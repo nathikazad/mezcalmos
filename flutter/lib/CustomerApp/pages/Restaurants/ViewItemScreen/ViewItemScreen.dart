@@ -6,16 +6,17 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/textFieldComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-
+import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'components/BottomBarItemViewScreen.dart';
-import 'components/chooseOneCheckBox.dart';
-import 'components/choosenManyCheckBox.dart';
+import 'components/ChooseOneCheckBox.dart';
+import 'components/ChoosenManyCheckBox.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
@@ -66,7 +67,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       });
     } else {
       this.cartItem.value = CartItem.clone(
-          restaurantCartController.cart.value.items.firstWhere((item) {
+          restaurantCartController.cart.value.cartItems.firstWhere((item) {
         return item.id == Get.parameters["cartItemId"];
       }));
       controller.getRestaurant(this.cartItem.value!.restaurantId).then((value) {
@@ -75,7 +76,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         });
       });
     }
-    controller.refresh();
+    cartItem.refresh();
     super.initState();
   }
 
@@ -84,7 +85,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     return Obx(
       () => Scaffold(
         appBar: CustomerAppBar(
-          title: currentRestaurant != null ? "${currentRestaurant!.name}" : "",
+          title: currentRestaurant != null
+              ? "${cartItem.value!.item.name[lang.userLanguageKey]}"
+              : "",
           autoBack: true,
         ),
         body: (cartItem.value?.item == null)
@@ -155,18 +158,24 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     child: Text(
                         "${cartItem.value!.item.description![lang.userLanguageKey]!.inCaps}",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText2),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(fontSize: 12.sp)),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  chooseOneCheckBoxes(
-                      cartItem.value!.item.chooseOneOptions, cartItem),
+                  ChooseOneCheckBox(
+                    chooseOneOptions: cartItem.value!.item.chooseOneOptions,
+                    cartItem: cartItem,
+                  ),
                   SizedBox(
                     height: 20,
                   ),
-                  chooseManyCheckBoxes(
-                      cartItem.value!.item.chooseManyOptions, cartItem),
+                  ChooseManyCheckBoxes(
+                      chooseManyOptions: cartItem.value!.item.chooseManyOptions,
+                      cartItem: cartItem),
                   TextFieldComponent(
                     textController: _noteTextEdittingController,
                     hint: lang.strings["customer"]["restaurant"]["menu"]
@@ -224,11 +233,4 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       return true;
     }
   }
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
 }

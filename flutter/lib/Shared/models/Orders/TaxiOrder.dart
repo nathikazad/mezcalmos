@@ -58,7 +58,6 @@ class TaxiNotificationStatus {
 }
 
 class TaxiOrder extends Order {
-  num cost;
   Location from;
   RouteInformation routeInformation;
   String? acceptRideTime;
@@ -71,7 +70,7 @@ class TaxiOrder extends Order {
   List<CounterOffer> counterOffers = [];
   TaxiOrder(
       {required String orderId,
-      required this.cost,
+      required num cost,
       required this.from,
       required Location to,
       required DateTime orderTime,
@@ -88,7 +87,7 @@ class TaxiOrder extends Order {
             orderId: orderId,
             paymentType: paymentType,
             orderType: OrderType.Taxi,
-            cost: 0,
+            cost: cost,
             customer: customer,
             serviceProvider: driver,
             to: to);

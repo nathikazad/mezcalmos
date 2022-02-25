@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/BasicCellComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 // build the order items inside the order info component
 final currency = new NumberFormat("#,##0.00", "en_US");
@@ -95,11 +96,4 @@ Widget buildOrdersItems(List<RestaurantOrderItem> items) {
       return children;
     }),
   ));
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
 }

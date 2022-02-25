@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 
 class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;
@@ -30,7 +30,7 @@ class RestaurantCard extends StatelessWidget {
         onTap: onClick,
         child: Container(
           width: double.infinity,
-          height: 125,
+          height: 145,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,14 +63,17 @@ class RestaurantCard extends StatelessWidget {
                             Icon(
                               Icons.restaurant_menu,
                               color: Colors.deepPurple,
+                              size: 15,
                             ),
                             SizedBox(
                               width: 5,
                             ),
-                            Text(
-                              restaurant.items.length.toStringAsFixed(0) +
-                                  ' ${lang.strings["customer"]["restaurant"]["menu"]["items"]}',
-                              style: txt.bodyText2,
+                            Flexible(
+                              child: Text(
+                                restaurant.items.length.toStringAsFixed(0) +
+                                    ' ${lang.strings["customer"]["restaurant"]["menu"]["items"]}',
+                                style: txt.bodyText2,
+                              ),
                             )
                           ],
                         ),
@@ -90,7 +93,7 @@ class RestaurantCard extends StatelessWidget {
   Container mezRestuarntCardImage(LanguageController lang) {
     ///responsible for the image of restaurant
     return Container(
-      width: 150.w,
+      width: 35.w,
       height: double.infinity,
       child: ClipRRect(
         borderRadius: BorderRadius.only(
@@ -100,7 +103,7 @@ class RestaurantCard extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              height: 125,
+              height: double.infinity,
               width: 150.w,
               child: CachedNetworkImage(
                 imageUrl: restaurant.photo,
@@ -115,7 +118,7 @@ class RestaurantCard extends StatelessWidget {
               ),
             ),
             Container(
-              height: 125,
+              height: double.infinity,
               width: 150.w,
               color: checkRestaurantAvailability(schedule: restaurant.schedule)
                   ? null

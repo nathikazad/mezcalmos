@@ -116,7 +116,7 @@
       }
     },
     "orders": {
-      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
       "inProcess": {
         "taxi": {
           "$orderId": {
@@ -140,7 +140,7 @@
         "taxi": {
           "$orderId": {
             "cost": {
-              ".write": "data.parent().exists() && data.parent().child($orderId + '/customer/id').val() === auth.uid"
+              ".write": "data.parent().exists() && data.parent().child('/customer/id').val() === auth.uid"
             },
             "notificationStatus": {
               "$driverId": {
@@ -163,7 +163,7 @@
     },
     "chat": {
       "$orderId": {
-        ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists() || root.child('taxiAdmins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+        ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists() || root.child('taxiAdmins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
         "messages": {
           "$messageId": {
             ".write": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()",
@@ -189,9 +189,11 @@
       }
     },
     "deliveryAdmins": {
-      "$uid": {
-        ".read": "$uid === auth.uid",
-        ".write": "$uid === auth.uid && root.child('deliveryAdmins/' + $uid).exists()"
+      "info": {
+        "$uid": {
+          ".read": "$uid === auth.uid",
+          ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + $uid).exists()"
+        }
       }
     },
     "adminChat": {
@@ -219,7 +221,7 @@
       }
     },
     "restaurants": {
-      ".read": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+      ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
       ".write": "false",
       "info": {
         ".read": "true",
@@ -277,8 +279,8 @@
             }
           },
           "state": {
-            "open": {
-              ".write": "$uid === auth.uid"
+            "available": {
+              ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
             }
           }
         }

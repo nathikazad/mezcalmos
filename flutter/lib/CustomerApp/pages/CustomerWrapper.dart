@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart';
@@ -16,11 +15,8 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -35,8 +31,6 @@ class CustomerWrapper extends StatefulWidget {
 class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
   LanguageController lang = Get.find<LanguageController>();
-  SideMenuDrawerController _sideMenuDrawerController =
-      Get.find<SideMenuDrawerController>();
   AuthController auth = Get.find<AuthController>();
   OrderController? _orderController;
   DateTime? appClosedTime;
@@ -54,7 +48,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     Get.put(RestaurantsInfoController(), permanent: true);
     WidgetsBinding.instance!.addObserver(this);
     if (Get.find<AuthController>().fireAuthUser != null) {
-      mezDbgPrint("~~~~~~~~~ ${Get.find<AuthController>().isDisplayNameSet()}");
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
@@ -87,12 +80,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
               autoBack: false,
             ),
             body: LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth != 0) {
-                ScreenUtil.init(
-                  constraints,
-                  designSize: Size(375, 812),
-                );
-              }
               return SingleChildScrollView(
                   child: ConstrainedBox(
                       constraints: BoxConstraints(
@@ -149,19 +136,14 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       numberOfCurrentOrders.value = _orderController!.currentOrders.length;
     });
     String? userId = Get.find<AuthController>().fireAuthUser!.uid;
-    // listening for notification Permissions!
-
     _notificationsStreamListener = initializeShowNotificationsListener();
+    // listening for notification Permissions!
     listenForLocationPermissions();
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             customerNotificationsNode(userId), customerNotificationHandler);
-    // kSignInRouteOptional being written in /wrapper , basically it is equal to true when the user
-    // was already SignedOut and was on a page , which we want him to go back to it once he signed in.
-    // check more in wrapper.
     if (Get.currentRoute == kHomeRoute) {
       Future.microtask(() {
-        // Fix to Input Focus problems ( we had it in build which gets re-executed after any input focus) !
         navigateToOrdersIfNecessary(_orderController!.currentOrders);
       });
     }
@@ -251,14 +233,18 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             subtitle: "${lang.strings['customer']['home']['food']["subtitle"]}",
             ontap: () {
               if (auth.fireAuthUser != null) {
-                if (Get.find<OrderController>().currentOrders.isEmpty) {
-                  Get.toNamed(kRestaurantsRoute);
+                List<Order> restaurantOrders = Get.find<OrderController>()
+                    .currentOrders
+                    .where((p0) => p0.orderType == OrderType.Restaurant)
+                    .toList();
+
+                if (restaurantOrders.length == 1) {
+                  Get.toNamed(
+                      getRestaurantOrderRoute(restaurantOrders[0].orderId));
+                } else if (restaurantOrders.length > 1) {
+                  Get.toNamed(kOrdersRoute);
                 } else {
-                  Get.toNamed(getRestaurantOrderRoute(
-                      Get.find<OrderController>()
-                          .currentOrders
-                          .value[0]
-                          .orderId));
+                  Get.toNamed(kRestaurantsRoute);
                 }
               } else {
                 Get.toNamed(kRestaurantsRoute);
@@ -280,15 +266,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   // when app resumes check if there are current orders and if yes navigate to orders page
   void navigateToOrdersIfNecessary(List<Order> currentOrders) {
-    mezDbgPrint("navigateToOrdersIfNecessary");
-
     if (currentOrders.length == 1) {
       // Restaurant
-      if (currentOrders[0].orderType == OrderType.Restaurant)
+      if (currentOrders[0].orderType == OrderType.Restaurant) {
         popEverythingAndNavigateTo(
             getRestaurantOrderRoute(currentOrders[0].orderId));
-      // Taxi
-      else if (currentOrders[0].orderType == OrderType.Taxi) {
+        // Taxi
+      } else if (currentOrders[0].orderType == OrderType.Taxi) {
         popEverythingAndNavigateTo(getTaxiOrderRoute(currentOrders[0].orderId));
       }
     } else if (currentOrders.length > 1) {

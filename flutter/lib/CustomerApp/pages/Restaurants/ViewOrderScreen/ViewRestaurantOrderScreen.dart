@@ -149,6 +149,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                       SizedBox(
                         height: 10,
                       ),
+
                       OrderItemsCard(
                         items: order.value!.items,
                       ),
@@ -159,11 +160,12 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                       //===============================>notes========================>
                       order.value?.notes == null ||
                               order.value!.notes!.length <= 0
-                          ? SizedBox()
+                          ? Container()
                           : notesWidget(order),
                       //===============================>button cancel===========================
-
-                      SizedBox(height: 10),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Container(
                           alignment: Alignment.center,
                           child: OrderFooterCard(order: order.value!)),
@@ -179,9 +181,3 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   }
 }
 
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
-}

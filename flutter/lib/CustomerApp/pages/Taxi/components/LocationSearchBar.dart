@@ -6,12 +6,9 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:sizer/sizer.dart';
 
 enum SearchComponentType { From, To, None }
 
@@ -303,12 +300,10 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     setState(() {
       if (_type == SearchComponentType.From) {
         locationSearchBarController.fromTextFieldFocusNode.requestFocus();
-        mezDbgPrint("Cleared From TF !");
         widget.request.value.from = null;
       }
       if (_type == SearchComponentType.To) {
         locationSearchBarController.fromTextFieldFocusNode.requestFocus();
-        mezDbgPrint("Cleared From TF !");
         widget.request.value.to = null;
       }
       locationSearchBarController.focusedTextField.value = _type;

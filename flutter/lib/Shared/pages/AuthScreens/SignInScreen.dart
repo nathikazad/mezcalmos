@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ionicons/ionicons.dart';
@@ -11,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:sizer/sizer.dart';
 
 enum SignInMode {
   OptionalSignIn,
@@ -18,19 +18,17 @@ enum SignInMode {
 }
 
 class SignIn extends GetWidget<AuthController> {
-  // final TextEditingController emailController = TextEditingController();
-  // final TextEditingController passwordController = TextEditingController();
   final SignInMode mode;
   SignIn({required this.mode});
-  LanguageController lang = Get.find<LanguageController>();
+  final LanguageController lang = Get.find<LanguageController>();
   RxBool clickedLogin = false.obs;
 
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
 
-    final sw = MediaQuery.of(context).size.width.w;
-    final sh = MediaQuery.of(context).size.height.h;
+    final sw = MediaQuery.of(context).size.width;
+    final sh = MediaQuery.of(context).size.height;
     final lmode = GetStorage().read(getxLmodeKey);
 
     return WillPopScope(
@@ -48,7 +46,7 @@ class SignIn extends GetWidget<AuthController> {
                     SizedBox(
                       height: 35,
                     ),
-                    (mode == SignInMode.OptionalSignIn)
+                    (mode == SignInMode.OptionalSignIn && !clickedLogin.value)
                         ? Container(
                             // padding: const EdgeInsets.only(top: 5),
                             alignment: Alignment.centerRight,
@@ -67,19 +65,18 @@ class SignIn extends GetWidget<AuthController> {
                           ),
                     Padding(
                       padding: const EdgeInsets.only(top: 50),
-                      child: MezcalmosSharedWidgets.logo(
-                          size: getSizeRelativeToScreen(60.w, sh, sw)),
+                      child: MezcalmosSharedWidgets.logo(size: 15.h),
                     ),
                     SizedBox(height: 10),
                     MezcalmosSharedWidgets.mezcalmosTitle(
-                        textSize: 40.sp, isBold: true),
+                        textSize: 35.sp, isBold: true),
                     Spacer(),
                     Text(lang.strings['shared']['login']["title"],
                         overflow: TextOverflow.visible,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
-                            .headline1
+                            .headline2
                             ?.copyWith(fontWeight: FontWeight.w600)),
                     Spacer(),
                     ...buildSignInButtons(lmode),
@@ -125,8 +122,10 @@ class SignIn extends GetWidget<AuthController> {
       child: TextButton(
           onPressed: () async {
             clickedLogin.value = true;
-            await controller.signInWithApple();
-            clickedLogin.value = false;
+            controller
+                .signInWithApple()
+                .onError((error, stackTrace) => clickedLogin.value = false);
+            // clickedLogin.value = false;
           },
           style: TextButton.styleFrom(
               backgroundColor: Colors.black,
@@ -186,28 +185,30 @@ class SignIn extends GetWidget<AuthController> {
           onPressed: () async {
             clickedLogin.value = true;
             lmode != "dev"
-                ? await controller.signInWithFacebook()
+                ? controller
+                    .signInWithFacebook()
+                    .onError((error, stackTrace) => clickedLogin.value = false)
                 : await Get.defaultDialog(
                     title: "Choose Test User",
                     content: Column(
                       children: [
                         TextButton(
                             onPressed: () {
-                              Get.back();
+                              // Get.back();
                               controller.signIn(
                                   tTestCustomerValue, tEmailTestPassword);
                             },
                             child: Text(tTestCustomerValue)),
                         TextButton(
                             onPressed: () {
-                              Get.back();
+                              // Get.back();
                               controller.signIn(
                                   tTestTaxiValue, tEmailTestPassword);
                             },
                             child: Text(tTestTaxiValue)),
                         TextButton(
                             onPressed: () {
-                              Get.back();
+                              // Get.back();
                               controller.signIn(
                                   tTestAdminValue, tEmailTestPassword);
                             },
@@ -215,7 +216,7 @@ class SignIn extends GetWidget<AuthController> {
                       ],
                     ));
 
-            clickedLogin.value = false;
+            // clickedLogin.value = false;
           },
           style: TextButton.styleFrom(
               backgroundColor: Color.fromARGB(255, 58, 85, 159),

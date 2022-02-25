@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
+import 'package:collection/collection.dart';
 
 class Restaurant {
   String id;
@@ -35,10 +36,8 @@ class Restaurant {
         restaurantData["state"]?["available"] ?? false);
     String name = restaurantData["info"]["name"];
     String photo = restaurantData["info"]["image"];
-    Map<LanguageType, String> description = {
-      LanguageType.EN: restaurantData["details"]["description"]["en"],
-      LanguageType.ES: restaurantData["details"]["description"]["es"]
-    };
+    Map<LanguageType, String> description =
+        convertToLanguageMap(restaurantData["details"]["description"]);
     //restaurantData["details"]["description"].toLanguageMap();
     Schedule? schedule = restaurantData["details"]["schedule"] != null
         ? Schedule.fromData(restaurantData["details"]["schedule"])
@@ -57,8 +56,11 @@ class Restaurant {
     return restaurant;
   }
 
-  Item findItemById(String id) {
-    return this.items.firstWhere((item) => item.id == id);
+  Item? findItemById(String id) {
+    return this.items.firstWhereOrNull((item) {
+      mezDbgPrint("@sa@d@: findItemById:: item Id ${item.id} == $id ");
+      return item.id == id;
+    });
   }
 
   Map<String, dynamic> toJson() {
@@ -100,10 +102,7 @@ class ChooseManyOption {
   factory ChooseManyOption.fromData(String id, dynamic data) {
     return ChooseManyOption(
         id: id,
-        name: {
-          LanguageType.EN: data["name"]["en"],
-          LanguageType.ES: data["name"]["es"]
-        },
+        name: convertToLanguageMap(data["name"]),
         cost: data["cost"],
         selectedByDefault: data["default"] ?? false);
   }
@@ -121,10 +120,7 @@ class ChooseOneOption {
   factory ChooseOneOption.fromData(String id, dynamic data) {
     ChooseOneOption chooseOneOption = ChooseOneOption(
         id: id,
-        name: {
-          LanguageType.EN: data["name"]["en"],
-          LanguageType.ES: data["name"]["es"]
-        },
+        name: convertToLanguageMap(data["name"]),
         // data["name"].toLanguageMap(),
         //TODO:change this
         dialog: data["dialog"]["es"]);
@@ -132,10 +128,7 @@ class ChooseOneOption {
       //mezDbgPrint(optionData["name"]);
       ChooseOneOptionListItem chooseOneOptionListItem = ChooseOneOptionListItem(
           optionId,
-          {
-            LanguageType.EN: optionData["name"]["en"],
-            LanguageType.ES: optionData["name"]["es"]
-          },
+          convertToLanguageMap(optionData["name"]),
           optionData["cost"]);
       chooseOneOption.chooseOneOptionListItems.add(chooseOneOptionListItem);
     });
@@ -146,7 +139,7 @@ class ChooseOneOption {
     if (this.chooseOneOptionListItems.length == 0) return null;
     return this
         .chooseOneOptionListItems
-        .firstWhere((element) => element.id == id);
+        .firstWhereOrNull((element) => element.id == id);
   }
 
   Map<String, dynamic> toJson() => {
@@ -162,14 +155,8 @@ class ChooseOneOptionListItem {
   num cost = 0;
   Map<LanguageType, String> name;
   ChooseOneOptionListItem(this.id, this.name, this.cost);
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "cost": cost,
-        "name": {
-          LanguageType.EN.toFirebaseFormatString(): name["en"],
-          LanguageType.ES.toFirebaseFormatString(): name["es"]
-        }
-      };
+  Map<String, dynamic> toJson() =>
+      {"id": id, "cost": cost, "name": name.toFirebaseFormat()};
 }
 
 class Item {
@@ -194,16 +181,10 @@ class Item {
     Item item = Item(
         id: itemId,
         available: itemData["available"],
-        description: {
-          LanguageType.EN: itemData["description"]["en"],
-          LanguageType.ES: itemData["description"]["es"]
-        },
+        description: convertToLanguageMap(itemData["description"]),
         //itemData["description"].toLanguageMap(),
         image: itemData["image"],
-        name: {
-          LanguageType.EN: itemData["name"]["en"],
-          LanguageType.ES: itemData["name"]["es"]
-        },
+        name: convertToLanguageMap(itemData["name"]),
         //itemData["name"].toLanguageMap(),
         cost: itemData["cost"]);
     if (itemData["options"]?["chooseOne"] != null) {
@@ -220,9 +201,6 @@ class Item {
             .add(ChooseManyOption.fromData(optionId, optionData));
       });
     }
-    // if (itemData["options"]["sides"] != null) {
-    //   item.sides = Sides.fromData(itemData["options"]["sides"], language);
-    // }
     return item;
   }
 
@@ -241,21 +219,15 @@ class Item {
 
   ChooseOneOption? findChooseOneOption(String id) {
     if (this.chooseOneOptions.length == 0) return null;
-    return this.chooseOneOptions.firstWhere((element) => element.id == id);
+    return this
+        .chooseOneOptions
+        .firstWhereOrNull((element) => element.id == id);
   }
 
   ChooseManyOption? findChooseManyOption(String id) {
     if (this.chooseOneOptions.length == 0) return null;
-    return this.chooseManyOptions.firstWhere((element) => element.id == id);
+    return this
+        .chooseManyOptions
+        .firstWhereOrNull((element) => element.id == id);
   }
 }
-
-// extension TurnDataToMapLangauge on dynamic {
-//   Map<LanguageType, String> get toLnaguageMap {
-//     mezDbgPrint("hhhhhh ====> ${{
-//       LanguageType.EN: this["en"],
-//       LanguageType.ES: this["es"]
-//     }}");
-//     return {LanguageType.EN: this["en"], LanguageType.ES: this["es"]};
-//   }
-// }

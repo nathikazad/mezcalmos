@@ -16,7 +16,7 @@ import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:sizer/sizer.dart';
 
-DateTime now = DateTime.now();
+DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
 
 class MessagingScreen extends StatefulWidget {
@@ -194,7 +194,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
           return singleChatComponent(
             // parentContext: context,
             message: e.message,
-            time: e.formatedTime,
+            time: intl.DateFormat('hh:mm a').format(e.timeStamp!.toLocal()),
             isMe: e.userId == _authController.user!.uid,
             userImage: controller.value!.participants[e.userId]?.image,
           );

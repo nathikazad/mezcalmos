@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -14,7 +13,7 @@ class NoUserIcon extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.all(8),
         child: CircleAvatar(
-            radius: 15.h,
+            radius: 25,
             backgroundImage: AssetImage(aDefaultAvatar),
             child: Material(
               shape: CircleBorder(),

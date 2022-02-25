@@ -28,12 +28,19 @@
         "appGoogleServices":"../android/app/google-services.json",
         "appAppleServices":"../ios/Runner/GoogleService-Info.plist",
         "pubspec.yaml" : "../pubspec.yaml",
-        "local.properties" : "../android/local.properties"
+        "local.properties" : "../android/local.properties",
+
+        "sharedPermissions":[
+                
+            "<uses-permission android:name='android.permission.INTERNET'/>",
+            "<uses-permission android:name='android.permission.ACCESS_FINE_LOCATION'/>",
+            "<uses-permission android:name='android.permission.ACCESS_COARSE_LOCATION'/>",
+            "<uses-permission android:name='android.permission.FOREGROUND_SERVICE'/>"
+        ]
 
     },
 
     "apps": {
-
         "TaxiApp":
         {
             "folderName": "TaxiApp",
@@ -62,7 +69,10 @@
                     "googe-service-file": "services/prod/android/taxi.json",
                     "apple-service-file": "services/prod/ios/taxi.plist"
                 }
-            }
+            },
+            "appPermissions":[
+                "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>"
+            ]
         },
 
         "CustomerApp":

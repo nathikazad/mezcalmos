@@ -16,12 +16,12 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:sizer/sizer.dart';
 
 class IncomingOrderViewScreen extends StatefulWidget {
   @override
@@ -67,19 +67,30 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
         // start Listening for the vailability of the order
         _orderListener =
             controller.getIncomingOrderStream(orderId).listen((order) {
-          if (order != null) {
-            // keep updating our Order
-            setState(() {
-              this.order = order;
-            });
+          mezDbgPrint(" @adsad@ : Inside listener ");
+          mezDbgPrint(" @adsad@ : order != null : ${order != null} ");
+
+          if (order != null && !_clickedButton) {
+            mezDbgPrint(" @adsad@ : Inside listener:: if ");
+
+            // keep updating our Order only when neeeded
+            if (order.cost != this.order?.cost ||
+                order.distanceToClient != this.order?.distanceToClient) {
+              setState(() {
+                this.order = order;
+              });
+            }
           } else {
             // if the Order is no more available , Show a pop up while poping back back !
             if (_clickedButton == false) {
               cancelOrderSubscription();
               Get.back();
               oneButtonDialog(
+                  title: 'Oops...',
                   body: lang.strings['taxi']['cancelOrder']['rideUnavailble'],
-                  imagUrl: aOrderUnavailable);
+                  bodyTextColor: Colors.black,
+                  fontSize: 14.sp,
+                  imagUrl: a404);
             }
           }
         });
@@ -104,8 +115,10 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: taxiAppBar(AppBarLeftButtonType.Back,
-          function: cancelOrderSubscription),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+        cancelOrderSubscription();
+        Get.back();
+      }),
       body: order != null
           ? Stack(
               alignment: Alignment.topCenter,
@@ -126,6 +139,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                               lang.strings['taxi']['taxiView']["acceptOrders"],
                               style: TextStyle(
                                 color: Colors.white,
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w700,
                               ),
                             )
@@ -148,10 +162,23 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
     );
   }
 
+  /// Call this right after accept order
+  /// Uses : Make sure that the orderId has been written to the taxiState since we do not await it in backend.
+  Future<void> avoidAcceptRideRaceCondition(String orderId) async {
+    if (Get.find<TaxiAuthController>().taxiState?.currentOrder == null) {
+      mezDbgPrint(
+          "[+] s@@d ==> [ ACCEPT TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
+      await Get.find<TaxiAuthController>()
+          .stateStream
+          .firstWhere((taxiState) => taxiState?.currentOrder != null);
+    } else
+      mezDbgPrint(
+          "[+] s@@d ==> [ ACCEPT TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
+  }
+
   void cancelOrderSubscription() {
     _orderListener?.cancel();
     _orderListener = null;
-    Get.back(closeOverlays: true);
   }
 
   Widget acceptOrderButton({required Widget child}) {
@@ -164,16 +191,16 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
       ),
       onPressed: !_clickedButton
           ? () async {
+              String _orderId = order!.orderId;
               setState(() {
                 _clickedButton = true;
               });
-              mezDbgPrint(
-                  '-----------------ORDER PRINT-------------' + order!.orderId);
 
               ServerResponse serverResponse =
-                  await controller.acceptTaxi(order!.orderId);
+                  await controller.acceptTaxi(_orderId);
 
               if (serverResponse.success) {
+                await avoidAcceptRideRaceCondition(_orderId);
                 // canceling Subscription Just to Avoid possible Racing Conditions
                 cancelOrderSubscription();
                 // Go to CurrentOrder View !
@@ -186,7 +213,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                   _clickedButton = false;
                 });
                 Get.back();
-                MezSnackbar("Failed", serverResponse.errorMessage!);
+                MezSnackbar("Oops..", serverResponse.errorMessage!);
               }
             }
           : () => null,

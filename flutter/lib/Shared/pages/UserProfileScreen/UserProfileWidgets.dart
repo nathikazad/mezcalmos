@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
-import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
+import 'package:sizer/sizer.dart';
 
 class UserProfileWidgetsClass {
   // Singleton
-  UserProfileController userProfileController;
-  UserProfileWidgetsClass(this.userProfileController);
+  final UserProfileController userProfileController;
+  final LanguageController _lang = Get.find<LanguageController>();
+  UserProfileWidgetsClass({required this.userProfileController});
 
   /// this holds the Main body parts.
   List<Widget> bodyContent(
@@ -25,12 +27,9 @@ class UserProfileWidgetsClass {
       Flexible(
         flex: 2,
         // fit: FlexFit.tight,
-        child: Stack(
-          fit: StackFit.passthrough,
-          children: pictureContainerWidget(
-              onBrowsImageClick: onBrowsImageClick,
-              isImageBeingUploaded: isImageBeingUploaded),
-        ),
+        child: pictureContainerWidget(
+            onBrowsImageClick: onBrowsImageClick,
+            isImageBeingUploaded: isImageBeingUploaded),
       ),
       Flexible(
           flex: 1,
@@ -50,34 +49,32 @@ class UserProfileWidgetsClass {
   }
 
   /// this Holds the Circled Container in the middle of the screen that has the user Image
-  List<Widget> pictureContainerWidget(
+  Widget pictureContainerWidget(
       {required Function() onBrowsImageClick,
       required bool isImageBeingUploaded}) {
-    return [
-      Center(
-        child: GestureDetector(
-          onTap: userProfileController.stateMode == UserProfileMode.Edit &&
-                  !isImageBeingUploaded
-              ? onBrowsImageClick
-              : () {},
-          child: Container(
-            height: 150,
-            width: 150,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: showDefaultOrUserImg(
-                            memoryImg: userProfileController.userImgBytes.value)
-                        .image)),
-            child: userProfileController.stateMode == UserProfileMode.Edit
-                ? browsImageButton(isImageBeingUploaded: isImageBeingUploaded)
-                : SizedBox(),
-          ),
+    return Center(
+      child: GestureDetector(
+        onTap: userProfileController.stateMode.value == UserProfileMode.Edit &&
+                !isImageBeingUploaded
+            ? onBrowsImageClick
+            : () {},
+        child: Container(
+          height: 150,
+          width: 150,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: showDefaultOrUserImg(
+                          memoryImg: userProfileController.userImgBytes.value)
+                      .image)),
+          child: userProfileController.stateMode.value == UserProfileMode.Edit
+              ? browsImageButton(isImageBeingUploaded: isImageBeingUploaded)
+              : SizedBox(),
         ),
       ),
-    ];
+    );
   }
 
   /// this is the brows button inside  [pictureContainerWidget] When on [UserProfileMode.Edit] mode it shows up.
@@ -88,7 +85,7 @@ class UserProfileWidgetsClass {
         width: 150,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.black45,
+          color: Colors.black.withOpacity(.66),
         ),
         padding: EdgeInsets.all(5),
         child: !isImageBeingUploaded
@@ -102,8 +99,8 @@ class UserProfileWidgetsClass {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    ' select ',
-                    style: TextStyle(color: Colors.white),
+                    _lang.strings['shared']['userInfo']['uploadPic'],
+                    style: TextStyle(color: Colors.white, fontSize: 11.sp),
                   )
                 ],
               )
@@ -127,7 +124,7 @@ class UserProfileWidgetsClass {
       flex: 1,
       child: Center(
           child: Text(
-        "User Information",
+        _lang.strings['shared']['userInfo']['title'],
         style: TextStyle(fontSize: 30),
       )),
     );
@@ -163,7 +160,7 @@ class UserProfileWidgetsClass {
 
   /// this basically either shows the UserName or shows the textField depending on [UserProfileMode].
   Widget showUserNameOrTextField({required bool isImageBeingUploaded}) {
-    if (userProfileController.stateMode == UserProfileMode.Show) {
+    if (userProfileController.stateMode.value == UserProfileMode.Show) {
       return Text(
         Get.find<AuthController>().user!.name!,
         style: TextStyle(fontSize: 30),
@@ -234,9 +231,8 @@ class UserProfileWidgetsClass {
         dotsColor: Colors.purple.shade400,
       );
     } else {
-      if (userProfileController.stateMode == UserProfileMode.Show) {
-        return TextButton(
-            onPressed: onStartEdit, child: Text("Edit User Info"));
+      if (userProfileController.stateMode.value == UserProfileMode.Show) {
+        return editButton(onStartEdit: onStartEdit);
       } else {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -245,35 +241,58 @@ class UserProfileWidgetsClass {
             saveButton(onSaveClick, clickedSave),
             // cancel button
             if (userProfileController.checkIfUserHasAllInfosSet() &&
-                userProfileController.stateMode == UserProfileMode.Edit &&
+                userProfileController.stateMode.value == UserProfileMode.Edit &&
                 !clickedSave)
-              Expanded(
-                  flex: 2,
-                  child: InkWell(
-                    onTap: () {
-                      userProfileController.reset();
-                      userProfileController
-                          .setUserProfileMode(UserProfileMode.Show);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.purple.shade400),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15)),
-                      height: 50,
-                      // width: Get.width - 100,
-                      child: Center(
-                          child: Text(
-                        "Cancel",
-                        style: TextStyle(color: Colors.purple.shade400),
-                      )),
-                    ),
-                  )),
+              cancelButton(),
           ],
         );
       }
     }
+  }
+
+  Expanded cancelButton() {
+    return Expanded(
+        flex: 2,
+        child: InkWell(
+          onTap: () {
+            userProfileController.reset();
+            userProfileController.setUserProfileMode(UserProfileMode.Show);
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.purple.shade400),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15)),
+            height: 50,
+            // width: Get.width - 100,
+            child: Center(
+                child: Text(
+              _lang.strings['shared']['userInfo']['cancel'],
+              style: TextStyle(fontSize: 12.sp, color: Colors.purple.shade400),
+            )),
+          ),
+        ));
+  }
+
+  Widget editButton({required Function() onStartEdit}) {
+    return InkWell(
+      onTap: onStartEdit,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.purple.shade500),
+            color: Colors.purple.shade400,
+            borderRadius: BorderRadius.circular(8.sp)),
+        height: 50,
+        // width: Get.width - 100,
+        child: Center(
+            child: Text(
+          _lang.strings['shared']['userInfo']['editInfo'],
+          style: TextStyle(color: Colors.white, fontSize: 15.sp),
+        )),
+      ),
+    );
   }
 
   Expanded saveButton(Function onSaveChangesClick, bool clickedSave) {
@@ -285,7 +304,8 @@ class UserProfileWidgetsClass {
                   await onSaveChangesClick();
                 }
               : () {
-                  MezSnackbar("Oops", "No Changes to be applied!",
+                  MezSnackbar("Oops",
+                      _lang.strings['shared']['userInfo']['noChangesToApply'],
                       position: SnackPosition.TOP);
                 },
           child: Container(
@@ -302,8 +322,9 @@ class UserProfileWidgetsClass {
             child: Center(
                 child: !clickedSave
                     ? Text(
-                        "Save",
+                        _lang.strings['shared']['userInfo']['saveBtn'],
                         style: TextStyle(
+                            fontSize: 12.sp,
                             color: userProfileController.didUserChangedInfos()
                                 ? Colors.white
                                 : Colors.grey.shade400),

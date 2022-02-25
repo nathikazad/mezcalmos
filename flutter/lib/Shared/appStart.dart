@@ -29,6 +29,7 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:package_info/package_info.dart';
 import 'package:sizer/sizer.dart';
+// import 'package:sizer/sizer.dart';import 'package:sizer/sizer.dart';
 
 final ThemeData _defaultAppTheme = ThemeData(
     primaryColor: Colors.white,
@@ -36,24 +37,24 @@ final ThemeData _defaultAppTheme = ThemeData(
 
 class StartingPoint extends StatefulWidget {
   final AppType appType;
-  final ThemeData? _appTheme;
+  final ThemeData? appTheme;
   final Function signInCallback;
   final Function signOutCallback;
   final List<GetPage<dynamic>> routes;
   final List<SideMenuItem>? sideMenuItems;
   final bool locationOn;
-  ThemeData get appTheme => _appTheme ?? _defaultAppTheme;
+
+  ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
   //  Sideminu
   StartingPoint(
       {required this.appType,
-      ThemeData? appTheme,
+      this.appTheme = null,
       required this.signInCallback,
       required this.signOutCallback,
       required this.routes,
       this.sideMenuItems,
-      this.locationOn = true})
-      : _appTheme = appTheme;
+      this.locationOn = true});
 
   @override
   _StartingPointState createState() => _StartingPointState();
@@ -80,25 +81,29 @@ class _StartingPointState extends State<StartingPoint> {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     if (_error) {
       MezSnackbar("Error", "Server connection failed !");
-      return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(
-            child: Icon(Icons.signal_wifi_bad,
-                color: Colors.red.shade200,
-                size: getSizeRelativeToScreen(50, Get.height, Get.width)),
-          ),
-        ),
-      );
+      return Sizer(
+          builder: (context, orientation, deviceType) => GetMaterialApp(
+                debugShowCheckedModeBanner: false,
+                home: Scaffold(
+                  body: Center(
+                    child: Icon(Icons.signal_wifi_bad,
+                        color: Colors.red.shade200,
+                        size:
+                            getSizeRelativeToScreen(50, Get.height, Get.width)),
+                  ),
+                ),
+              ));
     }
     if (!_initialized) {
-      return SplashScreen();
+      return Sizer(
+          builder: (context, orientation, deviceType) => SplashScreen());
     } else {
       mezDbgPrint("====> PreviewMode ===> ${GetStorage().read('previewMode')}");
-      return mainApp(
-          appType: widget.appType,
-          appTheme: widget.appTheme,
-          routes: widget.routes);
+      return Sizer(
+          builder: (context, orientation, deviceType) => mainApp(
+              appType: widget.appType,
+              appTheme: widget.appThemeGetter,
+              routes: widget.routes));
     }
   }
 

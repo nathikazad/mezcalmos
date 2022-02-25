@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:geocoding/geocoding.dart' as Geo;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
@@ -24,13 +25,12 @@ class MGoogleMapController {
   GoogleMapController? controller;
   LatLngBounds? bounds;
   Function? onMapTap;
-  final double mapZoomLvl = 12 / 10;
 
   /// Instead of going over the cropping rounded process everytime we update Taxi Markers,
   ///
   /// We save it in _taxiDriverImgDescruptorCopy.
   List<int>? _taxiDriverImgDescruptorCopy;
-  RxDouble markersDefaultSize = (Get.height * 0.055).w.obs;
+  RxDouble markersDefaultSize = 10.h.obs;
 
   /// calling this of every single Taxi Driver nearBy and add it / update it / delete it
   ///
@@ -83,6 +83,21 @@ class MGoogleMapController {
     markers.removeWhere((element) => element.markerId.value == markerId);
   }
 
+  double _calculateMarkersSize() {
+    var res = markersDefaultSize.value;
+
+    if (SizerUtil.height <= 868) {
+      mezDbgPrint(
+          "Size of screen height is less or equal to [868] , returning 60 as marker size !");
+      return 60;
+    } else {
+      mezDbgPrint(
+          "Size of screen height is greater than [868] , returning ${res} as marker size !");
+
+      return res;
+    }
+  }
+
   Future<void> addOrUpdateUserMarker(
       {String? markerId,
       required LatLng latLng,
@@ -93,19 +108,19 @@ class MGoogleMapController {
         Get.find<AuthController>().user?.bigImage;
 
     if (uImg == null) {
-      icon = await BitmapDescriptorLoader(
+      icon = await bitmapDescriptorLoader(
           (await cropRonded(
               (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
-          markersDefaultSize.value * mapZoomLvl,
-          markersDefaultSize.value * mapZoomLvl,
+          _calculateMarkersSize(),
+          _calculateMarkersSize(),
           isBytes: true);
     } else {
-      icon = await BitmapDescriptorLoader(
+      icon = await bitmapDescriptorLoader(
           (await cropRonded(
               (await http.get(Uri.parse(customImgHttpUrl ?? uImg)))
                   .bodyBytes) as Uint8List),
-          markersDefaultSize.value * mapZoomLvl,
-          markersDefaultSize.value * mapZoomLvl,
+          _calculateMarkersSize(),
+          _calculateMarkersSize(),
           isBytes: true);
     }
 
@@ -128,10 +143,12 @@ class MGoogleMapController {
     }
     this._addOrUpdateMarker(Marker(
         markerId: MarkerId(markerId),
-        icon: await BitmapDescriptorLoader(
-            _taxiDriverImgDescruptorCopy,
-            markersDefaultSize.value * mapZoomLvl,
-            markersDefaultSize.value * mapZoomLvl,
+        icon: await bitmapDescriptorLoader(
+            (await cropRonded((await rootBundle.load(taxi_driver_marker_asset))
+                .buffer
+                .asUint8List())),
+            _calculateMarkersSize(),
+            _calculateMarkersSize(),
             isBytes: true),
         flat: true,
         position: latLng));
@@ -139,13 +156,13 @@ class MGoogleMapController {
 
   Future<void> addOrUpdatePurpleDestinationMarker(
       {String markerId = "dest", required LatLng latLng}) async {
-    BitmapDescriptor icon = await BitmapDescriptorLoader(
+    BitmapDescriptor icon = await bitmapDescriptorLoader(
         (await cropRonded(
             (await rootBundle.load(purple_destination_marker_asset))
                 .buffer
                 .asUint8List())),
-        markersDefaultSize.value * mapZoomLvl,
-        markersDefaultSize.value * mapZoomLvl,
+        _calculateMarkersSize(),
+        _calculateMarkersSize(),
         isBytes: true);
     // markerId = markerId;
 

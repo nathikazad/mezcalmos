@@ -6,6 +6,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 class RestaurantOrder extends Order {
   RestaurantOrderStatus status;
   int quantity;
+  num itemsCost;
+  num shippingCost;
   List<RestaurantOrderItem> items = [];
   String? notes;
   UserInfo get restaurant => this.serviceProvider!;
@@ -20,6 +22,8 @@ class RestaurantOrder extends Order {
       required UserInfo restaurant,
       required UserInfo customer,
       required Location to,
+      required this.itemsCost,
+      required this.shippingCost,
       this.notes})
       : super(
             orderId: orderId,
@@ -43,7 +47,9 @@ class RestaurantOrder extends Order {
         notes: data["notes"],
         to: Location.fromFirebaseData(data['to']),
         restaurant: UserInfo.fromData(data["restaurant"]),
-        customer: UserInfo.fromData(data["customer"]));
+        customer: UserInfo.fromData(data["customer"]),
+        itemsCost: data['itemsCost'],
+        shippingCost: data['shippingCost']);
 
     data["items"].forEach((dynamic itemId, dynamic itemData) {
       RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
@@ -59,12 +65,7 @@ class RestaurantOrder extends Order {
           ?.forEach((dynamic id, dynamic data) {
         restaurantOrderItem.chooseManyOptions.add(ChooseManyOption(
             optionId: id,
-            optionName: {
-              LanguageType.EN: data["name"]
-                  ["${LanguageType.EN.toFirebaseFormatString()}"],
-              LanguageType.ES: data["name"]
-                  ["${LanguageType.ES.toFirebaseFormatString()}"]
-            },
+            optionName: convertToLanguageMap(data["name"]),
             chosenValueCost: data["chosenValueCost"],
             chosenOptionValue: data["chosenValue"]));
       });
@@ -72,22 +73,10 @@ class RestaurantOrder extends Order {
           ?.forEach((dynamic id, dynamic data) {
         restaurantOrderItem.chooseOneOptions.add(ChooseOneOption(
             optionId: id,
-            optionName: {
-              LanguageType.EN: data["name"]
-                  ["${LanguageType.EN.toFirebaseFormatString()}"],
-              LanguageType.ES: data["name"]
-                  ["${LanguageType.ES.toFirebaseFormatString()}"]
-            },
+            optionName: convertToLanguageMap(data["name"]),
             chosenOptionId: data["chosenOptionId"],
             chosenOptionCost: data["chosenOptionCost"],
-            chosenOptionName: {
-              LanguageType.EN: data["chosenOptionName"]
-                  ["${LanguageType.EN.toFirebaseFormatString()}"],
-              LanguageType.ES: data["chosenOptionName"]
-                  ["${LanguageType.ES.toFirebaseFormatString()}"]
-            }
-            // data["chosenOptionName"]
-            ));
+            chosenOptionName: convertToLanguageMap(data["chosenOptionName"])));
       });
       restaurantOrder.items.add(restaurantOrderItem);
     });
@@ -110,19 +99,20 @@ class RestaurantOrder extends Order {
         status == RestaurantOrderStatus.OnTheWay;
   }
 
-  String get clipBoardText {
+  String clipBoardText(LanguageType languageType) {
     String text = "";
     text += "${this.restaurant.name}\n";
     text += this.items.fold<String>("", (mainString, item) {
-      mainString += "  ${item.name} x${item.quantity} ${item.totalCost}\n";
+      mainString +=
+          "  ${item.name[languageType]} x${item.quantity} ${item.totalCost}\n";
       mainString +=
           item.chooseOneOptions.fold("", (secondString, chooseOneOption) {
-        return "${secondString}    ${chooseOneOption.optionName}: ${chooseOneOption.chosenOptionName}\n";
+        return "${secondString}    ${chooseOneOption.optionName[languageType]}: ${chooseOneOption.chosenOptionName[languageType]}\n";
       });
       mainString +=
           item.chooseManyOptions.fold("", (secondString, chooseManyOption) {
-        mezDbgPrint(chooseManyOption.optionName);
-        return "${secondString}    ${chooseManyOption.optionName}\n";
+        mezDbgPrint(chooseManyOption.optionName[languageType]);
+        return "${secondString}    ${chooseManyOption.optionName[languageType]}\n";
       });
       mainString += "    ${item.notes}\n";
       return mainString;
@@ -132,7 +122,7 @@ class RestaurantOrder extends Order {
     text += "${this.customer.name}\n";
     text += "${this.to.address}\n";
     text +=
-        "https://www.google.com/maps/@${this.to.latitude},${this.to.longitude},15z";
+        "https://www.google.com/maps/dir/?api=1&destination=${this.to.latitude},${this.to.longitude}";
     mezDbgPrint(text);
     return text;
   }

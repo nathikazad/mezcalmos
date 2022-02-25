@@ -50,7 +50,7 @@
                 },
                 "dailog":{
                     "title":"Warning",
-                    "subtitle":"You already have some items in your cart, Would you like to discard to them ?",
+                    "subtitle": "You already have some items in your cart from another restaurant, do you want to check them out first or overwrite them?",
                     "leftBtn":"Checkout",
                     "rightBtn":"Overwrite"
                 }
@@ -119,6 +119,7 @@
         },
         "taxiView": {
             "taxi": "Taxi",
+            "taxiOrder" : "Taxi order",
             "currentLocation":"Current location",
             "pickFromMap":"Pick from map",
             "searching": "Searching for Taxi",
@@ -140,9 +141,13 @@
             "rideCancelledByTaxi": "Ride cancelled by taxi",
             "rideCancelledByCustomer": "You have cancelled your ride",
             "ride": "ride",
-            "taxiRideCheckedTooltip" : "This shows how many drivers have received your offer \nbut did not find the offer acceptable.",
-            "taxiRequestPriceTooltip" : "How much are you willing to offer for this ride?\n We will broadcast your offer to all taxi drivers near you,\n they will accept your order only if they find \nthe offered price acceptable.",
-            "taxiRidePriceTooltip" : " Click - to decrease your price by 5.\n Click + to increase your price by 5.\n\n If you see your order not being accepted try them out."
+            "taxiRideCheckedTooltip" : "This shows how many drivers have received your offer but did not find the offer acceptable.",
+            "taxiRequestPriceTooltip" : "How much are you willing to offer for this ride? We will broadcast your offer to all taxi drivers near you, they will accept your order only if they find the offered price acceptable.",
+            "taxiRidePriceTooltip" : "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out.",
+            "failedToRequestTaxi" : "Failed to request a taxi !",
+            "increasePrice" : "Increase the price",
+            "decreasePrice" : "Decrease the price"
+
         },
         "cancelOrder": {
             "title":"Confirm Cancelation.",
@@ -172,7 +177,10 @@
                 "title":"Enter location name",
                 "button":"EDIT",
                 "textHint":"Location Name"
-            }
+            },
+            "savedLocationsListEmpty" : "Your Saved locations list is empty",
+            "clickBtnToAddNewLocation" : "Add new location by clicking the button below"
+
         },
         "pickLocation":{
         "pickLocation":"Pick Location",
@@ -230,7 +238,7 @@
             "trafficJam": "Traffic jam",
             "other": "Other",
             "customerCancelled": "Sorry to inform you the customer cancelled the ride.",
-            "rideUnavailble": "Sorry to inform you the the ride is not available any more."
+            "rideUnavailble": "Sorry to inform you that the ride is not available any more."
         },
         "orders": {
             "orderStatus":{
@@ -240,7 +248,7 @@
                 "lookingForTaxi":"Looking for Taxi",
                 "inTransit":"Taxi in transit",
                 "droppedOff":"Dropped off",
-                "expired":"Order expired"
+                "expired": "Expired"
             },
             "title": "Orders",
             "item": "Item|Items",
@@ -273,12 +281,17 @@
             "titleSuccess" : "Success :)",
             "titleFailed" : "Oops :(",
             "orderCancelSuccess": "Order cancelled successfully.",
-            "orderCancelFailed": "Failed to cancel the order."
+            "orderCancelFailed": "Failed to cancel the order.",
+            "serverCommunicationError" : "Failed to communicate with the server :("
         },
         "permissions": {
+            "cameraAccessOffTitle" : "App can't access Camera.",
+            "cameraAccessOffBody" : "Apparently you denied the app from Camera access, go to General > APP > Allow Camera!",
+            "photoAccessOffTitle" : "App can't access Photos.",
+            "photoAccessOffBody" : "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else.",
             "locationIsOff": "Location Service Turned Off",
             "permissionBtn": "GIVE PERMISSION",
-            "askForNotif": "The app uses your location to match you with the best rides and share your location with customers, even when the app is in background.",
+            "askForNotif": "The app collects your location Data to match you with the best rides and share your location with customers, even when the app is in background.",
             "locationPermissionDenied": "Oops, Sadly without location permissions you can not use our application!",
             "locationPermissionDeniedForever" : "Location permissions are denied forever! Please change that."
         },
@@ -286,10 +299,10 @@
             "title": "Connect using Facebook or using SMS ! ",
             "owner": "Login To    Make An Order ",
             "customer": "Login To    Make An Order ",
-            "fbBtn": "LOGIN WITH FACEBOOK",
-            "loginWithSms": "LOGIN WITH SMS",
-            "whatsAppLogin": " LOGIN WITH WHATSAPP",
-            "loginWithApple": " LOGIN WITH APPLE",
+            "fbBtn": "SIGN IN WITH FACEBOOK",
+            "loginWithSms": "SIGN IN WITH SMS",
+            "whatsAppLogin": "SIGN IN WITH WHATSAPP",
+            "loginWithApple": "SIGN IN WITH APPLE",
             "verifyCountryCode": "Please verify your country code",
             "verifyPhoneNumber": "Please verify your phone number",
             "OtpConfirmation": "OTP Code Confirmation",
@@ -308,7 +321,9 @@
             "otpSubtitleNumber": "Enter Phone Number",
             "submit": "SUBMIT",
             "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply.",
-            "signInToMakeOrder": "Sign in to make order"
+            "signInToMakeOrder": "Sign in to make order",
+            "wrongOTPCode" :  "The Confirmation code is Wrong, please try again.",
+            "failedOTPConfirmRequest" : "OTP Code confirmation failed :("
         },
         "messages": {
             "title": "Messages",
@@ -371,9 +386,11 @@
             "viewOrder": "View Order"
         },
         "userInfo": {
+            "noChangesToApply" : "No Changes to be applied!",
             "snackMsg":"Please be patient while your photo is uploaded",
             "snackTxt":"Uploading Image",
             "choosePic":"Choose a photo",
+            "uploadPic" :"Upload Image",
             "saveTxt":"Please save the changes you made",
             "hintTxt":"Enter your full name",
             "validationTxtOne":"Please enter your full name",
@@ -384,13 +401,16 @@
             "addInfo": "Add Information",
             "editBtn": "EDIT INFORMATION",
             "deleteBtn": "Delete Account",
-            "saveBtn": "SAVE",
+            "saveBtn": "Save",
             "cancel": "Cancel",
             "editImgMsg": "Click on image to change it",
             "fullName": "Full Name",
             "phoneNumber": "Phone Number",
             "clickToUploadImg": "clickToUpdate",
-            "addPhoneNumber": "Add phone number"
+            "addPhoneNumber": "Add phone number",
+            "wrongName" : "Name must only contains at least 4 letters and spaces.",
+            "mustSetUserNameHint" : "Please enter a name\nto keep using the app.",
+            "mustSetUserImgHint" : "Please upload an image\nby clicking 'Upload Image'\nto keep using the app."
         },
         "navDrawer": {
             "userInfo": "User Information",
@@ -442,10 +462,15 @@
             "yes" : "Yes",
             "no" : "No"
         },
-        
         "conenctionStatus" : {
             "noInternetConnection" : "No internet connection",
             "reconnecting" : "Reconnecting"
+        },
+        "buttonsTexts": {
+            "confirm" : "confirm",
+            "camera" : "Camera",
+            "gallery" : "Gallery",
+            "failedMapLaunch" : "Failed to launch that on Map!"
         }
     },
     "admin": {

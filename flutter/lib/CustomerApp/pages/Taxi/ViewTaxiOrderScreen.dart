@@ -35,7 +35,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   Rxn<TaxiOrder> order = Rxn();
   StreamSubscription? _orderListener;
   final String toMarkerId = "to";
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageController _lang = Get.find<LanguageController>();
   RxDouble bottomPadding =
       ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
 
@@ -45,7 +45,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
     String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as TaxiOrder?;
-    mezDbgPrint("ViewTaxiscreen :: Order :: ${order.value}");
     if (order.value != null) {
       // set initial location
       widget.mGoogleMapController.setLocation(order.value!.from);
@@ -55,38 +54,26 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
       widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
       widget.mGoogleMapController.animateAndUpdateBounds();
 
-      mezDbgPrint("order not null !");
       if (order.value!.inProcess()) {
-        mezDbgPrint("order is in process!");
         inProcessOrderStatusHandler(order.value!.status);
-        // widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(false);
-
         _orderListener = controller
             .getCurrentOrderStream(orderId)
             .listen((currentOrder) async {
           if (currentOrder != null) {
-            // setState(() {
-            //   mezDbgPrint("SetState First time !");
-            // });
-            mezDbgPrint(
-                "currentOrder is not null! ======= == = = == =>>> $currentOrder.");
-
             order.value = currentOrder as TaxiOrder;
             inProcessOrderStatusHandler(order.value!.status);
             setState(() {});
           } else {
-            mezDbgPrint("currentOrder is null!");
             _orderListener?.cancel();
             _orderListener = null;
             TaxiOrder? _order = controller.getOrder(orderId) as TaxiOrder?;
             // this else clause gets executed when the order becomes /pastOrders.
-
-            mezDbgPrint("+++ GOT PAST OORDER ----- >>> ${order.value}");
             if (_order == null) {
               if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
                 Get.back();
                 oneButtonDialog(
-                    body: "Order Canceled Successfully !",
+                    body: _lang.strings['shared']['snackbars']
+                        ['orderCancelSuccess'],
                     imagUrl: _order!.customer.image);
               }
               _order = (await controller.getPastOrderStream(orderId).first)
@@ -176,8 +163,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
 
   /// This gets invoked when the order is moved to [inProcess] db node
   void inProcessOrderStatusHandler(TaxiOrdersStatus status) {
-    mezDbgPrint(
-        "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[ $status ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
     switch (status) {
       case TaxiOrdersStatus.OnTheWay:
         bottomPadding.value = 10.0;
@@ -266,10 +251,9 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
         right: 15,
         child: InkWell(
           onTap: () async {
-            mezDbgPrint("Canceling order ===> ${order.value!.orderId}");
             YesNoDialogButton res = await yesNoDialog(
-                text: "Confirm Cancelation.",
-                body: "Are you sure you want to cancel your Order ?");
+                text: _lang.strings['customer']['cancelOrder']['title'],
+                body: _lang.strings['customer']['cancelOrder']['question']);
             if (res == YesNoDialogButton.Yes) {
               await Get.find<TaxiController>().cancelTaxi(order.value!.orderId);
             }
@@ -281,7 +265,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
                   borderRadius: BorderRadius.circular(10)),
               child: Center(
                 child: Text(
-                  "CANCEL",
+                  _lang.strings['customer']['taxiView']['cancel'],
                   style: TextStyle(
                       fontFamily: "psr",
                       color: Colors.white,
@@ -299,13 +283,23 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   List<MezToolTipHint> getHints() {
     return [
       MezToolTipHint(
-          hintWidget: RidePriceControllHint(
-              hintText: Get.find<LanguageController>().strings['customer']
-                  ['taxiView']['taxiRidePriceTooltip']),
-          left: 80,
-          bottom: 150.5),
+        hintWidget: RidePriceControllHint(
+            hintText: Get.find<LanguageController>().strings['customer']
+                ['taxiView']['taxiRidePriceTooltip']),
+        left: 80.1,
+        bottom: 150.5,
+        bodyLeft: 20,
+        bodyRight: 20,
+        bodyBottom: 150.5,
+      ),
       MezToolTipHint(
-          hintWidget: RideReadByTaxisHint(), left: 210, bottom: 150.5)
+        hintWidget: RideReadByTaxisHint(),
+        left: 199,
+        bottom: 150.5,
+        bodyLeft: 20,
+        bodyRight: 20,
+        bodyBottom: 150.5,
+      )
     ];
   }
 }

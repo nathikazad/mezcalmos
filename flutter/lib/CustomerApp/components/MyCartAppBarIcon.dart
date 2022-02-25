@@ -18,7 +18,7 @@ class MyCartAppBarIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => _authController.isUserSignedIn &&
-            Get.find<RestaurantController>().cart.value.items.length > 0
+            Get.find<RestaurantController>().cart.value.cartItems.length > 0
         ? Padding(
             padding: const EdgeInsets.only(right: 5.0, bottom: 8.0),
             child: IconButton(
@@ -31,7 +31,7 @@ class MyCartAppBarIcon extends StatelessWidget {
                       Get.find<RestaurantController>()
                           .cart
                           .value
-                          .items
+                          .cartItems
                           .length
                           .toStringAsFixed(0),
                       style: Theme.of(context).textTheme.subtitle1!.copyWith(

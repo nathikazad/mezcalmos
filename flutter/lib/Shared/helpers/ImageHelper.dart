@@ -13,7 +13,9 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 String generateRandomString(int len) {
   var r = Random();
@@ -40,10 +42,10 @@ Future<File> writeFileFromBytesAndReturnIt(
   String pathWithoutExtension =
       splittedPath.sublist(0, splittedPath.length - 1).join('.');
   mezDbgPrint("PATH WITHOUT EXTENSION $pathWithoutExtension");
-  mezDbgPrint("PATH WITH EXTENSION ${filePath}");
+  mezDbgPrint("PATH WITH EXTENSION $filePath");
 
   return (await File(
-          '${pathWithoutExtension}.${DateTime.now().millisecondsSinceEpoch}.${splittedPath.last}')
+          '$pathWithoutExtension.${DateTime.now().millisecondsSinceEpoch}.${splittedPath.last}')
       .writeAsBytes(imgBytes));
 }
 
@@ -51,12 +53,14 @@ Future<File> writeFileFromBytesAndReturnIt(
 Image showDefaultOrUserImg({Uint8List? memoryImg}) {
   if (memoryImg != null) {
     return mLoadImage(
-        url: null, memoryImage: memoryImg, assetInCaseFailed: aLogoPath);
+        url: null,
+        memoryImage: memoryImg,
+        assetInCaseFailed: aDefaultDbUserImgAsset);
   }
   return mLoadImage(
       url: Get.find<AuthController>().user!.bigImage ??
           Get.find<AuthController>().user!.image,
-      assetInCaseFailed: aLogoPath);
+      assetInCaseFailed: aDefaultDbUserImgAsset);
 }
 
 Future<imPicker.ImageSource?> imagePickerChoiceDialog(
@@ -73,7 +77,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 10.h,
+                height: 10,
               ),
               TextButton(
                   onPressed: () {
@@ -93,7 +97,8 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             Icons.camera_enhance,
                             color: Colors.white,
                           ),
-                          Text('Camera')
+                          Text(Get.find<LanguageController>().strings['shared']
+                              ['buttonsTexts']['camera'])
                         ],
                       ))),
               SizedBox(
@@ -117,7 +122,8 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             Icons.photo_library_outlined,
                             color: Colors.white,
                           ),
-                          Text('Gallery')
+                          Text(Get.find<LanguageController>().strings['shared']
+                              ['buttonsTexts']['gallery'])
                         ],
                       ))),
             ],
@@ -135,10 +141,30 @@ Future<imPicker.XFile?> imagePicker(
     return await picker.pickImage(
       source: source,
       preferredCameraDevice: imPicker.CameraDevice.front,
-      // maxWidth: 100,
       imageQuality: nQualityCompressionOfUserImage,
     );
-  } on PlatformException catch (_) {
+  } on PlatformException catch (exception) {
+    if (exception.code == 'camera_access_denied') {
+      MezSnackbar(
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['cameraAccessOffTitle'],
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['cameraAccessOffBody'],
+          position: SnackPosition.TOP);
+    } else if (exception.code == 'photo_access_denied') {
+      MezSnackbar(
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['photoAccessOffTitle'],
+          Get.find<LanguageController>().strings['shared']['permissions']
+              ['photoAccessOffBody'],
+          position: SnackPosition.TOP);
+    } else {
+      return await picker.pickImage(
+        source: source,
+        preferredCameraDevice: imPicker.CameraDevice.front,
+        imageQuality: nQualityCompressionOfUserImage,
+      );
+    }
     return null;
   }
 }
@@ -193,7 +219,7 @@ Image mLoadImage(
 
 // BitmapLoading stuff -------------------
 
-Future<BitmapDescriptor> BitmapDescriptorLoader(
+Future<BitmapDescriptor> bitmapDescriptorLoader(
     dynamic asset, num width, num height,
     {bool isBytes = false}) async {
   return BitmapDescriptor.fromBytes(

@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
-import 'package:mezcalmos/Shared/pages/ViewNotifications.dart';
+import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
 
 // Routes Keys.

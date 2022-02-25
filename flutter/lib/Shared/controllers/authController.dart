@@ -92,6 +92,7 @@ class AuthController extends GetxController {
             .child(userInfo(user.uid))
             .onValue
             .listen((event) {
+          if (event.snapshot.value == null) return;
           if (event.snapshot.value['language'] == null) {
             event.snapshot.value['language'] =
                 Get.find<LanguageController>().userLanguageKey;
@@ -155,7 +156,7 @@ class AuthController extends GetxController {
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(userInfo(fireAuthUser!.uid))
-          .child('bigImaage')
+          .child('bigImage')
           .set(originalImageUrl);
     }
   }
@@ -298,7 +299,10 @@ class AuthController extends GetxController {
             .signInWithCustomToken(response.data["token"]);
       }
     } catch (e) {
-      MezSnackbar("Error", "OTP Code confirmation failed :(");
+      MezSnackbar(
+          "Oops ..",
+          Get.find<LanguageController>().strings['shared']['login']
+              ['failedOTPConfirmRequest']);
       print("Exception happend in GetAuthUsingOTP : $e");
     }
 
@@ -321,6 +325,7 @@ class AuthController extends GetxController {
           .signInWithCredential(facebookAuthCredential);
     } else {
       MezSnackbar("Notice ~", "Failed SignIn with Facebook !");
+      throw Exception("Failed SignIn with Facebook !");
     }
   }
 
@@ -342,7 +347,7 @@ class AuthController extends GetxController {
         nonce: nonce,
       );
 
-      print(appleCredential.authorizationCode);
+      mezDbgPrint(appleCredential.authorizationCode);
 
       // Create an `OAuthCredential` from the credential returned by Apple.
       final oauthCredential = fireAuth.OAuthProvider("apple.com").credential(
@@ -354,8 +359,9 @@ class AuthController extends GetxController {
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
     } catch (exception) {
-      print(exception);
+      mezDbgPrint(exception);
       MezSnackbar("Notice ~", "Failed SignIn with Apple !");
+      throw exception;
     }
   }
 
@@ -364,7 +370,7 @@ class AuthController extends GetxController {
     _userNodeListener?.cancel();
     _userNodeListener = null;
     super.dispose();
-    print("--------------------> AuthController Auto Disposed !");
+    mezDbgPrint("--------------------> AuthController Auto Disposed !");
   }
 }
 

@@ -142,7 +142,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
-        appBar: taxiAppBar(AppBarLeftButtonType.Menu),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
         body: MezLogoAnimation(centered: true));
   }
 

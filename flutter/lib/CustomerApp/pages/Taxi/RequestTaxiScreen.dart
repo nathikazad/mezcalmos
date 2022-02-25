@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
@@ -60,8 +61,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     if (Get.arguments != null) {
       taxiRequest.value = Get.arguments as TaxiRequest;
 
-      // mezDbgPrint(
-      //     "============ the older requist is ${(Get.arguments as TaxiRequest).status} ===========");
       locationPickerController.setOnMapTap(onTap: () {
         locationSearchBarController.unfocusAllFocusNodes.call();
         setState(() {});
@@ -75,28 +74,25 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       // set blackScreenBottom 110
       locationPickerController.blackScreenBottomTextMargin.value = 80;
 
-      GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
-        //taxiRequest.value.from = Location("", locData);
-        updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
-        locationPickerController.setLocation(taxiRequest.value.from!);
-        locationPickerController.addOrUpdateUserMarker(
-            markerId: SearchComponentType.From.toShortString(),
-            latLng: LatLng(taxiRequest.value.from!.latitude,
-                taxiRequest.value.from!.longitude));
+      updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
+      locationPickerController.setLocation(taxiRequest.value.from!);
+      locationPickerController.addOrUpdateUserMarker(
+          markerId: SearchComponentType.From.toShortString(),
+          latLng: LatLng(taxiRequest.value.from!.latitude,
+              taxiRequest.value.from!.longitude));
 
-        updateModelAndMarker(SearchComponentType.To, taxiRequest.value.to!);
-        locationPickerController.addOrUpdatePurpleDestinationMarker(
-            latLng: LatLng(taxiRequest.value.to!.position.latitude!,
-                taxiRequest.value.to!.position.longitude!));
-        locationPickerController.hideFakeMarker();
-        locationPickerController.setAnimateMarkersPolyLinesBounds(true);
-        locationPickerController.animateAndUpdateBounds();
-        updateRouteInformation()
-            .then((value) => locationPickerController.showConfirmButton());
+      updateModelAndMarker(SearchComponentType.To, taxiRequest.value.to!);
+      locationPickerController.addOrUpdatePurpleDestinationMarker(
+          latLng: LatLng(taxiRequest.value.to!.position.latitude!,
+              taxiRequest.value.to!.position.longitude!));
+      locationPickerController.hideFakeMarker();
+      locationPickerController.setAnimateMarkersPolyLinesBounds(true);
+      locationPickerController.animateAndUpdateBounds();
+      updateRouteInformation()
+          .then((value) => locationPickerController.showConfirmButton());
 
-        setState(() {
-          _pickedFromTo = true;
-        });
+      setState(() {
+        _pickedFromTo = true;
       });
     } else {
       locationPickerController.setOnMapTap(onTap: () {
@@ -159,7 +155,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                         MezSnackbar("Oops",
                             "This prod version is live and running , we can't let you do that :( !");
                       } else
-                        await requestTaxi(_);
+                        await requestTaxi();
                     }),
               ),
               LocationSearchBar(
@@ -236,8 +232,22 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     }
   }
 
+  /// Call this right after customer presses Confirm button
+  /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
+  Future<void> avoidTaxiRequestRaceCondition(String orderId) async {
+    if (Get.find<OrderController>().getOrder(orderId) == null) {
+      mezDbgPrint(
+          "[+] s@@d ==> [ REQUEST TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
+      await Get.find<OrderController>()
+          .getCurrentOrderStream(orderId)
+          .firstWhere((order) => order != null);
+    } else
+      mezDbgPrint(
+          "[+] s@@d ==> [ REQUEST TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
+  }
+
   // after confirm button is clicked on mez pick google map
-  Future<void> requestTaxi(Location? loc) async {
+  Future<void> requestTaxi() async {
     // we show grayed Confirm button so the user won't press it twice.
     this.locationPickerController.showLoadingIconOnConfirm();
 
@@ -245,16 +255,18 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     ServerResponse response = await controller.requestTaxi(taxiRequest.value);
     if (response.success) {
       String orderId = response.data["orderId"];
+      await avoidTaxiRequestRaceCondition(orderId);
       // in case the widget is still mounted , then make dart scheduale this delayed call as soon as possible ,
       // so we don't fall into assertion error ('!_debugLocked': is not true.)
       await Future.delayed(Duration.zero, () {
-        mezDbgPrint("Goung tooooo route >>>>  ${getTaxiOrderRoute(orderId)}");
         popEverythingAndNavigateTo(getTaxiOrderRoute(orderId));
       });
     } else {
-      MezSnackbar("Error :(", "Failed to request a taxi !",
+      MezSnackbar(
+          "Oops :(",
+          Get.find<LanguageController>().strings['customer']['taxiView']
+              ['failedToRequestTaxi'],
           position: SnackPosition.TOP);
-      mezDbgPrint("Error requesting the taxi : ${response.toString()}");
       this.locationPickerController.showConfirmButton();
     }
   }
@@ -284,8 +296,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   Future<void> updateRouteInformation() async {
     MapHelper.Route? route = await MapHelper.getDurationAndDistance(
         taxiRequest.value.from!, taxiRequest.value.to!);
-
-    mezDbgPrint("updateRouteInformation::Route => ${route?.polylineList}");
     if (route != null) {
       setState(() {
         int estimatedPrice =
@@ -297,8 +307,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
             distance: route.distance,
             duration: route.duration));
       });
-      mezDbgPrint("Polyliiines ====> ${route.polylineList}");
-      mezDbgPrint("Polyliiines ====> ${taxiRequest.value.toString()}");
     } else {
       // TODO:handle route error
     }
@@ -319,6 +327,9 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         ),
         left: 80.1,
         bottom: 150.5,
+        bodyLeft: 20,
+        bodyRight: 20,
+        bodyBottom: 150.5,
       ),
     ];
   }

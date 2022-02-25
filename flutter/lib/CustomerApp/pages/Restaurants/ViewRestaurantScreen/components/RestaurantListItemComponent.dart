@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 class RestaurantsListItemsOfComponent extends StatefulWidget {
   RestaurantsListItemsOfComponent({Key? key, required this.item, this.function})
@@ -23,10 +25,8 @@ class _RestaurantsListItemsOfComponentState
     LanguageController lang = Get.find<LanguageController>();
     return InkWell(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        margin: const EdgeInsets.symmetric(
-          horizontal: 15,
-        ),
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Row(
@@ -79,15 +79,14 @@ class _RestaurantsListItemsOfComponentState
                     alignment: Alignment.centerLeft,
                     child: Text(
                         "${widget.item.name[lang.userLanguageKey]!.capitalizeFirstofEach}",
-                        style: txt.headline3!
-                            .copyWith(color: Colors.grey.shade800)),
+                        style: txt.headline3!.copyWith(fontSize: 13.sp)),
                   ),
                   SizedBox(
                     height: 7,
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text("\$${widget.item.cost}", style: txt.headline1),
+                    child: Text("\$${widget.item.cost}", style: txt.headline3),
                   )
                 ],
               ),
@@ -112,11 +111,4 @@ class _RestaurantsListItemsOfComponentState
       },
     );
   }
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
 }

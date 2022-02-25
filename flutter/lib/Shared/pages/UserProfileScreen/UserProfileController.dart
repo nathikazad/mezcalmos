@@ -20,7 +20,7 @@ class UserProfileController {
   Rxn<String> errorReport = Rxn();
 
   bool didUserChangedInfos() {
-    return (userName.value != _authController.user!.name &&
+    return (userName.value != _authController.user?.name &&
             userName.value != null &&
             userName.value!.length >= 4) ||
         userImg.value != null;
@@ -39,7 +39,7 @@ class UserProfileController {
   void reset() {
     userImg.value = null;
     userImgBytes.value = null;
-    userName.value = _authController.user!.name!;
+    userName.value = _authController.user?.name;
     originalImgUrl = null;
     compressedImgUrl = null;
   }

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -26,6 +24,8 @@ Future<void> oneButtonDialog(
     {String? title,
     required String body,
     required String imagUrl,
+    Color? bodyTextColor,
+    double fontSize = 20,
     String buttonText = "Ok"}) async {
   await Get.defaultDialog(
     backgroundColor: Colors.grey.shade100,
@@ -60,8 +60,8 @@ Future<void> oneButtonDialog(
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'psr',
-                    fontSize: 20,
-                    color: Colors.grey.shade700),
+                    fontSize: fontSize,
+                    color: bodyTextColor ?? Colors.grey.shade700),
               ),
             ))
       ],
@@ -81,7 +81,6 @@ Future<TwoButtonDialogButton?> twoButtonDialog(
     Widget? buttonLeftStyle,
     Widget? buttonRightStyle,
     Function? rightButtonCallback}) async {
-  LanguageController lang = Get.find<LanguageController>();
   TwoButtonDialogButton? twoButtonDialogButton;
   await Get.defaultDialog<TwoButtonDialogButton>(
     onWillPop: () async {
@@ -89,7 +88,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog(
       return true;
     },
     radius: 4,
-    title: (titleUp!) ? "$title" : "",
+    title: (titleUp!) ? title : "",
     content: Container(
       color: const Color(0xffffffff),
       child: Column(
@@ -102,7 +101,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog(
           (!titleUp)
               ? Container(
                   padding: const EdgeInsets.only(top: 15),
-                  child: Text("$title",
+                  child: Text(title,
                       style: const TextStyle(
                           color: const Color(0xff000f1c),
                           fontWeight: FontWeight.w700,
@@ -115,7 +114,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog(
           SizedBox(
             height: 8,
           ),
-          Text("$body",
+          Text(body,
               style: const TextStyle(
                   color: const Color(0xff1d1d1d),
                   fontWeight: FontWeight.w400,
@@ -183,10 +182,6 @@ Future<YesNoDialogButton> yesNoDialog(
     Widget? buttonRightStyle = const NoButtonComponetStyle(),
     bool? titleUp = false,
     String? imgUrl}) async {
-  //return YesNoDialogButton.No;
-  // TODO: @Saad use two button dialog
-  // OLD CODE BELOW
-
   TwoButtonDialogButton? _res = (await twoButtonDialog(
     title: text,
     body: body,
@@ -262,8 +257,8 @@ class YesButtonComponetStyle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MezDialogButtonStyle(
-        buttonText:
-            "${Get.find<LanguageController>().strings["taxi"]["taxiView"]["yes"]}",
+        buttonText: Get.find<LanguageController>().strings["taxi"]["taxiView"]
+            ["yes"],
         buttonColor: Color(0xffdb2846),
         buttonShadowColor: Color(0x2eff0000));
   }
@@ -275,8 +270,8 @@ class NoButtonComponetStyle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MezDialogButtonStyle(
-        buttonText:
-            "${Get.find<LanguageController>().strings["taxi"]["taxiView"]["no"]}",
+        buttonText: Get.find<LanguageController>().strings["taxi"]["taxiView"]
+            ["no"],
         buttonColor: Color(0xfffdfdfd),
         buttonShadowColor: Color(0x334c504a));
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:sizer/sizer.dart';
 
 class SavedlocationISEmpty extends StatelessWidget {
   const SavedlocationISEmpty({Key? key}) : super(key: key);
@@ -14,16 +15,25 @@ class SavedlocationISEmpty extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            child: Image.asset("assets/images/shared/noSavedLoc.png"),
+            width: 80.w,
+            height: 80.w,
+            child: Image.asset(
+              "assets/images/shared/noSavedLoc.png",
+            ),
           ),
           SizedBox(
             height: 15,
           ),
           Container(
             child: Text(
-              "Your Saved locations list is empty",
-              style: txt.headline2!
-                  .copyWith(fontWeight: FontWeight.w700, fontSize: 19),
+              //customer.savedLocations.savedLocationsListEmpty
+              Get.find<LanguageController>().strings['customer']
+                  ['savedLocations']['savedLocationsListEmpty'],
+              textAlign: TextAlign.center,
+              style: txt.headline2!.copyWith(
+                fontWeight: FontWeight.w700,
+                fontSize: 19,
+              ),
             ),
           ),
           SizedBox(
@@ -31,7 +41,9 @@ class SavedlocationISEmpty extends StatelessWidget {
           ),
           Container(
             child: Text(
-              "Add new location by clicking the button below",
+              Get.find<LanguageController>().strings['customer']
+                  ['savedLocations']['clickBtnToAddNewLocation'],
+              textAlign: TextAlign.center,
               style: txt.subtitle1!
                   .copyWith(fontWeight: FontWeight.w500, fontSize: 13),
             ),
