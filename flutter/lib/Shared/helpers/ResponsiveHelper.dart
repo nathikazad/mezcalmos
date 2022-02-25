@@ -1,7 +1,7 @@
 // Usefull when trying to make Sizes adptable!
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sizer/sizer.dart';
 
 Widget emptyOrWidgetSmallPhones({Widget? empty, required Widget child}) {
   if (Get.width > 320) {

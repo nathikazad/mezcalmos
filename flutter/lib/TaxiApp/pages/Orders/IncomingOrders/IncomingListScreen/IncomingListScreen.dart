@@ -14,7 +14,7 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'Components/MezSwitch.dart';
 import 'Components/NoScrollGlowBehaviour.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:get/get.dart';
 

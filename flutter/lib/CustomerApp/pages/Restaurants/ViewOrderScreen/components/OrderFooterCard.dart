@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
@@ -102,8 +102,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                                                   padding: EdgeInsets.all(12)),
                                               child: Container(
                                                   alignment: Alignment.center,
-                                                  child:
-                                                      Text(lang.strings[
+                                                  child: Text(lang.strings[
                                                                   "customer"]
                                                               ["restaurant"]
                                                           ["cancelOrderDialog"]

@@ -3,7 +3,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/com
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 

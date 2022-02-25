@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -12,6 +13,8 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -52,6 +55,29 @@ class _MessagingScreenState extends State<MessagingScreen> {
   RxList<Widget> chatLines = <Widget>[].obs;
 
   RxString _typedMsg = "".obs;
+
+  void navigateToOrderPage() {
+    OrderType orderType =
+        Get.find<OrderController>().getOrder(this.orderId!)!.orderType;
+    switch (orderType) {
+      case OrderType.Taxi:
+        // offNamedUntil : to avoid loop of same routes being on stack:
+        // TaxiOrderRoute -> Messages -> TaxiOrderRoute -> messages ...
+        Get.offNamedUntil(getTaxiOrderRoute(this.orderId!),
+            (route) => route.settings.name == kTaxiOrderRoute);
+        break;
+      case OrderType.Restaurant:
+        // offNamedUntil : to avoid loop of same routes being on stack:
+        // restaurantOrderRoute -> Messages -> restaurantOrderRoute -> messages ...
+        Get.offNamedUntil(getRestaurantOrderRoute(this.orderId!),
+            (route) => route.settings.name == kRestaurantOrderRoute);
+        break;
+      case OrderType.Laundry:
+        Get.snackbar("Launcdry order", "Oups not implemented yet!");
+        break;
+      default:
+    }
+  }
 
   Widget singleChatComponent({
     required String message,
@@ -189,6 +215,15 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   "User",
             ),
           ),
+          actions: [
+            InkWell(
+              child: Icon(
+                Icons.shopping_cart_sharp,
+                color: Colors.purple.shade700,
+              ),
+              onTap: navigateToOrderPage,
+            )
+          ],
         ),
         body: Container(
           child: Column(
