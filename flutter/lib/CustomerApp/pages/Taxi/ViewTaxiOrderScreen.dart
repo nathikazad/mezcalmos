@@ -20,6 +20,7 @@ import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:sizer/sizer.dart';
 
 class ViewTaxiOrderScreen extends StatefulWidget {
   final MGoogleMapController mGoogleMapController = MGoogleMapController();
@@ -106,6 +107,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
     super.dispose();
   }
 
+  bool _offersBtnClicked = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,10 +135,43 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
                                   this.widget.mGoogleMapController,
                               periodicRerendering: true,
                             )),
+                        if (_offersBtnClicked)
+                          InkWell(
+                            onTap: !_clickedAccept
+                                ? () {
+                                    setState(() {
+                                      _offersBtnClicked = false;
+                                    });
+                                  }
+                                : null,
+                            child: Container(
+                              height: Get.height,
+                              width: Get.width,
+                            ),
+                          ),
                         TopBar(order: order.value!),
-                        cancelButton(order.value!.status),
+                        Positioned(
+                          bottom: 15,
+                          left: 15,
+                          right: 15,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              if (this.order.value!.counterOffers.isEmpty)
+                                Flexible(child: offersButton()),
+                              if (this.order.value!.counterOffers.isEmpty)
+                                SizedBox(
+                                  width: 10,
+                                ),
+                              Flexible(
+                                  child: cancelButton(order.value!.status)),
+                            ],
+                          ),
+                        ),
                         TaxiOrderBottomBar(order: order),
                         getToolTip(),
+                        counterOffersBottomSheet(),
                       ])
                 : MezLogoAnimation(
                     centered: true,
@@ -245,10 +281,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
     if (status != TaxiOrdersStatus.LookingForTaxi) {
       return SizedBox();
     } else {
-      return Positioned(
-        bottom: 15,
-        left: 15,
-        right: 15,
+      return Container(
         child: InkWell(
           onTap: () async {
             YesNoDialogButton res = await yesNoDialog(
@@ -279,6 +312,49 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
     }
   }
 
+  Widget offersButton() {
+    return Container(
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            _offersBtnClicked = true;
+          });
+        },
+        child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+                color: Colors.purple.shade400,
+                borderRadius: BorderRadius.circular(10)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'offers',
+                  style: TextStyle(
+                      fontFamily: "psr",
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(width: 10),
+                Container(
+                  height: 20,
+                  width: 20,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.white),
+                  child: Flexible(
+                      child: Text(
+                    this.order.value!.counterOffers.length.toString(),
+                    textAlign: TextAlign.center,
+                  )),
+                )
+              ],
+            )),
+      ),
+    );
+  }
+
   /// the hints [MezToolTipHint] that are related to this view !
   List<MezToolTipHint> getHints() {
     return [
@@ -300,6 +376,169 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
         bodyRight: 20,
         bodyBottom: 150.5,
       )
+    ];
+  }
+
+  bool _clickedAccept = false;
+
+  Widget counterOffersBottomSheet() {
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: AnimatedContainer(
+        duration: Duration(seconds: 1),
+        height: _offersBtnClicked ? 40.h : 0,
+        curve: Curves.easeInExpo,
+        width: Get.width,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(color: Colors.black38, blurRadius: 10, spreadRadius: 5)
+            ],
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        child: !_clickedAccept
+            ? SingleChildScrollView(
+                padding:
+                    EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
+                physics: ClampingScrollPhysics(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 50, right: 50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Offers',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(fontSize: 14.sp),
+                          ),
+                          Text(
+                            this.order.value!.counterOffers.length.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(fontSize: 14.sp),
+                          )
+                        ],
+                      ),
+                    ),
+                    ...getCounterOffersListItems(),
+                    ...getCounterOffersListItems(),
+                    ...getCounterOffersListItems(),
+                    ...getCounterOffersListItems(),
+                    ...getCounterOffersListItems(),
+                  ],
+                ),
+              )
+            : MezLogoAnimation(
+                centered: true,
+              ),
+      ),
+    );
+  }
+
+  List<Widget> getCounterOffersListItems() {
+    return [
+      Padding(
+        padding: EdgeInsets.only(left: 50, right: 50, top: 5),
+        child: Divider(),
+      ),
+      // list items of CounterOffer
+      Container(
+        // height: 100,
+        width: Get.width,
+        child: ListTile(
+          leading: Container(
+            height: 40,
+            width: 40,
+            decoration:
+                BoxDecoration(shape: BoxShape.circle, color: Colors.black),
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'SAAD TAXI',
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          fontWeight: FontWeight.bold, fontSize: 12.sp),
+                    ),
+                    Text(
+                      '\$40',
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          fontWeight: FontWeight.bold, fontSize: 11.sp),
+                    ),
+                  ]),
+              Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: Row(
+                  children: [
+                    Container(
+                      height: 29,
+                      width: 29,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 172, 89, 252),
+                          shape: BoxShape.circle),
+                      child: Center(
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _clickedAccept = true;
+                            });
+                            // we accept counter offer and wait for it.
+
+                            // if it fails , we set _clickedAccept = false
+                          },
+                          child: Icon(
+                            Icons.check,
+                            size: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      height: 29,
+                      width: 29,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 252, 89, 99),
+                          shape: BoxShape.circle),
+                      child: Center(
+                        child: InkWell(
+                          onTap: () {
+                            // to do cancel count offer.
+                          },
+                          child: Icon(
+                            Icons.close,
+                            size: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     ];
   }
 }

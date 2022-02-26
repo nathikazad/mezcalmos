@@ -92,7 +92,7 @@ class MGoogleMapController {
       return 60;
     } else {
       mezDbgPrint(
-          "Size of screen height is greater than [868] , returning ${res} as marker size !");
+          "Size of screen height is greater than [868] , returning $res as marker size !");
 
       return res;
     }
