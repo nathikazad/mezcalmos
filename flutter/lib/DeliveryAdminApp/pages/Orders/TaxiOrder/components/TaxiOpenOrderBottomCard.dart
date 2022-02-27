@@ -22,35 +22,43 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(_getOrderStatus()),
-                  Spacer(),
-                  Icon(
-                    Icons.timer,
-                    size: 20,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  CountdownTimer(
-                    endTime:
-                        order.orderTime.millisecondsSinceEpoch + 1000 * 300,
-                    widgetBuilder: (_, CurrentRemainingTime? time) {
-                      if (time == null) {
-                        return Text('Order expired');
-                      }
-                      return Text(
-                        '${time.min ?? '00'}:${time.sec}',
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: Theme.of(context).primaryColorLight),
-                      );
-                    },
-                  ),
-                ],
-              ),
+              child: (order.status != TaxiOrdersStatus.LookingForTaxi)
+                  ? Container(
+                      alignment: Alignment.center,
+                      child: Text(_getOrderStatus()))
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(_getOrderStatus()),
+                        Spacer(),
+                        Icon(
+                          Icons.timer,
+                          size: 20,
+                          color: Theme.of(context).primaryColorLight,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        CountdownTimer(
+                          endTime: order.orderTime.millisecondsSinceEpoch +
+                              1000 * 600,
+                          widgetBuilder: (_, CurrentRemainingTime? time) {
+                            if (time == null) {
+                              return Text('Order expired');
+                            }
+                            return Text(
+                              '${time.min ?? '00'}:${time.sec}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                      color:
+                                          Theme.of(context).primaryColorLight),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
             ),
             Divider(),
             Row(

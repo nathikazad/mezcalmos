@@ -12,6 +12,7 @@ const String kOrdersRoute = '/orders';
 const String kRestaurantOrderRoute = '/orders/:orderId';
 const String kLaundryOrderRoute = '/orders/laundry/:orderId';
 const String kTaxiOrderRoute = '/orders/taxi/:orderId';
+
 const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
 const String kDriversListRoute = '/drivers';

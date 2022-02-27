@@ -78,7 +78,7 @@ class TaxiOrder extends Order {
             customer: customer,
             serviceProvider: driver,
             to: to,
-            routeInformation:routeInformation);
+            routeInformation: routeInformation);
   // Get props as list.
   List<Object> get props =>
       [orderId, from, to, orderTime, paymentType, routeInformation!];
@@ -168,6 +168,19 @@ class TaxiOrder extends Order {
         status == TaxiOrdersStatus.LookingForTaxi ||
         status == TaxiOrdersStatus.DroppedOff ||
         status == TaxiOrdersStatus.OnTheWay;
+  }
+
+  bool isOpenOrder() {
+    switch (this.status) {
+      case TaxiOrdersStatus.ForwardingSuccessful:
+      case TaxiOrdersStatus.LookingForTaxi:
+      case TaxiOrdersStatus.ForwardingToLocalCompany:
+      case TaxiOrdersStatus.ForwardingUnsuccessful:
+        return true;
+
+      default:
+        return false;
+    }
   }
 
   num numberOfTaxiSentNotificationTo() {

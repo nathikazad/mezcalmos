@@ -69,11 +69,14 @@ Color _getRightColor(TaxiOrdersStatus status) {
     case TaxiOrdersStatus.LookingForTaxi:
       return Colors.transparent;
     case TaxiOrdersStatus.CancelledByCustomer:
-      return Colors.red;
+    case TaxiOrdersStatus.ForwardingUnsuccessful:
     case TaxiOrdersStatus.CancelledByTaxi:
       return Colors.red;
+
     case TaxiOrdersStatus.DroppedOff:
+    case TaxiOrdersStatus.ForwardingSuccessful:
       return Colors.green;
+
     default:
       return Colors.amber;
   }
@@ -82,12 +85,8 @@ Color _getRightColor(TaxiOrdersStatus status) {
 Widget _getTaxiOrderWidget(TaxiOrdersStatus status) {
   switch (status) {
     case TaxiOrdersStatus.CancelledByCustomer:
-      return Icon(
-        Icons.block,
-        size: 50,
-        color: Colors.red,
-      );
-    case TaxiOrdersStatus.CancelledByCustomer:
+    case TaxiOrdersStatus.CancelledByTaxi:
+    case TaxiOrdersStatus.ForwardingUnsuccessful:
       return Icon(
         Icons.block,
         size: 50,
@@ -110,6 +109,7 @@ Widget _getTaxiOrderWidget(TaxiOrdersStatus status) {
             fit: BoxFit.contain,
           ));
     case TaxiOrdersStatus.InTransit:
+    case TaxiOrdersStatus.ForwardingToLocalCompany:
       return Container(
           height: 50,
           width: 50,
@@ -118,6 +118,7 @@ Widget _getTaxiOrderWidget(TaxiOrdersStatus status) {
             fit: BoxFit.contain,
           ));
     case TaxiOrdersStatus.DroppedOff:
+    case TaxiOrdersStatus.ForwardingSuccessful:
       return Container(
           height: 50,
           width: 50,

@@ -25,7 +25,16 @@ class TaxiOrderBottomCard extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(_getOrderStatus()),
             ),
-            Divider(),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                children: [
+                  Text('Customer ',
+                      style: Theme.of(context).textTheme.subtitle1),
+                  Expanded(child: Divider())
+                ],
+              ),
+            ),
             Row(
               children: [
                 CircleAvatar(
@@ -44,37 +53,36 @@ class TaxiOrderBottomCard extends StatelessWidget {
                         order.customer.name,
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
-                      Container(
-                        padding: EdgeInsets.only(left: 5),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.directions_outlined,
-                              size: 16,
-                              color: Theme.of(context).primaryColorLight,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              order.routeInformation!.distance
-                                  .distanceStringInKm,
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 )
               ],
             ),
-            if (order.serviceProvider != null)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [Divider(), _orderTaxiDriver(context)],
-              ),
+            if (order.serviceProvider != null) _orderTaxiDriver(context),
             Divider(),
+            Container(
+              child: Row(
+                children: [
+                  Text('Distance :'),
+                  // Spacer(),
+                  // Icon(
+                  //   Icons.directions_outlined,
+                  //   size: 16,
+                  //   color: Theme.of(context).primaryColorLight,
+                  // ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    order.routeInformation!.distance.distanceStringInKm,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
             Text(
               'From :' + order.from.address,
               style: Theme.of(context).textTheme.bodyText2,
@@ -84,7 +92,9 @@ class TaxiOrderBottomCard extends StatelessWidget {
             ),
             Text('To :' + order.to.address,
                 style: Theme.of(context).textTheme.bodyText2),
-            Divider(),
+            SizedBox(
+              height: 10,
+            ),
             _getOrderBottomComponent(context),
           ],
         ),
@@ -116,22 +126,41 @@ class TaxiOrderBottomCard extends StatelessWidget {
   }
 
   Widget _orderTaxiDriver(context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CircleAvatar(
-          radius: 25,
-          backgroundImage:
-              CachedNetworkImageProvider(order.serviceProvider!.image),
-        ),
-        SizedBox(
-          width: 8,
-        ),
-        Flexible(
-          child: Text(
-            order.serviceProvider!.name,
-            style: Theme.of(context).textTheme.bodyText1,
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 5),
+          child: Row(
+            children: [
+              Text('Driver ', style: Theme.of(context).textTheme.subtitle1),
+              Expanded(child: Divider())
+            ],
           ),
-        )
+        ),
+        Row(
+          children: [
+            CircleAvatar(
+              radius: 25,
+              backgroundImage:
+                  CachedNetworkImageProvider(order.serviceProvider!.image),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    order.serviceProvider!.name,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ],
     );
   }

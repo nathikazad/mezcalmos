@@ -126,6 +126,19 @@ class TaxiOrderController extends GetxController {
     });
   }
 
+  Stream<TaxiOrder?> getPastOrderStrem(String orderId) {
+    return pastOrders.stream.map<TaxiOrder?>((_) {
+      try {
+        return pastOrders.firstWhere(
+          (currentOrder) => currentOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
+        return null;
+      }
+    });
+  }
+
   Future<ServerResponse> forwardToLocalCompany(String orderId) async {
     mezDbgPrint('Function called');
 

@@ -47,7 +47,7 @@ class TaxiOpenOrderCard extends StatelessWidget {
                         ),
                         CountdownTimer(
                           endTime: order.orderTime.millisecondsSinceEpoch +
-                              1000 * 300,
+                              1000 * 600,
                           widgetBuilder: (_, CurrentRemainingTime? time) {
                             if (time == null) {
                               return Text('  Order expired');

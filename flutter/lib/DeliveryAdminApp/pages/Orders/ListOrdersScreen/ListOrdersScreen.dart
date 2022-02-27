@@ -7,18 +7,14 @@ import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/LaundryOrderCard.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/TaxiOpenOrderCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/LaundryOrdersListComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/RestaurantOrdersListComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/TaxiOrdersListComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-
-import 'components/TaxiCurrentOrderCard.dart';
-import 'components/buildOrders.dart';
 
 final f = new DateFormat('hh:mm a');
 
@@ -148,199 +144,21 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
               // appBar: mezcalmosAppBar(
               //     "menu", Get.find<SideMenuDraweController>().openMenu),
               drawer: MezSideMenu(),
-              body: Obx(() {
-                return TabBarView(children: [
-                  // Restaurant orders list view
-                  _restaurantOrdersList(context),
-                  // Laundry orders list view
-                  laundryOrdersList(context),
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.all(8),
-                            alignment: Alignment.centerLeft,
-                            child: Text("Open orders",
-                                style: Theme.of(context).textTheme.headline1,
-                                textAlign: TextAlign.left),
-                          ),
-                          Container(
-                            child: taxiOpenOrders.isNotEmpty
-                                ? Column(
-                                    children: List.generate(
-                                        taxiOpenOrders.length,
-                                        (index) => TaxiOpenOrderCard(
-                                            order: taxiOpenOrders[index]
-                                                as TaxiOrder)),
-                                  )
-                                : Center(
-                                    child: Text(lang.strings['deliveryAdminApp']
-                                        ['laundry']['noOrders']),
-                                  ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.all(8),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                                lang.strings["customer"]["orders"]["title"],
-                                style: Theme.of(context).textTheme.headline1,
-                                textAlign: TextAlign.left),
-                          ),
-                          Container(
-                            child: taxiInProcessOrders.isNotEmpty
-                                ? Column(
-                                    children: List.generate(
-                                        taxiInProcessOrders.length,
-                                        (index) => TaxiCurrentOrderCard(
-                                            order: taxiInProcessOrders[index]
-                                                as TaxiOrder)),
-                                  )
-                                : Center(
-                                    child: Text(lang.strings['deliveryAdminApp']
-                                        ['laundry']['noOrders']),
-                                  ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.all(8),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                                lang.strings['deliveryAdminApp']['laundry']
-                                    ['pastOrders'],
-                                style: Theme.of(context).textTheme.headline1,
-                                textAlign: TextAlign.left),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Container(
-                            child: taxiPastOrders.isNotEmpty
-                                ? Column(
-                                    children: List.generate(
-                                        taxiPastOrders.length,
-                                        (index) => TaxiCurrentOrderCard(
-                                            order: taxiPastOrders[index]
-                                                as TaxiOrder)),
-                                  )
-                                : Center(
-                                    child: Text(lang.strings['deliveryAdminApp']
-                                        ['laundry']['noOrders']),
-                                  ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ]);
-              })),
+              body: TabBarView(children: [
+                // Restaurant orders list view
+                RestaurantOrdersList(
+                    pastOrders: controller.pastOrders,
+                    currentOrders: controller.inProcessOrders),
+                // Laundry orders list view
+                LaundryOrdersList(
+                    pastOrders: laundryOrderController.pastOrders,
+                    currentOrders: laundryOrderController.inProcessOrders),
+                TaxiOrdersList(
+                    pastOrders: taxiOrderController.pastOrders,
+                    currentOrders: taxiOrderController.inProcessOrders,
+                    openOrders: taxiOrderController.openOrders)
+              ])),
         ));
-  }
-
-  Widget laundryOrdersList(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(8),
-              alignment: Alignment.centerLeft,
-              child: Text(lang.strings["customer"]["orders"]["title"],
-                  style: Theme.of(context).textTheme.headline1,
-                  textAlign: TextAlign.left),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Container(
-              child: laundryInProcessOrders.isNotEmpty
-                  ? Column(
-                      children: List.generate(
-                          laundryInProcessOrders.length,
-                          (index) => LaundryOrderCard(
-                              order: laundryInProcessOrders[index]
-                                  as LaundryOrder)),
-                    )
-                  : Center(
-                      child: Text(lang.strings['deliveryAdminApp']['laundry']
-                          ['noOrders']),
-                    ),
-            ),
-            Container(
-              margin: const EdgeInsets.all(8),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                  lang.strings['deliveryAdminApp']['laundry']['pastOrders'],
-                  style: Theme.of(context).textTheme.headline1,
-                  textAlign: TextAlign.left),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Container(
-              child: laundryPastOrders.isNotEmpty
-                  ? Column(
-                      children: List.generate(
-                          laundryPastOrders.length,
-                          (index) => LaundryOrderCard(
-                              order: laundryPastOrders[index] as LaundryOrder)),
-                    )
-                  : Center(
-                      child: Text(lang.strings['deliveryAdminApp']['laundry']
-                          ['noOrders']),
-                    ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _restaurantOrdersList(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.all(8),
-            alignment: Alignment.centerLeft,
-            child: Text(lang.strings["customer"]["orders"]["title"],
-                style: Theme.of(context).textTheme.headline1,
-                textAlign: TextAlign.left),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Container(
-            child: inProcessOrders.value.length > 0
-                ? buildOrders(inProcessOrders)
-                : Center(
-                    child: Text(lang.strings['deliveryAdminApp']['laundry']
-                        ['noOrders']),
-                  ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(8),
-            alignment: Alignment.centerLeft,
-            child: Text(
-                lang.strings['deliveryAdminApp']['laundry']['pastOrders'],
-                style: Theme.of(context).textTheme.headline1,
-                textAlign: TextAlign.left),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Container(
-            child: controller.pastOrders.value.length > 0
-                ? buildOrders(controller.pastOrders)
-                : Center(
-                    child: Text(lang.strings['deliveryAdminApp']['laundry']
-                        ['noOrders']),
-                  ),
-          ),
-        ],
-      ),
-    );
   }
 
   TabBar deliveryAdminTabbar(BuildContext context) {
