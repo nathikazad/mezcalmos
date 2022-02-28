@@ -32,29 +32,6 @@ class MGoogleMapController {
   List<int>? _taxiDriverImgDescruptorCopy;
   RxDouble markersDefaultSize = 10.h.obs;
 
-  /// calling this of every single Taxi Driver nearBy and add it / update it / delete it
-  ///
-  /// depending if he has new data / out of raduis's range
-  void checkIfInRangeAndUpdateMarkersAccordingly(
-      {required LatLng latLng,
-      required String markerId,
-      double distanceInKm = 5}) {
-    bool isWithinRange = MapHelper.calculateDistance(
-            Location.buildLocationData(latLng.latitude, latLng.longitude),
-            Location.buildLocationData(
-                location.value!.latitude, location.value!.longitude)) <=
-        distanceInKm;
-
-    // we update the TaxiDriver marker
-    if (isWithinRange) {
-      this.addOrUpdateTaxiDriverMarker(markerId, latLng);
-    }
-    // we remove if there is already
-    else {
-      this.removeMarkerById(markerId);
-    }
-  }
-
   void setOnMapTap({required Function onTap}) {
     this.onMapTap = onTap;
   }

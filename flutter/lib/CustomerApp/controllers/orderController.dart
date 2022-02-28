@@ -76,7 +76,7 @@ class OrderController extends GetxController {
         List<Order> orders = [];
 
         if (event.snapshot.value != null) {
-          mezDbgPrint("my data hhhh ${event.snapshot.value.toString()}");
+          mezDbgPrint("my data : ${event.snapshot.value.toString()}");
           for (var orderId in event.snapshot.value.keys) {
             dynamic orderData = event.snapshot.value[orderId];
             // if restaurant order

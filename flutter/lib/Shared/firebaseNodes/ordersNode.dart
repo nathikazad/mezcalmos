@@ -13,12 +13,12 @@ String rootInProcessOrderDriverLocationNode(String orderId) {
   return 'orders/inProcess/taxi/$orderId/driver/location';
 }
 
-String taxiCounterOfferNode(String orderId, String? driverId) {
-  String nodeAddress = 'orders/open/${orderId}/counterOffers';
-  if (driverId != null) nodeAddress += '/$driverId';
-  return nodeAddress;
+String customersCounterOfferNode(
+    String orderId, String customerId, String driverId) {
+  return 'customers/inProcessOrders/$customerId/$orderId/counterOffers/$driverId';
 }
 
-String taxiCounterOfferNodeStatus(String orderId, String driverId) {
-  return taxiCounterOfferNode(orderId, driverId) + "/status";
+String taxiCounterOfferNodeStatus(
+    String orderId, String customerId, String driverId) {
+  return customersCounterOfferNode(orderId, customerId, driverId) + "/status";
 }

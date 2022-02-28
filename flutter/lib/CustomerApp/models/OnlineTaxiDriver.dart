@@ -1,13 +1,13 @@
 class OnlineTaxiDriver {
   String taxiId;
-  dynamic latLng;
+  dynamic position;
   bool isOnline;
   bool isInOrder;
   dynamic lastUpdateTime;
 
   OnlineTaxiDriver(
       {required this.taxiId,
-      required this.latLng,
+      required this.position,
       required this.isOnline,
       required this.isInOrder,
       required this.lastUpdateTime});
@@ -16,9 +16,17 @@ class OnlineTaxiDriver {
       {required String taxiId, required dynamic data}) {
     return OnlineTaxiDriver(
         taxiId: taxiId,
-        latLng: data['location'],
-        isOnline: data['isOnline'],
-        isInOrder: data['isInOrder'],
+        position: data['position'],
+        isOnline: data['isOnline'] ?? false,
+        isInOrder: data['isInOrder'] ?? false,
         lastUpdateTime: data['lastUpdateTime']);
   }
+
+  Map toJson() => {
+        "taxiId": taxiId,
+        "position": position,
+        "isOnline": isOnline,
+        "isInOrder": isInOrder,
+        "lastUpdateTime": lastUpdateTime
+      };
 }

@@ -34,6 +34,7 @@ class TaxiController extends GetxController {
     _onlineTaxiDrivers.value.keys.forEach((taxiId) {
       // _temp.add(value)
       mezDbgPrint("-----------==== @saad@ox ===-----------");
+      mezDbgPrint("${_onlineTaxiDrivers.value[taxiId]}");
       _temp.add(OnlineTaxiDriver.fromData(
           taxiId: taxiId, data: _onlineTaxiDrivers.value[taxiId]));
       mezDbgPrint("-----------==== @saad@ox ===-----------");
@@ -106,10 +107,10 @@ class TaxiController extends GetxController {
   }
 
   Future<ServerResponse> acceptCounterOffer(
-      String orderId, String driverId) async {
+      String orderId, String customerId, String driverId) async {
     await _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiCounterOfferNode(orderId, driverId))
+        .child(customersCounterOfferNode(orderId, customerId, driverId))
         .set(CounterOfferStatus.Accepted.toFirebaseFormatString());
 
     mezDbgPrint("Accept Taxi Called");
@@ -130,10 +131,11 @@ class TaxiController extends GetxController {
     }
   }
 
-  Future<void> rejectCounterOffer(String orderId, String driverId) async {
+  Future<void> rejectCounterOffer(
+      String orderId, String customerId, String driverId) async {
     await _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiCounterOfferNode(orderId, driverId))
+        .child(customersCounterOfferNode(orderId, customerId, driverId))
         .set(CounterOfferStatus.Rejected.toFirebaseFormatString());
   }
 

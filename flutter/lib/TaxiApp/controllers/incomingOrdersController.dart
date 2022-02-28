@@ -154,11 +154,14 @@ class IncomingOrdersController extends GetxController {
 
   /// submit counter offer for a particular order
   Future<void> submitCounterOffer(
-      String orderId, CounterOffer counterOffer) async {
+      String orderId, String customerId, CounterOffer counterOffer) async {
+    mezDbgPrint("Submiiiiiiit counter offer !");
     await _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiCounterOfferNode(orderId, _authController.fireAuthUser!.uid))
+        .child(customersCounterOfferNode(
+            orderId, customerId, _authController.fireAuthUser!.uid))
         .set(counterOffer.toFirebaseFormattedJson());
+
     await _databaseHelper.firebaseDatabase
         .reference()
         .child(inNegotationNode(_authController.fireAuthUser!.uid))
@@ -168,10 +171,11 @@ class IncomingOrdersController extends GetxController {
   /// the first counter offer event from customer
   /// a listener(or alarm at counter offer expiry time) should be
   /// started after submitting counter offer
-  Future<CounterOffer> counterOfferEvent(String orderId) {
+  Future<CounterOffer> counterOfferEvent(String orderId, String customerId) {
     return _databaseHelper.firebaseDatabase
         .reference()
-        .child(taxiCounterOfferNode(orderId, _authController.fireAuthUser!.uid))
+        .child(customersCounterOfferNode(
+            orderId, customerId, _authController.fireAuthUser!.uid))
         .onChildChanged
         .where((event) {
           CounterOffer counterOffer =
@@ -186,18 +190,21 @@ class IncomingOrdersController extends GetxController {
   /// to remove taxi form counter offer mode
   /// either after customer responds or a timer runs out
   /// if expired is set then the status in db is set to expired as well
-  Future<void> removeFromNegotiationMode(String orderId,
+  Future<void> removeFromNegotiationMode(String orderId, String customerId,
       {bool expired = false}) async {
     await _databaseHelper.firebaseDatabase
         .reference()
         .child(inNegotationNode(_authController.fireAuthUser!.uid))
-        .set(false);
+        .remove();
+
     if (expired)
       await _databaseHelper.firebaseDatabase
           .reference()
-          .child(
-              taxiCounterOfferNode(orderId, _authController.fireAuthUser!.uid))
-          .set(CounterOfferStatus.Expired);
+          .child(customersCounterOfferNode(
+              orderId, customerId, _authController.fireAuthUser!.uid))
+          .remove();
+    // if it's expired why would we keep it ? Any reasons @Nathikos ?
+    // .set(CounterOfferStatus.Expired.toFirebaseFormatString());
   }
 
   Future<ServerResponse> acceptTaxi(String orderId) async {

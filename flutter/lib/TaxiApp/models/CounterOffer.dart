@@ -1,18 +1,24 @@
+import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
+
 class CounterOffer {
   num price;
   DateTime offerValidTime;
   CounterOfferStatus counterOfferStatus;
   String? driverId;
-  CounterOffer(
-      {required this.price,
-      this.counterOfferStatus = CounterOfferStatus.Submitted,
-      required this.offerValidTime,
-      this.driverId});
+
+  CounterOffer({
+    required this.price,
+    this.counterOfferStatus = CounterOfferStatus.Submitted,
+    required this.offerValidTime,
+    this.driverId,
+  });
 
   /// Builds a counter offer with 30 second validity by default
   /// validTime in seconds
-  factory CounterOffer.buildWithExpiration(
-      {required num price, int validTimeInSeconds = 30}) {
+  factory CounterOffer.buildWithExpiration({
+    required num price,
+    int validTimeInSeconds = 30,
+  }) {
     return CounterOffer(
         price: price,
         offerValidTime:

@@ -158,9 +158,11 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              if (this.order.value!.counterOffers.isEmpty)
+                              if (this.order.value!.counterOffers.isNotEmpty &&
+                                  this.order.value!.status ==
+                                      TaxiOrdersStatus.LookingForTaxi)
                                 Flexible(child: offersButton()),
-                              if (this.order.value!.counterOffers.isEmpty)
+                              if (this.order.value!.counterOffers.isNotEmpty)
                                 SizedBox(
                                   width: 10,
                                 ),
@@ -431,10 +433,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
                       ),
                     ),
                     ...getCounterOffersListItems(),
-                    ...getCounterOffersListItems(),
-                    ...getCounterOffersListItems(),
-                    ...getCounterOffersListItems(),
-                    ...getCounterOffersListItems(),
                   ],
                 ),
               )
@@ -446,99 +444,109 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   }
 
   List<Widget> getCounterOffersListItems() {
-    return [
-      Padding(
-        padding: EdgeInsets.only(left: 50, right: 50, top: 5),
-        child: Divider(),
-      ),
-      // list items of CounterOffer
-      Container(
-        // height: 100,
-        width: Get.width,
-        child: ListTile(
-          leading: Container(
-            height: 40,
-            width: 40,
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: Colors.black),
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'SAAD TAXI',
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                          fontWeight: FontWeight.bold, fontSize: 12.sp),
-                    ),
-                    Text(
-                      '\$40',
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                          fontWeight: FontWeight.bold, fontSize: 11.sp),
-                    ),
-                  ]),
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 29,
-                      width: 29,
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 172, 89, 252),
-                          shape: BoxShape.circle),
-                      child: Center(
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              _clickedAccept = true;
-                            });
-                            // we accept counter offer and wait for it.
+    List<Widget> _widgets = [];
 
-                            // if it fails , we set _clickedAccept = false
-                          },
-                          child: Icon(
-                            Icons.check,
-                            size: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 29,
-                      width: 29,
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 252, 89, 99),
-                          shape: BoxShape.circle),
-                      child: Center(
-                        child: InkWell(
-                          onTap: () {
-                            // to do cancel count offer.
-                          },
-                          child: Icon(
-                            Icons.close,
-                            size: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+    order.value!.counterOffers.forEach((offer) => _widgets.addAll([
+          Padding(
+            padding: EdgeInsets.only(left: 50, right: 50, top: 5),
+            child: Divider(),
           ),
-        ),
-      ),
-    ];
+          // list items of CounterOffer
+          Container(
+            // height: 100,
+            width: Get.width,
+            child: ListTile(
+              leading: Container(
+                height: 40,
+                width: 40,
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: Colors.black),
+              ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'SAAD TAXI',
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  fontWeight: FontWeight.bold, fontSize: 12.sp),
+                        ),
+                        Text(
+                          '\$40',
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  fontWeight: FontWeight.bold, fontSize: 11.sp),
+                        ),
+                      ]),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 29,
+                          width: 29,
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 172, 89, 252),
+                              shape: BoxShape.circle),
+                          child: Center(
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  _clickedAccept = true;
+                                });
+                                // we accept counter offer and wait for it.
+
+                                // if it fails , we set _clickedAccept = false
+                              },
+                              child: Icon(
+                                Icons.check,
+                                size: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          height: 29,
+                          width: 29,
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 252, 89, 99),
+                              shape: BoxShape.circle),
+                          child: Center(
+                            child: InkWell(
+                              onTap: () {
+                                // to do cancel count offer.
+                              },
+                              child: Icon(
+                                Icons.close,
+                                size: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ]));
+
+    return _widgets;
   }
 }

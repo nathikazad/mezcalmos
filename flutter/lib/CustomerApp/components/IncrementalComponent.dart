@@ -5,6 +5,8 @@ import 'package:sizer/sizer.dart';
 class IncrementalComponent extends StatefulWidget {
   final GestureTapCallback increment;
   final GestureTapCallback decrement;
+  final Color btnColors;
+  final center;
   int value;
   final int? maxVal;
   final int? minVal;
@@ -14,6 +16,8 @@ class IncrementalComponent extends StatefulWidget {
       required this.increment,
       required this.value,
       required this.decrement,
+      this.center = false,
+      this.btnColors = const Color(0xffac59fc),
       this.onChangedToZero,
       this.maxVal = 100,
       this.minVal = 0})
@@ -24,36 +28,38 @@ class IncrementalComponent extends StatefulWidget {
 }
 
 class _IncrementalComponentState extends State<IncrementalComponent> {
+  void _increment() {
+    print("the max value is ${widget.maxVal}");
+    if (widget.value < widget.maxVal!)
+      setState(() {
+        widget.value++;
+      });
+    else
+      return;
+  }
+
+  void _decrement() {
+    print("the max value is ${widget.minVal}");
+    if (widget.value != widget.minVal) {
+      mezDbgPrint("the component value ${widget.value}");
+      setState(() {
+        widget.value--;
+      });
+      if (widget.value == 0) {
+        print("the value ${widget.value}");
+        widget.onChangedToZero?.call(true);
+      } else
+        widget.onChangedToZero?.call(false);
+      mezDbgPrint("the component value ${widget.value}");
+    } else
+      return;
+  }
+
   @override
   Widget build(BuildContext context) {
-    void _increment() {
-      print("the max value is ${widget.maxVal}");
-      if (widget.value < widget.maxVal!)
-        setState(() {
-          widget.value++;
-        });
-      else
-        return;
-    }
-
-    void _decrement() {
-      print("the max value is ${widget.minVal}");
-      if (widget.value != widget.minVal) {
-        mezDbgPrint("the component value ${widget.value}");
-        setState(() {
-          widget.value--;
-        });
-        if (widget.value == 0) {
-          print("the value ${widget.value}");
-          widget.onChangedToZero?.call(true);
-        } else
-          widget.onChangedToZero?.call(false);
-        mezDbgPrint("the component value ${widget.value}");
-      } else
-        return;
-    }
-
     return Row(
+      mainAxisAlignment:
+          widget.center ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
         InkWell(
           child: Container(

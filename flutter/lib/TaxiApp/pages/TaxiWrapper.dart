@@ -13,7 +13,6 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/TaxiApp/components/taxiAppBar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
@@ -104,13 +103,14 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   ///   go to order with listener
   void handleInNegotationMode(String orderId) {
     IncomingOrdersController incomingOrdersController =
-        Get.find<IncomingOrdersController>();
+        Get.put<IncomingOrdersController>(IncomingOrdersController());
     TaxiOrder? taxiOrder = incomingOrdersController.getOrder(orderId);
     // assuming orders have been loaded
     // check if order is null
     // TODO: make sure incoming orders are loaded
     if (taxiOrder == null) {
-      incomingOrdersController.removeFromNegotiationMode(orderId,
+      incomingOrdersController.removeFromNegotiationMode(
+          orderId, taxiOrder!.customer.id,
           expired: true);
       Get.toNamed(kIncomingOrdersListRoute);
     } else {
@@ -118,14 +118,16 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
       CounterOffer? counterOffer = taxiOrder.findCounterOfferByDriverId(userId);
       // check if counter offer data exists
       if (counterOffer == null) {
-        incomingOrdersController.removeFromNegotiationMode(orderId,
+        incomingOrdersController.removeFromNegotiationMode(
+            orderId, taxiOrder.customer.id,
             expired: true);
         Get.toNamed(kIncomingOrdersListRoute);
       } else {
         // check if counter offer is expired
         if (DateTime.now().toUtc().isAfter(counterOffer.offerValidTime) ||
             counterOffer.counterOfferStatus != CounterOfferStatus.Submitted) {
-          incomingOrdersController.removeFromNegotiationMode(orderId,
+          incomingOrdersController.removeFromNegotiationMode(
+              orderId, taxiOrder.customer.id,
               expired: true);
           Get.toNamed(kIncomingOrdersListRoute);
         } else {

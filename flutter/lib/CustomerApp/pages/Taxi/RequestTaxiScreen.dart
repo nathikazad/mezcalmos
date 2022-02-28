@@ -45,17 +45,41 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
   /******************************  Init and build function ************************************/
 
+  void startFetchingOnlineDrivers() {
+    controller.fecthOnlineTaxiDrivers().then((drivers) {
+      // Weo loop throught each driver and we call the mgoogleMap refresh from withing the controller
+      drivers.forEach((driver) {
+        mezDbgPrint("======= [ driver ] ====== ${driver.toJson()}");
+        LatLng driverLocation =
+            LatLng(driver.position['lat'], driver.position['lng']);
+
+        bool isWithinRange = MapHelper.calculateDistance(
+                Location.buildLocationData(
+                    driverLocation.latitude, driverLocation.longitude),
+                Location.buildLocationData(
+                    locationPickerController.location.value!.latitude,
+                    locationPickerController.location.value!.longitude)) <=
+            5;
+
+        if (isWithinRange) {
+          locationPickerController.addOrUpdateTaxiDriverMarker(
+              driver.taxiId, driverLocation);
+        }
+        // we remove if there is already
+        else {
+          locationPickerController.removeMarkerById(driver.taxiId);
+        }
+      });
+    });
+  }
+
   @override
   void initState() {
+    // fetch first without waiting 10seconds.
+    startFetchingOnlineDrivers();
+    // then keep it periodic each 10s
     Timer.periodic(Duration(seconds: 10), (Timer timer) {
-      controller.fecthOnlineTaxiDrivers().then((drivers) {
-        // Weo loop throught each driver and we call the mgoogleMap refresh from withing the controller
-        drivers.forEach((driver) {
-          locationPickerController.checkIfInRangeAndUpdateMarkersAccordingly(
-              latLng: LatLng(driver.latLng['lat'], driver.latLng['lng']),
-              markerId: driver.taxiId);
-        });
-      });
+      startFetchingOnlineDrivers();
     });
 
     if (Get.arguments != null) {

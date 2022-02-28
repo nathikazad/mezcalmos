@@ -138,6 +138,7 @@ class TaxiAuthController extends GetxController {
             "lng": currentLocation.longitude
           }
         };
+        mezDbgPrint("#s#a: $positionUpdate");
         try {
           // mezDbgPrint(positionUpdate);
           _databaseHelper.firebaseDatabase
