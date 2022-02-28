@@ -58,23 +58,19 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      viewHeader(),
-                      Obx(
-                        () => Container(
-                          child: (_deliveryAuthController
-                                  .deliveryDriverState!.isOnline)
-                              ? _currentOrdersList(context)
-                              : DriverNotLookingComponent(),
-                        ),
-                      ),
-                      Divider(),
-                      Text(orderController.pastOrders.length.toString()),
-                      Obx(() => _pastOrdersList(context)),
-                    ]),
+                child: Column(children: [
+                  viewHeader(),
+                  Obx(
+                    () => Container(
+                      child: (_deliveryAuthController
+                              .deliveryDriverState!.isOnline)
+                          ? _currentOrdersList(context)
+                          : DriverNotLookingComponent(),
+                    ),
+                  ),
+                  Divider(),
+                  Obx(() => _pastOrdersList(context)),
+                ]),
               ),
             )));
   }
