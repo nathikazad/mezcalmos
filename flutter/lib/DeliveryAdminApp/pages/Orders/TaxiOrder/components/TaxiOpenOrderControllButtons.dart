@@ -6,64 +6,85 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 
-class TaxiOpenOrderControllButtons extends StatelessWidget {
+class TaxiOpenOrderControllButtons extends StatefulWidget {
   final TaxiOrder order;
-  TaxiOpenOrderControllButtons({Key? key, required this.order})
+  const TaxiOpenOrderControllButtons({Key? key, required this.order})
       : super(key: key);
+
+  @override
+  State<TaxiOpenOrderControllButtons> createState() =>
+      _TaxiOpenOrderControllButtonsState();
+}
+
+class _TaxiOpenOrderControllButtonsState
+    extends State<TaxiOpenOrderControllButtons> {
+  RxBool btnClicked = RxBool(false);
   TaxiOrderController _taxiOrderController = Get.find<TaxiOrderController>();
+
   num taxiNumber = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _getBottomComponent(context),
-        if (order.status == TaxiOrdersStatus.ForwardingToLocalCompany)
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: TextButton(
-                onPressed: () async {
-                  await _taxiOrderController.submitForwardResult(
-                      orderId: order.orderId, forwardSuccessful: false);
-                  Get.back(closeOverlays: true);
-                },
-                style: TextButton.styleFrom(backgroundColor: Colors.redAccent),
-                child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(5),
-                    child: Text('Cancel'))),
-          ),
-      ],
-    );
+    return Obx(() {
+      if (btnClicked == false) {
+        return _getBottomComponent(context);
+      } else {
+        return Center(child: CircularProgressIndicator());
+      }
+    });
   }
 
   Widget _getBottomComponent(context) {
-    switch (order.status) {
+    switch (widget.order.status) {
       case TaxiOrdersStatus.LookingForTaxi:
         return TextButton(
             onPressed: () async {
-              _taxiOrderController.forwardToLocalCompany(order.orderId);
+              btnClicked.value = true;
+              _taxiOrderController.forwardToLocalCompany(widget.order.orderId);
             },
             child: Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(5),
                 child: Text('Forward to local company')));
       case TaxiOrdersStatus.ForwardingToLocalCompany:
-        return TextButton(
-            onPressed: () async {
-              dynamic result = await taxiNumberDialog(context);
-              mezDbgPrint("Resulttttttt : $result");
-              if (result != 0) {
-                await _taxiOrderController.submitForwardResult(
-                    orderId: order.orderId,
-                    forwardSuccessful: true,
-                    taxiNumber: result.toString());
-                Get.back(closeOverlays: true);
-              }
-            },
-            child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(5),
-                child: Text('Confirm local company taxi')));
+        return Column(
+          children: [
+            TextButton(
+                onPressed: () async {
+                  dynamic result = await taxiNumberDialog(context);
+                  mezDbgPrint("Resulttttttt : $result");
+                  if (result != 0) {
+                    btnClicked.value = true;
+                    await _taxiOrderController.submitForwardResult(
+                        orderId: widget.order.orderId,
+                        forwardSuccessful: true,
+                        taxiNumber: result.toString());
+                    Get.back(closeOverlays: true);
+                  }
+                },
+                child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(5),
+                    child: Text('Confirm local company taxi'))),
+            Container(
+              margin: const EdgeInsets.only(top: 8),
+              child: TextButton(
+                  onPressed: () async {
+                    btnClicked.value = true;
+                    await _taxiOrderController.submitForwardResult(
+                        orderId: widget.order.orderId,
+                        forwardSuccessful: false);
+                    Get.back(closeOverlays: true);
+                  },
+                  style:
+                      TextButton.styleFrom(backgroundColor: Colors.redAccent),
+                  child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(5),
+                      child: Text('Cancel'))),
+            ),
+          ],
+        );
 
       case TaxiOrdersStatus.ForwardingUnsuccessful:
         return Column(
@@ -88,7 +109,7 @@ class TaxiOpenOrderControllButtons extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                       Text(
-                        'at : ${DateFormat('dd MMM yyy hh:mm a').format(order.orderTime.toLocal())}',
+                        'at : ${DateFormat('dd MMM yyy hh:mm a').format(widget.order.orderTime.toLocal())}',
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ],
@@ -121,7 +142,7 @@ class TaxiOpenOrderControllButtons extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                       Text(
-                        'at : ${DateFormat('dd MMM yyy hh:mm a').format(order.orderTime.toLocal())}',
+                        'at : ${DateFormat('dd MMM yyy hh:mm a').format(widget.order.orderTime.toLocal())}',
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ],
@@ -143,7 +164,7 @@ class TaxiOpenOrderControllButtons extends StatelessWidget {
         barrierDismissible: false,
         builder: (ctx) {
           return AlertDialog(
-            title: Text('Confirm Order weight '),
+            title: Text('Confirm Taxi number '),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -156,7 +177,7 @@ class TaxiOpenOrderControllButtons extends StatelessWidget {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (v) {
                     if (num.tryParse(v!) == null) {
-                      return 'Please enter a valid weight';
+                      return 'Please enter a valid taxi number';
                     } else {
                       return null;
                     }
@@ -186,6 +207,9 @@ class TaxiOpenOrderControllButtons extends StatelessWidget {
                         padding: EdgeInsets.all(5),
                         alignment: Alignment.center,
                         child: Text('Confirm Taxi number'))),
+                SizedBox(
+                  height: 5,
+                ),
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context, 0);

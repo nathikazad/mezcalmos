@@ -87,8 +87,8 @@ class TaxiOrdersList extends StatelessWidget {
                     ? Column(
                         children: List.generate(
                             pastOrders.length,
-                            (index) =>
-                                TaxiCurrentOrderCard(order: pastOrders[index])),
+                            (index) => TaxiCurrentOrderCard(
+                                order: pastOrders[index])).reversed.toList(),
                       )
                     : Center(
                         child: Text(lang.strings['deliveryAdminApp']['laundry']

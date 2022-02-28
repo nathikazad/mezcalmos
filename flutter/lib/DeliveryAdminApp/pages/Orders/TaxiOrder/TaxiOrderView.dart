@@ -58,9 +58,9 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _orderListener?.cancel();
     _orderListener = null;
+    super.dispose();
   }
 
   @override

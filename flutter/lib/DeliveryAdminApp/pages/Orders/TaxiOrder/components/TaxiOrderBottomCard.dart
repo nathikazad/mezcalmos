@@ -8,8 +8,11 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import '../../../../../Shared/controllers/languageController.dart';
 
 class TaxiOrderBottomCard extends StatelessWidget {
-  final TaxiOrder order;
+  /// Bottom card of the taxi order :  shows order info and driver info
+
   TaxiOrderBottomCard({Key? key, required this.order}) : super(key: key);
+
+  final TaxiOrder order;
   TaxiOrderController _taxiOrderController = Get.find<TaxiOrderController>();
   @override
   Widget build(BuildContext context) {
