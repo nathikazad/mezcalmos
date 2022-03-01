@@ -105,7 +105,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                             width: 10.sp,
                           ),
                           Text(
-                            "${order.routeInformation.duration.shortTextVersion}",
+                            "${order.routeInformation!.duration.shortTextVersion}",
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             maxLines: 1,
@@ -127,7 +127,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                             width: 10.sp,
                           ),
                           Text(
-                            order.routeInformation.distance.distanceStringInKm,
+                            order.routeInformation!.distance.distanceStringInKm,
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             maxLines: 1,

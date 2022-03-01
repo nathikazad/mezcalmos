@@ -1,12 +1,10 @@
-import 'dart:developer';
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 enum TaxiOrdersStatus {
   DroppedOff,
@@ -20,7 +18,8 @@ enum TaxiOrdersStatus {
 
 extension ParseOrderStatusToString on TaxiOrdersStatus {
   String toFirebaseFormatString() {
-    return this.toString().split('.').last;
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 }
 
@@ -28,18 +27,6 @@ extension ParseStringToOrderStatus on String {
   TaxiOrdersStatus toTaxiOrderStatus() {
     return TaxiOrdersStatus.values.firstWhere(
         (e) => e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
-  }
-}
-
-class RouteInformation {
-  String polyline;
-  RideDistance distance;
-  RideDuration duration;
-  RouteInformation(
-      {required this.polyline, required this.distance, required this.duration});
-
-  Map<String, dynamic> toJson() {
-    return {...distance.toJson(), ...duration.toJson(), "polyline": polyline};
   }
 }
 
@@ -59,7 +46,6 @@ class TaxiNotificationStatus {
 
 class TaxiOrder extends Order {
   Location from;
-  RouteInformation routeInformation;
   String? acceptRideTime;
   String? rideFinishTime;
   String? rideStartTime;
@@ -75,7 +61,7 @@ class TaxiOrder extends Order {
       required Location to,
       required DateTime orderTime,
       required PaymentType paymentType,
-      required this.routeInformation,
+      required RouteInformation routeInformation,
       TaxiUserInfo? driver,
       required this.acceptRideTime,
       required this.rideFinishTime,
@@ -90,10 +76,11 @@ class TaxiOrder extends Order {
             cost: cost,
             customer: customer,
             serviceProvider: driver,
-            to: to);
+            to: to,
+            routeInformation: routeInformation);
   // Get props as list.
   List<Object> get props =>
-      [orderId, from, to, orderTime, paymentType, routeInformation];
+      [orderId, from, to, orderTime, paymentType, routeInformation!];
 
   /// Convert [TaxiOrder] object to [TaxiRequest] object.
   TaxiRequest toTaxiRequest() {
@@ -203,8 +190,11 @@ class TaxiOrder extends Order {
   }
 
   List<CounterOffer> getValidCounterOffers() {
-    return this.counterOffers.where((counterOffer) =>
-        counterOffer.counterOfferStatus == CounterOfferStatus.Submitted).toList();
+    return this
+        .counterOffers
+        .where((counterOffer) =>
+            counterOffer.counterOfferStatus == CounterOfferStatus.Submitted)
+        .toList();
   }
 
   CounterOffer? findCounterOfferByDriverId(String driverId) {
@@ -215,35 +205,5 @@ class TaxiOrder extends Order {
     } catch (e) {
       return null;
     }
-  }
-}
-
-class TaxiUserInfo extends UserInfo {
-  String taxiNumber;
-  String? sitio;
-  LatLng? location;
-
-  TaxiUserInfo(
-      {required String id,
-      required String name,
-      required String image,
-      required this.taxiNumber,
-      this.sitio,
-      required this.location})
-      : super(id, name, image);
-
-  factory TaxiUserInfo.fromData(dynamic data) {
-    // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
-    LatLng? location = data["location"] != null
-        ? LatLng(data["location"]["position"]["lat"],
-            data["location"]["position"]["lng"])
-        : null;
-    return TaxiUserInfo(
-        id: data["id"],
-        name: data["name"],
-        image: data["image"],
-        taxiNumber: data["taxiNumber"].toString(),
-        sitio: data["sitio"],
-        location: location);
   }
 }

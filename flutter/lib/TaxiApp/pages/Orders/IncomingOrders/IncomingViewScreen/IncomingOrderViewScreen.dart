@@ -63,7 +63,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
       if (order!.inProcess()) {
         // populate the LatLngPoints from the encoded PolyLine String + SetState!
         mGoogleMapController.decodeAndAddPolyline(
-            encodedPolylineString: order!.routeInformation.polyline);
+            encodedPolylineString: order!.routeInformation!.polyline);
         // add the corresponding markers
         mGoogleMapController.addOrUpdateUserMarker(
             markerId: order!.customer.id,

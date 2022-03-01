@@ -56,7 +56,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
       if (_orderSnapshot.inProcess()) {
         // populate the LatLngPoints from the encoded PolyLine String + SetState!
         mGoogleMapController.decodeAndAddPolyline(
-            encodedPolylineString: _orderSnapshot.routeInformation.polyline);
+            encodedPolylineString: _orderSnapshot.routeInformation!.polyline);
         mGoogleMapController.setLocation(_orderSnapshot.from);
         updateOrder(orderStreamEvent: _orderSnapshot);
         // set InitialPosition

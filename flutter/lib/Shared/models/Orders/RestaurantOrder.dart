@@ -1,15 +1,41 @@
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
-class RestaurantOrder extends Order {
-  RestaurantOrderStatus status;
+enum RestaurantOrderStatus {
+  OrderReceieved,
+  PreparingOrder,
+  ReadyForPickup,
+  OnTheWay,
+  Delivered,
+  CancelledByAdmin,
+  CancelledByCustomer
+}
+
+extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToRestaurantOrderStatus on String {
+  RestaurantOrderStatus toRestaurantOrderStatus() {
+    return RestaurantOrderStatus.values
+        .firstWhere((e) => e.toFirebaseFormatString() == this);
+  }
+}
+
+class RestaurantOrder extends DeliverableOrder {
   int quantity;
   num itemsCost;
   num shippingCost;
   List<RestaurantOrderItem> items = [];
   String? notes;
+  RestaurantOrderStatus status;
   UserInfo get restaurant => this.serviceProvider!;
   RestaurantOrder(
       {required String orderId,
@@ -22,6 +48,8 @@ class RestaurantOrder extends Order {
       required UserInfo restaurant,
       required UserInfo customer,
       required Location to,
+      DeliveryDriverUserInfo? dropoffDriver,
+      String? dropOffDriverChatId,
       required this.itemsCost,
       required this.shippingCost,
       this.notes})
@@ -34,7 +62,9 @@ class RestaurantOrder extends Order {
             cost: cost,
             customer: customer,
             serviceProvider: restaurant,
-            to: to);
+            to: to,
+            dropoffDriver: dropoffDriver,
+            dropOffDriverChatId: dropOffDriverChatId);
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
     RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
@@ -49,7 +79,12 @@ class RestaurantOrder extends Order {
         restaurant: UserInfo.fromData(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]),
         itemsCost: data['itemsCost'],
-        shippingCost: data['shippingCost']);
+        shippingCost: data['shippingCost'],
+        dropoffDriver: (data["dropoffDriver"] != null)
+            ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
+            : null,
+        dropOffDriverChatId: data['secondaryChats']
+            ?['deliveryAdminDropOffDriver']);
 
     data["items"].forEach((dynamic itemId, dynamic itemData) {
       RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
@@ -174,28 +209,4 @@ class ChooseManyOption {
       required this.optionName,
       required this.chosenValueCost,
       required this.chosenOptionValue});
-}
-
-enum RestaurantOrderStatus {
-  OrderReceieved,
-  PreparingOrder,
-  ReadyForPickup,
-  OnTheWay,
-  Delivered,
-  CancelledByAdmin,
-  CancelledByCustomer
-}
-
-extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
-  String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension ParseStringToRestaurantOrderStatus on String {
-  RestaurantOrderStatus toRestaurantOrderStatus() {
-    return RestaurantOrderStatus.values
-        .firstWhere((e) => e.toFirebaseFormatString() == this);
-  }
 }

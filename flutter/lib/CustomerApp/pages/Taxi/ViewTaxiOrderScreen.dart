@@ -51,7 +51,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
       widget.mGoogleMapController.setLocation(order.value!.from);
       // add the polylines!
       widget.mGoogleMapController.decodeAndAddPolyline(
-          encodedPolylineString: order.value!.routeInformation.polyline);
+          encodedPolylineString: order.value!.routeInformation!.polyline);
       widget.mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
       widget.mGoogleMapController.animateAndUpdateBounds();
 

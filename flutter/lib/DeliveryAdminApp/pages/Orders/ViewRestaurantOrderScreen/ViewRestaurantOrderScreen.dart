@@ -1,24 +1,27 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryDriverController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Components/DriverCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/CurrentOrderInfo.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderNoteCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderShippingLocation.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderTotalCostCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/PastOrderInfo.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'components/CurrentOrderInfo.dart';
-import 'components/PastOrderInfo.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 LinearGradient? buttonGraientColor;
@@ -31,13 +34,15 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   LanguageController lang = Get.find<LanguageController>();
   AuthController auth = Get.find<AuthController>();
-  // Since we have alot of buttons we check loading by name
+  DeliveryDriverController deliveryDriverController = Get.find<
+      DeliveryDriverController>(); // Since we have alot of buttons we check loading by name
 
   Rxn<RestaurantOrder> order = Rxn();
-  OrderController controller = Get.find<OrderController>();
+  RestaurantOrderController controller = Get.find<RestaurantOrderController>();
   late String orderId;
   Rx<bool> hasNewMessage = false.obs;
   StreamSubscription? _orderListener;
+  DeliveryDriverUserInfo? driver;
   @override
   void initState() {
     super.initState();
@@ -45,14 +50,19 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as RestaurantOrder?;
+    order.value = controller.getOrder(orderId);
     if (order.value == null) {
       Get.back();
     } else {
       _orderListener =
           controller.getCurrentOrderStream(orderId).listen((newOrder) {
+        mezDbgPrint("PRIIIIIIIINT ${order.value!.dropoffDriver}");
         if (newOrder != null) {
-          order.value = controller.getOrder(orderId) as RestaurantOrder?;
+          order.value = controller.getOrder(orderId);
+          mezDbgPrint("PRIIIIIIIINT ${order.value!.dropoffDriver}");
+          if (order.value?.dropoffDriver != null) {
+            driver = order.value!.dropoffDriver;
+          }
         } else {
           Get.back();
         }
@@ -107,6 +117,21 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       : PastOrderInfo(order: order.value!),
 
                   //============================= Customer info====================
+                  if (order.value?.inProcess() ?? false)
+                    Obx(
+                      () => DriverCard(
+                        canChangeDriver: false,
+                        driver: order.value!.dropoffDriver,
+                        order: order.value!,
+                        callBack: (newDriver) {
+                          deliveryDriverController.assignDeliveryDriver(
+                              deliveryDriverId: newDriver!.deliveryDriverId,
+                              orderId: order.value!.orderId,
+                              orderType: OrderType.Restaurant,
+                              deliveryDriverType: DeliveryDriverType.DropOff);
+                        },
+                      ),
+                    ),
                   //getCustomerInfoCart(),
                   OrderInfoCard(order: order),
                   //==========================>total cost=====================================

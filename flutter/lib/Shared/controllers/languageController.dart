@@ -20,7 +20,7 @@ class LanguageController extends GetxController {
       .obs; // language Object by default  must be set to en if no lang given  in constructor.
 
   LanguageController() {
-    final LanguageType lang =
+    final LanguageType? lang =
         Platform.localeName.substring(0, 2).toLanguageType();
 
     // mezDbgPrint("\n\n\n\n\nUSER LANGUAGE [[ $lang ]]\n\n\n\n\n");
@@ -69,7 +69,7 @@ class LanguageController extends GetxController {
     }
   }
 
-  void userLanguageChanged(LanguageType language) {
+  void setLanguage(LanguageType language) {
     _userLanguageKey.value = language;
   }
 

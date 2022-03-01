@@ -3,15 +3,17 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
 
 // the styles of status buttons inside the order screen
 class ButtonsStyle {
   // this button for cancel order
   static Widget cancelButtonWidget(String orderId) {
-    OrderController controller = Get.find<OrderController>();
+    RestaurantOrderController controller =
+        Get.find<RestaurantOrderController>();
     LanguageController lang = Get.find<LanguageController>();
 
     return Expanded(
@@ -52,8 +54,9 @@ class ButtonsStyle {
   }
 
   // this button for PreparingOrder
-  static Widget preparingOrderButtonWidget(String orderId) {
-    OrderController controller = Get.find<OrderController>();
+  static Widget preparingOrderButtonWidget(RestaurantOrder order) {
+    RestaurantOrderController controller =
+        Get.find<RestaurantOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
         widget: Text(
@@ -66,38 +69,46 @@ class ButtonsStyle {
         gradient: LinearGradient(
             begin: Alignment(-0.10374055057764053, 0),
             end: Alignment(1.1447703838348389, 1.1694844961166382),
-            colors: [
-              // const Color(0xede29211),
-              const Color(0xffd3bc0b),
-              const Color(0xdbd17c18)
-            ]),
-        function: () async {
-          var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["readyAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["readyAlert"]["subTitle"], () {
-            Get.back(result: true);
-          }, () {
-            Get.back(result: false);
-          },
-              Container(height: 70, width: 70, child: Image.asset(box)),
-              LinearGradient(
-                  begin: Alignment(-0.10374055057764053, 0),
-                  end: Alignment(1.1447703838348389, 1.1694844961166382),
-                  colors: [
+            colors: (order.dropoffDriver == null)
+                ? [Colors.grey, Colors.grey]
+                : [
                     // const Color(0xede29211),
                     const Color(0xffd3bc0b),
                     const Color(0xdbd17c18)
-                  ]));
-          if (res) {
-            Get.snackbar("Loading", "");
-            controller.readyForPickupOrder(orderId);
-          }
-        });
+                  ]),
+        function: (order.dropoffDriver == null)
+            ? () {
+                Get.snackbar("Error", "Please Select a driver");
+              }
+            : () async {
+                var res = await dailogComponent(
+                    lang.strings["deliveryAdminApp"]["readyAlert"]["title"],
+                    lang.strings["deliveryAdminApp"]["readyAlert"]["subTitle"],
+                    () {
+                  Get.back(result: true);
+                }, () {
+                  Get.back(result: false);
+                },
+                    Container(height: 70, width: 70, child: Image.asset(box)),
+                    LinearGradient(
+                        begin: Alignment(-0.10374055057764053, 0),
+                        end: Alignment(1.1447703838348389, 1.1694844961166382),
+                        colors: [
+                          // const Color(0xede29211),
+                          const Color(0xffd3bc0b),
+                          const Color(0xdbd17c18)
+                        ]));
+                if (res) {
+                  Get.snackbar("Loading", "");
+                  controller.readyForPickupOrder(order.orderId);
+                }
+              });
   }
 
   // this button for ReadyForPickup
   static Widget readyForPickupButtonWidget(String orderId) {
-    OrderController controller = Get.find<OrderController>();
+    RestaurantOrderController controller =
+        Get.find<RestaurantOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
       widget: Text(lang.strings["deliveryAdminApp"]["ordersButton"]["deliver"],
@@ -133,7 +144,8 @@ class ButtonsStyle {
 
   // this button for OrderReceieved
   static Widget orderReceievedButtonWidget(String orderId) {
-    OrderController controller = Get.find<OrderController>();
+    RestaurantOrderController controller =
+        Get.find<RestaurantOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
         widget: Text(
@@ -171,7 +183,8 @@ class ButtonsStyle {
 
   //this button for OnTheWay
   static Widget onTheWayButtonWidget(String orderId) {
-    OrderController controller = Get.find<OrderController>();
+    RestaurantOrderController controller =
+        Get.find<RestaurantOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
         widget: Text(

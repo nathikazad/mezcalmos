@@ -73,7 +73,7 @@ class UserProfileController {
     // first we check the user if he has everything Set
     if (checkIfUserHasAllInfosSet()) {
       // we set the TextField's Text to user name
-      userName.value = _authController.user!.name!;
+      userName.value = _authController.user!.name;
     } else {
       // in case Name null then we set userName to empty String cuz TextField does not accept null.
       userName.value = _authController.user?.name ?? "";

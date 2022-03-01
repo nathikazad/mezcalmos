@@ -326,7 +326,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
             getEstimatedRidePriceInPesos(route.distance.distanceInMeters);
         taxiRequest.value.setEstimatedPrice(estimatedPrice);
         locationPickerController.addPolyline(route.polylineList);
-        taxiRequest.value.setRouteInformation(TaxiOrder.RouteInformation(
+        taxiRequest.value.setRouteInformation(MapHelper.RouteInformation(
             polyline: route.encodedPolyLine,
             distance: route.distance,
             duration: route.duration));

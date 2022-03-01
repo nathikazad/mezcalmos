@@ -1,4 +1,4 @@
-import { NotificationInfo } from "./Generic";
+import { NotificationInfo } from "./Generic/Generic";
 
 export interface DeliveryAdmin {
   authorized: boolean,

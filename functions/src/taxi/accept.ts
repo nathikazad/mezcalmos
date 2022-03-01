@@ -5,15 +5,15 @@ import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import { isSignedIn } from "../shared/helper/authorizer";
-import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic";
-import { OrderType } from "../shared/models/Order";
-import { UserInfo } from "../shared/models/User";
-import { Taxi } from "../shared/models/taxi/Taxi";
-import { CounterOfferStatus, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
-import { buildChatForOrder } from "../shared/helper/chat";
-import { ParticipantType } from "../shared/models/Chat";
-import { push } from "../shared/notification/notifyUser";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { OrderType } from "../shared/models/Generic/Order";
+import { UserInfo } from "../shared/models/Generic/User";
+import { Taxi } from "../shared/models/Drivers/Taxi";
+import { CounterOfferStatus, TaxiInfo, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
+import * as chatController from "../shared/controllers/chatController";
+import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Generic/Chat";
+import { pushNotification } from "../shared/notification/notifyUser";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { getUserInfo } from "../shared/controllers/rootController";
 import { getTaxi } from "../shared/controllers/taxiController";
@@ -106,7 +106,7 @@ export = functions.https.onCall(async (data, context) => {
 
     order.status = TaxiOrderStatus.OnTheWay;
     order.acceptRideTime = (new Date()).toISOString()
-    order.driver = {
+    order.driver = <TaxiInfo>{
       id: taxiId,
       name: driverInfo.name,
       image: driverInfo.image,
@@ -123,7 +123,9 @@ export = functions.https.onCall(async (data, context) => {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
 
 
-    await buildChatForOrder(
+
+    let chat: Chat = await buildChatForOrder(
+      orderId,
       order.customer.id,
       {
         ...order.customer,
@@ -134,8 +136,9 @@ export = functions.https.onCall(async (data, context) => {
         ...driverInfo,
         particpantType: ParticipantType.Taxi
       },
-      OrderType.Taxi,
-      orderId);
+        OrderType.Restaurant);
+
+    await chatController.setChat(orderId, chat);
 
 
     let notification: Notification = {
@@ -150,7 +153,7 @@ export = functions.https.onCall(async (data, context) => {
       background: taxiOrderStatusChangeMessages[TaxiOrderStatus.OnTheWay]
     }
 
-    push(order.customer.id!, notification);
+    pushNotification(order.customer.id!, notification);
 
     return {
       status: ServerResponseStatus.Success,

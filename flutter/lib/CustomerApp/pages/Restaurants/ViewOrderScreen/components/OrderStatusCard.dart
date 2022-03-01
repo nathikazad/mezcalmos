@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:rive/rive.dart';
 
 class OrderStatusCard extends StatelessWidget {
@@ -31,77 +32,142 @@ class OrderStatusCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                getOrderWidget(ordersStates),
-                Flexible(
-                  flex: 8,
-                  fit: FlexFit.tight,
-                  child: Text(
-                    getOrderStatus(ordersStates),
-                    style: txt.headline3,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
+                OrderStatusImage(ordersStates),
+                OrderStatus(ordersStates: ordersStates, txt: txt),
                 Spacer(),
-                Material(
-                  color: Theme.of(context).primaryColorLight,
-                  shape: CircleBorder(),
-                  child: InkWell(
-                    onTap: () {
-                      Get.toNamed(getRestaurantMessagesRoute(order.orderId));
-                    },
-                    customBorder: CircleBorder(),
-                    child: Stack(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(12),
-                          child: Icon(
-                            Icons.textsms,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Obx(
-                          () => Get.find<OrderController>()
-                                  .orderHaveNewMessageNotifications(
-                                      order.orderId)
-                              ? Positioned(
-                                  left: 27,
-                                  top: 10,
-                                  child: Container(
-                                    width: 13,
-                                    height: 13,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            color: const Color(0xfff6efff),
-                                            width: 2),
-                                        color: const Color(0xffff0000)),
-                                  ),
-                                )
-                              : Container(),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                MessageButton(order: order),
               ],
             ),
           ),
         ),
-        Container(
-            margin: EdgeInsets.all(5),
-            alignment: Alignment.center,
-            child: Text(
-              getOrderHelperText(ordersStates),
-              textAlign: TextAlign.center,
-            ))
+        StatusDescription(ordersStates: ordersStates)
       ],
     );
   }
 }
 
-Widget getOrderWidget(RestaurantOrderStatus status) {
+class OrderStatus extends StatelessWidget {
+  const OrderStatus({
+    Key? key,
+    required this.ordersStates,
+    required this.txt,
+  }) : super(key: key);
+
+  final RestaurantOrderStatus ordersStates;
+  final TextTheme txt;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      flex: 8,
+      fit: FlexFit.tight,
+      child: Text(
+        getOrderStatus(ordersStates),
+        style: txt.headline3,
+        textAlign: TextAlign.center,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+}
+
+class StatusDescription extends StatelessWidget {
+  const StatusDescription({
+    Key? key,
+    required this.ordersStates,
+  }) : super(key: key);
+
+  final RestaurantOrderStatus ordersStates;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.all(5),
+        alignment: Alignment.center,
+        child: Text(
+          getOrderHelperText(ordersStates),
+          textAlign: TextAlign.center,
+        ));
+  }
+}
+
+class MessageButton extends StatelessWidget {
+  const MessageButton({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
+
+  final RestaurantOrder order;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Theme.of(context).primaryColorLight,
+      shape: CircleBorder(),
+      child: InkWell(
+        onTap: () {
+          Get.toNamed(getMessagesRoute(
+              chatId: order.orderId,
+              recipientType: ParticipantType.Restaurant));
+        },
+        customBorder: CircleBorder(),
+        child: Stack(
+          children: [
+            MessageIcon(),
+            Obx(
+              () => Get.find<OrderController>()
+                      .orderHaveNewMessageNotifications(order.orderId)
+                  ? NewMessageRedDot()
+                  : Container(),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MessageIcon extends StatelessWidget {
+  const MessageIcon({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(12),
+      child: Icon(
+        Icons.textsms,
+        color: Colors.white,
+      ),
+    );
+  }
+}
+
+class NewMessageRedDot extends StatelessWidget {
+  const NewMessageRedDot({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: 27,
+      top: 10,
+      child: Container(
+        width: 13,
+        height: 13,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: const Color(0xfff6efff), width: 2),
+            color: const Color(0xffff0000)),
+      ),
+    );
+  }
+}
+
+Widget OrderStatusImage(RestaurantOrderStatus status) {
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
       return Padding(

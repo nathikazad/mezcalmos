@@ -1,61 +1,77 @@
-import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
-import 'package:firebase_database/firebase_database.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-class User {
-  /** 
-   * changed these fields to String? , 
-   * cuz a new user authenticated using OTP will have only : 
-   * {phoneNumber: +216xxxxxxx, phoneNumberType: SMS} , 
-   * thus errors gets thrown in authController ,
-   * to avoid that its better to make them Nullable String
-  **/
+class UserInfo {
+  String id;
+  String name;
+  String image;
+  LanguageType? language;
 
-  String uid;
-  String? email;
-  String? name;
-
-  /// compressed version of [bigImage]
-  String? image;
-
-  /// Original version of image that was uploaded by the user with some light compression.
-  String? bigImage;
-  LanguageType language;
-  String? phone;
-  dynamic data;
-
-  User(
-      {required this.uid,
-      required this.email,
+  UserInfo(
+      {required this.id,
       required this.name,
       required this.image,
-      this.bigImage,
-      required this.language,
-      this.phone});
+      this.language});
 
-  // Get props as list.
-  List<dynamic> get props => [uid, email, name, image, bigImage];
-
-  // Removed parse from json , Since we will be working with Snapshots
-  User.fromSnapshot(fireAuth.User user, DataSnapshot snapshot)
-      : uid = user.uid,
-        email = user.email,
-        name = snapshot.value['name'],
-        image = snapshot.value['image'],
-        bigImage = snapshot.value['bigImage'],
-        language = snapshot.value['language'] == null
-            ? LanguageType.ES
-            : snapshot.value['language'].toString().toLanguageType(),
-        phone = snapshot.value['phone'],
-        data = snapshot.value;
+  factory UserInfo.fromData(dynamic data) {
+    return UserInfo(
+        id: data["id"],
+        name: data["name"],
+        image: data["image"],
+        language: data["language"] != null
+            ? data["language"].toString().toLanguageType()
+            : null);
+  }
 
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {
-        "uid": uid,
+        "uid": id,
+        "name": name,
+        "image": image,
+        "language": language.toString(),
+      };
+}
+
+
+class MainUserInfo {
+  String id;
+  String? name;
+  String? image;
+  LanguageType? language;
+  String? email;
+
+  /// Original version of image that was uploaded by the user with some light compression.
+  String? bigImage;
+
+  String? phone;
+  MainUserInfo(
+      {required this.id,
+      required this.name,
+      required this.image,
+      this.language,
+      this.email,
+      this.phone});
+
+  factory MainUserInfo.fromData(dynamic data) {
+    return MainUserInfo(
+        id: data["id"],
+        name: data["name"],
+        image: data["image"],
+        language: data["language"] != null
+            ? data["language"].toString().toLanguageType()
+            : null,
+        phone: data['phone'],
+        email: data['email']);
+  }
+
+  // Added for Debugging Perposes - Don't delete for now
+  Map<String, dynamic> toJson() => {
+        "uid": id,
         "email": email,
         "name": name,
         "image": image,
+        "language": language.toString(),
+        "phone": phone,
         "bigImage": bigImage,
-        "language": language.toString()
       };
 }

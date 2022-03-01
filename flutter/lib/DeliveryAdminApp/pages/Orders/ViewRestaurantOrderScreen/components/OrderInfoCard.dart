@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/basicCellComponent.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-import 'OrderItemsCard.dart';
 import 'ChangeStatusButtons.dart';
+import 'OrderItemsCard.dart';
 
 //Display the order customer and items
 
@@ -20,7 +21,7 @@ class OrderInfoCard extends StatefulWidget {
 }
 
 class _OrderInfoCardState extends State<OrderInfoCard> {
-  OrderController controller = Get.find<OrderController>();
+  RestaurantOrderController controller = Get.find<RestaurantOrderController>();
   LanguageController lang = Get.find<LanguageController>();
 
   @override
@@ -58,8 +59,9 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                         color: Color(0xff5c7fff),
                       ),
                       onPressed: () {
-                        Get.toNamed(getCustomerMessagesRoute(
-                            widget.order.value!.orderId));
+                        Get.toNamed(getMessagesRoute(
+                            chatId: widget.order.value?.orderId ?? '',
+                            recipientType: ParticipantType.Customer));
                       },
                     ),
                     Positioned(
@@ -89,7 +91,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
               ),
               if (widget.order.value?.inProcess() ?? false)
                 Row(
-                  children: changebuttonsDepandesOnStatus(widget.order),
+                  children: buildRestOrderButtons(widget.order),
                 )
             ],
           ),

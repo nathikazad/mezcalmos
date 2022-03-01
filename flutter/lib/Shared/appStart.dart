@@ -29,7 +29,6 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:package_info/package_info.dart';
 import 'package:sizer/sizer.dart';
-// import 'package:sizer/sizer.dart';import 'package:sizer/sizer.dart';
 
 final ThemeData _defaultAppTheme = ThemeData(
     primaryColor: Colors.white,

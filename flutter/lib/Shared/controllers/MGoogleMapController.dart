@@ -5,17 +5,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:geocoding/geocoding.dart' as Geo;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/TaxiApp/constants/assets.dart';
-import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:sizer/sizer.dart';
+//import 'package:sizer/sizer.dart';
 
 class MGoogleMapController {
   RxSet<Polyline> polylines = <Polyline>{}.obs;
@@ -31,6 +30,8 @@ class MGoogleMapController {
   /// We save it in _taxiDriverImgDescruptorCopy.
   List<int>? _taxiDriverImgDescruptorCopy;
   RxDouble markersDefaultSize = 10.h.obs;
+
+  MinMaxZoomPreference? minMaxZoomPrefs;
 
   void setOnMapTap({required Function onTap}) {
     this.onMapTap = onTap;
@@ -104,7 +105,7 @@ class MGoogleMapController {
     // default userId is authenticated's
     this._addOrUpdateMarker(Marker(
         markerId: MarkerId(
-            markerId ?? Get.find<AuthController>().user?.uid ?? 'ANONYMOUS'),
+            markerId ?? Get.find<AuthController>().user?.id ?? 'ANONYMOUS'),
         icon: icon,
         position: latLng));
   }
@@ -164,7 +165,7 @@ class MGoogleMapController {
   void removerAuthenticatedUserMarker() {
     markers.removeWhere((element) =>
         element.markerId.value ==
-        (Get.find<AuthController>().user?.uid ?? 'ANONYMOUS'));
+        (Get.find<AuthController>().user?.id ?? 'ANONYMOUS'));
   }
 
   void addPolyline(List<PointLatLng> latLngPoints) {
@@ -289,5 +290,15 @@ class MGoogleMapController {
         ? _getMarkersAndPolylinesBounds()
         : null);
     await animateCameraWithNewBounds();
+  }
+
+  MinMaxZoomPreference getMapMinMaxZommPrefs() {
+    if (this.minMaxZoomPrefs == null) {
+      return this.polylines.isNotEmpty
+          ? MinMaxZoomPreference.unbounded
+          : MinMaxZoomPreference(16, 17);
+    } else {
+      return this.minMaxZoomPrefs!;
+    }
   }
 }

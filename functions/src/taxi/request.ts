@@ -2,11 +2,11 @@ import * as functions from "firebase-functions";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import * as rootNodes from "../shared/databaseNodes/root";
 import { isSignedIn } from "../shared/helper/authorizer";
-import { ServerResponseStatus } from "../shared/models/Generic";
-import { OrderType } from "../shared/models/Order";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { OrderType } from "../shared/models/Generic/Order";
 import { getUserInfo } from "../shared/controllers/rootController";
-import { OrderRequest } from "../shared/models/taxi/OrderRequest";
-import { constructTaxiOrder } from "../shared/models/taxi/TaxiOrder";
+import { TaxiOrderRequest } from "../shared/models/Services/Taxi/TaxiOrderRequest";
+import { constructTaxiOrder } from "../shared/models/Services/Taxi/TaxiOrder";
 
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)
@@ -14,7 +14,7 @@ export = functions.https.onCall(async (data, context) => {
     return response;
 
   let customerId: string = context.auth!.uid;
-  let orderRequest: OrderRequest = <OrderRequest>data;
+  let orderRequest: TaxiOrderRequest = <TaxiOrderRequest>data;
   console.log(orderRequest);
 
   let transactionResponse = await customerNodes.lock(customerId).transaction(function (lock) {

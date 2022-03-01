@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
@@ -58,6 +59,10 @@ class OrderController extends GetxController {
                   OrderType.Taxi.toFirebaseFormatString()) {
                 orders.add(TaxiOrder.fromData(orderId, orderData));
               }
+              if (orderData["orderType"] ==
+                  OrderType.Laundry.toFirebaseFormatString()) {
+                orders.add(LaundryOrder.fromData(orderId, orderData));
+              }
             } catch (e) {
               mezDbgPrint(
                   "past order error $orderId ==============" + e.toString());
@@ -88,6 +93,11 @@ class OrderController extends GetxController {
             if (orderData["orderType"] ==
                 OrderType.Taxi.toFirebaseFormatString()) {
               orders.add(TaxiOrder.fromData(orderId, orderData));
+            }
+            if (orderData["orderType"] ==
+                OrderType.Laundry.toFirebaseFormatString()) {
+              mezDbgPrint(OrderType.Laundry.toFirebaseFormatString());
+              orders.add(LaundryOrder.fromData(orderId, orderData));
             }
           }
         }

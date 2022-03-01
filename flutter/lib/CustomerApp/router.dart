@@ -1,12 +1,15 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/LaundryCurrentOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryPickLocView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
 import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/ListOrdersScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/PickLocationScreen/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreem/ListRestaurantsScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/PickLocationScreen/PickLocationView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/ViewCartScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/SavedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrderScreen.dart';
@@ -28,6 +31,11 @@ const String kCartItemRoute = '/cart/:cartItemId';
 const String kPickLocationRoute = '/pickLocationFromMap/addLocation';
 const String kPickLocationEditRoute = '/pickLocationFromMap/editLocation';
 const String kSavedLocations = '/savedLocations';
+// laundry
+
+const String kLaundryOrderRequest = '/laundryOrderRequest';
+const String kLaundryPickLoc = '/laundryPickLock';
+const String kLaundryCurrentOrder = '/laundryCurrentOrder/:orderId';
 
 String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
@@ -51,18 +59,33 @@ String getTaxiOrderRoute(String orderId) {
   return kTaxiOrderRoute.replaceFirst(":orderId", orderId);
 }
 
+String getLaundyOrderRoute(String orderId) {
+  return kLaundryCurrentOrder.replaceFirst(":orderId", orderId);
+}
+
 String getRestaurantMessagesRoute(
   String orderId,
 ) {
-  return kMessagesRoute.replaceFirst(":orderId", orderId) +
-      "?recipientType=${ParticipantType.Restaurant.toFirebaseFormattedString()}";
+  return getMessagesRoute(
+      chatId: orderId,
+      recipientType: ParticipantType.Restaurant,
+      orderId: orderId);
 }
 
 String getTaxiMessagesRoute(
   String orderId,
 ) {
-  return kMessagesRoute.replaceFirst(":orderId", orderId) +
-      "?recipientType=${ParticipantType.Taxi.toFirebaseFormattedString()}";
+  return getMessagesRoute(
+      chatId: orderId, recipientType: ParticipantType.Taxi, orderId: orderId);
+}
+
+String getLaundryMessagesRoute(
+  String orderId,
+) {
+  return getMessagesRoute(
+      chatId: orderId,
+      recipientType: ParticipantType.Laundry,
+      orderId: orderId);
 }
 
 // GetX based Router (For navigating)
@@ -114,7 +137,23 @@ class XRouter {
             page: () => ViewTaxiOrderScreen(),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
-        GetPage(name: kSavedLocations, page: () => SavedLocationView())
+        GetPage(name: kSavedLocations, page: () => SavedLocationView()),
+        // Laundry routes
+        GetPage(
+            name: kLaundryOrderRequest,
+            page: () => LaundryOrderRequestView(),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: kLaundryPickLoc,
+            page: () => LaundryPickLocView(),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
+        GetPage(
+            name: kLaundryCurrentOrder,
+            page: () => LaundryCurrentOrderView(),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
       ] +
       SharedRouter.sharedRoutes;
 }

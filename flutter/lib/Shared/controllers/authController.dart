@@ -28,8 +28,8 @@ class AuthController extends GetxController {
   Function _onSignOutCallback;
   Function _onSignInCallback;
 
-  Rxn<User> _user = Rxn<User>();
-  User? get user => _user.value;
+  Rxn<MainUserInfo> _user = Rxn<MainUserInfo>();
+  MainUserInfo? get user => _user.value;
 
   Rxn<fireAuth.User> _fireAuthUser = Rxn<fireAuth.User>();
   fireAuth.User? get fireAuthUser => _fireAuthUser.value;
@@ -40,12 +40,12 @@ class AuthController extends GetxController {
   StreamController<fireAuth.User?> _authStateStreamController =
       StreamController.broadcast();
 
-  StreamController<User?> _userInfoStreamController =
+  StreamController<MainUserInfo?> _userInfoStreamController =
       StreamController.broadcast();
 
   Stream<fireAuth.User?> get authStateStream =>
       _authStateStreamController.stream;
-  Stream<User?> get userInfoStream => _userInfoStreamController.stream;
+  Stream<MainUserInfo?> get userInfoStream => _userInfoStreamController.stream;
 
   bool get isUserSignedIn => _fireAuthUser.value != null;
   FirebaseDb _databaseHelper =
@@ -103,10 +103,9 @@ class AuthController extends GetxController {
                     .userLanguageKey
                     .toFirebaseFormatString());
           }
-          _user.value = User.fromSnapshot(user, event.snapshot);
-          _userInfoStreamController.add(_user.value!);
-          Get.find<LanguageController>()
-              .userLanguageChanged(_user.value!.language);
+          _user.value = MainUserInfo.fromData(event.snapshot.value);
+          if (_user.value!.language != null)
+            Get.find<LanguageController>().setLanguage(_user.value!.language!);
         });
       }
     });
@@ -167,17 +166,7 @@ class AuthController extends GetxController {
           .reference()
           .child(userInfo(fireAuthUser!.uid))
           .child('name')
-          .set(name)
-          .then((value) {
-        _user.value = User(
-          uid: _user.value!.uid,
-          email: _user.value?.email,
-          image: _user.value?.image,
-          bigImage: _user.value?.bigImage,
-          language: _user.value!.language,
-          name: name,
-        );
-      });
+          .set(name);
     }
     if (compressedImageUrl != null && compressedImageUrl.isURL) {
       await _databaseHelper.firebaseDatabase
@@ -209,7 +198,7 @@ class AuthController extends GetxController {
     if (_user.value != null) {
       _databaseHelper.firebaseDatabase
           .reference()
-          .child(userLanguage(_user.value!.uid))
+          .child(userLanguage(_user.value!.id))
           .set(newLanguage.toFirebaseFormatString());
     }
   }

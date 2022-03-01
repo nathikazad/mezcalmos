@@ -1,6 +1,6 @@
-import { Language } from "../shared/models/Generic";
-import { BackgroundNotification } from "../shared/models/Notification";
-import { RestaurantOrderStatus } from "./models/RestaurantOrder";
+import { Language } from "../shared/models/Generic/Generic";
+import { BackgroundNotification } from "../shared/models/Generic/Notification";
+import { RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
 
 export const restaurantOrderStatusChangeMessages:
   { [id in RestaurantOrderStatus]: BackgroundNotification } = {

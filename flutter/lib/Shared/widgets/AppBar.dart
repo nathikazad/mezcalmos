@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 enum AppBarLeftButtonType { Back, Menu }
 
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {dynamic bgColor = Colors.white,
     Function? onClick,
+    PreferredSizeWidget? tabbar,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btn_icon;
 
   switch (leftBtnType) {
     case AppBarLeftButtonType.Back:
+      if (onClick == null) {
+        onClick = () {
+          Get.back();
+        };
+      }
       btn_icon = Center(
         child: Icon(
           MezcalmosIcons.chevron_left,
@@ -37,6 +43,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   return AppBar(
     toolbarHeight: 80,
     elevation: 0,
+    bottom: tabbar,
     automaticallyImplyLeading: false,
     title: Container(
       // width: Get.width,

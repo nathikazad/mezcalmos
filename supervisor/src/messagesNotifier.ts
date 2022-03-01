@@ -1,8 +1,8 @@
-import { Chat, Message } from "../../functions/src/shared/models/Chat";
+import { Chat, Message } from "../../functions/src/shared/models/Generic/Chat";
 import { getChat, setChatMessageNotifiedAsTrue } from "../../functions/src/shared/controllers/chatController";
 import * as notifyUser from "../../functions/src/shared/notification/notifyUser";
 import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
-import { NewMessageNotification, Notification, NotificationAction, NotificationType } from "../../functions/src/shared/models/Notification";
+import { NewMessageNotification, Notification, NotificationAction, NotificationType } from "../../functions/src/shared/models/Generic/Notification";
 
 export function startWatchingMessageNotificationQueue() {
   rootNodes.notificationsQueueNode().on('child_added', function (snap) {
@@ -13,8 +13,11 @@ export function startWatchingMessageNotificationQueue() {
 }
 
 async function notifyOtherParticipants(messageId: string, message: Message) {
-  let chat: Chat = await getChat(message.orderId);
-  if (chat.messages && chat.messages![messageId]?.notified) {
+  // TO BE REMOVED, added for backwards compatibility in cases where message does not have chatId field
+  message.chatId = message.chatId ?? message.orderId;
+  // TILL HERE
+  let chat: Chat = await getChat(message.chatId);
+  if (chat.messages && chat.messages![messageId].notified) {
     return
   }
   let senderInfo = chat.participants[message.userId]
@@ -24,6 +27,7 @@ async function notifyOtherParticipants(messageId: string, message: Message) {
     let participant = chat.participants[participantId]
     let notification: Notification = {
       foreground: <NewMessageNotification>{
+        chatId: message.chatId,
         sender: senderInfo,
         message: message.message,
         orderId: message.orderId,
@@ -42,7 +46,7 @@ async function notifyOtherParticipants(messageId: string, message: Message) {
         }
       }
     }
-    notifyUser.push(participantId, notification, participant.particpantType);
+    notifyUser.pushNotification(participantId, notification, participant.particpantType);
   }
-  setChatMessageNotifiedAsTrue(message.orderId, messageId);
+  setChatMessageNotifiedAsTrue(message.chatId, messageId);
 }

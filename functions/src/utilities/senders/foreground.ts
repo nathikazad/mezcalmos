@@ -1,6 +1,6 @@
 import { notificationsNode } from "../../shared/databaseNodes/root";
-import { ParticipantType } from "../../shared/models/Chat";
-import { ForegroundNotification } from "../../shared/models/Notification";
+import { ParticipantType } from "../../shared/models/Generic/Chat";
+import { ForegroundNotification } from "../../shared/models/Generic/Notification";
 
 export interface fgPayload {
   particpantType: ParticipantType,

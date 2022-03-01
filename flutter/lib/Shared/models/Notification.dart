@@ -57,6 +57,7 @@ class Notification {
   String? linkText;
   NotificationType notificationType;
   NotificationAction notificationAction;
+  String? get chatId => variableParams['chatId'];
   String? get orderId => variableParams['orderId'];
   String? get orderType => variableParams['orderType'];
   Notification(

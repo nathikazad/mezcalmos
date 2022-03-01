@@ -9,8 +9,9 @@ import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
+import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
+// import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
 import 'package:location/location.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -158,7 +159,7 @@ class TaxiAuthController extends GetxController {
             // updating driver location in root orders/inProcess/taxi
             _databaseHelper.firebaseDatabase
                 .reference()
-                .child(rootInProcessOrderDriverLocationNode(
+                .child(rootTaxiInProcessOrderDriverLocationNode(
                     _state.value!.currentOrder!))
                 .set(positionUpdate);
 

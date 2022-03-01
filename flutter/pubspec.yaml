@@ -52,8 +52,6 @@ dependencies:
   image_cropper: ^1.4.1
   image_picker: ^0.8.4
   sliding_up_panel: ^2.0.0+1
-  
-  
   graphql: ^5.0.0
   google_fonts: ^2.1.0
   month_picker_dialog: ^0.4.0
@@ -102,6 +100,7 @@ flutter:
     - assets/images/deliveryAdmin/
     - assets/images/customer/restaurants/
     - assets/images/customer/taxi/
+    - assets/images/customer/laundry/
     - assets/fonts/
     - assets/i18n/
     - assets/animation/

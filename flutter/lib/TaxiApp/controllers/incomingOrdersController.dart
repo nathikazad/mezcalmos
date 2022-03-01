@@ -102,12 +102,12 @@ class IncomingOrdersController extends GetxController {
     if (tmpOrderCheck != null) {
       await _databaseHelper.firebaseDatabase
           .reference()
-          .child(rootOpenOrderReadNode(orderId, _authController.user!.uid))
+          .child(rootOpenOrderReadNode(orderId, _authController.user!.id))
           .set(true);
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(customerInProcessOrderReadNode(
-              orderId, customerId, _authController.user!.uid))
+              orderId, customerId, _authController.user!.id))
           .set(true);
     }
   }
@@ -122,12 +122,12 @@ class IncomingOrdersController extends GetxController {
     if (tmpOrderCheck != null) {
       await _databaseHelper.firebaseDatabase
           .reference()
-          .child(rootOpenOrderReceivedNode(orderId, _authController.user!.uid))
+          .child(rootOpenOrderReceivedNode(orderId, _authController.user!.id))
           .set(true);
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(customerInProcessOrderReceivedNode(
-              orderId, customerId, _authController.user!.uid))
+              orderId, customerId, _authController.user!.id))
           .set(true);
     }
   }

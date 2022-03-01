@@ -1,13 +1,16 @@
 import * as functions from "firebase-functions";
 import { isSignedIn } from "../shared/helper/authorizer";
-import { orderInProcess, RestaurantOrder, RestaurantOrderStatus } from "./models/RestaurantOrder";
+import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { OrderType } from "../shared/models/Order";
-import { ServerResponseStatus } from "../shared/models/Generic";
+import { OrderType } from "../shared/models/Generic/Order";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { finishOrder } from "./helper";
-import { notifyDeliveryAdminsCancelledOrder } from "../shared/notification/notifyDeliveryAdmin";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
+import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
+import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { pushNotification } from "../shared/notification/notifyUser";
+import { ParticipantType } from "../shared/models/Generic/Chat";
 // Customer Canceling
 export = functions.https.onCall(async (data, context) => {
   let response = await isSignedIn(context.auth)
@@ -53,8 +56,34 @@ export = functions.https.onCall(async (data, context) => {
   await finishOrder(order, orderId);
 
   deliveryAdminNodes.deliveryAdmins().once('value', (snapshot) => {
-    notifyDeliveryAdminsCancelledOrder(snapshot.val(), orderId);
+    notifyOthersCancelledOrder(snapshot.val(), orderId, order);
   });
 
   return { status: ServerResponseStatus.Success, orderId: data.orderId }
 });
+
+
+async function notifyOthersCancelledOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
+  orderId: string, order: RestaurantOrder) {
+
+  let notification: Notification = {
+    foreground: <RestaurantOrderStatusChangeNotification>{
+      status: RestaurantOrderStatus.CancelledByCustomer,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: OrderType.Restaurant,
+      notificationAction: NotificationAction.ShowPopUp,
+      orderId: orderId
+    },
+    background: restaurantOrderStatusChangeMessages[RestaurantOrderStatus.CancelledByCustomer]
+  }
+
+  for (let adminId in deliveryAdmins) {
+    pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  }
+
+  if (order.dropoffDriver)
+    pushNotification(order.dropoffDriver.id, notification, ParticipantType.DeliveryDriver);
+
+
+}

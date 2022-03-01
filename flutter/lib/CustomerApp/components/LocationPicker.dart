@@ -15,7 +15,6 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
-import 'package:sizer/sizer.dart';
 
 class LocationPickerController extends MGoogleMapController {
   RxBool _showFakeMarker = true.obs;
