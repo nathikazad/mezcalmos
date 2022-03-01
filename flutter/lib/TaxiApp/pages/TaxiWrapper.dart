@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
+import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -17,7 +18,6 @@ import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
-import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:mezcalmos/TaxiApp/notificationHandler.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 

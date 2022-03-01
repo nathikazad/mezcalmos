@@ -1,5 +1,3 @@
-import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
-
 class CounterOffer {
   num price;
   DateTime offerValidTime;

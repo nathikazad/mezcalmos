@@ -2,14 +2,15 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 class TaxiState {
   bool isAuthorized;
   bool isLooking;
   String? currentOrder;
-  TaxiState(this.isAuthorized, this.isLooking, [this.currentOrder]);
+  String? inNegotationOrderId;
+  TaxiState(this.isAuthorized, this.isLooking,
+      [this.currentOrder, this.inNegotationOrderId]);
 
   factory TaxiState.fromSnapshot(dynamic data) {
     mezDbgPrint("TaxiDriver ${data}");
@@ -17,7 +18,9 @@ class TaxiState {
         data == null ? false : data['authorizationStatus'] == "authorized";
     bool isLooking = data == null ? false : data['isLooking'] == true;
     String? currentOrder = data == null ? null : data['currentOrderId'];
-    return TaxiState(isAuthorized, isLooking, currentOrder);
+    String? inNegotationOrderId = data == null ? null : data['inNegotiation'];
+    return TaxiState(
+        isAuthorized, isLooking, currentOrder, inNegotationOrderId);
   }
 
   Map<String, dynamic> toJson() => {
@@ -56,7 +59,6 @@ class TaxiDriver {
             lastLocationUpdateTime?.toUtc().toIso8601String()
       };
 }
-
 
 // Used by taxi order
 class TaxiUserInfo extends UserInfo {
