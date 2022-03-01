@@ -1,10 +1,12 @@
 import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -15,7 +17,9 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
+  AuthController authController = Get.find<AuthController>();
   late bool databaseUserLastSnapshot;
+
   @override
   void dispose() {
     super.dispose();
@@ -42,10 +46,13 @@ class _WrapperState extends State<Wrapper> {
             kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
       }
     } else {
-      if (Get.find<AuthController>().user != null) {
+      if (authController.user != null) {
+        mezDbgPrint('@@@@@@@@@@@@@@@@@@@@@@@@@@user not null redirect ');
         redirectIfUserInfosNotSet();
-      } else
+      } else {
+        mezDbgPrint('############user  null redirect ');
         startListeningForUserModelChanges();
+      }
     }
   }
 
