@@ -154,11 +154,11 @@ String getTaxiOrderStatus(TaxiOrdersStatus status) {
     case TaxiOrdersStatus.Expired:
       return '${lang.strings["taxi"]["orders"]["orderStatus"]["expired"]}';
     case TaxiOrdersStatus.ForwardingSuccessful:
-      return ' Successfully forwarded';
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["droppedOff"]}';
     case TaxiOrdersStatus.ForwardingUnsuccessful:
-      return 'Forward canceled';
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByTaxi"]}';
     case TaxiOrdersStatus.ForwardingToLocalCompany:
-      return 'Your order is being forwarded to a local company';
+      return '${lang.strings["taxi"]["orders"]["orderStatus"]["forwarding"]}';
 
     default:
       return 'Unknown status';

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
@@ -14,7 +15,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -104,6 +104,7 @@ class AuthController extends GetxController {
                     .toFirebaseFormatString());
           }
           _user.value = MainUserInfo.fromData(event.snapshot.value);
+          _userInfoStreamController.add(_user.value);
           if (_user.value!.language != null)
             Get.find<LanguageController>().setLanguage(_user.value!.language!);
         });

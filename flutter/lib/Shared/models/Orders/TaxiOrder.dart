@@ -159,6 +159,7 @@ class TaxiOrder extends Order {
     // all of them are in /past node
     return status == TaxiOrdersStatus.CancelledByCustomer ||
         status == TaxiOrdersStatus.CancelledByTaxi ||
+        status == TaxiOrdersStatus.ForwardingUnsuccessful ||
         status == TaxiOrdersStatus.Expired;
   }
 

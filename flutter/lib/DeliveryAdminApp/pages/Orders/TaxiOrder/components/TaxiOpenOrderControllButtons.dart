@@ -123,6 +123,8 @@ class _TaxiOpenOrderControllButtonsState
         return Column(
           children: [
             Divider(),
+            if (widget.order.serviceProvider != null)
+              Text(widget.order.driver?.taxiNumber ?? 'hhh'),
             Row(
               children: [
                 Icon(
@@ -175,8 +177,8 @@ class _TaxiOpenOrderControllButtonsState
                     FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
                   ],
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (v) {
-                    if (num.tryParse(v!) == null) {
+                  validator: (value) {
+                    if (num.tryParse(value!) == null) {
                       return 'Please enter a valid taxi number';
                     } else {
                       return null;
