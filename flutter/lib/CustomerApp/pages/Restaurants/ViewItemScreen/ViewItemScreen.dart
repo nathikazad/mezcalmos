@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'components/BottomBarItemViewScreen.dart';
 import 'components/ChooseOneCheckBox.dart';
 import 'components/ChoosenManyCheckBox.dart';
@@ -85,7 +85,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     return Obx(
       () => Scaffold(
         appBar: CustomerAppBar(
-          title: currentRestaurant != null ? "${currentRestaurant!.name}" : "",
+          title: currentRestaurant != null
+              ? "${cartItem.value!.item.name[lang.userLanguageKey]}"
+              : "",
           autoBack: true,
         ),
         body: (cartItem.value?.item == null)
@@ -231,11 +233,4 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       return true;
     }
   }
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
 }

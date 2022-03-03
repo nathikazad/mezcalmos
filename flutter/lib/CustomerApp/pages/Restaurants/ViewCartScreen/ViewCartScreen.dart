@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 
 import 'components/CartIsEmptyScreen.dart';
 
@@ -131,6 +132,20 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     }
   }
 
+  /// Call this right after customer presses Checkout
+  /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
+  Future<void> avoidCheckoutRaceCondition(String orderId) async {
+    if (Get.find<OrderController>().getOrder(orderId) == null) {
+      mezDbgPrint(
+          "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ]  RACING CONDITION HAPPENING ... ");
+      await Get.find<OrderController>()
+          .getCurrentOrderStream(orderId)
+          .firstWhere((order) => order != null);
+    } else
+      mezDbgPrint(
+          "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ] NO RACING CONDITION HAPPEND ! ");
+  }
+
 //itemviewscreen
   void checkoutActionButton() async {
     if (nbClicks == 0) {
@@ -144,10 +159,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         //     controller.cart.value.restaurant!.id = "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx";
 
         var response = await controller.checkout();
-        mezDbgPrint(
-            "======== the response is ${response.errorCode} and the cart value ${controller.cart.value.toFirebaseFormattedJson().toString()}");
-        print(response.errorCode.toString());
+
         if (response.success) {
+          await avoidCheckoutRaceCondition(response.data["orderId"]);
+
           controller.clearCart();
           popEverythingAndNavigateTo(
               getRestaurantOrderRoute(response.data["orderId"]));
@@ -199,11 +214,4 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       return true;
     }
   }
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
 }

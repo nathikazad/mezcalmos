@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 class RestaurantsListItemsOfComponent extends StatefulWidget {
   RestaurantsListItemsOfComponent({Key? key, required this.item, this.function})
@@ -110,11 +111,4 @@ class _RestaurantsListItemsOfComponentState
       },
     );
   }
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
 }

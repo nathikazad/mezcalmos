@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -79,17 +78,6 @@ class IncomingOrdersController extends GetxController {
       });
       orders.sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
     });
-
-    // _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
-    //   mezDbgPrint("[+] Callback executed :: app resumed !");
-    //   orders.forEach((element) {
-    //     _databaseHelper.firebaseDatabase
-    //         .reference()
-    //         .child(notificationStatusReadNode(
-    //             element.orderId, _authController.user!.uid))
-    //         .set(true);
-    //   });
-    // });
   }
 
   TaxiOrder? getOrder(String orderId) {
@@ -170,6 +158,7 @@ class IncomingOrdersController extends GetxController {
       HttpsCallableResult response =
           await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});
       mezDbgPrint(response.data.toString());
+
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       mezDbgPrint(e.toString());
