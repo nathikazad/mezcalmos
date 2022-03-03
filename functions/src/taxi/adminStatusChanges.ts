@@ -81,6 +81,11 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
   if (newStatus == TaxiOrderStatus.ForwardingSuccessful && data.taxiNumber) {
     backgroundNotification[Language.EN].body.replace(", ", ` ${data.taxiNumber} `);
     backgroundNotification[Language.ES].body.replace(", ", ` ${data.taxiNumber} `);
+    order.driver = {
+      taxiNumber: data.taxiNumber,
+      id: "none",
+      image: "none"
+    }
   }
 
   let notification: Notification = {
