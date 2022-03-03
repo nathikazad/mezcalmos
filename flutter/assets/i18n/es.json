@@ -92,7 +92,7 @@
                     "canceledByAdmin": "Tu pedido es cancelado por el Restaurante.",
                     "canceledByCustomer": "Su pedido es cancelado por el cliente.",
                     "recievied": "Su pedido es recibido por el restaurante."
-                    },
+                },
                 "orderStatus":"Estado de la orden",
                 "preparing": "Preparando el pedido",
                 "readyForPickUp": "Lista para recoger",
@@ -179,12 +179,11 @@
             },
             "savedLocationsListEmpty" : "Tu lista de ubicaciones guardadas está vacía",
             "clickBtnToAddNewLocation" : "Agregue una nueva ubicación haciendo clic en el botón de abajo"
-
         },
         "pickLocation":{
             "pickLocation":"Elegir ubicación",
             "pickLabele":"Busque la ubicación o mueva el mapa y elija la ubicación"
-            },
+        },
         "orders": {
             "title": "Pedidos",
             "onGoingOrders":"Pedidos en curso",
@@ -282,7 +281,6 @@
             "orderCancelSuccess": "El pedido se canceló correctamente.",
             "orderCancelFailed": "No se pudo cancelar el pedido.",
             "serverCommunicationError" : "No se pudo comunicar con el servidor :("
-
         },
         "permissions": {
             "cameraAccessOffTitle" : "La aplicación no puede acceder a la cámara.",
