@@ -161,6 +161,7 @@
             "rideCancelledByCustomer": "You have cancelled your ride",
             "rideCancelledByCompany": "Ride cancelled by the company",
             "forwardSuccess": "You ride has been successfully forwarded to a local taxi",
+            "taxiNumber": "Taxi number",
             "ride": "ride",
             "taxiRideCheckedTooltip": "This shows how many drivers have received your offer but did not find the offer acceptable.",
             "taxiRequestPriceTooltip": "How much are you willing to offer for this ride? We will broadcast your offer to all taxi drivers near you, they will accept your order only if they find the offered price acceptable.",

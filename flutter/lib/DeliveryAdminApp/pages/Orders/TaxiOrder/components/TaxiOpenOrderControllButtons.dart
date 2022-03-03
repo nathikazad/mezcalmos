@@ -123,8 +123,6 @@ class _TaxiOpenOrderControllButtonsState
         return Column(
           children: [
             Divider(),
-            if (widget.order.serviceProvider != null)
-              Text(widget.order.driver?.taxiNumber ?? 'hhh'),
             Row(
               children: [
                 Icon(

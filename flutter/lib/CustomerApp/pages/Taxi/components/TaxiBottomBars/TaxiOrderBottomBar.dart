@@ -314,7 +314,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                widget.order.value!.driver?.taxiNumber ?? 'taxinumberNull',
+                " ${lang.strings?["customer"]?["taxiView"]?["taxiNumber"]} : ${widget.order.value!.driver!.taxiNumber}",
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               Text(lang.strings?["customer"]?["taxiView"]?["forwardSuccess"],

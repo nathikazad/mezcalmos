@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 class TaxiState {
@@ -57,7 +56,6 @@ class TaxiDriver {
       };
 }
 
-
 // Used by taxi order
 class TaxiUserInfo extends UserInfo {
   String taxiNumber;
@@ -84,11 +82,11 @@ class TaxiUserInfo extends UserInfo {
         ? data["language"].toString().toLanguageType()
         : null;
     return TaxiUserInfo(
-        id: data["id"],
-        name: data["name"],
+        id: data["id"] ?? '',
+        name: data["name"] ?? '',
         image: data["image"],
         taxiNumber: data["taxiNumber"].toString(),
-        sitio: data["sitio"],
+        sitio: data["sitio"] ?? '',
         language: language,
         location: location);
   }

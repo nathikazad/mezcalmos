@@ -142,6 +142,7 @@
             "rideCancelledByCustomer": "Has cancelado tu viaje",
             "rideCancelledByCompany": "Viaje cancelado por la empresa.",
             "forwardSuccess": "Tu viaje se ha desviado con éxito a un taxi local",
+            "taxiNumber": "Número de taxis",
             "ride": "viaje",
             "taxiRideCheckedTooltip": "Esto muestra cuántos conductores recibieron su oferta pero no encontraron aceptable la oferta",
             "taxiRequestPriceTooltip": "¿Cuánto está dispuesto a ofrecer por este viaje? Transmitiremos su oferta a todos los taxistas cerca de usted, aceptarán su pedido solo si encuentran que el precio ofrecido es aceptable.",
