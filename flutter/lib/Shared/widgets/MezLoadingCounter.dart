@@ -8,13 +8,18 @@ class MezLoadingCounter extends StatefulWidget {
   final int counterDurationInSeconds;
   final double circleSize;
   final Widget? childInsideCounter;
-
+  final double loadingLineHeight;
+  final double? manualCounterValue;
+  final bool reversed;
   MezLoadingCounter(
       {required this.onCounterEnd,
-      required this.counterDurationInSeconds,
+      this.counterDurationInSeconds = 30,
       required this.circleSize,
       this.childInsideCounter,
-      this.onCounterChange});
+      this.onCounterChange,
+      this.manualCounterValue,
+      this.reversed = false,
+      this.loadingLineHeight = 20});
 
   @override
   _MezLoadingCounterState createState() => _MezLoadingCounterState();
@@ -26,7 +31,9 @@ class _MezLoadingCounterState extends State<MezLoadingCounter> {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
-        tween: Tween(begin: 0.0, end: 1.0),
+        tween: widget.reversed
+            ? Tween(begin: 1.0, end: 0.0)
+            : Tween(begin: 0.0, end: 1.0),
         duration: Duration(seconds: widget.counterDurationInSeconds),
         onEnd: widget.onCounterEnd,
         builder: (ctx, double value, child) {
@@ -43,9 +50,9 @@ class _MezLoadingCounterState extends State<MezLoadingCounter> {
                 ShaderMask(
                   shaderCallback: (rect) {
                     return SweepGradient(
-                      startAngle: 0.0,
+                      startAngle: widget.reversed ? 1.0 : 0.0,
                       endAngle: 3.14 * 2,
-                      stops: [value, 0.0],
+                      stops: [widget.manualCounterValue ?? value, 0.0],
                       center: Alignment.center,
                       colors: [
                         Color.fromARGB(255, 172, 89, 252),
@@ -61,16 +68,14 @@ class _MezLoadingCounterState extends State<MezLoadingCounter> {
                 ),
                 Center(
                   child: Container(
-                    width: widget.circleSize - 20,
-                    height: widget.circleSize - 20,
+                    width: widget.circleSize - widget.loadingLineHeight,
+                    height: widget.circleSize - widget.loadingLineHeight,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color.fromARGB(255, 236, 236, 236)),
                     child: widget.childInsideCounter ??
                         Center(
-                          child: Text((value * widget.counterDurationInSeconds)
-                              .toInt()
-                              .toString()),
+                          child: Text(_currentCount.toInt().toString()),
                         ),
                   ),
                 )

@@ -84,7 +84,8 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
     return Scaffold(
-        appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back, withOrder: true),
+        appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
+            function: Get.back, withOrder: true),
         body: Obx(() {
           if (order.value == null) {
             // Order Loading ..

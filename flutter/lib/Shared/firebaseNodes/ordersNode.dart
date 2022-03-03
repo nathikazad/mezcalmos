@@ -6,6 +6,10 @@ String rootOpenOrderReadNode(String orderId, String uid) {
   return rootTaxiOpenOrdersNode() + '/$orderId/notificationStatus/$uid/read';
 }
 
+String rootOpenOrderCounterOffer(String orderId, String driverId) {
+  return rootTaxiOpenOrdersNode() + '/$orderId/counterOffers/$driverId';
+}
+
 String rootOpenOrderReceivedNode(String orderId, String uid) {
   return rootTaxiOpenOrdersNode() +
       '/$orderId/notificationStatus/$uid/received';

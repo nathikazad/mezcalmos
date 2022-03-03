@@ -80,7 +80,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     laundryOrderController.pastOrders.stream.listen((_) {
       laundryPastOrders.value = laundryFetchPastByRange();
     });
-   
+
     // _ordersListViewController.addListener(() {
     //   mezDbgPrint(_ordersListViewController.offset);
     //   if (_ordersListViewController.offset <= 0.1) {

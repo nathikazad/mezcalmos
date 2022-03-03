@@ -35,8 +35,13 @@ class TaxiController extends GetxController {
       // _temp.add(value)
       mezDbgPrint("-----------==== @saad@ox ===-----------");
       mezDbgPrint("${_onlineTaxiDrivers.value[taxiId]}");
-      _temp.add(OnlineTaxiDriver.fromData(
-          taxiId: taxiId, data: _onlineTaxiDrivers.value[taxiId]));
+      var _driver = OnlineTaxiDriver.fromData(
+          taxiId: taxiId, data: _onlineTaxiDrivers.value[taxiId]);
+      if (_driver.isDriverAvailable()) {
+        _temp.add(_driver);
+      } else {
+        mezDbgPrint("Driver Not available!");
+      }
       mezDbgPrint("-----------==== @saad@ox ===-----------");
     });
 
@@ -111,6 +116,7 @@ class TaxiController extends GetxController {
     await _databaseHelper.firebaseDatabase
         .reference()
         .child(customersCounterOfferNode(orderId, customerId, driverId))
+        .child('status')
         .set(CounterOfferStatus.Accepted.toFirebaseFormatString());
 
     mezDbgPrint("Accept Taxi Called");
@@ -136,6 +142,7 @@ class TaxiController extends GetxController {
     await _databaseHelper.firebaseDatabase
         .reference()
         .child(customersCounterOfferNode(orderId, customerId, driverId))
+        .child('status')
         .set(CounterOfferStatus.Rejected.toFirebaseFormatString());
   }
 

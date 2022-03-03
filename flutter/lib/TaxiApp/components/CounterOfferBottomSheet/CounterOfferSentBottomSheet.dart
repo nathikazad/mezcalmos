@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezLoadingCounter.dart';
@@ -8,16 +9,22 @@ import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
 import 'package:sizer/sizer.dart';
 
 class CounterOfferSentBottomSheet extends StatelessWidget {
-  final Rxn<CounterOffer> counterOffer;
+  CounterOffer counterOffer;
   final IncomingOrdersController controller;
   final TaxiOrder order;
   final Function() onCounterEnd;
+  final int duration;
+  final Function()? onRejected;
+  final Function()? onAccepted;
 
   CounterOfferSentBottomSheet(
       {required this.counterOffer,
       required this.controller,
       required this.order,
-      required this.onCounterEnd});
+      required this.onCounterEnd,
+      this.onAccepted,
+      this.onRejected,
+      this.duration = nDefaultCounterOfferValidExpireTimeInSeconds});
   final double size = 100;
 
   @override
@@ -41,13 +48,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
           padding: EdgeInsets.only(left: 50, right: 50, top: 5),
           child: Divider(),
         ),
-        MezLoadingCounter(
-            onCounterChange: (counterValue) {
-              mezDbgPrint("======> $counterValue");
-            },
-            onCounterEnd: onCounterEnd,
-            circleSize: size,
-            counterDurationInSeconds: 20),
+        getBottomSheetBodyByCounterOfferStatus(),
         Padding(
           padding: EdgeInsets.only(left: 50, right: 50, top: 5),
           child: Divider(),
@@ -58,7 +59,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Offer price :'),
-                Text("\$${counterOffer.value!.price}"),
+                Text("\$${counterOffer.price}"),
               ],
             )),
         Padding(
@@ -68,7 +69,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
               children: [
                 Text('Offer status :'),
                 Text(
-                    "${counterOffer.value!.counterOfferStatus.toFirebaseFormatString()}"),
+                    "${counterOffer.counterOfferStatus.toFirebaseFormatString()}"),
               ],
             )),
         Padding(
@@ -84,5 +85,40 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Widget getBottomSheetBodyByCounterOfferStatus() {
+    switch (counterOffer.counterOfferStatus) {
+      case CounterOfferStatus.Rejected:
+        onRejected?.call();
+        return Icon(
+          Icons.cancel,
+          size: size,
+          color: Colors.red,
+        );
+      case CounterOfferStatus.Accepted:
+        onAccepted?.call();
+        return Icon(
+          Icons.check_circle_rounded,
+          size: size,
+          color: Colors.green,
+        );
+      default:
+        return MezLoadingCounter(
+          onCounterChange: (counterValue) {
+            mezDbgPrint("======> $counterValue");
+          },
+          reversed: true,
+          manualCounterValue:
+              counterOffer.validityTimeDifference().abs().toDouble() /
+                  nDefaultCounterOfferValidExpireTimeInSeconds,
+          // manualCounterValue: ((nDefaultCounterOfferValidExpireTimeInSeconds -
+          //         counterOffer.validityTimeDifference().abs()) /
+          //     nDefaultCounterOfferValidExpireTimeInSeconds),
+          onCounterEnd: onCounterEnd,
+          circleSize: size,
+          counterDurationInSeconds: duration,
+        );
+    }
   }
 }

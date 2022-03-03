@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
@@ -86,8 +87,8 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
       } else if (state.currentOrder != null) {
         mezDbgPrint("TaxiWrapper::handleState going to current order");
         Get.toNamed(kCurrentOrderRoute);
-      } else if (state.inNegotationOrderId != null) {
-        handleInNegotationMode(state.inNegotationOrderId!);
+      } else if (state.inOrderNegotation != null) {
+        await handleInNegotationMode(state.inOrderNegotation!);
       } else {
         mezDbgPrint("TaxiWrapper::handleState going to incoming orders");
         Get.toNamed(kIncomingOrdersListRoute);
@@ -101,38 +102,35 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   ///   remove from negotiation
   /// else
   ///   go to order with listener
-  void handleInNegotationMode(String orderId) {
+  Future<void> handleInNegotationMode(
+      InCounterOfferNegotiation negotiation) async {
+    mezDbgPrint("@SAAD@2 => handleInNegotationMode");
     IncomingOrdersController incomingOrdersController =
         Get.put<IncomingOrdersController>(IncomingOrdersController());
-    TaxiOrder? taxiOrder = incomingOrdersController.getOrder(orderId);
-    // assuming orders have been loaded
-    // check if order is null
-    // TODO: make sure incoming orders are loaded
-    if (taxiOrder == null) {
+    // Because when calling getOrder , the IncomingOrdersController's Orders listener hasn't even been started,
+    // thus we check directly and quickly the db first, if it does exists then we wait for the IncomingOrdersController
+    // to get the order.
+    CounterOffer? _driverCounterOffer =
+        await incomingOrdersController.getDriverCountOfferInCustomersNode(
+            negotiation.orderId, negotiation.customerId);
+    if (_driverCounterOffer == null) {
       incomingOrdersController.removeFromNegotiationMode(
-          orderId, taxiOrder!.customer.id,
+          negotiation.orderId, negotiation.customerId,
           expired: true);
       Get.toNamed(kIncomingOrdersListRoute);
     } else {
-      String userId = _authController.fireAuthUser!.uid;
-      CounterOffer? counterOffer = taxiOrder.findCounterOfferByDriverId(userId);
-      // check if counter offer data exists
-      if (counterOffer == null) {
+      mezDbgPrint("@SAAD@2 => in else = in else");
+      // check if counter offer is expired
+      if (_driverCounterOffer.validityTimeDifference() > 0) {
+        mezDbgPrint("@SAAD@2 => in else = in else = in if");
+
         incomingOrdersController.removeFromNegotiationMode(
-            orderId, taxiOrder.customer.id,
+            negotiation.orderId, negotiation.customerId,
             expired: true);
         Get.toNamed(kIncomingOrdersListRoute);
       } else {
-        // check if counter offer is expired
-        if (DateTime.now().toUtc().isAfter(counterOffer.offerValidTime) ||
-            counterOffer.counterOfferStatus != CounterOfferStatus.Submitted) {
-          incomingOrdersController.removeFromNegotiationMode(
-              orderId, taxiOrder.customer.id,
-              expired: true);
-          Get.toNamed(kIncomingOrdersListRoute);
-        } else {
-          Get.toNamed(getIncomingOrderRoute(orderId));
-        }
+        mezDbgPrint("@SAAD@2 => in else = in else = in else");
+        Get.toNamed(getIncomingOrderRoute(negotiation.orderId));
       }
     }
   }

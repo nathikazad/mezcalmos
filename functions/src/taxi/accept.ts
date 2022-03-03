@@ -94,14 +94,16 @@ export = functions.https.onCall(async (data, context) => {
     }
 
     if (data.counterOfferDriverId) {
-      if (!order.counterOffers || !order.counterOffers![data.counterOfferDriverId]
-        || order.counterOffers![data.counterOfferDriverId].status != CounterOfferStatus.Accepted) {
+      let orderFromCustomerNode : TaxiOrder = (await customerNodes.inProcessOrders(order.customer.id, orderId).get()).val();
+
+      if (!orderFromCustomerNode.counterOffers || !orderFromCustomerNode.counterOffers![data.counterOfferDriverId]
+        || orderFromCustomerNode.counterOffers![data.counterOfferDriverId].status != CounterOfferStatus.Accepted) {
         return {
           status: ServerResponseStatus.Error,
           errorMessage: `No valid counter offer from driver ${data.counterOfferDriverId} found`
         }
       }
-      order.cost = order.counterOffers![data.counterOfferDriverId].price
+      order.cost = orderFromCustomerNode.counterOffers![data.counterOfferDriverId].price
     }
 
     order.status = TaxiOrderStatus.OnTheWay;

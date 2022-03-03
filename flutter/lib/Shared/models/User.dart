@@ -1,5 +1,4 @@
 import 'package:mezcalmos/Shared/models/Generic.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class UserInfo {
   String id;
@@ -23,6 +22,12 @@ class UserInfo {
             : null);
   }
 
+  Map<String, dynamic> toFirebaseJson() => {
+        "id": id,
+        "name": name,
+        "image": image,
+      };
+
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {
         "uid": id,
@@ -31,7 +36,6 @@ class UserInfo {
         "language": language.toString(),
       };
 }
-
 
 class MainUserInfo {
   String id;

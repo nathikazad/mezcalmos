@@ -4,13 +4,19 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
+class InCounterOfferNegotiation {
+  String orderId;
+  String customerId;
+  InCounterOfferNegotiation({required this.customerId, required this.orderId});
+}
+
 class TaxiState {
   bool isAuthorized;
   bool isLooking;
   String? currentOrder;
-  String? inNegotationOrderId;
+  InCounterOfferNegotiation? inOrderNegotation;
   TaxiState(this.isAuthorized, this.isLooking,
-      [this.currentOrder, this.inNegotationOrderId]);
+      [this.currentOrder, this.inOrderNegotation]);
 
   factory TaxiState.fromSnapshot(dynamic data) {
     mezDbgPrint("TaxiDriver ${data}");
@@ -18,9 +24,13 @@ class TaxiState {
         data == null ? false : data['authorizationStatus'] == "authorized";
     bool isLooking = data == null ? false : data['isLooking'] == true;
     String? currentOrder = data == null ? null : data['currentOrderId'];
-    String? inNegotationOrderId = data == null ? null : data['inNegotiation'];
-    return TaxiState(
-        isAuthorized, isLooking, currentOrder, inNegotationOrderId);
+    InCounterOfferNegotiation? _inOrderNegotation =
+        data?['inNegotiation'] == null
+            ? null
+            : InCounterOfferNegotiation(
+                customerId: data['inNegotiation']['customerId'],
+                orderId: data['inNegotiation']['orderId']);
+    return TaxiState(isAuthorized, isLooking, currentOrder, _inOrderNegotation);
   }
 
   Map<String, dynamic> toJson() => {

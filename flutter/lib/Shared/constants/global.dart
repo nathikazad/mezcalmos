@@ -29,6 +29,8 @@ const String tEmailTestPassword = "password";
 const double nDefaultMezcalmosTextSize = 30.5;
 const int nSplashScreenTimer = 1;
 const int nQualityCompressionOfUserImage = 10;
+const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;
+
 // ----------------- Costants Strings ----------------- //
 const String tPrivacyPolicyCustomerApp =
     "https://www.mezcalmos.com/privacy-policy.html";

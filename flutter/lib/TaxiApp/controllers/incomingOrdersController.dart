@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
@@ -11,6 +13,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
@@ -156,6 +159,8 @@ class IncomingOrdersController extends GetxController {
   Future<void> submitCounterOffer(
       String orderId, String customerId, CounterOffer counterOffer) async {
     mezDbgPrint("Submiiiiiiit counter offer !");
+
+    // in customer's node
     await _databaseHelper.firebaseDatabase
         .reference()
         .child(customersCounterOfferNode(
@@ -165,26 +170,57 @@ class IncomingOrdersController extends GetxController {
     await _databaseHelper.firebaseDatabase
         .reference()
         .child(inNegotationNode(_authController.fireAuthUser!.uid))
-        .set(orderId);
+        .set({"orderId": orderId, "customerId": customerId});
   }
 
   /// the first counter offer event from customer
   /// a listener(or alarm at counter offer expiry time) should be
   /// started after submitting counter offer
-  Future<CounterOffer> counterOfferEvent(String orderId, String customerId) {
-    return _databaseHelper.firebaseDatabase
+  // Future<CounterOffer?> counterOfferEvent(String orderId, String customerId) {
+  //   return _databaseHelper.firebaseDatabase
+  //       .reference()
+  //       .child(customersCounterOfferNode(
+  //           orderId, customerId, _authController.fireAuthUser!.uid))
+  //       .onChildChanged
+  //       // .where((event) {
+  //       //   CounterOffer counterOffer = CounterOffer.fromData(
+  //       //       event.snapshot.value,
+  //       //       taxiUserInfo: event.snapshot.value['driverInfos']);
+  //       //   return counterOffer.counterOfferStatus !=
+  //       //       CounterOfferStatus.Submitted;
+  //       // })
+  //       .first
+  //       .then<CounterOffer?>((data) {
+  //     mezDbgPrint("First ===> ${data.snapshot.value}");
+  //     CounterOffer.fromData(data.snapshot.value,
+  //         taxiUserInfo: data.snapshot.value['driverInfos']);
+  //   }).timeout(Duration(seconds: nDefaultCounterOfferValidExpireTimeInSeconds),
+  //           onTimeout: () => null);
+  // }
+
+  // Commented The event above cuz it won't work in case TaxiDriver got redirected to incommingOrderViewScreeen.
+  // insteead we have two approaches :
+  // 1 - Send the CounterOffer as parametere from TaxiWrapper, and then we can listen to the event, even in that case,
+  // there still risk, cuz while moving the driver to the incommingOrderViewScreeen, the Customer might reject it, which
+  // will cause it not get invoked, since it was not changed.
+  // 2 - More reliable which is just calling [getCustomerTaxiOrderIfExistsInDatabase] since we have an async timer on the view that works each 1s
+
+  /// this function gets the order with the given [orderId] directly fron the database,
+  ///
+  /// if it exists then it parse it to a [TaxiOrder] else it returns null.
+  ///
+  /// this is mainly useful in some cases when we need to check an [orderId] but the Controller hasn't loaded orders yet.
+  Future<CounterOffer?> getDriverCountOfferInCustomersNode(
+      String orderId, String customerId) async {
+    DataSnapshot snap = await _databaseHelper.firebaseDatabase
         .reference()
         .child(customersCounterOfferNode(
             orderId, customerId, _authController.fireAuthUser!.uid))
-        .onChildChanged
-        .where((event) {
-          CounterOffer counterOffer =
-              CounterOffer.fromData(event.snapshot.value);
-          return counterOffer.counterOfferStatus !=
-              CounterOfferStatus.Submitted;
-        })
-        .first
-        .then((value) => CounterOffer.fromData(value.snapshot));
+        .once();
+    return snap.value != null
+        ? CounterOffer.fromData(snap.value,
+            taxiUserInfo: UserInfo.fromData(snap.value['driverInfos']))
+        : null;
   }
 
   /// to remove taxi form counter offer mode
@@ -197,12 +233,13 @@ class IncomingOrdersController extends GetxController {
         .child(inNegotationNode(_authController.fireAuthUser!.uid))
         .remove();
 
-    if (expired)
+    if (expired) {
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(customersCounterOfferNode(
               orderId, customerId, _authController.fireAuthUser!.uid))
           .remove();
+    }
     // if it's expired why would we keep it ? Any reasons @Nathikos ?
     // .set(CounterOfferStatus.Expired.toFirebaseFormatString());
   }

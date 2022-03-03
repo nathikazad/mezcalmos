@@ -12,16 +12,11 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     Function? onClick,
     PreferredSizeWidget? tabbar,
     List<Widget> actionIcons = const <Widget>[]}) {
-  Widget btn_icon;
+  Widget btnIcon;
 
   switch (leftBtnType) {
     case AppBarLeftButtonType.Back:
-      if (onClick == null) {
-        onClick = () {
-          Get.back();
-        };
-      }
-      btn_icon = Center(
+      btnIcon = Center(
         child: Icon(
           MezcalmosIcons.chevron_left,
           color: Colors.white,
@@ -33,7 +28,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       if (onClick == null) {
         onClick = Get.find<SideMenuDrawerController>().openMenu;
       }
-      btn_icon = Icon(
+      btnIcon = Icon(
         MezcalmosIcons.stream,
         color: Colors.white,
         size: 16,
@@ -81,7 +76,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight),
                 ),
-                child: btn_icon,
+                child: btnIcon,
               ),
             ),
           ),

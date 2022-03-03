@@ -1,15 +1,15 @@
 class OnlineTaxiDriver {
   String taxiId;
   dynamic position;
-  bool isOnline;
-  bool isInOrder;
-  dynamic lastUpdateTime;
+  bool online;
+  bool inOrder;
+  DateTime lastUpdateTime;
 
   OnlineTaxiDriver(
       {required this.taxiId,
       required this.position,
-      required this.isOnline,
-      required this.isInOrder,
+      required this.online,
+      required this.inOrder,
       required this.lastUpdateTime});
 
   factory OnlineTaxiDriver.fromData(
@@ -17,16 +17,22 @@ class OnlineTaxiDriver {
     return OnlineTaxiDriver(
         taxiId: taxiId,
         position: data['position'],
-        isOnline: data['isOnline'] ?? false,
-        isInOrder: data['isInOrder'] ?? false,
-        lastUpdateTime: data['lastUpdateTime']);
+        online: data['online'] ?? false,
+        inOrder: data['inOrder'] ?? false,
+        lastUpdateTime: DateTime.parse(data['lastUpdateTime']));
+  }
+
+  bool isDriverAvailable() {
+    return online &&
+        !inOrder &&
+        lastUpdateTime.difference(DateTime.now()).inMinutes < 5;
   }
 
   Map toJson() => {
         "taxiId": taxiId,
         "position": position,
-        "isOnline": isOnline,
-        "isInOrder": isInOrder,
+        "isOnline": online,
+        "isInOrder": inOrder,
         "lastUpdateTime": lastUpdateTime
       };
 }

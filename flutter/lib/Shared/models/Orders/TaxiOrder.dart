@@ -1,5 +1,7 @@
+import 'package:get/state_manager.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -53,7 +55,16 @@ class TaxiOrder extends Order {
   double distanceToClient = 0;
   TaxiUserInfo? get driver => this.serviceProvider as TaxiUserInfo?;
   List<TaxiNotificationStatus> notificationStatuses = [];
-  List<CounterOffer> counterOffers = [];
+  List<CounterOffer> _counterOffers = [];
+
+  List<CounterOffer> getValidCounterOfferts() {
+    return _counterOffers
+        .where((offer) =>
+            offer.validityTimeDifference() < 0 &&
+            offer.counterOfferStatus == CounterOfferStatus.Submitted)
+        .toList();
+  }
+
   TaxiOrder(
       {required String orderId,
       required num cost,
@@ -136,14 +147,24 @@ class TaxiOrder extends Order {
         // DO NOTHING
       }
     });
-
+    mezDbgPrint("len #s#a#a#d ====> ${data['counterOffers']}");
     data["counterOffers"]
         ?.forEach((dynamic driverId, dynamic counterOfferData) {
       try {
-        taxiOrder.counterOffers
-            .add(CounterOffer.fromData(counterOfferData, driverId.toString()));
+        mezDbgPrint("CounterOffer ===> $counterOfferData");
+
+        var _tmpCountOffer = CounterOffer.fromData(counterOfferData,
+            taxiUserInfo: UserInfo.fromData(counterOfferData["driverInfos"]));
+
+        if (_tmpCountOffer.validityTimeDifference() < 0) {
+          taxiOrder._counterOffers.add(_tmpCountOffer);
+        } else {
+          mezDbgPrint("#s#a#a#d --- Not valid CountOffer .. skipping.");
+        }
       } on NoSuchMethodError catch (_) {
         // DO NOTHING
+        mezDbgPrint(
+            "#s#a#a#d --[data['counterOffers']]--  exception ==> \n $_!!");
       }
     });
 
@@ -189,19 +210,18 @@ class TaxiOrder extends Order {
     });
   }
 
-  List<CounterOffer> getValidCounterOffers() {
-    return this
-        .counterOffers
-        .where((counterOffer) =>
-            counterOffer.counterOfferStatus == CounterOfferStatus.Submitted)
-        .toList();
-  }
+  // List<CounterOffer> getValidCounterOffers() {
+  //   return this
+  //       ._counterOffers
+  //       .where((counterOffer) =>
+  //           counterOffer.counterOfferStatus == CounterOfferStatus.Submitted)
+  //       .toList();
+  // }
 
   CounterOffer? findCounterOfferByDriverId(String driverId) {
     try {
-      return this
-          .counterOffers
-          .firstWhere((counterOffer) => counterOffer.driverId == driverId);
+      return this._counterOffers.firstWhere(
+          (counterOffer) => counterOffer.driverInfos.id == driverId);
     } catch (e) {
       return null;
     }
