@@ -112,18 +112,18 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
 
   /*   -------  [ Order Card ]  -------  */
   Widget orderCard(TaxiOrder order) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(
-              color: Color.fromARGB(255, 236, 236, 236),
-              width: 0.5,
-              style: BorderStyle.solid),
-          borderRadius: BorderRadius.circular(4)),
-      padding: EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 5),
-      child: GestureDetector(
-        onTap: () {
-          Get.toNamed(getIncomingOrderRoute(order.orderId));
-        },
+    return InkWell(
+      onTap: () {
+        Get.toNamed(getIncomingOrderRoute(order.orderId));
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(
+                color: Color.fromARGB(255, 236, 236, 236),
+                width: 0.5,
+                style: BorderStyle.solid),
+            borderRadius: BorderRadius.circular(4)),
+        padding: EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
