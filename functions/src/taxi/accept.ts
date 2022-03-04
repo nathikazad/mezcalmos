@@ -29,7 +29,7 @@ export = functions.https.onCall(async (data, context) => {
       errorMessage: "Required orderId"
     }
   }
-  let taxiId: string = data.counterOfferDriverId || context.auth!.uid;
+  let taxiId: string = data.counterOfferDriverId ?? context.auth!.uid;
   let orderId: string = data.orderId;
   let taxi: Taxi = (await getTaxi(taxiId));
   console.log(`Got taxi ${taxi}`);
