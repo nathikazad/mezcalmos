@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
@@ -138,7 +139,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                         MezSnackbar("Oops",
                             "This prod version is live and running , we can't let you do that :( !");
                       } else
-                        await requestTaxi(_);
+                        await requestTaxi();
                     }),
               ),
               LocationSearchBar(
@@ -215,8 +216,22 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     }
   }
 
+  /// Call this right after customer presses Confirm button
+  /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
+  Future<void> avoidTaxiRequestRaceCondition(String orderId) async {
+    if (Get.find<OrderController>().getOrder(orderId) == null) {
+      mezDbgPrint(
+          "[+] s@@d ==> [ REQUEST TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
+      await Get.find<OrderController>()
+          .getCurrentOrderStream(orderId)
+          .firstWhere((order) => order != null);
+    } else
+      mezDbgPrint(
+          "[+] s@@d ==> [ REQUEST TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
+  }
+
   // after confirm button is clicked on mez pick google map
-  Future<void> requestTaxi(Location? loc) async {
+  Future<void> requestTaxi() async {
     // we show grayed Confirm button so the user won't press it twice.
     this.locationPickerController.showLoadingIconOnConfirm();
 
@@ -224,6 +239,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     ServerResponse response = await controller.requestTaxi(taxiRequest.value);
     if (response.success) {
       String orderId = response.data["orderId"];
+      await avoidTaxiRequestRaceCondition(orderId);
       // in case the widget is still mounted , then make dart scheduale this delayed call as soon as possible ,
       // so we don't fall into assertion error ('!_debugLocked': is not true.)
       await Future.delayed(Duration.zero, () {

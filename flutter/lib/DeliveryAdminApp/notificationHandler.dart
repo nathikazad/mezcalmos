@@ -11,7 +11,7 @@ Notification deliveryAdminNotificationHandler(String key, dynamic value) {
   // mezDbgPrint(notificationType.toFirebaseFormatString());
   switch (notificationType) {
     case NotificationType.NewMessage:
-      mezDbgPrint("the key is $key and its value ${value.toString()}");
+      // mezDbgPrint("the key is $key and its value ${value.toString()}");
       return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:
       return orderStatusChangeNotification(key, value);

@@ -8,6 +8,7 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryDriverController.
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderNoteCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderShippingLocation.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderTotalCostCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -19,6 +20,8 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import '../../../../Shared/models/Drivers/DeliveryDriver.dart';
 import '../../../../Shared/models/Orders/Order.dart';
 import '../Components/DriverCard.dart';
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'components/CurrentOrderInfo.dart';
 import 'components/PastOrderInfo.dart';
 
@@ -79,7 +82,23 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back, withOrder: true),
+        floatingActionButton: new FloatingActionButton(
+          focusColor: Colors.grey.shade100,
+          hoverColor: Colors.grey.shade100,
+          splashColor: Colors.grey.shade100,
+          backgroundColor: Colors.grey.shade100,
+          foregroundColor: Colors.purple.shade700,
+          onPressed: () {
+            Clipboard.setData(ClipboardData(
+                    text: order.value?.clipBoardText(lang.userLanguageKey)))
+                .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
+                    position: SnackPosition.TOP));
+          },
+          tooltip: 'Copy',
+          child: new Icon(Icons.copy),
+        ),
+        appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
+            withOrder: true, function: Get.back),
         backgroundColor: Colors.white,
         body: Obx(() {
           if (order.value == null) {
@@ -118,9 +137,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                   //getCustomerInfoCart(),
                   OrderInfoCard(order: order),
                   //==========================>total cost=====================================
-
-                  //=========== location========================
                   orderTotalCostCard(order),
+                  //=========== location========================
+                  orderShippingLocation(order),
                   //===============================>notes========================>
                   orderNoteCard(order)
                 ],
