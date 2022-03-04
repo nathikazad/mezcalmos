@@ -41,6 +41,15 @@ class BackgroundNotificationsController extends GetxController {
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     }
+    _messaging.getInitialMessage().then((message) =>
+        message != null ? notificationClickHandler(message) : null);
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      notificationClickHandler(message);
+    });
+  }
+
+  void notificationClickHandler(RemoteMessage message) {
+    if (message.data["linkUrl"] != null) Get.toNamed(message.data["linkUrl"]);
   }
 
   Future<NotificationSettings> requestPermission() async {
