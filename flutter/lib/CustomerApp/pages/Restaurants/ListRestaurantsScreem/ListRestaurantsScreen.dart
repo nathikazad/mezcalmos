@@ -70,7 +70,8 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
                             restaurant: restaurants[index],
                             onClick: () {
                               Get.toNamed(
-                                  getRestaurantRoute(restaurants[index].id),
+                                  getRestaurantRoute(
+                                      restaurants[index].info.id),
                                   arguments: restaurants[index]);
                             },
                           )),

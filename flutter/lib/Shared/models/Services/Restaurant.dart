@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -11,18 +10,12 @@ class Restaurant extends Service {
   List<Item> items = [];
 
   Restaurant(
-      {required String id,
+      {required ServiceUserInfo userInfo,
       required this.description,
-      required String name,
-      required String photo,
-      Location? location,
       Schedule? schedule,
       required ServiceState restaurantState})
       : super(
-            id: id,
-            name: name,
-            photo: photo,
-            location: location,
+            info: userInfo,
             schedule: schedule,
             state: restaurantState);
 
@@ -37,8 +30,6 @@ class Restaurant extends Service {
                 .toAuthorizationStatus() ??
             AuthorizationStatus.Unauthorized,
         restaurantData["state"]?["available"] ?? false);
-    String name = restaurantData["info"]["name"];
-    String photo = restaurantData["info"]["image"];
     Map<LanguageType, String> description =
         convertToLanguageMap(restaurantData["details"]["description"]);
     //restaurantData["details"]["description"].toLanguageMap();
@@ -46,16 +37,12 @@ class Restaurant extends Service {
         ? Schedule.fromData(restaurantData["details"]["schedule"])
         : null;
 
-      Location? location = restaurantData["details"]["locaiton"] != null
-        ? Location.fromFirebaseData(restaurantData["details"]["locaiton"]);
+
 
     Restaurant restaurant = Restaurant(
-        id: restaurantId,
+        userInfo: ServiceUserInfo.fromData(restaurantData["info"]),
         description: description,
-        name: name,
-        photo: photo,
         schedule: schedule,
-        location: location,
         restaurantState: restaurantState);
     restaurantData["menu"].forEach((dynamic itemId, dynamic itemData) {
       restaurant.items.add(Item.itemFromData(itemId, itemData));
@@ -72,9 +59,8 @@ class Restaurant extends Service {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      "id": id,
       "description": description,
-      "name": name,
+      "info": info.toJson(),
       "items": jsonEncode(items),
       "restaurantState": state.toJson()
     };
