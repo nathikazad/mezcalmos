@@ -20,22 +20,15 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-<<<<<<< HEAD
-import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-=======
 
-import '../../../../Shared/models/Drivers/DeliveryDriver.dart';
 import '../../../../Shared/models/Orders/Order.dart';
 import '../Components/DriverCard.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'components/CurrentOrderInfo.dart';
 import 'components/PastOrderInfo.dart';
->>>>>>> deliveryDriverMaster
 
 final currency = new NumberFormat("#,##0.00", "en_US");
-LinearGradient? buttonGraientColor;
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
   @override

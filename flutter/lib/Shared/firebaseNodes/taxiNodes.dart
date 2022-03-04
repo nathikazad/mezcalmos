@@ -10,12 +10,10 @@ String inNegotationNode(String uid) {
   return taxiStateNode(uid) + "/inNegotiation";
 }
 
-String onlineTaxiDrivers() {
-  return 'online/taxi';
-}
-
-String onlineTaxiStateNode(String uid) {
-  return 'online/taxi/$uid/';
+String onlineTaxiDrivers({String? driverId}) {
+  String address = 'online/taxi';
+  if (driverId != null) address += '/$driverId';
+  return address;
 }
 
 String taxiDriverAppVersionNode(String uid) {

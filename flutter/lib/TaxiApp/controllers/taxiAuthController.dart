@@ -182,7 +182,8 @@ class TaxiAuthController extends GetxController {
 
           _databaseHelper.firebaseDatabase
               .reference()
-              .child(onlineTaxiStateNode(_authController.fireAuthUser!.uid))
+              .child(onlineTaxiDrivers(
+                  driverId: _authController.fireAuthUser!.uid))
               .set(positionUpdate);
         } catch (e) {
           mezDbgPrint("Write driver position to db error");

@@ -23,13 +23,3 @@ String rootInProcessOrderDriverLocationNode(
     String orderId, OrderType orderType) {
   return 'orders/inProcess/${orderType.toFirebaseFormatString()}/$orderId/driver/location';
 }
-
-String customersCounterOfferNode(
-    String orderId, String customerId, String driverId) {
-  return 'customers/inProcessOrders/$customerId/$orderId/counterOffers/$driverId';
-}
-
-String taxiCounterOfferNodeStatus(
-    String orderId, String customerId, String driverId) {
-  return customersCounterOfferNode(orderId, customerId, driverId) + "/status";
-}
