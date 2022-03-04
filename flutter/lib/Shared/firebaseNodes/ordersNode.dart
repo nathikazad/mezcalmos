@@ -17,5 +17,24 @@ String rootTaxiInProcessOrderDriverLocationNode(String orderId) {
 
 String rootInProcessOrderDriverLocationNode(
     String orderId, OrderType orderType) {
-  return 'orders/inProcess/${orderType.toFirebaseFormatString()}/$orderId/driver/location';
+  return rootInProcessOrdersNode(orderType: orderType, orderId: orderId) +
+      '/driver/location';
+}
+
+String rootInProcessOrdersNode({OrderType? orderType, String? orderId}) {
+  String node = 'orders/inProcess';
+  if (orderType != null) {
+    node += '/${orderType.toFirebaseFormatString()}';
+    if (orderId != null) node += '/$orderId';
+  }
+  return node;
+}
+
+String rootPastOrdersNode({OrderType? orderType, String? orderId}) {
+  String node = 'orders/past';
+  if (orderType != null) {
+    node += '/${orderType.toFirebaseFormatString()}';
+    if (orderId != null) node += '/$orderId';
+  }
+  return node;
 }

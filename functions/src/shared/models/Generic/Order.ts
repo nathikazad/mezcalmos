@@ -19,6 +19,20 @@ export enum OrderType {
   Water = "water"
 }
 
+export const pluralizeOrderType = function (orderType: OrderType): string {
+  switch (orderType) {
+    case OrderType.Taxi:
+      return "taxis";
+    case OrderType.Restaurant:
+      return "restaurants";
+    case OrderType.Laundry:
+      return "laundries";
+    case OrderType.Water:
+      return "waters";
+
+  }
+}
+
 export enum PaymentType {
   Cash = "cash",
   Card = "card"

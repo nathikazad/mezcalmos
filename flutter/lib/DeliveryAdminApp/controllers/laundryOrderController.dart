@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
 class LaundryOrderController extends GetxController {
@@ -24,7 +25,7 @@ class LaundryOrderController extends GetxController {
     mezDbgPrint("--------------------> LaundrysOrderController Initialized !");
     _currentOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(laundryInProcessOrdersNode())
+        .child(rootInProcessOrdersNode(orderType: OrderType.Laundry))
         .onValue
         .listen((event) {
       List<LaundryOrder> orders = [];
@@ -39,7 +40,7 @@ class LaundryOrderController extends GetxController {
 
     _pastOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(laundryPastOrdersNode())
+        .child(rootPastOrdersNode(orderType: OrderType.Laundry))
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAdded
@@ -162,6 +163,11 @@ class LaundryOrderController extends GetxController {
   // Need to be removed
   Future<ServerResponse> deliveredOrder(String orderId) async {
     return _callLaundryCloudFunction("deliveredOrder", orderId);
+  }
+  
+  Future<ServerResponse> assignLaundry(String orderId, String laundryId) async {
+    return _callLaundryCloudFunction("assignLaundry", orderId,
+        optionalParams: <String, dynamic>{"laundryId": laundryId});
   }
 
   Future<ServerResponse> _callLaundryCloudFunction(

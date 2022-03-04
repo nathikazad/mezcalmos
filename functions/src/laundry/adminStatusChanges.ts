@@ -6,12 +6,15 @@ import { orderInProcess, LaundryOrderStatus, LaundryOrder, LaundryOrderStatusCha
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
+import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { finishOrder } from "./helper";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
 import { pushNotification } from "../shared/notification/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
+import { getLaundry } from "./laundryController";
+import { Laundry } from "../shared/models/Services/Laundry/Laundry";
 
 let statusArrayInSeq: Array<LaundryOrderStatus> =
   [LaundryOrderStatus.OrderReceieved,
@@ -68,6 +71,15 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     }
   }
 
+
+  if (order.serviceProviderId == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Order does not have a laundry`,
+      errorCode: "laundryDontExist"
+    }
+  }
+
   if (newStatus == LaundryOrderStatus.CancelledByAdmin) {
     if (!orderInProcess(order.status))
       return {
@@ -116,8 +128,72 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     await finishOrder(order, orderId);
   else if (newStatus == LaundryOrderStatus.ReadyForDelivery) {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+    laundryNodes.inProcessOrders(order.laundry.id).update(order);
     await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
     deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
   }
   return { status: ServerResponseStatus.Success }
 }
+
+
+export const assignToLaundry = functions.https.onCall(async (data, context) => {
+
+  let response = await isSignedIn(context.auth)
+  if (response != undefined) {
+    return response;
+  }
+
+  response = await checkDeliveryAdmin(context.auth!.uid)
+  if (response != undefined) {
+    return response;
+  }
+
+  if (data.orderId == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Expected order id`,
+      errorCode: "orderIdNotGiven"
+    }
+  }
+
+  if (data.laundryId == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Expected laundry id`,
+      errorCode: "orderIdNotGiven"
+    }
+  }
+
+  let orderId: string = data.orderId;
+  let laundryId: string = data.laundryId;
+  let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
+  if (order == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Order does not exist`,
+      errorCode: "orderDontExist"
+    }
+  }
+
+  if (order.serviceProviderId != null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Order already has a laundry`,
+      errorCode: "laundryAlreadyExist"
+    }
+  }
+
+  let laundry: Laundry = await getLaundry(laundryId);
+  if (laundry == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Laundry does not exist`,
+      errorCode: "laundryDontExist"
+    }
+  }
+
+  order.serviceProviderId = laundryId;
+  order.laundry = laundry.info;
+  laundryNodes.inProcessOrders(laundryId, orderId).set(order);
+  return response
+});

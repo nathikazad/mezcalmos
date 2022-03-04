@@ -35,10 +35,25 @@ abstract class Order {
 
 enum OrderType { Taxi, Restaurant, Laundry, Water }
 
+
+
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+
+  String toPlural() {
+    switch (this) {
+    case OrderType.Taxi:
+      return "taxis";
+    case OrderType.Restaurant:
+      return "restaurants";
+    case OrderType.Laundry:
+      return "laundries";
+    case OrderType.Water:
+      return "waters";
+  }
   }
 }
 

@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
@@ -25,7 +26,7 @@ class RestaurantOrderController extends GetxController {
         "--------------------> RestaurantsOrderController Initialized !");
     _currentOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(restaurantInProcessOrdersNode())
+        .child(rootInProcessOrdersNode(orderType: OrderType.Restaurant))
         .onValue
         .listen((event) {
       List<RestaurantOrder> orders = [];
@@ -41,7 +42,7 @@ class RestaurantOrderController extends GetxController {
     });
     _pastOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(restaurantPastOrdersNode())
+        .child(rootPastOrdersNode(orderType: OrderType.Restaurant))
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAdded

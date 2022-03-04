@@ -103,7 +103,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
 
   void getAndSortRestaurants(List<Restaurant>? data) {
     restaurants = data!
-        .where((resto) => resto.restaurantState.available == true)
+        .where((resto) => resto.state.available == true)
         .toList(growable: true);
     restaurants.sort((a, b) {
       if (b.schedule != null) {
