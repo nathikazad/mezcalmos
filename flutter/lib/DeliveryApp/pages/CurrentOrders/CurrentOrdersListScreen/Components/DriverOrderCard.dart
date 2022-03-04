@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
 
 class DriverOrderCard extends StatelessWidget {
@@ -29,16 +30,18 @@ class DriverOrderCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _getOrderIcon(context),
                   Flexible(
+                    flex: 5,
+                    fit: FlexFit.tight,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           _getOrderTitle(),
-                          style: textTheme.headline3,
+                          style: textTheme.bodyText1,
                         ),
                         SizedBox(
                           height: 5,
@@ -58,7 +61,9 @@ class DriverOrderCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  Spacer(),
+                  _getOrderWidget(),
                 ],
               ),
               Divider(
@@ -106,6 +111,49 @@ class DriverOrderCard extends StatelessWidget {
         radius: 30,
         backgroundImage: CachedNetworkImageProvider(order.customer.image),
       );
+    }
+  }
+
+  Widget _getOrderWidget() {
+    if (order.orderType == OrderType.Restaurant) {
+      switch ((order as RestaurantOrder).status) {
+        case RestaurantOrderStatus.CancelledByAdmin:
+        case RestaurantOrderStatus.CancelledByCustomer:
+          return Icon(
+            Icons.cancel,
+            color: Colors.red,
+            size: 40.sp,
+          );
+        case RestaurantOrderStatus.Delivered:
+          return Icon(
+            Icons.check_circle,
+            color: Colors.green,
+            size: 40.sp,
+          );
+
+        default:
+          return Container();
+      }
+    } else {
+      switch ((order as LaundryOrder).status) {
+        case LaundryOrderStatus.CancelledByAdmin:
+        case LaundryOrderStatus.CancelledByCustomer:
+          return Icon(
+            Icons.cancel,
+            color: Colors.red,
+            size: 40.sp,
+          );
+        case LaundryOrderStatus.Delivered:
+        case LaundryOrderStatus.AtLaundry:
+          return Icon(
+            Icons.check_circle,
+            color: Colors.green,
+            size: 40.sp,
+          );
+
+        default:
+          return Container();
+      }
     }
   }
 

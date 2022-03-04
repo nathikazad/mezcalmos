@@ -195,17 +195,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Obx(
-            () {
-              if (recipientType == ParticipantType.DeliveryAdmin)
-                return Text("Administrador");
-              else
-                return Text(
+          title: (recipientType == ParticipantType.DeliveryAdmin)
+              ? Text("Administrador")
+              : Text(
                   controller.recipient(recipientType: recipientType)?.name ??
                       "User",
-                );
-            },
-          ),
+                ),
         ),
         body: Container(
           child: Column(
