@@ -62,8 +62,11 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
             5;
 
         if (isWithinRange) {
+          mezDbgPrint(
+              "[xdbg]Adding marker with driver name === ${driver.name} | id ${driver.taxiId}");
           locationPickerController.addOrUpdateTaxiDriverMarker(
-              driver.taxiId, driverLocation);
+              driver.taxiId, driverLocation,
+              markerTitle: driver.name);
         }
         // we remove if there is already
         else {

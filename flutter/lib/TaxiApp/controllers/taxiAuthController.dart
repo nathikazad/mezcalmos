@@ -36,6 +36,7 @@ class TaxiAuthController extends GetxController {
 
   bool _checkedAppVersion = false;
   String? _previousStateValue = "init";
+  final lmode = GetStorage().read(getxLmodeKey);
 
   @override
   void onInit() {
@@ -175,6 +176,10 @@ class TaxiAuthController extends GetxController {
           }
           positionUpdate["online"] = _state.value?.isLooking;
           positionUpdate["inOrder"] = _state.value?.currentOrder != null;
+          if (lmode != "prod") {
+            positionUpdate["name"] = _authController.user!.name;
+          }
+
           _databaseHelper.firebaseDatabase
               .reference()
               .child(onlineTaxiStateNode(_authController.fireAuthUser!.uid))

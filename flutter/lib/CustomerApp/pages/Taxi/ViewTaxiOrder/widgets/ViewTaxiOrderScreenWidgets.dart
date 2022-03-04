@@ -144,7 +144,10 @@ class ViewTaxiOrderScreenWidgets {
       right: 0,
       child: AnimatedContainer(
         duration: Duration(seconds: 1),
-        height: viewController.offersBtnClicked.value ? 40.h : 0,
+        height: viewController.offersBtnClicked.value &&
+                viewController.counterOffers.isNotEmpty
+            ? 40.h
+            : 0,
         curve: Curves.easeInExpo,
         width: Get.width,
         decoration: BoxDecoration(
@@ -312,10 +315,13 @@ class ViewTaxiOrderScreenWidgets {
                             onTap: () async {
                               // to do cancel count offer.
                               // we accept counter offer and wait for it.
-                              viewController.taxiController.rejectCounterOffer(
-                                  viewController.order.value!.orderId,
-                                  viewController.order.value!.customer.id,
-                                  offer.driverInfos.id);
+                              viewController.taxiController
+                                  .rejectCounterOffer(
+                                      viewController.order.value!.orderId,
+                                      viewController.order.value!.customer.id,
+                                      offer.driverInfos.id)
+                                  .then((_) => viewController
+                                      .offersBtnClicked.value = false);
                             },
                             child: Icon(
                               Icons.close,

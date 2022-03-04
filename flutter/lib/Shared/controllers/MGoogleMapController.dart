@@ -110,8 +110,8 @@ class MGoogleMapController {
         position: latLng));
   }
 
-  Future<void> addOrUpdateTaxiDriverMarker(
-      String markerId, LatLng latLng) async {
+  Future<void> addOrUpdateTaxiDriverMarker(String markerId, LatLng latLng,
+      {String? markerTitle}) async {
     // this check so we keep one single copy of the asset Bytes instead of re-croping again n again
     if (this._taxiDriverImgDescruptorCopy == null) {
       _taxiDriverImgDescruptorCopy = await cropRonded(
@@ -120,6 +120,9 @@ class MGoogleMapController {
               .asUint8List());
     }
     this._addOrUpdateMarker(Marker(
+        infoWindow: markerTitle == null
+            ? InfoWindow.noText
+            : InfoWindow(title: markerTitle),
         markerId: MarkerId(markerId),
         icon: await bitmapDescriptorLoader(
             (await cropRonded((await rootBundle.load(taxi_driver_marker_asset))

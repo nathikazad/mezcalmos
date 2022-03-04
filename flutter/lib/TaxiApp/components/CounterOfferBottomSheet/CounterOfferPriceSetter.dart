@@ -37,7 +37,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
   void initState() {
     super.initState();
     setState(() {
-      _currentOfferPrice = widget.order.cost;
+      _currentOfferPrice = widget.order.cost + 5;
     });
   }
 
@@ -72,6 +72,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
           width: Get.width,
           child: Center(
             child: IncrementalComponent(
+                minVal: (widget.order.cost as int) + 5,
                 maxVal: 1000,
                 center: true,
                 btnColors: Colors.black,

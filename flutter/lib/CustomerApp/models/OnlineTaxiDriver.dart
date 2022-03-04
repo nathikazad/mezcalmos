@@ -1,5 +1,8 @@
 class OnlineTaxiDriver {
   String taxiId;
+
+  /// [name] is only for debug-staging.
+  String? name;
   dynamic position;
   bool online;
   bool inOrder;
@@ -7,6 +10,7 @@ class OnlineTaxiDriver {
 
   OnlineTaxiDriver(
       {required this.taxiId,
+      this.name,
       required this.position,
       required this.online,
       required this.inOrder,
@@ -16,6 +20,7 @@ class OnlineTaxiDriver {
       {required String taxiId, required dynamic data}) {
     return OnlineTaxiDriver(
         taxiId: taxiId,
+        name: data['name'],
         position: data['position'],
         online: data['online'] ?? false,
         inOrder: data['inOrder'] ?? false,
@@ -30,6 +35,7 @@ class OnlineTaxiDriver {
 
   Map toJson() => {
         "taxiId": taxiId,
+        "name": name,
         "position": position,
         "isOnline": online,
         "isInOrder": inOrder,
