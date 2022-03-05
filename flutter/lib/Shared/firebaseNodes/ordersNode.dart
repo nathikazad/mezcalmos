@@ -12,10 +12,13 @@ String rootOpenOrderReceivedNode(String orderId, String uid) {
 }
 
 String rootTaxiInProcessOrderDriverLocationNode(String orderId) {
-  return rootInProcessOrderDriverLocationNode(orderId, OrderType.Taxi);
+  return rootInProcessOrderDriverLocationNode(
+      orderId: orderId, orderType: OrderType.Taxi);
 }
 
 String rootInProcessOrderDriverLocationNode(
-    String orderId, OrderType orderType) {
-  return 'orders/inProcess/${orderType.toFirebaseFormatString()}/$orderId/driver/location';
+    {required String orderId,
+    required OrderType orderType,
+    String driverAddress = "driver"}) {
+  return 'orders/inProcess/${orderType.toFirebaseFormatString()}/$orderId/$driverAddress/location';
 }

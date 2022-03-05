@@ -118,7 +118,6 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.OtwDelivery;
   }
 
-  @override
   LaundryOrderPhase getCurrentPhase() {
     switch (this.status) {
       case LaundryOrderStatus.OrderReceieved:

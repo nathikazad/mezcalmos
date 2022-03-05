@@ -45,6 +45,8 @@ String customerInProcessOrderReceivedNode(
 }
 
 String customerInProcessOrderDriverLocationNode(
-    String orderId, String customerId) {
-  return 'customers/inProcessOrders/$customerId/$orderId/driver/location';
+    {required String orderId,
+    required String customerId,
+    String driverAddress = "driver"}) {
+  return 'customers/inProcessOrders/$customerId/$orderId/$driverAddress/location';
 }
