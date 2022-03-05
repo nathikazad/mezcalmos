@@ -129,11 +129,12 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                       debugString: "IncomingViewScreen",
                       myLocationButtonEnabled: false,
                     ),
-                    if (iOrderViewController.clickedOffersBtn.value &&
+                    if (iOrderViewController.submittedCounterOffer.value &&
                         iOrderViewController.counterOffer.value == null)
                       InkWell(
                         onTap: () {
-                          iOrderViewController.clickedOffersBtn.value = false;
+                          iOrderViewController.submittedCounterOffer.value =
+                              false;
                         },
                         child: Container(
                           height: Get.height,

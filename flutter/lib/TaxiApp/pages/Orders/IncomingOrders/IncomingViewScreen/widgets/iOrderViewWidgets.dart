@@ -67,7 +67,7 @@ class IOrderViewWidgets {
         right: 0,
         child: AnimatedContainer(
             duration: Duration(seconds: 1),
-            height: iOrderViewController.clickedOffersBtn.value ||
+            height: iOrderViewController.submittedCounterOffer.value ||
                     iOrderViewController.counterOffer.value != null
                 ? 40.h
                 : 0,
@@ -129,7 +129,7 @@ class IOrderViewWidgets {
 
               if (serverResponse.success) {
                 await iOrderViewController
-                    .avoidAcceptRideRaceCondition(_orderId);
+                    .waitForOrderToBeUpdatedAfterAccept(_orderId);
                 // canceling Subscription Just to Avoid possible Racing Conditions
                 iOrderViewController.cancelOrderSubscription();
                 // Go to CurrentOrder View !
@@ -157,7 +157,7 @@ class IOrderViewWidgets {
             MaterialStateProperty.all(Color.fromARGB(255, 172, 89, 252)),
       ),
       onPressed: () {
-        iOrderViewController.clickedOffersBtn.value = true;
+        iOrderViewController.submittedCounterOffer.value = true;
       },
       child: Text(
         'Offer price',

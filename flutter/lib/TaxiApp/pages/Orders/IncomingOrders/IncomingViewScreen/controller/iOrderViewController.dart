@@ -27,7 +27,7 @@ class IOrderViewController {
   Rxn<CounterOffer> counterOffer = Rxn();
   Timer? countOfferTimerValidator;
   RxBool clickedAcceptButton = false.obs;
-  RxBool clickedOffersBtn = false.obs;
+  RxBool submittedCounterOffer = false.obs;
 
   bool checkIfCounterOfferIsNotExpired(CounterOffer? offer) {
     return offer != null && offer.validityTimeDifference() < 0;
@@ -54,7 +54,7 @@ class IOrderViewController {
       // in case counter Offer was accepted.
       if (counterOffer.value?.counterOfferStatus ==
           CounterOfferStatus.Accepted) {
-        await avoidAcceptRideRaceCondition(orderId);
+        await waitForOrderToBeUpdatedAfterAccept(orderId);
         // canceling Subscription Just to Avoid possible Racing Conditions
         cancelOrderSubscription();
         // Go to CurrentOrder View !
@@ -74,7 +74,7 @@ class IOrderViewController {
     await controller.removeFromNegotiationMode(
         order!.orderId, order!.customer.id,
         expired: expired);
-    clickedOffersBtn.value = false;
+    submittedCounterOffer.value = false;
   }
 
   /// this gets invoked when the Taxi Driver presses [Send offer] button.
@@ -89,12 +89,12 @@ class IOrderViewController {
                     id: authController.user!.id,
                     name: authController.user!.name!,
                     image: authController.user!.image!)))
-        .then((value) => clickedOffersBtn.value = false);
+        .then((value) => submittedCounterOffer.value = false);
   }
 
   /// Call this right after accept order
   /// Uses : Make sure that the orderId has been written to the taxiState since we do not await it in backend.
-  Future<void> avoidAcceptRideRaceCondition(String orderId) async {
+  Future<void> waitForOrderToBeUpdatedAfterAccept(String orderId) async {
     if (taxiAuthController.taxiState?.currentOrder == null) {
       mezDbgPrint(
           "[+] s@@d ==> [ ACCEPT TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
