@@ -3,13 +3,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/components/CounterOfferBottomSheet/CounterOfferPriceSetter.dart';
 import 'package:mezcalmos/TaxiApp/components/CounterOfferBottomSheet/CounterOfferSentBottomSheet.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/controller/iOrderViewController.dart';
-import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:sizer/sizer.dart';
 
 class IOrderViewWidgets {
@@ -67,10 +63,7 @@ class IOrderViewWidgets {
         right: 0,
         child: AnimatedContainer(
             duration: Duration(seconds: 1),
-            height: iOrderViewController.submittedCounterOffer.value ||
-                    iOrderViewController.counterOffer.value != null
-                ? 40.h
-                : 0,
+            height: iOrderViewController.bottomSheetHeight.value,
             curve: Curves.easeInExpo,
             width: Get.width,
             decoration: BoxDecoration(
@@ -90,19 +83,14 @@ class IOrderViewWidgets {
                     ? CounterOfferSentBottomSheet(
                         counterOffer: iOrderViewController.counterOffer.value!,
                         controller: iOrderViewController.controller,
-                        order: iOrderViewController.order!,
-                        onRejected: iOrderViewController
-                            .removeCounterOfferAndResetState,
-                        onAccepted: () async => await iOrderViewController
-                            .removeCounterOfferAndResetState
-                            .call(expired: false),
+                        order: iOrderViewController.order.value!,
                         onCounterEnd: () async => await iOrderViewController
                             .removeCounterOfferAndResetState(),
                       )
                     : CounterOfferPriceSetter(
                         counterOffer: iOrderViewController.counterOffer,
                         controller: iOrderViewController.controller,
-                        order: iOrderViewController.order!,
+                        order: iOrderViewController.order.value!,
                         onCountOfferSent: (priceOffered) =>
                             iOrderViewController.onCountOfferSent(priceOffered),
                         onPriceChanged: (price) {
@@ -120,29 +108,7 @@ class IOrderViewWidgets {
             MaterialStateProperty.all(Color.fromARGB(255, 79, 168, 35)),
       ),
       onPressed: !iOrderViewController.clickedAcceptButton.value
-          ? () async {
-              String _orderId = iOrderViewController.order!.orderId;
-              iOrderViewController.clickedAcceptButton.value = true;
-
-              ServerResponse serverResponse =
-                  await iOrderViewController.controller.acceptTaxi(_orderId);
-
-              if (serverResponse.success) {
-                await iOrderViewController
-                    .waitForOrderToBeUpdatedAfterAccept(_orderId);
-                // canceling Subscription Just to Avoid possible Racing Conditions
-                iOrderViewController.cancelOrderSubscription();
-                // Go to CurrentOrder View !
-                Get.offNamedUntil(
-                    kCurrentOrderRoute, ModalRoute.withName(kHomeRoute));
-                // Notice the User !
-              } else {
-                // in case Taxi User failed accepting the iOrderViewController.order.
-                iOrderViewController.clickedAcceptButton.value = false;
-                Get.back();
-                MezSnackbar("Oops..", serverResponse.errorMessage!);
-              }
-            }
+          ? iOrderViewController.onTaxiRideAccept
           : () => null,
       child: child,
     );

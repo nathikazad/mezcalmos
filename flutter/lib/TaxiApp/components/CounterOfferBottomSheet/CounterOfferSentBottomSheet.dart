@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
@@ -14,16 +13,12 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
   final TaxiOrder order;
   final Function() onCounterEnd;
   final int duration;
-  final Function()? onRejected;
-  final Function()? onAccepted;
 
   CounterOfferSentBottomSheet(
       {required this.counterOffer,
       required this.controller,
       required this.order,
       required this.onCounterEnd,
-      this.onAccepted,
-      this.onRejected,
       this.duration = nDefaultCounterOfferValidExpireTimeInSeconds});
   final double size = 100;
 
@@ -90,14 +85,12 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
   Widget getBottomSheetBodyByCounterOfferStatus() {
     switch (counterOffer.counterOfferStatus) {
       case CounterOfferStatus.Rejected:
-        onRejected?.call();
         return Icon(
           Icons.cancel,
           size: size,
           color: Colors.red,
         );
       case CounterOfferStatus.Accepted:
-        onAccepted?.call();
         return Icon(
           Icons.check_circle_rounded,
           size: size,

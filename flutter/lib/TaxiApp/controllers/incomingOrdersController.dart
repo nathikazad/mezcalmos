@@ -223,6 +223,30 @@ class IncomingOrdersController extends GetxController {
         : null;
   }
 
+  Stream<CounterOffer?> listenOnCounterOfferChanges(
+      String orderId, String customerId) {
+    return _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customersCounterOfferNode(
+            orderId, customerId, _authController.fireAuthUser!.uid))
+        .onValue
+        .map<CounterOffer?>((counterOfferEvent) {
+      try {
+        dynamic snap = counterOfferEvent.snapshot;
+        CounterOffer? _cOffer = snap.value != null
+            ? CounterOffer.fromData(snap.value,
+                taxiUserInfo: UserInfo.fromData(snap.value['driverInfos']))
+            : null;
+        if (_cOffer != null && _cOffer.validityTimeDifference() < 0) {
+          return _cOffer;
+        }
+        return null;
+      } on StateError catch (_) {
+        return null;
+      }
+    });
+  }
+
   /// to remove taxi form counter offer mode
   /// either after customer responds or a timer runs out
   /// if expired is set then the status in db is set to expired as well
