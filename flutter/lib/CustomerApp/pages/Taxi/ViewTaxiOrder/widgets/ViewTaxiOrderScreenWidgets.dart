@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/controllers/ViewT
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RideReadByTaxisHint.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -17,7 +18,7 @@ import 'package:sizer/sizer.dart';
 class ViewTaxiOrderScreenWidgets {
   final ViewTaxiOrderController viewController;
   ViewTaxiOrderScreenWidgets({required this.viewController});
-
+  LanguageController lang = Get.find<LanguageController>();
   /// this builds [MezToolTip] with the given [getHints()],
   ///
   /// if [Get.find<TaxiController>().numOfTimesToolTipShownToUser()] has already set to 5+,
@@ -43,9 +44,9 @@ class ViewTaxiOrderScreenWidgets {
         child: InkWell(
           onTap: () async {
             YesNoDialogButton res = await yesNoDialog(
-                text: viewController.lang.strings['customer']['cancelOrder']
+                text: lang.strings['customer']['cancelOrder']
                     ['title'],
-                body: viewController.lang.strings['customer']['cancelOrder']
+                body: lang.strings['customer']['cancelOrder']
                     ['question']);
             if (res == YesNoDialogButton.Yes) {
               await viewController.taxiController
@@ -59,7 +60,7 @@ class ViewTaxiOrderScreenWidgets {
                   borderRadius: BorderRadius.circular(10)),
               child: Center(
                 child: Text(
-                  viewController.lang.strings['customer']['taxiView']['cancel'],
+                  lang.strings['customer']['taxiView']['cancel'],
                   style: TextStyle(
                       fontFamily: "psr",
                       color: Colors.white,
@@ -118,7 +119,7 @@ class ViewTaxiOrderScreenWidgets {
     return [
       MezToolTipHint(
         hintWidget: RidePriceControllHint(
-            hintText: viewController.lang.strings['customer']['taxiView']
+            hintText: lang.strings['customer']['taxiView']
                 ['taxiRidePriceTooltip']),
         left: 80.1,
         bottom: 150.5,
