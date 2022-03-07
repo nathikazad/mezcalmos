@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/TaxiApp/components/CounterOfferBottomSheet/CounterOfferPriceSetter.dart';
-import 'package:mezcalmos/TaxiApp/components/CounterOfferBottomSheet/CounterOfferSentBottomSheet.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/CounterOfferBottomSheet/CounterOfferPriceSetter.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/CounterOfferBottomSheet/CounterOfferSentBottomSheet.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/controller/iOrderViewController.dart';
 import 'package:sizer/sizer.dart';
 

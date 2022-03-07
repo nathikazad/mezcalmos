@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedBottomBar.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IPositionedFromToBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/IPositionedBottomBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/IPositionedFromToBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/iOrderViewWidgets.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/controller/iOrderViewController.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/widgets/iOrderViewWidgets.dart';
 import 'package:sizer/sizer.dart';
 
 class IncomingOrderViewScreen extends StatefulWidget {
@@ -61,7 +60,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                       Get.back();
                     }
                   : null),
-          body: iOrderViewController.order != null
+          body: iOrderViewController.order.value != null
               ? Stack(
                   alignment: Alignment.topCenter,
                   children: [
