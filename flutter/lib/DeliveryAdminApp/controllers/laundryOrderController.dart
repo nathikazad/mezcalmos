@@ -104,14 +104,12 @@ class LaundryOrderController extends GetxController {
   }
 
   void clearNewOrderNotifications() {
-    _fbNotificationsController.notifications.value.forEach((element) {
-      // mezDbgPrint(element.notificationType.toFirebaseFormatString());
-    });
-    _fbNotificationsController.notifications.value
+   
+    _fbNotificationsController.notifications
         .where((notification) =>
             notification.notificationType == NotificationType.NewOrder)
         .forEach((notification) {
-      // mezDbgPrint(notification.id);
+     
       _fbNotificationsController.removeNotification(notification.id);
     });
   }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:rive/rive.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,7 +13,7 @@ class LaundryOngoigOrderCard extends StatelessWidget {
     required this.order,
   }) : super(key: key);
 
-  final Order order;
+  final LaundryOrder order;
 
   LanguageController lang = Get.find<LanguageController>();
   @override
@@ -90,7 +88,7 @@ class LaundryOngoigOrderCard extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  getLaundryOrderWidget((order as LaundryOrder).status),
+                  getLaundryOrderWidget((order).status),
                   SizedBox(
                     width: 10,
                   )
@@ -123,7 +121,7 @@ class LaundryOngoigOrderCard extends StatelessWidget {
             width: 5,
           ),
           Text(
-            getLaundryOrderStatus((order as LaundryOrder).status),
+            getLaundryOrderStatus((order).status),
             style: txt.bodyText2,
           ),
           SizedBox(

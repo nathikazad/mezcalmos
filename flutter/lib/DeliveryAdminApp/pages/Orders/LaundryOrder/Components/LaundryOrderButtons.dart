@@ -32,7 +32,7 @@ class OrderButtons {
                   colors: [const Color(0xede21132), const Color(0xdbd11835)]));
           if (res) {
             controller.cancelOrder(orderId);
-            Get.back();
+            Get.back(closeOverlays: true);
           }
         },
         widget: Text(
@@ -202,38 +202,38 @@ class OrderButtons {
               ? [Colors.grey, Colors.grey]
               : [const Color(0xffff9300), const Color(0xdbd15f18)],
         ),
-        function: (order.dropoffDriver != null)
-            ? () async {
-                var res = await dailogComponent(
-                    lang.strings["deliveryAdminApp"]["laundry"]
-                        ["readyForDeliveryTitle"],
-                    lang.strings["deliveryAdminApp"]["laundry"]
-                        ["readyForDeliveryText"], () {
-                  Get.back(result: true);
-                }, () {
-                  Get.back(result: false);
-                },
-                    Icon(
-                      Icons.dry_cleaning_rounded,
-                      size: 70,
-                      color: Colors.purple,
-                    ),
-                    LinearGradient(
-                        begin: Alignment(-0.10374055057764053, 0),
-                        end: Alignment(1.1447703838348389, 1.1694844961166382),
-                        colors: [
-                          const Color(0xffff9300),
-                          const Color(0xdbd15f18)
-                        ]));
-                if (res) {
-                  Get.snackbar("Loading", "");
-                  controller.readyForDeliveryOrder(order.orderId);
-                  Get.back();
-                }
-              }
-            : () {
-                Get.snackbar("Please select a driver ", "");
-              });
+        function: () async {
+          if (order.dropoffDriver != null) {
+            var res = await dailogComponent(
+                lang.strings["deliveryAdminApp"]["laundry"]
+                    ["readyForDeliveryTitle"],
+                lang.strings["deliveryAdminApp"]["laundry"]
+                    ["readyForDeliveryText"], () {
+              Get.back(result: true);
+            }, () {
+              Get.back(result: false);
+            },
+                Icon(
+                  Icons.dry_cleaning_rounded,
+                  size: 70,
+                  color: Colors.purple,
+                ),
+                LinearGradient(
+                    begin: Alignment(-0.10374055057764053, 0),
+                    end: Alignment(1.1447703838348389, 1.1694844961166382),
+                    colors: [
+                      const Color(0xffff9300),
+                      const Color(0xdbd15f18)
+                    ]));
+            if (res) {
+              Get.snackbar("Loading", "");
+              controller.readyForDeliveryOrder(order.orderId);
+              Get.back(closeOverlays: true);
+            }
+          } else {
+            Get.snackbar('Error', 'Please Select a driver');
+          }
+        });
   }
 
   //this button for otwDelivery
@@ -272,7 +272,7 @@ class OrderButtons {
           if (res) {
             Get.snackbar("Loading", "");
             controller.otwDeliveryOrder(orderId);
-            Get.back();
+            Get.back(closeOverlays: true);
           }
         });
   }
@@ -308,7 +308,7 @@ class OrderButtons {
           if (res) {
             Get.snackbar("Loading", "");
             controller.deliveredOrder(orderId);
-            Get.back();
+            Get.back(closeOverlays: true);
           }
         });
   }

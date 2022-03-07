@@ -23,6 +23,7 @@ class LaundryOrderRequestView extends StatefulWidget {
 }
 
 class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
+  TextEditingController _orderNote = TextEditingController();
   final LocationPickerController locationPickerController =
       LocationPickerController();
   final AuthController authController = Get.find<AuthController>();
@@ -80,12 +81,37 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 ),
               ),
               SizedBox(
+                height: 10,
+              ),
+              _orderNoteComponent(),
+              SizedBox(
                 height: 20,
               ),
               orderSummaryCard(context)
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _orderNoteComponent() {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(lang.strings?["customer"]?["restaurant"]?["menu"]?["notes"],
+              style: Theme.of(context).textTheme.headline3),
+          SizedBox(
+            height: 10,
+          ),
+          TextField(
+            controller: _orderNote,
+            decoration: InputDecoration(
+                filled: true, fillColor: Theme.of(context).primaryColor),
+          )
+        ],
       ),
     );
   }
@@ -213,33 +239,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     return Obx(
       () => BottomAppBar(
         child: (authController.user != null)
-            ? TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: (defaultLoc != null)
-                      ? Theme.of(context).primaryColorLight
-                      : Colors.grey,
-                ),
-                onPressed: (defaultLoc == null)
-                    ? null
-                    : () {
-                        clicked.value = true;
-                        laundryController
-                            .requestLaundryService(LaundryRequest(
-                                to: defaultLoc,
-                                notes: 'hhhh',
-                                paymentType: PaymentType.Cash))
-                            .then((response) => popEverythingAndNavigateTo(
-                                getLaundyOrderRoute(response.data['orderId'])));
-                      },
-                child: (clicked.value)
-                    ? CircularProgressIndicator(
-                        color: Colors.white,
-                      )
-                    : Container(
-                        padding: EdgeInsets.all(8),
-                        child: Text(lang.strings['customer']['restaurant']
-                            ['cart']['orderNow'])),
-              )
+            ? makeOrderButton(context)
             : TextButton(
                 onPressed: () async {
                   await Get.toNamed(kSignInRouteOptional);
@@ -250,6 +250,36 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                         lang.strings["shared"]["login"]["signInToMakeOrder"])),
               ),
       ),
+    );
+  }
+
+  Widget makeOrderButton(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor: (defaultLoc != null)
+            ? Theme.of(context).primaryColorLight
+            : Colors.grey,
+      ),
+      onPressed: (defaultLoc == null)
+          ? null
+          : () {
+              clicked.value = true;
+              laundryController
+                  .requestLaundryService(LaundryRequest(
+                      to: defaultLoc,
+                      notes: _orderNote.text,
+                      paymentType: PaymentType.Cash))
+                  .then((response) => popEverythingAndNavigateTo(
+                      getLaundyOrderRoute(response.data['orderId'])));
+            },
+      child: (clicked.value)
+          ? CircularProgressIndicator(
+              color: Colors.white,
+            )
+          : Container(
+              padding: EdgeInsets.all(8),
+              child: Text(
+                  lang.strings['customer']['restaurant']['cart']['orderNow'])),
     );
   }
 }

@@ -55,6 +55,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
     if (order.value == null) {
+      Get.snackbar('Error', "Order not found");
       Get.back();
     } else {
       _orderListener =
@@ -88,7 +89,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
         body: Obx(() {
           if (order.value == null) {
             // Order Loading ..
-            Get.back();
+
             return MezLogoAnimation(
               centered: true,
             );

@@ -225,7 +225,8 @@ class OngoingOrderList extends StatelessWidget {
                         order: controller.currentOrders()[index]);
                   case OrderType.Laundry:
                     return LaundryOngoigOrderCard(
-                        order: controller.currentOrders()[index]);
+                        order:
+                            controller.currentOrders()[index] as LaundryOrder);
 
                   default:
                     return SizedBox(

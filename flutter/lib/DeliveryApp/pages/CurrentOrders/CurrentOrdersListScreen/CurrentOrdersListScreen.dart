@@ -87,17 +87,13 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
-          ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              reverse: true,
-              itemCount: orderController.pastOrders.length,
-              itemBuilder: (context, index) {
-                return DriverOrderCard(
-                    order: orderController.pastOrders[index]);
-              }),
-        ],
+          Column(
+            children: List.generate(
+                orderController.pastOrders.length,
+                (index) =>
+                    DriverOrderCard(order: orderController.pastOrders[index])),
+          )
+        ].reversed.toList(),
       );
     } else {
       return Container();
