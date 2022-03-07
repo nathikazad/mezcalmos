@@ -195,5 +195,7 @@ export const assignToLaundry = functions.https.onCall(async (data, context) => {
   order.serviceProviderId = laundryId;
   order.laundry = laundry.info;
   laundryNodes.inProcessOrders(laundryId, orderId).set(order);
+  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+  await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
   return response
 });
