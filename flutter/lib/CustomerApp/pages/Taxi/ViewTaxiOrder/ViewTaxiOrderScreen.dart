@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/controllers/ViewT
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/widgets/ViewTaxiOrderScreenWidgets.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiOrderBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -19,87 +20,24 @@ class ViewTaxiOrderScreen extends StatefulWidget {
 class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   final ViewTaxiOrderController viewController = ViewTaxiOrderController();
   late final ViewTaxiOrderScreenWidgets viewWidgets;
-
+  LanguageController lang = Get.find<LanguageController>();
   /******************************  Init and build function ************************************/
   @override
   void initState() {
     String orderId = Get.parameters['orderId']!;
     viewWidgets = ViewTaxiOrderScreenWidgets(viewController: viewController);
-    viewController.controller.clearOrderNotifications(orderId);
-    viewController.order.value =
-        viewController.controller.getOrder(orderId) as TaxiOrder?;
-    if (viewController.order.value != null) {
-      // set initial location
-      viewController.mGoogleMapController
-          .setLocation(viewController.order.value!.from);
-      // add the polylines!
-      viewController.mGoogleMapController.decodeAndAddPolyline(
-          encodedPolylineString:
-              viewController.order.value!.routeInformation!.polyline);
-      viewController.mGoogleMapController
-          .setAnimateMarkersPolyLinesBounds(true);
-      viewController.mGoogleMapController.animateAndUpdateBounds();
-
-      if (viewController.order.value!.inProcess()) {
-        viewController
-            .inProcessOrderStatusHandler(viewController.order.value!.status);
-        viewController.startCountOffersValidityCheckPeriodically();
-        viewController.orderListener = viewController.controller
-            .getCurrentOrderStream(orderId)
-            .listen((currentOrder) async {
-          if (currentOrder != null) {
-            viewController.order.value = currentOrder as TaxiOrder;
-            viewController.inProcessOrderStatusHandler(
-                viewController.order.value!.status);
-            // setState(() {});
-          } else {
-            viewController.orderListener?.cancel();
-            viewController.orderListener = null;
-            TaxiOrder? _order =
-                viewController.controller.getOrder(orderId) as TaxiOrder?;
-            // this else clause gets executed when the order becomes /pastOrders.
-            if (_order == null) {
-              if (viewController.order.value!.status ==
-                  TaxiOrdersStatus.CancelledByCustomer) {
-                Get.back();
-                oneButtonDialog(
-                    body: viewController.lang.strings['shared']['snackbars']
-                        ['orderCancelSuccess'],
-                    imagUrl: _order!.customer.image);
-              }
-              _order = (await viewController.controller
-                  .getPastOrderStream(orderId)
-                  .first) as TaxiOrder?;
-            }
-
-            viewController.order.value = _order;
-            // one time execution :
-            viewController.mGoogleMapController
-                .setAnimateMarkersPolyLinesBounds(true);
-            viewController
-                .pastOrderStatusHandler(viewController.order.value!.status);
-            // setState(() {});
-          }
-        });
-      } else {
-        // it's in past orders!
-        viewController
-            .pastOrderStatusHandler(viewController.order.value!.status);
-        // setState(() {});
-      }
-    } else {
-      mezDbgPrint("Error :Unfound Order !");
-    }
-
+    viewController.init(orderId, orderCancelledCallback: (TaxiOrder order) {
+      Get.back();
+      oneButtonDialog(
+          body: lang.strings['shared']['snackbars']['orderCancelSuccess'],
+          imagUrl: order.customer.image);
+    });
     super.initState();
   }
 
   @override
   void dispose() {
-    viewController.orderListener?.cancel();
-    viewController.orderListener = null;
-    viewController.countOfferTimerValidator?.cancel();
-    viewController.countOfferTimerValidator = null;
+    viewController.dispose();
     super.dispose();
   }
 

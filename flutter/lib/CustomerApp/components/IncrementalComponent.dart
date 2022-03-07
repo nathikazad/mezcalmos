@@ -7,7 +7,7 @@ class IncrementalComponent extends StatefulWidget {
   final GestureTapCallback decrement;
   final Color btnColors;
   final center;
-  int value;
+  final int value;
   final int? maxVal;
   final int? minVal;
   final ValueChanged<bool>? onChangedToZero;
@@ -24,15 +24,18 @@ class IncrementalComponent extends StatefulWidget {
       : super(key: key);
 
   @override
-  _IncrementalComponentState createState() => _IncrementalComponentState();
+  _IncrementalComponentState createState() =>
+      _IncrementalComponentState(this.value);
 }
 
 class _IncrementalComponentState extends State<IncrementalComponent> {
+  int _value;
+  _IncrementalComponentState(this._value);
   void _increment() {
     print("the max value is ${widget.maxVal}");
-    if (widget.value < widget.maxVal!)
+    if (_value < widget.maxVal!)
       setState(() {
-        widget.value++;
+        _value++;
       });
     else
       return;
@@ -40,17 +43,17 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
 
   void _decrement() {
     print("the max value is ${widget.minVal}");
-    if (widget.value != widget.minVal) {
-      mezDbgPrint("the component value ${widget.value}");
+    if (_value != widget.minVal) {
+      mezDbgPrint("the component value ${_value}");
       setState(() {
-        widget.value--;
+        _value--;
       });
-      if (widget.value == 0) {
-        print("the value ${widget.value}");
+      if (_value == 0) {
+        print("the value ${_value}");
         widget.onChangedToZero?.call(true);
       } else
         widget.onChangedToZero?.call(false);
-      mezDbgPrint("the component value ${widget.value}");
+      mezDbgPrint("the component value ${_value}");
     } else
       return;
   }
@@ -66,7 +69,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(32)),
-                color: (widget.value > widget.minVal!)
+                color: (_value > widget.minVal!)
                     ? const Color(0xffac59fc)
                     : Colors.grey.shade400,
               ),
@@ -75,7 +78,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
                 color: Colors.white,
                 size: 16.sp,
               )),
-          onTap: (widget.value > widget.minVal!)
+          onTap: (_value > widget.minVal!)
               ? () {
                   _decrement();
                   widget.decrement();
@@ -90,7 +93,8 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Theme.of(context).primaryColorLight.withOpacity(0.2)),
-          child: Text("${widget.value}",
+          child:
+              Text("${_value}",
               style: Theme.of(context).textTheme.headline3),
         ),
         SizedBox(

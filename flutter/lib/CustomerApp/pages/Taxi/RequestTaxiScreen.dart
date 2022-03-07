@@ -19,7 +19,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart' as TaxiOrder;
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -42,6 +41,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   final LocationSearchBarController locationSearchBarController =
       LocationSearchBarController();
   bool _pickedFromTo = false;
+  Timer? timer;
 
   /******************************  Init and build function ************************************/
 
@@ -81,7 +81,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     // fetch first without waiting 10seconds.
     startFetchingOnlineDrivers();
     // then keep it periodic each 10s
-    Timer.periodic(Duration(seconds: 10), (Timer timer) {
+    timer = Timer.periodic(Duration(seconds: 10), (Timer timer) {
       startFetchingOnlineDrivers();
     });
 
@@ -200,6 +200,12 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
             ]),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   Widget getToolTip() {

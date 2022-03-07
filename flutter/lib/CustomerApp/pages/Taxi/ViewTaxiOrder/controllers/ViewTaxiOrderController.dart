@@ -7,7 +7,6 @@ import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
@@ -20,13 +19,68 @@ class ViewTaxiOrderController {
   final Rxn<TaxiOrder> order = Rxn();
   StreamSubscription? orderListener;
   final String toMarkerId = "to";
-  LanguageController lang = Get.find<LanguageController>();
   RxDouble bottomPadding =
       ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
   RxList<CounterOffer> counterOffers = <CounterOffer>[].obs;
   Timer? countOfferTimerValidator;
   RxBool clickedAccept = false.obs;
   RxBool offersBtnClicked = false.obs;
+
+  void init(String orderId, {Function? orderCancelledCallback}) {
+    controller.clearOrderNotifications(orderId);
+    order.value = controller.getOrder(orderId) as TaxiOrder?;
+    if (order.value != null) {
+      // set initial location
+      initializeMap();
+
+      if (order.value!.inProcess()) {
+        inProcessOrderStatusHandler(order.value!.status);
+        startCountOffersValidityCheckPeriodically();
+        orderListener = controller
+            .getCurrentOrderStream(orderId)
+            .listen((currentOrder) async {
+          if (currentOrder != null) {
+            order.value = currentOrder as TaxiOrder;
+            inProcessOrderStatusHandler(order.value!.status);
+            // setState(() {});
+          } else {
+            orderListener?.cancel();
+            orderListener = null;
+            TaxiOrder? _order = controller.getOrder(orderId) as TaxiOrder?;
+            // this else clause gets executed when the order becomes /pastOrders.
+            if (_order == null) {
+              if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
+                orderCancelledCallback?.call(_order);
+              }
+              _order = (await controller.getPastOrderStream(orderId).first)
+                  as TaxiOrder?;
+            }
+
+            order.value = _order;
+            // one time execution :
+            mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
+            pastOrderStatusHandler(order.value!.status);
+            // setState(() {});
+          }
+        });
+      } else {
+        // it's in past orders!
+        pastOrderStatusHandler(order.value!.status);
+        // setState(() {});
+      }
+    } else {
+      mezDbgPrint("Error :Unfound Order !");
+    }
+  }
+
+  void initializeMap() {
+    mGoogleMapController.setLocation(order.value!.from);
+    // add the polylines!
+    mGoogleMapController.decodeAndAddPolyline(
+        encodedPolylineString: order.value!.routeInformation!.polyline);
+    mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
+    mGoogleMapController.animateAndUpdateBounds();
+  }
 
   /// Check the counterOffers Validity each 1 second,
   ///
@@ -128,5 +182,12 @@ class ViewTaxiOrderController {
             latLng: order.value!.from.toLatLng());
         break;
     }
+  }
+
+  void dispose() {
+    orderListener?.cancel();
+    orderListener = null;
+    countOfferTimerValidator?.cancel();
+    countOfferTimerValidator = null;
   }
 }
