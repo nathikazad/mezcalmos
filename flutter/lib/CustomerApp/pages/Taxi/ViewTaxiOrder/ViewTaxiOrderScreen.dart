@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/controllers/ViewTaxiOrderController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/widgets/CounterOfferWidgets.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/widgets/ViewTaxiOrderScreenWidgets.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiOrderBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
@@ -20,6 +21,7 @@ class ViewTaxiOrderScreen extends StatefulWidget {
 class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   final ViewTaxiOrderController viewController = ViewTaxiOrderController();
   late final ViewTaxiOrderScreenWidgets viewWidgets;
+  late final CounterOfferWidgets counterOfferWidgets;
   LanguageController lang = Get.find<LanguageController>();
   /******************************  Init and build function ************************************/
   @override
@@ -89,7 +91,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                             if (viewController.counterOffers.isNotEmpty &&
                                 viewController.order.value!.status ==
                                     TaxiOrdersStatus.LookingForTaxi)
-                              Flexible(child: viewWidgets.offersButton()),
+                              Flexible(
+                                  child: counterOfferWidgets.offersButton()),
                             if (viewController.counterOffers.isNotEmpty)
                               SizedBox(
                                 width: 10,
@@ -102,7 +105,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                       ),
                       TaxiOrderBottomBar(order: viewController.order),
                       viewWidgets.getToolTip(),
-                      viewWidgets.counterOffersBottomSheet(context),
+                      counterOfferWidgets.counterOffersBottomSheet(context),
                     ])
               : MezLogoAnimation(
                   centered: true,
