@@ -5,7 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/controllers/ViewT
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RideReadByTaxisHint.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 
@@ -13,6 +13,7 @@ class ViewTaxiOrderScreenWidgets {
   final ViewTaxiOrderController viewController;
   ViewTaxiOrderScreenWidgets({required this.viewController});
   LanguageController lang = Get.find<LanguageController>();
+
   /// this builds [MezToolTip] with the given [getHints()],
   ///
   /// if [Get.find<TaxiController>().numOfTimesToolTipShownToUser()] has already set to 5+,
@@ -38,10 +39,8 @@ class ViewTaxiOrderScreenWidgets {
         child: InkWell(
           onTap: () async {
             YesNoDialogButton res = await yesNoDialog(
-                text: lang.strings['customer']['cancelOrder']
-                    ['title'],
-                body: lang.strings['customer']['cancelOrder']
-                    ['question']);
+                text: lang.strings['customer']['cancelOrder']['title'],
+                body: lang.strings['customer']['cancelOrder']['question']);
             if (res == YesNoDialogButton.Yes) {
               await viewController.taxiController
                   .cancelTaxi(viewController.order.value!.orderId);
@@ -67,6 +66,7 @@ class ViewTaxiOrderScreenWidgets {
       );
     }
   }
+
   /// the hints [MezToolTipHint] that are related to this view !
   List<MezToolTipHint> getHints() {
     return [
@@ -89,5 +89,31 @@ class ViewTaxiOrderScreenWidgets {
         bodyBottom: 150.5,
       )
     ];
+  }
+
+  /// this widget is either :
+  ///
+  /// 1. A Transparent Container with full Screen height wrapped with an `InkWell` : When `viewController.offersBtnClicked.value == true`
+  ///
+  /// (To absorb user's pointer taps inOrder to hide the bottomSheet upon a click on the background)
+  ///
+  /// 2. An Empty `SizedBox` when it's the opposit.
+  Widget absorbOrIgnoreUserTapWidget() {
+    // if there is a counter offer we give a user a way to reduce it by simply clicking on the background.
+    if (viewController.offersBtnClicked.value)
+      return InkWell(
+        onTap: !viewController.clickedAccept.value
+            ? () {
+                viewController.offersBtnClicked.value = false;
+                viewController.animatedSliderController.slideDown();
+              }
+            : null,
+        child: Container(
+          height: Get.height,
+          width: Get.width,
+        ),
+      );
+    else
+      return SizedBox();
   }
 }

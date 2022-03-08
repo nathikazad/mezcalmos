@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/IPositionedBottomBar.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/IPositionedFromToBar.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/iOrderViewWidgets.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedBottomBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedFromToBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/iOrderViewWidgets.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/controller/iOrderViewController.dart';
 import 'package:sizer/sizer.dart';
 
@@ -18,11 +19,13 @@ class IncomingOrderViewScreen extends StatefulWidget {
 }
 
 class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
-  final IOrderViewController iOrderViewController = IOrderViewController();
+  late final AnimatedSliderController animatedSliderController;
+  late final IOrderViewController iOrderViewController;
   late final IOrderViewWidgets iOrderViewWidgets;
 
   @override
   void initState() {
+    initializeLateControllers();
     String orderId = Get.parameters['orderId']!;
     iOrderViewWidgets =
         IOrderViewWidgets(iOrderViewController: iOrderViewController);
@@ -45,6 +48,14 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   void dispose() {
     iOrderViewController.cancelStreamsSubscriptions();
     super.dispose();
+  }
+
+  void initializeLateControllers() {
+    this.animatedSliderController = AnimatedSliderController();
+    this.iOrderViewController = IOrderViewController(
+        animatedSliderController: animatedSliderController);
+    this.iOrderViewWidgets =
+        IOrderViewWidgets(iOrderViewController: iOrderViewController);
   }
 
   @override

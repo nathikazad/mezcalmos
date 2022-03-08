@@ -10,13 +10,16 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:sizer/sizer.dart';
 
 class IOrderViewController {
+  final AnimatedSliderController animatedSliderController;
+  IOrderViewController({required this.animatedSliderController});
+
   final LanguageController lang = Get.find<LanguageController>();
   final AuthController authController = Get.find<AuthController>();
   final TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
@@ -29,11 +32,7 @@ class IOrderViewController {
   Rxn<CounterOffer> counterOffer = Rxn();
   RxBool clickedAcceptButton = false.obs;
   RxBool submittedCounterOffer = false.obs;
-  RxDouble bottomSheetHeight = 0.0.obs;
   StreamSubscription? _counterOfferStream;
-
-  void _expandBottomSheet() => bottomSheetHeight.value = 40.0.h;
-  void _minimizeBottomSheet() => bottomSheetHeight.value = 0.0.h;
 
   void initController(
       {required String orderId, required Function() onOrderNoMoreAvailable}) {
@@ -138,7 +137,7 @@ class IOrderViewController {
         order.value!.orderId, order.value!.customer.id,
         expired: expired);
     submittedCounterOffer.value = false;
-    _minimizeBottomSheet();
+    this.animatedSliderController.slideDown();
   }
 
   /// this gets invoked when the Taxi Driver presses [Send offer] button.
@@ -155,7 +154,7 @@ class IOrderViewController {
                     image: authController.user!.image!)))
         .then((value) {
       submittedCounterOffer.value = true;
-      _expandBottomSheet();
+      this.animatedSliderController.slideUp();
     });
   }
 

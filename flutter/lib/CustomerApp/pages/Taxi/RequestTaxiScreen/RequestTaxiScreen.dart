@@ -20,27 +20,26 @@ class RequestTaxiScreen extends StatefulWidget {
 }
 
 class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
-  final RequestTaxiController requestTaxiController = RequestTaxiController();
-  late final HintsWidgets hintsWidgets;
+  final RequestTaxiController viewController = RequestTaxiController();
+  late final RequestTaxiScreenWidgets viewWidgets;
 
   @override
   void initState() {
-    hintsWidgets = HintsWidgets(requestTaxiController: requestTaxiController);
+    viewWidgets =
+        RequestTaxiScreenWidgets(requestTaxiController: viewController);
     // fetch first without waiting 10seconds.
-    requestTaxiController.startFetchingOnlineDrivers();
+    viewController.startFetchingOnlineDrivers();
     // then keep it periodic each 10s
-    requestTaxiController.timer =
-        Timer.periodic(Duration(seconds: 10), (Timer timer) {
-      requestTaxiController.startFetchingOnlineDrivers();
+    viewController.timer = Timer.periodic(Duration(seconds: 10), (Timer timer) {
+      viewController.startFetchingOnlineDrivers();
     });
 
     if (Get.arguments != null) {
       // we re-create the TaxiRequest passed along args
-      requestTaxiController
-          .initiateTaxiOrderReCreation(Get.arguments as TaxiRequest);
+      viewController.initiateTaxiOrderReCreation(Get.arguments as TaxiRequest);
     } else {
       // when no args passed we simply initialte the view and map with current user's loc.
-      requestTaxiController.initiateViewAndMapWithCurrentLocation();
+      viewController.initiateViewAndMapWithCurrentLocation();
     }
     super.initState();
   }
@@ -68,11 +67,11 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                     /// [onSuccessSignIn] THIS WILL GETS EXECUTED IF USER GOT SIGNED IN SUCCESSFULY
                     // AFTER HE CREATED HIS TAXI REQUESTED WHILE HE WAS SIGNEDOUT
                     onSuccessSignIn:
-                        requestTaxiController.onSuccessSignInUpdateUserMarker,
+                        viewController.onSuccessSignInUpdateUserMarker,
                     locationPickerMapController:
-                        requestTaxiController.locationPickerController,
+                        viewController.locationPickerController,
                     notifyParentOfLocationFinalized:
-                        requestTaxiController.updateModelAndMaybeCalculateRoute,
+                        viewController.updateModelAndMaybeCalculateRoute,
                     notifyParentOfConfirm: (Location? _) async {
                       if (GetStorage().read(getxLmodeKey) == "prod" &&
                           Get.find<AuthController>().fireAuthUser?.uid ==
@@ -80,23 +79,22 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                         MezSnackbar("Oops",
                             "This prod version is live and running , we can't let you do that :( !");
                       } else
-                        await requestTaxiController.requestTaxi();
+                        await viewController.requestTaxi();
                     }),
               ),
               LocationSearchBar(
-                  request: requestTaxiController.taxiRequest,
+                  request: viewController.taxiRequest,
                   locationSearchBarController:
-                      requestTaxiController.locationSearchBarController,
-                  newLocationChosenEvent: requestTaxiController
-                      .updateModelAndHandoffToLocationPicker),
-              requestTaxiController.pickedFromTo.value
+                      viewController.locationSearchBarController,
+                  newLocationChosenEvent:
+                      viewController.updateModelAndHandoffToLocationPicker),
+              viewController.pickedFromTo.value
                   // from , to
                   ? TaxiReqBottomBar(
-                      taxiRequest: requestTaxiController.taxiRequest.value,
+                      taxiRequest: viewController.taxiRequest.value,
                     )
                   : SizedBox(),
-              if (requestTaxiController.pickedFromTo.value)
-                hintsWidgets.getToolTip(),
+              if (viewController.pickedFromTo.value) viewWidgets.getToolTip(),
             ]),
       ),
     );
@@ -104,7 +102,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
   @override
   void dispose() {
-    requestTaxiController.dispose();
+    viewController.dispose();
     super.dispose();
   }
 }

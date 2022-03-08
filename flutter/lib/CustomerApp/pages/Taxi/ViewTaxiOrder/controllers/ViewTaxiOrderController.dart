@@ -10,8 +10,12 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 
 class ViewTaxiOrderController {
+  final AnimatedSliderController animatedSliderController;
+  ViewTaxiOrderController({required this.animatedSliderController});
+
   final OrderController controller = Get.find<OrderController>();
   final TaxiController taxiController =
       Get.put<TaxiController>(TaxiController());

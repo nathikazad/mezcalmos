@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/CounterOfferBottomSheet/CounterOfferPriceSetter.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/CounterOfferBottomSheet/CounterOfferSentBottomSheet.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/controller/iOrderViewController.dart';
@@ -10,7 +11,6 @@ import 'package:sizer/sizer.dart';
 
 class IOrderViewWidgets {
   final IOrderViewController iOrderViewController;
-
   IOrderViewWidgets({required this.iOrderViewController});
 
   /// this holds the two Accept / Offer buttons.
@@ -56,47 +56,32 @@ class IOrderViewWidgets {
   }
 
   /// this holds the BottomSheet when the TaxiDriver clicks offer Price.
-  Positioned counterOfferBottomSheet() {
-    return Positioned(
-        bottom: 0,
-        left: 0,
-        right: 0,
-        child: AnimatedContainer(
-            duration: Duration(seconds: 1),
-            height: iOrderViewController.bottomSheetHeight.value,
-            curve: Curves.easeInExpo,
-            width: Get.width,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black38, blurRadius: 10, spreadRadius: 5)
-                ],
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20))),
-            child: SingleChildScrollView(
-                padding:
-                    EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
-                physics: ClampingScrollPhysics(),
-                child: iOrderViewController.counterOffer.value != null
-                    ? CounterOfferSentBottomSheet(
-                        counterOffer: iOrderViewController.counterOffer.value!,
-                        controller: iOrderViewController.controller,
-                        order: iOrderViewController.order.value!,
-                        onCounterEnd: () async => await iOrderViewController
-                            .removeCounterOfferAndResetState(),
-                      )
-                    : CounterOfferPriceSetter(
-                        counterOffer: iOrderViewController.counterOffer,
-                        controller: iOrderViewController.controller,
-                        order: iOrderViewController.order.value!,
-                        onCountOfferSent: (priceOffered) =>
-                            iOrderViewController.onCountOfferSent(priceOffered),
-                        onPriceChanged: (price) {
-                          mezDbgPrint("New Price offered ===> $price");
-                        },
-                      ))));
+  AnimatedSlider counterOfferBottomSheet() {
+    return AnimatedSlider(
+        isPositionedCoordinates: Rect.fromLTRB(0, Get.height, 0, 0),
+        animatedSliderController:
+            this.iOrderViewController.animatedSliderController,
+        child: SingleChildScrollView(
+            padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
+            physics: ClampingScrollPhysics(),
+            child: iOrderViewController.counterOffer.value != null
+                ? CounterOfferSentBottomSheet(
+                    counterOffer: iOrderViewController.counterOffer.value!,
+                    controller: iOrderViewController.controller,
+                    order: iOrderViewController.order.value!,
+                    onCounterEnd: () async => await iOrderViewController
+                        .removeCounterOfferAndResetState(),
+                  )
+                : CounterOfferPriceSetter(
+                    counterOffer: iOrderViewController.counterOffer,
+                    controller: iOrderViewController.controller,
+                    order: iOrderViewController.order.value!,
+                    onCountOfferSent: (priceOffered) =>
+                        iOrderViewController.onCountOfferSent(priceOffered),
+                    onPriceChanged: (price) {
+                      mezDbgPrint("New Price offered ===> $price");
+                    },
+                  )));
   }
 
   Widget acceptOrderButton({required Widget child}) {
@@ -124,6 +109,7 @@ class IOrderViewWidgets {
       ),
       onPressed: () {
         iOrderViewController.submittedCounterOffer.value = true;
+        iOrderViewController.animatedSliderController.slideUp();
       },
       child: Text(
         'Offer price',
@@ -148,6 +134,7 @@ class IOrderViewWidgets {
       return InkWell(
         onTap: () {
           iOrderViewController.submittedCounterOffer.value = false;
+          this.iOrderViewController.animatedSliderController.slideDown();
         },
         child: Container(
           height: Get.height,

@@ -4,9 +4,9 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/controllers/R
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 
-class HintsWidgets {
+class RequestTaxiScreenWidgets {
   final RequestTaxiController requestTaxiController;
-  HintsWidgets({required this.requestTaxiController});
+  RequestTaxiScreenWidgets({required this.requestTaxiController});
 
   /// the hints  [MezToolTipHint] that are related to this view !
   List<MezToolTipHint> getHints() {

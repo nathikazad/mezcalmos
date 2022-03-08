@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
@@ -8,7 +9,7 @@ import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:sizer/sizer.dart';
 
 class CounterOfferSentBottomSheet extends StatelessWidget {
-  CounterOffer counterOffer;
+  final Rx<CounterOffer> counterOffer;
   final IncomingOrdersController controller;
   final TaxiOrder order;
   final Function() onCounterEnd;
@@ -54,7 +55,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Offer price :'),
-                Text("\$${counterOffer.price}"),
+                Text("\$${counterOffer.value.price}"),
               ],
             )),
         Padding(
@@ -64,7 +65,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
               children: [
                 Text('Offer status :'),
                 Text(
-                    "${counterOffer.counterOfferStatus.toFirebaseFormatString()}"),
+                    "${counterOffer.value.counterOfferStatus.toFirebaseFormatString()}"),
               ],
             )),
         Padding(
@@ -83,7 +84,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
   }
 
   Widget getBottomSheetBodyByCounterOfferStatus() {
-    switch (counterOffer.counterOfferStatus) {
+    switch (counterOffer.value.counterOfferStatus) {
       case CounterOfferStatus.Rejected:
         return Icon(
           Icons.cancel,
@@ -103,7 +104,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
           },
           reversed: true,
           manualCounterValue:
-              counterOffer.validityTimeDifference().abs().toDouble() /
+              counterOffer.value.validityTimeDifference().abs().toDouble() /
                   nDefaultCounterOfferValidExpireTimeInSeconds,
           // manualCounterValue: ((nDefaultCounterOfferValidExpireTimeInSeconds -
           //         counterOffer.validityTimeDifference().abs()) /

@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
 import 'package:mezcalmos/Shared/widgets/MezLoadingCounter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:sizer/sizer.dart';
@@ -20,6 +21,7 @@ class CounterOfferWidgets {
       child: InkWell(
         onTap: () {
           viewController.offersBtnClicked.value = true;
+          viewController.animatedSliderController.slideUp();
         },
         child: Container(
             height: 50,
@@ -56,70 +58,55 @@ class CounterOfferWidgets {
   }
 
   Widget counterOffersBottomSheet(BuildContext context) {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: AnimatedContainer(
-        duration: Duration(seconds: 1),
-        height: viewController.offersBtnClicked.value &&
-                viewController.counterOffers.isNotEmpty
-            ? 40.h
-            : 0,
-        curve: Curves.easeInExpo,
-        width: Get.width,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(color: Colors.black38, blurRadius: 10, spreadRadius: 5)
-            ],
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-        child: !viewController.clickedAccept.value
-            ? SingleChildScrollView(
-                padding:
-                    EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
-                physics: ClampingScrollPhysics(),
-                child: viewController.clickedAccept.value
-                    ? MezLogoAnimation(
-                        centered: true,
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 50, right: 50),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Offers',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(fontSize: 14.sp),
-                                ),
-                                Text(
-                                  viewController.counterOffers.length
-                                      .toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(fontSize: 14.sp),
-                                )
-                              ],
-                            ),
-                          ),
-                          ...getCounterOffersListItems(context),
-                        ],
+    return AnimatedSlider(
+      isPositionedCoordinates: Rect.fromLTRB(0, Get.height, 0, 0),
+      animatedSliderController: this.viewController.animatedSliderController,
+      child: !viewController.clickedAccept.value
+          ? counterOffersScrollView(context)
+          : MezLogoAnimation(
+              centered: true,
+            ),
+    );
+  }
+
+  SingleChildScrollView counterOffersScrollView(BuildContext context) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
+      physics: ClampingScrollPhysics(),
+      child: viewController.clickedAccept.value
+          ? MezLogoAnimation(
+              centered: true,
+            )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 50, right: 50),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Offers',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(fontSize: 14.sp),
                       ),
-              )
-            : MezLogoAnimation(
-                centered: true,
-              ),
-      ),
+                      Text(
+                        viewController.counterOffers.length.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(fontSize: 14.sp),
+                      )
+                    ],
+                  ),
+                ),
+                ...getCounterOffersListItems(context),
+              ],
+            ),
     );
   }
 
