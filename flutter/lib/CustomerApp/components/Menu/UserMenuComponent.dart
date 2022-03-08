@@ -19,7 +19,8 @@ class UserMenu extends StatefulWidget {
 }
 
 class _UserMenuState extends State<UserMenu> {
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']
+      ['components']['Menu']['UserMenuComponent'];
   AuthController auth = Get.find<AuthController>();
   OrderController orderController = Get.find<OrderController>();
 
@@ -53,7 +54,7 @@ class _UserMenuState extends State<UserMenu> {
                   width: 10,
                 ),
                 Text(
-                  lang.strings['customer']['savedLocations']['title'],
+                  _i18n['savedLocations'],
                 ),
               ],
             ),
@@ -67,7 +68,7 @@ class _UserMenuState extends State<UserMenu> {
                   width: 10,
                 ),
                 Text(
-                  lang.strings['shared']['navDrawer']["userInfo"],
+                  _i18n["userInfo"],
                 ),
               ],
             ),
@@ -81,7 +82,7 @@ class _UserMenuState extends State<UserMenu> {
                   width: 10,
                 ),
                 Text(
-                  lang.strings['shared']['navDrawer']["logout"],
+                  _i18n["logout"],
                 ),
               ],
             ),
@@ -131,7 +132,7 @@ class _UserMenuState extends State<UserMenu> {
         SizedBox(
           width: 10,
         ),
-        Text(" ${lang.strings['admin']['notifs']['notifications']}"),
+        Text(" ${_i18n['notifications']}"),
       ],
     );
   }
@@ -154,7 +155,7 @@ class _UserMenuState extends State<UserMenu> {
         SizedBox(
           width: 10,
         ),
-        Text(" ${lang.strings['admin']['orders']['orders']}"),
+        Text(" ${_i18n['orders']}"),
       ],
     );
   }

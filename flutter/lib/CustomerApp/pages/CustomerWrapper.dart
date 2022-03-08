@@ -31,7 +31,8 @@ class CustomerWrapper extends StatefulWidget {
 
 class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']['pages']
+      ['CustomerWrapper'];
   AuthController auth = Get.find<AuthController>();
   OrderController? _orderController;
   DateTime? appClosedTime;
@@ -176,7 +177,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       alignment: Alignment.centerLeft,
       child: Obx(
         () => Text(
-          "${lang.strings['customer']['home']['welcomeText']}",
+          "${_i18n['welcomeText']}",
           style: textStyle,
           textAlign: TextAlign.left,
         ),
@@ -188,8 +189,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     return Container(
       margin: EdgeInsets.all(5),
       child: Obx(
-        () => Text("${lang.strings['customer']['home']['appDescription']}",
-            style: textStyle),
+        () => Text("${_i18n['appDescription']}", style: textStyle),
       ),
     );
   }
@@ -200,7 +200,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       margin: const EdgeInsets.all(5),
       child: Obx(
         () => Text(
-          "${lang.strings['customer']['home']['services']}",
+          "${_i18n['services']}",
           style: textStyle,
           textAlign: TextAlign.left,
         ),
@@ -214,9 +214,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         //====================Taxi===================
         Obx(
           () => ServicesCard(
-            title: "${lang.strings['customer']['home']['taxi']["title"]}",
+            title: "${_i18n['taxi']["title"]}",
             url: "assets/images/customer/taxi/taxiService.png",
-            subtitle: "${lang.strings['customer']['home']['taxi']["subtitle"]}",
+            subtitle: "${_i18n['taxi']["subtitle"]}",
             ontap: () {
               if (Get.find<AuthController>().fireAuthUser == null) {
                 Get.toNamed(kTaxiRequestRoute);
@@ -230,24 +230,35 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         //==================Food====================
         Obx(
           () => ServicesCard(
-              title: "${lang.strings['customer']['home']['food']["title"]}",
-              url: "assets/images/customer/restaurants/restaurantService.png",
-              subtitle:
-                  "${lang.strings['customer']['home']['food']["subtitle"]}",
-              ontap: () {
-                getServiceRoute(
-                    orderType: OrderType.Restaurant,
-                    serviceRoute: kRestaurantsRoute,
-                    singleOrderRoute: (v) {
-                      Get.toNamed(getRestaurantOrderRoute(v));
-                    });
-              }),
+            title: "${_i18n['food']["title"]}",
+            url: "assets/images/customer/restaurants/restaurantService.png",
+            subtitle: "${_i18n['food']["subtitle"]}",
+            ontap: () {
+              if (auth.fireAuthUser != null) {
+                List<Order> restaurantOrders = Get.find<OrderController>()
+                    .currentOrders
+                    .where((p0) => p0.orderType == OrderType.Restaurant)
+                    .toList();
+
+                if (restaurantOrders.length == 1) {
+                  Get.toNamed(
+                      getRestaurantOrderRoute(restaurantOrders[0].orderId));
+                } else if (restaurantOrders.length > 1) {
+                  Get.toNamed(kOrdersRoute);
+                } else {
+                  Get.toNamed(kRestaurantsRoute);
+                }
+              } else {
+                Get.toNamed(kRestaurantsRoute);
+              }
+            },
+          ),
         ),
 
         //==================Laundry=================
         Obx(
           () => ServicesCard(
-            title: "${lang.strings['customer']['home']['laundry']["title"]}",
+            title: "${_i18n['laundry']["title"]}",
             url: "assets/images/customer/laundryService.png",
             ontap: () {
               getServiceRoute(

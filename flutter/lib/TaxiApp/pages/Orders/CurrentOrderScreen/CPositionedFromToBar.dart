@@ -6,9 +6,11 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["TaxiApp"]
+["pages"]["Orders"]["CurrentOrderScreen"]["CPositionedFromToBar"];
+
 class CurrentPositionedFromToTopBar extends StatelessWidget {
   OrderController controller = Get.find<OrderController>();
-  LanguageController lang = Get.find<LanguageController>();
   TaxiOrder order;
   CurrentPositionedFromToTopBar(this.order);
   @override
@@ -47,7 +49,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Obx(() => Text(
-                              lang.strings['shared']['inputLocation']["from"],
+                              _i18n["from"],
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 16,
@@ -56,7 +58,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                             )),
                         GestureDetector(
                           onTap: () => MezSnackbar(
-                              lang.strings['shared']['inputLocation']["from"],
+                              _i18n["from"],
                               order.from.address),
                           child: Text(
                             order.from.address,
@@ -124,7 +126,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                       children: [
                         Obx(
                           () => Text(
-                            lang.strings['shared']['inputLocation']["to"],
+                            _i18n["to"],
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -133,7 +135,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () => MezSnackbar(
-                              lang.strings['shared']['inputLocation']["to"],
+                              _i18n["to"],
                               order.to.address),
                           child: Text(
                             order.to.address, //13+..

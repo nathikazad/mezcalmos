@@ -5,6 +5,9 @@ import 'package:sizer/sizer.dart';
 
 import 'DropDownListCartView.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ViewCartScreen"]["components"]["OrderSummaryCard"];
+
 class OrderSummaryCard extends StatelessWidget {
   final String? orderCost;
   final String? deliveryCost;
@@ -21,7 +24,6 @@ class OrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
 
     return Container(
@@ -42,7 +44,7 @@ class OrderSummaryCard extends StatelessWidget {
               alignment: Alignment.center,
               width: Get.width,
               child: Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["orderSummary"]}",
+                  "${_i18n["orderSummary"]}",
                   style: txt.headline3),
             ),
             Divider(
@@ -57,7 +59,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: Text(
-                          "${lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
+                          "${_i18n["orderCost"]} :",
                           style: txt.bodyText2),
                     ),
                   ),
@@ -78,7 +80,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: Text(
-                          "${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
+                          "${_i18n["deliveryCost"]} :",
                           style: txt.bodyText2),
                     ),
                   ),
@@ -99,7 +101,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: Text(
-                        "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} :",
+                        "${_i18n["totalCost"]} :",
                         style: txt.headline3!.copyWith(
                           fontWeight: FontWeight.w600,
                           fontSize: 14.75.sp,
@@ -128,7 +130,7 @@ class OrderSummaryCard extends StatelessWidget {
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                "${lang.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]} :",
+                "${_i18n["deliveryLocation"]} :",
                 style: txt.headline3!.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 14.75.sp,

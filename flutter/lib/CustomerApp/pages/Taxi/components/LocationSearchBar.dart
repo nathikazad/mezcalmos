@@ -12,6 +12,9 @@ import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 
 enum SearchComponentType { From, To, None }
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+["Taxi"]["components"]["LocationSearchBar"];
+
 extension ParseSearchComponentTypeToString on SearchComponentType {
   String toShortString() {
     String str = this.toString().split('.').last;
@@ -158,7 +161,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         leftTopRadius: 5,
         leftBotRaduis: 5,
         bgColor: Colors.white,
-        label: lang.strings['shared']['inputLocation']['from'],
+        label: _i18n['from'],
         text: widget.request.value.from?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.From),
         onTextChange: textFieldOnTextChanged,
@@ -223,7 +226,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         // to Controll where to start our dropDown DX (Distance on X axis)
         dropDownDxOffset: -(Get.width / 2.1),
         dropDownWidth: Get.width - 20,
-        label: lang.strings['shared']['inputLocation']['to'],
+        label: _i18n['to'],
         text: widget.request.value.to?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.To),
         onTextChange: textFieldOnTextChanged,
@@ -354,14 +357,13 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   /******************************  helper functions ************************************/
 
   void loadDropdownItems() {
-    LanguageController lang = Get.find<LanguageController>();
     dropDownItems.addAll([
       LocationDropDownItem(
           function: () async {
             widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
                 locationSearchBarController.focusedTextField.value);
           },
-          title: "${lang.strings["customer"]["taxiView"]["currentLocation"]}",
+          title: "${_i18n["currentLocation"]}",
           icon:
               Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple)),
       LocationDropDownItem(
@@ -369,7 +371,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
             widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
                 locationSearchBarController.focusedTextField.value);
           },
-          title: "${lang.strings["customer"]["taxiView"]["pickFromMap"]}",
+          title: "${_i18n["pickFromMap"]}",
           icon: Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple))
     ]);
     if (Get.find<AuthController>().fireAuthUser != null) {

@@ -11,10 +11,12 @@ import 'package:mezcalmos/TaxiAdminApp/controller/ordersController.dart';
 
 import 'OrdersOnDayPage.dart';
 
+dynamic _i18n =  Get.find<LanguageController>().strings["TaxiAdminApp"]["pages"]
+["Orders"]["OrdersCumOnDayPage"];
+
 class OrdersCumOnDayPage extends GetView<OrderStatsController> {
   var f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
-  LanguageController lang = Get.find<LanguageController>();
   FutureBuilder<RxMap<String, dynamic>> getOrdersCumulativeOnDay() {
     return FutureBuilder<RxMap<String, dynamic>>(
         future: controller.getOrdersCumulativeOnDay(
@@ -34,7 +36,7 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                     Expanded(
                       child: InkWell(
                         child: Text(
-                          lang.strings["admin"]["orders"]["cumulative"],
+                          _i18n["cumulative"],
                           style: TextStyle(
                               fontSize: 29, fontWeight: FontWeight.bold),
                         ),
@@ -150,8 +152,7 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                                   padding: const EdgeInsets.only(
                                       top: 0, bottom: 0, right: 8, left: 10),
                                   child: Text(
-                                    lang.strings["admin"]["orders"]
-                                        ["totalOrders"],
+                                    _i18n["totalOrders"],
                                     style: GoogleFonts.lato(
                                       textStyle: TextStyle(
                                         color: Colors.white
@@ -200,35 +201,35 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.Finished,
-                  lang.strings["admin"]["orders"]["finished"],
+                  _i18n["finished"],
                   "${snapshot.data!['finished']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.Cancelled,
-                  lang.strings["admin"]["orders"]["cancelled"],
+                  _i18n["cancelled"],
                   "${snapshot.data!['cancelled']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.Expired,
-                  lang.strings["admin"]["orders"]["expired"],
+                   _i18n["expired"],
                   "${snapshot.data!['expired']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.InProccess,
-                  lang.strings["admin"]["orders"]["inProcess"],
+                  _i18n["inProcess"],
                   "${snapshot.data!['inProcess']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.IsLooking,
-                  lang.strings["admin"]["orders"]["isLooking"],
+                  _i18n["isLooking"],
                   "${snapshot.data!['isLooking']}"),
             ];
           } else if (snapshot.hasError) {

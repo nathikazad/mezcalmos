@@ -21,6 +21,9 @@ final f = new DateFormat('hh:mm a');
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
+// dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
+// ["Orders"]["ListOrdersScreen"];
+
 class ListOrdersScreen extends StatefulWidget {
   @override
   _ListOrdersScreen createState() => _ListOrdersScreen();

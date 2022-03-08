@@ -18,6 +18,9 @@ import 'package:sizer/sizer.dart';
 import 'Components/MezSwitch.dart';
 import 'Components/NoScrollGlowBehaviour.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+["Orders"]["IncomingOrders"]["IncomingListScreen"]["IncomingListScreen"];
+
 class IncomingOrdersScreen extends StatefulWidget {
   @override
   _IncomingOrdersScreenState createState() => _IncomingOrdersScreenState();
@@ -26,7 +29,6 @@ class IncomingOrdersScreen extends StatefulWidget {
 class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
   IncomingOrdersController controller =
       Get.put<IncomingOrdersController>(IncomingOrdersController());
-  LanguageController lang = Get.find<LanguageController>();
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
 
   @override
@@ -68,7 +70,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             Flexible(
               child: Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["title"],
+                  _i18n["title"],
                   style: TextStyle(
                       // fontSize: getSizeRelativeToScreen(70, sw, sh),
                       fontSize: 25.5.sp,
@@ -281,7 +283,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             children: [
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["noOrdersTitle"],
+                  _i18n["noOrdersTitle"],
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20.5.sp, fontFamily: 'psr'),
                 ),
@@ -291,7 +293,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
               ),
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["noOrdersDesc"],
+                  _i18n["noOrdersDesc"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 14.sp,
@@ -330,7 +332,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             children: [
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["toggleTitle"],
+                  _i18n["toggleTitle"],
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20.5.sp, fontFamily: 'psr'),
                 ),
@@ -340,7 +342,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
               ),
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["toggleDesc"],
+                  _i18n["toggleDesc"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 14.sp,

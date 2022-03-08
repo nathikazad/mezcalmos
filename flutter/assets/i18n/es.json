@@ -1,374 +1,327 @@
 {
-    "customer": {
-        "home": {
-            "supportText":"necesitas ayuda ? Contacta con nuestro equipo de soporte",
-            "welcomeText":"Bienvenido a MEZCALMOS 👋",
-            "appDescription":"Su lugar único para encontrar todos sus servicios locales que necesita y donde puede disfrutar de servicios rápidos y de alta calidad .",
-            "taxi": {
-                "title":"Taxi",
-                "subtitle":"Consiga el taxi más cercano y obtenga su destino lo antes posible."
-            },
-            "groceries": "Comestibles",
-            "services": "Servicios",
-            "food": {
-                "title":"Comida",
-                "subtitle":"Descubre los platos más deliciosos de los restaurantes más cercanos."
-            },
-            "laundry":{
-                "title":"Lavandería",
-                "subtitle":"Próximamente ..."
-            }
-        },
-        "restaurant": {
-            "emptRestaurantList" : "Aún no hay restaurantes registrados.",
-            "restaurants": "Restaurantes",
-            "notAvailable": "Su restaurante está cerrado",
-            "menu": {
-                "myCart": "Mi Carrito",
-                "items":"elementos",
-                "menu": "Menú",
-                "info":"Informacións",
-                "description": "Descripción",
-                "location":"localización",
-                "notes": "Notas",
-                "quantity": "Cantidad",
-                "addToCart": "AÑADIR AL CARRITO",
-                "modifyItem": "Modificar artículo",
-                "workingHours":{
-                    "workingHours":"Horas Laborales",
-                    "open":"Abierto",
-                    "closed":"Cerrado",
-                    "weekDays":{
-                        "monday":"Lunes",
-                        "tuesday":"Martes",
-                        "wednesday":"Miércoles",
-                        "thursday":"Jueves",
-                        "friday":"Viernes",
-                        "saturday":"Sábado",
-                        "sunday":"Domingo"
-                    }
-                },
-                "dailog":{
-                    "title":"Advertencia",
-                    "subtitle": "Ya tiene algunos artículos en su carrito de otro restaurante, ¿quiere revisarlos primero o sobrescribirlos?",
-                    "leftBtn": "Revisar",
-                    "rightBtn":"Sobrescribir"
+    "CustomerApp":{
+        "components":{
+            "Menu":{
+                "UserMenuComponent": {
+                    "savedLocations": "Ubicaciones guardadas",
+                    "userInfo":  " Información del usuario ",
+                    "logout": "Cerrar sesión",
+                    "notifications": "Notificaciones",
+                    "orders":  "Pedidos"
                 }
             },
-            "cart": {
-                "myCart":"Mi Carrito",
-                "cart": "Carro",
-                "inCart": "En El Carrito",
-                "orderSummary":"Resumen de la orden",
-                "orderCost":"Costo de la orden",
-                "clear": "Vaciar",
-                "clearCart": "Vaciar carrito",
-                "clearCartConfirm": "Está seguro de que desea vaciar el carrito?",
-                "deleteItem": "Eliminar este artículo.",
-                "deleteItemConfirm": "Quieres eliminar este artículo?",
-                "totalCost": "Costo Total",
-                "deliveryCost": "Costo de envío",
-                "total": "Total",
-                "deliveryLocation": "Lugar De Entrega",
-                "pickLocation": "Elegir del mapa",
-                "orderNow": "ORDENAR AHORA",
-                "options": "Opciones"
+            "CustomerHomeFooterButtons": {
+                "privacyPolicy": "Privacy policy"
             },
-            "checkout": {
-                "orderItems": "Encargar Artículos",
-                "cancel": "Cancelar",
-                "cancelOrder": "Cancelar el pedido",
-                "orderCanceled":"Se cancela el pedido ...",
-                "cancelOrderConfirm": "¿Estás segura de que deseas cancelar este pedido?"
+            "DropDownLocationList": {
+                "pickLocation": "Elegir del mapa"
             },
-            "orderStatus": {
-                "orderCanceled":"cancelada",
-                "orderDeliverd":"entregado",
-                "helperText":{
-                    "preparing": "Tu pedido está siendo preparado por el restaurante.",
-                    "readyForPickUp": "Su pedido está preparado y listo para ser recogido por el conductor de la entrega.",
-                    "onTheWay": "Tu pedido está en camino",
-                    "delivered": "Su pedido ha sido entregado con éxito.",
-                    "canceledByAdmin": "Tu pedido es cancelado por el Restaurante.",
-                    "canceledByCustomer": "Su pedido es cancelado por el cliente.",
-                    "recievied": "Su pedido es recibido por el restaurante."
-                    },
-                "orderStatus":"Estado de la orden",
-                "preparing": "Preparando el pedido",
-                "readyForPickUp": "Lista para recoger",
-                "onTheWay": "En camino",
-                "delivered": "Entregado",
-                "canceledByAdmin": "Cancelada",
-                "canceledByCustomer": "Cancelada",
-                "recievied": "Recibida"
+            "LocationPicker": {
+                "pick": "ELIGE",
+                "confirm" : "confirmar",
+                "signInToMakeOrder": "Iniciar sesión para hacer el pedido",
+                "moveMapIfNotPrecise": "Puede mover el mapa."
             },
-            "cancelOrderDialog": {
-                "yes": "Si, Estoy seguro!",
-                "no": "No"
+            "ServicesCard": {
+                "comingSoon": "Próximamente ..."
             }
         },
-        "inviteCode": {
-            "inviteCodQuestion": "Tienes un código de invitación?",
-            "no": "No",
-            "confirm": "Confirmar"
-        },
-        "signInAlert":{
-            "title":"Debe iniciar sesión para agregar artículos a su carrito",
-            "signBtn":"Apuntame dentro",
-            "notNowBtn": "Ahora no ?"
-        },
-        "taxiView": {
-            "taxi": "Taxi",
-            "taxiOrder" : "Orden de taxi",
-            "currentLocation":"Ubicación actual",
-            "pickFromMap":"Elegir del mapa",
-            "searching": "Buscando taxi",
-            "cancel": "Cancelar",
-            "arrival": "Llegara",
-            "message": "Envía Mensaje",
-            "rideStarted": "Paseo iniciado",
-            "droppedOff": "Dejado",
-            "review": "Revisar",
-            "loading": "Cargando",
-            "confirm": "Confirmar",
-            "cancelled": "Cancelado",
-            "logIn": "Inicie sesión para hacer este pedido",
-            "outOfPuerto": "Estas demasiado lejos de puerto",
-            "priceEstimate": "El precio estimado del viaje es de $",
-            "noRide": "Lamento informarle que este viaje ya no existe.",
-            "rideFinished": "El viaje ha terminado",
-            "rideExpired": "Tu pedido ha expirado",
-            "rideCancelledByTaxi": "El viaje ha sido cancelado por taxi",
-            "rideCancelledByCustomer": "Has cancelado tu viaje",
-            "ride": "viaje",
-            "taxiRideCheckedTooltip" : "Esto muestra cuántos conductores recibieron su oferta pero no encontraron aceptable la oferta" ,
-            "taxiRequestPriceTooltip" : "¿Cuánto está dispuesto a ofrecer por este viaje? Transmitiremos su oferta a todos los taxistas cerca de usted, aceptarán su pedido solo si encuentran que el precio ofrecido es aceptable.",
-            "taxiRidePriceTooltip" : "Haga clic en + - para aumentar/disminuir su precio en 5. Si ve que su pedido no se acepta, pruébelos.",
-            "failedToRequestTaxi" : "¡Error al solicitar un taxi!",
-            "increasePrice" : "Aumentar el precio",
-            "decreasePrice" : "disminuir el precio",
-            "offers" : "ofertas",
-            "offerPrice" : "Precio de oferta",
-            "offerStatus" : "Estado de la oferta",
-            "offerTip" : "Cada oferta que realice tiene un tiempo de espera de 60 segundos, si el cliente no acepta su oferta, la oferta se cancelará."
-        },
-        "laundry": {
-            "firstStep": "El primer paso es crear un pedido una vez que crea un pedido, uno de nuestros conductores llegará a su ubicación para recoger sus cosas",
-            "howItWorks": "Cómo funciona",
-            "laundryPricing": "Precios de lavandería",
-            "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido.",
-            "orderHelper": {
-                "atLaundry": " La lavandería está procesando su pedido.",
-                "cancelByAdmin": " Orden cancelado por el administrador.",
-                "cancelByUser": " Usted canceló el pedido",
-                "delivered": "El pedido ha sido entregado con éxito",
-                "otwDelivery": " Nuestro conductor está en camino de entregar su pedido.",
-                "otwPickup": "Nuestro conductor está en camino de recoger su pedido de su ubicación ",
-                "pickedUp": " Orden recogido de su ubicación con éxito",
-                "ready": " Su pedido está listo para la entrega.",
-                "received": " El pedido recibido y se procederá tan pronto como sea posible."
+        "pages":{
+            "ListOrdersScreen":{
+                "components": {
+                    "RestaurantOngoingOrderCard": {
+                       "totalCost": "Costo Total"
+                    },
+                    "RestaurantPastOrderCard": {
+                       "totalCost": "Costo Total"
+                    },
+                    "TaxiOrderOngoingCard": {
+                      "taxiOrder" : "Orden de taxi",
+                      "totalCost": "Costo Total",
+                      "orderStatus":{
+                        "canceledByTaxi": "Cancelado",
+                        "canceledByCustomer":"Cancelado",
+                        "onTheWay":"Taxi en el camino",
+                        "lookingForTaxi":"Buscando Taxi",
+                        "inTransit":"Taxi en tránsito",
+                        "droppedOff":"Dejado",
+                        "expired": "Caducado"
+                      }
+                    },
+                    "TaxiPastOrderCard": {
+                       "taxiOrder" : "Orden de taxi",
+                       "totalCost": "Costo Total"
+                    }
+                },
+                "ListOrdersScreen": {
+                    "title": "Pedidos",
+                    "noOrders": "Sin pedidos",
+                    "shared":{
+                      "notification":{
+                        "today": "Hoy",
+                        "yesterday": "Ayer"
+                      }
+                    },
+                    "orders":{
+                       "noOrders": "Sin pedidos",
+                       "onGoingOrders":"Pedidos en curso"
+                    }
+          
+                }
             },
-            "secondStep": "Segundo paso Nuestro proveedor de servicios de lavandería recibirá su pedido y comenzará a hacer su trabajo y le informaremos sobre los cambios en los precios según el peso del pedido",
-            "thirdStep": "Paso final Una vez que su pedido esté listo, uno de nuestros conductores recogerá el pedido de la lavandería y lo conseguirá a su ubicación lo antes posible."
-        },
-        "cancelOrder": {
-            "title":"Confirmar cancelación.",
-            "question": "Estás seguro de que deseas cancelar tu pedido?",
-            "cancelRide": "Cancelar viaje",
-            "postAgain": "Publica de nuevo",
-            "noShow": "No vino",
-            "mistake": "Error",
-            "other": "Otro",
-            "taxiCancelled": "Lamento informarle que el taxi canceló el viaje.",
-            "orderExpired": "Lamento informar que su solicitud de taxi ha caducado."
-        },
-        "savedLocations": {
-            "title": "Ubicaciones guardadas",
-            "location": "Ubicacion",
-            "addNewLoc": "Añadir Nueva Ubicación",
-            "editLocation": "Editar ubicación",
-            "deleteLocation":"Eliminar ubicación",
-            "locations": "Ubicaciones",
-            "addLocationDialog": {
-                "title": "ingrese el nombre de la ubicación, si desea guardar para uso futuro, de lo contrario, puede omitir",
-                "button": "OK",
-                "textHint": "Nombre del lugar",
-                "skip": "Omitir"
+            "PickLocationScreen": {
+                "PickLocationView": {
+                   "pickLocation":"Elegir ubicación",
+                   "pickLabele":"Busque la ubicación o mueva el mapa y elija la ubicación"
+                }
             },
-            "editLocationDialog": {
-                "title": "Ingrese el nombre de la ubicación",
-                "button": "EDITAR",
-                "textHint": "Nombre del lugar"
-            },
-            "savedLocationsListEmpty" : "Tu lista de ubicaciones guardadas está vacía",
-            "clickBtnToAddNewLocation" : "Agregue una nueva ubicación haciendo clic en el botón de abajo"
+            "Restaurants": {
+                "ListRestaurantsScreem": {
+                    "components": {
+                      "RestaurandCard": {
+                        "items":"elementos",
+                        "closed":"Cerrado"
+                      },
+                      "searchField": {
+                        "search": "Busca"
+                      }
+                    },
+                    "ListRestaurantScreen": {
+                      "restaurants": "Restaurantes",
+                      "emptRestaurantList" : "Aún no hay restaurantes registrados."
+                    }
+                },
+                "ViewCartScreen":{
+                    "components":{
+                        "BuildCart":{
+                            "inCart": "En El Carrito",
+                            "clearCart": "Vaciar carrito",
+                            "clearCartConfirm": "Está seguro de que desea vaciar el carrito?",
+                            "clear": "Vaciar"
+                        },
+                        "BuildItems": {
+                            "deleteItem": "Eliminar este artículo.",
+                            "deleteItemConfirm": "Quieres eliminar este artículo?"
+                        },
+                        "ChoosenManyOption": {
+                            "options": "Opciones"
+                        },
+                        "DropDownListCartView":{
+                            "pickLocation": "Elegir del mapa"
+                        },
+                        "OrderSummaryCard":{
+                            "orderSummary":"Resumen de la orden",
+                            "orderCost":"Costo de la orden",
+                            "deliveryCost": "Costo de envío",
+                            "totalCost": "Costo Total",
+                            "deliveryLocation": "Lugar De Entrega"
+                        },
+                        "SaveLocationDailog":{
+                            "addLocationDialogTitle": "ingrese el nombre de la ubicación, si desea guardar para uso futuro, de lo contrario, puede omitir",
+                            "editLocationDialogTitle":"Ingrese el nombre de la ubicación",
+                            "addLocationDialogButton":"OK",
+                            "editLocationDialogButton":"EDITAR",
+                            "addLocationDialogSkip": "Omitir"
+                        },
+                          "ViewCartBody": {
+                            "notes": "Notas"
+                        }
+                    },
+                    "ViewCartScreen": {
+                        "myCart": "Mi Carrito",
+                        "notAvailable": "Su restaurante está cerrado",
+                        "orderNow": "ORDENAR AHORA"
+                    }
+                },
+                "ViewItemScreen":{
+                    "components":{
+                        "BottomBarItemViewScreen":{
+                          "notAvailable": "Su restaurante está cerrado",
+                          "title":"Advertencia",
+                          "leftBtn": "Revisar",
+                          "rightBtn":"Sobrescribir",
+                          "subtitle": "Ya tiene algunos artículos en su carrito de otro restaurante, ¿quiere revisarlos primero o sobrescribirlos?",
+                          "addToCart": "AÑADIR AL CARRITO",
+                          "modifyItem": "Modificar artículo"
+                        },
+                        "ChoosenManyCheckBox":{
+                           "optional": "Opcional"
+                        },
+                        "DialogRequiredSignIn":{
+                          "title":"Debe iniciar sesión para agregar artículos a su carrito",
+                          "signBtn":"Apuntame dentro",
+                          "notNowBtn": "Ahora no ?"
+                        }
+                    },
+                    "ViewItemScreen":{
+                        "notes": "Notas"
+                    }
+                },
+                "ViewOrderScreen":{
+                    "components":{
+                        "notesWidget":{
+                            "notes": "Notas"
+                        },
+                        "OrderFooterCard":{
+                            "cancelOrder": "Cancelar el pedido",
+                            "orderCanceled":"Se cancela el pedido ...",
+                            "cancelOrderConfirm": "¿Estás segura de que deseas cancelar este pedido?",
+                            "titleSuccess": "Éxito :)",
+                            "orderCancelSuccess": "El pedido se canceló correctamente.",
+                            "titleFailed": "Vaya :(",
+                            "orderCancelFailed": "No se pudo cancelar el pedido.",
+                            "yes": "Si, Estoy seguro!",
+                            "no": "No",
+                            "orderDelivered":"entregado",
+                            "orderCancelled":"cancelada"
+                        },
+                        "OrdersItemsCard":{
+                            "orderItems": "Encargar Artículos",
+                            "canceledByAdmin": "Tu pedido es cancelado por el Restaurante.",
+                            "canceledByCustomer": "Su pedido es cancelado por el cliente.",
+                            "received": "Recibida",
+                            "preparing": "Preparando el pedido",
+                            "onTheWay": "En camino",
+                            "readyForPickUp": "Lista para recoger",
+                            "delivered": "Entregado",
+                            "helperText-canceledByAdmin": "Tu pedido es cancelado por el Restaurante.",
+                            "helperText-canceledByCustomer": "Su pedido es cancelado por el cliente.",
+                            "helperText-received": "Su pedido es recibido por el restaurante.",
+                            "helperText-preparing": "Tu pedido está siendo preparado por el restaurante.",
+                            "helperText-onTheWay": "Tu pedido está en camino",
+                            "helperText-readyForPickUp": "Su pedido está preparado y listo para ser recogido por el conductor de la entrega.",
+                            "helperText-delivered": "Su pedido ha sido entregado con éxito."
+                        },
+                        "OrderSummaryCard":{
+                            "totalCost": "Costo Total",
+                            "deliveryCost": "Costo de envío",
+                            "total": "Total",
+                            "deliveryLocation": "Lugar De Entrega"
+                        }
+                    },
+                    "ViewRestaurantOrderScreen":{
+                        "orderStatus":"Estado de la orden"
+                    }
+                },
+                "ViewRestaurantScreen":{
+                    "components":{
+                        "restaurantInfoTab":{
+                            "description": "Descripción",
+                            "location":"localización",
+                            "workingHours":"Horas Laborales",
+                            "weekDays":{
+                                "monday":"Lunes",
+                                "tuesday":"Martes",
+                                "wednesday":"Miércoles",
+                                "thursday":"Jueves",
+                                "friday":"Viernes",
+                                "saturday":"Sábado",
+                                "sunday":"Domingo"
+                            }
+                        },
+                        "workinHoursCart":{
+                            "open":"Abierto",
+                            "closed":"Cerrado"
+                        }
+                    },
+                    "ViewRestaurantScreen":{
+                        "menu": "Menú",
+                        "info":"Informacións"
+                    }
+                }
 
-        },
-        "pickLocation":{
-            "pickLocation":"Elegir ubicación",
-            "pickLabele":"Busque la ubicación o mueva el mapa y elija la ubicación"
             },
-        "orders": {
-            "title": "Pedidos",
-            "onGoingOrders":"Pedidos en curso",
-            "item": "Artículo|Artículos",
-            "onTheWay": "En camino",
-            "inTransit": "En tránsito",
-            "inProcess": "En proceso",
-            "searching": "Buscando",
-            "noOrders": "Sin pedidos"
-        }
-    },
-    "taxi": {
-        "incoming": {
-            "title": "Órdenes  Entrantes",
-            "loading": "Cargando",
-            "services": "Todos los servicios",
-            "isInTax": "Por favor finalice | su viaje | para aceptar nuevos pedidos",
-            "far": "lejos",
-            "toggleTitle": "Activar Pedidos Entrantes",
-            "toggleDesc": "Activar para ver nuevos pedidos",
-            "noOrdersTitle": "No Hay Ordenes",
-            "noOrdersDesc": "Intentarlo más tarde"
-        },
-        "taxiView": {
-            "taxi": "Taxi",
-            "searching": "Buscando taxi",
-            "acceptOrders": "Aceptar orden",
-            "startRide": "Iniciar viaje",
-            "finishRide": "Terminar viaje",
-            "message": "Envía Mensaje",
-            "droppedOff": "Dejado",
-            "droppedOffMessage": "Tu viaje ha terminado",
-            "review": "Revisar",
-            "loading": "Cargando",
-            "cancelled": "Cancelado",
-            "tooFarFromstartRide": "Haga clic en Iniciar viaje después de que el cliente haya llegado a su vehículo. Según su GPS, parece que todavía está lejos de la ubicación del cliente, está seguro de que aún desea comenzar el viaje?",
-            "tooFarFromfinishRide": "Haga clic en Terminar después de que el cliente haya salido de su vehículo. Según su GPS, parece que todavía está lejos de la ubicación final del cliente. Estás seguro de que aún desea terminar el viaje?",
-            "no": "No",
-            "yes": "Sí",
-            "noRide": "Lamento informarle que este viaje ya no existe."
-        },
-        "cancelOrder": {
-            "question": "Por qué quieres cancelar el viaje?",
-            "cancelRide": "Cancelar viaje",
-            "confirmation_header": "Por favor confirmar",
-            "confirmation_text": "¿Estás seguro de que deseas cancelar el viaje actual?",
-            "backToIncoming": "Volver a entrante",
-            "noShow": "No vino",
-            "otherRide": "Otro viaje",
-            "trafficJam": "Embotellamiento",
-            "other": "Otro",
-            "customerCancelled": "Lamento informarle que el cliente canceló el viaje.",
-            "rideUnavailble": "Lamento informarle que el viaje ya no está disponible."
-        },
-        "orders": {
-            "orderStatus":{
-                "canceledByTaxi": "Cancelado",
-                "canceledByCustomer":"Cancelado",
-                "onTheWay":"Taxi en el camino",
-                "lookingForTaxi":"Buscando Taxi",
-                "inTransit":"Taxi en tránsito",
-                "droppedOff":"Dejado",
-                "expired": "Caducado"
+            "SavedLocations":{
+                "components": {
+                    "SavedLocationBody":{
+                        "title": "Ubicaciones guardadas",
+                        "location": "Ubicacion"
+                    },
+                    "SavedLocationComponent":{
+                        "editLocation": "Editar ubicación",
+                        "deleteLocation":"Eliminar ubicación"
+                    },
+                    "SavedLocationIsEmpty":{
+                        "savedLocationsListEmpty" : "Tu lista de ubicaciones guardadas está vacía",
+                        "clickBtnToAddNewLocation" : "Agregue una nueva ubicación haciendo clic en el botón de abajo" 
+                    }
+                } ,
+                "SavedLocationView": {
+                    "title": "Ubicaciones guardadas",
+                    "addNewLoc": "Añadir Nueva Ubicación"
+                }
             },
-            "title": "Pedidos",
-            "item": "Artículo|Artículos",
-            "onTheWay": "En camino",
-            "onTheWayMessage": "está en camino ahora para recogerte",
-            "inTransit": "En tránsito",
-            "inTransitMessage": "Tu viaje está en camino",
-            "searching": "Buscando",
-            "searchingMessage": "Te van a emparejar con un taxi",
-            "noOrders": "Sin pedidos",
-            "cancelled": "Taxi cancelado",
-            "cancelledMessage": "Tu viaje ha sido cancelado"
-        },
-        "introduction": {
-            "howToTaxi": "¿Desea utilizar la aplicación  Mezcalmos para ofrecer  transporte a los clientes  en <span class = 'text_blue'> Puerto Escondido? </span> ",
-            "signUpTaxi": "Haga clic en Registrarse,  muéstrenos la prueba de su  autorización de taxi y comience  a ofrecer viajes de inmediato.",
-            "confirmation": "Su solicitud está bajo revisión. Nos pondremos en contacto con usted en breve",
-            "logIn": " Registrate|Iniciar sesión",
-            "alreadyMember": "Ya eres un usuario?",
-            "yes": "SI"
-        }
-    },
-    "shared": {
-        "unauthorizedScreen":{
-            "unauthorized":"No autorizado",
-            "subTitle1":"No está autorizado, póngase en contacto con Alejandro.",
-            "subTitle2":" , para obtener la autorización."
-        },
-        "snackbars": {
-            "titleSuccess": "Éxito :)",
-            "titleFailed": "Vaya :(",
-            "orderCancelSuccess": "El pedido se canceló correctamente.",
-            "orderCancelFailed": "No se pudo cancelar el pedido.",
-            "serverCommunicationError" : "No se pudo comunicar con el servidor :("
+            "Taxi": {
+                "components": {
+                    "Hints":{
+                        "RideReadByTaxisHint":{
+                            "taxiRideCheckedTooltip" : "Esto muestra cuántos conductores recibieron su oferta pero no encontraron aceptable la oferta" 
+                        }
+                    },
+                    "TaxiBottomBars":{
+                        "TaxiOrderBottomBar":{
+                            "rideFinished": "El viaje ha terminado",
+                            "ride": "viaje",
+                            "rideExpired": "Tu pedido ha expirado",
+                            "rideCancelledByTaxi": "El viaje ha sido cancelado por taxi",
+                            "rideCancelledByCustomer": "Has cancelado tu viaje"
+                        },
+                        "TaxiReqBottomBar":{
+                            "decreasePrice" : "disminuir el precio",
+                            "increasePrice" : "Aumentar el precio"
+                        }
+                    },
+                    "BottomBarComponents":{
+                        "confirmation_header": "Por favor confirmar",
+                        "confirmation_text": "¿Estás seguro de que deseas cancelar el viaje actual?",
+                        "serverCommunicationError" : "No se pudo comunicar con el servidor :("
+                    },
+                    "LocationSearchBar":{
+                        "from": "Desde",
+                        "to": "Para",
+                        "currentLocation":"Ubicación Actual",
+                        "pickFromMap":"Elige del mapa"
+                    },
+                    "TopBar":{
+                        "from": "Desde",
+                        "to": "Para"
+                    }
+                },
+                "RequestTaxiScreen": {
+                    "failedToRequestTaxi" : "¡Error al solicitar un taxi!",
+                    "taxiRequestPriceTooltip" : "Haga clic en + - para aumentar/disminuir su precio en 5. Si ve que su pedido no se acepta, pruébelos."
+                },
+                  "ViewTaxiOrdersScreen": {
+                    "orderCancelSuccess": "El pedido se canceló correctamente.",
+                    "title":"Confirmar cancelación.",
+                    "question": "Estás seguro de que deseas cancelar tu pedido?",
+                    "cancel": "Cancelar",
+                    "taxiRidePriceTooltip" : "Haga clic en + - para aumentar/disminuir su precio en 5. Si ve que su pedido no se acepta, pruébelos."
+                }
 
-        },
-        "permissions": {
-            "cameraAccessOffTitle" : "La aplicación no puede acceder a la cámara.",
-            "cameraAccessOffBody" : "Aparentemente, denegó el acceso a la aplicación desde la cámara, vaya a General > Aplicación > ¡Permitir cámara!",
-            "photoAccessOffTitle" : "La aplicación no puede acceder a Fotos.",
-            "photoAccessOffBody" : "Aparentemente, le negó el acceso a la aplicación desde la biblioteca de fotos, vaya a General > Aplicación > Fotos y cambie Ninguno a otra cosa.",
-            "locationIsOff": "Servicio de ubicación desactivado",
-            "askForNotif": "La aplicación recopila los datos de su ubicación para emparejarlo con los mejores viajes y compartir su ubicación con los clientes, incluso cuando la aplicación está en segundo plano.",
-            "permissionBtn": "ACTIVAR AHORA",
-            "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
-            "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo.",
-            "android_11" : "Detectamos que su versión de Android es 11 o más reciente, por lo tanto, debemos pedirle que nos dé permisos para usar la ubicación en segundo plano para mantener a sus clientes actualizados sobre su ubicación actual, incluso cuando la aplicación se ejecuta en segundo plano."
-        },
-        "login": {
-            "title": "Conéctese usando Facebook o usando SMS! ",
-            "owner": " Inicie sesión con   Facebook para   hacer un pedido ",
-            "customer": " Inicie sesión con   Facebook para   hacer un pedido ",
-            "fbBtn": "INICIAR CON FACEBOOK",
-            "whatsAppLogin": " INICIAR CON WHATSAPP",
-            "loginWithSms": "INICIAR CON SMS",
-            "loginWithApple": "INICIAR CON APPLE",
-            "verifyCountryCode": "Verifique el código de su país",
-            "verifyPhoneNumber": "Verifique su número de teléfono",
-            "OtpConfirmation": "Confirmación del \ncódigo OTP",
-            "otpDidnReciveTxt":"No has recibido el mensaje de texto?",
-            "confirmation":"Confirmación",
-            "enterOtpCode": "Ingrese el código OTP enviado a",
-            "resend": "Reenviar",
-            "resendAfter": "Reenviar después",
-            "seconds": "segundos",
-            "welcomeTitle": "Bienvenido de nuevo: D",
-            "hello": "Hola",
-            "welcomeDesc2": "Nos alegra que hayas vuelto!",
-            "confirm": "Confirmar",
-            "otpCode": "OTP código",
-            "enterPhoneNumber": "Ingrese el número teléfono para recibir el código OTP",
-            "otpSubtitleNumber": "Ingresa número telefónico",
-            "submit": "ENVIAR",
-            "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos.",
-            "signInToMakeOrder": "Iniciar sesión para hacer el pedido",
-            "wrongOTPCode" :  "El código de confirmación es incorrecto, inténtelo de nuevo.",
-            "failedOTPConfirmRequest" : "La confirmación del código OTP falló :("
-        },
-        "messages": {
-            "title": "Mensajes",
-            "available": "Disponible",
-            "orderLink": "Página de pedido",
-            "newMessage": "Nuevo mensaje de",
-            "writeMsgPlaceholder": "Escribe tu mensaje aqui ..."
-        },
-        "notification": {
-            "latest":"Último",
-            "title": "Notificaciones",
-            "today": "Hoy",
-            "yesterday": "Ayer",
-            "older": "Antiguos",
-            "item": "Artículo|Artículos",
-            "clear": "Borrar",
-            "alertClearNotification": {
-                "title": "Eliminar todas las notificaciones",
-                "subTitle": "Estás seguro de que quieres eliminar las notificaciones?"
             },
-            "notificationType": {
+            "CustomerWrapper":{
+                "welcomeText":"Bienvenido a MEZCALMOS 👋",
+                "appDescription":"Su lugar único para encontrar todos sus servicios locales que necesita y donde puede disfrutar de servicios rápidos y de alta calidad .",
+                "services": "Servicios",
+                "taxi": {
+                    "title":"Taxi",
+                    "subtitle":"Consiga el taxi más cercano y obtenga su destino lo antes posible."
+                },
+                "food": {
+                    "title":"Comida",
+                    "subtitle":"Descubre los platos más deliciosos de los restaurantes más cercanos."
+                },
+                "laundry":{
+                    "title":"Lavandería",
+                    "subtitle":"Próximamente ..."
+                },
+                "supportText":"necesitas ayuda ? Contacta con nuestro equipo de soporte"
+            }
+        },
+        "notificationHandler": {
+            "viewOrder": "Ver Pedido",
+            "restaurant":{
                 "preparingOrder": {
                     "title": "Preparando Orden",
                     "body": "Se está preparando tu pedido"
@@ -377,221 +330,352 @@
                     "title": "Listo Para Recoger",
                     "body": "Tu pedido está listo para ser recogido"
                 },
-                "onTheWayRestaurant": {
+                "onTheWay": {
                     "title": "En Camino",
                     "body": "Tu pedido está en camino"
-                },
-                "delivered": {
+                  },
+                  "delivered": {
                     "title": "Entregado",
                     "body": "Tu pedido ha sido entregado"
-                },
-                "cancelled": {
+                  },
+                  "cancelled": {
                     "title": "Orden Cancelada",
                     "body": "Tu pedido ha sido cancelado"
-                },
-                "onTheWayTaxi": {
+                  }
+            },
+            "taxi":{
+                "onTheWay": {
                     "title": "En Camino",
                     "body": "Tu taxi está en camino"
-                },
-                "inTransit": {
+                  },
+                  "inTransit": {
                     "title": "En Transito",
                     "body": "Estás de camino a tu destino"
-                },
-                "droppedOff": {
+                  },
+                  "droppedOff": {
                     "title": "Llegado",
                     "body": "Ha llegado a su destino"
-                },
-                "expired": {
+                  },
+                  "cancelled": {
+                    "title": "Orden Cancelada",
+                    "body": "Tu pedido ha sido cancelado"
+                  },
+                  "expired": {
                     "title": "No hay taxis disponibles",
                     "body": "Lamentablemente, no pudimos encontrar un taxi para usted. Vuelva a intentarlo más tarde"
+                  } 
+            }
+        }
+
+    },
+    "Shared":{
+        "controllers":{
+            "authController":{
+               "failedOTPConfirmRequest" : "La confirmación del código OTP falló :("
+            }
+        },
+        "helpers":{
+            "ImageHelper":{
+                "camera" : "Cámara",
+                "gallery" : "Galería",
+                "cameraAccessOffTitle" : "La aplicación no puede acceder a la cámara.",
+                "cameraAccessOffBody" : "Aparentemente, denegó el acceso a la aplicación desde la cámara, vaya a General > Aplicación > ¡Permitir cámara!",
+                "photoAccessOffTitle" : "App can't access Photos.",
+                "photoAccessOffBody" : "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
+            },
+            "NotificationsHelper":{
+                "view": "Ver"
+            }
+        },
+        "pages":{
+            "AuthScreens":{
+                "SMS":{
+                    "OtpConfirmationScreen":{
+                        "confirmation":"Confirmación",
+                        "OtpConfirmation": "Confirmación del \ncódigo OTP",
+                        "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos.",
+                        "enterOtpCode": "Ingrese el código OTP enviado a",
+                        "otpDidnReciveTxt":"No has recibido el mensaje de texto?",
+                        "resend": "Reenviar",
+                        "resendAfter": "Reenviar después",
+                        "seconds": "segundos",
+                        "wrongOTPCode" :  "El código de confirmación es incorrecto, inténtelo de nuevo.",
+                        "confirm": "Confirmar"
+                    },
+                    "PhoneNumberScreen":{
+                        "otpCode": "OTP código",
+                        "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos.",
+                        "enterPhoneNumber": "Ingrese el número teléfono para recibir el código OTP",
+                        "submit": "ENVIAR"
+                    }
+                },
+                "SignInScreen":{
+                    "title": "Conéctese usando Facebook o usando SMS! ",
+                    "loginWithApple": "INICIAR CON APPLE",
+                    "loginWithSms": "INICIAR CON SMS",
+                    "fbBtn": "INICIAR CON FACEBOOK"
+                },
+                "UnauthorizedScreen":{
+                    "unauthorized":"No autorizado",
+                    "subTitle1":"No está autorizado, póngase en contacto con Alejandro.",
+                    "subTitle2":" , para obtener la autorización."
                 }
             },
-            "view": "Ver",
-            "viewOrder": "Ver Pedido"
+            "Notifications":{
+                "components":{
+                  "ClearNotificationButton":{
+                    "latest":"Último",
+                    "alertClearNotificationTitle":"Eliminar todas las notificaciones"
+                  }
+                },
+                "ViewNotifications":{
+                  "title": "Notificaciones"
+                }
+            },
+            "UserProfileScreen":{
+                "UserProfileScreen":{
+                    "mustSetUserNameHint" : "Introduce un nombre\npara seguir usando la aplicación.",
+                    "mustSetUserImgHint" : "Cargue una imagen\nhaciendo clic en 'Subir imagen'\npara seguir usando la aplicación.",
+                    "wrongName" : "El nombre solo debe contener al menos 4 letras y espacios."
+                },
+                "UserProfileWidgets":{
+                    "uploadPic" :"Subir imagen",
+                    "title": " Información del usuario ",
+                    "cancel": "Cancelar",
+                    "editInfo": "Editar Información",
+                    "noChangesToApply" : "¡No hay cambios que aplicar!",
+                    "saveBtn": "Guardar"
+                }
+            },
+            "CounterOffers" : {
+                "offers" : "ofertas",
+                "offerPrice" : "Precio de oferta",
+                "offerStatus" : "Estado de la oferta",
+                "offerTip" : "Cada oferta que realice tiene un tiempo de espera de 60 segundos, si el cliente no acepta su oferta, la oferta se cancelará."
+            },
+            "NoInternetConnectionScreen":{
+                "noInternetConnection" : "Sin conexión a Internet",
+                "reconnecting": "Reconectando"
+            }
         },
-        "userInfo": {
-            "noChangesToApply" : "¡No hay cambios que aplicar!",
-            "snackMsg":"Ten paciencia mientras se carga tu foto.",
-            "snackTxt":"Uploading Image",
-            "choosePic":"Elige una foto",
-            "uploadPic" :"Subir imagen",
-            "saveTxt":"Guarda los cambios que hiciste",
-            "hintTxt":"Ingresa tu nombre completo",
-            "validationTxtOne":"Por favor ingresa tu nombre completo",
-            "validationTxtTwo":"Por favor ingrese un nombre valido",
-            "title": " Información del usuario ",
-            "editInfo": "Editar Información",
-            "editPhoneNumber": "Cambiar número de teléfono",
-            "addInfo": "Agregar Información",
-            "editBtn": "EDITAR INFORMACION",
-            "deleteBtn": "Borrar cuenta",
-            "saveBtn": "Guardar",
-            "cancel": "Cancelar",
-            "editImgMsg": "Click on image to change it",
-            "fullName": "Nombre completo",
-            "phoneNumber": "Número de teléfono",
-            "clickToUploadImg": "clickToUpdateEs",
-            "addPhoneNumber": "Agregar el número de teléfono",
-            "wrongName" : "El nombre solo debe contener al menos 4 letras y espacios.",
-            "mustSetUserNameHint" : "Introduce un nombre\npara seguir usando la aplicación.",
-            "mustSetUserImgHint" : "Cargue una imagen\nhaciendo clic en 'Subir imagen'\npara seguir usando la aplicación."
-        },
-        "navDrawer": {
-            "userInfo": "Información del usuario",
-            "myOrders": "Mis Pedidos",
-            "savedLocations": "Ubicaciones guardadas",
-            "logout": "Cerrar sesión",
-            "login": "Iniciar sesión",
-            "contactAdmin": "Contactar admin",
-            "legal": "Política de privacidad"
-        },
-        "header": {
-            "alert": "El estado del pedido cambió"
-        },
-        "addItem": {
-            "title": " Agregar artículo nuevo",
-            "name": "Nombre",
-            "note": "nota|notas",
-            "addItemBtn": "Agregar artículo"
-        },
-        "inputLocation": {
-            "from": "Desde",
-            "to": "Para",
-            "optional": "Opcional",
-            "currentLoc": "Ubicación Actual",
-            "searching": "Buscando",
-            "pick": "ELIGE",
-            "pickFromMap": "Elige del mapa",
-            "moveMapIfNotPrecise": "Puede mover el mapa.",
-            "moveMapToPick": "Mueva el mapa para elegir la ubicación."
-        },
-        "pickLocation": {
-            "name": "Nombre",
-            "address": "Dirección",
-            "searching": "ELEGIR",
-            "pick": "ELIGE",
-            "location": "localización",
-            "noLocation": "No hay ubicación seleccionada"
-        },
-        "placeHolders": {
-            "home": "Hogar",
-            "address": "Ingresa Dirección",
-            "name": "Ingresa Nombre",
-            "search": "Busca",
-            "writeHere": "Escriba aquí",
-            "displayName": "Ingresa Nombre",
-            "phone": "Ingresa Numero Telefono",
-            "phoneNumber": "+52123456.."
-        },
-        "popUps": {
-            "yes" : "Si",
-            "no" : "No"
-        },
-        "conenctionStatus" : {
-            "noInternetConnection" : "Sin conexión a Internet",
-            "reconnecting": "Reconectando"
-        },
-        "buttonsTexts": {
-            "confirm" : "confirmar",
-            "camera" : "Cámara",
-            "gallery" : "Galería"
+        "widgets":{
+            "LocationSearchComponent":{
+              "address": "Ingresa Dirección"
+            },
+            "MezClearButton":{
+              "clear": "Borrar"
+            },
+            "MezDialogs":{
+                "yes" : "Si",
+                "no" : "No"
+            },
+            "MezSideMenu":{
+              "userInfo": "Información del usuario",
+              "logout": "Cerrar sesión",
+              "legal": "Política de privacidad"
+            }
         }
     },
-    "admin": {
-        "orders": {
-            "cumulative": "Cumulativo",
-            "totalOrders": "Órdenes Totales",
-            "finished": "Terminado",
-            "cancelled": "Cancelado",
-            "expired": "Caducado",
-            "inProcess": "En Proceso",
-            "isLooking": "Está Mirando",
-            "orders": "Pedidos",
-            "time": "Tiempo",
-            "driver": "Conductor",
-            "cust": "Client",
-            "orderFR": "Proporción De Cumplimiento De Pedidos",
-            "orderId": "Solicitar ID",
-            "orderT": "Tiempo De La Orden",
-            "status": "Estado",
-            "price": "Precio",
-            "rideEnd": "Hora De Finalización Del Viaje",
-            "rideStart": "Hora De Inicio Del Viaje",
-            "droppedOff": "Dejado",
-            "firstOrder": "Primer pedido",
-            "lastOrder": "Último pedido"
+    "TaxiApp":{
+        "components":{
+            "taxiDialogs":{
+              "rideUnavailable": "Lamento informarle que el viaje ya no está disponible.",
+              "customerCancelled": "Lamento informarle que el cliente canceló el viaje."
+            }
         },
-        "notifs": {
-            "notifications": "Notificaciones",
-            "sent": "Enviado",
-            "received": "Recibido",
-            "read": "Leer"
+        "pages":{
+            "Orders":{
+                "CurrentOrderScreen":{
+                    "CPositionedBottomBar":{
+                        "startRide": "Iniciar viaje",
+                        "finishRide": "Terminar viaje",
+                        "confirmation_header": "Por favor confirmar",
+                        "confirmation_text": "¿Estás seguro de que deseas cancelar el viaje actual?",
+                        "yes" : "Si",
+                        "no" : "No",
+                        "tooFarFromfinishRide": "Haga clic en Terminar después de que el cliente haya salido de su vehículo. Según su GPS, parece que todavía está lejos de la ubicación final del cliente. Estás seguro de que aún desea terminar el viaje?",
+                        "tooFarFromstartRide": "Haga clic en Iniciar viaje después de que el cliente haya llegado a su vehículo. Según su GPS, parece que todavía está lejos de la ubicación del cliente, está seguro de que aún desea comenzar el viaje?"
+                    },
+                    "CPositionedFromToBar":{
+                        "from": "Desde",
+                        "to": "Para"
+                    },
+                    "CurrentOrderScreen":{
+                        "cancelledMessage": "Tu viaje ha sido cancelado"
+                    }
+                },
+                "IncomingOrders":{
+                    "IncomingListScreen":{
+                        "IncomingListScreen":{
+                          "title": "Órdenes  Entrantes",
+                          "noOrdersTitle":"No Hay Ordenes",
+                          "noOrdersDesc":"Intentarlo más tarde",
+                          "toggleTitle": "Activar Pedidos Entrantes",
+                          "toggleDesc": "Activar para ver nuevos pedidos"
+                        }
+                    },
+                    "IncomingViewScreen":{
+                        "IncomingOrderViewScreen":{
+                          "rideUnavailable": "Lamento informarle que el viaje ya no está disponible.",
+                          "acceptOrders": "Aceptar orden"
+                        },
+                        "IPositionedBottomBar":{
+                          "far": "lejos"
+                        },
+                        "IPositionedFromToBar":{
+                            "from": "Desde",
+                            "to": "Para"
+                        }
+                    }
+                }
+            }
         },
-        "appVersion": "Version De Aplicacion"
-    },
-    "deliveryAdminApp": {
-        "ordersButton": {
-            "preparing": "PREPARAR",
-            "readyForPickUp": "ALIMENTOS LISTOS",
-            "deliver": "INICIAR ENTREGA",
-            "canceled": "CANCELAR",
-            "received": "ENTREGADO"
-        },
-        "prepareAlert": {
-            "title": "Preparar Orden",
-            "subTitle": "Estás seguro de que quieres\npreparar el pedido?"
-        },
-        "readyAlert": {
-            "title": "LISTO",
-            "subTitle": "Está seguro de que desea marcar\nel pedido como listo?"
-        },
-        "onTheWayAlert": {
-            "title": "En Camino",
-            "subTitle": "Está seguro de que desea iniciar\nla entrega del pedido?"
-        },
-        "deliveredAlert": {
-            "title": "Entregar",
-            "subTitle": "Estás seguro de que quieres\nentregar el pedido?"
-        },
-        "cancelAlert": {
-            "title": "Cancelar",
-            "subTitle": "Estás seguro de que cancelar\nentregar el pedido?"
-        },
-        "laundry": {
-            "atLaundry": "En la lavandería",
-            "atLaundryText": "Confirme el pedido recibido por la lavandería configurando el peso del pedido. ",
-            "atLaundryTitle": "Orden en la lavandería",
-            "confirmPickUp": "Confirmar la recogida",
-            "currentOrders": "órdenes actuales",
-            "customer": "Cliente",
-            "delivered": "Orden entregado",
-            "deliveredText": "Confirme que el pedido se entrega al cliente.",
-            "deliveredTitle": "Orden entregado",
-            "deliveryCost": "Coste de envío",
-            "fixedRate": "Tipo de interés fijo",
-            "laundry": "Lavandería",
-            "laundryOrders": "Órdenes de lavandería",
-            "noOrders": "Sin pedidos",
-            "orderCost": "Costo de la orden",
-            "orderReceived": "orden recibida",
-            "orderWeight": "Peso de pedido",
-            "orderWeightError": " Error, por favor inserte un peso de pedido válido",
-            "otwDelivery": "Entrega en el camino",
-            "otwDeliveryText": "Confirme que el pedido se está entregando al cliente.",
-            "otwDeliveryTitle": "Entrega en el camino",
-            "otwPickUp": "Recoger en el camino",
-            "pastOrders": "Órdenes pasadas",
-            "pickedUp": "Pedido recogido",
-            "pickedUpText": "Confirmar la orden recogida del cliente",
-            "pickedUpTitle": "Orden recogido",
-            "readyForDelivery": "Listo para la entrega",
-            "readyForDeliveryText": "Confirme que el pedido está listo para la entrega.",
-            "readyForDeliveryTitle": "Orden listo para la entrega",
-            "restaurantOrders": "Órdenes de restaurantes",
-            "startPickUp": "Iniciar recogida",
-            "startPickUpText": "El conductor debe ser notificado a recoger el pedido.",
-            "startPickUpTitle": "Iniciar orden de recogida",
-            "totalCost": "Coste total"
+        "notificationHandler":{
+            "cancelledTitle": "Cancelada",
+            "cancelledBody": "Su pedido es cancelado por el cliente."
         }
+    },
+    "TaxiAdminApp":{
+        "pages":{
+            "Driver":{
+                "DriverPage":{
+                  "orderId": "Solicitar ID",
+                  "appVersion": "Version De Aplicacion",
+                  "totalOrders": "Órdenes Totales",
+                  "droppedOff": "Dejado",
+                  "firstOrder": "Primer pedido",
+                  "lastOrder": "Último pedido",
+                  "notifications": "Notificaciones",
+                  "sent":"Enviado",
+                  "received": "Recibido",
+                  "read": "Leer",
+                  "orders":"Pedidos"
+                }
+            },
+            "Notifications":{
+                "NotifCountOnDayByDriverPage":{
+                  "notifications": "Notificaciones",
+                  "driver": "Conductor"
+                }
+            },
+            "Orders":{
+                "OrdersCumOnDayPage":{
+                  "cumulative": "Cumulativo",
+                  "totalOrders": "Órdenes Totales",
+                  "finished": "Terminado",
+                  "cancelled": "Cancelado",
+                  "expired": "Caducado",
+                  "inProcess": "En Proceso",
+                  "isLooking": "Está Mirando"
+                },
+                "OrdersCumOnMonthPage":{
+                  "orders": "Pedidos"
+                },
+                "OrdersFulfillmentOnMonthPage":{
+                  "orderFR": "Proporción De Cumplimiento De Pedidos"
+                },
+                "OrdersOnDayPage":{
+                  "orders": "Pedidos",
+                  "time": "Tiempo",
+                  "driver": "Conductor",
+                  "cust": "Client"
+                },
+                "OrderViewPage":{
+                  "orderId": "Solicitar ID",
+                  "orderT": "Tiempo De La Orden",
+                  "status": "Estado",
+                  "price": "Precio",
+                  "rideStart":  "Hora De Inicio Del Viaje",
+                  "rideEnd": "Hora De Finalización Del Viaje",
+                  "notifications": "Notificaciones",
+                  "sent": "Enviado",
+                  "received": "Recibido",
+                  "read": "Leer"
+                }
+            }
+        }
+    },
+
+     "DeliveryAdminApp":{
+        "components":{
+           "buildWidgetOnOrderStatus":{
+           "preparing": "Preparando el pedido",
+           "readyForPickUp": "Lista para recoger",
+           "onTheWay": "En camino",
+           "delivered": "Entregado",
+           "received": "Recibida",
+           "canceledByCustomer": "Cancelada",
+           "canceledByAdmin": "Cancelada"
+          }
+        },
+        "pages":{
+           "Orders":{
+            "ListOrdersScreen":{
+              "ListOrdersScreen":{}
+            },
+           "ViewRestaurantOrderScreen":{
+              "components":{
+                 "ButtonStyles":{
+                   "cancelAlert": {
+                      "title": "Cancelar",
+                      "subTitle": "Estás seguro de que cancelar\nentregar el pedido?"
+                  },
+                   "cancel": "Cancelar",
+                   "readyForPickUp": "ALIMENTOS LISTOS",
+                   "readyAlert": {
+                        "title": "LISTO",
+                        "subTitle": "Está seguro de que desea marcar\nel pedido como listo?"
+                    },
+                   "deliver": "INICIAR ENTREGA",
+                   "onTheWayAlert": {
+                      "title": "En Camino",
+                      "subTitle": "Está seguro de que desea iniciar\nla entrega del pedido?"
+                    },
+                   "preparing": "PREPARE",
+                   "prepareAlert": {
+                      "title": "Preparar Orden",
+                      "subTitle": "Estás seguro de que quieres\npreparar el pedido?"
+                    },
+                   "received": "ENTREGADO",
+                   "deliveredAlert": {
+                      "title": "Entregar",
+                      "subTitle": "Estás seguro de que quieres\nentregar el pedido?"
+                    }
+              },
+             
+               "OrderInfoCard":{
+                   "orderItems": "Encargar Artículos"
+              },
+               "OrderNoteCard":{
+                  "notes": "Notas"
+              },
+               "OrderTotalCostCard":{
+                  "totalCost": "Costo Total",
+                  "deliveryCost": "Costo de envío",
+                  "total": "Total"
+              },
+               "PastOrderInfo":{
+                  "canceledByAdmin": "Cancelada",
+                  "canceledByCustomer": "Cancelada",
+                  "received":  "Recibida",
+                  "preparing": "Preparando el pedido",
+                  "onTheWay": "En camino",
+                  "readyForPickUp":  "Lista para recoger",
+                  "delivered":"Entregado",
+                  "helperTextCanceledByAdmin": "Tu pedido es cancelado por el Restaurante.",
+                  "helperTextCanceledByCustomer": "Su pedido es cancelado por el cliente.",
+                  "helperTextReceived": "Su pedido es recibido por el restaurante.",
+                  "helperTextPreparing": "Tu pedido está siendo preparado por el restaurante.",
+                  "helperTextOnTheWay":  "Tu pedido está en camino",
+                  "helperTextReadyForPickUp": "Su pedido está preparado y listo para ser recogido por el conductor de la entrega.",
+                  "helperTextDelivered": "Su pedido ha sido entregado con éxito."
+              }
+            
+            }
+          }
+        } 
+      }
     }
+
 }
+    

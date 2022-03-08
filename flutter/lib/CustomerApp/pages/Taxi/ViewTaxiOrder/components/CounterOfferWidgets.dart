@@ -88,7 +88,8 @@ class CounterOfferWidgets {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        lang.strings['customer']['taxiView']['offers'],
+                        lang.strings['Shared']['pages']['CounterOffers']
+                            ['offers'],
                         style: Theme.of(context)
                             .textTheme
                             .bodyText1!

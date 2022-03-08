@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/BuildCart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/BuildItems.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/DropDownListCartView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/OrderSummaryCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TextFieldComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildCart.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildItems.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/DropDownListCartView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
+
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ViewCartScreen"]["components"]["ViewCartBody"];
 
 class ViewCartBody extends StatefulWidget {
   final OnDropDownNewValue? onValueChangeCallback;
@@ -21,7 +24,7 @@ class ViewCartBody extends StatefulWidget {
 }
 
 class _ViewCartBodyState extends State<ViewCartBody> {
-  LanguageController lang = Get.find<LanguageController>();
+  // LanguageController lang = Get.find<LanguageController>();
   RestaurantController controller = Get.find<RestaurantController>();
   TextEditingController textcontoller = new TextEditingController();
 
@@ -68,7 +71,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.centerLeft,
               child: Text(
-                  "${lang.strings['customer']['restaurant']['menu']['notes']}",
+                  "${_i18n['notes']}",
                   style: const TextStyle(
                       color: const Color(0xff000f1c),
                       fontFamily: "psb",
@@ -81,7 +84,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             ),
             TextFieldComponent(
               textController: textcontoller,
-              hint: lang.strings["customer"]["restaurant"]["menu"]["notes"],
+              hint: _i18n["notes"],
             ),
             SizedBox(
               height: 25,

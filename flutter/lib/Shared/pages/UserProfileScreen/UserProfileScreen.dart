@@ -16,6 +16,9 @@ import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.d
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']
+["UserProfileScreen"]["UserProfileScreen"];
+
 class UserProfile extends StatefulWidget {
   final AuthController authController = Get.find<AuthController>();
   // this is just to controll incase we want to make a push to this route with a pre-defined mode.
@@ -90,8 +93,7 @@ class _UserProfileState extends State<UserProfile> {
     if (!Get.find<AuthController>().isDisplayNameSet()) {
       _hints.add(MezToolTipHint(
         hintWidget: NoUserNameSetHint(
-          hintText: Get.find<LanguageController>().strings['shared']['userInfo']
-              ['mustSetUserNameHint'],
+          hintText: _i18n['mustSetUserNameHint'],
         ),
         left: Get.width / 2,
         bodyLeft: Get.width / 4,
@@ -103,8 +105,7 @@ class _UserProfileState extends State<UserProfile> {
     if (!Get.find<AuthController>().isUserImgSet()) {
       _hints.add(MezToolTipHint(
         hintWidget: NoUserImageSetHint(
-          hintText: Get.find<LanguageController>().strings['shared']['userInfo']
-              ['mustSetUserImgHint'],
+          hintText: _i18n['mustSetUserImgHint'],
         ),
         left: Get.width / 2,
         bodyLeft: Get.width / 4,
@@ -143,8 +144,7 @@ class _UserProfileState extends State<UserProfile> {
       clickedSave.value = false;
     } else {
       widget.userProfileController.setErrorTextForXDuration(
-          Get.find<LanguageController>().strings['shared']['userInfo']
-              ['wrongName'],
+          _i18n['wrongName'],
           duration: Duration(seconds: 5));
     }
   }

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
-import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/components/DialogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]
+        ["pages"]["Orders"]["ViewRestaurantOrderScreen"]["components"]
+    ["ButtonStyles"];
 
 // the styles of status buttons inside the order screen
 class ButtonsStyle {
@@ -15,13 +19,14 @@ class ButtonsStyle {
     RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
     LanguageController lang = Get.find<LanguageController>();
+    // OrderController controller = Get.find<OrderController>();
 
     return Expanded(
       child: ButtonComponent(
         function: () async {
-          var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["cancelAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["cancelAlert"]["subTitle"], () {
+          var res = await dialogComponent(
+              _i18n["cancelAlert"]["title"], _i18n["cancelAlert"]["subTitle"],
+              () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);
@@ -36,9 +41,7 @@ class ButtonsStyle {
             Get.back();
           }
         },
-        widget: Text(
-            lang.strings["customer"]["restaurant"]["checkout"]["cancel"]
-                .toUpperCase(),
+        widget: Text(_i18n["cancel"].toUpperCase(),
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -59,8 +62,7 @@ class ButtonsStyle {
         Get.find<RestaurantOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
-        widget: Text(
-            lang.strings["deliveryAdminApp"]["ordersButton"]["readyForPickUp"],
+        widget: Text(_i18n["readyForPickUp"],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -69,22 +71,18 @@ class ButtonsStyle {
         gradient: LinearGradient(
             begin: Alignment(-0.10374055057764053, 0),
             end: Alignment(1.1447703838348389, 1.1694844961166382),
-            colors: (order.dropoffDriver == null)
-                ? [Colors.grey, Colors.grey]
-                : [
-                    // const Color(0xede29211),
-                    const Color(0xffd3bc0b),
-                    const Color(0xdbd17c18)
-                  ]),
+            colors: [
+              // const Color(0xede29211),
+              const Color(0xffd3bc0b),
+              const Color(0xdbd17c18)
+            ]),
         function: (order.dropoffDriver == null)
             ? () {
                 Get.snackbar("Error", "Please Select a driver");
               }
             : () async {
-                var res = await dailogComponent(
-                    lang.strings["deliveryAdminApp"]["readyAlert"]["title"],
-                    lang.strings["deliveryAdminApp"]["readyAlert"]["subTitle"],
-                    () {
+                var res = await dialogComponent(_i18n["readyAlert"]["title"],
+                    _i18n["readyAlert"]["subTitle"], () {
                   Get.back(result: true);
                 }, () {
                   Get.back(result: false);
@@ -111,7 +109,7 @@ class ButtonsStyle {
         Get.find<RestaurantOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
-      widget: Text(lang.strings["deliveryAdminApp"]["ordersButton"]["deliver"],
+      widget: Text(_i18n["deliver"],
           style: TextStyle(
               color: const Color(0xffffffff),
               fontFamily: "psb",
@@ -122,9 +120,9 @@ class ButtonsStyle {
           end: Alignment(1.1447703838348389, 1.1694844961166382),
           colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
       function: () async {
-        var res = await dailogComponent(
-            lang.strings["deliveryAdminApp"]["onTheWayAlert"]["title"],
-            lang.strings["deliveryAdminApp"]["onTheWayAlert"]["subTitle"], () {
+        var res = await dialogComponent(
+            _i18n["onTheWayAlert"]["title"], _i18n["onTheWayAlert"]["subTitle"],
+            () {
           Get.back(result: true);
         }, () {
           Get.back(result: false);
@@ -148,8 +146,7 @@ class ButtonsStyle {
         Get.find<RestaurantOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
-        widget: Text(
-            lang.strings["deliveryAdminApp"]["ordersButton"]["preparing"],
+        widget: Text(_i18n["preparing"],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -161,9 +158,9 @@ class ButtonsStyle {
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
         function: () async {
-          var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["prepareAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["prepareAlert"]["subTitle"], () {
+          var res = await dialogComponent(
+              _i18n["prepareAlert"]["title"], _i18n["prepareAlert"]["subTitle"],
+              () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);
@@ -187,8 +184,7 @@ class ButtonsStyle {
         Get.find<RestaurantOrderController>();
     LanguageController lang = Get.find<LanguageController>();
     return ButtonComponent(
-        widget: Text(
-            lang.strings["deliveryAdminApp"]["ordersButton"]["received"],
+        widget: Text(_i18n["received"],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -199,10 +195,8 @@ class ButtonsStyle {
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
         function: () async {
-          var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["subTitle"],
-              () {
+          var res = await dialogComponent(_i18n["deliveredAlert"]["title"],
+              _i18n["deliveredAlert"]["subTitle"], () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);

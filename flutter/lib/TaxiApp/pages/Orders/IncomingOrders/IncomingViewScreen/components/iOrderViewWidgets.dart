@@ -112,7 +112,8 @@ class IOrderViewWidgets {
         iOrderViewController.animatedSliderController.slideUp();
       },
       child: Text(
-        'Offer price',
+        iOrderViewController.lang.strings['Shared']['pages']['CounterOffers']
+            ['offerPrice'],
         style: TextStyle(
           color: Colors.white,
           fontSize: 12.sp,

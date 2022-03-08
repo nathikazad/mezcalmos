@@ -35,8 +35,8 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
           Get.back();
           oneButtonDialog(
               title: 'Oops...',
-              body: iOrderViewController.lang.strings['taxi']['cancelOrder']
-                  ['rideUnavailble'],
+              body: iOrderViewController.lang.strings['TaxiApp']['components']
+                  ['taxiDialogs']['rideUnavailable'],
               bodyTextColor: Colors.black,
               fontSize: 14.sp,
               imagUrl: a404);

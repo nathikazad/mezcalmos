@@ -7,14 +7,19 @@ import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 Future<void> mezcalmosDialogWithTaxi({required String message}) =>
     oneButtonDialog(body: message, imagUrl: taxiImageAsset);
 
+dynamic _i18n = Get.find<LanguageController>().strings["TaxiApp"]
+["components"]["taxiDialogs"];
+
 Future<void>
-    mezcalmosDialogOrderNoMoreAvailable() async => mezcalmosDialogWithTaxi(
-        message: Get.find<LanguageController>().strings['taxi']['cancelOrder']
-            ['rideUnavailble']);
+    mezcalmosDialogOrderNoMoreAvailable() async {
+  return mezcalmosDialogWithTaxi(
+      message: _i18n['rideUnavailable']);
+}
 
 // THIS BELONGS TO TAXI
-Future<void> mezcalmosDialogOrderCancelled() async => mezcalmosDialogWithTaxi(
-    message: Get.find<LanguageController>().strings['taxi']['cancelOrder']
-        ['customerCancelled']);
+Future<void> mezcalmosDialogOrderCancelled() {
+  return mezcalmosDialogWithTaxi(
+      message: _i18n['customerCancelled']);
+}
 
 

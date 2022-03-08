@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings['Shared']['widgets']
+["MezClearButton"];
+
 class MezClearButton extends StatelessWidget {
   final GestureTapCallback onTapFunction;
   MezClearButton({required this.onTapFunction, Key? key}) : super(key: key);
 
-  LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -34,7 +36,7 @@ class MezClearButton extends StatelessWidget {
                 color: Color(0xffdb2846),
               ),
               Text(
-                lang.strings['customer']['restaurant']['cart']['clear'],
+                _i18n['clear'],
                 style: TextStyle(
                     color: const Color(0xffdb2846),
                     fontWeight: FontWeight.w500,

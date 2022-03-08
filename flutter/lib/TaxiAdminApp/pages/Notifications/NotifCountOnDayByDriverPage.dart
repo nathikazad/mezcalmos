@@ -10,8 +10,11 @@ import 'package:mezcalmos/TaxiAdminApp/pages/Orders/OrdersCumOnDayPage.dart';
 
 const mypadding = const EdgeInsets.symmetric(horizontal: 10);
 
+dynamic _i18n = Get.find<LanguageController>().strings["TaxiAdminApp"]["pages"]
+["Notifications"]["NotifCountOnDayByDriverPage"];
+
 class NotifCountOnDayPage extends GetView<NotificationsController> {
-  LanguageController lang = Get.find<LanguageController>();
+ 
   final f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
   final TextEditingController srearchC = new TextEditingController();
@@ -34,7 +37,7 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                     Expanded(
                       child: InkWell(
                         child: Text(
-                          lang.strings["admin"]["notifs"]["notifications"],
+                          _i18n["notifications"],
                           style: TextStyle(
                               fontSize: 28, fontWeight: FontWeight.bold),
                         ),
@@ -166,7 +169,7 @@ class NotifCountOnDayPage extends GetView<NotificationsController> {
                       child: Container(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          lang.strings["admin"]["orders"]["driver"],
+                          _i18n["driver"],
                           style: adminAppTextStyle1,
                           textAlign: TextAlign.left,
                         ),

@@ -74,7 +74,8 @@ class LocationPicker extends StatefulWidget {
 enum BottomButtomToShow { Pick, Confirm, GrayedOut, Loading }
 
 class LocationPickerState extends State<LocationPicker> {
-  final LanguageController _lang = Get.find<LanguageController>();
+  final dynamic _i18n = Get.find<LanguageController>().strings["customerApp"]
+      ["components"]["LocationPicker"];
   Location? location;
   bool userTaped = false;
 
@@ -133,20 +134,20 @@ class LocationPickerState extends State<LocationPicker> {
     switch (widget.locationPickerMapController._bottomButtomToShow.value) {
       case BottomButtomToShow.Pick:
         return buildBottomButton(
-          _lang.strings["shared"]["pickLocation"]["pick"],
+          _i18n["pick"],
           notifier: widget.notifyParentOfLocationFinalized,
           // onPress: showGrayedOutButton
         );
       case BottomButtomToShow.Confirm:
         if (Get.find<AuthController>().fireAuthUser != null) {
           return buildBottomButton(
-              _lang.strings['shared']['buttonsTexts']['confirm']
+              _i18n['confirm']
                   .toString()
                   .capitalize,
               notifier: widget.notifyParentOfConfirm);
         } else {
           return buildBottomButton(
-              _lang.strings["shared"]["login"]["signInToMakeOrder"],
+              _i18n["signInToMakeOrder"],
               notifier: (_) async {
             await Get.toNamed(kSignInRouteOptional);
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
@@ -160,7 +161,7 @@ class LocationPickerState extends State<LocationPicker> {
         );
       case BottomButtomToShow.GrayedOut:
         return buildBottomButton(
-          _lang.strings['shared']['buttonsTexts']['confirm']
+          _i18n['confirm']
               .toString()
               .capitalize,
         );
@@ -255,7 +256,7 @@ class LocationPickerState extends State<LocationPicker> {
             ),
             Expanded(
               child: Text(
-                _lang.strings["shared"]["inputLocation"]["moveMapIfNotPrecise"],
+                _i18n["moveMapIfNotPrecise"],
                 // "You can move the map if position is not precise.",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

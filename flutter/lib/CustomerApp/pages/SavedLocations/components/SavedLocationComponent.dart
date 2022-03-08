@@ -6,6 +6,9 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+["SavedLocations"]["components"]["SavedLocationComponent"];
+
 class SavedLocationComponent extends StatelessWidget {
   SavedLocationComponent({required this.savelocation, Key? key})
       : super(key: key);
@@ -15,7 +18,6 @@ class SavedLocationComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     CustomerAuthController _customerAuthController =
         Get.find<CustomerAuthController>();
@@ -92,7 +94,7 @@ class SavedLocationComponent extends StatelessWidget {
                       ),
                       iconColor: Colors.black,
                       title:
-                          "${lang.strings["customer"]["savedLocations"]["editLocation"]}",
+                          "${_i18n["editLocation"]}",
                       ontap: () {
                         mezDbgPrint("edit saved lovation item");
                         Get.toNamed(kPickLocationEditRoute,
@@ -109,7 +111,7 @@ class SavedLocationComponent extends StatelessWidget {
                       ),
                       iconColor: Colors.red,
                       title:
-                          "${lang.strings["customer"]["savedLocations"]["deleteLocation"]}",
+                          "${_i18n["deleteLocation"]}",
                       ontap: () {
                         mezDbgPrint("delete saved location item");
                         _customerAuthController.deleteLocation(savelocation);
