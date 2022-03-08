@@ -9,16 +9,12 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/component
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 
-import '../../ViewcartScreen/components/DropDownListCartView.dart';
-
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 class ViewCartBody extends StatefulWidget {
-  final OnDropDownNewValue? onValueChangeCallback;
   final Function({Location? location})? setLocationCallBack;
 
-  ViewCartBody({Key? key, this.onValueChangeCallback, this.setLocationCallBack})
-      : super(key: key);
+  ViewCartBody({Key? key, this.setLocationCallBack}) : super(key: key);
 
   @override
   _ViewCartBodyState createState() => _ViewCartBodyState();
