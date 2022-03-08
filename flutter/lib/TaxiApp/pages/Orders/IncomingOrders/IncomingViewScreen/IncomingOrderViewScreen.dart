@@ -70,18 +70,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                       debugString: "IncomingViewScreen",
                       myLocationButtonEnabled: false,
                     ),
-                    if (iOrderViewController.submittedCounterOffer.value &&
-                        iOrderViewController.counterOffer.value == null)
-                      InkWell(
-                        onTap: () {
-                          iOrderViewController.submittedCounterOffer.value =
-                              false;
-                        },
-                        child: Container(
-                          height: Get.height,
-                          width: Get.width,
-                        ),
-                      ),
+                    iOrderViewWidgets.absorbOrIgnoreUserTapWidget(),
                     IncomingPositionedBottomBar(
                       order: this.iOrderViewController.order.value!,
                     ),

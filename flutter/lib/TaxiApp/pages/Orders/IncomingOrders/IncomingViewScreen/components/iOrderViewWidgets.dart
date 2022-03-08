@@ -135,4 +135,26 @@ class IOrderViewWidgets {
       ),
     );
   }
+
+  /// this widget is either :
+  ///
+  /// 1. A Transparent Container with full Screen height wrapped with an `InkWell` : When `counterOffer == null && submittedCounterOffer == true` (To absorb user's pointer taps inOrder to hide the bottomSheet upon a click on the background)
+  ///
+  /// 2. An Empty `SizedBox` when it's the opposit.
+  Widget absorbOrIgnoreUserTapWidget() {
+    // if there is a counter offer we give a user a way to reduce it by simply clicking on the background.
+    if (iOrderViewController.submittedCounterOffer.value &&
+        iOrderViewController.counterOffer.value == null) {
+      return InkWell(
+        onTap: () {
+          iOrderViewController.submittedCounterOffer.value = false;
+        },
+        child: Container(
+          height: Get.height,
+          width: Get.width,
+        ),
+      );
+    } else
+      return SizedBox();
+  }
 }
