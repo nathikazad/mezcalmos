@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/IncrementalComponent.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
-import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
 import 'package:sizer/sizer.dart';
 
 typedef void OnPriceChanged(int);

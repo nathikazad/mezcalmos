@@ -4,19 +4,18 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
-import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
 
 class IncomingOrdersController extends GetxController {
   RxList<TaxiOrder> orders = <TaxiOrder>[]
@@ -172,31 +171,6 @@ class IncomingOrdersController extends GetxController {
         .child(inNegotationNode(_authController.fireAuthUser!.uid))
         .set({"orderId": orderId, "customerId": customerId});
   }
-
-  /// the first counter offer event from customer
-  /// a listener(or alarm at counter offer expiry time) should be
-  /// started after submitting counter offer
-  // Future<CounterOffer?> counterOfferEvent(String orderId, String customerId) {
-  //   return _databaseHelper.firebaseDatabase
-  //       .reference()
-  //       .child(customersCounterOfferNode(
-  //           orderId, customerId, _authController.fireAuthUser!.uid))
-  //       .onChildChanged
-  //       // .where((event) {
-  //       //   CounterOffer counterOffer = CounterOffer.fromData(
-  //       //       event.snapshot.value,
-  //       //       taxiUserInfo: event.snapshot.value['driverInfos']);
-  //       //   return counterOffer.counterOfferStatus !=
-  //       //       CounterOfferStatus.Submitted;
-  //       // })
-  //       .first
-  //       .then<CounterOffer?>((data) {
-  //     mezDbgPrint("First ===> ${data.snapshot.value}");
-  //     CounterOffer.fromData(data.snapshot.value,
-  //         taxiUserInfo: data.snapshot.value['driverInfos']);
-  //   }).timeout(Duration(seconds: nDefaultCounterOfferValidExpireTimeInSeconds),
-  //           onTimeout: () => null);
-  // }
 
   // Commented The event above cuz it won't work in case TaxiDriver got redirected to incommingOrderViewScreeen.
   // insteead we have two approaches :

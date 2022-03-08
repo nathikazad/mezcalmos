@@ -8,8 +8,8 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
-import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 class ViewTaxiOrderController {
   final OrderController controller = Get.find<OrderController>();
@@ -35,7 +35,11 @@ class ViewTaxiOrderController {
 
       if (order.value!.inProcess()) {
         inProcessOrderStatusHandler(order.value!.status);
-        startCountOffersValidityCheckPeriodically();
+
+        /// Only start if the status is `TaxiOrdersStatus.LookingForTaxi`
+        if (order.value!.status == TaxiOrdersStatus.LookingForTaxi) {
+          startCountOffersValidityCheckPeriodically();
+        }
         orderListener = controller
             .getCurrentOrderStream(orderId)
             .listen((currentOrder) async {
@@ -46,6 +50,9 @@ class ViewTaxiOrderController {
           } else {
             orderListener?.cancel();
             orderListener = null;
+            // this is in case customer created the order and got expired :
+            _cancelPeriodicCounterOffersTimer();
+
             TaxiOrder? _order = controller.getOrder(orderId) as TaxiOrder?;
             // this else clause gets executed when the order becomes /pastOrders.
             if (_order == null) {
@@ -66,7 +73,6 @@ class ViewTaxiOrderController {
       } else {
         // it's in past orders!
         pastOrderStatusHandler(order.value!.status);
-        // setState(() {});
       }
     } else {
       mezDbgPrint("Error :Unfound Order !");
@@ -93,9 +99,13 @@ class ViewTaxiOrderController {
         timer.cancel();
         return;
       }
-      mezDbgPrint(
-          "Counter offers [startCountOffersValidityCheckPeriodically] ===> ${order.value!.getValidCounterOfferts().length}");
       counterOffers.value = order.value!.getValidCounterOfferts();
+      // default is : isLoookingForTaxi
+      // this is kind of like an observator, when the user has the Counter offers opened and all offers got expired,
+      // basically length == 0, we set it as false to automatically hide the bottom sheet.
+      if (counterOffers().isEmpty) {
+        offersBtnClicked.value = false;
+      }
     });
   }
 
@@ -118,6 +128,7 @@ class ViewTaxiOrderController {
   void inProcessOrderStatusHandler(TaxiOrdersStatus status) {
     switch (status) {
       case TaxiOrdersStatus.OnTheWay:
+        _cancelPeriodicCounterOffersTimer();
         bottomPadding.value = 10.0;
         mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
         mGoogleMapController.animateAndUpdateBounds();
@@ -137,6 +148,7 @@ class ViewTaxiOrderController {
         break;
 
       case TaxiOrdersStatus.InTransit:
+        _cancelPeriodicCounterOffersTimer();
         bottomPadding.value = 10.0;
         mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
 
@@ -162,13 +174,6 @@ class ViewTaxiOrderController {
 
       default:
         // bottomPadding.value = 10.0;
-
-        // default is : isLoookingForTaxi
-        // this is kind of like an observator, when the user has the Counter offers opened and all offers got expired,
-        // basically length == 0, we set it as false to automatically hide the bottom sheet.
-        if (counterOffers.isEmpty) {
-          offersBtnClicked.value = false;
-        }
         // so user can move freely
         mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
         mGoogleMapController.animateAndUpdateBounds();
@@ -184,10 +189,15 @@ class ViewTaxiOrderController {
     }
   }
 
+  /// this is a private function, only called internally.
+  void _cancelPeriodicCounterOffersTimer() {
+    countOfferTimerValidator?.cancel();
+    countOfferTimerValidator = null;
+  }
+
   void dispose() {
     orderListener?.cancel();
     orderListener = null;
-    countOfferTimerValidator?.cancel();
-    countOfferTimerValidator = null;
+    _cancelPeriodicCounterOffersTimer();
   }
 }

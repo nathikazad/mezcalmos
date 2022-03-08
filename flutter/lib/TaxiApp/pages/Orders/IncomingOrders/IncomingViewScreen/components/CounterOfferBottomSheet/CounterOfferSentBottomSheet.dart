@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezLoadingCounter.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
-import 'package:mezcalmos/TaxiApp/models/CounterOffer.dart';
 import 'package:sizer/sizer.dart';
 
 class CounterOfferSentBottomSheet extends StatelessWidget {

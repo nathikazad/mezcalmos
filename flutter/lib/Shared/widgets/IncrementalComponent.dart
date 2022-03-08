@@ -94,8 +94,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
               shape: BoxShape.circle,
               color: Theme.of(context).primaryColorLight.withOpacity(0.2)),
           child:
-              Text("${_value}",
-              style: Theme.of(context).textTheme.headline3),
+              Text("${_value}", style: Theme.of(context).textTheme.headline3),
         ),
         SizedBox(
           width: 5,
