@@ -4,17 +4,21 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/BuildCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/BuildItems.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/DropDownListCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
+
+import '../../ViewcartScreen/components/DropDownListCartView.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 class ViewCartBody extends StatefulWidget {
   final OnDropDownNewValue? onValueChangeCallback;
+  final Function({Location? location})? setLocationCallBack;
 
-  ViewCartBody({Key? key, this.onValueChangeCallback}) : super(key: key);
+  ViewCartBody({Key? key, this.onValueChangeCallback, this.setLocationCallBack})
+      : super(key: key);
 
   @override
   _ViewCartBodyState createState() => _ViewCartBodyState();
@@ -53,7 +57,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
               height: 10,
             ),
             Obx(() => OrderSummaryCard(
-                  onValueChangeCallback: widget.onValueChangeCallback,
+                  setLocationCallBack: widget.setLocationCallBack,
                   deliveryCost:
                       controller.cart.value.shippingCost.toStringAsFixed(0),
                   orderCost:

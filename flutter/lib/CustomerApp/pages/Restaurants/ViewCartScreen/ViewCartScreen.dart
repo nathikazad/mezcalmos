@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/ViewCartBody.dart';
@@ -11,9 +12,9 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 
 import 'components/CartIsEmptyScreen.dart';
 
@@ -35,6 +36,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       Get.find<CustomerAuthController>();
   var listOfSavedLoacations = <SavedLocation>[];
   SavedLocation? dropDownListValue;
+  Location? orderToLocation;
   int nbClicks = 0;
   @override
   void initState() {
@@ -66,7 +68,13 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       body: Obx(() {
         mezDbgPrint("@sa@d@: ${controller.cart.value.cartItems.length}");
         if (controller.cart.value.cartItems.length > 0) {
-          return SingleChildScrollView(child: ViewCartBody(
+          return SingleChildScrollView(
+              child: ViewCartBody(
+            setLocationCallBack: ({Location? location}) {
+              setState(() {
+                orderToLocation = location;
+              });
+            },
             onValueChangeCallback: ({String? newValue}) {
               mezDbgPrint("@sa@d@: onValueChangeCallback :: $newValue");
               if (newValue == null) {
@@ -95,7 +103,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   Color getTheRightButtonColor() {
     // it returns the pruple or the grey color for the order now button
 
-    if (ddResult == DropDownResult.Null ||
+    if (orderToLocation == null ||
         !checkRestaurantAvailability(
             schedule: controller.associatedRestaurant?.schedule)) {
       return Color(0xdddddddd);
@@ -150,10 +158,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   void checkoutActionButton() async {
     if (nbClicks == 0) {
       mezDbgPrint("Called : checkoutActionButton : DdResult ($ddResult}");
-      if (ddResult != DropDownResult.Null) {
+      if (orderToLocation != null) {
         setState(() {
           _clickedOrderNow = true;
         });
+        controller.cart.value.toLocation = orderToLocation;
         controller.cart.value.notes = textcontoller.text;
         mezDbgPrint(controller.cart.value.toFirebaseFormattedJson().toString());
         //     controller.cart.value.restaurant!.id = "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx";

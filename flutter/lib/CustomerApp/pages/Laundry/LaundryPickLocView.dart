@@ -21,15 +21,17 @@ class LaundryPickLocView extends StatefulWidget {
 
 class _LaundryPickLocViewState extends State<LaundryPickLocView> {
   Location? currentLoc;
-  final LocationPickerController locationPickerController =
+  LatLng? currentLatLng;
+  LocationPickerController locationPickerController =
       LocationPickerController();
 
   LanguageController lang = Get.find<LanguageController>();
   @override
   void initState() {
     geoloc.Location().getLocation().then((value) {
-      LatLng currentLatLng = LatLng(value.latitude!, value.longitude!);
-      geoCodeAndSetLocation(currentLatLng);
+      currentLatLng = LatLng(value.latitude!, value.longitude!);
+
+      geoCodeAndSetLocation(currentLatLng!);
     });
 
     super.initState();

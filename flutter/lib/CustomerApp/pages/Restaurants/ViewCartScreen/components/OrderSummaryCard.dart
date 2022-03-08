@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:sizer/sizer.dart';
-
-import 'DropDownListCartView.dart';
 
 class OrderSummaryCard extends StatelessWidget {
   final String? orderCost;
   final String? deliveryCost;
   final String? totalCost;
-  final OnDropDownNewValue? onValueChangeCallback;
+
+  final Function({Location? location})? setLocationCallBack;
 
   const OrderSummaryCard({
     Key? key,
-    this.onValueChangeCallback,
     this.orderCost,
     this.deliveryCost,
+    this.setLocationCallBack,
     this.totalCost,
   }) : super(key: key);
 
@@ -139,9 +140,7 @@ class OrderSummaryCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            DropDownListCartView(
-              onValueChangeCallback: this.onValueChangeCallback,
-            ),
+            DropDownLocationList(onValueChangeCallback: setLocationCallBack),
           ],
         ),
       ),

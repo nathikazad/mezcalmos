@@ -9,7 +9,6 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/Component
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -34,8 +33,6 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   RxBool clicked = false.obs;
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(defaultLoc);
-    final txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CustomerAppBar(autoBack: true),
       bottomNavigationBar: bottomButton(context),

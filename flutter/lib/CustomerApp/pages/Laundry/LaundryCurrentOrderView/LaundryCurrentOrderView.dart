@@ -48,8 +48,8 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
     order.value = controller.getOrder(orderId) as LaundryOrder?;
     if (order.value == null) {
-      controller.currentOrders.stream.first
-          .then((value) => order.value = value as LaundryOrder?);
+      mezDbgPrint("Order null");
+      Get.back();
     } else {
       if (order.value!.inProcess()) {
         _orderListener =
