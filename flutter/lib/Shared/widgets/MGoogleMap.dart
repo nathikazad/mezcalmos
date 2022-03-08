@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
 import 'package:sizer/sizer.dart';
 
@@ -103,7 +102,7 @@ class MGoogleMapState extends State<MGoogleMap> {
   Widget build(BuildContext context) {
     mezDbgPrint(
         "Inside MGoogleMap build ${this.hashCode} ${widget.debugString}");
-    responsiveSize(context);
+
     return Stack(
       children: [
         Obx(

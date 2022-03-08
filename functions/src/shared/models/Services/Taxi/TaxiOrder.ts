@@ -33,7 +33,10 @@ export enum TaxiOrderStatus {
   Expired = "expired",
   OnTheWay = "onTheWay",
   InTransit = "inTransit",
-  LookingForTaxi = "lookingForTaxi"
+  LookingForTaxi = "lookingForTaxi",
+  ForwardingToLocalCompany = "forwardingToLocalCompany",
+  ForwardingSuccessful = "forwardingSuccessful",
+  ForwardingUnsuccessful = "forwardingUnsuccessful"
 }
 
 export function orderInProcess(status: TaxiOrderStatus): boolean {

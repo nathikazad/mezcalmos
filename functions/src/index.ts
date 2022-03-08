@@ -42,6 +42,8 @@ export const taxi = {
   cancelFromCustomer: require("./taxi/cancelTaxiFromCustomer"),
   cancelFromDriver: require("./taxi/taxiStatusChange").cancelTaxiFromDriver,
   finishRide: require("./taxi/taxiStatusChange").finishRide,
+  forwardToLocalCompany: require("./taxi/adminStatusChanges").forwardToLocalCompany,
+  submitForwardResult: require("./taxi/adminStatusChanges").submitForwardResult,
 }
 
 import * as laundryStatusChange from './laundry/adminStatusChanges'

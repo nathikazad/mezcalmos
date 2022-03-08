@@ -41,7 +41,9 @@ class TaxiPastOrderCard extends StatelessWidget {
                           backgroundImage: mLoadImage(
                                   assetInCaseFailed:
                                       'assets/images/customer/taxi/taxiDriverImg.png',
-                                  url: order.serviceProvider?.image)
+                                  url: (order.isOpenOrder())
+                                      ? null
+                                      : order.serviceProvider?.image)
                               .image),
                       //  if (order.serviceProvider != null)
                       Positioned(
@@ -68,8 +70,10 @@ class TaxiPastOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          order.serviceProvider?.name ??
-                              "${lang.strings['customer']['taxiView']['taxiOrder']}",
+                          (order.isOpenOrder())
+                              ? "${lang.strings['customer']['taxiView']['taxiOrder']}"
+                              : order.serviceProvider?.name ??
+                                  "${lang.strings['customer']['taxiView']['taxiOrder']}",
                           overflow: TextOverflow.ellipsis,
                           style: txt.headline3,
                           maxLines: 2,
