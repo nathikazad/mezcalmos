@@ -43,7 +43,8 @@ class RestaurantController extends GetxController {
             // check if already associated restaurant with cart is the same as current restaurant,
             // if not clear the old associated restaurant
             if (associatedRestaurant != null) {
-              if (cartData["serviceProviderId"] != associatedRestaurant?.id) {
+              if (cartData["serviceProviderId"] !=
+                  associatedRestaurant?.info.id) {
                 associatedRestaurant = null;
               }
             }
@@ -92,7 +93,7 @@ class RestaurantController extends GetxController {
           "@@saadf@@ restaurantController::addItem ---> associatedRestaurant == null !");
       associatedRestaurant = await getAssociatedRestaurant(restaurantId);
       cart.value = Cart(restaurant: associatedRestaurant!);
-    } else if (associatedRestaurant!.id != restaurantId) {
+    } else if (associatedRestaurant!.info.id != restaurantId) {
       mezDbgPrint(
           "@@saadf@@ restaurantController::addItem ---> associatedRestaurant!.id != restaurantId!");
 

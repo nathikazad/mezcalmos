@@ -196,7 +196,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 schedule: currentRestaurant?.schedule),
             cartItem: cartItem,
             mode: widget.viewItemScreenMode,
-            currentRestaurantId: currentRestaurant?.id,
+            currentRestaurantId: currentRestaurant?.info.id,
           )
         ],
       ),

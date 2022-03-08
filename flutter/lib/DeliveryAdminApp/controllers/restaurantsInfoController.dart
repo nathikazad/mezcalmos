@@ -1,5 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:get/get.dart';
@@ -17,7 +19,7 @@ class RestaurantsInfoController extends GetxController {
   Future<List<Restaurant>> getRestaurants() {
     return _databaseHelper.firebaseDatabase
         .reference()
-        .child('restaurants/info')
+        .child(serviceProviderInfos(orderType: OrderType.Restaurant))
         .once()
         .then<List<Restaurant>>((snapshot) {
       List<Restaurant> restaurants = [];
@@ -36,7 +38,8 @@ class RestaurantsInfoController extends GetxController {
   Future<Restaurant> getRestaurant(String restaurantId) async {
     return _databaseHelper.firebaseDatabase
         .reference()
-        .child('restaurants/info/$restaurantId')
+        .child(serviceProviderInfos(
+            orderType: OrderType.Laundry, providerId: restaurantId))
         .once()
         .then<Restaurant>((snapshot) {
       return Restaurant.fromRestaurantData(
