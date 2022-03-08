@@ -66,7 +66,7 @@ class IOrderViewWidgets {
             physics: ClampingScrollPhysics(),
             child: iOrderViewController.counterOffer.value != null
                 ? CounterOfferSentBottomSheet(
-                    counterOffer: iOrderViewController.counterOffer.value!,
+                    counterOffer: iOrderViewController.counterOffer,
                     controller: iOrderViewController.controller,
                     order: iOrderViewController.order.value!,
                     onCounterEnd: () async => await iOrderViewController

@@ -146,7 +146,11 @@
             "taxiRidePriceTooltip" : "Haga clic en + - para aumentar/disminuir su precio en 5. Si ve que su pedido no se acepta, pruébelos.",
             "failedToRequestTaxi" : "¡Error al solicitar un taxi!",
             "increasePrice" : "Aumentar el precio",
-            "decreasePrice" : "disminuir el precio"
+            "decreasePrice" : "disminuir el precio",
+            "offers" : "ofertas",
+            "offerPrice" : "Precio de oferta",
+            "offerStatus" : "Estado de la oferta",
+            "offerTip" : "Cada oferta que realice tiene un tiempo de espera de 60 segundos, si el cliente no acepta su oferta, la oferta se cancelará."
         },
         "laundry": {
             "firstStep": "El primer paso es crear un pedido una vez que crea un pedido, uno de nuestros conductores llegará a su ubicación para recoger sus cosas",
@@ -312,7 +316,8 @@
             "askForNotif": "La aplicación recopila los datos de su ubicación para emparejarlo con los mejores viajes y compartir su ubicación con los clientes, incluso cuando la aplicación está en segundo plano.",
             "permissionBtn": "ACTIVAR AHORA",
             "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
-            "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo."
+            "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo.",
+            "android_11" : "Detectamos que su versión de Android es 11 o más reciente, por lo tanto, debemos pedirle que nos dé permisos para usar la ubicación en segundo plano para mantener a sus clientes actualizados sobre su ubicación actual, incluso cuando la aplicación se ejecuta en segundo plano."
         },
         "login": {
             "title": "Conéctese usando Facebook o usando SMS! ",

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
@@ -6,10 +9,13 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:permission_handler/permission_handler.dart'
+    show openAppSettings;
 
 class LocationPermissionScreen extends StatelessWidget {
   final SettingsController _settingsController = Get.find<SettingsController>();
@@ -78,50 +84,7 @@ class LocationPermissionScreen extends StatelessWidget {
                     height: getSizeRelativeToScreen(25, Get.height, Get.width),
                   ),
                   GestureDetector(
-                    onTap: () async {
-                      Location location = Location();
-                      bool _serviceEnabled = await location.requestService();
-                      // if Location Service is enabled!
-                      if (_serviceEnabled) {
-                        PermissionStatus _permissionStatus =
-                            await _locationController
-                                .requestLocationPermissions();
-                        mezDbgPrint(_permissionStatus);
-                        switch (_permissionStatus) {
-                          // on denied forever User must know cuz it needs manual change in IOS!!
-                          case PermissionStatus.deniedForever:
-                            MezSnackbar(
-                                'Error :(',
-                                _settingsController.appLanguage
-                                        .strings['shared']['permissions']
-                                    ['locationPermissionDeniedForever'],
-                                position: SnackPosition.TOP);
-                            break;
-
-                          // on granted !
-                          case PermissionStatus.granted:
-                            Get.back(closeOverlays: true);
-                            break;
-                          case PermissionStatus.grantedLimited:
-                            Get.back(closeOverlays: true);
-                            break;
-                          // Default
-                          default:
-                            MezSnackbar(
-                                'Error :(',
-                                _settingsController
-                                        .appLanguage.strings['shared']
-                                    ['permissions']['locationPermissionDenied'],
-                                position: SnackPosition.TOP);
-                        }
-                      } else {
-                        MezSnackbar(
-                            'Error :(',
-                            _settingsController.appLanguage.strings['shared']
-                                ['permissions']['locationIsOff'],
-                            position: SnackPosition.TOP);
-                      }
-                    },
+                    onTap: () async => await onGivePermissionBtnClick(),
                     child: Container(
                       height:
                           getSizeRelativeToScreen(25, Get.height, Get.width),
@@ -160,5 +123,64 @@ class LocationPermissionScreen extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  Future<void> onGivePermissionBtnClick() async {
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidDeviceInfo =
+          await DeviceInfoPlugin().androidInfo;
+      int? sdkVersion = androidDeviceInfo.version.sdkInt;
+      if (sdkVersion != null && sdkVersion >= 30) {
+        YesNoDialogButton res = await yesNoDialog(
+            body: _settingsController.appLanguage.strings['shared']
+                ['permissions']['android_11'],
+            text: "");
+
+        if (res == YesNoDialogButton.Yes) {
+          await openAppSettings();
+        } else
+          return;
+      }
+    }
+    Location location = Location();
+    bool _serviceEnabled = await location.requestService();
+    // if Location Service is enabled!
+    if (_serviceEnabled) {
+      PermissionStatus _permissionStatus =
+          await _locationController.requestLocationPermissions();
+      mezDbgPrint(_permissionStatus);
+      switch (_permissionStatus) {
+        // on denied forever User must know cuz it needs manual change in IOS!!
+        case PermissionStatus.deniedForever:
+          MezSnackbar(
+              'Error :(',
+              _settingsController.appLanguage.strings['shared']['permissions']
+                  ['locationPermissionDeniedForever'],
+              position: SnackPosition.TOP);
+          Future.delayed(Duration(seconds: 4), openAppSettings);
+          break;
+
+        // on granted !
+        case PermissionStatus.granted:
+          Get.back(closeOverlays: true);
+          break;
+        case PermissionStatus.grantedLimited:
+          Get.back(closeOverlays: true);
+          break;
+        // Default
+        default:
+          MezSnackbar(
+              'Error :(',
+              _settingsController.appLanguage.strings['shared']['permissions']
+                  ['locationPermissionDenied'],
+              position: SnackPosition.TOP);
+      }
+    } else {
+      MezSnackbar(
+          'Error :(',
+          _settingsController.appLanguage.strings['shared']['permissions']
+              ['locationIsOff'],
+          position: SnackPosition.TOP);
+    }
   }
 }

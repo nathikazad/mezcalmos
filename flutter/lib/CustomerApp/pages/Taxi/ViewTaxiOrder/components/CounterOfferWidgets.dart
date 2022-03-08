@@ -32,7 +32,7 @@ class CounterOfferWidgets {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'offers',
+                  lang.strings['customer']['taxiView']['offers'],
                   style: TextStyle(
                       fontFamily: "psr",
                       color: Colors.white,
@@ -88,7 +88,7 @@ class CounterOfferWidgets {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Offers',
+                        lang.strings['customer']['taxiView']['offers'],
                         style: Theme.of(context)
                             .textTheme
                             .bodyText1!

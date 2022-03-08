@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
@@ -9,11 +10,12 @@ import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:sizer/sizer.dart';
 
 class CounterOfferSentBottomSheet extends StatelessWidget {
-  final Rx<CounterOffer> counterOffer;
+  final Rxn<CounterOffer> counterOffer;
   final IncomingOrdersController controller;
   final TaxiOrder order;
   final Function() onCounterEnd;
   final int duration;
+  final LanguageController lang = Get.find<LanguageController>();
 
   CounterOfferSentBottomSheet(
       {required this.counterOffer,
@@ -33,7 +35,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Center(
               child: Text(
-                'Ride offer',
+                lang.strings['customer']['taxiView']['offer'],
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!
@@ -54,8 +56,8 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Offer price :'),
-                Text("\$${counterOffer.value.price}"),
+                Text(lang.strings['customer']['taxiView']['offerPrice']),
+                Text("\$${counterOffer.value!.price}"),
               ],
             )),
         Padding(
@@ -63,9 +65,9 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Offer status :'),
+                Text(lang.strings['customer']['taxiView']['offerStatus']),
                 Text(
-                    "${counterOffer.value.counterOfferStatus.toFirebaseFormatString()}"),
+                    "${counterOffer.value!.counterOfferStatus.toFirebaseFormatString()}"),
               ],
             )),
         Padding(
@@ -75,7 +77,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10, top: 20),
           child: Text(
-            "Every offer you make have a timeout of 60 seconds if the customer doesn’t accept your offer the offer will be canceled",
+            lang.strings['customer']['taxiView']['offerTip'],
             style: TextStyle(fontFamily: 'psr', fontSize: 10.sp),
           ),
         )
@@ -84,7 +86,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
   }
 
   Widget getBottomSheetBodyByCounterOfferStatus() {
-    switch (counterOffer.value.counterOfferStatus) {
+    switch (counterOffer.value!.counterOfferStatus) {
       case CounterOfferStatus.Rejected:
         return Icon(
           Icons.cancel,
@@ -104,7 +106,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
           },
           reversed: true,
           manualCounterValue:
-              counterOffer.value.validityTimeDifference().abs().toDouble() /
+              counterOffer.value!.validityTimeDifference().abs().toDouble() /
                   nDefaultCounterOfferValidExpireTimeInSeconds,
           // manualCounterValue: ((nDefaultCounterOfferValidExpireTimeInSeconds -
           //         counterOffer.validityTimeDifference().abs()) /
