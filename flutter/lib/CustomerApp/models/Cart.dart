@@ -21,7 +21,7 @@ class Cart {
       cartData["items"]?.forEach((dynamic itemId, dynamic itemData) {
         Item? item = this.restaurant!.findItemById(itemData["id"]);
         if (item == null) return;
-        CartItem cartItem = CartItem(item, restaurant!.id,
+        CartItem cartItem = CartItem(item, restaurant!.info.id,
             id: itemId,
             quantity: itemData["quantity"],
             notes: itemData["notes"]);
@@ -99,7 +99,7 @@ class Cart {
 
     return <String, dynamic>{
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
-      "serviceProviderId": restaurant?.id,
+      "serviceProviderId": restaurant?.info.id,
       "quantity": this.quantity(),
       "cost": this.totalCost().toInt(),
       "itemsCost": this.itemsCost().toInt(),

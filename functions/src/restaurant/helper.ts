@@ -1,5 +1,5 @@
 import { RestaurantOrder } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import * as restaurantNodes from "../shared/databaseNodes/restaurant";
+import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import *  as rootDbNodes from "../shared/databaseNodes/root";

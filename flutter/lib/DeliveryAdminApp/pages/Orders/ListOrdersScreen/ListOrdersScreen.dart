@@ -6,16 +6,15 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/LaundryOrderCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/LaundryOrdersListComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/RestaurantOrdersListComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/TaxiOrdersListComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-
-import 'components/buildOrders.dart';
 
 final f = new DateFormat('hh:mm a');
 
@@ -31,12 +30,17 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   RxList<Order> pastOrders = RxList.empty();
   RxList<Order> laundryInProcessOrders = RxList.empty();
   RxList<Order> laundryPastOrders = RxList.empty();
+  RxList<Order> taxiInProcessOrders = RxList.empty();
+  RxList<Order> taxiOpenOrders = RxList.empty();
+  RxList<Order> taxiPastOrders = RxList.empty();
   RestaurantOrderController controller = Get.find<RestaurantOrderController>();
   LaundryOrderController laundryOrderController =
       Get.find<LaundryOrderController>();
+  TaxiOrderController taxiOrderController = Get.find<TaxiOrderController>();
   LanguageController lang = Get.find<LanguageController>();
   StreamSubscription? _ordersListener;
   StreamSubscription? _laundryOrdersListener;
+  StreamSubscription? _taxiOrdersListener;
 
   // ScrollController _ordersListViewController = ScrollController();
   // int fetchedOrders = 1;
@@ -59,6 +63,18 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     return laundryOrderController.pastOrders().reversed.toList();
   }
 
+  List<Order> taxiCurrentFetchByRange() {
+    return taxiOrderController.inProcessOrders().reversed.toList();
+  }
+
+  List<Order> taxiOpenFetchByRange() {
+    return taxiOrderController.openOrders().reversed.toList();
+  }
+
+  List<Order> taxiFetchPastByRange() {
+    return taxiOrderController.pastOrders().reversed.toList();
+  }
+
   @override
   void initState() {
     controller.clearNewOrderNotifications();
@@ -72,6 +88,19 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     controller.pastOrders.stream.listen((_) {
       pastOrders.value = fetchPastByRange();
     });
+    taxiInProcessOrders.value = taxiCurrentFetchByRange();
+    taxiOrderController.inProcessOrders.stream.listen((_) {
+      taxiInProcessOrders.value = taxiCurrentFetchByRange();
+    });
+    taxiOpenOrders.value = taxiOpenFetchByRange();
+    taxiOrderController.openOrders.stream.listen((_) {
+      taxiOpenOrders.value = taxiOpenFetchByRange();
+    });
+    taxiPastOrders.value = taxiFetchPastByRange();
+    taxiOrderController.pastOrders.stream.listen((_) {
+      taxiPastOrders.value = taxiFetchPastByRange();
+    });
+
     laundryInProcessOrders.value = laundryFetchByRange();
     laundryOrderController.inProcessOrders.stream.listen((_) {
       laundryInProcessOrders.value = laundryFetchByRange();
@@ -80,16 +109,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     laundryOrderController.pastOrders.stream.listen((_) {
       laundryPastOrders.value = laundryFetchPastByRange();
     });
-   
-    // _ordersListViewController.addListener(() {
-    //   mezDbgPrint(_ordersListViewController.offset);
-    //   if (_ordersListViewController.offset <= 0.1) {
-    //     // to remove that bounce back xd
-    //     _ordersListViewController.position.jumpTo(0.0);
-    //     // then fetch !
-    //     inProcessOrders().addAll(fetchByRange());
-    //   }
-    // });
+
     super.initState();
   }
 
@@ -99,6 +119,8 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     _ordersListener = null;
     _laundryOrdersListener?.cancel();
     _laundryOrdersListener = null;
+    _taxiOrdersListener?.cancel();
+    _taxiOrdersListener = null;
     // _ordersListViewController.dispose();
     super.dispose();
   }
@@ -111,7 +133,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
           return false;
         },
         child: DefaultTabController(
-          length: 2,
+          length: 3,
           child: Scaffold(
               key: Get.find<SideMenuDrawerController>().getNewKey(),
               appBar: deliveryAdminAppBar(AppBarLeftButtonType.Menu,
@@ -122,117 +144,20 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
               // appBar: mezcalmosAppBar(
               //     "menu", Get.find<SideMenuDraweController>().openMenu),
               drawer: MezSideMenu(),
-              body: Obx(() {
-                return TabBarView(children: [
-                  // Restaurant orders list view
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(8),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                              lang.strings["customer"]["orders"]["title"],
-                              style: Theme.of(context).textTheme.headline1,
-                              textAlign: TextAlign.left),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Container(
-                          child: inProcessOrders.value.length > 0
-                              ? buildOrders(inProcessOrders)
-                              : Center(
-                                  child: Text(lang.strings['deliveryAdminApp']
-                                      ['laundry']['noOrders']),
-                                ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.all(8),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                              lang.strings['deliveryAdminApp']['laundry']
-                                  ['pastOrders'],
-                              style: Theme.of(context).textTheme.headline1,
-                              textAlign: TextAlign.left),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Container(
-                          child: controller.pastOrders.value.length > 0
-                              ? buildOrders(controller.pastOrders)
-                              : Center(
-                                  child: Text(lang.strings['deliveryAdminApp']
-                                      ['laundry']['noOrders']),
-                                ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Laundry orders list view
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.all(8),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                                lang.strings["customer"]["orders"]["title"],
-                                style: Theme.of(context).textTheme.headline1,
-                                textAlign: TextAlign.left),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Container(
-                            child: laundryInProcessOrders.isNotEmpty
-                                ? Column(
-                                    children: List.generate(
-                                        laundryInProcessOrders.length,
-                                        (index) => LaundryOrderCard(
-                                            order: laundryInProcessOrders[index]
-                                                as LaundryOrder)),
-                                  )
-                                : Center(
-                                    child: Text(lang.strings['deliveryAdminApp']
-                                        ['laundry']['noOrders']),
-                                  ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.all(8),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                                lang.strings['deliveryAdminApp']['laundry']
-                                    ['pastOrders'],
-                                style: Theme.of(context).textTheme.headline1,
-                                textAlign: TextAlign.left),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Container(
-                            child: laundryPastOrders.isNotEmpty
-                                ? Column(
-                                    children: List.generate(
-                                        laundryPastOrders.length,
-                                        (index) => LaundryOrderCard(
-                                            order: laundryPastOrders[index]
-                                                as LaundryOrder)),
-                                  )
-                                : Center(
-                                    child: Text(lang.strings['deliveryAdminApp']
-                                        ['laundry']['noOrders']),
-                                  ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ]);
-              })),
+              body: TabBarView(children: [
+                // Restaurant orders list view
+                RestaurantOrdersList(
+                    pastOrders: controller.pastOrders,
+                    currentOrders: controller.inProcessOrders),
+                // Laundry orders list view
+                LaundryOrdersList(
+                    pastOrders: laundryOrderController.pastOrders,
+                    currentOrders: laundryOrderController.inProcessOrders),
+                TaxiOrdersList(
+                    pastOrders: taxiOrderController.pastOrders,
+                    currentOrders: taxiOrderController.inProcessOrders,
+                    openOrders: taxiOrderController.openOrders)
+              ])),
         ));
   }
 
@@ -245,7 +170,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             children: [
               Flexible(
                   child: Text(
-                lang.strings['deliveryAdminApp']['laundry']['restaurantOrders'],
+                'Restaurant',
                 style: Theme.of(context).textTheme.bodyText2,
               )),
               SizedBox(
@@ -273,7 +198,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             children: [
               Flexible(
                   child: Text(
-                lang.strings['deliveryAdminApp']['laundry']['laundryOrders'],
+                'laundry',
                 style: Theme.of(context).textTheme.bodyText2,
               )),
               SizedBox(
@@ -284,6 +209,34 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                   radius: 8,
                   child: Text(
                     '${laundryInProcessOrders.length}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(color: Colors.white),
+                  ),
+                )
+            ],
+          ),
+        ),
+      ),
+      Obx(
+        () => Tab(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                  child: Text(
+                'Taxi',
+                style: Theme.of(context).textTheme.bodyText2,
+              )),
+              SizedBox(
+                width: 5,
+              ),
+              if (taxiOpenOrders.isNotEmpty)
+                CircleAvatar(
+                  radius: 8,
+                  child: Text(
+                    '${taxiOpenOrders.length}',
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1!

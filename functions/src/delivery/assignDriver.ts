@@ -77,6 +77,14 @@ export = functions.https.onCall(async (data, context) => {
   let order: TwoWayDeliverableOrder = await getInProcessOrder(data.orderType, orderId);
   let chatId: string = await pushChat();
 
+  if (order.serviceProviderId == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Order does not have a laundry service provider, call assign laundry first`,
+      errorCode: "laundryDontExist"
+    }
+  }
+
   order.secondaryChats = order.secondaryChats ?? {};
   switch (deliveryDriverType) {
     case DeliveryDriverType.DropOff:

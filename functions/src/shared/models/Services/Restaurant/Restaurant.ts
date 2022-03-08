@@ -1,5 +1,5 @@
-import { AuthorizationStatus, Language } from "../../Generic/Generic";
-import { UserInfo } from "../../Generic/User";
+import { Language } from "../../Generic/Generic";
+import { Service } from "../Service";
 
 export interface Details {
   description: Record<Language, string>;
@@ -37,14 +37,8 @@ export interface MenuItem {
   options: Options;
 }
 
-export interface State {
-  authorizationStatus: AuthorizationStatus;
-  open: boolean;
-}
 
-export interface Restaurant {
+export interface Restaurant extends Service {
   details: Details;
   menu: Record<string, MenuItem>;
-  state: State;
-  info: UserInfo;
 }

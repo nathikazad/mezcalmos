@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -70,7 +70,8 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
                             restaurant: restaurants[index],
                             onClick: () {
                               Get.toNamed(
-                                  getRestaurantRoute(restaurants[index].id),
+                                  getRestaurantRoute(
+                                      restaurants[index].info.id),
                                   arguments: restaurants[index]);
                             },
                           )),
@@ -103,7 +104,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
 
   void getAndSortRestaurants(List<Restaurant>? data) {
     restaurants = data!
-        .where((resto) => resto.restaurantState.available == true)
+        .where((resto) => resto.state.available == true)
         .toList(growable: true);
     restaurants.sort((a, b) {
       if (b.schedule != null) {

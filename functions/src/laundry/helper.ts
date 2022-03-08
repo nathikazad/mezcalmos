@@ -1,6 +1,7 @@
 import { LaundryOrder } from "../shared/models/Services/Laundry/LaundryOrder";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
+import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 import { OrderType } from "../shared/models/Generic/Order";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 
@@ -14,6 +15,11 @@ export async function finishOrder(
   // and finally remove from root /inProcessOrders   
   await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).remove();
   await rootDbNodes.pastOrders(OrderType.Laundry, orderId).set(order)
+
+  if (order.laundry) {
+    laundryNodes.inProcessOrders(order.laundry.id).remove();
+    laundryNodes.pastOrders(order.laundry.id).set(order);
+  }
 
   if (order.dropoffDriver) {
     await deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id!, orderId).remove();

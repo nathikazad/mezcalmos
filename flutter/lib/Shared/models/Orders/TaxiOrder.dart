@@ -1,7 +1,5 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -14,7 +12,10 @@ enum TaxiOrdersStatus {
   Expired,
   OnTheWay,
   InTransit,
-  LookingForTaxi
+  LookingForTaxi,
+  ForwardingToLocalCompany,
+  ForwardingSuccessful,
+  ForwardingUnsuccessful
 }
 
 extension ParseOrderStatusToString on TaxiOrdersStatus {
@@ -77,7 +78,7 @@ class TaxiOrder extends Order {
             customer: customer,
             serviceProvider: driver,
             to: to,
-            routeInformation:routeInformation);
+            routeInformation: routeInformation);
   // Get props as list.
   List<Object> get props =>
       [orderId, from, to, orderTime, paymentType, routeInformation!];
@@ -158,6 +159,7 @@ class TaxiOrder extends Order {
     // all of them are in /past node
     return status == TaxiOrdersStatus.CancelledByCustomer ||
         status == TaxiOrdersStatus.CancelledByTaxi ||
+        status == TaxiOrdersStatus.ForwardingUnsuccessful ||
         status == TaxiOrdersStatus.Expired;
   }
 
@@ -167,6 +169,19 @@ class TaxiOrder extends Order {
         status == TaxiOrdersStatus.LookingForTaxi ||
         status == TaxiOrdersStatus.DroppedOff ||
         status == TaxiOrdersStatus.OnTheWay;
+  }
+
+  bool isOpenOrder() {
+    switch (this.status) {
+      case TaxiOrdersStatus.ForwardingSuccessful:
+      case TaxiOrdersStatus.LookingForTaxi:
+      case TaxiOrdersStatus.ForwardingToLocalCompany:
+      case TaxiOrdersStatus.ForwardingUnsuccessful:
+        return true;
+
+      default:
+        return false;
+    }
   }
 
   num numberOfTaxiSentNotificationTo() {

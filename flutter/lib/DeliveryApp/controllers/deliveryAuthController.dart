@@ -13,6 +13,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:location/location.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class DeliveryAuthController extends GetxController {
@@ -150,30 +152,33 @@ class DeliveryAuthController extends GetxController {
           OrderController _orderController = Get.find<OrderController>();
 
           _orderController.currentOrders.forEach((order) {
+            
             // updating driver location in deliveryDrivers/inProcessOrders
             _databaseHelper.firebaseDatabase
                 .reference()
                 .child(deliveryDriverInProcessOrderDriverLocationNode(
                     orderId: order.orderId,
-                    deliveryDriverId: _authController.fireAuthUser!.uid))
+                    deliveryDriverId: _authController.fireAuthUser!.uid,
+                    driverAddress: order.driverDatabaseAddress()))
                 .set(positionUpdate);
 
             // updating driver location in root orders/inProcess/<OrderType>
             _databaseHelper.firebaseDatabase
                 .reference()
                 .child(rootInProcessOrderDriverLocationNode(
-                    order.orderId, order.orderType))
+                    orderId: order.orderId,
+                    orderType: order.orderType,
+                    driverAddress: order.driverDatabaseAddress()))
                 .set(positionUpdate);
-
 
             _databaseHelper.firebaseDatabase
                 .reference()
                 .child(customerInProcessOrderDriverLocationNode(
-                    order.orderId, order.customer.id))
+                    orderId: order.orderId, 
+                    customerId: order.customer.id,
+                    driverAddress: order.driverDatabaseAddress()))
                 .set(positionUpdate);
           });
-          
-          
         } catch (e) {
           mezDbgPrint("Write driver position to db error");
         }

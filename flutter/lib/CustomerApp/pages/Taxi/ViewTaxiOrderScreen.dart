@@ -16,10 +16,10 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 
 class ViewTaxiOrderScreen extends StatefulWidget {
   final MGoogleMapController mGoogleMapController = MGoogleMapController();
@@ -230,7 +230,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen>
   void pastOrderStatusHandler(TaxiOrdersStatus status) {
     bottomPadding.value = 10.0;
 
-    if (order.value!.driver != null)
+    if (order.value!.driver != null && !order.value!.isOpenOrder())
       widget.mGoogleMapController.removeMarkerById(order.value!.driver!.id);
     // adding customer's marker
     widget.mGoogleMapController.addOrUpdateUserMarker(
