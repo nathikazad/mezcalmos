@@ -39,7 +39,7 @@ class ServiceUserInfo extends UserInfo {
   factory ServiceUserInfo.fromData(dynamic data) {
     // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
     Location? location = data["location"] != null
-        ? Location.fromFirebaseData(data["location"]);
+        ? Location.fromFirebaseData(data["location"]) : null;
     return ServiceUserInfo(
         id: data["id"],
         name: data["name"],

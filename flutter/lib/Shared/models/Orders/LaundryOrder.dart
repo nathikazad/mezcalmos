@@ -37,7 +37,7 @@ extension ParseStringToOrderStatus on String {
 class LaundryOrder extends TwoWayDeliverableOrder {
   num? weight;
   String? notes;
-  UserInfo laundry;
+  UserInfo? laundry;
   LaundryOrderStatus status;
   LaundryOrder(
       {required String orderId,
@@ -78,7 +78,9 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         paymentType: data["paymentType"].toString().toPaymentType(),
         weight: data["weight"],
         notes: data["notes"],
-        laundry: UserInfo.fromData(data["laundry"]),
+        laundry: (data["laundry"] != null)
+            ? UserInfo.fromData(data["laundry"])
+            : null,
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
             : null,

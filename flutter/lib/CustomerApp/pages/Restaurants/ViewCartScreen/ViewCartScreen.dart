@@ -68,24 +68,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       body: Obx(() {
         mezDbgPrint("@sa@d@: ${controller.cart.value.cartItems.length}");
         if (controller.cart.value.cartItems.length > 0) {
-          return SingleChildScrollView(
-              child: ViewCartBody(
+          return SingleChildScrollView(child: ViewCartBody(
             setLocationCallBack: ({Location? location}) {
               setState(() {
                 orderToLocation = location;
               });
-            },
-            onValueChangeCallback: ({String? newValue}) {
-              mezDbgPrint("@sa@d@: onValueChangeCallback :: $newValue");
-              if (newValue == null) {
-                setState(() {
-                  ddResult = DropDownResult.Null;
-                });
-              } else {
-                setState(() {
-                  ddResult = DropDownResult.String;
-                });
-              }
             },
           ));
         } else {
