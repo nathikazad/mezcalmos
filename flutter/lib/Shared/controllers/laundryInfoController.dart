@@ -43,6 +43,9 @@ class LaundryInfoController extends GetxController {
             orderType: OrderType.Laundry, providerId: laundryId))
         .once()
         .then<Laundry>((snapshot) {
+      mezDbgPrint("Getting the laundry ------------------------->");
+      mezDbgPrint(Laundry.fromLaundryData(
+          laundryId: laundryId, laundryData: snapshot.value));
       return Laundry.fromLaundryData(
           laundryId: laundryId, laundryData: snapshot.value);
     });

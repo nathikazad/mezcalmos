@@ -10,6 +10,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderCustomer.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderSummary.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryProviderCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -106,6 +107,15 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     SizedBox(
                       height: 10,
                     ),
+                    LaundryProviderCard(
+                        laundryID: order.value!.laundry?.id ?? null,
+                        callBack: (newLaundry) {
+                          setState(() async {
+                            await controller.assignLaundry(
+                                order.value!.orderId, newLaundry!.info.id);
+                          });
+                        },
+                        order: order.value!),
                     LaundryOrderCustomer(
                       order: order.value!,
                     ),
