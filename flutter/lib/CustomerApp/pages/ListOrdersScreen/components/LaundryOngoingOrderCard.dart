@@ -17,7 +17,6 @@ class LaundryOngoigOrderCard extends StatelessWidget {
 
   final Order order;
 
-  LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;

@@ -24,7 +24,7 @@ class _LaundryPickLocViewState extends State<LaundryPickLocView> {
   final LocationPickerController locationPickerController =
       LocationPickerController();
 
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n = Get.find<LanguageController>().strings['AppName']['Filename'];
   @override
   void initState() {
     geoloc.Location().getLocation().then((value) {

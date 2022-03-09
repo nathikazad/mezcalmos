@@ -18,7 +18,7 @@ class LaundryLocPicker extends StatefulWidget {
 }
 
 class _LaundryLocPickerState extends State<LaundryLocPicker> {
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n = Get.find<LanguageController>().strings['AppName']['Filename'];
 
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();

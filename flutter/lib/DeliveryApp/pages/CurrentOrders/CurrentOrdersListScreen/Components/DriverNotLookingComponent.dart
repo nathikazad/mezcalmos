@@ -8,7 +8,8 @@ class DriverNotLookingComponent extends StatelessWidget {
   ///  Shows an image from assets and text telling the drive he is offline
 
   DriverNotLookingComponent({Key? key}) : super(key: key);
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n =
+      Get.find<LanguageController>().strings["CustomerApp"]["pages"];
   @override
   Widget build(BuildContext context) {
     return Column(

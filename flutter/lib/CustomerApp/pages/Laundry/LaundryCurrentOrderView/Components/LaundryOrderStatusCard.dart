@@ -101,7 +101,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
   }
 }
 
-LanguageController lang = Get.find<LanguageController>();
+dynamic _i18n = Get.find<LanguageController>().strings['AppName']['Filename'];
 Widget getOrderWidget(LaundryOrderStatus status) {
   switch (status) {
     case LaundryOrderStatus.CancelledByAdmin:

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/PickLocationScreen/PickLocationView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
     ["Restaurants"]["ViewCartScreen"]["components"]["SaveLocationDailog"];
@@ -12,7 +11,6 @@ Future<String?> savedLocationDailog(
     bool? comingFromCart = false,
     String? nameVal,
     PickLocationMode mode = PickLocationMode.AddNewLocation}) async {
-  // LanguageController lang = Get.find<LanguageController>();
   TextEditingController txtController = TextEditingController();
   if (nameVal != null && nameVal != "") {
     txtController.text = nameVal;

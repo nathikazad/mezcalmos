@@ -4,7 +4,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 Widget orderShippingLocation(Rxn<RestaurantOrder> order) {
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n =
+      Get.find<LanguageController>().strings["CustomerApp"]["pages"];
   return Column(
     children: [
       Container(

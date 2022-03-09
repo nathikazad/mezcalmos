@@ -5,6 +5,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+
 class LaundryOrderStatusCard extends StatelessWidget {
   const LaundryOrderStatusCard({
     Key? key,
@@ -42,7 +44,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
   }
 }
 
-LanguageController lang = Get.find<LanguageController>();
+
 
 Widget getOrderWidget(LaundryOrderStatus status) {
   switch (status) {

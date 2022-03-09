@@ -105,7 +105,6 @@ Notification restaurantOrderStatusChangeNotificationHandler(
 // TODO: needs to be formatted for laundry
 Map<String, dynamic>? getLaundryOrderStatusFields(
     LaundryOrderStatus laundryOrderStatus) {
-  LanguageController lang = Get.find<LanguageController>();
   switch (laundryOrderStatus) {
     case LaundryOrderStatus.OrderReceieved:
       return <String, dynamic>{

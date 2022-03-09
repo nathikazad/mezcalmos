@@ -29,7 +29,6 @@ class LaundryOrderScreen extends StatefulWidget {
 
 class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   ///--------------- Controllers ------------------------//
-  LanguageController lang = Get.find<LanguageController>();
   AuthController auth = Get.find<AuthController>();
   LaundryOrderController controller = Get.find<LaundryOrderController>();
   DeliveryDriverController deliveryDriverController =

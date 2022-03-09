@@ -22,7 +22,7 @@ class LaundryOrderFooterCard extends StatefulWidget {
 
 class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
   LaundryController laundryController = Get.find<LaundryController>();
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n = Get.find<LanguageController>().strings['AppName']['Filename'];
   RxBool _clickedCancel = false.obs;
 
   @override

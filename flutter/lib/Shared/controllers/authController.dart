@@ -26,7 +26,6 @@ dynamic _i18n = Get.find<LanguageController>().strings['Shared']['controllers'][
 
 class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
-  LanguageController lang = Get.find<LanguageController>();
   Function _onSignOutCallback;
   Function _onSignInCallback;
 
@@ -97,7 +96,7 @@ class AuthController extends GetxController {
           if (event.snapshot.value == null) return;
           if (event.snapshot.value['language'] == null) {
             event.snapshot.value['language'] =
-                lang.userLanguageKey;
+                userLanguage;
             _databaseHelper.firebaseDatabase
                 .reference()
                 .child(userLanguage(user.uid))

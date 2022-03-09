@@ -15,7 +15,9 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
   final TaxiOrder order;
   final Function() onCounterEnd;
   final int duration;
-  final LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n =
+      Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+
 
   CounterOfferSentBottomSheet(
       {required this.counterOffer,

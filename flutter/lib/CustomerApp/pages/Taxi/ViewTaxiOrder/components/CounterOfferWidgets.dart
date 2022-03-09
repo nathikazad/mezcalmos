@@ -14,7 +14,8 @@ import 'package:sizer/sizer.dart';
 class CounterOfferWidgets {
   final ViewTaxiOrderController viewController;
   CounterOfferWidgets({required this.viewController});
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n =
+      Get.find<LanguageController>().strings["CustomerApp"]["pages"];
 
   Widget offersButton() {
     return Container(

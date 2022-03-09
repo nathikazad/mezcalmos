@@ -8,12 +8,14 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+
 // the styles of status buttons inside the order screen
 class OrderButtons {
   // this button for cancel order
   static Widget cancelButtonWidget(String orderId) {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
 
     return Expanded(
       child: ButtonComponent(
@@ -57,7 +59,7 @@ class OrderButtons {
     String orderId,
   ) {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
     return ButtonComponent(
         widget: Text(lang.strings['deliveryAdminApp']['laundry']['startPickUp'],
             style: TextStyle(
@@ -101,7 +103,7 @@ class OrderButtons {
   // this button for pickedUp
   static Widget pickedUp(String orderId) {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
     return ButtonComponent(
       widget: Text(lang.strings['deliveryAdminApp']['laundry']['pickedUp'],
           style: TextStyle(
@@ -141,7 +143,7 @@ class OrderButtons {
   // this button for atTheLaundry
   static Widget atTheLaundry(String orderId) {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
 
     return ButtonComponent(
         widget: Text(lang.strings['deliveryAdminApp']['laundry']['atLaundry'],
@@ -186,7 +188,7 @@ class OrderButtons {
   //this button for readyforDelivery
   static Widget readyForDeliveryButton(LaundryOrder order) {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
     return ButtonComponent(
         widget: Text(
             lang.strings['deliveryAdminApp']['laundry']['readyForDelivery'],
@@ -239,7 +241,7 @@ class OrderButtons {
   //this button for otwDelivery
   static Widget otwDeliveryButton(String orderId) {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
     return ButtonComponent(
         widget: Text(lang.strings['deliveryAdminApp']['laundry']['otwDelivery'],
             style: TextStyle(
@@ -280,7 +282,7 @@ class OrderButtons {
   //this button for deliverd
   static Widget deliverdButton(String orderId) {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
     return ButtonComponent(
         widget: Text(lang.strings['deliveryAdminApp']['laundry']['delivered'],
             style: TextStyle(

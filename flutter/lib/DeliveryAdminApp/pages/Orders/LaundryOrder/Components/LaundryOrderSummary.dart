@@ -6,7 +6,8 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 class LaundryOrderSummary extends StatelessWidget {
   final LaundryOrder order;
   LaundryOrderSummary({Key? key, required this.order}) : super(key: key);
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n =
+      Get.find<LanguageController>().strings["CustomerApp"]["pages"];
 
   @override
   Widget build(BuildContext context) {

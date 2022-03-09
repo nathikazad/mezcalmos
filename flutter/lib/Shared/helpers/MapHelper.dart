@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'dart:math' show cos, sqrt, sin, pi, atan2, pow;
 import 'package:http/http.dart' as http;
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
@@ -90,10 +91,10 @@ Future<LocModel.Location> getCurrentLocation() async {
 
 /// This is for AutoComplete location Search !
 Future<Map<String, String>> getLocationsSuggestions(String search) async {
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
   LocationData loc = await Location().getLocation();
   String url =
-      "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&language=${lang.userLanguageKey}&components=country:mx&location=${loc.latitude},${loc.longitude}&radius=11000&key=$placesApikey";
+      "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$search&language=${userLanguage}&components=country:mx&location=${loc.latitude},${loc.longitude}&radius=11000&key=$placesApikey";
 
   http.Response resp = await http.get(Uri.parse(url));
   Map<String, dynamic> respJson = json.decode(resp.body);

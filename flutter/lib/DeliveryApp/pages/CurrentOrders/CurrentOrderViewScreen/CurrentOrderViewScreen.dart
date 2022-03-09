@@ -27,7 +27,6 @@ class CurrentOrderViewScreen extends StatefulWidget {
 
 class _ViewCurrentOrderScreenState extends State<CurrentOrderViewScreen> {
   MGoogleMapController mGoogleMapController = MGoogleMapController();
-  LanguageController lang = Get.find<LanguageController>();
   Rxn<Order> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   StreamSubscription? _orderListener;

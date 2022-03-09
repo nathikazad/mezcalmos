@@ -62,7 +62,6 @@ class PastOrderInfo extends StatelessWidget {
 }
 
 String getOrderStatus(RestaurantOrderStatus status) {
-  LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
       return '${_i18n["canceledByAdmin"]}';
@@ -85,7 +84,6 @@ String getOrderStatus(RestaurantOrderStatus status) {
 }
 
 String getOrderHelperText(RestaurantOrderStatus status) {
-  LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
       return '${_i18n["helperTextCanceledByAdmin"]}';

@@ -24,6 +24,7 @@ import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"];
 
 class MessagingScreen extends StatefulWidget {
   @override
@@ -61,7 +62,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   }
 
   AuthController _authController = Get.find<AuthController>();
-  LanguageController lang = Get.find<LanguageController>();
+  
 
   TextEditingController _textEditingController = new TextEditingController();
   ScrollController _listViewScrollController = new ScrollController();
@@ -264,7 +265,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
               SendMessageBox(
                   typedMsg: _typedMsg,
                   textEditingController: _textEditingController,
-                  languageController: lang,
                   controller: controller,
                   chatId: chatId,
                   orderId: orderId)
@@ -279,18 +279,15 @@ class SendMessageBox extends StatelessWidget {
       {Key? key,
       required RxString typedMsg,
       required TextEditingController textEditingController,
-      required LanguageController languageController,
       required this.controller,
       this.orderId,
       required this.chatId})
       : _typedMsg = typedMsg,
         _textEditingController = textEditingController,
-        _languageController = languageController,
         super(key: key);
 
   final RxString _typedMsg;
   final TextEditingController _textEditingController;
-  final LanguageController _languageController;
   final MessageController controller;
   final String? orderId;
   final String chatId;

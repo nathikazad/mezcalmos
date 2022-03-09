@@ -9,6 +9,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:get/get.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+
 Notification deliveryDriverNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
@@ -52,7 +54,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(
 
 Map<String, dynamic>? getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
-  LanguageController lang = Get.find<LanguageController>();
+  
   switch (restaurantOrderStatus) {
     case RestaurantOrderStatus.PreparingOrder:
       return <String, dynamic>{
@@ -116,7 +118,6 @@ Notification laundryOrderStatusChangeNotificationHandler(
 
 Map<String, dynamic>? getLaundryOrderStatusFields(
     LaundryOrderStatus laundryOrderStatus) {
-  LanguageController lang = Get.find<LanguageController>();
   switch (laundryOrderStatus) {
     case LaundryOrderStatus.ReadyForDelivery:
       return <String, dynamic>{

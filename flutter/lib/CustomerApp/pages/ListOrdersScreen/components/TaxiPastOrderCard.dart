@@ -22,7 +22,6 @@ class TaxiPastOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Card(
       child: InkWell(

@@ -13,6 +13,8 @@ import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+
 class ViewNotifications extends StatefulWidget {
   ViewNotifications({Key? key}) : super(key: key);
 
@@ -24,7 +26,6 @@ class _ViewNotificationsState extends State<ViewNotifications> {
   // RxList<notifs.Notification> currentNotifs = RxList.empty();
   ForegroundNotificationsController controller =
       Get.find<ForegroundNotificationsController>();
-  LanguageController lang = Get.find<LanguageController>();
   AuthController authController = Get.find<AuthController>();
 
   @override
@@ -105,7 +106,6 @@ class ClearNotifButton extends StatelessWidget {
 
   ForegroundNotificationsController controller =
       Get.find<ForegroundNotificationsController>();
-  LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return Obx(() => (controller.notifications.value.length <= 0)

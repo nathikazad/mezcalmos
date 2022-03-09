@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
@@ -24,7 +25,7 @@ class RestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
+    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
     final txt = Theme.of(context).textTheme;
     return Card(
       margin: EdgeInsets.all(8),
@@ -52,7 +53,7 @@ class RestaurantCard extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        restaurant.description[lang.userLanguageKey]!,
+                        restaurant.description[userLanguage]!,
                         style: txt.subtitle1,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -85,7 +86,7 @@ class RestaurantCard extends StatelessWidget {
                   ),
                 ),
               ),
-              mezRestuarntCardImage(lang)
+              mezRestuarntCardImage()
             ],
           ),
         ),
@@ -93,7 +94,7 @@ class RestaurantCard extends StatelessWidget {
     );
   }
 
-  Container mezRestuarntCardImage(LanguageController lang) {
+  Container mezRestuarntCardImage() {
     ///responsible for the image of restaurant
     return Container(
       width: 35.w,

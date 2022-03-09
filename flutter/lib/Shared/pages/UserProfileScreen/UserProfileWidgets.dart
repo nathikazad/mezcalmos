@@ -15,7 +15,6 @@ dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']
 class UserProfileWidgetsClass {
   // Singleton
   final UserProfileController userProfileController;
-  //final LanguageController lang = Get.find<LanguageController>();
   UserProfileWidgetsClass({required this.userProfileController});
 
   /// this holds the Main body parts.

@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
@@ -34,7 +35,7 @@ class ViewItemScreen extends StatefulWidget {
 }
 
 class _ViewItemScreenState extends State<ViewItemScreen> {
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
   AuthController auth = Get.find<AuthController>();
   Rxn<CartItem> cartItem = Rxn();
   RestaurantController restaurantCartController =
@@ -89,7 +90,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       () => Scaffold(
         appBar: CustomerAppBar(
           title: currentRestaurant != null
-              ? "${cartItem.value!.item.name[lang.userLanguageKey]}"
+              ? "${cartItem.value!.item.name[userLanguage]}"
               : "",
           autoBack: true,
         ),
@@ -159,7 +160,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Text(
-                        "${cartItem.value!.item.description![lang.userLanguageKey]!.inCaps}",
+                        "${cartItem.value!.item.description![userLanguage]!.inCaps}",
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme

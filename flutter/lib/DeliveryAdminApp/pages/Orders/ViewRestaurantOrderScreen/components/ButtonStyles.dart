@@ -18,7 +18,7 @@ class ButtonsStyle {
   static Widget cancelButtonWidget(String orderId) {
     RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
     // OrderController controller = Get.find<OrderController>();
 
     return Expanded(
@@ -60,7 +60,7 @@ class ButtonsStyle {
   static Widget preparingOrderButtonWidget(RestaurantOrder order) {
     RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
     return ButtonComponent(
         widget: Text(_i18n["readyForPickUp"],
             style: TextStyle(
@@ -107,7 +107,7 @@ class ButtonsStyle {
   static Widget readyForPickupButtonWidget(String orderId) {
     RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
     return ButtonComponent(
       widget: Text(_i18n["deliver"],
           style: TextStyle(
@@ -144,7 +144,7 @@ class ButtonsStyle {
   static Widget orderReceievedButtonWidget(String orderId) {
     RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
     return ButtonComponent(
         widget: Text(_i18n["preparing"],
             style: TextStyle(
@@ -182,7 +182,7 @@ class ButtonsStyle {
   static Widget onTheWayButtonWidget(String orderId) {
     RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    
     return ButtonComponent(
         widget: Text(_i18n["received"],
             style: TextStyle(

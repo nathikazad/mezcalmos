@@ -29,7 +29,7 @@ class ListOrdersScreen extends StatefulWidget {
   _ListOrdersScreen createState() => _ListOrdersScreen();
 }
 
-class _ListOrdersScreen extends State<ListOrdersScreen> {
+class _ListOrdersScreen extends State<ListOrdersScreen> { 
   RxList<Order> inProcessOrders = RxList.empty();
   RxList<Order> pastOrders = RxList.empty();
   RxList<Order> laundryInProcessOrders = RxList.empty();
@@ -37,7 +37,8 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   RestaurantOrderController controller = Get.find<RestaurantOrderController>();
   LaundryOrderController laundryOrderController =
       Get.find<LaundryOrderController>();
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n =
+      Get.find<LanguageController>().strings["CustomerApp"]["pages"];
   StreamSubscription? _ordersListener;
   StreamSubscription? _laundryOrdersListener;
 

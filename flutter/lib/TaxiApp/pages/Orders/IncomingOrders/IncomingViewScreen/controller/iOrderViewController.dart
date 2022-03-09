@@ -20,7 +20,6 @@ class IOrderViewController {
   final AnimatedSliderController animatedSliderController;
   IOrderViewController({required this.animatedSliderController});
 
-  final LanguageController lang = Get.find<LanguageController>();
   final AuthController authController = Get.find<AuthController>();
   final TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
   final IncomingOrdersController controller =

@@ -32,7 +32,6 @@ class ListOrdersScreen extends StatefulWidget {
 }
 
 class _ListOrdersScreen extends State<ListOrdersScreen> {
-  LanguageController lang = Get.find<LanguageController>();
   OrderController controller = Get.put(OrderController());
   AuthController auth = Get.find<AuthController>();
 
@@ -51,7 +50,6 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CustomerAppBar(
@@ -70,12 +68,12 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                     PastOrderList(txt: txt, controller: controller),
                 ],
               ))
-            : NoOrdersWidget(lang),
+            : NoOrdersWidget(),
       ),
     );
   }
 
-  Center NoOrdersWidget(LanguageController lang) {
+  Center NoOrdersWidget() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -105,18 +103,17 @@ class PastOrderList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(
         () => controller.pastOrders().length >= 1
-            ? pastOrdersWidget(lang)
-            : NoPastOrdersWidget(lang, context),
+            ? pastOrdersWidget()
+            : NoPastOrdersWidget(context),
       ),
     );
   }
 
-  Column pastOrdersWidget(LanguageController lang) {
+  Column pastOrdersWidget() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       GroupedListView<Order, DateTime>(
           elements: controller.pastOrders(),
@@ -164,7 +161,7 @@ class PastOrderList extends StatelessWidget {
     ]);
   }
 
-  Center NoPastOrdersWidget(LanguageController lang, BuildContext context) {
+  Center NoPastOrdersWidget(BuildContext context) {
     return Center(
       child: Column(
         children: [

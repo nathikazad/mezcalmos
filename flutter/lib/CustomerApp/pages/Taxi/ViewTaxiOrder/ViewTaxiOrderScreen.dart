@@ -23,11 +23,12 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   late final ViewTaxiOrderController viewController;
   late final ViewTaxiOrderScreenWidgets viewWidgets;
   late final CounterOfferWidgets counterOfferWidgets;
-  final LanguageController lang = Get.find<LanguageController>();
   /******************************  Init and build function ************************************/
 
   @override
   void initState() {
+    dynamic _i18n =
+        Get.find<LanguageController>().strings["CustomerApp"]["pages"];
     initializeLateControllers();
     // Order handling
     String orderId = Get.parameters['orderId']!;

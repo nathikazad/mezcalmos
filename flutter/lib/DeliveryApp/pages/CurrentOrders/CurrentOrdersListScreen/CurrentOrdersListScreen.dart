@@ -15,6 +15,8 @@ import 'package:sizer/sizer.dart';
 import 'Components/DriverOrderCard.dart';
 import 'Components/MezSwitch.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+
 class CurrentOrdersListScreen extends StatefulWidget {
   @override
   _CurrentOrdersListScreenState createState() =>
@@ -25,7 +27,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   RxList<Order> currentOrders = RxList.empty();
   RxList<Order> pastOrders = RxList.empty();
   OrderController orderController = Get.find<OrderController>();
-  LanguageController lang = Get.find<LanguageController>();
+  
   DeliveryAuthController _deliveryAuthController =
       Get.find<DeliveryAuthController>();
 

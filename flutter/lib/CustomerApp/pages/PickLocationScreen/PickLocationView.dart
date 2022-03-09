@@ -36,8 +36,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   bool showScreenLoading = false;
 
   dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
-    ["PickLocationScreen"]["PickLocationView"];
-  //LanguageController lang = Get.find<LanguageController>();
+      ["PickLocationScreen"]["PickLocationView"];
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
 

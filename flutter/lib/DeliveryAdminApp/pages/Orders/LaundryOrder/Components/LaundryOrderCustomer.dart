@@ -10,7 +10,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 class LaundryOrderCustomer extends StatelessWidget {
   final LaundryOrder order;
   LaundryOrderCustomer({Key? key, required this.order}) : super(key: key);
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n =
+      Get.find<LanguageController>().strings["CustomerApp"]["pages"];
   LaundryOrderController controller = Get.find<LaundryOrderController>();
 
   @override

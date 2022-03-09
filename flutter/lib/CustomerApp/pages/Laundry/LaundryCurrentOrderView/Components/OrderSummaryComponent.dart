@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 class OrderSummaryComponent extends StatelessWidget {
   final LaundryOrder order;
   OrderSummaryComponent({Key? key, required this.order}) : super(key: key);
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n = Get.find<LanguageController>().strings['AppName']['Filename'];
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -16,7 +16,7 @@ class OrderSummaryComponent extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "${lang.strings["customer"]["restaurant"]["cart"]["orderSummary"]}",
+              "${_lang.strings["customer"]["restaurant"]["cart"]["orderSummary"]}",
               style: Theme.of(context).textTheme.headline3,
             ),
             Divider(
@@ -26,7 +26,7 @@ class OrderSummaryComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
+                  "${_lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -44,7 +44,7 @@ class OrderSummaryComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
+                  "${_lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -60,7 +60,7 @@ class OrderSummaryComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} :",
+                  "${_lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -75,7 +75,7 @@ class OrderSummaryComponent extends StatelessWidget {
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                "${lang.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]} :",
+                "${_lang.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]} :",
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -108,7 +108,7 @@ class OrderSummaryComponent extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              lang.strings['customer']['laundry']['laundryPricing'],
+              _lang.strings['customer']['laundry']['laundryPricing'],
               style: Theme.of(context).textTheme.headline3,
             ),
             Divider(
@@ -118,7 +118,7 @@ class OrderSummaryComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  lang.strings['deliveryAdminApp']['laundry']['fixedRate'],
+                  _lang.strings['deliveryAdminApp']['laundry']['fixedRate'],
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -136,7 +136,7 @@ class OrderSummaryComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  lang.strings['deliveryAdminApp']['laundry']['orderWeight'],
+                  _lang.strings['deliveryAdminApp']['laundry']['orderWeight'],
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -154,7 +154,7 @@ class OrderSummaryComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} :",
+                  "${_lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -183,7 +183,7 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
                 Flexible(
                     child: Text(
-                        lang.strings['customer']['laundry']
+                        _lang.strings['customer']['laundry']
                             ['laundryPricingNote'],
                         maxLines: 3)),
               ],

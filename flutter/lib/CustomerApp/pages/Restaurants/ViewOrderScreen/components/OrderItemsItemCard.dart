@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
 
@@ -16,7 +17,7 @@ class OrderItemsItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-    LanguageController lang = Get.find<LanguageController>();
+    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
     return Card(
       child: Container(
         padding: EdgeInsets.all(8),
@@ -36,7 +37,7 @@ class OrderItemsItemCard extends StatelessWidget {
                   flex: 2,
                   fit: FlexFit.tight,
                   child: Text(
-                    item.name[lang.userLanguageKey]!,
+                    item.name[userLanguage]!,
                     style: txt.bodyText1,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

@@ -28,7 +28,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   final AuthController authController = Get.find<AuthController>();
 
   LaundryController laundryController = Get.find<LaundryController>();
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n = Get.find<LanguageController>().strings['AppName']['Filename'];
   Location? defaultLoc;
   RxBool clicked = false.obs;
   @override

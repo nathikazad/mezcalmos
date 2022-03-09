@@ -18,8 +18,6 @@ class ListRestaurantsScreen extends StatefulWidget {
 }
 
 class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
-  LanguageController lang = Get.find<LanguageController>();
-
   List<Restaurant> restaurants = <Restaurant>[];
   RestaurantsInfoController _restaurantsInfoController =
       Get.put<RestaurantsInfoController>(RestaurantsInfoController());

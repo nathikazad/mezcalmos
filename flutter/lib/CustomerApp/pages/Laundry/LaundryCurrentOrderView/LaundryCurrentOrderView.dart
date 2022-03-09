@@ -32,7 +32,6 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       LocationPickerController();
 
   LaundryController laundryController = Get.find<LaundryController>();
-  LanguageController lang = Get.find<LanguageController>();
 
   @override
   void initState() {
@@ -83,7 +82,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       appBar: CustomerAppBar(
         autoBack: true,
         title:
-            '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderStatus"]}',
+            '${_lang.strings["customer"]["restaurant"]["orderStatus"]["orderStatus"]}',
       ),
       body: Obx(
         () => order.value != null

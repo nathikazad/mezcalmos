@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 class LaundryPricingCompnent extends StatelessWidget {
   final LaundryOrder order;
   LaundryPricingCompnent({Key? key, required this.order}) : super(key: key);
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n = Get.find<LanguageController>().strings['AppName']['Filename'];
   @override
   Widget build(BuildContext context) {
     return Card(
