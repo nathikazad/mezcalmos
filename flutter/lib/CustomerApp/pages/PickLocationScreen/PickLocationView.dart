@@ -35,7 +35,8 @@ class _PickLocationViewState extends State<PickLocationView> {
   SavedLocation? savedLocation;
   bool showScreenLoading = false;
 
-  dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+  dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+      ["pages"]
     ["PickLocationScreen"]["PickLocationView"];
   //LanguageController lang = Get.find<LanguageController>();
   CustomerAuthController customerAuthController =
@@ -45,7 +46,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   //   String? address = await getAdressFromLatLng(
   //       LatLng(pickedLocation.latitude, pickedLocation.longitude));
   //   locationPickerController.location.value!.address = address ??
-  //       "${_i18n.strings['shared']['pickLocation']['address']} : ${pickedLocation.latitude}, ${pickedLocation.longitude}";
+  //       "${_i18n().strings['shared']['pickLocation']['address']} : ${pickedLocation.latitude}, ${pickedLocation.longitude}";
   // }
 
   @override
@@ -93,7 +94,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                 function: () async => await onPickButtonClick(context),
                 widget: Center(
                     child: Text(
-                        _i18n["pickLocation"],
+                        _i18n()["pickLocation"],
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
@@ -110,7 +111,7 @@ class _PickLocationViewState extends State<PickLocationView> {
         resizeToAvoidBottomInset: false,
         appBar: CustomerAppBar(
           autoBack: true,
-          title: _i18n["pickLocation"],
+          title: _i18n()["pickLocation"],
         ),
         body: mezPickLocationViewBody());
   }
@@ -210,7 +211,7 @@ class _PickLocationViewState extends State<PickLocationView> {
           Container(
             margin: const EdgeInsets.all(8),
             child:
-                Text(_i18n["pickLabele"]),
+                Text(_i18n()["pickLabele"]),
           ),
 
           Container(

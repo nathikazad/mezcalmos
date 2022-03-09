@@ -21,7 +21,7 @@ class RestaurantPastOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]
+    dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["ListOrdersScreen"]["components"]["RestaurantPastOrderCard"];
     final txt = Theme.of(context).textTheme;
     return Card(
@@ -104,7 +104,7 @@ class RestaurantPastOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      " ${_i18n["totalCost"]} : \$${order.cost.toStringAsFixed(0)}  ",
+                      " ${_i18n()["totalCost"]} : \$${order.cost.toStringAsFixed(0)}  ",
                     ),
                     (MediaQuery.of(context).size.width > 320)
                         ? Flexible(

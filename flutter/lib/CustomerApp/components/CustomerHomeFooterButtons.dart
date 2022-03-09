@@ -12,7 +12,7 @@ class HomeFooterButtons extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   LanguageController langController = Get.find<LanguageController>();
-  dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']
+  dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['components']['CustomerHomeFooterButtons'];
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ class HomeFooterButtons extends StatelessWidget {
                       flex: 1,
                       fit: FlexFit.loose,
                       child: Text(
-                        _i18n["privacyPolicy"],
+                        _i18n()["privacyPolicy"],
                         style: txt.bodyText2,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

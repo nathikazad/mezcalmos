@@ -16,7 +16,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:mezcalmos/TaxiAdminApp/controller/driverController.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["TaxiAdminApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiAdminApp"]
+    ["pages"]
 ["Driver"]["DriverPage"];
 
 class DriverPage extends GetView<DriverStatsController> {
@@ -111,28 +112,28 @@ class DriverPage extends GetView<DriverStatsController> {
               height: 25,
             ),
             InfoCardComponent(
-              title_0: _i18n["orderId"],
+              title_0: _i18n()["orderId"],
               subTitle_0: "$idOrder",
-              title_0_1: _i18n,
+              title_0_1: _i18n(),
               subTitle_0_1: (data[1]["appVersionNumber"] == null)
                   ? "Unknown"
                   : "${data[1]["appVersionNumber"]}",
-              title_1_0: _i18n["totalOrders"],
+              title_1_0: _i18n()["totalOrders"],
               subTitle_1_0: "${data[2]["totalOrders"]}",
-              title_1_1: _i18n["droppedOff"],
+              title_1_1: _i18n()["droppedOff"],
               subTitle_1_1: "${data[2]["droppedOff"]}",
-              title_2_0: _i18n["firstOrder"],
+              title_2_0: _i18n()["firstOrder"],
               subTitle_2_0:
                   "${f.format(DateTime.parse("${data[2]["firstOrderTime"]}"))}",
-              title_2_1: _i18n["lastOrder"],
+              title_2_1: _i18n()["lastOrder"],
               subTitle_2_1:
                   "${f.format(DateTime.parse("${data[2]["lastOrderTime"]}"))}",
-              title_3_0: _i18n["notifications"],
+              title_3_0: _i18n()["notifications"],
               subTitle_3_0:
-                  "${_i18n["sent"]}:${data[2]["sentNotifications"]}",
-              subTitle_3_1: "${_i18n["received"]}:0",
+                  "${_i18n()["sent"]}:${data[2]["sentNotifications"]}",
+              subTitle_3_1: "${_i18n()["received"]}:0",
               subTitle_3_2:
-                  "${_i18n["read"]}:${data[2]["readNotifications"]}",
+                  "${_i18n()["read"]}:${data[2]["readNotifications"]}",
             ),
             SizedBox(
               height: 25,
@@ -176,7 +177,7 @@ class DriverPage extends GetView<DriverStatsController> {
                               Container(
                                 padding: EdgeInsets.only(left: 10),
                                 child: Text(
-                                  _i18n["orders"],
+                                  _i18n()["orders"],
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -285,7 +286,7 @@ class DriverPage extends GetView<DriverStatsController> {
                               Container(
                                 padding: EdgeInsets.only(left: 10),
                                 child: Text(
-                                  _i18n["notifications"],
+                                  _i18n()["notifications"],
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),

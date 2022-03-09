@@ -11,8 +11,8 @@ import 'package:mezcalmos/TaxiAdminApp/components/staticMap.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/ordersController.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Driver/DriverPage.dart';
 
-dynamic _i18n =  Get.find<LanguageController>().strings["TaxiAdminApp"]["pages"]
-["Orders"]["OrderViewPage"];
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiAdminApp"]
+    ["pages"]["Orders"]["OrderViewPage"];
 
 class OrderViewPage extends GetView<OrderStatsController> {
   final String orderId;
@@ -129,31 +129,31 @@ class OrderViewPage extends GetView<OrderStatsController> {
               "${data["orders"][0]["dropOffLocation"]["crs"]["properties"]["name"]}",
             ),
             InfoCardComponent(
-              title_0: _i18n["orderId"],
+              title_0: _i18n()["orderId"],
               subTitle_0: "${data["orders"][0]["orderId"]}",
-              title_0_1: _i18n["orderT"],
+              title_0_1: _i18n()["orderT"],
               subTitle_0_1:
                   "${f.format(DateTime.parse("${data["orders"][0]["orderTime"]}"))}",
-              title_1_0: _i18n["status"],
+              title_1_0: _i18n()["status"],
               subTitle_1_0:
                   "${data["orders"][0]["finalStatus"].toString().toUpperCase()}",
-              title_1_1: _i18n["price"],
+              title_1_1: _i18n()["price"],
               subTitle_1_1: "\$${data["orders"][0]["finalPrice"]}",
-              title_2_0: _i18n["rideStart"],
+              title_2_0: _i18n()["rideStart"],
               subTitle_2_0: (data["orders"][0]["rideStartTime"] == null)
                   ? "--:-- "
                   : "${ff.format(DateTime.parse("${data["orders"][0]["rideStartTime"]}"))}",
-              title_2_1: _i18n["rideEnd"],
+              title_2_1: _i18n()["rideEnd"],
               subTitle_2_1: (data["orders"][0]['rideFinishTime'] != null)
                   ? "${ff.format(DateTime.parse("${data["orders"][0]["rideFinishTime"]}"))}"
                   : "--:--",
-              title_3_0: _i18n["notifications"],
+              title_3_0: _i18n()["notifications"],
               subTitle_3_0:
-                  "${_i18n["sent"]}:${data["orders"][0]["notifications_sent"]}",
+                  "${_i18n()["sent"]}:${data["orders"][0]["notifications_sent"]}",
               subTitle_3_1:
-                  "${_i18n["received"]}:${data["orders"][0]["notifications_received"]}",
+                  "${_i18n()["received"]}:${data["orders"][0]["notifications_received"]}",
               subTitle_3_2:
-                  "${_i18n["read"]}:${data["orders"][0]["notifications_read"]}",
+                  "${_i18n()["read"]}:${data["orders"][0]["notifications_read"]}",
             ),
           ],
         ),

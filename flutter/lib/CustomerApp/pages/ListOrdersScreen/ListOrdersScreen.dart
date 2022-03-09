@@ -23,7 +23,8 @@ import 'components/TaxiOrderOngoingCard.dart';
 final f = new DateFormat('MM.dd.yyyy');
 final currency = new NumberFormat("#,##0.00", "en_US");
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
     ["ListOrdersScreen"]["ListOrdersScreen"];
 
 class ListOrdersScreen extends StatefulWidget {
@@ -55,7 +56,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     final txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CustomerAppBar(
-        title: '${_i18n["title"]}',
+        title: '${_i18n()["title"]}',
         autoBack: true,
       ),
       body: Obx(
@@ -82,7 +83,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         children: [
           Icon(Icons.error, color: Colors.black, size: 30),
           Text(
-            _i18n['noOrders'],
+            _i18n()['noOrders'],
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
@@ -133,9 +134,9 @@ class PastOrderList extends StatelessWidget {
               margin: const EdgeInsets.all(8),
               child: Text(
                 (calculateDifference(element.orderTime) == 0)
-                    ? ' ${_i18n.strings["shared"]["notification"]["today"]} '
+                    ? ' ${_i18n().strings["shared"]["notification"]["today"]} '
                     : (calculateDifference(element.orderTime) == -1)
-                        ? ' ${_i18n.strings["shared"]["notification"]["yesterday"]} '
+                        ? ' ${_i18n().strings["shared"]["notification"]["yesterday"]} '
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
                 style: txt.headline3,
               ),
@@ -171,7 +172,7 @@ class PastOrderList extends StatelessWidget {
           Icon(Icons.error, color: Colors.white),
           Text(
             // i18n.strings['customer']['orders']['noOrders'],
-            _i18n.strings['orders']['noOrders'],
+            _i18n().strings['orders']['noOrders'],
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -204,7 +205,7 @@ class OngoingOrderList extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             child: Text(
-              '${_i18n.strings["orders"]["onGoingOrders"]}',
+              '${_i18n().strings["orders"]["onGoingOrders"]}',
               style: txt.headline3,
             ),
           ),

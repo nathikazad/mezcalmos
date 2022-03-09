@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
     ["Restaurants"]["ListRestaurantsScreem"]["components"]["searchField"];
 
 class SearchField extends StatelessWidget {
@@ -18,7 +19,7 @@ class SearchField extends StatelessWidget {
       child: TextField(
         style: Theme.of(context).textTheme.bodyText2,
         decoration: InputDecoration(
-            labelText: '${_i18n["search"]}',
+            labelText: '${_i18n()["search"]}',
             floatingLabelBehavior: FloatingLabelBehavior.never,
             filled: true,
             fillColor: Colors.white,

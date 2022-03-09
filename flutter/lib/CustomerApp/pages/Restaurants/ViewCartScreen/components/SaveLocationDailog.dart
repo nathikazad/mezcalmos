@@ -4,7 +4,8 @@ import 'package:mezcalmos/CustomerApp/pages/PickLocationScreen/PickLocationView.
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
     ["Restaurants"]["ViewCartScreen"]["components"]["SaveLocationDailog"];
 
 Future<String?> savedLocationDailog(
@@ -30,8 +31,8 @@ Future<String?> savedLocationDailog(
                   alignment: Alignment.center,
                   child: Text(
                     (comingFromCart != null && comingFromCart)
-                        ? '${_i18n["addLocationDialogTitle"]}'
-                        : '${_i18n["editLocationDialogTitle"]}',
+                        ? '${_i18n()["addLocationDialogTitle"]}'
+                        : '${_i18n()["editLocationDialogTitle"]}',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
@@ -72,8 +73,8 @@ Future<String?> savedLocationDailog(
                       alignment: Alignment.center,
                       child: Text(
                         nameVal != null
-                            ? _i18n["editLocationDialogButton"]
-                            : _i18n["addLocationDialogButton"],
+                            ? _i18n()["editLocationDialogButton"]
+                            : _i18n()["addLocationDialogButton"],
                       ),
                     )),
                 SizedBox(
@@ -91,7 +92,7 @@ Future<String?> savedLocationDailog(
                           padding: EdgeInsets.all(12)),
                       child: Container(
                           alignment: Alignment.center,
-                          child: Text(_i18n["addLocationDialogSkip"]))),
+                          child: Text(_i18n()["addLocationDialogSkip"]))),
               ],
             )));
       });
@@ -108,7 +109,7 @@ InkWell skipButton(
           color: Colors.grey.shade700),
       child: Center(
         child: Text(
-            _i18n["addLocationDialogSkip"],
+            _i18n()["addLocationDialogSkip"],
             style: const TextStyle(
                 color: const Color(0xfffff4f4),
                 fontWeight: FontWeight.w700,

@@ -16,7 +16,7 @@ import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.d
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 ["UserProfileScreen"]["UserProfileScreen"];
 
 class UserProfile extends StatefulWidget {
@@ -93,7 +93,7 @@ class _UserProfileState extends State<UserProfile> {
     if (!Get.find<AuthController>().isDisplayNameSet()) {
       _hints.add(MezToolTipHint(
         hintWidget: NoUserNameSetHint(
-          hintText: _i18n['mustSetUserNameHint'],
+          hintText: _i18n()['mustSetUserNameHint'],
         ),
         left: Get.width / 2,
         bodyLeft: Get.width / 4,
@@ -105,7 +105,7 @@ class _UserProfileState extends State<UserProfile> {
     if (!Get.find<AuthController>().isUserImgSet()) {
       _hints.add(MezToolTipHint(
         hintWidget: NoUserImageSetHint(
-          hintText: _i18n['mustSetUserImgHint'],
+          hintText: _i18n()['mustSetUserImgHint'],
         ),
         left: Get.width / 2,
         bodyLeft: Get.width / 4,
@@ -144,7 +144,7 @@ class _UserProfileState extends State<UserProfile> {
       clickedSave.value = false;
     } else {
       widget.userProfileController.setErrorTextForXDuration(
-          _i18n['wrongName'],
+          _i18n()['wrongName'],
           duration: Duration(seconds: 5));
     }
   }

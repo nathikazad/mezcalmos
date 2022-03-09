@@ -20,7 +20,7 @@ import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["TaxiApp"]
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]
 ["pages"]["Orders"]["CurrentOrderScreen"]["CPositionedBottomBar"];
 
 
@@ -131,8 +131,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                       ? Text(
                                           order.status !=
                                                   TaxiOrdersStatus.InTransit
-                                              ? _i18n["startRide"]
-                                              : _i18n["finishRide"],
+                                              ? _i18n()["startRide"]
+                                              : _i18n()["finishRide"],
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.white,
@@ -275,9 +275,11 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                 context: context,
                                 builder: (BuildContext ctx) {
                                   return AlertDialog(
-                                    title: Text(_i18n?['confirmation_header'] ??
+                                    title: Text(
+                                        _i18n()?['confirmation_header'] ??
                                         "Por favor confirmar"),
-                                    content: Text(_i18n?['confirmation_text'] ??
+                                    content: Text(
+                                        _i18n()?['confirmation_text'] ??
                                         "¿Cancelar el viaje actual?"),
                                     actions: [
                                       TextButton(
@@ -295,13 +297,13 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                               });
                                             }
                                           },
-                                          child: Text(_i18n?['yes'] ??
+                                          child: Text(_i18n()?['yes'] ??
                                               'Si')),
                                       TextButton(
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text(_i18n?['no'] ??
+                                          child: Text(_i18n()?['no'] ??
                                               'No'))
                                     ],
                                   );
@@ -356,7 +358,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                 color: Color(0xffdb2846),
               ),
             ),
-            body: _i18n["tooFarFromfinishRide"]);
+            body: _i18n()["tooFarFromfinishRide"]);
 
         mezDbgPrint("CurrentPositionedBottomBar clickedYes: $clickedYes");
         if (clickedYes == YesNoDialogButton.Yes) {
@@ -371,7 +373,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
           0.5) {
         YesNoDialogButton clickedYes = await yesNoDialog(
             text: "Oops!",
-            body: _i18n["tooFarFromstartRide"]);
+            body: _i18n()["tooFarFromstartRide"]);
         if (clickedYes == YesNoDialogButton.Yes) {
           await startRide();
         }
@@ -409,7 +411,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
       await launch(url);
     else {
       MezSnackbar(
-          "Oops :(", _i18n['failedMapLaunch']);
+          "Oops :(", _i18n()['failedMapLaunch']);
     }
   }
 }

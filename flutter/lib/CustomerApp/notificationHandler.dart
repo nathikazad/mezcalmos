@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
 Notification customerNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
@@ -70,7 +70,7 @@ Notification taxiOrderStatusChangeNotificationHandler(
   return Notification(
       id: key,
       linkUrl: getTaxiOrderRoute(value['orderId']),
-      linkText: _i18n['viewOrder'],
+      linkText: _i18n()['viewOrder'],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -90,7 +90,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(
   return Notification(
       id: key,
       linkUrl: getRestaurantOrderRoute(value['orderId']),
-      linkText: _i18n['viewOrder'],
+      linkText: _i18n()['viewOrder'],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -189,36 +189,36 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
   switch (restaurantOrderStatus) {
     case RestaurantOrderStatus.PreparingOrder:
       return <String, dynamic>{
-        "title": "${_i18n["restaurant"]["preparingOrder"]["title"]}",
-        "body": "${_i18n["restaurant"]["preparingOrder"]["body"]}",
+        "title": "${_i18n()["restaurant"]["preparingOrder"]["title"]}",
+        "body": "${_i18n()["restaurant"]["preparingOrder"]["body"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
-        "title": "${_i18n["restaurant"]["readyForPickup"]["title"]}",
-        "body": "${_i18n["restaurant"]["readyForPickup"]["body"]}",
+        "title": "${_i18n()["restaurant"]["readyForPickup"]["title"]}",
+        "body": "${_i18n()["restaurant"]["readyForPickup"]["body"]}",
         "imgUrl":
             "assets/images/shared/notifications/readyOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
-        "title": "${_i18n["restaurant"]["onTheWay"]["title"]}",
-        "body": "${_i18n["restaurant"]["onTheWay"]["body"]}",
+        "title": "${_i18n()["restaurant"]["onTheWay"]["title"]}",
+        "body": "${_i18n()["restaurant"]["onTheWay"]["body"]}",
         "imgUrl":
             "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.Delivered:
       return <String, dynamic>{
-        "title": "${_i18n["restaurant"]["delivered"]["title"]}",
-        "body": "${_i18n["restaurant"]["delivered"]["body"]}",
+        "title": "${_i18n()["restaurant"]["delivered"]["title"]}",
+        "body": "${_i18n()["restaurant"]["delivered"]["body"]}",
         "imgUrl":
             "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
-        "title": "${_i18n["restaurant"]["cancelled"]["title"]}",
-        "body": "${_i18n["restaurant"]["cancelled"]["body"]}",
+        "title": "${_i18n()["restaurant"]["cancelled"]["title"]}",
+        "body": "${_i18n()["restaurant"]["cancelled"]["body"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
@@ -232,36 +232,36 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
   switch (taxiOrdersStatus) {
     case TaxiOrdersStatus.OnTheWay:
       return <String, dynamic>{
-        "title": "${_i18n["taxi"]["onTheWay"]["title"]}",
-        "body": "${_i18n["taxi"]["onTheWay"]["body"]}",
+        "title": "${_i18n()["taxi"]["onTheWay"]["title"]}",
+        "body": "${_i18n()["taxi"]["onTheWay"]["body"]}",
         "imgUrl":
             "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.InTransit:
       return <String, dynamic>{
-        "title": "${_i18n["taxi"]["inTransit"]["title"]}",
-        "body": "${_i18n["taxi"]["inTransit"]["body"]}",
+        "title": "${_i18n()["taxi"]["inTransit"]["title"]}",
+        "body": "${_i18n()["taxi"]["inTransit"]["body"]}",
         "imgUrl":
             "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.DroppedOff:
       return <String, dynamic>{
-        "title": "${_i18n["taxi"]["droppedOff"]["title"]}",
-        "body": "${_i18n["taxi"]["droppedOff"]["body"]}",
+        "title": "${_i18n()["taxi"]["droppedOff"]["title"]}",
+        "body": "${_i18n()["taxi"]["droppedOff"]["body"]}",
         "imgUrl":
             "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.CancelledByTaxi:
       return <String, dynamic>{
-        "title": "${_i18n["taxi"]["cancelled"]["title"]}",
-        "body": "${_i18n["taxi"]["cancelled"]["body"]}",
+        "title": "${_i18n()["taxi"]["cancelled"]["title"]}",
+        "body": "${_i18n()["taxi"]["cancelled"]["body"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.Expired:
       return <String, dynamic>{
-        "title": "${_i18n["taxi"]["expired"]["title"]}",
-        "body": "${_i18n["taxi"]["expired"]["body"]}",
+        "title": "${_i18n()["taxi"]["expired"]["title"]}",
+        "body": "${_i18n()["taxi"]["expired"]["body"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };

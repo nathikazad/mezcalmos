@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
 ["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderNoteCard"];
 
 // Display the notte of the order inside the order view
@@ -15,7 +16,7 @@ Widget orderNoteCard(Rxn<RestaurantOrder> order) {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.centerLeft,
         child: Text(
-            "${_i18n['notes']}",
+            "${_i18n()['notes']}",
             style: const TextStyle(
                 color: const Color(0xff000f1c),
                 fontFamily: "psb",

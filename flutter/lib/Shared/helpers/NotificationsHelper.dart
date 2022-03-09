@@ -9,7 +9,8 @@ import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:flutter/material.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['helpers']["NotificationsHelper"];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
+    ["NotificationsHelper"];
 
 StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
   return Get.find<ForegroundNotificationsController>()
@@ -38,7 +39,7 @@ void _displayNotification(notifs.Notification notification) async {
             buttonShadowColor: Color(0xfffdfdfd)),
         buttonRightStyle: MezDialogButtonStyle(
             buttonText: notification.linkText ??
-                _i18n['view'],
+                _i18n()['view'],
             buttonColor: Color(0xffffffff),
             buttonShadowColor: Color(0xfffdfdfd)),
         rightButtonCallback: () {

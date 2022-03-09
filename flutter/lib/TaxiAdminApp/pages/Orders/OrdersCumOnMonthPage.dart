@@ -11,7 +11,8 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 
-dynamic _i18n =  Get.find<LanguageController>().strings["TaxiAdminApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiAdminApp"]
+    ["pages"]
 ["Orders"]["OrdersCumOnMonthPage"];
 
 const mypadding = const EdgeInsets.symmetric(horizontal: 10);
@@ -43,7 +44,7 @@ class OrdersCumOnMonthPage extends GetView<OrderStatsController> {
                     children: [
                       Expanded(
                         child: Text(
-                          _i18n["orders"],
+                          _i18n()["orders"],
                           style: TextStyle(
                               fontSize: 28, fontWeight: FontWeight.bold),
                         ),

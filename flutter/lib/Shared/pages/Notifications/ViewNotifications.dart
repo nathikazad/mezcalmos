@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/pages/Notifications/components/NotificationCard
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 ["Notifications"]["ViewNotifications"];
 
 class ViewNotifications extends StatefulWidget {
@@ -40,7 +40,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
     final txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text(_i18n['title']),
+        title: Text(_i18n()['title']),
         automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(

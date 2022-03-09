@@ -19,7 +19,7 @@ class UserMenu extends StatefulWidget {
 }
 
 class _UserMenuState extends State<UserMenu> {
-  dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']
+  dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['components']['Menu']['UserMenuComponent'];
   AuthController auth = Get.find<AuthController>();
   OrderController orderController = Get.find<OrderController>();
@@ -54,7 +54,7 @@ class _UserMenuState extends State<UserMenu> {
                   width: 10,
                 ),
                 Text(
-                  _i18n['savedLocations'],
+                  _i18n()['savedLocations'],
                 ),
               ],
             ),
@@ -68,7 +68,7 @@ class _UserMenuState extends State<UserMenu> {
                   width: 10,
                 ),
                 Text(
-                  _i18n["userInfo"],
+                  _i18n()["userInfo"],
                 ),
               ],
             ),
@@ -82,7 +82,7 @@ class _UserMenuState extends State<UserMenu> {
                   width: 10,
                 ),
                 Text(
-                  _i18n["logout"],
+                  _i18n()["logout"],
                 ),
               ],
             ),
@@ -132,7 +132,7 @@ class _UserMenuState extends State<UserMenu> {
         SizedBox(
           width: 10,
         ),
-        Text(" ${_i18n['notifications']}"),
+        Text(" ${_i18n()['notifications']}"),
       ],
     );
   }
@@ -155,7 +155,7 @@ class _UserMenuState extends State<UserMenu> {
         SizedBox(
           width: 10,
         ),
-        Text(" ${_i18n['orders']}"),
+        Text(" ${_i18n()['orders']}"),
       ],
     );
   }

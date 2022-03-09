@@ -6,7 +6,8 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 enum TwoButtonDialogButton { Left, Right }
 enum YesNoDialogButton { Yes, No }
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['widgets']
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['Shared']['widgets']
 ["MezDialogs"];
 
 
@@ -262,7 +263,7 @@ class YesButtonComponetStyle extends StatelessWidget {
   Widget build(BuildContext context) {
     //LanguageController lang = Get.find<LanguageController>();
     return MezDialogButtonStyle(
-        buttonText: _i18n["yes"],
+        buttonText: _i18n()["yes"],
         buttonColor: Color(0xffdb2846),
         buttonShadowColor: Color(0x2eff0000));
   }
@@ -275,7 +276,7 @@ class NoButtonComponetStyle extends StatelessWidget {
   Widget build(BuildContext context) {
     //LanguageController lang = Get.find<LanguageController>();
     return MezDialogButtonStyle(
-        buttonText: _i18n["no"],
+        buttonText: _i18n()["no"],
         buttonColor: Color(0xfffdfdfd),
         buttonShadowColor: Color(0x334c504a));
   }

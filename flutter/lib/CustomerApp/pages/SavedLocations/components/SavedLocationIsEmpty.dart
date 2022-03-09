@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
 ["SavedLocations"]["components"]["SavedLocationIsEmpty"];
 
 class SavedlocationISEmpty extends StatelessWidget {
@@ -30,7 +31,7 @@ class SavedlocationISEmpty extends StatelessWidget {
           Container(
             child: Text(
               //customer.savedLocations.savedLocationsListEmpty
-              _i18n.strings['customer']
+              _i18n().strings['customer']
                   ['savedLocations']['savedLocationsListEmpty'],
               textAlign: TextAlign.center,
               style: txt.headline2!.copyWith(
@@ -44,7 +45,7 @@ class SavedlocationISEmpty extends StatelessWidget {
           ),
           Container(
             child: Text(
-              _i18n['clickBtnToAddNewLocation'],
+              _i18n()['clickBtnToAddNewLocation'],
               textAlign: TextAlign.center,
               style: txt.subtitle1!
                   .copyWith(fontWeight: FontWeight.w500, fontSize: 13),

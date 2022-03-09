@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/widgets/AutoCompleteTextField.dart';
 
 typedef TextFieldGotUpdated = void Function(String updatedText);
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['widgets']
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['widgets']
 ["LocationSearchComponent"];
 
 
@@ -175,7 +175,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   },
                   tfTextDecoration: InputDecoration(
                       contentPadding: widget.hintPadding,
-                      hintText: _i18n["address"],
+                      hintText: _i18n()["address"],
                       hintStyle: TextStyle(
                           color: Color.fromRGBO(141, 141, 141, 1),
                           fontSize: 16.33,

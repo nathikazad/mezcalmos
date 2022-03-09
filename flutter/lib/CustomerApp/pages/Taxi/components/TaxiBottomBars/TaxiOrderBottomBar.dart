@@ -14,7 +14,8 @@ import 'package:sizer/sizer.dart';
 
 import '../BottomBarComponents.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
 ["Taxi"]["components"]["TaxiBottomBars"]["TaxiOrderBottomBar"];
 
 class TaxiOrderBottomBar extends StatefulWidget {
@@ -221,7 +222,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
       case TaxiOrdersStatus.DroppedOff:
         _widgies.assignAll([
           taxiAvatarAndName(
-              description: _i18n?['rideFinished'],
+              description: _i18n()?['rideFinished'],
               pContext: pContext,
               order: widget.order.value!),
           VerticalDivider(),
@@ -242,8 +243,8 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               pContext: pContext,
               asset: taxi_driver_marker_asset,
               name:
-                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n?['ride']}.",
-              description: _i18n?['rideExpired'],
+                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n()?['ride']}.",
+              description: _i18n()?['rideExpired'],
               order: widget.order.value!),
           RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest())
         ]);
@@ -255,7 +256,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           taxiAvatarAndName(
               order: widget.order.value!,
               pContext: pContext,
-              description: _i18n?['rideCancelledByTaxi']),
+              description: _i18n()?['rideCancelledByTaxi']),
           messageBtn(
               order: widget.order.value!,
               margin: EdgeInsets.symmetric(horizontal: 6)),
@@ -271,8 +272,8 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               pContext: pContext,
               asset: taxi_driver_marker_asset,
               name:
-                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n?['ride']}.",
-              description: _i18n?['rideCancelledByCustomer']),
+                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n()?['ride']}.",
+              description: _i18n()?['rideCancelledByCustomer']),
           RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest())
         ]);
         // widget.bottomPadding = 10.0;

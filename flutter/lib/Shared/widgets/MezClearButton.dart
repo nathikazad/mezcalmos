@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['widgets']
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['widgets']
 ["MezClearButton"];
 
 class MezClearButton extends StatelessWidget {
@@ -36,7 +36,7 @@ class MezClearButton extends StatelessWidget {
                 color: Color(0xffdb2846),
               ),
               Text(
-                _i18n['clear'],
+                _i18n()['clear'],
                 style: TextStyle(
                     color: const Color(0xffdb2846),
                     fontWeight: FontWeight.w500,

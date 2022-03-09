@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+        ["pages"]
 ["Restaurants"]["ViewRestaurantScreen"]["components"]["workinHoursCart"];
 
 class WorkingHoursCart extends StatelessWidget {
@@ -42,8 +43,7 @@ class WorkingHoursCart extends StatelessWidget {
                   : Color.fromRGBO(252, 89, 99, 0.6),
               child: Center(
                   child: Text(isOpen!
-                      ? "${_i18n["open"]}"
-                      : "${_i18n["closed"]}")),
+                      ? "${_i18n()["open"]}" : "${_i18n()["closed"]}")),
             ),
           ),
           Flexible(

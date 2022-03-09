@@ -8,7 +8,8 @@ import 'package:get/get.dart';
 
 final f = new DateFormat('dd/MM/yyyy hh:mm a');
 
-dynamic _i18n =  Get.find<LanguageController>().strings["DeliveryAdminApp"]["components"]
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["components"]
 ["buildWidgetOnOrderStatus"];
 
 Widget buildWigetOnOrderStatus(
@@ -33,7 +34,7 @@ Widget buildWigetOnOrderStatus(
           ),
           Container(
             child: Text(
-                "${_i18n["preparing"]}",
+                "${_i18n()["preparing"]}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",
@@ -52,7 +53,7 @@ Widget buildWigetOnOrderStatus(
         children: [
           Container(
             child: Text(
-                "${_i18n["readyForPickUp"]}",
+                "${_i18n()["readyForPickUp"]}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",
@@ -72,7 +73,7 @@ Widget buildWigetOnOrderStatus(
         children: [
           Container(
             child: Text(
-                "${_i18n["onTheWay"]}",
+                "${_i18n()["onTheWay"]}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontWeight: FontWeight.w400,
@@ -109,7 +110,7 @@ Widget buildWigetOnOrderStatus(
           ),
           Container(
             child: Text(
-                "${_i18n["delivered"]} ${f.format(orderTime.toLocal()).toString()}",
+                "${_i18n()["delivered"]} ${f.format(orderTime.toLocal()).toString()}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "prs",
@@ -137,7 +138,7 @@ Widget buildWigetOnOrderStatus(
           ),
           Container(
             child: Text(
-                "${_i18n["received"]} ${f.format(orderTime.toLocal()).toString()}",
+                "${_i18n()["received"]} ${f.format(orderTime.toLocal()).toString()}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "prs",
@@ -164,7 +165,7 @@ Widget buildWigetOnOrderStatus(
               )),
           Container(
             child: Text(
-                "${_i18n["canceledByCustomer"]} ",
+                "${_i18n()["canceledByCustomer"]} ",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",
@@ -191,7 +192,7 @@ Widget buildWigetOnOrderStatus(
               )),
           Container(
             child: Text(
-                "${_i18n["canceledByAdmin"]} ",
+                "${_i18n()["canceledByAdmin"]} ",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",

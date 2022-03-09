@@ -22,7 +22,7 @@ class DropDownLocationList extends StatefulWidget {
 }
 
 class _DropDownLocationListState extends State<DropDownLocationList> {
-  dynamic _i18n = Get.find<LanguageController>().strings["customerApp"]
+  dynamic _i18n() => Get.find<LanguageController>().strings["customerApp"]
       ["components"]["DropDownLocationList"];
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
@@ -36,7 +36,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
     getSavedLocation();
     pickLocationPlaceholder =
-        SavedLocation(name: _i18n["pickLocation"], id: "_pick_");
+        SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
 
     listOfSavedLoacations.add(pickLocationPlaceholder!);
 
@@ -88,7 +88,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               isDense: true,
               isExpanded: true,
               hint: Center(
-                child: Text(_i18n["pickLocation"],
+                child: Text(_i18n()["pickLocation"],
                     style: Theme.of(context).textTheme.bodyText2),
               ),
               icon: Icon(Icons.expand_more),

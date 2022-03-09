@@ -4,7 +4,8 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
     ["Restaurants"]["ViewCartScreen"]["components"]["BuildCart"];
 
 
@@ -37,7 +38,7 @@ class CartBuilder extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        "${_i18n["inCart"]}",
+                        "${_i18n()["inCart"]}",
                         style: txt.headline2,
                       ),
                     )
@@ -59,8 +60,8 @@ class CartBuilder extends StatelessWidget {
                       child: InkWell(
                         onTap: () async {
                           YesNoDialogButton yesNoRes = await cancelAlertDialog(
-                            title: _i18n["clearCart"],
-                            body: _i18n["clearCartConfirm"],
+                            title: _i18n()["clearCart"],
+                            body: _i18n()["clearCartConfirm"],
                             icon: Container(
                               child: Icon(
                                 Icons.highlight_off,
@@ -80,7 +81,7 @@ class CartBuilder extends StatelessWidget {
                             children: [
                               Container(
                                 child: Text(
-                                    "${_i18n["clear"]}"),
+                                    "${_i18n()["clear"]}"),
                               ),
                               Icon(
                                 Icons.delete_outline,

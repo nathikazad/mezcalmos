@@ -39,6 +39,20 @@ class LanguageController extends GetxController {
   dynamic get strings =>
       _jsonStrings[_userLanguageKey.value.toFirebaseFormatString()];
 
+  /// fileLocation: customerApp/notificationHandler
+  dynamic getLMap(String fileLocation) {
+    try {
+      dynamic map =
+          _jsonStrings[_userLanguageKey.value.toFirebaseFormatString()];
+      fileLocation.split('/').forEach((element) {
+        map = map[element];
+      });
+      return map;
+    } on Exception catch (e) {
+      // TODO
+    }
+  }
+
   LanguageType get oppositLangKey => _userLanguageKey.value == LanguageType.EN
       ? LanguageType.ES
       : LanguageType.EN;

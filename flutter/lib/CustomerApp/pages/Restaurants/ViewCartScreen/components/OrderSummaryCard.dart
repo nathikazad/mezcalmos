@@ -5,7 +5,8 @@ import 'package:sizer/sizer.dart';
 
 import 'DropDownListCartView.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
     ["Restaurants"]["ViewCartScreen"]["components"]["OrderSummaryCard"];
 
 class OrderSummaryCard extends StatelessWidget {
@@ -44,7 +45,7 @@ class OrderSummaryCard extends StatelessWidget {
               alignment: Alignment.center,
               width: Get.width,
               child: Text(
-                  "${_i18n["orderSummary"]}",
+                  "${_i18n()["orderSummary"]}",
                   style: txt.headline3),
             ),
             Divider(
@@ -59,7 +60,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: Text(
-                          "${_i18n["orderCost"]} :",
+                          "${_i18n()["orderCost"]} :",
                           style: txt.bodyText2),
                     ),
                   ),
@@ -80,7 +81,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: Text(
-                          "${_i18n["deliveryCost"]} :",
+                          "${_i18n()["deliveryCost"]} :",
                           style: txt.bodyText2),
                     ),
                   ),
@@ -101,7 +102,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: Text(
-                        "${_i18n["totalCost"]} :",
+                        "${_i18n()["totalCost"]} :",
                         style: txt.headline3!.copyWith(
                           fontWeight: FontWeight.w600,
                           fontSize: 14.75.sp,
@@ -130,7 +131,7 @@ class OrderSummaryCard extends StatelessWidget {
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                "${_i18n["deliveryLocation"]} :",
+                "${_i18n()["deliveryLocation"]} :",
                 style: txt.headline3!.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 14.75.sp,

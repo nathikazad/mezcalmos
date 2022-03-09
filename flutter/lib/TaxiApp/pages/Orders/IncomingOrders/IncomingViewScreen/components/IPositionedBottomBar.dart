@@ -11,7 +11,7 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:sizer/sizer.dart';
 
 
-dynamic _i18n = Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
 ["Orders"]["IncomingOrders"]["IncomingViewScreen"]["IPositionedBottomBar"];
 
 class IncomingPositionedBottomBar extends StatelessWidget {
@@ -191,7 +191,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${order.distanceToClient.toStringAsFixed(1)} km ${_i18n["far"]}",
+                  "${order.distanceToClient.toStringAsFixed(1)} km ${_i18n()["far"]}",
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                   maxLines: 1,

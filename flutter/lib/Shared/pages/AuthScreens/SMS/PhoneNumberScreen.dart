@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 const mypadding = EdgeInsets.only(left: 15, right: 15);
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 ["AuthScreens"]["SMS"]["PhoneNumberScreen"];
 
 
@@ -86,7 +86,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                 child: Text(
 
                     ///****add ths to lan file */
-                    _i18n["otpCode"],
+                    _i18n()["otpCode"],
                     style: Theme.of(context).textTheme.headline1),
               ),
             ),
@@ -98,7 +98,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
               () => Container(
                 padding: EdgeInsets.only(left: 15, right: 15, top: 15),
                 child: Text(
-                  _i18n["twilioNote"],
+                  _i18n()["twilioNote"],
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ),
@@ -119,7 +119,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              child: Text(_i18n["enterPhoneNumber"],
+              child: Text(_i18n()["enterPhoneNumber"],
                   // "Enter Phone To Recieve OPT Code",
                   style: Theme.of(context).textTheme.bodyText1),
             ),
@@ -257,7 +257,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
               alignment: Alignment.center,
               child: (clickedSendOtp.value)
                   ? CircularProgressIndicator()
-                  : Text(_i18n["submit"]),
+                  : Text(_i18n()["submit"]),
             )),
       ),
     );

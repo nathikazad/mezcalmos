@@ -9,7 +9,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
     ["Restaurants"]["ViewItemScreen"]["components"]["ChoosenManyCheckBox"];
 
 class ChooseManyCheckBoxes extends StatelessWidget {
@@ -53,7 +54,7 @@ class ChooseManyCheckBoxes extends StatelessWidget {
     if (chooseManyOptions.length > 0) {
       _lst.addAll([
         MenuTitles(
-          title: _i18n['optional'],
+          title: _i18n()['optional'],
         ),
         SizedBox(
           height: 15,

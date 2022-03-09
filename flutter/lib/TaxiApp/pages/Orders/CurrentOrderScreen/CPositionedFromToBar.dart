@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["TaxiApp"]
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]
 ["pages"]["Orders"]["CurrentOrderScreen"]["CPositionedFromToBar"];
 
 class CurrentPositionedFromToTopBar extends StatelessWidget {
@@ -49,7 +49,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Obx(() => Text(
-                              _i18n["from"],
+                              _i18n()["from"],
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 16,
@@ -58,7 +58,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                             )),
                         GestureDetector(
                           onTap: () => MezSnackbar(
-                              _i18n["from"],
+                              _i18n()["from"],
                               order.from.address),
                           child: Text(
                             order.from.address,
@@ -126,7 +126,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                       children: [
                         Obx(
                           () => Text(
-                            _i18n["to"],
+                            _i18n()["to"],
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class CurrentPositionedFromToTopBar extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () => MezSnackbar(
-                              _i18n["to"],
+                              _i18n()["to"],
                               order.to.address),
                           child: Text(
                             order.to.address, //13+..

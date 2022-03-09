@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 ["NoInternetConnectionScreen"];
 
 class NoInternetConnectionScreen extends StatelessWidget {
@@ -28,7 +28,7 @@ class NoInternetConnectionScreen extends StatelessWidget {
               children: [
                 Obx(
                   () => Text(
-                    _i18n['noInternetConnection'],
+                    _i18n()['noInternetConnection'],
                     style: TextStyle(color: Colors.purple.shade900),
                   ),
                 ),
@@ -45,7 +45,7 @@ class NoInternetConnectionScreen extends StatelessWidget {
                 ),
                 Obx(
                   () => Text(
-                    _i18n['reconnecting'],
+                    _i18n()['reconnecting'],
                     style: TextStyle(color: Colors.purple.shade900),
                   ),
                 ),

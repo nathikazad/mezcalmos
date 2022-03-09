@@ -12,7 +12,8 @@ import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']["AuthScreens"]["UnauthorizedScreen"];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ["AuthScreens"]["UnauthorizedScreen"];
 
 class UnauthorizedScreen extends StatefulWidget {
   UnauthorizedScreen({Key? key}) : super(key: key);
@@ -73,7 +74,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                   height: 20,
                 ),
                 Text(
-                  '${_i18n['unauthorized']}',
+                  '${_i18n()['unauthorized']}',
                   style: TextStyle(
                       color: Colors.black38, fontSize: 20, fontFamily: 'psr'),
                 ),
@@ -99,7 +100,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                           children: <TextSpan>[
                             TextSpan(
                                 text:
-                                    '${_i18n['subTitle1']} ',
+                                    '${_i18n()['subTitle1']} ',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'psr',
@@ -114,7 +115,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                                     fontWeight: FontWeight.bold)),
                             TextSpan(
                                 text:
-                                    '${_i18n['subTitle2']}',
+                                    '${_i18n()['subTitle2']}',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'psr',

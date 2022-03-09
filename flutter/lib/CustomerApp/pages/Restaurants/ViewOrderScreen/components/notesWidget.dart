@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
 ["Restaurants"]["ViewOrderScreen"]["components"]["notesWidget"];
 
 Widget notesWidget(Rxn<RestaurantOrder> order) {
@@ -11,7 +12,7 @@ Widget notesWidget(Rxn<RestaurantOrder> order) {
     Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       alignment: Alignment.centerLeft,
-      child: Text(_i18n['notes'],
+      child: Text(_i18n()['notes'],
           style: const TextStyle(
               color: const Color(0xff000f1c),
               fontFamily: "psb",

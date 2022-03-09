@@ -23,7 +23,8 @@ class ViewCartScreen extends StatefulWidget {
   _ViewCartScreenState createState() => _ViewCartScreenState();
 }
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
     ["Restaurants"]["ViewCartScreen"]["ViewCartScreen"];
 
 class _ViewCartScreenState extends State<ViewCartScreen> {
@@ -62,7 +63,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: "${_i18n["myCart"]}",
+        title: "${_i18n()["myCart"]}",
       ),
       body: Obx(() {
         mezDbgPrint("@sa@d@: ${controller.cart.value.cartItems.length}");
@@ -108,7 +109,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   Widget getTheRightWidgetForOrderNowButton(bool clicked) {
     if (!checkRestaurantAvailability(
         schedule: controller.associatedRestaurant?.schedule)) {
-      return Text("${_i18n["notAvailable"]}",
+      return Text("${_i18n()["notAvailable"]}",
           style: Theme.of(context)
               .textTheme
               .headline2!
@@ -124,7 +125,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         ),
       );
     } else {
-      return Text("${_i18n['orderNow']}",
+      return Text("${_i18n()['orderNow']}",
           style: Theme.of(context)
               .textTheme
               .headline2!

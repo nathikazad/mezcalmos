@@ -18,7 +18,8 @@ import 'components/notesWidget.dart';
 
 final currency = new NumberFormat("#0", "en_US");
 ////////////===========
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
 ["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
 
 
@@ -131,7 +132,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         appBar: CustomerAppBar(
           autoBack: true,
           title:
-              '${_i18n["orderStatus"]}',
+              '${_i18n()["orderStatus"]}',
         ),
         body: Obx(
           () {

@@ -17,7 +17,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
 
 String generateRandomString(int len) {
   var r = Random();
@@ -99,7 +100,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             Icons.camera_enhance,
                             color: Colors.white,
                           ),
-                          Text(_i18n['camera'])
+                          Text(_i18n()['camera'])
                         ],
                       ))),
               SizedBox(
@@ -124,7 +125,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             color: Colors.white,
                           ),
                           Text(
-                              _i18n['gallery'])
+                              _i18n()['gallery'])
                         ],
                       ))),
             ],
@@ -148,13 +149,11 @@ Future<imPicker.XFile?> imagePicker(
   } on PlatformException catch (exception) {
     if (exception.code == 'camera_access_denied') {
       MezSnackbar(
-          _i18n['cameraAccessOffTitle'],
-          _i18n['cameraAccessOffBody'],
+          _i18n()['cameraAccessOffTitle'], _i18n()['cameraAccessOffBody'],
           position: SnackPosition.TOP);
     } else if (exception.code == 'photo_access_denied') {
       MezSnackbar(
-          _i18n['photoAccessOffTitle'],
-          _i18n['photoAccessOffBody'],
+          _i18n()['photoAccessOffTitle'], _i18n()['photoAccessOffBody'],
           position: SnackPosition.TOP);
     } else {
       return await picker.pickImage(

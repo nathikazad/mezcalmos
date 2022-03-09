@@ -17,7 +17,8 @@ import 'ItemInformationCart.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
- dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
     ["Restaurants"]["ViewCartScreen"]["components"]["BuildItems"];
 
 
@@ -79,8 +80,8 @@ class CartItemsBuilder extends StatelessWidget {
                                   controller.refresh();
                                   YesNoDialogButton yesNoResult =
                                       await cancelAlertDialog(
-                                          title: _i18n["deleteItem"],
-                                          body: _i18n["deleteItemConfirm"],
+                                          title: _i18n()["deleteItem"],
+                                          body: _i18n()["deleteItemConfirm"],
                                           icon: Container(
                                             child: Icon(
                                               Icons.highlight_off,

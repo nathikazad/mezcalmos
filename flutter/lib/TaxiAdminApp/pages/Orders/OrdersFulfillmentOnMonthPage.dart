@@ -12,7 +12,8 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 const mypadding = const EdgeInsets.symmetric(horizontal: 10);
 
-dynamic _i18n =  Get.find<LanguageController>().strings["TaxiAdminApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiAdminApp"]
+    ["pages"]
 ["Orders"]["OrdersFulfillmentOnMonthPage"];
 
 class OrdersFulfillmentOnMonthPage extends GetView<OrderStatsController> {
@@ -29,7 +30,7 @@ class OrdersFulfillmentOnMonthPage extends GetView<OrderStatsController> {
         ),
         Container(
           child: Text(
-            _i18n["orderFR"],
+            _i18n()["orderFR"],
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),

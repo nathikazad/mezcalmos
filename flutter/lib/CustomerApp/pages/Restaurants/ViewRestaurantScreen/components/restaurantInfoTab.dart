@@ -8,7 +8,8 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
 
 final f = new DateFormat('hh:mma');
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+        ["pages"]
 ["Restaurants"]["ViewRestaurantScreen"]["components"]["restaurantInfoTab"];
 
 
@@ -28,7 +29,7 @@ class RestaurantInfoTab extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                '${_i18n["description"]} :',
+                '${_i18n()["description"]} :',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -41,7 +42,7 @@ class RestaurantInfoTab extends StatelessWidget {
                     children: [
                       Container(
                         child: Text(
-                          '${_i18n["location"]} :',
+                          '${_i18n()["location"]} :',
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
@@ -73,7 +74,7 @@ class RestaurantInfoTab extends StatelessWidget {
       Container(
         alignment: Alignment.centerLeft,
         child: Text(
-          "${_i18n["workingHours"]}",
+          "${_i18n()["workingHours"]}",
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
@@ -87,7 +88,7 @@ class RestaurantInfoTab extends StatelessWidget {
         if (key.index == i) {
           widgets.add(WorkingHoursCart(
             day:
-                "${_i18n["weekDays"]["${key.toFirebaseFormatString()}"]}",
+                "${_i18n()["weekDays"]["${key.toFirebaseFormatString()}"]}",
             isOpen: value.isOpen,
             openHour:
                 "${f.format(DateTime(xDate.year, xDate.month, xDate.day, value.from[0], value.from[1]))}",

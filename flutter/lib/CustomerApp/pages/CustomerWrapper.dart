@@ -31,7 +31,8 @@ class CustomerWrapper extends StatefulWidget {
 
 class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
-  dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']['pages']
+  dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+      ['pages']
       ['CustomerWrapper'];
   AuthController auth = Get.find<AuthController>();
   OrderController? _orderController;
@@ -177,7 +178,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       alignment: Alignment.centerLeft,
       child: Obx(
         () => Text(
-          "${_i18n['welcomeText']}",
+          "${_i18n()['welcomeText']}",
           style: textStyle,
           textAlign: TextAlign.left,
         ),
@@ -189,7 +190,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     return Container(
       margin: EdgeInsets.all(5),
       child: Obx(
-        () => Text("${_i18n['appDescription']}", style: textStyle),
+        () => Text("${_i18n()['appDescription']}", style: textStyle),
       ),
     );
   }
@@ -200,7 +201,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       margin: const EdgeInsets.all(5),
       child: Obx(
         () => Text(
-          "${_i18n['services']}",
+          "${_i18n()['services']}",
           style: textStyle,
           textAlign: TextAlign.left,
         ),
@@ -214,9 +215,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         //====================Taxi===================
         Obx(
           () => ServicesCard(
-            title: "${_i18n['taxi']["title"]}",
+            title: "${_i18n()['taxi']["title"]}",
             url: "assets/images/customer/taxi/taxiService.png",
-            subtitle: "${_i18n['taxi']["subtitle"]}",
+            subtitle: "${_i18n()['taxi']["subtitle"]}",
             ontap: () {
               if (Get.find<AuthController>().fireAuthUser == null) {
                 Get.toNamed(kTaxiRequestRoute);
@@ -230,9 +231,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         //==================Food====================
         Obx(
           () => ServicesCard(
-            title: "${_i18n['food']["title"]}",
+            title: "${_i18n()['food']["title"]}",
             url: "assets/images/customer/restaurants/restaurantService.png",
-            subtitle: "${_i18n['food']["subtitle"]}",
+            subtitle: "${_i18n()['food']["subtitle"]}",
             ontap: () {
               if (auth.fireAuthUser != null) {
                 List<Order> restaurantOrders = Get.find<OrderController>()
@@ -258,7 +259,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         //==================Laundry=================
         Obx(
           () => ServicesCard(
-            title: "${_i18n['laundry']["title"]}",
+            title: "${_i18n()['laundry']["title"]}",
             url: "assets/images/customer/laundryService.png",
             ontap: () {
               getServiceRoute(

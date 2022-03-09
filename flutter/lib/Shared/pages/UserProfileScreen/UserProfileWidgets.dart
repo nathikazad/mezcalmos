@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 ["UserProfileScreen"]["UserProfileWidgets"];
 
 class UserProfileWidgetsClass {
@@ -102,7 +102,7 @@ class UserProfileWidgetsClass {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    _i18n['uploadPic'],
+                    _i18n()['uploadPic'],
                     style: TextStyle(color: Colors.white, fontSize: 11.sp),
                   )
                 ],
@@ -127,7 +127,7 @@ class UserProfileWidgetsClass {
       flex: 1,
       child: Center(
           child: Text(
-        _i18n['title'],
+        _i18n()['title'],
         style: TextStyle(fontSize: 30),
       )),
     );
@@ -271,7 +271,7 @@ class UserProfileWidgetsClass {
             // width: Get.width - 100,
             child: Center(
                 child: Text(
-              _i18n['cancel'],
+              _i18n()['cancel'],
               style: TextStyle(fontSize: 12.sp, color: Colors.purple.shade400),
             )),
           ),
@@ -291,7 +291,7 @@ class UserProfileWidgetsClass {
         // width: Get.width - 100,
         child: Center(
             child: Text(
-          _i18n['editInfo'],
+          _i18n()['editInfo'],
           style: TextStyle(color: Colors.white, fontSize: 15.sp),
         )),
       ),
@@ -308,7 +308,7 @@ class UserProfileWidgetsClass {
                 }
               : () {
                   MezSnackbar("Oops",
-                      _i18n['noChangesToApply'],
+                      _i18n()['noChangesToApply'],
                       position: SnackPosition.TOP);
                 },
           child: Container(
@@ -325,7 +325,7 @@ class UserProfileWidgetsClass {
             child: Center(
                 child: !clickedSave
                     ? Text(
-                        _i18n['saveBtn'],
+                        _i18n()['saveBtn'],
                         style: TextStyle(
                             fontSize: 12.sp,
                             color: userProfileController.didUserChangedInfos()

@@ -10,7 +10,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'ChangeStatusButtons.dart';
 import 'OrderItemsCard.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["DeliveryAdminApp"]
         ["pages"]["Orders"]["ViewRestaurantOrderScreen"]["components"]
     ["OrderInfoCard"];
 //Display the order customer and items
@@ -105,7 +106,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.centerLeft,
-          child: Text("${_i18n["orderItems"]}",
+          child: Text("${_i18n()["orderItems"]}",
               style: Theme.of(context).textTheme.bodyText2,
               textAlign: TextAlign.left),
         ),

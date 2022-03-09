@@ -21,7 +21,8 @@ import 'components/ChoosenManyCheckBox.dart';
 final currency = new NumberFormat("#,##0.00", "en_US");
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
     ["Restaurants"]["ViewItemScreen"]["ViewItemScreen"];
 
 class ViewItemScreen extends StatefulWidget {
@@ -181,7 +182,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                       cartItem: cartItem),
                   TextFieldComponent(
                     textController: _noteTextEdittingController,
-                    hint: _i18n["notes"],
+                    hint: _i18n()["notes"],
                     onChangeCallback: (String value) {
                       cartItem.value?.notes = value;
                     },

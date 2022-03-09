@@ -11,7 +11,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
     ["Restaurants"]["ViewCartScreen"]["components"]["ViewCartBody"];
 
 class ViewCartBody extends StatefulWidget {
@@ -71,7 +72,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.centerLeft,
               child: Text(
-                  "${_i18n['notes']}",
+                  "${_i18n()['notes']}",
                   style: const TextStyle(
                       color: const Color(0xff000f1c),
                       fontFamily: "psb",
@@ -84,7 +85,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             ),
             TextFieldComponent(
               textController: textcontoller,
-              hint: _i18n["notes"],
+              hint: _i18n()["notes"],
             ),
             SizedBox(
               height: 25,

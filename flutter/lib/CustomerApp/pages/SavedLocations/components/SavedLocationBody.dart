@@ -5,7 +5,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 import 'SavedLocationComponent.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
 ["SavedLocations"]["components"]["SavedLocationBody"];
 
 class SavedLocationBody extends StatelessWidget {
@@ -29,7 +30,7 @@ class SavedLocationBody extends StatelessWidget {
               children: [
                 Container(
                   child: Text(
-                      _i18n["title"],
+                      _i18n()["title"],
                       style: txt.headline1!
                           .copyWith(fontWeight: FontWeight.w700, fontSize: 12),
                       textAlign: TextAlign.center),
@@ -37,7 +38,7 @@ class SavedLocationBody extends StatelessWidget {
                 Spacer(),
                 Container(
                   child: Text(
-                      "${getLocationNumbers()} ${_i18n["location"]}${getLocationNumbers() > 1 ? 's' : ''}",
+                      "${getLocationNumbers()} ${_i18n()["location"]}${getLocationNumbers() > 1 ? 's' : ''}",
                       style: txt.headline4!
                           .copyWith(fontWeight: FontWeight.w700, fontSize: 12),
                       textAlign: TextAlign.center),

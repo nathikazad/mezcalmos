@@ -5,7 +5,8 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
     ["Restaurants"]["ViewCartScreen"]["components"]["ChoosenManyOption"];
 
 List<Widget> choosenManyOption(
@@ -18,7 +19,7 @@ List<Widget> choosenManyOption(
       height: 5,
     ),
     MenuTitles(
-      title: _i18n["options"],
+      title: _i18n()["options"],
       textTheme: txt.subtitle1!
           .copyWith(fontSize: 13, color: Color.fromRGBO(33, 33, 33, 0.8)),
     ),

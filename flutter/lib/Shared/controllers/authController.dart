@@ -22,7 +22,8 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['controllers']['authController'];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
+    ['controllers']['authController'];
 
 class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
@@ -293,7 +294,7 @@ class AuthController extends GetxController {
     } catch (e) {
       MezSnackbar(
           "Oops ..",
-          _i18n['failedOTPConfirmRequest']);
+          _i18n()['failedOTPConfirmRequest']);
       print("Exception happend in GetAuthUsingOTP : $e");
     }
 

@@ -4,7 +4,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
 ["Restaurants"]["ViewOrderScreen"]["components"]["OrderSummaryCard"];
 
 class OrderSummaryCard extends StatelessWidget {
@@ -22,7 +23,7 @@ class OrderSummaryCard extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           alignment: Alignment.centerLeft,
           child: Text(
-            '${_i18n["totalCost"]}',
+            '${_i18n()["totalCost"]}',
             style: txt.bodyText1,
           ),
         ),
@@ -36,7 +37,7 @@ class OrderSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${_i18n["deliveryCost"]}',
+                      '${_i18n()["deliveryCost"]}',
                       style: txt.bodyText1,
                     ),
                     Text('\$' + order.shippingCost.toString(),
@@ -50,7 +51,7 @@ class OrderSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${_i18n["total"]}',
+                      '${_i18n()["total"]}',
                       style: txt.bodyText1,
                     ),
                     Text(
@@ -70,7 +71,7 @@ class OrderSummaryCard extends StatelessWidget {
           margin: EdgeInsets.all(8),
           alignment: Alignment.centerLeft,
           child: Text(
-            '${_i18n["deliveryLocation"]}',
+            '${_i18n()["deliveryLocation"]}',
             style: txt.bodyText1,
           ),
         ),

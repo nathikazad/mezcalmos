@@ -24,7 +24,7 @@ import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedFro
 
 import '../../../router.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["TaxiApp"]
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]
 ["pages"]["Orders"]["CurrentOrderScreen"]["CurrentOrderScreen"];
 
 class CurrentOrderScreen extends StatefulWidget {
@@ -82,7 +82,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
             // this will get the order inCase it moved to /past
             if (order?.status == TaxiOrdersStatus.CancelledByCustomer) {
               oneButtonDialog(
-                  body: _i18n['cancelledMessage'],
+                  body: _i18n()['cancelledMessage'],
                   imagUrl: aOrderUnavailable);
             }
           }

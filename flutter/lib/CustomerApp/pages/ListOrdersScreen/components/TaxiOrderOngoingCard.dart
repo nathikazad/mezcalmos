@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n =
+dynamic _i18n() =>
   Get.find<LanguageController>().strings["CustomerApp"]["pages"]
     ["ListOrdersScreen"]["components"]["TaxiOrderOngoingOrderCard"];
     
@@ -70,7 +70,7 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                       children: [
                         Text(
                           order.serviceProvider?.name ??
-                              "${_i18n['taxiOrder']}",
+                              "${_i18n()['taxiOrder']}",
                           style: txt.headline3,
                         ),
                         if (MediaQuery.of(context).size.width > 320)
@@ -113,7 +113,7 @@ class TaxiOngoingOrderCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            "${_i18n["totalCost"]} : \$${order.cost}",
+            "${_i18n()["totalCost"]} : \$${order.cost}",
           ),
           Spacer(),
           Icon(
@@ -142,19 +142,19 @@ class TaxiOngoingOrderCard extends StatelessWidget {
 String getTaxiOrderStatus(TaxiOrdersStatus status) {
   switch (status) {
     case TaxiOrdersStatus.CancelledByTaxi:
-      return '${_i18n["orderStatus"]["canceledByTaxi"]}';
+      return '${_i18n()["orderStatus"]["canceledByTaxi"]}';
     case TaxiOrdersStatus.CancelledByCustomer:
-      return '${_i18n["orderStatus"]["canceledByCustomer"]}';
+      return '${_i18n()["orderStatus"]["canceledByCustomer"]}';
     case TaxiOrdersStatus.LookingForTaxi:
-      return '${_i18n["orderStatus"]["lookingForTaxi"]}';
+      return '${_i18n()["orderStatus"]["lookingForTaxi"]}';
     case TaxiOrdersStatus.OnTheWay:
-      return '${_i18n["orderStatus"]["onTheWay"]}';
+      return '${_i18n()["orderStatus"]["onTheWay"]}';
     case TaxiOrdersStatus.InTransit:
-      return '${_i18n["orderStatus"]["inTransit"]}';
+      return '${_i18n()["orderStatus"]["inTransit"]}';
     case TaxiOrdersStatus.DroppedOff:
-      return '${_i18n["orderStatus"]["droppedOff"]}';
+      return '${_i18n()["orderStatus"]["droppedOff"]}';
     case TaxiOrdersStatus.Expired:
-      return '${_i18n["orderStatus"]["expired"]}';
+      return '${_i18n()["orderStatus"]["expired"]}';
 
     default:
       return 'Unknown status';

@@ -6,7 +6,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:get/get.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["TaxiApp"]["notificationHandler"];
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["TaxiApp"]["notificationHandler"];
 
 Notification taxiNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
@@ -43,9 +44,9 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
     TaxiOrdersStatus taxiOrderStatus) {
   return <String, dynamic>{
     "title":
-        "${_i18n["cancelledTitle"]}",
+        "${_i18n()["cancelledTitle"]}",
     "body":
-        "${_i18n["cancelledBody"]}",
+        "${_i18n()["cancelledBody"]}",
     "imgUrl": "assets/images/cancel.png",
   };
 }

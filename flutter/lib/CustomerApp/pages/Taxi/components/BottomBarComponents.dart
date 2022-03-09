@@ -15,7 +15,8 @@ import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
 ["Taxi"]["components"]["BottomBarComponents"];
 
 Widget verticalSeparator() {
@@ -200,9 +201,10 @@ Widget cancelBtn(TaxiOrder order) {
     child: GestureDetector(
       onTap: () async {
         YesNoDialogButton res = await yesNoDialog(
-            text: _i18n?['confirmation_header'] ??
+            text: _i18n()?['confirmation_header'] ??
                 "Por favor confirmar",
-            body: _i18n?['confirmation_text'] ??
+            body:
+                _i18n()?['confirmation_text'] ??
                 "¿Cancelar el viaje actual?");
 
         if (res == YesNoDialogButton.Yes) {
@@ -211,7 +213,7 @@ Widget cancelBtn(TaxiOrder order) {
 
           if (!resp.success) {
             MezSnackbar("Oops",
-                _i18n['serverCommunicationError'],
+                _i18n()['serverCommunicationError'],
                 position: SnackPosition.TOP);
           }
           // no need for else here , because we are handling UI changes already upon CanceledbyCustomer.

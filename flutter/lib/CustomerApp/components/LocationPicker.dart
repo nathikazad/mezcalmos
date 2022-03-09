@@ -16,6 +16,10 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["customerApp"]
+    ["components"]["LocationPicker"];
+
+
 class LocationPickerController extends MGoogleMapController {
   RxBool _showFakeMarker = true.obs;
   RxBool _showBlackScreen = false.obs;
@@ -74,8 +78,6 @@ class LocationPicker extends StatefulWidget {
 enum BottomButtomToShow { Pick, Confirm, GrayedOut, Loading }
 
 class LocationPickerState extends State<LocationPicker> {
-  final dynamic _i18n = Get.find<LanguageController>().strings["customerApp"]
-      ["components"]["LocationPicker"];
   Location? location;
   bool userTaped = false;
 
@@ -134,20 +136,20 @@ class LocationPickerState extends State<LocationPicker> {
     switch (widget.locationPickerMapController._bottomButtomToShow.value) {
       case BottomButtomToShow.Pick:
         return buildBottomButton(
-          _i18n["pick"],
+          _i18n()["pick"],
           notifier: widget.notifyParentOfLocationFinalized,
           // onPress: showGrayedOutButton
         );
       case BottomButtomToShow.Confirm:
         if (Get.find<AuthController>().fireAuthUser != null) {
           return buildBottomButton(
-              _i18n['confirm']
+              _i18n()['confirm']
                   .toString()
                   .capitalize,
               notifier: widget.notifyParentOfConfirm);
         } else {
           return buildBottomButton(
-              _i18n["signInToMakeOrder"],
+              _i18n()["signInToMakeOrder"],
               notifier: (_) async {
             await Get.toNamed(kSignInRouteOptional);
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
@@ -161,7 +163,7 @@ class LocationPickerState extends State<LocationPicker> {
         );
       case BottomButtomToShow.GrayedOut:
         return buildBottomButton(
-          _i18n['confirm']
+          _i18n()['confirm']
               .toString()
               .capitalize,
         );
@@ -256,7 +258,7 @@ class LocationPickerState extends State<LocationPicker> {
             ),
             Expanded(
               child: Text(
-                _i18n["moveMapIfNotPrecise"],
+                _i18n()["moveMapIfNotPrecise"],
                 // "You can move the map if position is not precise.",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

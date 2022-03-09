@@ -9,7 +9,8 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
     ["ListOrdersScreen"]["components"]["TaxiPastOrderCard"];
 
 class TaxiPastOrderCard extends StatelessWidget {
@@ -72,7 +73,7 @@ class TaxiPastOrderCard extends StatelessWidget {
                       children: [
                         Text(
                           order.serviceProvider?.name ??
-                              "${_i18n['taxiOrder']}",
+                              "${_i18n()['taxiOrder']}",
                           overflow: TextOverflow.ellipsis,
                           style: txt.headline3,
                           maxLines: 2,
@@ -108,7 +109,7 @@ class TaxiPastOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      " ${_i18n["totalCost"]} : \$${order.cost.toStringAsFixed(0)}",
+                      " ${_i18n()["totalCost"]} : \$${order.cost.toStringAsFixed(0)}",
                     ),
                     (MediaQuery.of(context).size.width > 320)
                         ? Flexible(

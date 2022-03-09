@@ -17,7 +17,8 @@ enum SignInMode {
   RequiredSignIn,
 }
 
-dynamic _i18n = Get.find<LanguageController>().strings['Shared']['pages']["AuthScreens"]["SignInScreen"];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ["AuthScreens"]["SignInScreen"];
 
 class SignIn extends GetWidget<AuthController> {
   final SignInMode mode;
@@ -72,7 +73,7 @@ class SignIn extends GetWidget<AuthController> {
                     MezcalmosSharedWidgets.mezcalmosTitle(
                         textSize: 35.sp, isBold: true),
                     Spacer(),
-                    Text(_i18n["title"],
+                    Text(_i18n()["title"],
                         overflow: TextOverflow.visible,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
@@ -141,7 +142,7 @@ class SignIn extends GetWidget<AuthController> {
                     child: Icon(Ionicons.logo_apple)),
                 Spacer(),
                 Text(
-                  _i18n["loginWithApple"],
+                  _i18n()["loginWithApple"],
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Spacer()
@@ -169,7 +170,7 @@ class SignIn extends GetWidget<AuthController> {
                     child: Icon(Ionicons.chatbox)),
                 Spacer(),
                 Text(
-                  _i18n["loginWithSms"],
+                  _i18n()["loginWithSms"],
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
@@ -235,7 +236,7 @@ class SignIn extends GetWidget<AuthController> {
                 Spacer(),
                 Text(
                   lmode != "dev"
-                      ? _i18n["fbBtn"]
+                      ? _i18n()["fbBtn"]
                       : "test mode login",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),

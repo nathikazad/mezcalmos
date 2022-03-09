@@ -9,8 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/ordersController.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Notifications/NotifCountOnDayByDriverPage.dart';
 
-dynamic _i18n =  Get.find<LanguageController>().strings["TaxiAdminApp"]["pages"]
-["Orders"]["OrdersOnDayPage"];
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiAdminApp"]
+    ["pages"]["Orders"]["OrdersOnDayPage"];
 
 class OrdersOnDayPage extends GetView<OrderStatsController> {
   var f = new DateFormat('dd/MM/yy');
@@ -35,7 +35,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                     Expanded(
                       child: InkWell(
                         child: Text(
-                          _i18n["orders"],
+                          _i18n()["orders"],
                           style: TextStyle(
                               fontSize: 29, fontWeight: FontWeight.bold),
                         ),
@@ -131,7 +131,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          _i18n["time"],
+                          _i18n()["time"],
                           style: adminAppTextStyle1,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
@@ -142,7 +142,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          _i18n["driver"],
+                          _i18n()["driver"],
                           style: adminAppTextStyle1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
@@ -153,7 +153,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          _i18n["cust"],
+                          _i18n()["cust"],
                           style: adminAppTextStyle1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,

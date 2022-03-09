@@ -4,7 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
 ["Orders"]["ViewRestaurantOrderScreen"]["components"]["PastOrderInfo"];
 
 // Goes on top of the  order screen to show the order final staus and time only on past order
@@ -65,19 +66,19 @@ String getOrderStatus(RestaurantOrderStatus status) {
   LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return '${_i18n["canceledByAdmin"]}';
+      return '${_i18n()["canceledByAdmin"]}';
     case RestaurantOrderStatus.CancelledByCustomer:
-      return '${_i18n["canceledByCustomer"]}';
+      return '${_i18n()["canceledByCustomer"]}';
     case RestaurantOrderStatus.OrderReceieved:
-      return '${_i18n["received"]}';
+      return '${_i18n()["received"]}';
     case RestaurantOrderStatus.PreparingOrder:
-      return '${_i18n["preparing"]}';
+      return '${_i18n()["preparing"]}';
     case RestaurantOrderStatus.OnTheWay:
-      return '${_i18n["onTheWay"]}';
+      return '${_i18n()["onTheWay"]}';
     case RestaurantOrderStatus.ReadyForPickup:
-      return '${_i18n["readyForPickUp"]}';
+      return '${_i18n()["readyForPickUp"]}';
     case RestaurantOrderStatus.Delivered:
-      return '${_i18n["delivered"]}';
+      return '${_i18n()["delivered"]}';
 
     default:
       return 'Unknown status';
@@ -88,19 +89,19 @@ String getOrderHelperText(RestaurantOrderStatus status) {
   LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return '${_i18n["helperTextCanceledByAdmin"]}';
+      return '${_i18n()["helperTextCanceledByAdmin"]}';
     case RestaurantOrderStatus.CancelledByCustomer:
-      return '${_i18n["helperTextCanceledByCustomer"]}';
+      return '${_i18n()["helperTextCanceledByCustomer"]}';
     case RestaurantOrderStatus.OrderReceieved:
-      return '${_i18n["helperTextReceived"]}';
+      return '${_i18n()["helperTextReceived"]}';
     case RestaurantOrderStatus.PreparingOrder:
-      return '${_i18n["helperTextPreparing"]}';
+      return '${_i18n()["helperTextPreparing"]}';
     case RestaurantOrderStatus.OnTheWay:
-      return '${_i18n["helperTextOnTheWay"]}';
+      return '${_i18n()["helperTextOnTheWay"]}';
     case RestaurantOrderStatus.ReadyForPickup:
-      return '${_i18n["helperTextReadyForPickUp"]}';
+      return '${_i18n()["helperTextReadyForPickUp"]}';
     case RestaurantOrderStatus.Delivered:
-      return '${_i18n["helperTextDelivered"]}';
+      return '${_i18n()["helperTextDelivered"]}';
 
     default:
       return 'Unknown status';

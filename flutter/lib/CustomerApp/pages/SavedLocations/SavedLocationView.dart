@@ -12,7 +12,8 @@ import 'package:sizer/sizer.dart';
 import 'components/SavedLocationBody.dart';
 import 'components/SavedLocationIsEmpty.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
 ["SavedLocations"]["SavedLocationView"];
 
 class SavedLocationView extends StatefulWidget {
@@ -76,13 +77,13 @@ class _SavedLocationViewState extends State<SavedLocationView> {
     final txt = Theme.of(context).textTheme;
     return Scaffold(
         appBar: CustomerAppBar(
-          title: "${_i18n["title"]}",
+          title: "${_i18n()["title"]}",
           autoBack: true,
         ),
         bottomNavigationBar: ButtonComponent(
           widget: Center(
             child: Text(
-              "${_i18n["addNewLoc"]}",
+              "${_i18n()["addNewLoc"]}",
               style:
                   txt.headline1!.copyWith(color: Colors.white, fontSize: 12.sp),
             ),

@@ -5,7 +5,8 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
 ["Taxi"]["components"]["TopBar"];
 
 class TopBar extends StatelessWidget {
@@ -58,7 +59,7 @@ class TopBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Obx(() => Text(
-                      _i18n["from"],
+                      _i18n()["from"],
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 16,
@@ -66,7 +67,7 @@ class TopBar extends StatelessWidget {
                       ),
                     )),
                 GestureDetector(
-                  onTap: () => MezSnackbar(_i18n["from"], order.from.address),
+                  onTap: () => MezSnackbar(_i18n()["from"], order.from.address),
                   child: Text(
                     order.from.address,
                     style: TextStyle(
@@ -138,7 +139,7 @@ class TopBar extends StatelessWidget {
               children: [
                 Obx(
                   () => Text(
-                    _i18n["to"],
+                    _i18n()["to"],
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -146,7 +147,7 @@ class TopBar extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => MezSnackbar(_i18n["to"], order.to.address),
+                  onTap: () => MezSnackbar(_i18n()["to"], order.to.address),
                   child: Text(
                     order.to.address, //13+..
                     style: TextStyle(

@@ -11,8 +11,8 @@ import 'package:mezcalmos/TaxiAdminApp/controller/ordersController.dart';
 
 import 'OrdersOnDayPage.dart';
 
-dynamic _i18n =  Get.find<LanguageController>().strings["TaxiAdminApp"]["pages"]
-["Orders"]["OrdersCumOnDayPage"];
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiAdminApp"]
+    ["pages"]["Orders"]["OrdersCumOnDayPage"];
 
 class OrdersCumOnDayPage extends GetView<OrderStatsController> {
   var f = new DateFormat('dd/MM/yy');
@@ -36,7 +36,7 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                     Expanded(
                       child: InkWell(
                         child: Text(
-                          _i18n["cumulative"],
+                          _i18n()["cumulative"],
                           style: TextStyle(
                               fontSize: 29, fontWeight: FontWeight.bold),
                         ),
@@ -152,7 +152,7 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
                                   padding: const EdgeInsets.only(
                                       top: 0, bottom: 0, right: 8, left: 10),
                                   child: Text(
-                                    _i18n["totalOrders"],
+                                    _i18n()["totalOrders"],
                                     style: GoogleFonts.lato(
                                       textStyle: TextStyle(
                                         color: Colors.white
@@ -201,35 +201,35 @@ class OrdersCumOnDayPage extends GetView<OrderStatsController> {
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.Finished,
-                  _i18n["finished"],
+                  _i18n()["finished"],
                   "${snapshot.data!['finished']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.Cancelled,
-                  _i18n["cancelled"],
+                  _i18n()["cancelled"],
                   "${snapshot.data!['cancelled']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.Expired,
-                   _i18n["expired"],
+                  _i18n()["expired"],
                   "${snapshot.data!['expired']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.InProccess,
-                  _i18n["inProcess"],
+                  _i18n()["inProcess"],
                   "${snapshot.data!['inProcess']}"),
               SizedBox(
                 height: 12,
               ),
               MezAdminOrdersComponents.ordersCumOnDayComponent(
                   OrdersStates.IsLooking,
-                  _i18n["isLooking"],
+                  _i18n()["isLooking"],
                   "${snapshot.data!['isLooking']}"),
             ];
           } else if (snapshot.hasError) {
