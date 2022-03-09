@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
