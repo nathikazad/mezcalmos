@@ -3,6 +3,9 @@ import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:get/get.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustomerWrapper'];
+
 class ServicesCard extends StatelessWidget {
   ServicesCard(
       {Key? key,
@@ -19,7 +22,7 @@ class ServicesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    dynamic i18n = Get.find<LanguageController>().strings["customerApp"]
+    dynamic i18n = Get.find<LanguageController>().strings["CustomerApp"]
         ["components"]["ServicesCard"];
     return Card(
       margin: EdgeInsets.all(5),

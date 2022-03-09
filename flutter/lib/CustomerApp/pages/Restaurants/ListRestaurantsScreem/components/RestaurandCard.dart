@@ -9,8 +9,8 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-        ["pages"]
-    ["Restaurants"]["ListRestaurantsScreem"]["components"]["RestaurandCard"];
+        ["pages"]["Restaurants"]["ListRestaurantsScreen"]["components"]
+    ["RestaurandCard"];
 
 class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;

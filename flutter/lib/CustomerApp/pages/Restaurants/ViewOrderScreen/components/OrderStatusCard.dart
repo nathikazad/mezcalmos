@@ -10,7 +10,7 @@ import 'package:rive/rive.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
-["Restaurants"]["ViewOrderScreen"]["components"]["OrderStatusCard"];
+        ["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
 
 class OrderStatusCard extends StatelessWidget {
   const OrderStatusCard({

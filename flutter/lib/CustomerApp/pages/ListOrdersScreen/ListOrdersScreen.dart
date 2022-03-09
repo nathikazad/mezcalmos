@@ -22,10 +22,8 @@ import 'components/TaxiOrderOngoingCard.dart';
 
 final f = new DateFormat('MM.dd.yyyy');
 final currency = new NumberFormat("#,##0.00", "en_US");
-
-dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-    ["ListOrdersScreen"]["ListOrdersScreen"];
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['ListOrdersScreen']['ListOrdersScreen'];
 
 class ListOrdersScreen extends StatefulWidget {
   @override
@@ -33,7 +31,6 @@ class ListOrdersScreen extends StatefulWidget {
 }
 
 class _ListOrdersScreen extends State<ListOrdersScreen> {
-  LanguageController lang = Get.find<LanguageController>();
   OrderController controller = Get.put(OrderController());
   AuthController auth = Get.find<AuthController>();
 
@@ -52,7 +49,6 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CustomerAppBar(
@@ -71,19 +67,19 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                     PastOrderList(txt: txt, controller: controller),
                 ],
               ))
-            : NoOrdersWidget(lang),
+            : NoOrdersWidget(),
       ),
     );
   }
 
-  Center NoOrdersWidget(LanguageController lang) {
+  Center NoOrdersWidget() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.error, color: Colors.black, size: 30),
           Text(
-            _i18n()['noOrders'],
+            _i18n()['orders']['noOrders'],
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
@@ -106,18 +102,17 @@ class PastOrderList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(
         () => controller.pastOrders().length >= 1
-            ? pastOrdersWidget(lang)
-            : NoPastOrdersWidget(lang, context),
+            ? pastOrdersWidget()
+            : NoPastOrdersWidget(context),
       ),
     );
   }
 
-  Column pastOrdersWidget(LanguageController lang) {
+  Column pastOrdersWidget() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       GroupedListView<Order, DateTime>(
           elements: controller.pastOrders(),
@@ -134,9 +129,11 @@ class PastOrderList extends StatelessWidget {
               margin: const EdgeInsets.all(8),
               child: Text(
                 (calculateDifference(element.orderTime) == 0)
-                    ? ' ${_i18n().strings["shared"]["notification"]["today"]} '
+                    ? Get.find<LanguageController>().strings["shared"]
+                        ["notification"]["today"]
                     : (calculateDifference(element.orderTime) == -1)
-                        ? ' ${_i18n().strings["shared"]["notification"]["yesterday"]} '
+                        ? Get.find<LanguageController>().strings["shared"]
+                            ["notification"]["yesterday"]
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
                 style: txt.headline3,
               ),
@@ -165,14 +162,13 @@ class PastOrderList extends StatelessWidget {
     ]);
   }
 
-  Center NoPastOrdersWidget(LanguageController lang, BuildContext context) {
+  Center NoPastOrdersWidget(BuildContext context) {
     return Center(
       child: Column(
         children: [
           Icon(Icons.error, color: Colors.white),
           Text(
-            // i18n.strings['customer']['orders']['noOrders'],
-            _i18n().strings['orders']['noOrders'],
+            _i18n()['orders']['noOrders'],
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -205,7 +201,7 @@ class OngoingOrderList extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             child: Text(
-              '${_i18n().strings["orders"]["onGoingOrders"]}',
+              _i18n()['orders']["onGoingOrders"],
               style: txt.headline3,
             ),
           ),

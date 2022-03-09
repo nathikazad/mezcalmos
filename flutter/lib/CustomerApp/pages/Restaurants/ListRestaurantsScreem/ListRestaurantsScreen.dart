@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-
-import '../../../router.dart';
 import 'components/RestaurandCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-    ["Restaurants"]["ListRestaurantsScreem"]["ListRestaurantsScreen"];
+    ["pages"]["Restaurants"]["ListRestaurantsScreen"]["ListRestaurantScreen"];
 
 class ListRestaurantsScreen extends StatefulWidget {
   @override

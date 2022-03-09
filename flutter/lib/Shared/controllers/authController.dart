@@ -27,7 +27,6 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
 
 class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
-  LanguageController lang = Get.find<LanguageController>();
   Function _onSignOutCallback;
   Function _onSignInCallback;
 
@@ -56,13 +55,19 @@ class AuthController extends GetxController {
 
   AuthController(this._onSignInCallback, this._onSignOutCallback);
   String? _previousUserValue = "init";
+
+  @override
+  void onReady() {
+    Get.lazyPut(() => LanguageController());
+    super.onReady();
+  }
+
   @override
   void onInit() {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
     mezDbgPrint('Auth controller init!');
-    Get.lazyPut(() => LanguageController());
     _auth.authStateChanges().listen((fireAuth.User? user) async {
       if (user?.toString() == _previousUserValue) {
         mezDbgPrint(
@@ -98,7 +103,7 @@ class AuthController extends GetxController {
           if (event.snapshot.value == null) return;
           if (event.snapshot.value['language'] == null) {
             event.snapshot.value['language'] =
-                lang.userLanguageKey;
+                Get.find<LanguageController>().userLanguageKey;
             _databaseHelper.firebaseDatabase
                 .reference()
                 .child(userLanguage(user.uid))
@@ -292,9 +297,7 @@ class AuthController extends GetxController {
             .signInWithCustomToken(response.data["token"]);
       }
     } catch (e) {
-      MezSnackbar(
-          "Oops ..",
-          _i18n()['failedOTPConfirmRequest']);
+      MezSnackbar("Oops ..", _i18n()['failedOTPConfirmRequest']);
       print("Exception happend in GetAuthUsingOTP : $e");
     }
 
