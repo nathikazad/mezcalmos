@@ -80,41 +80,52 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         clipBehavior: Clip.none,
         alignment: Alignment.topCenter,
         children: [
-          Container(
-              width: Get.width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5), color: Colors.white),
-              child: MGoogleMap(
-                mGoogleMapController: this.viewController.mGoogleMapController,
-                periodicRerendering: true,
-              )),
+          Map(),
           viewWidgets.absorbOrIgnoreUserTapWidget(),
           TopBar(order: viewController.order.value!),
-          Positioned(
-            bottom: 15,
-            left: 15,
-            right: 15,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                if (viewController.counterOffers.isNotEmpty &&
-                    viewController.order.value!.status ==
-                        TaxiOrdersStatus.LookingForTaxi)
-                  Flexible(child: counterOfferWidgets.offersButton()),
-                if (viewController.counterOffers.isNotEmpty)
-                  SizedBox(
-                    width: 10,
-                  ),
-                Flexible(
-                    child: viewWidgets
-                        .cancelButton(viewController.order.value!.status)),
-              ],
-            ),
-          ),
+          BottomButtons(),
           TaxiOrderBottomBar(order: viewController.order),
           viewWidgets.getToolTip(),
           counterOfferWidgets.counterOffersBottomSheet(context),
         ]);
+  }
+
+  /// The map view to show the route and location of the agents
+  Container Map() {
+    return Container(
+        width: Get.width,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5), color: Colors.white),
+        child: MGoogleMap(
+          mGoogleMapController: this.viewController.mGoogleMapController,
+          periodicRerendering: true,
+        ));
+  }
+
+  /// Show cancel button by default and show counter offers button when
+  /// there are counter offers
+  Positioned BottomButtons() {
+    return Positioned(
+      bottom: 15,
+      left: 15,
+      right: 15,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if (viewController.counterOffers.isNotEmpty &&
+              viewController.order.value!.status ==
+                  TaxiOrdersStatus.LookingForTaxi)
+            Flexible(child: counterOfferWidgets.offersButton()),
+          if (viewController.counterOffers.isNotEmpty)
+            SizedBox(
+              width: 10,
+            ),
+          Flexible(
+              child:
+                  viewWidgets.cancelButton(viewController.order.value!.status)),
+        ],
+      ),
+    );
   }
 }

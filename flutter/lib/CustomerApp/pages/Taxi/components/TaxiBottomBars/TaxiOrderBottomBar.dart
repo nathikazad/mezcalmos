@@ -19,6 +19,9 @@ dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
 
 class TaxiOrderBottomBar extends StatefulWidget {
   Rxn<TaxiOrder> order;
+  /// Show a bottom bar that depends on the status
+  /// normally shows taxi avatar and name but if order is looking
+  /// then shows increment and decrement price buttons
   TaxiOrderBottomBar({Key? key, required this.order}) : super(key: key);
 
   @override
@@ -47,7 +50,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                   width: 1, color: Theme.of(context).scaffoldBackgroundColor),
               color: Colors.white),
           child: Row(
-            children: buildBottomBatByStatus(context),
+            children: buildBottomBarByStatus(context),
           ),
         ),
       ),
@@ -201,7 +204,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
     );
   }
 
-  List<Widget> buildBottomBatByStatus(BuildContext pContext) {
+  List<Widget> buildBottomBarByStatus(BuildContext pContext) {
     List<Widget> _widgies = [];
     switch (widget.order.value!.status) {
       case TaxiOrdersStatus.LookingForTaxi:
