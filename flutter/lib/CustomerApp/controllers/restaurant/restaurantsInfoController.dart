@@ -8,7 +8,6 @@ import 'dart:async';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class RestaurantsInfoController extends GetxController {
-  LanguageController lang = Get.find<LanguageController>();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   @override
   void onInit() {

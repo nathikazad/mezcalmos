@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/components/DeliveryAppBar.dart';
+import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/notificationHandler.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
@@ -107,7 +107,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
-        appBar: DeliveryAppBar(AppBarLeftButtonType.Menu,
+        appBar: deliveryAppBar(AppBarLeftButtonType.Menu,
             function: () => Get.find<SideMenuDrawerController>().openMenu()),
         body: MezLogoAnimation(centered: true));
   }

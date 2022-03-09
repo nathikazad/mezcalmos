@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/components/DialogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
-import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -18,7 +18,7 @@ class OrderButtons {
     return Expanded(
       child: ButtonComponent(
         function: () async {
-          var res = await dailogComponent(
+          var res = await dialogComponent(
               lang.strings["deliveryAdminApp"]["cancelAlert"]["title"],
               lang.strings["deliveryAdminApp"]["cancelAlert"]["subTitle"], () {
             Get.back(result: true);
@@ -70,7 +70,7 @@ class OrderButtons {
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xffd3bc0b), const Color(0xdbd17c18)]),
         function: () async {
-          var res = await dailogComponent(
+          var res = await dialogComponent(
               lang.strings['deliveryAdminApp']['laundry']['startPickUpTitle'],
               lang.strings['deliveryAdminApp']['laundry']['startPickUpText'],
               () {
@@ -114,7 +114,7 @@ class OrderButtons {
           end: Alignment(1.1447703838348389, 1.1694844961166382),
           colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
       function: () async {
-        var res = await dailogComponent(
+        var res = await dialogComponent(
             lang.strings['deliveryAdminApp']['laundry']['pickedUpTitle'],
             lang.strings['deliveryAdminApp']['laundry']['pickedUpText'], () {
           Get.back(result: true);
@@ -204,7 +204,7 @@ class OrderButtons {
         ),
         function: (order.dropoffDriver != null)
             ? () async {
-                var res = await dailogComponent(
+                var res = await dialogComponent(
                     lang.strings["deliveryAdminApp"]["laundry"]
                         ["readyForDeliveryTitle"],
                     lang.strings["deliveryAdminApp"]["laundry"]
@@ -252,7 +252,7 @@ class OrderButtons {
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
         function: () async {
-          var res = await dailogComponent(
+          var res = await dialogComponent(
               lang.strings["deliveryAdminApp"]["laundry"]["otwDeliveryTitle"],
               lang.strings["deliveryAdminApp"]["laundry"]["otwDeliveryText"],
               () {
@@ -293,7 +293,7 @@ class OrderButtons {
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
         function: () async {
-          var res = await dailogComponent(
+          var res = await dialogComponent(
               lang.strings["deliveryAdminApp"]["laundry"]["deliveredTitle"],
               lang.strings["deliveryAdminApp"]["laundry"]["deliveredText"], () {
             Get.back(result: true);
