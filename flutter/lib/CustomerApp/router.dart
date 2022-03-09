@@ -1,15 +1,14 @@
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/LaundryCurrentOrderView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryPickLocView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreem/ListRestaurantsScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/SavedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrderScreen.dart';
@@ -30,11 +29,11 @@ const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
 const String kPickLocationRoute = '/pickLocationFromMap/addLocation';
 const String kPickLocationEditRoute = '/pickLocationFromMap/editLocation';
+const String kPickLocationNotAuth = '/pickLocationFromMap/addLocationNoAuth';
 const String kSavedLocations = '/savedLocations';
 // laundry
 
 const String kLaundryOrderRequest = '/laundryOrderRequest';
-const String kLaundryPickLoc = '/laundryPickLock';
 const String kLaundryCurrentOrder = '/laundryCurrentOrder/:orderId';
 
 String getRestaurantRoute(String restaurantId) {
@@ -113,6 +112,12 @@ class XRouter {
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(
+            name: kCartItemRoute,
+            page: () => ViewItemScreen(
+                viewItemScreenMode: ViewItemScreenMode.EditItemMode),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
+        GetPage(
             name: kCartRoute,
             page: () => ViewCartScreen(),
             transitionDuration: Duration(milliseconds: 500),
@@ -126,6 +131,9 @@ class XRouter {
         GetPage(
             name: kPickLocationEditRoute,
             page: () => PickLocationView(PickLocationMode.EditLocation)),
+        GetPage(
+            name: kPickLocationNotAuth,
+            page: () => PickLocationView(PickLocationMode.NonLoggedInPick)),
         // Taxis Routes
         GetPage(
             name: kTaxiRequestRoute,
@@ -144,11 +152,7 @@ class XRouter {
             page: () => LaundryOrderRequestView(),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
-        GetPage(
-            name: kLaundryPickLoc,
-            page: () => LaundryPickLocView(),
-            transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),
+
         GetPage(
             name: kLaundryCurrentOrder,
             page: () => LaundryCurrentOrderView(),

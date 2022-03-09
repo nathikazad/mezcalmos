@@ -195,7 +195,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   pickFromMapComponent(BuildContext context) {
     return InkWell(
       onTap: () async {
-        Location? currentLoc = await Get.toNamed(kLaundryPickLoc) as Location?;
+        Location? currentLoc =
+            await Get.toNamed(kPickLocationNotAuth) as Location?;
         if (currentLoc != null) {
           setState(() {
             defaultLoc = currentLoc;

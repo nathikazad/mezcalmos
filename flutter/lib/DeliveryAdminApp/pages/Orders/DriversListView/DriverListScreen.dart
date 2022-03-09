@@ -47,7 +47,7 @@ class _DriversListScreenState extends State<DriversListScreen> {
               drivers: deliveryDrivers.value,
               order: order!,
             ),
-            _driversListComponent()
+            _driversListComponent(),
           ],
         ),
       ),

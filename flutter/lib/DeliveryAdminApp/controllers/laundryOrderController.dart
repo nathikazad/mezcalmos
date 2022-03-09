@@ -137,31 +137,6 @@ class LaundryOrderController extends GetxController {
     return _callLaundryCloudFunction("readyForDeliveryOrder", orderId);
   }
 
-  // Need to be removed
-  Future<ServerResponse> otwPickupOrder(String orderId) async {
-    return _callLaundryCloudFunction("otwPickupOrder", orderId);
-  }
-
-  // Need to be removed
-  Future<ServerResponse> pickedUpOrder(String orderId) async {
-    return _callLaundryCloudFunction("pickedUpOrder", orderId);
-  }
-
-  // Need to be removed
-  Future<ServerResponse> atLaundryOrder(String orderId, num weight) async {
-    return _callLaundryCloudFunction("atLaundryOrder", orderId,
-        optionalParams: <String, dynamic>{"weight": weight});
-  }
-
-  // Need to be removed
-  Future<ServerResponse> otwDeliveryOrder(String orderId) async {
-    return _callLaundryCloudFunction("otwDeliveryOrder", orderId);
-  }
-
-  // Need to be removed
-  Future<ServerResponse> deliveredOrder(String orderId) async {
-    return _callLaundryCloudFunction("deliveredOrder", orderId);
-  }
   
   Future<ServerResponse> assignLaundry(String orderId, String laundryId) async {
     return _callLaundryCloudFunction("assignLaundry", orderId,
