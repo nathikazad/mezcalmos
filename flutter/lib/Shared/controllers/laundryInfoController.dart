@@ -1,12 +1,11 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'dart:async';
+
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:get/get.dart';
-import 'dart:async';
 
 class LaundryInfoController extends GetxController {
   LanguageController lang = Get.find<LanguageController>();
@@ -43,9 +42,6 @@ class LaundryInfoController extends GetxController {
             orderType: OrderType.Laundry, providerId: laundryId))
         .once()
         .then<Laundry>((snapshot) {
-      mezDbgPrint("Getting the laundry ------------------------->");
-      mezDbgPrint(Laundry.fromLaundryData(
-          laundryId: laundryId, laundryData: snapshot.value));
       return Laundry.fromLaundryData(
           laundryId: laundryId, laundryData: snapshot.value);
     });
