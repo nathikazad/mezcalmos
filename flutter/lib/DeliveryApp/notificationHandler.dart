@@ -106,7 +106,7 @@ Notification laundryOrderStatusChangeNotificationHandler(
       getLaundryOrderStatusFields(newOrdersStatus)!;
   return Notification(
       id: key,
-      linkUrl: getCurrentOrderRoute(dynamicFields["orderId"]),
+      linkUrl: getCurrentOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -123,7 +123,6 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
   switch (laundryOrderStatus) {
     case LaundryOrderStatus.ReadyForDelivery:
       return <String, dynamic>{
-        "orderId": "needTobefixed",
         "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
         "body":
@@ -133,7 +132,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       };
     case LaundryOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
-        "orderId": "needTobefixed",
+        //  "orderId": "needTobefixed",
         "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
@@ -143,7 +142,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       };
     case LaundryOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
-        "orderId": "needTobefixed",
+        //   "orderId": "needTobefixed",
         "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
@@ -153,7 +152,6 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       };
     default:
       return <String, dynamic>{
-        "orderId": "needTobefixed",
         "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
