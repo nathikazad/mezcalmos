@@ -37,7 +37,7 @@ class TaxiOpenOrderCard extends StatelessWidget {
 // Return the bottom part of the card : adress destination + distance
   Widget _cardBottom(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Flexible(
           child: Text(
@@ -89,16 +89,12 @@ class TaxiOpenOrderCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Flexible(
-                    flex: 5,
-                    fit: FlexFit.loose,
-                    child: Text(
-                      order.customer.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(fontSize: 11.sp),
-                    ),
+                  Text(
+                    order.customer.name,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(fontSize: 11.sp),
                   ),
                   Spacer(),
                   Icon(

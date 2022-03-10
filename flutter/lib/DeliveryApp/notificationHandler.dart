@@ -123,6 +123,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
   switch (laundryOrderStatus) {
     case LaundryOrderStatus.ReadyForDelivery:
       return <String, dynamic>{
+        "orderId": "needTobefixed",
         "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
         "body":
@@ -132,6 +133,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       };
     case LaundryOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
+        "orderId": "needTobefixed",
         "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
@@ -141,6 +143,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       };
     case LaundryOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
+        "orderId": "needTobefixed",
         "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
@@ -149,7 +152,15 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     default:
-    // do nothing
+      return <String, dynamic>{
+        "orderId": "needTobefixed",
+        "title":
+            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+      };
   }
   return null;
 }

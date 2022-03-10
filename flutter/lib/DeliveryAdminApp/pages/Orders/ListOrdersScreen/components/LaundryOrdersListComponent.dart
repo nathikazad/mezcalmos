@@ -31,18 +31,20 @@ class LaundryOrdersList extends StatelessWidget {
             SizedBox(
               height: 8,
             ),
-            Container(
-              child: currentOrders.isNotEmpty
-                  ? Column(
-                      children: List.generate(
-                          currentOrders.length,
-                          (index) =>
-                              LaundryOrderCard(order: currentOrders[index])),
-                    )
-                  : Center(
-                      child: Text(lang.strings['deliveryAdminApp']['laundry']
-                          ['noOrders']),
-                    ),
+            Obx(
+              ()=> Container(
+                child: currentOrders.isNotEmpty
+                    ? Column(
+                        children: List.generate(
+                            currentOrders.length,
+                            (index) =>
+                                LaundryOrderCard(order: currentOrders[index])),
+                      )
+                    : Center(
+                        child: Text(lang.strings['deliveryAdminApp']['laundry']
+                            ['noOrders']),
+                      ),
+              ),
             ),
             Container(
               margin: const EdgeInsets.all(8),
@@ -55,18 +57,20 @@ class LaundryOrdersList extends StatelessWidget {
             SizedBox(
               height: 8,
             ),
-            Container(
-              child: pastOrders.isNotEmpty
-                  ? Column(
-                      children: List.generate(
-                          pastOrders.length,
-                          (index) =>
-                              LaundryOrderCard(order: pastOrders[index])),
-                    )
-                  : Center(
-                      child: Text(lang.strings['deliveryAdminApp']['laundry']
-                          ['noOrders']),
-                    ),
+            Obx(
+              ()=> Container(
+                child: pastOrders.isNotEmpty
+                    ? Column(
+                        children: List.generate(
+                            pastOrders.length,
+                            (index) =>
+                                LaundryOrderCard(order: pastOrders[index])),
+                      )
+                    : Center(
+                        child: Text(lang.strings['deliveryAdminApp']['laundry']
+                            ['noOrders']),
+                      ),
+              ),
             ),
           ],
         ),

@@ -5,72 +5,60 @@ import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class LaundryControllButtons extends StatelessWidget {
- 
   /// UI : shows two buttons one to controll the order status and other to cancel the order
   /// PARAMETER : Deliverable order as laundry order
   /// LOGIC : first button text and onPressed function depends on order status
 
-
-
-  final LaundryOrder order;
   LaundryControllButtons({Key? key, required this.order}) : super(key: key);
+  final LaundryOrder order;
   LaundryOrderController laundryOrderController =
       Get.find<LaundryOrderController>();
   num orderWeight = 0;
+  RxBool clicked = RxBool(false);
   @override
   Widget build(BuildContext context) {
-    return Flex(
-      direction: Axis.horizontal,
-      children: [
-        Flexible(
-            flex: 3,
-            child: TextButton(
-                onPressed: () async {
-                  switch (order.status) {
-                    case LaundryOrderStatus.OrderReceieved:
-                      laundryOrderController.otwPickupOrder(order.orderId);
-                      break;
-                    case LaundryOrderStatus.OtwPickup:
-                      laundryOrderController.pickedUpOrder(order.orderId);
-                      break;
-                    case LaundryOrderStatus.PickedUp:
-                      await orderWeightDialog(context);
-                      if (orderWeight != 0) {
-                        laundryOrderController.atLaundryOrder(
-                            order.orderId, orderWeight);
-                      }
-
-                      break;
-                    case LaundryOrderStatus.ReadyForDelivery:
-                      laundryOrderController.otwDeliveryOrder(order.orderId);
-                      break;
-                    case LaundryOrderStatus.OtwDelivery:
-                      laundryOrderController.deliveredOrder(order.orderId);
-                      break;
-                    default:
+    return Obx(() {
+      if (clicked.value) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      } else {
+        return TextButton(
+            onPressed: () async {
+              clicked.value = true;
+              switch (order.status) {
+                case LaundryOrderStatus.OrderReceieved:
+                  laundryOrderController.otwPickupOrder(order.orderId);
+                  break;
+                case LaundryOrderStatus.OtwPickup:
+                  laundryOrderController.pickedUpOrder(order.orderId);
+                  break;
+                case LaundryOrderStatus.PickedUp:
+                  await orderWeightDialog(context);
+                  if (orderWeight != 0) {
+                    await laundryOrderController.atLaundryOrder(
+                        order.orderId, orderWeight);
+                    Get.back(closeOverlays: true);
                   }
-                },
-                child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(8),
-                    child: Text(_getActionButtonText())))),
-        SizedBox(
-          width: 5,
-        ),
-        Flexible(
-          flex: 2,
-          child: TextButton(
-              onPressed: () {
-                // TODO implement cancel function
-              },
-              style: TextButton.styleFrom(backgroundColor: Colors.redAccent),
-              child: Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(8),
-                  child: Text('Cancel'))),
-        ),
-      ],
-    );
+
+                  break;
+                case LaundryOrderStatus.ReadyForDelivery:
+                  laundryOrderController.otwDeliveryOrder(order.orderId);
+                  break;
+                case LaundryOrderStatus.OtwDelivery:
+                  await laundryOrderController.deliveredOrder(order.orderId);
+                  Get.back(closeOverlays: true);
+                  break;
+                default:
+                  null;
+              }
+            },
+            child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(8),
+                child: Text(_getActionButtonText())));
+      }
+    });
   }
 
   orderWeightDialog(BuildContext context) async {

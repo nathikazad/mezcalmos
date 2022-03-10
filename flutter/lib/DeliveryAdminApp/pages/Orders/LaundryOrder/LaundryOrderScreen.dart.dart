@@ -17,7 +17,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 import '../../../../Shared/models/Drivers/DeliveryDriver.dart';
 
@@ -85,86 +84,73 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-    return Scaffold(
-        appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back, withOrder: true),
-        body: Obx(() {
-          if (order.value == null) {
-            // Order Loading ..
-
-            return MezLogoAnimation(
-              centered: true,
-            );
-          } else {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    LaundryOrderStatusCard(
-                      order: order.value!,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    LaundryProviderCard(
+    return Obx(
+      () => Scaffold(
+          appBar:
+              deliveryAdminAppBar(AppBarLeftButtonType.Back, withOrder: true),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  LaundryOrderStatusCard(
+                    order: order.value!,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Obx(
+                    () => LaundryProviderCard(
                         laundryID: order.value!.laundry?.id ?? null,
-                        callBack: (newLaundry) {
-                          setState(() async {
-                            await controller.assignLaundry(
-                                order.value!.orderId, newLaundry!.info.id);
-                          });
-                        },
                         order: order.value!),
-                    LaundryOrderCustomer(
+                  ),
+                  //   if (order.value?.inProcess() ?? false)
+                  Obx(
+                    () => DriverCard(
+                      driver: getRightDriver(),
                       order: order.value!,
+                      callBack: (newDriver) {
+                        deliveryDriverController.assignDeliveryDriver(
+                            deliveryDriverId: newDriver!.deliveryDriverId,
+                            orderId: order.value!.orderId,
+                            orderType: OrderType.Laundry,
+                            deliveryDriverType: getRightDeliveryDriverType());
+                      },
                     ),
-                    if (order.value?.inProcess() ?? false)
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: buildOrderButtons(order),
-                        ),
+                  ),
+                  if (order.value?.inProcess() ?? false)
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: buildOrderButtons(order),
                       ),
-                    SizedBox(
-                      height: 10,
                     ),
-                    if (order.value?.inProcess() ?? false)
-                      Obx(
-                        () => DriverCard(
-                          driver: getRightDriver(),
-                          order: order.value!,
-                          canChangeDriver: canChangeDriver(),
-                          callBack: (newDriver) {
-                            deliveryDriverController.assignDeliveryDriver(
-                                deliveryDriverId: newDriver!.deliveryDriverId,
-                                orderId: order.value!.orderId,
-                                orderType: OrderType.Laundry,
-                                deliveryDriverType:
-                                    getRightDeliveryDriverType());
-                          },
-                        ),
-                      ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    LaundryOrderSummary(
-                      order: order.value!,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    deliveryLocation(txt, context),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    orderNotes(txt)
-                  ],
-                ),
+                  LaundryOrderCustomer(
+                    order: order.value!,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  LaundryOrderSummary(
+                    order: order.value!,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  deliveryLocation(txt, context),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  orderNotes(txt)
+                ],
               ),
-            );
-          }
-        }));
+            ),
+          )),
+    );
   }
 
 // Card that shows the notes assigned with the orders
@@ -227,65 +213,24 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   }
 
   DeliveryDriverUserInfo? getRightDriver() {
-    switch (order.value!.status) {
-      case (LaundryOrderStatus.AtLaundry):
+    switch (order.value!.getCurrentPhase()) {
+      case (LaundryOrderPhase.Dropoff):
         return order.value!.dropoffDriver;
-      case (LaundryOrderStatus.ReadyForDelivery):
-        return order.value!.dropoffDriver;
-      case (LaundryOrderStatus.OtwDelivery):
-        return order.value!.dropoffDriver;
-      case (LaundryOrderStatus.Delivered):
-        return order.value!.dropoffDriver;
-
-      case (LaundryOrderStatus.OrderReceieved):
+      case (LaundryOrderPhase.Pickup):
         return order.value!.pickupDriver;
-      case (LaundryOrderStatus.OtwPickup):
-        return order.value!.pickupDriver;
-      case (LaundryOrderStatus.PickedUp):
-        return order.value!.pickupDriver;
-
       default:
-        return null;
+        return order.value!.dropoffDriver;
     }
   }
 
   DeliveryDriverType getRightDeliveryDriverType() {
-    switch (order.value!.status) {
-      case (LaundryOrderStatus.AtLaundry):
+    switch (order.value!.getCurrentPhase()) {
+      case (LaundryOrderPhase.Dropoff):
         return DeliveryDriverType.DropOff;
-      case (LaundryOrderStatus.ReadyForDelivery):
-        return DeliveryDriverType.DropOff;
-      case (LaundryOrderStatus.OtwDelivery):
-        return DeliveryDriverType.DropOff;
-      case (LaundryOrderStatus.Delivered):
-        return DeliveryDriverType.DropOff;
-
-      case (LaundryOrderStatus.OrderReceieved):
+      case (LaundryOrderPhase.Pickup):
         return DeliveryDriverType.Pickup;
-      case (LaundryOrderStatus.OtwPickup):
-        return DeliveryDriverType.Pickup;
-      case (LaundryOrderStatus.PickedUp):
-        return DeliveryDriverType.Pickup;
-
       default:
-        return DeliveryDriverType.Pickup;
+        return DeliveryDriverType.DropOff;
     }
   }
-
-  bool canChangeDriver() {
-    switch (order.value!.status) {
-      case (LaundryOrderStatus.AtLaundry):
-        return true;
-      case (LaundryOrderStatus.ReadyForDelivery):
-        return true;
-
-      case (LaundryOrderStatus.OrderReceieved):
-        return true;
-
-      default:
-        return false;
-    }
-  }
-
-// Card that shows the order summary (prices and total costs)
 }

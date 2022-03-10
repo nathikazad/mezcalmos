@@ -121,7 +121,6 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                   if (order.value?.inProcess() ?? false)
                     Obx(
                       () => DriverCard(
-                        canChangeDriver: false,
                         driver: order.value!.dropoffDriver,
                         order: order.value!,
                         callBack: (newDriver) {

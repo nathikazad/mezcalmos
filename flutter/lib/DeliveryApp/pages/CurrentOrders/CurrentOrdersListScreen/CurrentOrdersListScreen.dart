@@ -89,11 +89,13 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           ),
           Column(
             children: List.generate(
-                orderController.pastOrders.length,
-                (index) =>
-                    DriverOrderCard(order: orderController.pastOrders[index])),
+                    orderController.pastOrders.length,
+                    (index) => DriverOrderCard(
+                        order: orderController.pastOrders[index]))
+                .reversed
+                .toList(),
           )
-        ].reversed.toList(),
+        ],
       );
     } else {
       return Container();
@@ -114,11 +116,11 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           ),
           Column(
             children: List.generate(
-                    orderController.currentOrders.length,
-                    (index) => DriverOrderCard(
-                        order: orderController.currentOrders[index]))
-                .reversed
-                .toList(),
+                orderController.currentOrders.length,
+                (index) => DriverOrderCard(
+                      order: orderController.currentOrders[index],
+                      showLeftIcon: false,
+                    )).reversed.toList(),
           ),
         ],
       );

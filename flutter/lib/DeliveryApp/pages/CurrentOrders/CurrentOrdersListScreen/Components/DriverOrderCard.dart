@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
 
 class DriverOrderCard extends StatelessWidget {
-  final Order order;
-  DriverOrderCard({Key? key, required this.order}) : super(key: key);
+  /// Order card for delivery driver used to show current or past order ,
+  /// showLeftIcon shoud be false when a current order is passed to this component
 
-  AuthController _authController = Get.find<AuthController>();
+  DriverOrderCard({Key? key, required this.order, this.showLeftIcon = true})
+      : super(key: key);
+  final Order order;
+  final bool showLeftIcon;
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
@@ -33,6 +35,9 @@ class DriverOrderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _getOrderIcon(context),
+                  SizedBox(
+                    width: 5,
+                  ),
                   Flexible(
                     flex: 5,
                     fit: FlexFit.tight,
@@ -63,7 +68,7 @@ class DriverOrderCard extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  _getOrderWidget(),
+                  if (showLeftIcon) _getOrderWidget(),
                 ],
               ),
               Divider(
@@ -161,7 +166,8 @@ class DriverOrderCard extends StatelessWidget {
     if (order.orderType == OrderType.Restaurant) {
       return 'Restaurant Delivery';
     } else if ((order as LaundryOrder).getCurrentPhase() ==
-        LaundryOrderPhase.Dropoff) {
+            LaundryOrderPhase.Dropoff &&
+        (order as LaundryOrder).status != LaundryOrderStatus.AtLaundry) {
       return 'Laundry Delivery';
     } else {
       return 'Laundry pick-up';

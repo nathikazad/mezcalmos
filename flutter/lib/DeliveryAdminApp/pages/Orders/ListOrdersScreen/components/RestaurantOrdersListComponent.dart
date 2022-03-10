@@ -29,13 +29,15 @@ class RestaurantOrdersList extends StatelessWidget {
           SizedBox(
             height: 8,
           ),
-          Container(
-            child: currentOrders.value.length > 0
-                ? buildOrders(currentOrders)
-                : Center(
-                    child: Text(lang.strings['deliveryAdminApp']['laundry']
-                        ['noOrders']),
-                  ),
+          Obx(
+            () => Container(
+              child: currentOrders.value.length > 0
+                  ? buildOrders(currentOrders)
+                  : Center(
+                      child: Text(lang.strings['deliveryAdminApp']['laundry']
+                          ['noOrders']),
+                    ),
+            ),
           ),
           Container(
             margin: const EdgeInsets.all(8),
@@ -48,13 +50,15 @@ class RestaurantOrdersList extends StatelessWidget {
           SizedBox(
             height: 8,
           ),
-          Container(
-            child: pastOrders.value.length > 0
-                ? buildOrders(pastOrders)
-                : Center(
-                    child: Text(lang.strings['deliveryAdminApp']['laundry']
-                        ['noOrders']),
-                  ),
+          Obx(
+            () => Container(
+              child: pastOrders.value.length > 0
+                  ? buildOrders(pastOrders)
+                  : Center(
+                      child: Text(lang.strings['deliveryAdminApp']['laundry']
+                          ['noOrders']),
+                    ),
+            ),
           ),
         ],
       ),

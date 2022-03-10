@@ -5,19 +5,14 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.da
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 class LaundryProviderCard extends StatefulWidget {
-  final Order order;
+  final LaundryOrder order;
   String? laundryID;
-  Function(Laundry?) callBack;
 
-  LaundryProviderCard(
-      {Key? key,
-      required this.laundryID,
-      required this.callBack,
-      required this.order})
+  LaundryProviderCard({Key? key, required this.laundryID, required this.order})
       : super(key: key);
 
   @override
@@ -31,10 +26,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
   Laundry? laundry;
   @override
   void initState() {
-    // TODO: implement initState
-    mezDbgPrint("Laundry Provider ============> ${widget.laundryID}");
     getLaundry();
-    mezDbgPrint("Laundry Provider ============> ${laundry}");
 
     super.initState();
   }
@@ -67,13 +59,13 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
                 borderRadius: BorderRadius.circular(10),
                 side: BorderSide(
                   width: 1.5,
-                  color: (widget.laundryID != null)
+                  color: (widget.order.laundry != null)
                       ? Colors.green
                       : Colors.redAccent,
                 )),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
-              onTap: (widget.laundryID == null)
+              onTap: (widget.order.laundry == null)
                   ? () async {
                       await Get.toNamed(kLaundriesListRoute,
                               arguments: widget.order)!
@@ -88,9 +80,9 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
-                child: (widget.laundryID != null)
-                    ? driverInfoComponent(textTheme, context)
-                    : noDriverComponent(context, textTheme),
+                child: (widget.order.laundry != null)
+                    ? laundryInfoComponent(textTheme, context)
+                    : noLaundryComponent(context, textTheme),
               ),
             ),
           ),
@@ -100,7 +92,9 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
   }
 
   // ------ LOCAL COMPONENTS ---------//
-  Widget noDriverComponent(BuildContext context, TextTheme textTheme) {
+
+  // CARD CONTENT WHEN THERE IS NO LAUNDRY ASSIGNED, LAUNDRY INFO  (LAUNDRY == NULL)
+  Widget noLaundryComponent(BuildContext context, TextTheme textTheme) {
     return Row(
       children: [
         Icon(
@@ -122,44 +116,34 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
   }
 
 // CARD CONTENT WHEN THERE IS LAUNDRY ASSIGNED, LAUNDRY INFO  (LAUNDRY != NULL)
-  Widget driverInfoComponent(TextTheme textTheme, BuildContext context) {
-    return FutureBuilder<Laundry>(
-        future: laundryInfoController.getLaundry(widget.laundryID!),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Row(
-              children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage:
-                      CachedNetworkImageProvider(snapshot.data!.info.image),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Flexible(
-                  flex: 3,
-                  fit: FlexFit.tight,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        snapshot.data!.info.name,
-                        style: textTheme.bodyText2,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+  Widget laundryInfoComponent(TextTheme textTheme, BuildContext context) {
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 25,
+          backgroundImage:
+              CachedNetworkImageProvider(widget.order.laundry!.image),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Flexible(
+          flex: 3,
+          fit: FlexFit.tight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.order.laundry!.name,
+                style: textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

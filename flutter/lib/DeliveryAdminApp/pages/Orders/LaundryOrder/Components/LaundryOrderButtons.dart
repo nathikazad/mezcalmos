@@ -198,7 +198,7 @@ class OrderButtons {
         gradient: LinearGradient(
           begin: Alignment(-0.10374055057764053, 0),
           end: Alignment(1.1447703838348389, 1.1694844961166382),
-          colors: (order.dropoffDriver != null)
+          colors: (order.dropoffDriver == null)
               ? [Colors.grey, Colors.grey]
               : [const Color(0xffff9300), const Color(0xdbd15f18)],
         ),
@@ -228,7 +228,6 @@ class OrderButtons {
             if (res) {
               Get.snackbar("Loading", "");
               controller.readyForDeliveryOrder(order.orderId);
-              Get.back(closeOverlays: true);
             }
           } else {
             Get.snackbar('Error', 'Please Select a driver');
