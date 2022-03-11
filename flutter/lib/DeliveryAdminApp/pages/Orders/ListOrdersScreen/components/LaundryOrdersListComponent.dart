@@ -5,6 +5,9 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import '../../../../../Shared/controllers/languageController.dart';
 import 'LaundryOrderCard.dart';
 
+dynamic i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["ListOrdersScreen"]["ListOrdersScreen"];
+
 class LaundryOrdersList extends StatelessWidget {
   /// Component responsible of building  laundry orders list inside the tabbarview of the delivery admin app
   LaundryOrdersList(
@@ -24,7 +27,7 @@ class LaundryOrdersList extends StatelessWidget {
             Container(
               margin: const EdgeInsets.all(8),
               alignment: Alignment.centerLeft,
-              child: Text(lang.strings["customer"]["orders"]["title"],
+              child: Text(i18n()["title"],
                   style: Theme.of(context).textTheme.headline1,
                   textAlign: TextAlign.left),
             ),
@@ -32,7 +35,7 @@ class LaundryOrdersList extends StatelessWidget {
               height: 8,
             ),
             Obx(
-              ()=> Container(
+              () => Container(
                 child: currentOrders.isNotEmpty
                     ? Column(
                         children: List.generate(
@@ -41,16 +44,14 @@ class LaundryOrdersList extends StatelessWidget {
                                 LaundryOrderCard(order: currentOrders[index])),
                       )
                     : Center(
-                        child: Text(lang.strings['deliveryAdminApp']['laundry']
-                            ['noOrders']),
+                        child: Text(i18n()['noOrders']),
                       ),
               ),
             ),
             Container(
               margin: const EdgeInsets.all(8),
               alignment: Alignment.centerLeft,
-              child: Text(
-                  lang.strings['deliveryAdminApp']['laundry']['pastOrders'],
+              child: Text(i18n()['pastOrders'],
                   style: Theme.of(context).textTheme.headline1,
                   textAlign: TextAlign.left),
             ),
@@ -58,7 +59,7 @@ class LaundryOrdersList extends StatelessWidget {
               height: 8,
             ),
             Obx(
-              ()=> Container(
+              () => Container(
                 child: pastOrders.isNotEmpty
                     ? Column(
                         children: List.generate(
@@ -67,8 +68,7 @@ class LaundryOrdersList extends StatelessWidget {
                                 LaundryOrderCard(order: pastOrders[index])),
                       )
                     : Center(
-                        child: Text(lang.strings['deliveryAdminApp']['laundry']
-                            ['noOrders']),
+                        child: Text(i18n()['noOrders']),
                       ),
               ),
             ),
