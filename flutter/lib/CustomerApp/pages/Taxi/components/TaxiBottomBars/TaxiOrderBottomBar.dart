@@ -290,9 +290,11 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           SizedBox(
             width: 5,
           ),
-          Text(
-            '${_i18n()["forwarding"]}',
-            style: Theme.of(pContext).textTheme.bodyText1,
+          Flexible(
+            child: Text(
+              '${_i18n()["forwarding"]}',
+              style: Theme.of(pContext).textTheme.bodyText1,
+            ),
           ),
           Spacer(),
           cancelBtn(widget.order.value!)
@@ -338,7 +340,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           Flexible(
               flex: 5,
               fit: FlexFit.tight,
-              child: Text(_i18n()['rideCancelledByCompany'],
+              child: Text(_i18n()['forwardUnsuccess'],
                   style: Theme.of(pContext).textTheme.bodyText2)),
           // taxiAvatarAndName(
           //     order: widget.order.value!,

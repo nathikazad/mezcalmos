@@ -268,7 +268,11 @@
                             "ride": "viaje",
                             "rideExpired": "Tu pedido ha expirado",
                             "rideCancelledByTaxi": "El viaje ha sido cancelado por taxi",
-                            "rideCancelledByCustomer": "Has cancelado tu viaje"
+                            "rideCancelledByCustomer": "Has cancelado tu viaje",
+                            "forwarding": "Estamos llamando a la compañía local por teléfono para encontrar su taxi",
+                            "taxiNumber": "Número de taxi",
+                            "forwardSuccess": "Un taxi de una compañía local está en camino",
+                            "forwardUnsuccess": "No se pudo encontrar su taxi de la compañía local"
                         },
                         "TaxiReqBottomBar": {
                             "decreasePrice": "disminuir el precio",
