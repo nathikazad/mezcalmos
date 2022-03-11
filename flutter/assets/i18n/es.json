@@ -765,7 +765,9 @@
                         "noOrders": "Sin pedidos",
                         "pastOrders": "Órdenes pasadas",
                         "restaurantOrders": "Órdenes de restaurantes",
-                        "laundryOrders": "Órdenes de lavandería"
+                        "laundryOrders": "Órdenes de lavandería",
+                        "today": "Hoy",
+                        "yesterday": "Ayer"
                     }
                 },
                 "ViewRestaurantOrderScreen": {

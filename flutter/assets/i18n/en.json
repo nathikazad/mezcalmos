@@ -756,7 +756,9 @@
             "noOrders": "No orders found",
             "pastOrders": "Past orders",
             "restaurantOrders": "Restaurant Orders",
-            "laundryOrders": "Laundry orders"
+            "laundryOrders": "Laundry orders",
+            "today": "Today",
+            "yesterday": "Yesterday"
           }
         },
         "ViewRestaurantOrderScreen": {
