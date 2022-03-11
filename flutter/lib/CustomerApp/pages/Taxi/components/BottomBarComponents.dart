@@ -16,8 +16,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-["Taxi"]["components"]["BottomBarComponents"];
+    ["pages"]["Taxi"]["components"]["BottomBarComponents"];
 
 Widget verticalSeparator() {
   return VerticalDivider(width: 1, color: Colors.grey.shade300);
@@ -150,7 +149,8 @@ Widget taxiAvatarAndName(
 Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
   return GestureDetector(
     onTap: () {
-      Get.toNamed(getTaxiMessagesRoute(order.orderId));
+      Get.toNamed(getTaxiMessagesRoute(order.orderId),
+          parameters: {"orderId": order.orderId});
     },
     child: Container(
       margin: margin ?? EdgeInsets.only(left: 6),
@@ -201,19 +201,16 @@ Widget cancelBtn(TaxiOrder order) {
     child: GestureDetector(
       onTap: () async {
         YesNoDialogButton res = await yesNoDialog(
-            text: _i18n()?['confirmation_header'] ??
-                "Por favor confirmar",
+            text: _i18n()?['confirmation_header'] ?? "Por favor confirmar",
             body:
-                _i18n()?['confirmation_text'] ??
-                "¿Cancelar el viaje actual?");
+                _i18n()?['confirmation_text'] ?? "¿Cancelar el viaje actual?");
 
         if (res == YesNoDialogButton.Yes) {
           ServerResponse resp =
               await Get.find<TaxiController>().cancelTaxi(order.orderId);
 
           if (!resp.success) {
-            MezSnackbar("Oops",
-                _i18n()['serverCommunicationError'],
+            MezSnackbar("Oops", _i18n()['serverCommunicationError'],
                 position: SnackPosition.TOP);
           }
           // no need for else here , because we are handling UI changes already upon CanceledbyCustomer.

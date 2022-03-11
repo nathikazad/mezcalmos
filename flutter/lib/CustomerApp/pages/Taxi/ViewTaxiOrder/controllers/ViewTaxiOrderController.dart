@@ -35,7 +35,7 @@ class ViewTaxiOrderController {
     order.value = controller.getOrder(orderId) as TaxiOrder?;
     if (order.value != null) {
       // set initial location
-      initializeMap();
+      initializeMap().then((value) => mezDbgPrint("Initialized Map!"));
 
       if (order.value!.inProcess()) {
         inProcessOrderStatusHandler(order.value!.status);
@@ -83,13 +83,13 @@ class ViewTaxiOrderController {
     }
   }
 
-  void initializeMap() {
+  Future<void> initializeMap() async {
     mGoogleMapController.setLocation(order.value!.from);
     // add the polylines!
     mGoogleMapController.decodeAndAddPolyline(
         encodedPolylineString: order.value!.routeInformation!.polyline);
     mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
-    mGoogleMapController.animateAndUpdateBounds();
+    await mGoogleMapController.animateAndUpdateBounds();
   }
 
   /// Check the counterOffers Validity each 1 second,

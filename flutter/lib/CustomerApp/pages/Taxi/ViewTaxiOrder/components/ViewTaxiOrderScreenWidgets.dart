@@ -9,10 +9,12 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Taxi"]["ViewTaxiOrdersScreen"];
+
 class ViewTaxiOrderScreenWidgets {
   final ViewTaxiOrderController viewController;
   ViewTaxiOrderScreenWidgets({required this.viewController});
-  LanguageController lang = Get.find<LanguageController>();
 
   /// this builds [MezToolTip] with the given [getHints()],
   ///
@@ -39,8 +41,7 @@ class ViewTaxiOrderScreenWidgets {
         child: InkWell(
           onTap: () async {
             YesNoDialogButton res = await yesNoDialog(
-                text: lang.strings['customer']['cancelOrder']['title'],
-                body: lang.strings['customer']['cancelOrder']['question']);
+                text: _i18n()['title'], body: _i18n()['question']);
             if (res == YesNoDialogButton.Yes) {
               await viewController.taxiController
                   .cancelTaxi(viewController.order.value!.orderId);
@@ -53,7 +54,7 @@ class ViewTaxiOrderScreenWidgets {
                   borderRadius: BorderRadius.circular(10)),
               child: Center(
                 child: Text(
-                  lang.strings['customer']['taxiView']['cancel'],
+                  _i18n()['cancel'],
                   style: TextStyle(
                       fontFamily: "psr",
                       color: Colors.white,
@@ -71,9 +72,8 @@ class ViewTaxiOrderScreenWidgets {
   List<MezToolTipHint> getHints() {
     return [
       MezToolTipHint(
-        hintWidget: RidePriceControllHint(
-            hintText: lang.strings['customer']['taxiView']
-                ['taxiRidePriceTooltip']),
+        hintWidget:
+            RidePriceControllHint(hintText: _i18n()['taxiRidePriceTooltip']),
         left: 80.1,
         bottom: 150.5,
         bodyLeft: 20,

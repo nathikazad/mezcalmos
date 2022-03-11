@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBarComponents.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/RecreateOrderBtn.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -12,14 +13,12 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:sizer/sizer.dart';
 
-import '../BottomBarComponents.dart';
-
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-["Taxi"]["components"]["TaxiBottomBars"]["TaxiOrderBottomBar"];
+    ["pages"]["Taxi"]["components"]["TaxiBottomBars"]["TaxiOrderBottomBar"];
 
 class TaxiOrderBottomBar extends StatefulWidget {
   Rxn<TaxiOrder> order;
+
   /// Show a bottom bar that depends on the status
   /// normally shows taxi avatar and name but if order is looking
   /// then shows increment and decrement price buttons

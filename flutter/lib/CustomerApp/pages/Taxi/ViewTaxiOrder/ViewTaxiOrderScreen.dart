@@ -13,6 +13,9 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Taxi"]["ViewTaxiOrdersScreen"];
+
 class ViewTaxiOrderScreen extends StatefulWidget {
   @override
   _ViewTaxiOrderScreenState createState() => _ViewTaxiOrderScreenState();
@@ -23,7 +26,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   late final ViewTaxiOrderController viewController;
   late final ViewTaxiOrderScreenWidgets viewWidgets;
   late final CounterOfferWidgets counterOfferWidgets;
-  final LanguageController lang = Get.find<LanguageController>();
+
   /******************************  Init and build function ************************************/
 
   @override
@@ -34,8 +37,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     viewController.init(orderId, orderCancelledCallback: (TaxiOrder order) {
       Get.back();
       oneButtonDialog(
-          body: lang.strings['shared']['snackbars']['orderCancelSuccess'],
-          imagUrl: order.customer.image);
+          body: _i18n()['orderCancelSuccess'], imagUrl: order.customer.image);
     });
     super.initState();
   }
@@ -62,8 +64,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-            onClick: () => Get.back()),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
         // appBar: AppBar(),
         backgroundColor: Colors.white,
         body: Obx(

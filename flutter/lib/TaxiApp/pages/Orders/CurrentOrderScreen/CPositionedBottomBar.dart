@@ -20,9 +20,8 @@ import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]
-["pages"]["Orders"]["CurrentOrderScreen"]["CPositionedBottomBar"];
-
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+    ["Orders"]["CurrentOrderScreen"]["CPositionedBottomBar"];
 
 class CurrentPositionedBottomBar extends StatelessWidget {
   RxBool showLoadingCircleInButton = false.obs;
@@ -277,10 +276,10 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                   return AlertDialog(
                                     title: Text(
                                         _i18n()?['confirmation_header'] ??
-                                        "Por favor confirmar"),
+                                            "Por favor confirmar"),
                                     content: Text(
                                         _i18n()?['confirmation_text'] ??
-                                        "¿Cancelar el viaje actual?"),
+                                            "¿Cancelar el viaje actual?"),
                                     actions: [
                                       TextButton(
                                           onPressed: () {
@@ -297,14 +296,12 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                               });
                                             }
                                           },
-                                          child: Text(_i18n()?['yes'] ??
-                                              'Si')),
+                                          child: Text(_i18n()?['yes'] ?? 'Si')),
                                       TextButton(
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text(_i18n()?['no'] ??
-                                              'No'))
+                                          child: Text(_i18n()?['no'] ?? 'No'))
                                     ],
                                   );
                                 }),
@@ -372,8 +369,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
               taxiAuthController.currentLocation, order.from.position) >
           0.5) {
         YesNoDialogButton clickedYes = await yesNoDialog(
-            text: "Oops!",
-            body: _i18n()["tooFarFromstartRide"]);
+            text: "Oops!", body: _i18n()["tooFarFromstartRide"]);
         if (clickedYes == YesNoDialogButton.Yes) {
           await startRide();
         }
@@ -410,8 +406,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
     if (await canLaunch(url))
       await launch(url);
     else {
-      MezSnackbar(
-          "Oops :(", _i18n()['failedMapLaunch']);
+      MezSnackbar("Oops :(", _i18n()['failedMapLaunch']);
     }
   }
 }

@@ -8,10 +8,9 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() =>
-  Get.find<LanguageController>().strings["CustomerApp"]["pages"]
-    ["ListOrdersScreen"]["components"]["TaxiOrderOngoingOrderCard"];
-    
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["ListOrdersScreen"]["components"]["TaxiOrderOngoingCard"];
+
 class TaxiOngoingOrderCard extends StatelessWidget {
   TaxiOngoingOrderCard({
     Key? key,

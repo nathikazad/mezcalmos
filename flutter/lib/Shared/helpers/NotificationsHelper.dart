@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 import 'package:flutter/material.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
@@ -38,8 +37,7 @@ void _displayNotification(notifs.Notification notification) async {
             buttonColor: Color(0xffffffff),
             buttonShadowColor: Color(0xfffdfdfd)),
         buttonRightStyle: MezDialogButtonStyle(
-            buttonText: notification.linkText ??
-                _i18n()['view'],
+            buttonText: notification.linkText ?? _i18n()['view'],
             buttonColor: Color(0xffffffff),
             buttonShadowColor: Color(0xfffdfdfd)),
         rightButtonCallback: () {
@@ -60,6 +58,7 @@ void notificationSnackBar(
   Get.rawSnackbar(
       onTap: (_) async {
         mezDbgPrint("ONTAP ====> $_");
+
         await onClick();
       },
       maxWidth: Get.width,

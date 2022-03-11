@@ -24,6 +24,8 @@ import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['MessagingScreen'];
 
 class MessagingScreen extends StatefulWidget {
   @override
@@ -32,8 +34,10 @@ class MessagingScreen extends StatefulWidget {
 
 // TODO : REFACTORING !
 class _MessagingScreenState extends State<MessagingScreen> {
-  String? orderId;
-  late String chatId;
+  late final String? orderId;
+  late final bool showViewOrderBtn;
+  late final String chatId;
+
   ParticipantType recipientType = ParticipantType.Customer;
   String? recipientId;
   MessageController controller =
@@ -48,6 +52,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     this.chatId = Get.parameters['chatId']!;
     this.orderId = Get.parameters['orderId'];
+    this.showViewOrderBtn = Get.arguments['showViewOrderBtn'] as bool? ?? false;
+
     if (Get.parameters['recipientId'] != null)
       this.recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {
@@ -74,16 +80,19 @@ class _MessagingScreenState extends State<MessagingScreen> {
         Get.find<OrderController>().getOrder(this.orderId!)!.orderType;
     switch (orderType) {
       case OrderType.Taxi:
-        // offNamedUntil : to avoid loop of same routes being on stack:
-        // TaxiOrderRoute -> Messages -> TaxiOrderRoute -> messages ...
-        Get.offNamedUntil(getTaxiOrderRoute(this.orderId!),
-            (route) => route.settings.name == kTaxiOrderRoute);
+        // offNamedUntil : to avoid loop of same routes being on stack: (WORKS)
+        // TaxiOrderRoute -> Messages -> TaxiOrderRoute -> messages ... (~)
+
+        // this only works when User is comming from Notification and currentRoute != orderViewScreen
+        Get.offAndToNamed(getTaxiOrderRoute(this.orderId!));
         break;
       case OrderType.Restaurant:
         // offNamedUntil : to avoid loop of same routes being on stack:
         // restaurantOrderRoute -> Messages -> restaurantOrderRoute -> messages ...
-        Get.offNamedUntil(getRestaurantOrderRoute(this.orderId!),
-            (route) => route.settings.name == kRestaurantOrderRoute);
+        Get.offNamedUntil(
+            getRestaurantOrderRoute(this.orderId!),
+            (route) =>
+                route.settings.name == getRestaurantOrderRoute(this.orderId!));
         break;
       case OrderType.Laundry:
         Get.snackbar("Launcdry order", "Oups not implemented yet!");
@@ -233,13 +242,23 @@ class _MessagingScreenState extends State<MessagingScreen> {
             },
           ),
           actions: [
-            InkWell(
-              child: Icon(
-                Icons.shopping_cart_sharp,
-                color: Colors.purple.shade700,
-              ),
-              onTap: navigateToOrderPage,
-            )
+            if (orderId != null && showViewOrderBtn)
+              InkWell(
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Text(
+                      "View\nOrder",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
+                // decoration: BoxDecoration(
+                //     color: Colors.grey.withAlpha(55),
+                //     borderRadius: BorderRadius.circular(10))),
+                onTap: navigateToOrderPage,
+              )
           ],
         ),
         body: Container(
@@ -264,7 +283,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
               SendMessageBox(
                   typedMsg: _typedMsg,
                   textEditingController: _textEditingController,
-                  languageController: lang,
                   controller: controller,
                   chatId: chatId,
                   orderId: orderId)
@@ -279,18 +297,15 @@ class SendMessageBox extends StatelessWidget {
       {Key? key,
       required RxString typedMsg,
       required TextEditingController textEditingController,
-      required LanguageController languageController,
       required this.controller,
       this.orderId,
       required this.chatId})
       : _typedMsg = typedMsg,
         _textEditingController = textEditingController,
-        _languageController = languageController,
         super(key: key);
 
   final RxString _typedMsg;
   final TextEditingController _textEditingController;
-  final LanguageController _languageController;
   final MessageController controller;
   final String? orderId;
   final String chatId;
@@ -309,8 +324,7 @@ class SendMessageBox extends StatelessWidget {
             filled: true,
             fillColor: Colors.white,
             border: OutlineInputBorder(borderSide: BorderSide.none),
-            hintText: _languageController.strings['shared']['messages']
-                ['writeMsgPlaceholder'],
+            hintText: _i18n()['writeMsgPlaceholder'],
             hintStyle: Theme.of(context)
                 .textTheme
                 .subtitle1

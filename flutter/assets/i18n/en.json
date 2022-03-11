@@ -454,6 +454,9 @@
       "NoInternetConnectionScreen":{
         "noInternetConnection" : "No internet connection",
         "reconnecting" : "Reconnecting"
+      },
+      "MessagingScreen" :{
+        "writeMsgPlaceholder": "Write your message here ..."
       }
     },
     "widgets":{

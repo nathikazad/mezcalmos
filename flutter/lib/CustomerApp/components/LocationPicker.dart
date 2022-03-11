@@ -16,9 +16,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["customerApp"]
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["components"]["LocationPicker"];
-
 
 class LocationPickerController extends MGoogleMapController {
   RxBool _showFakeMarker = true.obs;
@@ -142,14 +141,10 @@ class LocationPickerState extends State<LocationPicker> {
         );
       case BottomButtomToShow.Confirm:
         if (Get.find<AuthController>().fireAuthUser != null) {
-          return buildBottomButton(
-              _i18n()['confirm']
-                  .toString()
-                  .capitalize,
+          return buildBottomButton(_i18n()['confirm'].toString().capitalize,
               notifier: widget.notifyParentOfConfirm);
         } else {
-          return buildBottomButton(
-              _i18n()["signInToMakeOrder"],
+          return buildBottomButton(_i18n()["signInToMakeOrder"],
               notifier: (_) async {
             await Get.toNamed(kSignInRouteOptional);
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
@@ -163,9 +158,7 @@ class LocationPickerState extends State<LocationPicker> {
         );
       case BottomButtomToShow.GrayedOut:
         return buildBottomButton(
-          _i18n()['confirm']
-              .toString()
-              .capitalize,
+          _i18n()['confirm'].toString().capitalize,
         );
     }
   }
