@@ -324,7 +324,7 @@
           "title": "Food"
         },
         "laundry": {
-          "subtitle": "Comming soon ...",
+          "subtitle": "Get your clothes cleaned by your nearest laundry service",
           "title": "Laundry"
         },
         "supportText": "need help ? Contact our support team"
@@ -337,6 +337,9 @@
         },
         "LaundryCurrentOrderView": {
           "Components": {
+            "LaundryOrderComponent": {
+              "notes": "Notes"
+            },
             "LaundryOrderFooterCard": {
               "cancelOrder": "Cancel Order",
               "orderCanceled": "Order is being cancelled ...",
@@ -753,7 +756,9 @@
             "noOrders": "No orders found",
             "pastOrders": "Past orders",
             "restaurantOrders": "Restaurant Orders",
-            "laundryOrders": "Laundry orders"
+            "laundryOrders": "Laundry orders",
+            "today": "Today",
+            "yesterday": "Yesterday"
           }
         },
         "ViewRestaurantOrderScreen": {

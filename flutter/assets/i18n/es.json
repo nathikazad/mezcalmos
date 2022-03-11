@@ -327,7 +327,7 @@
                 },
                 "laundry": {
                     "title": "Lavandería",
-                    "subtitle": "Próximamente ..."
+                    "subtitle": "Haz que tu ropa lave tu lavandería más cercana"
                 },
                 "supportText": "necesitas ayuda ? Contacta con nuestro equipo de soporte"
             },
@@ -339,6 +339,9 @@
                 },
                 "LaundryCurrentOrderView": {
                     "Components": {
+                        "LaundryOrderComponent": {
+                            "notes": "Notas"
+                        },
                         "LaundryOrderFooterCard": {
                             "cancelOrder": "Cancelar el pedido",
                             "orderCanceled": "Se cancela el pedido ...",
@@ -762,7 +765,9 @@
                         "noOrders": "Sin pedidos",
                         "pastOrders": "Órdenes pasadas",
                         "restaurantOrders": "Órdenes de restaurantes",
-                        "laundryOrders": "Órdenes de lavandería"
+                        "laundryOrders": "Órdenes de lavandería",
+                        "today": "Hoy",
+                        "yesterday": "Ayer"
                     }
                 },
                 "ViewRestaurantOrderScreen": {
