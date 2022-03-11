@@ -5,6 +5,7 @@ import { OrderNotification } from '../../Generic/Notification';
 import { Location } from "../../Generic/Generic";
 
 export interface LaundryOrder extends TwoWayDeliverableOrder {
+  laundry: UserInfo;
   notes?: string;
   weight?: number;
   status: LaundryOrderStatus;

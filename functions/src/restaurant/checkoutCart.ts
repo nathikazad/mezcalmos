@@ -11,7 +11,7 @@ import { OrderType } from "../shared/models/Generic/Order";
 import { Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
 import { UserInfo } from "../shared/models/Generic/User";
 import { Language, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import * as restaurantNodes from "../shared/databaseNodes/restaurant";
+import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootNodes from "../shared/databaseNodes/root";

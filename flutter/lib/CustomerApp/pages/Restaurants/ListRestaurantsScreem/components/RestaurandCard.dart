@@ -46,7 +46,7 @@ class RestaurantCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        restaurant.name,
+                        restaurant.info.name,
                         style: txt.headline3,
                       ),
                       SizedBox(
@@ -110,7 +110,7 @@ class RestaurantCard extends StatelessWidget {
               height: double.infinity,
               width: 150.w,
               child: CachedNetworkImage(
-                imageUrl: restaurant.photo,
+                imageUrl: restaurant.info.image,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Container(
                   width: 15,

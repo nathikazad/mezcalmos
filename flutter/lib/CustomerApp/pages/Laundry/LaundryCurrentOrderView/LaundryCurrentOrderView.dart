@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryPricingComponent.dart';
@@ -24,7 +25,7 @@ class LaundryCurrentOrderView extends StatefulWidget {
 }
 
 class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
-  String? orderId;
+  late String orderId;
   Rxn<LaundryOrder> order = Rxn();
   StreamSubscription? _orderListener;
   OrderController controller = Get.find<OrderController>();
@@ -37,16 +38,22 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   @override
   void initState() {
     super.initState();
-    orderId = Get.parameters['orderId'];
+    // Handle Order id from the rooting
+    if (Get.parameters['orderId'] != null) {
+      orderId = Get.parameters['orderId']!;
+    } else {
+      mezDbgPrint("Order id null from the parameters ######");
+      Get.back();
+    }
 
-    order.value = controller.getOrder(orderId!) as LaundryOrder?;
+    order.value = controller.getOrder(orderId) as LaundryOrder?;
     if (order.value == null) {
-      controller.currentOrders.stream.first
-          .then((value) => order.value = value as LaundryOrder?);
+      mezDbgPrint("Order null");
+      Get.back();
     } else {
       if (order.value!.inProcess()) {
         _orderListener =
-            controller.getCurrentOrderStream(orderId!).listen((event) {
+            controller.getCurrentOrderStream(orderId).listen((event) {
           if (event != null) {
             mezDbgPrint("===================" +
                 (event as LaundryOrder).status.toString());
@@ -55,12 +62,12 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           } else {
             _orderListener?.cancel();
             _orderListener = null;
-            controller.getPastOrderStream(orderId!).listen((event) {
+            controller.getPastOrderStream(orderId).listen((event) {
               if (event != null) {
                 order.value = event as LaundryOrder;
               }
             });
-            order.value = controller.getOrder(orderId!) as LaundryOrder?;
+            order.value = controller.getOrder(orderId) as LaundryOrder?;
           }
         });
       }
@@ -102,13 +109,17 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                       ),
                       LaundryPricingCompnent(order: order.value!),
                       SizedBox(
-                        height: 20,
+                        height: 10,
+                      ),
+                      LaundryOrderNoteComponent(order: order.value!),
+                      SizedBox(
+                        height: 10,
                       ),
                       OrderSummaryComponent(
                         order: order.value!,
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       LaundryOrderFooterCard(order: order.value!)
                     ],

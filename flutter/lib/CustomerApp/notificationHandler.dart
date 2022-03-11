@@ -1,13 +1,13 @@
+import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
@@ -58,12 +58,12 @@ Notification laundryOrderStatusChangeNotificationHandler(
       variableParams: value);
 }
 
-
 Notification taxiOrderStatusChangeNotificationHandler(
     String key, dynamic value) {
   TaxiOrdersStatus newOrdersStatus =
       value['status'].toString().toTaxiOrderStatus();
-  mezDbgPrint(newOrdersStatus);
+  mezDbgPrint(
+      'notif nuuuuuuuuuuuuuuuuuuuuuuuuuuuul :' + newOrdersStatus.toString());
   Map<String, dynamic> dynamicFields =
       getTaxiOrderStatusFields(newOrdersStatus)!;
   mezDbgPrint(dynamicFields);
@@ -100,7 +100,6 @@ Notification restaurantOrderStatusChangeNotificationHandler(
           value["notificationAction"].toString().toNotificationAction(),
       variableParams: value);
 }
-
 
 // TODO: needs to be formatted for laundry
 Map<String, dynamic>? getLaundryOrderStatusFields(
@@ -182,6 +181,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
     default:
     // do nothing
   }
+  return null;
 }
 
 Map<String, dynamic>? getRestaurantOrderStatusFields(
@@ -225,6 +225,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
     default:
     // do nothing
   }
+  return null;
 }
 
 Map<String, dynamic>? getTaxiOrderStatusFields(
@@ -265,9 +266,38 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
+    // TODO !
+    case TaxiOrdersStatus.ForwardingToLocalCompany:
+    //   return <String, dynamic>{
+    //     "title":
+    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdCompany"]["title"]}",
+    //     "body":
+    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdCompany"]["body"]}",
+    //     "imgUrl":
+    //         "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+    //   };
+    // case TaxiOrdersStatus.ForwardingUnsuccessful:
+    //   return <String, dynamic>{
+    //     "title":
+    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdCancelled"]["title"]}",
+    //     "body":
+    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdCancelled"]["body"]}",
+    //     "imgUrl":
+    //         "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+    //   };
+    // case TaxiOrdersStatus.ForwardingSuccessful:
+    //   return <String, dynamic>{
+    //     "title":
+    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdSuccess"]["title"]}",
+    //     "body":
+    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdSuccess"]["body"]}",
+    //     "imgUrl":
+    //         "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+    //   };
     default:
     // do nothing
   }
+  return null;
 }
 
 Notification newMessageNotification(String key, dynamic value) {

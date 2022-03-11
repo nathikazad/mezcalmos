@@ -37,6 +37,7 @@ extension ParseStringToOrderStatus on String {
 class LaundryOrder extends TwoWayDeliverableOrder {
   num? weight;
   String? notes;
+  UserInfo? laundry;
   LaundryOrderStatus status;
   LaundryOrder(
       {required String orderId,
@@ -46,6 +47,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required PaymentType paymentType,
       required this.status,
       required UserInfo customer,
+      required this.laundry,
       DeliveryDriverUserInfo? dropoffDriver,
       String? dropOffDriverChatId,
       DeliveryDriverUserInfo? pickupDriver,
@@ -76,6 +78,9 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         paymentType: data["paymentType"].toString().toPaymentType(),
         weight: data["weight"],
         notes: data["notes"],
+        laundry: (data["laundry"] != null)
+            ? UserInfo.fromData(data["laundry"])
+            : null,
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
             : null,
@@ -118,15 +123,14 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.OtwDelivery;
   }
 
-  @override
   LaundryOrderPhase getCurrentPhase() {
     switch (this.status) {
       case LaundryOrderStatus.OrderReceieved:
       case LaundryOrderStatus.PickedUp:
       case LaundryOrderStatus.OtwPickup:
-      case LaundryOrderStatus.AtLaundry:
         return LaundryOrderPhase.Pickup;
       case LaundryOrderStatus.ReadyForDelivery:
+
       case LaundryOrderStatus.OtwDelivery:
         return LaundryOrderPhase.Dropoff;
       case LaundryOrderStatus.Delivered:

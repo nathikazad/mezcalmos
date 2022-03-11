@@ -171,7 +171,8 @@ class TaxiAuthController extends GetxController {
               _databaseHelper.firebaseDatabase
                   .reference()
                   .child(customerInProcessOrderDriverLocationNode(
-                      _state.value!.currentOrder!, currentOrderCustomerId))
+                      orderId: _state.value!.currentOrder!,
+                      customerId: currentOrderCustomerId))
                   .set(positionUpdate);
           }
           positionUpdate["online"] = _state.value?.isLooking;

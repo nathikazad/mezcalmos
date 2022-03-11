@@ -4,11 +4,11 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/LaundryOngoingOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/LaundryPastOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/RestaurantOngoingOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/RestaurantPastOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/TaxiPastOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/components/LaundryOngoingOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/components/LaundryPastOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/components/RestaurantOngoingOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/components/RestaurantPastOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/components/TaxiPastOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -222,7 +222,8 @@ class OngoingOrderList extends StatelessWidget {
                         order: controller.currentOrders()[index]);
                   case OrderType.Laundry:
                     return LaundryOngoigOrderCard(
-                        order: controller.currentOrders()[index]);
+                        order:
+                            controller.currentOrders()[index] as LaundryOrder);
 
                   default:
                     return SizedBox(

@@ -101,18 +101,20 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
               onPressed: () async {
                 if (auth.fireAuthUser != null) {
                   if (ViewItemScreenMode.AddItemMode == widget.mode) {
-                    if (restaurantCartController.associatedRestaurant?.id !=
+                    if (restaurantCartController
+                            .associatedRestaurant?.info.id !=
                         null) {
-                      if (restaurantCartController.associatedRestaurant?.id ==
+                      if (restaurantCartController
+                              .associatedRestaurant?.info.id ==
                           widget.currentRestaurantId) {
                         mezDbgPrint(
-                            "the first id is ${restaurantCartController.associatedRestaurant?.id} and the scond is ${widget.currentRestaurantId}");
+                            "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurantId}");
                         restaurantCartController
                             .addItem(widget.cartItem.value!);
                         Get.offNamed(kCartRoute);
                       } else {
                         mezDbgPrint(
-                            "not true ${restaurantCartController.associatedRestaurant?.id} and the other is ${widget.currentRestaurantId}");
+                            "not true ${restaurantCartController.associatedRestaurant?.info.id} and the other is ${widget.currentRestaurantId}");
 
                         YesNoDialogButton clickedYes = await yesNoDialog(
                             text: _i18n()["title"],

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
-import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/SaveLocationDailog.dart';
@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:sizer/sizer.dart';
 
-enum PickLocationMode { AddNewLocation, EditLocation }
+enum PickLocationMode { AddNewLocation, EditLocation, NonLoggedInPick }
 
 class PickLocationView extends StatefulWidget {
   final PickLocationMode? pickLocationMode;
@@ -34,10 +34,10 @@ class _PickLocationViewState extends State<PickLocationView> {
   // Location? locationPickerController.location;
   SavedLocation? savedLocation;
   bool showScreenLoading = false;
+  LatLng? currentLatLng;
 
   dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-      ["pages"]
-    ["PickLocationScreen"]["PickLocationView"];
+      ["pages"]["PickLocationScreen"]["PickLocationView"];
   //LanguageController lang = Get.find<LanguageController>();
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
@@ -60,9 +60,9 @@ class _PickLocationViewState extends State<PickLocationView> {
         geoCodeAndSetControllerLocation(
             LatLng(locData.latitude!, locData.longitude!));
       });
-    } else {
+    } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
       var x = Get.parameters["id"];
-      savedLocation = customerAuthController
+      savedLocation = Get.find<CustomerAuthController>()
           .customerRxn()!
           .savedLocations
           .firstWhere((saved) => saved.id == x);
@@ -75,9 +75,30 @@ class _PickLocationViewState extends State<PickLocationView> {
           });
         });
       });
-    }
+    } else {
+      mezDbgPrint("Iniiit");
 
+      GeoLoc.Location().getLocation().then((value) {
+        currentLatLng = LatLng(value.latitude!, value.longitude!);
+
+        geoCodeAndSetLocation(currentLatLng!);
+      });
+    }
+    mezDbgPrint('LOOOOOOOOC ' + locationPickerController.location.toString());
     super.initState();
+  }
+
+  geoCodeAndSetLocation(LatLng currentLoc) async {
+    String? address = await getAdressFromLatLng(currentLoc);
+
+    setState(() {
+      locationPickerController.setLocation(Location.fromFirebaseData({
+        "address": address ??
+            currentLoc.latitude.toString() + ", ${currentLoc.longitude}",
+        "lat": currentLoc.latitude,
+        "lng": currentLoc.longitude,
+      }));
+    });
   }
 
   @override
@@ -93,8 +114,7 @@ class _PickLocationViewState extends State<PickLocationView> {
             ? ButtonComponent(
                 function: () async => await onPickButtonClick(context),
                 widget: Center(
-                    child: Text(
-                        _i18n()["pickLocation"],
+                    child: Text(_i18n()["pickLocation"],
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
@@ -167,14 +187,20 @@ class _PickLocationViewState extends State<PickLocationView> {
         await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
         savedLocation = SavedLocation(
             name: _result, location: locationPickerController.location.value!);
-        customerAuthController.saveNewLocation(savedLocation!);
+        Get.find<CustomerAuthController>().saveNewLocation(savedLocation!);
       } else {
         await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
         savedLocation = SavedLocation(
             name: locationPickerController.location.value!.address,
             location: locationPickerController.location.value!);
       }
-    } else {
+      setState(() {
+        locationPickerController
+            .setLocation(locationPickerController.location.value!);
+      });
+
+      Get.back<SavedLocation?>(result: savedLocation);
+    } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
       _result = await savedLocationDailog(
           comingFromCart: Get.arguments,
           context: context,
@@ -187,15 +213,17 @@ class _PickLocationViewState extends State<PickLocationView> {
             name: _result,
             location: locationPickerController.location.value!);
 
-        customerAuthController.editLocation(savedLocation!);
+        Get.find<CustomerAuthController>().editLocation(savedLocation!);
       }
-    }
-    setState(() {
-      locationPickerController
-          .setLocation(locationPickerController.location.value!);
-    });
+      setState(() {
+        locationPickerController
+            .setLocation(locationPickerController.location.value!);
+      });
 
-    Get.back<SavedLocation?>(result: savedLocation);
+      Get.back<SavedLocation?>(result: savedLocation);
+    } else if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
+      Get.back<Location>(result: locationPickerController.location.value);
+    }
   }
 
   // ------------------------------------------- WIDGETS -------------------------------------------
@@ -210,8 +238,7 @@ class _PickLocationViewState extends State<PickLocationView> {
           ),
           Container(
             margin: const EdgeInsets.all(8),
-            child:
-                Text(_i18n()["pickLabele"]),
+            child: Text(_i18n()["pickLabele"]),
           ),
 
           Container(

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
@@ -21,8 +22,6 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-
-import '../../../../Shared/models/Orders/Order.dart';
 import '../Components/DriverCard.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'components/CurrentOrderInfo.dart';
@@ -124,7 +123,6 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                   if (order.value?.inProcess() ?? false)
                     Obx(
                       () => DriverCard(
-                        canChangeDriver: false,
                         driver: order.value!.dropoffDriver,
                         order: order.value!,
                         callBack: (newDriver) {

@@ -9,7 +9,6 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/Component
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -23,6 +22,7 @@ class LaundryOrderRequestView extends StatefulWidget {
 }
 
 class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
+  TextEditingController _orderNote = TextEditingController();
   final LocationPickerController locationPickerController =
       LocationPickerController();
   final AuthController authController = Get.find<AuthController>();
@@ -33,8 +33,6 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   RxBool clicked = false.obs;
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(defaultLoc);
-    final txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CustomerAppBar(autoBack: true),
       bottomNavigationBar: bottomButton(context),
@@ -80,12 +78,37 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 ),
               ),
               SizedBox(
+                height: 10,
+              ),
+              _orderNoteComponent(),
+              SizedBox(
                 height: 20,
               ),
               orderSummaryCard(context)
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _orderNoteComponent() {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(lang.strings?["customer"]?["restaurant"]?["menu"]?["notes"],
+              style: Theme.of(context).textTheme.headline3),
+          SizedBox(
+            height: 10,
+          ),
+          TextField(
+            controller: _orderNote,
+            decoration: InputDecoration(
+                filled: true, fillColor: Theme.of(context).primaryColor),
+          )
+        ],
       ),
     );
   }
@@ -172,7 +195,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   pickFromMapComponent(BuildContext context) {
     return InkWell(
       onTap: () async {
-        Location? currentLoc = await Get.toNamed(kLaundryPickLoc) as Location?;
+        Location? currentLoc =
+            await Get.toNamed(kPickLocationNotAuth) as Location?;
         if (currentLoc != null) {
           setState(() {
             defaultLoc = currentLoc;
@@ -213,33 +237,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     return Obx(
       () => BottomAppBar(
         child: (authController.user != null)
-            ? TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: (defaultLoc != null)
-                      ? Theme.of(context).primaryColorLight
-                      : Colors.grey,
-                ),
-                onPressed: (defaultLoc == null)
-                    ? null
-                    : () {
-                        clicked.value = true;
-                        laundryController
-                            .requestLaundryService(LaundryRequest(
-                                to: defaultLoc,
-                                notes: 'hhhh',
-                                paymentType: PaymentType.Cash))
-                            .then((response) => popEverythingAndNavigateTo(
-                                getLaundyOrderRoute(response.data['orderId'])));
-                      },
-                child: (clicked.value)
-                    ? CircularProgressIndicator(
-                        color: Colors.white,
-                      )
-                    : Container(
-                        padding: EdgeInsets.all(8),
-                        child: Text(lang.strings['customer']['restaurant']
-                            ['cart']['orderNow'])),
-              )
+            ? makeOrderButton(context)
             : TextButton(
                 onPressed: () async {
                   await Get.toNamed(kSignInRouteOptional);
@@ -250,6 +248,36 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                         lang.strings["shared"]["login"]["signInToMakeOrder"])),
               ),
       ),
+    );
+  }
+
+  Widget makeOrderButton(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor: (defaultLoc != null)
+            ? Theme.of(context).primaryColorLight
+            : Colors.grey,
+      ),
+      onPressed: (defaultLoc == null)
+          ? null
+          : () {
+              clicked.value = true;
+              laundryController
+                  .requestLaundryService(LaundryRequest(
+                      to: defaultLoc,
+                      notes: _orderNote.text,
+                      paymentType: PaymentType.Cash))
+                  .then((response) => popEverythingAndNavigateTo(
+                      getLaundyOrderRoute(response.data['orderId'])));
+            },
+      child: (clicked.value)
+          ? CircularProgressIndicator(
+              color: Colors.white,
+            )
+          : Container(
+              padding: EdgeInsets.all(8),
+              child: Text(
+                  lang.strings['customer']['restaurant']['cart']['orderNow'])),
     );
   }
 }

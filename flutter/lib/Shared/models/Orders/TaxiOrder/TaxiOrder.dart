@@ -14,7 +14,10 @@ enum TaxiOrdersStatus {
   Expired,
   OnTheWay,
   InTransit,
-  LookingForTaxi
+  LookingForTaxi,
+  ForwardingToLocalCompany,
+  ForwardingSuccessful,
+  ForwardingUnsuccessful
 }
 
 extension ParseOrderStatusToString on TaxiOrdersStatus {
@@ -157,8 +160,6 @@ class TaxiOrder extends Order {
 
         if (_tmpCountOffer.validityTimeDifference() < 0) {
           taxiOrder._counterOffers.add(_tmpCountOffer);
-        } else {
-          mezDbgPrint("#s#a#a#d --- Not valid CountOffer .. skipping.");
         }
       } on NoSuchMethodError catch (_) {
         // DO NOTHING
@@ -188,6 +189,7 @@ class TaxiOrder extends Order {
     // all of them are in /past node
     return status == TaxiOrdersStatus.CancelledByCustomer ||
         status == TaxiOrdersStatus.CancelledByTaxi ||
+        status == TaxiOrdersStatus.ForwardingUnsuccessful ||
         status == TaxiOrdersStatus.Expired;
   }
 
@@ -197,6 +199,19 @@ class TaxiOrder extends Order {
         status == TaxiOrdersStatus.LookingForTaxi ||
         status == TaxiOrdersStatus.DroppedOff ||
         status == TaxiOrdersStatus.OnTheWay;
+  }
+
+  bool isOpenOrder() {
+    switch (this.status) {
+      case TaxiOrdersStatus.ForwardingSuccessful:
+      case TaxiOrdersStatus.LookingForTaxi:
+      case TaxiOrdersStatus.ForwardingToLocalCompany:
+      case TaxiOrdersStatus.ForwardingUnsuccessful:
+        return true;
+
+      default:
+        return false;
+    }
   }
 
   num numberOfTaxiSentNotificationTo() {

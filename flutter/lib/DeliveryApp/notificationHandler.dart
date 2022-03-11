@@ -1,12 +1,13 @@
+import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:get/get.dart';
 
 Notification deliveryDriverNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
@@ -36,9 +37,11 @@ Notification restaurantOrderStatusChangeNotificationHandler(
       value['status'].toString().toRestaurantOrderStatus();
   Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
+  mezDbgPrint("DYNAMIC FIELDS PRINT =================>");
+  mezDbgPrint(dynamicFields);
   return Notification(
       id: key,
-      linkUrl: getCurrentOrderRoute(dynamicFields["orderId"]),
+      linkUrl: getCurrentOrderRoute(dynamicFields["orderId"] ?? ''),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -92,6 +95,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
     default:
     // do nothing
   }
+  return null;
 }
 
 Notification laundryOrderStatusChangeNotificationHandler(
@@ -102,7 +106,7 @@ Notification laundryOrderStatusChangeNotificationHandler(
       getLaundryOrderStatusFields(newOrdersStatus)!;
   return Notification(
       id: key,
-      linkUrl: getCurrentOrderRoute(dynamicFields["orderId"]),
+      linkUrl: getCurrentOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -128,6 +132,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       };
     case LaundryOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
+        //  "orderId": "needTobefixed",
         "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
@@ -137,6 +142,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       };
     case LaundryOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
+        //   "orderId": "needTobefixed",
         "title":
             "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
         "body":
@@ -145,8 +151,16 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     default:
-    // do nothing
+      return <String, dynamic>{
+        "title":
+            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+        "body":
+            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+      };
   }
+  return null;
 }
 
 Notification newMessageNotification(String key, dynamic value) {

@@ -42,7 +42,7 @@ class CartItemsBuilder extends StatelessWidget {
                 itemName:
                     cartItem.item.name[lang.userLanguageKey]![0].toUpperCase() +
                         cartItem.item.name[lang.userLanguageKey]!.substring(1),
-                restaurantName: controller.associatedRestaurant!.name,
+                restaurantName: controller.associatedRestaurant!.info.name,
                 itemsPrice: counter.value.toStringAsFixed(0),
               ),
             )),

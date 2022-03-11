@@ -230,17 +230,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Obx(
-            () {
-              if (recipientType == ParticipantType.DeliveryAdmin)
-                return Text("Administrador");
-              else
-                return Text(
+          title: (recipientType == ParticipantType.DeliveryAdmin)
+              ? Text("Administrador")
+              : Text(
                   controller.recipient(recipientType: recipientType)?.name ??
                       "User",
-                );
-            },
-          ),
+                ),
           actions: [
             if (orderId != null && showViewOrderBtn)
               InkWell(
@@ -254,9 +249,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
                     ),
                   ),
                 ),
-                // decoration: BoxDecoration(
-                //     color: Colors.grey.withAlpha(55),
-                //     borderRadius: BorderRadius.circular(10))),
                 onTap: navigateToOrderPage,
               )
           ],
