@@ -45,7 +45,7 @@ Notification laundryOrderStatusChangeNotificationHandler(
   mezDbgPrint(dynamicFields);
   return Notification(
       id: key,
-      linkUrl: getTaxiOrderRoute(value['orderId']),
+      linkUrl: getLaundyOrderRoute(value['orderId']),
       linkText: _i18n()['viewOrder'],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
