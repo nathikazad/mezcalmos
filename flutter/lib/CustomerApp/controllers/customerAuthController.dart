@@ -42,7 +42,7 @@ class CustomerAuthController extends GetxController {
         _customer.value = Customer.fromSnapshotData(event.snapshot.value);
 
         if (_checkedAppVersion == false) {
-          String VERSION = GetStorage().read(getxVersion);
+          String VERSION = GetStorage().read(getxAppVersion);
           print("[+] Customer currently using App v$VERSION");
           _databaseHelper.firebaseDatabase
               .reference()

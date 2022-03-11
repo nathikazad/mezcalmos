@@ -66,6 +66,7 @@ dependencies:
   flutter_image_compress: ^1.1.0
   device_info_plus: ^3.2.2
   permission_handler: ^9.2.0
+  store_redirect: ^2.0.1
   # flutter_screenutil: 5.1.0
   
 # dependency_overrides:

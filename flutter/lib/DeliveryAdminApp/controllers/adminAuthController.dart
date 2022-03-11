@@ -48,7 +48,7 @@ class AdminAuthController extends GetxController {
       _admin.value = Admin.fromSnapshot(event.snapshot.value);
       if (_admin.value?.authorized ?? false) {
         if (_checkedAppVersion == false) {
-          String appVersion = GetStorage().read(getxVersion);
+          String appVersion = GetStorage().read(getxAppVersion);
           print("[+] Customer currently using App v$appVersion");
           _databaseHelper.firebaseDatabase
               .reference()

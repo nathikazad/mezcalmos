@@ -4,9 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/AppUpdate.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -18,6 +20,9 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
   AuthController authController = Get.find<AuthController>();
+  AppVersionController _appVersionController =
+      Get.put(AppVersionController(), permanent: true);
+
   late bool databaseUserLastSnapshot;
 
   @override
@@ -32,25 +37,57 @@ class _WrapperState extends State<Wrapper> {
       Get.find<AuthController>().authStateStream.listen((user) {
         handleAuthStateChange(user);
       });
+      handleAppVersionUpdatesAndStartListener();
     });
     super.initState();
   }
 
+  /// This parts Checks the snapshot at [AppVersionController.isNewVersionOut] if it is not null
+  ///
+  /// and then start a listener in case there there is updates.
+  void handleAppVersionUpdatesAndStartListener() {
+    // first we check the snapshot
+    checkIfNotInUpdateScreenAndPush(
+        _appVersionController.appVersionInfos.value);
+    // then we start listening.
+    Future.delayed(Duration(seconds: 0), () {
+      // this listenr is distinct by the way.
+      _appVersionController.appVersionInfos.stream.listen((updateType) {
+        checkIfNotInUpdateScreenAndPush(updateType);
+      });
+    });
+  }
+
+  void checkIfNotInUpdateScreenAndPush(AppUpdate? appVersionInfos) {
+    bool _diff = appVersionInfos?.areLocalAndRemoteVersionsDiffrent() == true;
+    if (Get.currentRoute == kAppNeedsUpdate && !_diff) {
+      Get.back();
+    } else if (Get.currentRoute != kAppNeedsUpdate && _diff) {
+      Get.toNamed(kAppNeedsUpdate);
+    }
+  }
+
   void handleAuthStateChange(fireAuth.User? user) async {
-    if (user == null) {
-      if (AppType.CustomerApp == settingsController.appType) {
-        // if (Get.currentRoute != kSignInRouteOptional) {
-        Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+    // We should Priotorize the AppNeedsUpdate route to force users to update
+    if (Get.currentRoute != kAppNeedsUpdate) {
+      if (user == null) {
+        if (AppType.CustomerApp == settingsController.appType) {
+          // if (Get.currentRoute != kSignInRouteOptional) {
+          Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+        } else {
+          Get.offNamedUntil(
+              kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
+        }
       } else {
-        Get.offNamedUntil(
-            kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
+        if (Get.find<AuthController>().user != null) {
+          redirectIfUserInfosNotSet();
+        } else
+          startListeningForUserModelChanges();
       }
     } else {
       if (authController.user != null) {
-        mezDbgPrint('@@@@@@@@@@@@@@@@@@@@@@@@@@user not null redirect ');
         redirectIfUserInfosNotSet();
       } else {
-        mezDbgPrint('############user  null redirect ');
         startListeningForUserModelChanges();
       }
     }

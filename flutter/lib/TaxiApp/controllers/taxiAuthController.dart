@@ -110,7 +110,7 @@ class TaxiAuthController extends GetxController {
 
   void saveAppVersionIfNecessary() {
     if (_checkedAppVersion == false) {
-      String VERSION = GetStorage().read(getxVersion);
+      String VERSION = GetStorage().read(getxAppVersion);
       mezDbgPrint("[+] TaxiDriver Currently using App v$VERSION");
       _databaseHelper.firebaseDatabase
           .reference()
