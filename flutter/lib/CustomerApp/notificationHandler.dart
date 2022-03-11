@@ -46,8 +46,7 @@ Notification laundryOrderStatusChangeNotificationHandler(
   return Notification(
       id: key,
       linkUrl: getTaxiOrderRoute(value['orderId']),
-      linkText: Get.find<LanguageController>().strings['shared']['notification']
-          ['viewOrder'],
+      linkText: _i18n()['viewOrder'],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],

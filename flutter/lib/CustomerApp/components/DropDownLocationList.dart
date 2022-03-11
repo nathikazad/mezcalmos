@@ -22,7 +22,7 @@ class DropDownLocationList extends StatefulWidget {
 }
 
 class _DropDownLocationListState extends State<DropDownLocationList> {
-  dynamic _i18n() => Get.find<LanguageController>().strings["customerApp"]
+  dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
       ["components"]["DropDownLocationList"];
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
