@@ -129,10 +129,10 @@ class PastOrderList extends StatelessWidget {
               margin: const EdgeInsets.all(8),
               child: Text(
                 (calculateDifference(element.orderTime) == 0)
-                    ? Get.find<LanguageController>().strings["shared"]
+                    ? _i18n()["shared"]
                         ["notification"]["today"]
                     : (calculateDifference(element.orderTime) == -1)
-                        ? Get.find<LanguageController>().strings["shared"]
+                        ? _i18n()["shared"]
                             ["notification"]["yesterday"]
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
                 style: txt.headline3,

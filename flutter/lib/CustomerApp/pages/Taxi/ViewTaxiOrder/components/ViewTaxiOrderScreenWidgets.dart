@@ -10,7 +10,8 @@ import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]["Taxi"]["ViewTaxiOrdersScreen"];
+    ["pages"]["Taxi"]
+        ["ViewTaxiOrder"]["components"]["ViewTaxiOrderScreenWidgets"];
 
 class ViewTaxiOrderScreenWidgets {
   final ViewTaxiOrderController viewController;
