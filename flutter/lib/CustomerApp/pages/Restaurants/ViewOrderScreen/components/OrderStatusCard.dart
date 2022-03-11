@@ -25,7 +25,6 @@ class OrderStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -37,55 +36,33 @@ class OrderStatusCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 OrderStatusImage(ordersStates),
-                OrderStatus(ordersStates: ordersStates, txt: txt),
+                _orderStatusText(context),
                 Spacer(),
-                MessageButton(order: order),
+                _orderMessageButton(context),
               ],
             ),
           ),
         ),
-        StatusDescription(ordersStates: ordersStates)
+        _orderHelperText(context)
       ],
     );
   }
-}
 
-class OrderStatus extends StatelessWidget {
-  const OrderStatus({
-    Key? key,
-    required this.ordersStates,
-    required this.txt,
-  }) : super(key: key);
-
-  final RestaurantOrderStatus ordersStates;
-  final TextTheme txt;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _orderStatusText(BuildContext context) {
     return Flexible(
       flex: 8,
       fit: FlexFit.tight,
       child: Text(
         getOrderStatus(ordersStates),
-        style: txt.headline3,
+        style: Theme.of(context).textTheme.headline3,
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
     );
   }
-}
 
-class StatusDescription extends StatelessWidget {
-  const StatusDescription({
-    Key? key,
-    required this.ordersStates,
-  }) : super(key: key);
-
-  final RestaurantOrderStatus ordersStates;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _orderHelperText(BuildContext context) {
     return Container(
         margin: EdgeInsets.all(5),
         alignment: Alignment.center,
@@ -94,18 +71,8 @@ class StatusDescription extends StatelessWidget {
           textAlign: TextAlign.center,
         ));
   }
-}
 
-class MessageButton extends StatelessWidget {
-  const MessageButton({
-    Key? key,
-    required this.order,
-  }) : super(key: key);
-
-  final RestaurantOrder order;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _orderMessageButton(BuildContext context) {
     return Material(
       color: Theme.of(context).primaryColorLight,
       shape: CircleBorder(),
@@ -118,11 +85,11 @@ class MessageButton extends StatelessWidget {
         customBorder: CircleBorder(),
         child: Stack(
           children: [
-            MessageIcon(),
+            _messageIcon(context),
             Obx(
               () => Get.find<OrderController>()
                       .orderHaveNewMessageNotifications(order.orderId)
-                  ? NewMessageRedDot()
+                  ? _newMessageRedDot(context)
                   : Container(),
             )
           ],
@@ -132,43 +99,29 @@ class MessageButton extends StatelessWidget {
   }
 }
 
-class MessageIcon extends StatelessWidget {
-  const MessageIcon({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(12),
-      child: Icon(
-        Icons.textsms,
-        color: Colors.white,
-      ),
-    );
-  }
+Widget _messageIcon(BuildContext context) {
+  return Container(
+    margin: EdgeInsets.all(12),
+    child: Icon(
+      Icons.textsms,
+      color: Colors.white,
+    ),
+  );
 }
 
-class NewMessageRedDot extends StatelessWidget {
-  const NewMessageRedDot({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      left: 27,
-      top: 10,
-      child: Container(
-        width: 13,
-        height: 13,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xfff6efff), width: 2),
-            color: const Color(0xffff0000)),
-      ),
-    );
-  }
+Widget _newMessageRedDot(BuildContext context) {
+  return Positioned(
+    left: 27,
+    top: 10,
+    child: Container(
+      width: 13,
+      height: 13,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: const Color(0xfff6efff), width: 2),
+          color: const Color(0xffff0000)),
+    ),
+  );
 }
 
 Widget OrderStatusImage(RestaurantOrderStatus status) {

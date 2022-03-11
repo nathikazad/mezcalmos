@@ -43,14 +43,15 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                       TaxiOrdersStatus.LookingForTaxi)
                   ? 45
                   : 0),
-          height: 60,
+          height: 70,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               border: Border.all(
                   width: 1, color: Theme.of(context).scaffoldBackgroundColor),
               color: Colors.white),
           child: Row(
-            children: buildBottomBarByStatus(context),
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: buildBottomBatByStatus(context),
           ),
         ),
       ),
@@ -204,7 +205,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
     );
   }
 
-  List<Widget> buildBottomBarByStatus(BuildContext pContext) {
+  List<Widget> buildBottomBatByStatus(BuildContext pContext) {
     List<Widget> _widgies = [];
     switch (widget.order.value!.status) {
       case TaxiOrdersStatus.LookingForTaxi:
@@ -274,6 +275,78 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                   "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n()?['ride']}.",
               description: _i18n()?['rideCancelledByCustomer']),
           RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest())
+        ]);
+        // widget.bottomPadding = 10.0;
+        break;
+      case TaxiOrdersStatus.ForwardingToLocalCompany:
+        _widgies.assignAll([
+          CircleAvatar(
+            radius: 17,
+            child: Icon(
+              Icons.local_taxi,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            '${_i18n()["forwarding"]}',
+            style: Theme.of(pContext).textTheme.bodyText1,
+          ),
+          Spacer(),
+          cancelBtn(widget.order.value!)
+        ]);
+        // widget.bottomPadding = 10.0;
+        break;
+      case TaxiOrdersStatus.ForwardingSuccessful:
+        _widgies.assignAll([
+          Icon(
+            Icons.check_circle,
+            color: Colors.green,
+            size: 30.sp,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Flexible(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                " ${_i18n()["taxiNumber"]} : ${widget.order.value!.driver!.taxiNumber}",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              Text(_i18n()["forwardSuccess"],
+                  style: Theme.of(pContext).textTheme.subtitle1)
+            ],
+          ))
+        ]);
+        // widget.bottomPadding = 10.0;
+        break;
+      case TaxiOrdersStatus.ForwardingUnsuccessful:
+        _widgies.assignAll([
+          Icon(
+            Icons.cancel,
+            color: Colors.red,
+            size: 30.sp,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Flexible(
+              flex: 5,
+              fit: FlexFit.tight,
+              child: Text(_i18n()['rideCancelledByCompany'],
+                  style: Theme.of(pContext).textTheme.bodyText2)),
+          // taxiAvatarAndName(
+          //     order: widget.order.value!,
+          //     pContext: pContext,
+          //     description: lang.strings?['customer']?['taxiView']
+          //         ?['rideCancelledByCompany']),
+          Spacer(),
+          RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest()),
         ]);
         // widget.bottomPadding = 10.0;
         break;

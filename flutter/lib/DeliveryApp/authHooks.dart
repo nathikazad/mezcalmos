@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 //import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
@@ -21,6 +22,7 @@ class AuthHooks {
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
     await Get.delete<DeliveryAuthController>(force: true);
+    await Get.delete<LaundryInfoController>(force: true);
   }
 
   static void onSignInHook() {
@@ -31,6 +33,7 @@ class AuthHooks {
     Get.put(BackgroundNotificationsController(), permanent: true);
     Get.put(OrderController(), permanent: true);
     Get.put(DeliveryAuthController(), permanent: true);
+    Get.put(LaundryInfoController(), permanent: true);
 
     Get.put(LaundryOrderController(), permanent: true);
     Get.put(RestaurantOrderController(), permanent: true);

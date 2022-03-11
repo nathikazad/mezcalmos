@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/components/TaxiOrderOngoingCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/components/TaxiOrderOngoingCard.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -10,8 +10,7 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-    ["ListOrdersScreen"]["components"]["TaxiPastOrderCard"];
+    ["pages"]["ListOrdersScreen"]["components"]["TaxiPastOrderCard"];
 
 class TaxiPastOrderCard extends StatelessWidget {
   TaxiPastOrderCard({
@@ -45,7 +44,9 @@ class TaxiPastOrderCard extends StatelessWidget {
                           backgroundImage: mLoadImage(
                                   assetInCaseFailed:
                                       'assets/images/customer/taxi/taxiDriverImg.png',
-                                  url: order.serviceProvider?.image)
+                                  url: (order.isOpenOrder())
+                                      ? null
+                                      : order.serviceProvider?.image)
                               .image),
                       //  if (order.serviceProvider != null)
                       Positioned(
@@ -72,8 +73,10 @@ class TaxiPastOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          order.serviceProvider?.name ??
-                              "${_i18n()['taxiOrder']}",
+                          (order.isOpenOrder())
+                              ? "${_i18n()['taxiOrder']}"
+                              : order.serviceProvider?.name ??
+                                  "${_i18n()['taxiOrder']}",
                           overflow: TextOverflow.ellipsis,
                           style: txt.headline3,
                           maxLines: 2,

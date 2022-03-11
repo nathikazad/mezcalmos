@@ -96,11 +96,11 @@ class TaxiUserInfo extends UserInfo {
         ? data["language"].toString().toLanguageType()
         : null;
     return TaxiUserInfo(
-        id: data["id"],
-        name: data["name"],
+        id: data["id"] ?? '',
+        name: data["name"] ?? '',
         image: data["image"],
         taxiNumber: data["taxiNumber"].toString(),
-        sitio: data["sitio"],
+        sitio: data["sitio"] ?? '',
         language: language,
         location: location);
   }

@@ -4,21 +4,20 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildItems.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/DropDownListCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-    ["Restaurants"]["ViewCartScreen"]["components"]["ViewCartBody"];
+    ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["ViewCartBody"];
 
 class ViewCartBody extends StatefulWidget {
-  final OnDropDownNewValue? onValueChangeCallback;
+  final Function({Location? location})? setLocationCallBack;
 
-  ViewCartBody({Key? key, this.onValueChangeCallback}) : super(key: key);
+  ViewCartBody({Key? key, this.setLocationCallBack}) : super(key: key);
 
   @override
   _ViewCartBodyState createState() => _ViewCartBodyState();
@@ -57,7 +56,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
               height: 10,
             ),
             Obx(() => OrderSummaryCard(
-                  onValueChangeCallback: widget.onValueChangeCallback,
+                  setLocationCallBack: widget.setLocationCallBack,
                   deliveryCost:
                       controller.cart.value.shippingCost.toStringAsFixed(0),
                   orderCost:
@@ -71,8 +70,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.centerLeft,
-              child: Text(
-                  "${_i18n()['notes']}",
+              child: Text("${_i18n()['notes']}",
                   style: const TextStyle(
                       color: const Color(0xff000f1c),
                       fontFamily: "psb",

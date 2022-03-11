@@ -249,9 +249,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
                     ),
                   ),
                 ),
-                // decoration: BoxDecoration(
-                //     color: Colors.grey.withAlpha(55),
-                //     borderRadius: BorderRadius.circular(10))),
                 onTap: navigateToOrderPage,
               )
           ],

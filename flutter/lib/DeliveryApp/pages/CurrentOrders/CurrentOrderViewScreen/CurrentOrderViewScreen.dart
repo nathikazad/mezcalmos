@@ -54,6 +54,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderViewScreen> {
   @override
   void dispose() {
     cancelOrderSubscription();
+
     super.dispose();
   }
 

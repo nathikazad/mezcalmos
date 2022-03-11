@@ -90,7 +90,7 @@ class TaxiOngoingOrderCard extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  getTaxiOrderWidget((order as TaxiOrder).status),
+                  getTaxiOrderWidget((order as TaxiOrder).status, context),
                   SizedBox(
                     width: 10,
                   )
@@ -154,13 +154,20 @@ String getTaxiOrderStatus(TaxiOrdersStatus status) {
       return '${_i18n()["orderStatus"]["droppedOff"]}';
     case TaxiOrdersStatus.Expired:
       return '${_i18n()["orderStatus"]["expired"]}';
+    // TODO LANG
+    // case TaxiOrdersStatus.ForwardingSuccessful:
+    //   return '${lang.strings["taxi"]["orders"]["orderStatus"]["droppedOff"]}';
+    // case TaxiOrdersStatus.ForwardingUnsuccessful:
+    //   return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByTaxi"]}';
+    // case TaxiOrdersStatus.ForwardingToLocalCompany:
+    //   return '${lang.strings["taxi"]["orders"]["orderStatus"]["forwarding"]}';
 
     default:
       return 'Unknown status';
   }
 }
 
-Widget getTaxiOrderWidget(TaxiOrdersStatus status) {
+Widget getTaxiOrderWidget(TaxiOrdersStatus status, conttext) {
   switch (status) {
     case TaxiOrdersStatus.CancelledByCustomer:
       return Icon(
@@ -212,7 +219,26 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status) {
         size: 50,
         color: Colors.grey,
       );
-
+    case TaxiOrdersStatus.ForwardingToLocalCompany:
+      return Icon(
+        Icons.business,
+        size: 50,
+        color: Theme.of(conttext).primaryColorLight,
+      );
+    case TaxiOrdersStatus.ForwardingSuccessful:
+      return Container(
+          height: 50,
+          width: 50,
+          child: Image.asset(
+            'assets/images/customer/taxi/taxi.png',
+            fit: BoxFit.contain,
+          ));
+    case TaxiOrdersStatus.ForwardingUnsuccessful:
+      return Icon(
+        Icons.block,
+        size: 50,
+        color: Colors.red,
+      );
     default:
       return Icon(
         Ionicons.help,

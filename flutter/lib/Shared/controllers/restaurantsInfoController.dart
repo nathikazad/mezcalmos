@@ -1,5 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:get/get.dart';
@@ -19,7 +21,7 @@ class RestaurantsInfoController extends GetxController {
   Future<List<Restaurant>> getRestaurants() async {
     DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
         .reference()
-        .child('restaurants/info/')
+        .child(serviceProviderInfos(orderType: OrderType.Restaurant))
         .once();
 
     mezDbgPrint("Got restorantes ===> ${snapshot.value}");
@@ -38,7 +40,8 @@ class RestaurantsInfoController extends GetxController {
   Future<Restaurant> getRestaurant(String restaurantId) async {
     return _databaseHelper.firebaseDatabase
         .reference()
-        .child('restaurants/info/$restaurantId')
+        .child(serviceProviderInfos(
+            orderType: OrderType.Restaurant, providerId: restaurantId))
         .once()
         .then<Restaurant>((snapshot) {
       return Restaurant.fromRestaurantData(
@@ -49,7 +52,9 @@ class RestaurantsInfoController extends GetxController {
   Future<Item> getItem(String restaurantId, String itemId) {
     return _databaseHelper.firebaseDatabase
         .reference()
-        .child('restaurants/info/$restaurantId/menu/$itemId')
+        .child(serviceProviderInfos(
+            orderType: OrderType.Restaurant, providerId: restaurantId))
+        .child('menu/$itemId')
         .once()
         .then<Item>((snapshot) => Item.itemFromData(
               itemId,

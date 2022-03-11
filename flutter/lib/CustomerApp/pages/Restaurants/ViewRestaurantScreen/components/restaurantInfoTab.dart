@@ -37,7 +37,7 @@ class RestaurantInfoTab extends StatelessWidget {
               margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 15),
               child: Text(restaurant.description[lang.userLanguageKey]!),
             ),
-            (restaurant.location != null)
+            (restaurant.info.location != null)
                 ? Column(
                     children: [
                       Container(

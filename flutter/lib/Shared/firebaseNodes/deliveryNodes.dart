@@ -30,7 +30,9 @@ String deliveryDriversInProcessOrdersNode(String uid) {
 }
 
 String deliveryDriverInProcessOrderDriverLocationNode(
-    {required String orderId, required String deliveryDriverId}) {
+    {required String orderId,
+    required String deliveryDriverId,
+    String driverAddress = "driver"}) {
   return deliveryDriversInProcessOrdersNode(deliveryDriverId) +
-      '/$orderId/driver/location';
+      '/$orderId/$driverAddress/location';
 }

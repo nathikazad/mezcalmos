@@ -76,7 +76,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    buildResturantItems(restaurant!.items, restaurant!.id),
+                    buildResturantItems(restaurant!.items, restaurant!.info.id),
                   ],
                 ),
               ),

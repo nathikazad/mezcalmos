@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -199,7 +199,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 schedule: currentRestaurant?.schedule),
             cartItem: cartItem,
             mode: widget.viewItemScreenMode,
-            currentRestaurantId: currentRestaurant?.id,
+            currentRestaurantId: currentRestaurant?.info.id,
           )
         ],
       ),

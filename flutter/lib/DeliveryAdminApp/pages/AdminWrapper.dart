@@ -7,6 +7,7 @@ import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/deliveryAdminNodes.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -14,7 +15,6 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/adminAuthController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/Admin.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
@@ -49,7 +49,7 @@ class _AdminWrapperState extends State<AdminWrapper> {
     _notificationsStreamListener = initializeShowNotificationsListener();
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
-            notificationsNode(userId), deliveryAdminNotificationHandler);
+            adminNotificationsNode(userId), deliveryAdminNotificationHandler);
     super.initState();
   }
 

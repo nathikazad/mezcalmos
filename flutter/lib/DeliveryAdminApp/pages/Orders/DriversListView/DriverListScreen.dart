@@ -3,11 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryDriverController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/DriversListView/Components/DriverSelectCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/DriversListView/Components/DriversMapComponent.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-
-import 'Components/DriverSelectCard.dart';
 
 class DriversListScreen extends StatefulWidget {
   const DriversListScreen({
@@ -19,7 +18,7 @@ class DriversListScreen extends StatefulWidget {
 }
 
 class _DriversListScreenState extends State<DriversListScreen> {
-  RxList<DeliveryDriver> deliveryDrivers = RxList.empty();
+  RxList<DeliveryDriver> deliveryDrivers = <DeliveryDriver>[].obs;
   StreamSubscription? driversListener;
 
   DeliveryDriverController deliveryDriverController =
@@ -48,7 +47,7 @@ class _DriversListScreenState extends State<DriversListScreen> {
               drivers: deliveryDrivers.value,
               order: order!,
             ),
-            _driversListComponent()
+            _driversListComponent(),
           ],
         ),
       ),

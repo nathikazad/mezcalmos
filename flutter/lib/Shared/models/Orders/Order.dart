@@ -3,6 +3,7 @@ import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 abstract class Order {
@@ -29,16 +30,49 @@ abstract class Order {
       this.routeInformation});
   bool inProcess();
   bool isCanceled();
+
+  String driverDatabaseAddress(){
+    switch (orderType) {
+      case OrderType.Laundry:
+          switch ((this as LaundryOrder).getCurrentPhase()) {
+            case LaundryOrderPhase.Dropoff:
+                return "dropoffDriver";      
+            case LaundryOrderPhase.Pickup:
+                return "pickupDriver";
+            case LaundryOrderPhase.Neither:
+              return "dropoffDriver";
+          }
+      case OrderType.Restaurant:
+        return "dropoffDriver";
+      default:
+        return "driver";
+    }
+  }
   // Order.orderFromData(dynamic orderId, dynamic orderData){
 
 }
 
 enum OrderType { Taxi, Restaurant, Laundry, Water }
 
+
+
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+
+  String toPlural() {
+    switch (this) {
+    case OrderType.Taxi:
+      return "taxis";
+    case OrderType.Restaurant:
+      return "restaurants";
+    case OrderType.Laundry:
+      return "laundries";
+    case OrderType.Water:
+      return "waters";
+  }
   }
 }
 

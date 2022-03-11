@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Menu/MenuComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/MyCartAppBarIcon.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
-
-import 'MyCartAppBarIcon.dart';
 
 // ignore: must_be_immutable
 class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
