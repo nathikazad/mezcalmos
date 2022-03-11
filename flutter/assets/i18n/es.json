@@ -339,6 +339,9 @@
                 },
                 "LaundryCurrentOrderView": {
                     "Components": {
+                        "LaundryOrderComponent": {
+                            "notes": "Notas"
+                        },
                         "LaundryOrderFooterCard": {
                             "cancelOrder": "Cancelar el pedido",
                             "orderCanceled": "Se cancela el pedido ...",

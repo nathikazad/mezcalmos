@@ -337,6 +337,9 @@
         },
         "LaundryCurrentOrderView": {
           "Components": {
+            "LaundryOrderComponent": {
+              "notes": "Notes"
+            },
             "LaundryOrderFooterCard": {
               "cancelOrder": "Cancel Order",
               "orderCanceled": "Order is being cancelled ...",

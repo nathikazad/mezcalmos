@@ -10,7 +10,9 @@ class LaundryOrderNoteComponent extends StatelessWidget {
   }) : super(key: key);
 
   final LaundryOrder order;
-LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n() =>
+      Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
+          ['LaundryCurrentOrderView']['Components']['LaundryOrderComponent'];
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ LanguageController lang = Get.find<LanguageController>();
             Container(
               alignment: Alignment.center,
               child: Text(
-                lang.strings?["customer"]?["restaurant"]?["menu"]?["notes"],
+                _i18n()["notes"],
                 style: Theme.of(context).textTheme.headline3,
               ),
             ),
