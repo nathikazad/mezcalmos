@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
@@ -18,13 +19,11 @@ import 'ItemInformationCart.dart';
 final currency = new NumberFormat("#,##0.00", "en_US");
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-    ["Restaurants"]["ViewCartScreen"]["components"]["BuildItems"];
-
+    ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["BuildItems"];
 
 class CartItemsBuilder extends StatelessWidget {
   final RestaurantController controller = Get.find<RestaurantController>();
-  final LanguageController lang = Get.find<LanguageController>();
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +38,8 @@ class CartItemsBuilder extends StatelessWidget {
                 child: Obx(
               () => ItemInformationCart(
                 imageUrl: cartItem.item.image!,
-                itemName:
-                    cartItem.item.name[lang.userLanguageKey]![0].toUpperCase() +
-                        cartItem.item.name[lang.userLanguageKey]!.substring(1),
+                itemName: cartItem.item.name[userLanguage]![0].toUpperCase() +
+                    cartItem.item.name[userLanguage]!.substring(1),
                 restaurantName: controller.associatedRestaurant!.info.name,
                 itemsPrice: counter.value.toStringAsFixed(0),
               ),

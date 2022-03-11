@@ -24,8 +24,8 @@ import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
-dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
-    ['MessagingScreen'];
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
+    ["MessagingScreen"];
 
 class MessagingScreen extends StatefulWidget {
   @override
@@ -67,7 +67,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
   }
 
   AuthController _authController = Get.find<AuthController>();
-  LanguageController lang = Get.find<LanguageController>();
 
   TextEditingController _textEditingController = new TextEditingController();
   ScrollController _listViewScrollController = new ScrollController();

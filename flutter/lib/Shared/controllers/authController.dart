@@ -97,16 +97,17 @@ class AuthController extends GetxController {
         _userNodeListener?.cancel();
         _userNodeListener = _databaseHelper.firebaseDatabase
             .reference()
-            .child(userInfo(user.uid))
+            .child(userInfoNode(user.uid))
             .onValue
             .listen((event) {
           if (event.snapshot.value == null) return;
           if (event.snapshot.value['language'] == null) {
-            event.snapshot.value['language'] =
-                Get.find<LanguageController>().userLanguageKey;
+            event.snapshot.value['language'] = Get.find<LanguageController>()
+                .userLanguageKey
+                .toFirebaseFormatString();
             _databaseHelper.firebaseDatabase
                 .reference()
-                .child(userLanguage(user.uid))
+                .child(userLanguageNode(user.uid))
                 .set(Get.find<LanguageController>()
                     .userLanguageKey
                     .toFirebaseFormatString());
@@ -163,7 +164,7 @@ class AuthController extends GetxController {
     if (originalImageUrl != null) {
       await _databaseHelper.firebaseDatabase
           .reference()
-          .child(userInfo(fireAuthUser!.uid))
+          .child(userInfoNode(fireAuthUser!.uid))
           .child('bigImage')
           .set(originalImageUrl);
     }
@@ -173,14 +174,14 @@ class AuthController extends GetxController {
     if (name != null) {
       await _databaseHelper.firebaseDatabase
           .reference()
-          .child(userInfo(fireAuthUser!.uid))
+          .child(userInfoNode(fireAuthUser!.uid))
           .child('name')
           .set(name);
     }
     if (compressedImageUrl != null && compressedImageUrl.isURL) {
       await _databaseHelper.firebaseDatabase
           .reference()
-          .child(userInfo(fireAuthUser!.uid))
+          .child(userInfoNode(fireAuthUser!.uid))
           .child('image')
           .set(compressedImageUrl);
     }
@@ -207,7 +208,7 @@ class AuthController extends GetxController {
     if (_user.value != null) {
       _databaseHelper.firebaseDatabase
           .reference()
-          .child(userLanguage(_user.value!.id))
+          .child(userLanguageNode(_user.value!.id))
           .set(newLanguage.toFirebaseFormatString());
     }
   }

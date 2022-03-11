@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -35,7 +36,7 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 }
 
 class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
   AuthController auth = Get.find<AuthController>();
   DeliveryDriverController deliveryDriverController = Get.find<
       DeliveryDriverController>(); // Since we have alot of buttons we check loading by name
@@ -91,7 +92,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           foregroundColor: Colors.purple.shade700,
           onPressed: () {
             Clipboard.setData(ClipboardData(
-                    text: order.value?.clipBoardText(lang.userLanguageKey)))
+                    text: order.value?.clipBoardText(userLanguage)))
                 .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
                     position: SnackPosition.TOP));
           },

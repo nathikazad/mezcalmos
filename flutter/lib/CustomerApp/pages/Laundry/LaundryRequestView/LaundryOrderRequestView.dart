@@ -28,7 +28,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   final AuthController authController = Get.find<AuthController>();
 
   LaundryController laundryController = Get.find<LaundryController>();
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+      ['pages']['Laundry']['LaundryRequestView']['LaundryOrderRequestView'];
   Location? defaultLoc;
   RxBool clicked = false.obs;
   @override
@@ -48,7 +49,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: Text(
-                  '${lang.strings['customer']['laundry']['howItWorks']}',
+                  '${_i18n()['howItWorks']}',
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
@@ -59,7 +60,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: Text(
-                  '${lang.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]} :',
+                  '${_i18n()["deliveryLocation"]} :',
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
@@ -98,8 +99,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(lang.strings?["customer"]?["restaurant"]?["menu"]?["notes"],
-              style: Theme.of(context).textTheme.headline3),
+          Text(_i18n()["notes"], style: Theme.of(context).textTheme.headline3),
           SizedBox(
             height: 10,
           ),
@@ -121,7 +121,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         child: Column(
           children: [
             Text(
-              "${lang.strings["customer"]["restaurant"]["cart"]["orderSummary"]}",
+              "${_i18n()["orderSummary"]}",
               style: Theme.of(context).textTheme.headline3,
             ),
             Divider(
@@ -131,7 +131,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["orderCost"]} :",
+                  "${_i18n()["orderCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -147,7 +147,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["deliveryCost"]} :",
+                  "${_i18n()["deliveryCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -162,7 +162,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                "${lang.strings["customer"]["restaurant"]["cart"]["deliveryLocation"]} :",
+                "${_i18n()["deliveryLocation"]} :",
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -179,10 +179,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                   width: 5,
                 ),
                 Flexible(
-                    child: Text(
-                        defaultLoc?.address ??
-                            lang.strings['shared']['pickLocation']
-                                ['noLocation'],
+                    child: Text(defaultLoc?.address ?? _i18n()['noLocation'],
                         maxLines: 1)),
               ],
             )
@@ -222,10 +219,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               width: 5,
             ),
             Flexible(
-                child: Text(
-                    defaultLoc?.address ??
-                        lang.strings['customer']['restaurant']['cart']
-                            ['pickLocation'],
+                child: Text(defaultLoc?.address ?? _i18n()['pickLocation'],
                     maxLines: 1)),
           ],
         ),
@@ -244,8 +238,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 },
                 child: Container(
                     padding: EdgeInsets.all(8),
-                    child: Text(
-                        lang.strings["shared"]["login"]["signInToMakeOrder"])),
+                    child: Text(_i18n()["signInToMakeOrder"])),
               ),
       ),
     );
@@ -275,9 +268,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               color: Colors.white,
             )
           : Container(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                  lang.strings['customer']['restaurant']['cart']['orderNow'])),
+              padding: EdgeInsets.all(8), child: Text(_i18n()['orderNow'])),
     );
   }
 }

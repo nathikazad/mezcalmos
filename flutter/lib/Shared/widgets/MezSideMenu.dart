@@ -20,7 +20,7 @@ dynamic _i18n() =>
 class MezSideMenu extends GetWidget<AuthController> {
   SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageController languageController = Get.find<LanguageController>();
 
   String lmd = GetStorage().read(getxLmodeKey);
   String VERSION = GetStorage().read(getxAppVersion);
@@ -175,7 +175,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                     )),
                 Obx(() => ListTile(
                     onTap: () {
-                      lang.changeUserLanguage();
+                      languageController.changeUserLanguage();
                       _drawerController.closeMenu();
                     },
                     leading: Container(
@@ -184,9 +184,10 @@ class MezSideMenu extends GetWidget<AuthController> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: AssetImage(lang.oppositFlag))),
+                              image:
+                                  AssetImage(languageController.oppositFlag))),
                     ),
-                    title: Text(lang.oppositToLang,
+                    title: Text(languageController.oppositToLang,
                         style: TextStyle(fontFamily: 'psb', fontSize: 13.sp)))),
               ],
             ),

@@ -94,7 +94,6 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   LocationSearchBarController locationSearchBarController;
   List<LocationDropDownItem> dropDownItems = [];
   LocationSearchBarState(this.locationSearchBarController);
-  LanguageController lang = Get.find<LanguageController>();
   /************  Init, build and other overrided function *********************************/
   @override
   void initState() {

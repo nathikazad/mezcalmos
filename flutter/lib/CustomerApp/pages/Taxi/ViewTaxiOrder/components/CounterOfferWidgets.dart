@@ -14,7 +14,9 @@ import 'package:sizer/sizer.dart';
 class CounterOfferWidgets {
   final ViewTaxiOrderController viewController;
   CounterOfferWidgets({required this.viewController});
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+      ["pages"]
+  ['Taxi']['ViewTaxiOrder']['components']['CounterOfferWidgets'];
 
   Widget offersButton() {
     return Container(
@@ -32,7 +34,7 @@ class CounterOfferWidgets {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  lang.strings['customer']['taxiView']['offers'],
+                  _i18n()['offers'],
                   style: TextStyle(
                       fontFamily: "psr",
                       color: Colors.white,
@@ -88,8 +90,7 @@ class CounterOfferWidgets {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        lang.strings['Shared']['pages']['CounterOffers']
-                            ['offers'],
+                        _i18n()['offers'],
                         style: Theme.of(context)
                             .textTheme
                             .bodyText1!

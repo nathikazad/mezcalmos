@@ -139,7 +139,6 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
 Future<imPicker.XFile?> imagePicker(
     {required imPicker.ImagePicker picker,
     imPicker.ImageSource source = imPicker.ImageSource.gallery}) async {
-  //LanguageController lang = Get.find<LanguageController>();
   try {
     return await picker.pickImage(
       source: source,

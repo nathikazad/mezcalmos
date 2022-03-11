@@ -7,6 +7,10 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']
+['ListOrdersScreen']['components']['LaundryOngoingOrderCard'];
+
 class LaundryOngoigOrderCard extends StatelessWidget {
   LaundryOngoigOrderCard({
     Key? key,
@@ -15,7 +19,6 @@ class LaundryOngoigOrderCard extends StatelessWidget {
 
   final LaundryOrder order;
 
-  LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
@@ -110,7 +113,7 @@ class LaundryOngoigOrderCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : \$${order.cost}",
+            "${_i18n()["totalCost"]} : \$${order.cost}",
           ),
           Spacer(),
           Icon(

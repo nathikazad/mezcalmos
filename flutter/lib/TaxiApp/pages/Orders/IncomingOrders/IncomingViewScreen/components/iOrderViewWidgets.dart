@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/CounterOfferBottomSheet/CounterOfferPriceSetter.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/Components/CounterOfferBottomSheet/CounterOfferSentBottomSheet.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/CounterOfferBottomSheet/CounterOfferPriceSetter.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/CounterOfferBottomSheet/CounterOfferSentBottomSheet.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/controller/iOrderViewController.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+["Orders"]["IncomingOrders"]["IncomingViewScreen"]["components"]["iOrderViewWidgets"];
 
 class IOrderViewWidgets {
   final IOrderViewController iOrderViewController;
@@ -30,8 +34,7 @@ class IOrderViewWidgets {
               child: acceptOrderButton(
                 child: !iOrderViewController.clickedAcceptButton.value
                     ? Text(
-                        iOrderViewController.lang.strings['taxi']['taxiView']
-                            ["acceptOrders"],
+                        _i18n()["acceptOrders"],
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12.sp,
@@ -112,8 +115,7 @@ class IOrderViewWidgets {
         iOrderViewController.animatedSliderController.slideUp();
       },
       child: Text(
-        iOrderViewController.lang.strings['Shared']['pages']['CounterOffers']
-            ['offerPrice'],
+        _i18n()['offerPrice'],
         style: TextStyle(
           color: Colors.white,
           fontSize: 12.sp,

@@ -2,10 +2,10 @@ String chatNode(String chatId) {
   return 'chat/$chatId';
 }
 
-String userLanguage(String? userId) {
+String userLanguageNode(String? userId) {
   return 'users/$userId/info/language';
 }
 
-String userInfo(String? userId) {
+String userInfoNode(String? userId) {
   return 'users/$userId/info';
 }

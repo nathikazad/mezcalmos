@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TitlesComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -11,7 +12,7 @@ dynamic _i18n() =>
 
 List<Widget> choosenManyOption(
     List<CartChooseManyItem> cartChooseManyItems, BuildContext context) {
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
   final txt = Theme.of(context).textTheme;
 
   List<Widget> myWidgets = [
@@ -33,7 +34,7 @@ List<Widget> choosenManyOption(
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 25, top: 5),
           child: Text(
-              "${cartChooseManyItem.optionDetails.name[lang.userLanguageKey]}"
+              "${cartChooseManyItem.optionDetails.name[userLanguage]}"
                   .inCaps,
               style: const TextStyle(
                   color: const Color(0xff000000),

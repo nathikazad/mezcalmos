@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/component
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TitlesComponent.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:intl/intl.dart';
 
@@ -12,7 +13,7 @@ final currency = new NumberFormat("#,##0.00", "en_US");
 class ChooseOneCheckBox extends StatelessWidget {
   final List<ChooseOneOption> chooseOneOptions;
   final Rxn<CartItem> cartItem;
-  final LanguageController lang = Get.find<LanguageController>();
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
   ChooseOneCheckBox({required this.chooseOneOptions, required this.cartItem});
 
   @override
@@ -23,7 +24,7 @@ class ChooseOneCheckBox extends StatelessWidget {
           children: [
             // head Category Title ie: Meat
             MenuTitles(
-              title: oneOption.name[lang.userLanguageKey]!.capitalizeFirst,
+              title: oneOption.name[userLanguage]!.capitalizeFirst,
             ),
             SizedBox(
               height: 15,
@@ -32,7 +33,7 @@ class ChooseOneCheckBox extends StatelessWidget {
             ...oneOption.chooseOneOptionListItems.map((oneOptionItem) {
               return Obx(
                 () => ViewItemScreenCartComponent(
-                  title: oneOptionItem.name[lang.userLanguageKey],
+                  title: oneOptionItem.name[userLanguage],
                   initialVal: cartItem.value
                           ?.findChooseOneItemById(oneOptionItem.id)
                           ?.chosenOptionDetails

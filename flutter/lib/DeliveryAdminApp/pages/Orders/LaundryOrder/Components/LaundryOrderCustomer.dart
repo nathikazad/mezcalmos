@@ -10,7 +10,11 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 class LaundryOrderCustomer extends StatelessWidget {
   final LaundryOrder order;
   LaundryOrderCustomer({Key? key, required this.order}) : super(key: key);
-  LanguageController lang = Get.find<LanguageController>();
+
+  dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+      ["pages"]
+  ["Orders"]["LaundryOrder"]["Components"]["LaundryOrderCustomer"];
+
   LaundryOrderController controller = Get.find<LaundryOrderController>();
 
   @override
@@ -22,7 +26,7 @@ class LaundryOrderCustomer extends StatelessWidget {
         Container(
           margin: const EdgeInsets.all(8),
           child: Text(
-            lang.strings['deliveryAdminApp']['laundry']['customer'],
+            _i18n()['customer'],
             style: txt.headline3,
           ),
         ),

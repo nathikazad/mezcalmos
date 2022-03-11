@@ -38,7 +38,7 @@ class AdminAuthController extends GetxController {
         .once()
         .then((snap) => mezDbgPrint(snap.value));
     _adminNodeListener?.cancel();
-    mezDbgPrint(userInfo(_authController.fireAuthUser!.uid));
+    mezDbgPrint(userInfoNode(_authController.fireAuthUser!.uid));
     mezDbgPrint((adminNode(_authController.fireAuthUser!.uid)));
     _adminNodeListener = _databaseHelper.firebaseDatabase
         .reference()

@@ -4,14 +4,16 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 Widget orderShippingLocation(Rxn<RestaurantOrder> order) {
-  LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+          ['pages']
+  ['Orders']["ViewRestaurantOrderScreen"]["components"]["OrderShippingLocation"];
   return Column(
     children: [
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.centerLeft,
         child: Text(
-            lang.strings['customer']['restaurant']['cart']['deliveryLocation'],
+            _i18n()['deliveryLocation'],
             style: const TextStyle(
                 color: const Color(0xff000f1c),
                 fontFamily: "psb",

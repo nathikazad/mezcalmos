@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/workinHoursCart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
@@ -20,7 +21,7 @@ class RestaurantInfoTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   LanguageController lang = Get.find<LanguageController>();
+    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -35,7 +36,7 @@ class RestaurantInfoTab extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 15),
-              child: Text(restaurant.description[lang.userLanguageKey]!),
+              child: Text(restaurant.description[userLanguage]!),
             ),
             (restaurant.info.location != null)
                 ? Column(
@@ -68,7 +69,6 @@ class RestaurantInfoTab extends StatelessWidget {
   }
 
   Widget getWorkingHoursWidget(Schedule? schedule, BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     var xDate = DateTime.now();
     List<Widget> widgets = [
       Container(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -11,6 +12,11 @@ import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/iOrderViewWidgets.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/controller/iOrderViewController.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+["Orders"]["IncomingOrders"]["IncomingViewScreen"]["IncomingOrderViewScreen"];
+
 
 class IncomingOrderViewScreen extends StatefulWidget {
   @override
@@ -35,8 +41,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
           Get.back();
           oneButtonDialog(
               title: 'Oops...',
-              body: iOrderViewController.lang.strings['TaxiApp']['components']
-                  ['taxiDialogs']['rideUnavailable'],
+              body: _i18n()['rideUnavailable'],
               bodyTextColor: Colors.black,
               fontSize: 14.sp,
               imagUrl: a404);

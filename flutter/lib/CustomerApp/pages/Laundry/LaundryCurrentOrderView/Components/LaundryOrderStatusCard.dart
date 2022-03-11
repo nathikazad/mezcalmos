@@ -101,7 +101,9 @@ class LaundryOrderStatusCard extends StatelessWidget {
   }
 }
 
-LanguageController lang = Get.find<LanguageController>();
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']['pages']
+['Laundry']['LaundryCurrentOrderView']['Components']['LaundryOrderStatusCard'];
 Widget getOrderWidget(LaundryOrderStatus status) {
   switch (status) {
     case LaundryOrderStatus.CancelledByAdmin:
@@ -198,21 +200,20 @@ String getOrderStatus(LaundryOrderStatus status) {
 
     case LaundryOrderStatus.CancelledByCustomer:
       return 'Order Canceled';
-
     case LaundryOrderStatus.OrderReceieved:
-      return lang.strings['deliveryAdminApp']['laundry']['orderReceived'];
+      return _i18n()['orderReceived'];
     case LaundryOrderStatus.OtwPickup:
-      return lang.strings['deliveryAdminApp']['laundry']['otwPickUp'];
+      return _i18n()['otwPickUp'];
     case LaundryOrderStatus.PickedUp:
-      return lang.strings['deliveryAdminApp']['laundry']['pickedUp'];
+      return _i18n()['pickedUp'];
     case LaundryOrderStatus.AtLaundry:
-      return lang.strings['deliveryAdminApp']['laundry']['atLaundry'];
+      return _i18n()['atLaundry'];
     case LaundryOrderStatus.ReadyForDelivery:
-      return lang.strings['deliveryAdminApp']['laundry']['readyForDelivery'];
+      return _i18n()['readyForDelivery'];
     case LaundryOrderStatus.OtwDelivery:
-      return lang.strings['deliveryAdminApp']['laundry']['otwDelivery'];
+      return _i18n()['otwDelivery'];
     case LaundryOrderStatus.Delivered:
-      return lang.strings['deliveryAdminApp']['laundry']['delivered'];
+      return _i18n()['delivered'];
     default:
       return 'Unknown Status';
   }
@@ -221,26 +222,25 @@ String getOrderStatus(LaundryOrderStatus status) {
 String getOrderHelperText(LaundryOrderStatus status) {
   switch (status) {
     case LaundryOrderStatus.CancelledByAdmin:
-      return lang.strings['customer']['laundry']['orderHelper']
-          ['cancelByAdmin'];
+      return _i18n()['cancelByAdmin'];
 
     case LaundryOrderStatus.CancelledByCustomer:
-      return lang.strings['customer']['laundry']['orderHelper']['cancelByUser'];
+      return _i18n()['cancelByUser'];
 
     case LaundryOrderStatus.OrderReceieved:
-      return lang.strings['customer']['laundry']['orderHelper']['received'];
+      return _i18n()['received'];
     case LaundryOrderStatus.OtwPickup:
-      return lang.strings['customer']['laundry']['orderHelper']['otwPickup'];
+      return _i18n()['orderHelperOtwPickup'];
     case LaundryOrderStatus.PickedUp:
-      return lang.strings['customer']['laundry']['orderHelper']['pickedUp'];
+      return _i18n()['orderHelperPickedUp'];
     case LaundryOrderStatus.AtLaundry:
-      return lang.strings['customer']['laundry']['orderHelper']['atLaundry'];
+      return _i18n()['orderHelperAtLaundry'];
     case LaundryOrderStatus.ReadyForDelivery:
-      return lang.strings['customer']['laundry']['orderHelper']['ready'];
+      return _i18n()['orderHelperReady'];
     case LaundryOrderStatus.OtwDelivery:
-      return lang.strings['customer']['laundry']['orderHelper']['otwDelivery'];
+      return _i18n()['orderHelperOtwDelivery'];
     case LaundryOrderStatus.Delivered:
-      return lang.strings['customer']['laundry']['orderHelper']['delivered'];
+      return _i18n()['orderHelperDelivered'];
     default:
       return 'Unknown Status';
   }

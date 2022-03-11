@@ -31,6 +31,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 
   @override
   void initState() {
+    dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+        ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
     initializeLateControllers();
     // Order handling
     String orderId = Get.parameters['orderId']!;

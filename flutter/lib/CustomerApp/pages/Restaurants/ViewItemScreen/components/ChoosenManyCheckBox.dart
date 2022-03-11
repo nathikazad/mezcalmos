@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/component
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TitlesComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
@@ -16,7 +17,7 @@ dynamic _i18n() =>
 class ChooseManyCheckBoxes extends StatelessWidget {
   final List<ChooseManyOption> chooseManyOptions;
   final Rxn<CartItem> cartItem;
-  final LanguageController lang = Get.find<LanguageController>();
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
 
   ChooseManyCheckBoxes(
       {required this.cartItem, required this.chooseManyOptions});
@@ -30,7 +31,7 @@ class ChooseManyCheckBoxes extends StatelessWidget {
           mezDbgPrint(
               "====>> Chosen Item ? ${cartItem.value!.findChooseManyItemById(manyOptions.id)?.chosen}");
           return ViewItemScreenCartComponent(
-            title: manyOptions.name[lang.userLanguageKey]!,
+            title: manyOptions.name[userLanguage]!,
             price: manyOptions.cost > 0
                 ? "\$${currency.format(manyOptions.cost)}"
                 : null,

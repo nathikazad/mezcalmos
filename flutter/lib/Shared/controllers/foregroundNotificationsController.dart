@@ -13,7 +13,6 @@ class ForegroundNotificationsController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
 
   RxList<Notification> notifications = RxList();
-  LanguageController lang = Get.find<LanguageController>();
 
   StreamSubscription? _notificationNodeAddListener;
   StreamSubscription? _notificationNodeRemoveListener;

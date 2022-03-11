@@ -13,7 +13,6 @@ class SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     return Container(
       margin: EdgeInsets.all(8),
       child: TextField(

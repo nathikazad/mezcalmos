@@ -5,6 +5,10 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]
+["Orders"]["LaundryOrder"]["Components"]["LaundryOrderStatusCard"];
+
 class LaundryOrderStatusCard extends StatelessWidget {
   const LaundryOrderStatusCard({
     Key? key,
@@ -42,7 +46,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
   }
 }
 
-LanguageController lang = Get.find<LanguageController>();
+
 
 Widget getOrderWidget(LaundryOrderStatus status) {
   switch (status) {
@@ -142,19 +146,19 @@ String getOrderStatus(LaundryOrderStatus status) {
       return 'Order Canceled';
 
     case LaundryOrderStatus.OrderReceieved:
-      return lang.strings['deliveryAdminApp']['laundry']['orderReceived'];
+      return _i18n()['orderReceived'];
     case LaundryOrderStatus.OtwPickup:
-      return lang.strings['deliveryAdminApp']['laundry']['otwPickUp'];
+      return _i18n()['otwPickUp'];
     case LaundryOrderStatus.PickedUp:
-      return lang.strings['deliveryAdminApp']['laundry']['pickedUp'];
+      return _i18n()['pickedUp'];
     case LaundryOrderStatus.AtLaundry:
-      return lang.strings['deliveryAdminApp']['laundry']['atLaundry'];
+      return _i18n()['atLaundry'];
     case LaundryOrderStatus.ReadyForDelivery:
-      return lang.strings['deliveryAdminApp']['laundry']['readyForDelivery'];
+      return _i18n()['readyForDelivery'];
     case LaundryOrderStatus.OtwDelivery:
-      return lang.strings['deliveryAdminApp']['laundry']['otwDelivery'];
+      return _i18n()['otwDelivery'];
     case LaundryOrderStatus.Delivered:
-      return lang.strings['deliveryAdminApp']['laundry']['delivered'];
+      return _i18n()['delivered'];
     default:
       return 'Unknown Status';
   }

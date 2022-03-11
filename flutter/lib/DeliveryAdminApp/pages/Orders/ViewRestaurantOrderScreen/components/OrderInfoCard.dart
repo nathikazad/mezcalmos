@@ -12,9 +12,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'ChangeStatusButtons.dart';
 import 'OrderItemsCard.dart';
 
-dynamic _i18n() =>
-    Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
-        ["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderInfoCard"];
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+["pages"]["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderInfoCard"];
 //Display the order customer and items
 
 class OrderInfoCard extends StatefulWidget {
@@ -27,7 +26,6 @@ class OrderInfoCard extends StatefulWidget {
 
 class _OrderInfoCardState extends State<OrderInfoCard> {
   RestaurantOrderController controller = Get.find<RestaurantOrderController>();
-  LanguageController lang = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {

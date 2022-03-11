@@ -15,7 +15,6 @@ dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
 ["Orders"]["IncomingOrders"]["IncomingViewScreen"]["IPositionedBottomBar"];
 
 class IncomingPositionedBottomBar extends StatelessWidget {
-  final LanguageController lang = Get.find<LanguageController>();
   final TaxiOrder order;
 
   IncomingPositionedBottomBar({required this.order});

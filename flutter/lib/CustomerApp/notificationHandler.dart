@@ -103,77 +103,60 @@ Notification restaurantOrderStatusChangeNotificationHandler(
 // TODO: needs to be formatted for laundry
 Map<String, dynamic>? getLaundryOrderStatusFields(
     LaundryOrderStatus laundryOrderStatus) {
-  LanguageController lang = Get.find<LanguageController>();
   switch (laundryOrderStatus) {
     case LaundryOrderStatus.OrderReceieved:
       return <String, dynamic>{
-        "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
-        "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["body"]}",
+        "title": "${_i18n()["preparingOrderTitle"]}",
+        "body": "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.OtwPickup:
       return <String, dynamic>{
-        "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["title"]}",
-        "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["body"]}",
+        "title": "${_i18n()["readyForPickUpTitle"]}",
+        "body": "${_i18n()["readyForPickUpBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/readyOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.PickedUp:
       return <String, dynamic>{
-        "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayRestaurant"]["title"]}",
-        "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayRestaurant"]["body"]}",
+        "title": "${_i18n()["onTheWayRestaurantTitle"]}",
+        "body": "${_i18n()["onTheWayRestaurantBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.AtLaundry:
       return <String, dynamic>{
-        "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["delivered"]["title"]}",
-        "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["delivered"]["body"]}",
+        "title": "${_i18n()["deliveredTitle"]}",
+        "body": "${_i18n()["deliveredBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.ReadyForDelivery:
       return <String, dynamic>{
-        "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
-        "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["body"]}",
+        "title": "${_i18n()["preparingOrderTitle"]}",
+        "body": "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.OtwDelivery:
       return <String, dynamic>{
-        "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["title"]}",
-        "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["body"]}",
+        "title": "${_i18n()["readyForPickUpTitle"]}",
+        "body": "${_i18n()["readyForPickUpBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/readyOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.Delivered:
       return <String, dynamic>{
-        "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayRestaurant"]["title"]}",
-        "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["onTheWayRestaurant"]["body"]}",
+        "title": "${_i18n()["onTheWayRestaurantTitle"]}",
+        "body": "${_i18n()["onTheWayRestaurantBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
-        "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
-        "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+        "title": "${_i18n()["cancelledTitle"]}",
+        "body": "${_i18n()["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
@@ -188,36 +171,36 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
   switch (restaurantOrderStatus) {
     case RestaurantOrderStatus.PreparingOrder:
       return <String, dynamic>{
-        "title": "${_i18n()["restaurant"]["preparingOrder"]["title"]}",
-        "body": "${_i18n()["restaurant"]["preparingOrder"]["body"]}",
+        "title": "${_i18n()["preparingOrderTitle"]}",
+        "body": "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
-        "title": "${_i18n()["restaurant"]["readyForPickup"]["title"]}",
-        "body": "${_i18n()["restaurant"]["readyForPickup"]["body"]}",
+        "title": "${_i18n()["readyForPickUpTitle"]}",
+        "body": "${_i18n()["readyForPickUpBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/readyOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
-        "title": "${_i18n()["restaurant"]["onTheWay"]["title"]}",
-        "body": "${_i18n()["restaurant"]["onTheWay"]["body"]}",
+        "title": "${_i18n()["onTheWayTitle"]}",
+        "body": "${_i18n()["onTheWayBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.Delivered:
       return <String, dynamic>{
-        "title": "${_i18n()["restaurant"]["delivered"]["title"]}",
-        "body": "${_i18n()["restaurant"]["delivered"]["body"]}",
+        "title": "${_i18n()["deliveredTitle"]}",
+        "body": "${_i18n()["deliveredBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
-        "title": "${_i18n()["restaurant"]["cancelled"]["title"]}",
-        "body": "${_i18n()["restaurant"]["cancelled"]["body"]}",
+        "title": "${_i18n()["cancelledTitle"]}",
+        "body": "${_i18n()["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
@@ -232,36 +215,36 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
   switch (taxiOrdersStatus) {
     case TaxiOrdersStatus.OnTheWay:
       return <String, dynamic>{
-        "title": "${_i18n()["taxi"]["onTheWay"]["title"]}",
-        "body": "${_i18n()["taxi"]["onTheWay"]["body"]}",
+        "title": "${_i18n()["taxiOnTheWayTitle"]}",
+        "body": "${_i18n()["taxiOnTheWayBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.InTransit:
       return <String, dynamic>{
-        "title": "${_i18n()["taxi"]["inTransit"]["title"]}",
-        "body": "${_i18n()["taxi"]["inTransit"]["body"]}",
+        "title": "${_i18n()["taxiInTransitTitle"]}",
+        "body": "${_i18n()["taxiInTransitBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.DroppedOff:
       return <String, dynamic>{
-        "title": "${_i18n()["taxi"]["droppedOff"]["title"]}",
-        "body": "${_i18n()["taxi"]["droppedOff"]["body"]}",
+        "title": "${_i18n()["taxiDroppedOffTitle"]}",
+        "body": "${_i18n()["taxiDroppedOffBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.CancelledByTaxi:
       return <String, dynamic>{
-        "title": "${_i18n()["taxi"]["cancelled"]["title"]}",
-        "body": "${_i18n()["taxi"]["cancelled"]["body"]}",
+        "title": "${_i18n()["taxiCancelledTitle"]}",
+        "body": "${_i18n()["taxiCancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     case TaxiOrdersStatus.Expired:
       return <String, dynamic>{
-        "title": "${_i18n()["taxi"]["expired"]["title"]}",
-        "body": "${_i18n()["taxi"]["expired"]["body"]}",
+        "title": "${_i18n()["taxiExpiredTitle"]}",
+        "body": "${_i18n()["taxiExpiredBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };

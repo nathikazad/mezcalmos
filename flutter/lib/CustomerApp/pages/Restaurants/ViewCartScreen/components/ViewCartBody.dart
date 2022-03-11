@@ -24,7 +24,6 @@ class ViewCartBody extends StatefulWidget {
 }
 
 class _ViewCartBodyState extends State<ViewCartBody> {
-  // LanguageController lang = Get.find<LanguageController>();
   RestaurantController controller = Get.find<RestaurantController>();
   TextEditingController textcontoller = new TextEditingController();
 

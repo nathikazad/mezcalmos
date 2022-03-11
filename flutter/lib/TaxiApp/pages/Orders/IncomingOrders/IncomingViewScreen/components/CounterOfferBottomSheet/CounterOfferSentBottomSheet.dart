@@ -15,7 +15,10 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
   final TaxiOrder order;
   final Function() onCounterEnd;
   final int duration;
-  final LanguageController lang = Get.find<LanguageController>();
+  dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+          ['Orders']['IncomingOrders']
+  ['IncomingViewScreen']['components']['CounterOfferBottomSheet']['CounterOfferSentBottomSheet'];
+
 
   CounterOfferSentBottomSheet(
       {required this.counterOffer,
@@ -35,7 +38,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Center(
               child: Text(
-                lang.strings['customer']['taxiView']['offer'],
+                _i18n()['offer'],
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!
@@ -56,7 +59,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(lang.strings['customer']['taxiView']['offerPrice']),
+                Text(_i18n()['offerPrice']),
                 Text("\$${counterOffer.value!.price}"),
               ],
             )),
@@ -65,7 +68,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(lang.strings['customer']['taxiView']['offerStatus']),
+                Text(_i18n()['offerStatus']),
                 Text(
                     "${counterOffer.value!.counterOfferStatus.toFirebaseFormatString()}"),
               ],
@@ -77,7 +80,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10, top: 20),
           child: Text(
-            lang.strings['customer']['taxiView']['offerTip'],
+            _i18n()['offerTip'],
             style: TextStyle(fontFamily: 'psr', fontSize: 10.sp),
           ),
         )

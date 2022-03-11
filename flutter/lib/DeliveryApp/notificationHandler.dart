@@ -9,6 +9,9 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+    ["notificationHandler"];
+
 Notification deliveryDriverNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
@@ -54,41 +57,41 @@ Notification restaurantOrderStatusChangeNotificationHandler(
 
 Map<String, dynamic>? getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
-  LanguageController lang = Get.find<LanguageController>();
+  
   switch (restaurantOrderStatus) {
     case RestaurantOrderStatus.PreparingOrder:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
+            "${_i18n()["preparingOrderTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["body"]}",
+            "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["title"]}",
+            "${_i18n()["readyForPickupTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["body"]}",
+            "${_i18n()["readyForPickupBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/readyOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+            "${_i18n()["cancelledTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+            "${_i18n()["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+            "${_i18n()["cancelledTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+            "${_i18n()["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
@@ -119,14 +122,13 @@ Notification laundryOrderStatusChangeNotificationHandler(
 
 Map<String, dynamic>? getLaundryOrderStatusFields(
     LaundryOrderStatus laundryOrderStatus) {
-  LanguageController lang = Get.find<LanguageController>();
   switch (laundryOrderStatus) {
     case LaundryOrderStatus.ReadyForDelivery:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
+            "${_i18n()["preparingOrderTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["body"]}",
+            "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
@@ -134,9 +136,9 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       return <String, dynamic>{
         //  "orderId": "needTobefixed",
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+            "${_i18n()["cancelledTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+            "${_i18n()["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
@@ -144,18 +146,9 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       return <String, dynamic>{
         //   "orderId": "needTobefixed",
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+            "${_i18n()["cancelledTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
-      };
-    default:
-      return <String, dynamic>{
-        "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
-        "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+            "${_i18n()["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
