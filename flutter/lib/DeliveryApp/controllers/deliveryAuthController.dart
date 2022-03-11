@@ -1,20 +1,19 @@
 import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:location/location.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class DeliveryAuthController extends GetxController {
@@ -113,7 +112,7 @@ class DeliveryAuthController extends GetxController {
 
   void saveAppVersionIfNecessary() {
     if (_checkedAppVersion == false) {
-      String VERSION = GetStorage().read(getxVersion);
+      String VERSION = GetStorage().read(getxAppVersion);
       _databaseHelper.firebaseDatabase
           .reference()
           .child(
@@ -152,7 +151,6 @@ class DeliveryAuthController extends GetxController {
           OrderController _orderController = Get.find<OrderController>();
 
           _orderController.currentOrders.forEach((order) {
-            
             // updating driver location in deliveryDrivers/inProcessOrders
             _databaseHelper.firebaseDatabase
                 .reference()
@@ -174,7 +172,7 @@ class DeliveryAuthController extends GetxController {
             _databaseHelper.firebaseDatabase
                 .reference()
                 .child(customerInProcessOrderDriverLocationNode(
-                    orderId: order.orderId, 
+                    orderId: order.orderId,
                     customerId: order.customer.id,
                     driverAddress: order.driverDatabaseAddress()))
                 .set(positionUpdate);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 import '../../../../../Shared/controllers/languageController.dart';
 import 'TaxiCurrentOrderCard.dart';

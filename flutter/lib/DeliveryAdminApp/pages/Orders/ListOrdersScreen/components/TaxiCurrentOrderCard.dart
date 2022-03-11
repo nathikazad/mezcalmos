@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 class TaxiCurrentOrderCard extends StatelessWidget {
   final TaxiOrder order;

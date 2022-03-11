@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 class TaxiOpenOrderControllButtons extends StatefulWidget {
   final TaxiOrder order;
