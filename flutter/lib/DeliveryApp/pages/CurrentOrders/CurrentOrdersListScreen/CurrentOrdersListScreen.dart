@@ -15,7 +15,8 @@ import 'package:sizer/sizer.dart';
 import 'Components/DriverOrderCard.dart';
 import 'Components/MezSwitch.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+ dynamic _i18n = Get.find<LanguageController>().strings["DeliveryApp"]["pages"]
+  ["CurrentOrders"]["CurrentOrdersListScreen"]["CurrentOrdersListScreen"];
 
 class CurrentOrdersListScreen extends StatefulWidget {
   @override
@@ -144,7 +145,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             flex: 2,
             child: Obx(
               () => Text(
-                lang.strings['taxi']['incoming']["title"],
+                _i18n["title"],
                 style: Theme.of(context).textTheme.headline2,
               ),
             ),

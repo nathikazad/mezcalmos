@@ -13,7 +13,8 @@ import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+dynamic _i18n = Get.find<LanguageController>().strings["Shared"]["pages"]
+["ViewNotifications"];
 
 class ViewNotifications extends StatefulWidget {
   ViewNotifications({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
     final txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text(lang.strings['shared']['notification']['title']),
+        title: Text(_i18n['title']),
         automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(
@@ -119,7 +120,7 @@ class ClearNotifButton extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  '${lang.strings["shared"]["notification"]["latest"]}',
+                  '${_i18n["latest"]}',
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
@@ -128,9 +129,9 @@ class ClearNotifButton extends StatelessWidget {
                   onPressed: () async {
                     YesNoDialogButton yesNoRes = await cancelAlertDialog(
                         title:
-                            "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
+                            "${_i18n["alertClearNotificationTitle"]}",
                         body:
-                            "${lang.strings["shared"]["notification"]["alertClearNotification"]["title"]}",
+                            "${_i18n["alertClearNotificationTitle"]}",
                         icon: Container(
                           child: Icon(
                             Icons.highlight_off,

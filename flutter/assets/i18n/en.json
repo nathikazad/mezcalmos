@@ -26,6 +26,7 @@
         "comingSoon": "Coming soon ..."
       }
     },
+
     "pages": {
       "ListOrdersScreen": {
         "components": {
@@ -50,6 +51,12 @@
           },
           "TaxiPastOrderCard": {
             "taxiOrder": "Taxi order",
+            "totalCost": "Total Cost"
+          },
+          "LaundryOngoingOrderCard":{
+            "totalCost": "Total Cost"
+          },
+          "LaundryPastOrderCard":{
             "totalCost": "Total Cost"
           }
         },
@@ -231,7 +238,7 @@
           }
         }
       },
-      "SavedLocations": {
+      "SavedLocations":{
         "components": {
           "SavedLocationBody":{
             "title": "Saved Locations",
@@ -291,12 +298,21 @@
           "failedToRequestTaxi" : "Failed to request a taxi !",
           "taxiRequestPriceTooltip" : "How much are you willing to offer for this ride? We will broadcast your offer to all taxi drivers near you, they will accept your order only if they find the offered price acceptable."
         },
-        "ViewTaxiOrdersScreen": {
-          "orderCancelSuccess": "Order cancelled successfully.",
-          "title":"Confirm Cancellation.",
-          "question": "Are you sure you want to cancel your Order ?",
-          "cancel": "Cancel",
-          "taxiRidePriceTooltip" : "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out."
+        "ViewTaxiOrder":{
+          "components":{
+              "CounterOfferWidgets": {
+                "offers" : "Offers"
+              },
+              "ViewTaxiOrderScreenWidgets":{
+                "title": "Confirm Cancelation.",
+                "question": "Are you sure you want to cancel your Order ?",
+                "cancel": "Cancel",
+                "taxiRidePriceTooltip": "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out."
+              }
+          },
+          "ViewTaxiOrderScreen":{
+             "orderCancelSuccess": "Order cancelled successfully."
+          }
         }
       },
       "CustomerWrapper": {
@@ -316,54 +332,122 @@
           "title": "Laundry"
         },
         "supportText": "need help ? Contact our support team"
+      },
+      "Laundry":{
+        "Components":{
+          "LaundryLocPicker":{
+            "pickLocation": "Pick from map"
+          }
+        },
+        "LaundryCurrentOrderView":{
+          "Components":{
+            "LaundryOrderFooterCard":{
+              "cancelOrder": "Cancel Order",
+              "orderCanceled": "Order is being cancelled ...",
+              "orderStatusCanceled": "Order Cancelled",
+              "orderStatusDeliverd": "Order Delivered",
+              "cancelOrderConfirm": "Are you sure you want to\ncancel this order?",
+              "titleSuccess": "Success :)",
+              "orderCancelSuccess": "Order cancelled successfully.",
+              "titleFailed": "Oops :(",
+              "orderCancelFailed": "Failed to cancel the order.",
+              "cancelOrderDialogYes": "Yes, I'm sure!",
+              "cancelOrderDialogNo": "No"
+            },
+            "LaundryOrderStatusCard":{
+              "orderReceived": "Order Received",
+              "otwPickUp": "Pick-up on the way",
+              "pickedUp": "Order Picked-up",
+              "atLaundry": "At laundry",
+              "readyForDelivery": "Ready for Delivery",
+              "otwDelivery": "Delivery on the way",
+              "delivered": "Order Delivered",
+              "cancelByAdmin": " Order Canceled by the admin",
+              "cancelByUser": " You canceled the order",
+              "received": " Order received and will be proceed as soon as possible",
+              "orderHelperOtwPickup": "Our driver is on the way to pick up your order from your location ",
+              "orderHelperPickedUp": " order picked up from your location successfully",
+              "orderHelperAtLaundry": " the laundry is processing your order",
+              "orderHelperReady": "your order is ready for delivery",
+              "orderHelperOtwDelivery": "Our driver is on the way to deliver back your order",
+              "orderHelperDelivered": "Order has been successfully delivered"
+            },
+            "LaundryPricingComponent":{
+              "laundryPricing": "Laundry Pricing",
+              "fixedRate": "Fixed Rate",
+              "orderWeight": "Order Weight",
+              "totalCost": "Total Cost",
+              "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order." 
+            },
+            "OrderSummaryComponent": {
+              "orderSummary": "Order Summary",
+              "orderCost": "Order Cost",
+              "deliveryCost": "Delivery Cost",
+              "totalCost": "Total Cost", 
+              "deliveryLocation": "Delivery Location",
+              "laundryPricing": "Laundry Pricing",
+              "fixedRate": "Fixed Rate",
+              "orderWeight": "Order Weight",
+              "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
+              
+            }
+          },
+          "LaundryCurrentOrderView":{
+            "orderStatus": "Order Status"
+          }
+          
+        },
+        "LaundryRequestView":{ 
+          "Components":{
+              "LaundryStepsComponent":{
+                "firstStep": "First step is creating an order once you create an order one of our drivers will be reaching your location to pickup your things",
+                "secondStep": "Second step our laundry service provider will recieve your order and start doing his work and we will inform you about price changes depending on the order weight",
+                "thirdStep": "Final step once your order is ready one of our drivers will pickup the order from the laundry and get it to your location as soon as possible"
+            }
+          },
+          "LaundryOrderRequestView":{
+            "howItWorks": "How it works",
+            "deliveryLocation": "Delivery Location",
+            "orderSummary": "Order Summary",
+            "orderCost": "Order Cost",
+            "deliveryCost": "Delivery Cost",
+            "noLocation": "No location selected",
+            "pickLocation": "Pick from map",
+            "orderNow": "ORDER NOW",
+            "signInToMakeOrder": "Sign in to make order"
+          }
+      
+        },
+        "LaundryPickLocView":{
+          "pickLocation": "Pick Location",
+          "pickLabele": "Search for location or move map and pick location"
+        }
+        
       }
     },
+
     "notificationHandler": {
       "viewOrder": "View Order",
-      "restaurant": {
-        "preparingOrder": {
-          "body": "Your order is being prepared",
-          "title": "Preparing Order"
-        },
-        "readyForPickup": {
-          "body": "Your order is ready for pickup",
-          "title": "Ready For Pickup"
-        },
-        "onTheWay": {
-          "body": "Your order is on the way",
-          "title": "On the Way"
-        },
-        "delivered": {
-          "body": "Your order has been delivered",
-          "title": "Delivered"
-        },
-        "cancelled": {
-          "body": "Your order has been cancelled",
-          "title": "Order Cancelled"
-        }
-      },
-      "taxi": {
-        "onTheWay": {
-          "body": "Your taxi is on the way",
-          "title": "On the Way"
-        },
-        "inTransit": {
-          "body": "You are on the way to your destination",
-          "title": "In Transit"
-        },
-        "droppedOff": {
-          "body": "Your have reached your destination",
-          "title": "Reached"
-        },
-        "cancelled": {
-          "body": "Your order has been cancelled",
-          "title": "Order Cancelled"
-        },
-        "expired": {
-          "body": "Unfortunately, we could not find a taxi for you. Please try again later",
-          "title": "No taxis available"
-        }
-      }
+      "preparingOrderTitle": "Preparing Order",
+      "preparingOrderBody": "Your order is being prepared",
+      "readyForPickUpTitle": "Ready For Pickup",
+      "readyForPickUpBody": "Your order is ready for pickup",
+      "onTheWayRestaurantTitle": "On the Way",
+      "onTheWayRestaurantBody": "Your order is on the way",
+      "deliveredTitle": "Delivered",
+      "deliveredBody": "Your order has been delivered",
+      "cancelledTitle": "Order Cancelled",
+      "cancelledBody": "Your order has been cancelled",
+      "taxiOnTheWayTitle": "On the Way",
+      "taxiOnTheWayBody": "Your taxi is on the way",
+      "taxiInTransitTitle": "In Transit",
+      "taxiInTransitBody": "You are on the way to your destination",
+      "taxiDroppedOffTitle": "Reached",
+      "taxiDroppedOffBody": "Your have reached your destination",
+      "taxiCancelledTitle": "Order Cancelled",
+      "taxiCancelledBody": "Your order has been cancelled",
+      "taxiExpiredTitle": "No taxis available",
+      "taxiExpiredBody": "Unfortunately, we could not find a taxi for you. Please try again later"
     }
   },
   
@@ -446,15 +530,18 @@
           "saveBtn": "Save"
         }
       },
-      "CounterOffers" : {
-        "offers" : "Offers",
-        "offerPrice" : "Offer's price",
-        "offerStatus" : "Offer's status",
-        "offerTip" : "Every offer you make have a timeout of 60 seconds if the customer doesn’t accept your offer the offer will be canceled."
-      },
+
       "NoInternetConnectionScreen":{
         "noInternetConnection" : "No internet connection",
         "reconnecting" : "Reconnecting"
+      },
+      "MessagingScreen":{
+        "writeMsgPlaceholder": "Write your message here ..."
+      },
+      "ViewNotifications":{
+        "title": "Notifications",
+        "latest": "Latest",
+        "alertClearNotificationTitle":"Clear All Notifications"
       }
     },
     "widgets":{
@@ -475,6 +562,7 @@
       }
     }
   },
+
   "TaxiApp":{
     "components":{
       "taxiDialogs":{
@@ -495,10 +583,12 @@
             "tooFarFromfinishRide": "Click Finish after the customer has exited your vehicle. Based on your GPS it seems you are still far from customer's end location, are you sure you still want to end the ride?",
             "tooFarFromstartRide": "Click start ride after the customer has reached your vehicle. Based on your GPS it seems you are still far from customer location, are you sure you still want to start the ride?"
           },
+
           "CPositionedFromToBar":{
             "from": "From",
             "to": "To"
           },
+
           "CurrentOrderScreen":{
             "cancelledMessage": "Your ride has been cancelled"
           }
@@ -511,21 +601,37 @@
               "noOrdersDesc": "Try again later",
               "toggleTitle": "Turn On Incoming Orders",
               "toggleDesc": "Turn on to see new orders"
-           
             }
           },
           "IncomingViewScreen":{
+            "components":{
+              "CounterOfferBottomSheet":{
+                "CounterOfferSentBottom":{
+                  "offer": "offer",
+                  "offerPrice": "Offer's price",
+                  "offerStatus": "Offer's status",
+                  "offerTip": "Every offer you make have a timeout of 60 seconds if the customer doesn’t accept your offer the offer will be canceled."
+                }
+              },
+              "iOrderViewWidgets":{
+                "acceptOrders": "Accept Order",
+                "offerPrice" : "Offer's price"
+              },
+              "IPositionedBottomBar":{
+                "far": "far"
+              },
+
+              "IPositionedFromToBar":{
+                "from": "From",
+                "to": "To"
+              }
+
+            },
             "IncomingOrderViewScreen":{
               "rideUnavailable": "Sorry to inform you that the ride is not available any more.",
               "acceptOrders": "Accept Order"
-            },
-            "IPositionedBottomBar":{
-              "far": "far"
-            },
-            "IPositionedFromToBar":{
-              "from": "From",
-              "to": "To"
             }
+           
           }
         }
       }
@@ -535,6 +641,7 @@
       "cancelledBody": "Your order has been cancelled"
     }
   },
+
   "TaxiAdminApp":{
     "pages":{
       "Driver":{
@@ -610,42 +717,87 @@
     },
     "pages":{
       "Orders":{
+        "LaundryOrder":{
+          "Components":{
+            "LaundryOrderButtons":{
+              "title": "Cancel",
+              "subTitle": "Are you sure you want\nto cancel the order?",
+              "cancel": "Cancel",
+              "startPickUp": "Start pickup",
+              "startPickUpText": "The driver should be notified to pick up the order",
+              "startPickUpTitle": "Start order Pickup",
+              "pickedUp": "Order Picked-up",
+              "atLaundry": "At laundry",
+              "atLaundryText": "Confirm the order received by the laundry by setting the order weight ",
+              "atLaundryTitle": "Order at laundry",
+              "orderWeightError": " Error, please insert a valid order weight",
+              "readyForDelivery": "Ready for Delivery",
+              "readyForDeliveryText": "Confirm that the order is ready for delivery",
+              "readyForDeliveryTitle": "Order ready for delivery",
+              "otwDelivery": "Delivery on the way",
+              "otwDeliveryText": "Confirm that the order is being delivered to the customer",
+              "otwDeliveryTitle": "Delivery On the way",
+              "delivered": "Order Delivered",
+              "deliveredText": "Confirm that the order is delivered to the customer",
+              "deliveredTitle": "Order delivered"
+            },
+            "LaundryOrderCustomer":{
+              "customer": "Customer"
+            },
+            "LaundryOrderStatusCard":{
+              "orderReceived": "Order Received",
+              "otwPickUp": "Pick-up on the way",
+              "pickedUp": "Order Picked-up",
+              "atLaundry": "At laundry",
+              "readyForDelivery": "Ready for Delivery",
+              "otwDelivery": "Delivery on the way",
+              "delivered": "Order Delivered"
+            },
+            "LaundryOrderSummary":{
+              "orderSummary": "Order Summary",
+              "orderWeight": "Order Weight",
+              "orderCost": "Order Cost",
+              "totalCost": "Total Cost"
+            }
+          },
+          "LaundryOrderScreen":{
+            "notes": "Notes",
+            "deliveryLocation": "Delivery Location"
+          }
+        },
         "ListOrdersScreen":{
-          "ListOrdersScreen":{}
+          "ListOrdersScreen":{
+            "title": "Orders",
+            "noOrders": "No orders found",
+            "pastOrders": "Past orders",
+            "restaurantOrders": "Restaurant Orders",
+            "laundryOrders": "Laundry orders"
+          }
         },
         "ViewRestaurantOrderScreen":{
           "components":{
             "ButtonStyles":{
-              "cancelAlert": {
-                "title": "Cancel",
-                "subTitle": "Are you sure you want\nto cancel the order?"
-              },
+              "cancelAlertTitle": "Cancel",
+              "cancelAlertSubTitle": "Are you sure you want\nto cancel the order?",
               "cancel": "Cancel",
               "readyForPickUp": "FOOD READY",
-              "readyAlert": {
-                "title": "READY",
-                "subTitle": "Are you sure you want\nto mark the order as ready?"
-              },
+              "readyAlertTitle": "READY",
+              "readyAlertSubTitle": "Are you sure you want\nto mark the order as ready?",
               "deliver": "START DELIVERY",
-              "onTheWayAlert": {
-                "title": "On the Way",
-                "subTitle": "Are you sure you want\nto start the order delivery?"
-              },
+              "onTheWayAlertTitle": "On the Way",
+              "onTheWayAlertSubTitle": "Are you sure you want\nto start the order delivery?",
               "preparing": "PREPARE",
-              "prepareAlert": {
-                "title": "Prepare Order",
-                "subTitle": "Are you sure you want\nto prepare order?"
-              },
+              "prepareAlertTitle": "Prepare Order",
+              "prepareAlertSubTitle": "Are you sure you want\nto prepare order?",
               "received": "DROPPED",
-              "deliveredAlert": {
-                "title": "Deliver",
-                "subTitle": "Are you sure you want\nto deliver the order?"
-              }
+              "deliveredAlertTitle": "Deliver",
+              "deliveredAlertSubTitle": "Are you sure you want\nto deliver the order?"
             },
-            
+
             "OrderInfoCard":{
               "orderItems": "Order Items"
             },
+
             "OrderNoteCard":{
               "notes": "Notes"
             },
@@ -669,11 +821,47 @@
               "helperTextOnTheWay": "Your order is on the way",
               "helperTextReadyForPickUp": "Your order is prepared and ready for pickup by the delivery driver'",
               "helperTextDelivered": "Your order has been successfully delivered"
+            },
+            "OrderShippingLocation":{
+              "deliveryLocation": "Delivery Location"
             }
+
           }
             
         }
       }
+    }
+  },
+
+  "DeliveryApp":{
+    "pages":{
+      "CurrentOrders":{
+        "CurrentOrdersListScreen":{
+            "Components":{
+                "DriverNoOrdersComponent":{
+                  "noOrdersTitle": "No Orders Found",
+                  "noOrdersDesc": "Try again later"
+                },
+                "DriverNotLookingComponent":{
+                  "toggleTitle": "Turn On Incoming Orders",
+                  "toggleDesc": "Turn on to see new orders"
+                }
+            },
+            "CurrentOrdersListScreen":{
+              "title": "Incoming  Orders"
+            }
+        }
+    }
+
+    },
+    "notificationHandler":{
+      "preparingOrderTitle": "Preparing Order",
+      "preparingOrderBody": "Your order is being prepared",
+      "readyForPickupTitle": "Ready For Pickup",
+      "readyForPickupBody": "Your order is ready for pickup",
+      "cancelledTitle": "Order Cancelled",
+      "cancelledBody": "Your order has been cancelled"
+
     }
   }
 }

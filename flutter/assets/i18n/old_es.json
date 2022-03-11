@@ -157,7 +157,7 @@
       "laundryPricing": "Precios de lavandería",
       "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido.",
       "orderHelper": {
-        "atLaundry": " La lavandería está procesando su pedido.",
+        "atLaundry": "La lavandería está procesando su pedido.",
         "cancelByAdmin": " Orden cancelado por el administrador.",
         "cancelByUser": " Usted canceló el pedido",
         "delivered": "El pedido ha sido entregado con éxito",

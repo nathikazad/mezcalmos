@@ -24,7 +24,7 @@ import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+dynamic _i18n = Get.find<LanguageController>().strings["Shared"]["pages"]["MessagingScreen"];
 
 class MessagingScreen extends StatefulWidget {
   @override
@@ -306,8 +306,7 @@ class SendMessageBox extends StatelessWidget {
             filled: true,
             fillColor: Colors.white,
             border: OutlineInputBorder(borderSide: BorderSide.none),
-            hintText: _languageController.strings['shared']['messages']
-                ['writeMsgPlaceholder'],
+            hintText: _i18n['writeMsgPlaceholder'],
             hintStyle: Theme.of(context)
                 .textTheme
                 .subtitle1

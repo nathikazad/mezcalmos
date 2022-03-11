@@ -9,8 +9,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]
-        ["pages"]["Orders"]["ViewRestaurantOrderScreen"]["components"]
-    ["ButtonStyles"];
+["pages"]["Orders"]["ViewRestaurantOrderScreen"]["components"]["ButtonStyles"];
 
 // the styles of status buttons inside the order screen
 class ButtonsStyle {
@@ -25,7 +24,8 @@ class ButtonsStyle {
       child: ButtonComponent(
         function: () async {
           var res = await dialogComponent(
-              _i18n["cancelAlert"]["title"], _i18n["cancelAlert"]["subTitle"],
+              _i18n["cancelAlertTitle"], 
+              _i18n["cancelAlertSubTitle"],
               () {
             Get.back(result: true);
           }, () {
@@ -81,8 +81,8 @@ class ButtonsStyle {
                 Get.snackbar("Error", "Please Select a driver");
               }
             : () async {
-                var res = await dialogComponent(_i18n["readyAlert"]["title"],
-                    _i18n["readyAlert"]["subTitle"], () {
+                var res = await dialogComponent(_i18n["readyAlertTitle"],
+                    _i18n["readyAlertSubTitle"], () {
                   Get.back(result: true);
                 }, () {
                   Get.back(result: false);
@@ -121,7 +121,7 @@ class ButtonsStyle {
           colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
       function: () async {
         var res = await dialogComponent(
-            _i18n["onTheWayAlert"]["title"], _i18n["onTheWayAlert"]["subTitle"],
+            _i18n["onTheWayAlertTitle"], _i18n["onTheWayAlertSubTitle"],
             () {
           Get.back(result: true);
         }, () {
@@ -159,7 +159,7 @@ class ButtonsStyle {
             colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
         function: () async {
           var res = await dialogComponent(
-              _i18n["prepareAlert"]["title"], _i18n["prepareAlert"]["subTitle"],
+              _i18n["prepareAlertTitle"], _i18n["prepareAlertSubTitle"],
               () {
             Get.back(result: true);
           }, () {
@@ -195,8 +195,8 @@ class ButtonsStyle {
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
         function: () async {
-          var res = await dialogComponent(_i18n["deliveredAlert"]["title"],
-              _i18n["deliveredAlert"]["subTitle"], () {
+          var res = await dialogComponent(_i18n["deliveredAlertTitle"],
+              _i18n["deliveredAlertSubTitle"], () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);

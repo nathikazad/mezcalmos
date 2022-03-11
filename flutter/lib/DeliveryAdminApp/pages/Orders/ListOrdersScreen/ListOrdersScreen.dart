@@ -37,8 +37,8 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   RestaurantOrderController controller = Get.find<RestaurantOrderController>();
   LaundryOrderController laundryOrderController =
       Get.find<LaundryOrderController>();
-  dynamic _i18n =
-      Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+  dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
+  ["Orders"]["ListOrdersScreen"]["ListOrdersScreen"];
   StreamSubscription? _ordersListener;
   StreamSubscription? _laundryOrdersListener;
 
@@ -136,7 +136,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                           margin: const EdgeInsets.all(8),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                              lang.strings["customer"]["orders"]["title"],
+                              _i18n["title"],
                               style: Theme.of(context).textTheme.headline1,
                               textAlign: TextAlign.left),
                         ),
@@ -147,16 +147,14 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                           child: inProcessOrders.value.length > 0
                               ? buildOrders(inProcessOrders)
                               : Center(
-                                  child: Text(lang.strings['deliveryAdminApp']
-                                      ['laundry']['noOrders']),
+                                  child: Text(_i18n['noOrders']),
                                 ),
                         ),
                         Container(
                           margin: const EdgeInsets.all(8),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                              lang.strings['deliveryAdminApp']['laundry']
-                                  ['pastOrders'],
+                              _i18n['pastOrders'],
                               style: Theme.of(context).textTheme.headline1,
                               textAlign: TextAlign.left),
                         ),
@@ -167,8 +165,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                           child: controller.pastOrders.value.length > 0
                               ? buildOrders(controller.pastOrders)
                               : Center(
-                                  child: Text(lang.strings['deliveryAdminApp']
-                                      ['laundry']['noOrders']),
+                                  child: Text(_i18n['noOrders']),
                                 ),
                         ),
                       ],
@@ -184,7 +181,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                             margin: const EdgeInsets.all(8),
                             alignment: Alignment.centerLeft,
                             child: Text(
-                                lang.strings["customer"]["orders"]["title"],
+                                _i18n["title"],
                                 style: Theme.of(context).textTheme.headline1,
                                 textAlign: TextAlign.left),
                           ),
@@ -201,16 +198,14 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                                                 as LaundryOrder)),
                                   )
                                 : Center(
-                                    child: Text(lang.strings['deliveryAdminApp']
-                                        ['laundry']['noOrders']),
+                                    child: Text(_i18n['noOrders']),
                                   ),
                           ),
                           Container(
                             margin: const EdgeInsets.all(8),
                             alignment: Alignment.centerLeft,
                             child: Text(
-                                lang.strings['deliveryAdminApp']['laundry']
-                                    ['pastOrders'],
+                                _i18n['pastOrders'],
                                 style: Theme.of(context).textTheme.headline1,
                                 textAlign: TextAlign.left),
                           ),
@@ -227,8 +222,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                                                 as LaundryOrder)),
                                   )
                                 : Center(
-                                    child: Text(lang.strings['deliveryAdminApp']
-                                        ['laundry']['noOrders']),
+                                    child: Text(_i18n['noOrders']),
                                   ),
                           ),
                         ],
@@ -249,7 +243,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             children: [
               Flexible(
                   child: Text(
-                lang.strings['deliveryAdminApp']['laundry']['restaurantOrders'],
+                _i18n['restaurantOrders'],
                 style: Theme.of(context).textTheme.bodyText2,
               )),
               SizedBox(
@@ -277,7 +271,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             children: [
               Flexible(
                   child: Text(
-                lang.strings['deliveryAdminApp']['laundry']['laundryOrders'],
+                _i18n['laundryOrders'],
                 style: Theme.of(context).textTheme.bodyText2,
               )),
               SizedBox(

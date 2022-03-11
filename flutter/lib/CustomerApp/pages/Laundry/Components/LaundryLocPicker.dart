@@ -18,7 +18,8 @@ class LaundryLocPicker extends StatefulWidget {
 }
 
 class _LaundryLocPickerState extends State<LaundryLocPicker> {
-  dynamic _i18n = Get.find<LanguageController>().strings['AppName']['Filename'];
+  dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']['pages']
+  ['Laundry']['Components']['LaundryLocPicker'];
 
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
@@ -31,7 +32,7 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
     setState(() {
       // default ID: _pick_ , stands for our  Pick From Map
       loc = SavedLocation(
-          name: lang.strings["customer"]["restaurant"]["cart"]["pickLocation"],
+          name: _i18n["pickLocation"],
           id: "_pick_");
 
       listOfSavedLoacations.add(loc!);
@@ -86,8 +87,7 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
             isExpanded: true,
             hint: Center(
               child: Text(
-                  lang.strings["customer"]["restaurant"]["cart"]
-                      ["pickLocation"],
+                  _i18n["pickLocation"],
                   style: Theme.of(context).textTheme.bodyText2),
             ),
             icon: Icon(Icons.expand_more),

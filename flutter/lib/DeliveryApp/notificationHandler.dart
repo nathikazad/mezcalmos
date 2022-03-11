@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:get/get.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+dynamic _i18n = Get.find<LanguageController>().strings["DeliveryApp"]["notificationHandler"];
 
 Notification deliveryDriverNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
@@ -59,36 +59,36 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
     case RestaurantOrderStatus.PreparingOrder:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
+            "${_i18n["preparingOrderTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["body"]}",
+            "${_i18n["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["title"]}",
+            "${_i18n["readyForPickupTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["readyForPickup"]["body"]}",
+            "${_i18n["readyForPickupBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/readyOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+            "${_i18n["cancelledTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+            "${_i18n["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+            "${_i18n["cancelledTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+            "${_i18n["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
@@ -122,27 +122,27 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
     case LaundryOrderStatus.ReadyForDelivery:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["title"]}",
+            "${_i18n["preparingOrderTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["preparingOrder"]["body"]}",
+            "${_i18n["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+            "${_i18n["cancelledTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+            "${_i18n["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
         "title":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
+            "${_i18n["cancelledTitle"]}",
         "body":
-            "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+            "${_i18n["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };

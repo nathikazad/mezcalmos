@@ -15,6 +15,9 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']['pages']
+['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
+
 class LaundryCurrentOrderView extends StatefulWidget {
   const LaundryCurrentOrderView({Key? key}) : super(key: key);
 
@@ -82,7 +85,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       appBar: CustomerAppBar(
         autoBack: true,
         title:
-            '${_lang.strings["customer"]["restaurant"]["orderStatus"]["orderStatus"]}',
+            '${_i18n["orderStatus"]}',
       ),
       body: Obx(
         () => order.value != null

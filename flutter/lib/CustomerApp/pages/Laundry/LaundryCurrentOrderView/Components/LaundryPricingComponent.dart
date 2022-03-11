@@ -6,7 +6,8 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 class LaundryPricingCompnent extends StatelessWidget {
   final LaundryOrder order;
   LaundryPricingCompnent({Key? key, required this.order}) : super(key: key);
-  dynamic _i18n = Get.find<LanguageController>().strings['AppName']['Filename'];
+  dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']['pages']
+['Laundry']['LaundryCurrentOrderView']['Components']['LaundryPricingComponent'];
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -16,7 +17,7 @@ class LaundryPricingCompnent extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              lang.strings['customer']['laundry']['laundryPricing'],
+              _i18n['laundryPricing'],
               style: Theme.of(context).textTheme.headline3,
             ),
             Divider(
@@ -26,7 +27,7 @@ class LaundryPricingCompnent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  lang.strings['deliveryAdminApp']['laundry']['fixedRate'],
+                 _i18n['fixedRate'],
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -44,7 +45,7 @@ class LaundryPricingCompnent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  lang.strings['deliveryAdminApp']['laundry']['orderWeight'],
+                  _i18n['orderWeight'],
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -62,7 +63,7 @@ class LaundryPricingCompnent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} :",
+                  "${_i18n["totalCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
@@ -91,8 +92,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                 ),
                 Flexible(
                     child: Text(
-                        lang.strings['customer']['laundry']
-                            ['laundryPricingNote'],
+                        _i18n['laundryPricingNote'],
                         maxLines: 3)),
               ],
             )

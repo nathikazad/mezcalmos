@@ -9,6 +9,9 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 import '../../../router.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']['pages']
+    ['ListOrdersScreen']['components']['LaundryPastOrderCard'];
+
 class LaundryPastOrderCard extends StatelessWidget {
   LaundryPastOrderCard({
     Key? key,
@@ -105,7 +108,7 @@ class LaundryPastOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      " ${lang.strings["customer"]["restaurant"]["cart"]["totalCost"]} : ${(order.cost != 0) ? '\$' + order.cost.toStringAsFixed(0) : '-'}",
+                      " ${_i18n["totalCost"]} : ${(order.cost != 0) ? '\$' + order.cost.toStringAsFixed(0) : '-'}",
                     ),
                     (MediaQuery.of(context).size.width > 320)
                         ? Flexible(

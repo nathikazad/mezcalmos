@@ -24,7 +24,8 @@ class _LaundryPickLocViewState extends State<LaundryPickLocView> {
   final LocationPickerController locationPickerController =
       LocationPickerController();
 
-  dynamic _i18n = Get.find<LanguageController>().strings['AppName']['Filename'];
+ dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']['pages']
+['Laundry']['LaundryPickLocView'];
   @override
   void initState() {
     geoloc.Location().getLocation().then((value) {
@@ -67,7 +68,7 @@ class _LaundryPickLocViewState extends State<LaundryPickLocView> {
             },
             child: Container(
               child: Text(
-                  '${lang.strings['customer']['pickLocation']['pickLocation']}'),
+                  '${_i18n['pickLocation']}'),
             )),
       ),
       body: Column(
@@ -79,7 +80,7 @@ class _LaundryPickLocViewState extends State<LaundryPickLocView> {
           ),
           Container(
             margin: const EdgeInsets.all(8),
-            child: Text(lang.strings["customer"]["pickLocation"]["pickLabele"]),
+            child: Text(_i18n["pickLabele"]),
           ),
 
           Container(

@@ -27,15 +27,15 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 
   @override
   void initState() {
-    dynamic _i18n =
-        Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+   dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+  ['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
     initializeLateControllers();
     // Order handling
     String orderId = Get.parameters['orderId']!;
     viewController.init(orderId, orderCancelledCallback: (TaxiOrder order) {
       Get.back();
       oneButtonDialog(
-          body: lang.strings['shared']['snackbars']['orderCancelSuccess'],
+          body: _i18n['orderCancelSuccess'],
           imagUrl: order.customer.image);
     });
     super.initState();

@@ -20,6 +20,9 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 import '../../../../Shared/models/Drivers/DeliveryDriver.dart';
 
+dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]['pages']
+['Orders']["LaundryOrder"]["LaundryOrderScreen"];
+
 class LaundryOrderScreen extends StatefulWidget {
   const LaundryOrderScreen({Key? key}) : super(key: key);
 
@@ -164,7 +167,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
         Container(
           margin: const EdgeInsets.all(8),
           child: Text(
-            '${lang.strings['customer']['restaurant']['menu']['notes']}',
+            '${_i18n['notes']}',
             style: txt.headline3,
           ),
         ),
@@ -189,7 +192,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
         Container(
           margin: const EdgeInsets.all(8),
           child: Text(
-            '${lang.strings['customer']['restaurant']['cart']['deliveryLocation']}',
+            '${_i18n['deliveryLocation']}',
             style: txt.headline3,
           ),
         ),

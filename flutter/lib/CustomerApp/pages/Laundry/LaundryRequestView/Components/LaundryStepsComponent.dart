@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+//import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
+
+dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']['pages']
+['Laundry']['LaundryRequestView']['Components']['LaundryStepsComponent'];
 
 class LaundryStepsComponent extends StatefulWidget {
   const LaundryStepsComponent({
@@ -79,11 +84,11 @@ class _LaundryStepsComponentState extends State<LaundryStepsComponent> {
 String getDescription(int index) {
   switch (index) {
     case 1:
-      return lang.strings['customer']['laundry']['firstStep'];
+      return _i18n['firstStep'];
     case 2:
-      return lang.strings['customer']['laundry']['secondStep'];
+      return _i18n['secondStep'];
     case 3:
-      return lang.strings['customer']['laundry']['thirdStep'];
+      return _i18n['thirdStep'];
     default:
       return '';
   }

@@ -7,8 +7,8 @@ import 'package:sizer/sizer.dart';
 class DriverNoOrdersComponent extends StatelessWidget {
   /// Shows an image from asset and text telling the driver that there is no current orders right now
   DriverNoOrdersComponent({Key? key}) : super(key: key);
-  dynamic _i18n =
-      Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+  dynamic _i18n = Get.find<LanguageController>().strings["DeliveryApp"]["pages"]
+  ["CurrentOrders"]["CurrentOrdersListScreen"]["Components"]["DriverNoOrdersComponent"];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,7 +27,7 @@ class DriverNoOrdersComponent extends StatelessWidget {
           children: [
             Obx(
               () => Text(
-                lang.strings['taxi']['incoming']["noOrdersTitle"],
+                _i18n["noOrdersTitle"],
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 25.5.sp, fontFamily: 'psr'),
               ),
@@ -37,7 +37,7 @@ class DriverNoOrdersComponent extends StatelessWidget {
             ),
             Obx(
               () => Text(
-                lang.strings['taxi']['incoming']["noOrdersDesc"],
+                _i18n["noOrdersDesc"],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 16.sp,

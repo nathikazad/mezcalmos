@@ -22,7 +22,8 @@ class LaundryOrderFooterCard extends StatefulWidget {
 
 class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
   LaundryController laundryController = Get.find<LaundryController>();
-  dynamic _i18n = Get.find<LanguageController>().strings['AppName']['Filename'];
+  dynamic _i18n = Get.find<LanguageController>().strings['CustomerApp']['pages']
+  ['Laundry']['LaundryCurrentOrderView']['Components']['LaundryOrderFooterCard'];
   RxBool _clickedCancel = false.obs;
 
   @override
@@ -42,8 +43,8 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                                 contentPadding: EdgeInsets.all(20),
                                 title: Text(
                                   !_clickedCancel.value
-                                      ? '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'
-                                      : '${lang.strings["customer"]["restaurant"]["checkout"]["orderCanceled"]}',
+                                      ? '${_i18n["cancelOrder"]}'
+                                      : '${_i18n["orderCanceled"]}',
                                   textAlign: TextAlign.center,
                                 ),
                                 content: alertDialogContent(),
@@ -56,7 +57,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                     child: Container(
                       alignment: Alignment.center,
                       child: Text(
-                          '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'),
+                          '${_i18n["cancelOrder"]}'),
                     )),
               )
             : (widget.order.status == LaundryOrderStatus.Delivered)
@@ -73,7 +74,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                              '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrder"]}'),
+                              '${_i18n["cancelOrder"]}'),
                         )));
   }
 
@@ -93,7 +94,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
               width: 10,
             ),
             Text(
-              '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderCanceled"]}',
+              '${_i18n["orderStatusCanceled"]}',
               style: txt.headline3,
             )
           ],
@@ -118,7 +119,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
               width: 10,
             ),
             Text(
-              '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderDeliverd"]}',
+              '${_i18n["orderStatusDeliverd"]}',
               style: txt.headline3,
             )
           ],
@@ -134,7 +135,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-              '${lang.strings["customer"]["restaurant"]["checkout"]["cancelOrderConfirm"]}'),
+              '${_i18n["cancelOrderConfirm"]}'),
           SizedBox(
             height: 10.h,
           ),
@@ -148,14 +149,14 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                 if (resp.success) {
                   Get.until((route) => route.settings.name == kHomeRoute);
                   MezSnackbar(
-                      lang.strings["shared"]["snackbars"]["titleSuccess"],
-                      lang.strings["shared"]["snackbars"]["orderCancelSuccess"],
+                     _i18n["titleSuccess"],
+                      _i18n["orderCancelSuccess"],
                       position: SnackPosition.TOP);
                 } else {
                   _clickedCancel.value = false;
                   MezSnackbar(
-                      lang.strings["shared"]["snackbars"]["titleFailed"],
-                      lang.strings["shared"]["snackbars"]["orderCancelFailed"],
+                     _i18n["titleFailed"],
+                      _i18n["orderCancelFailed"],
                       position: SnackPosition.TOP);
                 }
               },
@@ -164,8 +165,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                   padding: EdgeInsets.all(12)),
               child: Container(
                   alignment: Alignment.center,
-                  child: Text(lang.strings["customer"]["restaurant"]
-                      ["cancelOrderDialog"]["yes"]))),
+                  child: Text(_i18n["cancelOrderDialogYes"]))),
           SizedBox(
             height: 10,
           ),
@@ -177,8 +177,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                   backgroundColor: Colors.black, padding: EdgeInsets.all(12)),
               child: Container(
                   alignment: Alignment.center,
-                  child: Text(lang.strings["customer"]["restaurant"]
-                      ["cancelOrderDialog"]["no"]))),
+                  child: Text(_i18n["cancelOrderDialogNo"]))),
         ],
       );
     } else {

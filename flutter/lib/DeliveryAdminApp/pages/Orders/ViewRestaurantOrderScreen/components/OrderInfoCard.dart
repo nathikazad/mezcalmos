@@ -11,8 +11,7 @@ import 'ChangeStatusButtons.dart';
 import 'OrderItemsCard.dart';
 
 dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]
-        ["pages"]["Orders"]["ViewRestaurantOrderScreen"]["components"]
-    ["OrderInfoCard"];
+["pages"]["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderInfoCard"];
 //Display the order customer and items
 
 class OrderInfoCard extends StatefulWidget {

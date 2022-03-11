@@ -8,7 +8,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n = Get.find<LanguageController>().strings["CustomerApp"]["pages"];
+dynamic _i18n = Get.find<LanguageController>().strings["DeliveryAdminApp"]['pages']
+['Orders']["LaundryOrder"]["Components"]["LaundryOrderButtons"];
 
 // the styles of status buttons inside the order screen
 class OrderButtons {
@@ -21,8 +22,8 @@ class OrderButtons {
       child: ButtonComponent(
         function: () async {
           var res = await dialogComponent(
-              lang.strings["deliveryAdminApp"]["cancelAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["cancelAlert"]["subTitle"], () {
+              _i18n["title"],
+              _i18n["subTitle"], () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);
@@ -38,7 +39,7 @@ class OrderButtons {
           }
         },
         widget: Text(
-            lang.strings["customer"]["restaurant"]["checkout"]["cancel"]
+           _i18n["cancel"]
                 .toUpperCase(),
             style: TextStyle(
                 color: const Color(0xffffffff),
@@ -61,7 +62,7 @@ class OrderButtons {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
     
     return ButtonComponent(
-        widget: Text(lang.strings['deliveryAdminApp']['laundry']['startPickUp'],
+        widget: Text(_i18n['startPickUp'],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -73,8 +74,8 @@ class OrderButtons {
             colors: [const Color(0xffd3bc0b), const Color(0xdbd17c18)]),
         function: () async {
           var res = await dialogComponent(
-              lang.strings['deliveryAdminApp']['laundry']['startPickUpTitle'],
-              lang.strings['deliveryAdminApp']['laundry']['startPickUpText'],
+              _i18n['startPickUpTitle'],
+              _i18n['startPickUpText'],
               () {
             Get.back(result: true);
           }, () {
@@ -105,7 +106,7 @@ class OrderButtons {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
     
     return ButtonComponent(
-      widget: Text(lang.strings['deliveryAdminApp']['laundry']['pickedUp'],
+      widget: Text(_i18n['pickedUp'],
           style: TextStyle(
               color: const Color(0xffffffff),
               fontFamily: "psb",
@@ -117,8 +118,8 @@ class OrderButtons {
           colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
       function: () async {
         var res = await dialogComponent(
-            lang.strings['deliveryAdminApp']['laundry']['pickedUpTitle'],
-            lang.strings['deliveryAdminApp']['laundry']['pickedUpText'], () {
+            _i18n['pickedUpTitle'],
+            _i18n['pickedUpText'], () {
           Get.back(result: true);
         }, () {
           Get.back(result: false);
@@ -146,7 +147,7 @@ class OrderButtons {
     
 
     return ButtonComponent(
-        widget: Text(lang.strings['deliveryAdminApp']['laundry']['atLaundry'],
+        widget: Text(_i18n['atLaundry'],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -159,8 +160,8 @@ class OrderButtons {
             colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
         function: () async {
           var res = await orderWeightDialog(
-              lang.strings['deliveryAdminApp']['laundry']['atLaundryTitle'],
-              lang.strings['deliveryAdminApp']['laundry']['atLaundryText'],
+              _i18n['atLaundryTitle'],
+              _i18n['atLaundryText'],
               () {},
               () {},
               Icon(
@@ -179,8 +180,7 @@ class OrderButtons {
           } else {
             Get.snackbar(
                 'Error',
-                lang.strings['deliveryAdminApp']['laundry']
-                    ['orderWeightError']);
+                _i18n['orderWeightError']);
           }
         });
   }
@@ -191,7 +191,7 @@ class OrderButtons {
     
     return ButtonComponent(
         widget: Text(
-            lang.strings['deliveryAdminApp']['laundry']['readyForDelivery'],
+            _i18n['readyForDelivery'],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -207,10 +207,8 @@ class OrderButtons {
         function: (order.dropoffDriver != null)
             ? () async {
                 var res = await dialogComponent(
-                    lang.strings["deliveryAdminApp"]["laundry"]
-                        ["readyForDeliveryTitle"],
-                    lang.strings["deliveryAdminApp"]["laundry"]
-                        ["readyForDeliveryText"], () {
+                    _i18n["readyForDeliveryTitle"],
+                    _i18n["readyForDeliveryText"], () {
                   Get.back(result: true);
                 }, () {
                   Get.back(result: false);
@@ -243,7 +241,7 @@ class OrderButtons {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
     
     return ButtonComponent(
-        widget: Text(lang.strings['deliveryAdminApp']['laundry']['otwDelivery'],
+        widget: Text(_i18n['otwDelivery'],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -255,8 +253,8 @@ class OrderButtons {
             colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
         function: () async {
           var res = await dialogComponent(
-              lang.strings["deliveryAdminApp"]["laundry"]["otwDeliveryTitle"],
-              lang.strings["deliveryAdminApp"]["laundry"]["otwDeliveryText"],
+              _i18n["otwDeliveryTitle"],
+              _i18n["otwDeliveryText"],
               () {
             Get.back(result: true);
           }, () {
@@ -284,7 +282,7 @@ class OrderButtons {
     LaundryOrderController controller = Get.find<LaundryOrderController>();
     
     return ButtonComponent(
-        widget: Text(lang.strings['deliveryAdminApp']['laundry']['delivered'],
+        widget: Text(_i18n['delivered'],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -296,8 +294,8 @@ class OrderButtons {
             colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
         function: () async {
           var res = await dialogComponent(
-              lang.strings["deliveryAdminApp"]["laundry"]["deliveredTitle"],
-              lang.strings["deliveryAdminApp"]["laundry"]["deliveredText"], () {
+              _i18n["deliveredTitle"],
+              _i18n["deliveredText"], () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);
