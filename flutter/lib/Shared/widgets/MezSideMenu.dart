@@ -23,7 +23,7 @@ class MezSideMenu extends GetWidget<AuthController> {
   LanguageController lang = Get.find<LanguageController>();
 
   String lmd = GetStorage().read(getxLmodeKey);
-  String VERSION = GetStorage().read(getxVersion);
+  String VERSION = GetStorage().read(getxAppVersion);
 
   @override
   Widget build(BuildContext context) {
