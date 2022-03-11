@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
@@ -52,8 +51,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
             width: 30,
             child: GestureDetector(
               onTap: () {
-                mezDbgPrint("@s@s@ : clicked $onClick !");
-                Future.delayed(Duration.zero, onClick?.call());
+                onClick?.call();
               },
               child: Container(
                 height: 30,

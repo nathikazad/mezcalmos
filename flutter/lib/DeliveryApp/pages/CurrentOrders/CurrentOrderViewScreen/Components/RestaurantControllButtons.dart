@@ -23,10 +23,10 @@ class RestaurantControllButtons extends StatelessWidget {
               Flexible(
                   flex: 3,
                   child: TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (order.status ==
                             RestaurantOrderStatus.ReadyForPickup) {
-                          restaurantOrderController
+                          await restaurantOrderController
                               .startRestaurantDelivery(order.orderId);
                         }
                       },
@@ -109,9 +109,10 @@ class RestaurantControllButtons extends StatelessWidget {
           ),
         if (order.status == RestaurantOrderStatus.OnTheWay)
           TextButton(
-              onPressed: () {
-                restaurantOrderController
+              onPressed: () async {
+                await restaurantOrderController
                     .finishRestaurantDelivery(order.orderId);
+                Get.back(closeOverlays: true);
               },
               child: Container(
                 padding: const EdgeInsets.all(5),

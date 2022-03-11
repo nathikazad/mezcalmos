@@ -69,11 +69,12 @@ class OrderController extends GetxController {
           // mezDbgPrint("Hndling Order : $orderId");
           dynamic orderData = event.snapshot.value[orderId];
           if (orderData["orderType"] ==
-              OrderType.Restaurant.toFirebaseFormatString())
+              OrderType.Restaurant.toFirebaseFormatString()) {
             orders.add(RestaurantOrder.fromData(orderId, orderData));
-          else if (orderData["orderType"] ==
-              OrderType.Laundry.toFirebaseFormatString())
+          } else if (orderData["orderType"] ==
+              OrderType.Laundry.toFirebaseFormatString()) {
             orders.add(LaundryOrder.fromData(orderId, orderData));
+          }
         });
       }
       currentOrders.value = orders;
