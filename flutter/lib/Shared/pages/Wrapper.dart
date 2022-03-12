@@ -20,8 +20,7 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
   AuthController authController = Get.find<AuthController>();
-  AppVersionController _appVersionController =
-      Get.put(AppVersionController(), permanent: true);
+  AppVersionController _appVersionController = Get.find<AppVersionController>();
 
   late bool databaseUserLastSnapshot;
 

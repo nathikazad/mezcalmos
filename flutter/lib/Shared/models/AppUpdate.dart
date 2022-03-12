@@ -11,7 +11,7 @@ class AppUpdate {
   factory AppUpdate.fromSnapshotData(dynamic data) {
     return AppUpdate(
         remoteVersion: data['versionName'],
-        forceUpdate: data['force'],
+        forceUpdate: data['force'] ?? false,
         updateNews: data['news']);
   }
 

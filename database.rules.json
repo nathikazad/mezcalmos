@@ -151,11 +151,6 @@
         ".read": "root.child('taxis/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'",
         "taxi": {
           "$orderId": {
-            "counterOffers": {
-              "$driverId": {
-                ".write": "auth.uid === $driverId"
-              }
-            },
             "cost": {
               ".write": "data.parent().exists() && data.parent().child('/customer/id').val() === auth.uid"
             },
@@ -175,14 +170,6 @@
               }
             }
           }
-        }
-      }
-    },
-    "online": {
-      "taxi": {
-        ".read": "auth.uid != null",
-        "$uid": {
-          ".write": "$uid === auth.uid"
         }
       }
     },
@@ -392,6 +379,11 @@
             }
           }
         }
+      }
+    },
+    "version" : {
+      "$app":{
+        ".read" : "true"
       }
     }
   }

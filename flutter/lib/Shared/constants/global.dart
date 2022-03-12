@@ -50,7 +50,6 @@ const String tDefaultCustomerName = "Unknown";
 const String getxPrivacyPolicyLink = "ppLink";
 const String getxLmodeKey = "lmod";
 const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
-const String getxUserDescriptionPlaceHolder = "user_descriptor_placeholder";
 const String getxTaxiDescriptor = "taxi_descriptor";
 const String getxDestinationDescriptor = "destination_descriptor";
 const String getxUserId = "userid";

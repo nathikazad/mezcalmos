@@ -1,24 +1,12 @@
 import 'dart:async';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/AppUpdate.dart';
 
-// enum AppUpdateType { MajorUpdate, MinorUpdate, Null }
-
-// extension StringToAppUpdateType on String? {
-//   AppUpdateType strToAppUpdateType() {
-//     if (this == null)
-//       return AppUpdateType.Null;
-//     else {
-//       return AppUpdateType.values.firstWhere((t) => t.toString() == this,
-//           orElse: () => AppUpdateType.Null);
-//     }
-//   }
-// }
-
 class AppVersionController extends GetxController {
+  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   StreamSubscription? _versionListener;
   Rxn<AppUpdate> appVersionInfos = Rxn();
   // this is only used inside AppNeedUpdate Screen
@@ -30,14 +18,16 @@ class AppVersionController extends GetxController {
     String platform = getPlatformType().toShortString();
     mezDbgPrint("s@a@a@d : packageName $packageName");
     mezDbgPrint("s@a@a@d : platform $platform");
+    mezDbgPrint("s@a@a@d : Listening on  version/$packageName-$platform");
 
-    _versionListener = FirebaseDatabase.instance
+    _versionListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child('version')
-        .child("$packageName-$platform")
+        .child("version/$packageName-$platform")
         .onValue
         .distinct()
         .listen((appUpdateInfos) {
+      mezDbgPrint("s@a@a@d : GOT IT   ");
+
       dynamic payload = appUpdateInfos.snapshot.value;
       mezDbgPrint("s@a@a@d : remoteUpdateInfos $payload");
 
