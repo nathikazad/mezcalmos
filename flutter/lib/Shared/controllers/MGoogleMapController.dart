@@ -65,13 +65,8 @@ class MGoogleMapController {
     var res = markersDefaultSize.value;
 
     if (SizerUtil.height <= 868) {
-      mezDbgPrint(
-          "Size of screen height is less or equal to [868] , returning 60 as marker size !");
       return 60;
     } else {
-      mezDbgPrint(
-          "Size of screen height is greater than [868] , returning $res as marker size !");
-
       return res;
     }
   }

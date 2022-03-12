@@ -11,7 +11,8 @@ import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
-["Orders"]["IncomingOrders"]["IncomingViewScreen"]["components"]["iOrderViewWidgets"];
+        ["Orders"]["IncomingOrders"]["IncomingViewScreen"]["components"]
+    ["iOrderViewWidgets"];
 
 class IOrderViewWidgets {
   final IOrderViewController iOrderViewController;
@@ -61,7 +62,8 @@ class IOrderViewWidgets {
   /// this holds the BottomSheet when the TaxiDriver clicks offer Price.
   AnimatedSlider counterOfferBottomSheet() {
     return AnimatedSlider(
-        isPositionedCoordinates: Rect.fromLTRB(0, Get.height, 0, 0),
+        isPositionedCoordinates:
+            AnimatedSliderCoordinates(left: 0, right: 0, bottom: 0),
         animatedSliderController:
             this.iOrderViewController.animatedSliderController,
         child: SingleChildScrollView(
@@ -69,9 +71,12 @@ class IOrderViewWidgets {
             physics: ClampingScrollPhysics(),
             child: iOrderViewController.counterOffer.value != null
                 ? CounterOfferSentBottomSheet(
-                    counterOffer: iOrderViewController.counterOffer,
+                    counterOffer: iOrderViewController.counterOffer.value!,
                     controller: iOrderViewController.controller,
                     order: iOrderViewController.order.value!,
+                    duration: iOrderViewController.counterOffer.value!
+                        .validityTimeDifference()
+                        .abs(),
                     onCounterEnd: () async => await iOrderViewController
                         .removeCounterOfferAndResetState(),
                   )
@@ -105,8 +110,6 @@ class IOrderViewWidgets {
   Widget offerBtn() {
     return TextButton(
       style: ButtonStyle(
-        // fixedSize: MaterialStateProperty.all(Size(Get.width / 1.05,
-        //     getSizeRelativeToScreen(20, Get.height, Get.width))),
         backgroundColor:
             MaterialStateProperty.all(Color.fromARGB(255, 172, 89, 252)),
       ),

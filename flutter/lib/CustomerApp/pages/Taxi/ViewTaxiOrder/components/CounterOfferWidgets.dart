@@ -15,8 +15,7 @@ class CounterOfferWidgets {
   final ViewTaxiOrderController viewController;
   CounterOfferWidgets({required this.viewController});
   dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-      ["pages"]
-  ['Taxi']['ViewTaxiOrder']['components']['CounterOfferWidgets'];
+      ["pages"]['Taxi']['ViewTaxiOrder']['components']['CounterOfferWidgets'];
 
   Widget offersButton() {
     return Container(
@@ -61,7 +60,8 @@ class CounterOfferWidgets {
 
   Widget counterOffersBottomSheet(BuildContext context) {
     return AnimatedSlider(
-      isPositionedCoordinates: Rect.fromLTRB(0, Get.height, 0, 0),
+      isPositionedCoordinates:
+          AnimatedSliderCoordinates(left: 0, right: 0, bottom: 0),
       animatedSliderController: this.viewController.animatedSliderController,
       child: !viewController.clickedAccept.value
           ? counterOffersScrollView(context)
@@ -139,15 +139,12 @@ class CounterOfferWidgets {
           width: 45,
           child: MezLoadingCounter(
             circleSize: 45,
+            reversed: true,
             loadingLineHeight: 7,
-            manualCounterValue: ((nDefaultCounterOfferValidExpireTimeInSeconds -
-                    offer.validityTimeDifference().abs()) /
-                nDefaultCounterOfferValidExpireTimeInSeconds),
-            counterDurationInSeconds:
-                nDefaultCounterOfferValidExpireTimeInSeconds,
-            // (nDefaultCounterOfferValidExpireTimeInSeconds - (diff_result)) 0.0333333333
-            // nDefaultCounterOfferValidExpireTimeInSeconds,
-            onCounterEnd: () {},
+            counterDurationInSeconds: offer.validityTimeDifference().abs(),
+            onCounterEnd: () {
+              viewController.animatedSliderController.slideDown();
+            },
             onCounterChange: (price) {},
             childInsideCounter: Container(
               decoration: BoxDecoration(

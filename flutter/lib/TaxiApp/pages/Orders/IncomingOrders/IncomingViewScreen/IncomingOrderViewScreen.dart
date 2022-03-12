@@ -14,9 +14,8 @@ import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
-    Get.find<LanguageController>().strings["TaxiApp"]["pages"]
-["Orders"]["IncomingOrders"]["IncomingViewScreen"]["IncomingOrderViewScreen"];
-
+    Get.find<LanguageController>().strings["TaxiApp"]["pages"]["Orders"]
+        ["IncomingOrders"]["IncomingViewScreen"]["IncomingOrderViewScreen"];
 
 class IncomingOrderViewScreen extends StatefulWidget {
   @override
@@ -33,8 +32,6 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   void initState() {
     initializeLateControllers();
     String orderId = Get.parameters['orderId']!;
-    iOrderViewWidgets =
-        IOrderViewWidgets(iOrderViewController: iOrderViewController);
     iOrderViewController.initController(
         orderId: orderId,
         onOrderNoMoreAvailable: () {

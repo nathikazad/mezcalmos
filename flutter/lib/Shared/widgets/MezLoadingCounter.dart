@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 typedef void OnCounterChange(int);
 
@@ -9,7 +13,7 @@ class MezLoadingCounter extends StatefulWidget {
   final double circleSize;
   final Widget? childInsideCounter;
   final double loadingLineHeight;
-  final double? manualCounterValue;
+  // final double? manualCounterValue;
   final bool reversed;
   MezLoadingCounter(
       {required this.onCounterEnd,
@@ -17,16 +21,24 @@ class MezLoadingCounter extends StatefulWidget {
       required this.circleSize,
       this.childInsideCounter,
       this.onCounterChange,
-      this.manualCounterValue,
+      // this.manualCounterValue,
       this.reversed = false,
       this.loadingLineHeight = 20});
 
   @override
-  _MezLoadingCounterState createState() => _MezLoadingCounterState();
+  _MezLoadingCounterState createState() => _MezLoadingCounterState(
+      // manualCounterValue: manualCounterValue?.toInt()
+      );
 }
 
 class _MezLoadingCounterState extends State<MezLoadingCounter> {
   int _lastCount = 0;
+
+  // PS : Keep this here i will need it in Future.
+  double dp(double val, int places) {
+    num mod = pow(10.0, places);
+    return ((val * mod).round().toDouble() / mod);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +51,7 @@ class _MezLoadingCounterState extends State<MezLoadingCounter> {
         builder: (ctx, double value, child) {
           // for our onCounterChange callback
           int _currentCount = (value * widget.counterDurationInSeconds).toInt();
+          // double _precisedValue = (dp(value, 3) * 10) - (value * 10).toInt();
           if (_currentCount != _lastCount) {
             widget.onCounterChange?.call(_currentCount);
             _lastCount = _currentCount;
@@ -51,8 +64,8 @@ class _MezLoadingCounterState extends State<MezLoadingCounter> {
                   shaderCallback: (rect) {
                     return SweepGradient(
                       startAngle: widget.reversed ? 1.0 : 0.0,
-                      endAngle: 3.14 * 2,
-                      stops: [widget.manualCounterValue ?? value, 0.0],
+                      endAngle: pi * 2,
+                      stops: [value, 0],
                       center: Alignment.center,
                       colors: [
                         Color.fromARGB(255, 172, 89, 252),

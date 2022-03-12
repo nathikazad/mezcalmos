@@ -45,6 +45,13 @@ class AnimatedSliderController {
   }
 
   // Public Functions
-  void slideUp() => this.sliderHeight = _maxSliderHeight;
-  void slideDown() => this.sliderHeight = _minSliderHeight;
+  void slideUp() {
+    if (this.sliderHeight != _maxSliderHeight)
+      this.sliderHeight = _maxSliderHeight;
+  }
+
+  void slideDown() {
+    if (this.sliderHeight != _minSliderHeight)
+      this.sliderHeight = _minSliderHeight;
+  }
 }

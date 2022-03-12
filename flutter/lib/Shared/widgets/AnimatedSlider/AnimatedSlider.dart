@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 
+class AnimatedSliderCoordinates {
+  double? left;
+  double? top;
+  double? right;
+  double? bottom;
+
+  AnimatedSliderCoordinates({this.left, this.top, this.right, this.bottom});
+}
+
 class AnimatedSlider extends StatefulWidget {
   /// child of the container
   final Widget child;
+
   final AnimatedSliderController animatedSliderController;
 
   /// if This Slidder is a Wrapped within `Positioned` a.k.a Stack->Positioned->AnimatedSlider ,
   ///
-  /// then use `Rect.fromLTRB(left, top, right, bottom)` to fill this with Positioned LTRB
-  final Rect? isPositionedCoordinates;
+  /// then use `AnimatedSliderCoordinates(left, top, right, bottom)` to fill this with Positioned LTRB
+  final AnimatedSliderCoordinates? isPositionedCoordinates;
 
   const AnimatedSlider(
       {required this.animatedSliderController,

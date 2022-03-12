@@ -10,15 +10,14 @@ import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:sizer/sizer.dart';
 
 class CounterOfferSentBottomSheet extends StatelessWidget {
-  final Rxn<CounterOffer> counterOffer;
+  CounterOffer counterOffer;
   final IncomingOrdersController controller;
   final TaxiOrder order;
   final Function() onCounterEnd;
   final int duration;
   dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
-          ['Orders']['IncomingOrders']
-  ['IncomingViewScreen']['components']['CounterOfferBottomSheet']['CounterOfferSentBottomSheet'];
-
+          ['Orders']['IncomingOrders']['IncomingViewScreen']['components']
+      ['CounterOfferBottomSheet']['CounterOfferSentBottomSheet'];
 
   CounterOfferSentBottomSheet(
       {required this.counterOffer,
@@ -60,7 +59,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(_i18n()['offerPrice']),
-                Text("\$${counterOffer.value!.price}"),
+                Text("\$${counterOffer.price}"),
               ],
             )),
         Padding(
@@ -70,7 +69,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
               children: [
                 Text(_i18n()['offerStatus']),
                 Text(
-                    "${counterOffer.value!.counterOfferStatus.toFirebaseFormatString()}"),
+                    "${counterOffer.counterOfferStatus.toFirebaseFormatString()}"),
               ],
             )),
         Padding(
@@ -89,7 +88,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
   }
 
   Widget getBottomSheetBodyByCounterOfferStatus() {
-    switch (counterOffer.value!.counterOfferStatus) {
+    switch (counterOffer.counterOfferStatus) {
       case CounterOfferStatus.Rejected:
         return Icon(
           Icons.cancel,
@@ -103,14 +102,13 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
           color: Colors.green,
         );
       default:
+        mezDbgPrint(
+            "Gicing to counter manualValue as : ${counterOffer.validityTimeDifference().abs().toDouble() / nDefaultCounterOfferValidExpireTimeInSeconds}");
         return MezLoadingCounter(
           onCounterChange: (counterValue) {
             mezDbgPrint("======> $counterValue");
           },
           reversed: true,
-          manualCounterValue:
-              counterOffer.value!.validityTimeDifference().abs().toDouble() /
-                  nDefaultCounterOfferValidExpireTimeInSeconds,
           // manualCounterValue: ((nDefaultCounterOfferValidExpireTimeInSeconds -
           //         counterOffer.validityTimeDifference().abs()) /
           //     nDefaultCounterOfferValidExpireTimeInSeconds),
