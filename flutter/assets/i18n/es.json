@@ -547,6 +547,14 @@
                 "title": "Notificaciones",
                 "latest": "Último",
                 "alertClearNotificationTitle": "Eliminar todas las notificaciones"
+            },
+            "LocationPermissionScreen": {
+                "permissionBtn": "ACTIVAR AHORA",
+                "askForNotif": "La aplicación recopila los datos de su ubicación para emparejarlo con los mejores viajes y compartir su ubicación con los clientes, incluso cuando la aplicación está en segundo plano.",
+                "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
+                "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo.",
+                "locationIsOff": "Servicio de ubicación desactivado",
+                "isAndroid_11" : "Detectamos que su versión de Android es 11 o más reciente, por lo tanto, debemos pedirle que nos dé permisos para usar la ubicación en segundo plano para mantener a sus clientes actualizados sobre su ubicación actual, incluso cuando la aplicación se ejecuta en segundo plano."
             }
         },
         "widgets": {

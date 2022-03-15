@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
@@ -17,8 +17,10 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:permission_handler/permission_handler.dart'
     show openAppSettings;
 
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['LocationPermissionScreen'];
+
 class LocationPermissionScreen extends StatelessWidget {
-  final SettingsController _settingsController = Get.find<SettingsController>();
   final LocationController _locationController = Get.find<LocationController>();
 
   final SideMenuDrawerController _sideMenuDraweController =
@@ -59,8 +61,7 @@ class LocationPermissionScreen extends StatelessWidget {
                   ),
                   Obx(
                     () => Text(
-                      _settingsController.appLanguage.strings['shared']
-                          ['permissions']['locationIsOff'],
+                      _i18n()['locationIsOff'],
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 26, fontFamily: 'psr'),
                     ),
@@ -71,8 +72,7 @@ class LocationPermissionScreen extends StatelessWidget {
                   Obx(
                     () => Text(
                       // "App can not work without Background Location Permission !",
-                      _settingsController.appLanguage.strings['shared']
-                          ['permissions']['askForNotif'],
+                      _i18n()['askForNotif'],
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 16,
@@ -106,8 +106,7 @@ class LocationPermissionScreen extends StatelessWidget {
                       child: Center(
                           child: Obx(
                         () => Text(
-                          _settingsController.appLanguage.strings['shared']
-                              ['permissions']['permissionBtn'],
+                          _i18n()['permissionBtn'],
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,
@@ -131,10 +130,8 @@ class LocationPermissionScreen extends StatelessWidget {
           await DeviceInfoPlugin().androidInfo;
       int? sdkVersion = androidDeviceInfo.version.sdkInt;
       if (sdkVersion != null && sdkVersion >= 30) {
-        YesNoDialogButton res = await yesNoDialog(
-            body: _settingsController.appLanguage.strings['shared']
-                ['permissions']['android_11'],
-            text: "");
+        YesNoDialogButton res =
+            await yesNoDialog(body: _i18n()['isAndroid_11'], text: "");
 
         if (res == YesNoDialogButton.Yes) {
           await openAppSettings();
@@ -152,10 +149,7 @@ class LocationPermissionScreen extends StatelessWidget {
       switch (_permissionStatus) {
         // on denied forever User must know cuz it needs manual change in IOS!!
         case PermissionStatus.deniedForever:
-          MezSnackbar(
-              'Error :(',
-              _settingsController.appLanguage.strings['shared']['permissions']
-                  ['locationPermissionDeniedForever'],
+          MezSnackbar('Error :(', _i18n()['locationPermissionDeniedForever'],
               position: SnackPosition.TOP);
           Future.delayed(Duration(seconds: 4), openAppSettings);
           break;
@@ -169,17 +163,11 @@ class LocationPermissionScreen extends StatelessWidget {
           break;
         // Default
         default:
-          MezSnackbar(
-              'Error :(',
-              _settingsController.appLanguage.strings['shared']['permissions']
-                  ['locationPermissionDenied'],
+          MezSnackbar('Error :(', _i18n()['locationPermissionDenied'],
               position: SnackPosition.TOP);
       }
     } else {
-      MezSnackbar(
-          'Error :(',
-          _settingsController.appLanguage.strings['shared']['permissions']
-              ['locationIsOff'],
+      MezSnackbar('Error :(', _i18n()['locationIsOff'],
           position: SnackPosition.TOP);
     }
   }

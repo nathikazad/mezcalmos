@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -17,7 +16,7 @@ import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
-["UserProfileScreen"]["UserProfileScreen"];
+    ["UserProfileScreen"]["UserProfileScreen"];
 
 class UserProfile extends StatefulWidget {
   final AuthController authController = Get.find<AuthController>();
