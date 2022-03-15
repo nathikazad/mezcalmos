@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
 import 'package:mezcalmos/Shared/widgets/MezLoadingCounter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 class CounterOfferWidgets {
@@ -203,8 +204,11 @@ class CounterOfferWidgets {
                                   offer.driverInfos.id);
                           if (!_response.success) {
                             viewController.clickedAccept.value = false;
+                            viewController.animatedSliderController.slideDown();
                           } else {
                             viewController.offersBtnClicked.value = false;
+                            viewController.animatedSliderController.slideDown();
+                            MezSnackbar("Oops", _response.errorMessage!);
                           }
                         },
                         child: Icon(
@@ -227,15 +231,15 @@ class CounterOfferWidgets {
                     child: Center(
                       child: InkWell(
                         onTap: () async {
-                          // to do cancel count offer.
-                          // we accept counter offer and wait for it.
                           viewController.taxiController
                               .rejectCounterOffer(
                                   viewController.order.value!.orderId,
                                   viewController.order.value!.customer.id,
                                   offer.driverInfos.id)
-                              .then((_) => viewController
-                                  .offersBtnClicked.value = false);
+                              .then((_) {
+                            viewController.offersBtnClicked.value = false;
+                            viewController.animatedSliderController.slideDown();
+                          });
                         },
                         child: Icon(
                           Icons.close,
