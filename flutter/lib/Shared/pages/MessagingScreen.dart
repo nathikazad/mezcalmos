@@ -52,7 +52,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     this.chatId = Get.parameters['chatId']!;
     this.orderId = Get.parameters['orderId'];
-    this.showViewOrderBtn = Get.arguments['showViewOrderBtn'] as bool? ?? false;
+    this.showViewOrderBtn =
+        (Get.arguments?['showViewOrderBtn'] as bool?) ?? false;
 
     if (Get.parameters['recipientId'] != null)
       this.recipientId = Get.parameters['recipientId'];
