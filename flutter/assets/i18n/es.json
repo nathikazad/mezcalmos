@@ -563,7 +563,7 @@
                 "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
                 "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo.",
                 "locationIsOff": "Servicio de ubicación desactivado",
-                "isAndroid_11" : "Detectamos que su versión de Android es 11 o más reciente, por lo tanto, debemos pedirle que nos dé permisos para usar la ubicación en segundo plano para mantener a sus clientes actualizados sobre su ubicación actual, incluso cuando la aplicación se ejecuta en segundo plano."
+                "isAndroid_11" : "Hemos detectado que su versión de Android es 11 o más reciente, por lo que debemos pedirle que nos dé sus permisos de ubicación."
             }
         },
         "widgets": {
