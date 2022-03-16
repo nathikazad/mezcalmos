@@ -539,6 +539,15 @@
         "title": "Notifications",
         "latest": "Latest",
         "alertClearNotificationTitle": "Clear All Notifications"
+      },
+      "LocationPermissionScreen": {
+        "permissionBtn": "GIVE PERMISSION",
+        "askForNotif": "The app collects your location Data to match you with the best rides and share your location with customers, even when the app is in background.",
+        "locationPermissionDenied": "Oops, Sadly without location permissions you can not use our application!",
+        "locationPermissionDeniedForever" : "Location permissions are denied forever! Please change that.",
+        "locationIsOff": "Location Service Turned Off",
+        "isAndroid_11" : "We've detected that your android version is 11 or newer, thus we have to ask you to give us permissions for using background location to keep your customers updated about your current location even when the app is running in background."
+
       }
     },
     "widgets": {

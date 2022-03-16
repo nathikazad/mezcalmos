@@ -20,8 +20,7 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
   AuthController authController = Get.find<AuthController>();
-  AppVersionController _appVersionController =
-      Get.put(AppVersionController(), permanent: true);
+  AppVersionController _appVersionController = Get.find<AppVersionController>();
 
   late bool databaseUserLastSnapshot;
 
@@ -47,23 +46,22 @@ class _WrapperState extends State<Wrapper> {
   /// and then start a listener in case there there is updates.
   void handleAppVersionUpdatesAndStartListener() {
     // first we check the snapshot
-    checkIfNotInUpdateScreenAndPush(
-        _appVersionController.appVersionInfos.value);
-    // then we start listening.
-    Future.delayed(Duration(seconds: 0), () {
+    checkIfNotInUpdateScreenAndPush(_appVersionController.appVersionInfos.value)
+        .then((_) {
       // this listenr is distinct by the way.
-      _appVersionController.appVersionInfos.stream.listen((updateType) {
-        checkIfNotInUpdateScreenAndPush(updateType);
+      _appVersionController.appVersionInfos.stream.listen((updateType) async {
+        await checkIfNotInUpdateScreenAndPush(updateType);
       });
     });
   }
 
-  void checkIfNotInUpdateScreenAndPush(AppUpdate? appVersionInfos) {
+  Future<void> checkIfNotInUpdateScreenAndPush(
+      AppUpdate? appVersionInfos) async {
     bool _diff = appVersionInfos?.areLocalAndRemoteVersionsDiffrent() == true;
     if (Get.currentRoute == kAppNeedsUpdate && !_diff) {
       Get.back();
     } else if (Get.currentRoute != kAppNeedsUpdate && _diff) {
-      Get.toNamed(kAppNeedsUpdate);
+      await Get.toNamed(kAppNeedsUpdate);
     }
   }
 

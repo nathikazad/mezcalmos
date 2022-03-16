@@ -6,10 +6,10 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
-["Orders"]["IncomingOrders"]["IncomingViewScreen"]["IPositionedFromToBar"];
+        ["Orders"]["IncomingOrders"]["IncomingViewScreen"]["components"]
+    ["IPositionedFromToBar"];
 
 class IncomingPositionedFromToTopBar extends StatelessWidget {
-  
   TaxiOrder order;
   IncomingPositionedFromToTopBar({required this.order});
 
@@ -57,9 +57,8 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                               ),
                             )),
                         GestureDetector(
-                          onTap: () => MezSnackbar(
-                              _i18n()["from"],
-                              order.from.address),
+                          onTap: () =>
+                              MezSnackbar(_i18n()["from"], order.from.address),
                           child: Text(
                             order.from.address,
                             style: TextStyle(fontSize: 15, fontFamily: 'psr'),
@@ -133,9 +132,8 @@ class IncomingPositionedFromToTopBar extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => MezSnackbar(
-                            _i18n()["to"],
-                            order.to.address),
+                        onTap: () =>
+                            MezSnackbar(_i18n()["to"], order.to.address),
                         child: Text(
                           order.to.address,
                           style: TextStyle(fontSize: 16, fontFamily: 'psr'),

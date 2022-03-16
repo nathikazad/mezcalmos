@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -31,6 +32,8 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   StreamSubscription<bool>? _locationStreamSub;
   AuthController _authController = Get.find<AuthController>();
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
+  IncomingOrdersController incomingOrdersController =
+      Get.put<IncomingOrdersController>(IncomingOrdersController());
   @override
   void initState() {
     mezDbgPrint("TaxiWrapper::init state");
@@ -88,7 +91,15 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
       } else if (state.inOrderNegotation != null) {
         await handleInNegotationMode(state.inOrderNegotation!);
       } else {
-        mezDbgPrint("TaxiWrapper::handleState going to incoming orders");
+        // if (Get.currentRoute == kAppNeedsUpdate &&
+        //     Get.find<AppVersionController>()
+        //             .appVersionInfos
+        //             .value
+        //             ?.areLocalAndRemoteVersionsDiffrent() ==
+        //         true) {
+        //   mezDbgPrint("TaxiWrapper::handleState going to incoming orders");
+        //   Get.toNamed(kAppNeedsUpdate);
+        // } else
         Get.toNamed(kIncomingOrdersListRoute);
       }
     } else {
@@ -103,8 +114,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   Future<void> handleInNegotationMode(
       InCounterOfferNegotiation negotiation) async {
     mezDbgPrint("@SAAD@2 => handleInNegotationMode");
-    IncomingOrdersController incomingOrdersController =
-        Get.put<IncomingOrdersController>(IncomingOrdersController());
+
     // Because when calling getOrder , the IncomingOrdersController's Orders listener hasn't even been started,
     // thus we check directly and quickly the db first, if it does exists then we wait for the IncomingOrdersController
     // to get the order.

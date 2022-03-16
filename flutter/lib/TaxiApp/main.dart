@@ -31,9 +31,6 @@ void main() {
 void loadBitmaps() async {
   mezDbgPrint("[+] L O A D I N G .... BITMAP_DESCRIPTORS !");
   if (await GetStorage.init()) {
-    await GetStorage().write(getxUserDescriptionPlaceHolder,
-        await bitmapDescriptorLoader(logo_asset, 60, 60));
-
     await GetStorage().write(getxTaxiDescriptor,
         await bitmapDescriptorLoader(taxi_driver_marker_asset, 60, 60));
 

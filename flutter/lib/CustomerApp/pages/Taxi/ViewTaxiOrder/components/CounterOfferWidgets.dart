@@ -9,14 +9,14 @@ import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
 import 'package:mezcalmos/Shared/widgets/MezLoadingCounter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 class CounterOfferWidgets {
   final ViewTaxiOrderController viewController;
   CounterOfferWidgets({required this.viewController});
   dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-      ["pages"]
-  ['Taxi']['ViewTaxiOrder']['components']['CounterOfferWidgets'];
+      ["pages"]['Taxi']['ViewTaxiOrder']['components']['CounterOfferWidgets'];
 
   Widget offersButton() {
     return Container(
@@ -61,7 +61,8 @@ class CounterOfferWidgets {
 
   Widget counterOffersBottomSheet(BuildContext context) {
     return AnimatedSlider(
-      isPositionedCoordinates: Rect.fromLTRB(0, Get.height, 0, 0),
+      isPositionedCoordinates:
+          AnimatedSliderCoordinates(left: 0, right: 0, bottom: 0),
       animatedSliderController: this.viewController.animatedSliderController,
       child: !viewController.clickedAccept.value
           ? counterOffersScrollView(context)
@@ -139,15 +140,12 @@ class CounterOfferWidgets {
           width: 45,
           child: MezLoadingCounter(
             circleSize: 45,
+            reversed: true,
             loadingLineHeight: 7,
-            manualCounterValue: ((nDefaultCounterOfferValidExpireTimeInSeconds -
-                    offer.validityTimeDifference().abs()) /
-                nDefaultCounterOfferValidExpireTimeInSeconds),
-            counterDurationInSeconds:
-                nDefaultCounterOfferValidExpireTimeInSeconds,
-            // (nDefaultCounterOfferValidExpireTimeInSeconds - (diff_result)) 0.0333333333
-            // nDefaultCounterOfferValidExpireTimeInSeconds,
-            onCounterEnd: () {},
+            counterDurationInSeconds: offer.validityTimeDifference().abs(),
+            onCounterEnd: () {
+              viewController.animatedSliderController.slideDown();
+            },
             onCounterChange: (price) {},
             childInsideCounter: Container(
               decoration: BoxDecoration(
@@ -206,8 +204,11 @@ class CounterOfferWidgets {
                                   offer.driverInfos.id);
                           if (!_response.success) {
                             viewController.clickedAccept.value = false;
+                            viewController.animatedSliderController.slideDown();
                           } else {
                             viewController.offersBtnClicked.value = false;
+                            viewController.animatedSliderController.slideDown();
+                            MezSnackbar("Oops", _response.errorMessage!);
                           }
                         },
                         child: Icon(
@@ -230,15 +231,15 @@ class CounterOfferWidgets {
                     child: Center(
                       child: InkWell(
                         onTap: () async {
-                          // to do cancel count offer.
-                          // we accept counter offer and wait for it.
                           viewController.taxiController
                               .rejectCounterOffer(
                                   viewController.order.value!.orderId,
                                   viewController.order.value!.customer.id,
                                   offer.driverInfos.id)
-                              .then((_) => viewController
-                                  .offersBtnClicked.value = false);
+                              .then((_) {
+                            viewController.offersBtnClicked.value = false;
+                            viewController.animatedSliderController.slideDown();
+                          });
                         },
                         child: Icon(
                           Icons.close,

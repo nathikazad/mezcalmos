@@ -18,6 +18,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
+import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -203,6 +204,8 @@ class _StartingPointState extends State<StartingPoint> {
         SettingsController(
             widget.appType, widget.sideMenuItems, widget.locationOn),
         permanent: true);
+
+    Get.lazyPut(() => AppVersionController(), fenix: true);
   }
 
   Future<void> waitForInitialization() async {

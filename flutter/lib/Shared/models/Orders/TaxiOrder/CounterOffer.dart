@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 class CounterOffer {
@@ -52,7 +53,9 @@ class CounterOffer {
   ///
   /// basically if the return == 0 , it means that this Offer is expired.
   int validityTimeDifference() {
-    return DateTime.now().toUtc().difference(offerValidTime.toUtc()).inSeconds;
+    var r = DateTime.now().toUtc().difference(offerValidTime.toUtc()).inSeconds;
+    mezDbgPrint("validityTimeDifference ===> $r");
+    return r;
   }
 }
 

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
@@ -36,18 +35,21 @@ class IOrderViewController {
   void initController(
       {required String orderId, required Function() onOrderNoMoreAvailable}) {
     order.value = controller.getOrder(orderId);
+
     // we do not setState here yet !
     if (order.value == null) {
-      mezDbgPrint('ORDER NULL NAVIGATE BACK');
-      Get.back();
+      onOrderNoMoreAvailable();
     } else {
       controller.markOrderAsRead(orderId, order.value!.customer.id);
+
       if (order.value!.inProcess()) {
         // we check valid counterOffer
         startListeningOnCounterOffer(orderId, order.value!.customer.id);
+
         // populate the LatLngPoints from the encoded PolyLine String + SetState!
         mGoogleMapController.decodeAndAddPolyline(
             encodedPolylineString: order.value!.routeInformation!.polyline);
+
         // add the corresponding markers
         mGoogleMapController.addOrUpdateUserMarker(
             markerId: order.value!.customer.id,
@@ -56,12 +58,14 @@ class IOrderViewController {
 
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
             latLng: order.value!.to.toLatLng());
+
         // set initial position
         mGoogleMapController.setLocation(order.value!.from);
+
         // start Listening for the vailability of the iOrderViewController.order
         _orderListener =
             controller.getIncomingOrderStream(orderId).listen((order) {
-          if (order != null && clickedAcceptButton.value) {
+          if (order != null) {
             // keep updating our Order only when neeeded
             if (order.cost != this.order.value?.cost ||
                 order.distanceToClient != this.order.value?.distanceToClient) {
@@ -90,6 +94,9 @@ class IOrderViewController {
       // we start listening here and we make sure to duspose the StreamSub when it's disposed.
       mezDbgPrint("#usaad# ====> ${_counterOffer?.toFirebaseFormattedJson()}");
       this.counterOffer.value = _counterOffer;
+      if (this.counterOffer.value != null) {
+        this.animatedSliderController.slideUp();
+      }
       if (_counterOffer?.counterOfferStatus == CounterOfferStatus.Accepted) {
         await removeCounterOfferAndResetState(expired: false);
         await waitForOrderToBeUpdatedAfterAccept(orderId);

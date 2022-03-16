@@ -10,9 +10,9 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:sizer/sizer.dart';
 
-
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
-["Orders"]["IncomingOrders"]["IncomingViewScreen"]["IPositionedBottomBar"];
+        ["Orders"]["IncomingOrders"]["IncomingViewScreen"]["components"]
+    ["IPositionedBottomBar"];
 
 class IncomingPositionedBottomBar extends StatelessWidget {
   final TaxiOrder order;
