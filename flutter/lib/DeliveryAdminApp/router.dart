@@ -1,7 +1,7 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/DeliveryAdminApp/pages/AdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/DriversListView/DriverListScreen.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryListView/LaundryListView.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryListView/LaundriesListView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/LaundryOrderScreen.dart.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/ListOrdersScreen.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/TaxiOrderView.dart';

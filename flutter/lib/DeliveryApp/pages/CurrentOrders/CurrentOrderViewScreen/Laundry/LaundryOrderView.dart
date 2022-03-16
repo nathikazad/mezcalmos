@@ -8,13 +8,14 @@ import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverBottomLaundryOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class LaundryOrderView extends StatefulWidget {
-  LaundryOrderView({Key? key}) : super(key: key);
+  const LaundryOrderView({Key? key}) : super(key: key);
 
   @override
   _LaundryOrderViewState createState() => _LaundryOrderViewState();
@@ -31,16 +32,25 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
   void initState() {
     super.initState();
 
-    String orderId = Get.parameters['orderId']!;
+    final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
     if (order.value == null) {
+      Get.back();
     } else {
       _orderListener =
-          controller.getCurrentOrderStream(orderId).listen((newOrder) {
+          controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
         if (newOrder != null) {
           order.value = controller.getOrder(orderId);
-        } else {}
+        } else {
+          controller.getPastOrderStream(orderId).listen((Order? pastOrder) {
+            if (pastOrder != null) {
+              order.value = pastOrder;
+            } else {
+              Get.back();
+            }
+          });
+        }
       });
     }
   }
@@ -55,6 +65,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
   AppBar getRightAppBar() {
     if (canGetBack()) {
+      mezDbgPrint("CCCCANNNNNNN GO BACK");
       return deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back);
     } else
       return deliveryAppBar(AppBarLeftButtonType.Back);
@@ -62,13 +73,14 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => canGetBack(),
-      child: Scaffold(
+    return Obx(
+      () => WillPopScope(
+        onWillPop: () async => canGetBack(),
+        child: Scaffold(
           appBar: getRightAppBar(),
           body: SingleChildScrollView(
-            child: Obx(
-              () {
+            child: Builder(
+              builder: (BuildContext context) {
                 if (order.value != null) {
                   return Column(children: [
                     DriverOrderMapComponent(order: order.value!),
@@ -82,7 +94,9 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                 }
               },
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 

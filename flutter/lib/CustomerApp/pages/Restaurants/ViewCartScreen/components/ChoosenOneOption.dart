@@ -8,16 +8,17 @@ import 'package:mezcalmos/Shared/models/Generic.dart';
 
 List<Widget> choosenOneOption(
     List<CartChooseOneItem> cartChooseOneItems, BuildContext context) {
-  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
 
-  final txt = Theme.of(context).textTheme;
-  List<Widget> myWidgets = [
+  final TextTheme txt = Theme.of(context).textTheme;
+  final List<Widget> myWidgets = [
     SizedBox(
       height: 15,
     ),
   ];
 
-  cartChooseOneItems.forEach((cartChooseOneItem) {
+  cartChooseOneItems.forEach((CartChooseOneItem cartChooseOneItem) {
     myWidgets.addAll([
       // title aka Id FIRST
       MenuTitles(
@@ -30,17 +31,16 @@ List<Widget> choosenOneOption(
         width: Get.width,
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: 25, top: 5),
-        child: Obx(() => Text(
+        child: Text(
             // oneOption.name
-            cartChooseOneItem
-                .chosenOptionDetails.name[userLanguage]!.inCaps,
+            cartChooseOneItem.chosenOptionDetails.name[userLanguage]!.inCaps,
             style: const TextStyle(
-                color: const Color(0xff000000),
+                color: Color(0xff000000),
                 fontWeight: FontWeight.w400,
                 fontFamily: "ProductSans",
                 fontStyle: FontStyle.normal,
                 fontSize: 17.0),
-            textAlign: TextAlign.left)),
+            textAlign: TextAlign.left),
       ),
       // THEN WE ADD THE CHOSED NAME
       // Container(

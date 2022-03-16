@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -28,11 +29,13 @@ class DeliveryDriverController extends GetxController {
         .reference()
         .child(deliveryDriversNode())
         .onValue
-        .listen((event) {
-      List<DeliveryDriver> _deliveryDrivers = [];
+        .listen((Event event) {
+      final List<DeliveryDriver> _deliveryDrivers = [];
       if (event.snapshot.value != null) {
         for (var deliveryDriverId in event.snapshot.value.keys) {
-          dynamic deliveryDriverData = event.snapshot.value[deliveryDriverId];
+          final dynamic deliveryDriverData =
+              event.snapshot.value[deliveryDriverId];
+
           _deliveryDrivers.add(
               DeliveryDriver.fromData(deliveryDriverId, deliveryDriverData));
         }
@@ -47,10 +50,10 @@ class DeliveryDriverController extends GetxController {
       required OrderType orderType,
       DeliveryDriverType deliveryDriverType =
           DeliveryDriverType.DropOff}) async {
-    HttpsCallable dropOrderFunction =
+    final HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('delivery-assignDriver');
     try {
-      HttpsCallableResult response = await dropOrderFunction.call({
+      final HttpsCallableResult response = await dropOrderFunction.call({
         "orderId": orderId,
         "deliveryDriverType": deliveryDriverType.toFirebaseFormatString(),
         "deliveryDriverId": deliveryDriverId,

@@ -84,7 +84,7 @@
                 }
             },
             "Restaurants": {
-                "ListRestaurantsScreem": {
+                "ListRestaurantsScreen": {
                     "components": {
                         "RestaurandCard": {
                             "items": "elementos",
@@ -563,7 +563,7 @@
                 "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
                 "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo.",
                 "locationIsOff": "Servicio de ubicación desactivado",
-                "isAndroid_11" : "Hemos detectado que su versión de Android es 11 o más reciente, por lo que debemos pedirle que nos dé sus permisos de ubicación."
+                "isAndroid_11": "Detectamos que su versión de Android es 11 o más reciente, por lo tanto, debemos pedirle que nos dé permisos para usar la ubicación en segundo plano para mantener a sus clientes actualizados sobre su ubicación actual, incluso cuando la aplicación se ejecuta en segundo plano."
             }
         },
         "widgets": {
@@ -733,6 +733,41 @@
         },
         "pages": {
             "Orders": {
+                "components": {
+                    "driverOrderCard": {
+                        "driver": "Conductora",
+                        "noDriver": "Elegir un conductor"
+                    },
+                    "laundryProviderCard": {
+                        "laundry": "Lavandería",
+                        "noLaundry": "Elegir una lavandería"
+                    }
+
+                },
+                "driversListView": {
+                    "driversListScreen": {
+                        "title": "Elegir un conductor",
+                        "components": {
+                            "driverSelectCard": {
+                                "available": "Disponible",
+                                "unavailable": "Indisponible"
+                            }
+                        }
+
+                    }
+                },
+                "laundryListView": {
+                    "laundriesListView": {
+                        "title": "Elegir una lavandería",
+                        "components": {
+                            "laundrySelectCard": {
+                                "available": "Disponible",
+                                "unavailable": "Indisponible"
+                            }
+                        }
+
+                    }
+                },
                 "LaundryOrder": {
                     "Components": {
                         "LaundryOrderButtons": {
@@ -976,7 +1011,8 @@
                                 "preparing": "Orden se está preparando",
                                 "readyForPickup": "Listo para recojer",
                                 "deliveryOtw": "Entrega en el camino",
-                                "delivered": "Orden entregado"
+                                "delivered": "Orden entregado",
+                                "canceled": "Orden cancelada"
                             },
                             "RestaurantControllButtons": {
                                 "confirmPickup": "Confirmar la recogida de la orden",

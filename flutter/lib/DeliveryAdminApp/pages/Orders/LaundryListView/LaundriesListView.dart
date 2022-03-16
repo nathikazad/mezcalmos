@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryListView/Components/LaundrySelectCard.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["laundryListView"]["laundriesListView"];
 
 class LaundriesListView extends StatelessWidget {
   LaundriesListView({Key? key}) : super(key: key);
@@ -14,14 +18,15 @@ class LaundriesListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Laundries'),
+        title: Text('${_i18n()["title"]}'),
       ),
       body: SingleChildScrollView(
           child: Column(
         children: [
           FutureBuilder<List<Laundry>>(
               future: laundryInfoController.getLaundries(),
-              builder: (context, snapshot) {
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<Laundry>> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
                     return Container(
@@ -33,7 +38,7 @@ class LaundriesListView extends StatelessWidget {
                     return Column(
                         children: List.generate(
                             snapshot.data!.length,
-                            (index) => LaundrySelectCard(
+                            (int index) => LaundrySelectCard(
                                   laundry: snapshot.data![index],
                                   function: () {
                                     if (snapshot.data![index].state.available) {

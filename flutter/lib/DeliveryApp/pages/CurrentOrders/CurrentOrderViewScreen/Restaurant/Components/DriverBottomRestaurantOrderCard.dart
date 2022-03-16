@@ -22,7 +22,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
       Get.find<RestaurantOrderController>();
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
@@ -169,6 +169,9 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
 // get order status readable title
   String _getOrderStatus() {
     switch (order.status) {
+      case RestaurantOrderStatus.CancelledByAdmin:
+      case RestaurantOrderStatus.CancelledByCustomer:
+        return '${_i18n()["orderStatus"]["canceled"]}';
       case RestaurantOrderStatus.OrderReceieved:
         return '${_i18n()["orderStatus"]["waiting"]}';
       case RestaurantOrderStatus.PreparingOrder:

@@ -21,7 +21,7 @@ class RestaurantControllButtons extends StatelessWidget {
   RxBool clicked = RxBool(false);
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Obx(() {
       if (clicked.value) {
         return Center(

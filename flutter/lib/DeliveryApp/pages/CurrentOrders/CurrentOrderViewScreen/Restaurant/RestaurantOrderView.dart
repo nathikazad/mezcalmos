@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class RestaurantOrderView extends StatefulWidget {
-  RestaurantOrderView({Key? key}) : super(key: key);
+  const RestaurantOrderView({Key? key}) : super(key: key);
 
   @override
   _RestaurantOrderViewState createState() => _RestaurantOrderViewState();
@@ -32,16 +32,24 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   void initState() {
     super.initState();
 
-    String orderId = Get.parameters['orderId']!;
+    final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
     if (order.value == null) {
       mezDbgPrint("ORDER NULL");
     } else {
       _orderListener =
-          controller.getCurrentOrderStream(orderId).listen((newOrder) {
+          controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
         if (newOrder != null) {
           order.value = controller.getOrder(orderId);
+        } else {
+          controller.getPastOrderStream(orderId).listen((Order? pastOrder) {
+            if (pastOrder != null) {
+              order.value = pastOrder;
+            } else {
+              Get.back();
+            }
+          });
         }
       });
     }
@@ -56,7 +64,10 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   }
 
   AppBar getRightAppBar() {
+    mezDbgPrint("CCCCANNNNNNN GO BACK");
+
     if (canGetBack()) {
+      mezDbgPrint("CCCCANNNNNNN GO BACK");
       return deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back);
     } else
       return deliveryAppBar(AppBarLeftButtonType.Back);
@@ -64,13 +75,14 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => canGetBack(),
-      child: Scaffold(
+    return Obx(
+      () => WillPopScope(
+        onWillPop: () async => canGetBack(),
+        child: Scaffold(
           appBar: getRightAppBar(),
           body: SingleChildScrollView(
-            child: Obx(
-              () {
+            child: Builder(
+              builder: (BuildContext context) {
                 if (order.value != null) {
                   return Column(children: [
                     DriverOrderMapComponent(order: order.value!),
@@ -84,7 +96,9 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                 }
               },
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 

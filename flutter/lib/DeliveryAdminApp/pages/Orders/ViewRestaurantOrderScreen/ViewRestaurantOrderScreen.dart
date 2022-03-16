@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:get/get.dart';
@@ -23,12 +24,12 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+
 import '../Components/DriverCard.dart';
-import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'components/CurrentOrderInfo.dart';
 import 'components/PastOrderInfo.dart';
 
-final currency = new NumberFormat("#,##0.00", "en_US");
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
   @override
@@ -58,12 +59,12 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     if (order.value == null) {
       Get.back();
     } else {
-      _orderListener =
-          controller.getCurrentOrderStream(orderId).listen((newOrder) {
-        mezDbgPrint("PRIIIIIIIINT ${order.value!.dropoffDriver}");
+      _orderListener = controller
+          .getCurrentOrderStream(orderId)
+          .listen((RestaurantOrder? newOrder) {
         if (newOrder != null) {
           order.value = controller.getOrder(orderId);
-          mezDbgPrint("PRIIIIIIIINT ${order.value!.dropoffDriver}");
+
           if (order.value?.dropoffDriver != null) {
             driver = order.value!.dropoffDriver;
           }
@@ -126,7 +127,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       () => DriverCard(
                         driver: order.value!.dropoffDriver,
                         order: order.value!,
-                        callBack: (newDriver) {
+                        callBack: (DeliveryDriver? newDriver) {
                           deliveryDriverController.assignDeliveryDriver(
                               deliveryDriverId: newDriver!.deliveryDriverId,
                               orderId: order.value!.orderId,

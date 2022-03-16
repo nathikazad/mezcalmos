@@ -726,6 +726,42 @@
         },
         "pages": {
             "Orders": {
+                "components": {
+                    "driverOrderCard": {
+                        "driver": "Driver",
+                        "noDriver": "Pick a driver"
+                    },
+                    "laundryProviderCard": {
+                        "laundry": "Laundry",
+                        "noLaundry": "Pick a laundry"
+                    }
+
+                },
+                "driversListView": {
+                    "driversListScreen": {
+                        "title": "Pick a driver",
+                        "components": {
+                            "driverSelectCard": {
+                                "available": "Available",
+                                "unavailable": "Unavailable"
+                            }
+                        }
+
+                    }
+                },
+                "laundryListView": {
+                    "laundriesListView": {
+                        "title": "Pick a laundry",
+                        "components": {
+                            "laundrySelectCard": {
+                                "available": "Available",
+                                "unavailable": "Unavailable"
+                            }
+                        }
+
+                    }
+                },
+
                 "LaundryOrder": {
                     "Components": {
                         "LaundryOrderButtons": {
@@ -974,7 +1010,8 @@
                                 "preparing": "Order is being prepared",
                                 "readyForPickup": "Ready for pickup",
                                 "deliveryOtw": "Delivery on the way",
-                                "delivered": "Order Delivered"
+                                "delivered": "Order Delivered",
+                                "canceled": "Order Cancelled"
                             },
                             "RestaurantControllButtons": {
                                 "confirmPickup": "Confirm Order Pickup",

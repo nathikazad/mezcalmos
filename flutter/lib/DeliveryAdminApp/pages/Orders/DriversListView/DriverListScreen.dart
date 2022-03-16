@@ -5,8 +5,12 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryDriverController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/DriversListView/Components/DriverSelectCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/DriversListView/Components/DriversMapComponent.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["driversListView"]["driversListScreen"];
 
 class DriversListScreen extends StatefulWidget {
   const DriversListScreen({
@@ -34,10 +38,10 @@ class _DriversListScreenState extends State<DriversListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick Driver'),
+        title: Text('${_i18n()["title"]}'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -62,7 +66,7 @@ class _DriversListScreenState extends State<DriversListScreen> {
         child: Column(
           children: List.generate(
               deliveryDrivers.length,
-              (index) => DriverSelectCard(
+              (int index) => DriverSelectCard(
                     driver: deliveryDrivers[index],
                     function:
                         (deliveryDrivers[index].deliveryDriverState.isOnline)
