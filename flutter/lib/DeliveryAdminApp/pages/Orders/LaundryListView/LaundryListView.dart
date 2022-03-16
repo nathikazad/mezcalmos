@@ -4,21 +4,11 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryListView/Componen
 import 'package:mezcalmos/Shared/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
-class LaundriesListView extends StatefulWidget {
-  const LaundriesListView({Key? key}) : super(key: key);
+class LaundriesListView extends StatelessWidget {
+  LaundriesListView({Key? key}) : super(key: key);
 
-  @override
-  State<LaundriesListView> createState() => _LaundriesListViewState();
-}
-
-class _LaundriesListViewState extends State<LaundriesListView> {
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

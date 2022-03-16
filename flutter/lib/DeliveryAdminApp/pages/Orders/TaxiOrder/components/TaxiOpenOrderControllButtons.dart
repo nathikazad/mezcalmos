@@ -3,8 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["TaxiOrder"]["components"]["taxiOrderBottomCard"];
 
 class TaxiOpenOrderControllButtons extends StatefulWidget {
   final TaxiOrder order;
@@ -45,14 +48,15 @@ class _TaxiOpenOrderControllButtonsState
             child: Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(5),
-                child: Text('Forward to local company')));
+                child: Text(
+                    '${_i18n()["TaxiOpenOrderControllButton"]["fwdToCompany"]}')));
       case TaxiOrdersStatus.ForwardingToLocalCompany:
         return Column(
           children: [
             TextButton(
                 onPressed: () async {
                   dynamic result = await taxiNumberDialog(context);
-                  mezDbgPrint("Resulttttttt : $result");
+
                   if (result != 0) {
                     btnClicked.value = true;
                     await _taxiOrderController.submitForwardResult(
@@ -65,7 +69,8 @@ class _TaxiOpenOrderControllButtonsState
                 child: Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(5),
-                    child: Text('Confirm local company taxi'))),
+                    child: Text(
+                        '${_i18n()["TaxiOpenOrderControllButton"]["confirmTaxi"]}'))),
             Container(
               margin: const EdgeInsets.only(top: 8),
               child: TextButton(
@@ -81,7 +86,8 @@ class _TaxiOpenOrderControllButtonsState
                   child: Container(
                       alignment: Alignment.center,
                       padding: EdgeInsets.all(5),
-                      child: Text('Cancel'))),
+                      child: Text(
+                          '${_i18n()["TaxiOpenOrderControllButton"]["cancel"]}'))),
             ),
           ],
         );
@@ -101,20 +107,19 @@ class _TaxiOpenOrderControllButtonsState
                   width: 10,
                 ),
                 Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Order Canceled',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                      Text(
-                        'at : ${DateFormat('dd MMM yyy hh:mm a').format(widget.order.orderTime.toLocal())}',
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                    ],
-                  ),
-                )
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _getOrderStatus(),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      '${_i18n()["at"]} ${DateFormat('dd MMM yyy hh:mm a').format(widget.order.orderTime.toLocal())}',
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ],
+                )),
               ],
             ),
           ],
@@ -134,20 +139,19 @@ class _TaxiOpenOrderControllButtonsState
                   width: 10,
                 ),
                 Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Order Droped off',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                      Text(
-                        'at : ${DateFormat('dd MMM yyy hh:mm a').format(widget.order.orderTime.toLocal())}',
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                    ],
-                  ),
-                )
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _getOrderStatus(),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      '${_i18n()["at"]} ${DateFormat('dd MMM yyy hh:mm a').format(widget.order.orderTime.toLocal())}',
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ],
+                )),
               ],
             ),
           ],
@@ -164,12 +168,13 @@ class _TaxiOpenOrderControllButtonsState
         barrierDismissible: false,
         builder: (ctx) {
           return AlertDialog(
-            title: Text('Confirm Taxi number '),
+            title: Text(
+                '${_i18n()["TaxiOpenOrderControllButton"]["confirmFwd"]} '),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextFormField(
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyText2,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
@@ -177,7 +182,7 @@ class _TaxiOpenOrderControllButtonsState
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (num.tryParse(value!) == null) {
-                      return 'Please enter a valid taxi number';
+                      return '${_i18n()["TaxiOpenOrderControllButton"]["fwdAlertErrorText"]}';
                     } else {
                       return null;
                     }
@@ -186,7 +191,8 @@ class _TaxiOpenOrderControllButtonsState
                     taxiNumber = num.parse(value);
                   },
                   decoration: InputDecoration(
-                      label: Text('Taxi number'),
+                      label: Text(
+                          '${_i18n()["TaxiOpenOrderControllButton"]["taxiNumber"]}'),
                       filled: true,
                       isDense: true,
                       border: OutlineInputBorder(
@@ -198,15 +204,15 @@ class _TaxiOpenOrderControllButtonsState
                 TextButton(
                     onPressed: () {
                       if (taxiNumber != 0) {
-                        mezDbgPrint('Getting back $taxiNumber');
                         //Navigator.pop(context, taxiNumber);
                         Get.back(result: taxiNumber);
                       }
                     },
                     child: Container(
-                        padding: EdgeInsets.all(5),
+                        //  padding: EdgeInsets.all(5),
                         alignment: Alignment.center,
-                        child: Text('Confirm Taxi number'))),
+                        child: Text(
+                            '${_i18n()["TaxiOpenOrderControllButton"]["confirmFwd"]}'))),
                 SizedBox(
                   height: 5,
                 ),
@@ -218,10 +224,41 @@ class _TaxiOpenOrderControllButtonsState
                       backgroundColor: Colors.red,
                     ),
                     child: Container(
-                        padding: EdgeInsets.all(5), child: Text('Cancel')))
+                        //    padding: EdgeInsets.all(5),
+                        child: Text(
+                            '${_i18n()["TaxiOpenOrderControllButton"]["cancel"]}')))
               ],
             ),
           );
         });
+  }
+
+  String _getOrderStatus() {
+    switch (widget.order.status) {
+      case TaxiOrdersStatus.CancelledByTaxi:
+        return '${_i18n()["orderStatus"]["canceledByTaxi"]}';
+      case TaxiOrdersStatus.CancelledByCustomer:
+        return '${_i18n()["orderStatus"]["canceledByCustomer"]}';
+      case TaxiOrdersStatus.LookingForTaxi:
+        return '${_i18n()["orderStatus"]["lookingForTaxi"]}';
+      case TaxiOrdersStatus.OnTheWay:
+        return '${_i18n()["orderStatus"]["onTheWay"]}';
+      case TaxiOrdersStatus.InTransit:
+        return '${_i18n()["orderStatus"]["inTransit"]}';
+      case TaxiOrdersStatus.DroppedOff:
+        return '${_i18n()["orderStatus"]["droppedOff"]}';
+      case TaxiOrdersStatus.Expired:
+        return '${_i18n()["orderStatus"]["expired"]}';
+
+      case TaxiOrdersStatus.ForwardingSuccessful:
+        return '${_i18n()["orderStatus"]["forwardSuccess"]}';
+      case TaxiOrdersStatus.ForwardingUnsuccessful:
+        return '${_i18n()["orderStatus"]["forwardUnsuccess"]}';
+      case TaxiOrdersStatus.ForwardingToLocalCompany:
+        return '${_i18n()["orderStatus"]["forwarding"]}';
+
+      default:
+        return 'Unknown status';
+    }
   }
 }

@@ -6,8 +6,9 @@ import '../../../../../Shared/controllers/languageController.dart';
 import 'TaxiCurrentOrderCard.dart';
 import 'TaxiOpenOrderCard.dart';
 
-dynamic i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-    ["pages"]["Orders"]["ListOrdersScreen"]["ListOrdersScreen"];
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
+        ["Orders"]["ListOrdersScreen"]["components"]["taxiOrdersListComponent"];
 
 class TaxiOrdersList extends StatelessWidget {
   /// Component responsible of building the taxi orders list inside the tabbarview of the delivery admin app
@@ -32,7 +33,7 @@ class TaxiOrdersList extends StatelessWidget {
             Container(
               margin: const EdgeInsets.all(8),
               alignment: Alignment.centerLeft,
-              child: Text("Open orders",
+              child: Text("${_i18n()["openOrders"]}",
                   style: Theme.of(context).textTheme.headline1,
                   textAlign: TextAlign.left),
             ),
@@ -46,14 +47,14 @@ class TaxiOrdersList extends StatelessWidget {
                                 TaxiOpenOrderCard(order: openOrders[index])),
                       )
                     : Center(
-                        child: Text(i18n()['noOrders']),
+                        child: Text("${_i18n()["noOrders"]}"),
                       ),
               ),
             ),
             Container(
               margin: const EdgeInsets.all(8),
               alignment: Alignment.centerLeft,
-              child: Text(i18n()["title"],
+              child: Text("${_i18n()["currentOrders"]}",
                   style: Theme.of(context).textTheme.headline1,
                   textAlign: TextAlign.left),
             ),
@@ -67,14 +68,14 @@ class TaxiOrdersList extends StatelessWidget {
                                 order: currentOrders[index])),
                       )
                     : Center(
-                        child: Text(i18n()['noOrders']),
+                        child: Text("${_i18n()["noOrders"]}"),
                       ),
               ),
             ),
             Container(
               margin: const EdgeInsets.all(8),
               alignment: Alignment.centerLeft,
-              child: Text(i18n()['pastOrders'],
+              child: Text("${_i18n()["pastOrders"]}",
                   style: Theme.of(context).textTheme.headline1,
                   textAlign: TextAlign.left),
             ),
@@ -91,7 +92,7 @@ class TaxiOrdersList extends StatelessWidget {
                                 order: pastOrders[index])).reversed.toList(),
                       )
                     : Center(
-                        child: Text(i18n()['noOrders']),
+                        child: Text("${_i18n()["noOrders"]}"),
                       ),
               ),
             ),

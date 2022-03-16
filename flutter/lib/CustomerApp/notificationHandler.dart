@@ -248,34 +248,28 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
-    // TODO !
+
     case TaxiOrdersStatus.ForwardingToLocalCompany:
-    //   return <String, dynamic>{
-    //     "title":
-    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdCompany"]["title"]}",
-    //     "body":
-    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdCompany"]["body"]}",
-    //     "imgUrl":
-    //         "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
-    //   };
-    // case TaxiOrdersStatus.ForwardingUnsuccessful:
-    //   return <String, dynamic>{
-    //     "title":
-    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdCancelled"]["title"]}",
-    //     "body":
-    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdCancelled"]["body"]}",
-    //     "imgUrl":
-    //         "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
-    //   };
-    // case TaxiOrdersStatus.ForwardingSuccessful:
-    //   return <String, dynamic>{
-    //     "title":
-    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdSuccess"]["title"]}",
-    //     "body":
-    //         "${lang.strings["shared"]["notification"]["notificationType"]["fwdSuccess"]["body"]}",
-    //     "imgUrl":
-    //         "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
-    //   };
+      return <String, dynamic>{
+        "title": "${_i18n()["taxiFwdToCompanyTitle"]}",
+        "body": "${_i18n()["taxiFwdToCompanyBody"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+      };
+    case TaxiOrdersStatus.ForwardingUnsuccessful:
+      return <String, dynamic>{
+        "title": "${_i18n()["taxiFwdCancelledTitle"]}",
+        "body": "${_i18n()["taxiFwdCancelledBody"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+      };
+    case TaxiOrdersStatus.ForwardingSuccessful:
+      return <String, dynamic>{
+        "title": "${_i18n()["taxiFwdSuccessTitle"]}",
+        "body": "${_i18n()["taxiFwdSuccessBody"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+      };
     default:
     // do nothing
   }

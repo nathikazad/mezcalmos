@@ -7,8 +7,8 @@ class OrderSummaryComponent extends StatelessWidget {
   final LaundryOrder order;
   OrderSummaryComponent({Key? key, required this.order}) : super(key: key);
   dynamic _i18n() =>
-      Get.find<LanguageController>().strings['CustomerApp']['pages']
-['Laundry']['LaundryCurrentOrderView']['Components']['OrderSummaryComponent'];
+      Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
+          ['LaundryCurrentOrderView']['Components']['OrderSummaryComponent'];
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -32,8 +32,8 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.cost != 0)
-                      ? '\$' + order.cost.toStringAsFixed(0)
+                  (order.weight != null)
+                      ? '${order.price * order.weight!} \$'
                       : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -50,7 +50,7 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  "\$5",
+                  "40 \$",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -66,7 +66,9 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.cost != 0) ? '\$' + (order.cost + 5).toString() : '-',
+                  (order.weight != null)
+                      ? '${order.price * order.weight! + 40} \$'
+                      : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -184,9 +186,7 @@ class OrderSummaryComponent extends StatelessWidget {
                   width: 10,
                 ),
                 Flexible(
-                    child: Text(
-                        _i18n()['laundryPricingNote'],
-                        maxLines: 3)),
+                    child: Text(_i18n()['laundryPricingNote'], maxLines: 3)),
               ],
             )
           ],

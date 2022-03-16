@@ -28,7 +28,7 @@ class ListOrdersScreen extends StatefulWidget {
   _ListOrdersScreen createState() => _ListOrdersScreen();
 }
 
-class _ListOrdersScreen extends State<ListOrdersScreen> { 
+class _ListOrdersScreen extends State<ListOrdersScreen> {
   RxList<Order> inProcessOrders = RxList.empty();
   RxList<Order> pastOrders = RxList.empty();
   RxList<Order> laundryInProcessOrders = RxList.empty();
@@ -40,8 +40,8 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   LaundryOrderController laundryOrderController =
       Get.find<LaundryOrderController>();
   TaxiOrderController taxiOrderController = Get.find<TaxiOrderController>();
-  dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
-  ["Orders"]["ListOrdersScreen"]["ListOrdersScreen"];
+  dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+      ["pages"]["Orders"]["ListOrdersScreen"]["ListOrdersScreen"];
   StreamSubscription? _ordersListener;
   StreamSubscription? _laundryOrdersListener;
   StreamSubscription? _taxiOrdersListener;
@@ -230,7 +230,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             children: [
               Flexible(
                   child: Text(
-                'Taxi',
+                _i18n()['taxiOrders'],
                 style: Theme.of(context).textTheme.bodyText2,
               )),
               SizedBox(

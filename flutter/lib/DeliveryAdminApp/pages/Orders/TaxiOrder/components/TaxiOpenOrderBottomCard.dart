@@ -2,9 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOpenOrderControllButtons.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["TaxiOrder"]["components"]["taxiOrderBottomCard"];
 
 class TaxiOpenOrderBottomCard extends StatelessWidget {
   /// Bottom card of the open taxi order :  shows order info and buttons to handle the order
@@ -42,13 +47,13 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'From :' + order.from.address,
+          '${_i18n()['from']}' + order.from.address,
           style: Theme.of(context).textTheme.bodyText2,
         ),
         SizedBox(
           height: 8,
         ),
-        Text('To :' + order.to.address,
+        Text('${_i18n()['to']}' + order.to.address,
             style: Theme.of(context).textTheme.bodyText2),
         SizedBox(
           height: 8,
@@ -126,7 +131,7 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
                   endTime: order.orderTime.millisecondsSinceEpoch + 1000 * 600,
                   widgetBuilder: (_, CurrentRemainingTime? time) {
                     if (time == null) {
-                      return Text('Order expired');
+                      return Text('${_i18n()["orderExpired"]}');
                     }
                     return Text(
                       '${time.min ?? '00'}:${time.sec}',
@@ -160,7 +165,7 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
             flex: 3,
             fit: FlexFit.tight,
             child: Text(
-                'Sent to : ${order.numberOfTaxiSentNotificationTo().toString()} drivers'),
+                '${_i18n()['sentTo']} ${order.numberOfTaxiSentNotificationTo().toString()} '),
           ),
           Spacer(),
           Icon(
@@ -175,7 +180,7 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
             flex: 3,
             fit: FlexFit.tight,
             child: Text(
-                'Read by : ${order.numberOfTaxiReadNotification().toString()} drivers'),
+                '${_i18n()['readBy']} ${order.numberOfTaxiReadNotification().toString()} '),
           ),
         ],
       ),
@@ -185,17 +190,30 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
 // function with a string return to the current open order status
   String _getOrderStatus() {
     switch (order.status) {
+      case TaxiOrdersStatus.CancelledByTaxi:
+        return '${_i18n()["orderStatus"]["canceledByTaxi"]}';
+      case TaxiOrdersStatus.CancelledByCustomer:
+        return '${_i18n()["orderStatus"]["canceledByCustomer"]}';
       case TaxiOrdersStatus.LookingForTaxi:
-        return 'Looking for taxi';
-      case TaxiOrdersStatus.ForwardingToLocalCompany:
-        return 'Forwarding to local company';
+        return '${_i18n()["orderStatus"]["lookingForTaxi"]}';
+      case TaxiOrdersStatus.OnTheWay:
+        return '${_i18n()["orderStatus"]["onTheWay"]}';
+      case TaxiOrdersStatus.InTransit:
+        return '${_i18n()["orderStatus"]["inTransit"]}';
+      case TaxiOrdersStatus.DroppedOff:
+        return '${_i18n()["orderStatus"]["droppedOff"]}';
+      case TaxiOrdersStatus.Expired:
+        return '${_i18n()["orderStatus"]["expired"]}';
+
       case TaxiOrdersStatus.ForwardingSuccessful:
-        return 'Forwarding Successful';
+        return '${_i18n()["orderStatus"]["forwardSuccess"]}';
       case TaxiOrdersStatus.ForwardingUnsuccessful:
-        return 'Forwarding unsuccessful';
+        return '${_i18n()["orderStatus"]["forwardUnsuccess"]}';
+      case TaxiOrdersStatus.ForwardingToLocalCompany:
+        return '${_i18n()["orderStatus"]["forwarding"]}';
 
       default:
-        return 'unknown';
+        return 'Unknown status';
     }
   }
 }

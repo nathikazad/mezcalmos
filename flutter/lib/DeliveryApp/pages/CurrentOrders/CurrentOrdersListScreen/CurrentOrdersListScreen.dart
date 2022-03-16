@@ -15,9 +15,8 @@ import 'package:sizer/sizer.dart';
 import 'Components/DriverOrderCard.dart';
 import 'Components/MezSwitch.dart';
 
-dynamic _i18n() =>
-    Get.find<LanguageController>().strings["DeliveryApp"]["pages"]
-  ["CurrentOrders"]["CurrentOrdersListScreen"]["CurrentOrdersListScreen"];
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+    ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"];
 
 class CurrentOrdersListScreen extends StatefulWidget {
   @override
@@ -29,7 +28,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   RxList<Order> currentOrders = RxList.empty();
   RxList<Order> pastOrders = RxList.empty();
   OrderController orderController = Get.find<OrderController>();
-  
+
   DeliveryAuthController _deliveryAuthController =
       Get.find<DeliveryAuthController>();
 
@@ -87,7 +86,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           Container(
             padding: const EdgeInsets.all(5),
             child: Text(
-              'Past orders',
+              _i18n()["pastOrders"],
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -114,7 +113,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           Container(
             padding: const EdgeInsets.all(5),
             child: Text(
-              'Current orders',
+              _i18n()["currentOrders"],
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),

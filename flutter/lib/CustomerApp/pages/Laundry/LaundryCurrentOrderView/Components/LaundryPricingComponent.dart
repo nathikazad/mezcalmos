@@ -7,8 +7,8 @@ class LaundryPricingCompnent extends StatelessWidget {
   final LaundryOrder order;
   LaundryPricingCompnent({Key? key, required this.order}) : super(key: key);
   dynamic _i18n() =>
-      Get.find<LanguageController>().strings['CustomerApp']['pages']
-['Laundry']['LaundryCurrentOrderView']['Components']['LaundryPricingComponent'];
+      Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
+          ['LaundryCurrentOrderView']['Components']['LaundryPricingComponent'];
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -32,9 +32,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.cost != 0)
-                      ? '\$' + order.cost.toStringAsFixed(0)
-                      : '-',
+                  "${order.price} \$ / kg",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -51,7 +49,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                 ),
                 Text(
                   (order.weight != null)
-                      ? order.weight.toString() + '/kg'
+                      ? order.weight.toString() + ' kg'
                       : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -68,8 +66,8 @@ class LaundryPricingCompnent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.cost != 0)
-                      ? '\$' + order.cost.toStringAsFixed(0)
+                  (order.weight != null)
+                      ? '${order.price * order.weight!} \$'
                       : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -81,22 +79,21 @@ class LaundryPricingCompnent extends StatelessWidget {
                   Divider(
                     height: 25,
                   ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.help_outline_rounded,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Flexible(
+                          child:
+                              Text(_i18n()['laundryPricingNote'], maxLines: 3)),
+                    ],
+                  )
                 ],
               ),
-            Row(
-              children: [
-                Icon(
-                  Icons.help_outline_rounded,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Flexible(
-                    child: Text(
-                        _i18n()['laundryPricingNote'],
-                        maxLines: 3)),
-              ],
-            )
           ],
         ),
       ),

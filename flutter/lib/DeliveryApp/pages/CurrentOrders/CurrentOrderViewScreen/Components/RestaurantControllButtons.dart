@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
+        ['pages']['CurrentOrders']['CurrentOrderViewScreen']['Components']
+    ['DriverBottomRestaurantOrderCard'];
 
 class RestaurantControllButtons extends StatelessWidget {
   /// buttons to controll the restaurant driver order status and the final status of the order (Delivered/Canceled)
@@ -37,7 +42,8 @@ class RestaurantControllButtons extends StatelessWidget {
                   child: Container(
                       alignment: Alignment.center,
                       padding: EdgeInsets.all(8),
-                      child: Text('Confirm Pick-up'))),
+                      child: Text(
+                          '${_i18n()["RestaurantControllButtons"]["confirmPickup"]}'))),
             if (order.status == RestaurantOrderStatus.Delivered)
               Row(
                 children: [
@@ -54,7 +60,7 @@ class RestaurantControllButtons extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Order deliverd',
+                        '${_i18n()["orderStatus"]["delivered"]}',
                         style: textTheme.bodyText1,
                       ),
                       Text(
@@ -82,7 +88,7 @@ class RestaurantControllButtons extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Order canceled',
+                        '${_i18n()["orderStatus"]["canceled"]}',
                         style: textTheme.bodyText1,
                       ),
                       Text(
@@ -104,7 +110,8 @@ class RestaurantControllButtons extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(5),
                     alignment: Alignment.center,
-                    child: Text('Confirm delivery'),
+                    child: Text(
+                        '${_i18n()["RestaurantControllButtons"]["confirmDelivery"]}'),
                   ))
           ],
         );

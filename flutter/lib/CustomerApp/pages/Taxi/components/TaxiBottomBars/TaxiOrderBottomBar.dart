@@ -35,24 +35,22 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
       bottom: 25,
       right: 15,
       left: 15,
-      child: Obx(
-        () => Container(
-          padding: const EdgeInsets.all(8),
-          margin: EdgeInsets.only(
-              bottom: (widget.order.value!.status ==
-                      TaxiOrdersStatus.LookingForTaxi)
-                  ? 45
-                  : 0),
-          height: 70,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(
-                  width: 1, color: Theme.of(context).scaffoldBackgroundColor),
-              color: Colors.white),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: buildBottomBatByStatus(context),
-          ),
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        margin: EdgeInsets.only(
+            bottom:
+                (widget.order.value!.status == TaxiOrdersStatus.LookingForTaxi)
+                    ? 45
+                    : 0),
+        height: 70,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+                width: 1, color: Theme.of(context).scaffoldBackgroundColor),
+            color: Colors.white),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: buildBottomBatByStatus(context),
         ),
       ),
     );
@@ -291,9 +289,14 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             width: 5,
           ),
           Flexible(
+            fit: FlexFit.tight,
+            flex: 7,
             child: Text(
               '${_i18n()["forwarding"]}',
-              style: Theme.of(pContext).textTheme.bodyText1,
+              style: Theme.of(pContext)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(fontSize: 11.sp),
             ),
           ),
           Spacer(),

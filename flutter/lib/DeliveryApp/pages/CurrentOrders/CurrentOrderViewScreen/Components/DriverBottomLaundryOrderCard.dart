@@ -5,9 +5,14 @@ import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/LaundryControllButtons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/LaundryOrderHeader.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/laundryOrderFromToComponent.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+        ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
+    ["DriverBottomLaundryOrderCard"];
 
 class DriverBottomLaundryOrderCard extends StatefulWidget {
   final LaundryOrder order;
@@ -90,7 +95,7 @@ class _DriverBottomLaundryOrderCardState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Order canceled',
+              "${_i18n()["orderStatus"]["canceled"]}",
               style: textTheme.bodyText1,
             ),
             Text(
@@ -120,7 +125,7 @@ class _DriverBottomLaundryOrderCardState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Order Deliverd',
+              "${_i18n()["orderStatus"]["delivered"]}",
               style: textTheme.bodyText1,
             ),
             Text(
@@ -136,24 +141,23 @@ class _DriverBottomLaundryOrderCardState
   String _getOrderStatus() {
     switch (widget.order.status) {
       case LaundryOrderStatus.OrderReceieved:
-        return 'Ready for pick-up';
+        return "${_i18n()["orderStatus"]["readyForPickup"]}";
       case LaundryOrderStatus.OtwPickup:
-        return 'Pick-up on the way';
+        return "${_i18n()["orderStatus"]["pickupOtw"]}";
       case LaundryOrderStatus.PickedUp:
-        return 'Order Picked up';
+        return "${_i18n()["orderStatus"]["pickedUp"]}";
       case LaundryOrderStatus.AtLaundry:
-        return 'Order at laundry';
+        return "${_i18n()["orderStatus"]["atLaundry"]}";
       case LaundryOrderStatus.ReadyForDelivery:
-        return 'Order ready for delivery';
+        return "${_i18n()["orderStatus"]["readyForDelivery"]}";
       case LaundryOrderStatus.OtwDelivery:
-        return 'Delivery on the way';
+        return "${_i18n()["orderStatus"]["deliveryOtw"]}";
       case LaundryOrderStatus.Delivered:
-        return 'Order Delivered';
+        return "${_i18n()["orderStatus"]["delivered"]}";
       case LaundryOrderStatus.CancelledByAdmin:
-        return 'Order Canceled';
+        return '${_i18n()["orderStatus"]["canceled"]}';
       case LaundryOrderStatus.CancelledByCustomer:
-        return 'Order Canceled';
-
+        return '${_i18n()["orderStatus"]["canceled"]}';
       default:
         return '';
     }
