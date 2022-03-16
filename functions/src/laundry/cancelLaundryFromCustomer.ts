@@ -7,10 +7,11 @@ import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { finishOrder } from "./helper";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { pushNotification } from "../shared/notification/notifyUser";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 // Customer Canceling
 export = functions.https.onCall(async (data, context) => {
@@ -76,7 +77,8 @@ async function notifyOthersCancelledOrder(deliveryAdmins: Record<string, Deliver
       notificationAction: NotificationAction.ShowPopUp,
       orderId: orderId
     },
-    background: LaundryOrderStatusChangeMessages[LaundryOrderStatus.CancelledByCustomer]
+    background: LaundryOrderStatusChangeMessages[LaundryOrderStatus.CancelledByCustomer],
+    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Laundry, orderId)
   }
 
   for (let adminId in deliveryAdmins) {

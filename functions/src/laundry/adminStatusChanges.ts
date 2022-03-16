@@ -9,12 +9,13 @@ import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { finishOrder } from "./helper";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
-import { pushNotification } from "../shared/notification/notifyUser";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { pushNotification } from "../utilities/senders/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { getLaundry } from "./laundryController";
 import { Laundry } from "../shared/models/Services/Laundry/Laundry";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 let statusArrayInSeq: Array<LaundryOrderStatus> =
   [LaundryOrderStatus.OrderReceieved,
@@ -114,7 +115,8 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
         ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
       orderId: orderId
     },
-    background: LaundryOrderStatusChangeMessages[newStatus]
+    background: LaundryOrderStatusChangeMessages[newStatus],
+    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Laundry, orderId)
   }
 
   pushNotification(order.customer.id!, notification);

@@ -7,10 +7,12 @@ import * as customerNodes from "../shared/databaseNodes/customer";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { isSignedIn } from "../shared/helper/authorizer";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
-import { pushNotification } from "../shared/notification/notifyUser";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { pushNotification } from "../utilities/senders/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessages";
 import { finishOrder } from "../laundry/helper";
+import { orderUrl } from "../utilities/senders/appRoutes";
+import { ParticipantType } from "../shared/models/Generic/Chat";
 
 let statusArrayInSeq: Array<LaundryOrderStatus> =
   [LaundryOrderStatus.OrderReceieved,
@@ -130,7 +132,8 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
       notificationAction: NotificationAction.ShowPopUp,
       orderId: orderId
     },
-    background: LaundryOrderStatusChangeMessages[newStatus]
+    background: LaundryOrderStatusChangeMessages[newStatus],
+    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Laundry, orderId)
   }
 
   pushNotification(order.customer.id!, notification);

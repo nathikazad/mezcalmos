@@ -6,11 +6,12 @@ import { OrderType } from "../shared/models/Generic/Order";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { finishOrder } from "./helper";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { pushNotification } from "../shared/notification/notifyUser";
+import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
+import { orderUrl } from "../utilities/senders/appRoutes";
 // Customer Canceling
 export = functions.https.onCall(async (data, context) => {
   let response = await isSignedIn(context.auth)
@@ -75,7 +76,8 @@ async function notifyOthersCancelledOrder(deliveryAdmins: Record<string, Deliver
       notificationAction: NotificationAction.ShowPopUp,
       orderId: orderId
     },
-    background: restaurantOrderStatusChangeMessages[RestaurantOrderStatus.CancelledByCustomer]
+    background: restaurantOrderStatusChangeMessages[RestaurantOrderStatus.CancelledByCustomer],
+    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Restaurant, orderId)
   }
 
   for (let adminId in deliveryAdmins) {

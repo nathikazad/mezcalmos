@@ -6,6 +6,7 @@ import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
 import { OrderType } from "../../functions/src/shared/models/Generic/Order";
 import { TaxiOrder } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
 import { Taxi } from "../../functions/src/shared/models/drivers/Taxi";
+import { taxiIncomingOrderUrl } from "../../functions/src/utilities/senders/appRoutes";
 
 
 const checkOpenOrdersInterval: number = 10 //seconds
@@ -167,6 +168,7 @@ function notifyDrivers(driversToNotify: Record<string, NotifyDriver>) {
         },
         data: {
           notificationType: "newOrder",
+          linkUrl: taxiIncomingOrderUrl(driverToNotify.orderId),
           markReceivedUrl: constructReturnUrl(driverToNotify.orderId)
         },
       },

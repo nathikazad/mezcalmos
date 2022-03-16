@@ -2,7 +2,7 @@ import { Order, OrderType } from "../../Generic/Order"
 import { UserInfo } from "../../Generic/User"
 import { TaxiOrderRequest } from "./TaxiOrderRequest"
 import { Location } from '../../Generic/Generic';
-import { OrderNotification } from "../../Generic/Notification";
+import { OrderNotification } from "../../Notification";
 
 export interface TaxiOrder extends Order {
   from: Location,

@@ -2,7 +2,7 @@
 import { Item, Cart } from './Cart';
 import { DeliverableOrder, OrderType } from '../../Generic/Order';
 import { UserInfo } from '../../Generic/User';
-import { OrderNotification } from '../../Generic/Notification';
+import { OrderNotification } from '../../Notification';
 
 export interface RestaurantOrder extends DeliverableOrder {
   quantity: number;

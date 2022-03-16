@@ -1,9 +1,9 @@
-import { ParticipantType } from "../models/Generic/Chat";
-import { Language, NotificationInfo } from "../models/Generic/Generic";
-import * as fcm from "../../utilities/senders/fcm";
-import { Notification } from "../models/Generic/Notification";
-import * as foreground from "../../utilities/senders/foreground";
-import { getNotificationInfo, getUserInfo } from "../controllers/rootController";
+import { ParticipantType } from "../../shared/models/Generic/Chat";
+import { Language, NotificationInfo } from "../../shared/models/Generic/Generic";
+import * as fcm from "./fcm";
+import { Notification } from "../../shared/models/Notification";
+import * as foreground from "./foreground";
+import { getNotificationInfo, getUserInfo } from "../../shared/controllers/rootController";
 
 
 export async function pushNotification(
@@ -14,7 +14,8 @@ export async function pushNotification(
   foreground.push({
     particpantType: particpantType,
     userId: userId,
-    notification: notification.foreground
+    notification: notification.foreground,
+    linkUrl: notification.linkUrl
   });
   let subscription: NotificationInfo;
   subscription = await getNotificationInfo(particpantType, userId);
@@ -23,7 +24,10 @@ export async function pushNotification(
     let fcmMessage: fcm.fcmPayload = {
       token: subscription.deviceNotificationToken,
       payload: {
-        notification: notification.background[language]
+        notification: notification.background[language],
+        data: {
+          linkUrl: notification.linkUrl
+        }
       },
       options: {
         priority: fcm.NotificationPriority.High

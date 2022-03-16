@@ -24,17 +24,16 @@ const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
 const String kViewRestaurantItemRoute = '/items/:restaurantId/:itemId';
 const String kRestaurantOrderRoute = '/restaurantOrders/:orderId';
-const String kTaxiOrderRoute = '/taxiOrders/:orderId';
 const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
+const String kTaxiOrderRoute = '/taxiOrders/:orderId';
+const String kLaundryOrderRequest = '/laundryOrderRequest';
+const String kLaundryCurrentOrder = '/laundryOrders/:orderId';
 const String kPickLocationRoute = '/pickLocationFromMap/addLocation';
 const String kPickLocationEditRoute = '/pickLocationFromMap/editLocation';
 const String kPickLocationNotAuth = '/pickLocationFromMap/addLocationNoAuth';
 const String kSavedLocations = '/savedLocations';
-// laundry
 
-const String kLaundryOrderRequest = '/laundryOrderRequest';
-const String kLaundryCurrentOrder = '/laundryCurrentOrder/:orderId';
 
 String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);

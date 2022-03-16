@@ -1,7 +1,7 @@
 
 import { OrderType, PaymentType, TwoWayDeliverableOrder } from '../../Generic/Order';
 import { UserInfo } from '../../Generic/User';
-import { OrderNotification } from '../../Generic/Notification';
+import { OrderNotification } from '../../Notification';
 import { Location } from "../../Generic/Generic";
 
 export interface LaundryOrder extends TwoWayDeliverableOrder {

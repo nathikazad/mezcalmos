@@ -9,10 +9,11 @@ import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { finishOrder } from "./helper";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
-import { pushNotification } from "../shared/notification/notifyUser";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { pushNotification } from "../utilities/senders/notifyUser";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [RestaurantOrderStatus.OrderReceieved,
@@ -107,7 +108,8 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
         ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
       orderId: orderId
     },
-    background: restaurantOrderStatusChangeMessages[newStatus]
+    background: restaurantOrderStatusChangeMessages[newStatus],
+    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Restaurant, orderId)
   }
 
   pushNotification(order.customer.id!, notification);

@@ -7,9 +7,11 @@ import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { BackgroundNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
-import { pushNotification } from "../shared/notification/notifyUser";
+import { BackgroundNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { pushNotification } from "../utilities/senders/notifyUser";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 export const forwardToLocalCompany =
   functions.https.onCall(async (data, context) => {
@@ -97,7 +99,8 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
       notificationAction: NotificationAction.ShowPopUp,
       orderId: orderId
     },
-    background: backgroundNotification!
+    background: backgroundNotification!,
+    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, orderId)
   }
 
   pushNotification(order.customer.id!, notification);

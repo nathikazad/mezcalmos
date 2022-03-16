@@ -20,10 +20,11 @@ import { isSignedIn } from "../shared/helper/authorizer";
 import { getRestaurant } from "./restaurantController";
 import { getUserInfo } from "../shared/controllers/rootController";
 import * as chatController from "../shared/controllers/chatController";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 
 import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
-import { pushNotification } from "../shared/notification/notifyUser";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 export = functions.https.onCall(async (data, context) => {
 
@@ -141,7 +142,8 @@ async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, Deliv
         title: "New Order",
         body: `There is a new restaurant order`
       }
-    }
+    },
+    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Restaurant, orderId)
   }
 
   for (let adminId in deliveryAdmins) {
