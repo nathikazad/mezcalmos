@@ -28,7 +28,11 @@ class DriverOrderCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.toNamed(getCurrentOrderRoute(order.orderId));
+          if (order.orderType == OrderType.Restaurant) {
+            Get.toNamed(getRestaurantOrderRoute(order.orderId));
+          } else if (order.orderType == OrderType.Laundry) {
+            Get.toNamed(getLaundryOrderRoute(order.orderId));
+          }
         },
         child: Ink(
           width: double.infinity,

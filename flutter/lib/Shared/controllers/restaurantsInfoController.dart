@@ -1,13 +1,14 @@
-import 'package:firebase_database/firebase_database.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:get/get.dart';
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class RestaurantsInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -34,7 +35,17 @@ class RestaurantsInfoController extends GetxController {
         mezDbgPrint("FREAKING EXCEPTION ===> $e");
       }
     });
-    return restaurants;
+
+    restaurants.sort((a, b) {
+      mezDbgPrint("Sortinnnnnnnnnnng");
+      if (a.isAvailable() && !b.isAvailable()) {
+        return 1;
+      } else if (!a.isAvailable() && b.isAvailable()) {
+        return -1;
+      } else
+        return 0;
+    });
+    return restaurants.reversed.toList();
   }
 
   Future<Restaurant> getRestaurant(String restaurantId) async {
@@ -60,5 +71,35 @@ class RestaurantsInfoController extends GetxController {
               itemId,
               snapshot.value,
             ));
+  }
+
+  bool checkRestaurantAvailability({Schedule? schedule}) {
+    var dayNane = DateFormat('EEEE').format(DateTime.now());
+
+    var x = DateTime.now();
+
+    if (schedule != null) {
+      bool isOpen = false;
+      schedule.openHours.forEach((key, value) {
+        if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
+          if (value.isOpen == true) {
+            var dateOfStart =
+                DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
+            var dateOfClose =
+                DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
+            mezDbgPrint(dateOfStart.toString());
+            mezDbgPrint(dateOfClose.toString());
+            if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
+              isOpen = true;
+            }
+          } else {
+            isOpen = false;
+          }
+        }
+      });
+      return isOpen;
+    } else {
+      return true;
+    }
   }
 }

@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -40,11 +39,10 @@ Notification restaurantOrderStatusChangeNotificationHandler(
       value['status'].toString().toRestaurantOrderStatus();
   Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
-  mezDbgPrint("DYNAMIC FIELDS PRINT =================>");
-  mezDbgPrint(dynamicFields);
+
   return Notification(
       id: key,
-      linkUrl: getCurrentOrderRoute(dynamicFields["orderId"] ?? ''),
+      linkUrl: getRestaurantOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -57,41 +55,32 @@ Notification restaurantOrderStatusChangeNotificationHandler(
 
 Map<String, dynamic>? getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
-  
   switch (restaurantOrderStatus) {
     case RestaurantOrderStatus.PreparingOrder:
       return <String, dynamic>{
-        "title":
-            "${_i18n()["preparingOrderTitle"]}",
-        "body":
-            "${_i18n()["preparingOrderBody"]}",
+        "title": "${_i18n()["preparingOrderTitle"]}",
+        "body": "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.ReadyForPickup:
       return <String, dynamic>{
-        "title":
-            "${_i18n()["readyForPickupTitle"]}",
-        "body":
-            "${_i18n()["readyForPickupBody"]}",
+        "title": "${_i18n()["readyForPickupTitle"]}",
+        "body": "${_i18n()["readyForPickupBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/readyOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
-        "title":
-            "${_i18n()["cancelledTitle"]}",
-        "body":
-            "${_i18n()["cancelledBody"]}",
+        "title": "${_i18n()["cancelledTitle"]}",
+        "body": "${_i18n()["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     case RestaurantOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
-        "title":
-            "${_i18n()["cancelledTitle"]}",
-        "body":
-            "${_i18n()["cancelledBody"]}",
+        "title": "${_i18n()["cancelledTitle"]}",
+        "body": "${_i18n()["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
@@ -109,7 +98,7 @@ Notification laundryOrderStatusChangeNotificationHandler(
       getLaundryOrderStatusFields(newOrdersStatus)!;
   return Notification(
       id: key,
-      linkUrl: getCurrentOrderRoute(value["orderId"]),
+      linkUrl: getLaundryOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -125,30 +114,22 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
   switch (laundryOrderStatus) {
     case LaundryOrderStatus.ReadyForDelivery:
       return <String, dynamic>{
-        "title":
-            "${_i18n()["preparingOrderTitle"]}",
-        "body":
-            "${_i18n()["preparingOrderBody"]}",
+        "title": "${_i18n()["preparingOrderTitle"]}",
+        "body": "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
-        //  "orderId": "needTobefixed",
-        "title":
-            "${_i18n()["cancelledTitle"]}",
-        "body":
-            "${_i18n()["cancelledBody"]}",
+        "title": "${_i18n()["cancelledTitle"]}",
+        "body": "${_i18n()["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
-        //   "orderId": "needTobefixed",
-        "title":
-            "${_i18n()["cancelledTitle"]}",
-        "body":
-            "${_i18n()["cancelledBody"]}",
+        "title": "${_i18n()["cancelledTitle"]}",
+        "body": "${_i18n()["cancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };

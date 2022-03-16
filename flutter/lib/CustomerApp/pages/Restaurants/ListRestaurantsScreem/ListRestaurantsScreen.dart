@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+
 import 'components/RestaurandCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -43,8 +44,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
               );
             case ConnectionState.done:
               {
-                getAndSortRestaurants(snapshot.data);
-                return buildRestaurant(context);
+                return buildRestaurant(context, snapshot.data);
               }
             default:
               return Container(
@@ -57,22 +57,21 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
     );
   }
 
-  Widget buildRestaurant(BuildContext context) {
+  Widget buildRestaurant(BuildContext context, List<Restaurant>? restos) {
     return Container(
-      child: restaurants.length > 0
+      child: restos!.length > 0
           ? SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: List.generate(
-                      restaurants.length,
+                      restos.length,
                       (index) => RestaurantCard(
-                            restaurant: restaurants[index],
+                            restaurant: restos[index],
                             onClick: () {
                               Get.toNamed(
-                                  getRestaurantRoute(
-                                      restaurants[index].info.id),
-                                  arguments: restaurants[index]);
+                                  getRestaurantRoute(restos[index].info.id),
+                                  arguments: restos[index]);
                             },
                           )),
                 ),
