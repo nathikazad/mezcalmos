@@ -34,12 +34,15 @@ class IOrderViewWidgets {
               flex: 2,
               child: acceptOrderButton(
                 child: !iOrderViewController.clickedAcceptButton.value
-                    ? Text(
-                        _i18n()["acceptOrders"],
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w700,
+                    ? Center(
+                        child: Text(
+                          _i18n()["acceptOrders"],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       )
                     : const SizedBox(
@@ -117,12 +120,15 @@ class IOrderViewWidgets {
         iOrderViewController.submittedCounterOffer.value = true;
         iOrderViewController.animatedSliderController.slideUp();
       },
-      child: Text(
-        _i18n()['offerPrice'],
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w700,
+      child: Center(
+        child: Text(
+          _i18n()['offerPrice'],
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
     );
