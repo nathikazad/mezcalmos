@@ -16,7 +16,7 @@ class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
 
-  StreamSubscription? _cartListener;
+  StreamSubscription<dynamic>? _cartListener;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
   @override
@@ -29,8 +29,8 @@ class RestaurantController extends GetxController {
           .reference()
           .child(customerCart(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((event) async {
-        dynamic cartData = event.snapshot.value;
+          .listen((Event event) async {
+        final dynamic cartData = event.snapshot.value;
         // check if cart has data
         if (cartData != null) {
           mezDbgPrint("@sa@d@: DATA ===> $cartData");
@@ -71,9 +71,9 @@ class RestaurantController extends GetxController {
   }
 
   Future<Restaurant> getAssociatedRestaurant(String restaurantId) async {
-    DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
+    final DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
         .reference()
-        .child('restaurants/info/${restaurantId}')
+        .child('restaurants/info/$restaurantId')
         .once();
     return Restaurant.fromRestaurantData(
         restaurantId: restaurantId, restaurantData: snapshot.value);
@@ -87,7 +87,7 @@ class RestaurantController extends GetxController {
   }
 
   Future<void> addItem(CartItem cartItem) async {
-    String restaurantId = cartItem.restaurantId;
+    final String restaurantId = cartItem.restaurantId;
     if (associatedRestaurant == null) {
       mezDbgPrint(
           "@@saadf@@ restaurantController::addItem ---> associatedRestaurant == null !");
@@ -125,7 +125,7 @@ class RestaurantController extends GetxController {
         .reference()
         .child(customerCart(_authController.user!.id))
         .remove()
-        .then((value) {
+        .then((_) {
       mezDbgPrint("============= /// :your cart is deleted \\\ ============= ");
       cart.value = Cart(restaurant: associatedRestaurant);
     });
@@ -133,12 +133,12 @@ class RestaurantController extends GetxController {
   }
 
   Future<ServerResponse> checkout() async {
-    HttpsCallable checkoutRestaurantCart =
+    final HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable("restaurant-checkoutCart");
     try {
       mezDbgPrint(cart.value.notes);
       mezDbgPrint(cart.value.toFirebaseFormattedJson());
-      HttpsCallableResult response = await checkoutRestaurantCart
+      final HttpsCallableResult<dynamic> response = await checkoutRestaurantCart
           .call(cart.value.toFirebaseFormattedJson());
       return ServerResponse.fromJson(response.data);
     } catch (e) {
@@ -148,11 +148,11 @@ class RestaurantController extends GetxController {
   }
 
   Future<ServerResponse> cancelOrder(String orderId) async {
-    HttpsCallable cancelOrder = FirebaseFunctions.instance
+    final HttpsCallable cancelOrder = FirebaseFunctions.instance
         .httpsCallable('restaurant-cancelOrderFromCustomer');
     try {
-      HttpsCallableResult response =
-          await cancelOrder.call({"orderId": orderId});
+      final HttpsCallableResult<dynamic> response =
+          await cancelOrder.call(<String, String>{"orderId": orderId});
       mezDbgPrint(response.toString());
       print(response.data);
       return ServerResponse.fromJson(response.data);
@@ -163,7 +163,7 @@ class RestaurantController extends GetxController {
   }
 
   @override
-  void onClose() async {
+  void onClose() {
     print("[+] RestaurantCartController::onClose ---------> Was invoked !");
     _cartListener?.cancel();
     _cartListener = null;

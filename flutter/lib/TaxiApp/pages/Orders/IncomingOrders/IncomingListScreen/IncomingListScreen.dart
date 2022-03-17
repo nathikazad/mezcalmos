@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -13,13 +14,12 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/Components/NoScrollGlowBehaviour.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:sizer/sizer.dart';
-import 'Components/MezSwitch.dart';
-import 'Components/NoScrollGlowBehaviour.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
-["Orders"]["IncomingOrders"]["IncomingListScreen"]["IncomingListScreen"];
+    ["Orders"]["IncomingOrders"]["IncomingListScreen"]["IncomingListScreen"];
 
 class IncomingOrdersScreen extends StatefulWidget {
   @override
@@ -50,7 +50,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             body: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   // Header that has the title + ON-OFF toggler!
                   viewHeader(),
                   //the rest of the View Body
@@ -66,7 +66,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Flexible(
               child: Obx(
                 () => Text(
@@ -96,7 +96,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                 if (controller.orders.length >= 1) {
                   return MezcalmosNoGlowScrollConfiguration(ListView.builder(
                       itemCount: controller.orders.length,
-                      itemBuilder: (ctx, i) {
+                      itemBuilder: (BuildContext ctx, int i) {
                         return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 2),
                             child: orderCard(controller.orders[i]));
@@ -116,7 +116,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
   Widget orderCard(TaxiOrder order) {
     return InkWell(
       onTap: () {
-        Get.toNamed(getIncomingOrderRoute(order.orderId));
+        Get.toNamed<void>(getIncomingOrderRoute(order.orderId));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -129,7 +129,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             CircleAvatar(
               radius: 14.sp,
               backgroundColor: Colors.grey,
@@ -137,7 +137,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                       url: order.customer.image,
                       assetInCaseFailed: aDefaultAvatar)
                   .image,
-              onBackgroundImageError: (e, s) => mezDbgPrint(
+              onBackgroundImageError: (Object e, StackTrace? s) => mezDbgPrint(
                   "Failed loading Customer openOrder::id::${order.orderId}"),
             ),
 
@@ -150,7 +150,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  children: [
+                  children: <Widget>[
                     // TopHalf widgets of the Card Info :
                     orderCardTopHalf(order),
                     // Spacer(),
@@ -175,13 +175,13 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
     return Flex(
       direction: Axis.horizontal,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      children: <Widget>[
         Text(
           order.customer.name,
           style: TextStyle(fontFamily: 'psb', fontSize: 11.sp),
         ),
         Row(
-          children: [
+          children: <Widget>[
             Transform.scale(
                 scale: 1.5,
                 child: Container(
@@ -265,7 +265,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -280,7 +280,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             direction: Axis.vertical,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Obx(
                 () => Text(
                   _i18n()["noOrdersTitle"],
@@ -314,7 +314,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -329,7 +329,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             direction: Axis.vertical,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Obx(
                 () => Text(
                   _i18n()["toggleTitle"],
@@ -369,8 +369,8 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                 buttonSize: Size(55.sp, 55.sp),
                 initialPosition:
                     _taxiAuthController.taxiState?.isLooking ?? false,
-                values: ['ON', 'OFF'],
-                onToggleCallback: (v) {
+                values: <String>['ON', 'OFF'],
+                onToggleCallback: (int v) {
                   // turn ut ON
                   if (v == 0) {
                     _taxiAuthController.turnOn();

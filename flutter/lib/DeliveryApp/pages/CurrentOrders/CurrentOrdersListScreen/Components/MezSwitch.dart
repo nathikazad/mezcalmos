@@ -5,7 +5,7 @@ class MezSwitch extends StatefulWidget {
   // this was the problem.
   bool initialPosition;
   final List<String> values;
-  final ValueChanged onToggleCallback;
+  final ValueChanged<int> onToggleCallback;
   final Color backgroundColor;
   final Size buttonSize;
   @required
@@ -44,7 +44,7 @@ class _MezSwitchState extends State<MezSwitch> {
             onTap: () {
               setState(() {
                 widget.initialPosition = !widget.initialPosition;
-                var index = 0;
+                int index = 0;
                 if (!widget.initialPosition) {
                   index = 1;
                 }
@@ -65,7 +65,8 @@ class _MezSwitchState extends State<MezSwitch> {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List.generate(widget.values.length, (index) {
+                children:
+                    List<Widget>.generate(widget.values.length, (int index) {
                   return Text(
                     widget.values[index],
                     style: TextStyle(
