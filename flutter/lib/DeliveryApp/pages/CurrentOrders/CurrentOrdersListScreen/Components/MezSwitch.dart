@@ -5,7 +5,7 @@ class MezSwitch extends StatefulWidget {
   // this was the problem.
   bool initialPosition;
   final List<String> values;
-  final ValueChanged<int> onToggleCallback;
+  final ValueChanged onToggleCallback;
   final Color backgroundColor;
   final Size buttonSize;
   @required
@@ -18,7 +18,7 @@ class MezSwitch extends StatefulWidget {
     required this.values,
     required this.onToggleCallback,
     required this.buttonSize,
-    required this.backgroundColor,
+    this.backgroundColor = const Color(0xFFe7e7e8),
     this.buttonColor = const Color(0xFFFFFFFF),
     this.textColor = const Color(0xFF000000),
   });
@@ -58,15 +58,20 @@ class _MezSwitchState extends State<MezSwitch> {
             child: Container(
               height: 80,
               decoration: ShapeDecoration(
-                color: widget.backgroundColor,
+                // color: Colors.black,
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    colors: <Color>[
+                      Color.fromARGB(10, 81, 133, 255),
+                      Color.fromARGB(10, 207, 73, 252)
+                    ]),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(Get.width * 0.1),
                 ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children:
-                    List<Widget>.generate(widget.values.length, (int index) {
+                children: List.generate(widget.values.length, (int index) {
                   return Text(
                     widget.values[index],
                     style: TextStyle(

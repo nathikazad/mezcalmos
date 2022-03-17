@@ -105,14 +105,4 @@ Notification newMessageNotification(String key, value) {
               NotificationAction.ShowSnackbarOnlyIfNotOnPage);
 }
 
-String handleNotifeRoute(value) {
-  mezDbgPrint(
-      "===========> handle notif rout ==============> ${value['orderType'].toString().toOrderType()}");
-  if (value['orderType'].toString().toOrderType() == OrderType.Restaurant) {
-    return getRestaurantOrderRoute(value["orderId"]);
-  } else if (value['orderType'].toString().toOrderType() == OrderType.Laundry) {
-    return getLaundryOrderRoute(value["orderId"]);
-  } else {
-    return '';
-  }
-}
+

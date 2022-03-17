@@ -123,8 +123,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl: getLinkUrl(
-          value['orderType'].toString().toOrderType(), value["orderId"]),
+      linkUrl: getLaundryOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -207,14 +206,4 @@ Notification newMessageNotification(String key, value) {
       notificationAction:
           (value["notificationAction"] as String).toNotificationAction(),
       variableParams: value);
-}
-
-String handleNotifeRoute(value) {
-  if (value["orderType"] == OrderType.Restaurant.toFirebaseFormatString()) {
-    return getRestaurantOrderRoute(value["orderId"]);
-  } else if (value["orderType"] == OrderType.Laundry.toFirebaseFormatString()) {
-    return getLaundryOrderRoute(value["orderId"]);
-  } else {
-    return '';
-  }
 }

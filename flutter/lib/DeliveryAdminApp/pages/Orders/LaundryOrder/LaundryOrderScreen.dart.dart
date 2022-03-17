@@ -13,7 +13,6 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderSummary.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -51,26 +50,23 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   void initState() {
     super.initState();
 
-    mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
     if (order.value == null) {
-      Get.snackbar('Error', "Order not found");
-      //   Get.back();
+      // Get.back();
     } else {
       _orderListener = controller
           .getCurrentOrderStream(orderId)
           .listen((LaundryOrder? newOrder) {
         if (newOrder != null) {
           order.value = controller.getOrder(orderId);
-          if (order.value?.pickupDriver != null) {
-            driver = order.value!.pickupDriver;
-          } else if (order.value!.dropoffDriver != null) {
+
+          if (order.value?.dropoffDriver != null) {
             driver = order.value!.dropoffDriver;
           }
         } else {
-          Get.back();
+          //  Get.back();
         }
       });
     }
@@ -102,25 +98,25 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  Obx(
-                    () => LaundryProviderCard(
-                        laundryID: order.value!.laundry?.id ?? null,
-                        order: order.value!),
-                  ),
+
+                  LaundryProviderCard(
+                      laundryID: order.value!.laundry?.id ?? null,
+                      order: order.value!),
+
                   //   if (order.value?.inProcess() ?? false)
-                  Obx(
-                    () => DriverCard(
-                      driver: getRightDriver(),
-                      order: order.value!,
-                      callBack: (DeliveryDriver? newDriver) {
-                        deliveryDriverController.assignDeliveryDriver(
-                            deliveryDriverId: newDriver!.deliveryDriverId,
-                            orderId: order.value!.orderId,
-                            orderType: OrderType.Laundry,
-                            deliveryDriverType: getRightDeliveryDriverType());
-                      },
-                    ),
+
+                  DriverCard(
+                    driver: getRightDriver(),
+                    order: order.value!,
+                    callBack: (DeliveryDriver? newDriver) {
+                      deliveryDriverController.assignDeliveryDriver(
+                          deliveryDriverId: newDriver!.deliveryDriverId,
+                          orderId: order.value!.orderId,
+                          orderType: OrderType.Laundry,
+                          deliveryDriverType: getRightDeliveryDriverType());
+                    },
                   ),
+
                   if (order.value?.inProcess() ?? false)
                     Container(
                       padding: const EdgeInsets.all(8.0),
