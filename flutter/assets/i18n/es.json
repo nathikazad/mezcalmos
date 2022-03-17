@@ -64,7 +64,6 @@
                 },
                 "ListOrdersScreen": {
                     "title": "Pedidos",
-                    "noOrders": "Sin pedidos",
                     "shared": {
                         "notification": {
                             "today": "Hoy",
@@ -305,7 +304,6 @@
                 "ViewTaxiOrder": {
                     "components": {
                         "CounterOfferWidgets": {
-                            "customerTaxiViewOffers": "",
                             "offers": "ofertas"
                         },
                         "ViewTaxiOrderScreenWidgets": {
@@ -469,7 +467,9 @@
             "laundryOtwDeliveryTitle": "Entrega en el camino",
             "laundryOtwDeliveryBody": "Tu orden está en camino",
             "laundryDeliveredTitle": "Entregada",
-            "LaundryDeliveredBody": "Su pedido ha sido entregado"
+            "LaundryDeliveredBody": "Su pedido ha sido entregado",
+            "counterOfferTitle": "Nueva Contraoferta",
+            "counterOfferBody": "New oferta de "
         }
     },
     "Shared": {

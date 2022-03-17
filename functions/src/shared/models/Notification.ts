@@ -1,12 +1,13 @@
-import { fcmNotification } from "../../../utilities/senders/fcm";
-import { Language } from "./Generic";
-import { OrderType } from "./Order";
-import { UserInfo } from "./User";
+import { fcmNotification } from "../../utilities/senders/fcm";
+import { Language } from "./Generic/Generic";
+import { OrderType } from "./Generic/Order";
+import { UserInfo } from "./Generic/User";
 
 export enum NotificationType {
   NewOrder = "newOrder",
   OrderStatusChange = "orderStatusChange",
-  NewMessage = "newMessage"
+  NewMessage = "newMessage",
+  NewCounterOffer = "newCounterOffer"
 }
 
 export enum NotificationAction {
@@ -17,7 +18,8 @@ export enum NotificationAction {
 
 export interface Notification {
   foreground: ForegroundNotification,
-  background: BackgroundNotification
+  background: BackgroundNotification,
+  linkUrl: string
 }
 
 export interface ForegroundNotification {
@@ -38,4 +40,9 @@ export interface NewMessageNotification extends ForegroundNotification {
 export interface OrderNotification extends ForegroundNotification {
   orderType: OrderType,
   orderId: string,
+}
+
+export interface NotificationForQueue {
+  notificationType: NotificationType,
+  timestamp: string
 }

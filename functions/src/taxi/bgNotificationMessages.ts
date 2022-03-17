@@ -1,5 +1,5 @@
 import { Language } from "../shared/models/Generic/Generic";
-import { BackgroundNotification } from "../shared/models/Generic/Notification";
+import { BackgroundNotification } from "../shared/models/Notification";
 import { TaxiOrderStatus } from "../shared/models/Services/Taxi/TaxiOrder";
 
 export const taxiOrderStatusChangeMessages:

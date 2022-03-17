@@ -1,5 +1,6 @@
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 class CounterOffer {
@@ -7,13 +8,13 @@ class CounterOffer {
   DateTime offerValidTime;
   CounterOfferStatus counterOfferStatus;
   // this is needed
-  UserInfo driverInfos;
+  UserInfo driverInfo;
 
   CounterOffer({
     required this.price,
     this.counterOfferStatus = CounterOfferStatus.Submitted,
     required this.offerValidTime,
-    required this.driverInfos,
+    required this.driverInfo,
   });
 
   /// Builds a counter offer with 30 second validity by default
@@ -25,7 +26,7 @@ class CounterOffer {
   }) {
     return CounterOffer(
         price: price,
-        driverInfos: taxiUserInfo,
+        driverInfo: taxiUserInfo,
         offerValidTime:
             DateTime.now().toUtc().add(Duration(seconds: validTimeInSeconds)));
   }
@@ -36,12 +37,12 @@ class CounterOffer {
         price: data["price"],
         offerValidTime: DateTime.parse(data["offerValidTime"]),
         counterOfferStatus: data["status"].toString().toCounterOfferStatus(),
-        driverInfos: taxiUserInfo);
+        driverInfo: taxiUserInfo);
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "driverInfos": this.driverInfos.toFirebaseJson(),
+      "driverInfo": this.driverInfo.toFirebaseFormatJson(),
       "price": this.price,
       "offerValidTime": this.offerValidTime.toIso8601String(),
       "offerValidTimeEpoch": this.offerValidTime.millisecondsSinceEpoch,
@@ -74,4 +75,29 @@ extension ParseStringToCounterOfferStatus on String {
     return CounterOfferStatus.values
         .firstWhere((e) => e.toFirebaseFormatString() == this);
   }
+}
+
+class CounterOfferNotificationForQueue extends NotificationForQueue {
+  UserInfo driver;
+  String orderId;
+  String customerId;
+  num price;
+  CounterOfferNotificationForQueue(
+      {required this.driver,
+      required this.orderId,
+      required this.customerId,
+      required this.price})
+      : super(
+            notificationType: NotificationType.NewCounterOffer,
+            timeStamp: DateTime.now().toUtc());
+
+  Map<String, dynamic> toFirebaseFormatJson() => {
+        ...super.toFirebaseFormatJson(),
+        "driver": driver.toFirebaseFormatJson(),
+        "timestamp": DateTime.now().toUtc().toString(),
+        "orderId": orderId,
+        "customerId": customerId,
+        "counterOfferPrice": price,
+        "notificationType": notificationType.toFirebaseFormatString()
+      };
 }

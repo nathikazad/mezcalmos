@@ -13,16 +13,16 @@ import *  as rootNodes from "../shared/databaseNodes/root";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { getInProcessOrder, getUserInfo } from "../shared/controllers/rootController";
 import { getDeliveryDriver } from "../shared/controllers/deliveryController";
-import { DeliveryDriver, DeliveryDriverType } from "../shared/models/Drivers/DeliveryDriver";
+import { DeliveryDriver, DeliveryDriverType, NewDeliveryOrderNotification } from "../shared/models/Drivers/DeliveryDriver";
 import { pushChat } from "../shared/controllers/chatController";
 import { Chat, ChatType, ParticipantType } from "../shared/models/Generic/Chat";
-import { pushNotification } from "../shared/notification/notifyUser";
-import { NewDeliveryOrderNotification } from "../shared/models/Notifications/DeliveryDriver";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 export = functions.https.onCall(async (data, context) => {
   if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
@@ -138,7 +138,8 @@ export = functions.https.onCall(async (data, context) => {
       orderId: orderId,
       deliveryDriverType: deliveryDriverType
     },
-    background: deliveryNewOrderMessage
+    background: deliveryNewOrderMessage,
+    linkUrl: orderUrl(ParticipantType.DeliveryDriver, data.orderType, orderId)
   }
 
   pushNotification(deliveryDriverId, notification);

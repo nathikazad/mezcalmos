@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 
 class UserInfo {
@@ -22,18 +23,12 @@ class UserInfo {
             : null);
   }
 
-  Map<String, dynamic> toFirebaseJson() => {
+  Map<String, dynamic> toFirebaseFormatJson() => {
         "id": id,
         "name": name,
         "image": image,
-      };
-
-  // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() => {
-        "uid": id,
-        "name": name,
-        "image": image,
-        "language": language.toString(),
+        "language":
+            language?.toString() ?? LanguageType.EN.toFirebaseFormatString(),
       };
 }
 
@@ -68,9 +63,15 @@ class MainUserInfo {
         email: data['email']);
   }
 
-  // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() => {
-        "uid": id,
+  UserInfo constructUserInfo() {
+    return UserInfo(
+        id: id,
+        name: name ?? "Not available",
+        image: image ?? defaultUserImgUrl);
+  }
+
+  Map<String, dynamic> toFirebaseFormatJson() => {
+        "id": id,
         "email": email,
         "name": name,
         "image": image,

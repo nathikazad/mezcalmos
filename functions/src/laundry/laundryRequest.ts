@@ -18,8 +18,9 @@ import { isSignedIn } from "../shared/helper/authorizer";
 import * as chatController from "../shared/controllers/chatController";
 import { getUserInfo } from "../shared/controllers/rootController";
 import { setChat } from "../shared/controllers/chatController";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
-import { pushNotification } from "../shared/notification/notifyUser";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)
@@ -132,7 +133,8 @@ async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, Deliv
         title: "New Order",
         body: `There is a new restaurant order`
       }
-    }
+    },
+    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Laundry, orderId)
   }
 
   for (let adminId in deliveryAdmins) {

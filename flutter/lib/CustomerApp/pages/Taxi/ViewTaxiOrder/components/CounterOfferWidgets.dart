@@ -152,7 +152,7 @@ class CounterOfferWidgets {
                   shape: BoxShape.circle,
                   color: Colors.grey.withAlpha(55),
                   image: DecorationImage(
-                      image: mLoadImage(url: offer.driverInfos.image).image)),
+                      image: mLoadImage(url: offer.driverInfo.image).image)),
             ),
           ),
         ),
@@ -165,7 +165,7 @@ class CounterOfferWidgets {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    offer.driverInfos.name,
+                    offer.driverInfo.name,
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1!
@@ -201,7 +201,7 @@ class CounterOfferWidgets {
                               .acceptCounterOffer(
                                   viewController.order.value!.orderId,
                                   viewController.order.value!.customer.id,
-                                  offer.driverInfos.id);
+                                  offer.driverInfo.id);
                           if (!_response.success) {
                             viewController.clickedAccept.value = false;
                             viewController.animatedSliderController.slideDown();
@@ -235,7 +235,7 @@ class CounterOfferWidgets {
                               .rejectCounterOffer(
                                   viewController.order.value!.orderId,
                                   viewController.order.value!.customer.id,
-                                  offer.driverInfos.id)
+                                  offer.driverInfo.id)
                               .then((_) {
                             viewController.offersBtnClicked.value = false;
                             viewController.animatedSliderController.slideDown();

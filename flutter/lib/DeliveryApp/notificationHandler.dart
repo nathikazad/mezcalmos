@@ -16,8 +16,18 @@ Notification deliveryDriverNotificationHandler(String key, value) {
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
-    // case NotificationType.NewOrder:
-    //   break;
+    case NotificationType.NewOrder:
+      return Notification(
+          id: key,
+          linkUrl: getCurrentOrderRoute(value["orderId"]),
+          body: value['message'], // needs to be changed
+          imgUrl: value['sender']['image'], // needs to be changed
+          title: value['sender']['name'], // needs to be changed
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.NewMessage,
+          notificationAction:
+              (value["notificationAction"] as String).toNotificationAction(),
+          variableParams: value);
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:

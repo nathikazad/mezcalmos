@@ -1,52 +1,90 @@
-import { Chat, Message } from "../../functions/src/shared/models/Generic/Chat";
+import { Chat, MessageNotificationForQueue, ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
 import { getChat, setChatMessageNotifiedAsTrue } from "../../functions/src/shared/controllers/chatController";
-import * as notifyUser from "../../functions/src/shared/notification/notifyUser";
+import * as notifyUser from "../../functions/src/utilities/senders/notifyUser";
+import { chatUrl, orderUrl } from "../../functions/src/utilities/senders/appRoutes";
 import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
-import { NewMessageNotification, Notification, NotificationAction, NotificationType } from "../../functions/src/shared/models/Generic/Notification";
+import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue } from "../../functions/src/shared/models/Notification";
+import { CounterOfferNotification, CounterOfferNotificationForQueue } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
+import { OrderType } from "../../functions/src/shared/models/Generic/Order";
 
 export function startWatchingMessageNotificationQueue() {
   rootNodes.notificationsQueueNode().on('child_added', function (snap) {
-    notifyOtherParticipants(snap.key!, snap.val());
+    let notification: NotificationForQueue = snap.val();
+    switch (notification.notificationType) {
+      case NotificationType.NewMessage:
+        notifyOtherMessageParticipants(notification as MessageNotificationForQueue);
+      case NotificationType.NewCounterOffer:
+        notifyCustomerAboutCounterOffer(notification as CounterOfferNotificationForQueue)
+    }
+
     console.log(snap.key);
     rootNodes.notificationsQueueNode(snap.key!).remove();
   });
 }
 
-async function notifyOtherParticipants(messageId: string, message: Message) {
+async function notifyOtherMessageParticipants(notificationForQueue: MessageNotificationForQueue) {
   // TO BE REMOVED, added for backwards compatibility in cases where message does not have chatId field
-  message.chatId = message.chatId ?? message.orderId;
+  notificationForQueue.chatId = notificationForQueue.chatId ?? notificationForQueue.orderId;
   // TILL HERE
-  let chat: Chat = await getChat(message.chatId);
-  if (chat.messages && chat.messages![messageId].notified) {
+  let chat: Chat = await getChat(notificationForQueue.chatId);
+  if (chat.messages && chat.messages![notificationForQueue.messageId].notified) {
     return
   }
-  let senderInfo = chat.participants[message.userId]
-  senderInfo.id = message.userId
-  delete chat.participants[message.userId]
+  let senderInfo = chat.participants[notificationForQueue.userId]
+  senderInfo.id = notificationForQueue.userId
+  delete chat.participants[notificationForQueue.userId]
   for (let participantId in chat.participants) {
     let participant = chat.participants[participantId]
     let notification: Notification = {
       foreground: <NewMessageNotification>{
-        chatId: message.chatId,
+        chatId: notificationForQueue.chatId,
         sender: senderInfo,
-        message: message.message,
-        orderId: message.orderId,
-        time: message.timestamp,
+        message: notificationForQueue.message,
+        orderId: notificationForQueue.orderId,
+        time: notificationForQueue.timestamp,
         notificationType: NotificationType.NewMessage,
         notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
       },
       background: {
         en: {
           title: `New message from ${senderInfo.name}`,
-          body: message.message
+          body: notificationForQueue.message
         },
         es: {
           title: `Nueva mensaje de ${senderInfo.name}`,
-          body: message.message
+          body: notificationForQueue.message
         }
-      }
+      },
+      linkUrl: chatUrl(notificationForQueue.chatId)
     }
     notifyUser.pushNotification(participantId, notification, participant.particpantType);
   }
-  setChatMessageNotifiedAsTrue(message.chatId, messageId);
+  setChatMessageNotifiedAsTrue(notificationForQueue.chatId, notificationForQueue.messageId);
+}
+
+async function notifyCustomerAboutCounterOffer(notificationForQueue: CounterOfferNotificationForQueue) {
+
+  let notification: Notification = {
+    foreground: <CounterOfferNotification>{
+      driver: notificationForQueue.driver,
+      orderId: notificationForQueue.orderId,
+      customerId: notificationForQueue.customerId,
+      price: notificationForQueue.price,
+      time: notificationForQueue.timestamp,
+      notificationType: NotificationType.NewCounterOffer,
+      notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+    },
+    background: {
+      en: {
+        title: 'New counter offer',
+        body: `New offer from ${notificationForQueue.driver.name} for ${notificationForQueue.price}`
+      },
+      es: {
+        title: `Nueva contraoferta`,
+        body: `Nueva oferta de ${notificationForQueue.driver.name} para ${notificationForQueue.price}`
+      }
+    },
+    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, notificationForQueue.orderId)
+  }
+  notifyUser.pushNotification(notificationForQueue.customerId, notification, ParticipantType.Customer);
 }

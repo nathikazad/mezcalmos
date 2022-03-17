@@ -467,9 +467,9 @@
             "laundryOtwDeliveryTitle": "Delivery on the way",
             "laundryOtwDeliveryBody": "You order is on the way",
             "laundryDeliveredTitle": "Delivered",
-            "LaundryDeliveredBody": "Your order has been delivered"
-
-
+            "LaundryDeliveredBody": "Your order has been delivered",
+            "counterOfferTitle": "New Counter Offer",
+            "counterOfferBody": "New offer from "
         }
     },
     "Shared": {

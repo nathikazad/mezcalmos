@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // Routes Keys.
 const String kOrdersRoute = '/orders';
-const String kRestaurantOrderRoute = '/orders/:orderId';
+const String kRestaurantOrderRoute = '/orders/restaurant/:orderId';
 const String kLaundryOrderRoute = '/orders/laundry/:orderId';
 const String kTaxiOrderRoute = '/orders/taxi/:orderId';
 

@@ -7,11 +7,13 @@ import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
-import { pushNotification } from "../shared/notification/notifyUser";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { pushNotification } from "../utilities/senders/notifyUser";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { restaurantOrderStatusChangeMessages } from "../restaurant/bgNotificationMessages";
 import { finishOrder } from "../restaurant/helper";
+import { orderUrl } from "../utilities/senders/appRoutes";
+import { ParticipantType } from "../shared/models/Generic/Chat";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [
@@ -83,10 +85,11 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
       time: (new Date()).toISOString(),
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Restaurant,
-      notificationAction: NotificationAction.ShowPopUp,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
       orderId: orderId
     },
-    background: restaurantOrderStatusChangeMessages[newStatus]
+    background: restaurantOrderStatusChangeMessages[newStatus],
+    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Restaurant, orderId)
   }
 
   pushNotification(order.customer.id!, notification);

@@ -1,3 +1,4 @@
+import { NotificationForQueue } from "../Notification";
 import { OrderType } from "./Order";
 import { UserInfo } from "./User";
 
@@ -55,4 +56,12 @@ export async function buildChatForOrder(
     }
   }
   return chat;
+}
+
+export interface MessageNotificationForQueue extends NotificationForQueue {
+  message: string,
+  userId: string,
+  chatId: string,
+  messageId: string,
+  orderId?: string
 }

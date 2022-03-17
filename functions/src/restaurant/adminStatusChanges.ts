@@ -9,10 +9,11 @@ import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { finishOrder } from "./helper";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
-import { pushNotification } from "../shared/notification/notifyUser";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { pushNotification } from "../utilities/senders/notifyUser";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [RestaurantOrderStatus.OrderReceieved,
@@ -97,23 +98,6 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
 
   order.status = newStatus
 
-  let notification: Notification = {
-    foreground: <RestaurantOrderStatusChangeNotification>{
-      status: newStatus,
-      time: (new Date()).toISOString(),
-      notificationType: NotificationType.OrderStatusChange,
-      orderType: OrderType.Restaurant,
-      notificationAction: newStatus != RestaurantOrderStatus.CancelledByAdmin
-        ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
-      orderId: orderId
-    },
-    background: restaurantOrderStatusChangeMessages[newStatus]
-  }
-
-  pushNotification(order.customer.id!, notification);
-  if (order.dropoffDriver)
-    pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
-
   if (newStatus == RestaurantOrderStatus.Delivered
     || newStatus == RestaurantOrderStatus.CancelledByAdmin)
     await finishOrder(order, orderId);
@@ -124,5 +108,25 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
     if (order.dropoffDriver)
       deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
   }
+
+  let notification: Notification = {
+    foreground: <RestaurantOrderStatusChangeNotification>{
+      status: newStatus,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: OrderType.Restaurant,
+      notificationAction: newStatus != RestaurantOrderStatus.CancelledByAdmin
+        ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
+      orderId: orderId
+    },
+    background: restaurantOrderStatusChangeMessages[newStatus],
+    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Restaurant, orderId)
+  }
+
+  pushNotification(order.customer.id!, notification);
+  notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Restaurant, orderId)  
+  if (order.dropoffDriver)
+    pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
+
   return { status: ServerResponseStatus.Success }
 }

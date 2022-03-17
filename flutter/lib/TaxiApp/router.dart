@@ -10,6 +10,8 @@ import 'package:mezcalmos/TaxiApp/pages/TaxiWrapper.dart';
 const String kCurrentOrderRoute = '/currentOrder';
 const String kIncomingOrdersListRoute = '/incomingOrders';
 const String kIncomingOrdersViewRoute = '/incomingOrders/:orderId';
+const String kPastOrdersListRoute = '/pastOrders';
+const String kPastOrdersViewRoute = '/pastOrders/:orderId';
 
 String getIncomingOrderRoute(String orderId) {
   return kIncomingOrdersViewRoute.replaceFirst(":orderId", orderId);

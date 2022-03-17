@@ -34,7 +34,7 @@ export interface Cart {
   cost: number;
   itemsCost: number;
   shippingCost: number;
-  notes?: number;
+  notes?: string;
   paymentType: PaymentType;
   serviceProviderId: string;
   to: Location;

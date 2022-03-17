@@ -12,11 +12,12 @@ import { Taxi } from "../shared/models/Drivers/Taxi";
 import { CounterOfferStatus, TaxiInfo, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
 import * as chatController from "../shared/controllers/chatController";
 import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Generic/Chat";
-import { pushNotification } from "../shared/notification/notifyUser";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { getUserInfo } from "../shared/controllers/rootController";
 import { getTaxi } from "../shared/controllers/taxiController";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)
@@ -117,7 +118,7 @@ export = functions.https.onCall(async (data, context) => {
     }
 
     await taxiNodes.inProcessOrders(taxiId, orderId).set(order);
-    taxiNodes.currentOrderIdNode(taxiId).set(orderId);
+    await taxiNodes.currentOrderIdNode(taxiId).set(orderId);
 
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).set(order);
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
@@ -142,20 +143,26 @@ export = functions.https.onCall(async (data, context) => {
 
     await chatController.setChat(orderId, chat);
 
+    // Notify customer only if driver is the one initiating the accept
+    // not notifying driver because driver will get response within 30 
+    // seconds after sending counter offer, can be assumed his phone
+    // will be on.
+    if (!data.counterOfferDriverId) {
+      let notification: Notification = {
+        foreground: <TaxiOrderStatusChangeNotification>{
+          status: TaxiOrderStatus.OnTheWay,
+          time: (new Date()).toISOString(),
+          notificationType: NotificationType.OrderStatusChange,
+          orderType: OrderType.Taxi,
+          notificationAction: NotificationAction.ShowSnackBarAlways,
+          orderId: orderId
+        },
+        background: taxiOrderStatusChangeMessages[TaxiOrderStatus.OnTheWay],
+        linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, orderId)
+      }
 
-    let notification: Notification = {
-      foreground: <TaxiOrderStatusChangeNotification>{
-        status: TaxiOrderStatus.OnTheWay,
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.OrderStatusChange,
-        orderType: OrderType.Taxi,
-        notificationAction: NotificationAction.ShowSnackBarAlways,
-        orderId: orderId
-      },
-      background: taxiOrderStatusChangeMessages[TaxiOrderStatus.OnTheWay]
+      pushNotification(order.customer.id!, notification);
     }
-
-    pushNotification(order.customer.id!, notification);
 
     return {
       status: ServerResponseStatus.Success,

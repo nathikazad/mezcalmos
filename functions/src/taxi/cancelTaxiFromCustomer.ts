@@ -3,13 +3,14 @@ import { isSignedIn } from "../shared/helper/authorizer";
 import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
 import * as customerNodes from "../shared/databaseNodes/customer";
-import { pushNotification } from "../shared/notification/notifyUser";
+import { pushNotification } from "../utilities/senders/notifyUser";
 import { OrderType } from "../shared/models/Generic/Order";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Generic/Notification";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
+import { taxiPastOrderUrl } from "../utilities/senders/appRoutes";
 
 
 export = functions.https.onCall(async (data, context) => {
@@ -113,7 +114,8 @@ export = functions.https.onCall(async (data, context) => {
           orderId: orderId,
           notificationAction: NotificationAction.ShowPopUp
         },
-        background: taxiOrderStatusChangeMessages[TaxiOrderStatus.CancelledByCustomer]
+        background: taxiOrderStatusChangeMessages[TaxiOrderStatus.CancelledByCustomer],
+        linkUrl: taxiPastOrderUrl(orderId)
       }
       
       pushNotification(order.driver.id, notification, ParticipantType.Taxi);

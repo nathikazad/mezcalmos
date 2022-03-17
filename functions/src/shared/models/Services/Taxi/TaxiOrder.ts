@@ -2,7 +2,7 @@ import { Order, OrderType } from "../../Generic/Order"
 import { UserInfo } from "../../Generic/User"
 import { TaxiOrderRequest } from "./TaxiOrderRequest"
 import { Location } from '../../Generic/Generic';
-import { OrderNotification } from "../../Generic/Notification";
+import { ForegroundNotification, NotificationForQueue, OrderNotification } from "../../Notification";
 
 export interface TaxiOrder extends Order {
   from: Location,
@@ -88,4 +88,18 @@ export enum CounterOfferStatus {
   Rejected = "rejected",
   Expired = "expired",
   Cancelled = "cancelled",
+}
+
+export interface CounterOfferNotificationForQueue extends NotificationForQueue {
+  driver: UserInfo,
+  orderId: string,
+  customerId: string,
+  price: number
+}
+
+export interface CounterOfferNotification extends ForegroundNotification {
+  driver: UserInfo,
+  orderId: string,
+  customerId: string,
+  price: number,
 }

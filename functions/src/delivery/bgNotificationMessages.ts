@@ -1,5 +1,5 @@
 import { Language } from "../shared/models/Generic/Generic";
-import { BackgroundNotification } from "../shared/models/Generic/Notification";
+import { BackgroundNotification } from "../shared/models/Notification";
 
 export const deliveryNewOrderMessage: BackgroundNotification =
 {
