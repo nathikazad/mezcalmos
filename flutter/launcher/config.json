@@ -114,6 +114,12 @@
                     "packageName": "com.mezstaging.delivery",
                     "googe-service-file": "services/stage/android/delivery.json",
                     "apple-service-file": "services/stage/ios/delivery.plist"
+                },
+                "prod": {
+                    "appName": "Mezdelivery",
+                    "packageName": "com.mezcalmos.delivery",
+                    "googe-service-file": "services/stage/android/delivery.json",
+                    "apple-service-file": "services/stage/ios/delivery.plist"
                 }
             }
         },
