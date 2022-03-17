@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
+//ignore_for_file:constant_identifier_names
 enum RestaurantOrderStatus {
   OrderReceieved,
   PreparingOrder,
@@ -17,15 +18,15 @@ enum RestaurantOrderStatus {
 
 extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
 
 extension ParseStringToRestaurantOrderStatus on String {
   RestaurantOrderStatus toRestaurantOrderStatus() {
-    return RestaurantOrderStatus.values
-        .firstWhere((e) => e.toFirebaseFormatString() == this);
+    return RestaurantOrderStatus.values.firstWhere(
+        (RestaurantOrderStatus e) => e.toFirebaseFormatString() == this);
   }
 }
 
@@ -33,10 +34,10 @@ class RestaurantOrder extends DeliverableOrder {
   int quantity;
   num itemsCost;
   num shippingCost;
-  List<RestaurantOrderItem> items = [];
+  List<RestaurantOrderItem> items = <RestaurantOrderItem>[];
   String? notes;
   RestaurantOrderStatus status;
-  UserInfo get restaurant => this.serviceProvider!;
+  UserInfo get restaurant => serviceProvider!;
   RestaurantOrder(
       {required String orderId,
       required this.status,
@@ -65,8 +66,9 @@ class RestaurantOrder extends DeliverableOrder {
             to: to,
             dropoffDriver: dropoffDriver,
             dropOffDriverChatId: dropOffDriverChatId);
+  //ignore_for_file:avoid_annotating_with_dynamic
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
-    RestaurantOrder restaurantOrder = RestaurantOrder(
+    final RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
         status: data["status"].toString().toRestaurantOrderStatus(),
         quantity: data["quantity"],
@@ -87,7 +89,7 @@ class RestaurantOrder extends DeliverableOrder {
             ?['deliveryAdminDropOffDriver']);
 
     data["items"].forEach((dynamic itemId, dynamic itemData) {
-      RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
+      final RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
           costPerOne: itemData["costPerOne"],
           totalCost: itemData["totalCost"],
           idInCart: itemId,
@@ -118,7 +120,7 @@ class RestaurantOrder extends DeliverableOrder {
     return restaurantOrder;
   }
 
-  String get restaurantId => this.serviceProviderId!;
+  String get restaurantId => serviceProviderId!;
 
   @override
   bool isCanceled() {
@@ -136,28 +138,29 @@ class RestaurantOrder extends DeliverableOrder {
 
   String clipBoardText(LanguageType languageType) {
     String text = "";
-    text += "${this.restaurant.name}\n";
-    text += this.items.fold<String>("", (mainString, item) {
+    text += "${restaurant.name}\n";
+    text +=
+        items.fold<String>("", (String mainString, RestaurantOrderItem item) {
       mainString +=
           "  ${item.name[languageType]} x${item.quantity} ${item.totalCost}\n";
-      mainString +=
-          item.chooseOneOptions.fold("", (secondString, chooseOneOption) {
-        return "${secondString}    ${chooseOneOption.optionName[languageType]}: ${chooseOneOption.chosenOptionName[languageType]}\n";
+      mainString += item.chooseOneOptions.fold("",
+          (String secondString, ChooseOneOption chooseOneOption) {
+        return "$secondString    ${chooseOneOption.optionName[languageType]}: ${chooseOneOption.chosenOptionName[languageType]}\n";
       });
-      mainString +=
-          item.chooseManyOptions.fold("", (secondString, chooseManyOption) {
+      mainString += item.chooseManyOptions.fold("",
+          (String secondString, ChooseManyOption chooseManyOption) {
         mezDbgPrint(chooseManyOption.optionName[languageType]);
-        return "${secondString}    ${chooseManyOption.optionName[languageType]}\n";
+        return "$secondString    ${chooseManyOption.optionName[languageType]}\n";
       });
       mainString += "    ${item.notes}\n";
       return mainString;
     });
-    text += "${this.notes}\n";
-    text += "${this.cost}\n";
-    text += "${this.customer.name}\n";
-    text += "${this.to.address}\n";
+    text += "$notes\n";
+    text += "$cost\n";
+    text += "${customer.name}\n";
+    text += "${to.address}\n";
     text +=
-        "https://www.google.com/maps/dir/?api=1&destination=${this.to.latitude},${this.to.longitude}";
+        "https://www.google.com/maps/dir/?api=1&destination=${to.latitude},${to.longitude}";
     mezDbgPrint(text);
     return text;
   }
@@ -172,8 +175,8 @@ class RestaurantOrderItem {
   String image;
   int quantity;
   String? notes;
-  List<ChooseManyOption> chooseManyOptions = [];
-  List<ChooseOneOption> chooseOneOptions = [];
+  List<ChooseManyOption> chooseManyOptions = <ChooseManyOption>[];
+  List<ChooseOneOption> chooseOneOptions = <ChooseOneOption>[];
   RestaurantOrderItem(
       {required this.costPerOne,
       required this.totalCost,
