@@ -5,7 +5,7 @@ import { NotificationPriority, push } from "../../functions/src/utilities/sender
 import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
 import { OrderType } from "../../functions/src/shared/models/Generic/Order";
 import { TaxiOrder } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
-import { Taxi } from "../../functions/src/shared/models/drivers/Taxi";
+import { Taxi } from "../../functions/src/shared/models/Drivers/Taxi";
 import { taxiIncomingOrderUrl } from "../../functions/src/utilities/senders/appRoutes";
 
 

@@ -19,7 +19,8 @@ Notification deliveryDriverNotificationHandler(String key, value) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          linkUrl: getCurrentOrderRoute(value["orderId"]),
+          linkUrl: getLinkUrl(value['orderType'].toString().toOrderType(),
+              value['orderId']), // needs to be changed, need to add laundry
           body: value['message'], // needs to be changed
           imgUrl: value['sender']['image'], // needs to be changed
           title: value['sender']['name'], // needs to be changed
@@ -41,6 +42,17 @@ Notification deliveryDriverNotificationHandler(String key, value) {
       }
     default:
       throw StateError("Invalid Notification Type");
+  }
+}
+
+String getLinkUrl(OrderType orderType, String orderId) {
+  switch (orderType) {
+    case OrderType.Laundry:
+      return getLaundryOrderRoute(orderId);
+    case OrderType.Restaurant:
+      return getRestaurantOrderRoute(orderId);
+    default:
+      return kHomeRoute;
   }
 }
 
@@ -174,9 +186,9 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
     default:
-    // do nothing
+      // do nothing
+      return null;
   }
-  return null;
 }
 
 Notification newMessageNotification(String key, value) {
