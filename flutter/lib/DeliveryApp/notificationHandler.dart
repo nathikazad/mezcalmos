@@ -11,8 +11,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["notificationHandler"];
 
-Notification deliveryDriverNotificationHandler(String key, dynamic value) {
-  NotificationType notificationType =
+Notification deliveryDriverNotificationHandler(String key, value) {
+  final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
     // case NotificationType.NewOrder:
@@ -33,11 +33,10 @@ Notification deliveryDriverNotificationHandler(String key, dynamic value) {
   }
 }
 
-Notification restaurantOrderStatusChangeNotificationHandler(
-    String key, dynamic value) {
-  RestaurantOrderStatus newOrdersStatus =
+Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
+  final RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
-  Map<String, dynamic> dynamicFields =
+  final Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
 
   return Notification(
@@ -90,11 +89,10 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
   return null;
 }
 
-Notification laundryOrderStatusChangeNotificationHandler(
-    String key, dynamic value) {
-  LaundryOrderStatus newOrdersStatus =
+Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
+  final LaundryOrderStatus newOrdersStatus =
       value['status'].toString().toLaundryOrderStatus();
-  Map<String, dynamic> dynamicFields =
+  final Map<String, dynamic> dynamicFields =
       getLaundryOrderStatusFields(newOrdersStatus)!;
   return Notification(
       id: key,
@@ -112,20 +110,48 @@ Notification laundryOrderStatusChangeNotificationHandler(
 Map<String, dynamic>? getLaundryOrderStatusFields(
     LaundryOrderStatus laundryOrderStatus) {
   switch (laundryOrderStatus) {
+    case LaundryOrderStatus.OtwPickup:
+      return <String, dynamic>{
+        "title": "${_i18n()["laundryOtwPickupTitle"]}",
+        "body": "${_i18n()["laundryOtwPickupBody"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+      };
+    case LaundryOrderStatus.PickedUp:
+      return <String, dynamic>{
+        "title": "${_i18n()["laundryPickedTitle"]}",
+        "body": "${_i18n()["laundryPickedBody"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
+      };
+    case LaundryOrderStatus.AtLaundry:
+      return <String, dynamic>{
+        "title": "${_i18n()["laundryAtLaundryTitle"]}",
+        "body": "${_i18n()["laundryAtLaundryBody"]}",
+        "imgUrl": "assets/images/shared/notifications/atLaundry.png",
+      };
     case LaundryOrderStatus.ReadyForDelivery:
       return <String, dynamic>{
-        "title": "${_i18n()["preparingOrderTitle"]}",
-        "body": "${_i18n()["preparingOrderBody"]}",
+        "title": "${_i18n()["laundryReadyForDeliveryTitle"]}",
+        "body": "${_i18n()["laundryReadyForDeliveryBody"]}",
         "imgUrl":
-            "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
+            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
+      };
+    case LaundryOrderStatus.OtwDelivery:
+      return <String, dynamic>{
+        "title": "${_i18n()["laundryOtwDeliveryTitle"]}",
+        "body": "${_i18n()["laundryOtwDeliveryBody"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+      };
+    case LaundryOrderStatus.Delivered:
+      return <String, dynamic>{
+        "title": "${_i18n()["laundryDeliveredTitle"]}",
+        "body": "${_i18n()["laundryDeliveredTitle"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.CancelledByAdmin:
-      return <String, dynamic>{
-        "title": "${_i18n()["cancelledTitle"]}",
-        "body": "${_i18n()["cancelledBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
-      };
     case LaundryOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
         "title": "${_i18n()["cancelledTitle"]}",
@@ -137,7 +163,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
   return null;
 }
 
-Notification newMessageNotification(String key, dynamic value) {
+Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(

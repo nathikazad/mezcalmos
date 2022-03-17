@@ -455,7 +455,20 @@
             "taxiFwdSuccessTitle": "Successfuly Forwarded",
             "taxiFwdSuccessBody": "Local taxi driver found ",
             "taxiFwdCancelTitle": "Forwarding Cancelled ",
-            "taxiFwdCancelBody": "You order has been cancelled "
+            "taxiFwdCancelBody": "You order has been cancelled ",
+            "laundryOtwPickupTitle": "Pickup on the way",
+            "laundryOtwPickupBody": "Driver on the way to pick up your order",
+            "laundryPickedTitle": "Order Picked-up",
+            "laundryPickedBody": "Order is picked up successfuly",
+            "laundryAtLaundryTitle": "At laundry",
+            "laundryAtLaundryBody": "You order is received by the laundry",
+            "laundryReadyForDeliveryTitle": "Ready for delivery",
+            "laundryReadyForDeliveryBody": "You order is ready for delivery",
+            "laundryOtwDeliveryTitle": "Delivery on the way",
+            "laundryOtwDeliveryBody": "You order is on the way",
+            "laundryDeliveredTitle": "Delivered",
+            "LaundryDeliveredBody": "Your order has been delivered"
+
 
         }
     },
@@ -765,6 +778,8 @@
                 "LaundryOrder": {
                     "Components": {
                         "LaundryOrderButtons": {
+                            "error": "Error",
+                            "driverErrorAlert": "Please select a driver",
                             "title": "Cancel",
                             "subTitle": "Are you sure you want\nto cancel the order?",
                             "cancel": "Cancel",
@@ -845,6 +860,8 @@
                 "ViewRestaurantOrderScreen": {
                     "components": {
                         "ButtonStyles": {
+                            "error": "Error",
+                            "driverErrorAlert": "Please select a driver",
                             "cancelAlertTitle": "Cancel",
                             "cancelAlertSubTitle": "Are you sure you want\nto cancel the order?",
                             "cancel": "Cancel",
@@ -1029,7 +1046,20 @@
             "readyForPickupTitle": "Ready For Pickup",
             "readyForPickupBody": "Your order is ready for pickup",
             "cancelledTitle": "Order Cancelled",
-            "cancelledBody": "Your order has been cancelled"
+            "cancelledBody": "Your order has been cancelled",
+            "laundryOtwPickupTitle": "Pickup on the way",
+            "laundryOtwPickupBody": " on the way to pick up the order",
+            "laundryPickedTitle": "Order Picked-up",
+            "laundryPickedBody": "Order is picked up successfuly",
+            "laundryAtLaundryTitle": "At laundry",
+            "laundryAtLaundryBody": "Order is received by the laundry",
+            "laundryReadyForDeliveryTitle": "Ready for delivery",
+            "laundryReadyForDeliveryBody": "Order is ready for delivery",
+            "laundryOtwDeliveryTitle": "Delivery on the way",
+            "laundryOtwDeliveryBody": "order is on the way to the customer",
+            "laundryDeliveredTitle": "Delivered",
+            "LaundryDeliveredBody": "Order has been delivered"
+
         }
     }
 }

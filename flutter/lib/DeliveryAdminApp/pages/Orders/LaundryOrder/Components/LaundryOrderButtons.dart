@@ -8,22 +8,21 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]['pages']
-['Orders']["LaundryOrder"]["Components"]["LaundryOrderButtons"];
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ['pages']['Orders']["LaundryOrder"]["Components"]["LaundryOrderButtons"];
 
 // the styles of status buttons inside the order screen
 class OrderButtons {
   // this button for cancel order
   static Widget cancelButtonWidget(String orderId) {
-    LaundryOrderController controller = Get.find<LaundryOrderController>();
-    
+    final LaundryOrderController controller =
+        Get.find<LaundryOrderController>();
 
     return Expanded(
       child: ButtonComponent(
         function: () async {
-          var res = await dialogComponent(
-              _i18n()["title"],
-              _i18n()["subTitle"], () {
+          bool res = await dialogComponent(
+              _i18n()["title"], _i18n()["subTitle"], () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);
@@ -34,13 +33,11 @@ class OrderButtons {
                   end: Alignment(1.1447703838348389, 1.1694844961166382),
                   colors: [const Color(0xede21132), const Color(0xdbd11835)]));
           if (res) {
-            controller.cancelOrder(orderId);
+            await controller.cancelOrder(orderId);
             Get.back(closeOverlays: true);
           }
         },
-        widget: Text(
-           _i18n()["cancel"]
-                .toUpperCase(),
+        widget: Text(_i18n()["cancel"].toUpperCase(),
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -50,14 +47,16 @@ class OrderButtons {
         gradient: const LinearGradient(
             begin: Alignment(-0.10374055057764053, 0),
             end: Alignment(1.1447703838348389, 1.1694844961166382),
-            colors: [const Color(0xede21132), const Color(0xdbd11835)]),
+            colors: [Color(0xede21132), Color(0xdbd11835)]),
       ),
     );
   }
+
   //this button for readyforDelivery
   static Widget readyForDeliveryButton(LaundryOrder order) {
-    LaundryOrderController controller = Get.find<LaundryOrderController>();
-    
+    final LaundryOrderController controller =
+        Get.find<LaundryOrderController>();
+
     return ButtonComponent(
       widget: Text(_i18n()['readyForDelivery'],
           style: TextStyle(
@@ -74,9 +73,9 @@ class OrderButtons {
       ),
       function: () async {
         if (order.dropoffDriver != null) {
-          var res = await dialogComponent(
-              _i18n()['readyForDeliveryTitle'],
-              _i18n()['readyForDeliveryText'], () {
+          bool res = await dialogComponent(
+              _i18n()['readyForDeliveryTitle'], _i18n()['readyForDeliveryText'],
+              () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);
@@ -92,10 +91,10 @@ class OrderButtons {
                   colors: [const Color(0xffff9300), const Color(0xdbd15f18)]));
           if (res) {
             Get.snackbar("Loading", "");
-            controller.readyForDeliveryOrder(order.orderId);
+            await controller.readyForDeliveryOrder(order.orderId);
           }
         } else {
-          Get.snackbar('Error', 'Please Select a driver');
+          Get.snackbar('${_i18n()["error"]}', '${_i18n()["error"]}');
         }
       },
     );

@@ -457,7 +457,19 @@
             "taxiFwdSuccessTitle": "Reenviado con éxito",
             "taxiFwdSuccessBody": "Taxi local encontró ",
             "taxiFwdCancelTitle": "Reenvío cancelado ",
-            "taxiFwdCancelBody": "Tu orden ha sido cancelado "
+            "taxiFwdCancelBody": "Tu orden ha sido cancelado ",
+            "laundryOtwPickupTitle": "Recogida en el camino",
+            "laundryOtwPickupBody": "Conductor en la forma de recoger su pedido.",
+            "laundryPickedTitle": "Pedido recogido",
+            "laundryPickedBody": "El orden es recogido con éxito",
+            "laundryAtLaundryTitle": "En la lavandería",
+            "laundryAtLaundryBody": "Tu orden es recibido por la lavandería.",
+            "laundryReadyForDeliveryTitle": "Listo para la entrega",
+            "laundryReadyForDeliveryBody": "Usted ordena está listo para la entrega",
+            "laundryOtwDeliveryTitle": "Entrega en el camino",
+            "laundryOtwDeliveryBody": "Tu orden está en camino",
+            "laundryDeliveredTitle": "Entregada",
+            "LaundryDeliveredBody": "Su pedido ha sido entregado"
         }
     },
     "Shared": {
@@ -771,6 +783,8 @@
                 "LaundryOrder": {
                     "Components": {
                         "LaundryOrderButtons": {
+                            "error": "error",
+                            "driverErrorAlert": "Por favor seleccione una unidadr",
                             "title": "Cancelar",
                             "subTitle": "Estás seguro de que cancelar\nentregar el pedido?",
                             "cancel": "Cancelar",
@@ -851,6 +865,8 @@
                 "ViewRestaurantOrderScreen": {
                     "components": {
                         "ButtonStyles": {
+                            "error": "error",
+                            "driverErrorAlert": "Por favor seleccione una unidadr",
                             "cancelAlertTitle": "Cancelar",
                             "cancelAlertSubTitle": "Estás seguro de que cancelar\nentregar el pedido?",
                             "cancel": "Cancelar",
@@ -1030,7 +1046,20 @@
             "readyForPickupTitle": "Listo Para Recoger",
             "readyForPickupBody": "Tu pedido está listo para ser recogido",
             "cancelledTitle": "Orden Cancelada",
-            "cancelledBody": "Tu pedido ha sido cancelado"
+            "cancelledBody": "Tu pedido ha sido cancelado",
+            "laundryOtwPickupTitle": "Recogida en el camino",
+            "laundryOtwPickupBody": " En el camino para recoger el pedido.",
+            "laundryPickedTitle": "Pedido recogido",
+            "laundryPickedBody": "El orden es recogido con éxito",
+            "laundryAtLaundryTitle": "En la lavandería",
+            "laundryAtLaundryBody": "El pedido es recibido por la lavandería.",
+            "laundryReadyForDeliveryTitle": "Listo para la entrega",
+            "laundryReadyForDeliveryBody": "El pedido está listo para la entrega.",
+            "laundryOtwDeliveryTitle": "Entrega en el camino",
+            "laundryOtwDeliveryBody": "El pedido está en camino al cliente.",
+            "laundryDeliveredTitle": "Entregada",
+            "LaundryDeliveredBody": "Pedido ha sido entregado"
+
         }
     }
 }

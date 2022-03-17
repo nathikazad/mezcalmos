@@ -11,14 +11,14 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
-Notification customerNotificationHandler(String key, dynamic value) {
-  NotificationType notificationType =
+Notification customerNotificationHandler(String key, value) {
+  final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:
-      OrderType orderType = value['orderType'].toString().toOrderType();
+      final OrderType orderType = value['orderType'].toString().toOrderType();
       mezDbgPrint(value['orderType']);
       switch (orderType) {
         case OrderType.Restaurant:
@@ -35,12 +35,11 @@ Notification customerNotificationHandler(String key, dynamic value) {
   }
 }
 
-Notification laundryOrderStatusChangeNotificationHandler(
-    String key, dynamic value) {
-  LaundryOrderStatus newOrdersStatus =
+Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
+  final LaundryOrderStatus newOrdersStatus =
       value['status'].toString().toLaundryOrderStatus();
   mezDbgPrint(newOrdersStatus);
-  Map<String, dynamic> dynamicFields =
+  final Map<String, dynamic> dynamicFields =
       getLaundryOrderStatusFields(newOrdersStatus)!;
   mezDbgPrint(dynamicFields);
   return Notification(
@@ -57,13 +56,12 @@ Notification laundryOrderStatusChangeNotificationHandler(
       variableParams: value);
 }
 
-Notification taxiOrderStatusChangeNotificationHandler(
-    String key, dynamic value) {
-  TaxiOrdersStatus newOrdersStatus =
+Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
+  final TaxiOrdersStatus newOrdersStatus =
       value['status'].toString().toTaxiOrderStatus();
   mezDbgPrint(
       'notif nuuuuuuuuuuuuuuuuuuuuuuuuuuuul :' + newOrdersStatus.toString());
-  Map<String, dynamic> dynamicFields =
+  final Map<String, dynamic> dynamicFields =
       getTaxiOrderStatusFields(newOrdersStatus)!;
   mezDbgPrint(dynamicFields);
   return Notification(
@@ -80,11 +78,10 @@ Notification taxiOrderStatusChangeNotificationHandler(
       variableParams: value);
 }
 
-Notification restaurantOrderStatusChangeNotificationHandler(
-    String key, dynamic value) {
-  RestaurantOrderStatus newOrdersStatus =
+Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
+  final RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
-  Map<String, dynamic> dynamicFields =
+  final Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
   return Notification(
       id: key,
@@ -104,56 +101,49 @@ Notification restaurantOrderStatusChangeNotificationHandler(
 Map<String, dynamic>? getLaundryOrderStatusFields(
     LaundryOrderStatus laundryOrderStatus) {
   switch (laundryOrderStatus) {
-    case LaundryOrderStatus.OrderReceieved:
-      return <String, dynamic>{
-        "title": "${_i18n()["preparingOrderTitle"]}",
-        "body": "${_i18n()["preparingOrderBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
-      };
     case LaundryOrderStatus.OtwPickup:
       return <String, dynamic>{
-        "title": "${_i18n()["readyForPickUpTitle"]}",
-        "body": "${_i18n()["readyForPickUpBody"]}",
+        "title": "${_i18n()["laundryOtwPickupTitle"]}",
+        "body": "${_i18n()["laundryOtwPickupBody"]}",
         "imgUrl":
-            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
+            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
     case LaundryOrderStatus.PickedUp:
       return <String, dynamic>{
-        "title": "${_i18n()["onTheWayRestaurantTitle"]}",
-        "body": "${_i18n()["onTheWayRestaurantBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
-      };
-    case LaundryOrderStatus.AtLaundry:
-      return <String, dynamic>{
-        "title": "${_i18n()["deliveredTitle"]}",
-        "body": "${_i18n()["deliveredBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
-      };
-    case LaundryOrderStatus.ReadyForDelivery:
-      return <String, dynamic>{
-        "title": "${_i18n()["preparingOrderTitle"]}",
-        "body": "${_i18n()["preparingOrderBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
-      };
-    case LaundryOrderStatus.OtwDelivery:
-      return <String, dynamic>{
-        "title": "${_i18n()["readyForPickUpTitle"]}",
-        "body": "${_i18n()["readyForPickUpBody"]}",
+        "title": "${_i18n()["laundryPickedTitle"]}",
+        "body": "${_i18n()["laundryPickedBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/readyOrderNotificationIcon.png",
       };
-    case LaundryOrderStatus.Delivered:
+    case LaundryOrderStatus.AtLaundry:
       return <String, dynamic>{
-        "title": "${_i18n()["onTheWayRestaurantTitle"]}",
-        "body": "${_i18n()["onTheWayRestaurantBody"]}",
+        "title": "${_i18n()["laundryAtLaundryTitle"]}",
+        "body": "${_i18n()["laundryAtLaundryBody"]}",
+        "imgUrl": "assets/images/shared/notifications/atLaundry.png",
+      };
+    case LaundryOrderStatus.ReadyForDelivery:
+      return <String, dynamic>{
+        "title": "${_i18n()["laundryReadyForDeliveryTitle"]}",
+        "body": "${_i18n()["laundryReadyForDeliveryBody"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
+      };
+    case LaundryOrderStatus.OtwDelivery:
+      return <String, dynamic>{
+        "title": "${_i18n()["laundryOtwDeliveryTitle"]}",
+        "body": "${_i18n()["laundryOtwDeliveryBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
+    case LaundryOrderStatus.Delivered:
+      return <String, dynamic>{
+        "title": "${_i18n()["laundryDeliveredTitle"]}",
+        "body": "${_i18n()["laundryDeliveredTitle"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+      };
     case LaundryOrderStatus.CancelledByAdmin:
+    case LaundryOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
         "title": "${_i18n()["cancelledTitle"]}",
         "body": "${_i18n()["cancelledBody"]}",
@@ -185,8 +175,8 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
-        "title": "${_i18n()["onTheWayTitle"]}",
-        "body": "${_i18n()["onTheWayBody"]}",
+        "title": "${_i18n()["onTheWayRestaurantTitle"]}",
+        "body": "${_i18n()["onTheWayRestaurantBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
@@ -276,7 +266,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
   return null;
 }
 
-Notification newMessageNotification(String key, dynamic value) {
+Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: (value['chatId'] == null)

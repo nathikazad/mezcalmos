@@ -181,7 +181,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
       case RestaurantOrderStatus.OnTheWay:
         return '${_i18n()["orderStatus"]["deliveryOtw"]}';
       case RestaurantOrderStatus.Delivered:
-        return '${_i18n()["orderStatus"]["deliverd"]}';
+        return '${_i18n()["orderStatus"]["delivered"]} ';
       default:
         return '';
     }
