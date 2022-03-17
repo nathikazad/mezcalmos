@@ -35,7 +35,7 @@ class MessagingScreen extends StatefulWidget {
 // TODO : REFACTORING !
 class _MessagingScreenState extends State<MessagingScreen> {
   late final String? orderId;
-  late final bool showViewOrderBtn;
+  late final bool? showViewOrderBtn;
   late final String chatId;
 
   ParticipantType recipientType = ParticipantType.Customer;
@@ -48,22 +48,22 @@ class _MessagingScreenState extends State<MessagingScreen> {
     print("inside messaginScreen onInitState !");
     if (Get.parameters['chatId'] == null) {
       Get.snackbar("Error", "Does not have a valid chatId!");
-      Get.back();
+      Get.back<void>();
     }
-    this.chatId = Get.parameters['chatId']!;
-    this.orderId = Get.parameters['orderId'];
-    this.showViewOrderBtn =
-        (Get.arguments?['showViewOrderBtn'] as bool?) ?? false;
+    chatId = Get.parameters['chatId']!;
+    orderId = Get.parameters['orderId'];
+    // default to False.
+    showViewOrderBtn = Get.arguments?['showViewOrderBtn'];
 
     if (Get.parameters['recipientId'] != null)
-      this.recipientId = Get.parameters['recipientId'];
+      recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {
       mezDbgPrint(
           " PRINTING RECPIENT TYPE =========> ${Get.parameters['recipientType']}");
-      this.recipientType =
+      recipientType =
           Get.parameters['recipientType']!.toString().toParticipantType();
     }
-    controller.clearMessageNotifications(chatId: this.chatId);
+    controller.clearMessageNotifications(chatId: chatId);
     mezDbgPrint(Get.parameters);
   }
 
@@ -76,23 +76,23 @@ class _MessagingScreenState extends State<MessagingScreen> {
   RxString _typedMsg = "".obs;
 
   void navigateToOrderPage() {
-    OrderType orderType =
-        Get.find<OrderController>().getOrder(this.orderId!)!.orderType;
+    final OrderType orderType =
+        Get.find<OrderController>().getOrder(orderId!)!.orderType;
     switch (orderType) {
       case OrderType.Taxi:
         // offNamedUntil : to avoid loop of same routes being on stack: (WORKS)
         // TaxiOrderRoute -> Messages -> TaxiOrderRoute -> messages ... (~)
 
         // this only works when User is comming from Notification and currentRoute != orderViewScreen
-        Get.offAndToNamed(getTaxiOrderRoute(this.orderId!));
+        Get.offAndToNamed<void>(getTaxiOrderRoute(orderId!));
         break;
       case OrderType.Restaurant:
         // offNamedUntil : to avoid loop of same routes being on stack:
         // restaurantOrderRoute -> Messages -> restaurantOrderRoute -> messages ...
-        Get.offNamedUntil(
-            getRestaurantOrderRoute(this.orderId!),
-            (route) =>
-                route.settings.name == getRestaurantOrderRoute(this.orderId!));
+        Get.offNamedUntil<void>(
+            getRestaurantOrderRoute(orderId!),
+            (Route<dynamic> route) =>
+                route.settings.name == getRestaurantOrderRoute(orderId!));
         break;
       case OrderType.Laundry:
         Get.snackbar("Launcdry order", "Oups not implemented yet!");
@@ -118,7 +118,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
             textDirection: !isMe ? TextDirection.ltr : TextDirection.rtl,
             spacing: 10,
             clipBehavior: Clip.none,
-            children: [
+            children: <Widget>[
               Container(
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -139,7 +139,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 spacing: 5,
                 direction: Axis.vertical,
                 runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
-                children: [
+                children: <Widget>[
                   Container(
                       constraints: BoxConstraints(
                           maxWidth: Get.width - 100, minWidth: 50),
@@ -201,16 +201,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((Duration timeStamp) {
       scrollDown(mezChatScrollDuration: timeStamp);
     });
-
-    // controller.loadChat(_authController.user!.uid, orderId);
     void _fillCallBack() {
-      mezDbgPrint(
-          "--------------------- >>>>> FillCallback Executed  >> Messages Count >> ${controller.chat.value?.messages.length}!");
       chatLines.assignAll(controller.chat.value!.messages.map(
-        (e) {
+        (Message e) {
           // mezDbgPrint(
           //     " \t\t ${controller.value!.participants[e.userId]?.image}");
           return singleChatComponent(
@@ -236,8 +232,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   controller.recipient(recipientType: recipientType)?.name ??
                       "User",
                 ),
-          actions: [
-            if (orderId != null && showViewOrderBtn)
+          actions: <Widget>[
+            if (orderId != null && showViewOrderBtn == true)
               InkWell(
                 child: Center(
                   child: Padding(
@@ -257,7 +253,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Padding(
                   padding: EdgeInsets.symmetric(vertical: 10.1),
                   child: Center(
@@ -268,7 +264,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   () => ListView(
                     shrinkWrap: true,
                     controller: _listViewScrollController,
-                    children: List.from(chatLines.reversed),
+                    children: List<Widget>.from(chatLines.reversed),
                   ),
                 ),
               ),
@@ -304,7 +300,7 @@ class SendMessageBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-        onChanged: (value) => _typedMsg.value = value,
+        onChanged: (String value) => _typedMsg.value = value,
         controller: _textEditingController,
         style:
             Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 14.5.sp),
@@ -325,12 +321,12 @@ class SendMessageBox extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: GestureDetector(
                 onTap: () {
-                  bool msgReady2Send =
+                  final bool msgReady2Send =
                       _textEditingController.text.replaceAll(' ', '').length >
                           0;
                   if (msgReady2Send) {
                     controller.sendMessage(
-                        message: _typedMsg.value, chatId: this.chatId);
+                        message: _typedMsg.value, chatId: chatId);
                     _textEditingController.clear();
                     _typedMsg.value = "";
                   } else {
