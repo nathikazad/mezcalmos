@@ -84,8 +84,10 @@ async function notifyOthersCancelledOrder(deliveryAdmins: Record<string, Deliver
     pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
   }
 
-  if (order.dropoffDriver)
+  if (order.dropoffDriver) {
+    notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Restaurant, orderId)
     pushNotification(order.dropoffDriver.id, notification, ParticipantType.DeliveryDriver);
+  }
 
 
 }

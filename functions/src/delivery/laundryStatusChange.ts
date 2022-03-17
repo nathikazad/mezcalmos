@@ -129,7 +129,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
       time: (new Date()).toISOString(),
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Laundry,
-      notificationAction: NotificationAction.ShowPopUp,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
       orderId: orderId
     },
     background: LaundryOrderStatusChangeMessages[newStatus],

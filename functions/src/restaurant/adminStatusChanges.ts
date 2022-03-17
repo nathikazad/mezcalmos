@@ -98,6 +98,17 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
 
   order.status = newStatus
 
+  if (newStatus == RestaurantOrderStatus.Delivered
+    || newStatus == RestaurantOrderStatus.CancelledByAdmin)
+    await finishOrder(order, orderId);
+  else {
+    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+    restaurantNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+    await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
+    if (order.dropoffDriver)
+      deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+  }
+
   let notification: Notification = {
     foreground: <RestaurantOrderStatusChangeNotification>{
       status: newStatus,
@@ -113,18 +124,9 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
   }
 
   pushNotification(order.customer.id!, notification);
+  notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Restaurant, orderId)  
   if (order.dropoffDriver)
     pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
 
-  if (newStatus == RestaurantOrderStatus.Delivered
-    || newStatus == RestaurantOrderStatus.CancelledByAdmin)
-    await finishOrder(order, orderId);
-  else {
-    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    restaurantNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
-    if (order.dropoffDriver)
-      deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
-  }
   return { status: ServerResponseStatus.Success }
 }

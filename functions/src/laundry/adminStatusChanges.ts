@@ -104,6 +104,14 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   }
 
   order.status = newStatus
+  if (newStatus == LaundryOrderStatus.CancelledByAdmin)
+    await finishOrder(order, orderId);
+  else if (newStatus == LaundryOrderStatus.ReadyForDelivery) {
+    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+    laundryNodes.inProcessOrders(order.laundry.id).update(order);
+    await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+  }
 
   let notification: Notification = {
     foreground: <LaundryOrderStatusChangeNotification>{
@@ -121,19 +129,13 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
 
   pushNotification(order.customer.id!, notification);
 
+
+  notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Laundry, orderId)  
   if (order.dropoffDriver)
     pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
   else if (order.pickupDriver)
     pushNotification(order.pickupDriver.id!, notification, ParticipantType.DeliveryDriver);
 
-  if (newStatus == LaundryOrderStatus.CancelledByAdmin)
-    await finishOrder(order, orderId);
-  else if (newStatus == LaundryOrderStatus.ReadyForDelivery) {
-    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    laundryNodes.inProcessOrders(order.laundry.id).update(order);
-    await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
-  }
   return { status: ServerResponseStatus.Success }
 }
 

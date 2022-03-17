@@ -85,7 +85,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
       time: (new Date()).toISOString(),
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Restaurant,
-      notificationAction: NotificationAction.ShowPopUp,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
       orderId: orderId
     },
     background: restaurantOrderStatusChangeMessages[newStatus],

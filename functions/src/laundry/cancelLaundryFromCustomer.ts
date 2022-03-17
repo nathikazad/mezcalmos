@@ -85,6 +85,8 @@ async function notifyOthersCancelledOrder(deliveryAdmins: Record<string, Deliver
     pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
   }
 
+
+  notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Laundry, orderId)
   if (order.dropoffDriver)
     pushNotification(order.dropoffDriver.id, notification, ParticipantType.DeliveryDriver);
   else if (order.pickupDriver)
