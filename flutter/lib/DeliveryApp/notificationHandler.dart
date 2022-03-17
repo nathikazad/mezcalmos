@@ -11,14 +11,15 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["notificationHandler"];
 
-Notification deliveryDriverNotificationHandler(String key, value) {
+Notification deliveryDriverNotificationHandler(String key, dynamic value) {
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          linkUrl: getCurrentOrderRoute(value["orderId"]),
+          linkUrl: getLinkUrl(value['orderType'].toString().toOrderType(),
+              value['orderId']), // needs to be changed, need to add laundry
           body: value['message'], // needs to be changed
           imgUrl: value['sender']['image'], // needs to be changed
           title: value['sender']['name'], // needs to be changed
@@ -40,6 +41,17 @@ Notification deliveryDriverNotificationHandler(String key, value) {
       }
     default:
       throw StateError("Invalid Notification Type");
+  }
+}
+
+String getLinkUrl(OrderType orderType, String orderId) {
+  switch (orderType) {
+    case OrderType.Laundry:
+      return getLaundryOrderRoute(orderId);
+    case OrderType.Restaurant:
+      return getRestaurantOrderRoute(orderId);
+    default:
+      return kHomeRoute;
   }
 }
 
@@ -169,6 +181,8 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
+    default:
+      return null;
   }
   return null;
 }
