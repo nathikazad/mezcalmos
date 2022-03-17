@@ -73,7 +73,7 @@ async function notifyOthersCancelledOrder(deliveryAdmins: Record<string, Deliver
       status: LaundryOrderStatus.CancelledByCustomer,
       time: (new Date()).toISOString(),
       notificationType: NotificationType.OrderStatusChange,
-      orderType: OrderType.Restaurant,
+      orderType: OrderType.Laundry,
       notificationAction: NotificationAction.ShowPopUp,
       orderId: orderId
     },
