@@ -20,6 +20,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -114,7 +115,7 @@ class _StartingPointState extends State<StartingPoint> {
       await setGlobalVariables();
       mezDbgPrint("Done : setGlobalVariables");
 
-      putControllers();
+      await putControllers();
       mezDbgPrint("Done : putControllers");
 
       await waitForInitialization();
@@ -193,11 +194,14 @@ class _StartingPointState extends State<StartingPoint> {
       mezDbgPrint("[ GET STORAGE ] FAILED TO INITIALIZE !");
   }
 
-  void putControllers() {
+  Future<void> putControllers() async {
+    await Get.put<LanguageController>(LanguageController())
+        .isLamgInitialized
+        .stream
+        .first;
     Get.put<AuthController>(
         AuthController(widget.signInCallback, widget.signOutCallback),
         permanent: true);
-    mezDbgPrint("Putting Auth Controller");
     Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
         permanent: true);
     Get.put<SettingsController>(

@@ -25,10 +25,6 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
-import '../Components/DriverCard.dart';
-import 'components/CurrentOrderInfo.dart';
-import 'components/PastOrderInfo.dart';
-
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
@@ -37,17 +33,26 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 }
 
 class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
-  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
   AuthController auth = Get.find<AuthController>();
+  RestaurantOrderController controller = Get.find<RestaurantOrderController>();
   DeliveryDriverController deliveryDriverController = Get.find<
       DeliveryDriverController>(); // Since we have alot of buttons we check loading by name
 
-  Rxn<RestaurantOrder> order = Rxn();
-  RestaurantOrderController controller = Get.find<RestaurantOrderController>();
-  late String orderId;
-  Rx<bool> hasNewMessage = false.obs;
-  StreamSubscription? _orderListener;
   DeliveryDriverUserInfo? driver;
+  Rx<bool> hasNewMessage = false.obs;
+  Rxn<RestaurantOrder> order = Rxn();
+  late String orderId;
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+
+  StreamSubscription<RestaurantOrder?>? _orderListener;
+
+  @override
+  void dispose() {
+    _orderListener?.cancel();
+    _orderListener = null;
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -57,7 +62,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
     if (order.value == null) {
-      // Get.back();
+      Get.back();
     } else {
       _orderListener = controller
           .getCurrentOrderStream(orderId)
@@ -69,17 +74,10 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             driver = order.value!.dropoffDriver;
           }
         } else {
-          //Get.back();
+          Get.back();
         }
       });
     }
-  }
-
-  @override
-  void dispose() {
-    _orderListener?.cancel();
-    _orderListener = null;
-    super.dispose();
   }
 
   @override

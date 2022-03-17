@@ -66,6 +66,7 @@ class RestaurantOrder extends DeliverableOrder {
             to: to,
             dropoffDriver: dropoffDriver,
             dropOffDriverChatId: dropOffDriverChatId);
+
   //ignore_for_file:avoid_annotating_with_dynamic
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
     final RestaurantOrder restaurantOrder = RestaurantOrder(
@@ -87,7 +88,6 @@ class RestaurantOrder extends DeliverableOrder {
             : null,
         dropOffDriverChatId: data['secondaryChats']
             ?['deliveryAdminDropOffDriver']);
-
     data["items"].forEach((dynamic itemId, dynamic itemData) {
       final RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
           costPerOne: itemData["costPerOne"],
