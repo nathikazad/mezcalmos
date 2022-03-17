@@ -320,10 +320,10 @@
             },
             "CustomerWrapper": {
                 "welcomeText": "Welcome to MEZCALMOS 👋",
-                "appDescription": "Your one stop palce to find all your needed local services and where you can enjoy fast and hight quality services.",
+                "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and hight quality services.",
                 "services": "Services",
                 "taxi": {
-                    "subtitle": "Get the nearest taxi arrount and get your destinatiion asap .",
+                    "subtitle": "Get the nearest taxi around and get your destinatiion asap .",
                     "title": "Taxi"
                 },
                 "food": {

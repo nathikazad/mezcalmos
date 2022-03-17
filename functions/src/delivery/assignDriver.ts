@@ -142,7 +142,7 @@ export = functions.https.onCall(async (data, context) => {
     linkUrl: orderUrl(ParticipantType.DeliveryDriver, data.orderType, orderId)
   }
 
-  pushNotification(deliveryDriverId, notification);
+  pushNotification(deliveryDriverId, notification, ParticipantType.DeliveryDriver);
 
 
   return {
