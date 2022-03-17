@@ -17,6 +17,8 @@ Notification customerNotificationHandler(String key, dynamic value) {
   switch (notificationType) {
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
+    case NotificationType.NewCounterOffer:
+
     case NotificationType.OrderStatusChange:
       OrderType orderType = value['orderType'].toString().toOrderType();
       mezDbgPrint(value['orderType']);
@@ -292,6 +294,21 @@ Notification newMessageNotification(String key, dynamic value) {
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.NewMessage,
+      notificationAction:
+          value["notificationAction"]?.toString().toNotificationAction() ??
+              NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+      variableParams: value);
+}
+
+Notification newCounterOfferNotification(String key, dynamic value) {
+  return Notification(
+      id: key,
+      linkUrl: getTaxiOrderRoute(value['orderId']),
+      body: "${_i18n()["counterOfferBody"]}${value['driver']['name']}",
+      imgUrl: value['driver']['image'],
+      title: "${_i18n()["counterOfferTitle"]}",
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewMessage,
       notificationAction:

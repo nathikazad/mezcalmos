@@ -6,7 +6,8 @@ import { UserInfo } from "./Generic/User";
 export enum NotificationType {
   NewOrder = "newOrder",
   OrderStatusChange = "orderStatusChange",
-  NewMessage = "newMessage"
+  NewMessage = "newMessage",
+  NewCounterOffer = "newCounterOffer"
 }
 
 export enum NotificationAction {
@@ -39,4 +40,9 @@ export interface NewMessageNotification extends ForegroundNotification {
 export interface OrderNotification extends ForegroundNotification {
   orderType: OrderType,
   orderId: string,
+}
+
+export interface NotificationForQueue {
+  notificationType: NotificationType,
+  timestamp: string
 }

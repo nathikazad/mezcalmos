@@ -170,6 +170,15 @@ class IncomingOrdersController extends GetxController {
         .reference()
         .child(inNegotationNode(_authController.fireAuthUser!.uid))
         .set({"orderId": orderId, "customerId": customerId});
+    
+        _databaseHelper.firebaseDatabase
+        .reference()
+        .child('notificationQueue/${_authController.fireAuthUser!.uid}')
+        .set(CounterOfferNotificationForQueue(
+          driver: _authController.user!.constructUserInfo(),
+          orderId: orderId, 
+          customerId: customerId, 
+          price: counterOffer.price).toFirebaseFormatJson());
   }
 
   // Commented The event above cuz it won't work in case TaxiDriver got redirected to incommingOrderViewScreeen.
@@ -193,7 +202,7 @@ class IncomingOrdersController extends GetxController {
         .once();
     return snap.value != null
         ? CounterOffer.fromData(snap.value,
-            taxiUserInfo: UserInfo.fromData(snap.value['driverInfos']))
+            taxiUserInfo: UserInfo.fromData(snap.value['driverInfo']))
         : null;
   }
 
@@ -209,7 +218,7 @@ class IncomingOrdersController extends GetxController {
         dynamic snap = counterOfferEvent.snapshot;
         CounterOffer? _cOffer = snap.value != null
             ? CounterOffer.fromData(snap.value,
-                taxiUserInfo: UserInfo.fromData(snap.value['driverInfos']))
+                taxiUserInfo: UserInfo.fromData(snap.value['driverInfo']))
             : null;
         if (_cOffer != null && _cOffer.validityTimeDifference() < 0) {
           return _cOffer;

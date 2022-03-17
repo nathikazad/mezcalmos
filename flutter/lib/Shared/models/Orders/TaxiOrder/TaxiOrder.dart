@@ -156,7 +156,7 @@ class TaxiOrder extends Order {
         mezDbgPrint("CounterOffer ===> $counterOfferData");
 
         var _tmpCountOffer = CounterOffer.fromData(counterOfferData,
-            taxiUserInfo: UserInfo.fromData(counterOfferData["driverInfos"]));
+            taxiUserInfo: UserInfo.fromData(counterOfferData["driverInfo"]));
 
         if (_tmpCountOffer.validityTimeDifference() < 0) {
           taxiOrder._counterOffers.add(_tmpCountOffer);
@@ -235,7 +235,7 @@ class TaxiOrder extends Order {
   CounterOffer? findCounterOfferByDriverId(String driverId) {
     try {
       return this._counterOffers.firstWhere(
-          (counterOffer) => counterOffer.driverInfos.id == driverId);
+          (counterOffer) => counterOffer.driverInfo.id == driverId);
     } catch (e) {
       return null;
     }

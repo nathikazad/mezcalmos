@@ -446,7 +446,9 @@
       "taxiCancelledTitle": "Order Cancelled",
       "taxiCancelledBody": "Your order has been cancelled",
       "taxiExpiredTitle": "No taxis available",
-      "taxiExpiredBody": "Unfortunately, we could not find a taxi for you. Please try again later"
+      "taxiExpiredBody": "Unfortunately, we could not find a taxi for you. Please try again later",
+      "counterOfferTitle": "New Counter Offer",
+      "counterOfferBody": "New offer from "
     }
   },
   "Shared": {

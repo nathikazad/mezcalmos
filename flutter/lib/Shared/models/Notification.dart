@@ -6,7 +6,8 @@ enum NotificationType {
   NewMessage,
   NewAdminMessage,
   OrderStatusChange,
-  NewOrder
+  NewOrder,
+  NewCounterOffer
 }
 
 extension ParseNotificationTypeToString on NotificationType {
@@ -77,5 +78,16 @@ class Notification {
   Map<String, dynamic> toJson() => {
         "id": id,
         "variableParams": variableParams,
+      };
+}
+
+abstract class NotificationForQueue {
+  NotificationType notificationType;
+  DateTime timeStamp;
+  NotificationForQueue(
+      {required this.notificationType, required this.timeStamp});
+  Map<String, dynamic> toFirebaseFormatJson() => {
+        "timestamp": timeStamp.toString(),
+        "notificationType": notificationType.toFirebaseFormatString()
       };
 }

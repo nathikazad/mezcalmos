@@ -66,12 +66,13 @@ class MessageController extends GetxController {
     _databaseHelper.firebaseDatabase
         .reference()
         .child('notificationQueue/${messageNode.key}')
-        .set(<String, dynamic>{
-      "message": message,
-      "userId": _authController.user!.id,
-      "timestamp": DateTime.now().toUtc().toString(),
-      "chatId": chatId
-    });
+        .set(MessageNotificationForQueue(
+                message: message,
+                userId: _authController.user!.id,
+                chatId: chatId,
+                messageId: messageNode.key,
+                orderId: orderId)
+            .toFirebaseFormatJson());
   }
 
   Participant? sender() {

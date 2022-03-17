@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 enum ParticipantType {
@@ -110,5 +111,31 @@ class Chat {
         "orderType": orderType,
         "participants": participants,
         "messages": messages,
+      };
+}
+
+class MessageNotificationForQueue extends NotificationForQueue {
+  String message;
+  String userId;
+  String chatId;
+  String messageId;
+  String? orderId;
+  MessageNotificationForQueue(
+      {required this.message,
+      required this.userId,
+      required this.chatId,
+      required this.messageId,
+      this.orderId})
+      : super(
+            notificationType: NotificationType.NewMessage,
+            timeStamp: DateTime.now().toUtc());
+
+  Map<String, dynamic> toFirebaseFormatJson() => {
+        ...super.toFirebaseFormatJson(),
+        "chatId": chatId,
+        "messageId": messageId,
+        "userId": userId,
+        "message": message,
+        "orderId": orderId
       };
 }
