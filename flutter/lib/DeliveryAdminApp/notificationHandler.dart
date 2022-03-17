@@ -5,8 +5,8 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-Notification deliveryAdminNotificationHandler(String key, dynamic value) {
-  NotificationType notificationType =
+Notification deliveryAdminNotificationHandler(String key, value) {
+  final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   // mezDbgPrint(notificationType.toFirebaseFormatString());
   switch (notificationType) {
@@ -22,24 +22,42 @@ Notification deliveryAdminNotificationHandler(String key, dynamic value) {
   }
 }
 
-Notification orderStatusChangeNotification(String key, dynamic value) {
-  RestaurantOrderStatus newOrdersStatus =
+Notification orderStatusChangeNotification(String key, value) {
+  final RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
-  return Notification(
-      id: key,
-      linkUrl: getRestaurantOrderRoute(value['orderId']),
-      body: 'Order is now ${newOrdersStatus.toFirebaseFormatString()}',
-      imgUrl: "assets/images/shared/notifications/cancel.png",
-      title: newOrdersStatus.toFirebaseFormatString(),
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.OrderStatusChange,
-      variableParams: value,
-      notificationAction:
-          value["notificationAction"].toString().toNotificationAction());
+  final OrderType orderType = value['orderType'].toString().toOrderType();
+  switch (orderType) {
+    case OrderType.Restaurant:
+      return Notification(
+          id: key,
+          linkUrl: getRestaurantOrderRoute(value["orderId"]),
+          body: 'Order is now ${newOrdersStatus.toFirebaseFormatString()}',
+          imgUrl: "assets/images/shared/notifications/cancel.png",
+          title: newOrdersStatus.toFirebaseFormatString(),
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.OrderStatusChange,
+          variableParams: value,
+          notificationAction:
+              value["notificationAction"].toString().toNotificationAction());
+    case OrderType.Laundry:
+      return Notification(
+          id: key,
+          linkUrl: getLaundryOrderRoute(value["orderId"]),
+          body: 'Order is now ${newOrdersStatus.toFirebaseFormatString()}',
+          imgUrl: "assets/images/shared/notifications/cancel.png",
+          title: newOrdersStatus.toFirebaseFormatString(),
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.OrderStatusChange,
+          variableParams: value,
+          notificationAction:
+              value["notificationAction"].toString().toNotificationAction());
+    default:
+      throw Exception("Invalid order type");
+  }
 }
 
-Notification newOrderNotification(String key, dynamic value) {
-  OrderType orderType = value['orderType'].toString().toOrderType();
+Notification newOrderNotification(String key, value) {
+  final OrderType orderType = value['orderType'].toString().toOrderType();
   switch (orderType) {
     case OrderType.Restaurant:
       return Notification(
@@ -70,7 +88,7 @@ Notification newOrderNotification(String key, dynamic value) {
   }
 }
 
-Notification newMessageNotification(String key, dynamic value) {
+Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
@@ -85,4 +103,16 @@ Notification newMessageNotification(String key, dynamic value) {
       notificationAction:
           value["notificationAction"]?.toString().toNotificationAction() ??
               NotificationAction.ShowSnackbarOnlyIfNotOnPage);
+}
+
+String handleNotifeRoute(value) {
+  mezDbgPrint(
+      "===========> handle notif rout ==============> ${value['orderType'].toString().toOrderType()}");
+  if (value['orderType'].toString().toOrderType() == OrderType.Restaurant) {
+    return getRestaurantOrderRoute(value["orderId"]);
+  } else if (value['orderType'].toString().toOrderType() == OrderType.Laundry) {
+    return getLaundryOrderRoute(value["orderId"]);
+  } else {
+    return '';
+  }
 }

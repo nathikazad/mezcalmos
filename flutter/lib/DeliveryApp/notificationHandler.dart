@@ -64,7 +64,8 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   mezDbgPrint(" =================> RESSSSSSTAURANT stausssss notifier ");
   return Notification(
       id: key,
-      linkUrl: handleNotifeRoute(value),
+      linkUrl: getLinkUrl(
+          value['orderType'].toString().toOrderType(), value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -122,7 +123,8 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl: handleNotifeRoute(value),
+      linkUrl: getLinkUrl(
+          value['orderType'].toString().toOrderType(), value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
