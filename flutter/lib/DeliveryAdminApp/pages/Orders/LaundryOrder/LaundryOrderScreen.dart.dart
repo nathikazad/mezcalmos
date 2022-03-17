@@ -6,11 +6,11 @@ import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryDriverController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Components/DriverCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Components/LaundryProviderCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/BuildOrderButtons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderCustomer.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderSummary.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Components/LaundryProviderCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -20,8 +20,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-    ['pages']
-['Orders']["LaundryOrder"]["LaundryOrderScreen"];
+    ['pages']['Orders']["LaundryOrder"]["LaundryOrderScreen"];
 
 class LaundryOrderScreen extends StatefulWidget {
   const LaundryOrderScreen({Key? key}) : super(key: key);
@@ -58,10 +57,11 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
     order.value = controller.getOrder(orderId);
     if (order.value == null) {
       Get.snackbar('Error', "Order not found");
-      Get.back();
+      //   Get.back();
     } else {
-      _orderListener =
-          controller.getCurrentOrderStream(orderId).listen((newOrder) {
+      _orderListener = controller
+          .getCurrentOrderStream(orderId)
+          .listen((LaundryOrder? newOrder) {
         if (newOrder != null) {
           order.value = controller.getOrder(orderId);
           if (order.value?.pickupDriver != null) {
@@ -70,7 +70,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
             driver = order.value!.dropoffDriver;
           }
         } else {
-          Get.back();
+          //  Get.back();
         }
       });
     }
@@ -85,7 +85,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Obx(
       () => Scaffold(
           appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
@@ -112,7 +112,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     () => DriverCard(
                       driver: getRightDriver(),
                       order: order.value!,
-                      callBack: (newDriver) {
+                      callBack: (DeliveryDriver? newDriver) {
                         deliveryDriverController.assignDeliveryDriver(
                             deliveryDriverId: newDriver!.deliveryDriverId,
                             orderId: order.value!.orderId,

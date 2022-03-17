@@ -105,8 +105,6 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         backgroundColor: Colors.white,
         body: Obx(() {
           if (order.value == null) {
-            // Order Loading ..
-            Get.back();
             return MezLogoAnimation(
               centered: true,
             );

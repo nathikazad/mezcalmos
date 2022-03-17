@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -38,10 +39,10 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
-
+  mezDbgPrint(" =================> RESSSSSSTAURANT stausssss notifier ");
   return Notification(
       id: key,
-      linkUrl: getRestaurantOrderRoute(value["orderId"]),
+      linkUrl: handleNotifeRoute(value),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -94,9 +95,12 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
       value['status'].toString().toLaundryOrderStatus();
   final Map<String, dynamic> dynamicFields =
       getLaundryOrderStatusFields(newOrdersStatus)!;
+  mezDbgPrint(
+      " =================> Laundryyyyyyyyyyyyyyyyyy stausssss notifier ${value["orderId"]}");
+
   return Notification(
       id: key,
-      linkUrl: getLaundryOrderRoute(value["orderId"]),
+      linkUrl: handleNotifeRoute(value),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -159,6 +163,8 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
+    default:
+    // do nothing
   }
   return null;
 }
@@ -177,4 +183,14 @@ Notification newMessageNotification(String key, value) {
       notificationAction:
           (value["notificationAction"] as String).toNotificationAction(),
       variableParams: value);
+}
+
+String handleNotifeRoute(value) {
+  if (value["orderType"] == OrderType.Restaurant.toFirebaseFormatString()) {
+    return getRestaurantOrderRoute(value["orderId"]);
+  } else if (value["orderType"] == OrderType.Laundry.toFirebaseFormatString()) {
+    return getLaundryOrderRoute(value["orderId"]);
+  } else {
+    return '';
+  }
 }
