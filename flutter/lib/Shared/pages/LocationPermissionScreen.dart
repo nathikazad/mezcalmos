@@ -83,7 +83,7 @@ class LocationPermissionScreen extends StatelessWidget {
                     height: getSizeRelativeToScreen(25, Get.height, Get.width),
                   ),
                   GestureDetector(
-                    onTap: () async => await onGivePermissionBtnClick(context),
+                    onTap: () async => onGivePermissionBtnClick(context),
                     child: Container(
                       height:
                           getSizeRelativeToScreen(25, Get.height, Get.width),
@@ -125,11 +125,11 @@ class LocationPermissionScreen extends StatelessWidget {
 
   Future<void> onGivePermissionBtnClick(BuildContext context) async {
     if (Platform.isAndroid) {
-      AndroidDeviceInfo androidDeviceInfo =
+      final AndroidDeviceInfo androidDeviceInfo =
           await DeviceInfoPlugin().androidInfo;
-      int? sdkVersion = androidDeviceInfo.version.sdkInt;
+      final int? sdkVersion = androidDeviceInfo.version.sdkInt;
       if (sdkVersion != null && sdkVersion >= 30) {
-        YesNoDialogButton res = await yesNoDialog(
+        final YesNoDialogButton res = await yesNoDialog(
           body: _i18n()['isAndroid_11'],
           bodyTextStyle: Theme.of(context)
               .textTheme
@@ -167,16 +167,19 @@ class LocationPermissionScreen extends StatelessWidget {
         );
 
         if (res == YesNoDialogButton.Yes) {
-          await openAppSettings();
+          final bool didOpen = await openAppSettings();
+          if (!didOpen) {
+            return;
+          }
         } else
           return;
       }
     }
-    Location location = Location();
-    bool _serviceEnabled = await location.requestService();
+    final Location location = Location();
+    final bool _serviceEnabled = await location.requestService();
     // if Location Service is enabled!
     if (_serviceEnabled) {
-      PermissionStatus _permissionStatus =
+      final PermissionStatus _permissionStatus =
           await _locationController.requestLocationPermissions();
       mezDbgPrint(_permissionStatus);
       switch (_permissionStatus) {
@@ -184,15 +187,16 @@ class LocationPermissionScreen extends StatelessWidget {
         case PermissionStatus.deniedForever:
           MezSnackbar('Error :(', _i18n()['locationPermissionDeniedForever'],
               position: SnackPosition.TOP, duration: Duration(seconds: 2));
-          Future.delayed(Duration(seconds: 3), openAppSettings);
+          // ignore_file_for : always_specify_types
+          Future<bool>.delayed(Duration(seconds: 3), openAppSettings);
           break;
 
         // on granted !
         case PermissionStatus.granted:
-          Get.back(closeOverlays: true);
+          Get.back<void>(closeOverlays: true);
           break;
         case PermissionStatus.grantedLimited:
-          Get.back(closeOverlays: true);
+          Get.back<void>(closeOverlays: true);
           break;
         // Default
         default:
