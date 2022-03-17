@@ -24,7 +24,7 @@ class ButtonsStyle {
     return Expanded(
       child: ButtonComponent(
         function: () async {
-          bool res = await dialogComponent(
+          final bool res = await dialogComponent(
               _i18n()["cancelAlertTitle"], _i18n()["cancelAlertSubTitle"], () {
             Get.back(result: true);
           }, () {
@@ -37,7 +37,6 @@ class ButtonsStyle {
                   colors: [const Color(0xede21132), const Color(0xdbd11835)]));
           if (res) {
             await controller.cancelOrder(orderId);
-            Get.back();
           }
         },
         widget: Text(_i18n()["cancel"].toUpperCase(),
@@ -81,7 +80,7 @@ class ButtonsStyle {
                     "${_i18n()["Error"]}", "${_i18n()["driverErrorAlert"]}");
               }
             : () async {
-                bool res = await dialogComponent(
+                final bool res = await dialogComponent(
                     _i18n()["readyAlertTitle"], _i18n()["readyAlertSubTitle"],
                     () {
                   Get.back(result: true);
@@ -121,7 +120,7 @@ class ButtonsStyle {
           end: Alignment(1.1447703838348389, 1.1694844961166382),
           colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
       function: () async {
-        bool res = await dialogComponent(
+        final bool res = await dialogComponent(
             _i18n()["onTheWayAlertTitle"], _i18n()["onTheWayAlertSubTitle"],
             () {
           Get.back(result: true);
@@ -159,7 +158,7 @@ class ButtonsStyle {
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
         function: () async {
-          bool res = await dialogComponent(
+          final bool res = await dialogComponent(
               _i18n()["prepareAlertTitle"], _i18n()["prepareAlertSubTitle"],
               () {
             Get.back(result: true);
@@ -196,7 +195,7 @@ class ButtonsStyle {
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
         function: () async {
-          bool res = await dialogComponent(
+          final bool res = await dialogComponent(
               _i18n()["deliveredAlertTitle"], _i18n()["deliveredAlertSubTitle"],
               () {
             Get.back(result: true);

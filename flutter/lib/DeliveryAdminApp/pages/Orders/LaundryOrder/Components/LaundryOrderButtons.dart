@@ -21,7 +21,7 @@ class OrderButtons {
     return Expanded(
       child: ButtonComponent(
         function: () async {
-          bool res = await dialogComponent(
+          final bool res = await dialogComponent(
               _i18n()["title"], _i18n()["subTitle"], () {
             Get.back(result: true);
           }, () {
@@ -34,7 +34,6 @@ class OrderButtons {
                   colors: [const Color(0xede21132), const Color(0xdbd11835)]));
           if (res) {
             await controller.cancelOrder(orderId);
-            Get.back(closeOverlays: true);
           }
         },
         widget: Text(_i18n()["cancel"].toUpperCase(),
@@ -73,7 +72,7 @@ class OrderButtons {
       ),
       function: () async {
         if (order.dropoffDriver != null) {
-          bool res = await dialogComponent(
+          final bool res = await dialogComponent(
               _i18n()['readyForDeliveryTitle'], _i18n()['readyForDeliveryText'],
               () {
             Get.back(result: true);

@@ -54,7 +54,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
     if (order.value == null) {
-      // Get.back();
+      Get.back();
     } else {
       _orderListener = controller
           .getCurrentOrderStream(orderId)
@@ -66,7 +66,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
             driver = order.value!.dropoffDriver;
           }
         } else {
-          //  Get.back();
+          Get.back();
         }
       });
     }
