@@ -57,12 +57,6 @@ class AuthController extends GetxController {
   String? _previousUserValue = "init";
 
   @override
-  void onReady() {
-    Get.lazyPut(() => LanguageController());
-    super.onReady();
-  }
-
-  @override
   void onInit() {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());

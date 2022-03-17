@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/controllers/RequestTaxiController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Taxi']['RequestTaxiScreen'];
 
 class RequestTaxiScreenWidgets {
   final RequestTaxiController requestTaxiController;
@@ -13,8 +18,7 @@ class RequestTaxiScreenWidgets {
     return [
       MezToolTipHint(
         hintWidget: RidePriceControllHint(
-          hintText: requestTaxiController.languageController.strings['customer']
-              ['taxiView']['taxiRequestPriceTooltip'],
+          hintText: _i18n()['taxiRequestPriceTooltip'],
         ),
         left: 80.1,
         bottom: 150.5,

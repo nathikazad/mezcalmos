@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -31,9 +32,9 @@ class CustomerWrapper extends StatefulWidget {
 
 class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
+  // CustomerApp.pages.CustomerWrapper.welcomeText
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-      ['pages']
-      ['CustomerWrapper'];
+      ['pages']['CustomerWrapper'];
   AuthController auth = Get.find<AuthController>();
   OrderController? _orderController;
   DateTime? appClosedTime;
@@ -46,6 +47,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   StreamSubscription? _authStateChnagesListener;
   @override
   void initState() {
+    mezDbgPrint(
+        "@kholouuuuuudouuuuuuu : ${Get.find<LanguageController>().strings}");
     Get.put(TaxiController(), permanent: true);
     Get.put(RestaurantController(), permanent: true);
     Get.put(RestaurantsInfoController(), permanent: true);
