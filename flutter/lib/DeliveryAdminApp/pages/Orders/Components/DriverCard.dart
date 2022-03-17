@@ -1,13 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["components"]["driverOrderCard"];
 
 class DriverCard extends StatelessWidget {
   final Order order;
@@ -22,7 +25,7 @@ class DriverCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -30,7 +33,7 @@ class DriverCard extends StatelessWidget {
         children: [
           Container(
             child: Text(
-              'Driver',
+              '${_i18n()["driver"]}',
               style: textTheme.bodyText1,
             ),
           ),
@@ -65,11 +68,10 @@ class DriverCard extends StatelessWidget {
     if (driver == null) {
       if (order.orderType == OrderType.Laundry) {
         if ((order as LaundryOrder).laundry == null) {
-          mezDbgPrint('No laundry');
           return null;
         } else {
           return () async {
-            DeliveryDriver? newDriver =
+            final DeliveryDriver? newDriver =
                 await Get.toNamed(kDriversListRoute, arguments: order)
                     as DeliveryDriver;
             callBack(newDriver);
@@ -77,7 +79,7 @@ class DriverCard extends StatelessWidget {
         }
       } else {
         return () async {
-          DeliveryDriver? newDriver =
+          final DeliveryDriver? newDriver =
               await Get.toNamed(kDriversListRoute, arguments: order)
                   as DeliveryDriver;
           callBack(newDriver);
@@ -103,7 +105,7 @@ class DriverCard extends StatelessWidget {
           width: 10,
         ),
         Text(
-          'Pick a driver',
+          '${_i18n()["noDriver"]}',
           style: textTheme.bodyText1,
         ),
         Spacer(),
@@ -152,7 +154,7 @@ class DriverCard extends StatelessWidget {
 
 // ------ FUNCTIONS ---------//
 // function to assign the right routing function depending on order type and order phase
-  getRightMessageRoute() {
+  void getRightMessageRoute() {
     if (order.orderType == OrderType.Laundry) {
       // START OF LAUNDRY ORDER LOGIC (PHASES)
       if (((order as LaundryOrder).getCurrentPhase() ==
@@ -169,7 +171,7 @@ class DriverCard extends StatelessWidget {
   }
 
 // restaurant order driver message route function
-  restaurantDriverMessageRoute() {
+  void restaurantDriverMessageRoute() {
     Get.toNamed(getMessagesRoute(
         orderId: order.orderId,
         chatId: (order as DeliverableOrder).dropOffDriverChatId!,
@@ -177,7 +179,7 @@ class DriverCard extends StatelessWidget {
   }
 
 // laundry order  dropoff driver message route function
-  _laundryDropOffDriverMessageRoute() {
+  void _laundryDropOffDriverMessageRoute() {
     Get.toNamed(getMessagesRoute(
         orderId: order.orderId,
         chatId: (order as DeliverableOrder).dropOffDriverChatId!,
@@ -185,7 +187,7 @@ class DriverCard extends StatelessWidget {
   }
 
 // laundry order pickup driver message route function
-  _laundryPickupDriverMessageRoute() {
+  void _laundryPickupDriverMessageRoute() {
     Get.toNamed(getMessagesRoute(
         orderId: order.orderId,
         chatId: (order as TwoWayDeliverableOrder).pickupDriverChatId!,

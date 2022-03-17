@@ -1,7 +1,12 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+        ["pages"]["Orders"]["driversListView"]["driversListScreen"]
+    ["components"]["driverSelectCard"];
 
 class DriverSelectCard extends StatelessWidget {
   const DriverSelectCard({
@@ -13,7 +18,7 @@ class DriverSelectCard extends StatelessWidget {
   final Function()? function;
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Card(
         child: InkWell(
       onTap: function,
@@ -55,7 +60,7 @@ class DriverSelectCard extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              'Available',
+                              '${_i18n()["available"]}',
                               style: txt.bodyText2,
                             )
                           ],
@@ -71,7 +76,7 @@ class DriverSelectCard extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              'Unavailable',
+                              '${_i18n()["unavailable"]}',
                               style: txt.bodyText2,
                             )
                           ],

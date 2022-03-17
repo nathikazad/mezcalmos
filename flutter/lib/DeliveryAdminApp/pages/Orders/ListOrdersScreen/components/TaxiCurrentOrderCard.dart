@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["ListOrdersScreen"]["components"]["taxiOrderCard"];
 
 class TaxiCurrentOrderCard extends StatelessWidget {
   final TaxiOrder order;
@@ -46,7 +50,7 @@ class TaxiCurrentOrderCard extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      'To : ' + order.to.address,
+                      '${_i18n()["to"]}' + order.to.address,
                       style: Theme.of(context).textTheme.subtitle1,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

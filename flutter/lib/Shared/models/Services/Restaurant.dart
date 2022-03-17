@@ -1,8 +1,10 @@
 import 'dart:convert';
+
+import 'package:collection/collection.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
-import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 
 class Restaurant extends Service {
@@ -14,10 +16,7 @@ class Restaurant extends Service {
       required this.description,
       Schedule? schedule,
       required ServiceState restaurantState})
-      : super(
-            info: userInfo,
-            schedule: schedule,
-            state: restaurantState);
+      : super(info: userInfo, schedule: schedule, state: restaurantState);
 
   factory Restaurant.fromRestaurantData(
       {required String restaurantId, required dynamic restaurantData}) {
@@ -36,8 +35,6 @@ class Restaurant extends Service {
     Schedule? schedule = restaurantData["details"]["schedule"] != null
         ? Schedule.fromData(restaurantData["details"]["schedule"])
         : null;
-
-
 
     Restaurant restaurant = Restaurant(
         userInfo: ServiceUserInfo.fromData(restaurantData["info"]),
@@ -64,6 +61,35 @@ class Restaurant extends Service {
       "items": jsonEncode(items),
       "restaurantState": state.toJson()
     };
+  }
+
+  bool isAvailable() {
+    var dayNane = DateFormat('EEEE').format(DateTime.now());
+
+    var x = DateTime.now();
+
+    if (this.schedule != null) {
+      bool isOpen = false;
+      schedule!.openHours.forEach((key, value) {
+        if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
+          if (value.isOpen == true) {
+            var dateOfStart =
+                DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
+            var dateOfClose =
+                DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
+           
+            if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
+              isOpen = true;
+            }
+          } else {
+            isOpen = false;
+          }
+        }
+      });
+      return isOpen;
+    } else {
+      return true;
+    }
   }
 }
 

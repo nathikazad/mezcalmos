@@ -1,0 +1,33 @@
+# include: package:lints/recommended.yaml
+
+analyzer:
+  exclude: [build/**]
+  language:
+    strict-inference: true
+    strict-raw-types: true
+
+linter:
+  rules:
+    - cancel_subscriptions
+    - always_use_package_imports
+    - avoid_web_libraries_in_flutter
+    - close_sinks
+    - empty_statements
+    - unnecessary_statements
+    - always_declare_return_types
+    - always_specify_types
+    - avoid_annotating_with_dynamic
+    - avoid_void_async
+    - await_only_futures
+    - camel_case_extensions
+    - constant_identifier_names
+    - prefer_final_locals
+    - unnecessary_const
+    - non_constant_identifier_names
+    - prefer_const_constructors_in_immutables
+    - unnecessary_brace_in_string_interps
+    - unnecessary_await_in_return
+    - unawaited_futures
+    - provide_deprecation_message
+    - unnecessary_this
+    - package_names

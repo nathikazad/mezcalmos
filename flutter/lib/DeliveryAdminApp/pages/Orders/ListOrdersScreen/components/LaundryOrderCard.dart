@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
@@ -14,7 +13,7 @@ class LaundryOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Card(
       // color: getOrderColor(order.status),
       child: InkWell(
@@ -49,8 +48,9 @@ class LaundryOrderCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text('\$15/KG'),
-                        Text("\$${order.cost}"),
+                        Text('\$40/KG'),
+                        if (order.weight != null)
+                          Text("\$${order.weight! * 40}"),
                         Row(
                           children: [
                             Icon(
@@ -58,7 +58,8 @@ class LaundryOrderCard extends StatelessWidget {
                               size: 16.sp,
                             ),
                             Text(
-                              DateFormat(' hh:mm a').format(order.orderTime),
+                              DateFormat(' hh:mm a')
+                                  .format(order.orderTime.toLocal()),
                             ),
                           ],
                         )

@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["components"]["laundryProviderCard"];
 
 class LaundryProviderCard extends StatefulWidget {
   final LaundryOrder order;
@@ -31,7 +35,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
     super.initState();
   }
 
-  getLaundry() async {
+  void getLaundry() async {
     if (widget.laundryID != null) {
       laundry = await laundryInfoController.getLaundry(widget.laundryID!);
       mezDbgPrint("Init laundry =====> $laundry");
@@ -42,7 +46,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -50,7 +54,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
         children: [
           Container(
             child: Text(
-              'Laundry',
+              '${_i18n()["laundry"]}',
               style: textTheme.bodyText1,
             ),
           ),
@@ -106,7 +110,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
           width: 10,
         ),
         Text(
-          'Pick a laundry agency',
+          '${_i18n()["noLaundry"]}',
           style: textTheme.bodyText1,
         ),
         Spacer(),

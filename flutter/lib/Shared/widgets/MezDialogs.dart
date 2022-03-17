@@ -7,9 +7,7 @@ enum TwoButtonDialogButton { Left, Right }
 enum YesNoDialogButton { Yes, No }
 
 dynamic _i18n() =>
-    Get.find<LanguageController>().strings['Shared']['widgets']
-["MezDialogs"];
-
+    Get.find<LanguageController>().strings['Shared']['widgets']["MezDialogs"];
 
 extension TwoButtonExtension on TwoButtonDialogButton {
   /// @param: [right] this is used to bind [YesNoDialogButton] with [TwoButtonDialogButton.Right]
@@ -77,6 +75,7 @@ Future<void> oneButtonDialog(
 Future<TwoButtonDialogButton?> twoButtonDialog(
     {required String title,
     required String body,
+    TextStyle? bodyTextStyle,
     //required String leftButtonText,
     bool? titleUp = false,
     double? buttonsWidthSize = 80,
@@ -99,36 +98,38 @@ Future<TwoButtonDialogButton?> twoButtonDialog(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 10,
-          ),
+          if (titleUp)
+            SizedBox(
+              height: 10,
+            ),
           (dailogIcon != null) ? dailogIcon : Container(),
-          (!titleUp)
-              ? Container(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: Text(title,
-                      style: const TextStyle(
-                          color: const Color(0xff000f1c),
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "ProductSans",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 25.0),
-                      textAlign: TextAlign.center),
-                )
-              : Container(),
-          SizedBox(
-            height: 8,
-          ),
+          if (titleUp)
+            Container(
+              padding: const EdgeInsets.only(top: 15),
+              child: Text(title,
+                  style: const TextStyle(
+                      color: const Color(0xff000f1c),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "ProductSans",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 25.0),
+                  textAlign: TextAlign.center),
+            ),
+          if (titleUp)
+            SizedBox(
+              height: 8,
+            ),
           Text(body,
-              style: const TextStyle(
-                  color: const Color(0xff1d1d1d),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "ProductSans",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 15.0),
+              style: bodyTextStyle ??
+                  const TextStyle(
+                      color: const Color(0xff1d1d1d),
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "ProductSans",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 15.0),
               textAlign: TextAlign.center),
           SizedBox(
-            height: 15,
+            height: 20,
           ),
           Container(
             child: Row(
@@ -182,14 +183,16 @@ Future<TwoButtonDialogButton?> twoButtonDialog(
 Future<YesNoDialogButton> yesNoDialog(
     {required String text,
     required String body,
+    TextStyle? bodyTextStyle,
     Widget? icon,
-    Widget? buttonLeftStyle = const YesButtonComponetStyle(),
-    Widget? buttonRightStyle = const NoButtonComponetStyle(),
+    Widget? buttonLeftStyle = const YesButtonStyle(),
+    Widget? buttonRightStyle = const NoButtonStyle(),
     bool? titleUp = false,
     String? imgUrl}) async {
   TwoButtonDialogButton? _res = (await twoButtonDialog(
     title: text,
     body: body,
+    bodyTextStyle: bodyTextStyle,
     titleUp: titleUp,
     dailogIcon: icon,
     buttonLeftStyle: buttonLeftStyle,
@@ -208,8 +211,8 @@ Future<YesNoDialogButton> cancelAlertDialog(
     title: title,
     body: body,
     dailogIcon: icon,
-    buttonRightStyle: NoButtonComponetStyle(),
-    buttonLeftStyle: YesButtonComponetStyle(),
+    buttonRightStyle: NoButtonStyle(),
+    buttonLeftStyle: YesButtonStyle(),
   ));
   if (_res != null) {
     return _res.toYesNo(
@@ -219,63 +222,111 @@ Future<YesNoDialogButton> cancelAlertDialog(
 }
 
 class MezDialogButtonStyle extends StatelessWidget {
+  final String buttonText;
+  final Color? buttonColor;
+  final Color? buttonShadowColor;
+  final BoxDecoration? customButtonDecoration;
+  final TextStyle? customTextStyle;
+
+  factory MezDialogButtonStyle.customized(
+      {BoxDecoration? customButtonDecoration,
+      TextStyle? customTextStyle,
+      required String buttonText}) {
+    return MezDialogButtonStyle(
+      customButtonDecoration: customButtonDecoration,
+      customTextStyle: customTextStyle,
+      buttonText: buttonText,
+    );
+  }
+
   MezDialogButtonStyle(
       {required this.buttonText,
-      required this.buttonColor,
-      required this.buttonShadowColor});
-  final String buttonText;
-  final Color buttonColor;
-  final Color buttonShadowColor;
+      this.buttonColor,
+      this.buttonShadowColor,
+      this.customButtonDecoration,
+      this.customTextStyle});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 88,
       height: 35,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-        boxShadow: [
-          BoxShadow(
-              color: buttonShadowColor,
-              offset: Offset(0, 6),
-              blurRadius: 10,
-              spreadRadius: 0)
-        ],
-        color: buttonColor,
-      ),
+      decoration: customButtonDecoration ??
+          BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            boxShadow: [
+              if (buttonShadowColor != null)
+                BoxShadow(
+                    color: buttonShadowColor!,
+                    offset: Offset(0, 6),
+                    blurRadius: 10,
+                    spreadRadius: 0)
+            ],
+            color: buttonColor,
+          ),
       child: Center(
         child: Text(buttonText,
-            style: const TextStyle(
-                color: const Color(0xff000000),
-                fontWeight: FontWeight.w700,
-                fontFamily: "ProductSans",
-                fontStyle: FontStyle.normal,
-                fontSize: 14.0),
+            style: customTextStyle ??
+                const TextStyle(
+                    color: const Color(0xff000000),
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "ProductSans",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 14.0),
             textAlign: TextAlign.center),
       ),
     );
   }
 }
 
-class YesButtonComponetStyle extends StatelessWidget {
-  const YesButtonComponetStyle({Key? key}) : super(key: key);
+class YesButtonStyle extends StatelessWidget {
+  final MezDialogButtonStyle? customMezDialogButtonStyle;
+
+  /// use this when using [YesButtonStyle.customized] from outside of a file , because text is required.
+  static final String yesText = _i18n()["yes"];
+
+  const YesButtonStyle({this.customMezDialogButtonStyle, Key? key})
+      : super(key: key);
+
+  factory YesButtonStyle.customized(
+      {MezDialogButtonStyle? customMezDialogButtonStyle}) {
+    return YesButtonStyle(
+      customMezDialogButtonStyle: customMezDialogButtonStyle,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MezDialogButtonStyle(
-        buttonText: _i18n()["yes"],
-        buttonColor: Color(0xffdb2846),
-        buttonShadowColor: Color(0x2eff0000));
+    return customMezDialogButtonStyle ??
+        MezDialogButtonStyle(
+            buttonText: _i18n()["yes"],
+            buttonColor: Color(0xffdb2846),
+            buttonShadowColor: Color(0x2eff0000));
   }
 }
 
-class NoButtonComponetStyle extends StatelessWidget {
-  const NoButtonComponetStyle({Key? key}) : super(key: key);
+class NoButtonStyle extends StatelessWidget {
+  final MezDialogButtonStyle? customMezDialogButtonStyle;
+
+  /// use this when using [NoButtonStyle.customized] from outside of a file , because text is required.
+  static final String noText = _i18n()["no"];
+
+  const NoButtonStyle({this.customMezDialogButtonStyle, Key? key})
+      : super(key: key);
+
+  factory NoButtonStyle.customized(
+      {MezDialogButtonStyle? customMezDialogButtonStyle}) {
+    return NoButtonStyle(
+      customMezDialogButtonStyle: customMezDialogButtonStyle,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MezDialogButtonStyle(
-        buttonText: _i18n()["no"],
-        buttonColor: Color(0xfffdfdfd),
-        buttonShadowColor: Color(0x334c504a));
+    return customMezDialogButtonStyle ??
+        MezDialogButtonStyle(
+            buttonText: _i18n()["no"],
+            buttonColor: Color(0xfffdfdfd),
+            buttonShadowColor: Color(0x334c504a));
   }
 }

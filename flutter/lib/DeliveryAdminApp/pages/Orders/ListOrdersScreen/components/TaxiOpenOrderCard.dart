@@ -4,8 +4,12 @@ import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["ListOrdersScreen"]["components"]["taxiOrderCard"];
 
 class TaxiOpenOrderCard extends StatelessWidget {
   final TaxiOrder order;
@@ -41,7 +45,7 @@ class TaxiOpenOrderCard extends StatelessWidget {
       children: [
         Flexible(
           child: Text(
-            'To : ' + order.to.address,
+            '${_i18n()["to"]}' + order.to.address,
             style: Theme.of(context).textTheme.subtitle1,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -110,7 +114,7 @@ class TaxiOpenOrderCard extends StatelessWidget {
                         order.orderTime.millisecondsSinceEpoch + 1000 * 600,
                     widgetBuilder: (_, CurrentRemainingTime? time) {
                       if (time == null) {
-                        return Text('Order expired');
+                        return Text('${_i18n()["orderExpired"]}');
                       }
                       return Text(
                         '${time.min ?? '00'}:${time.sec}',
@@ -122,9 +126,9 @@ class TaxiOpenOrderCard extends StatelessWidget {
                 ],
               ),
               Text(
-                  'Sent to : ${order.numberOfTaxiSentNotificationTo().toString()} drivers'),
+                  '${_i18n()["sentTo"]} ${order.numberOfTaxiSentNotificationTo().toString()} ${_i18n()["drivers"]}'),
               Text(
-                  'Read by : ${order.numberOfTaxiReadNotification().toString()} drivers'),
+                  '${_i18n()["readBy"]} ${order.numberOfTaxiReadNotification().toString()} ${_i18n()["drivers"]}'),
             ],
           ),
         ),

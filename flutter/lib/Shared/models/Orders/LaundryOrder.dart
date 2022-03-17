@@ -39,6 +39,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   String? notes;
   UserInfo? laundry;
   LaundryOrderStatus status;
+  num price;
   LaundryOrder(
       {required String orderId,
       required num cost,
@@ -48,6 +49,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.status,
       required UserInfo customer,
       required this.laundry,
+      this.price = 20,
       DeliveryDriverUserInfo? dropoffDriver,
       String? dropOffDriverChatId,
       DeliveryDriverUserInfo? pickupDriver,
@@ -70,6 +72,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   factory LaundryOrder.fromData(dynamic id, dynamic data) {
     LaundryOrder laundryOrder = LaundryOrder(
         orderId: id,
+        price: 20,
         customer: UserInfo.fromData(data["customer"]),
         status: data['status'].toString().toLaundryOrderStatus(),
         cost: data['cost'],

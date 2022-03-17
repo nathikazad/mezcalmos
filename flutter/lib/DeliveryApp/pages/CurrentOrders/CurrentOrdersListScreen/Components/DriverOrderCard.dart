@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+        ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"]["Components"]
+    ["DriverOrderCard"];
 
 class DriverOrderCard extends StatelessWidget {
   /// Order card for delivery driver used to show current or past order ,
@@ -23,7 +28,11 @@ class DriverOrderCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.toNamed(getCurrentOrderRoute(order.orderId));
+          if (order.orderType == OrderType.Restaurant) {
+            Get.toNamed(getRestaurantOrderRoute(order.orderId));
+          } else if (order.orderType == OrderType.Laundry) {
+            Get.toNamed(getLaundryOrderRoute(order.orderId));
+          }
         },
         child: Ink(
           width: double.infinity,
@@ -39,7 +48,7 @@ class DriverOrderCard extends StatelessWidget {
                     width: 5,
                   ),
                   Flexible(
-                    flex: 5,
+                    flex: 6,
                     fit: FlexFit.tight,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,13 +173,13 @@ class DriverOrderCard extends StatelessWidget {
 
   String _getOrderTitle() {
     if (order.orderType == OrderType.Restaurant) {
-      return 'Restaurant Delivery';
+      return "${_i18n()['orderTitle']['restaurantDelivery']}";
     } else if ((order as LaundryOrder).getCurrentPhase() ==
             LaundryOrderPhase.Dropoff &&
         (order as LaundryOrder).status != LaundryOrderStatus.AtLaundry) {
-      return 'Laundry Delivery';
+      return "${_i18n()['orderTitle']['laundryPickup']}";
     } else {
-      return 'Laundry pick-up';
+      return "${_i18n()['orderTitle']['laundryDelivery']}";
     }
   }
 }

@@ -154,13 +154,13 @@ String getTaxiOrderStatus(TaxiOrdersStatus status) {
       return '${_i18n()["orderStatus"]["droppedOff"]}';
     case TaxiOrdersStatus.Expired:
       return '${_i18n()["orderStatus"]["expired"]}';
-    // TODO LANG
-    // case TaxiOrdersStatus.ForwardingSuccessful:
-    //   return '${lang.strings["taxi"]["orders"]["orderStatus"]["droppedOff"]}';
-    // case TaxiOrdersStatus.ForwardingUnsuccessful:
-    //   return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByTaxi"]}';
-    // case TaxiOrdersStatus.ForwardingToLocalCompany:
-    //   return '${lang.strings["taxi"]["orders"]["orderStatus"]["forwarding"]}';
+
+    case TaxiOrdersStatus.ForwardingSuccessful:
+      return '${_i18n()["orderStatus"]["forwardSuccess"]}';
+    case TaxiOrdersStatus.ForwardingUnsuccessful:
+      return '${_i18n()["orderStatus"]["forwardUnsuccess"]}';
+    case TaxiOrdersStatus.ForwardingToLocalCompany:
+      return '${_i18n()["orderStatus"]["forward"]}';
 
     default:
       return 'Unknown status';

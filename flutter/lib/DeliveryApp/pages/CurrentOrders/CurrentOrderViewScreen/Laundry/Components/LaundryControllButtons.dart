@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+        ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
+    ["DriverBottomLaundryOrderCard"]["laundryControllButtons"];
 
 class LaundryControllButtons extends StatelessWidget {
   /// UI : shows two buttons one to controll the order status and other to cancel the order
@@ -66,7 +71,7 @@ class LaundryControllButtons extends StatelessWidget {
         context: context,
         builder: (ctx) {
           return AlertDialog(
-            title: Text('Confirm Order weight '),
+            title: Text("${_i18n()["confirmOrderWeight"]}"),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -79,7 +84,7 @@ class LaundryControllButtons extends StatelessWidget {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (v) {
                     if (num.tryParse(v!) == null) {
-                      return 'Please enter a valid weight';
+                      return "${_i18n()["orderWeightAlert"]}";
                     } else {
                       return null;
                     }
@@ -88,9 +93,10 @@ class LaundryControllButtons extends StatelessWidget {
                     orderWeight = num.parse(value);
                   },
                   decoration: InputDecoration(
-                      label: Text('Order weight'),
+                      label: Text('${_i18n()["orderWeight"]}'),
                       filled: true,
                       isDense: true,
+                      suffixText: 'KG',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8))),
                 ),
@@ -106,7 +112,7 @@ class LaundryControllButtons extends StatelessWidget {
                     child: Container(
                         padding: EdgeInsets.all(5),
                         alignment: Alignment.center,
-                        child: Text('Confirm order weight'))),
+                        child: Text('${_i18n()["confirm"]}'))),
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context, 0);
@@ -115,7 +121,8 @@ class LaundryControllButtons extends StatelessWidget {
                       backgroundColor: Colors.red,
                     ),
                     child: Container(
-                        padding: EdgeInsets.all(5), child: Text('Cancel')))
+                        padding: EdgeInsets.all(5),
+                        child: Text('${_i18n()["cancel"]}')))
               ],
             ),
           );
@@ -125,16 +132,16 @@ class LaundryControllButtons extends StatelessWidget {
   String _getActionButtonText() {
     switch (order.status) {
       case LaundryOrderStatus.OrderReceieved:
-        return 'Pick-up Order';
+        return '${_i18n()["pickupOrder"]}';
       case LaundryOrderStatus.OtwPickup:
-        return 'Confirm Pick-up';
+        return '${_i18n()["confirmPickup"]}';
       case LaundryOrderStatus.PickedUp:
-        return 'At laundry';
+        return '${_i18n()["atLaundry"]}';
 
       case LaundryOrderStatus.ReadyForDelivery:
-        return 'Deliver order';
+        return '${_i18n()["deliverOrder"]}';
       case LaundryOrderStatus.OtwDelivery:
-        return 'Confirm Delivery';
+        return '${_i18n()["confirmDelivery"]}';
 
       default:
         return '';

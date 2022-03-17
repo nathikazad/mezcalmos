@@ -45,7 +45,10 @@
                             "lookingForTaxi": "Buscando Taxi",
                             "inTransit": "Taxi en tránsito",
                             "droppedOff": "Dejado",
-                            "expired": "Caducado"
+                            "expired": "Caducado",
+                            "forwarding": "Reenvío a la empresa",
+                            "forwardSuccess": "Reenviado con éxito",
+                            "forwardUnsuccess": "Reenvío cancelado"
                         }
                     },
                     "TaxiPastOrderCard": {
@@ -61,7 +64,6 @@
                 },
                 "ListOrdersScreen": {
                     "title": "Pedidos",
-                    "noOrders": "Sin pedidos",
                     "shared": {
                         "notification": {
                             "today": "Hoy",
@@ -81,7 +83,7 @@
                 }
             },
             "Restaurants": {
-                "ListRestaurantsScreem": {
+                "ListRestaurantsScreen": {
                     "components": {
                         "RestaurandCard": {
                             "items": "elementos",
@@ -269,7 +271,7 @@
                             "rideExpired": "Tu pedido ha expirado",
                             "rideCancelledByTaxi": "El viaje ha sido cancelado por taxi",
                             "rideCancelledByCustomer": "Has cancelado tu viaje",
-                            "forwarding": "Estamos llamando a la compañía local por teléfono para encontrar su taxi",
+                            "forwarding": "Llamando a la compañía local por teléfono para encontrar tu taxi",
                             "taxiNumber": "Número de taxi",
                             "forwardSuccess": "Un taxi de una compañía local está en camino",
                             "forwardUnsuccess": "No se pudo encontrar su taxi de la compañía local"
@@ -302,7 +304,6 @@
                 "ViewTaxiOrder": {
                     "components": {
                         "CounterOfferWidgets": {
-                            "customerTaxiViewOffers": "",
                             "offers": "ofertas"
                         },
                         "ViewTaxiOrderScreenWidgets": {
@@ -439,16 +440,34 @@
             "deliveredBody": "Tu pedido ha sido entregado",
             "cancelledTitle": "Orden Cancelada",
             "cancelledBody": "Tu pedido ha sido cancelado",
-            "taxiOnTheWayTitle": "On the Way",
-            "taxiOnTheWayBody": "Your taxi is on the way",
-            "taxiInTransitTitle": "In Transit",
-            "taxiInTransitBody": "You are on the way to your destination",
-            "taxiDroppedOffTitle": "Reached",
-            "taxiDroppedOffBody": "Your have reached your destination",
-            "taxiCancelledTitle": "Order Cancelled",
-            "taxiCancelledBody": "Your order has been cancelled",
-            "taxiExpiredTitle": "No taxis available",
-            "taxiExpiredBody": "Unfortunately, we could not find a taxi for you. Please try again later",
+            "taxiOnTheWayTitle": "En camino",
+            "taxiOnTheWayBody": "Tu taxi esta en camino",
+            "taxiInTransitTitle": "En tránsito",
+            "taxiInTransitBody": "Estas en camino a tu destino",
+            "taxiDroppedOffTitle": "Alcanzada",
+            "taxiDroppedOffBody": "Ha llegado a su destino",
+            "taxiCancelledTitle": "Orden cancelada",
+            "taxiCancelledBody": "Su pedido ha sido cancelado",
+            "taxiExpiredTitle": "No hay taxis disponibles",
+            "taxiExpiredBody": "Desafortunadamente, no pudimos encontrar un taxi para ti.Por favor, inténtelo de nuevo más tarde",
+            "taxiFwdToCompanyTitle": "Reenviado a la empresa",
+            "taxiFwdToCompanyBody": "Estamos llamando a una compañía local para encontrarte un taxi.",
+            "taxiFwdSuccessTitle": "Reenviado con éxito",
+            "taxiFwdSuccessBody": "Taxi local encontró ",
+            "taxiFwdCancelTitle": "Reenvío cancelado ",
+            "taxiFwdCancelBody": "Tu orden ha sido cancelado ",
+            "laundryOtwPickupTitle": "Recogida en el camino",
+            "laundryOtwPickupBody": "Conductor en la forma de recoger su pedido.",
+            "laundryPickedTitle": "Pedido recogido",
+            "laundryPickedBody": "El orden es recogido con éxito",
+            "laundryAtLaundryTitle": "En la lavandería",
+            "laundryAtLaundryBody": "Tu orden es recibido por la lavandería.",
+            "laundryReadyForDeliveryTitle": "Listo para la entrega",
+            "laundryReadyForDeliveryBody": "Usted ordena está listo para la entrega",
+            "laundryOtwDeliveryTitle": "Entrega en el camino",
+            "laundryOtwDeliveryBody": "Tu orden está en camino",
+            "laundryDeliveredTitle": "Entregada",
+            "LaundryDeliveredBody": "Su pedido ha sido entregado",
             "counterOfferTitle": "Nueva Contraoferta",
             "counterOfferBody": "New oferta de "
         }
@@ -556,7 +575,7 @@
                 "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
                 "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo.",
                 "locationIsOff": "Servicio de ubicación desactivado",
-                "isAndroid_11" : "Detectamos que su versión de Android es 11 o más reciente, por lo tanto, debemos pedirle que nos dé permisos para usar la ubicación en segundo plano para mantener a sus clientes actualizados sobre su ubicación actual, incluso cuando la aplicación se ejecuta en segundo plano."
+                "isAndroid_11": "Detectamos que su versión de Android es 11 o más reciente, por lo tanto, debemos pedirle que nos dé permisos para usar la ubicación en segundo plano para mantener a sus clientes actualizados sobre su ubicación actual, incluso cuando la aplicación se ejecuta en segundo plano."
             }
         },
         "widgets": {
@@ -720,13 +739,52 @@
                 "received": "Recibida",
                 "canceledByCustomer": "Cancelada",
                 "canceledByAdmin": "Cancelada"
+
+
             }
         },
         "pages": {
             "Orders": {
+                "components": {
+                    "driverOrderCard": {
+                        "driver": "Conductora",
+                        "noDriver": "Elegir un conductor"
+                    },
+                    "laundryProviderCard": {
+                        "laundry": "Lavandería",
+                        "noLaundry": "Elegir una lavandería"
+                    }
+
+                },
+                "driversListView": {
+                    "driversListScreen": {
+                        "title": "Elegir un conductor",
+                        "components": {
+                            "driverSelectCard": {
+                                "available": "Disponible",
+                                "unavailable": "Indisponible"
+                            }
+                        }
+
+                    }
+                },
+                "laundryListView": {
+                    "laundriesListView": {
+                        "title": "Elegir una lavandería",
+                        "components": {
+                            "laundrySelectCard": {
+                                "available": "Disponible",
+                                "unavailable": "Indisponible"
+                            }
+                        }
+
+                    }
+                },
                 "LaundryOrder": {
                     "Components": {
                         "LaundryOrderButtons": {
+                            "error": "error",
+                            "driverErrorAlert": "Por favor seleccione una unidadr",
                             "title": "Cancelar",
                             "subTitle": "Estás seguro de que cancelar\nentregar el pedido?",
                             "cancel": "Cancelar",
@@ -774,12 +832,32 @@
                     }
                 },
                 "ListOrdersScreen": {
+                    "components": {
+                        "taxiOrderCard": {
+                            "orderExpired": "Orden expirado",
+                            "driver": "Conductora",
+                            "drivers": "Conductoras",
+                            "sentTo": "Enviado a : ",
+                            "readBy": "Leído por : ",
+                            "to": "Para :"
+                        },
+                        "taxiOrdersListComponent": {
+                            "taxiOrders": "Órdenes de taxi",
+                            "openOrders": "Ordenes abiertas",
+                            "currentOrders": "Órdenes actuales",
+                            "pastOrders": "Órdenes pasadas",
+                            "noOrders": "No se han encontrado pedidos"
+
+                        }
+                    },
                     "ListOrdersScreen": {
                         "title": "Pedidos",
                         "noOrders": "Sin pedidos",
                         "pastOrders": "Órdenes pasadas",
-                        "restaurantOrders": "Órdenes de restaurantes",
-                        "laundryOrders": "Órdenes de lavandería",
+                        "openOrders": "Ordenes abiertas",
+                        "restaurantOrders": "restaurantes",
+                        "laundryOrders": "lavandería",
+                        "taxiOrders": "taxi",
                         "today": "Hoy",
                         "yesterday": "Ayer"
                     }
@@ -787,6 +865,8 @@
                 "ViewRestaurantOrderScreen": {
                     "components": {
                         "ButtonStyles": {
+                            "error": "error",
+                            "driverErrorAlert": "Por favor seleccione una unidadr",
                             "cancelAlertTitle": "Cancelar",
                             "cancelAlertSubTitle": "Estás seguro de que cancelar\nentregar el pedido?",
                             "cancel": "Cancelar",
@@ -834,7 +914,48 @@
                             "deliveryLocation": "Lugar De Entrega"
                         }
                     }
+                },
+                "TaxiOrder": {
+                    "components": {
+                        "taxiOrderBottomCard": {
+                            "customer": "Cliente",
+                            "driver": "Driver",
+                            "drivers": "Conductoras",
+                            "sentTo": "Enviado a :",
+                            "readBy": "Leído por :",
+                            "from": "Desde :",
+                            "to": "Para :",
+                            "distance": "Distancia:",
+                            "at :": "en :",
+                            "orderExpired": "Orden expirado",
+                            "orderStatus": {
+                                "canceledByTaxi": "Cancelled",
+                                "canceledByCustomer": "Cancelled",
+                                "onTheWay": "Taxi en el camino",
+                                "lookingForTaxi": "Buscando un taxi",
+                                "inTransit": "Taxi en tránsito",
+                                "droppedOff": "Dejado caer",
+                                "expired": "Caducada",
+                                "forwarding": "Reenvío a la empresa",
+                                "forwardSuccess": "Reenviado con éxito",
+                                "forwardUnsuccess": "Reenvío cancelado"
+
+                            },
+                            "TaxiOpenOrderControllButton": {
+                                "fwdToCompany": "Adelante a la empresa",
+                                "cancel": "Cancelar",
+                                "confirmFwd": "Confirmar el número de taxi",
+                                "fwdAlertErrorText": "Por favor ingrese un número de taxi válido",
+                                "taxiNumber": "Número de taxis",
+                                "confirmTaxi": "Confirmar el taxi local"
+
+
+                            }
+                        }
+
+                    }
                 }
+
             }
         }
     },
@@ -842,6 +963,9 @@
         "pages": {
             "CurrentOrders": {
                 "CurrentOrdersListScreen": {
+                    "currentOrders": "Órdenes actuales",
+                    "pastOrders": "Órdenes pasadas",
+                    "title": "Órdenes  Entrantes",
                     "Components": {
                         "DriverNoOrdersComponent": {
                             "noOrdersTitle": "No Hay Ordenes",
@@ -850,10 +974,68 @@
                         "DriverNotLookingComponent": {
                             "toggleTitle": "Activar Pedidos Entrantes",
                             "toggleDesc": "Activar para ver nuevos pedidos"
+                        },
+                        "DriverOrderCard": {
+                            "orderTitle": {
+                                "restaurantDelivery": "Entrega de restaurantes",
+                                "laundryPickup": "Recogida de lavandería",
+                                "laundryDelivery": "Entrega de lavandería"
+                            }
                         }
                     },
                     "CurrentOrdersListScreen": {
                         "title": "Órdenes  Entrantes"
+
+                    }
+
+                },
+                "CurrentOrderViewScreen": {
+                    "Components": {
+                        "DriverBottomLaundryOrderCard": {
+                            "orderStatus": {
+                                "readyForPickup": "Listo para recojer",
+                                "pickupOtw": "Recogida en el camino",
+                                "pickedUp": "Pedido recogido",
+                                "atLaundry": "En la lavandería",
+                                "readyForDelivery": "Listo para la entrega",
+                                "deliveryOtw": "Entrega en el camino",
+                                "delivered": "Orden entregado",
+                                "canceled": "Orden cancelada"
+
+                            },
+                            "laundeyOrderHeader": {
+                                "laundryOrder": "Orden de lavandería"
+
+                            },
+                            "laundryControllButtons": {
+                                "pickupOrder": "Orden para recoger",
+                                "confirmPickup": "Confirmar la recogida de la orden",
+                                "atLaundry": "En la lavandería",
+                                "deliverOrder": "Encargar",
+                                "confirmDelivery": "Confirmar el envío",
+                                "confirmOrderWeight": "Confirmar peso de orden",
+                                "orderWeightAlert": "Por favor ingrese un peso válido",
+                                "confirm": "Confirmar",
+                                "cancel": "Cancelar",
+                                "orderWeight": "Peso de pedido"
+                            }
+                        },
+                        "DriverBottomRestaurantOrderCard": {
+                            "restaurantDelivery": "Entrega de restaurantes",
+                            "orderStatus": {
+                                "waiting": "Esperando preparando la orden",
+                                "preparing": "Orden se está preparando",
+                                "readyForPickup": "Listo para recojer",
+                                "deliveryOtw": "Entrega en el camino",
+                                "delivered": "Orden entregado",
+                                "canceled": "Orden cancelada"
+                            },
+                            "RestaurantControllButtons": {
+                                "confirmPickup": "Confirmar la recogida de la orden",
+                                "confirmDelivery": "Confirmar el envío"
+
+                            }
+                        }
                     }
                 }
             }
@@ -864,7 +1046,20 @@
             "readyForPickupTitle": "Listo Para Recoger",
             "readyForPickupBody": "Tu pedido está listo para ser recogido",
             "cancelledTitle": "Orden Cancelada",
-            "cancelledBody": "Tu pedido ha sido cancelado"
+            "cancelledBody": "Tu pedido ha sido cancelado",
+            "laundryOtwPickupTitle": "Recogida en el camino",
+            "laundryOtwPickupBody": " En el camino para recoger el pedido.",
+            "laundryPickedTitle": "Pedido recogido",
+            "laundryPickedBody": "El orden es recogido con éxito",
+            "laundryAtLaundryTitle": "En la lavandería",
+            "laundryAtLaundryBody": "El pedido es recibido por la lavandería.",
+            "laundryReadyForDeliveryTitle": "Listo para la entrega",
+            "laundryReadyForDeliveryBody": "El pedido está listo para la entrega.",
+            "laundryOtwDeliveryTitle": "Entrega en el camino",
+            "laundryOtwDeliveryBody": "El pedido está en camino al cliente.",
+            "laundryDeliveredTitle": "Entregada",
+            "LaundryDeliveredBody": "Pedido ha sido entregado"
+
         }
     }
 }

@@ -86,7 +86,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
           Map(),
           viewWidgets.absorbOrIgnoreUserTapWidget(),
           TopBar(order: viewController.order.value!),
-          BottomButtons(),
+          Obx(() => BottomButtons()),
           TaxiOrderBottomBar(order: viewController.order),
           viewWidgets.getToolTip(),
           counterOfferWidgets.counterOffersBottomSheet(context),

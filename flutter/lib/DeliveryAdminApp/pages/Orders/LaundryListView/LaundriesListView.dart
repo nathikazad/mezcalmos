@@ -1,37 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryListView/Components/LaundrySelectCard.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
-class LaundriesListView extends StatefulWidget {
-  const LaundriesListView({Key? key}) : super(key: key);
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["laundryListView"]["laundriesListView"];
 
-  @override
-  State<LaundriesListView> createState() => _LaundriesListViewState();
-}
+class LaundriesListView extends StatelessWidget {
+  LaundriesListView({Key? key}) : super(key: key);
 
-class _LaundriesListViewState extends State<LaundriesListView> {
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Laundries'),
+        title: Text('${_i18n()["title"]}'),
       ),
       body: SingleChildScrollView(
           child: Column(
         children: [
           FutureBuilder<List<Laundry>>(
               future: laundryInfoController.getLaundries(),
-              builder: (context, snapshot) {
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<Laundry>> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
                     return Container(
@@ -43,7 +38,7 @@ class _LaundriesListViewState extends State<LaundriesListView> {
                     return Column(
                         children: List.generate(
                             snapshot.data!.length,
-                            (index) => LaundrySelectCard(
+                            (int index) => LaundrySelectCard(
                                   laundry: snapshot.data![index],
                                   function: () {
                                     if (snapshot.data![index].state.available) {

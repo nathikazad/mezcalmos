@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/RestaurantControllButtons.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantControllButtons.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../../../Shared/models/Orders/RestaurantOrder.dart';
+dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
+        ['pages']['CurrentOrders']['CurrentOrderViewScreen']['Components']
+    ['DriverBottomRestaurantOrderCard'];
 
 class DriverBottomRestaurantOrderCard extends StatelessWidget {
   final RestaurantOrder order;
@@ -18,7 +22,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
       Get.find<RestaurantOrderController>();
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
@@ -57,13 +61,13 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
           color: Theme.of(context).primaryColorLight,
         ),
         Flexible(
-          flex: 4,
+          flex: 6,
           fit: FlexFit.tight,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Restaurant Delivery',
+                '${_i18n()["restaurantDelivery"]}',
                 style: textTheme.headline3!.copyWith(fontSize: 13.sp),
               ),
               Row(
@@ -165,17 +169,19 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
 // get order status readable title
   String _getOrderStatus() {
     switch (order.status) {
+      case RestaurantOrderStatus.CancelledByAdmin:
+      case RestaurantOrderStatus.CancelledByCustomer:
+        return '${_i18n()["orderStatus"]["canceled"]}';
       case RestaurantOrderStatus.OrderReceieved:
-        return 'Waiting for preparing the order';
+        return '${_i18n()["orderStatus"]["waiting"]}';
       case RestaurantOrderStatus.PreparingOrder:
-        return 'Order is being prepared';
+        return '${_i18n()["orderStatus"]["preparing"]}';
       case RestaurantOrderStatus.ReadyForPickup:
-        return 'Order is ready and waiting for you';
+        return '${_i18n()["orderStatus"]["readyForPickup"]}';
       case RestaurantOrderStatus.OnTheWay:
-        return 'Order on the way';
+        return '${_i18n()["orderStatus"]["deliveryOtw"]}';
       case RestaurantOrderStatus.Delivered:
-        return 'Order Delivered';
-
+        return '${_i18n()["orderStatus"]["delivered"]} ';
       default:
         return '';
     }

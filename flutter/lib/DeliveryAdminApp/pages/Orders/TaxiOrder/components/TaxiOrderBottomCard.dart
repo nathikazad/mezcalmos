@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 import '../../../../../Shared/controllers/languageController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["TaxiOrder"]["components"]["taxiOrderBottomCard"];
 
 class TaxiOrderBottomCard extends StatelessWidget {
   /// Bottom card of the taxi order :  shows order info and driver info
@@ -13,7 +15,6 @@ class TaxiOrderBottomCard extends StatelessWidget {
   TaxiOrderBottomCard({Key? key, required this.order}) : super(key: key);
 
   final TaxiOrder order;
-  TaxiOrderController _taxiOrderController = Get.find<TaxiOrderController>();
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -32,7 +33,7 @@ class TaxiOrderBottomCard extends StatelessWidget {
               margin: const EdgeInsets.symmetric(vertical: 5),
               child: Row(
                 children: [
-                  Text('Customer ',
+                  Text('${_i18n()['customer']} ',
                       style: Theme.of(context).textTheme.subtitle1),
                   Expanded(child: Divider())
                 ],
@@ -66,13 +67,7 @@ class TaxiOrderBottomCard extends StatelessWidget {
             Container(
               child: Row(
                 children: [
-                  Text('Distance :'),
-                  // Spacer(),
-                  // Icon(
-                  //   Icons.directions_outlined,
-                  //   size: 16,
-                  //   color: Theme.of(context).primaryColorLight,
-                  // ),
+                  Text('${_i18n()['distance']}'),
                   SizedBox(
                     width: 5,
                   ),
@@ -87,13 +82,13 @@ class TaxiOrderBottomCard extends StatelessWidget {
               height: 8,
             ),
             Text(
-              'From :' + order.from.address,
+              '${_i18n()['from']}' + order.from.address,
               style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(
               height: 8,
             ),
-            Text('To :' + order.to.address,
+            Text('${_i18n()['to']}' + order.to.address,
                 style: Theme.of(context).textTheme.bodyText2),
             SizedBox(
               height: 10,
@@ -106,22 +101,28 @@ class TaxiOrderBottomCard extends StatelessWidget {
   }
 
   String _getOrderStatus() {
-    LanguageController lang = Get.find<LanguageController>();
     switch (order.status) {
       case TaxiOrdersStatus.CancelledByTaxi:
-        return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByTaxi"]}';
+        return '${_i18n()["orderStatus"]["canceledByTaxi"]}';
       case TaxiOrdersStatus.CancelledByCustomer:
-        return '${lang.strings["taxi"]["orders"]["orderStatus"]["canceledByCustomer"]}';
+        return '${_i18n()["orderStatus"]["canceledByCustomer"]}';
       case TaxiOrdersStatus.LookingForTaxi:
-        return '${lang.strings["taxi"]["orders"]["orderStatus"]["lookingForTaxi"]}';
+        return '${_i18n()["orderStatus"]["lookingForTaxi"]}';
       case TaxiOrdersStatus.OnTheWay:
-        return '${lang.strings["taxi"]["orders"]["orderStatus"]["onTheWay"]}';
+        return '${_i18n()["orderStatus"]["onTheWay"]}';
       case TaxiOrdersStatus.InTransit:
-        return '${lang.strings["taxi"]["orders"]["orderStatus"]["inTransit"]}';
+        return '${_i18n()["orderStatus"]["inTransit"]}';
       case TaxiOrdersStatus.DroppedOff:
-        return '${lang.strings["taxi"]["orders"]["orderStatus"]["droppedOff"]}';
+        return '${_i18n()["orderStatus"]["droppedOff"]}';
       case TaxiOrdersStatus.Expired:
-        return '${lang.strings["taxi"]["orders"]["orderStatus"]["expired"]}';
+        return '${_i18n()["orderStatus"]["expired"]}';
+
+      case TaxiOrdersStatus.ForwardingSuccessful:
+        return '${_i18n()["orderStatus"]["forwardSuccess"]}';
+      case TaxiOrdersStatus.ForwardingUnsuccessful:
+        return '${_i18n()["orderStatus"]["forwardUnsuccess"]}';
+      case TaxiOrdersStatus.ForwardingToLocalCompany:
+        return '${_i18n()["orderStatus"]["forward"]}';
 
       default:
         return 'Unknown status';
@@ -136,7 +137,8 @@ class TaxiOrderBottomCard extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
             children: [
-              Text('Driver ', style: Theme.of(context).textTheme.subtitle1),
+              Text('${_i18n()['driver']} ',
+                  style: Theme.of(context).textTheme.subtitle1),
               Expanded(child: Divider())
             ],
           ),
@@ -187,11 +189,11 @@ class TaxiOrderBottomCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Order Canceled',
+                    _getOrderStatus(),
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
-                    'at : ${DateFormat('dd MMM yyy hh:mm a').format(order.orderTime.toLocal())}',
+                    '${_i18n()["at"]} ${DateFormat('dd MMM yyy hh:mm a').format(order.orderTime.toLocal())}',
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ],
@@ -215,11 +217,11 @@ class TaxiOrderBottomCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Order Droped Off',
+                    _getOrderStatus(),
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
-                    'at : ${DateFormat('dd MMM yyy hh:m a').format(order.orderTime.toLocal())}',
+                    '${_i18n()["at"]} ${DateFormat('dd MMM yyy hh:m a').format(order.orderTime.toLocal())}',
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ],

@@ -6,8 +6,8 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderNoteComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryPricingComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderSummaryComponent.dart';
@@ -17,8 +17,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']
-['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
+    ['pages']['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
 
 class LaundryCurrentOrderView extends StatefulWidget {
   const LaundryCurrentOrderView({Key? key}) : super(key: key);
@@ -92,8 +91,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title:
-            '${_i18n()["orderStatus"]}',
+        title: '${_i18n()["orderStatus"]}',
       ),
       body: Obx(
         () => order.value != null
