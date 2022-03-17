@@ -121,7 +121,10 @@
                     "googe-service-file": "services/stage/android/delivery.json",
                     "apple-service-file": "services/stage/ios/delivery.plist"
                 }
-            }
+            },
+            "appPermissions":[
+                "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>"
+            ]
         },
         "TaxiAdminApp": {
             "folderName": "TaxiAdminApp",
