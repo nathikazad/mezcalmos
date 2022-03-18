@@ -3,7 +3,7 @@ import * as customerNodes from "../shared/databaseNodes/customer";
 import * as rootNodes from "../shared/databaseNodes/root";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { OrderType } from "../shared/models/Generic/Order";
+import { Order, OrderType } from "../shared/models/Generic/Order";
 import { getUserInfo } from "../shared/controllers/rootController";
 import { TaxiOrderRequest } from "../shared/models/Services/Taxi/TaxiOrderRequest";
 import { constructTaxiOrder } from "../shared/models/Services/Taxi/TaxiOrder";
@@ -33,15 +33,14 @@ export = functions.https.onCall(async (data, context) => {
   }
 
   try {
-    // let customerInProcessOrders = (await customerNodes.inProcessOrders(uid).once('value')).val();
+    let customerInProcessOrders: Record<string, Order> = (await customerNodes.inProcessOrders(customerId).once('value')).val();
     // check if customer is already in another taxi
-    // if (customerCurrentOrder) {
-    //   firebase.database().ref(`users/${uid}/lock`).remove()
-    //   return {
-    //     status: "Error",
-    //     errorMessage: "Customer is already in another taxi"
-    //   }
-    // }
+    if (Object.values(customerInProcessOrders).filter(order => order.orderType == OrderType.Taxi).length > 0) {
+      return {
+        status: "Error",
+        errorMessage: "Customer is already in another taxi"
+      }
+    }
 
     let userInfo = await getUserInfo(customerId);
     let order = constructTaxiOrder(orderRequest, userInfo);
