@@ -10,14 +10,15 @@ import { OrderType } from "../../functions/src/shared/models/Generic/Order";
 export function startWatchingMessageNotificationQueue() {
   rootNodes.notificationsQueueNode().on('child_added', function (snap) {
     let notification: NotificationForQueue = snap.val();
+    console.log(`Notification type ${notification.notificationType}`)
     switch (notification.notificationType) {
       case NotificationType.NewMessage:
         notifyOtherMessageParticipants(notification as MessageNotificationForQueue);
+        break;
       case NotificationType.NewCounterOffer:
         notifyCustomerAboutCounterOffer(notification as CounterOfferNotificationForQueue)
+        break;
     }
-
-    console.log(snap.key);
     rootNodes.notificationsQueueNode(snap.key!).remove();
   });
 }
@@ -40,7 +41,7 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
         chatId: notificationForQueue.chatId,
         sender: senderInfo,
         message: notificationForQueue.message,
-        orderId: notificationForQueue.orderId,
+        orderId: notificationForQueue.orderId ?? null,
         time: notificationForQueue.timestamp,
         notificationType: NotificationType.NewMessage,
         notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
@@ -63,7 +64,7 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
 }
 
 async function notifyCustomerAboutCounterOffer(notificationForQueue: CounterOfferNotificationForQueue) {
-
+  // TODO: check to see if customer has an order and counter offer has been notified
   let notification: Notification = {
     foreground: <CounterOfferNotification>{
       driver: notificationForQueue.driver,
