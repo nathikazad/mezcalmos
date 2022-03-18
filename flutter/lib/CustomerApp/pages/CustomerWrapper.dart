@@ -48,8 +48,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   StreamSubscription? _authStateChnagesListener;
   @override
   void initState() {
-    mezDbgPrint(
-        "@kholouuuuuudouuuuuuu : ${Get.find<LanguageController>().strings}");
     Get.put(TaxiController(), permanent: true);
     Get.put(RestaurantController(), permanent: true);
     Get.put(RestaurantsInfoController(), permanent: true);

@@ -8,6 +8,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -254,19 +255,24 @@ class _StartingPointState extends State<StartingPoint> {
       print("[+] InitializedConfig -- the ${appType.toShortString()} !");
     }
 
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      onInit: () async => await _initializeConfig(),
-      title: appType.toShortString(),
-      theme: appTheme,
-      color: Colors.white,
-      enableLog: true,
-      getPages: routes,
-      initialRoute: kWrapperRoute,
-      // builder: (ctx, widget) {
-      //   responsiveSize(context);
-      //   return widget!;
-      // },
+    final bool? isPreviewModeEnabled = GetStorage().read<bool?>('previewMode');
+
+    return DevicePreview(
+      enabled: isPreviewModeEnabled == true ? true : false,
+      builder: (BuildContext context) => GetMaterialApp(
+        useInheritedMediaQuery: true,
+        locale:
+            isPreviewModeEnabled == true ? DevicePreview.locale(context) : null,
+        builder: isPreviewModeEnabled == true ? DevicePreview.appBuilder : null,
+        debugShowCheckedModeBanner: false,
+        onInit: () async => _initializeConfig(),
+        title: appType.toShortString(),
+        theme: appTheme,
+        color: Colors.white,
+        enableLog: true,
+        getPages: routes,
+        initialRoute: kWrapperRoute,
+      ),
     );
   }
 }
