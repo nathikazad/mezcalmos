@@ -12,8 +12,9 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'ChangeStatusButtons.dart';
 import 'OrderItemsCard.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-["pages"]["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderInfoCard"];
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
+        ["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderInfoCard"];
 //Display the order customer and items
 
 class OrderInfoCard extends StatefulWidget {
@@ -67,21 +68,21 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                             recipientType: ParticipantType.Customer));
                       },
                     ),
-                    Positioned(
-                        left: 28,
-                        top: 10,
-                        child: (controller.orderHaveNewMessageNotifications(
-                                widget.order.value!.orderId))
-                            ? Container(
-                                width: 10,
-                                height: 10,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        color: const Color(0xfff6efff),
-                                        width: 2),
-                                    color: const Color(0xffff0000)))
-                            : Container())
+                    // Positioned(
+                    //     left: 28,
+                    //     top: 10,
+                    //     child: (controller.orderHaveNewMessageNotifications(
+                    //             widget.order.value!.orderId))
+                    //         ? Container(
+                    //             width: 10,
+                    //             height: 10,
+                    //             decoration: BoxDecoration(
+                    //                 borderRadius: BorderRadius.circular(10),
+                    //                 border: Border.all(
+                    //                     color: const Color(0xfff6efff),
+                    //                     width: 2),
+                    //                 color: const Color(0xffff0000)))
+                    //         : Container())
                   ]),
                 ),
               ),
