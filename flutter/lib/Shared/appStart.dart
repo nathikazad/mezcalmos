@@ -261,8 +261,9 @@ class _StartingPointState extends State<StartingPoint> {
       enabled: isPreviewModeEnabled == true ? true : false,
       builder: (BuildContext context) => GetMaterialApp(
         useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
+        locale:
+            isPreviewModeEnabled == true ? DevicePreview.locale(context) : null,
+        builder: isPreviewModeEnabled == true ? DevicePreview.appBuilder : null,
         debugShowCheckedModeBanner: false,
         onInit: () async => _initializeConfig(),
         title: appType.toShortString(),
