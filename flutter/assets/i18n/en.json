@@ -380,7 +380,7 @@
                         },
                         "LaundryPricingComponent": {
                             "laundryPricing": "Laundry Pricing",
-                            "fixedRate": "Fixed Rate",
+                            "fixedRate": "Cost Per Kilo",
                             "orderWeight": "Order Weight",
                             "totalCost": "Total Cost",
                             "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
@@ -392,7 +392,7 @@
                             "totalCost": "Total Cost",
                             "deliveryLocation": "Delivery Location",
                             "laundryPricing": "Laundry Pricing",
-                            "fixedRate": "Fixed Rate",
+                            "fixedRate": "Cost Per Kilo",
                             "orderWeight": "Order Weight",
                             "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
                         }

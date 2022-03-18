@@ -3,35 +3,37 @@ import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 
 class Laundry extends Service {
+  num costPerKilo = 20;
   Laundry(
-      {
-      required ServiceUserInfo userInfo,
+      {required ServiceUserInfo userInfo,
       Schedule? schedule,
-      required ServiceState laundryState})
-      : super(
-            info: userInfo,
-            schedule: schedule,
-            state: laundryState);
+      required ServiceState laundryState,
+      required num costPerKilo})
+      : super(info: userInfo, schedule: schedule, state: laundryState);
 
   factory Laundry.fromLaundryData(
+      // ignore: avoid_annotating_with_dynamic
       {required String laundryId, required dynamic laundryData}) {
-    ServiceState laundryState = ServiceState(
+    final ServiceState laundryState = ServiceState(
         laundryData["state"]?["authorizationStatus"]
                 ?.toString()
                 .toAuthorizationStatus() ??
             AuthorizationStatus.Unauthorized,
         laundryData["state"]?["available"] ?? false);
 
-    Schedule? schedule = laundryData["details"]["schedule"] != null
+    final Schedule? schedule = laundryData["details"]["schedule"] != null
         ? Schedule.fromData(laundryData["details"]["schedule"])
         : null;
 
-    
+    final num costPerKilo = laundryData["details"]["costPerKilo"] != null
+        ? laundryData["details"]["costPerKilo"]
+        : 20;
 
-    Laundry laundry = Laundry(
+    final Laundry laundry = Laundry(
         userInfo: ServiceUserInfo.fromData(laundryData["info"]),
         schedule: schedule,
-        laundryState: laundryState);
+        laundryState: laundryState,
+        costPerKilo: costPerKilo);
     return laundry;
   }
 

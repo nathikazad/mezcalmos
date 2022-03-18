@@ -33,7 +33,7 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
                 Text(
                   (order.weight != null)
-                      ? '${order.price * order.weight!} \$'
+                      ? '${order.costPerKilo * order.weight!} \$'
                       : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -67,7 +67,7 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
                 Text(
                   (order.weight != null)
-                      ? '${order.price * order.weight! + 40} \$'
+                      ? '${order.costPerKilo * order.weight! + 40} \$'
                       : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),

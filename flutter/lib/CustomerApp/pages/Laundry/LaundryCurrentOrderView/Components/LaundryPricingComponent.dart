@@ -32,7 +32,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  "${order.price} \$ / kg",
+                  "${order.costPerKilo} \$ / kg",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -67,7 +67,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                 ),
                 Text(
                   (order.weight != null)
-                      ? '${order.price * order.weight!} \$'
+                      ? '${order.costPerKilo * order.weight!} \$'
                       : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
