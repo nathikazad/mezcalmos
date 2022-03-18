@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/BottomBarItemViewScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ChooseOneCheckBox.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ChoosenManyCheckBox.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
@@ -15,16 +18,13 @@ import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'components/BottomBarItemViewScreen.dart';
-import 'components/ChooseOneCheckBox.dart';
-import 'components/ChoosenManyCheckBox.dart';
 
-final currency = new NumberFormat("#,##0.00", "en_US");
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
+// ignore_for_file: constant_identifier_names
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-    ["Restaurants"]["ViewItemScreen"]["ViewItemScreen"];
+    ["pages"]["Restaurants"]["ViewItemScreen"]["ViewItemScreen"];
 
 class ViewItemScreen extends StatefulWidget {
   ViewItemScreen({Key? key, required this.viewItemScreenMode})
@@ -38,7 +38,7 @@ class ViewItemScreen extends StatefulWidget {
 class _ViewItemScreenState extends State<ViewItemScreen> {
   LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
   AuthController auth = Get.find<AuthController>();
-  Rxn<CartItem> cartItem = Rxn();
+  Rxn<CartItem> cartItem = Rxn<CartItem>();
   RestaurantController restaurantCartController =
       Get.find<RestaurantController>();
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
@@ -185,6 +185,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     textController: _noteTextEdittingController,
                     hint: _i18n()["notes"],
                     onChangeCallback: (String value) {
+                      mezDbgPrint(
+                          "@IOIOIO@ | ${cartItem.value} notes : $value");
                       cartItem.value?.notes = value;
                     },
                   ),

@@ -91,6 +91,8 @@ class Cart {
     return this.cartItems.firstWhereOrNull((element) => element.id == id);
   }
 
+  void setCartNotes(String? notes) => this.notes = notes;
+
   Map<String, dynamic> toFirebaseFormattedJson() {
     Map<String, dynamic> items = {};
     this.cartItems.forEach((element) {

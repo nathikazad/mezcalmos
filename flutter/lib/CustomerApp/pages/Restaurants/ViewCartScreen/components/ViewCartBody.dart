@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
@@ -15,9 +16,14 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["ViewCartBody"];
 
 class ViewCartBody extends StatefulWidget {
-  final Function({Location? location})? setLocationCallBack;
+  final void Function({Location? location})? setLocationCallBack;
+  final TextEditingController notesTextController;
 
-  ViewCartBody({Key? key, this.setLocationCallBack}) : super(key: key);
+  const ViewCartBody({
+    required this.notesTextController,
+    Key? key,
+    this.setLocationCallBack,
+  }) : super(key: key);
 
   @override
   _ViewCartBodyState createState() => _ViewCartBodyState();
@@ -25,11 +31,9 @@ class ViewCartBody extends StatefulWidget {
 
 class _ViewCartBodyState extends State<ViewCartBody> {
   RestaurantController controller = Get.find<RestaurantController>();
-  TextEditingController textcontoller = new TextEditingController();
 
   @override
   void dispose() {
-    textcontoller.dispose();
     super.dispose();
   }
 
@@ -81,7 +85,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
               height: 15,
             ),
             TextFieldComponent(
-              textController: textcontoller,
+              textController: widget.notesTextController,
               hint: _i18n()["notes"],
             ),
             SizedBox(

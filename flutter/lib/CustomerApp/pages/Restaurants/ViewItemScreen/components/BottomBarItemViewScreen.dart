@@ -12,11 +12,11 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-        ["pages"]
-    ["Restaurants"]["ViewItemScreen"]["components"]["BottomBarItemViewScreen"];
+        ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
+    ["BottomBarItemViewScreen"];
 
 class BottomBarItemViewScreen extends StatefulWidget {
-  BottomBarItemViewScreen(
+  const BottomBarItemViewScreen(
       {Key? key,
       required this.cartItem,
       required this.mode,
@@ -51,9 +51,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
       height: 60,
       width: Get.width,
       color: Colors.red,
-      child: Center(
-          child: Text(
-              "${_i18n()["notAvailable"]}")),
+      child: Center(child: Text("${_i18n()["notAvailable"]}")),
     );
   }
 

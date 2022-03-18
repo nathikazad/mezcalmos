@@ -25,8 +25,7 @@ class ViewCartScreen extends StatefulWidget {
 }
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-    ["Restaurants"]["ViewCartScreen"]["ViewCartScreen"];
+    ["pages"]["Restaurants"]["ViewCartScreen"]["ViewCartScreen"];
 
 class _ViewCartScreenState extends State<ViewCartScreen> {
   RestaurantController controller = Get.find<RestaurantController>();
@@ -59,9 +58,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // mezDbgPrint(controller.cart.value.toLocation?.toFirebaseFormattedJson());
-
-    responsiveSize(context);
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
@@ -70,12 +66,14 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       body: Obx(() {
         mezDbgPrint("@sa@d@: ${controller.cart.value.cartItems.length}");
         if (controller.cart.value.cartItems.length > 0) {
-          return SingleChildScrollView(child: ViewCartBody(
+          return SingleChildScrollView(
+              child: ViewCartBody(
             setLocationCallBack: ({Location? location}) {
               setState(() {
                 orderToLocation = location;
               });
             },
+            notesTextController: textcontoller,
           ));
         } else {
           return CartIsEmptyScreen();
@@ -152,7 +150,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         });
         controller.cart.value.toLocation = orderToLocation;
         controller.cart.value.notes = textcontoller.text;
-        mezDbgPrint(controller.cart.value.toFirebaseFormattedJson().toString());
+        mezDbgPrint(
+            "@ssss@ OOOORRRDDEEEEER :: ${controller.cart.value.toFirebaseFormattedJson().toString()}");
         //     controller.cart.value.restaurant!.id = "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx";
 
         var response = await controller.checkout();
