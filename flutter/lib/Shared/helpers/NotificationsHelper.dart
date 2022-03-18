@@ -27,35 +27,11 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
   });
 }
 
-void _displayNotification(notifs.Notification notification) async {
+Future<void> _displayNotification(notifs.Notification notification) async {
   await Get.find<SettingsController>().playNotificationSound();
   // mezDbgPrint(notification.imgUrl);
   if (notification.notificationAction == notifs.NotificationAction.ShowPopUp) {
-    if (Get.currentRoute == notification.linkUrl)
-      await oneButtonDialog(
-          title: notification.title,
-          body: notification.body,
-          buttonStyle: MezDialogButtonStyle(
-              buttonText: "Ok",
-              buttonColor: Color(0xffffffff),
-              buttonShadowColor: Color(0xfffdfdfd)));
-    else
-      await twoButtonDialog(
-          title: notification.title,
-          body: notification.body,
-          buttonLeftStyle: MezDialogButtonStyle(
-              buttonText: "Ok",
-              buttonColor: Color(0xffffffff),
-              buttonShadowColor: Color(0xfffdfdfd)),
-          buttonRightStyle: MezDialogButtonStyle(
-              buttonText: notification.linkText ?? _i18n()['view'],
-              buttonColor: Color(0xffffffff),
-              buttonShadowColor: Color(0xfffdfdfd)),
-          rightButtonCallback: () {
-            Get.back();
-            return Get.toNamed(notification.linkUrl);
-          },
-          leftButtonCallback: () {});
+    await decideWhichButtonDialogToUse(notification);
   } else {
     notificationSnackBar(notification.imgUrl, notification.title,
         notification.body, notification.formattedTime, () async {
@@ -63,6 +39,35 @@ void _displayNotification(notifs.Notification notification) async {
       await Get.toNamed(notification.linkUrl);
     });
   }
+}
+
+Future<void> decideWhichButtonDialogToUse(
+    notifs.Notification notification) async {
+  if (Get.currentRoute == notification.linkUrl)
+    await oneButtonDialog(
+        title: notification.title,
+        body: notification.body,
+        buttonStyle: MezDialogButtonStyle(
+            buttonText: "Ok",
+            buttonColor: Color(0xffffffff),
+            buttonShadowColor: Color(0xfffdfdfd)));
+  else
+    await twoButtonDialog(
+        title: notification.title,
+        body: notification.body,
+        buttonLeftStyle: MezDialogButtonStyle(
+            buttonText: "Ok",
+            buttonColor: Color(0xffffffff),
+            buttonShadowColor: Color(0xfffdfdfd)),
+        buttonRightStyle: MezDialogButtonStyle(
+            buttonText: notification.linkText ?? _i18n()['view'],
+            buttonColor: Color(0xffffffff),
+            buttonShadowColor: Color(0xfffdfdfd)),
+        rightButtonCallback: () {
+          Get.back();
+          return Get.toNamed(notification.linkUrl);
+        },
+        leftButtonCallback: () {});
 }
 
 void notificationSnackBar(
