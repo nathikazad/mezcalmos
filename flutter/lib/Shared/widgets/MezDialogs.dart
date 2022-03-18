@@ -26,7 +26,8 @@ extension TwoButtonExtension on TwoButtonDialogButton {
 Future<void> oneButtonDialog(
     {String? title,
     required String body,
-    required String imagUrl,
+    String? imagUrl,
+    Widget? buttonStyle,
     Color? bodyTextColor,
     double fontSize = 20,
     String buttonText = "Ok"}) async {
@@ -39,6 +40,7 @@ Future<void> oneButtonDialog(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
+        if (imagUrl != null)
         Flexible(
             fit: FlexFit.loose,
             child: Container(
@@ -66,7 +68,21 @@ Future<void> oneButtonDialog(
                     fontSize: fontSize,
                     color: bodyTextColor ?? Colors.grey.shade700),
               ),
-            ))
+            )),
+        SizedBox(
+          height: 20,
+        ),
+        Flexible(
+          child: Center(
+            child: Container(
+              width: 80,
+              child: InkWell(
+                child: buttonStyle,
+                onTap: Get.back,
+              ),
+            ),
+          ),
+        )
       ],
     ),
   );
