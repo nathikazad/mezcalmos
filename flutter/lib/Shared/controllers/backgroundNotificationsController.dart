@@ -49,6 +49,8 @@ class BackgroundNotificationsController extends GetxController {
   }
 
   void notificationClickHandler(RemoteMessage message) {
+    mezDbgPrint("notificationClickHandler");
+    mezDbgPrint(message.data["linkUrl"]);
     if (message.data["linkUrl"] != null) Get.toNamed(message.data["linkUrl"]);
   }
 

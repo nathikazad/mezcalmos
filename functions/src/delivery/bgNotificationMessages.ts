@@ -4,12 +4,12 @@ import { BackgroundNotification } from "../shared/models/Notification";
 export const deliveryNewOrderMessage: BackgroundNotification =
 {
   [Language.EN]: {
-    title: "Looking for a ride",
-    body: "We are finding you a taxi."
+    title: "New Order",
+    body: "You have been assigned a new order."
   },
   [Language.ES]: {
-    title: "Buscando para una taxi",
-    body: "Estamos buscandote un taxi"
+    title: "Nueva Orden",
+    body: "Tienes una nueva orden"
   }
 }
 
