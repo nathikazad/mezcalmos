@@ -184,8 +184,8 @@
                         },
                         "OrdersItemsCard": {
                             "orderItems": "Order Items",
-                            "canceledByAdmin": "Your order has been cancelled by the restaurant",
-                            "canceledByCustomer": "Your order has been cancelled",
+                            "canceledByAdmin": "Cancelled",
+                            "canceledByCustomer": "Cancelled",
                             "received": "Order Received",
                             "preparing": "Preparing the order",
                             "onTheWay": "On The Way",

@@ -184,8 +184,8 @@
                         },
                         "OrdersItemsCard": {
                             "orderItems": "Encargar Artículos",
-                            "canceledByAdmin": "Tu pedido es cancelado por el Restaurante.",
-                            "canceledByCustomer": "Su pedido es cancelado por el cliente.",
+                            "canceledByAdmin": "Cancelada",
+                            "canceledByCustomer": "Cancelada",
                             "received": "Recibida",
                             "preparing": "Preparando el pedido",
                             "onTheWay": "En camino",
