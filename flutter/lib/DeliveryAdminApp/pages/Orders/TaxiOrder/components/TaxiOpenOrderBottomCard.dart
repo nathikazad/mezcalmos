@@ -13,7 +13,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
 
 class TaxiOpenOrderBottomCard extends StatelessWidget {
   /// Bottom card of the open taxi order :  shows order info and buttons to handle the order
-  TaxiOpenOrderBottomCard({Key? key, required this.order}) : super(key: key);
+  const TaxiOpenOrderBottomCard({Key? key, required this.order})
+      : super(key: key);
   final TaxiOrder order;
 
   @override
@@ -128,7 +129,7 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
                   width: 5,
                 ),
                 CountdownTimer(
-                  endTime: order.orderTime.millisecondsSinceEpoch + 1000 * 600,
+                  endTime: order.orderTime.millisecondsSinceEpoch + 1000 * 300,
                   widgetBuilder: (_, CurrentRemainingTime? time) {
                     if (time == null) {
                       return Text('${_i18n()["orderExpired"]}');

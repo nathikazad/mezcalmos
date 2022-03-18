@@ -111,7 +111,7 @@ class TaxiOpenOrderCard extends StatelessWidget {
                   ),
                   CountdownTimer(
                     endTime:
-                        order.orderTime.millisecondsSinceEpoch + 1000 * 600,
+                        order.orderTime.millisecondsSinceEpoch + 1000 * 300,
                     widgetBuilder: (_, CurrentRemainingTime? time) {
                       if (time == null) {
                         return Text('${_i18n()["orderExpired"]}');
