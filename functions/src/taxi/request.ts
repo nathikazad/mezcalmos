@@ -35,7 +35,7 @@ export = functions.https.onCall(async (data, context) => {
   try {
     let customerInProcessOrders: Record<string, Order> = (await customerNodes.inProcessOrders(customerId).once('value')).val();
     // check if customer is already in another taxi
-    if (Object.values(customerInProcessOrders).filter(order => order.orderType == OrderType.Taxi).length > 0) {
+    if (customerInProcessOrders != null && Object.values(customerInProcessOrders).filter(order => order.orderType == OrderType.Taxi).length > 0) {
       return {
         status: "Error",
         errorMessage: "Customer is already in another taxi"

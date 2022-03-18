@@ -11,7 +11,7 @@ class DeliveryDriverState {
   DeliveryDriverState({required this.isAuthorized, required this.isOnline});
 
   factory DeliveryDriverState.fromSnapshot(dynamic data) {
-    mezDbgPrint("DeliveryDriver ${data}");
+    // mezDbgPrint("DeliveryDriver ${data}");
     bool isAuthorized =
         data == null ? false : data['authorizationStatus'] == "authorized";
     bool isOnline = data == null ? false : data['isOnline'] == true;

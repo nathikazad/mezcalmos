@@ -50,11 +50,13 @@ class MessageController extends GetxController {
       {required String message,
       required String chatId,
       String? orderId}) async {
+        
     DatabaseReference messageNode = _databaseHelper.firebaseDatabase
         .reference()
         .child('${chatNode(chatId)}/messages')
         .push();
 
+    // ignore: unawaited_futures
     messageNode.set(<String, dynamic>{
       "message": message,
       "userId": _authController.user!.id,
@@ -63,6 +65,7 @@ class MessageController extends GetxController {
       "orderId": orderId
     });
 
+    // ignore: unawaited_futures
     _databaseHelper.firebaseDatabase
         .reference()
         .child('notificationQueue/${messageNode.key}')
