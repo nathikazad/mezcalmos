@@ -97,7 +97,7 @@ class CounterOfferNotificationForQueue extends NotificationForQueue {
         "timestamp": DateTime.now().toUtc().toString(),
         "orderId": orderId,
         "customerId": customerId,
-        "counterOfferPrice": price,
+        "price": price,
         "notificationType": notificationType.toFirebaseFormatString()
       };
 }
