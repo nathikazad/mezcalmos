@@ -400,7 +400,7 @@
                         },
                         "LaundryPricingComponent": {
                             "laundryPricing": "Precios de lavandería",
-                            "fixedRate": "Tipo de interés fijo",
+                            "fixedRate": "Costo por kilo",
                             "orderWeight": "Peso de pedido",
                             "totalCost": "Costo Total",
                             "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido."
@@ -412,7 +412,7 @@
                             "totalCost": "Costo Total",
                             "deliveryLocation": "Lugar De Entrega",
                             "laundryPricing": "Precios de lavandería",
-                            "fixedRate": "Tipo de interés fijo",
+                            "fixedRate": "Costo por kilo",
                             "orderWeight": "Peso de pedido",
                             "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido."
                         }

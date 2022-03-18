@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/CustomerApp/models/OnlineTaxiDriver.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -11,10 +12,14 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:location/location.dart' as GeoLoc;
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Taxi']['RequestTaxiScreen'];
 
 class RequestTaxiController {
   final LocationPickerController locationPickerController =
@@ -22,8 +27,6 @@ class RequestTaxiController {
   final LocationSearchBarController locationSearchBarController =
       LocationSearchBarController();
   final TaxiController controller = Get.put<TaxiController>(TaxiController());
-  final LanguageController languageController = Get.find<LanguageController>();
-  final OrderController orderController = Get.find<OrderController>();
 
   Rx<SearchComponentType> currentFocusedTextField =
       SearchComponentType.From.obs;
@@ -83,21 +86,21 @@ class RequestTaxiController {
     locationPickerController.setAnimateMarkersPolyLinesBounds(true);
     locationPickerController.animateAndUpdateBounds();
     updateRouteInformation()
-        .then((value) => locationPickerController.showConfirmButton());
+        .then((_) => locationPickerController.showConfirmButton());
 
     pickedFromTo.value = true;
   }
 
   /// Calls `TaxiController.fecthOnlineTaxiDrivers` and check if within 5KM then returns the driver.
   void startFetchingOnlineDrivers() {
-    controller.fecthOnlineTaxiDrivers().then((drivers) {
+    controller.fecthOnlineTaxiDrivers().then((List<OnlineTaxiDriver> drivers) {
       // Weo loop throught each driver and we call the mgoogleMap refresh from withing the controller
-      drivers.forEach((driver) {
+      drivers.forEach((OnlineTaxiDriver driver) {
         mezDbgPrint("======= [ driver ] ====== ${driver.toJson()}");
-        LatLng driverLocation =
+        final LatLng driverLocation =
             LatLng(driver.position['lat'], driver.position['lng']);
 
-        bool isWithinRange = MapHelper.calculateDistance(
+        final bool isWithinRange = MapHelper.calculateDistance(
                 Location.buildLocationData(
                     driverLocation.latitude, driverLocation.longitude),
                 Location.buildLocationData(
@@ -152,7 +155,7 @@ class RequestTaxiController {
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
       locationPickerController.animateAndUpdateBounds();
       updateRouteInformation()
-          .then((value) => locationPickerController.showConfirmButton());
+          .then((_) => locationPickerController.showConfirmButton());
       pickedFromTo.value = true;
     } else {
       locationPickerController.setAnimateMarkersPolyLinesBounds(false);
@@ -170,7 +173,7 @@ class RequestTaxiController {
           "[+] s@@d ==> [ REQUEST TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
       await Get.find<OrderController>()
           .getCurrentOrderStream(orderId)
-          .firstWhere((order) => order != null);
+          .firstWhere((Order? order) => order != null);
     } else
       mezDbgPrint(
           "[+] s@@d ==> [ REQUEST TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
@@ -181,24 +184,22 @@ class RequestTaxiController {
   /// return true if success , false else.
   Future<bool> requestTaxi() async {
     // we show grayed Confirm button so the user won't press it twice.
-    this.locationPickerController.showLoadingIconOnConfirm();
+    locationPickerController.showLoadingIconOnConfirm();
 
     // build order and call controller function
-    ServerResponse response = await controller.requestTaxi(taxiRequest.value);
+    final ServerResponse response =
+        await controller.requestTaxi(taxiRequest.value);
     if (response.success) {
-      String orderId = response.data["orderId"];
+      final String orderId = response.data["orderId"];
       await waitForCurrentOrderStreamFirstTrigger(orderId);
       // in case the widget is still mounted , then make dart scheduale this delayed call as soon as possible ,
       // so we don't fall into assertion error ('!_debugLocked': is not true.)
-      await Future.delayed(Duration.zero, () {
+      await Future<void>.delayed(Duration.zero, () {
         popEverythingAndNavigateTo(getTaxiOrderRoute(orderId));
       });
       return Future<bool>.value(true);
     } else {
-      MezSnackbar(
-          "Oops :(",
-          Get.find<LanguageController>().strings['customer']['taxiView']
-              ['failedToRequestTaxi'],
+      MezSnackbar("Oops :(", _i18n()['failedToRequestTaxi'],
           position: SnackPosition.TOP);
       locationPickerController.showConfirmButton();
       return Future<bool>.value(false);
@@ -207,9 +208,10 @@ class RequestTaxiController {
 
 /******************************  Helper function ************************************/
   void updateModelAndMarker(
-      SearchComponentType textFieldType, Location newLocation) async {
+      SearchComponentType textFieldType, Location newLocation) {
     if (textFieldType == SearchComponentType.From) {
       taxiRequest.value.setFromLocation(newLocation);
+      //ignore_for_file:unawaited_futures
       locationPickerController.addOrUpdateUserMarker(
           markerId: textFieldType.toShortString(),
           latLng: newLocation.toLatLng());
@@ -228,10 +230,10 @@ class RequestTaxiController {
   }
 
   Future<void> updateRouteInformation() async {
-    MapHelper.Route? route = await MapHelper.getDurationAndDistance(
+    final MapHelper.Route? route = await MapHelper.getDurationAndDistance(
         taxiRequest.value.from!, taxiRequest.value.to!);
     if (route != null) {
-      int estimatedPrice =
+      final int estimatedPrice =
           getEstimatedRidePriceInPesos(route.distance.distanceInMeters);
       taxiRequest.value.setEstimatedPrice(estimatedPrice);
       locationPickerController.addPolyline(route.polylineList);
@@ -245,7 +247,7 @@ class RequestTaxiController {
   }
 
   int getEstimatedRidePriceInPesos(int distanceInMeteres) {
-    int roundedKm = (distanceInMeteres / 1000).round();
+    final int roundedKm = (distanceInMeteres / 1000).round();
     return roundedKm <= 1 ? 35 : roundedKm * 15;
   }
 

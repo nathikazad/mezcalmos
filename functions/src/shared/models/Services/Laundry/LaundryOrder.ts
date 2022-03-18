@@ -9,6 +9,8 @@ export interface LaundryOrder extends TwoWayDeliverableOrder {
   notes?: string;
   weight?: number;
   status: LaundryOrderStatus;
+  shippingCost: number;
+  costPerKilo: number;
 }
 
 export enum LaundryOrderStatus {
@@ -39,7 +41,9 @@ export function constructLaundryOrder(
     notes: params.notes,
     cost: 0,
     paymentType: params.paymentType,
-    to: params.to
+    to: params.to,
+    shippingCost: 50,
+    costPerKilo: 20
   }
 }
 

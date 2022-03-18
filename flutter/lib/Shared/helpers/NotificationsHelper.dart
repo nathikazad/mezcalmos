@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_function_invocation
+
 import 'dart:async';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -25,11 +27,32 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
   });
 }
 
-void _displayNotification(notifs.Notification notification) async {
+Future<void> _displayNotification(notifs.Notification notification) async {
   await Get.find<SettingsController>().playNotificationSound();
   // mezDbgPrint(notification.imgUrl);
   if (notification.notificationAction == notifs.NotificationAction.ShowPopUp) {
-    twoButtonDialog(
+    await decideWhichButtonDialogToUse(notification);
+  } else {
+    notificationSnackBar(notification.imgUrl, notification.title,
+        notification.body, notification.formattedTime, () async {
+      // mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
+      await Get.toNamed(notification.linkUrl);
+    });
+  }
+}
+
+Future<void> decideWhichButtonDialogToUse(
+    notifs.Notification notification) async {
+  if (Get.currentRoute == notification.linkUrl)
+    await oneButtonDialog(
+        title: notification.title,
+        body: notification.body,
+        buttonStyle: MezDialogButtonStyle(
+            buttonText: "Ok",
+            buttonColor: Color(0xffffffff),
+            buttonShadowColor: Color(0xfffdfdfd)));
+  else
+    await twoButtonDialog(
         title: notification.title,
         body: notification.body,
         buttonLeftStyle: MezDialogButtonStyle(
@@ -41,16 +64,10 @@ void _displayNotification(notifs.Notification notification) async {
             buttonColor: Color(0xffffffff),
             buttonShadowColor: Color(0xfffdfdfd)),
         rightButtonCallback: () {
+          Get.back();
           return Get.toNamed(notification.linkUrl);
         },
         leftButtonCallback: () {});
-  } else {
-    notificationSnackBar(notification.imgUrl, notification.title,
-        notification.body, notification.formattedTime, () async {
-      // mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
-      Get.toNamed(notification.linkUrl);
-    });
-  }
 }
 
 void notificationSnackBar(

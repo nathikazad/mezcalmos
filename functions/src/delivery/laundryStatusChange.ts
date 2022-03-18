@@ -119,6 +119,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
       }
     }
     order.weight = data.weight
+    order.cost = order.weight! * order.costPerKilo + order.shippingCost
   }
 
   order.status = newStatus

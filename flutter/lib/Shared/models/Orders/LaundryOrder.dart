@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -30,7 +32,7 @@ extension ParseOrderStatusToString on LaundryOrderStatus {
 extension ParseStringToOrderStatus on String {
   LaundryOrderStatus toLaundryOrderStatus() {
     return LaundryOrderStatus.values.firstWhere((LaundryOrderStatus e) =>
-        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
+        e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
   }
 }
 
@@ -39,7 +41,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   String? notes;
   UserInfo? laundry;
   LaundryOrderStatus status;
-  num price;
+  num shippingCost;
+  num costPerKilo;
   LaundryOrder(
       {required String orderId,
       required num cost,
@@ -49,7 +52,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.status,
       required UserInfo customer,
       required this.laundry,
-      this.price = 20,
+      required this.shippingCost,
+      required this.costPerKilo,
       DeliveryDriverUserInfo? dropoffDriver,
       String? dropOffDriverChatId,
       DeliveryDriverUserInfo? pickupDriver,
@@ -69,10 +73,9 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             pickupDriver: pickupDriver,
             pickupDriverChatId: pickupDriverChatId);
 
-  factory LaundryOrder.fromData(id, data) {
+  factory LaundryOrder.fromData(dynamic id, dynamic data) {
     final LaundryOrder laundryOrder = LaundryOrder(
         orderId: id,
-        price: 20,
         customer: UserInfo.fromData(data["customer"]),
         status: data['status'].toString().toLaundryOrderStatus(),
         cost: data['cost'],
@@ -80,6 +83,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         orderTime: DateTime.parse(data["orderTime"]),
         paymentType: data["paymentType"].toString().toPaymentType(),
         weight: data["weight"],
+        shippingCost: data['shippingCost'],
+        costPerKilo: data['costPerKilo'],
         notes: data["notes"],
         laundry: (data["laundry"] != null)
             ? UserInfo.fromData(data["laundry"])
