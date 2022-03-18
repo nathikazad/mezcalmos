@@ -1058,7 +1058,9 @@
             "laundryOtwDeliveryTitle": "Delivery on the way",
             "laundryOtwDeliveryBody": "order is on the way to the customer",
             "laundryDeliveredTitle": "Delivered",
-            "LaundryDeliveredBody": "Order has been delivered"
+            "LaundryDeliveredBody": "Order has been delivered",
+            "driverNotifTitle": "New Order",
+            "driverNotifBody": "You got a new order"
 
         }
     }

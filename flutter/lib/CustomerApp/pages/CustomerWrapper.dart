@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
@@ -8,7 +9,6 @@ import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
+import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -77,7 +78,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
 
     responsiveSize(context);
     return WillPopScope(
@@ -86,7 +87,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             appBar: CustomerAppBar(
               autoBack: false,
             ),
-            body: LayoutBuilder(builder: (context, constraints) {
+            body: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
               return SingleChildScrollView(
                   child: ConstrainedBox(
                       constraints: BoxConstraints(
@@ -125,7 +127,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   void startAuthListener() {
     _authStateChnagesListener?.cancel();
     _authStateChnagesListener = null;
-    _authStateChnagesListener = auth.authStateStream.listen((fireUser) {
+    _authStateChnagesListener = auth.authStateStream.listen((User? fireUser) {
       if (fireUser != null) {
         _doIfFireAuthUserIsNotNull();
       } else {
@@ -142,13 +144,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     _orderCountListener = _orderController!.currentOrders.stream.listen((_) {
       numberOfCurrentOrders.value = _orderController!.currentOrders.length;
     });
-    String? userId = Get.find<AuthController>().fireAuthUser!.uid;
+    final String? userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
     // listening for notification Permissions!
     listenForLocationPermissions();
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
-            customerNotificationsNode(userId), customerNotificationHandler);
+            customerNotificationsNode(userId!), customerNotificationHandler);
     if (Get.currentRoute == kHomeRoute) {
       Future.microtask(() {
         navigateToOrdersIfNecessary(_orderController!.currentOrders);
@@ -159,17 +161,18 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   void checkTaxiCurrentOrdersAndNavigate() {
     _orderController = Get.find<OrderController>();
     // return;
-    num noOfCurrentTaxiOrders = _orderController
+    final num noOfCurrentTaxiOrders = _orderController
             ?.currentOrders()
-            .where((currentOrder) => currentOrder.orderType == OrderType.Taxi)
+            .where((Order currentOrder) =>
+                currentOrder.orderType == OrderType.Taxi)
             .length ??
         0;
     if (noOfCurrentTaxiOrders == 0) {
       Get.toNamed(kTaxiRequestRoute);
     } else {
-      String orderId = _orderController!.currentOrders
+      final String orderId = _orderController!.currentOrders
           .firstWhere(
-              (currentOrder) => currentOrder.orderType == OrderType.Taxi)
+              (Order currentOrder) => currentOrder.orderType == OrderType.Taxi)
           .orderId;
       Get.toNamed(getTaxiOrderRoute(orderId));
     }
@@ -222,11 +225,12 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/customer/taxi/taxiService.png",
             subtitle: "${_i18n()['taxi']["subtitle"]}",
             ontap: () {
-              if (Get.find<AuthController>().fireAuthUser == null) {
-                Get.toNamed(kTaxiRequestRoute);
-              } else {
-                checkTaxiCurrentOrdersAndNavigate();
-              }
+              getServiceRoute(
+                  orderType: OrderType.Taxi,
+                  serviceRoute: kTaxiRequestRoute,
+                  singleOrderRoute: (String orderId) {
+                    Get.toNamed(getTaxiOrderRoute(orderId));
+                  });
             },
           ),
         ),
@@ -238,23 +242,12 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/customer/restaurants/restaurantService.png",
             subtitle: "${_i18n()['food']["subtitle"]}",
             ontap: () {
-              if (auth.fireAuthUser != null) {
-                List<Order> restaurantOrders = Get.find<OrderController>()
-                    .currentOrders
-                    .where((p0) => p0.orderType == OrderType.Restaurant)
-                    .toList();
-
-                if (restaurantOrders.length == 1) {
-                  Get.toNamed(
-                      getRestaurantOrderRoute(restaurantOrders[0].orderId));
-                } else if (restaurantOrders.length > 1) {
-                  Get.toNamed(kOrdersRoute);
-                } else {
-                  Get.toNamed(kRestaurantsRoute);
-                }
-              } else {
-                Get.toNamed(kRestaurantsRoute);
-              }
+              getServiceRoute(
+                  orderType: OrderType.Restaurant,
+                  serviceRoute: kRestaurantsRoute,
+                  singleOrderRoute: (String orderId) {
+                    Get.toNamed(getRestaurantOrderRoute(orderId));
+                  });
             },
           ),
         ),
@@ -263,12 +256,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         Obx(
           () => ServicesCard(
             title: "${_i18n()['laundry']["title"]}",
+            subtitle: "${_i18n()['laundry']["subtitle"]}",
             url: "assets/images/customer/laundryService.png",
             ontap: () {
               getServiceRoute(
                   orderType: OrderType.Laundry,
                   serviceRoute: kLaundryOrderRequest,
-                  singleOrderRoute: (v) {
+                  singleOrderRoute: (String v) {
                     Get.toNamed(getLaundyOrderRoute(v));
                   });
             },
@@ -282,10 +276,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       {required OrderType orderType,
       required String serviceRoute,
       required Function(String) singleOrderRoute}) {
-    if (auth.fireAuthUser != null) {
-      List<Order> orders = Get.find<OrderController>()
+    if (Get.find<AuthController>().fireAuthUser != null) {
+      final List<Order> orders = Get.find<OrderController>()
           .currentOrders
-          .where((p0) => p0.orderType == orderType)
+          .where((Order p0) => p0.orderType == orderType)
           .toList();
 
       if (orders.length == 1) {
@@ -317,29 +311,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     }
   }
 
-  void serviceRouting(
-      {required OrderType orderType,
-      required Function(String) singleOrderRoute,
-      required Future<dynamic>? serviceRoute}) {
-    List<Order> orders = Get.find<OrderController>()
-        .currentOrders
-        .where((p0) => p0.orderType == orderType)
-        .toList();
-
-    if (orders.length == 1) {
-      singleOrderRoute(orders[0].orderId);
-    } else if (orders.length > 1) {
-      Get.toNamed(kOrdersRoute);
-    } else {
-      serviceRoute;
-    }
-  }
-
   void listenForLocationPermissions() {
     _locationStreamSub?.cancel();
     _locationStreamSub = Get.find<LocationController>().locationPermissionStream
         // .distinct()
-        .listen((locationPermission) {
+        .listen((bool locationPermission) {
       if (locationPermission == false &&
           Get.currentRoute != kLocationPermissionPage) {
         Get.toNamed(kLocationPermissionPage);

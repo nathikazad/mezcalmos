@@ -21,9 +21,10 @@ Notification deliveryDriverNotificationHandler(String key, value) {
           id: key,
           linkUrl: getLinkUrl(value['orderType'].toString().toOrderType(),
               value['orderId']), // needs to be changed, need to add laundry
-          body: value['message'], // needs to be changed
-          imgUrl: value['sender']['image'], // needs to be changed
-          title: value['sender']['name'], // needs to be changed
+          body: '${_i18n()['driverNotifBody']}', // needs to be changed
+          imgUrl:
+              'assets/images/shared/notifications/deliverynNotif.png', // needs to be changed
+          title: '${_i18n()['driverNotifTitle']}',
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewMessage,
           notificationAction:

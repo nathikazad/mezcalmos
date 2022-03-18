@@ -21,9 +21,12 @@ import 'package:sizer/sizer.dart';
 
 enum PickLocationMode { AddNewLocation, EditLocation, NonLoggedInPick }
 
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["PickLocationScreen"]["PickLocationView"];
+
 class PickLocationView extends StatefulWidget {
   final PickLocationMode? pickLocationMode;
-  PickLocationView(this.pickLocationMode);
+  const PickLocationView(this.pickLocationMode);
   @override
   _PickLocationViewState createState() => _PickLocationViewState();
 }
@@ -36,22 +39,21 @@ class _PickLocationViewState extends State<PickLocationView> {
   bool showScreenLoading = false;
   LatLng? currentLatLng;
 
-  dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-      ["pages"]["PickLocationScreen"]["PickLocationView"];
-  CustomerAuthController customerAuthController =
-      Get.find<CustomerAuthController>();
+  LanguageController _lang = Get.find<LanguageController>();
+  // CustomerAuthController customerAuthController =
+  //     Get.find<CustomerAuthController>();
 
   // Future<void> geoCodeAndSetNewAddress(LatLng pickedLocation) async {
   //   String? address = await getAdressFromLatLng(
   //       LatLng(pickedLocation.latitude, pickedLocation.longitude));
   //   locationPickerController.location.value!.address = address ??
-  //       "${_i18n().strings['shared']['pickLocation']['address']} : ${pickedLocation.latitude}, ${pickedLocation.longitude}";
+  //       "${_lang.strings['shared']['pickLocation']['address']} : ${pickedLocation.latitude}, ${pickedLocation.longitude}";
   // }
 
   @override
   void initState() {
     if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
-      GeoLoc.Location().getLocation().then((locData) {
+      GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
         // first we set Location without GeoCoding the address
         setNewLocationOnController(
             latlng: LatLng(locData.latitude!, locData.longitude!));
@@ -60,12 +62,12 @@ class _PickLocationViewState extends State<PickLocationView> {
             LatLng(locData.latitude!, locData.longitude!));
       });
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
-      var x = Get.parameters["id"];
+      final String? x = Get.parameters["id"];
       savedLocation = Get.find<CustomerAuthController>()
           .customerRxn()!
           .savedLocations
-          .firstWhere((saved) => saved.id == x);
-      GeoLoc.Location().getLocation().then((locData) {
+          .firstWhere((SavedLocation saved) => saved.id == x);
+      GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
         setState(() {
           locationPickerController.location.value = Location.fromFirebaseData({
             "address": savedLocation!.location?.address,
@@ -77,7 +79,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     } else {
       mezDbgPrint("Iniiit");
 
-      GeoLoc.Location().getLocation().then((value) {
+      GeoLoc.Location().getLocation().then((GeoLoc.LocationData value) {
         currentLatLng = LatLng(value.latitude!, value.longitude!);
 
         geoCodeAndSetLocation(currentLatLng!);
@@ -88,7 +90,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   }
 
   geoCodeAndSetLocation(LatLng currentLoc) async {
-    String? address = await getAdressFromLatLng(currentLoc);
+    final String? address = await getAdressFromLatLng(currentLoc);
 
     setState(() {
       locationPickerController.setLocation(Location.fromFirebaseData({
@@ -109,7 +111,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
-        bottomNavigationBar: this.showScreenLoading == false
+        bottomNavigationBar: showScreenLoading == false
             ? ButtonComponent(
                 function: () async => await onPickButtonClick(context),
                 widget: Center(
@@ -140,7 +142,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   ///
   /// To not make the Map dependable on awaiting it to finish and onDone , it sets it to the controller::location.
   void geoCodeAndSetControllerLocation(LatLng latLng) {
-    getAdressFromLatLng(latLng).then((addrs) {
+    getAdressFromLatLng(latLng).then((String? addrs) {
       mezDbgPrint("+ Done resolving user's Address $addrs !");
       setNewLocationOnController(latlng: latLng, address: addrs);
     }).catchError((e) {
@@ -153,7 +155,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   ///
   /// an Awaitable method, wheres the other is not, we use this when user clicks Save/Add new Saved Location
   Future<void> awaitGeoCodeAndSetControllerLocation(LatLng latLng) async {
-    String? addrs = await getAdressFromLatLng(latLng);
+    final String? addrs = await getAdressFromLatLng(latLng);
     setNewLocationOnController(latlng: latLng, address: addrs);
   }
 
@@ -169,7 +171,7 @@ class _PickLocationViewState extends State<PickLocationView> {
 
   Future<void> onPickButtonClick(BuildContext context) async {
     String? _result;
-    LatLng _pickedLoc = await locationPickerController.getMapCenter();
+    final LatLng _pickedLoc = await locationPickerController.getMapCenter();
 
     locationPickerController.moveToNewLatLng(
         _pickedLoc.latitude, _pickedLoc.longitude);
@@ -270,7 +272,7 @@ class _PickLocationViewState extends State<PickLocationView> {
             child: locationPickerController.location.value != null
                 ? LocationPicker(
                     showBottomButton: false,
-                    locationPickerMapController: this.locationPickerController,
+                    locationPickerMapController: locationPickerController,
                     notifyParentOfConfirm: (_) {},
                     notifyParentOfLocationFinalized: (Location location) {
                       setState(() {

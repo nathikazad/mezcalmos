@@ -1058,7 +1058,9 @@
             "laundryOtwDeliveryTitle": "Entrega en el camino",
             "laundryOtwDeliveryBody": "El pedido está en camino al cliente.",
             "laundryDeliveredTitle": "Entregada",
-            "LaundryDeliveredBody": "Pedido ha sido entregado"
+            "LaundryDeliveredBody": "Pedido ha sido entregado",
+            "driverNotifTitle": "Nuevo orden",
+            "driverNotifBody": "Tienes un nuevo pedido"
 
         }
     }
