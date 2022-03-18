@@ -41,6 +41,7 @@ class BackgroundNotificationsController extends GetxController {
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     }
+    // ignore: unawaited_futures, always_specify_types
     _messaging.getInitialMessage().then((message) =>
         message != null ? notificationClickHandler(message) : null);
     FirebaseMessaging.onMessageOpenedApp.listen((message) {

@@ -83,6 +83,18 @@ Notification newOrderNotification(String key, value) {
           variableParams: value,
           notificationAction:
               value["notificationAction"].toString().toNotificationAction());
+    case OrderType.Taxi:
+      return Notification(
+          id: key,
+          linkUrl: getTaxiOrderRoute(value['orderId']),
+          body: 'New order from taxi',
+          imgUrl: 'assets/images/customer/taxi/taxiDriverImg.png',
+          title: "New Taxi Order",
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.NewOrder,
+          variableParams: value,
+          notificationAction:
+              value["notificationAction"].toString().toNotificationAction());
     default:
       throw Exception("Invalid order type");
   }
