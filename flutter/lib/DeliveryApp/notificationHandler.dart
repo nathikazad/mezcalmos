@@ -23,7 +23,7 @@ Notification deliveryDriverNotificationHandler(String key, value) {
               value['orderId']), // needs to be changed, need to add laundry
           body: '${_i18n()['driverNotifBody']}', // needs to be changed
           imgUrl:
-              'assets/images/shared/notifications/deliverynNotif.png', // needs to be changed
+              'assets/images/shared/notifications/deliveryNotif.png', // needs to be changed
           title: '${_i18n()['driverNotifTitle']}',
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewMessage,
