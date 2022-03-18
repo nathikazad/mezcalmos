@@ -18,7 +18,7 @@ Notification customerNotificationHandler(String key, value) {
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
     case NotificationType.NewCounterOffer:
-
+      return newCounterOfferNotification(key, value);
     case NotificationType.OrderStatusChange:
       final OrderType orderType = value['orderType'].toString().toOrderType();
       mezDbgPrint(value['orderType']);

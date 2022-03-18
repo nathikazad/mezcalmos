@@ -176,8 +176,10 @@ class RequestTaxiController {
           "[+] s@@d ==> [ REQUEST TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
   }
 
-  // after confirm button is clicked on mez pick google map
-  Future<void> requestTaxi() async {
+  /// after confirm button is clicked on mez pick google map.
+  ///
+  /// return true if success , false else.
+  Future<bool> requestTaxi() async {
     // we show grayed Confirm button so the user won't press it twice.
     this.locationPickerController.showLoadingIconOnConfirm();
 
@@ -191,13 +193,15 @@ class RequestTaxiController {
       await Future.delayed(Duration.zero, () {
         popEverythingAndNavigateTo(getTaxiOrderRoute(orderId));
       });
+      return Future<bool>.value(true);
     } else {
       MezSnackbar(
           "Oops :(",
           Get.find<LanguageController>().strings['customer']['taxiView']
               ['failedToRequestTaxi'],
           position: SnackPosition.TOP);
-      this.locationPickerController.showConfirmButton();
+      locationPickerController.showConfirmButton();
+      return Future<bool>.value(false);
     }
   }
 

@@ -22,7 +22,7 @@ class RequestTaxiScreen extends StatefulWidget {
 class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   final RequestTaxiController viewController = RequestTaxiController();
   late final RequestTaxiScreenWidgets viewWidgets;
-
+  bool lockOnTaxiRequest = false;
   @override
   void initState() {
     viewWidgets =
@@ -78,8 +78,14 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                               testUserIdInProd) {
                         MezSnackbar("Oops",
                             "This prod version is live and running , we can't let you do that :( !");
-                      } else
-                        await viewController.requestTaxi();
+                      } else if (!lockOnTaxiRequest) {
+                        // lock to avoid the user Fast button taps aka fast-taps .
+                        lockOnTaxiRequest = true;
+                        bool res = await viewController.requestTaxi();
+                        if (!res) {
+                          lockOnTaxiRequest = false;
+                        }
+                      }
                     }),
               ),
               LocationSearchBar(
