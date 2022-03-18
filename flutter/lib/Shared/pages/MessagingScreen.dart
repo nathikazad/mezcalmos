@@ -52,6 +52,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     chatId = Get.parameters['chatId']!;
     orderId = Get.parameters['orderId'];
+    mezDbgPrint("orderid $orderId");
     // default to False.
     showViewOrderBtn = Get.arguments?['showViewOrderBtn'];
 
@@ -326,7 +327,9 @@ class SendMessageBox extends StatelessWidget {
                           0;
                   if (msgReady2Send) {
                     controller.sendMessage(
-                        message: _typedMsg.value, chatId: chatId);
+                        message: _typedMsg.value,
+                        chatId: chatId,
+                        orderId: orderId);
                     _textEditingController.clear();
                     _typedMsg.value = "";
                   } else {
