@@ -22,15 +22,15 @@ enum LaundryOrderPhase {
 
 extension ParseOrderStatusToString on LaundryOrderStatus {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 }
 
 extension ParseStringToOrderStatus on String {
   LaundryOrderStatus toLaundryOrderStatus() {
-    return LaundryOrderStatus.values.firstWhere(
-        (e) => e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
+    return LaundryOrderStatus.values.firstWhere((LaundryOrderStatus e) =>
+        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -69,8 +69,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             pickupDriver: pickupDriver,
             pickupDriverChatId: pickupDriverChatId);
 
-  factory LaundryOrder.fromData(dynamic id, dynamic data) {
-    LaundryOrder laundryOrder = LaundryOrder(
+  factory LaundryOrder.fromData(id, data) {
+    final LaundryOrder laundryOrder = LaundryOrder(
         orderId: id,
         price: 20,
         customer: UserInfo.fromData(data["customer"]),
@@ -126,8 +126,15 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.OtwDelivery;
   }
 
+  num? getPrice() {
+    if (weight != null) {
+      return weight! * 20;
+    }
+    return null;
+  }
+
   LaundryOrderPhase getCurrentPhase() {
-    switch (this.status) {
+    switch (status) {
       case LaundryOrderStatus.OrderReceieved:
       case LaundryOrderStatus.PickedUp:
       case LaundryOrderStatus.OtwPickup:

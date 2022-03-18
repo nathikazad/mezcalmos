@@ -65,24 +65,25 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                       onPressed: () {
                         Get.toNamed(getMessagesRoute(
                             chatId: widget.order.value?.orderId ?? '',
+                            orderId: widget.order.value!.orderId,
                             recipientType: ParticipantType.Customer));
                       },
                     ),
-                    // Positioned(
-                    //     left: 28,
-                    //     top: 10,
-                    //     child: (controller.orderHaveNewMessageNotifications(
-                    //             widget.order.value!.orderId))
-                    //         ? Container(
-                    //             width: 10,
-                    //             height: 10,
-                    //             decoration: BoxDecoration(
-                    //                 borderRadius: BorderRadius.circular(10),
-                    //                 border: Border.all(
-                    //                     color: const Color(0xfff6efff),
-                    //                     width: 2),
-                    //                 color: const Color(0xffff0000)))
-                    //         : Container())
+                    Positioned(
+                        left: 28,
+                        top: 10,
+                        child: (controller.orderHaveNewMessageNotifications(
+                                widget.order.value!.orderId))
+                            ? Container(
+                                width: 10,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        color: const Color(0xfff6efff),
+                                        width: 2),
+                                    color: const Color(0xffff0000)))
+                            : Container())
                   ]),
                 ),
               ),

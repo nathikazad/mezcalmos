@@ -80,6 +80,7 @@ class OrderStatusCard extends StatelessWidget {
         onTap: () {
           Get.toNamed(getMessagesRoute(
               chatId: order.orderId,
+              orderId: order.orderId,
               recipientType: ParticipantType.Restaurant));
         },
         customBorder: CircleBorder(),
@@ -111,8 +112,8 @@ Widget _messageIcon(BuildContext context) {
 
 Widget _newMessageRedDot(BuildContext context) {
   return Positioned(
-    left: 27,
-    top: 10,
+    left: 0,
+    top: 0,
     child: Container(
       width: 13,
       height: 13,

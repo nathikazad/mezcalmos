@@ -1,5 +1,4 @@
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -83,6 +82,18 @@ Notification newOrderNotification(String key, value) {
           variableParams: value,
           notificationAction:
               value["notificationAction"].toString().toNotificationAction());
+    case OrderType.Taxi:
+      return Notification(
+          id: key,
+          linkUrl: getTaxiOrderRoute(value['orderId']),
+          body: 'New order from taxi',
+          imgUrl: 'assets/images/customer/taxi/howToTaxiIllustration2.png',
+          title: "New taxi Order",
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.NewOrder,
+          variableParams: value,
+          notificationAction:
+              value["notificationAction"].toString().toNotificationAction());
     default:
       throw Exception("Invalid order type");
   }
@@ -93,6 +104,7 @@ Notification newMessageNotification(String key, value) {
       id: key,
       linkUrl: getMessagesRoute(
           chatId: value['chatId'] ?? value['orderId'],
+          orderId: value['orderId'],
           recipientId: value['sender']['id']),
       body: value['message'],
       imgUrl: value['sender']['image'],
@@ -104,5 +116,3 @@ Notification newMessageNotification(String key, value) {
           value["notificationAction"]?.toString().toNotificationAction() ??
               NotificationAction.ShowSnackbarOnlyIfNotOnPage);
 }
-
-

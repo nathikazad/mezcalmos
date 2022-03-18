@@ -6,12 +6,15 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOpenOrderBottomCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOrderBottomCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOrderMapComponent.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
-import '../../../../Shared/helpers/PrintHelper.dart';
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["pages"]["Orders"]["TaxiOrder"]["TaxiOrderView"];
 
 class TaxiOrderView extends StatefulWidget {
-  TaxiOrderView({Key? key}) : super(key: key);
+  const TaxiOrderView({Key? key}) : super(key: key);
 
   @override
   _TaxiOrderViewState createState() => _TaxiOrderViewState();
@@ -31,8 +34,9 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
     if (order.value == null) {
       Get.back();
     } else if (order.value!.isOpenOrder()) {
-      _orderListener =
-          taxiOrderController.getOpenOrderStream(orderId).listen((newOrder) {
+      _orderListener = taxiOrderController
+          .getOpenOrderStream(orderId)
+          .listen((TaxiOrder? newOrder) {
         if (newOrder != null) {
           order.value = taxiOrderController.getOrder(orderId);
         } else {
@@ -42,7 +46,7 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
     } else if (order.value!.inProcess()) {
       _orderListener = taxiOrderController
           .getInProcessOrderStream(orderId)
-          .listen((newOrder) {
+          .listen((TaxiOrder? newOrder) {
         if (newOrder != null) {
           order.value = taxiOrderController.getOrder(orderId);
         } else {
@@ -67,7 +71,7 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order'),
+        title: Text('${_i18n()["order"]}'),
       ),
       body: Obx(() {
         return SingleChildScrollView(

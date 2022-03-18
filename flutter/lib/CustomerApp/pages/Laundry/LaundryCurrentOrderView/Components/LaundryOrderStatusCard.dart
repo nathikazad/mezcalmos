@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:rive/rive.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
+        ['LaundryCurrentOrderView']['Components']['LaundryOrderStatusCard'];
 
 class LaundryOrderStatusCard extends StatelessWidget {
   const LaundryOrderStatusCard({
@@ -17,7 +20,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -64,6 +67,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Get.toNamed(getMessagesRoute(
+             orderId: order.orderId,
               chatId: order.orderId, recipientType: ParticipantType.Laundry));
         },
         customBorder: CircleBorder(),
@@ -76,24 +80,24 @@ class LaundryOrderStatusCard extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            Obx(
-              () => Get.find<OrderController>()
-                      .orderHaveNewMessageNotifications(order.orderId)
-                  ? Positioned(
-                      left: 27,
-                      top: 10,
-                      child: Container(
-                        width: 13,
-                        height: 13,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: const Color(0xfff6efff), width: 2),
-                            color: const Color(0xffff0000)),
-                      ),
-                    )
-                  : Container(),
-            )
+            // Obx(
+            //   () => Get.find<OrderController>()
+            //           .orderHaveNewMessageNotifications(order.orderId)
+            //       ? Positioned(
+            //           left: 27,
+            //           top: 10,
+            //           child: Container(
+            //             width: 13,
+            //             height: 13,
+            //             decoration: BoxDecoration(
+            //                 borderRadius: BorderRadius.circular(10),
+            //                 border: Border.all(
+            //                     color: const Color(0xfff6efff), width: 2),
+            //                 color: const Color(0xffff0000)),
+            //           ),
+            //         )
+            //       : Container(),
+            // )
           ],
         ),
       ),
@@ -101,9 +105,6 @@ class LaundryOrderStatusCard extends StatelessWidget {
   }
 }
 
-dynamic _i18n() =>
-    Get.find<LanguageController>().strings['CustomerApp']['pages']
-['Laundry']['LaundryCurrentOrderView']['Components']['LaundryOrderStatusCard'];
 Widget getOrderWidget(LaundryOrderStatus status) {
   switch (status) {
     case LaundryOrderStatus.CancelledByAdmin:
@@ -196,10 +197,9 @@ Widget getOrderWidget(LaundryOrderStatus status) {
 String getOrderStatus(LaundryOrderStatus status) {
   switch (status) {
     case LaundryOrderStatus.CancelledByAdmin:
-      return 'Order Canceled';
-
     case LaundryOrderStatus.CancelledByCustomer:
-      return 'Order Canceled';
+      return _i18n()['canceled'];
+
     case LaundryOrderStatus.OrderReceieved:
       return _i18n()['orderReceived'];
     case LaundryOrderStatus.OtwPickup:

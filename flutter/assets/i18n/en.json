@@ -47,7 +47,7 @@
                             "droppedOff": "Dropped off",
                             "expired": "Expired",
                             "forwarding": "Forwarding to company",
-                            "forwardSuccess": "Successfully forwarded",
+                            "forwardSuccess": "Forwarded",
                             "forwardUnsuccess": "Forwarding canceled"
                         }
                     },
@@ -56,10 +56,29 @@
                         "totalCost": "Total Cost"
                     },
                     "LaundryOngoingOrderCard": {
-                        "totalCost": "Total Cost"
+                        "totalCost": "Total Cost",
+                        "status": {
+                            "canceled": "Order Cancelled",
+                            "orderReceived": "Order Received",
+                            "otwPickUp": "Pick-up on the way",
+                            "pickedUp": "Order Picked-up",
+                            "atLaundry": "At laundry",
+                            "readyForDelivery": "Ready for Delivery",
+                            "otwDelivery": "Delivery on the way",
+                            "delivered": "Order Delivered"
+                        }
                     },
                     "LaundryPastOrderCard": {
-                        "totalCost": "Total Cost"
+                        "totalCost": "Total Cost",
+                        "status": {
+                            "orderReceived": "Order Received",
+                            "otwPickUp": "Pick-up on the way",
+                            "pickedUp": "Order Picked-up",
+                            "atLaundry": "At laundry",
+                            "readyForDelivery": "Ready for Delivery",
+                            "otwDelivery": "Delivery on the way",
+                            "delivered": "Order Delivered"
+                        }
                     }
                 },
                 "ListOrdersScreen": {
@@ -450,9 +469,9 @@
             "taxiCancelledBody": "Your order has been cancelled",
             "taxiExpiredTitle": "No taxis available",
             "taxiExpiredBody": "Unfortunately, we could not find a taxi for you. Please try again later",
-            "taxiFwdToCompanyTitle": "Forwarded to company",
+            "taxiFwdToCompanyTitle": "Forwarding to company",
             "taxiFwdToCompanyBody": "We are calling a local company to find you a taxi",
-            "taxiFwdSuccessTitle": "Successfuly Forwarded",
+            "taxiFwdSuccessTitle": "Forwarded",
             "taxiFwdSuccessBody": "Local taxi driver found ",
             "taxiFwdCancelTitle": "Forwarding Cancelled ",
             "taxiFwdCancelBody": "You order has been cancelled ",
@@ -911,6 +930,7 @@
                     }
                 },
                 "TaxiOrder": {
+
                     "components": {
                         "taxiOrderBottomCard": {
                             "customer": "Customer",
@@ -932,7 +952,7 @@
                                 "droppedOff": "Dropped off",
                                 "expired": "Expired",
                                 "forwarding": "Forwarding to company",
-                                "forwardSuccess": "Successfully forwarded",
+                                "forwardSuccess": "Forwarded",
                                 "forwardUnsuccess": "Forwarding canceled"
 
 
@@ -950,6 +970,9 @@
 
                         }
 
+                    },
+                    "TaxiOrderView": {
+                        "order": "Order"
                     }
 
                 }

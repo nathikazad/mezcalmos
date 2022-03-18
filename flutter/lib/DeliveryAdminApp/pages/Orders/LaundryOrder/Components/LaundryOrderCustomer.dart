@@ -59,6 +59,7 @@ class LaundryOrderCustomer extends StatelessWidget {
                     onTap: () {
                       Get.toNamed(getMessagesRoute(
                           chatId: order.orderId,
+                          orderId: order.orderId,
                           recipientType: ParticipantType.Customer));
                     },
                     customBorder: CircleBorder(),

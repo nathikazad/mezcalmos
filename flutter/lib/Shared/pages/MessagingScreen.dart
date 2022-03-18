@@ -52,7 +52,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     chatId = Get.parameters['chatId']!;
     orderId = Get.parameters['orderId'];
-    mezDbgPrint("orderid $orderId");
+    mezDbgPrint("=======================>>>>>>>>>>>>>>>>>> orderid $orderId");
     // default to False.
     showViewOrderBtn = Get.arguments?['showViewOrderBtn'];
 
@@ -322,6 +322,8 @@ class SendMessageBox extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: GestureDetector(
                 onTap: () {
+                  mezDbgPrint(
+                      "--------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDER ID>>>>>>>>>>>>>>>>>>>>> $orderId");
                   final bool msgReady2Send =
                       _textEditingController.text.replaceAll(' ', '').length >
                           0;
