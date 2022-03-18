@@ -42,7 +42,7 @@ export function constructLaundryOrder(
     cost: 0,
     paymentType: params.paymentType,
     to: params.to,
-    shippingCost: 40,
+    shippingCost: 50,
     costPerKilo: 20
   }
 }

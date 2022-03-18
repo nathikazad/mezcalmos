@@ -170,22 +170,22 @@ class OrderController extends GetxController {
   bool orderHaveNewMessageNotifications(String orderId) {
     return _fbNotificationsController
         .notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.orderId == orderId)
         .isNotEmpty;
   }
 
   void clearOrderNotifications(String orderId) {
     _fbNotificationsController
         .notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             (notification.notificationType ==
                     NotificationType.OrderStatusChange ||
                 notification.notificationType ==
                     NotificationType.NewCounterOffer) &&
-            notification.orderId! == orderId)
-        .forEach((notification) {
+            notification.orderId == orderId)
+        .forEach((Notification notification) {
       _fbNotificationsController.removeNotification(notification.id);
     });
   }
@@ -193,9 +193,9 @@ class OrderController extends GetxController {
   @override
   void onClose() async {
     print("[+] OrderController::onClose ---------> Was invoked !");
-    _currentOrdersListener?.cancel();
+    await _currentOrdersListener?.cancel();
     _currentOrdersListener = null;
-    _pastOrdersListener?.cancel();
+    await _pastOrdersListener?.cancel();
     _pastOrdersListener = null;
     super.onClose();
   }
