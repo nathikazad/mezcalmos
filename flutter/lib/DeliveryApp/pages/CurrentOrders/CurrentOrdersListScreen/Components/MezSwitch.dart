@@ -5,7 +5,7 @@ class MezSwitch extends StatefulWidget {
   // this was the problem.
   bool initialPosition;
   final List<String> values;
-  final ValueChanged onToggleCallback;
+  final ValueChanged<int> onToggleCallback;
   final Color backgroundColor;
   final Size buttonSize;
   @required
