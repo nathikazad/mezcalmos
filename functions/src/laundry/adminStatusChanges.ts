@@ -72,14 +72,14 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     }
   }
 
-
-  if (order.serviceProviderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order does not have a laundry`,
-      errorCode: "laundryDontExist"
-    }
-  }
+  // TO ADD: when customers choose their laundry
+  // if (order.serviceProviderId == null) {
+  //   return {
+  //     status: ServerResponseStatus.Error,
+  //     errorMessage: `Order does not have a laundry`,
+  //     errorCode: "laundryDontExist"
+  //   }
+  // }
 
   if (newStatus == LaundryOrderStatus.CancelledByAdmin) {
     if (!orderInProcess(order.status))
