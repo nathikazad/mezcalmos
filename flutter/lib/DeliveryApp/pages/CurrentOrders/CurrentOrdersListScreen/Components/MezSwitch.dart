@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class MezSwitch extends StatefulWidget {
   // this was the problem.
@@ -31,8 +30,8 @@ class _MezSwitchState extends State<MezSwitch> {
   Widget build(BuildContext context) {
     return Container(
       // color: Colors.black,
-      width: widget.buttonSize.height,
-      height: widget.buttonSize.width,
+      // width: widget.buttonSize.height,
+      // height: widget.buttonSize.width,
       // margin: EdgeInsets.all(0),
       child: Stack(
         // fit: StackFit.loose,
@@ -57,16 +56,12 @@ class _MezSwitchState extends State<MezSwitch> {
             },
             child: Container(
               height: 80,
+              // height: widget.buttonSize.height,
               decoration: ShapeDecoration(
-                // color: Colors.black,
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    colors: <Color>[
-                      Color.fromARGB(10, 81, 133, 255),
-                      Color.fromARGB(10, 207, 73, 252)
-                    ]),
+                color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Get.width * 0.1),
+                  borderRadius: BorderRadius.circular(50),
+                  //   borderRadius: BorderRadius.circular(Get.width * 0.1),
                 ),
               ),
               child: Row(
@@ -76,7 +71,7 @@ class _MezSwitchState extends State<MezSwitch> {
                     widget.values[index],
                     style: TextStyle(
                       fontFamily: 'psb',
-                      fontSize: Get.width * 0.040,
+                      //  fontSize: Get.width * 0.040,
                       // fontWeight: FontWeight.bold,
                       color: index == 0 ? Colors.green : Colors.red,
                     ),
@@ -103,12 +98,10 @@ class _MezSwitchState extends State<MezSwitch> {
               ),
               child: Text(
                 widget.initialPosition ? widget.values[0] : widget.values[1],
-                style: TextStyle(
-                  fontFamily: 'Rubik',
-                  fontSize: Get.width * 0.040,
-                  color: widget.textColor,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(color: Colors.white),
               ),
               alignment: Alignment.center,
             ),

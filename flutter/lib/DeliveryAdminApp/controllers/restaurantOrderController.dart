@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -28,11 +29,11 @@ class RestaurantOrderController extends GetxController {
         .reference()
         .child(rootInProcessOrdersNode(orderType: OrderType.Restaurant))
         .onValue
-        .listen((event) {
-      List<RestaurantOrder> orders = [];
+        .listen((Event event) {
+      final List<RestaurantOrder> orders = [];
       if (event.snapshot.value != null) {
         for (var orderId in event.snapshot.value.keys) {
-          dynamic orderData = event.snapshot.value[orderId];
+          final dynamic orderData = event.snapshot.value[orderId];
           orders.add(RestaurantOrder.fromData(orderId, orderData));
         }
       } else {}
@@ -46,7 +47,7 @@ class RestaurantOrderController extends GetxController {
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAdded
-        .listen((event) {
+        .listen((Event event) {
       pastOrders.add(
           RestaurantOrder.fromData(event.snapshot.key, event.snapshot.value));
     });
@@ -57,8 +58,8 @@ class RestaurantOrderController extends GetxController {
   @override
   void onClose() async {
     mezDbgPrint("[+] OrderController::dispose ---------> Was invoked !");
-    _currentOrdersListener?.cancel();
-    _pastOrdersListener?.cancel();
+    await _currentOrdersListener?.cancel();
+    await _pastOrdersListener?.cancel();
     pastOrders.clear();
     inProcessOrders.clear();
     super.onClose();
@@ -66,12 +67,12 @@ class RestaurantOrderController extends GetxController {
 
   RestaurantOrder? getOrder(String orderId) {
     try {
-      return inProcessOrders.firstWhere((order) {
+      return inProcessOrders.firstWhere((RestaurantOrder order) {
         return order.orderId == orderId;
       });
     } on StateError {
       try {
-        return pastOrders.firstWhere((order) {
+        return pastOrders.firstWhere((RestaurantOrder order) {
           return order.orderId == orderId;
         });
       } on StateError {
@@ -88,7 +89,7 @@ class RestaurantOrderController extends GetxController {
     return inProcessOrders.stream.map<RestaurantOrder?>((_) {
       try {
         return inProcessOrders.firstWhere(
-          (currentOrder) => currentOrder.orderId == orderId,
+          (RestaurantOrder currentOrder) => currentOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
@@ -100,20 +101,21 @@ class RestaurantOrderController extends GetxController {
   bool orderHaveNewMessageNotifications(String orderId) {
     return _fbNotificationsController
         .notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.orderId == orderId)
         .isNotEmpty;
   }
 
   void clearNewOrderNotifications() {
-    _fbNotificationsController.notifications.value.forEach((element) {
+    _fbNotificationsController.notifications.value
+        .forEach((Notification element) {
       // mezDbgPrint(element.notificationType.toFirebaseFormatString());
     });
     _fbNotificationsController.notifications.value
-        .where((notification) =>
+        .where((Notification notification) =>
             notification.notificationType == NotificationType.NewOrder)
-        .forEach((notification) {
+        .forEach((Notification notification) {
       // mezDbgPrint(notification.id);
       _fbNotificationsController.removeNotification(notification.id);
     });
@@ -122,12 +124,12 @@ class RestaurantOrderController extends GetxController {
   void clearOrderNotifications(String orderId) {
     _fbNotificationsController
         .notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             (notification.notificationType ==
                     NotificationType.OrderStatusChange ||
                 notification.notificationType == NotificationType.NewOrder) &&
             notification.orderId! == orderId)
-        .forEach((notification) {
+        .forEach((Notification notification) {
       _fbNotificationsController.removeNotification(notification.id);
     });
   }
@@ -156,11 +158,11 @@ class RestaurantOrderController extends GetxController {
 
   Future<ServerResponse> _callRestaurantCloudFunction(
       String functionName, String orderId) async {
-    HttpsCallable dropOrderFunction =
+    final HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('restaurant-$functionName');
     mezDbgPrint("Drop order");
     try {
-      HttpsCallableResult response =
+      final HttpsCallableResult response =
           await dropOrderFunction.call({"orderId": orderId});
       return ServerResponse.fromJson(response.data);
     } catch (e) {

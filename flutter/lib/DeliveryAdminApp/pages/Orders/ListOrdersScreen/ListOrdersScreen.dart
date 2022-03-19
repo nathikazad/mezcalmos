@@ -15,10 +15,11 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:sizer/sizer.dart';
 
-final f = new DateFormat('hh:mm a');
+final DateFormat f = new DateFormat('hh:mm a');
 
-final currency = new NumberFormat("#,##0.00", "en_US");
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
 // dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
 // ["Orders"]["ListOrdersScreen"];
@@ -175,7 +176,10 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
               Flexible(
                   child: Text(
                 _i18n()['restaurantOrders'],
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2!
+                    .copyWith(fontSize: 10.sp),
               )),
               SizedBox(
                 width: 5,
@@ -203,7 +207,10 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
               Flexible(
                   child: Text(
                 _i18n()['laundryOrders'],
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2!
+                    .copyWith(fontSize: 10.sp),
               )),
               SizedBox(
                 width: 5,
@@ -231,7 +238,10 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
               Flexible(
                   child: Text(
                 _i18n()['taxiOrders'],
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2!
+                    .copyWith(fontSize: 10.sp),
               )),
               SizedBox(
                 width: 5,

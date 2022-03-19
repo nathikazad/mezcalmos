@@ -47,7 +47,7 @@
                             "droppedOff": "Dejado",
                             "expired": "Caducado",
                             "forwarding": "Reenvío a la empresa",
-                            "forwardSuccess": "Reenviado con éxito",
+                            "forwardSuccess": "Reenviada",
                             "forwardUnsuccess": "Reenvío cancelado"
                         }
                     },
@@ -56,10 +56,30 @@
                         "totalCost": "Costo Total"
                     },
                     "LaundryOngoingOrderCard": {
-                        "totalCost": "Costo Total"
+                        "totalCost": "Costo Total",
+                        "status": {
+                            "canceled": "Cancelada",
+                            "orderReceived": "orden recibida",
+                            "otwPickUp": "Recoger en el camino",
+                            "pickedUp": "Pedido recogido",
+                            "atLaundry": "En la lavandería",
+                            "readyForDelivery": "Listo para la entrega",
+                            "otwDelivery": "Entrega en el camino",
+                            "delivered": "Orden entregado"
+                        }
                     },
                     "LaundryPastOrderCard": {
-                        "totalCost": "Costo Total"
+                        "totalCost": "Costo Total",
+                        "status": {
+                            "canceled": "Cancelada",
+                            "orderReceived": "orden recibida",
+                            "otwPickUp": "Recoger en el camino",
+                            "pickedUp": "Pedido recogido",
+                            "atLaundry": "En la lavandería",
+                            "readyForDelivery": "Listo para la entrega",
+                            "otwDelivery": "Entrega en el camino",
+                            "delivered": "Orden entregado"
+                        }
                     }
                 },
                 "ListOrdersScreen": {
@@ -368,6 +388,7 @@
                             "readyForDelivery": "Listo para la entrega",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden entregado",
+                            "canceled": "Orden cancelada",
                             "cancelByAdmin": " Orden cancelado por el administrador.",
                             "cancelByUser": " Usted canceló el pedido",
                             "received": " El pedido recibido y se procederá tan pronto como sea posible.",
@@ -937,7 +958,7 @@
                                 "droppedOff": "Dejado caer",
                                 "expired": "Caducada",
                                 "forwarding": "Reenvío a la empresa",
-                                "forwardSuccess": "Reenviado con éxito",
+                                "forwardSuccess": "Reenviada",
                                 "forwardUnsuccess": "Reenvío cancelado"
 
                             },
@@ -953,6 +974,9 @@
                             }
                         }
 
+                    },
+                    "TaxiOrderView": {
+                        "order": "Pedido"
                     }
                 }
 

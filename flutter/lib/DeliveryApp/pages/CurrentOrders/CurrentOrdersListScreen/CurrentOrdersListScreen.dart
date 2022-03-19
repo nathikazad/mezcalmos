@@ -34,11 +34,11 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
 
   @override
   void initState() {
-    orderController.currentOrders.stream.listen((value) {
+    orderController.currentOrders.stream.listen((List<DeliverableOrder> value) {
       currentOrders.value = value;
     });
 
-    orderController.pastOrders.stream.listen((value) {
+    orderController.pastOrders.stream.listen((List<DeliverableOrder> value) {
       pastOrders.value = value;
     });
     super.initState();
@@ -93,7 +93,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           Column(
             children: List.generate(
                     orderController.pastOrders.length,
-                    (index) => DriverOrderCard(
+                    (int index) => DriverOrderCard(
                         order: orderController.pastOrders[index]))
                 .reversed
                 .toList(),
@@ -120,7 +120,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           Column(
             children: List.generate(
                 orderController.currentOrders.length,
-                (index) => DriverOrderCard(
+                (int index) => DriverOrderCard(
                       order: orderController.currentOrders[index],
                       showLeftIcon: false,
                     )).reversed.toList(),
@@ -158,15 +158,15 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   Widget onOffSwitcher() {
     return Flexible(
         child: Obx(() => Container(
-              height: 50.sp,
+              height: 40.sp,
               width: 115.sp,
               child: MezSwitch(
-                buttonSize: Size(60.sp, 50.sp),
+                buttonSize: Size(50.sp, 40.sp),
                 initialPosition:
                     _deliveryAuthController.deliveryDriverState?.isOnline ??
                         false,
-                values: ['ON', 'OFF'],
-                onToggleCallback: (v) {
+                values: [' ON ', ' OFF '],
+                onToggleCallback: (int v) {
                   // turn ut ON
                   if (v == 0) {
                     _deliveryAuthController.turnOn();

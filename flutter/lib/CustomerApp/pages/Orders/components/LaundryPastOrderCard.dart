@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/components/LaundryOngoingOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
@@ -22,7 +22,7 @@ class LaundryPastOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Card(
       child: InkWell(
         onTap: () {
@@ -108,7 +108,7 @@ class LaundryPastOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      " ${_i18n()["totalCost"]} : ${(order.cost != 0) ? '\$' + order.cost.toStringAsFixed(0) : '-'}",
+                      " ${_i18n()["totalCost"]} : ${(order.getPrice() != null) ? '\$${order.getPrice()}' : '-'}",
                     ),
                     (MediaQuery.of(context).size.width > 320)
                         ? Flexible(
@@ -124,7 +124,7 @@ class LaundryPastOrderCard extends StatelessWidget {
                           )
                         : Text(
                             getLaundryOrderStatus(order.status),
-                            style: txt.bodyText2,
+                            style: txt.bodyText1,
                           ),
                   ],
                 ),

@@ -32,7 +32,7 @@ extension ParseOrderStatusToString on LaundryOrderStatus {
 extension ParseStringToOrderStatus on String {
   LaundryOrderStatus toLaundryOrderStatus() {
     return LaundryOrderStatus.values.firstWhere((LaundryOrderStatus e) =>
-        e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
+        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -73,7 +73,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             pickupDriver: pickupDriver,
             pickupDriverChatId: pickupDriverChatId);
 
-  factory LaundryOrder.fromData(dynamic id, dynamic data) {
+  factory LaundryOrder.fromData(id, data) {
     final LaundryOrder laundryOrder = LaundryOrder(
         orderId: id,
         customer: UserInfo.fromData(data["customer"]),
@@ -83,8 +83,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         orderTime: DateTime.parse(data["orderTime"]),
         paymentType: data["paymentType"].toString().toPaymentType(),
         weight: data["weight"],
-        shippingCost: data['shippingCost'],
-        costPerKilo: data['costPerKilo'],
+        shippingCost: data['shippingCost'] ?? 50,
+        costPerKilo: data['costPerKilo'] ?? 20,
         notes: data["notes"],
         laundry: (data["laundry"] != null)
             ? UserInfo.fromData(data["laundry"])
@@ -129,6 +129,13 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.AtLaundry ||
         status == LaundryOrderStatus.ReadyForDelivery ||
         status == LaundryOrderStatus.OtwDelivery;
+  }
+
+  num? getPrice() {
+    if (weight != null) {
+      return weight! * 20;
+    }
+    return null;
   }
 
   LaundryOrderPhase getCurrentPhase() {

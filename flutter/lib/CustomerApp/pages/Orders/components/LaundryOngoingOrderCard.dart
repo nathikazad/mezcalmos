@@ -8,11 +8,10 @@ import 'package:rive/rive.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']
-['ListOrdersScreen']['components']['LaundryOngoingOrderCard'];
+    ['pages']['ListOrdersScreen']['components']['LaundryOngoingOrderCard'];
 
 class LaundryOngoigOrderCard extends StatelessWidget {
-  LaundryOngoigOrderCard({
+  const LaundryOngoigOrderCard({
     Key? key,
     required this.order,
   }) : super(key: key);
@@ -21,7 +20,7 @@ class LaundryOngoigOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Card(
       child: InkWell(
         onTap: () {
@@ -113,7 +112,7 @@ class LaundryOngoigOrderCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            "${_i18n()["totalCost"]} : \$${order.cost}",
+            " ${_i18n()["totalCost"]} : ${(order.getPrice() != null) ? '\$${order.getPrice()}' : '-'}",
           ),
           Spacer(),
           Icon(
@@ -231,25 +230,23 @@ Widget getLaundryOrderWidget(LaundryOrderStatus status) {
 String getLaundryOrderStatus(LaundryOrderStatus status) {
   switch (status) {
     case LaundryOrderStatus.CancelledByAdmin:
-      return 'Order Canceled';
-
     case LaundryOrderStatus.CancelledByCustomer:
-      return 'Order Canceled';
+      return _i18n()["status"]['canceled'];
 
     case LaundryOrderStatus.OrderReceieved:
-      return 'Order Received';
+      return _i18n()["status"]['orderReceived'];
     case LaundryOrderStatus.OtwPickup:
-      return 'Pick-up On the way';
+      return _i18n()["status"]['otwPickUp'];
     case LaundryOrderStatus.PickedUp:
-      return 'Order picked-up';
+      return _i18n()["status"]['pickedUp'];
     case LaundryOrderStatus.AtLaundry:
-      return 'Order at laundry';
+      return _i18n()["status"]['atLaundry'];
     case LaundryOrderStatus.ReadyForDelivery:
-      return 'Ready For Delivery';
+      return _i18n()["status"]['readyForDelivery'];
     case LaundryOrderStatus.OtwDelivery:
-      return 'Delivery on the way';
+      return _i18n()["status"]['otwDelivery'];
     case LaundryOrderStatus.Delivered:
-      return 'Order Delivered';
+      return _i18n()["status"]['delivered'];
     default:
       return 'Unknown Status';
   }

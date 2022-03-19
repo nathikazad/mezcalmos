@@ -13,6 +13,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderSummary.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -49,7 +50,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   @override
   void initState() {
     super.initState();
-
+    mezDbgPrint("Laaaaaaauuuuuuuuuundryyyy screeennnnnnnnnn");
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
@@ -66,7 +67,9 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
             driver = order.value!.dropoffDriver;
           }
         } else {
-          Get.back();
+          _orderListener?.cancel();
+          _orderListener = null;
+          Get.back(closeOverlays: true);
         }
       });
     }
