@@ -32,7 +32,7 @@ void markInDb(String url) async {
 
 class BackgroundNotificationsController extends GetxController {
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
-
+  StreamSubscription<RemoteMessage>? onMessageOpenedAppListener;
   @override
   void onInit() async {
     super.onInit();
@@ -44,7 +44,8 @@ class BackgroundNotificationsController extends GetxController {
     // ignore: unawaited_futures, always_specify_types
     _messaging.getInitialMessage().then((message) =>
         message != null ? notificationClickHandler(message) : null);
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    onMessageOpenedAppListener =
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {
       notificationClickHandler(message);
     });
   }
@@ -79,6 +80,7 @@ class BackgroundNotificationsController extends GetxController {
   void onClose() async {
     mezDbgPrint(
         "[+] DeviceNotificationsController::dispose ---------> Was invoked !");
+    await onMessageOpenedAppListener?.cancel();
     super.onClose();
   }
 }
