@@ -250,8 +250,8 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
       };
     case TaxiOrdersStatus.ForwardingUnsuccessful:
       return <String, dynamic>{
-        "title": "${_i18n()["taxiFwdCancelledTitle"]}",
-        "body": "${_i18n()["taxiFwdCancelledBody"]}",
+        "title": "${_i18n()["taxiFwdCancelTitle"]}",
+        "body": "${_i18n()["taxiFwdCancelBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };
@@ -286,7 +286,7 @@ Notification newMessageNotification(String key, value) {
       variableParams: value);
 }
 
-Notification newCounterOfferNotification(String key, dynamic value) {
+Notification newCounterOfferNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: getTaxiOrderRoute(value['orderId']),

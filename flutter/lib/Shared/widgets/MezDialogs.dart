@@ -32,7 +32,10 @@ Future<void> oneButtonDialog(
     double fontSize = 20,
     String buttonText = "Ok"}) async {
   await Get.defaultDialog(
-    backgroundColor: Colors.grey.shade100,
+    backgroundColor: Colors.white,
+    contentPadding: const EdgeInsets.all(5),
+    titlePadding: const EdgeInsets.all(5),
+    radius: 8,
     title: title ?? '',
     content: Flex(
       direction: Axis.vertical,
@@ -41,17 +44,17 @@ Future<void> oneButtonDialog(
       mainAxisSize: MainAxisSize.min,
       children: [
         if (imagUrl != null)
-        Flexible(
-            fit: FlexFit.loose,
-            child: Container(
-              height: Get.height / 4,
-              width: Get.width / 2,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: mLoadImage(url: imagUrl).image,
-                      // image: AssetImage(imagUrl),
-                      fit: BoxFit.contain)),
-            )),
+          Flexible(
+              fit: FlexFit.loose,
+              child: Container(
+                height: Get.height / 4,
+                width: Get.width / 2,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: mLoadImage(url: imagUrl).image,
+                        // image: AssetImage(imagUrl),
+                        fit: BoxFit.contain)),
+              )),
         Flexible(
             fit: FlexFit.loose,
             child: SizedBox(
@@ -107,7 +110,10 @@ Future<TwoButtonDialogButton?> twoButtonDialog(
       twoButtonDialogButton = null;
       return true;
     },
-    radius: 4,
+    backgroundColor: Colors.white,
+    contentPadding: const EdgeInsets.all(5),
+    titlePadding: const EdgeInsets.all(5),
+    radius: 8,
     title: (titleUp!) ? title : "",
     content: Container(
       color: const Color(0xffffffff),
@@ -124,7 +130,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog(
               padding: const EdgeInsets.only(top: 15),
               child: Text(title,
                   style: const TextStyle(
-                      color: const Color(0xff000f1c),
+                      color: Color(0xff000f1c),
                       fontWeight: FontWeight.w700,
                       fontFamily: "ProductSans",
                       fontStyle: FontStyle.normal,
@@ -138,7 +144,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog(
           Text(body,
               style: bodyTextStyle ??
                   const TextStyle(
-                      color: const Color(0xff1d1d1d),
+                      color: Color(0xff1d1d1d),
                       fontWeight: FontWeight.w400,
                       fontFamily: "ProductSans",
                       fontStyle: FontStyle.normal,
@@ -205,7 +211,7 @@ Future<YesNoDialogButton> yesNoDialog(
     Widget? buttonRightStyle = const NoButtonStyle(),
     bool? titleUp = false,
     String? imgUrl}) async {
-  TwoButtonDialogButton? _res = (await twoButtonDialog(
+  final TwoButtonDialogButton? _res = (await twoButtonDialog(
     title: text,
     body: body,
     bodyTextStyle: bodyTextStyle,
@@ -223,7 +229,7 @@ Future<YesNoDialogButton> yesNoDialog(
 
 Future<YesNoDialogButton> cancelAlertDialog(
     {required String title, required String body, Widget? icon}) async {
-  TwoButtonDialogButton? _res = (await twoButtonDialog(
+  final TwoButtonDialogButton? _res = (await twoButtonDialog(
     title: title,
     body: body,
     dailogIcon: icon,
@@ -255,7 +261,7 @@ class MezDialogButtonStyle extends StatelessWidget {
     );
   }
 
-  MezDialogButtonStyle(
+  const MezDialogButtonStyle(
       {required this.buttonText,
       this.buttonColor,
       this.buttonShadowColor,
@@ -284,7 +290,7 @@ class MezDialogButtonStyle extends StatelessWidget {
         child: Text(buttonText,
             style: customTextStyle ??
                 const TextStyle(
-                    color: const Color(0xff000000),
+                    color: Color(0xff000000),
                     fontWeight: FontWeight.w700,
                     fontFamily: "ProductSans",
                     fontStyle: FontStyle.normal,

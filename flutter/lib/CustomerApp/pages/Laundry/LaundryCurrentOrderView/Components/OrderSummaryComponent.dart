@@ -5,7 +5,8 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class OrderSummaryComponent extends StatelessWidget {
   final LaundryOrder order;
-  OrderSummaryComponent({Key? key, required this.order}) : super(key: key);
+  const OrderSummaryComponent({Key? key, required this.order})
+      : super(key: key);
   dynamic _i18n() =>
       Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
           ['LaundryCurrentOrderView']['Components']['OrderSummaryComponent'];
@@ -32,9 +33,7 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.weight != null)
-                      ? '${order.costPerKilo * order.weight!} \$'
-                      : '-',
+                  (order.weight != null) ? '${order.cost -50} \$' : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -50,7 +49,7 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  "40 \$",
+                  "50 \$",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -66,9 +65,7 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.weight != null)
-                      ? '${order.costPerKilo * order.weight! + 40} \$'
-                      : '-',
+                  (order.weight != null) ? '${order.cost} \$' : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -104,7 +101,7 @@ class OrderSummaryComponent extends StatelessWidget {
     );
   }
 
-  laundryPricingCard(BuildContext context, LaundryOrder order) {
+  Card laundryPricingCard(BuildContext context, LaundryOrder order) {
     return Card(
       child: Container(
         width: double.infinity,

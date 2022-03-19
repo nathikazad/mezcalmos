@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class LaundryOrderRequestView extends StatefulWidget {
@@ -93,7 +94,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     );
   }
 
-  _orderNoteComponent() {
+  Widget _orderNoteComponent() {
     return Container(
       margin: const EdgeInsets.all(8),
       child: Column(
@@ -113,7 +114,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     );
   }
 
-  orderSummaryCard(BuildContext context) {
+  Card orderSummaryCard(BuildContext context) {
     return Card(
       child: Container(
         width: double.infinity,
@@ -135,7 +136,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  "\$5/KG",
+                  "\$20/KG",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -151,7 +152,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  "\$10",
+                  "\$50",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -189,10 +190,10 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     );
   }
 
-  pickFromMapComponent(BuildContext context) {
+  InkWell pickFromMapComponent(BuildContext context) {
     return InkWell(
       onTap: () async {
-        Location? currentLoc =
+        final Location? currentLoc =
             await Get.toNamed(kPickLocationNotAuth) as Location?;
         if (currentLoc != null) {
           setState(() {
@@ -227,7 +228,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     );
   }
 
-  bottomButton(BuildContext context) {
+  Obx bottomButton(BuildContext context) {
     return Obx(
       () => BottomAppBar(
         child: (authController.user != null)
@@ -260,7 +261,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       to: defaultLoc,
                       notes: _orderNote.text,
                       paymentType: PaymentType.Cash))
-                  .then((response) => popEverythingAndNavigateTo(
+                  .then((ServerResponse response) => popEverythingAndNavigateTo(
                       getLaundyOrderRoute(response.data['orderId'])));
             },
       child: (clicked.value)

@@ -67,9 +67,8 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
             driver = order.value!.dropoffDriver;
           }
         } else {
-          _orderListener?.cancel();
-          _orderListener = null;
-          Get.back(closeOverlays: true);
+        
+          Get.back();
         }
       });
     }

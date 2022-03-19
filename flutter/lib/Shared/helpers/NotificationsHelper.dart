@@ -1,14 +1,15 @@
 // ignore_for_file: inference_failure_on_function_invocation
 
 import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
     ["NotificationsHelper"];
@@ -16,7 +17,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
 StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
   return Get.find<ForegroundNotificationsController>()
       .displayNotificationsStream
-      .listen((notification) {
+      .listen((notifs.Notification notification) {
     // mezDbgPrint("Notification Displayer: ${notification.toJson()}");
     // mezDbgPrint("Notif::title ====> ${notification.title}");
     // mezDbgPrint("Notif::body ====> ${notification.body}");
@@ -64,7 +65,7 @@ Future<void> decideWhichButtonDialogToUse(
             buttonColor: Color(0xffffffff),
             buttonShadowColor: Color(0xfffdfdfd)),
         rightButtonCallback: () {
-          Get.back();
+          
           return Get.toNamed(notification.linkUrl);
         },
         leftButtonCallback: () {});

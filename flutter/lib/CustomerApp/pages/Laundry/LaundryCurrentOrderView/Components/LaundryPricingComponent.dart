@@ -5,7 +5,8 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class LaundryPricingCompnent extends StatelessWidget {
   final LaundryOrder order;
-  LaundryPricingCompnent({Key? key, required this.order}) : super(key: key);
+  const LaundryPricingCompnent({Key? key, required this.order})
+      : super(key: key);
   dynamic _i18n() =>
       Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
           ['LaundryCurrentOrderView']['Components']['LaundryPricingComponent'];
@@ -66,9 +67,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.weight != null)
-                      ? '${order.costPerKilo * order.weight!} \$'
-                      : '-',
+                  (order.weight != null) ? '${order.cost - 50} \$' : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
