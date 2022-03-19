@@ -387,6 +387,8 @@
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered",
+                            "canceled": "Order Cancelled",
+
                             "cancelByAdmin": " Order Canceled by the admin",
                             "cancelByUser": " You canceled the order",
                             "received": " Order received and will be proceed as soon as possible",

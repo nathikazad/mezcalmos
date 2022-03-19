@@ -388,6 +388,7 @@
                             "readyForDelivery": "Listo para la entrega",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden entregado",
+                            "canceled": "Orden cancelada",
                             "cancelByAdmin": " Orden cancelado por el administrador.",
                             "cancelByUser": " Usted canceló el pedido",
                             "received": " El pedido recibido y se procederá tan pronto como sea posible.",

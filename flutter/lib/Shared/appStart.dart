@@ -107,7 +107,7 @@ class _StartingPointState extends State<StartingPoint> {
               SplashScreen());
     } else {
       mezDbgPrint(
-          "====> PreviewMode ===> ${GetStorage().read<String?>('previewMode')}");
+          "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}");
       return Sizer.Sizer(
           builder: (BuildContext context, Orientation orientation,
                   Sizer.DeviceType deviceType) =>
