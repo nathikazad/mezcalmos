@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
@@ -46,6 +47,36 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   RxInt numberOfCurrentOrders = RxInt(0);
   StreamSubscription? _orderCountListener;
   StreamSubscription? _authStateChnagesListener;
+  StreamSubscription? _firebaseDeepLinkListener;
+
+  void startListeningForDynamicLinks() {
+    _firebaseDeepLinkListener?.cancel();
+    _firebaseDeepLinkListener = null;
+    FirebaseDynamicLinks.instance.onLink
+        .listen((PendingDynamicLinkData linkData) {
+      Future<void>.delayed(Duration.zero, () => handleIfDynamicLink(linkData));
+    });
+  }
+
+  void handleIfDynamicLink(PendingDynamicLinkData? data) {
+    // final PendingDynamicLinkData? data =
+    //     await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri? deepLink = data?.link;
+    if (deepLink != null) {
+      // handle
+      mezDbgPrint("@deepLink@: ${deepLink.origin}");
+      final List<String> separatedString = <String>[];
+      separatedString.addAll(deepLink.path.split('/'));
+      if (separatedString.length == 3) {
+        if (separatedString[1] == "restaurant") {
+          Get.toNamed<void>(getRestaurantRoute(separatedString[1]));
+        }
+      }
+    }
+
+    return null;
+  }
+
   @override
   void initState() {
     Get.put(TaxiController(), permanent: true);
@@ -53,11 +84,30 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     Get.put(RestaurantsInfoController(), permanent: true);
     Get.put(LaundryController(), permanent: true);
     WidgetsBinding.instance!.addObserver(this);
+
     if (Get.find<AuthController>().fireAuthUser != null) {
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
+    FirebaseDynamicLinks.instance
+        .getInitialLink()
+        .then((PendingDynamicLinkData? value) {
+      handleIfDynamicLink(value);
+      startListeningForDynamicLinks();
+    });
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _firebaseDeepLinkListener?.cancel();
+    _firebaseDeepLinkListener = null;
+    _orderCountListener?.cancel();
+    _orderCountListener = null;
+    _authStateChnagesListener?.cancel();
+    _authStateChnagesListener = null;
+    super.dispose();
   }
 
   @override
