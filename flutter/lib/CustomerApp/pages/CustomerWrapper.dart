@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart'
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
@@ -20,7 +21,6 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -34,12 +34,12 @@ class CustomerWrapper extends StatefulWidget {
 
 class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
-  // CustomerApp.pages.CustomerWrapper.welcomeText
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['pages']['CustomerWrapper'];
   AuthController auth = Get.find<AuthController>();
   OrderController? _orderController;
   DateTime? appClosedTime;
+  final DeepLinkHandler _deepLinkHandler = DeepLinkHandler();
 
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
@@ -47,35 +47,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   RxInt numberOfCurrentOrders = RxInt(0);
   StreamSubscription? _orderCountListener;
   StreamSubscription? _authStateChnagesListener;
-  StreamSubscription? _firebaseDeepLinkListener;
-
-  void startListeningForDynamicLinks() {
-    _firebaseDeepLinkListener?.cancel();
-    _firebaseDeepLinkListener = null;
-    FirebaseDynamicLinks.instance.onLink
-        .listen((PendingDynamicLinkData linkData) {
-      Future<void>.delayed(Duration.zero, () => handleIfDynamicLink(linkData));
-    });
-  }
-
-  void handleIfDynamicLink(PendingDynamicLinkData? data) {
-    // final PendingDynamicLinkData? data =
-    //     await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri? deepLink = data?.link;
-    if (deepLink != null) {
-      // handle
-      mezDbgPrint("@deepLink@: ${deepLink.origin}");
-      final List<String> separatedString = <String>[];
-      separatedString.addAll(deepLink.path.split('/'));
-      if (separatedString.length == 3) {
-        if (separatedString[1] == "restaurant") {
-          Get.toNamed<void>(getRestaurantRoute(separatedString[1]));
-        }
-      }
-    }
-
-    return null;
-  }
 
   @override
   void initState() {
@@ -89,20 +60,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
-    FirebaseDynamicLinks.instance
-        .getInitialLink()
-        .then((PendingDynamicLinkData? value) {
-      handleIfDynamicLink(value);
-      startListeningForDynamicLinks();
-    });
-
     super.initState();
   }
 
   @override
   void dispose() {
-    _firebaseDeepLinkListener?.cancel();
-    _firebaseDeepLinkListener = null;
+    // _firebaseDeepLinkListener?.cancel();
+    // _firebaseDeepLinkListener = null;
     _orderCountListener?.cancel();
     _orderCountListener = null;
     _authStateChnagesListener?.cancel();
@@ -113,6 +77,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
+      /// Check of app was opened through a DeepLink
+      Future<void>.delayed(Duration(seconds: 1),
+              _deepLinkHandler.startDynamicLinkCheckRoutine)
+          .then((_) => _deepLinkHandler.cancelDeepLinkListener(
+              duration: Duration(seconds: 1)));
       if (appClosedTime != null &&
           _orderController != null &&
           DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&

@@ -45,15 +45,18 @@ class RestaurantsInfoController extends GetxController {
     return restaurants.reversed.toList();
   }
 
-  Future<Restaurant> getRestaurant(String restaurantId) async {
+  Future<Restaurant?> getRestaurant(String restaurantId) async {
     return _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderInfos(
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .once()
-        .then<Restaurant>((DataSnapshot snapshot) {
-      return Restaurant.fromRestaurantData(
-          restaurantId: restaurantId, restaurantData: snapshot.value);
+        .then<Restaurant?>((DataSnapshot snapshot) {
+      if (snapshot.value != null) {
+        return Restaurant.fromRestaurantData(
+            restaurantId: restaurantId, restaurantData: snapshot.value);
+      }
+      return null;
     });
   }
 
