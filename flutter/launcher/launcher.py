@@ -22,6 +22,7 @@ PRINTLN = lambda x,end='\n' : print(x , end=end) if ACTIVE_DEBUG else None
 
 VALID_CONFIG_KEYS_LEN = 2
 rm_lambda = lambda path : 'rm -rf {path}*'
+
 # POSSIBLE_LMODES = [
 #     'stage',
 #     'dev',
@@ -80,6 +81,7 @@ class Launcher:
     def __init__(self , user_args , conf) -> None:
         self.user_args = user_args
         self.conf = conf
+        self.isWin = False
         # self.last_app = Config.chSum(user_args['app'])
         try:
             self.__launch__()
@@ -97,7 +99,7 @@ class Launcher:
                     if self.user_args['fmode'] == "hide":
                         fmd = OUTPUT_FILTERS.HIDE
 
-            binary = ['flutter' , 'run', '-t', 'lib/'+user_args['app']+'/main.dart']
+            binary = ['flutter.bat' if self.isWin else 'flutter' , 'run', '-t', 'lib/'+user_args['app']+'/main.dart']
             binary.extend(f_args)
 
             Config.launch_flutter_app(binary=binary , filter_file=ff , filter_mode=fmd)
@@ -513,6 +515,7 @@ class Config:
         print(f"\n- MezLauncher v{VERSION}\n")
         global rm_lambda
         if platform.startswith('win'):
+            self.isWin = True
             # cuz CMD is dumb xd
             rm_lambda = lambda path : f'del {path}'# && rd {path}
 
