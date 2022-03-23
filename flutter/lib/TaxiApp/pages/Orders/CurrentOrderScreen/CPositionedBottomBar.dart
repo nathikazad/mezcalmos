@@ -215,8 +215,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           // Spacer(),
                           Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                           GestureDetector(
-                            onTap: () async {
-                              Get.toNamed(
+                            onTap: () {
+                              Get.toNamed<void>(
                                   getMessagesRoute(chatId: order.orderId));
                             },
                             child: Container(

@@ -9,40 +9,40 @@ import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
 
 enum AppBarLeftButtonType { Back, Menu }
-AppVersionController _appUpdate = Get.find<AppVersionController>();
-List<Widget> getReminderIfNewUpdate() {
-  if (_appUpdate.appVersionInfos.value?.areLocalAndRemoteVersionsDiffrent() ==
-      true) {
-    return [
-      SizedBox(
-        height: 10,
-      ),
-      GestureDetector(
-        onTap: () => _appUpdate.appVersionInfos.refresh(),
-        child: Container(
-          width: Get.width,
-          height: 20,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 97, 127, 255),
-              Color.fromARGB(255, 198, 90, 252),
-            ], begin: Alignment.centerRight, end: Alignment.centerLeft),
-          ),
-          child: Text(
-            "Click to update to : v${_appUpdate.appVersionInfos.value!.remoteVersion}.",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w600),
-          ),
-        ),
-      ),
-    ];
-  } else
-    return [];
-}
+// AppVersionController _appUpdate = Get.find<AppVersionController>();
+// List<Widget> getReminderIfNewUpdate() {
+//   if (_appUpdate.appVersionInfos.value?.areLocalAndRemoteVersionsDiffrent() ==
+//       true) {
+//     return [
+//       SizedBox(
+//         height: 10,
+//       ),
+//       GestureDetector(
+//         onTap: () => _appUpdate.appVersionInfos.refresh(),
+//         child: Container(
+//           width: Get.width,
+//           height: 20,
+//           decoration: BoxDecoration(
+//             borderRadius: BorderRadius.circular(8),
+//             gradient: LinearGradient(colors: [
+//               Color.fromARGB(255, 97, 127, 255),
+//               Color.fromARGB(255, 198, 90, 252),
+//             ], begin: Alignment.centerRight, end: Alignment.centerLeft),
+//           ),
+//           child: Text(
+//             "Click to update to : v${_appUpdate.appVersionInfos.value!.remoteVersion}.",
+//             textAlign: TextAlign.center,
+//             style: TextStyle(
+//                 color: Colors.white,
+//                 fontSize: 10.sp,
+//                 fontWeight: FontWeight.w600),
+//           ),
+//         ),
+//       ),
+//     ];
+//   } else
+//     return [];
+// }
 
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {dynamic bgColor = Colors.white,
@@ -127,8 +127,8 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
               ],
             ),
           ),
-          if (_appUpdate.appVersionInfos.value != null)
-            ...getReminderIfNewUpdate(),
+          // if (_appUpdate.appVersionInfos.value != null)
+          //   ...getReminderIfNewUpdate(),
         ],
       ),
     ),

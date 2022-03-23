@@ -36,6 +36,7 @@ class MessagingScreen extends StatefulWidget {
 class _MessagingScreenState extends State<MessagingScreen> {
   late final String? orderId;
   late final bool? showViewOrderBtn;
+
   late final String chatId;
 
   ParticipantType recipientType = ParticipantType.Customer;
@@ -46,6 +47,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
   void initState() {
     super.initState();
     print("inside messaginScreen onInitState !");
+    mezDbgPrint(
+      "@AYROUTE : ${Get.currentRoute} || chatId : ${Get.parameters['chatId']} ",
+    );
     if (Get.parameters['chatId'] == null) {
       Get.snackbar("Error", "Does not have a valid chatId!");
       Get.back<void>();
@@ -55,7 +59,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
     mezDbgPrint("=======================>>>>>>>>>>>>>>>>>> orderid $orderId");
     // default to False.
     showViewOrderBtn = Get.arguments?['showViewOrderBtn'];
-
+    mezDbgPrint(
+        "@R@E@CPIENT : t=${Get.parameters['recipientType']}&id=${Get.parameters['recipientId']}");
     if (Get.parameters['recipientId'] != null)
       recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {

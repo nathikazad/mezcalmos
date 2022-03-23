@@ -123,7 +123,8 @@ class OrderController extends GetxController {
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.orderId == orderId)
+        .toList()
         .isNotEmpty;
   }
 

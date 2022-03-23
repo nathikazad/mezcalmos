@@ -20,7 +20,7 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
   AuthController authController = Get.find<AuthController>();
-  AppVersionController _appVersionController = Get.find<AppVersionController>();
+  // AppVersionController _appVersionController = Get.find<AppVersionController>();
 
   late bool databaseUserLastSnapshot;
 
@@ -36,7 +36,7 @@ class _WrapperState extends State<Wrapper> {
       Get.find<AuthController>().authStateStream.listen((user) {
         handleAuthStateChange(user);
       });
-      handleAppVersionUpdatesAndStartListener();
+      // handleAppVersionUpdatesAndStartListener();
     });
     super.initState();
   }
@@ -44,16 +44,16 @@ class _WrapperState extends State<Wrapper> {
   /// This parts Checks the snapshot at [AppVersionController.isNewVersionOut] if it is not null
   ///
   /// and then start a listener in case there there is updates.
-  void handleAppVersionUpdatesAndStartListener() {
-    // first we check the snapshot
-    checkIfNotInUpdateScreenAndPush(_appVersionController.appVersionInfos.value)
-        .then((_) {
-      // this listenr is distinct by the way.
-      _appVersionController.appVersionInfos.stream.listen((updateType) async {
-        await checkIfNotInUpdateScreenAndPush(updateType);
-      });
-    });
-  }
+  // void handleAppVersionUpdatesAndStartListener() {
+  //   // first we check the snapshot
+  //   checkIfNotInUpdateScreenAndPush(_appVersionController.appVersionInfos.value)
+  //       .then((_) {
+  //     // this listenr is distinct by the way.
+  //     _appVersionController.appVersionInfos.stream.listen((updateType) async {
+  //       await checkIfNotInUpdateScreenAndPush(updateType);
+  //     });
+  //   });
+  // }
 
   Future<void> checkIfNotInUpdateScreenAndPush(
       AppUpdate? appVersionInfos) async {

@@ -32,8 +32,11 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   StreamSubscription<bool>? _locationStreamSub;
   AuthController _authController = Get.find<AuthController>();
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
+
+  //------- incomingOrdersController ------------
   IncomingOrdersController incomingOrdersController =
       Get.put<IncomingOrdersController>(IncomingOrdersController());
+  //---------------------------------------------
   @override
   void initState() {
     mezDbgPrint("TaxiWrapper::init state");
@@ -91,15 +94,6 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
       } else if (state.inOrderNegotation != null) {
         await handleInNegotationMode(state.inOrderNegotation!);
       } else {
-        // if (Get.currentRoute == kAppNeedsUpdate &&
-        //     Get.find<AppVersionController>()
-        //             .appVersionInfos
-        //             .value
-        //             ?.areLocalAndRemoteVersionsDiffrent() ==
-        //         true) {
-        //   mezDbgPrint("TaxiWrapper::handleState going to incoming orders");
-        //   Get.toNamed(kAppNeedsUpdate);
-        // } else
         Get.toNamed(kIncomingOrdersListRoute);
       }
     } else {

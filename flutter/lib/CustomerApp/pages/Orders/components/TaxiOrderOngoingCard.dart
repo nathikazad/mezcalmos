@@ -154,13 +154,12 @@ String getTaxiOrderStatus(TaxiOrdersStatus status) {
       return '${_i18n()["orderStatus"]["droppedOff"]}';
     case TaxiOrdersStatus.Expired:
       return '${_i18n()["orderStatus"]["expired"]}';
-
     case TaxiOrdersStatus.ForwardingSuccessful:
       return '${_i18n()["orderStatus"]["forwardSuccess"]}';
     case TaxiOrdersStatus.ForwardingUnsuccessful:
       return '${_i18n()["orderStatus"]["forwardUnsuccess"]}';
     case TaxiOrdersStatus.ForwardingToLocalCompany:
-      return '${_i18n()["orderStatus"]["forward"]}';
+      return '${_i18n()["orderStatus"]["forwarding"]}';
 
     default:
       return 'Unknown status';

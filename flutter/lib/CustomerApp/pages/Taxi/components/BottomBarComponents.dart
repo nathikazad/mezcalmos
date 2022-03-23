@@ -149,8 +149,8 @@ Widget taxiAvatarAndName(
 Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
   return GestureDetector(
     onTap: () {
-      Get.toNamed(getTaxiMessagesRoute(order.orderId),
-          parameters: {"orderId": order.orderId});
+      Get.toNamed<void>(getTaxiMessagesRoute(order.orderId),
+          parameters: <String, String>{"orderId": order.orderId});
     },
     child: Container(
       margin: margin ?? EdgeInsets.only(left: 6),
@@ -238,7 +238,7 @@ Widget cancelBtn(TaxiOrder order) {
 Widget buildMsgAndCancelBtn(TaxiOrder order) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
+    children: <Widget>[
       messageBtn(order: order),
       SizedBox(
         width: 5,

@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
-import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/iOrderViewWidgets.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/controller/iOrderViewController.dart';
-import 'package:sizer/sizer.dart';
-
-dynamic _i18n() =>
-    Get.find<LanguageController>().strings["TaxiApp"]["pages"]["Orders"]
-        ["IncomingOrders"]["IncomingViewScreen"]["IncomingOrderViewScreen"];
 
 class IncomingOrderViewScreen extends StatefulWidget {
   @override
@@ -31,17 +24,12 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   @override
   void initState() {
     initializeLateControllers();
-    String orderId = Get.parameters['orderId']!;
+    final String orderId = Get.parameters['orderId']!;
     iOrderViewController.initController(
         orderId: orderId,
         onOrderNoMoreAvailable: () {
-          Get.back();
-          oneButtonDialog(
-              title: 'Oops...',
-              body: _i18n()['rideUnavailable'],
-              bodyTextColor: Colors.black,
-              fontSize: 14.sp,
-              imagUrl: a404);
+          Get.back<void>();
+          mezcalmosDialogOrderNoMoreAvailable(context);
         });
     super.initState();
   }
@@ -53,10 +41,10 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   }
 
   void initializeLateControllers() {
-    this.animatedSliderController = AnimatedSliderController();
-    this.iOrderViewController = IOrderViewController(
+    animatedSliderController = AnimatedSliderController();
+    iOrderViewController = IOrderViewController(
         animatedSliderController: animatedSliderController);
-    this.iOrderViewWidgets =
+    iOrderViewWidgets =
         IOrderViewWidgets(iOrderViewController: iOrderViewController);
   }
 
@@ -70,13 +58,13 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
               onClick: iOrderViewController.counterOffer.value == null
                   ? () {
                       iOrderViewController.cancelStreamsSubscriptions();
-                      Get.back();
+                      Get.back<void>();
                     }
                   : null),
           body: iOrderViewController.order.value != null
               ? Stack(
                   alignment: Alignment.topCenter,
-                  children: [
+                  children: <Widget>[
                     MGoogleMap(
                       mGoogleMapController:
                           iOrderViewController.mGoogleMapController,
@@ -85,13 +73,13 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                     ),
                     iOrderViewWidgets.absorbOrIgnoreUserTapWidget(),
                     IncomingPositionedBottomBar(
-                      order: this.iOrderViewController.order.value!,
+                      order: iOrderViewController.order.value!,
                     ),
                     if (iOrderViewController.counterOffer.value == null)
                       iOrderViewWidgets.acceptAndOfferButtons(),
                     iOrderViewWidgets.counterOfferBottomSheet(),
                     IncomingPositionedFromToTopBar(
-                      order: this.iOrderViewController.order.value!,
+                      order: iOrderViewController.order.value!,
                     )
                   ],
                 )
