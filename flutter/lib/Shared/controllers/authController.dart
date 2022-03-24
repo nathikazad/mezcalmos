@@ -117,11 +117,12 @@ class AuthController extends GetxController {
   }
 
   bool isDisplayNameSet() {
-    return _user.value?.name != null;
+    return _user.value?.name != null && _user.value?.name != "";
   }
 
   bool isUserImgSet() {
     return _user.value?.image != null &&
+        _user.value?.image != "" &&
         _user.value?.image != defaultUserImgUrl;
   }
 
