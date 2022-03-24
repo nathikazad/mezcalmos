@@ -5,11 +5,14 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class LaundryPricingCompnent extends StatelessWidget {
   final LaundryOrder order;
+
   const LaundryPricingCompnent({Key? key, required this.order})
       : super(key: key);
+
   dynamic _i18n() =>
       Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
           ['LaundryCurrentOrderView']['Components']['LaundryPricingComponent'];
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -22,9 +25,7 @@ class LaundryPricingCompnent extends StatelessWidget {
               _i18n()['laundryPricing'],
               style: Theme.of(context).textTheme.headline3,
             ),
-            Divider(
-              height: 15,
-            ),
+            const Divider(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -38,9 +39,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -56,9 +55,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -75,20 +72,19 @@ class LaundryPricingCompnent extends StatelessWidget {
             if (order.weight == null)
               Column(
                 children: [
-                  Divider(
-                    height: 25,
-                  ),
+                  Divider(height: 25),
                   Row(
                     children: [
                       Icon(
                         Icons.help_outline_rounded,
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(height: 10),
                       Flexible(
-                          child:
-                              Text(_i18n()['laundryPricingNote'], maxLines: 3)),
+                        child: Text(
+                          _i18n()['laundryPricingNote'],
+                          maxLines: 3,
+                        ),
+                      ),
                     ],
                   )
                 ],

@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
@@ -9,29 +11,40 @@ import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:location/location.dart' as GeoLoc;
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Taxi']['RequestTaxiScreen'];
 
 class RequestTaxiController {
+  /// LocationPickerController
   final LocationPickerController locationPickerController =
       LocationPickerController();
+
+  /// LocationSearchBarController
   final LocationSearchBarController locationSearchBarController =
       LocationSearchBarController();
+
+  /// TaxiController
   final TaxiController controller = Get.put<TaxiController>(TaxiController());
 
+  /// currentFocusedTextField
   Rx<SearchComponentType> currentFocusedTextField =
       SearchComponentType.From.obs;
+
+  /// taxiRequest
   Rx<TaxiRequest> taxiRequest = TaxiRequest().obs;
+
+  /// pickedFromTo
   RxBool pickedFromTo = false.obs;
+
+  /// Timer
   Timer? timer;
 
   /// this is called at initState time , loads up the map and set the current location as the user's current loc.
@@ -123,17 +136,21 @@ class RequestTaxiController {
     });
   }
 
-/******************************  EVENT HANDLERS ************************************/
+  /******************************  EVENT HANDLERS ************************************/
 // when one of the dropdowns (pick current location, a saved location or a places suggestion clicked)
   void updateModelAndHandoffToLocationPicker(
-      Location? newLocation, SearchComponentType textFieldType) {
+    Location? newLocation,
+    SearchComponentType textFieldType,
+  ) {
     // locationPickerController.removeCircleMarker();
     if (newLocation != null) {
       currentFocusedTextField.value = textFieldType;
       updateModelAndMarker(textFieldType, newLocation);
       locationPickerController.setLocation(newLocation);
       locationPickerController.moveToNewLatLng(
-          newLocation.latitude, newLocation.longitude);
+        newLocation.latitude,
+        newLocation.longitude,
+      );
       locationPickerController.showFakeMarkerAndPickButton();
       locationPickerController.showOrHideBlackScreen(true);
     } else {
@@ -206,27 +223,32 @@ class RequestTaxiController {
     }
   }
 
-/******************************  Helper function ************************************/
+  /******************************  Helper function ************************************/
   void updateModelAndMarker(
-      SearchComponentType textFieldType, Location newLocation) {
+    SearchComponentType textFieldType,
+    Location newLocation,
+  ) {
     if (textFieldType == SearchComponentType.From) {
       taxiRequest.value.setFromLocation(newLocation);
       //ignore_for_file:unawaited_futures
       locationPickerController.addOrUpdateUserMarker(
-          markerId: textFieldType.toShortString(),
-          latLng: newLocation.toLatLng());
+        markerId: textFieldType.toShortString(),
+        latLng: newLocation.toLatLng(),
+      );
     } else {
       taxiRequest.value.setToLocation(newLocation);
       locationPickerController.addOrUpdatePurpleDestinationMarker(
-          markerId: textFieldType.toShortString(),
-          latLng: newLocation.toLatLng());
+        markerId: textFieldType.toShortString(),
+        latLng: newLocation.toLatLng(),
+      );
     }
   }
 
   void onSuccessSignInUpdateUserMarker() {
     locationPickerController.addOrUpdateUserMarker(
-        markerId: SearchComponentType.From.toShortString(),
-        latLng: taxiRequest.value.from!.toLatLng());
+      markerId: SearchComponentType.From.toShortString(),
+      latLng: taxiRequest.value.from!.toLatLng(),
+    );
   }
 
   Future<void> updateRouteInformation() async {

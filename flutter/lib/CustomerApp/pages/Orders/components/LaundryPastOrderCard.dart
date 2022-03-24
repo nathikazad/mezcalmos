@@ -13,12 +13,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['components']['LaundryPastOrderCard'];
 
 class LaundryPastOrderCard extends StatelessWidget {
-  LaundryPastOrderCard({
+  const LaundryPastOrderCard({
     Key? key,
     required this.order,
   }) : super(key: key);
 
-  LaundryOrder order;
+  final LaundryOrder order;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class LaundryPastOrderCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          Get.toNamed(getLaundyOrderRoute(order.orderId));
+          Get.toNamed<void>(getLaundyOrderRoute(order.orderId));
         },
         borderRadius: BorderRadius.circular(10),
         child: Ink(

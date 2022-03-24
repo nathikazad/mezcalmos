@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import 'package:mezcalmos/CustomerApp/components/MyExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ChoosenManyOption.dart';
@@ -33,7 +32,7 @@ class CartItemsBuilder extends StatelessWidget {
         var counter = cartItem.totalCost().obs;
         children.add(Container(
           margin: const EdgeInsets.all(5),
-          child: MyExpensionPanelComponent(
+          child: MyExpansionPanelComponent(
             child: Flexible(
                 child: Obx(
               () => ItemInformationCart(

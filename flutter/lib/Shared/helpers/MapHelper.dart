@@ -1,17 +1,16 @@
 import 'dart:convert';
+import 'dart:math' show cos, sqrt, sin, pi, atan2, pow;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'dart:math' show cos, sqrt, sin, pi, atan2, pow;
-import 'package:http/http.dart' as http;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 typedef LocationChangesNotifier = void Function(LocModel.Location location);
 
@@ -19,22 +18,31 @@ class RouteInformation {
   String polyline;
   RideDistance distance;
   RideDuration duration;
-  RouteInformation(
-      {required this.polyline, required this.distance, required this.duration});
+
+  RouteInformation({
+    required this.polyline,
+    required this.distance,
+    required this.duration,
+  });
 
   Map<String, dynamic> toJson() {
-    return {...distance.toJson(), ...duration.toJson(), "polyline": polyline};
+    return <String, dynamic>{
+      ...distance.toJson(),
+      ...duration.toJson(),
+      "polyline": polyline
+    };
   }
 }
 
 class RideDistance {
   String distanceStringInKm;
   int distanceInMeters;
+
   RideDistance(this.distanceStringInKm, this.distanceInMeters);
 
   Map<String, dynamic> toJson() {
-    return {
-      "distance": {
+    return <String, dynamic>{
+      "distance": <String, dynamic>{
         "text": this.distanceStringInKm,
         "value": this.distanceInMeters
       }
@@ -56,10 +64,14 @@ String hoursMinsShortner(String original) {
 
 class RideDuration {
   String _text;
+
   String get longTextVersion => this._text;
+
   String get shortTextVersion => hoursMinsShortner(this._text);
   int seconds;
+
   RideDuration(this._text, this.seconds);
+
   Map<String, dynamic> toJson() {
     return {
       "duration": {"text": this.longTextVersion, "value": this.seconds}
@@ -76,11 +88,13 @@ class Route {
   RideDuration duration;
   List<PointLatLng> polylineList;
   String encodedPolyLine;
-  Route(
-      {required this.duration,
-      required this.distance,
-      required this.polylineList,
-      required this.encodedPolyLine});
+
+  Route({
+    required this.duration,
+    required this.distance,
+    required this.polylineList,
+    required this.encodedPolyLine,
+  });
 }
 
 Future<LocModel.Location> getCurrentLocation() async {

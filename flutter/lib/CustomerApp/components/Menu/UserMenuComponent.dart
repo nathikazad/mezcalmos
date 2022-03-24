@@ -11,8 +11,12 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class UserMenu extends StatefulWidget {
+  const UserMenu({
+    Key? key,
+    required this.padding,
+  }) : super(key: key);
+
   final double padding;
-  UserMenu({Key? key, required this.padding}) : super(key: key);
 
   @override
   State<UserMenu> createState() => _UserMenuState();
@@ -21,19 +25,24 @@ class UserMenu extends StatefulWidget {
 class _UserMenuState extends State<UserMenu> {
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['components']['Menu']['UserMenuComponent'];
-  AuthController auth = Get.find<AuthController>();
-  OrderController orderController = Get.find<OrderController>();
+
+  /// AuthController
+  final AuthController auth = Get.find<AuthController>();
+
+  /// OrderController
+  final OrderController orderController = Get.find<OrderController>();
 
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
       padding: EdgeInsets.only(right: 12),
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      ),
       icon: UserMenuIcon(
         padding: widget.padding,
       ),
-      itemBuilder: (context) {
+      itemBuilder: (BuildContext context) {
         return [
           PopupMenuItem(
             child: orderMenuItem(context),
@@ -90,7 +99,7 @@ class _UserMenuState extends State<UserMenu> {
           ),
         ];
       },
-      onSelected: (value) {
+      onSelected: (Object? value) {
         switch (value) {
           case 0:
             Get.toNamed(kOrdersRoute);

@@ -20,26 +20,32 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'components/RestaurantOngoingOrderCard.dart';
 import 'components/TaxiOrderOngoingCard.dart';
 
-final f = new DateFormat('MM.dd.yyyy');
-final currency = new NumberFormat("#,##0.00", "en_US");
+final DateFormat f = new DateFormat('MM.dd.yyyy');
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
+
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
 
 class ListOrdersScreen extends StatefulWidget {
+  const ListOrdersScreen({Key? key}) : super(key: key);
+
   @override
   _ListOrdersScreen createState() => _ListOrdersScreen();
 }
 
 class _ListOrdersScreen extends State<ListOrdersScreen> {
+  /// GEt OrderController
   OrderController controller = Get.put(OrderController());
+
+  /// GEt AuthController
   AuthController auth = Get.find<AuthController>();
 
   @override
-  initState() {
-    mezDbgPrint(
-        "ListOrdersScreen: onInit current : ${controller.currentOrders.length} past : ${controller.pastOrders.length}");
-
+  void initState() {
     super.initState();
+    mezDbgPrint(
+      "ListOrdersScreen: onInit current : ${controller.currentOrders.length} past : ${controller.pastOrders.length}",
+    );
   }
 
   @override
@@ -49,7 +55,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CustomerAppBar(
         title: '${_i18n()["title"]}',
@@ -59,31 +65,35 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         () => controller.currentOrders.length + controller.pastOrders.length > 0
             ? SingleChildScrollView(
                 child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (controller.currentOrders.isNotEmpty)
-                    OngoingOrderList(txt: txt, controller: controller),
-                  if (controller.pastOrders.isNotEmpty)
-                    PastOrderList(txt: txt, controller: controller),
-                ],
-              ))
-            : NoOrdersWidget(),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (controller.currentOrders.isNotEmpty)
+                      OngoingOrderList(txt: txt, controller: controller),
+                    if (controller.pastOrders.isNotEmpty)
+                      PastOrderList(txt: txt, controller: controller),
+                  ],
+                ),
+              )
+            : _noOrdersWidget(),
       ),
     );
   }
 
-  Center NoOrdersWidget() {
+  Center _noOrdersWidget() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.error, color: Colors.black, size: 30),
+        children: <Widget>[
+          const Icon(Icons.error, color: Colors.black, size: 30),
           Text(
             _i18n()['orders']['noOrders'],
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
-          )
+              color: Colors.black,
+              fontWeight: FontWeight.w300,
+              fontSize: 14,
+            ),
+          ),
         ],
       ),
     );
@@ -107,65 +117,62 @@ class PastOrderList extends StatelessWidget {
       child: Obx(
         () => controller.pastOrders().length >= 1
             ? pastOrdersWidget()
-            : NoPastOrdersWidget(context),
+            : _noPastOrdersWidget(context),
       ),
     );
   }
 
   Column pastOrdersWidget() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      GroupedListView<Order, DateTime>(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        GroupedListView<Order, DateTime>(
+          shrinkWrap: true,
           elements: controller.pastOrders(),
-          groupBy: (element) => DateTime(element.orderTime.year,
+          groupBy: (Order element) => DateTime(element.orderTime.year,
               element.orderTime.month, element.orderTime.day),
           groupComparator: (DateTime value1, DateTime value2) =>
               value2.compareTo(value1),
-          itemComparator: (element1, element2) =>
+          itemComparator: (Order element1, Order element2) =>
               element2.orderTime.compareTo(element1.orderTime),
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          groupHeaderBuilder: (element) {
+          physics: const NeverScrollableScrollPhysics(),
+          groupHeaderBuilder: (Order element) {
             return Container(
               margin: const EdgeInsets.all(8),
               child: Text(
                 (calculateDifference(element.orderTime) == 0)
-                    ? _i18n()["shared"]
-                        ["notification"]["today"]
+                    ? _i18n()["shared"]["notification"]["today"]
                     : (calculateDifference(element.orderTime) == -1)
-                        ? _i18n()["shared"]
-                            ["notification"]["yesterday"]
+                        ? _i18n()["shared"]["notification"]["yesterday"]
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
                 style: txt.headline3,
               ),
             );
           },
-          separator: SizedBox(
-            height: 5,
-          ),
-          itemBuilder: (context, element) {
+          separator: const SizedBox(height: 5),
+          itemBuilder: (_, Order element) {
             switch (element.orderType) {
               case OrderType.Taxi:
                 return TaxiPastOrderCard(order: element as TaxiOrder);
-
               case OrderType.Restaurant:
                 return RestaurantPastOrderCard(
-                    order: element as RestaurantOrder);
+                  order: element as RestaurantOrder,
+                );
               case OrderType.Laundry:
                 return LaundryPastOrderCard(order: element as LaundryOrder);
-
               default:
-                return SizedBox(
-                  height: 0,
-                );
+                return const SizedBox.shrink();
             }
-          }),
-    ]);
+          },
+        ),
+      ],
+    );
   }
 
-  Center NoPastOrdersWidget(BuildContext context) {
+  Center _noPastOrdersWidget(BuildContext context) {
     return Center(
       child: Column(
-        children: [
+        children: <Widget>[
           Icon(Icons.error, color: Colors.white),
           Text(
             _i18n()['orders']['noOrders'],
@@ -174,7 +181,7 @@ class PastOrderList extends StatelessWidget {
                 .textTheme
                 .bodyText1!
                 .copyWith(color: Colors.black),
-          )
+          ),
         ],
       ),
     );
@@ -206,34 +213,32 @@ class OngoingOrderList extends StatelessWidget {
             ),
           ),
           ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: NeverScrollableScrollPhysics(),
-              reverse: true,
-              itemCount: controller.currentOrders().length,
-              itemBuilder: (context, index) {
-                switch (controller.currentOrders()[index].orderType) {
-                  case OrderType.Taxi:
-                    return TaxiOngoingOrderCard(
-                        order: controller.currentOrders()[index]);
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            physics: NeverScrollableScrollPhysics(),
+            reverse: true,
+            itemCount: controller.currentOrders().length,
+            itemBuilder: (_, int index) {
+              switch (controller.currentOrders()[index].orderType) {
+                case OrderType.Taxi:
+                  return TaxiOngoingOrderCard(
+                    order: controller.currentOrders()[index],
+                  );
+                case OrderType.Restaurant:
+                  return RestaurantOngoingOrderCard(
+                    order: controller.currentOrders()[index],
+                  );
+                case OrderType.Laundry:
+                  return LaundryOngoigOrderCard(
+                    order: controller.currentOrders()[index] as LaundryOrder,
+                  );
 
-                  case OrderType.Restaurant:
-                    return RestaurantOngoingOrderCard(
-                        order: controller.currentOrders()[index]);
-                  case OrderType.Laundry:
-                    return LaundryOngoigOrderCard(
-                        order:
-                            controller.currentOrders()[index] as LaundryOrder);
-
-                  default:
-                    return SizedBox(
-                      height: 0,
-                    );
-                }
-              }),
-          SizedBox(
-            height: 10,
-          )
+                default:
+                  return const SizedBox.shrink();
+              }
+            },
+          ),
+          const SizedBox(height: 10)
         ]),
       ),
     );

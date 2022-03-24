@@ -23,16 +23,29 @@ class LaundryOrderRequestView extends StatefulWidget {
 }
 
 class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
+  /// TextEditingController
   TextEditingController _orderNote = TextEditingController();
+
+  /// LocationPickerController
   final LocationPickerController locationPickerController =
       LocationPickerController();
+
+  /// AuthController
   final AuthController authController = Get.find<AuthController>();
 
+  /// LaundryController
   LaundryController laundryController = Get.find<LaundryController>();
+
+  /// LanguageController
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['pages']['Laundry']['LaundryRequestView']['LaundryOrderRequestView'];
+
+  /// Location
   Location? defaultLoc;
+
+  /// RxBool clicked
   RxBool clicked = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +57,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Container(
                 margin: const EdgeInsets.all(8),
                 child: Text(
@@ -55,9 +66,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 ),
               ),
               LaundryStepsComponent(),
-              SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Container(
                 margin: const EdgeInsets.all(8),
                 child: Text(
@@ -79,14 +88,10 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       : pickFromMapComponent(context),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               _orderNoteComponent(),
-              SizedBox(
-                height: 20,
-              ),
-              orderSummaryCard(context)
+              const SizedBox(height: 20),
+              orderSummaryCard(context),
             ],
           ),
         ),
@@ -101,9 +106,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(_i18n()["notes"], style: Theme.of(context).textTheme.headline3),
-          SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           TextField(
             controller: _orderNote,
             decoration: InputDecoration(
@@ -125,9 +128,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               "${_i18n()["orderSummary"]}",
               style: Theme.of(context).textTheme.headline3,
             ),
-            Divider(
-              height: 15,
-            ),
+            Divider(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -141,9 +142,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -157,9 +156,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 ),
               ],
             ),
-            Divider(
-              height: 25,
-            ),
+            Divider(height: 25),
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -167,21 +164,20 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
-            SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Row(
               children: [
                 Icon(
                   Icons.place_rounded,
                   color: Theme.of(context).primaryColorLight,
                 ),
-                SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(height: 5),
                 Flexible(
-                    child: Text(defaultLoc?.address ?? _i18n()['noLocation'],
-                        maxLines: 1)),
+                  child: Text(
+                    defaultLoc?.address ?? _i18n()['noLocation'],
+                    maxLines: 1,
+                  ),
+                ),
               ],
             )
           ],
@@ -194,7 +190,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     return InkWell(
       onTap: () async {
         final Location? currentLoc =
-            await Get.toNamed(kPickLocationNotAuth) as Location?;
+            await Get.toNamed<void>(kPickLocationNotAuth) as Location?;
         if (currentLoc != null) {
           setState(() {
             defaultLoc = currentLoc;
@@ -205,23 +201,25 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         padding: const EdgeInsets.all(8),
         alignment: Alignment.centerLeft,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-                color: (defaultLoc == null)
-                    ? Colors.red
-                    : Theme.of(context).primaryColorLight)),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+              color: (defaultLoc == null)
+                  ? Colors.red
+                  : Theme.of(context).primaryColorLight),
+        ),
         child: Row(
           children: [
             Icon(
               Icons.place_rounded,
               color: Theme.of(context).primaryColorLight,
             ),
-            SizedBox(
-              width: 5,
-            ),
+            const SizedBox(width: 5),
             Flexible(
-                child: Text(defaultLoc?.address ?? _i18n()['pickLocation'],
-                    maxLines: 1)),
+              child: Text(
+                defaultLoc?.address ?? _i18n()['pickLocation'],
+                maxLines: 1,
+              ),
+            ),
           ],
         ),
       ),
@@ -235,11 +233,14 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             ? makeOrderButton(context)
             : TextButton(
                 onPressed: () async {
-                  await Get.toNamed(kSignInRouteOptional);
+                  await Get.toNamed<void>(kSignInRouteOptional);
                 },
                 child: Container(
-                    padding: EdgeInsets.all(8),
-                    child: Text(_i18n()["signInToMakeOrder"])),
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    _i18n()["signInToMakeOrder"],
+                  ),
+                ),
               ),
       ),
     );
@@ -269,7 +270,11 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               color: Colors.white,
             )
           : Container(
-              padding: EdgeInsets.all(8), child: Text(_i18n()['orderNow'])),
+              padding: EdgeInsets.all(8),
+              child: Text(
+                _i18n()['orderNow'],
+              ),
+            ),
     );
   }
 }

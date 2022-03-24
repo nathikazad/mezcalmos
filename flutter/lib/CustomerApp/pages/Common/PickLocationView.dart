@@ -26,7 +26,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class PickLocationView extends StatefulWidget {
   final PickLocationMode? pickLocationMode;
+
   const PickLocationView(this.pickLocationMode);
+
   @override
   _PickLocationViewState createState() => _PickLocationViewState();
 }
@@ -34,12 +36,14 @@ class PickLocationView extends StatefulWidget {
 class _PickLocationViewState extends State<PickLocationView> {
   final LocationPickerController locationPickerController =
       LocationPickerController();
+
   // Location? locationPickerController.location;
   SavedLocation? savedLocation;
   bool showScreenLoading = false;
   LatLng? currentLatLng;
 
   LanguageController _lang = Get.find<LanguageController>();
+
   // CustomerAuthController customerAuthController =
   //     Get.find<CustomerAuthController>();
 
@@ -89,7 +93,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     super.initState();
   }
 
-  geoCodeAndSetLocation(LatLng currentLoc) async {
+  Future<void> geoCodeAndSetLocation(LatLng currentLoc) async {
     final String? address = await getAdressFromLatLng(currentLoc);
 
     setState(() {
@@ -111,31 +115,37 @@ class _PickLocationViewState extends State<PickLocationView> {
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
-        bottomNavigationBar: showScreenLoading == false
-            ? ButtonComponent(
-                function: () async => await onPickButtonClick(context),
-                widget: Center(
-                    child: Text(_i18n()["pickLocation"],
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.white, fontSize: 12.sp))),
-              )
-            : ButtonComponent(
-                bgColor: Colors.grey.shade400,
-                function: () {},
-                widget: Center(
-                    child: Center(
+      bottomNavigationBar: showScreenLoading == false
+          ? ButtonComponent(
+              function: () async => await onPickButtonClick(context),
+              widget: Center(
+                  child: Text(_i18n()["pickLocation"],
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline2!
+                          .copyWith(color: Colors.white, fontSize: 12.sp))),
+            )
+          : ButtonComponent(
+              bgColor: Colors.grey.shade400,
+              function: () {},
+              widget: Center(
+                child: Center(
                   child: CircularProgressIndicator(
-                      strokeWidth: 1, color: Colors.black),
-                ))),
-        resizeToAvoidBottomInset: false,
-        appBar: CustomerAppBar(
-          autoBack: true,
-          title: _i18n()["pickLocation"],
-        ),
-        body: mezPickLocationViewBody());
+                    strokeWidth: 1,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+      resizeToAvoidBottomInset: false,
+      appBar: CustomerAppBar(
+        autoBack: true,
+        title: _i18n()["pickLocation"],
+      ),
+      body: mezPickLocationViewBody(),
+    );
   }
+
   // ------------------------------------------- Functions -------------------------------------------
 
   /// Get the related Address to a given [latLng], without awaiting the GeoCoding , mainly used onInit

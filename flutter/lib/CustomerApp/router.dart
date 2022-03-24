@@ -34,7 +34,6 @@ const String kPickLocationEditRoute = '/pickLocationFromMap/editLocation';
 const String kPickLocationNotAuth = '/pickLocationFromMap/addLocationNoAuth';
 const String kSavedLocations = '/savedLocations';
 
-
 String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
 }
@@ -61,102 +60,130 @@ String getLaundyOrderRoute(String orderId) {
   return kLaundryCurrentOrder.replaceFirst(":orderId", orderId);
 }
 
-String getRestaurantMessagesRoute(
-  String orderId,
-) {
+String getRestaurantMessagesRoute(String orderId) {
   return getMessagesRoute(
-      chatId: orderId,
-      recipientType: ParticipantType.Restaurant,
-      orderId: orderId);
+    chatId: orderId,
+    recipientType: ParticipantType.Restaurant,
+    orderId: orderId,
+  );
 }
 
 String getTaxiMessagesRoute(
   String orderId,
 ) {
   return getMessagesRoute(
-      chatId: orderId, recipientType: ParticipantType.Taxi, orderId: orderId);
+    chatId: orderId,
+    recipientType: ParticipantType.Taxi,
+    orderId: orderId,
+  );
 }
 
 String getLaundryMessagesRoute(
   String orderId,
 ) {
   return getMessagesRoute(
-      chatId: orderId,
-      recipientType: ParticipantType.Laundry,
-      orderId: orderId);
+    chatId: orderId,
+    recipientType: ParticipantType.Laundry,
+    orderId: orderId,
+  );
 }
 
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
-        GetPage(name: kHomeRoute, page: () => CustomerWrapper()),
+        GetPage(
+          name: kHomeRoute,
+          page: () => CustomerWrapper(),
+        ),
         // restaurant Routes
-        GetPage(name: kOrdersRoute, page: () => ListOrdersScreen()),
-        GetPage(name: kRestaurantsRoute, page: () => ListRestaurantsScreen()),
         GetPage(
-            name: kRestaurantRoute,
-            page: () => ViewRestaurantScreen(),
-            transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),
+          name: kOrdersRoute,
+          page: () => ListOrdersScreen(),
+        ),
         GetPage(
-            name: kViewRestaurantItemRoute,
-            page: () => ViewItemScreen(
-                viewItemScreenMode: ViewItemScreenMode.AddItemMode),
-            transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),
+          name: kRestaurantsRoute,
+          page: () => ListRestaurantsScreen(),
+        ),
         GetPage(
-            name: kCartItemRoute,
-            page: () => ViewItemScreen(
-                viewItemScreenMode: ViewItemScreenMode.EditItemMode),
-            transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),
+          name: kRestaurantRoute,
+          page: () => ViewRestaurantScreen(),
+          transitionDuration: Duration(milliseconds: 500),
+          transition: Transition.rightToLeft,
+        ),
         GetPage(
-            name: kCartItemRoute,
-            page: () => ViewItemScreen(
-                viewItemScreenMode: ViewItemScreenMode.EditItemMode),
-            transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),
+          name: kViewRestaurantItemRoute,
+          page: () => ViewItemScreen(
+            viewItemScreenMode: ViewItemScreenMode.AddItemMode,
+          ),
+          transitionDuration: Duration(milliseconds: 500),
+          transition: Transition.rightToLeft,
+        ),
         GetPage(
-            name: kCartRoute,
-            page: () => ViewCartScreen(),
-            transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),
+          name: kCartItemRoute,
+          page: () => ViewItemScreen(
+              viewItemScreenMode: ViewItemScreenMode.EditItemMode),
+          transitionDuration: Duration(milliseconds: 500),
+          transition: Transition.rightToLeft,
+        ),
         GetPage(
-            name: kRestaurantOrderRoute,
-            page: () => ViewRestaurantOrderScreen()),
+          name: kCartItemRoute,
+          page: () => ViewItemScreen(
+              viewItemScreenMode: ViewItemScreenMode.EditItemMode),
+          transitionDuration: Duration(milliseconds: 500),
+          transition: Transition.rightToLeft,
+        ),
         GetPage(
-            name: kPickLocationRoute,
-            page: () => PickLocationView(PickLocationMode.AddNewLocation)),
+          name: kCartRoute,
+          page: () => ViewCartScreen(),
+          transitionDuration: Duration(milliseconds: 500),
+          transition: Transition.rightToLeft,
+        ),
         GetPage(
-            name: kPickLocationEditRoute,
-            page: () => PickLocationView(PickLocationMode.EditLocation)),
+          name: kRestaurantOrderRoute,
+          page: () => ViewRestaurantOrderScreen(),
+        ),
         GetPage(
-            name: kPickLocationNotAuth,
-            page: () => PickLocationView(PickLocationMode.NonLoggedInPick)),
+          name: kPickLocationRoute,
+          page: () => PickLocationView(PickLocationMode.AddNewLocation),
+        ),
+        GetPage(
+          name: kPickLocationEditRoute,
+          page: () => PickLocationView(PickLocationMode.EditLocation),
+        ),
+        GetPage(
+          name: kPickLocationNotAuth,
+          page: () => PickLocationView(PickLocationMode.NonLoggedInPick),
+        ),
         // Taxis Routes
         GetPage(
-            name: kTaxiRequestRoute,
-            page: () => RequestTaxiScreen(),
-            transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),
+          name: kTaxiRequestRoute,
+          page: () => RequestTaxiScreen(),
+          transitionDuration: Duration(milliseconds: 500),
+          transition: Transition.rightToLeft,
+        ),
         GetPage(
-            name: kTaxiOrderRoute,
-            page: () => ViewTaxiOrderScreen(),
-            transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),
-        GetPage(name: kSavedLocations, page: () => SavedLocationView()),
+          name: kTaxiOrderRoute,
+          page: () => ViewTaxiOrderScreen(),
+          transitionDuration: Duration(milliseconds: 500),
+          transition: Transition.rightToLeft,
+        ),
+        GetPage(
+          name: kSavedLocations,
+          page: () => SavedLocationView(),
+        ),
         // Laundry routes
         GetPage(
-            name: kLaundryOrderRequest,
-            page: () => LaundryOrderRequestView(),
-            transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),
-
+          name: kLaundryOrderRequest,
+          page: () => LaundryOrderRequestView(),
+          transitionDuration: Duration(milliseconds: 500),
+          transition: Transition.rightToLeft,
+        ),
         GetPage(
-            name: kLaundryCurrentOrder,
-            page: () => LaundryCurrentOrderView(),
-            transitionDuration: Duration(milliseconds: 500),
-            transition: Transition.rightToLeft),
+          name: kLaundryCurrentOrder,
+          page: () => LaundryCurrentOrderView(),
+          transitionDuration: Duration(milliseconds: 500),
+          transition: Transition.rightToLeft,
+        ),
       ] +
       SharedRouter.sharedRoutes;
 }

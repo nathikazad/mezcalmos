@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 
 class FilterOrders extends StatelessWidget {
-  FilterOrders({
+  const FilterOrders({
     Key? key,
   }) : super(key: key);
 
-  OrderController controller = Get.find<OrderController>();
+  /// OrderController
+  static final OrderController controller = Get.find<OrderController>();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

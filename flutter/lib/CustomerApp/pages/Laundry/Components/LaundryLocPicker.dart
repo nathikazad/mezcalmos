@@ -11,7 +11,10 @@ typedef OnDropDownNewValue = void Function({String? newValue});
 class LaundryLocPicker extends StatefulWidget {
   final OnDropDownNewValue? onValueChangeCallback;
 
-  LaundryLocPicker({this.onValueChangeCallback, Key? key}) : super(key: key);
+  const LaundryLocPicker({
+    this.onValueChangeCallback,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _LaundryLocPickerState createState() => _LaundryLocPickerState();

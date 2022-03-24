@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 
 class BasicCellComponent extends StatelessWidget {
   final String url;
   final String title;
   final Widget? traillingIcon;
-  const BasicCellComponent(
-      {required this.url, required this.title, this.traillingIcon, Key? key})
-      : super(key: key);
+
+  const BasicCellComponent({
+    required this.url,
+    required this.title,
+    this.traillingIcon,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

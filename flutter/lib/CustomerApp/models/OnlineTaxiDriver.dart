@@ -8,16 +8,19 @@ class OnlineTaxiDriver {
   bool inOrder;
   DateTime lastUpdateTime;
 
-  OnlineTaxiDriver(
-      {required this.taxiId,
-      this.name,
-      required this.position,
-      required this.online,
-      required this.inOrder,
-      required this.lastUpdateTime});
+  OnlineTaxiDriver({
+    required this.taxiId,
+    this.name,
+    required this.position,
+    required this.online,
+    required this.inOrder,
+    required this.lastUpdateTime,
+  });
 
-  factory OnlineTaxiDriver.fromData(
-      {required String taxiId, required dynamic data}) {
+  factory OnlineTaxiDriver.fromData({
+    required String taxiId,
+    required dynamic data,
+  }) {
     return OnlineTaxiDriver(
         taxiId: taxiId,
         name: data['name'],
@@ -33,7 +36,7 @@ class OnlineTaxiDriver {
         lastUpdateTime.difference(DateTime.now()).inMinutes < 5;
   }
 
-  Map toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         "taxiId": taxiId,
         "name": name,
         "position": position,

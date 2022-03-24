@@ -17,6 +17,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Taxi"]["ViewTaxiOrdersScreen"];
 
 class ViewTaxiOrderScreen extends StatefulWidget {
+  const ViewTaxiOrderScreen({Key? key}) : super(key: key);
+
   @override
   _ViewTaxiOrderScreenState createState() => _ViewTaxiOrderScreenState();
 }
@@ -31,17 +33,20 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 
   @override
   void initState() {
+    super.initState();
     dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
     initializeLateControllers();
     // Order handling
     String orderId = Get.parameters['orderId']!;
-    viewController.init(orderId, orderCancelledCallback: (TaxiOrder order) {
-      Get.back();
-      oneButtonDialog(
-          body: _i18n()['orderCancelSuccess'], imagUrl: order.customer.image);
-    });
-    super.initState();
+    viewController.init(
+      orderId,
+      orderCancelledCallback: (TaxiOrder order) {
+        Get.back();
+        oneButtonDialog(
+            body: _i18n()['orderCancelSuccess'], imagUrl: order.customer.image);
+      },
+    );
   }
 
   @override
@@ -53,56 +58,56 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   void initializeLateControllers() {
     // We do not realy need to make AnimatedSliderController late here , but it's good for Future refrences.
     // To show that You can set it up before using it.
-    this.animatedSliderController = AnimatedSliderController();
-    this.viewController = ViewTaxiOrderController(
-        animatedSliderController: animatedSliderController);
-    this.viewWidgets =
-        ViewTaxiOrderScreenWidgets(viewController: viewController);
-    this.counterOfferWidgets =
-        CounterOfferWidgets(viewController: viewController);
+    animatedSliderController = AnimatedSliderController();
+    viewController = ViewTaxiOrderController(
+      animatedSliderController: animatedSliderController,
+    );
+    viewWidgets = ViewTaxiOrderScreenWidgets(viewController: viewController);
+    counterOfferWidgets = CounterOfferWidgets(viewController: viewController);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
-        // appBar: AppBar(),
-        backgroundColor: Colors.white,
-        body: Obx(
-          () => viewController.order.value != null
-              ? getViewStack(context)
-              : MezLogoAnimation(
-                  centered: true,
-                ),
-        ));
+      resizeToAvoidBottomInset: false,
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
+      // appBar: AppBar(),
+      backgroundColor: Colors.white,
+      body: Obx(
+        () => viewController.order.value != null
+            ? getViewStack(context)
+            : MezLogoAnimation(centered: true),
+      ),
+    );
   }
 
   Stack getViewStack(BuildContext context) {
     return Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.topCenter,
-        children: [
-          Map(),
-          viewWidgets.absorbOrIgnoreUserTapWidget(),
-          TopBar(order: viewController.order.value!),
-          Obx(() => BottomButtons()),
-          TaxiOrderBottomBar(order: viewController.order),
-          viewWidgets.getToolTip(),
-          counterOfferWidgets.counterOffersBottomSheet(context),
-        ]);
+      clipBehavior: Clip.none,
+      alignment: Alignment.topCenter,
+      children: <Widget>[
+        map(),
+        viewWidgets.absorbOrIgnoreUserTapWidget(),
+        TopBar(order: viewController.order.value!),
+        Obx(() => BottomButtons()),
+        TaxiOrderBottomBar(order: viewController.order),
+        viewWidgets.getToolTip(),
+        counterOfferWidgets.counterOffersBottomSheet(context),
+      ],
+    );
   }
 
   /// The map view to show the route and location of the agents
-  Container Map() {
+  Container map() {
     return Container(
-        width: Get.width,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5), color: Colors.white),
-        child: MGoogleMap(
-          mGoogleMapController: this.viewController.mGoogleMapController,
-          periodicRerendering: true,
-        ));
+      width: Get.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5), color: Colors.white),
+      child: MGoogleMap(
+        mGoogleMapController: viewController.mGoogleMapController,
+        periodicRerendering: true,
+      ),
+    );
   }
 
   /// Show cancel button by default and show counter offers button when

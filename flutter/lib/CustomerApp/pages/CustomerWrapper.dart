@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
@@ -9,9 +8,9 @@ import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart'
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -78,10 +77,14 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       /// Check of app was opened through a DeepLink
-      Future<void>.delayed(Duration(seconds: 1),
-              _deepLinkHandler.startDynamicLinkCheckRoutine)
-          .then((_) => _deepLinkHandler.cancelDeepLinkListener(
-              duration: Duration(seconds: 1)));
+      Future<void>.delayed(
+        Duration(seconds: 1),
+        _deepLinkHandler.startDynamicLinkCheckRoutine,
+      ).then(
+        (_) => _deepLinkHandler.cancelDeepLinkListener(
+          duration: Duration(seconds: 1),
+        ),
+      );
       if (appClosedTime != null &&
           _orderController != null &&
           DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
@@ -99,46 +102,50 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
     responsiveSize(context);
     return WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-            appBar: CustomerAppBar(
-              autoBack: false,
-            ),
-            body: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-              return SingleChildScrollView(
-                  child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                          minWidth: constraints.maxWidth,
-                          minHeight: constraints.maxHeight),
-                      child: IntrinsicHeight(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child:
-                              Column(mainAxisSize: MainAxisSize.max, children: [
-                            SizedBox(
-                              height: 10,
-                            ),
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: CustomerAppBar(
+          autoBack: false,
+        ),
+        body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    minWidth: constraints.maxWidth,
+                    minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        const SizedBox(height: 10),
 
-                            mezWelcomeContainer(
-                                Theme.of(context).textTheme.headline2!),
-                            //============================== description=============================
-                            mezDescription(txt.subtitle1!),
-
-                            //============================Service title===================================
-                            SizedBox(
-                              height: 10,
-                            ),
-                            mezServiceTitle(txt.headline2!),
-
-                            //========================= list of services ===========================
-                            Expanded(child: mezListOfServices()),
-                            // Spacer(),
-                            HomeFooterButtons(),
-                          ]),
+                        mezWelcomeContainer(
+                          Theme.of(context).textTheme.headline2!,
                         ),
-                      )));
-            })));
+                        //============================== description=============================
+                        mezDescription(txt.subtitle1!),
+
+                        //============================Service title===================================
+                        const SizedBox(height: 10),
+                        mezServiceTitle(txt.headline2!),
+
+                        //========================= list of services ===========================
+                        Expanded(child: mezListOfServices()),
+                        // Spacer(),
+                        HomeFooterButtons(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 
   void startAuthListener() {
@@ -241,7 +248,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             title: "${_i18n()['taxi']["title"]}",
             url: "assets/images/customer/taxi/taxiService.png",
             subtitle: "${_i18n()['taxi']["subtitle"]}",
-            ontap: () {
+            onTap: () {
               getServiceRoute(
                   orderType: OrderType.Taxi,
                   serviceRoute: kTaxiRequestRoute,
@@ -258,7 +265,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             title: "${_i18n()['food']["title"]}",
             url: "assets/images/customer/restaurants/restaurantService.png",
             subtitle: "${_i18n()['food']["subtitle"]}",
-            ontap: () {
+            onTap: () {
               getServiceRoute(
                   orderType: OrderType.Restaurant,
                   serviceRoute: kRestaurantsRoute,
@@ -275,7 +282,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             title: "${_i18n()['laundry']["title"]}",
             subtitle: "${_i18n()['laundry']["subtitle"]}",
             url: "assets/images/customer/laundryService.png",
-            ontap: () {
+            onTap: () {
               getServiceRoute(
                   orderType: OrderType.Laundry,
                   serviceRoute: kLaundryOrderRequest,

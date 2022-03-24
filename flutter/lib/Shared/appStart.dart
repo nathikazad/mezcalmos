@@ -30,7 +30,7 @@ import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sizer/sizer.dart' as Sizer;
 
 final ThemeData _defaultAppTheme = ThemeData(
@@ -49,14 +49,15 @@ class StartingPoint extends StatefulWidget {
   ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
   //  Sideminu
-  const StartingPoint(
-      {required this.appType,
-      this.appTheme = null,
-      required this.signInCallback,
-      required this.signOutCallback,
-      required this.routes,
-      this.sideMenuItems,
-      this.locationOn = true});
+  const StartingPoint({
+    required this.appType,
+    this.appTheme = null,
+    required this.signInCallback,
+    required this.signOutCallback,
+    required this.routes,
+    this.sideMenuItems,
+    this.locationOn = true,
+  });
 
   @override
   _StartingPointState createState() => _StartingPointState();
@@ -82,39 +83,51 @@ class _StartingPointState extends State<StartingPoint> {
       DeviceOrientation.portraitDown
     ]);
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    );
     if (_error) {
       MezSnackbar("Error", "Server connection failed !");
       return Sizer.Sizer(
-          builder: (BuildContext context, Orientation orientation,
-                  Sizer.DeviceType deviceType) =>
-              GetMaterialApp(
-                debugShowCheckedModeBanner: false,
-                home: Scaffold(
-                  body: Center(
-                    child: Icon(Icons.signal_wifi_bad,
-                        color: Colors.red.shade200,
-                        size:
-                            getSizeRelativeToScreen(50, Get.height, Get.width)),
-                  ),
-                ),
-              ));
+        builder: (
+          BuildContext context,
+          Orientation orientation,
+          Sizer.DeviceType deviceType,
+        ) =>
+            GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            body: Center(
+              child: Icon(
+                Icons.signal_wifi_bad,
+                color: Colors.red.shade200,
+                size: getSizeRelativeToScreen(50, Get.height, Get.width),
+              ),
+            ),
+          ),
+        ),
+      );
     }
     if (!_initialized) {
       return Sizer.Sizer(
-          builder: (BuildContext context, Orientation orientation,
-                  Sizer.DeviceType deviceType) =>
-              SplashScreen());
+        builder: (BuildContext context, Orientation orientation,
+                Sizer.DeviceType deviceType) =>
+            SplashScreen(),
+      );
     } else {
       mezDbgPrint(
           "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}");
       return Sizer.Sizer(
-          builder: (BuildContext context, Orientation orientation,
-                  Sizer.DeviceType deviceType) =>
-              mainApp(
-                  appType: widget.appType,
-                  appTheme: widget.appThemeGetter,
-                  routes: widget.routes));
+        builder: (
+          BuildContext context,
+          Orientation orientation,
+          Sizer.DeviceType deviceType,
+        ) =>
+            mainApp(
+          appType: widget.appType,
+          appTheme: widget.appThemeGetter,
+          routes: widget.routes,
+        ),
+      );
     }
   }
 
@@ -174,10 +187,13 @@ class _StartingPointState extends State<StartingPoint> {
       throw Exception("Invalid Launch Mode");
     }
 
-    Get.put(FirebaseDb(
+    Get.put(
+      FirebaseDb(
         dbUrl: _host + dbRoot,
         firebaseDatabase: firebaseDb,
-        firebaseApp: _app));
+        firebaseApp: _app,
+      ),
+    );
   }
 
   Future<void> setGlobalVariables() async {
@@ -239,14 +255,14 @@ class _StartingPointState extends State<StartingPoint> {
     switch (type) {
       case AppType.CustomerApp:
         await GetStorage()
-            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+            .write(getxPrivacyPolicyLink, sPrivacyPolicyCustomerApp);
         break;
       case AppType.TaxiApp:
-        await GetStorage().write(getxPrivacyPolicyLink, tPrivacyPolicyTaxiApp);
+        await GetStorage().write(getxPrivacyPolicyLink, sPrivacyPolicyTaxiApp);
         break;
       default:
         await GetStorage()
-            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+            .write(getxPrivacyPolicyLink, sPrivacyPolicyCustomerApp);
     }
   }
 

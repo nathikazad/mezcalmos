@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,51 +9,57 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
+import 'package:sizer/sizer.dart';
 
 class MGoogleMap extends StatefulWidget {
   final MapHelper.LocationChangesNotifier? notifyParentOfNewLocation;
+
   // LatLng initialLocation;
   final Duration rerenderDuration;
   final String? debugString;
   final MGoogleMapController mGoogleMapController;
+
   // this is used when we don't want to re-render the map periodically.
   final bool periodicRerendering;
   final bool myLocationButtonEnabled;
-  MGoogleMap(
-      {Key? key,
-      this.notifyParentOfNewLocation,
-      this.periodicRerendering = true,
-      this.myLocationButtonEnabled = false,
-      // required this.initialLocation,
-      this.debugString,
-      this.rerenderDuration = const Duration(seconds: 2),
-      required this.mGoogleMapController})
-      : super(key: key);
+
+  const MGoogleMap({
+    Key? key,
+    this.notifyParentOfNewLocation,
+    this.periodicRerendering = true,
+    this.myLocationButtonEnabled = false,
+    // required this.initialLocation,
+    this.debugString,
+    this.rerenderDuration = const Duration(seconds: 2),
+    required this.mGoogleMapController,
+  }) : super(key: key);
 
   @override
   State<MGoogleMap> createState() => MGoogleMapState();
 }
 
 class MGoogleMapState extends State<MGoogleMap> {
+  /// _reRenderingTimer
   Timer? _reRenderingTimer;
-  Completer<GoogleMapController> _completer = Completer();
-  // to make sure each marker gets fully handled when the new data comes on it's corresponding stream!
+
+  /// GoogleMapController
+  Completer<GoogleMapController> _completer = Completer<GoogleMapController>();
+
+  /// to make sure each marker gets fully handled when the new data comes on it's corresponding stream!
   MGoogleMapState();
 
   @override
   void didUpdateWidget(MGoogleMap oldWidget) {
     super.didUpdateWidget(oldWidget);
-    mezDbgPrint(
-        "MGoogleMap didUpdateWidget ${this.hashCode} ${widget.debugString}");
+    mezDbgPrint("MGoogleMap didUpdateWidget $hashCode ${widget.debugString}");
     widget.mGoogleMapController.animateAndUpdateBounds();
   }
 
   @override
   void initState() {
     super.initState();
-    mezDbgPrint("MGoogleMap initstate ${this.hashCode} ${widget.debugString}");
+    mezDbgPrint("MGoogleMap initstate $hashCode ${widget.debugString}");
     // one time polylines LatLng points extraction.
     widget.mGoogleMapController.animateAndUpdateBounds();
     // attach Callback onResume to avoid Map going black in some devices after going back from background to foreGround.
@@ -62,16 +69,19 @@ class MGoogleMapState extends State<MGoogleMap> {
     });
     // control our re-rendring Separately;
     _reRenderingTimer = widget.periodicRerendering
-        ? Timer.periodic(widget.rerenderDuration, (_) {
-            // mezDbgPrint("MGOOGLEMAP ---> RE REN D R ING!");
-            widget.mGoogleMapController.animateAndUpdateBounds();
-          })
+        ? Timer.periodic(
+            widget.rerenderDuration,
+            (_) {
+              // mezDbgPrint("MGOOGLEMAP ---> RE REN D R ING!");
+              widget.mGoogleMapController.animateAndUpdateBounds();
+            },
+          )
         : null;
   }
 
   @override
   void dispose() {
-    mezDbgPrint("MGoogleMap disposed ${this.hashCode} ${widget.debugString}");
+    mezDbgPrint("MGoogleMap disposed $hashCode ${widget.debugString}");
     _reRenderingTimer?.cancel();
     // gmapControlelr disposing.
     widget.mGoogleMapController.controller?.dispose();
@@ -99,8 +109,7 @@ class MGoogleMapState extends State<MGoogleMap> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(
-        "Inside MGoogleMap build ${this.hashCode} ${widget.debugString}");
+    mezDbgPrint("Inside MGoogleMap build $hashCode ${widget.debugString}");
 
     return Stack(
       children: [

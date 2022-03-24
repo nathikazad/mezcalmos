@@ -12,55 +12,55 @@ import 'package:sizer/sizer.dart';
 import '../../../router.dart';
 
 class RestaurantPastOrderCard extends StatelessWidget {
-  RestaurantPastOrderCard({
+  const RestaurantPastOrderCard({
     Key? key,
     required this.order,
   }) : super(key: key);
 
-  Order order;
+  final Order order;
 
   @override
   Widget build(BuildContext context) {
     dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["ListOrdersScreen"]["components"]["RestaurantPastOrderCard"];
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Card(
       child: InkWell(
         onTap: () {
-          Get.toNamed(getRestaurantOrderRoute(order.orderId));
+          Get.toNamed<void>(getRestaurantOrderRoute(order.orderId));
         },
         borderRadius: BorderRadius.circular(10),
         child: Ink(
           padding: EdgeInsets.all(8),
           width: double.infinity,
           child: Column(
-            children: [
+            children: <Widget>[
               Row(
-                children: [
+                children: <Widget>[
                   Stack(
-                    children: [
+                    children: <Widget>[
                       CircleAvatar(
-                          radius: 25,
-                          backgroundImage:
-                              mLoadImage(url: order.serviceProvider?.image)
-                                  .image),
+                        radius: 25,
+                        backgroundImage:
+                            mLoadImage(url: order.serviceProvider?.image).image,
+                      ),
                       Positioned(
-                          top: 0,
-                          right: 0,
-                          child: CircleAvatar(
-                              radius: 12,
-                              backgroundColor: Colors.green.shade400,
-                              child: Icon(
-                                Icons.food_bank,
-                                size: 20,
-                                // size: 18.sp,
-                                color: Colors.white,
-                              )))
+                        top: 0,
+                        right: 0,
+                        child: CircleAvatar(
+                          radius: 12,
+                          backgroundColor: Colors.green.shade400,
+                          child: Icon(
+                            Icons.food_bank,
+                            size: 20,
+                            // size: 18.sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                   Flexible(
                     flex: 5,
                     fit: FlexFit.tight,
@@ -83,7 +83,7 @@ class RestaurantPastOrderCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   !order.isCanceled()
                       ? Icon(
                           Ionicons.bag_check,
@@ -97,12 +97,12 @@ class RestaurantPastOrderCard extends StatelessWidget {
                         ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Container(
                 padding: EdgeInsets.all(3),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Text(
                       " ${_i18n()["totalCost"]} : \$${order.cost.toStringAsFixed(0)}  ",
                     ),

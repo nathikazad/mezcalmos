@@ -5,11 +5,14 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class OrderSummaryComponent extends StatelessWidget {
   final LaundryOrder order;
+
   const OrderSummaryComponent({Key? key, required this.order})
       : super(key: key);
+
   dynamic _i18n() =>
       Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
           ['LaundryCurrentOrderView']['Components']['OrderSummaryComponent'];
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -22,9 +25,7 @@ class OrderSummaryComponent extends StatelessWidget {
               "${_i18n()["orderSummary"]}",
               style: Theme.of(context).textTheme.headline3,
             ),
-            Divider(
-              height: 15,
-            ),
+            Divider(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -33,14 +34,12 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.weight != null) ? '${order.cost -50} \$' : '-',
+                  (order.weight != null) ? '${order.cost - 50} \$' : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -54,9 +53,7 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -70,9 +67,7 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
-              height: 25,
-            ),
+            Divider(height: 25),
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -80,18 +75,14 @@ class OrderSummaryComponent extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
-            SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Icon(
                   Icons.place_rounded,
                   color: Theme.of(context).primaryColorLight,
                 ),
-                SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(height: 5),
                 Flexible(child: Text(order.to.address, maxLines: 1)),
               ],
             )
@@ -148,9 +139,7 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -169,9 +158,7 @@ class OrderSummaryComponent extends StatelessWidget {
             if (order.weight == null)
               Column(
                 children: [
-                  Divider(
-                    height: 25,
-                  ),
+                  Divider(height: 25),
                 ],
               ),
             Row(
@@ -179,11 +166,13 @@ class OrderSummaryComponent extends StatelessWidget {
                 Icon(
                   Icons.help_outline_rounded,
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(height: 10),
                 Flexible(
-                    child: Text(_i18n()['laundryPricingNote'], maxLines: 3)),
+                  child: Text(
+                    _i18n()['laundryPricingNote'],
+                    maxLines: 3,
+                  ),
+                ),
               ],
             )
           ],

@@ -10,12 +10,14 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 typedef OnDropDownNewValue = void Function({Location? location});
 
 class DropDownLocationList extends StatefulWidget {
+  DropDownLocationList({
+    this.onValueChangeCallback,
+    this.passedInLocation,
+    Key? key,
+  }) : super(key: key);
+
   final OnDropDownNewValue? onValueChangeCallback;
   Location? passedInLocation;
-
-  DropDownLocationList(
-      {this.onValueChangeCallback, this.passedInLocation, Key? key})
-      : super(key: key);
 
   @override
   _DropDownLocationListState createState() => _DropDownLocationListState();
@@ -43,7 +45,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     if (widget.passedInLocation == null) {
       dropDownListValue = pickLocationPlaceholder;
     } else {
-      SavedLocation passedInLocation = SavedLocation(
+      final SavedLocation passedInLocation = SavedLocation(
           name: widget.passedInLocation!.address,
           location: widget.passedInLocation,
           id: 'new');
@@ -57,10 +59,12 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     super.initState();
   }
 
-  getSavedLocation() {
-    customerAuthController.customerRxn.value?.savedLocations.forEach((element) {
-      listOfSavedLoacations.add(element);
-    });
+  void getSavedLocation() {
+    customerAuthController.customerRxn.value?.savedLocations.forEach(
+      (SavedLocation element) {
+        listOfSavedLoacations.add(element);
+      },
+    );
   }
 
   @override
@@ -79,7 +83,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       child: DropdownButtonHideUnderline(
         child: Obx(() {
           return DropdownButton<SavedLocation>(
-              selectedItemBuilder: (context) {
+              selectedItemBuilder: (BuildContext context) {
                 return dropDownSelectedItemBuilder(textTheme);
               },
               iconDisabledColor: Color.fromRGBO(172, 89, 252, 1),
@@ -94,9 +98,9 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               icon: Icon(Icons.expand_more),
               items: listOfSavedLoacations
                   .map<DropdownMenuItem<SavedLocation>>(
-                      (e) => buildItems(e, textTheme))
+                      (SavedLocation e) => buildItems(e, textTheme))
                   .toList(),
-              onChanged: (newLocation) async {
+              onChanged: (SavedLocation? newLocation) async {
                 await locationChangedHandler(newLocation);
               });
         }),
@@ -115,9 +119,9 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     mezDbgPrint(widget.passedInLocation);
     // we will route the user back to the Map
     if (newLocation?.id == "_pick_") {
-      SavedLocation? saveLocation =
-          await Get.toNamed(kPickLocationRoute, arguments: true)
-              as SavedLocation?;
+      final SavedLocation? saveLocation = await Get.toNamed<SavedLocation?>(
+          kPickLocationRoute,
+          arguments: true);
       mezDbgPrint("View Got result : $saveLocation");
       if (saveLocation != null) {
         setState(() {
@@ -168,15 +172,19 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
   List<Widget> dropDownSelectedItemBuilder(TextTheme txt) {
     return listOfSavedLoacations
-        .map<Widget>((item) => Container(
-              alignment: Alignment.center,
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Text(item.name,
-                    style: txt.headline2!
-                        .copyWith(fontWeight: FontWeight.w400, fontSize: 12)),
+        .map<Widget>(
+          (SavedLocation item) => Container(
+            alignment: Alignment.center,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                item.name,
+                style: txt.headline2!
+                    .copyWith(fontWeight: FontWeight.w400, fontSize: 12),
               ),
-            ))
+            ),
+          ),
+        )
         .toList();
   }
 }

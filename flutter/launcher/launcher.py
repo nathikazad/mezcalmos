@@ -97,7 +97,7 @@ class Launcher:
                     if self.user_args['fmode'] == "hide":
                         fmd = OUTPUT_FILTERS.HIDE
 
-            binary = ['flutter' , 'run', '-t', 'lib/'+user_args['app']+'/main.dart']
+            binary = ['flutter.bat' , 'run', '-t', 'lib/'+user_args['app']+'/main.dart']
             binary.extend(f_args)
 
             Config.launch_flutter_app(binary=binary , filter_file=ff , filter_mode=fmd)

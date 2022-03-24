@@ -4,12 +4,13 @@ import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
 
 enum AppBarLeftButtonType { Back, Menu }
+
 AppVersionController _appUpdate = Get.find<AppVersionController>();
+
 List<Widget> getReminderIfNewUpdate() {
   if (_appUpdate.appVersionInfos.value?.areLocalAndRemoteVersionsDiffrent() ==
       true) {
@@ -44,11 +45,13 @@ List<Widget> getReminderIfNewUpdate() {
     return [];
 }
 
-AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
-    {dynamic bgColor = Colors.white,
-    Function? onClick,
-    PreferredSizeWidget? tabbar,
-    List<Widget> actionIcons = const <Widget>[]}) {
+AppBar mezcalmosAppBar(
+  AppBarLeftButtonType leftBtnType, {
+  Color bgColor = Colors.white,
+  Function? onClick,
+  PreferredSizeWidget? tabBar,
+  List<Widget> actionIcons = const <Widget>[],
+}) {
   Widget btnIcon;
 
   switch (leftBtnType) {
@@ -75,11 +78,11 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   return AppBar(
     toolbarHeight: 80,
     elevation: 0,
-    bottom: tabbar,
+    bottom: tabBar,
     automaticallyImplyLeading: false,
     title: Obx(
       () => Column(
-        children: [
+        children: <Widget>[
           Container(
             // width: Get.width,
             child: Row(
@@ -90,15 +93,13 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                   height: 30,
                   width: 30,
                   child: GestureDetector(
-                    onTap: () {
-                      onClick?.call();
-                    },
+                    onTap: () => onClick?.call(),
                     child: Container(
                       height: 30,
                       width: 30,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
+                        boxShadow: <BoxShadow>[
                           BoxShadow(
                             color: Color.fromARGB(255, 216, 225, 249),
                             spreadRadius: 0,
@@ -107,14 +108,18 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                           ),
                         ],
                         gradient: LinearGradient(
-                            colors: onClick != null
-                                ? [
-                                    Color.fromARGB(255, 97, 127, 255),
-                                    Color.fromARGB(255, 198, 90, 252),
-                                  ]
-                                : [Colors.grey.shade300, Colors.grey.shade300],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
+                          colors: onClick != null
+                              ? <Color>[
+                                  Color.fromARGB(255, 97, 127, 255),
+                                  Color.fromARGB(255, 198, 90, 252),
+                                ]
+                              : <Color>[
+                                  Colors.grey.shade300,
+                                  Colors.grey.shade300
+                                ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
                       ),
                       child: btnIcon,
                     ),
@@ -123,7 +128,9 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                 Spacer(),
                 MezcalmosSharedWidgets.fillTitle(actionIcons.length),
                 Spacer(),
-                for (var i = 0; i < actionIcons.length; i++) ...[actionIcons[i]]
+                for (int i = 0; i < actionIcons.length; i++) ...<Widget>[
+                  actionIcons[i]
+                ]
               ],
             ),
           ),

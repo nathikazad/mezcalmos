@@ -1,24 +1,20 @@
-import 'dart:math';
-
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-import 'package:mezcalmos/TaxiAdminApp/components/appBar.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbNotifs.dart';
 import 'package:mezcalmos/TaxiAdminApp/Models/NbOrders.dart';
-import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
+import 'package:mezcalmos/TaxiAdminApp/components/appBar.dart';
 import 'package:mezcalmos/TaxiAdminApp/components/getFutureData.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:mezcalmos/TaxiAdminApp/components/infoCardComponent.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/driverController.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiAdminApp"]
-    ["pages"]
-["Driver"]["DriverPage"];
+    ["pages"]["Driver"]["DriverPage"];
 
 class DriverPage extends GetView<DriverStatsController> {
   var f = new DateFormat('dd/MM/yyyy');
@@ -202,9 +198,9 @@ class DriverPage extends GetView<DriverStatsController> {
                               initialLabelIndex: switcherIndex.value,
                               totalSwitches: 3,
                               fontSize: 15,
-                              labels: ['7', '15', "30"],
+                              labels: ['7', '15', '30'],
                               radiusStyle: true,
-                              onToggle: (index) {
+                              onToggle: (int? index) {
                                 switch (index) {
                                   case 0:
                                     days.value = 7;
@@ -217,7 +213,7 @@ class DriverPage extends GetView<DriverStatsController> {
                                     break;
                                   default:
                                 }
-                                switcherIndex.value = index;
+                                switcherIndex.value = index ?? 0;
                                 Get.snackbar("Loading data ...", "",
                                     snackPosition: SnackPosition.BOTTOM);
                                 print('switched to: $index');
@@ -300,7 +296,7 @@ class DriverPage extends GetView<DriverStatsController> {
                               minWidth: 45,
                               minHeight: 35,
                               cornerRadius: 18.0,
-                              activeBgColors: [
+                              activeBgColors: <List<Color>>[
                                 [Color.fromRGBO(103, 121, 254, 1)],
                                 [Color.fromRGBO(103, 121, 254, 1)],
                                 [Color.fromRGBO(103, 121, 254, 1)]
@@ -313,7 +309,7 @@ class DriverPage extends GetView<DriverStatsController> {
                               fontSize: 15,
                               labels: ['7', '15', "30"],
                               radiusStyle: true,
-                              onToggle: (index) {
+                              onToggle: (int? index) {
                                 switch (index) {
                                   case 0:
                                     days.value = 7;
@@ -326,7 +322,7 @@ class DriverPage extends GetView<DriverStatsController> {
                                     break;
                                   default:
                                 }
-                                switcherIndex.value = index;
+                                switcherIndex.value = index ?? 0;
                                 Get.snackbar("Loading data ...", "",
                                     snackPosition: SnackPosition.BOTTOM);
                                 print('switched to: $index');

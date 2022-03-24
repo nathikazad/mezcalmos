@@ -8,41 +8,49 @@ import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeFooterButtons extends StatelessWidget {
-  HomeFooterButtons({
+  const HomeFooterButtons({
     Key? key,
   }) : super(key: key);
-  LanguageController langController = Get.find<LanguageController>();
-  dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-      ['components']['CustomerHomeFooterButtons'];
+
+  /// LanguageController
+  static final LanguageController _languageController =
+      Get.find<LanguageController>();
+
+  dynamic _i18n() => _languageController.strings['CustomerApp']['components']
+      ['CustomerHomeFooterButtons'];
+
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Obx(
       () => Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
+        children: <Widget>[
           Flexible(
             child: InkWell(
               onTap: () {
-                langController.changeUserLanguage();
+                _languageController.changeUserLanguage();
               },
               child: Ink(
                 padding: EdgeInsets.all(12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     Container(
                       height: 20.sp,
                       width: 20.sp,
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: AssetImage(langController.oppositFlag))),
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage(_languageController.oppositFlag),
+                        ),
+                      ),
                     ),
-                    SizedBox(
-                      width: 10,
+                    const SizedBox(width: 10),
+                    Text(
+                      _languageController.oppositToLang,
+                      style: txt.bodyText2,
                     ),
-                    Text(langController.oppositToLang, style: txt.bodyText2),
                   ],
                 ),
               ),
@@ -58,15 +66,13 @@ class HomeFooterButtons extends StatelessWidget {
                 padding: EdgeInsets.all(12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     Icon(
                       Ionicons.lock_closed,
                       // color: Theme.of(context).primaryColorLight,
                       size: 20.sp,
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10),
                     Flexible(
                       flex: 1,
                       fit: FlexFit.loose,

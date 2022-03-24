@@ -23,7 +23,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
     final TextTheme txt = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Card(
           child: Container(
             width: double.infinity,
@@ -66,9 +66,10 @@ class LaundryOrderStatusCard extends StatelessWidget {
       shape: CircleBorder(),
       child: InkWell(
         onTap: () {
-          Get.toNamed(getMessagesRoute(
-             orderId: order.orderId,
-              chatId: order.orderId, recipientType: ParticipantType.Laundry));
+          Get.toNamed<void>(getMessagesRoute(
+              orderId: order.orderId,
+              chatId: order.orderId,
+              recipientType: ParticipantType.Laundry));
         },
         customBorder: CircleBorder(),
         child: Stack(

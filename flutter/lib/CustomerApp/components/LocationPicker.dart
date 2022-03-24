@@ -20,10 +20,19 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["components"]["LocationPicker"];
 
 class LocationPickerController extends MGoogleMapController {
+  /// _showFakeMarker
   RxBool _showFakeMarker = true.obs;
+
+  /// _showBlackScreen
   RxBool _showBlackScreen = false.obs;
+
+  /// _bottomButtomToShow
   Rx<BottomButtomToShow> _bottomButtomToShow = BottomButtomToShow.Pick.obs;
+
+  /// blackScreenBottomTextMargin
   RxDouble blackScreenBottomTextMargin = 0.0.obs;
+
+  /// myLocationButtonEnabled
   RxBool myLocationButtonEnabled = true.obs;
 
   void showOrHideBlackScreen(bool value) {
@@ -57,23 +66,34 @@ class LocationPickerController extends MGoogleMapController {
 }
 
 class LocationPicker extends StatefulWidget {
+  const LocationPicker({
+    this.showBottomButton = true,
+    this.onSuccessSignIn,
+    required this.notifyParentOfLocationFinalized,
+    required this.notifyParentOfConfirm,
+    required this.locationPickerMapController,
+  });
+
+  /// notifyParentOfLocationFinalized
   final MapHelper.LocationChangesNotifier notifyParentOfLocationFinalized;
+
+  /// notifyParentOfConfirm
   final Function notifyParentOfConfirm;
+
+  /// onSuccessSignIn
   final Function? onSuccessSignIn;
 
-  // Location location;
+  /// onSuccessSignIn
   final LocationPickerController locationPickerMapController;
+
+  /// showBottomButton
   final bool showBottomButton;
-  LocationPicker(
-      {this.showBottomButton = true,
-      this.onSuccessSignIn,
-      required this.notifyParentOfLocationFinalized,
-      required this.notifyParentOfConfirm,
-      required this.locationPickerMapController});
+
   @override
   LocationPickerState createState() => LocationPickerState();
 }
 
+//ignore_for_file:constant_identifier_names
 enum BottomButtomToShow { Pick, Confirm, GrayedOut, Loading }
 
 class LocationPickerState extends State<LocationPicker> {
@@ -91,29 +111,28 @@ class LocationPickerState extends State<LocationPicker> {
     return Obx(() => widget.locationPickerMapController.location.value != null
         ? Stack(
             alignment: Alignment.center,
-            children: [
+            children: <Widget>[
               MGoogleMap(
                 mGoogleMapController: widget.locationPickerMapController,
                 notifyParentOfNewLocation:
                     widget.notifyParentOfLocationFinalized,
                 periodicRerendering: false,
-                //   periodicRedrendring: false,
                 myLocationButtonEnabled: widget
                     .locationPickerMapController.myLocationButtonEnabled.value,
               ),
               widget.locationPickerMapController._showFakeMarker.value
                   ? pickerMarker()
-                  : SizedBox(),
+                  : const SizedBox(),
               widget.locationPickerMapController._showBlackScreen.value
                   ? gestureDetector()
-                  : SizedBox(),
-              this.widget.showBottomButton ? bottomButton() : SizedBox()
+                  : const SizedBox(),
+              widget.showBottomButton ? bottomButton() : const SizedBox()
             ],
           )
         : Center(child: CircularProgressIndicator()));
   }
 
-/******************************  Widgets ************************************/
+  /******************************  Widgets ************************************/
   Widget pickerMarker() {
     return Center(
       child: Container(
@@ -146,7 +165,7 @@ class LocationPickerState extends State<LocationPicker> {
         } else {
           return buildBottomButton(_i18n()["signInToMakeOrder"],
               notifier: (_) async {
-            await Get.toNamed(kSignInRouteOptional);
+            await Get.toNamed<void>(kSignInRouteOptional);
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
             widget.onSuccessSignIn?.call();
             setState(() {});
@@ -163,60 +182,71 @@ class LocationPickerState extends State<LocationPicker> {
     }
   }
 
-  Widget buildBottomButton(String? buttonText,
-      {Function? notifier, Function? onPress}) {
+  Widget buildBottomButton(
+    String? buttonText, {
+    Function? notifier,
+    Function? onPress,
+  }) {
     return Positioned(
-        bottom: 0,
-        left: 15,
-        right: widget.locationPickerMapController.myLocationButtonEnabled.value
-            ? 80
-            : 15,
-        child: InkWell(
-          onTap: notifier != null
-              ? () async {
-                  var _loc = await getCenterAndGeoCode();
-                  notifier.call(_loc);
-                  widget.locationPickerMapController._showFakeMarker.value =
-                      false;
-                }
-              : () {},
-          child: Container(
-            height: 45,
-            margin: EdgeInsets.only(
-                bottom: widget.locationPickerMapController
-                        .myLocationButtonEnabled.value
+      bottom: 0,
+      left: 15,
+      right: widget.locationPickerMapController.myLocationButtonEnabled.value
+          ? 80
+          : 15,
+      child: InkWell(
+        onTap: notifier != null
+            ? () async {
+                final Location _loc = await getCenterAndGeoCode();
+                notifier.call(_loc);
+                widget.locationPickerMapController._showFakeMarker.value =
+                    false;
+              }
+            : () {},
+        child: Container(
+          height: 45,
+          margin: EdgeInsets.only(
+            bottom:
+                widget.locationPickerMapController.myLocationButtonEnabled.value
                     ? 2
-                    : 15),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              gradient: LinearGradient(
-                  colors: notifier != null
-                      ? [
-                          Color.fromRGBO(81, 132, 255, 1),
-                          Color.fromRGBO(206, 73, 252, 1)
-                        ]
-                      : [Colors.grey.shade400, Colors.grey.shade400],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight),
-            ),
-            child: Center(
-              child: buttonText != null
-                  ? Text(buttonText,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.visible,
-                      style: TextStyle(
-                        fontFamily: 'psr',
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                      ))
-                  : Container(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                          strokeWidth: 1, color: Colors.black)),
+                    : 15,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            gradient: LinearGradient(
+              colors: notifier != null
+                  ? <Color>[
+                      Color.fromRGBO(81, 132, 255, 1),
+                      Color.fromRGBO(206, 73, 252, 1)
+                    ]
+                  : <Color>[Colors.grey.shade400, Colors.grey.shade400],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
           ),
-        ));
+          child: Center(
+            child: buttonText != null
+                ? Text(
+                    buttonText,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.visible,
+                    style: TextStyle(
+                      fontFamily: 'psr',
+                      color: Colors.white,
+                      fontSize: 14.sp,
+                    ),
+                  )
+                : Container(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 1,
+                      color: Colors.black,
+                    ),
+                  ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget gestureDetector() {
@@ -232,15 +262,16 @@ class LocationPickerState extends State<LocationPicker> {
             : Colors.transparent,
         alignment: Alignment.bottomCenter,
         padding: EdgeInsets.only(
-            bottom: widget.locationPickerMapController
-                    .blackScreenBottomTextMargin.value +
-                35,
-            left: Get.width / 5.5,
-            right: 10),
+          bottom: widget.locationPickerMapController.blackScreenBottomTextMargin
+                  .value +
+              35,
+          left: Get.width / 5.5,
+          right: 10,
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 2.0, right: 5),
               child: Icon(
@@ -258,40 +289,49 @@ class LocationPickerState extends State<LocationPicker> {
                 softWrap: true,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                    color: Colors.white, fontFamily: 'psb', fontSize: 15.sp),
+                  color: Colors.white,
+                  fontFamily: 'psb',
+                  fontSize: 15.sp,
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 
-/******************************  helper functions ************************************/
+  /******************************  helper functions ************************************/
   Future<Location> getCenterAndGeoCode() async {
-    LatLng _mapCenter =
-        await this.widget.locationPickerMapController.getMapCenter();
+    final LatLng _mapCenter =
+        await widget.locationPickerMapController.getMapCenter();
 
-    GeoLoc.LocationData _newLocationData =
+    final GeoLoc.LocationData _newLocationData =
         Location.buildLocationData(_mapCenter.latitude, _mapCenter.longitude);
 
-    double kmDistance = MapHelper.calculateDistance(
-        _newLocationData,
-        Location.buildLocationData(
-            widget.locationPickerMapController.location.value!.latitude,
-            widget.locationPickerMapController.location.value!.longitude));
+    final double kmDistance = MapHelper.calculateDistance(
+      _newLocationData,
+      Location.buildLocationData(
+        widget.locationPickerMapController.location.value!.latitude,
+        widget.locationPickerMapController.location.value!.longitude,
+      ),
+    );
 
     String formattedAddress =
         widget.locationPickerMapController.location.value!.address;
     if (kmDistance > 0.5 || formattedAddress == "") {
       // ADDED : || formattedAddress == ""  CUZ on clear we set address == "".
       // and that's what 's leavign the textfields empty when re-picking but  distance is less than 0.5 km
-      formattedAddress = await MapHelper.getAdressFromLatLng(LatLng(
-              _newLocationData.latitude!, _newLocationData.longitude!)) ??
+      formattedAddress = await MapHelper.getAdressFromLatLng(
+            LatLng(
+              _newLocationData.latitude!,
+              _newLocationData.longitude!,
+            ),
+          ) ??
           widget.locationPickerMapController.location.value!.address;
     }
 
-    Location finalResult = Location(formattedAddress, _newLocationData);
+    final Location finalResult = Location(formattedAddress, _newLocationData);
 
     mezDbgPrint("@===> new location : ${finalResult.toString()}");
 

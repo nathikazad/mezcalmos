@@ -33,9 +33,7 @@ class _LaundryStepsComponentState extends State<LaundryStepsComponent> {
               stepComponent(context, 3),
             ],
           ),
-          SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Card(
             child: Container(
               margin: const EdgeInsets.all(16),

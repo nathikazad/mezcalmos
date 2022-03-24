@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 class ButtonComponent extends StatelessWidget {
   final Widget? widget;
   final Color bgColor;
-
   final GestureTapCallback? function;
+
   ButtonComponent({
     this.widget,
     this.function,
