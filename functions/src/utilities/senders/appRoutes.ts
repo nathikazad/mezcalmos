@@ -11,8 +11,7 @@ export function orderUrl(
     case ParticipantType.DeliveryAdmin:
       return `/orders/${orderType}/${orderId}`
     case ParticipantType.DeliveryDriver:
-      
-       return `/currentOrders/${orderType}/${orderId}`
+      return `/currentOrders/${orderType}/${orderId}`
     default:
       return "/";
   }
