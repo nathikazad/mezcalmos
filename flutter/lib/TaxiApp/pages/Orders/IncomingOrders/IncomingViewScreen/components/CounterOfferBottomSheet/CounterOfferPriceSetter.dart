@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/LaundryOrdersListComponent.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+          ['Orders']['IncomingOrders']['IncomingViewScreen']['components']
+      ['CounterOfferBottomSheet']['CounterOfferPriceSetter'];
+
 
 typedef void OnPriceChanged(int);
 typedef void OnCounterOfferSent(num);
@@ -50,7 +57,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Center(
               child: Text(
-                'Make a ride offer',
+                _i18n()["rideOffer"],
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!
@@ -64,7 +71,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
         Padding(
           padding: EdgeInsets.only(top: 5, bottom: 5),
           child: Text(
-            'The customer will be notified with your offer once the offer accepted the ride will automatically starts',
+            _i18n()["firstTxt"],
             textAlign: TextAlign.center,
           ),
         ),
@@ -103,7 +110,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
               width: 80.w,
               child: Center(
                   child: Text(
-                'Send offer',
+                -i18n()["sendOffer"],
                 style: TextStyle(color: Colors.white, fontFamily: 'psb'),
               )),
             ),
@@ -112,7 +119,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
         Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10, top: 20),
           child: Text(
-            "Every offer you make have a timeout of 60 seconds if the customer doesn’t accept your offer the offer will be canceled",
+           _i18n()["secondTxt"],
             style: TextStyle(fontFamily: 'psr', fontSize: 10.sp),
           ),
         )
