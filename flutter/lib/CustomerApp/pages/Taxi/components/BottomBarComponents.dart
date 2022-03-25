@@ -18,6 +18,8 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Taxi"]["components"]["BottomBarComponents"];
 
+final OrderController orderController = Get.find<OrderController>();
+
 Widget verticalSeparator() {
   return VerticalDivider(width: 1, color: Colors.grey.shade300);
 }
@@ -169,11 +171,10 @@ Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
         ],
       ),
       child: Center(
-        child: Obx(
-          () => Stack(
-            children: [
-              Get.find<OrderController>()
-                      .hasNewMessageNotification(order.orderId)
+        child: Stack(
+          children: <Widget>[
+            Obx(
+              () => orderController.hasNewMessageNotification(order.orderId)
                   ? Positioned(
                       top: 5,
                       right: 5,
@@ -184,15 +185,15 @@ Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
                             color: Colors.red, shape: BoxShape.circle),
                       ))
                   : SizedBox(),
-              Center(
-                child: Icon(
-                  Icons.mail,
-                  color: Color.fromARGB(255, 103, 121, 254),
-                  size: 16,
-                ),
-              )
-            ],
-          ),
+            ),
+            Center(
+              child: Icon(
+                Icons.mail,
+                color: Color.fromARGB(255, 103, 121, 254),
+                size: 16,
+              ),
+            )
+          ],
         ),
       ),
     ),

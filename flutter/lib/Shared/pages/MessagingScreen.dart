@@ -62,7 +62,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
           Get.parameters['recipientType']!.toString().toParticipantType();
     }
     controller.clearMessageNotifications(chatId: chatId);
-    mezDbgPrint(Get.parameters);
+    mezDbgPrint("@AYROUT ===> ${Get.parameters} | ORDERID ==> $orderId");
   }
 
   AuthController _authController = Get.find<AuthController>();
@@ -321,8 +321,6 @@ class SendMessageBox extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: GestureDetector(
                 onTap: () {
-                  mezDbgPrint(
-                      "--------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDER ID>>>>>>>>>>>>>>>>>>>>> $orderId");
                   final bool msgReady2Send =
                       _textEditingController.text.replaceAll(' ', '').length >
                           0;

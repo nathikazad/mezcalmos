@@ -118,13 +118,12 @@ class OrderController extends GetxController {
   }
 
   bool hasNewMessageNotification(String orderId) {
-    var res = _fbNotificationsController.notifications().where(
-        (Notification notification) =>
+    return _fbNotificationsController
+        .notifications()
+        .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId == orderId);
-
-    mezDbgPrint("chlagabonga@@@ ===> ${res.length}");
-    return res.length > 0;
+            notification.orderId == orderId)
+        .isNotEmpty;
   }
 
   Order? getOrder(String orderId) {
