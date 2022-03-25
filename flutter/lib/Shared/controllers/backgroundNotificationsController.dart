@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:get/get.dart';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:http/http.dart' as http;
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
@@ -53,6 +54,7 @@ class BackgroundNotificationsController extends GetxController {
   void notificationClickHandler(RemoteMessage message) {
     mezDbgPrint("notificationClickHandler");
     mezDbgPrint("CurrentRoute : ${Get.currentRoute}");
+    mezDbgPrint("_____________________________________________");
     mezDbgPrint(message.data["linkUrl"]);
     if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
     Future<void>.delayed(Duration(milliseconds: 100),

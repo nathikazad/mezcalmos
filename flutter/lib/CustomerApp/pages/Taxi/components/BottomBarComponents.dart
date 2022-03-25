@@ -200,13 +200,13 @@ Widget cancelBtn(TaxiOrder order) {
     margin: EdgeInsets.only(right: 6),
     child: GestureDetector(
       onTap: () async {
-        YesNoDialogButton res = await yesNoDialog(
+        final YesNoDialogButton res = await yesNoDialog(
             text: _i18n()?['confirmation_header'] ?? "Por favor confirmar",
             body:
                 _i18n()?['confirmation_text'] ?? "¿Cancelar el viaje actual?");
 
         if (res == YesNoDialogButton.Yes) {
-          ServerResponse resp =
+          final ServerResponse resp =
               await Get.find<TaxiController>().cancelTaxi(order.orderId);
 
           if (!resp.success) {

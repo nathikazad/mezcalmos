@@ -25,6 +25,7 @@ export enum ParticipantType {
   DeliveryDriver = "deliveryDriver"
 }
 
+
 export interface Participant extends UserInfo {
   particpantType: ParticipantType
 }

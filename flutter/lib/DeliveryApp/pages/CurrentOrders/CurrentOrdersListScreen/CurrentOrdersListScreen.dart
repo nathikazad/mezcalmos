@@ -63,15 +63,14 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(children: [
                   viewHeader(),
-                  // Obx(
-                  //   () =>
-                  Container(
-                    child:
-                        (_deliveryAuthController.deliveryDriverState!.isOnline)
-                            ? _currentOrdersList(context)
-                            : DriverNotLookingComponent(),
+                  Obx(
+                    () => Container(
+                      child: (_deliveryAuthController
+                              .deliveryDriverState!.isOnline)
+                          ? _currentOrdersList(context)
+                          : DriverNotLookingComponent(),
+                    ),
                   ),
-                  // ),
                   Divider(),
                   Obx(() => _pastOrdersList(context)),
                 ]),

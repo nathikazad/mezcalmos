@@ -39,13 +39,13 @@ Future<void> oneButtonDialog(
     radius: 8,
     title: title ?? '',
     content: Container(
-      height: 80.h,
-      width: 90.w,
+      //  height: 80.h,
+      // width: 90.w,
       child: Flex(
         direction: Axis.vertical,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min,
         children: [
           if (imagUrl != null)
             Center(

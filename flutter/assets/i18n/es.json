@@ -947,7 +947,7 @@
                             "from": "Desde :",
                             "to": "Para :",
                             "distance": "Distancia:",
-                            "at :": "en :",
+                            "at": "en :",
                             "orderExpired": "Orden expirado",
                             "orderStatus": {
                                 "canceledByTaxi": "Cancelled",
