@@ -47,25 +47,17 @@ class _MessagingScreenState extends State<MessagingScreen> {
   void initState() {
     super.initState();
     print("inside messaginScreen onInitState !");
-    mezDbgPrint(
-      "@AYROUTE : ${Get.currentRoute} || chatId : ${Get.parameters['chatId']} ",
-    );
+
     if (Get.parameters['chatId'] == null) {
       Get.snackbar("Error", "Does not have a valid chatId!");
       Get.back<void>();
     }
     chatId = Get.parameters['chatId']!;
     orderId = Get.parameters['orderId'];
-    mezDbgPrint("=======================>>>>>>>>>>>>>>>>>> orderid $orderId");
-    // default to False.
     showViewOrderBtn = Get.arguments?['showViewOrderBtn'];
-    mezDbgPrint(
-        "@R@E@CPIENT : t=${Get.parameters['recipientType']}&id=${Get.parameters['recipientId']}");
     if (Get.parameters['recipientId'] != null)
       recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {
-      mezDbgPrint(
-          " PRINTING RECPIENT TYPE =========> ${Get.parameters['recipientType']}");
       recipientType =
           Get.parameters['recipientType']!.toString().toParticipantType();
     }
@@ -234,9 +226,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
         appBar: AppBar(
           title: (recipientType == ParticipantType.DeliveryAdmin)
               ? Text("Administrador")
-              : Text(
-                  controller.recipient(recipientType: recipientType)?.name ??
-                      "User",
+              : Obx(
+                  () => Text(
+                    controller.recipient(recipientType: recipientType)?.name ??
+                        "User",
+                  ),
                 ),
           actions: <Widget>[
             if (orderId != null && showViewOrderBtn == true)

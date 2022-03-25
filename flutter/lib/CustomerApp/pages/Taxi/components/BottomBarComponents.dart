@@ -149,8 +149,9 @@ Widget taxiAvatarAndName(
 Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
   return GestureDetector(
     onTap: () {
-      Get.toNamed<void>(getTaxiMessagesRoute(order.orderId),
-          parameters: <String, String>{"orderId": order.orderId});
+      Get.toNamed<void>(
+        getTaxiMessagesRoute(order.orderId),
+      );
     },
     child: Container(
       margin: margin ?? EdgeInsets.only(left: 6),
@@ -168,27 +169,30 @@ Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
         ],
       ),
       child: Center(
-        child: Stack(
-          children: [
-            Get.find<OrderController>().hasNewMessageNotification(order.orderId)
-                ? Positioned(
-                    top: 5,
-                    right: 5,
-                    child: Container(
-                      height: 6,
-                      width: 6,
-                      decoration: BoxDecoration(
-                          color: Colors.red, shape: BoxShape.circle),
-                    ))
-                : SizedBox(),
-            Center(
-              child: Icon(
-                Icons.mail,
-                color: Color.fromARGB(255, 103, 121, 254),
-                size: 16,
-              ),
-            )
-          ],
+        child: Obx(
+          () => Stack(
+            children: [
+              Get.find<OrderController>()
+                      .hasNewMessageNotification(order.orderId)
+                  ? Positioned(
+                      top: 5,
+                      right: 5,
+                      child: Container(
+                        height: 6,
+                        width: 6,
+                        decoration: BoxDecoration(
+                            color: Colors.red, shape: BoxShape.circle),
+                      ))
+                  : SizedBox(),
+              Center(
+                child: Icon(
+                  Icons.mail,
+                  color: Color.fromARGB(255, 103, 121, 254),
+                  size: 16,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     ),

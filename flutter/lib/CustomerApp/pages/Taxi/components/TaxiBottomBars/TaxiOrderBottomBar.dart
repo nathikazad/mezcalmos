@@ -232,8 +232,6 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               order: widget.order.value!,
               margin: EdgeInsets.symmetric(horizontal: 6))
         ]);
-        // widget.bottomPadding = 10.0;
-
         break;
 
       case TaxiOrdersStatus.Expired:
