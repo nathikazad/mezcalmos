@@ -10,11 +10,11 @@ from tokenize import String
 from termcolor import colored
 
 # LAST UPDATE INFOS : 
+# ADDED Patching Android - Ios icons.
 # ADDED .ipa support with versioning and removed auto IOS_TARGETED_DEVICES = 1,2 TO 1 only.
 
-
 # GLOBAL CONSTANTS !
-VERSION = "1.1.12"
+VERSION = "1.1.13"
 XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
@@ -125,10 +125,24 @@ class Launcher:
         # open('../lib/pre-main.dart' , 'w+').write(f_root_main)
         # PRINTLN("[+] Pacthed ../lib/pre-main.dart successfully !")
 
+        # Patching Android - Ios icons:
+        PRINTLN("[~] Setting-up App-Icons for android/ios ...")
+        _userArgsAppName = self.user_args["app"].lower().replace("app" , "")
+        # Android first:
+        originalAndroidIconsBytes = open(f'assets/{_userArgsAppName}/icons/android.png' , 'rb').read()
+        open('../assets/icons/android.png' , 'wb+').write(originalAndroidIconsBytes)
+        PRINTLN(f"\t- ✅ Android:{_userArgsAppName} => Setting Android App-Icon Done.")
+        # Then iOS :
+        originalIosIconsBytes = open(f'assets/{_userArgsAppName}/icons/ios.png' , 'rb').read()
+        open('../assets/icons/ios.png' , 'wb+').write(originalIosIconsBytes)
+        PRINTLN(f"\t- ✅ iOS:{_userArgsAppName} => Setting iOS App-Icon Done.")
+
+        
+
         # Writing Valid launcher.xml
         _launcherXmlFile = self.conf['settings']['launcher.xml']
-        _outputAppName = self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['appName'];
-        _appPackageName = self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['packageName'];
+        _outputAppName = self.conf['apps'][self.user_args["app"]]['packages'][self.user_args['lmode']]['appName'];
+        _appPackageName = self.conf['apps'][self.user_args["app"]]['packages'][self.user_args['lmode']]['packageName'];
 
         PRINTLN(f"[+] Android:Label => {_outputAppName} .")
         PRINTLN(f"[+] Package:Name  => {_appPackageName} .")
@@ -234,7 +248,7 @@ class Launcher:
             exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
 
         open(_project_pbxproj_path , 'w+').write(_cloned)
-        PRINTLN(f"[+] Patched ios/project.pbxproj => {_appPackageName}")
+        PRINTLN(f"[+]  Patched ios/project.pbxproj => {_appPackageName}")
         _cloned = open(f'patches/ios/{_ios_app_folder_name}/Info.plist').read().replace('<mez-output-name>', _outputAppName).replace('<mez-app-type>' , _ios_app_folder_name)
         open(_info_plist_path , 'w+').write(_cloned)
         PRINTLN(f"[+] Patched ios/Runner/Info.plist => {_outputAppName}!")

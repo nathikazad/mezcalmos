@@ -17,7 +17,8 @@ android/app/src/debug/
 android/app/src/profile/
 android/app/src/main/AndroidManifest.xml
 android/app/src/main/kotlin/
-
+assets/icons/android.png
+assets/icons/ios.png
 pre-main.dart
 android/launcherPackage.properties
 android/app/src/main/res/values/launcher.xml
