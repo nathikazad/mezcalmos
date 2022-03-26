@@ -18,14 +18,20 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 void main() {
   loadBitmaps();
   runMainGuarded(
-      () => runApp(Sizer(builder: (context, orientation, deviceType) {
-            return StartingPoint(
-                appType: AppType.TaxiApp,
-                signInCallback: signInCallback,
-                appTheme: TaxiAppTheme.lightTheme,
-                signOutCallback: signOutCallback,
-                routes: routes);
-          })));
+    () => runApp(
+      Sizer(
+        builder: (_, __, ___) {
+          return StartingPoint(
+            appType: AppType.TaxiApp,
+            signInCallback: signInCallback,
+            appTheme: TaxiAppTheme.lightTheme,
+            signOutCallback: signOutCallback,
+            routes: routes,
+          );
+        },
+      ),
+    ),
+  );
 }
 
 void loadBitmaps() async {
@@ -38,3 +44,5 @@ void loadBitmaps() async {
         await bitmapDescriptorLoader(purple_destination_marker_asset, 60, 60));
   }
 }
+
+// python launcher.py env=stage app=TaxiApp

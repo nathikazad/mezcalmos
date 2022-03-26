@@ -87,9 +87,12 @@ class RequestTaxiController {
     updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
     locationPickerController.setLocation(taxiRequest.value.from!);
     locationPickerController.addOrUpdateUserMarker(
-        markerId: SearchComponentType.From.toShortString(),
-        latLng: LatLng(taxiRequest.value.from!.latitude,
-            taxiRequest.value.from!.longitude));
+      markerId: SearchComponentType.From.toShortString(),
+      latLng: LatLng(
+        taxiRequest.value.from!.latitude,
+        taxiRequest.value.from!.longitude,
+      ),
+    );
 
     updateModelAndMarker(SearchComponentType.To, taxiRequest.value.to!);
     locationPickerController.addOrUpdatePurpleDestinationMarker(
@@ -98,8 +101,9 @@ class RequestTaxiController {
     locationPickerController.hideFakeMarker();
     locationPickerController.setAnimateMarkersPolyLinesBounds(true);
     locationPickerController.animateAndUpdateBounds();
-    updateRouteInformation()
-        .then((_) => locationPickerController.showConfirmButton());
+    updateRouteInformation().then(
+      (_) => locationPickerController.showConfirmButton(),
+    );
 
     pickedFromTo.value = true;
   }
@@ -145,6 +149,7 @@ class RequestTaxiController {
     // locationPickerController.removeCircleMarker();
     if (newLocation != null) {
       currentFocusedTextField.value = textFieldType;
+      currentFocusedTextField.refresh();
       updateModelAndMarker(textFieldType, newLocation);
       locationPickerController.setLocation(newLocation);
       locationPickerController.moveToNewLatLng(
@@ -242,6 +247,7 @@ class RequestTaxiController {
         latLng: newLocation.toLatLng(),
       );
     }
+    taxiRequest.refresh();
   }
 
   void onSuccessSignInUpdateUserMarker() {

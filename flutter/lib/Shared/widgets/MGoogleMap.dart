@@ -91,15 +91,16 @@ class MGoogleMapState extends State<MGoogleMap> {
 
   Future<LocationData?> _currentLocation() async {
     LocationData? currentLocation;
-    var location = new Location();
     try {
-      currentLocation = await location.getLocation();
+      currentLocation = await Location().getLocation();
       widget.notifyParentOfNewLocation?.call(
-        LocationModel.Location.fromFirebaseData({
-          "lat": currentLocation.latitude,
-          "lng": currentLocation.longitude,
-          "address": ""
-        }),
+        LocationModel.Location.fromFirebaseData(
+          <String, dynamic>{
+            "lat": currentLocation.latitude,
+            "lng": currentLocation.longitude,
+            "address": ""
+          },
+        ),
       );
     } on Exception {
       currentLocation = null;
@@ -110,20 +111,19 @@ class MGoogleMapState extends State<MGoogleMap> {
   @override
   Widget build(BuildContext context) {
     mezDbgPrint("Inside MGoogleMap build $hashCode ${widget.debugString}");
-
     return Stack(
-      children: [
+      children: <Widget>[
         Obx(
           () => widget.mGoogleMapController.location.value != null
               ? GoogleMap(
                   onTap: (_) {
                     widget.mGoogleMapController.onMapTap?.call();
                   },
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   mapToolbarEnabled: false,
                   minMaxZoomPreference:
                       widget.mGoogleMapController.getMapMinMaxZommPrefs(),
-                  onCameraMove: (camMove) {
+                  onCameraMove: (CameraPosition camMove) {
                     widget.mGoogleMapController
                         .updateMarkersIconOnZoomChange(zoom: camMove.zoom);
                   },
@@ -136,10 +136,11 @@ class MGoogleMapState extends State<MGoogleMap> {
                   mapType: MapType.normal,
                   tiltGesturesEnabled: true,
                   initialCameraPosition: CameraPosition(
-                      target: widget.mGoogleMapController.location.value!
-                          .toLatLng(),
-                      tilt: 9.440717697143555,
-                      zoom: 5.151926040649414),
+                    target:
+                        widget.mGoogleMapController.location.value!.toLatLng(),
+                    tilt: 9.440717697143555,
+                    zoom: 5.151926040649414,
+                  ),
                   onMapCreated: (GoogleMapController _gController) async {
                     mezDbgPrint(
                         "\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
@@ -149,7 +150,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                     _completer.complete(_gController);
                   },
                 )
-              : SizedBox(),
+              : const SizedBox(),
         ),
 
         // ),
@@ -159,27 +160,33 @@ class MGoogleMapState extends State<MGoogleMap> {
                 bottom: 10,
                 child: InkWell(
                   onTap: () async {
-                    LocationData? _tmpCurrentLoc = await _currentLocation();
+                    final LocationData? _tmpCurrentLoc =
+                        await _currentLocation();
                     if (_tmpCurrentLoc != null) {
-                      widget.mGoogleMapController.controller
-                          ?.animateCamera(CameraUpdate.newCameraPosition(
-                        CameraPosition(
-                          target: LatLng(_tmpCurrentLoc.latitude!,
-                              _tmpCurrentLoc.longitude!),
+                      await widget.mGoogleMapController.controller
+                          ?.animateCamera(
+                        CameraUpdate.newCameraPosition(
+                          CameraPosition(
+                            target: LatLng(
+                              _tmpCurrentLoc.latitude!,
+                              _tmpCurrentLoc.longitude!,
+                            ),
+                          ),
                         ),
-                      ));
+                      );
                     }
                   },
                   child: Container(
                     height: 10.sp,
                     width: 10.sp,
                     decoration: BoxDecoration(
-                      color: Color(0xffffffff),
+                      color: Colors.white,
                       boxShadow: <BoxShadow>[
                         BoxShadow(
-                            blurRadius: 8,
-                            color: Colors.black38,
-                            spreadRadius: 1)
+                          blurRadius: 8,
+                          color: Colors.black38,
+                          spreadRadius: 1,
+                        )
                       ],
                       shape: BoxShape.circle,
                     ),
@@ -192,7 +199,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                   ),
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
       ],
     );
   }

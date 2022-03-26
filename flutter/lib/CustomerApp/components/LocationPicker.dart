@@ -108,28 +108,30 @@ class LocationPickerState extends State<LocationPicker> {
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    return Obx(() => widget.locationPickerMapController.location.value != null
-        ? Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              MGoogleMap(
-                mGoogleMapController: widget.locationPickerMapController,
-                notifyParentOfNewLocation:
-                    widget.notifyParentOfLocationFinalized,
-                periodicRerendering: false,
-                myLocationButtonEnabled: widget
-                    .locationPickerMapController.myLocationButtonEnabled.value,
-              ),
-              widget.locationPickerMapController._showFakeMarker.value
-                  ? pickerMarker()
-                  : const SizedBox(),
-              widget.locationPickerMapController._showBlackScreen.value
-                  ? gestureDetector()
-                  : const SizedBox(),
-              widget.showBottomButton ? bottomButton() : const SizedBox()
-            ],
-          )
-        : Center(child: CircularProgressIndicator()));
+    return Obx(
+      () => widget.locationPickerMapController.location.value != null
+          ? Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                MGoogleMap(
+                  mGoogleMapController: widget.locationPickerMapController,
+                  notifyParentOfNewLocation:
+                      widget.notifyParentOfLocationFinalized,
+                  periodicRerendering: false,
+                  myLocationButtonEnabled: widget.locationPickerMapController
+                      .myLocationButtonEnabled.value,
+                ),
+                widget.locationPickerMapController._showFakeMarker.value
+                    ? pickerMarker()
+                    : const SizedBox(),
+                widget.locationPickerMapController._showBlackScreen.value
+                    ? gestureDetector()
+                    : const SizedBox(),
+                widget.showBottomButton ? bottomButton() : const SizedBox()
+              ],
+            )
+          : Center(child: CircularProgressIndicator()),
+    );
   }
 
   /******************************  Widgets ************************************/

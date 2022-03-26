@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -11,7 +9,6 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.da
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiReqBottomBar.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -37,14 +34,14 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       requestTaxiController: viewController,
     );
     // fetch first without waiting 10seconds.
-    viewController.startFetchingOnlineDrivers();
-    // then keep it periodic each 10s
-    viewController.timer = Timer.periodic(
-      Duration(seconds: 10),
-      (Timer timer) {
-        viewController.startFetchingOnlineDrivers();
-      },
-    );
+    // viewController.startFetchingOnlineDrivers();
+    // // then keep it periodic each 10s
+    // viewController.timer = Timer.periodic(
+    //   Duration(seconds: 10),
+    //   (Timer timer) {
+    //     viewController.startFetchingOnlineDrivers();
+    //   },
+    // );
 
     if (Get.arguments != null) {
       // we re-create the TaxiRequest passed along args
@@ -84,7 +81,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                     viewController.locationPickerController,
                 notifyParentOfLocationFinalized:
                     viewController.updateModelAndMaybeCalculateRoute,
-                notifyParentOfConfirm: (Location? _) async {
+                notifyParentOfConfirm: (_) async {
                   if (GetStorage().read<String>(getxLmodeKey) == "prod" &&
                       Get.find<AuthController>().fireAuthUser?.uid ==
                           testUserIdInProd) {
