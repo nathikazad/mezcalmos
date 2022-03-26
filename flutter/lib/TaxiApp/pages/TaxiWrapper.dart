@@ -22,14 +22,21 @@ import 'package:mezcalmos/TaxiApp/notificationHandler.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 class TaxiWrapper extends StatefulWidget {
+  const TaxiWrapper({Key? key}) : super(key: key);
+
   @override
   _TaxiWrapperState createState() => _TaxiWrapperState();
 }
 
 class _TaxiWrapperState extends State<TaxiWrapper> {
+  ///
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
+
+  ///
   StreamSubscription<bool>? _locationStreamSub;
+
+  ///
   AuthController _authController = Get.find<AuthController>();
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
 

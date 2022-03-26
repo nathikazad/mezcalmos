@@ -27,13 +27,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   void initState() {
     viewWidgets =
         RequestTaxiScreenWidgets(requestTaxiController: viewController);
-    //TODO:FIX
-    // fetch first without waiting 10seconds.
-    // viewController.startFetchingOnlineDrivers();
-    // // then keep it periodic each 10s
-    // viewController.timer = Timer.periodic(Duration(seconds: 10), (Timer timer) {
-    //   viewController.startFetchingOnlineDrivers();
-    // });
 
     if (Get.arguments != null) {
       // we re-create the TaxiRequest passed along args
