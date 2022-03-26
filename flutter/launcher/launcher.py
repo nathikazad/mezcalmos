@@ -130,11 +130,17 @@ class Launcher:
         _userArgsAppName = self.user_args["app"].lower().replace("app" , "")
         # Android first:
         originalAndroidIconsBytes = open(f'assets/{_userArgsAppName}/icons/android.png' , 'rb').read()
+        originalPlayStoreBytes = open(f'assets/{_userArgsAppName}/icons/playstore.png' , 'rb').read()
         open('../assets/icons/android.png' , 'wb+').write(originalAndroidIconsBytes)
+        open('../assets/icons/android.png' , 'wb+').write(originalPlayStoreBytes)
         PRINTLN(f"\t- ✅ Android:{_userArgsAppName} => Setting Android App-Icon Done.")
         # Then iOS :
         originalIosIconsBytes = open(f'assets/{_userArgsAppName}/icons/ios.png' , 'rb').read()
+        originalAppStoreBytes = open(f'assets/{_userArgsAppName}/icons/appstore.png' , 'rb').read()
         open('../assets/icons/ios.png' , 'wb+').write(originalIosIconsBytes)
+        open('../assets/icons/appstore.png' , 'wb+').write(originalAppStoreBytes)
+        # xassets-AppIcon:
+
         PRINTLN(f"\t- ✅ iOS:{_userArgsAppName} => Setting iOS App-Icon Done.")
 
         
@@ -229,6 +235,7 @@ class Launcher:
         _project_pbxproj_path = "../ios/Runner.xcodeproj/project.pbxproj"
         _info_plist_path = "../ios/Runner/Info.plist"
         
+        # <mez-app-type> -> replaces project.pbxproj 's Icon Set
         _cloned = open('patches/ios/project.pbxproj').read()
         _cloned = _cloned.replace('<mez-package>', _appPackageName).replace('<mez-app-type>' , _ios_app_folder_name)
         # Safe check for launching.
