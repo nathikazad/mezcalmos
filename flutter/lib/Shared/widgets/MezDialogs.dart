@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:sizer/sizer.dart';
 
 enum TwoButtonDialogButton { Left, Right }
 enum YesNoDialogButton { Yes, No }
@@ -37,46 +38,46 @@ Future<void> oneButtonDialog(
     titlePadding: const EdgeInsets.all(5),
     radius: 8,
     title: title ?? '',
-    content: Flex(
-      direction: Axis.vertical,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (imagUrl != null)
-          Flexible(
-              fit: FlexFit.loose,
+    content: Container(
+      //  height: 80.h,
+      // width: 90.w,
+      child: Flex(
+        direction: Axis.vertical,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (imagUrl != null)
+            Center(
               child: Container(
-                height: Get.height / 4,
-                width: Get.width / 2,
+                padding: EdgeInsets.all(20),
+                height: 20.h,
+                width: 20.h,
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: mLoadImage(url: imagUrl).image,
+                        alignment: Alignment.center,
                         // image: AssetImage(imagUrl),
                         fit: BoxFit.contain)),
-              )),
-        Flexible(
-            fit: FlexFit.loose,
-            child: SizedBox(
-              height: 20,
-            )),
-        Flexible(
-            fit: FlexFit.loose,
-            child: Center(
-              child: Text(
-                body,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: 'psr',
-                    fontSize: fontSize,
-                    color: bodyTextColor ?? Colors.grey.shade700),
               ),
-            )),
-        SizedBox(
-          height: 20,
-        ),
-        Flexible(
-          child: Center(
+            ),
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: Text(
+              body,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: 'psr',
+                  fontSize: fontSize,
+                  color: bodyTextColor ?? Colors.grey.shade700),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Center(
             child: Container(
               width: 80,
               child: InkWell(
@@ -84,9 +85,9 @@ Future<void> oneButtonDialog(
                 onTap: Get.back,
               ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     ),
   );
 }

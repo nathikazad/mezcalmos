@@ -36,7 +36,7 @@ class _LaundryOrderFromToComponentState
     if (widget.order.laundry != null) {
       await laundryInfoController
           .getLaundry(widget.order.laundry!.id)
-          .then((value) {
+          .then((Laundry value) {
         setState(() {
           laundry = value;
         });
@@ -46,8 +46,8 @@ class _LaundryOrderFromToComponentState
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
-    List<Widget> fromToWidgets = [
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    final List<Widget> fromToWidgets = [
       Row(
         children: [
           CircleAvatar(
@@ -58,18 +58,20 @@ class _LaundryOrderFromToComponentState
           SizedBox(
             width: 10,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.order.laundry?.name ?? 'Laundry Agency',
-                style: textTheme.bodyText1,
-              ),
-              Text(
-                laundry?.info.location?.address ?? '',
-                style: textTheme.subtitle1,
-              ),
-            ],
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.order.laundry?.name ?? 'Laundry Agency',
+                  style: textTheme.bodyText1,
+                ),
+                Text(
+                  laundry?.info.location?.address ?? '',
+                  style: textTheme.subtitle1,
+                ),
+              ],
+            ),
           )
         ],
       ),

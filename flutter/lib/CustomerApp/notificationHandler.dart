@@ -301,6 +301,7 @@ Notification newCounterOfferNotification(String key, value) {
       variableParams: value);
 }
 
+// checking type
 String getMessageUrl(String orderId) {
   switch (Get.find<OrderController>().getOrder(orderId)!.orderType) {
     case OrderType.Restaurant:

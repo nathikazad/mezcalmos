@@ -67,8 +67,9 @@ class LaundryOrderStatusCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Get.toNamed(getMessagesRoute(
-             orderId: order.orderId,
-              chatId: order.orderId, recipientType: ParticipantType.Laundry));
+              orderId: order.orderId,
+              chatId: order.orderId,
+              recipientType: ParticipantType.Laundry));
         },
         customBorder: CircleBorder(),
         child: Stack(

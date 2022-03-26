@@ -71,7 +71,7 @@ class MGoogleMapState extends State<MGoogleMap> {
 
   @override
   void dispose() {
-    mezDbgPrint("MGoogleMap disposed ${this.hashCode} ${widget.debugString}");
+    mezDbgPrint("MGoogleMap disposed $hashCode ${widget.debugString}");
     _reRenderingTimer?.cancel();
     // gmapControlelr disposing.
     widget.mGoogleMapController.controller?.dispose();
@@ -99,8 +99,7 @@ class MGoogleMapState extends State<MGoogleMap> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(
-        "Inside MGoogleMap build ${this.hashCode} ${widget.debugString}");
+    mezDbgPrint("Inside MGoogleMap build $hashCode ${widget.debugString}");
 
     return Stack(
       children: [

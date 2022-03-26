@@ -22,15 +22,15 @@ enum TaxiOrdersStatus {
 
 extension ParseOrderStatusToString on TaxiOrdersStatus {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 }
 
 extension ParseStringToOrderStatus on String {
   TaxiOrdersStatus toTaxiOrderStatus() {
-    return TaxiOrdersStatus.values.firstWhere(
-        (e) => e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
+    return TaxiOrdersStatus.values.firstWhere((TaxiOrdersStatus e) =>
+        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -55,13 +55,13 @@ class TaxiOrder extends Order {
   String? rideStartTime;
   TaxiOrdersStatus status;
   double distanceToClient = 0;
-  TaxiUserInfo? get driver => this.serviceProvider as TaxiUserInfo?;
+  TaxiUserInfo? get driver => serviceProvider as TaxiUserInfo?;
   List<TaxiNotificationStatus> notificationStatuses = [];
   List<CounterOffer> _counterOffers = [];
 
   List<CounterOffer> getValidCounterOfferts() {
     return _counterOffers
-        .where((offer) =>
+        .where((CounterOffer offer) =>
             offer.validityTimeDifference() < 0 &&
             offer.counterOfferStatus == CounterOfferStatus.Submitted)
         .toList();
@@ -98,15 +98,15 @@ class TaxiOrder extends Order {
   /// Convert [TaxiOrder] object to [TaxiRequest] object.
   TaxiRequest toTaxiRequest() {
     return TaxiRequest(
-        from: this.from,
-        to: this.to,
-        routeInformation: this.routeInformation,
-        estimatedPrice: this.cost.round(),
-        paymentType: this.paymentType);
+        from: from,
+        to: to,
+        routeInformation: routeInformation,
+        estimatedPrice: cost.round(),
+        paymentType: paymentType);
   }
 
-  factory TaxiOrder.fromData(dynamic id, dynamic data) {
-    TaxiOrder taxiOrder = TaxiOrder(
+  factory TaxiOrder.fromData(id, data) {
+    final TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
         driver: (data["driver"] != null)
             ? TaxiUserInfo.fromData(data["driver"])
@@ -131,11 +131,10 @@ class TaxiOrder extends Order {
 
     // mezDbgPrint(itemData.toString());
 
-    data["notificationStatus"]
-        ?.forEach((dynamic uid, dynamic notificationStatus) {
-      dynamic recievedIsBool =
+    data["notificationStatus"]?.forEach((uid, notificationStatus) {
+      final dynamic recievedIsBool =
           notificationStatus["received"].runtimeType == bool;
-      bool isRecieved =
+      final bool isRecieved =
           recievedIsBool && notificationStatus["received"] == true;
 
       try {
@@ -150,12 +149,12 @@ class TaxiOrder extends Order {
       }
     });
     mezDbgPrint("len #s#a#a#d ====> ${data['counterOffers']}");
-    data["counterOffers"]
-        ?.forEach((dynamic driverId, dynamic counterOfferData) {
+    data["counterOffers"]?.forEach((driverId, counterOfferData) {
       try {
         mezDbgPrint("CounterOffer ===> $counterOfferData");
 
-        var _tmpCountOffer = CounterOffer.fromData(counterOfferData,
+        final CounterOffer _tmpCountOffer = CounterOffer.fromData(
+            counterOfferData,
             taxiUserInfo: UserInfo.fromData(counterOfferData["driverInfo"]));
 
         if (_tmpCountOffer.validityTimeDifference() < 0) {
@@ -202,11 +201,11 @@ class TaxiOrder extends Order {
   }
 
   bool isOpenOrder() {
-    switch (this.status) {
-      case TaxiOrdersStatus.ForwardingSuccessful:
+    switch (status) {
+      // case TaxiOrdersStatus.ForwardingSuccessful:
       case TaxiOrdersStatus.LookingForTaxi:
-      case TaxiOrdersStatus.ForwardingToLocalCompany:
-      case TaxiOrdersStatus.ForwardingUnsuccessful:
+        // case TaxiOrdersStatus.ForwardingToLocalCompany:
+        //   case TaxiOrdersStatus.ForwardingUnsuccessful:
         return true;
 
       default:
@@ -215,11 +214,12 @@ class TaxiOrder extends Order {
   }
 
   num numberOfTaxiSentNotificationTo() {
-    return this.notificationStatuses.length;
+    return notificationStatuses.length;
   }
 
   int numberOfTaxiReadNotification() {
-    return this.notificationStatuses.fold<int>(0, (previousValue, element) {
+    return notificationStatuses.fold<int>(0,
+        (int previousValue, TaxiNotificationStatus element) {
       return (element.read ? 1 : 0) + previousValue;
     });
   }
@@ -234,8 +234,8 @@ class TaxiOrder extends Order {
 
   CounterOffer? findCounterOfferByDriverId(String driverId) {
     try {
-      return this._counterOffers.firstWhere(
-          (counterOffer) => counterOffer.driverInfo.id == driverId);
+      return _counterOffers.firstWhere((CounterOffer counterOffer) =>
+          counterOffer.driverInfo.id == driverId);
     } catch (e) {
       return null;
     }

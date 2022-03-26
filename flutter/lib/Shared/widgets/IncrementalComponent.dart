@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
 
+typedef void OnValueChanged(int newValue);
+
 class IncrementalComponent extends StatefulWidget {
-  final GestureTapCallback increment;
-  final GestureTapCallback decrement;
+  final OnValueChanged increment;
+  final OnValueChanged decrement;
+  final int incrementBy;
+  final int decrementBy;
   final Color btnColors;
-  final center;
+  final bool center;
   final int value;
   final int? maxVal;
   final int? minVal;
   final ValueChanged<bool>? onChangedToZero;
-  IncrementalComponent(
+  const IncrementalComponent(
       {Key? key,
       required this.increment,
       required this.value,
       required this.decrement,
+      this.incrementBy = 1,
+      this.decrementBy = 1,
       this.center = false,
       this.btnColors = const Color(0xffac59fc),
       this.onChangedToZero,
@@ -24,36 +29,30 @@ class IncrementalComponent extends StatefulWidget {
       : super(key: key);
 
   @override
-  _IncrementalComponentState createState() =>
-      _IncrementalComponentState(this.value);
+  _IncrementalComponentState createState() => _IncrementalComponentState(value);
 }
 
 class _IncrementalComponentState extends State<IncrementalComponent> {
   int _value;
   _IncrementalComponentState(this._value);
   void _increment() {
-    print("the max value is ${widget.maxVal}");
     if (_value < widget.maxVal!)
       setState(() {
-        _value++;
+        _value += widget.incrementBy;
       });
     else
       return;
   }
 
   void _decrement() {
-    print("the max value is ${widget.minVal}");
     if (_value != widget.minVal) {
-      mezDbgPrint("the component value ${_value}");
       setState(() {
-        _value--;
+        _value -= widget.decrementBy;
       });
       if (_value == 0) {
-        print("the value ${_value}");
         widget.onChangedToZero?.call(true);
       } else
         widget.onChangedToZero?.call(false);
-      mezDbgPrint("the component value ${_value}");
     } else
       return;
   }
@@ -63,7 +62,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
     return Row(
       mainAxisAlignment:
           widget.center ? MainAxisAlignment.center : MainAxisAlignment.start,
-      children: [
+      children: <Widget>[
         InkWell(
           child: Container(
               padding: const EdgeInsets.all(5),
@@ -81,7 +80,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
           onTap: (_value > widget.minVal!)
               ? () {
                   _decrement();
-                  widget.decrement();
+                  widget.decrement(_value);
                 }
               : null,
         ),
@@ -93,8 +92,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Theme.of(context).primaryColorLight.withOpacity(0.2)),
-          child:
-              Text("${_value}", style: Theme.of(context).textTheme.headline3),
+          child: Text("$_value", style: Theme.of(context).textTheme.headline3),
         ),
         SizedBox(
           width: 5,
@@ -113,7 +111,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
               )),
           onTap: () {
             _increment();
-            widget.increment();
+            widget.increment(_value);
           },
         ),
       ],

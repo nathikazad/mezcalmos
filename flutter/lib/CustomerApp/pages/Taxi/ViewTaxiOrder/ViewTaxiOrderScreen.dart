@@ -53,13 +53,11 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   void initializeLateControllers() {
     // We do not realy need to make AnimatedSliderController late here , but it's good for Future refrences.
     // To show that You can set it up before using it.
-    this.animatedSliderController = AnimatedSliderController();
-    this.viewController = ViewTaxiOrderController(
+    animatedSliderController = AnimatedSliderController();
+    viewController = ViewTaxiOrderController(
         animatedSliderController: animatedSliderController);
-    this.viewWidgets =
-        ViewTaxiOrderScreenWidgets(viewController: viewController);
-    this.counterOfferWidgets =
-        CounterOfferWidgets(viewController: viewController);
+    viewWidgets = ViewTaxiOrderScreenWidgets(viewController: viewController);
+    counterOfferWidgets = CounterOfferWidgets(viewController: viewController);
   }
 
   @override
@@ -82,11 +80,11 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     return Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.topCenter,
-        children: [
-          Map(),
+        children: <Widget>[
+          mGoogleMap(),
           viewWidgets.absorbOrIgnoreUserTapWidget(),
           TopBar(order: viewController.order.value!),
-          Obx(() => BottomButtons()),
+          Obx(() => bottomButtons()),
           TaxiOrderBottomBar(order: viewController.order),
           viewWidgets.getToolTip(),
           counterOfferWidgets.counterOffersBottomSheet(context),
@@ -94,20 +92,20 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   }
 
   /// The map view to show the route and location of the agents
-  Container Map() {
+  Container mGoogleMap() {
     return Container(
         width: Get.width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5), color: Colors.white),
         child: MGoogleMap(
-          mGoogleMapController: this.viewController.mGoogleMapController,
+          mGoogleMapController: viewController.mGoogleMapController,
           periodicRerendering: true,
         ));
   }
 
   /// Show cancel button by default and show counter offers button when
   /// there are counter offers
-  Positioned BottomButtons() {
+  Positioned bottomButtons() {
     return Positioned(
       bottom: 15,
       left: 15,

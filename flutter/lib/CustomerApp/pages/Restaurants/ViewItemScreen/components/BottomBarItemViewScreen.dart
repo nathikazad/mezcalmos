@@ -66,11 +66,11 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
             width: 5,
           ),
           IncrementalComponent(
-            increment: () {
+            increment: (_) {
               widget.cartItem.value!.quantity++;
               widget.cartItem.refresh();
             },
-            decrement: () {
+            decrement: (_) {
               widget.cartItem.value!.quantity--;
               widget.cartItem.refresh();
             },

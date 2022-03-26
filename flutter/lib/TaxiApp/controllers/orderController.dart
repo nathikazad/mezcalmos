@@ -126,6 +126,7 @@ class OrderController extends GetxController {
             notification.notificationType == NotificationType.NewMessage &&
             notification.orderId! ==
                 Get.find<TaxiAuthController>().taxiState!.currentOrder)
+        .toList()
         .isNotEmpty;
   }
 

@@ -20,7 +20,7 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
   AuthController authController = Get.find<AuthController>();
-  AppVersionController _appVersionController = Get.find<AppVersionController>();
+  // AppVersionController _appVersionController = Get.find<AppVersionController>();
 
   late bool databaseUserLastSnapshot;
 
@@ -36,7 +36,7 @@ class _WrapperState extends State<Wrapper> {
       Get.find<AuthController>().authStateStream.listen((user) {
         handleAuthStateChange(user);
       });
-      handleAppVersionUpdatesAndStartListener();
+      // handleAppVersionUpdatesAndStartListener();
     });
     super.initState();
   }
@@ -44,16 +44,16 @@ class _WrapperState extends State<Wrapper> {
   /// This parts Checks the snapshot at [AppVersionController.isNewVersionOut] if it is not null
   ///
   /// and then start a listener in case there there is updates.
-  void handleAppVersionUpdatesAndStartListener() {
-    // first we check the snapshot
-    checkIfNotInUpdateScreenAndPush(_appVersionController.appVersionInfos.value)
-        .then((_) {
-      // this listenr is distinct by the way.
-      _appVersionController.appVersionInfos.stream.listen((updateType) async {
-        await checkIfNotInUpdateScreenAndPush(updateType);
-      });
-    });
-  }
+  // void handleAppVersionUpdatesAndStartListener() {
+  //   // first we check the snapshot
+  //   checkIfNotInUpdateScreenAndPush(_appVersionController.appVersionInfos.value)
+  //       .then((_) {
+  //     // this listenr is distinct by the way.
+  //     _appVersionController.appVersionInfos.stream.listen((updateType) async {
+  //       await checkIfNotInUpdateScreenAndPush(updateType);
+  //     });
+  //   });
+  // }
 
   Future<void> checkIfNotInUpdateScreenAndPush(
       AppUpdate? appVersionInfos) async {
@@ -102,7 +102,6 @@ class _WrapperState extends State<Wrapper> {
             !Get.find<AuthController>().isUserImgSet()) &&
         Get.currentRoute != kUserProfile) {
       /* KEEEP THIS HERE FOR FUTURE REFRENCE
-      
         We have so far 3 Scenarios here : 
         - The Current route is kOtpConfirmRoute :
           > this is basically when user Signs In using OTP and confirm :
@@ -114,17 +113,16 @@ class _WrapperState extends State<Wrapper> {
           > this is when the user already was SignedIn and was on ProfileScreen but closes the App and re-open it or a upon a hot Restart
             > Nav stack is : kWrapper
 
-
         In All three Cases we should inject that kHomeRoute right after kWrapper then pop the rest off and push kUserProfile
         Where the nav stack should look like this : kWrapper > kHomeRoute > kUserProfile
         and since kUserProfile will gets poped only and only if the infos are well set, that way we are 100% sure to return to
         kHomeRoute with a valid User infos.
 
-       */
+      */
       // We pop everything till wrapper and push kHomeRoute
-      Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      Get.offNamedUntil<void>(kHomeRoute, ModalRoute.withName(kWrapperRoute));
       // then we push kUserProfile on top of kHomeRoute
-      Get.toNamed(kUserProfile);
+      Get.toNamed<void>(kUserProfile);
       // now the Nav Stack is correct and looks like this :  wrapper > kHomeRoute > kUserProfile
     } else {
       // if user has all infos set and a successfull SignIn then we proceed with the usual.

@@ -1,8 +1,5 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 class DeliveryDriverState {
@@ -10,17 +7,17 @@ class DeliveryDriverState {
   bool isOnline;
   DeliveryDriverState({required this.isAuthorized, required this.isOnline});
 
-  factory DeliveryDriverState.fromSnapshot(dynamic data) {
+  factory DeliveryDriverState.fromSnapshot(data) {
     // mezDbgPrint("DeliveryDriver ${data}");
-    bool isAuthorized =
+    final bool isAuthorized =
         data == null ? false : data['authorizationStatus'] == "authorized";
-    bool isOnline = data == null ? false : data['isOnline'] == true;
+    final bool isOnline = data == null ? false : data['isOnline'] == true;
     // String? currentOrder = data == null ? null : data['currentOrderId'];
     return DeliveryDriverState(isAuthorized: isAuthorized, isOnline: isOnline);
   }
 
   Map<String, dynamic> toJson() =>
-      {"authorizationStatus": this.isAuthorized, "isOnline": this.isOnline};
+      {"authorizationStatus": isAuthorized, "isOnline": isOnline};
 }
 
 // used by delivery admin app
@@ -38,19 +35,19 @@ class DeliveryDriver {
       required this.deliveryDriverId,
       required this.driverInfo});
 
-  factory DeliveryDriver.fromData(
-      String deliveryDriverId, dynamic deliveryDriverData) {
-    DeliveryDriverState deliveryDriverState =
+  factory DeliveryDriver.fromData(String deliveryDriverId, deliveryDriverData) {
+    final DeliveryDriverState deliveryDriverState =
         DeliveryDriverState.fromSnapshot(deliveryDriverData['state']);
-    DeliveryDriverUserInfo deliveryDriverUserInfo =
+    final DeliveryDriverUserInfo deliveryDriverUserInfo =
         DeliveryDriverUserInfo.fromData(deliveryDriverData['info']);
-    dynamic driverLocation = deliveryDriverData['location'] == null
+    final dynamic driverLocation = deliveryDriverData['location'] == null
         ? null
         : LatLng(deliveryDriverData["location"]["position"]["lat"],
             deliveryDriverData["location"]["position"]["lng"]);
-    DateTime? lastLocationUpdateTime = deliveryDriverData['location'] == null
-        ? null
-        : DateTime.parse(deliveryDriverData['location']['lastUpdateTime']);
+    final DateTime? lastLocationUpdateTime =
+        deliveryDriverData['location'] == null
+            ? null
+            : DateTime.parse(deliveryDriverData['location']['lastUpdateTime']);
     return DeliveryDriver(
         deliveryDriverId: deliveryDriverId,
         deliveryDriverState: deliveryDriverState,
@@ -61,8 +58,8 @@ class DeliveryDriver {
 
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {
-        "authorizationStatus": this.deliveryDriverState.isAuthorized,
-        "isOnline": this.deliveryDriverState.isOnline,
+        "authorizationStatus": deliveryDriverState.isAuthorized,
+        "isOnline": deliveryDriverState.isOnline,
         "driverLocation": driverLocation.toJson(),
         "lastLocationUpdateTime":
             lastLocationUpdateTime?.toUtc().toIso8601String()
@@ -80,13 +77,13 @@ class DeliveryDriverUserInfo extends UserInfo {
       LanguageType? language})
       : super(id: id, name: name, image: image, language: language);
 
-  factory DeliveryDriverUserInfo.fromData(dynamic data) {
+  factory DeliveryDriverUserInfo.fromData(data) {
     // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
-    LatLng? location = data["location"] != null
+    final LatLng? location = data["location"] != null
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])
         : null;
-    LanguageType? language = data["language"] != null
+    final LanguageType? language = data["language"] != null
         ? data["language"].toString().toLanguageType()
         : null;
     return DeliveryDriverUserInfo(
@@ -102,14 +99,14 @@ enum DeliveryDriverType { Pickup, DropOff }
 
 extension ParseDeliveryDriverTypeToString on DeliveryDriverType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 }
 
 extension ParseStringToDeliveryDriverType on String {
   DeliveryDriverType toDeliveryDriverType() {
-    return DeliveryDriverType.values.firstWhere(
-        (e) => e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
+    return DeliveryDriverType.values.firstWhere((DeliveryDriverType e) =>
+        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }

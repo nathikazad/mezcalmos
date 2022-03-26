@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
@@ -9,14 +11,13 @@ import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:location/location.dart' as GeoLoc;
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Taxi']['RequestTaxiScreen'];
@@ -127,6 +128,9 @@ class RequestTaxiController {
 // when one of the dropdowns (pick current location, a saved location or a places suggestion clicked)
   void updateModelAndHandoffToLocationPicker(
       Location? newLocation, SearchComponentType textFieldType) {
+    mezDbgPrint(
+        "zlaganga : $textFieldType | newLocationAddress : ${newLocation?.address}");
+
     // locationPickerController.removeCircleMarker();
     if (newLocation != null) {
       currentFocusedTextField.value = textFieldType;
@@ -151,6 +155,8 @@ class RequestTaxiController {
     locationPickerController.showOrHideBlackScreen(false);
 
     updateModelAndMarker(currentFocusedTextField.value, newLocation);
+    currentFocusedTextField.refresh();
+    taxiRequest.refresh();
     if (taxiRequest.value.isFromToSet()) {
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
       locationPickerController.animateAndUpdateBounds();

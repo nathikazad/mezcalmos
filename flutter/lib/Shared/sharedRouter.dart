@@ -41,7 +41,7 @@ String getMessagesRoute(
     mainUrl += "?recipientId=$recipientId";
   else
     mainUrl += "?recipientType=${recipientType.toFirebaseFormattedString()}";
-  if (orderId != null) mainUrl += "&orderId=$orderId&";
+  if (orderId != null) mainUrl += "&orderId=$orderId";
   return mainUrl;
 }
 

@@ -22,14 +22,20 @@ class TaxiOpenOrderControllButtons extends StatefulWidget {
 class _TaxiOpenOrderControllButtonsState
     extends State<TaxiOpenOrderControllButtons> {
   RxBool btnClicked = RxBool(false);
+
   TaxiOrderController _taxiOrderController = Get.find<TaxiOrderController>();
 
   num taxiNumber = 0;
+  @override
+  void initState() {
+    btnClicked.value = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (btnClicked == false) {
+      if (btnClicked.value == false) {
         return _getBottomComponent(context);
       } else {
         return Center(child: CircularProgressIndicator());
@@ -43,7 +49,8 @@ class _TaxiOpenOrderControllButtonsState
         return TextButton(
             onPressed: () async {
               btnClicked.value = true;
-              _taxiOrderController.forwardToLocalCompany(widget.order.orderId);
+              await _taxiOrderController
+                  .forwardToLocalCompany(widget.order.orderId);
             },
             child: Container(
                 alignment: Alignment.center,
@@ -55,7 +62,7 @@ class _TaxiOpenOrderControllButtonsState
           children: [
             TextButton(
                 onPressed: () async {
-                  dynamic result = await taxiNumberDialog(context);
+                  final dynamic result = await taxiNumberDialog(context);
 
                   if (result != 0) {
                     btnClicked.value = true;
@@ -93,6 +100,8 @@ class _TaxiOpenOrderControllButtonsState
         );
 
       case TaxiOrdersStatus.ForwardingUnsuccessful:
+      case TaxiOrdersStatus.CancelledByCustomer:
+      case TaxiOrdersStatus.CancelledByTaxi:
         return Column(
           children: [
             Divider(),
@@ -125,6 +134,7 @@ class _TaxiOpenOrderControllButtonsState
           ],
         );
       case TaxiOrdersStatus.ForwardingSuccessful:
+      case TaxiOrdersStatus.DroppedOff:
         return Column(
           children: [
             Divider(),
@@ -166,7 +176,7 @@ class _TaxiOpenOrderControllButtonsState
     return await showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (ctx) {
+        builder: (BuildContext ctx) {
           return AlertDialog(
             title: Text(
                 '${_i18n()["TaxiOpenOrderControllButton"]["confirmFwd"]} '),
@@ -180,15 +190,17 @@ class _TaxiOpenOrderControllButtonsState
                     FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
                   ],
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) {
+                  validator: (String? value) {
                     if (num.tryParse(value!) == null) {
                       return '${_i18n()["TaxiOpenOrderControllButton"]["fwdAlertErrorText"]}';
                     } else {
                       return null;
                     }
                   },
-                  onChanged: (value) {
-                    taxiNumber = num.parse(value);
+                  onChanged: (String value) {
+                    if (num.tryParse(value) != null) {
+                      taxiNumber = num.parse(value);
+                    }
                   },
                   decoration: InputDecoration(
                       label: Text(

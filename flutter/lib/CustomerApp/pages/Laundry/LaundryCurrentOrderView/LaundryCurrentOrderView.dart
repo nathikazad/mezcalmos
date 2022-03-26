@@ -35,7 +35,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   final LocationPickerController locationPickerController =
       LocationPickerController();
 
-  LaundryController laundryController = Get.find<LaundryController>();
+  // LaundryController laundryController = Get.find<LaundryController>();
 
   @override
   void initState() {

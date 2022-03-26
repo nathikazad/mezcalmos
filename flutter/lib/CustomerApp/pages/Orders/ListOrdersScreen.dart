@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Orders/components/LaundryOngoingOrde
 import 'package:mezcalmos/CustomerApp/pages/Orders/components/LaundryPastOrderCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/components/RestaurantOngoingOrderCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/components/RestaurantPastOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/components/TaxiOrderOngoingCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/components/TaxiPastOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -17,11 +18,8 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
-import 'components/RestaurantOngoingOrderCard.dart';
-import 'components/TaxiOrderOngoingCard.dart';
-
-final f = new DateFormat('MM.dd.yyyy');
-final currency = new NumberFormat("#,##0.00", "en_US");
+final DateFormat f = new DateFormat('MM.dd.yyyy');
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
 
@@ -129,11 +127,9 @@ class PastOrderList extends StatelessWidget {
               margin: const EdgeInsets.all(8),
               child: Text(
                 (calculateDifference(element.orderTime) == 0)
-                    ? _i18n()["shared"]
-                        ["notification"]["today"]
+                    ? _i18n()["shared"]["notification"]["today"]
                     : (calculateDifference(element.orderTime) == -1)
-                        ? _i18n()["shared"]
-                            ["notification"]["yesterday"]
+                        ? _i18n()["shared"]["notification"]["yesterday"]
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
                 style: txt.headline3,
               ),

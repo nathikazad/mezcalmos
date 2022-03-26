@@ -36,6 +36,7 @@ class MessagingScreen extends StatefulWidget {
 class _MessagingScreenState extends State<MessagingScreen> {
   late final String? orderId;
   late final bool? showViewOrderBtn;
+
   late final String chatId;
 
   ParticipantType recipientType = ParticipantType.Customer;
@@ -46,26 +47,22 @@ class _MessagingScreenState extends State<MessagingScreen> {
   void initState() {
     super.initState();
     print("inside messaginScreen onInitState !");
+
     if (Get.parameters['chatId'] == null) {
       Get.snackbar("Error", "Does not have a valid chatId!");
       Get.back<void>();
     }
     chatId = Get.parameters['chatId']!;
     orderId = Get.parameters['orderId'];
-    mezDbgPrint("=======================>>>>>>>>>>>>>>>>>> orderid $orderId");
-    // default to False.
     showViewOrderBtn = Get.arguments?['showViewOrderBtn'];
-
     if (Get.parameters['recipientId'] != null)
       recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {
-      mezDbgPrint(
-          " PRINTING RECPIENT TYPE =========> ${Get.parameters['recipientType']}");
       recipientType =
           Get.parameters['recipientType']!.toString().toParticipantType();
     }
     controller.clearMessageNotifications(chatId: chatId);
-    mezDbgPrint(Get.parameters);
+    mezDbgPrint("@AYROUT ===> ${Get.parameters} | ORDERID ==> $orderId");
   }
 
   AuthController _authController = Get.find<AuthController>();
@@ -229,9 +226,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
         appBar: AppBar(
           title: (recipientType == ParticipantType.DeliveryAdmin)
               ? Text("Administrador")
-              : Text(
-                  controller.recipient(recipientType: recipientType)?.name ??
-                      "User",
+              : Obx(
+                  () => Text(
+                    controller.recipient(recipientType: recipientType)?.name ??
+                        "User",
+                  ),
                 ),
           actions: <Widget>[
             if (orderId != null && showViewOrderBtn == true)
@@ -322,8 +321,6 @@ class SendMessageBox extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: GestureDetector(
                 onTap: () {
-                  mezDbgPrint(
-                      "--------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDER ID>>>>>>>>>>>>>>>>>>>>> $orderId");
                   final bool msgReady2Send =
                       _textEditingController.text.replaceAll(' ', '').length >
                           0;

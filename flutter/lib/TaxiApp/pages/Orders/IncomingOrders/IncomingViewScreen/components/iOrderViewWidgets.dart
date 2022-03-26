@@ -67,8 +67,7 @@ class IOrderViewWidgets {
     return AnimatedSlider(
         isPositionedCoordinates:
             AnimatedSliderCoordinates(left: 0, right: 0, bottom: 0),
-        animatedSliderController:
-            this.iOrderViewController.animatedSliderController,
+        animatedSliderController: iOrderViewController.animatedSliderController,
         child: SingleChildScrollView(
             padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
             physics: ClampingScrollPhysics(),
@@ -80,17 +79,17 @@ class IOrderViewWidgets {
                     duration: iOrderViewController.counterOffer.value!
                         .validityTimeDifference()
                         .abs(),
-                    onCounterEnd: () async => await iOrderViewController
-                        .removeCounterOfferAndResetState(),
+                    onCounterEnd: () async =>
+                        iOrderViewController.removeCounterOfferAndResetState(),
                   )
                 : CounterOfferPriceSetter(
                     counterOffer: iOrderViewController.counterOffer,
                     controller: iOrderViewController.controller,
                     order: iOrderViewController.order.value!,
-                    onCountOfferSent: (priceOffered) =>
+                    onCountOfferSent: (num priceOffered) =>
                         iOrderViewController.onCountOfferSent(priceOffered),
-                    onPriceChanged: (price) {
-                      mezDbgPrint("New Price offered ===> $price");
+                    onPriceChanged: (int price) {
+                      mezDbgPrint("@szzaaad@ new price ===> $price");
                     },
                   )));
   }

@@ -27,19 +27,17 @@ class IncomingOrdersScreen extends StatefulWidget {
 }
 
 class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
-  IncomingOrdersController controller =
-      Get.put<IncomingOrdersController>(IncomingOrdersController());
+  IncomingOrdersController _controller = Get.find<IncomingOrdersController>();
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -93,13 +91,13 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
               // if isLooking
               if (_taxiAuthController.taxiState?.isLooking == true) {
                 // if there are Orders
-                if (controller.orders.length >= 1) {
+                if (_controller.orders.length >= 1) {
                   return MezcalmosNoGlowScrollConfiguration(ListView.builder(
-                      itemCount: controller.orders.length,
+                      itemCount: _controller.orders.length,
                       itemBuilder: (BuildContext ctx, int i) {
                         return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 2),
-                            child: orderCard(controller.orders[i]));
+                            child: orderCard(_controller.orders[i]));
                       }));
                 } else {
                   // if there are No Orders
