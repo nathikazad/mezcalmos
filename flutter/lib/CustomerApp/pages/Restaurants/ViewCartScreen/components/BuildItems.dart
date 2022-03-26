@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/MyExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ChoosenManyOption.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/ChoosenOneOption.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/ItemInformationCart.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -13,10 +15,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
-import 'ChoosenOneOption.dart';
-import 'ItemInformationCart.dart';
-
-final currency = new NumberFormat("#,##0.00", "en_US");
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["BuildItems"];
@@ -66,7 +65,7 @@ class CartItemsBuilder extends StatelessWidget {
                           Spacer(),
                           IncrementalComponent(
                               minVal: 0,
-                              increment: () {
+                              increment: (_) {
                                 counter.value =
                                     counter.value + cartItem.costPerOne();
                                 print("${cartItem.item.id}");
@@ -101,7 +100,7 @@ class CartItemsBuilder extends StatelessWidget {
                                 }
                               },
                               value: cartItem.quantity,
-                              decrement: () {
+                              decrement: (_) {
                                 if (cartItem.quantity <= 1) {
                                 } else {
                                   counter.value =
