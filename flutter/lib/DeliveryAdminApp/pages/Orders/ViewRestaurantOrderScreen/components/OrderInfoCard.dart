@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/basicCellComponent.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/ChangeStatusButtons.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderItemsCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-import 'OrderItemsCard.dart';
 import 'ChangeStatusButtons.dart';
+import 'OrderItemsCard.dart';
 
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
+        ["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderInfoCard"];
 //Display the order customer and items
 
 class OrderInfoCard extends StatefulWidget {
@@ -20,8 +26,7 @@ class OrderInfoCard extends StatefulWidget {
 }
 
 class _OrderInfoCardState extends State<OrderInfoCard> {
-  OrderController controller = Get.find<OrderController>();
-  LanguageController lang = Get.find<LanguageController>();
+  RestaurantOrderController controller = Get.find<RestaurantOrderController>();
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +63,10 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                         color: Color(0xff5c7fff),
                       ),
                       onPressed: () {
-                        Get.toNamed(getCustomerMessagesRoute(
-                            widget.order.value!.orderId));
+                        Get.toNamed(getMessagesRoute(
+                            chatId: widget.order.value?.orderId ?? '',
+                            orderId: widget.order.value!.orderId,
+                            recipientType: ParticipantType.Customer));
                       },
                     ),
                     Positioned(
@@ -89,7 +96,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
               ),
               if (widget.order.value?.inProcess() ?? false)
                 Row(
-                  children: changebuttonsDepandesOnStatus(widget.order),
+                  children: buildRestOrderButtons(widget.order),
                 )
             ],
           ),
@@ -100,8 +107,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.centerLeft,
-          child: Text(
-              "${lang.strings["customer"]["restaurant"]["checkout"]["orderItems"]}",
+          child: Text("${_i18n()["orderItems"]}",
               style: Theme.of(context).textTheme.bodyText2,
               textAlign: TextAlign.left),
         ),

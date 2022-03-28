@@ -106,16 +106,25 @@
                 }
             }
         },
-
         "DeliveryApp":{
             "folderName": "DeliveryApp",
             "packages": {
                 "stage": {
-                    "name": "com.meztaxi.stagingDriver",
-                    "googe-service-file": "services/staging-android-taxi.google-services.json",
-                    "apple-service-file": "services/staging.GoogleService-Info.plist"
+                    "appName": "MezdeliveryStaging",
+                    "packageName": "com.mezstaging.delivery",
+                    "googe-service-file": "services/stage/android/delivery.json",
+                    "apple-service-file": "services/stage/ios/delivery.plist"
+                },
+                "prod": {
+                    "appName": "Mezdelivery",
+                    "packageName": "com.mezcalmos.delivery",
+                    "googe-service-file": "services/prod/android/delivery.json",
+                    "apple-service-file": "services/prod/ios/delivery.plist"
                 }
-            }
+            },
+            "appPermissions":[
+                "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>"
+            ]
         },
         "TaxiAdminApp": {
             "folderName": "TaxiAdminApp",

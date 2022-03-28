@@ -9,10 +9,12 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ["UserProfileScreen"]["UserProfileWidgets"];
+
 class UserProfileWidgetsClass {
   // Singleton
   final UserProfileController userProfileController;
-  final LanguageController _lang = Get.find<LanguageController>();
   UserProfileWidgetsClass({required this.userProfileController});
 
   /// this holds the Main body parts.
@@ -99,7 +101,7 @@ class UserProfileWidgetsClass {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    _lang.strings['shared']['userInfo']['uploadPic'],
+                    _i18n()['uploadPic'],
                     style: TextStyle(color: Colors.white, fontSize: 11.sp),
                   )
                 ],
@@ -124,7 +126,7 @@ class UserProfileWidgetsClass {
       flex: 1,
       child: Center(
           child: Text(
-        _lang.strings['shared']['userInfo']['title'],
+        _i18n()['title'],
         style: TextStyle(fontSize: 30),
       )),
     );
@@ -162,7 +164,7 @@ class UserProfileWidgetsClass {
   Widget showUserNameOrTextField({required bool isImageBeingUploaded}) {
     if (userProfileController.stateMode.value == UserProfileMode.Show) {
       return Text(
-        Get.find<AuthController>().user!.name!,
+        Get.find<AuthController>().user!.name ?? "No Name",
         style: TextStyle(fontSize: 30),
       );
     } else {
@@ -268,7 +270,7 @@ class UserProfileWidgetsClass {
             // width: Get.width - 100,
             child: Center(
                 child: Text(
-              _lang.strings['shared']['userInfo']['cancel'],
+              _i18n()['cancel'],
               style: TextStyle(fontSize: 12.sp, color: Colors.purple.shade400),
             )),
           ),
@@ -288,7 +290,7 @@ class UserProfileWidgetsClass {
         // width: Get.width - 100,
         child: Center(
             child: Text(
-          _lang.strings['shared']['userInfo']['editInfo'],
+          _i18n()['editInfo'],
           style: TextStyle(color: Colors.white, fontSize: 15.sp),
         )),
       ),
@@ -304,8 +306,7 @@ class UserProfileWidgetsClass {
                   await onSaveChangesClick();
                 }
               : () {
-                  MezSnackbar("Oops",
-                      _lang.strings['shared']['userInfo']['noChangesToApply'],
+                  MezSnackbar("Oops", _i18n()['noChangesToApply'],
                       position: SnackPosition.TOP);
                 },
           child: Container(
@@ -322,7 +323,7 @@ class UserProfileWidgetsClass {
             child: Center(
                 child: !clickedSave
                     ? Text(
-                        _lang.strings['shared']['userInfo']['saveBtn'],
+                        _i18n()['saveBtn'],
                         style: TextStyle(
                             fontSize: 12.sp,
                             color: userProfileController.didUserChangedInfos()

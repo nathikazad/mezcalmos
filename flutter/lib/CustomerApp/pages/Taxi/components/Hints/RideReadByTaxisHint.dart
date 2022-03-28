@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
-class RideReadByTaxisHint extends StatelessWidget {
-  final LanguageController _lang = Get.find<LanguageController>();
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
+ ["Taxi"]["components"]["Hints"]["RideReadByTaxisHint"];
 
+class RideReadByTaxisHint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -14,7 +16,7 @@ class RideReadByTaxisHint extends StatelessWidget {
         ),
         Center(
           child: Text(
-            _lang.strings['customer']['taxiView']['taxiRideCheckedTooltip'],
+            _i18n()['taxiRideCheckedTooltip'],
             textAlign: TextAlign.center,
             softWrap: true,
             maxLines: 10,

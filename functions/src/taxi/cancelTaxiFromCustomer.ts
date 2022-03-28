@@ -3,14 +3,16 @@ import { isSignedIn } from "../shared/helper/authorizer";
 import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
 import * as customerNodes from "../shared/databaseNodes/customer";
-import { push } from "../shared/notification/notifyUser";
-import { OrderType } from "../shared/models/Order";
-import { ServerResponseStatus } from "../shared/models/Generic";
-import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { OrderType } from "../shared/models/Generic/Order";
+import { Language, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { ParticipantType } from "../shared/models/Chat";
-
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { orderUrl, taxiPastOrderUrl } from "../utilities/senders/appRoutes";
+import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
+import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 
 export = functions.https.onCall(async (data, context) => {
   let response = await isSignedIn(context.auth)
@@ -89,6 +91,7 @@ export = functions.https.onCall(async (data, context) => {
         errorCode: "orderNotInProcess"
       }
     }
+
     order.status = TaxiOrderStatus.CancelledByCustomer;
     order.finishRideTime = (new Date()).toISOString();
 
@@ -113,14 +116,18 @@ export = functions.https.onCall(async (data, context) => {
           orderId: orderId,
           notificationAction: NotificationAction.ShowPopUp
         },
-        background: taxiOrderStatusChangeMessages[TaxiOrderStatus.CancelledByCustomer]
+        background: taxiOrderStatusChangeMessages[TaxiOrderStatus.CancelledByCustomer],
+        linkUrl: taxiPastOrderUrl(orderId)
       }
       
-      push(order.driver.id, notification, ParticipantType.Taxi);
-  
+      pushNotification(order.driver.id, notification, ParticipantType.Taxi);
     }
 
-   
+    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
+      let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
+      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
+    })
+
     return {
       status: ServerResponseStatus.Success,
       message: "started"
@@ -137,3 +144,33 @@ export = functions.https.onCall(async (data, context) => {
     rootNodes.openOrders(OrderType.Taxi, orderId).child("lock").remove();
   }
 });
+
+async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
+  orderId: string) {
+
+  let notification: Notification = {
+    foreground: <TaxiOrderStatusChangeNotification>{
+      time: (new Date()).toISOString(),
+      status: TaxiOrderStatus.CancelledByCustomer,
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: OrderType.Taxi,
+      orderId: orderId,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
+    },
+    background: {
+      [Language.ES]: {
+        title: "Pedido de Taxi Cancellado",
+        body: `El cliente cancelo el pedido de taxi`
+      },
+      [Language.EN]: {
+        title: "Taxi Order Cancelled",
+        body: `The customer cancelled the order`
+      }
+    },
+    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Taxi, orderId)
+  }
+
+  for (let adminId in deliveryAdmins) {
+    pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  }
+}

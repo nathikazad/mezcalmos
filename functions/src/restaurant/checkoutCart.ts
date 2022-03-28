@@ -4,24 +4,27 @@
 // const hasura = new hasuraModule.Hasura(keys.hasura)
 
 import * as functions from "firebase-functions";
-import { Cart } from './models/Cart';
-import { constructRestaurantOrder, RestaurantOrder } from './models/RestaurantOrder';
-import { Chat, ParticipantType } from "../shared/models/Chat";
-import { OrderType } from "../shared/models/Order";
-import { Restaurant } from "./models/Restaurant";
-import { UserInfo } from "../shared/models/User";
-import { ServerResponseStatus } from "../shared/models/Generic";
-import * as restaurantNodes from "../shared/databaseNodes/restaurant";
+import { Cart } from '../shared/models/Services/Restaurant/Cart';
+import { constructRestaurantOrder, NewRestaurantOrderNotification, RestaurantOrder } from '../shared/models/Services/Restaurant/RestaurantOrder';
+import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Generic/Chat";
+import { OrderType } from "../shared/models/Generic/Order";
+import { Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
+import { UserInfo } from "../shared/models/Generic/User";
+import { Language, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootNodes from "../shared/databaseNodes/root";
-import { notifyDeliveryAdminsNewOrder } from "../shared/notification/notifyDeliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { buildChatForOrder } from "../shared/helper/chat";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { getRestaurant } from "./restaurantController";
 import { getUserInfo } from "../shared/controllers/rootController";
-import { setChat } from "../shared/controllers/chatController";
+import * as chatController from "../shared/controllers/chatController";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+
+import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 export = functions.https.onCall(async (data, context) => {
 
@@ -51,56 +54,99 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-  let customerInfo: UserInfo = await getUserInfo(customerId);
-  const order: RestaurantOrder = constructRestaurantOrder({
-    cart: cart,
-    customer: customerInfo,
-    restaurant: restaurant.info,
+  let transactionResponse = await customerNodes.lock(customerId).transaction(function (lock) {
+    if (lock == true) {
+      return
+    } else {
+      return true
+    }
   })
 
-  let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
-  restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
-  rootNodes.inProcessOrders(OrderType.Restaurant, orderId).set(order);
-  await customerNodes.cart(customerId).remove();
-
-
-  let chat: Chat = await buildChatForOrder(customerId,
-    {
-      ...customerInfo,
-      particpantType: ParticipantType.Customer
-    },
-    cart.serviceProviderId,
-    {
-      ...restaurant.info,
-      particpantType: ParticipantType.Restaurant
-    },
-    OrderType.Restaurant,
-    orderId);
-
-  deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
-    let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
-    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
-  })
-
-  return {
-    status: ServerResponseStatus.Success,
-    orderId: orderId
-  }
-})
-
-
-async function addDeliveryAdminsToChat(
-  deliveryAdmins: Record<string, DeliveryAdmin>,
-  chat: Chat,
-  orderId: string) {
-  for (var deliveryAdminId in deliveryAdmins) {
-    var userInfo: UserInfo = await getUserInfo(deliveryAdminId);
-    chat.participants[deliveryAdminId] = {
-      ...userInfo,
-      particpantType: ParticipantType.DeliveryAdmin
+  if (!transactionResponse.committed) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: 'Customer lock not available'
     }
   }
 
-  setChat(orderId, chat);
+  try {
+    let customerInfo: UserInfo = await getUserInfo(customerId);
+    const order: RestaurantOrder = constructRestaurantOrder({
+      cart: cart,
+      customer: customerInfo,
+      restaurant: restaurant.info,
+    })
+
+    let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
+    restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
+    rootNodes.inProcessOrders(OrderType.Restaurant, orderId).set(order);
+    await customerNodes.cart(customerId).remove();
+
+
+    let chat: Chat = await buildChatForOrder(
+      orderId,
+      customerId,
+      {
+        ...customerInfo,
+        particpantType: ParticipantType.Customer
+      },
+      cart.serviceProviderId,
+      {
+        ...restaurant.info,
+        particpantType: ParticipantType.Restaurant
+      },
+      OrderType.Restaurant);
+
+    await chatController.setChat(orderId, chat);
+
+    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
+      let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
+      addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
+      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
+    })
+
+    return {
+      status: ServerResponseStatus.Success,
+      orderId: orderId
+    }
+  } catch (e) {
+    functions.logger.error(e);
+    functions.logger.error(`Order request error ${customerId}`);
+    return {
+      status: ServerResponseStatus.Error,
+      orderId: "Order request error"
+    }
+  } finally {
+    await customerNodes.lock(customerId).remove();
+  }
+})
+
+async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
+  orderId: string, restaurant: UserInfo) {
+
+  let notification: Notification = {
+    foreground: <NewRestaurantOrderNotification>{
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.NewOrder,
+      orderType: OrderType.Restaurant,
+      orderId: orderId,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
+      restaurant: restaurant
+    },
+    background: {
+      [Language.ES]: {
+        title: "Nueva Pedido",
+        body: `Hay una nueva orden de alimento`
+      },
+      [Language.EN]: {
+        title: "New Order",
+        body: `There is a new restaurant order`
+      }
+    },
+    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Restaurant, orderId)
+  }
+
+  for (let adminId in deliveryAdmins) {
+    pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  }
 }

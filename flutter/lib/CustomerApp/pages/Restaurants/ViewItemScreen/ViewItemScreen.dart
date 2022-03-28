@@ -4,22 +4,27 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantsInfoController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/BottomBarItemViewScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ChooseOneCheckBox.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ChoosenManyCheckBox.dart';
+import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TextFieldComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
-import 'components/BottomBarItemViewScreen.dart';
-import 'components/ChooseOneCheckBox.dart';
-import 'components/ChoosenManyCheckBox.dart';
-
-final currency = new NumberFormat("#,##0.00", "en_US");
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
+// ignore_for_file: constant_identifier_names
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Restaurants"]["ViewItemScreen"]["ViewItemScreen"];
 
 class ViewItemScreen extends StatefulWidget {
   ViewItemScreen({Key? key, required this.viewItemScreenMode})
@@ -31,9 +36,9 @@ class ViewItemScreen extends StatefulWidget {
 }
 
 class _ViewItemScreenState extends State<ViewItemScreen> {
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
   AuthController auth = Get.find<AuthController>();
-  Rxn<CartItem> cartItem = Rxn();
+  Rxn<CartItem> cartItem = Rxn<CartItem>();
   RestaurantController restaurantCartController =
       Get.find<RestaurantController>();
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
@@ -85,7 +90,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     return Obx(
       () => Scaffold(
         appBar: CustomerAppBar(
-          title: currentRestaurant != null ? "${currentRestaurant!.name}" : "",
+          title: currentRestaurant != null
+              ? "${cartItem.value!.item.name[userLanguage]}"
+              : "",
           autoBack: true,
         ),
         body: (cartItem.value?.item == null)
@@ -154,7 +161,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Text(
-                        "${cartItem.value!.item.description![lang.userLanguageKey]!.inCaps}",
+                        "${cartItem.value!.item.description![userLanguage]!.inCaps}",
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -176,9 +183,10 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                       cartItem: cartItem),
                   TextFieldComponent(
                     textController: _noteTextEdittingController,
-                    hint: lang.strings["customer"]["restaurant"]["menu"]
-                        ["notes"],
+                    hint: _i18n()["notes"],
                     onChangeCallback: (String value) {
+                      mezDbgPrint(
+                          "@IOIOIO@ | ${cartItem.value} notes : $value");
                       cartItem.value?.notes = value;
                     },
                   ),
@@ -194,7 +202,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 schedule: currentRestaurant?.schedule),
             cartItem: cartItem,
             mode: widget.viewItemScreenMode,
-            currentRestaurantId: currentRestaurant?.id,
+            currentRestaurantId: currentRestaurant?.info.id,
           )
         ],
       ),
@@ -231,11 +239,4 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       return true;
     }
   }
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
 }

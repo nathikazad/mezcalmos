@@ -1,6 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'dart:async';
@@ -12,13 +12,12 @@ typedef shouldSaveNotification = bool Function(Notification notification);
 class ForegroundNotificationsController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
 
-  RxList<Notification> notifications = RxList();
-  LanguageController _lang = Get.find<LanguageController>();
+  RxList<Notification> notifications = RxList<Notification>();
 
-  StreamSubscription? _notificationNodeAddListener;
-  StreamSubscription? _notificationNodeRemoveListener;
+  StreamSubscription<Event>? _notificationNodeAddListener;
+  StreamSubscription<Event>? _notificationNodeRemoveListener;
   StreamController<Notification> _displayNotificationsStreamController =
-      StreamController.broadcast();
+      StreamController<Notification>.broadcast();
   late String _notificationNode;
 
   Stream<Notification> get displayNotificationsStream =>
@@ -38,19 +37,20 @@ class ForegroundNotificationsController extends GetxController {
     // mezDbgPrint(
     //     "ForegroundNotificationsController:startListeningForNotifications");
     // mezDbgPrint(notificationNode);
-    this._notificationNode = notificationNode;
+    _notificationNode = notificationNode;
     _notificationNodeAddListener?.cancel();
     _notificationNodeAddListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(notificationNode)
         .onChildAdded
-        .listen((event) {
+        .listen((Event event) {
       // mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
       // mezDbgPrint(event.snapshot.value);
       try {
-        Notification _notification =
+        final Notification _notification =
             notificationHandler(event.snapshot.key!, event.snapshot.value);
-        bool alreadyOnLinkPage = (Get.currentRoute == _notification.linkUrl);
+        final bool alreadyOnLinkPage =
+            (Get.currentRoute == _notification.linkUrl);
 
         switch (_notification.notificationAction) {
           case NotificationAction.ShowPopUp:
@@ -84,11 +84,11 @@ class ForegroundNotificationsController extends GetxController {
         .reference()
         .child(notificationNode)
         .onChildRemoved
-        .listen((event) {
-      Notification _notifaction =
+        .listen((Event event) {
+      final Notification _notifaction =
           notificationHandler(event.snapshot.key!, event.snapshot.value);
-      notifications.value = notifications.value
-          .where((element) => element.id != _notifaction.id)
+      notifications.value = notifications
+          .where((Notification element) => element.id != _notifaction.id)
           .toList();
     });
   }
@@ -101,16 +101,16 @@ class ForegroundNotificationsController extends GetxController {
   }
 
   bool hasNewNotifications() {
-    return notifications.value.isNotEmpty;
+    return notifications.isNotEmpty;
   }
 
   void clearAllMessageNotification() {
     mezDbgPrint(
         "fbNotificationsController: Clearing All Messages Notifications");
     notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage)
-        .forEach((element) {
+        .forEach((Notification element) {
       removeNotification(element.id);
     });
   }

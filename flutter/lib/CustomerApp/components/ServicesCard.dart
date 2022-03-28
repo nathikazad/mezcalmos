@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:get/get.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustomerWrapper'];
 
 class ServicesCard extends StatelessWidget {
   ServicesCard(
@@ -19,7 +22,8 @@ class ServicesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    LanguageController lang = Get.find<LanguageController>();
+    dynamic i18n = Get.find<LanguageController>().strings["CustomerApp"]
+        ["components"]["ServicesCard"];
     return Card(
       margin: EdgeInsets.all(5),
       color: subtitle != null ? Colors.white : Colors.grey.shade300,
@@ -54,7 +58,7 @@ class ServicesCard extends StatelessWidget {
                       child: subtitle != null
                           ? Text("${subtitle}", style: textTheme.subtitle1)
                           : Text(
-                              "${lang.strings['customer']['home']['laundry']["subtitle"]}",
+                              "${i18n["comingSoon"]}",
                               style: textTheme.subtitle1,
                             ),
                     )

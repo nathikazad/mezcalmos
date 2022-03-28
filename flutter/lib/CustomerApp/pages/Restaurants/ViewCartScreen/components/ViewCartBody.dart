@@ -2,32 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/BuildCart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/BuildItems.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/DropDownListCartView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/OrderSummaryCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TextFieldComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildCart.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildItems.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 
-final currency = new NumberFormat("#,##0.00", "en_US");
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["ViewCartBody"];
 
 class ViewCartBody extends StatefulWidget {
-  final OnDropDownNewValue? onValueChangeCallback;
+  final void Function({Location? location})? setLocationCallBack;
+  final TextEditingController notesTextController;
 
-  ViewCartBody({Key? key, this.onValueChangeCallback}) : super(key: key);
+  const ViewCartBody({
+    required this.notesTextController,
+    Key? key,
+    this.setLocationCallBack,
+  }) : super(key: key);
 
   @override
   _ViewCartBodyState createState() => _ViewCartBodyState();
 }
 
 class _ViewCartBodyState extends State<ViewCartBody> {
-  LanguageController lang = Get.find<LanguageController>();
   RestaurantController controller = Get.find<RestaurantController>();
-  TextEditingController textcontoller = new TextEditingController();
 
   @override
   void dispose() {
-    textcontoller.dispose();
     super.dispose();
   }
 
@@ -53,7 +59,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
               height: 10,
             ),
             Obx(() => OrderSummaryCard(
-                  onValueChangeCallback: widget.onValueChangeCallback,
+                  setLocationCallBack: widget.setLocationCallBack,
                   deliveryCost:
                       controller.cart.value.shippingCost.toStringAsFixed(0),
                   orderCost:
@@ -67,8 +73,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.centerLeft,
-              child: Text(
-                  "${lang.strings['customer']['restaurant']['menu']['notes']}",
+              child: Text("${_i18n()['notes']}",
                   style: const TextStyle(
                       color: const Color(0xff000f1c),
                       fontFamily: "psb",
@@ -80,8 +85,8 @@ class _ViewCartBodyState extends State<ViewCartBody> {
               height: 15,
             ),
             TextFieldComponent(
-              textController: textcontoller,
-              hint: lang.strings["customer"]["restaurant"]["menu"]["notes"],
+              textController: widget.notesTextController,
+              hint: _i18n()["notes"],
             ),
             SizedBox(
               height: 25,

@@ -8,6 +8,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -18,7 +19,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
+import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -28,8 +31,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:package_info/package_info.dart';
-import 'package:sizer/sizer.dart';
-// import 'package:sizer/sizer.dart';import 'package:sizer/sizer.dart';
+import 'package:sizer/sizer.dart' as Sizer;
 
 final ThemeData _defaultAppTheme = ThemeData(
     primaryColor: Colors.white,
@@ -47,7 +49,7 @@ class StartingPoint extends StatefulWidget {
   ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
   //  Sideminu
-  StartingPoint(
+  const StartingPoint(
       {required this.appType,
       this.appTheme = null,
       required this.signInCallback,
@@ -75,14 +77,18 @@ class _StartingPointState extends State<StartingPoint> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    SystemChrome.setPreferredOrientations(<DeviceOrientation>[
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
+    ]);
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     if (_error) {
       MezSnackbar("Error", "Server connection failed !");
-      return Sizer(
-          builder: (context, orientation, deviceType) => GetMaterialApp(
+      return Sizer.Sizer(
+          builder: (BuildContext context, Orientation orientation,
+                  Sizer.DeviceType deviceType) =>
+              GetMaterialApp(
                 debugShowCheckedModeBanner: false,
                 home: Scaffold(
                   body: Center(
@@ -95,26 +101,31 @@ class _StartingPointState extends State<StartingPoint> {
               ));
     }
     if (!_initialized) {
-      return Sizer(
-          builder: (context, orientation, deviceType) => SplashScreen());
+      return Sizer.Sizer(
+          builder: (BuildContext context, Orientation orientation,
+                  Sizer.DeviceType deviceType) =>
+              SplashScreen());
     } else {
-      mezDbgPrint("====> PreviewMode ===> ${GetStorage().read('previewMode')}");
-      return Sizer(
-          builder: (context, orientation, deviceType) => mainApp(
-              appType: widget.appType,
-              appTheme: widget.appThemeGetter,
-              routes: widget.routes));
+      mezDbgPrint(
+          "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}");
+      return Sizer.Sizer(
+          builder: (BuildContext context, Orientation orientation,
+                  Sizer.DeviceType deviceType) =>
+              mainApp(
+                  appType: widget.appType,
+                  appTheme: widget.appThemeGetter,
+                  routes: widget.routes));
     }
   }
 
-  void initializeSetup() async {
+  Future<void> initializeSetup() async {
     try {
       await setupFirebase();
       mezDbgPrint("Done : setupFirebase");
       await setGlobalVariables();
       mezDbgPrint("Done : setGlobalVariables");
 
-      putControllers();
+      await putControllers();
       mezDbgPrint("Done : putControllers");
 
       await waitForInitialization();
@@ -142,7 +153,7 @@ class _StartingPointState extends State<StartingPoint> {
     mezDbgPrint('mode  -> $_launchMode');
     mezDbgPrint('host  -> $_host');
 
-    FirebaseApp _app = await Firebase.initializeApp();
+    final FirebaseApp _app = await Firebase.initializeApp();
     mezDbgPrint("[+] App Initialized under Name ${_app.name} .");
     late FirebaseDatabase firebaseDb;
 
@@ -183,26 +194,32 @@ class _StartingPointState extends State<StartingPoint> {
           "previewModeString  -> ${String.fromEnvironment('PREVIEW', defaultValue: 'NONE')}");
 
       // Get the VersionNumber
-      PackageInfo pInfos = await PackageInfo.fromPlatform();
+      final PackageInfo pInfos = await PackageInfo.fromPlatform();
       mezDbgPrint("[ GET STORAGE ] version number ${pInfos.version}");
-      await GetStorage().write(getxVersion, pInfos.version);
+      await GetStorage().write(getxPackageName, pInfos.packageName);
+      await GetStorage().write(getxAppVersion, pInfos.version);
       await GetStorage().write(getxGmapBottomPaddingKey,
           Platform.isAndroid ? 38.0.sp : Get.height / 35);
     } else
       mezDbgPrint("[ GET STORAGE ] FAILED TO INITIALIZE !");
   }
 
-  void putControllers() {
+  Future<void> putControllers() async {
+    await Get.put<LanguageController>(LanguageController())
+        .isLamgInitialized
+        .stream
+        .first;
     Get.put<AuthController>(
         AuthController(widget.signInCallback, widget.signOutCallback),
         permanent: true);
-    mezDbgPrint("Putting Auth Controller");
     Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
         permanent: true);
     Get.put<SettingsController>(
         SettingsController(
             widget.appType, widget.sideMenuItems, widget.locationOn),
         permanent: true);
+
+    // Get.lazyPut(() => AppVersionController(), fenix: true);
   }
 
   Future<void> waitForInitialization() async {
@@ -212,7 +229,7 @@ class _StartingPointState extends State<StartingPoint> {
 
   void hookOnFlutterErrorsStdout() {
     FlutterError.onError = (FlutterErrorDetails details) {
-      for (var item in details.toString().split('\n')) {
+      for (String item in details.toString().split('\n')) {
         mezDbgPrint(item);
       }
     };
@@ -239,7 +256,7 @@ class _StartingPointState extends State<StartingPoint> {
       required List<GetPage<dynamic>> routes}) {
     Future<void> _initializeConfig() async {
       // We will use this to Initialize anything at MaterialApp root init of app
-      BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
+      final BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
           ImageConfiguration(), 'assets/images/shared/purpleCircle.png');
 
       await GetStorage().write('markerCircle', desc);
@@ -247,19 +264,22 @@ class _StartingPointState extends State<StartingPoint> {
       print("[+] InitializedConfig -- the ${appType.toShortString()} !");
     }
 
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      onInit: () async => await _initializeConfig(),
-      title: appType.toShortString(),
-      theme: appTheme,
-      color: Colors.white,
-      enableLog: true,
-      getPages: routes,
-      initialRoute: kWrapperRoute,
-      // builder: (ctx, widget) {
-      //   responsiveSize(context);
-      //   return widget!;
-      // },
+    final bool? isPreviewModeEnabled = GetStorage().read<bool?>('previewMode');
+
+    return DevicePreview(
+      enabled: isPreviewModeEnabled == true ? true : false,
+      builder: (BuildContext context) => GetMaterialApp(
+        useInheritedMediaQuery: true,
+        builder: isPreviewModeEnabled == true ? DevicePreview.appBuilder : null,
+        debugShowCheckedModeBanner: false,
+        onInit: () async => _initializeConfig(),
+        title: appType.toShortString(),
+        theme: appTheme,
+        color: Colors.white,
+        enableLog: true,
+        getPages: routes,
+        initialRoute: kWrapperRoute,
+      ),
     );
   }
 }

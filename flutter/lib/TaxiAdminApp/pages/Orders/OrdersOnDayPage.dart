@@ -9,10 +9,12 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/TaxiAdminApp/controller/ordersController.dart';
 import 'package:mezcalmos/TaxiAdminApp/pages/Notifications/NotifCountOnDayByDriverPage.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiAdminApp"]
+    ["pages"]["Orders"]["OrdersOnDayPage"];
+
 class OrdersOnDayPage extends GetView<OrderStatsController> {
   var f = new DateFormat('dd/MM/yy');
   var selectedtime = DateTime.now().obs;
-  LanguageController lang = Get.find<LanguageController>();
   StreamBuilder<List<dynamic>> getOrdersOnDay() {
     return StreamBuilder<RxList<dynamic>>(
         stream: controller.getOrdersOnDay(
@@ -33,7 +35,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                     Expanded(
                       child: InkWell(
                         child: Text(
-                          lang.strings["admin"]["orders"]["orders"],
+                          _i18n()["orders"],
                           style: TextStyle(
                               fontSize: 29, fontWeight: FontWeight.bold),
                         ),
@@ -129,7 +131,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          lang.strings["admin"]["orders"]["time"],
+                          _i18n()["time"],
                           style: adminAppTextStyle1,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
@@ -140,7 +142,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          lang.strings["admin"]["orders"]["driver"],
+                          _i18n()["driver"],
                           style: adminAppTextStyle1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
@@ -151,7 +153,7 @@ class OrdersOnDayPage extends GetView<OrderStatsController> {
                       flex: 2,
                       child: Container(
                         child: Text(
-                          lang.strings["admin"]["orders"]["cust"],
+                          _i18n()["cust"],
                           style: adminAppTextStyle1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,

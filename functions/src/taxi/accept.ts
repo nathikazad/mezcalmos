@@ -5,18 +5,19 @@ import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import { isSignedIn } from "../shared/helper/authorizer";
-import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic";
-import { OrderType } from "../shared/models/Order";
-import { UserInfo } from "../shared/models/User";
-import { Taxi } from "../shared/models/taxi/Taxi";
-import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
-import { buildChatForOrder } from "../shared/helper/chat";
-import { ParticipantType } from "../shared/models/Chat";
-import { push } from "../shared/notification/notifyUser";
+import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { OrderType } from "../shared/models/Generic/Order";
+import { UserInfo } from "../shared/models/Generic/User";
+import { Taxi } from "../shared/models/Drivers/Taxi";
+import { CounterOfferStatus, TaxiInfo, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
+import * as chatController from "../shared/controllers/chatController";
+import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Generic/Chat";
+import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { getUserInfo } from "../shared/controllers/rootController";
 import { getTaxi } from "../shared/controllers/taxiController";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)
@@ -29,7 +30,7 @@ export = functions.https.onCall(async (data, context) => {
       errorMessage: "Required orderId"
     }
   }
-  let taxiId: string = context.auth!.uid;
+  let taxiId: string = data.counterOfferDriverId ?? context.auth!.uid;
   let orderId: string = data.orderId;
   let taxi: Taxi = (await getTaxi(taxiId));
   console.log(`Got taxi ${taxi}`);
@@ -93,9 +94,22 @@ export = functions.https.onCall(async (data, context) => {
       };
     }
 
+    if (data.counterOfferDriverId) {
+      let orderFromCustomerNode : TaxiOrder = (await customerNodes.inProcessOrders(order.customer.id, orderId).get()).val();
+
+      if (!orderFromCustomerNode.counterOffers || !orderFromCustomerNode.counterOffers![data.counterOfferDriverId]
+        || orderFromCustomerNode.counterOffers![data.counterOfferDriverId].status != CounterOfferStatus.Accepted) {
+        return {
+          status: ServerResponseStatus.Error,
+          errorMessage: `No valid counter offer from driver ${data.counterOfferDriverId} found`
+        }
+      }
+      order.cost = orderFromCustomerNode.counterOffers![data.counterOfferDriverId].price
+    }
+
     order.status = TaxiOrderStatus.OnTheWay;
     order.acceptRideTime = (new Date()).toISOString()
-    order.driver = {
+    order.driver = <TaxiInfo>{
       id: taxiId,
       name: driverInfo.name,
       image: driverInfo.image,
@@ -104,7 +118,7 @@ export = functions.https.onCall(async (data, context) => {
     }
 
     await taxiNodes.inProcessOrders(taxiId, orderId).set(order);
-    taxiNodes.currentOrderIdNode(taxiId).set(orderId);
+    await taxiNodes.currentOrderIdNode(taxiId).set(orderId);
 
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).set(order);
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
@@ -112,7 +126,9 @@ export = functions.https.onCall(async (data, context) => {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
 
 
-    await buildChatForOrder(
+
+    let chat: Chat = await buildChatForOrder(
+      orderId,
       order.customer.id,
       {
         ...order.customer,
@@ -123,23 +139,30 @@ export = functions.https.onCall(async (data, context) => {
         ...driverInfo,
         particpantType: ParticipantType.Taxi
       },
-      OrderType.Taxi,
-      orderId);
+        OrderType.Restaurant);
 
+    await chatController.setChat(orderId, chat);
 
-    let notification: Notification = {
-      foreground: <TaxiOrderStatusChangeNotification>{
-        status: TaxiOrderStatus.OnTheWay,
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.OrderStatusChange,
-        orderType: OrderType.Taxi,
-        notificationAction: NotificationAction.ShowSnackBarAlways,
-        orderId: orderId
-      },
-      background: taxiOrderStatusChangeMessages[TaxiOrderStatus.OnTheWay]
+    // Notify customer only if driver is the one initiating the accept
+    // not notifying driver because driver will get response within 30 
+    // seconds after sending counter offer, can be assumed his phone
+    // will be on.
+    if (!data.counterOfferDriverId) {
+      let notification: Notification = {
+        foreground: <TaxiOrderStatusChangeNotification>{
+          status: TaxiOrderStatus.OnTheWay,
+          time: (new Date()).toISOString(),
+          notificationType: NotificationType.OrderStatusChange,
+          orderType: OrderType.Taxi,
+          notificationAction: NotificationAction.ShowSnackBarAlways,
+          orderId: orderId
+        },
+        background: taxiOrderStatusChangeMessages[TaxiOrderStatus.OnTheWay],
+        linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, orderId)
+      }
+
+      pushNotification(order.customer.id!, notification);
     }
-
-    push(order.customer.id!, notification);
 
     return {
       status: ServerResponseStatus.Success,

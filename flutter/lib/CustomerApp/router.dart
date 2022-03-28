@@ -1,15 +1,17 @@
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
-import 'package:mezcalmos/CustomerApp/pages/ListOrdersScreen/ListOrdersScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/LaundryCurrentOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreem/ListRestaurantsScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/PickLocationScreen/PickLocationView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/ViewCartScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/SavedLocationView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrderScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
@@ -22,11 +24,14 @@ const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
 const String kViewRestaurantItemRoute = '/items/:restaurantId/:itemId';
 const String kRestaurantOrderRoute = '/restaurantOrders/:orderId';
-const String kTaxiOrderRoute = '/taxiOrders/:orderId';
 const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
+const String kTaxiOrderRoute = '/taxiOrders/:orderId';
+const String kLaundryOrderRequest = '/laundryOrderRequest';
+const String kLaundryCurrentOrder = '/laundryOrders/:orderId';
 const String kPickLocationRoute = '/pickLocationFromMap/addLocation';
 const String kPickLocationEditRoute = '/pickLocationFromMap/editLocation';
+const String kPickLocationNotAuth = '/pickLocationFromMap/addLocationNoAuth';
 const String kSavedLocations = '/savedLocations';
 
 String getRestaurantRoute(String restaurantId) {
@@ -51,18 +56,33 @@ String getTaxiOrderRoute(String orderId) {
   return kTaxiOrderRoute.replaceFirst(":orderId", orderId);
 }
 
+String getLaundyOrderRoute(String orderId) {
+  return kLaundryCurrentOrder.replaceFirst(":orderId", orderId);
+}
+
 String getRestaurantMessagesRoute(
   String orderId,
 ) {
-  return kMessagesRoute.replaceFirst(":orderId", orderId) +
-      "?recipientType=${ParticipantType.Restaurant.toFirebaseFormattedString()}";
+  return getMessagesRoute(
+      chatId: orderId,
+      recipientType: ParticipantType.Restaurant,
+      orderId: orderId);
 }
 
 String getTaxiMessagesRoute(
   String orderId,
 ) {
-  return kMessagesRoute.replaceFirst(":orderId", orderId) +
-      "?recipientType=${ParticipantType.Taxi.toFirebaseFormattedString()}";
+  return getMessagesRoute(
+      chatId: orderId, recipientType: ParticipantType.Taxi, orderId: orderId);
+}
+
+String getLaundryMessagesRoute(
+  String orderId,
+) {
+  return getMessagesRoute(
+      chatId: orderId,
+      recipientType: ParticipantType.Laundry,
+      orderId: orderId);
 }
 
 // GetX based Router (For navigating)
@@ -90,6 +110,12 @@ class XRouter {
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
         GetPage(
+            name: kCartItemRoute,
+            page: () => ViewItemScreen(
+                viewItemScreenMode: ViewItemScreenMode.EditItemMode),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
+        GetPage(
             name: kCartRoute,
             page: () => ViewCartScreen(),
             transitionDuration: Duration(milliseconds: 500),
@@ -103,6 +129,9 @@ class XRouter {
         GetPage(
             name: kPickLocationEditRoute,
             page: () => PickLocationView(PickLocationMode.EditLocation)),
+        GetPage(
+            name: kPickLocationNotAuth,
+            page: () => PickLocationView(PickLocationMode.NonLoggedInPick)),
         // Taxis Routes
         GetPage(
             name: kTaxiRequestRoute,
@@ -114,7 +143,19 @@ class XRouter {
             page: () => ViewTaxiOrderScreen(),
             transitionDuration: Duration(milliseconds: 500),
             transition: Transition.rightToLeft),
-        GetPage(name: kSavedLocations, page: () => SavedLocationView())
+        GetPage(name: kSavedLocations, page: () => SavedLocationView()),
+        // Laundry routes
+        GetPage(
+            name: kLaundryOrderRequest,
+            page: () => LaundryOrderRequestView(),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
+
+        GetPage(
+            name: kLaundryCurrentOrder,
+            page: () => LaundryCurrentOrderView(),
+            transitionDuration: Duration(milliseconds: 500),
+            transition: Transition.rightToLeft),
       ] +
       SharedRouter.sharedRoutes;
 }

@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:rive/rive.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+        ["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
 
 class OrderStatusCard extends StatelessWidget {
   const OrderStatusCard({
@@ -20,7 +25,6 @@ class OrderStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -31,77 +35,97 @@ class OrderStatusCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                getOrderWidget(ordersStates),
-                Flexible(
-                  flex: 8,
-                  fit: FlexFit.tight,
-                  child: Text(
-                    getOrderStatus(ordersStates),
-                    style: txt.headline3,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
+                OrderStatusImage(ordersStates),
+                _orderStatusText(context),
                 Spacer(),
-                Material(
-                  color: Theme.of(context).primaryColorLight,
-                  shape: CircleBorder(),
-                  child: InkWell(
-                    onTap: () {
-                      Get.toNamed(getRestaurantMessagesRoute(order.orderId));
-                    },
-                    customBorder: CircleBorder(),
-                    child: Stack(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(12),
-                          child: Icon(
-                            Icons.textsms,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Obx(
-                          () => Get.find<OrderController>()
-                                  .orderHaveNewMessageNotifications(
-                                      order.orderId)
-                              ? Positioned(
-                                  left: 27,
-                                  top: 10,
-                                  child: Container(
-                                    width: 13,
-                                    height: 13,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            color: const Color(0xfff6efff),
-                                            width: 2),
-                                        color: const Color(0xffff0000)),
-                                  ),
-                                )
-                              : Container(),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                _orderMessageButton(context),
               ],
             ),
           ),
         ),
-        Container(
-            margin: EdgeInsets.all(5),
-            alignment: Alignment.center,
-            child: Text(
-              getOrderHelperText(ordersStates),
-              textAlign: TextAlign.center,
-            ))
+        _orderHelperText(context)
       ],
+    );
+  }
+
+  Widget _orderStatusText(BuildContext context) {
+    return Flexible(
+      flex: 8,
+      fit: FlexFit.tight,
+      child: Text(
+        getOrderStatus(ordersStates),
+        style: Theme.of(context).textTheme.headline3,
+        textAlign: TextAlign.center,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+
+  Widget _orderHelperText(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.all(5),
+        alignment: Alignment.center,
+        child: Text(
+          getOrderHelperText(ordersStates),
+          textAlign: TextAlign.center,
+        ));
+  }
+
+  Widget _orderMessageButton(BuildContext context) {
+    return Material(
+      color: Theme.of(context).primaryColorLight,
+      shape: CircleBorder(),
+      child: InkWell(
+        onTap: () {
+          Get.toNamed(getMessagesRoute(
+              chatId: order.orderId,
+              orderId: order.orderId,
+              recipientType: ParticipantType.Restaurant));
+        },
+        customBorder: CircleBorder(),
+        child: Stack(
+          children: [
+            _messageIcon(context),
+            Obx(
+              () => Get.find<OrderController>()
+                      .orderHaveNewMessageNotifications(order.orderId)
+                  ? _newMessageRedDot(context)
+                  : Container(),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
 
-Widget getOrderWidget(RestaurantOrderStatus status) {
+Widget _messageIcon(BuildContext context) {
+  return Container(
+    margin: EdgeInsets.all(12),
+    child: Icon(
+      Icons.textsms,
+      color: Colors.white,
+    ),
+  );
+}
+
+Widget _newMessageRedDot(BuildContext context) {
+  return Positioned(
+    left: 0,
+    top: 0,
+    child: Container(
+      width: 13,
+      height: 13,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: const Color(0xfff6efff), width: 2),
+          color: const Color(0xffff0000)),
+    ),
+  );
+}
+
+Widget OrderStatusImage(RestaurantOrderStatus status) {
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
       return Padding(
@@ -173,22 +197,21 @@ Widget getOrderWidget(RestaurantOrderStatus status) {
 }
 
 String getOrderStatus(RestaurantOrderStatus status) {
-  LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["canceledByAdmin"]}';
+      return '${_i18n()["canceledByAdmin"]}';
     case RestaurantOrderStatus.CancelledByCustomer:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["canceledByCustomer"]}';
+      return '${_i18n()["canceledByCustomer"]}';
     case RestaurantOrderStatus.OrderReceieved:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["recievied"]}';
+      return '${_i18n()["received"]}';
     case RestaurantOrderStatus.PreparingOrder:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["preparing"]}';
+      return '${_i18n()["preparing"]}';
     case RestaurantOrderStatus.OnTheWay:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["onTheWay"]}';
+      return '${_i18n()["onTheWay"]}';
     case RestaurantOrderStatus.ReadyForPickup:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["readyForPickUp"]}';
+      return '${_i18n()["readyForPickUp"]}';
     case RestaurantOrderStatus.Delivered:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["delivered"]}';
+      return '${_i18n()["delivered"]}';
 
     default:
       return 'Unknown status';
@@ -196,22 +219,21 @@ String getOrderStatus(RestaurantOrderStatus status) {
 }
 
 String getOrderHelperText(RestaurantOrderStatus status) {
-  LanguageController lang = Get.find<LanguageController>();
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["canceledByAdmin"]}';
+      return '${_i18n()["helperText-canceledByAdmin"]}';
     case RestaurantOrderStatus.CancelledByCustomer:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["canceledByCustomer"]}';
+      return '${_i18n()["helperText-canceledByCustomer"]}';
     case RestaurantOrderStatus.OrderReceieved:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["recievied"]}';
+      return '${_i18n()["helperText-received"]}';
     case RestaurantOrderStatus.PreparingOrder:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["preparing"]}';
+      return '${_i18n()["helperText-preparing"]}';
     case RestaurantOrderStatus.OnTheWay:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["onTheWay"]}';
+      return '${_i18n()["helperText-onTheWay"]}';
     case RestaurantOrderStatus.ReadyForPickup:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["readyForPickUp"]}';
+      return '${_i18n()["helperText-readyForPickUp"]}';
     case RestaurantOrderStatus.Delivered:
-      return '${lang.strings["customer"]["restaurant"]["orderStatus"]["helperText"]["delivered"]}';
+      return '${_i18n()["helperText-delivered"]}';
 
     default:
       return 'Unknown status';

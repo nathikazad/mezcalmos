@@ -1,41 +1,34 @@
 import 'dart:convert';
+
+import 'package:collection/collection.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
-import 'package:collection/collection.dart';
+import 'package:mezcalmos/Shared/models/Services/Service.dart';
 
-class Restaurant {
-  String id;
+class Restaurant extends Service {
   Map<LanguageType, String> description;
-  String name;
-  String photo;
-  String? location;
-  Schedule? schedule;
-  RestaurantState restaurantState;
   List<Item> items = [];
 
   Restaurant(
-      {required this.id,
+      {required ServiceUserInfo userInfo,
       required this.description,
-      required this.name,
-      required this.photo,
-      this.location,
-      this.schedule,
-      required this.restaurantState});
+      Schedule? schedule,
+      required ServiceState restaurantState})
+      : super(info: userInfo, schedule: schedule, state: restaurantState);
 
   factory Restaurant.fromRestaurantData(
       {required String restaurantId, required dynamic restaurantData}) {
     // List<Object?> availableLanguages =
     //     restaurantData["details"]["languages"] as List<Object?>;
 
-    RestaurantState restaurantState = RestaurantState(
+    ServiceState restaurantState = ServiceState(
         restaurantData["state"]?["authorizationStatus"]
                 ?.toString()
                 .toAuthorizationStatus() ??
             AuthorizationStatus.Unauthorized,
         restaurantData["state"]?["available"] ?? false);
-    String name = restaurantData["info"]["name"];
-    String photo = restaurantData["info"]["image"];
     Map<LanguageType, String> description =
         convertToLanguageMap(restaurantData["details"]["description"]);
     //restaurantData["details"]["description"].toLanguageMap();
@@ -44,10 +37,8 @@ class Restaurant {
         : null;
 
     Restaurant restaurant = Restaurant(
-        id: restaurantId,
+        userInfo: ServiceUserInfo.fromData(restaurantData["info"]),
         description: description,
-        name: name,
-        photo: photo,
         schedule: schedule,
         restaurantState: restaurantState);
     restaurantData["menu"].forEach((dynamic itemId, dynamic itemData) {
@@ -65,26 +56,41 @@ class Restaurant {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      "id": id,
       "description": description,
-      "name": name,
+      "info": info.toJson(),
       "items": jsonEncode(items),
-      "restaurantState": restaurantState.toJson()
+      "restaurantState": state.toJson()
     };
   }
-}
 
-class RestaurantState {
-  AuthorizationStatus authorizationStatus = AuthorizationStatus.Unauthorized;
-  bool available = false;
-  RestaurantState(this.authorizationStatus, this.available);
-  Map<String, dynamic> toJson() => {
-        "authorizationStatus": authorizationStatus.toFirebaseFormatString(),
-        "available": available
-      };
+  bool isAvailable() {
+    var dayNane = DateFormat('EEEE').format(DateTime.now());
 
-  bool get authorized =>
-      this.authorizationStatus == AuthorizationStatus.Authorized;
+    var x = DateTime.now();
+
+    if (this.schedule != null) {
+      bool isOpen = false;
+      schedule!.openHours.forEach((key, value) {
+        if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
+          if (value.isOpen == true) {
+            var dateOfStart =
+                DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
+            var dateOfClose =
+                DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
+           
+            if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
+              isOpen = true;
+            }
+          } else {
+            isOpen = false;
+          }
+        }
+      });
+      return isOpen;
+    } else {
+      return true;
+    }
+  }
 }
 
 class ChooseManyOption {

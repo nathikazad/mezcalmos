@@ -1,16 +1,19 @@
 import 'dart:async';
-import 'dart:collection';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 
@@ -79,17 +82,6 @@ class IncomingOrdersController extends GetxController {
       });
       orders.sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
     });
-
-    // _appLifeCycleController.attachCallback(AppLifecycleState.resumed, () {
-    //   mezDbgPrint("[+] Callback executed :: app resumed !");
-    //   orders.forEach((element) {
-    //     _databaseHelper.firebaseDatabase
-    //         .reference()
-    //         .child(notificationStatusReadNode(
-    //             element.orderId, _authController.user!.uid))
-    //         .set(true);
-    //   });
-    // });
   }
 
   TaxiOrder? getOrder(String orderId) {
@@ -112,12 +104,12 @@ class IncomingOrdersController extends GetxController {
     if (tmpOrderCheck != null) {
       await _databaseHelper.firebaseDatabase
           .reference()
-          .child(rootOpenOrderReadNode(orderId, _authController.user!.uid))
+          .child(rootOpenOrderReadNode(orderId, _authController.user!.id))
           .set(true);
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(customerInProcessOrderReadNode(
-              orderId, customerId, _authController.user!.uid))
+              orderId, customerId, _authController.user!.id))
           .set(true);
     }
   }
@@ -132,12 +124,12 @@ class IncomingOrdersController extends GetxController {
     if (tmpOrderCheck != null) {
       await _databaseHelper.firebaseDatabase
           .reference()
-          .child(rootOpenOrderReceivedNode(orderId, _authController.user!.uid))
+          .child(rootOpenOrderReceivedNode(orderId, _authController.user!.id))
           .set(true);
       await _databaseHelper.firebaseDatabase
           .reference()
           .child(customerInProcessOrderReceivedNode(
-              orderId, customerId, _authController.user!.uid))
+              orderId, customerId, _authController.user!.id))
           .set(true);
     }
   }
@@ -162,6 +154,103 @@ class IncomingOrdersController extends GetxController {
     // _appLifeCycleController.cleanAllCallbacks();
   }
 
+  /// submit counter offer for a particular order
+  Future<void> submitCounterOffer(
+      String orderId, String customerId, CounterOffer counterOffer) async {
+    mezDbgPrint("Submiiiiiiit counter offer !");
+
+    // in customer's node
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customersCounterOfferNode(
+            orderId, customerId, _authController.fireAuthUser!.uid))
+        .set(counterOffer.toFirebaseFormattedJson());
+
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(inNegotationNode(_authController.fireAuthUser!.uid))
+        .set({"orderId": orderId, "customerId": customerId});
+    
+        _databaseHelper.firebaseDatabase
+        .reference()
+        .child('notificationQueue/${_authController.fireAuthUser!.uid}')
+        .set(CounterOfferNotificationForQueue(
+          driver: _authController.user!.constructUserInfo(),
+          orderId: orderId, 
+          customerId: customerId, 
+          price: counterOffer.price).toFirebaseFormatJson());
+  }
+
+  // Commented The event above cuz it won't work in case TaxiDriver got redirected to incommingOrderViewScreeen.
+  // insteead we have two approaches :
+  // 1 - Send the CounterOffer as parametere from TaxiWrapper, and then we can listen to the event, even in that case,
+  // there still risk, cuz while moving the driver to the incommingOrderViewScreeen, the Customer might reject it, which
+  // will cause it not get invoked, since it was not changed.
+  // 2 - More reliable which is just calling [getCustomerTaxiOrderIfExistsInDatabase] since we have an async timer on the view that works each 1s
+
+  /// this function gets the order with the given [orderId] directly fron the database,
+  ///
+  /// if it exists then it parse it to a [TaxiOrder] else it returns null.
+  ///
+  /// this is mainly useful in some cases when we need to check an [orderId] but the Controller hasn't loaded orders yet.
+  Future<CounterOffer?> getDriverCountOfferInCustomersNode(
+      String orderId, String customerId) async {
+    DataSnapshot snap = await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customersCounterOfferNode(
+            orderId, customerId, _authController.fireAuthUser!.uid))
+        .once();
+    return snap.value != null
+        ? CounterOffer.fromData(snap.value,
+            taxiUserInfo: UserInfo.fromData(snap.value['driverInfo']))
+        : null;
+  }
+
+  Stream<CounterOffer?> listenOnCounterOfferChanges(
+      String orderId, String customerId) {
+    return _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customersCounterOfferNode(
+            orderId, customerId, _authController.fireAuthUser!.uid))
+        .onValue
+        .map<CounterOffer?>((counterOfferEvent) {
+      try {
+        dynamic snap = counterOfferEvent.snapshot;
+        CounterOffer? _cOffer = snap.value != null
+            ? CounterOffer.fromData(snap.value,
+                taxiUserInfo: UserInfo.fromData(snap.value['driverInfo']))
+            : null;
+        if (_cOffer != null && _cOffer.validityTimeDifference() < 0) {
+          return _cOffer;
+        }
+        return null;
+      } on StateError catch (_) {
+        return null;
+      }
+    });
+  }
+
+  /// to remove taxi form counter offer mode
+  /// either after customer responds or a timer runs out
+  /// if expired is set then the status in db is set to expired as well
+  Future<void> removeFromNegotiationMode(String orderId, String customerId,
+      {bool expired = false}) async {
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(inNegotationNode(_authController.fireAuthUser!.uid))
+        .remove();
+
+    if (expired) {
+      await _databaseHelper.firebaseDatabase
+          .reference()
+          .child(customersCounterOfferNode(
+              orderId, customerId, _authController.fireAuthUser!.uid))
+          .remove();
+    }
+    // if it's expired why would we keep it ? Any reasons @Nathikos ?
+    // .set(CounterOfferStatus.Expired.toFirebaseFormatString());
+  }
+
   Future<ServerResponse> acceptTaxi(String orderId) async {
     mezDbgPrint("Accept Taxi Called");
     HttpsCallable acceptTaxiFunction =
@@ -170,6 +259,7 @@ class IncomingOrdersController extends GetxController {
       HttpsCallableResult response =
           await acceptTaxiFunction.call(<String, dynamic>{'orderId': orderId});
       mezDbgPrint(response.data.toString());
+
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       mezDbgPrint(e.toString());

@@ -13,13 +13,17 @@ import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['Shared']['widgets']
+["MezSideMenu"];
+
 class MezSideMenu extends GetWidget<AuthController> {
   SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageController languageController = Get.find<LanguageController>();
 
   String lmd = GetStorage().read(getxLmodeKey);
-  String VERSION = GetStorage().read(getxVersion);
+  String VERSION = GetStorage().read(getxAppVersion);
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +127,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                           size: 22.sp,
                         ),
                         title: Text(
-                            lang.strings['shared']['navDrawer']["userInfo"],
+                            _i18n()["userInfo"],
                             style:
                                 TextStyle(fontFamily: 'psb', fontSize: 13.sp)),
                       )
@@ -149,7 +153,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                         ),
                         title: Obx(
                           () => Text(
-                            lang.strings['shared']['navDrawer']["logout"],
+                            _i18n()["logout"],
                             style:
                                 TextStyle(fontFamily: 'psb', fontSize: 13.sp),
                           ),
@@ -165,13 +169,13 @@ class MezSideMenu extends GetWidget<AuthController> {
                     ),
                     title: Obx(
                       () => Text(
-                        lang.strings['shared']['navDrawer']["legal"],
+                        _i18n()["legal"],
                         style: TextStyle(fontFamily: 'psb', fontSize: 13.sp),
                       ),
                     )),
                 Obx(() => ListTile(
                     onTap: () {
-                      lang.changeUserLanguage();
+                      languageController.changeUserLanguage();
                       _drawerController.closeMenu();
                     },
                     leading: Container(
@@ -180,9 +184,10 @@ class MezSideMenu extends GetWidget<AuthController> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: AssetImage(lang.oppositFlag))),
+                              image:
+                                  AssetImage(languageController.oppositFlag))),
                     ),
-                    title: Text(lang.oppositToLang,
+                    title: Text(languageController.oppositToLang,
                         style: TextStyle(fontFamily: 'psb', fontSize: 13.sp)))),
               ],
             ),

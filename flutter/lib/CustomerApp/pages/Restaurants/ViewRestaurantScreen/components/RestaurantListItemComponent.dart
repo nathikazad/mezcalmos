@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 class RestaurantsListItemsOfComponent extends StatefulWidget {
   RestaurantsListItemsOfComponent({Key? key, required this.item, this.function})
@@ -21,7 +23,7 @@ class _RestaurantsListItemsOfComponentState
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-    LanguageController lang = Get.find<LanguageController>();
+    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
     return InkWell(
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -77,7 +79,7 @@ class _RestaurantsListItemsOfComponentState
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                        "${widget.item.name[lang.userLanguageKey]!.capitalizeFirstofEach}",
+                        "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
                         style: txt.headline3!.copyWith(fontSize: 13.sp)),
                   ),
                   SizedBox(
@@ -110,11 +112,4 @@ class _RestaurantsListItemsOfComponentState
       },
     );
   }
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
 }

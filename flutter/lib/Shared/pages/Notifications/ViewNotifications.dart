@@ -12,8 +12,11 @@ import 'package:mezcalmos/Shared/pages/Notifications/components/NotificationCard
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ["Notifications"]["ViewNotifications"];
+
 class ViewNotifications extends StatefulWidget {
-  ViewNotifications({Key? key}) : super(key: key);
+  const ViewNotifications({Key? key}) : super(key: key);
 
   @override
   _ViewNotificationsState createState() => _ViewNotificationsState();
@@ -22,10 +25,9 @@ class ViewNotifications extends StatefulWidget {
 class _ViewNotificationsState extends State<ViewNotifications> {
   ForegroundNotificationsController controller =
       Get.find<ForegroundNotificationsController>();
-  LanguageController lang = Get.find<LanguageController>();
   AuthController authController = Get.find<AuthController>();
-  final f = new DateFormat('hh:mm a');
-  final ff = new DateFormat('MM.dd.yyyy');
+  final DateFormat f = new DateFormat('hh:mm a');
+  final DateFormat ff = new DateFormat('MM.dd.yyyy');
 
   @override
   void initState() {
@@ -35,10 +37,10 @@ class _ViewNotificationsState extends State<ViewNotifications> {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text(lang.strings['shared']['notification']['title']),
+        title: Text(_i18n()['title']),
         automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(
@@ -47,7 +49,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           child: Column(
             children: [
               ClearNotificationButton(),
-              Obx(() => _buildNotification(controller.notifications))
+              Obx(() => _buildNotification(
+                  controller.notifications.reversed.toList()))
             ],
           ),
         ),
@@ -56,11 +59,11 @@ class _ViewNotificationsState extends State<ViewNotifications> {
   }
 
   Widget _buildNotification(List<notifs.Notification> notifications) {
-    var dd = DateTime.now();
-    List<Widget> myWidgets = [];
+    DateTime dd = DateTime.now();
+    final List<Widget> myWidgets = [];
     return Column(
       children: notifications.fold<List<Widget>>(<Widget>[],
-          (children, notification) {
+          (List<Widget> children, notifs.Notification notification) {
         if (dd.isSameDate(notification.timestamp)) {
           myWidgets.addAll([
             NotificationCard(

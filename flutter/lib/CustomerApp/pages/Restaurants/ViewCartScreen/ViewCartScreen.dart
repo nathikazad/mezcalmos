@@ -4,17 +4,18 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/ViewCartBody.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ViewCartBody.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/CartIsEmptyScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-
-import 'components/CartIsEmptyScreen.dart';
 
 enum DropDownResult { Null, String }
 
@@ -23,8 +24,10 @@ class ViewCartScreen extends StatefulWidget {
   _ViewCartScreenState createState() => _ViewCartScreenState();
 }
 
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Restaurants"]["ViewCartScreen"]["ViewCartScreen"];
+
 class _ViewCartScreenState extends State<ViewCartScreen> {
-  LanguageController lang = Get.find<LanguageController>();
   RestaurantController controller = Get.find<RestaurantController>();
   bool _clickedOrderNow = false;
   DropDownResult ddResult = DropDownResult.Null;
@@ -34,6 +37,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       Get.find<CustomerAuthController>();
   var listOfSavedLoacations = <SavedLocation>[];
   SavedLocation? dropDownListValue;
+  Location? orderToLocation;
   int nbClicks = 0;
   @override
   void initState() {
@@ -54,30 +58,22 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // mezDbgPrint(controller.cart.value.toLocation?.toFirebaseFormattedJson());
-
-    responsiveSize(context);
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: "${lang.strings["customer"]["restaurant"]["cart"]["myCart"]}",
+        title: "${_i18n()["myCart"]}",
       ),
       body: Obx(() {
         mezDbgPrint("@sa@d@: ${controller.cart.value.cartItems.length}");
         if (controller.cart.value.cartItems.length > 0) {
-          return SingleChildScrollView(child: ViewCartBody(
-            onValueChangeCallback: ({String? newValue}) {
-              mezDbgPrint("@sa@d@: onValueChangeCallback :: $newValue");
-              if (newValue == null) {
-                setState(() {
-                  ddResult = DropDownResult.Null;
-                });
-              } else {
-                setState(() {
-                  ddResult = DropDownResult.String;
-                });
-              }
+          return SingleChildScrollView(
+              child: ViewCartBody(
+            setLocationCallBack: ({Location? location}) {
+              setState(() {
+                orderToLocation = location;
+              });
             },
+            notesTextController: textcontoller,
           ));
         } else {
           return CartIsEmptyScreen();
@@ -94,7 +90,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   Color getTheRightButtonColor() {
     // it returns the pruple or the grey color for the order now button
 
-    if (ddResult == DropDownResult.Null ||
+    if (orderToLocation == null ||
         !checkRestaurantAvailability(
             schedule: controller.associatedRestaurant?.schedule)) {
       return Color(0xdddddddd);
@@ -106,7 +102,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   Widget getTheRightWidgetForOrderNowButton(bool clicked) {
     if (!checkRestaurantAvailability(
         schedule: controller.associatedRestaurant?.schedule)) {
-      return Text("${lang.strings["customer"]["restaurant"]["notAvailable"]}",
+      return Text("${_i18n()["notAvailable"]}",
           style: Theme.of(context)
               .textTheme
               .headline2!
@@ -122,8 +118,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         ),
       );
     } else {
-      return Text(
-          "${lang.strings['customer']['restaurant']['cart']['orderNow']}",
+      return Text("${_i18n()['orderNow']}",
           style: Theme.of(context)
               .textTheme
               .headline2!
@@ -131,23 +126,39 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     }
   }
 
+  /// Call this right after customer presses Checkout
+  /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
+  Future<void> avoidCheckoutRaceCondition(String orderId) async {
+    if (Get.find<OrderController>().getOrder(orderId) == null) {
+      mezDbgPrint(
+          "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ]  RACING CONDITION HAPPENING ... ");
+      await Get.find<OrderController>()
+          .getCurrentOrderStream(orderId)
+          .firstWhere((order) => order != null);
+    } else
+      mezDbgPrint(
+          "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ] NO RACING CONDITION HAPPEND ! ");
+  }
+
 //itemviewscreen
   void checkoutActionButton() async {
     if (nbClicks == 0) {
       mezDbgPrint("Called : checkoutActionButton : DdResult ($ddResult}");
-      if (ddResult != DropDownResult.Null) {
+      if (orderToLocation != null) {
         setState(() {
           _clickedOrderNow = true;
         });
+        controller.cart.value.toLocation = orderToLocation;
         controller.cart.value.notes = textcontoller.text;
-        mezDbgPrint(controller.cart.value.toFirebaseFormattedJson().toString());
+        mezDbgPrint(
+            "@ssss@ OOOORRRDDEEEEER :: ${controller.cart.value.toFirebaseFormattedJson().toString()}");
         //     controller.cart.value.restaurant!.id = "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx";
 
         var response = await controller.checkout();
-        mezDbgPrint(
-            "======== the response is ${response.errorCode} and the cart value ${controller.cart.value.toFirebaseFormattedJson().toString()}");
-        print(response.errorCode.toString());
+
         if (response.success) {
+          await avoidCheckoutRaceCondition(response.data["orderId"]);
+
           controller.clearCart();
           popEverythingAndNavigateTo(
               getRestaurantOrderRoute(response.data["orderId"]));
@@ -199,11 +210,4 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       return true;
     }
   }
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
 }

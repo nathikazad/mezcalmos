@@ -1,14 +1,15 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/DeliveryAdminApp/models/Admin.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/Admin.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/deliveryAdminNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 
 class AdminAuthController extends GetxController {
   Rxn<Admin> _admin = Rxn();
@@ -31,27 +32,23 @@ class AdminAuthController extends GetxController {
 
     mezDbgPrint(
         "Admin from AdminAuthController >> ${_authController.fireAuthUser!.uid}");
+    _databaseHelper.firebaseDatabase
+        .reference()
+        .child(adminNode(_authController.fireAuthUser!.uid))
+        .once()
+        .then((snap) => mezDbgPrint(snap.value));
     _adminNodeListener?.cancel();
-    mezDbgPrint(userInfo(_authController.fireAuthUser!.uid));
+    mezDbgPrint(userInfoNode(_authController.fireAuthUser!.uid));
+    mezDbgPrint((adminNode(_authController.fireAuthUser!.uid)));
     _adminNodeListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(adminNode(_authController.fireAuthUser!.uid))
         .onValue
         .listen((event) async {
-      mezDbgPrint("=====================================");
-      mezDbgPrint("=====================================");
-      mezDbgPrint("=====================================");
-      mezDbgPrint("=====================================");
-      mezDbgPrint(event.snapshot.value);
-      mezDbgPrint("=====================================");
-      mezDbgPrint("=====================================");
-      mezDbgPrint("=====================================");
-      mezDbgPrint("=====================================");
-
       _admin.value = Admin.fromSnapshot(event.snapshot.value);
       if (_admin.value?.authorized ?? false) {
         if (_checkedAppVersion == false) {
-          String appVersion = GetStorage().read(getxVersion);
+          String appVersion = GetStorage().read(getxAppVersion);
           print("[+] Customer currently using App v$appVersion");
           _databaseHelper.firebaseDatabase
               .reference()
@@ -63,8 +60,7 @@ class AdminAuthController extends GetxController {
 
         String? deviceNotificationToken =
             await _notificationsController.getToken();
-        mezDbgPrint(
-            "AdminAuthController  Messaging Token>> ${deviceNotificationToken}");
+
         if (deviceNotificationToken != null)
           _databaseHelper.firebaseDatabase
               .reference()

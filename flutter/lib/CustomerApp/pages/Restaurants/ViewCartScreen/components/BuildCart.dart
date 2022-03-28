@@ -4,10 +4,14 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
+    ["Restaurants"]["ViewCartScreen"]["components"]["BuildCart"];
+
+
 class CartBuilder extends StatelessWidget {
   CartBuilder({Key? key}) : super(key: key);
   final RestaurantController controller = Get.find<RestaurantController>();
-  final LanguageController lang = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class CartBuilder extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        "${lang.strings["customer"]["restaurant"]["cart"]["inCart"]}",
+                        "${_i18n()["inCart"]}",
                         style: txt.headline2,
                       ),
                     )
@@ -56,10 +60,8 @@ class CartBuilder extends StatelessWidget {
                       child: InkWell(
                         onTap: () async {
                           YesNoDialogButton yesNoRes = await cancelAlertDialog(
-                            title: lang.strings["customer"]["restaurant"]
-                                ["cart"]["clearCart"],
-                            body: lang.strings["customer"]["restaurant"]["cart"]
-                                ["clearCartConfirm"],
+                            title: _i18n()["clearCart"],
+                            body: _i18n()["clearCartConfirm"],
                             icon: Container(
                               child: Icon(
                                 Icons.highlight_off,
@@ -79,7 +81,7 @@ class CartBuilder extends StatelessWidget {
                             children: [
                               Container(
                                 child: Text(
-                                    "${lang.strings["customer"]["restaurant"]["cart"]["clear"]}"),
+                                    "${_i18n()["clear"]}"),
                               ),
                               Icon(
                                 Icons.delete_outline,

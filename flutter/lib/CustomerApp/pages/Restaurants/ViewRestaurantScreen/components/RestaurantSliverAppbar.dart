@@ -47,19 +47,19 @@ class RestaurantSliverAppBar extends StatelessWidget {
           collapseMode: CollapseMode.parallax,
           centerTitle: true,
           title: Text(
-            restaurant.name,
+            restaurant.info.name,
             style: Theme.of(context)
                 .textTheme
                 .headline2!
                 .copyWith(color: Colors.white),
           ),
           background: CachedNetworkImage(
-            imageUrl: restaurant.photo,
+            imageUrl: restaurant.info.image,
             fit: BoxFit.cover,
             imageBuilder: (context, imageProvider) => Container(
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(restaurant.photo),
+                      image: NetworkImage(restaurant.info.image),
                       fit: BoxFit.cover)),
               foregroundDecoration: BoxDecoration(
                   gradient: LinearGradient(

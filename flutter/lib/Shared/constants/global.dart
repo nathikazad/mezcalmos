@@ -29,6 +29,8 @@ const String tEmailTestPassword = "password";
 const double nDefaultMezcalmosTextSize = 30.5;
 const int nSplashScreenTimer = 1;
 const int nQualityCompressionOfUserImage = 10;
+const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;
+
 // ----------------- Costants Strings ----------------- //
 const String tPrivacyPolicyCustomerApp =
     "https://www.mezcalmos.com/privacy-policy.html";
@@ -48,11 +50,11 @@ const String tDefaultCustomerName = "Unknown";
 const String getxPrivacyPolicyLink = "ppLink";
 const String getxLmodeKey = "lmod";
 const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
-const String getxUserDescriptionPlaceHolder = "user_descriptor_placeholder";
 const String getxTaxiDescriptor = "taxi_descriptor";
 const String getxDestinationDescriptor = "destination_descriptor";
 const String getxUserId = "userid";
-const String getxVersion = "version";
+const String getxAppVersion = "version";
+const String getxPackageName = "packageName";
 const String defaultUserImgUrl =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
 
@@ -60,6 +62,7 @@ const String defaultUserImgUrl =
 const String aDefaultNotificationsSound = 'assets/sounds/notif-alert.mp3';
 const String aLogoPath = "assets/images/shared/logo.png";
 const String a404 = "assets/images/shared/404.png";
+const String aUpdate = "assets/images/shared/update.png";
 const String aDefaultDbUserImgAsset =
     "assets/images/shared/defaultUserLogo.png";
 const String aDefaultAvatar = "assets/images/shared/noUserImage.jpg";
@@ -77,7 +80,13 @@ const String aOrderUnavailable = "assets/images/shared/circularCancel.png";
 const String aTaxiRidePriceController =
     "assets/images/customer/taxi/taxiRidePriceController.png";
 
-enum AppType { CustomerApp, TaxiApp, TaxiAdminApp, DeliveryAdminApp }
+enum AppType {
+  CustomerApp,
+  TaxiApp,
+  TaxiAdminApp,
+  DeliveryAdminApp,
+  DeliveryApp
+}
 
 extension ParseOrderTypeToString on AppType {
   String toShortString() {

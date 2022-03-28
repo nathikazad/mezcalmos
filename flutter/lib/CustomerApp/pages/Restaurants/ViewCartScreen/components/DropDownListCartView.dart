@@ -7,6 +7,10 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+        ["Restaurants"]["ViewCartScreen"]["components"]["DropDownListCartView"];
+
 typedef OnDropDownNewValue = void Function({String? newValue});
 
 class DropDownListCartView extends StatefulWidget {
@@ -21,7 +25,6 @@ class DropDownListCartView extends StatefulWidget {
 
 class _DropDownListCartViewState extends State<DropDownListCartView> {
   RestaurantController controller = Get.find<RestaurantController>();
-  LanguageController lang = Get.find<LanguageController>();
 
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
@@ -33,9 +36,7 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
   void initState() {
     setState(() {
       // default ID: _pick_ , stands for our  Pick From Map
-      loc = SavedLocation(
-          name: lang.strings["customer"]["restaurant"]["cart"]["pickLocation"],
-          id: "_pick_");
+      loc = SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
 
       listOfSavedLoacations.add(loc!);
 
@@ -88,9 +89,7 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
             isDense: true,
             isExpanded: true,
             hint: Center(
-              child: Text(
-                  lang.strings["customer"]["restaurant"]["cart"]
-                      ["pickLocation"],
+              child: Text(_i18n()["pickLocation"],
                   style: Theme.of(context).textTheme.bodyText2),
             ),
             icon: Icon(Icons.expand_more),

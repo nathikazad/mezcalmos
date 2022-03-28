@@ -9,8 +9,8 @@ import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
-import 'package:mezcalmos/TaxiApp/models/TaxiDriver.dart';
 import 'package:location/location.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -36,6 +36,7 @@ class TaxiAuthController extends GetxController {
 
   bool _checkedAppVersion = false;
   String? _previousStateValue = "init";
+  final lmode = GetStorage().read(getxLmodeKey);
 
   @override
   void onInit() {
@@ -109,7 +110,7 @@ class TaxiAuthController extends GetxController {
 
   void saveAppVersionIfNecessary() {
     if (_checkedAppVersion == false) {
-      String VERSION = GetStorage().read(getxVersion);
+      String VERSION = GetStorage().read(getxAppVersion);
       mezDbgPrint("[+] TaxiDriver Currently using App v$VERSION");
       _databaseHelper.firebaseDatabase
           .reference()
@@ -157,7 +158,7 @@ class TaxiAuthController extends GetxController {
             // updating driver location in root orders/inProcess/taxi
             _databaseHelper.firebaseDatabase
                 .reference()
-                .child(rootInProcessOrderDriverLocationNode(
+                .child(rootTaxiInProcessOrderDriverLocationNode(
                     _state.value!.currentOrder!))
                 .set(positionUpdate);
 
@@ -170,9 +171,21 @@ class TaxiAuthController extends GetxController {
               _databaseHelper.firebaseDatabase
                   .reference()
                   .child(customerInProcessOrderDriverLocationNode(
-                      _state.value!.currentOrder!, currentOrderCustomerId))
+                      orderId: _state.value!.currentOrder!,
+                      customerId: currentOrderCustomerId))
                   .set(positionUpdate);
           }
+          positionUpdate["online"] = _state.value?.isLooking;
+          positionUpdate["inOrder"] = _state.value?.currentOrder != null;
+          if (lmode != "prod") {
+            positionUpdate["name"] = _authController.user!.name;
+          }
+
+          _databaseHelper.firebaseDatabase
+              .reference()
+              .child(onlineTaxiDrivers(
+                  driverId: _authController.fireAuthUser!.uid))
+              .set(positionUpdate);
         } catch (e) {
           mezDbgPrint("Write driver position to db error");
         }

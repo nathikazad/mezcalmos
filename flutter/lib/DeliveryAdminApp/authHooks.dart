@@ -1,20 +1,28 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/controllers/messageController.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/adminAuthController.dart';
-
+import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryDriverController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
 class AuthHooks {
   static Future<void> onSignOutHook() async {
     mezDbgPrint(
         "[+] DeliveryAdminApp::AuthHooks::onSignOutHook -> Callback Executed.");
     await Get.delete<AdminAuthController>(force: true);
-    await Get.delete<OrderController>(force: true);
+    await Get.delete<RestaurantOrderController>(force: true);
+    await Get.delete<LaundryOrderController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<MessageController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
+    await Get.delete<DeliveryDriverController>(force: true);
+    await Get.delete<TaxiOrderController>(force: true);
+    await Get.delete<LaundryInfoController>(force: true);
     mezDbgPrint(
         "[+] DeliveryAdminApp::AuthHooks::onSignOutHook -> Callback Finished.");
   }
@@ -29,8 +37,13 @@ class AuthHooks {
     Get.put<ForegroundNotificationsController>(
         ForegroundNotificationsController(),
         permanent: true);
-    Get.put<OrderController>(OrderController(), permanent: true);
+    Get.put<RestaurantOrderController>(RestaurantOrderController(),
+        permanent: true);
+    Get.put<LaundryOrderController>(LaundryOrderController(), permanent: true);
+    Get.put<LaundryInfoController>(LaundryInfoController(), permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
-
+    Get.put<DeliveryDriverController>(DeliveryDriverController(),
+        permanent: true);
+    Get.put<TaxiOrderController>(TaxiOrderController(), permanent: true);
   }
 }

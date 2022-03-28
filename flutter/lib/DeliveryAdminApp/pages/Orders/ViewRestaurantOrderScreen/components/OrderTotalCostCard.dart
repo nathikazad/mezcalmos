@@ -9,16 +9,19 @@ import 'package:sizer/sizer.dart';
 
 final currency = new NumberFormat("#,##0.00", "en_US");
 
-Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
-  LanguageController lang = Get.find<LanguageController>();
 
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+        ["pages"]
+["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderTotalCostCard"];
+
+Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
   return Column(
     children: [
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.centerLeft,
         child: Text(
-            "${lang.strings['customer']['restaurant']['cart']['totalCost']}",
+            "${_i18n()['totalCost']}",
             style: TextStyle(
                 color: const Color(0xff000f1c),
                 fontFamily: "psb",
@@ -49,7 +52,7 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
                 child: Row(
                   children: [
                     Text(
-                        "${lang.strings['customer']['restaurant']['cart']['deliveryCost']}",
+                        "${_i18n()['deliveryCost']}",
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
                             fontFamily: "psr",
@@ -80,7 +83,7 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
                   children: [
                     // Total
                     Text(
-                        "${lang.strings['customer']['restaurant']['cart']['total']}",
+                        "${_i18n()['total']}",
                         style: const TextStyle(
                             color: const Color(0xff000f1c),
                             fontFamily: "psr",

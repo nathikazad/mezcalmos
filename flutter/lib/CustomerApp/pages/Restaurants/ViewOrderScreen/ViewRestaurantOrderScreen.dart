@@ -18,6 +18,10 @@ import 'components/notesWidget.dart';
 
 final currency = new NumberFormat("#0", "en_US");
 ////////////===========
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
+["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
+
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
   @override
@@ -26,7 +30,6 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 }
 
 class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
-  LanguageController lang = Get.find<LanguageController>();
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   RestaurantController restaurantController = Get.find<RestaurantController>();
@@ -128,7 +131,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         appBar: CustomerAppBar(
           autoBack: true,
           title:
-              '${lang.strings["customer"]["restaurant"]["orderStatus"]["orderStatus"]}',
+              '${_i18n()["orderStatus"]}',
         ),
         body: Obx(
           () {
@@ -181,9 +184,3 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   }
 }
 
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
-}

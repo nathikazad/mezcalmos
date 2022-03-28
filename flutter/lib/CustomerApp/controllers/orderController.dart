@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -7,9 +8,10 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 class OrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -35,7 +37,7 @@ class OrderController extends GetxController {
           .reference()
           .child(customerPastOrders(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((event) async {
+          .listen((Event event) async {
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
         //  mezDbgPrint("PAST ORDERS ==> ${event.snapshot.value} ");
@@ -44,10 +46,10 @@ class OrderController extends GetxController {
 
         mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
 
-        List<Order> orders = [];
+        final List<Order> orders = [];
         if (event.snapshot.value != null) {
           for (var orderId in event.snapshot.value.keys) {
-            dynamic orderData = event.snapshot.value[orderId];
+            final dynamic orderData = event.snapshot.value[orderId];
             try {
               if (orderData["orderType"] ==
                   OrderType.Restaurant.toFirebaseFormatString()) {
@@ -57,6 +59,10 @@ class OrderController extends GetxController {
               if (orderData["orderType"] ==
                   OrderType.Taxi.toFirebaseFormatString()) {
                 orders.add(TaxiOrder.fromData(orderId, orderData));
+              }
+              if (orderData["orderType"] ==
+                  OrderType.Laundry.toFirebaseFormatString()) {
+                orders.add(LaundryOrder.fromData(orderId, orderData));
               }
             } catch (e) {
               mezDbgPrint(
@@ -72,13 +78,13 @@ class OrderController extends GetxController {
           .reference()
           .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((event) async {
-        List<Order> orders = [];
+          .listen((Event event) async {
+        final List<Order> orders = [];
 
         if (event.snapshot.value != null) {
-          mezDbgPrint("my data hhhh ${event.snapshot.value.toString()}");
+          // mezDbgPrint("my data : ${event.snapshot.value.toString()}");
           for (var orderId in event.snapshot.value.keys) {
-            dynamic orderData = event.snapshot.value[orderId];
+            final dynamic orderData = event.snapshot.value[orderId];
             // if restaurant order
             if (orderData["orderType"] ==
                 OrderType.Restaurant.toFirebaseFormatString()) {
@@ -88,6 +94,10 @@ class OrderController extends GetxController {
             if (orderData["orderType"] ==
                 OrderType.Taxi.toFirebaseFormatString()) {
               orders.add(TaxiOrder.fromData(orderId, orderData));
+            }
+            if (orderData["orderType"] ==
+                OrderType.Laundry.toFirebaseFormatString()) {
+              orders.add(LaundryOrder.fromData(orderId, orderData));
             }
           }
         }
@@ -100,7 +110,8 @@ class OrderController extends GetxController {
 
   Order? hasOrderOfType({required OrderType typeToCheck}) {
     try {
-      return currentOrders().firstWhere((o) => o.orderType == typeToCheck);
+      return currentOrders()
+          .firstWhere((Order o) => o.orderType == typeToCheck);
     } on StateError catch (_) {
       return null;
     }
@@ -109,20 +120,20 @@ class OrderController extends GetxController {
   bool hasNewMessageNotification(String orderId) {
     return _fbNotificationsController
         .notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.orderId == orderId)
         .isNotEmpty;
   }
 
   Order? getOrder(String orderId) {
     try {
-      return currentOrders.firstWhere((order) {
+      return currentOrders.firstWhere((Order order) {
         return order.orderId == orderId;
       });
     } on StateError {
       try {
-        return pastOrders.firstWhere((order) {
+        return pastOrders.firstWhere((Order order) {
           return order.orderId == orderId;
         });
       } on StateError {
@@ -135,7 +146,7 @@ class OrderController extends GetxController {
     return currentOrders.stream.map<Order?>((_) {
       try {
         return currentOrders.firstWhere(
-          (currentOrder) => currentOrder.orderId == orderId,
+          (Order currentOrder) => currentOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
@@ -148,7 +159,7 @@ class OrderController extends GetxController {
     return pastOrders.stream.map<Order?>((_) {
       try {
         return pastOrders.firstWhere(
-          (pastOrder) => pastOrder.orderId == orderId,
+          (Order pastOrder) => pastOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
@@ -160,20 +171,22 @@ class OrderController extends GetxController {
   bool orderHaveNewMessageNotifications(String orderId) {
     return _fbNotificationsController
         .notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.orderId == orderId)
         .isNotEmpty;
   }
 
   void clearOrderNotifications(String orderId) {
     _fbNotificationsController
         .notifications()
-        .where((notification) =>
-            notification.notificationType ==
-                NotificationType.OrderStatusChange &&
-            notification.orderId! == orderId)
-        .forEach((notification) {
+        .where((Notification notification) =>
+            (notification.notificationType ==
+                    NotificationType.OrderStatusChange ||
+                notification.notificationType ==
+                    NotificationType.NewCounterOffer) &&
+            notification.orderId == orderId)
+        .forEach((Notification notification) {
       _fbNotificationsController.removeNotification(notification.id);
     });
   }
@@ -181,9 +194,9 @@ class OrderController extends GetxController {
   @override
   void onClose() async {
     print("[+] OrderController::onClose ---------> Was invoked !");
-    _currentOrdersListener?.cancel();
+    await _currentOrdersListener?.cancel();
     _currentOrdersListener = null;
-    _pastOrdersListener?.cancel();
+    await _pastOrdersListener?.cancel();
     _pastOrdersListener = null;
     super.onClose();
   }

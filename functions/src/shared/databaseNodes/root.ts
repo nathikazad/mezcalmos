@@ -1,7 +1,6 @@
 import * as firebase from "firebase-admin";
-import { OrderType } from "../models/Order";
-import { ParticipantType } from "../models/Chat";
-import { NotificationInfo } from "../models/Generic";
+import { OrderType } from "../models/Generic/Order";
+import { ParticipantType } from "../models/Generic/Chat";
 
 export function notificationsNode(particpantType: ParticipantType, userId: string) {
   return firebase.database().ref(`/notifications/${particpantType}/${userId}`)
@@ -16,14 +15,11 @@ const participantTypeToNodeMap: { [id in ParticipantType]: string } = {
   [ParticipantType.DeliveryAdmin]: "deliveryAdmins",
   [ParticipantType.Taxi]: "taxis",
   [ParticipantType.Restaurant]: "restaurants",
+  [ParticipantType.DeliveryDriver]: "deliveryDrivers",
 };
 
 export function notificationInfoNode(participantType: ParticipantType, userId: string) {
   return firebase.database().ref(`/${participantTypeToNodeMap[participantType]}/info/${userId}/notificationInfo`);
-}
-
-export async function getNotificationInfo(participantType: ParticipantType, userId: string): Promise<NotificationInfo> {
-  return (await notificationInfoNode(participantType, userId).once('value')).val();
 }
 
 export function inProcessOrders(orderType: OrderType, orderId?: string) {

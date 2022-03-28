@@ -53,7 +53,7 @@ class SettingsController extends GetxController {
           await _userNotificationsSoundPool.load(_soundData);
     }
     // start Listening on Internet Connectivity !
-    startListeningForConnectivity();
+    // startListeningForConnectivity();
   }
 
   Future playNotificationSound({int? soundId}) async {
@@ -84,6 +84,7 @@ class SettingsController extends GetxController {
 
   @override
   void dispose() {
+    _internetConnectionStatusListener?.cancel();
     _appTheme.dispose();
     _appLanguage.dispose();
     super.dispose();

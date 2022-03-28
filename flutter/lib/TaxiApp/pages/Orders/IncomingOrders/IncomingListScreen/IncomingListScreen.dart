@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -7,17 +8,18 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/Components/NoScrollGlowBehaviour.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:sizer/sizer.dart';
 
-import 'Components/MezSwitch.dart';
-import 'Components/NoScrollGlowBehaviour.dart';
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+    ["Orders"]["IncomingOrders"]["IncomingListScreen"]["IncomingListScreen"];
 
 class IncomingOrdersScreen extends StatefulWidget {
   @override
@@ -25,20 +27,17 @@ class IncomingOrdersScreen extends StatefulWidget {
 }
 
 class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
-  IncomingOrdersController controller =
-      Get.put<IncomingOrdersController>(IncomingOrdersController());
-  LanguageController lang = Get.find<LanguageController>();
+  IncomingOrdersController _controller = Get.find<IncomingOrdersController>();
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -49,7 +48,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             body: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   // Header that has the title + ON-OFF toggler!
                   viewHeader(),
                   //the rest of the View Body
@@ -65,11 +64,11 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Flexible(
               child: Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["title"],
+                  _i18n()["title"],
                   style: TextStyle(
                       // fontSize: getSizeRelativeToScreen(70, sw, sh),
                       fontSize: 25.5.sp,
@@ -92,13 +91,13 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
               // if isLooking
               if (_taxiAuthController.taxiState?.isLooking == true) {
                 // if there are Orders
-                if (controller.orders.length >= 1) {
+                if (_controller.orders.length >= 1) {
                   return MezcalmosNoGlowScrollConfiguration(ListView.builder(
-                      itemCount: controller.orders.length,
-                      itemBuilder: (ctx, i) {
+                      itemCount: _controller.orders.length,
+                      itemBuilder: (BuildContext ctx, int i) {
                         return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 2),
-                            child: orderCard(controller.orders[i]));
+                            child: orderCard(_controller.orders[i]));
                       }));
                 } else {
                   // if there are No Orders
@@ -113,22 +112,22 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
 
   /*   -------  [ Order Card ]  -------  */
   Widget orderCard(TaxiOrder order) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(
-              color: Color.fromARGB(255, 236, 236, 236),
-              width: 0.5,
-              style: BorderStyle.solid),
-          borderRadius: BorderRadius.circular(4)),
-      padding: EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 5),
-      child: GestureDetector(
-        onTap: () {
-          Get.toNamed(getIncomingOrderRoute(order.orderId));
-        },
+    return InkWell(
+      onTap: () {
+        Get.toNamed<void>(getIncomingOrderRoute(order.orderId));
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(
+                color: Color.fromARGB(255, 236, 236, 236),
+                width: 0.5,
+                style: BorderStyle.solid),
+            borderRadius: BorderRadius.circular(4)),
+        padding: EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             CircleAvatar(
               radius: 14.sp,
               backgroundColor: Colors.grey,
@@ -136,7 +135,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                       url: order.customer.image,
                       assetInCaseFailed: aDefaultAvatar)
                   .image,
-              onBackgroundImageError: (e, s) => mezDbgPrint(
+              onBackgroundImageError: (Object e, StackTrace? s) => mezDbgPrint(
                   "Failed loading Customer openOrder::id::${order.orderId}"),
             ),
 
@@ -149,7 +148,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  children: [
+                  children: <Widget>[
                     // TopHalf widgets of the Card Info :
                     orderCardTopHalf(order),
                     // Spacer(),
@@ -174,13 +173,13 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
     return Flex(
       direction: Axis.horizontal,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      children: <Widget>[
         Text(
           order.customer.name,
           style: TextStyle(fontFamily: 'psb', fontSize: 11.sp),
         ),
         Row(
-          children: [
+          children: <Widget>[
             Transform.scale(
                 scale: 1.5,
                 child: Container(
@@ -236,7 +235,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
           width: 2.w,
         ),
         Text(
-          order.routeInformation.distance.distanceStringInKm,
+          order.routeInformation!.distance.distanceStringInKm,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
           softWrap: false,
@@ -248,7 +247,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         Icon(MezcalmosIcons.stopwatch, size: 2.h),
         SizedBox(width: 2.w),
         Text(
-          order.routeInformation.duration.shortTextVersion,
+          order.routeInformation!.duration.shortTextVersion,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
           softWrap: false,
@@ -264,7 +263,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -279,10 +278,10 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             direction: Axis.vertical,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["noOrdersTitle"],
+                  _i18n()["noOrdersTitle"],
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20.5.sp, fontFamily: 'psr'),
                 ),
@@ -292,7 +291,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
               ),
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["noOrdersDesc"],
+                  _i18n()["noOrdersDesc"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 14.sp,
@@ -313,7 +312,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -328,10 +327,10 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             direction: Axis.vertical,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["toggleTitle"],
+                  _i18n()["toggleTitle"],
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20.5.sp, fontFamily: 'psr'),
                 ),
@@ -341,7 +340,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
               ),
               Obx(
                 () => Text(
-                  lang.strings['taxi']['incoming']["toggleDesc"],
+                  _i18n()["toggleDesc"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 14.sp,
@@ -368,8 +367,8 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
                 buttonSize: Size(55.sp, 55.sp),
                 initialPosition:
                     _taxiAuthController.taxiState?.isLooking ?? false,
-                values: ['ON', 'OFF'],
-                onToggleCallback: (v) {
+                values: <String>['ON', 'OFF'],
+                onToggleCallback: (int v) {
                   // turn ut ON
                   if (v == 0) {
                     _taxiAuthController.turnOn();

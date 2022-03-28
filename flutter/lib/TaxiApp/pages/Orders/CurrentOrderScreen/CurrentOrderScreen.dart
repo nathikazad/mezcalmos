@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as LocationLibrary;
@@ -10,19 +8,22 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedFromToBar.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
-import '../../../router.dart';
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+    ["Orders"]["CurrentOrderScreen"]["CurrentOrderScreen"];
 
 class CurrentOrderScreen extends StatefulWidget {
   @override
@@ -31,40 +32,31 @@ class CurrentOrderScreen extends StatefulWidget {
 
 class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   MGoogleMapController mGoogleMapController = MGoogleMapController();
-  LanguageController lang = Get.find<LanguageController>();
   TaxiOrder? order;
   OrderController controller = Get.find<OrderController>();
-  StreamSubscription? _orderListener;
-  bool _clickedButton = false;
+  StreamSubscription<TaxiOrder?>? _orderListener;
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
 
   @override
   void initState() {
     mezDbgPrint("Inside _ViewCurrentOrderScreenState::InitState");
-    String orderId = taxiAuthController.taxiState!.currentOrder!;
+    final String orderId = taxiAuthController.taxiState!.currentOrder!;
     mezDbgPrint("orderId :: $orderId");
 
     controller.clearOrderNotifications();
     // we need the first snapshot seprated !
-    TaxiOrder? _orderSnapshot = controller.getOrder(orderId);
+    final TaxiOrder? _orderSnapshot = controller.getOrder(orderId);
     mezDbgPrint("_orderSnapshot :: $_orderSnapshot");
 
     if (_orderSnapshot == null) {
-      // TODO ORDERNOTAVAILABLEANYMORE DIALOGUE
-      Get.back();
+      Get.back<void>();
+      mezcalmosDialogOrderNoMoreAvailable(context);
     } else {
       if (_orderSnapshot.inProcess()) {
         // populate the LatLngPoints from the encoded PolyLine String + SetState!
         mGoogleMapController.decodeAndAddPolyline(
-            encodedPolylineString: _orderSnapshot.routeInformation.polyline);
+            encodedPolylineString: _orderSnapshot.routeInformation!.polyline);
         mGoogleMapController.setLocation(_orderSnapshot.from);
-        // mGoogleMapController.setLocation(Location(
-        //     "CurrentLocation",
-        //     LocationLibrary.LocationData.fromMap({
-        //       "latitude": _orderSnapshot.driver!.location!.latitude,
-        //       "longitude": _orderSnapshot.driver!.location!.longitude
-        //     })));
-        // handle OrderStatus first time (since this.order will be null)!
         updateOrder(orderStreamEvent: _orderSnapshot);
         // set InitialPosition
         if (order?.driver?.location != null)
@@ -73,13 +65,14 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               order!.driver!.location!.longitude);
 
         // Listener
-        _orderListener =
-            controller.getCurrentOrderStream(orderId).listen((order) {
+        _orderListener = controller
+            .getCurrentOrderStream(orderId)
+            .listen((TaxiOrder? order) {
           if (order != null) {
             updateOrder(orderStreamEvent: order);
           } else {
             cancelOrderSubscription();
-            controller.getPastOrderStream(orderId).listen((order) {
+            controller.getPastOrderStream(orderId).listen((TaxiOrder? order) {
               if (order != null) {
                 updateOrder(orderStreamEvent: order);
               }
@@ -87,7 +80,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
             // this will get the order inCase it moved to /past
             if (order?.status == TaxiOrdersStatus.CancelledByCustomer) {
               oneButtonDialog(
-                  body: lang.strings['taxi']['orders']['cancelledMessage'],
+                  body: _i18n()['cancelledMessage'],
                   imagUrl: aOrderUnavailable);
             }
           }
@@ -115,20 +108,19 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           drawer: MezSideMenu(),
           backgroundColor: Colors.white,
           appBar: getRightAppBar(order!.status),
-          body:
-              order != null && this.mGoogleMapController.location.value != null
-                  ? Stack(alignment: Alignment.topCenter, children: [
-                      MGoogleMap(
-                        mGoogleMapController: this.mGoogleMapController,
-                        myLocationButtonEnabled: false,
-                        debugString: "CurrentOrderScreen",
-                      ),
-                      CurrentPositionedBottomBar(order!),
-                      CurrentPositionedFromToTopBar(order!),
-                    ])
-                  : MezLogoAnimation(
-                      centered: true,
-                    ),
+          body: order != null && mGoogleMapController.location.value != null
+              ? Stack(alignment: Alignment.topCenter, children: <Widget>[
+                  MGoogleMap(
+                    mGoogleMapController: mGoogleMapController,
+                    myLocationButtonEnabled: false,
+                    debugString: "CurrentOrderScreen",
+                  ),
+                  CurrentPositionedBottomBar(order!),
+                  CurrentPositionedFromToTopBar(order!),
+                ])
+              : MezLogoAnimation(
+                  centered: true,
+                ),
         )); // no need for obx here.
   }
 
@@ -190,7 +182,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         if (order?.driver?.location != null)
           mGoogleMapController.setLocation(Location(
               "CurrentLocation",
-              LocationLibrary.LocationData.fromMap({
+              LocationLibrary.LocationData.fromMap(<String, double>{
                 "latitude": order!.driver!.location!.latitude,
                 "longitude": order!.driver!.location!.longitude
               })));
@@ -209,7 +201,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   PreferredSizeWidget getRightAppBar(TaxiOrdersStatus status) {
     if (status == TaxiOrdersStatus.CancelledByCustomer) {
       return mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: () => Get.offNamedUntil(
+          onClick: () => Get.offNamedUntil<void>(
               kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute)));
     } else {
       return mezcalmosAppBar(AppBarLeftButtonType.Menu, onClick: () async {

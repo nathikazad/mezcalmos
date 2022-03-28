@@ -1,9 +1,13 @@
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:get/get.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["TaxiApp"]["notificationHandler"];
 
 Notification taxiNotificationHandler(String key, dynamic value) {
   NotificationType notificationType =
@@ -38,12 +42,9 @@ Notification orderStatusChangeNotificationHandler(String key, dynamic value) {
 
 Map<String, dynamic>? getTaxiOrderStatusFields(
     TaxiOrdersStatus taxiOrderStatus) {
-  LanguageController lang = Get.find<LanguageController>();
   return <String, dynamic>{
-    "title":
-        "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["title"]}",
-    "body":
-        "${lang.strings["shared"]["notification"]["notificationType"]["cancelled"]["body"]}",
+    "title": "${_i18n()["cancelledTitle"]}",
+    "body": "${_i18n()["cancelledBody"]}",
     "imgUrl": "assets/images/cancel.png",
   };
 }
@@ -51,7 +52,8 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 Notification newMessageNotification(String key, dynamic value) {
   return Notification(
       id: key,
-      linkUrl: getCustomerMessagesRoute(value['orderId']),
+      linkUrl: getMessagesRoute(
+          chatId: value['chatId'], recipientType: ParticipantType.Customer),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

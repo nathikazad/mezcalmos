@@ -1,16 +1,43 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
-class RestaurantOrder extends Order {
-  RestaurantOrderStatus status;
+//ignore_for_file:constant_identifier_names
+enum RestaurantOrderStatus {
+  OrderReceieved,
+  PreparingOrder,
+  ReadyForPickup,
+  OnTheWay,
+  Delivered,
+  CancelledByAdmin,
+  CancelledByCustomer
+}
+
+extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToRestaurantOrderStatus on String {
+  RestaurantOrderStatus toRestaurantOrderStatus() {
+    return RestaurantOrderStatus.values.firstWhere(
+        (RestaurantOrderStatus e) => e.toFirebaseFormatString() == this);
+  }
+}
+
+class RestaurantOrder extends DeliverableOrder {
   int quantity;
   num itemsCost;
   num shippingCost;
-  List<RestaurantOrderItem> items = [];
+  List<RestaurantOrderItem> items = <RestaurantOrderItem>[];
   String? notes;
-  UserInfo get restaurant => this.serviceProvider!;
+  RestaurantOrderStatus status;
+  UserInfo get restaurant => serviceProvider!;
   RestaurantOrder(
       {required String orderId,
       required this.status,
@@ -22,6 +49,8 @@ class RestaurantOrder extends Order {
       required UserInfo restaurant,
       required UserInfo customer,
       required Location to,
+      DeliveryDriverUserInfo? dropoffDriver,
+      String? dropOffDriverChatId,
       required this.itemsCost,
       required this.shippingCost,
       this.notes})
@@ -34,9 +63,13 @@ class RestaurantOrder extends Order {
             cost: cost,
             customer: customer,
             serviceProvider: restaurant,
-            to: to);
+            to: to,
+            dropoffDriver: dropoffDriver,
+            dropOffDriverChatId: dropOffDriverChatId);
+
+  //ignore_for_file:avoid_annotating_with_dynamic
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
-    RestaurantOrder restaurantOrder = RestaurantOrder(
+    final RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
         status: data["status"].toString().toRestaurantOrderStatus(),
         quantity: data["quantity"],
@@ -49,10 +82,14 @@ class RestaurantOrder extends Order {
         restaurant: UserInfo.fromData(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]),
         itemsCost: data['itemsCost'],
-        shippingCost: data['shippingCost']);
-
+        shippingCost: data['shippingCost'],
+        dropoffDriver: (data["dropoffDriver"] != null)
+            ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
+            : null,
+        dropOffDriverChatId: data['secondaryChats']
+            ?['deliveryAdminDropOffDriver']);
     data["items"].forEach((dynamic itemId, dynamic itemData) {
-      RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
+      final RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
           costPerOne: itemData["costPerOne"],
           totalCost: itemData["totalCost"],
           idInCart: itemId,
@@ -83,7 +120,7 @@ class RestaurantOrder extends Order {
     return restaurantOrder;
   }
 
-  String get restaurantId => this.serviceProviderId!;
+  String get restaurantId => serviceProviderId!;
 
   @override
   bool isCanceled() {
@@ -99,29 +136,31 @@ class RestaurantOrder extends Order {
         status == RestaurantOrderStatus.OnTheWay;
   }
 
-  String get clipBoardText {
+  String clipBoardText(LanguageType languageType) {
     String text = "";
-    text += "${this.restaurant.name}\n";
-    text += this.items.fold<String>("", (mainString, item) {
-      mainString += "  ${item.name} x${item.quantity} ${item.totalCost}\n";
+    text += "${restaurant.name}\n";
+    text +=
+        items.fold<String>("", (String mainString, RestaurantOrderItem item) {
       mainString +=
-          item.chooseOneOptions.fold("", (secondString, chooseOneOption) {
-        return "${secondString}    ${chooseOneOption.optionName}: ${chooseOneOption.chosenOptionName}\n";
+          "  ${item.name[languageType]} x${item.quantity} ${item.totalCost}\n";
+      mainString += item.chooseOneOptions.fold("",
+          (String secondString, ChooseOneOption chooseOneOption) {
+        return "$secondString    ${chooseOneOption.optionName[languageType]}: ${chooseOneOption.chosenOptionName[languageType]}\n";
       });
-      mainString +=
-          item.chooseManyOptions.fold("", (secondString, chooseManyOption) {
-        mezDbgPrint(chooseManyOption.optionName);
-        return "${secondString}    ${chooseManyOption.optionName}\n";
+      mainString += item.chooseManyOptions.fold("",
+          (String secondString, ChooseManyOption chooseManyOption) {
+        mezDbgPrint(chooseManyOption.optionName[languageType]);
+        return "$secondString    ${chooseManyOption.optionName[languageType]}\n";
       });
       mainString += "    ${item.notes}\n";
       return mainString;
     });
-    text += "${this.notes}\n";
-    text += "${this.cost}\n";
-    text += "${this.customer.name}\n";
-    text += "${this.to.address}\n";
+    text += "$notes\n";
+    text += "$cost\n";
+    text += "${customer.name}\n";
+    text += "${to.address}\n";
     text +=
-        "https://www.google.com/maps/@${this.to.latitude},${this.to.longitude},15z";
+        "https://www.google.com/maps/dir/?api=1&destination=${to.latitude},${to.longitude}";
     mezDbgPrint(text);
     return text;
   }
@@ -136,8 +175,8 @@ class RestaurantOrderItem {
   String image;
   int quantity;
   String? notes;
-  List<ChooseManyOption> chooseManyOptions = [];
-  List<ChooseOneOption> chooseOneOptions = [];
+  List<ChooseManyOption> chooseManyOptions = <ChooseManyOption>[];
+  List<ChooseOneOption> chooseOneOptions = <ChooseOneOption>[];
   RestaurantOrderItem(
       {required this.costPerOne,
       required this.totalCost,
@@ -173,28 +212,4 @@ class ChooseManyOption {
       required this.optionName,
       required this.chosenValueCost,
       required this.chosenOptionValue});
-}
-
-enum RestaurantOrderStatus {
-  OrderReceieved,
-  PreparingOrder,
-  ReadyForPickup,
-  OnTheWay,
-  Delivered,
-  CancelledByAdmin,
-  CancelledByCustomer
-}
-
-extension ParseRestaurantOrderStatusToString on RestaurantOrderStatus {
-  String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension ParseStringToRestaurantOrderStatus on String {
-  RestaurantOrderStatus toRestaurantOrderStatus() {
-    return RestaurantOrderStatus.values
-        .firstWhere((e) => e.toFirebaseFormatString() == this);
-  }
 }

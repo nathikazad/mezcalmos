@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/components/DialogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/buttonComponent.dart';
-import 'package:mezcalmos/DeliveryAdminApp/components/dailogComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
+        ["Orders"]["ViewRestaurantOrderScreen"]["components"]["ButtonStyles"];
 
 // the styles of status buttons inside the order screen
 class ButtonsStyle {
   // this button for cancel order
   static Widget cancelButtonWidget(String orderId) {
-    OrderController controller = Get.find<OrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    final RestaurantOrderController controller =
+        Get.find<RestaurantOrderController>();
+
+    // OrderController controller = Get.find<OrderController>();
 
     return Expanded(
       child: ButtonComponent(
         function: () async {
-          var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["cancelAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["cancelAlert"]["subTitle"], () {
+          final bool res = await dialogComponent(
+              _i18n()["cancelAlertTitle"], _i18n()["cancelAlertSubTitle"], () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);
@@ -30,13 +36,10 @@ class ButtonsStyle {
                   end: Alignment(1.1447703838348389, 1.1694844961166382),
                   colors: [const Color(0xede21132), const Color(0xdbd11835)]));
           if (res) {
-            controller.cancelOrder(orderId);
-            Get.back();
+            await controller.cancelOrder(orderId);
           }
         },
-        widget: Text(
-            lang.strings["customer"]["restaurant"]["checkout"]["cancel"]
-                .toUpperCase(),
+        widget: Text(_i18n()["cancel"].toUpperCase(),
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -46,18 +49,18 @@ class ButtonsStyle {
         gradient: const LinearGradient(
             begin: Alignment(-0.10374055057764053, 0),
             end: Alignment(1.1447703838348389, 1.1694844961166382),
-            colors: [const Color(0xede21132), const Color(0xdbd11835)]),
+            colors: [Color(0xede21132), Color(0xdbd11835)]),
       ),
     );
   }
 
   // this button for PreparingOrder
-  static Widget preparingOrderButtonWidget(String orderId) {
-    OrderController controller = Get.find<OrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+  static Widget preparingOrderButtonWidget(RestaurantOrder order) {
+    final RestaurantOrderController controller =
+        Get.find<RestaurantOrderController>();
+
     return ButtonComponent(
-        widget: Text(
-            lang.strings["deliveryAdminApp"]["ordersButton"]["readyForPickUp"],
+        widget: Text(_i18n()["readyForPickUp"],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -71,36 +74,42 @@ class ButtonsStyle {
               const Color(0xffd3bc0b),
               const Color(0xdbd17c18)
             ]),
-        function: () async {
-          var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["readyAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["readyAlert"]["subTitle"], () {
-            Get.back(result: true);
-          }, () {
-            Get.back(result: false);
-          },
-              Container(height: 70, width: 70, child: Image.asset(box)),
-              LinearGradient(
-                  begin: Alignment(-0.10374055057764053, 0),
-                  end: Alignment(1.1447703838348389, 1.1694844961166382),
-                  colors: [
-                    // const Color(0xede29211),
-                    const Color(0xffd3bc0b),
-                    const Color(0xdbd17c18)
-                  ]));
-          if (res) {
-            Get.snackbar("Loading", "");
-            controller.readyForPickupOrder(orderId);
-          }
-        });
+        function: (order.dropoffDriver == null)
+            ? () {
+                Get.snackbar(
+                    "${_i18n()["Error"]}", "${_i18n()["driverErrorAlert"]}");
+              }
+            : () async {
+                final bool res = await dialogComponent(
+                    _i18n()["readyAlertTitle"], _i18n()["readyAlertSubTitle"],
+                    () {
+                  Get.back(result: true);
+                }, () {
+                  Get.back(result: false);
+                },
+                    Container(height: 70, width: 70, child: Image.asset(box)),
+                    LinearGradient(
+                        begin: Alignment(-0.10374055057764053, 0),
+                        end: Alignment(1.1447703838348389, 1.1694844961166382),
+                        colors: [
+                          // const Color(0xede29211),
+                          const Color(0xffd3bc0b),
+                          const Color(0xdbd17c18)
+                        ]));
+                if (res) {
+                  Get.snackbar("Loading", "");
+                  await controller.readyForPickupOrder(order.orderId);
+                }
+              });
   }
 
   // this button for ReadyForPickup
   static Widget readyForPickupButtonWidget(String orderId) {
-    OrderController controller = Get.find<OrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    final RestaurantOrderController controller =
+        Get.find<RestaurantOrderController>();
+
     return ButtonComponent(
-      widget: Text(lang.strings["deliveryAdminApp"]["ordersButton"]["deliver"],
+      widget: Text(_i18n()["deliver"],
           style: TextStyle(
               color: const Color(0xffffffff),
               fontFamily: "psb",
@@ -111,9 +120,9 @@ class ButtonsStyle {
           end: Alignment(1.1447703838348389, 1.1694844961166382),
           colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]),
       function: () async {
-        var res = await dailogComponent(
-            lang.strings["deliveryAdminApp"]["onTheWayAlert"]["title"],
-            lang.strings["deliveryAdminApp"]["onTheWayAlert"]["subTitle"], () {
+        final bool res = await dialogComponent(
+            _i18n()["onTheWayAlertTitle"], _i18n()["onTheWayAlertSubTitle"],
+            () {
           Get.back(result: true);
         }, () {
           Get.back(result: false);
@@ -125,7 +134,7 @@ class ButtonsStyle {
                 colors: [const Color(0xff5572ea), const Color(0xdb1f18d1)]));
         if (res) {
           Get.snackbar("Loading", "");
-          controller.deliverOrder(orderId);
+          await controller.deliverOrder(orderId);
         }
       },
     );
@@ -133,11 +142,11 @@ class ButtonsStyle {
 
   // this button for OrderReceieved
   static Widget orderReceievedButtonWidget(String orderId) {
-    OrderController controller = Get.find<OrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    final RestaurantOrderController controller =
+        Get.find<RestaurantOrderController>();
+
     return ButtonComponent(
-        widget: Text(
-            lang.strings["deliveryAdminApp"]["ordersButton"]["preparing"],
+        widget: Text(_i18n()["preparing"],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -149,9 +158,9 @@ class ButtonsStyle {
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xffff9300), const Color(0xdbd15f18)]),
         function: () async {
-          var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["prepareAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["prepareAlert"]["subTitle"], () {
+          final bool res = await dialogComponent(
+              _i18n()["prepareAlertTitle"], _i18n()["prepareAlertSubTitle"],
+              () {
             Get.back(result: true);
           }, () {
             Get.back(result: false);
@@ -164,18 +173,18 @@ class ButtonsStyle {
 
           if (res) {
             Get.snackbar("Loading", "");
-            controller.prepareOrder(orderId);
+            await controller.prepareOrder(orderId);
           }
         });
   }
 
   //this button for OnTheWay
   static Widget onTheWayButtonWidget(String orderId) {
-    OrderController controller = Get.find<OrderController>();
-    LanguageController lang = Get.find<LanguageController>();
+    final RestaurantOrderController controller =
+        Get.find<RestaurantOrderController>();
+
     return ButtonComponent(
-        widget: Text(
-            lang.strings["deliveryAdminApp"]["ordersButton"]["received"],
+        widget: Text(_i18n()["received"],
             style: TextStyle(
                 color: const Color(0xffffffff),
                 fontFamily: "psb",
@@ -186,9 +195,8 @@ class ButtonsStyle {
             end: Alignment(1.1447703838348389, 1.1694844961166382),
             colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
         function: () async {
-          var res = await dailogComponent(
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["title"],
-              lang.strings["deliveryAdminApp"]["deliveredAlert"]["subTitle"],
+          final bool res = await dialogComponent(
+              _i18n()["deliveredAlertTitle"], _i18n()["deliveredAlertSubTitle"],
               () {
             Get.back(result: true);
           }, () {
@@ -201,7 +209,7 @@ class ButtonsStyle {
                   colors: [const Color(0xff13cb29), const Color(0xdb219125)]));
           if (res) {
             Get.snackbar("Loading", "");
-            controller.dropOrder(orderId);
+            await controller.dropOrder(orderId);
             Get.back();
           }
         });

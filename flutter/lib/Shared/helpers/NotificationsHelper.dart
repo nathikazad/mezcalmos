@@ -1,18 +1,23 @@
+// ignore_for_file: inference_failure_on_function_invocation
+
 import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
-import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
-import 'package:flutter/material.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
+    ["NotificationsHelper"];
 
 StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
   return Get.find<ForegroundNotificationsController>()
       .displayNotificationsStream
-      .listen((notification) {
+      .listen((notifs.Notification notification) {
     // mezDbgPrint("Notification Displayer: ${notification.toJson()}");
     // mezDbgPrint("Notif::title ====> ${notification.title}");
     // mezDbgPrint("Notif::body ====> ${notification.body}");
@@ -23,11 +28,32 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
   });
 }
 
-void _displayNotification(notifs.Notification notification) async {
+Future<void> _displayNotification(notifs.Notification notification) async {
   await Get.find<SettingsController>().playNotificationSound();
   // mezDbgPrint(notification.imgUrl);
   if (notification.notificationAction == notifs.NotificationAction.ShowPopUp) {
-    twoButtonDialog(
+    await decideWhichButtonDialogToUse(notification);
+  } else {
+    notificationSnackBar(notification.imgUrl, notification.title,
+        notification.body, notification.formattedTime, () async {
+      // mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
+      await Get.toNamed(notification.linkUrl);
+    });
+  }
+}
+
+Future<void> decideWhichButtonDialogToUse(
+    notifs.Notification notification) async {
+  if (Get.currentRoute == notification.linkUrl)
+    await oneButtonDialog(
+        title: notification.title,
+        body: notification.body,
+        buttonStyle: MezDialogButtonStyle(
+            buttonText: "Ok",
+            buttonColor: Color(0xffffffff),
+            buttonShadowColor: Color(0xfffdfdfd)));
+  else
+    await twoButtonDialog(
         title: notification.title,
         body: notification.body,
         buttonLeftStyle: MezDialogButtonStyle(
@@ -35,22 +61,14 @@ void _displayNotification(notifs.Notification notification) async {
             buttonColor: Color(0xffffffff),
             buttonShadowColor: Color(0xfffdfdfd)),
         buttonRightStyle: MezDialogButtonStyle(
-            buttonText: notification.linkText ??
-                Get.find<LanguageController>().strings['shared']['notification']
-                    ['view'],
+            buttonText: notification.linkText ?? _i18n()['view'],
             buttonColor: Color(0xffffffff),
             buttonShadowColor: Color(0xfffdfdfd)),
         rightButtonCallback: () {
+          
           return Get.toNamed(notification.linkUrl);
         },
         leftButtonCallback: () {});
-  } else {
-    notificationSnackBar(notification.imgUrl, notification.title,
-        notification.body, notification.formattedTime, () async {
-      // mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
-      Get.toNamed(notification.linkUrl);
-    });
-  }
 }
 
 void notificationSnackBar(
@@ -58,6 +76,7 @@ void notificationSnackBar(
   Get.rawSnackbar(
       onTap: (_) async {
         mezDbgPrint("ONTAP ====> $_");
+
         await onClick();
       },
       maxWidth: Get.width,

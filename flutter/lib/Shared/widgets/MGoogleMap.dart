@@ -7,9 +7,9 @@ import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
-import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:sizer/sizer.dart';import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
 
 class MGoogleMap extends StatefulWidget {
   final MapHelper.LocationChangesNotifier? notifyParentOfNewLocation;
@@ -71,7 +71,7 @@ class MGoogleMapState extends State<MGoogleMap> {
 
   @override
   void dispose() {
-    mezDbgPrint("MGoogleMap disposed ${this.hashCode} ${widget.debugString}");
+    mezDbgPrint("MGoogleMap disposed $hashCode ${widget.debugString}");
     _reRenderingTimer?.cancel();
     // gmapControlelr disposing.
     widget.mGoogleMapController.controller?.dispose();
@@ -99,9 +99,8 @@ class MGoogleMapState extends State<MGoogleMap> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(
-        "Inside MGoogleMap build ${this.hashCode} ${widget.debugString}");
-    responsiveSize(context);
+    mezDbgPrint("Inside MGoogleMap build $hashCode ${widget.debugString}");
+
     return Stack(
       children: [
         Obx(
@@ -113,9 +112,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                   padding: EdgeInsets.all(20),
                   mapToolbarEnabled: false,
                   minMaxZoomPreference:
-                      widget.mGoogleMapController.polylines.isNotEmpty
-                          ? MinMaxZoomPreference.unbounded
-                          : MinMaxZoomPreference(16, 17),
+                      widget.mGoogleMapController.getMapMinMaxZommPrefs(),
                   onCameraMove: (camMove) {
                     widget.mGoogleMapController
                         .updateMarkersIconOnZoomChange(zoom: camMove.zoom);
@@ -164,8 +161,8 @@ class MGoogleMapState extends State<MGoogleMap> {
                     }
                   },
                   child: Container(
-                    height: 50.sp,
-                    width: 50.sp,
+                    height: 10.sp,
+                    width: 10.sp,
                     decoration: BoxDecoration(
                       color: Color(0xffffffff),
                       boxShadow: <BoxShadow>[

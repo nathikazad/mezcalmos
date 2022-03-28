@@ -1,11 +1,12 @@
 import * as taxiNodes from "../../functions/src/shared/databaseNodes/taxi";
 import * as customerNodes from "../../functions/src/shared/databaseNodes/customer";
-import { Taxi } from "../../functions/src/shared/models/taxi/Taxi";
-import { TaxiOrder } from "../../functions/src/shared/models/taxi/TaxiOrder";
 import { expireOrder } from "../../functions/src/taxi/expire";
 import { NotificationPriority, push } from "../../functions/src/utilities/senders/fcm";
 import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
-import { OrderType } from "../../functions/src/shared/models/Order";
+import { OrderType } from "../../functions/src/shared/models/Generic/Order";
+import { TaxiOrder } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
+import { Taxi } from "../../functions/src/shared/models/Drivers/Taxi";
+import { taxiIncomingOrderUrl } from "../../functions/src/utilities/senders/appRoutes";
 
 
 const checkOpenOrdersInterval: number = 10 //seconds
@@ -143,15 +144,18 @@ function notifyDrivers(driversToNotify: Record<string, NotifyDriver>) {
     if (openOrders[driverToNotify.orderId].notificationStatus == undefined)
       openOrders[driverToNotify.orderId].notificationStatus = {}
 
-    if (openOrders[driverToNotify.orderId].notificationStatus![driverId] == undefined)
+    if (openOrders[driverToNotify.orderId].notificationStatus![driverId] == undefined) {
       openOrders[driverToNotify.orderId].notificationStatus![driverId] = {
         sent: true,
         sentTime: (new Date()).toISOString(),
         sentCount: 1
       }
+    }
     else {
-      openOrders[driverToNotify.orderId].notificationStatus![driverId].sentCount =
-        openOrders[driverToNotify.orderId].notificationStatus![driverId].sentCount ?? 0 + 1;
+      if (openOrders[driverToNotify.orderId].notificationStatus![driverId].sentCount == null) {
+        openOrders[driverToNotify.orderId].notificationStatus![driverId].sentCount = 0
+      }
+      openOrders[driverToNotify.orderId].notificationStatus![driverId].sentCount++;
     }
 
     push({
@@ -164,6 +168,7 @@ function notifyDrivers(driversToNotify: Record<string, NotifyDriver>) {
         },
         data: {
           notificationType: "newOrder",
+          linkUrl: taxiIncomingOrderUrl(driverToNotify.orderId),
           markReceivedUrl: constructReturnUrl(driverToNotify.orderId)
         },
       },
@@ -181,18 +186,18 @@ function updateNotificationStatusesInDb() {
     let openOrder = openOrders[orderId];
     rootNodes.openOrders(OrderType.Taxi, orderId).transaction(function (order) {
       if (order != null) {
-        console.log("root")
+        // console.log("root")
         order.notificationStatus = openOrder.notificationStatus!
-        console.log(order)
+        // console.log(order)
         return order;
       }
       return order
     });
     customerNodes.inProcessOrders(openOrder.customer.id, orderId).transaction(function (order) {
       if (order != null) {
-        console.log("customer")
+        // console.log("customer")
         order.notificationStatus = openOrder.notificationStatus!
-        console.log(order)
+        // console.log(order)
         return order;
       }
       return order

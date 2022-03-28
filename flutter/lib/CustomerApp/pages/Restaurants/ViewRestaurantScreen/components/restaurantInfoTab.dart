@@ -3,11 +3,16 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/workinHoursCart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
 
 final f = new DateFormat('hh:mma');
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+        ["pages"]
+["Restaurants"]["ViewRestaurantScreen"]["components"]["restaurantInfoTab"];
+
 
 class RestaurantInfoTab extends StatelessWidget {
   final Restaurant restaurant;
@@ -16,7 +21,7 @@ class RestaurantInfoTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
+    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -25,20 +30,20 @@ class RestaurantInfoTab extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                '${lang.strings["customer"]["restaurant"]["menu"]["description"]} :',
+                '${_i18n()["description"]} :',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
             Container(
               margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 15),
-              child: Text(restaurant.description[lang.userLanguageKey]!),
+              child: Text(restaurant.description[userLanguage]!),
             ),
-            (restaurant.location != null)
+            (restaurant.info.location != null)
                 ? Column(
                     children: [
                       Container(
                         child: Text(
-                          '${lang.strings["customer"]["restaurant"]["menu"]["location"]} :',
+                          '${_i18n()["location"]} :',
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
@@ -64,13 +69,12 @@ class RestaurantInfoTab extends StatelessWidget {
   }
 
   Widget getWorkingHoursWidget(Schedule? schedule, BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     var xDate = DateTime.now();
     List<Widget> widgets = [
       Container(
         alignment: Alignment.centerLeft,
         child: Text(
-          "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["workingHours"]}",
+          "${_i18n()["workingHours"]}",
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
@@ -84,7 +88,7 @@ class RestaurantInfoTab extends StatelessWidget {
         if (key.index == i) {
           widgets.add(WorkingHoursCart(
             day:
-                "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["weekDays"]["${key.toFirebaseFormatString()}"]}",
+                "${_i18n()["weekDays"]["${key.toFirebaseFormatString()}"]}",
             isOpen: value.isOpen,
             openHour:
                 "${f.format(DateTime(xDate.year, xDate.month, xDate.day, value.from[0], value.from[1]))}",
@@ -99,11 +103,4 @@ class RestaurantInfoTab extends StatelessWidget {
       children: widgets,
     );
   }
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.toUpperCase()).join(" ");
 }

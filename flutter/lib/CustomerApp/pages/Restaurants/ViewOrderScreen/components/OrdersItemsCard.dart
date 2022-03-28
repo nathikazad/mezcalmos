@@ -5,6 +5,10 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 import 'OrderItemsItemCard.dart';
 
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
+
 class OrderItemsCard extends StatelessWidget {
   OrderItemsCard({
     Key? key,
@@ -15,7 +19,6 @@ class OrderItemsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     return Container(
       child: Column(
@@ -24,7 +27,7 @@ class OrderItemsCard extends StatelessWidget {
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.symmetric(horizontal: 8),
             child: Text(
-              '${lang.strings["customer"]["restaurant"]["checkout"]["orderItems"]}',
+              '${_i18n()["orderItems"]}',
               style: txt.bodyText1,
             ),
           ),

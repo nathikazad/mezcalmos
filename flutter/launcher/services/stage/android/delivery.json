@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "606383265109",
+    "firebase_url": "https://mezcalmos-staging-default-rtdb.firebaseio.com",
+    "project_id": "mezcalmos-staging",
+    "storage_bucket": "mezcalmos-staging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606383265109:android:a71417e9608e3fcad8cbdc",
+        "android_client_info": {
+          "package_name": "com.mezstaging.delivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "606383265109-gr1panpkmnvqv5qsnfop7dch4pn091v5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxRRO05KcVbR8oaj7SnHJeClpkLQI2COc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "606383265109-gr1panpkmnvqv5qsnfop7dch4pn091v5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "606383265109-16eenb96it4mfiave8hnp6m2faqlj3u8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mezstaging.delivery"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

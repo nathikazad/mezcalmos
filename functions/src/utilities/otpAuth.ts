@@ -1,6 +1,6 @@
 import * as firebase from "firebase-admin";
 import * as functions from "firebase-functions";
-import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic";
+import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as sms from "./senders/sms";
 
 interface sendOtpInterface {

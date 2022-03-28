@@ -1,13 +1,14 @@
 import * as functions from "firebase-functions";
 import * as rootNodes from "../shared/databaseNodes/root";
 import * as customerNodes from "../shared/databaseNodes/customer";
-import { ServerResponseStatus } from "../shared/models/Generic";
-import { OrderType } from "../shared/models/Order";
-import { push } from "../shared/notification/notifyUser";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { OrderType } from "../shared/models/Generic/Order";
+import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/taxi/TaxiOrder";
+import { TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { ParticipantType } from "../shared/models/Chat";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { orderUrl } from "../utilities/senders/appRoutes";
 
 export async function expireOrder(orderId: string) {
   let order = (await rootNodes.openOrders(OrderType.Taxi, orderId).once('value')).val()
@@ -66,10 +67,11 @@ export async function expireOrder(orderId: string) {
         orderId: orderId,
         notificationAction: NotificationAction.ShowPopUp,
       },
-      background: taxiOrderStatusChangeMessages[TaxiOrderStatus.Expired]
+      background: taxiOrderStatusChangeMessages[TaxiOrderStatus.Expired],
+      linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, orderId)
     }
 
-    push(order.customer.id!, notification, ParticipantType.Customer, true);
+    pushNotification(order.customer.id!, notification, ParticipantType.Customer, true);
 
     return {
       status: ServerResponseStatus.Success,

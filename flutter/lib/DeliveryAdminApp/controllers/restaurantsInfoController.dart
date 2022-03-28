@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'dart:async';
 
 class RestaurantsInfoController extends GetxController {
-  LanguageController lang = Get.find<LanguageController>();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   @override
   void onInit() {

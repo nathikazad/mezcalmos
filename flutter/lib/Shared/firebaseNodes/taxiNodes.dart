@@ -6,6 +6,16 @@ String taxiStateNode(String uid) {
   return 'taxis/info/$uid/state';
 }
 
+String inNegotationNode(String uid) {
+  return taxiStateNode(uid) + "/inNegotiation";
+}
+
+String onlineTaxiDrivers({String? driverId}) {
+  String address = 'online/taxi';
+  if (driverId != null) address += '/$driverId';
+  return address;
+}
+
 String taxiDriverAppVersionNode(String uid) {
   return taxiAuthNode(uid) + '/versionNumber';
 }

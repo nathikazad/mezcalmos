@@ -4,14 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 
 class LanguageController extends GetxController {
-  AuthController _authController = Get.find<AuthController>();
-
   // default is english
-  RxBool isAppInitialized = false.obs;
+  RxBool isLamgInitialized = false.obs;
   Rx<LanguageType> _userLanguageKey = tDefaultLanguage.obs;
 
   // jsonStrings will have:
@@ -20,7 +19,7 @@ class LanguageController extends GetxController {
       .obs; // language Object by default  must be set to en if no lang given  in constructor.
 
   LanguageController() {
-    final LanguageType lang =
+    final LanguageType? lang =
         Platform.localeName.substring(0, 2).toLanguageType();
 
     // mezDbgPrint("\n\n\n\n\nUSER LANGUAGE [[ $lang ]]\n\n\n\n\n");
@@ -39,6 +38,20 @@ class LanguageController extends GetxController {
   dynamic get strings =>
       _jsonStrings[_userLanguageKey.value.toFirebaseFormatString()];
 
+  /// fileLocation: customerApp/notificationHandler
+  dynamic getLMap(String fileLocation) {
+    try {
+      dynamic map =
+          _jsonStrings[_userLanguageKey.value.toFirebaseFormatString()];
+      fileLocation.split('/').forEach((element) {
+        map = map[element];
+      });
+      return map;
+    } on Exception catch (e) {
+      // TODO
+    }
+  }
+
   LanguageType get oppositLangKey => _userLanguageKey.value == LanguageType.EN
       ? LanguageType.ES
       : LanguageType.EN;
@@ -50,38 +63,42 @@ class LanguageController extends GetxController {
 
   void changeUserLanguage([LanguageType? language]) {
     if (language == null) {
-      if (_authController.user?.language == LanguageType.ES) {
+      if (Get.find<AuthController>().user?.language == LanguageType.ES) {
         language = LanguageType.EN;
       } else {
         language = LanguageType.ES;
       }
-      if (_authController.user != null) {
+      if (Get.find<AuthController>().user != null) {
         // we need that because in case user clicked change lang from SideMenu , we really don't
         // need to execute that one because there is no user SIgnedIn yet!
         // we have to make some kind of queue that will handle stuff once the user SignedIn.
-        _authController.changeLanguage(language);
+        Get.find<AuthController>().changeLanguage(language);
       } else {
         // welse so we can still update the user language locally but not in db!
         _userLanguageKey.value = oppositLangKey;
       }
-    } else if (_authController.user == null) {
+    } else if (Get.find<AuthController>().user == null) {
       _userLanguageKey.value = language;
     }
   }
 
-  void userLanguageChanged(LanguageType language) {
+  void setLanguage(LanguageType language) {
     _userLanguageKey.value = language;
   }
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
-    String enJson = await rootBundle.loadString(enLang);
-    String esJson = await rootBundle.loadString(esLang);
-    _jsonStrings = <String, dynamic>{
-      "en": jsonDecode(enJson) as Map<String, dynamic>,
-      "es": jsonDecode(esJson) as Map<String, dynamic>
-    };
+    Future<dynamic>.microtask(() async {
+      String enJson = await rootBundle.loadString(enLang);
+      String esJson = await rootBundle.loadString(esLang);
+      _jsonStrings = <String, dynamic>{
+        "en": jsonDecode(enJson) as Map<String, dynamic>,
+        "es": jsonDecode(esJson) as Map<String, dynamic>
+      };
+    }).then((_) {
+      isLamgInitialized.value = true;
+    });
   }
 
   @override

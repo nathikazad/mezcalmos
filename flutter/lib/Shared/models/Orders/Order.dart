@@ -1,5 +1,10 @@
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 abstract class Order {
   String orderId;
@@ -11,6 +16,7 @@ abstract class Order {
   UserInfo? serviceProvider;
   Location to;
   num cost;
+  RouteInformation? routeInformation;
   Order(
       {required this.orderId,
       required this.orderType,
@@ -20,19 +26,53 @@ abstract class Order {
       required this.cost,
       required this.customer,
       this.serviceProvider,
-      required this.to});
+      required this.to,
+      this.routeInformation});
   bool inProcess();
   bool isCanceled();
+
+  String driverDatabaseAddress(){
+    switch (orderType) {
+      case OrderType.Laundry:
+          switch ((this as LaundryOrder).getCurrentPhase()) {
+            case LaundryOrderPhase.Dropoff:
+                return "dropoffDriver";      
+            case LaundryOrderPhase.Pickup:
+                return "pickupDriver";
+            case LaundryOrderPhase.Neither:
+              return "dropoffDriver";
+          }
+      case OrderType.Restaurant:
+        return "dropoffDriver";
+      default:
+        return "driver";
+    }
+  }
   // Order.orderFromData(dynamic orderId, dynamic orderData){
 
 }
 
 enum OrderType { Taxi, Restaurant, Laundry, Water }
 
+
+
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+
+  String toPlural() {
+    switch (this) {
+    case OrderType.Taxi:
+      return "taxis";
+    case OrderType.Restaurant:
+      return "restaurants";
+    case OrderType.Laundry:
+      return "laundries";
+    case OrderType.Water:
+      return "waters";
+  }
   }
 }
 
@@ -59,14 +99,64 @@ extension ParseStringToPaymentType on String {
   }
 }
 
-class UserInfo {
-  String id;
-  String name;
-  String image;
+abstract class DeliverableOrder extends Order {
+  DeliveryDriverUserInfo? dropoffDriver;
+  String? dropOffDriverChatId;
+  DeliverableOrder(
+      {required String orderId,
+      String? serviceProviderId,
+      required PaymentType paymentType,
+      required DateTime orderTime,
+      required num cost,
+      UserInfo? serviceProvider,
+      required UserInfo customer,
+      required Location to,
+      required OrderType orderType,
+      this.dropoffDriver,
+      required this.dropOffDriverChatId,
+      RouteInformation? routeInformation})
+      : super(
+            orderId: orderId,
+            orderType: orderType,
+            serviceProviderId: serviceProviderId,
+            paymentType: paymentType,
+            orderTime: orderTime,
+            cost: cost,
+            customer: customer,
+            serviceProvider: serviceProvider,
+            to: to,
+            routeInformation: routeInformation);
+}
 
-  UserInfo(this.id, this.name, this.image);
-
-  factory UserInfo.fromData(dynamic data) {
-    return UserInfo(data["id"], data["name"], data["image"]);
-  }
+abstract class TwoWayDeliverableOrder extends DeliverableOrder {
+  DeliveryDriverUserInfo? pickupDriver;
+  String? pickupDriverChatId;
+  TwoWayDeliverableOrder(
+      {required String orderId,
+      String? serviceProviderId,
+      required PaymentType paymentType,
+      required DateTime orderTime,
+      required num cost,
+      UserInfo? serviceProvider,
+      required UserInfo customer,
+      required Location to,
+      required OrderType orderType,
+      RouteInformation? routeInformation,
+      DeliveryDriverUserInfo? dropoffDriver,
+      required dropOffDriverChatId,
+      this.pickupDriver,
+      required this.pickupDriverChatId})
+      : super(
+            orderId: orderId,
+            orderType: orderType,
+            serviceProviderId: serviceProviderId,
+            paymentType: paymentType,
+            orderTime: orderTime,
+            cost: cost,
+            customer: customer,
+            serviceProvider: serviceProvider,
+            to: to,
+            routeInformation: routeInformation,
+            dropoffDriver: dropoffDriver,
+            dropOffDriverChatId: dropOffDriverChatId);
 }

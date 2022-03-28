@@ -3,19 +3,25 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBarComponents.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/RecreateOrderBtn.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:sizer/sizer.dart';
 
-import '../BottomBarComponents.dart';
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Taxi"]["components"]["TaxiBottomBars"]["TaxiOrderBottomBar"];
 
 class TaxiOrderBottomBar extends StatefulWidget {
   Rxn<TaxiOrder> order;
+
+  /// Show a bottom bar that depends on the status
+  /// normally shows taxi avatar and name but if order is looking
+  /// then shows increment and decrement price buttons
   TaxiOrderBottomBar({Key? key, required this.order}) : super(key: key);
 
   @override
@@ -23,37 +29,36 @@ class TaxiOrderBottomBar extends StatefulWidget {
 }
 
 class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
-  LanguageController lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return Positioned(
       bottom: 25,
       right: 15,
       left: 15,
-      child: Obx(
-        () => Container(
-          padding: const EdgeInsets.all(8),
-          margin: EdgeInsets.only(
-              bottom: (widget.order.value!.status ==
-                      TaxiOrdersStatus.LookingForTaxi)
-                  ? 45
-                  : 0),
-          height: 60,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(
-                  width: 1, color: Theme.of(context).scaffoldBackgroundColor),
-              color: Colors.white),
-          child: Row(
-            children: buildBottomBatByStatus(context),
-          ),
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        margin: EdgeInsets.only(
+            bottom:
+                (widget.order.value!.status == TaxiOrdersStatus.LookingForTaxi)
+                    ? 45
+                    : 0),
+        height: 70,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+                width: 1, color: Theme.of(context).scaffoldBackgroundColor),
+            color: Colors.white),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: buildBottomBatByStatus(context),
         ),
       ),
     );
   }
 
   Widget incrementDecrementPrice() {
-    TaxiController taxiController = Get.put<TaxiController>(TaxiController());
+    final TaxiController taxiController =
+        Get.put<TaxiController>(TaxiController());
     return Flexible(
       flex: 2,
       // fit: FlexFit.tight,
@@ -72,7 +77,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                   tooltip: 'Decrease the price',
                   padding: EdgeInsets.zero,
                   onPressed: () {
-                    Order? order = Get.find<OrderController>()
+                    final Order? order = Get.find<OrderController>()
                         .hasOrderOfType(typeToCheck: OrderType.Taxi);
                     if (order != null) {
                       taxiController.updateRideCost(
@@ -106,7 +111,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                   tooltip: 'Increase the price',
                   padding: EdgeInsets.zero,
                   onPressed: () {
-                    Order? order = Get.find<OrderController>()
+                    final Order? order = Get.find<OrderController>()
                         .hasOrderOfType(typeToCheck: OrderType.Taxi);
                     if (order != null) {
                       taxiController.updateRideCost(
@@ -200,7 +205,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
   }
 
   List<Widget> buildBottomBatByStatus(BuildContext pContext) {
-    List<Widget> _widgies = [];
+    final List<Widget> _widgies = [];
     switch (widget.order.value!.status) {
       case TaxiOrdersStatus.LookingForTaxi:
         _widgies.assignAll([
@@ -216,8 +221,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
       case TaxiOrdersStatus.DroppedOff:
         _widgies.assignAll([
           taxiAvatarAndName(
-              description: lang.strings?['customer']?['taxiView']
-                  ?['rideFinished'],
+              description: _i18n()?['rideFinished'],
               pContext: pContext,
               order: widget.order.value!),
           VerticalDivider(),
@@ -228,8 +232,6 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               order: widget.order.value!,
               margin: EdgeInsets.symmetric(horizontal: 6))
         ]);
-        // widget.bottomPadding = 10.0;
-
         break;
 
       case TaxiOrdersStatus.Expired:
@@ -238,9 +240,8 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               pContext: pContext,
               asset: taxi_driver_marker_asset,
               name:
-                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${lang.strings?['customer']?['taxiView']?['ride']}.",
-              description: lang.strings?['customer']?['taxiView']
-                  ?['rideExpired'],
+                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n()?['ride']}.",
+              description: _i18n()?['rideExpired'],
               order: widget.order.value!),
           RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest())
         ]);
@@ -252,8 +253,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           taxiAvatarAndName(
               order: widget.order.value!,
               pContext: pContext,
-              description: lang.strings?['customer']?['taxiView']
-                  ?['rideCancelledByTaxi']),
+              description: _i18n()?['rideCancelledByTaxi']),
           messageBtn(
               order: widget.order.value!,
               margin: EdgeInsets.symmetric(horizontal: 6)),
@@ -269,10 +269,88 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               pContext: pContext,
               asset: taxi_driver_marker_asset,
               name:
-                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${lang.strings?['customer']?['taxiView']?['ride']}.",
-              description: lang.strings?['customer']?['taxiView']
-                  ?['rideCancelledByCustomer']),
+                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n()?['ride']}.",
+              description: _i18n()?['rideCancelledByCustomer']),
           RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest())
+        ]);
+        // widget.bottomPadding = 10.0;
+        break;
+      case TaxiOrdersStatus.ForwardingToLocalCompany:
+        _widgies.assignAll([
+          CircleAvatar(
+            radius: 17,
+            child: Icon(
+              Icons.local_taxi,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Flexible(
+            fit: FlexFit.tight,
+            flex: 7,
+            child: Text(
+              '${_i18n()["forwarding"]}',
+              style: Theme.of(pContext)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(fontSize: 11.sp),
+            ),
+          ),
+          Spacer(),
+          cancelBtn(widget.order.value!)
+        ]);
+        // widget.bottomPadding = 10.0;
+        break;
+      case TaxiOrdersStatus.ForwardingSuccessful:
+        _widgies.assignAll([
+          Icon(
+            Icons.check_circle,
+            color: Colors.green,
+            size: 30.sp,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Flexible(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                " ${_i18n()["taxiNumber"]} : ${widget.order.value!.driver!.taxiNumber}",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              Text(_i18n()["forwardSuccess"],
+                  style: Theme.of(pContext).textTheme.subtitle1)
+            ],
+          ))
+        ]);
+        // widget.bottomPadding = 10.0;
+        break;
+      case TaxiOrdersStatus.ForwardingUnsuccessful:
+        _widgies.assignAll([
+          Icon(
+            Icons.cancel,
+            color: Colors.red,
+            size: 30.sp,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Flexible(
+              flex: 5,
+              fit: FlexFit.tight,
+              child: Text(_i18n()['forwardUnsuccess'],
+                  style: Theme.of(pContext).textTheme.bodyText1)),
+          // taxiAvatarAndName(
+          //     order: widget.order.value!,
+          //     pContext: pContext,
+          //     description: lang.strings?['customer']?['taxiView']
+          //         ?['rideCancelledByCompany']),
+          Spacer(),
+          RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest()),
         ]);
         // widget.bottomPadding = 10.0;
         break;

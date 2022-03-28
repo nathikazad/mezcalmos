@@ -1,6 +1,4 @@
 const String _imgs_path = "assets/images/customer/taxi/";
-
-const String logo_asset = "${_imgs_path}logo.png";
 const String header_asset = "${_imgs_path}header.png";
 
 // default ones  --------------------------------------------------------------------------------------------------------------

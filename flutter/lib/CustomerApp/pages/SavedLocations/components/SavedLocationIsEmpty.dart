@@ -3,9 +3,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
+["SavedLocations"]["components"]["SavedLocationIsEmpty"];
+
 class SavedlocationISEmpty extends StatelessWidget {
   const SavedlocationISEmpty({Key? key}) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
@@ -27,7 +31,7 @@ class SavedlocationISEmpty extends StatelessWidget {
           Container(
             child: Text(
               //customer.savedLocations.savedLocationsListEmpty
-              Get.find<LanguageController>().strings['customer']
+              _i18n().strings['customer']
                   ['savedLocations']['savedLocationsListEmpty'],
               textAlign: TextAlign.center,
               style: txt.headline2!.copyWith(
@@ -41,8 +45,7 @@ class SavedlocationISEmpty extends StatelessWidget {
           ),
           Container(
             child: Text(
-              Get.find<LanguageController>().strings['customer']
-                  ['savedLocations']['clickBtnToAddNewLocation'],
+              _i18n()['clickBtnToAddNewLocation'],
               textAlign: TextAlign.center,
               style: txt.subtitle1!
                   .copyWith(fontWeight: FontWeight.w500, fontSize: 13),

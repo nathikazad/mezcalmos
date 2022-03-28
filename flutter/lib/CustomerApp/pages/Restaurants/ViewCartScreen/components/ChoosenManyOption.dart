@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/TitlesComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TitlesComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ViewCartScreen"]["components"]["ChoosenManyOption"];
 
 List<Widget> choosenManyOption(
     List<CartChooseManyItem> cartChooseManyItems, BuildContext context) {
-  LanguageController lang = Get.find<LanguageController>();
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
   final txt = Theme.of(context).textTheme;
 
   List<Widget> myWidgets = [
@@ -14,7 +20,7 @@ List<Widget> choosenManyOption(
       height: 5,
     ),
     MenuTitles(
-      title: lang.strings["customer"]["restaurant"]["cart"]["options"],
+      title: _i18n()["options"],
       textTheme: txt.subtitle1!
           .copyWith(fontSize: 13, color: Color.fromRGBO(33, 33, 33, 0.8)),
     ),
@@ -28,7 +34,7 @@ List<Widget> choosenManyOption(
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 25, top: 5),
           child: Text(
-              "${cartChooseManyItem.optionDetails.name[lang.userLanguageKey]}"
+              "${cartChooseManyItem.optionDetails.name[userLanguage]}"
                   .inCaps,
               style: const TextStyle(
                   color: const Color(0xff000000),
@@ -46,11 +52,4 @@ List<Widget> choosenManyOption(
   } else {
     return myWidgets;
   }
-}
-
-extension CapExtension on String {
-  String get inCaps => '${this[0].toUpperCase()}${this.substring(1)}';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach =>
-      this.split(" ").map((str) => str.capitalize).join(" ");
 }

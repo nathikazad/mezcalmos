@@ -1,6 +1,6 @@
-import { Language } from "../shared/models/Generic";
+import { Language } from "../shared/models/Generic/Generic";
 import { BackgroundNotification } from "../shared/models/Notification";
-import { TaxiOrderStatus } from "../shared/models/taxi/TaxiOrder";
+import { TaxiOrderStatus } from "../shared/models/Services/Taxi/TaxiOrder";
 
 export const taxiOrderStatusChangeMessages:
   { [id in TaxiOrderStatus]: BackgroundNotification } = {
@@ -72,6 +72,36 @@ export const taxiOrderStatusChangeMessages:
     [Language.ES]: {
       title: "Tu viaje ha sido cancelado",
       body: "Lamento informarle que su viaje ha sido cancelado."
+    }
+  },
+  [TaxiOrderStatus.ForwardingToLocalCompany]: {
+    [Language.EN]: {
+      title: "Fowarding your order to local company",
+      body: "We were unable to find you a driver, we are calling the local company to find you a driver"
+    },
+    [Language.ES]: {
+      title: "Reenviando su pedido a la empresa local",
+      body: "No pudimos encontrarle un conductor, estamos llamando a la empresa local para encontrarle un conductor"
+    }
+  },
+  [TaxiOrderStatus.ForwardingSuccessful]: {
+    [Language.EN]: {
+      title: "Taxi is on the way",
+      body: "We found you a taxi, and he is on the way."
+    },
+    [Language.ES]: {
+      title: "El taxi está en camino",
+      body: "Te encontramos un taxi, y está en camino"
+    }
+  },
+  [TaxiOrderStatus.ForwardingUnsuccessful]: {
+    [Language.EN]: {
+      title: "Taxi not found through local company",
+      body: "Sorry to inform you that we could not find you a taxi through local company."
+    },
+    [Language.ES]: {
+      title: "Taxi no encontrado a través de la empresa local",
+      body: "Lamento informarle que no pudimos encontrarle un taxi a través de la compañía local."
     }
   }
 }

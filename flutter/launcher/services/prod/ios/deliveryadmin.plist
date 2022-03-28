@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>804036698204-24c5phscma3cibpsu304ie3n4263ick3.apps.googleusercontent.com</string>
+	<string>804036698204-8sc677laf8vjfc9ot4vo1j6379ppse4n.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.804036698204-24c5phscma3cibpsu304ie3n4263ick3</string>
+	<string>com.googleusercontent.apps.804036698204-8sc677laf8vjfc9ot4vo1j6379ppse4n</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>804036698204-asifo3thj82e433pt5idptgjcah4rlvs.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mezstaging.deliveryadmin</string>
+	<string>com.mezcalmos.deliveryadmin</string>
 	<key>PROJECT_ID</key>
 	<string>mezcalmos-31f1c</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:804036698204:ios:ba3291310b10fddf3f8699</string>
+	<string>1:804036698204:ios:4642d7e627191e493f8699</string>
 	<key>DATABASE_URL</key>
 	<string>https://mezcalmos-31f1c-default-rtdb.firebaseio.com</string>
 </dict>

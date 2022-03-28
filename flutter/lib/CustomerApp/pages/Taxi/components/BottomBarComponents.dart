@@ -9,11 +9,16 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Taxi"]["components"]["BottomBarComponents"];
+
+final OrderController orderController = Get.find<OrderController>();
 
 Widget verticalSeparator() {
   return VerticalDivider(width: 1, color: Colors.grey.shade300);
@@ -146,7 +151,9 @@ Widget taxiAvatarAndName(
 Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
   return GestureDetector(
     onTap: () {
-      Get.toNamed(getTaxiMessagesRoute(order.orderId));
+      Get.toNamed<void>(
+        getTaxiMessagesRoute(order.orderId),
+      );
     },
     child: Container(
       margin: margin ?? EdgeInsets.only(left: 6),
@@ -165,18 +172,20 @@ Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
       ),
       child: Center(
         child: Stack(
-          children: [
-            Get.find<OrderController>().hasNewMessageNotification(order.orderId)
-                ? Positioned(
-                    top: 5,
-                    right: 5,
-                    child: Container(
-                      height: 6,
-                      width: 6,
-                      decoration: BoxDecoration(
-                          color: Colors.red, shape: BoxShape.circle),
-                    ))
-                : SizedBox(),
+          children: <Widget>[
+            Obx(
+              () => orderController.hasNewMessageNotification(order.orderId)
+                  ? Positioned(
+                      top: 5,
+                      right: 5,
+                      child: Container(
+                        height: 6,
+                        width: 6,
+                        decoration: BoxDecoration(
+                            color: Colors.red, shape: BoxShape.circle),
+                      ))
+                  : SizedBox(),
+            ),
             Center(
               child: Icon(
                 Icons.mail,
@@ -192,25 +201,21 @@ Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
 }
 
 Widget cancelBtn(TaxiOrder order) {
-  LanguageController lang = Get.find<LanguageController>();
   return Container(
     margin: EdgeInsets.only(right: 6),
     child: GestureDetector(
       onTap: () async {
-        YesNoDialogButton res = await yesNoDialog(
-            text: lang.strings?['taxi']?['cancelOrder']
-                    ?['confirmation_header'] ??
-                "Por favor confirmar",
-            body: lang.strings?['taxi']?['cancelOrder']?['confirmation_text'] ??
-                "¿Cancelar el viaje actual?");
+        final YesNoDialogButton res = await yesNoDialog(
+            text: _i18n()?['confirmation_header'] ?? "Por favor confirmar",
+            body:
+                _i18n()?['confirmation_text'] ?? "¿Cancelar el viaje actual?");
 
         if (res == YesNoDialogButton.Yes) {
-          ServerResponse resp =
+          final ServerResponse resp =
               await Get.find<TaxiController>().cancelTaxi(order.orderId);
 
           if (!resp.success) {
-            MezSnackbar("Oops",
-                lang.strings['shared']['snackbars']['serverCommunicationError'],
+            MezSnackbar("Oops", _i18n()['serverCommunicationError'],
                 position: SnackPosition.TOP);
           }
           // no need for else here , because we are handling UI changes already upon CanceledbyCustomer.
@@ -238,7 +243,7 @@ Widget cancelBtn(TaxiOrder order) {
 Widget buildMsgAndCancelBtn(TaxiOrder order) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
+    children: <Widget>[
       messageBtn(order: order),
       SizedBox(
         width: 5,

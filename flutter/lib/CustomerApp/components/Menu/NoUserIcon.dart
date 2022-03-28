@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:sizer/sizer.dart';
 
 class NoUserIcon extends StatelessWidget {
   const NoUserIcon({

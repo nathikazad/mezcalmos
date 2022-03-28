@@ -11,8 +11,11 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ["AuthScreens"]["SMS"]["OtpConfirmationScreen"];
+
+
 class OtpConfirmationScreen extends GetView<AuthController> {
-  LanguageController lang = Get.find<LanguageController>();
   RxBool clickedSignInOtp = false.obs;
   RxInt _timeBetweenResending = 0.obs;
   RxBool canConfirmOtp = false.obs;
@@ -45,7 +48,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: Text('${lang.strings["shared"]["login"]["confirmation"]}'),
+          title: Text('${_i18n()["confirmation"]}'),
         ),
         bottomSheet: BottomSheet(
             enableDrag: false,
@@ -70,7 +73,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   () => Container(
                     margin: const EdgeInsets.all(5),
                     child: Text(
-                        lang.strings['shared']['login']["OtpConfirmation"],
+                        _i18n()["OtpConfirmation"],
                         overflow: TextOverflow.visible,
                         style: txt.headline1),
                   ),
@@ -84,7 +87,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   margin: const EdgeInsets.all(8),
                   child: Obx(
                     () => Text(
-                      lang.strings['shared']['login']["twilioNote"],
+                      _i18n()["twilioNote"],
                       style: txt.bodyText2,
                     ),
                   ),
@@ -111,7 +114,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   style: txt.bodyText2,
                   children: <TextSpan>[
                     new TextSpan(
-                        text: lang.strings['shared']['login']["enterOtpCode"],
+                        text: _i18n()["enterOtpCode"],
                         style: txt.bodyText2),
                     new TextSpan(
                         text: "  ${Get.arguments ?? _phonePassed}",
@@ -170,7 +173,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "${lang.strings["shared"]["login"]["otpDidnReciveTxt"]}",
+                  "${_i18n()["otpDidnReceiveTxt"]}",
                   style: txt.bodyText2,
                 ),
                 Obx(
@@ -203,8 +206,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                                 : Colors.grey),
                         child: Text(
                           _timeBetweenResending.value == 0
-                              ? lang.strings['shared']['login']["resend"]
-                              : "${lang.strings['shared']['login']["resendAfter"]} ${_timeBetweenResending.value} ${lang.strings['shared']['login']["seconds"]}",
+                              ? _i18n()["resend"]
+                              : "${_i18n()["resendAfter"]} ${_timeBetweenResending.value} ${_i18n()["seconds"]}",
                         )),
                   ),
                 ),
@@ -237,7 +240,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                     case false:
                       MezSnackbar(
                           "Oops ..",
-                          Get.find<LanguageController>().strings['shared']
+                          _i18n().strings['shared']
                               ['login']['wrongOTPCode']);
                       clickedSignInOtp.value = false;
                       break;
@@ -253,7 +256,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
             alignment: Alignment.center,
             child: (clickedSignInOtp.value)
                 ? CircularProgressIndicator()
-                : Text(lang.strings['shared']['login']["confirm"]),
+                : Text(_i18n()["confirm"]),
           )),
     );
   }

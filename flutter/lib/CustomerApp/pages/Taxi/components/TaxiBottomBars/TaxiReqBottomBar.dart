@@ -5,6 +5,10 @@ import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]
+["Taxi"]["components"]["TaxiBottomBars"]["TaxiReqBottomBar"];
+
 class TaxiReqBottomBar extends StatefulWidget {
   final TaxiRequest taxiRequest;
   const TaxiReqBottomBar({Key? key, required this.taxiRequest})
@@ -15,7 +19,6 @@ class TaxiReqBottomBar extends StatefulWidget {
 }
 
 class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
-  final LanguageController _lang = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -57,7 +60,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               child: IconButton(
                 iconSize: 13.sp,
                 splashRadius: 18,
-                tooltip: _lang.strings['customer']['taxiView']['decreasePrice'],
+                tooltip: _i18n()['decreasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   widget.taxiRequest.decrementPrice();
@@ -80,7 +83,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               child: IconButton(
                 iconSize: 13.sp,
                 splashRadius: 18,
-                tooltip: _lang.strings['customer']['taxiView']['increasePrice'],
+                tooltip: _i18n()['increasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   widget.taxiRequest.incrementPrice();

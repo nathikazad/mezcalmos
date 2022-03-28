@@ -16,6 +16,9 @@
           "image": {
             ".write": "$uid === auth.uid"
           },
+          "bigImage": {
+            ".write": "$uid === auth.uid"
+          },
           "name": {
             ".write": "$uid === auth.uid"
           },
@@ -54,6 +57,15 @@
             "cost": {
               ".write": "data.parent().exists() && data.parent().child('/customer/id').val() === auth.uid"
             },
+            "counterOffers": {
+              "$driverId": {
+                ".write": "$driverId === auth.uid",
+                ".read": "$driverId === auth.uid",
+                "status": {
+                  ".write": "auth.uid === $uid"
+                }
+              }
+            },
             "notificationStatus": {
               "$driverId": {
                 "received": {
@@ -64,9 +76,9 @@
                 }
               }
             },
-            "driver": {
+            "$driverType": {
               "location": {
-                ".write": "data.parent().parent().exists() && data.parent().parent().child('/driver/id').val() === auth.uid"
+                ".write": "data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
               }
             }
           }
@@ -75,7 +87,7 @@
     },
     "taxis": {
       ".read": "root.child('taxiAdmins/' + auth.uid + '/authorized').val() === true",
-      "info" : {
+      "info": {
         "$uid": {
           ".read": "$uid === auth.uid",
           "notificationInfo": {
@@ -86,6 +98,9 @@
           },
           "state": {
             "isLooking": {
+              ".write": "$uid === auth.uid"
+            },
+            "inNegotiation": {
               ".write": "$uid === auth.uid"
             }
           },
@@ -116,13 +131,13 @@
       }
     },
     "orders": {
-      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
       "inProcess": {
-        "taxi": {
+        "$orderType": {
           "$orderId": {
-            "driver": {
+            "$driverType": {
               "location": {
-                ".write": "data.parent().parent().exists() && root.child('orders/inProcess/taxi/' + $orderId + '/driver/id').val() === auth.uid"
+                ".write": "data.parent().parent().exists() && root.child('orders/inProcess/' + $orderType + '/' + $orderId + '/' + $driverType + '/id').val() === auth.uid"
               }
             }
           }
@@ -135,8 +150,8 @@
           ]
         }
       },
-      "open" : {
-        ".read": "true",
+      "open": {
+        ".read": "root.child('taxis/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'",
         "taxi": {
           "$orderId": {
             "cost": {
@@ -151,6 +166,11 @@
                   ".write": "root.child('orders/open/taxi/' + $orderId).exists() && $driverId === auth.uid"
                 }
               }
+            },
+            "counterOffers": {
+              "$driverId": {
+                ".write": "(auth.uid == $driverId && (!data.hasChild('status') || data.child('status').val() == 'submitted')) || (auth.uid == data.parent().parent().child('customer').child('id').val() && data.child('status').val() == 'submitted' && data.child('offerValidTimeEpoch').val() > now)"
+              }
             }
           }
         }
@@ -158,7 +178,7 @@
     },
     "chat": {
       "$orderId": {
-        ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists() || root.child('taxiAdmins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+        ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists() || root.child('taxiAdmins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
         "messages": {
           "$messageId": {
             ".write": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists()",
@@ -184,9 +204,11 @@
       }
     },
     "deliveryAdmins": {
-      "$uid": {
-        ".read": "$uid === auth.uid",
-        ".write": "$uid === auth.uid && root.child('deliveryAdmins/' + $uid).exists()"
+      "info": {
+        "$uid": {
+          ".read": "$uid === auth.uid",
+          ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + $uid).exists()"
+        }
       }
     },
     "adminChat": {
@@ -214,7 +236,7 @@
       }
     },
     "restaurants": {
-      ".read": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
+      ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
       ".write": "false",
       "info": {
         ".read": "true",
@@ -273,7 +295,7 @@
           },
           "state": {
             "available": {
-              ".write": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
+              ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
             }
           }
         }
@@ -292,6 +314,80 @@
     "notificationQueue": {
       ".write": "true",
       ".read": "false"
+    },
+    "online": {
+      ".read": "auth.uid != null",
+      "$transporterType": {
+        "$transporterId": {
+          ".write": "auth.uid == $transporterId"
+        }
+      }
+    },
+    "deliveryDrivers": {
+      ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true  ",
+      "info": {
+        "$uid": {
+          ".read": "$uid === auth.uid",
+          "notificationInfo": {
+            ".write": "$uid === auth.uid"
+          },
+          "details": {
+            ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
+          },
+          "state": {
+            "isOnline": {
+              ".write": "$uid === auth.uid"
+            }
+          },
+          "versionNumber": {
+            ".write": "$uid === auth.uid"
+          },
+          "location": {
+            ".write": "$uid === auth.uid"
+          }
+        }
+      },
+      "inProcessOrders": {
+        "$uid": {
+          ".read": "$uid === auth.uid",
+          "$orderId": {
+            "$driverType": {
+              "location": {
+                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && $uid === auth.uid"
+              }
+            }
+          }
+        }
+      },
+      "pastOrders": {
+        "$uid": {
+          ".read": "$uid === auth.uid"
+        }
+      }
+    },
+    "laundries": {
+      ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true  ",
+      "info": {
+        "$uid": {
+          ".read": "$uid === auth.uid",
+          "notificationInfo": {
+            ".write": "$uid === auth.uid"
+          },
+          "details": {
+            ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
+          },
+          "state": {
+            "isOnline": {
+              ".write": "$uid === auth.uid"
+            }
+          }
+        }
+      }
+    },
+    "version" : {
+      "$app":{
+        ".read" : "true"
+      }
     }
   }
 }

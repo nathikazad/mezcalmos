@@ -2,7 +2,9 @@ import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum UserProfileMode { Edit, Show }
 
@@ -20,10 +22,19 @@ class UserProfileController {
   Rxn<String> errorReport = Rxn();
 
   bool didUserChangedInfos() {
-    return (userName.value != _authController.user?.name &&
-            userName.value != null &&
-            userName.value!.length >= 4) ||
-        userImg.value != null;
+    mezDbgPrint("ayono@ayono@ => usernameValue = ${userName.value}");
+    mezDbgPrint(
+      "ayono@ayono@ => userName::auth = ${_authController.user?.name}",
+    );
+    mezDbgPrint("ayono@ayono@ => userImg = ${userImg.value}");
+    mezDbgPrint(
+      "ayono@ayono@ => auth::userImg = ${_authController.user?.image}",
+    );
+    return userName.value != _authController.user?.name &&
+        userName.value != null &&
+        userName.value!.length >= 4 &&
+        (userImg.value != null ||
+            _authController.user?.image != defaultUserImgUrl);
   }
 
   /// Set Error Text to be shown to the user that takes [duration] as a rendring out time.
@@ -39,9 +50,11 @@ class UserProfileController {
   void reset() {
     userImg.value = null;
     userImgBytes.value = null;
-    userName.value = _authController.user?.name;
     originalImgUrl = null;
     compressedImgUrl = null;
+    if (userName.value == _authController.user?.name) {
+      userName.value = _authController.user?.name;
+    }
   }
 
   void setTextFieldText(String value) {
@@ -73,7 +86,7 @@ class UserProfileController {
     // first we check the user if he has everything Set
     if (checkIfUserHasAllInfosSet()) {
       // we set the TextField's Text to user name
-      userName.value = _authController.user!.name!;
+      userName.value = _authController.user!.name;
     } else {
       // in case Name null then we set userName to empty String cuz TextField does not accept null.
       userName.value = _authController.user?.name ?? "";

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+        ["pages"]
+["Restaurants"]["ViewRestaurantScreen"]["components"]["workinHoursCart"];
+
 class WorkingHoursCart extends StatelessWidget {
   final String? day;
   final String? openHour;
@@ -13,7 +17,6 @@ class WorkingHoursCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     return Container(
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(5)),
@@ -40,8 +43,7 @@ class WorkingHoursCart extends StatelessWidget {
                   : Color.fromRGBO(252, 89, 99, 0.6),
               child: Center(
                   child: Text(isOpen!
-                      ? "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["open"]}"
-                      : "${lang.strings["customer"]["restaurant"]["menu"]["workingHours"]["closed"]}")),
+                      ? "${_i18n()["open"]}" : "${_i18n()["closed"]}")),
             ),
           ),
           Flexible(

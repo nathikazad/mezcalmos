@@ -1,9 +1,12 @@
 import * as firebase from "firebase-admin";
 
-export function chatNode(orderId: string) {
-  return firebase.database().ref(`/chat/${orderId}`);
+export function chatNode(orderId?: string) {
+  let address = `/chat`;
+  if (orderId != null)
+    address += `/${orderId}`
+  return firebase.database().ref(address);
 }
 
-export function chatMessageNotifiedNode(orderId: string, messageId: string) {
-  return firebase.database().ref(`chat/${orderId}/messages/${messageId}/notified`);
+export function chatMessageNotifiedNode(chatId: string, messageId: string) {
+  return firebase.database().ref(`chat/${chatId}/messages/${messageId}/notified`);
 }

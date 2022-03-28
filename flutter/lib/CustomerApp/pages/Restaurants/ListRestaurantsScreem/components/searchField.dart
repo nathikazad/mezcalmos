@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+    ["Restaurants"]["ListRestaurantsScreem"]["components"]["searchField"];
+
 class SearchField extends StatelessWidget {
   const SearchField({
     Key? key,
@@ -9,13 +13,12 @@ class SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageController lang = Get.find<LanguageController>();
     return Container(
       margin: EdgeInsets.all(8),
       child: TextField(
         style: Theme.of(context).textTheme.bodyText2,
         decoration: InputDecoration(
-            labelText: '${lang.strings["shared"]["placeHolders"]["search"]}',
+            labelText: '${_i18n()["search"]}',
             floatingLabelBehavior: FloatingLabelBehavior.never,
             filled: true,
             fillColor: Colors.white,

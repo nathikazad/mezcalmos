@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -15,6 +14,9 @@ import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 // import 'package:permission_handler/permission_handler.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ["UserProfileScreen"]["UserProfileScreen"];
 
 class UserProfile extends StatefulWidget {
   final AuthController authController = Get.find<AuthController>();
@@ -27,9 +29,9 @@ class UserProfile extends StatefulWidget {
   // Constructor!
   UserProfile({Key? key, this.pageInitMode = UserProfileMode.Show})
       : super(key: key) {
-    userProfileController.setUserProfileMode(this.pageInitMode);
-    userProfileWidgets = UserProfileWidgetsClass(
-        userProfileController: this.userProfileController);
+    userProfileController.setUserProfileMode(pageInitMode);
+    userProfileWidgets =
+        UserProfileWidgetsClass(userProfileController: userProfileController);
   }
 
   @override
@@ -60,12 +62,12 @@ class _UserProfileState extends State<UserProfile> {
     return WillPopScope(
         onWillPop: () async {
           return widget.userProfileWidgets.onWillPopScopeFunction(
-              isImageBeingUploaded: this.isUploadingImg.value);
+              isImageBeingUploaded: isUploadingImg.value);
         },
         child: Obx(
           () => Scaffold(
-            appBar: widget.userProfileWidgets.getRightAppBar(
-                isImageBeingUploaded: this.isUploadingImg.value),
+            appBar: widget.userProfileWidgets
+                .getRightAppBar(isImageBeingUploaded: isUploadingImg.value),
             body: Stack(fit: StackFit.expand, children: [
               Flex(
                 direction: Axis.vertical,
@@ -75,8 +77,8 @@ class _UserProfileState extends State<UserProfile> {
                     onBrowsImageClick: onBrowsImageClick,
                     onSaveClick: onSaveChangesClick,
                     onEditButtonClick: onStartEdit,
-                    isImageBeingUploaded: this.isUploadingImg.value,
-                    clickedSave: this.clickedSave.value),
+                    isImageBeingUploaded: isUploadingImg.value,
+                    clickedSave: clickedSave.value),
               ),
               getToolTips(),
             ]),
@@ -86,12 +88,11 @@ class _UserProfileState extends State<UserProfile> {
 
   // -------------------------------------------------------- Hints Setup ---------------------------------------------------------------
   Widget getToolTips() {
-    List<MezToolTipHint> _hints = [];
+    List<MezToolTipHint> _hints = <MezToolTipHint>[];
     if (!Get.find<AuthController>().isDisplayNameSet()) {
       _hints.add(MezToolTipHint(
         hintWidget: NoUserNameSetHint(
-          hintText: Get.find<LanguageController>().strings['shared']['userInfo']
-              ['mustSetUserNameHint'],
+          hintText: _i18n()['mustSetUserNameHint'],
         ),
         left: Get.width / 2,
         bodyLeft: Get.width / 4,
@@ -103,8 +104,7 @@ class _UserProfileState extends State<UserProfile> {
     if (!Get.find<AuthController>().isUserImgSet()) {
       _hints.add(MezToolTipHint(
         hintWidget: NoUserImageSetHint(
-          hintText: Get.find<LanguageController>().strings['shared']['userInfo']
-              ['mustSetUserImgHint'],
+          hintText: _i18n()['mustSetUserImgHint'],
         ),
         left: Get.width / 2,
         bodyLeft: Get.width / 4,
@@ -143,8 +143,7 @@ class _UserProfileState extends State<UserProfile> {
       clickedSave.value = false;
     } else {
       widget.userProfileController.setErrorTextForXDuration(
-          Get.find<LanguageController>().strings['shared']['userInfo']
-              ['wrongName'],
+          _i18n()['wrongName'],
           duration: Duration(seconds: 5));
     }
   }
@@ -185,25 +184,33 @@ class _UserProfileState extends State<UserProfile> {
               .addListener(ImageStreamListener((ImageInfo info, bool _) async {
             // ------------------- Original Version -----------------//
             // put the original file to firebaseStorage
-            String _originalUrl =
+            final String _originalUrl =
                 await _authController.uploadUserImgToFbStorage(
                     imageFile: io.File(
                         widget.userProfileController.userImg.value!.path));
             // we set our original FirebaseStorage Url in our controller.
             widget.userProfileController.originalImgUrl = _originalUrl;
             // Setting Original Image aka (bigImage)
-            _authController.setOriginalUserImage(
+            await _authController.setOriginalUserImage(
                 widget.userProfileController.originalImgUrl);
             // ------------------- Compressed Version -----------------//
             // put the compressed file to firebaseStorage
-            String _compressedUrl =
+            final String _compressedUrl =
                 await _authController.uploadUserImgToFbStorage(
                     imageFile: compressedFile, isCompressed: true);
             // we set our _compressed FirebaseStorage Url in our controller.
             widget.userProfileController.compressedImgUrl = _compressedUrl;
             // we right away set it in database
-            _authController.editUserProfile(
+            await _authController.editUserProfile(
                 null, widget.userProfileController.compressedImgUrl);
+            mezDbgPrint("ayono@ayono@ : ClickedSave = false!");
+            mezDbgPrint(
+              "ayono@ayono@ widget.userProfileController.checkIfUserHasAllInfosSet() : ${widget.userProfileController.checkIfUserHasAllInfosSet()}",
+            );
+            mezDbgPrint(
+              "ayono@ayono@ widget.userProfileController.didUserChangedInfos() : ${widget.userProfileController.didUserChangedInfos()}",
+            );
+
             // once uploaded we need to remove the temporary compressed version from user's device
             compressedFile.delete();
             // after the uploading of the image is done, we set back this to false.

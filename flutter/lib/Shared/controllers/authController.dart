@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
@@ -14,7 +15,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -22,14 +22,16 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
+    ['controllers']['authController'];
+
 class AuthController extends GetxController {
   fireAuth.FirebaseAuth _auth = fireAuth.FirebaseAuth.instance;
-
   Function _onSignOutCallback;
   Function _onSignInCallback;
 
-  Rxn<User> _user = Rxn<User>();
-  User? get user => _user.value;
+  Rxn<MainUserInfo> _user = Rxn<MainUserInfo>();
+  MainUserInfo? get user => _user.value;
 
   Rxn<fireAuth.User> _fireAuthUser = Rxn<fireAuth.User>();
   fireAuth.User? get fireAuthUser => _fireAuthUser.value;
@@ -40,12 +42,12 @@ class AuthController extends GetxController {
   StreamController<fireAuth.User?> _authStateStreamController =
       StreamController.broadcast();
 
-  StreamController<User?> _userInfoStreamController =
+  StreamController<MainUserInfo?> _userInfoStreamController =
       StreamController.broadcast();
 
   Stream<fireAuth.User?> get authStateStream =>
       _authStateStreamController.stream;
-  Stream<User?> get userInfoStream => _userInfoStreamController.stream;
+  Stream<MainUserInfo?> get userInfoStream => _userInfoStreamController.stream;
 
   bool get isUserSignedIn => _fireAuthUser.value != null;
   FirebaseDb _databaseHelper =
@@ -53,13 +55,13 @@ class AuthController extends GetxController {
 
   AuthController(this._onSignInCallback, this._onSignOutCallback);
   String? _previousUserValue = "init";
+
   @override
   void onInit() {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
     mezDbgPrint('Auth controller init!');
-    Get.lazyPut(() => LanguageController());
     _auth.authStateChanges().listen((fireAuth.User? user) async {
       if (user?.toString() == _previousUserValue) {
         mezDbgPrint(
@@ -89,24 +91,25 @@ class AuthController extends GetxController {
         _userNodeListener?.cancel();
         _userNodeListener = _databaseHelper.firebaseDatabase
             .reference()
-            .child(userInfo(user.uid))
+            .child(userInfoNode(user.uid))
             .onValue
             .listen((event) {
           if (event.snapshot.value == null) return;
           if (event.snapshot.value['language'] == null) {
-            event.snapshot.value['language'] =
-                Get.find<LanguageController>().userLanguageKey;
+            event.snapshot.value['language'] = Get.find<LanguageController>()
+                .userLanguageKey
+                .toFirebaseFormatString();
             _databaseHelper.firebaseDatabase
                 .reference()
-                .child(userLanguage(user.uid))
+                .child(userLanguageNode(user.uid))
                 .set(Get.find<LanguageController>()
                     .userLanguageKey
                     .toFirebaseFormatString());
           }
-          _user.value = User.fromSnapshot(user, event.snapshot);
-          _userInfoStreamController.add(_user.value!);
-          Get.find<LanguageController>()
-              .userLanguageChanged(_user.value!.language);
+          _user.value = MainUserInfo.fromData(event.snapshot.value);
+          _userInfoStreamController.add(_user.value);
+          if (_user.value!.language != null)
+            Get.find<LanguageController>().setLanguage(_user.value!.language!);
         });
       }
     });
@@ -114,11 +117,12 @@ class AuthController extends GetxController {
   }
 
   bool isDisplayNameSet() {
-    return _user.value?.name != null;
+    return _user.value?.name != null && _user.value?.name != "";
   }
 
   bool isUserImgSet() {
     return _user.value?.image != null &&
+        _user.value?.image != "" &&
         _user.value?.image != defaultUserImgUrl;
   }
 
@@ -155,7 +159,7 @@ class AuthController extends GetxController {
     if (originalImageUrl != null) {
       await _databaseHelper.firebaseDatabase
           .reference()
-          .child(userInfo(fireAuthUser!.uid))
+          .child(userInfoNode(fireAuthUser!.uid))
           .child('bigImage')
           .set(originalImageUrl);
     }
@@ -165,24 +169,14 @@ class AuthController extends GetxController {
     if (name != null) {
       await _databaseHelper.firebaseDatabase
           .reference()
-          .child(userInfo(fireAuthUser!.uid))
+          .child(userInfoNode(fireAuthUser!.uid))
           .child('name')
-          .set(name)
-          .then((value) {
-        _user.value = User(
-          uid: _user.value!.uid,
-          email: _user.value?.email,
-          image: _user.value?.image,
-          bigImage: _user.value?.bigImage,
-          language: _user.value!.language,
-          name: name,
-        );
-      });
+          .set(name);
     }
     if (compressedImageUrl != null && compressedImageUrl.isURL) {
       await _databaseHelper.firebaseDatabase
           .reference()
-          .child(userInfo(fireAuthUser!.uid))
+          .child(userInfoNode(fireAuthUser!.uid))
           .child('image')
           .set(compressedImageUrl);
     }
@@ -209,7 +203,7 @@ class AuthController extends GetxController {
     if (_user.value != null) {
       _databaseHelper.firebaseDatabase
           .reference()
-          .child(userLanguage(_user.value!.uid))
+          .child(userLanguageNode(_user.value!.id))
           .set(newLanguage.toFirebaseFormatString());
     }
   }
@@ -299,10 +293,7 @@ class AuthController extends GetxController {
             .signInWithCustomToken(response.data["token"]);
       }
     } catch (e) {
-      MezSnackbar(
-          "Oops ..",
-          Get.find<LanguageController>().strings['shared']['login']
-              ['failedOTPConfirmRequest']);
+      MezSnackbar("Oops ..", _i18n()['failedOTPConfirmRequest']);
       print("Exception happend in GetAuthUsingOTP : $e");
     }
 

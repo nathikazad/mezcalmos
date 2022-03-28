@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import * as fs from 'fs';
-import { Keys } from "./models/Keys";
+import { Keys } from "./models/Generic/Keys";
+
 
 let keys: Keys = <Keys>functions.config()
 if (Object.keys(keys).length == 0) {

@@ -8,6 +8,10 @@ import 'package:mezcalmos/Shared/widgets/AutoCompleteTextField.dart';
 
 typedef TextFieldGotUpdated = void Function(String updatedText);
 
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['widgets']
+["LocationSearchComponent"];
+
+
 // Location Search component
 class LocationSearchComponent extends StatefulWidget {
   final bool useBorders;
@@ -65,7 +69,6 @@ class LocationSearchComponent extends StatefulWidget {
 
 class LocationSearchComponentState extends State<LocationSearchComponent> {
   TextEditingController _controller = TextEditingController();
-  final LanguageController _lang = Get.find<LanguageController>();
 
   // bool isTfEnabled = true;
   bool _showClearBtn = false;
@@ -172,8 +175,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                   },
                   tfTextDecoration: InputDecoration(
                       contentPadding: widget.hintPadding,
-                      hintText: Get.find<LanguageController>().strings["shared"]
-                          ["placeHolders"]["address"],
+                      hintText: _i18n()["address"],
                       hintStyle: TextStyle(
                           color: Color.fromRGBO(141, 141, 141, 1),
                           fontSize: 16.33,
