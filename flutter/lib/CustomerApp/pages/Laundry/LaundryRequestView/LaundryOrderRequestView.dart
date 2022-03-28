@@ -37,59 +37,66 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomerAppBar(autoBack: true),
-      bottomNavigationBar: bottomButton(context),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                margin: const EdgeInsets.all(8),
-                child: Text(
-                  '${_i18n()['howItWorks']}',
-                  style: Theme.of(context).textTheme.headline3,
+      //  bottomNavigationBar: bottomButton(context),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      child: Text(
+                        '${_i18n()['howItWorks']}',
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    LaundryStepsComponent(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      child: Text(
+                        '${_i18n()["deliveryLocation"]} :',
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    Obx(
+                      () => Card(
+                        child: authController.user != null
+                            ? DropDownLocationList(
+                                passedInLocation: defaultLoc,
+                                onValueChangeCallback: ({Location? location}) {
+                                  setState(() {
+                                    defaultLoc = location;
+                                  });
+                                },
+                              )
+                            : pickFromMapComponent(context),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    _orderNoteComponent(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    orderSummaryCard(context)
+                  ],
                 ),
               ),
-              LaundryStepsComponent(),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                margin: const EdgeInsets.all(8),
-                child: Text(
-                  '${_i18n()["deliveryLocation"]} :',
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-              ),
-              Obx(
-                () => Card(
-                  child: authController.user != null
-                      ? DropDownLocationList(
-                          passedInLocation: defaultLoc,
-                          onValueChangeCallback: ({Location? location}) {
-                            setState(() {
-                              defaultLoc = location;
-                            });
-                          },
-                        )
-                      : pickFromMapComponent(context),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              _orderNoteComponent(),
-              SizedBox(
-                height: 20,
-              ),
-              orderSummaryCard(context)
-            ],
+            ),
           ),
-        ),
+          bottomButton(context),
+        ],
       ),
     );
   }
@@ -230,15 +237,22 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
 
   Obx bottomButton(BuildContext context) {
     return Obx(
-      () => BottomAppBar(
+      () => Container(
+        width: double.infinity,
+        //  padding: const EdgeInsets.all(5),
         child: (authController.user != null)
             ? makeOrderButton(context)
             : TextButton(
                 onPressed: () async {
                   await Get.toNamed(kSignInRouteOptional);
                 },
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ),
                 child: Container(
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(12),
                     child: Text(_i18n()["signInToMakeOrder"])),
               ),
       ),
@@ -248,6 +262,9 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   Widget makeOrderButton(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.zero,
+        ),
         backgroundColor: (defaultLoc != null)
             ? Theme.of(context).primaryColorLight
             : Colors.grey,
@@ -269,7 +286,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               color: Colors.white,
             )
           : Container(
-              padding: EdgeInsets.all(8), child: Text(_i18n()['orderNow'])),
+              padding: EdgeInsets.all(12), child: Text(_i18n()['orderNow'])),
     );
   }
 }
