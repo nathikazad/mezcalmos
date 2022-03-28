@@ -84,17 +84,12 @@ class OrderController extends GetxController {
 
   DeliverableOrder? getOrder(String orderId) {
     try {
-      return currentOrders.firstWhere((order) {
-        // mezDbgPrint(
-        //     "Checking CurrentOrders::${order.orderId} ==> Driver Loc : ${order.driver?.location?.toJson()}");
+      return currentOrders.firstWhere((DeliverableOrder order) {
         return order.orderId == orderId;
       });
     } on StateError {
       try {
-        return pastOrders.firstWhere((order) {
-          mezDbgPrint(
-              "Checking PastOrders::${order.orderId} ==> ${order.toString()}");
-
+        return pastOrders.firstWhere((DeliverableOrder order) {
           return order.orderId == orderId;
         });
       } on StateError {
