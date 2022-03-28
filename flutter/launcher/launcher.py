@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 
 from ast import Str
-from dataclasses import replace
 import os , json
 from sys import argv, stderr, platform
 from enum import Enum
 import subprocess as proc
-from tokenize import String
-from termcolor import colored
 
 # LAST UPDATE INFOS : 
 # ADDED Patching Android - Ios icons.
@@ -23,11 +20,6 @@ PRINTLN = lambda x,end='\n' : print(x , end=end) if ACTIVE_DEBUG else None
 VALID_CONFIG_KEYS_LEN = 2
 rm_lambda = lambda path : 'rm -rf {path}*'
 
-# POSSIBLE_LMODES = [
-#     'stage',
-#     'dev',
-#     'prod'
-# ]
 
 class OUTPUT_FILTERS(Enum):
     SHOW = 0
@@ -128,11 +120,14 @@ class Launcher:
         # Patching Android - Ios icons:
         PRINTLN("[~] Setting-up App-Icons for android/ios ...")
         _userArgsAppName = self.user_args["app"].lower().replace("app" , "")
+        if not os.path.exists('../assets/icons'):
+            os.mkdir('../assets/icons' , mode=755)
+            
         # Android first:
         originalAndroidIconsBytes = open(f'assets/{_userArgsAppName}/icons/android.png' , 'rb').read()
         originalPlayStoreBytes = open(f'assets/{_userArgsAppName}/icons/playstore.png' , 'rb').read()
         open('../assets/icons/android.png' , 'wb+').write(originalAndroidIconsBytes)
-        open('../assets/icons/android.png' , 'wb+').write(originalPlayStoreBytes)
+        open('../assets/icons/playstore.png' , 'wb+').write(originalPlayStoreBytes)
         PRINTLN(f"\t- ✅ Android:{_userArgsAppName} => Setting Android App-Icon Done.")
         # Then iOS :
         originalIosIconsBytes = open(f'assets/{_userArgsAppName}/icons/ios.png' , 'rb').read()
