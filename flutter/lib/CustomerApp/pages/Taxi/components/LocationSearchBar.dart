@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
@@ -87,7 +86,7 @@ class LocationSearchBarController {
 }
 
 class LocationSearchBar extends StatefulWidget {
-  TaxiRequest request;
+  final TaxiRequest request;
   final SearchLocationNotifier newLocationChosenEvent;
   final LocationSearchBarController locationSearchBarController;
 

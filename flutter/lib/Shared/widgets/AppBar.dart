@@ -10,7 +10,7 @@ enum AppBarLeftButtonType { Back, Menu }
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {bgColor = Colors.white,
     Function? onClick,
-    PreferredSizeWidget? tabbar,
+    PreferredSizeWidget? tabBar,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btnIcon;
 
@@ -85,7 +85,9 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
               Spacer(),
               MezcalmosSharedWidgets.fillTitle(actionIcons.length),
               Spacer(),
-              for (var i = 0; i < actionIcons.length; i++) ...<Widget>[actionIcons[i]],
+              for (var i = 0; i < actionIcons.length; i++) ...<Widget>[
+                actionIcons[i]
+              ],
             ],
           ),
         ),

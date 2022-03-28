@@ -96,23 +96,26 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   }
                 },
               ),
-              // --- <>
-              Obx(
-                () => LocationSearchBar(
-                    request: viewController.taxiRequest.value,
-                    locationSearchBarController:
-                        viewController.locationSearchBarController,
-                    newLocationChosenEvent:
-                        viewController.updateModelAndHandoffToLocationPicker),
+            ),
+            // --- <>
+            Obx(
+              () => LocationSearchBar(
+                request: viewController.taxiRequest.value,
+                locationSearchBarController:
+                    viewController.locationSearchBarController,
+                newLocationChosenEvent:
+                    viewController.updateModelAndHandoffToLocationPicker,
               ),
-              viewController.pickedFromTo.value
-                  // from , to
-                  ? TaxiReqBottomBar(
-                      taxiRequest: viewController.taxiRequest.value,
-                    )
-                  : SizedBox(),
-              if (viewController.pickedFromTo.value) viewWidgets.getToolTip(),
-            ]),
+            ),
+            // from , to
+            viewController.pickedFromTo.value
+                ? TaxiReqBottomBar(
+                    taxiRequest: viewController.taxiRequest.value,
+                  )
+                : SizedBox(),
+            if (viewController.pickedFromTo.value) viewWidgets.getToolTip(),
+          ],
+        ),
       ),
     );
   }
