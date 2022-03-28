@@ -630,6 +630,7 @@
                     "CPositionedBottomBar": {
                         "startRide": "Iniciar viaje",
                         "finishRide": "Terminar viaje",
+                        "orderCancelled": "Pedido cancelado por el cliente",
                         "confirmation_header": "Por favor confirmar",
                         "confirmation_text": "¿Estás seguro de que deseas cancelar el viaje actual?",
                         "yes": "Si",
@@ -660,7 +661,7 @@
                             "CounterOfferBottomSheet": {
                                 "CounterOfferPriceSetter": {
                                   "rideOffer": "Haz una oferta de viaje",
-                                  "firstTxt": "El cliente será notificado con su oferta una vez que la oferta sea aceptada, el viaje comenzará automáticamente"",
+                                  "firstTxt": "El cliente será notificado con su oferta una vez que la oferta sea aceptada, el viaje comenzará automáticamente",
                                   "sendOffer": "Enviar oferta",
                                   "secondTxt": "Cada oferta que realice tiene un tiempo de espera de 60 segundos, si el cliente no acepta su oferta, la oferta se cancelará."
                                 },
@@ -757,6 +758,13 @@
         }
     },
     "DeliveryAdminApp": {
+        "notificationHandler": {
+            "restaurantTitle": "Nuevo pedido de restaurante",
+            "laundryTitle": "Nuevo pedido de lavandería",
+            "laundryBody": "Nuevo pedido de lavandería",
+            "taxiTitle": "Nueva orden de taxi",
+            "taxiBody": "Nuevo pedido de taxi"
+        },
         "components": {
             "buildWidgetOnOrderStatus": {
                 "preparing": "Preparando el pedido",

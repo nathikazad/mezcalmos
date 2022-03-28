@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/RestaurantOrdersListComponent.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -85,7 +86,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                     fontSize: 12.sp),
                           ),
                           Text(
-                            'Order Canceled by the Customer ',
+                            -i18n()["orderCancelled"],
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2!

@@ -4,6 +4,10 @@ import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]["notificationHandler"];
 
 Notification deliveryAdminNotificationHandler(String key, value) {
   final NotificationType notificationType =
@@ -78,7 +82,7 @@ Notification newOrderNotification(String key, value) {
           linkUrl: getRestaurantOrderRoute(value['orderId']),
           body: 'New order from restaurant ${value['restaurant']['name']}',
           imgUrl: value['restaurant']['image'],
-          title: "New Restaurant Order",
+          title: _i18n()["restaurantTitle"],
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewOrder,
           variableParams: value,
@@ -88,9 +92,9 @@ Notification newOrderNotification(String key, value) {
       return Notification(
           id: key,
           linkUrl: getLaundryOrderRoute(value['orderId']),
-          body: 'New order from laundry',
+          body: _i18n()["laundryBody"],
           imgUrl: 'assets/images/customer/laundry/laundryMachine.png',
-          title: "New Laundry Order",
+          title: _i18n()["laundryTitle"],
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewOrder,
           variableParams: value,
@@ -100,9 +104,9 @@ Notification newOrderNotification(String key, value) {
       return Notification(
           id: key,
           linkUrl: getTaxiOrderRoute(value['orderId']),
-          body: 'New order from taxi',
+          body: _i18n()['taxiBody'],
           imgUrl: 'assets/images/customer/taxi/taxiDriverImg.png',
-          title: "New Taxi Order",
+          title: _i18n()['taxiTitle'],
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewOrder,
           variableParams: value,

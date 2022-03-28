@@ -625,6 +625,7 @@
                     "CPositionedBottomBar": {
                         "startRide": "Start Ride",
                         "finishRide": "Finish Ride",
+                        "orderCancelled": "Order Canceled by the Customer",
                         "confirmation_header": "Please confirm",
                         "confirmation_text": "Are you sure you want to cancel the current ride?",
                         "yes": "Yes",
@@ -752,6 +753,13 @@
         }
     },
     "DeliveryAdminApp": {
+        "notificationHandler": {
+         "restaurantTitle": "New Restaurant Order",
+         "laundryTitle": "New Laundry Order",
+         "laundryBody": "New order from laundry",
+         "taxiTitle": "New Taxi Order",
+         "taxiBody": "New order from taxi"
+        },
         "components": {
             "buildWidgetOnOrderStatus": {
                 "preparing": "Preparing the order",
@@ -1014,8 +1022,6 @@
                     },
                     "CurrentOrdersListScreen": {
                         "title": "Incoming  Orders"
-
-
                     }
 
                 },
@@ -1031,11 +1037,9 @@
                                 "deliveryOtw": "Delivery on the way",
                                 "delivered": "Order Delivered",
                                 "canceled": "Order Cancelled"
-
                             },
                             "laundeyOrderHeader": {
                                 "laundryOrder": "Laundry Order"
-
                             },
                             "laundryControllButtons": {
                                 "pickupOrder": "Pickup Order",
