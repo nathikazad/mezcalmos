@@ -17,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
@@ -67,6 +68,33 @@ class _StartingPointState extends State<StartingPoint> {
   bool _error = false;
 
   _StartingPointState();
+
+  /// AppUpdateInfo
+  AppUpdateInfo? _updateInfo;
+
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
+
+  /// _flexibleUpdateAvailable
+  bool _flexibleUpdateAvailable = false;
+
+  /// Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> checkForUpdate() async {
+    await InAppUpdate.checkForUpdate().then((AppUpdateInfo info) {
+      setState(() {
+        _updateInfo = info;
+      });
+    }).catchError((e) {
+      showSnack(e.toString());
+    });
+  }
+
+  void showSnack(String text) {
+    if (_scaffoldKey.currentContext != null) {
+      ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(
+        SnackBar(content: Text(text)),
+      );
+    }
+  }
 
   @override
   void initState() {
