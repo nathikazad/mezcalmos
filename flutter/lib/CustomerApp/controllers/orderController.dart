@@ -82,7 +82,7 @@ class OrderController extends GetxController {
         final List<Order> orders = [];
 
         if (event.snapshot.value != null) {
-          mezDbgPrint("my data : ${event.snapshot.value.toString()}");
+          // mezDbgPrint("my data : ${event.snapshot.value.toString()}");
           for (Event orderId in event.snapshot.value.keys) {
             final dynamic orderData = event.snapshot.value[orderId];
             // if restaurant order
@@ -97,7 +97,6 @@ class OrderController extends GetxController {
             }
             if (orderData["orderType"] ==
                 OrderType.Laundry.toFirebaseFormatString()) {
-              mezDbgPrint(OrderType.Laundry.toFirebaseFormatString());
               orders.add(LaundryOrder.fromData(orderId, orderData));
             }
           }
@@ -123,7 +122,7 @@ class OrderController extends GetxController {
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.orderId == orderId)
         .isNotEmpty;
   }
 

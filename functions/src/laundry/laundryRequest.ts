@@ -127,11 +127,11 @@ async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, Deliv
     background: {
       [Language.ES]: {
         title: "Nueva Pedido",
-        body: `Hay una nueva orden de alimento`
+        body: `Hay una nueva orden de lavaderia`
       },
       [Language.EN]: {
         title: "New Order",
-        body: `There is a new restaurant order`
+        body: `There is a new laundry order`
       }
     },
     linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Laundry, orderId)

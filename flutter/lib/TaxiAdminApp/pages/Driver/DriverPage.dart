@@ -26,6 +26,7 @@ class DriverPage extends GetView<DriverStatsController> {
   LanguageController lang = Get.find<LanguageController>();
 
   DriverPage(this.idOrder);
+
   Widget getDriverInfo(String driverId, int nbDays) {
     return getFutureData(getAllDriverInfo(driverId, nbDays), (data) {
       print(data[4]);

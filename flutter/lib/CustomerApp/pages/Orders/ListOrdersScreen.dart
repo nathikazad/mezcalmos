@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Orders/components/LaundryOngoingOrde
 import 'package:mezcalmos/CustomerApp/pages/Orders/components/LaundryPastOrderCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/components/RestaurantOngoingOrderCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/components/RestaurantPastOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/components/TaxiOrderOngoingCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/components/TaxiPastOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -17,12 +18,8 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
-import 'components/RestaurantOngoingOrderCard.dart';
-import 'components/TaxiOrderOngoingCard.dart';
-
 final DateFormat f = new DateFormat('MM.dd.yyyy');
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
-
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
 

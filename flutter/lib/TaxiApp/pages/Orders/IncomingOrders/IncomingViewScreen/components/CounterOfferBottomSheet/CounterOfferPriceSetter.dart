@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/LaundryOrdersListComponent.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:sizer/sizer.dart';
 
-typedef void OnPriceChanged(int);
-typedef void OnCounterOfferSent(num);
+dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
+        ['Orders']['IncomingOrders']['IncomingViewScreen']['components']
+    ['CounterOfferBottomSheet']['CounterOfferPriceSetter'];
+
+typedef void OnPriceChanged(int newPrice);
+typedef void OnCounterOfferSent(num cOfferPrice);
 
 class CounterOfferPriceSetter extends StatefulWidget {
   final Rxn<CounterOffer> counterOffer;
@@ -16,7 +22,7 @@ class CounterOfferPriceSetter extends StatefulWidget {
   final OnCounterOfferSent onCountOfferSent;
   final OnPriceChanged onPriceChanged;
 
-  CounterOfferPriceSetter({
+  const CounterOfferPriceSetter({
     required this.counterOffer,
     required this.controller,
     required this.order,
@@ -31,14 +37,11 @@ class CounterOfferPriceSetter extends StatefulWidget {
 }
 
 class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
-  late num _currentOfferPrice;
-
+  late int _currentPrice;
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _currentOfferPrice = widget.order.cost + 5;
-    });
+    _currentPrice = (widget.order.cost + 5) as int;
   }
 
   Widget build(BuildContext context) {
@@ -50,7 +53,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Center(
               child: Text(
-                'Make a ride offer',
+                _i18n()["rideOffer"],
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!
@@ -64,7 +67,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
         Padding(
           padding: EdgeInsets.only(top: 5, bottom: 5),
           child: Text(
-            'The customer will be notified with your offer once the offer accepted the ride will automatically starts',
+            _i18n()["firstTxt"],
             textAlign: TextAlign.center,
           ),
         ),
@@ -72,29 +75,25 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
           width: Get.width,
           child: Center(
             child: IncrementalComponent(
-                minVal: (widget.order.cost as int) + 5,
-                maxVal: 1000,
-                center: true,
-                btnColors: Colors.black,
-                increment: () {
-                  setState(() {
-                    _currentOfferPrice += 5;
-                  });
-                  widget.onPriceChanged(_currentOfferPrice);
-                },
-                value: _currentOfferPrice as int,
-                decrement: () {
-                  setState(() {
-                    _currentOfferPrice -= 5;
-                  });
-                  widget.onPriceChanged(_currentOfferPrice);
-                }),
+              minVal: (widget.order.cost as int) + 5,
+              maxVal: 1000,
+              center: true,
+              incrementBy: 5,
+              decrementBy: 5,
+              btnColors: Colors.black,
+              increment: (int newValue) {
+                _currentPrice = newValue;
+                widget.onPriceChanged(newValue);
+              },
+              value: _currentPrice,
+              decrement: widget.onPriceChanged,
+            ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10, top: 10),
           child: InkWell(
-            onTap: () => widget.onCountOfferSent(_currentOfferPrice),
+            onTap: () => widget.onCountOfferSent(_currentPrice),
             child: Container(
               height: 50,
               decoration: BoxDecoration(
@@ -103,7 +102,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
               width: 80.w,
               child: Center(
                   child: Text(
-                'Send offer',
+                -i18n()["sendOffer"],
                 style: TextStyle(color: Colors.white, fontFamily: 'psb'),
               )),
             ),
@@ -112,7 +111,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
         Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10, top: 20),
           child: Text(
-            "Every offer you make have a timeout of 60 seconds if the customer doesn’t accept your offer the offer will be canceled",
+            _i18n()["secondTxt"],
             style: TextStyle(fontFamily: 'psr', fontSize: 10.sp),
           ),
         )

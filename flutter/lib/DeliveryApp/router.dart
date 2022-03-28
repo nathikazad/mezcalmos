@@ -6,7 +6,6 @@ import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 const String kCurrentOrdersListRoute = '/currentOrders';
-const String kCurrentOrderViewRoute = '/currentOrders/:orderId';
 const String kLaundryOrderView = '/currentOrders/laundry/:orderId';
 const String kRestaurantOrderView = '/currentOrders/restaurant/:orderId';
 

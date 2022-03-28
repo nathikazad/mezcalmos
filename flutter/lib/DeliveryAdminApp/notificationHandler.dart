@@ -1,4 +1,5 @@
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -42,6 +43,19 @@ Notification orderStatusChangeNotification(String key, value) {
       return Notification(
           id: key,
           linkUrl: getLaundryOrderRoute(value["orderId"]),
+          body: 'Order is now ${newOrdersStatus.toFirebaseFormatString()}',
+          imgUrl: "assets/images/shared/notifications/cancel.png",
+          title: newOrdersStatus.toFirebaseFormatString(),
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.OrderStatusChange,
+          variableParams: value,
+          notificationAction:
+              value["notificationAction"].toString().toNotificationAction());
+    case OrderType.Taxi:
+      mezDbgPrint("Priiiiiint taxi nottiiiiiiiiiiif ----------");
+      return Notification(
+          id: key,
+          linkUrl: getTaxiOrderRoute(value["orderId"]),
           body: 'Order is now ${newOrdersStatus.toFirebaseFormatString()}',
           imgUrl: "assets/images/shared/notifications/cancel.png",
           title: newOrdersStatus.toFirebaseFormatString(),

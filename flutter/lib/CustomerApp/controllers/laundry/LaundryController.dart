@@ -11,10 +11,9 @@ class LaundryController extends GetxController {
     final HttpsCallable cancelLaundryFunction =
         FirebaseFunctions.instance.httpsCallable('laundry-cancelFromCustomer');
     try {
-      final HttpsCallableResult<dynamic> response =
-          await cancelLaundryFunction.call(
-        <String, String>{"orderId": orderId},
-      );
+      final HttpsCallableResult<Map<String, dynamic>> response =
+          await cancelLaundryFunction
+              .call(<String, dynamic>{"orderId": orderId});
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,
@@ -30,20 +29,26 @@ class LaundryController extends GetxController {
 
       try {
         mezDbgPrint(laundryRequest.asCloudFunctionParam());
-        final HttpsCallableResult<dynamic> response = await requestTaxiFunction
-            .call(laundryRequest.asCloudFunctionParam());
+        final HttpsCallableResult<Map<String, dynamic>?> response =
+            await requestTaxiFunction
+                .call(laundryRequest.asCloudFunctionParam());
         mezDbgPrint(response.data);
 
         return ServerResponse.fromJson(response.data);
       } catch (e) {
         mezDbgPrint("+ EROROROROR HAPPPPEND ==> $e");
-        return ServerResponse(ResponseStatus.Error,
-            errorMessage: "Server Error", errorCode: "serverError");
+        return ServerResponse(
+          ResponseStatus.Error,
+          errorMessage: "Server Error",
+          errorCode: "serverError",
+        );
       }
     } else {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Invalid Request",
-          errorCode: "invalid taxi request or google map server down");
+      return ServerResponse(
+        ResponseStatus.Error,
+        errorMessage: "Invalid Request",
+        errorCode: "invalid taxi request or google map server down",
+      );
     }
   }
 

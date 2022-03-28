@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
@@ -22,7 +22,7 @@ class ViewTaxiOrderController {
       Get.put<TaxiController>(TaxiController());
   final MGoogleMapController mGoogleMapController = MGoogleMapController();
   final Rxn<TaxiOrder> order = Rxn<TaxiOrder>();
-  StreamSubscription? orderListener;
+  StreamSubscription<Order?>? orderListener;
   final String toMarkerId = "to";
   RxDouble bottomPadding =
       ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
@@ -36,7 +36,7 @@ class ViewTaxiOrderController {
     order.value = controller.getOrder(orderId) as TaxiOrder?;
     if (order.value != null) {
       // set initial location
-      initializeMap().then((value) => mezDbgPrint("Initialized Map!"));
+      initializeMap().then((_) => mezDbgPrint("Initialized Map!"));
 
       if (order.value!.inProcess()) {
         inProcessOrderStatusHandler(order.value!.status);
@@ -47,13 +47,13 @@ class ViewTaxiOrderController {
         }
         orderListener = controller
             .getCurrentOrderStream(orderId)
-            .listen((currentOrder) async {
+            .listen((Order? currentOrder) async {
           if (currentOrder != null) {
             order.value = currentOrder as TaxiOrder;
             inProcessOrderStatusHandler(order.value!.status);
             // setState(() {});
           } else {
-            orderListener?.cancel();
+            await orderListener?.cancel();
             orderListener = null;
             // this is in case customer created the order and got expired :
             _cancelPeriodicCounterOffersTimer();
@@ -72,8 +72,8 @@ class ViewTaxiOrderController {
             // one time execution :
             mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
             pastOrderStatusHandler(order.value!.status);
-            // setState(() {});
           }
+          order.refresh();
         });
       } else {
         // it's in past orders!
@@ -100,9 +100,10 @@ class ViewTaxiOrderController {
   ///
   /// offer will stay on the databse.
   void startCountOffersValidityCheckPeriodically() {
-    countOfferTimerValidator = Timer.periodic(Duration(seconds: 1), (timer) {
+    countOfferTimerValidator =
+        Timer.periodic(Duration(seconds: 1), (Timer _timer) {
       if (countOfferTimerValidator?.isActive != true || order.value == null) {
-        timer.cancel();
+        _timer.cancel();
         return;
       }
       counterOffers.value = order.value!.getValidCounterOfferts();

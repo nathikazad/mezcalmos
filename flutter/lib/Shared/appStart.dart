@@ -263,7 +263,7 @@ class _StartingPointState extends State<StartingPoint> {
             widget.appType, widget.sideMenuItems, widget.locationOn),
         permanent: true);
 
-    Get.lazyPut(() => AppVersionController(), fenix: true);
+    // Get.lazyPut(() => AppVersionController(), fenix: true);
   }
 
   Future<void> waitForInitialization() async {

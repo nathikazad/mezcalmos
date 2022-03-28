@@ -69,7 +69,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
           Get.toNamed<void>(getMessagesRoute(
               orderId: order.orderId,
               chatId: order.orderId,
-              recipientType: ParticipantType.Laundry));
+              recipientType: ParticipantType.Laundry,),);
         },
         customBorder: CircleBorder(),
         child: Stack(

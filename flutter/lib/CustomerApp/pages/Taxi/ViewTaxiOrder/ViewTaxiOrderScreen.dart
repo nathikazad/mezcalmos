@@ -60,8 +60,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     // To show that You can set it up before using it.
     animatedSliderController = AnimatedSliderController();
     viewController = ViewTaxiOrderController(
-      animatedSliderController: animatedSliderController,
-    );
+        animatedSliderController: animatedSliderController,);
     viewWidgets = ViewTaxiOrderScreenWidgets(viewController: viewController);
     counterOfferWidgets = CounterOfferWidgets(viewController: viewController);
   }
@@ -83,36 +82,34 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 
   Stack getViewStack(BuildContext context) {
     return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.topCenter,
-      children: <Widget>[
-        map(),
-        viewWidgets.absorbOrIgnoreUserTapWidget(),
-        TopBar(order: viewController.order.value!),
-        Obx(() => BottomButtons()),
-        TaxiOrderBottomBar(order: viewController.order),
-        viewWidgets.getToolTip(),
-        counterOfferWidgets.counterOffersBottomSheet(context),
-      ],
-    );
+        clipBehavior: Clip.none,
+        alignment: Alignment.topCenter,
+        children: <Widget>[
+          mGoogleMap(),
+          viewWidgets.absorbOrIgnoreUserTapWidget(),
+          TopBar(order: viewController.order.value!),
+          Obx(() => bottomButtons()),
+          TaxiOrderBottomBar(order: viewController.order),
+          viewWidgets.getToolTip(),
+          counterOfferWidgets.counterOffersBottomSheet(context),
+        ]);
   }
 
   /// The map view to show the route and location of the agents
-  Container map() {
+  Container mGoogleMap() {
     return Container(
-      width: Get.width,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5), color: Colors.white),
-      child: MGoogleMap(
-        mGoogleMapController: viewController.mGoogleMapController,
-        periodicRerendering: true,
-      ),
-    );
+        width: Get.width,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5), color: Colors.white),
+        child: MGoogleMap(
+          mGoogleMapController: viewController.mGoogleMapController,
+          periodicRerendering: true,
+        ));
   }
 
   /// Show cancel button by default and show counter offers button when
   /// there are counter offers
-  Positioned BottomButtons() {
+  Positioned bottomButtons() {
     return Positioned(
       bottom: 15,
       left: 15,

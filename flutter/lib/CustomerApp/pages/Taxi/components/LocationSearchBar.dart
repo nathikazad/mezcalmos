@@ -7,10 +7,13 @@ import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 
+// ignore: constant_identifier_names
 enum SearchComponentType { From, To, None }
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -84,7 +87,7 @@ class LocationSearchBarController {
 }
 
 class LocationSearchBar extends StatefulWidget {
-  final Rx<TaxiRequest> request;
+  TaxiRequest request;
   final SearchLocationNotifier newLocationChosenEvent;
   final LocationSearchBarController locationSearchBarController;
 
@@ -114,8 +117,13 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   }
 
   @override
+  void didChangeDependencies() {
+    mezDbgPrint("Location@Search@Bar : ${widget.request.from?.address}");
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     return Positioned(
       top: 5,
       left: 10,
@@ -143,8 +151,11 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   @override
   void didUpdateWidget(LocationSearchBar oldWidget) {
-    if (widget.request.value.to?.address != null &&
-        widget.request.value.from?.address != null) {
+    mezDbgPrint(
+        "DidUpdate => Location@Search@Bar : ${widget.request.from?.address}");
+
+    if (widget.request.to?.address != null &&
+        widget.request.from?.address != null) {
       locationSearchBarController.unfocusAllFocusNodes();
       locationSearchBarController.focusedTextField.value =
           SearchComponentType.None;
@@ -175,8 +186,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       child: LocationSearchComponent(
         suffixPadding: EdgeInsets.only(top: 20, right: 10),
         focusNode: locationSearchBarController.fromTextFieldFocusNode,
-        readOnly: widget.request.value.from?.address != null &&
-            widget.request.value.from?.address != "",
+        readOnly: widget.request.from?.address != null &&
+            widget.request.from?.address != "",
         dropDownDxOffset: 0,
         dropDownWidth: Get.width - 20,
         useBorders: false,
@@ -184,7 +195,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         leftBotRaduis: 5,
         bgColor: Colors.white,
         label: _i18n()['from'],
-        text: widget.request.value.from?.address ?? "",
+        text: widget.request.from?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.From),
         onTextChange: textFieldOnTextChanged,
         onFocus: () => textFieldOnFocus(SearchComponentType.From),
@@ -245,7 +256,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       child: LocationSearchComponent(
         suffixPadding: EdgeInsets.only(top: 20, right: 10),
         focusNode: locationSearchBarController.toTextFieldFocusNode,
-        readOnly: widget.request.value.to?.address != null,
+        readOnly: widget.request.to?.address != null,
         useBorders: false,
         rightTopRaduis: 5,
         rightBotRaduis: 5,
@@ -254,7 +265,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         dropDownDxOffset: -(Get.width / 2.1),
         dropDownWidth: Get.width - 20,
         label: _i18n()['to'],
-        text: widget.request.value.to?.address ?? "",
+        text: widget.request.to?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.To),
         onTextChange: textFieldOnTextChanged,
         onFocus: () => textFieldOnFocus(SearchComponentType.To),
@@ -328,11 +339,11 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     setState(() {
       if (_type == SearchComponentType.From) {
         locationSearchBarController.fromTextFieldFocusNode.requestFocus();
-        widget.request.value.from = null;
+        widget.request.from = null;
       }
       if (_type == SearchComponentType.To) {
         locationSearchBarController.fromTextFieldFocusNode.requestFocus();
-        widget.request.value.to = null;
+        widget.request.to = null;
       }
       locationSearchBarController.focusedTextField.value = _type;
 
@@ -356,8 +367,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   void textFieldOnFocus(SearchComponentType type) {
     if (type == SearchComponentType.From &&
-            widget.request.value.from?.address == null ||
-        widget.request.value.from?.address == "") {
+            widget.request.from?.address == null ||
+        widget.request.from?.address == "") {
       locationSearchBarController.expandDropdown(
           itemsCount: dropDownItems.length);
       setState(() {
@@ -365,9 +376,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       });
     }
 
-    if (type == SearchComponentType.To &&
-            widget.request.value.to?.address == null ||
-        widget.request.value.from?.address == "") {
+    if (type == SearchComponentType.To && widget.request.to?.address == null ||
+        widget.request.from?.address == "") {
       locationSearchBarController.expandDropdown(
         itemsCount: dropDownItems.length,
       );
@@ -387,33 +397,24 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     dropDownItems.addAll(
       <LocationDropDownItem>[
         LocationDropDownItem(
-          function: () async {
-            widget.newLocationChosenEvent(
-              await MapHelper.getCurrentLocation(),
-              locationSearchBarController.focusedTextField.value,
-            );
-          },
-          title: "${_i18n()["currentLocation"]}",
-          icon: Icon(
-            MezcalmosIcons.crosshairs,
-            size: 20,
-            color: Colors.purple,
-          ),
-        ),
+            function: () async {
+              final Location? _loc = await MapHelper.getCurrentLocation();
+              mezDbgPrint("zlaganga::root : ${_loc?.address}");
+              widget.newLocationChosenEvent(
+                  _loc, locationSearchBarController.focusedTextField.value);
+            },
+            title: "${_i18n()["currentLocation"]}",
+            icon: Icon(MezcalmosIcons.crosshairs,
+                size: 20, color: Colors.purple)),
         LocationDropDownItem(
-          function: () async {
-            widget.newLocationChosenEvent(
-              await MapHelper.getCurrentLocation(),
-              locationSearchBarController.focusedTextField.value,
-            );
-          },
-          title: "${_i18n()["pickFromMap"]}",
-          icon: Icon(
-            MezcalmosIcons.crosshairs,
-            size: 20,
-            color: Colors.purple,
-          ),
-        ),
+            function: () async {
+              widget.newLocationChosenEvent(
+                  await MapHelper.getCurrentLocation(),
+                  locationSearchBarController.focusedTextField.value);
+            },
+            title: "${_i18n()["pickFromMap"]}",
+            icon:
+                Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple))
       ],
     );
     if (Get.find<AuthController>().fireAuthUser != null) {
@@ -426,19 +427,14 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     return _authController!.customerRxn.value?.savedLocations
             .map<LocationDropDownItem>((SavedLocation e) {
           return LocationDropDownItem(
-            icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
-            function: () {
-              Location? _savedLoc = _authController!.getLocationById(e.id!);
-              widget.newLocationChosenEvent(
-                _savedLoc,
-                locationSearchBarController.focusedTextField.value,
-              );
-              // setState(() {
-              //   _locationSearchBarController.focusedTextField.value = SearchComponentType.None;
-              // });
-            },
-            title: e.name,
-          );
+              icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
+              function: () {
+                final Location? _savedLoc =
+                    _authController!.getLocationById(e.id!);
+                widget.newLocationChosenEvent(_savedLoc,
+                    locationSearchBarController.focusedTextField.value);
+              },
+              title: e.name);
         }).toList() ??
         <LocationDropDownItem>[];
   }

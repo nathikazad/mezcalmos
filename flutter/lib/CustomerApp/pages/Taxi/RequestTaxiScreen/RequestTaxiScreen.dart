@@ -30,18 +30,15 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   @override
   void initState() {
     super.initState();
-    viewWidgets = RequestTaxiScreenWidgets(
-      requestTaxiController: viewController,
-    );
+    viewWidgets =
+        RequestTaxiScreenWidgets(requestTaxiController: viewController);
+    //TODO:FIX
     // fetch first without waiting 10seconds.
     // viewController.startFetchingOnlineDrivers();
     // // then keep it periodic each 10s
-    // viewController.timer = Timer.periodic(
-    //   Duration(seconds: 10),
-    //   (Timer timer) {
-    //     viewController.startFetchingOnlineDrivers();
-    //   },
-    // );
+    // viewController.timer = Timer.periodic(Duration(seconds: 10), (Timer timer) {
+    //   viewController.startFetchingOnlineDrivers();
+    // });
 
     if (Get.arguments != null) {
       // we re-create the TaxiRequest passed along args
@@ -99,23 +96,23 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   }
                 },
               ),
-            ),
-            LocationSearchBar(
-              request: viewController.taxiRequest,
-              locationSearchBarController:
-                  viewController.locationSearchBarController,
-              newLocationChosenEvent:
-                  viewController.updateModelAndHandoffToLocationPicker,
-            ),
-            viewController.pickedFromTo.value
-                // from , to
-                ? TaxiReqBottomBar(
-                    taxiRequest: viewController.taxiRequest.value,
-                  )
-                : SizedBox(),
-            if (viewController.pickedFromTo.value) viewWidgets.getToolTip(),
-          ],
-        ),
+              // --- <>
+              Obx(
+                () => LocationSearchBar(
+                    request: viewController.taxiRequest.value,
+                    locationSearchBarController:
+                        viewController.locationSearchBarController,
+                    newLocationChosenEvent:
+                        viewController.updateModelAndHandoffToLocationPicker),
+              ),
+              viewController.pickedFromTo.value
+                  // from , to
+                  ? TaxiReqBottomBar(
+                      taxiRequest: viewController.taxiRequest.value,
+                    )
+                  : SizedBox(),
+              if (viewController.pickedFromTo.value) viewWidgets.getToolTip(),
+            ]),
       ),
     );
   }

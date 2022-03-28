@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
-["UserProfileScreen"]["UserProfileWidgets"];
+    ["UserProfileScreen"]["UserProfileWidgets"];
 
 class UserProfileWidgetsClass {
   // Singleton
@@ -306,8 +306,7 @@ class UserProfileWidgetsClass {
                   await onSaveChangesClick();
                 }
               : () {
-                  MezSnackbar("Oops",
-                      _i18n()['noChangesToApply'],
+                  MezSnackbar("Oops", _i18n()['noChangesToApply'],
                       position: SnackPosition.TOP);
                 },
           child: Container(

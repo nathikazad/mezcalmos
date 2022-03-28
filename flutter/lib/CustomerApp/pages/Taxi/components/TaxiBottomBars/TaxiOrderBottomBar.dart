@@ -57,7 +57,8 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
   }
 
   Widget incrementDecrementPrice() {
-    TaxiController taxiController = Get.put<TaxiController>(TaxiController());
+    final TaxiController taxiController =
+        Get.put<TaxiController>(TaxiController());
     return Flexible(
       flex: 2,
       // fit: FlexFit.tight,
@@ -76,7 +77,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                   tooltip: 'Decrease the price',
                   padding: EdgeInsets.zero,
                   onPressed: () {
-                    Order? order = Get.find<OrderController>()
+                    final Order? order = Get.find<OrderController>()
                         .hasOrderOfType(typeToCheck: OrderType.Taxi);
                     if (order != null) {
                       taxiController.updateRideCost(
@@ -110,7 +111,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                   tooltip: 'Increase the price',
                   padding: EdgeInsets.zero,
                   onPressed: () {
-                    Order? order = Get.find<OrderController>()
+                    final Order? order = Get.find<OrderController>()
                         .hasOrderOfType(typeToCheck: OrderType.Taxi);
                     if (order != null) {
                       taxiController.updateRideCost(
@@ -204,7 +205,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
   }
 
   List<Widget> buildBottomBatByStatus(BuildContext pContext) {
-    List<Widget> _widgies = [];
+    final List<Widget> _widgies = [];
     switch (widget.order.value!.status) {
       case TaxiOrdersStatus.LookingForTaxi:
         _widgies.assignAll([
@@ -231,8 +232,6 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               order: widget.order.value!,
               margin: EdgeInsets.symmetric(horizontal: 6))
         ]);
-        // widget.bottomPadding = 10.0;
-
         break;
 
       case TaxiOrdersStatus.Expired:
@@ -344,7 +343,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               flex: 5,
               fit: FlexFit.tight,
               child: Text(_i18n()['forwardUnsuccess'],
-                  style: Theme.of(pContext).textTheme.bodyText2)),
+                  style: Theme.of(pContext).textTheme.bodyText1)),
           // taxiAvatarAndName(
           //     order: widget.order.value!,
           //     pContext: pContext,

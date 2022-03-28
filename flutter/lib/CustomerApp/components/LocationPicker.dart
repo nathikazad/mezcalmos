@@ -305,8 +305,9 @@ class LocationPickerState extends State<LocationPicker> {
 
   /******************************  helper functions ************************************/
   Future<Location> getCenterAndGeoCode() async {
-    final LatLng _mapCenter =
-        await widget.locationPickerMapController.getMapCenter();
+    mezDbgPrint("zlaganga ==> called");
+    LatLng _mapCenter =
+        await this.widget.locationPickerMapController.getMapCenter();
 
     final GeoLoc.LocationData _newLocationData =
         Location.buildLocationData(_mapCenter.latitude, _mapCenter.longitude);

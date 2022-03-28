@@ -143,9 +143,10 @@ class RequestTaxiController {
   /******************************  EVENT HANDLERS ************************************/
 // when one of the dropdowns (pick current location, a saved location or a places suggestion clicked)
   void updateModelAndHandoffToLocationPicker(
-    Location? newLocation,
-    SearchComponentType textFieldType,
-  ) {
+      Location? newLocation, SearchComponentType textFieldType) {
+    mezDbgPrint(
+        "zlaganga : $textFieldType | newLocationAddress : ${newLocation?.address}");
+
     // locationPickerController.removeCircleMarker();
     if (newLocation != null) {
       currentFocusedTextField.value = textFieldType;
@@ -173,6 +174,8 @@ class RequestTaxiController {
     locationPickerController.showOrHideBlackScreen(false);
 
     updateModelAndMarker(currentFocusedTextField.value, newLocation);
+    currentFocusedTextField.refresh();
+    taxiRequest.refresh();
     if (taxiRequest.value.isFromToSet()) {
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
       locationPickerController.animateAndUpdateBounds();

@@ -653,6 +653,12 @@
                     "IncomingViewScreen": {
                         "components": {
                             "CounterOfferBottomSheet": {
+                                "CounterOfferPriceSetter": {
+                                 "rideOffer": "Make a ride offer",
+                                 "firstTxt": "The customer will be notified with your offer once the offer accepted the ride will automatically starts",
+                                 "sendOffer": "Send Offer",
+                                 "secondTxt": "Every offer you make have a timeout of 60 seconds if the customer doesn’t accept your offer the offer will be cancelled"
+                                },
                                 "CounterOfferSentBottomSheet": {
                                     "offer": "offer",
                                     "offerPrice": "Offer's price",
@@ -943,7 +949,7 @@
                             "from": "From :",
                             "to": "To :",
                             "distance": "Distance : ",
-                            "at :": "at : ",
+                            "at": "at : ",
                             "orderExpired": "Order Expired",
                             "orderStatus": {
                                 "canceledByTaxi": "Cancelled",
