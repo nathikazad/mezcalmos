@@ -23,7 +23,7 @@ class LaundryOrderView extends StatefulWidget {
 
 class _LaundryOrderViewState extends State<LaundryOrderView> {
   MGoogleMapController mGoogleMapController = MGoogleMapController();
-  Rxn<Order> order = Rxn();
+  Rxn<Order> order = Rxn<Order>();
   OrderController controller = Get.find<OrderController>();
   StreamSubscription? _orderListener;
   DeliveryAuthController deliveryAuthAuthController =
@@ -36,7 +36,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
     if (order.value == null) {
-      Get.back();
+      Get.back<void>();
     } else {
       _orderListener =
           controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
@@ -47,7 +47,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
             if (pastOrder != null) {
               order.value = pastOrder;
             } else {
-              Get.back();
+              Get.back<void>();
             }
           });
         }
@@ -82,11 +82,13 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
             child: Builder(
               builder: (BuildContext context) {
                 if (order.value != null) {
-                  return Column(children: [
-                    DriverOrderMapComponent(order: order.value!),
-                    DriverBottomLaundryOrderCard(
-                        order: order.value as LaundryOrder),
-                  ]);
+                  return Column(
+                    children: <Widget>[
+                      DriverOrderMapComponent(order: order),
+                      DriverBottomLaundryOrderCard(
+                          order: order.value as LaundryOrder),
+                    ],
+                  );
                 } else {
                   return MezLogoAnimation(
                     centered: true,
