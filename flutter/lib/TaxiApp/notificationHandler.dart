@@ -43,10 +43,8 @@ Notification orderStatusChangeNotificationHandler(String key, dynamic value) {
 Map<String, dynamic>? getTaxiOrderStatusFields(
     TaxiOrdersStatus taxiOrderStatus) {
   return <String, dynamic>{
-    "title":
-        "${_i18n()["cancelledTitle"]}",
-    "body":
-        "${_i18n()["cancelledBody"]}",
+    "title": "${_i18n()["cancelledTitle"]}",
+    "body": "${_i18n()["cancelledBody"]}",
     "imgUrl": "assets/images/cancel.png",
   };
 }

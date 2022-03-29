@@ -18,6 +18,8 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Taxi"]["components"]["BottomBarComponents"];
 
+final OrderController orderController = Get.find<OrderController>();
+
 Widget verticalSeparator() {
   return VerticalDivider(width: 1, color: Colors.grey.shade300);
 }
@@ -149,8 +151,9 @@ Widget taxiAvatarAndName(
 Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
   return GestureDetector(
     onTap: () {
-      Get.toNamed(getTaxiMessagesRoute(order.orderId),
-          parameters: {"orderId": order.orderId});
+      Get.toNamed<void>(
+        getTaxiMessagesRoute(order.orderId),
+      );
     },
     child: Container(
       margin: margin ?? EdgeInsets.only(left: 6),
@@ -169,18 +172,20 @@ Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
       ),
       child: Center(
         child: Stack(
-          children: [
-            Get.find<OrderController>().hasNewMessageNotification(order.orderId)
-                ? Positioned(
-                    top: 5,
-                    right: 5,
-                    child: Container(
-                      height: 6,
-                      width: 6,
-                      decoration: BoxDecoration(
-                          color: Colors.red, shape: BoxShape.circle),
-                    ))
-                : SizedBox(),
+          children: <Widget>[
+            Obx(
+              () => orderController.hasNewMessageNotification(order.orderId)
+                  ? Positioned(
+                      top: 5,
+                      right: 5,
+                      child: Container(
+                        height: 6,
+                        width: 6,
+                        decoration: BoxDecoration(
+                            color: Colors.red, shape: BoxShape.circle),
+                      ))
+                  : SizedBox(),
+            ),
             Center(
               child: Icon(
                 Icons.mail,
@@ -200,13 +205,13 @@ Widget cancelBtn(TaxiOrder order) {
     margin: EdgeInsets.only(right: 6),
     child: GestureDetector(
       onTap: () async {
-        YesNoDialogButton res = await yesNoDialog(
+        final YesNoDialogButton res = await yesNoDialog(
             text: _i18n()?['confirmation_header'] ?? "Por favor confirmar",
             body:
                 _i18n()?['confirmation_text'] ?? "¿Cancelar el viaje actual?");
 
         if (res == YesNoDialogButton.Yes) {
-          ServerResponse resp =
+          final ServerResponse resp =
               await Get.find<TaxiController>().cancelTaxi(order.orderId);
 
           if (!resp.success) {
@@ -238,7 +243,7 @@ Widget cancelBtn(TaxiOrder order) {
 Widget buildMsgAndCancelBtn(TaxiOrder order) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
+    children: <Widget>[
       messageBtn(order: order),
       SizedBox(
         width: 5,

@@ -29,11 +29,13 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
   void initState() {
     mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
-    // taxiOrderController.clearOrderNotifications(orderId);
+
     order.value = taxiOrderController.getOrder(orderId);
     if (order.value == null) {
       Get.back();
     } else if (order.value!.isOpenOrder()) {
+      mezDbgPrint("open order stream ---------------------------");
+
       _orderListener = taxiOrderController
           .getOpenOrderStream(orderId)
           .listen((TaxiOrder? newOrder) {
@@ -44,6 +46,8 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
         }
       });
     } else if (order.value!.inProcess()) {
+      mezDbgPrint("process order stream ---------------------------");
+
       _orderListener = taxiOrderController
           .getInProcessOrderStream(orderId)
           .listen((TaxiOrder? newOrder) {
@@ -54,7 +58,16 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
         }
       });
     } else {
-      // Get.back();
+      mezDbgPrint("past order stream ---------------------------");
+      _orderListener = taxiOrderController
+          .getPastOrderStrem(orderId)
+          .listen((TaxiOrder? pastOrder) {
+        if (pastOrder != null) {
+          order.value = taxiOrderController.getOrder(orderId);
+        } else {
+          Get.back();
+        }
+      });
     }
 
     super.initState();
@@ -69,22 +82,21 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${_i18n()["order"]}'),
-      ),
-      body: Obx(() {
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              TaxiOrderMapComponent(order: order.value!),
-              (!order.value!.isOpenOrder())
-                  ? TaxiOrderBottomCard(order: order.value!)
-                  : TaxiOpenOrderBottomCard(order: order.value!),
-            ],
+    return Obx(
+      () => Scaffold(
+          appBar: AppBar(
+            title: Text('${_i18n()["order"]}'),
           ),
-        );
-      }),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                TaxiOrderMapComponent(order: order.value!),
+                (order.value!.isOpenOrder())
+                    ? TaxiOpenOrderBottomCard(order: order.value!)
+                    : TaxiOrderBottomCard(order: order.value!),
+              ],
+            ),
+          )),
     );
   }
 }

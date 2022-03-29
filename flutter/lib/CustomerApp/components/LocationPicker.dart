@@ -74,6 +74,7 @@ class LocationPicker extends StatefulWidget {
   LocationPickerState createState() => LocationPickerState();
 }
 
+//ignore_for_file:constant_identifier_names
 enum BottomButtomToShow { Pick, Confirm, GrayedOut, Loading }
 
 class LocationPickerState extends State<LocationPicker> {
@@ -270,6 +271,7 @@ class LocationPickerState extends State<LocationPicker> {
 
 /******************************  helper functions ************************************/
   Future<Location> getCenterAndGeoCode() async {
+    mezDbgPrint("zlaganga ==> called");
     LatLng _mapCenter =
         await this.widget.locationPickerMapController.getMapCenter();
 

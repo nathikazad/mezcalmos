@@ -16,6 +16,9 @@
           "image": {
             ".write": "$uid === auth.uid"
           },
+          "bigImage": {
+            ".write": "$uid === auth.uid"
+          },
           "name": {
             ".write": "$uid === auth.uid"
           },

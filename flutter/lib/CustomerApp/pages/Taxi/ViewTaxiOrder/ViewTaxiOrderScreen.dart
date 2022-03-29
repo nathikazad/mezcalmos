@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]["Taxi"]["ViewTaxiOrdersScreen"];
+    ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
 
 class ViewTaxiOrderScreen extends StatefulWidget {
   @override
@@ -31,13 +31,11 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 
   @override
   void initState() {
-    dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-        ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
     initializeLateControllers();
     // Order handling
-    String orderId = Get.parameters['orderId']!;
+    final String orderId = Get.parameters['orderId']!;
     viewController.init(orderId, orderCancelledCallback: (TaxiOrder order) {
-      Get.back();
+      Get.back<void>();
       oneButtonDialog(
           body: _i18n()['orderCancelSuccess'], imagUrl: order.customer.image);
     });
@@ -53,13 +51,11 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   void initializeLateControllers() {
     // We do not realy need to make AnimatedSliderController late here , but it's good for Future refrences.
     // To show that You can set it up before using it.
-    this.animatedSliderController = AnimatedSliderController();
-    this.viewController = ViewTaxiOrderController(
+    animatedSliderController = AnimatedSliderController();
+    viewController = ViewTaxiOrderController(
         animatedSliderController: animatedSliderController);
-    this.viewWidgets =
-        ViewTaxiOrderScreenWidgets(viewController: viewController);
-    this.counterOfferWidgets =
-        CounterOfferWidgets(viewController: viewController);
+    viewWidgets = ViewTaxiOrderScreenWidgets(viewController: viewController);
+    counterOfferWidgets = CounterOfferWidgets(viewController: viewController);
   }
 
   @override
@@ -82,11 +78,11 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     return Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.topCenter,
-        children: [
-          Map(),
+        children: <Widget>[
+          mGoogleMap(),
           viewWidgets.absorbOrIgnoreUserTapWidget(),
           TopBar(order: viewController.order.value!),
-          Obx(() => BottomButtons()),
+          Obx(() => bottomButtons()),
           TaxiOrderBottomBar(order: viewController.order),
           viewWidgets.getToolTip(),
           counterOfferWidgets.counterOffersBottomSheet(context),
@@ -94,20 +90,21 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   }
 
   /// The map view to show the route and location of the agents
-  Container Map() {
+  Container mGoogleMap() {
     return Container(
-        width: Get.width,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5), color: Colors.white),
-        child: MGoogleMap(
-          mGoogleMapController: this.viewController.mGoogleMapController,
-          periodicRerendering: true,
-        ));
+      width: Get.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5), color: Colors.white),
+      child: MGoogleMap(
+        mGoogleMapController: viewController.mGoogleMapController,
+        periodicRerendering: true,
+      ),
+    );
   }
 
   /// Show cancel button by default and show counter offers button when
   /// there are counter offers
-  Positioned BottomButtons() {
+  Positioned bottomButtons() {
     return Positioned(
       bottom: 15,
       left: 15,
@@ -115,18 +112,20 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           if (viewController.counterOffers.isNotEmpty &&
               viewController.order.value!.status ==
                   TaxiOrdersStatus.LookingForTaxi)
-            Flexible(child: counterOfferWidgets.offersButton()),
+            Flexible(
+              child: counterOfferWidgets.offersButton(),
+            ),
           if (viewController.counterOffers.isNotEmpty)
             SizedBox(
               width: 10,
             ),
           Flexible(
-              child:
-                  viewWidgets.cancelButton(viewController.order.value!.status)),
+            child: viewWidgets.cancelButton(viewController.order.value!.status),
+          ),
         ],
       ),
     );

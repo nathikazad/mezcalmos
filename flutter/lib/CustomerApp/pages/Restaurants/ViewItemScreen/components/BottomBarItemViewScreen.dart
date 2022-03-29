@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
@@ -9,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -39,7 +39,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
   AuthController auth = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
 
     return widget.isAvailable
         ? addItemToCartButton(txt)
@@ -57,7 +57,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
 
   Widget addItemToCartButton(TextTheme txt) {
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.only(bottom: 16, right: 5, left: 5, top: 5),
       color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -66,11 +66,11 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
             width: 5,
           ),
           IncrementalComponent(
-            increment: () {
+            increment: (_) {
               widget.cartItem.value!.quantity++;
               widget.cartItem.refresh();
             },
-            decrement: () {
+            decrement: (_) {
               widget.cartItem.value!.quantity--;
               widget.cartItem.refresh();
             },
@@ -107,14 +107,14 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                           widget.currentRestaurantId) {
                         mezDbgPrint(
                             "the first id is ${restaurantCartController.associatedRestaurant?.info.id} and the scond is ${widget.currentRestaurantId}");
-                        restaurantCartController
+                        await restaurantCartController
                             .addItem(widget.cartItem.value!);
-                        Get.offNamed(kCartRoute);
+                        await Get.offNamed(kCartRoute);
                       } else {
                         mezDbgPrint(
                             "not true ${restaurantCartController.associatedRestaurant?.info.id} and the other is ${widget.currentRestaurantId}");
 
-                        YesNoDialogButton clickedYes = await yesNoDialog(
+                        final YesNoDialogButton clickedYes = await yesNoDialog(
                             text: _i18n()["title"],
                             titleUp: true,
                             icon: Container(
@@ -146,17 +146,18 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                             body: _i18n()["subtitle"]);
                         if (clickedYes == YesNoDialogButton.Yes) {
                           Get.back();
-                          Get.toNamed(kCartRoute);
+                          await Get.toNamed(kCartRoute);
                         } else {
                           Get.back();
-                          restaurantCartController
+                          await restaurantCartController
                               .addItem(widget.cartItem.value!);
-                          Get.offNamed(kCartRoute);
+                          await Get.offNamed(kCartRoute);
                         }
                       }
                     } else {
-                      restaurantCartController.addItem(widget.cartItem.value!);
-                      Get.offNamed(kCartRoute);
+                      await restaurantCartController
+                          .addItem(widget.cartItem.value!);
+                      await Get.offNamed(kCartRoute);
                     }
                   } else {
                     await restaurantCartController

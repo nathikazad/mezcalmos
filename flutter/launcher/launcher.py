@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 
 from ast import Str
-from dataclasses import replace
 import os , json
 from sys import argv, stderr, platform
 from enum import Enum
 import subprocess as proc
-from tokenize import String
-from termcolor import colored
 
 # LAST UPDATE INFOS : 
+# ADDED Patching Android - Ios icons.
 # ADDED .ipa support with versioning and removed auto IOS_TARGETED_DEVICES = 1,2 TO 1 only.
 
-
 # GLOBAL CONSTANTS !
-VERSION = "1.1.12"
+VERSION = "1.1.13"
 XOR_VALUE = 100
 CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
@@ -22,11 +19,7 @@ PRINTLN = lambda x,end='\n' : print(x , end=end) if ACTIVE_DEBUG else None
 
 VALID_CONFIG_KEYS_LEN = 2
 rm_lambda = lambda path : 'rm -rf {path}*'
-# POSSIBLE_LMODES = [
-#     'stage',
-#     'dev',
-#     'prod'
-# ]
+
 
 class OUTPUT_FILTERS(Enum):
     SHOW = 0
@@ -77,9 +70,11 @@ class DW_EXIT_REASONS(Enum):
     REACH_THE_LAZY_SAAD = -10000
 
 class Launcher:
-    def __init__(self , user_args , conf) -> None:
+    def __init__(self , user_args , conf , isWindows=False) -> None:
         self.user_args = user_args
         self.conf = conf
+        self.isWin = isWindows
+        self.pathname_separator = '/' if not self.isWin else '\\'
         # self.last_app = Config.chSum(user_args['app'])
         try:
             self.__launch__()
@@ -97,7 +92,7 @@ class Launcher:
                     if self.user_args['fmode'] == "hide":
                         fmd = OUTPUT_FILTERS.HIDE
 
-            binary = ['flutter' , 'run', '-t', 'lib/'+user_args['app']+'/main.dart']
+            binary = ['flutter.bat' if self.isWin else 'flutter' , 'run', '-t', 'lib/'+user_args['app']+'/main.dart']
             binary.extend(f_args)
 
             Config.launch_flutter_app(binary=binary , filter_file=ff , filter_mode=fmd)
@@ -123,10 +118,34 @@ class Launcher:
         # open('../lib/pre-main.dart' , 'w+').write(f_root_main)
         # PRINTLN("[+] Pacthed ../lib/pre-main.dart successfully !")
 
+        # Patching Android - Ios icons:
+        PRINTLN("[~] Setting-up App-Icons for android/ios ...")
+        _userArgsAppName = self.user_args["app"].lower().replace("app" , "")
+        _project_icons_path = '..|assets|icons|'.replace('|' , self.pathname_separator)
+        if not os.path.exists(_project_icons_path):
+            os.system(f'mkdir {_project_icons_path}')
+            
+        # Android first:
+        originalAndroidIconsBytes = open(f'assets/{_userArgsAppName}/icons/android.png' , 'rb').read()
+        originalPlayStoreBytes = open(f'assets/{_userArgsAppName}/icons/playstore.png' , 'rb').read()
+        open(f'{_project_icons_path}android.png' , 'wb+').write(originalAndroidIconsBytes)
+        open(f'{_project_icons_path}playstore.png' , 'wb+').write(originalPlayStoreBytes)
+        PRINTLN(f"\t- ✅ Android:{_userArgsAppName} => Setting Android App-Icon Done.")
+        # Then iOS :
+        originalIosIconsBytes = open(f'assets/{_userArgsAppName}/icons/ios.png' , 'rb').read()
+        originalAppStoreBytes = open(f'assets/{_userArgsAppName}/icons/appstore.png' , 'rb').read()
+        open(f'{_project_icons_path}ios.png' , 'wb+').write(originalIosIconsBytes)
+        open(f'{_project_icons_path}appstore.png' , 'wb+').write(originalAppStoreBytes)
+        # xassets-AppIcon:
+
+        PRINTLN(f"\t- ✅ iOS:{_userArgsAppName} => Setting iOS App-Icon Done.")
+
+        
+
         # Writing Valid launcher.xml
         _launcherXmlFile = self.conf['settings']['launcher.xml']
-        _outputAppName = self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['appName'];
-        _appPackageName = self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['packageName'];
+        _outputAppName = self.conf['apps'][self.user_args["app"]]['packages'][self.user_args['lmode']]['appName'];
+        _appPackageName = self.conf['apps'][self.user_args["app"]]['packages'][self.user_args['lmode']]['packageName'];
 
         PRINTLN(f"[+] Android:Label => {_outputAppName} .")
         PRINTLN(f"[+] Package:Name  => {_appPackageName} .")
@@ -178,9 +197,9 @@ class Launcher:
         open(_project_main_manifest , 'w+').write(_cloned)
 
         # profile :
-        _project_profile_manifest = "../android/app/src/profile/AndroidManifest.xml"
+        _project_profile_manifest = "..|android|app|src|profile|AndroidManifest.xml".replace('|' , self.pathname_separator)
         if not os.path.exists(os.path.dirname(_project_profile_manifest)):
-            os.mkdir(os.path.dirname(_project_profile_manifest))
+            os.system(f'mkdir {os.path.dirname(_project_profile_manifest)}')
         
         if os.path.exists(_project_profile_manifest):
             os.system('mv ../android/app/src/profile/AndroidManifest.xml ../android/app/src/profile/AndroidManifest.xml.backup')
@@ -190,10 +209,10 @@ class Launcher:
 
 
         # debug:
-        _project_debug_manifest = "../android/app/src/debug/AndroidManifest.xml"
+        _project_debug_manifest = "..|android|app|src|debug|AndroidManifest.xml".replace('|' , self.pathname_separator)
         
         if not os.path.exists(os.path.dirname(_project_debug_manifest)):
-            os.mkdir(os.path.dirname(_project_debug_manifest))
+            os.system(f'mkdir {os.path.dirname(_project_debug_manifest)}')
         
         if os.path.exists(_project_debug_manifest):
             os.system('mv ../android/app/src/debug/AndroidManifest.xml ../android/app/src/debug/AndroidManifest.xml.backup')
@@ -213,6 +232,7 @@ class Launcher:
         _project_pbxproj_path = "../ios/Runner.xcodeproj/project.pbxproj"
         _info_plist_path = "../ios/Runner/Info.plist"
         
+        # <mez-app-type> -> replaces project.pbxproj 's Icon Set
         _cloned = open('patches/ios/project.pbxproj').read()
         _cloned = _cloned.replace('<mez-package>', _appPackageName).replace('<mez-app-type>' , _ios_app_folder_name)
         # Safe check for launching.
@@ -232,7 +252,7 @@ class Launcher:
             exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
 
         open(_project_pbxproj_path , 'w+').write(_cloned)
-        PRINTLN(f"[+] Patched ios/project.pbxproj => {_appPackageName}")
+        PRINTLN(f"[+]  Patched ios/project.pbxproj => {_appPackageName}")
         _cloned = open(f'patches/ios/{_ios_app_folder_name}/Info.plist').read().replace('<mez-output-name>', _outputAppName).replace('<mez-app-type>' , _ios_app_folder_name)
         open(_info_plist_path , 'w+').write(_cloned)
         PRINTLN(f"[+] Patched ios/Runner/Info.plist => {_outputAppName}!")
@@ -512,9 +532,13 @@ class Config:
     def __init__(self , args) -> None:
         print(f"\n- MezLauncher v{VERSION}\n")
         global rm_lambda
+        global is_windows
         if platform.startswith('win'):
+            is_windows = True
             # cuz CMD is dumb xd
             rm_lambda = lambda path : f'del {path}'# && rd {path}
+        else:
+            is_windows = False
 
         self.args = args
         self.__check_args_validity__()
@@ -531,7 +555,7 @@ class Config:
 
         if self.user_args['pymode'] == "launch":
             # it's a launch operation !
-            Launcher(self.user_args , self.conf)
+            Launcher(self.user_args , self.conf , is_windows)
 
         # elif self.user_args['pymode'] == "build":
         #     # it's a build operation !

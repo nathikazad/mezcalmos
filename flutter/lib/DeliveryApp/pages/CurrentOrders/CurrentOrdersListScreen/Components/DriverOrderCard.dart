@@ -17,13 +17,14 @@ class DriverOrderCard extends StatelessWidget {
   /// Order card for delivery driver used to show current or past order ,
   /// showLeftIcon shoud be false when a current order is passed to this component
 
-  DriverOrderCard({Key? key, required this.order, this.showLeftIcon = true})
+  const DriverOrderCard(
+      {Key? key, required this.order, this.showLeftIcon = true})
       : super(key: key);
   final Order order;
   final bool showLeftIcon;
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Card(
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
@@ -175,7 +176,7 @@ class DriverOrderCard extends StatelessWidget {
     if (order.orderType == OrderType.Restaurant) {
       return "${_i18n()['orderTitle']['restaurantDelivery']}";
     } else if ((order as LaundryOrder).getCurrentPhase() ==
-            LaundryOrderPhase.Dropoff &&
+            LaundryOrderPhase.Pickup &&
         (order as LaundryOrder).status != LaundryOrderStatus.AtLaundry) {
       return "${_i18n()['orderTitle']['laundryPickup']}";
     } else {

@@ -23,9 +23,9 @@ class RestaurantOrderView extends StatefulWidget {
 
 class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   MGoogleMapController mGoogleMapController = MGoogleMapController();
-  Rxn<Order> order = Rxn();
+  Rxn<Order> order = Rxn<Order>();
   OrderController controller = Get.find<OrderController>();
-  StreamSubscription? _orderListener;
+  StreamSubscription<Order?>? _orderListener;
   DeliveryAuthController deliveryAuthAuthController =
       Get.find<DeliveryAuthController>();
   @override
@@ -40,16 +40,12 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
     } else {
       _orderListener =
           controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
-        if (newOrder != null) {
-          order.value = controller.getOrder(orderId);
+        final DeliverableOrder? _order = controller.getOrder(orderId);
+        if (_order == null) {
+          Get.back<void>();
         } else {
-          controller.getPastOrderStream(orderId).listen((Order? pastOrder) {
-            if (pastOrder != null) {
-              order.value = pastOrder;
-            } else {
-              Get.back();
-            }
-          });
+          order.value = _order;
+          order.refresh();
         }
       });
     }
@@ -84,8 +80,8 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
             child: Builder(
               builder: (BuildContext context) {
                 if (order.value != null) {
-                  return Column(children: [
-                    DriverOrderMapComponent(order: order.value!),
+                  return Column(children: <Widget>[
+                    DriverOrderMapComponent(order: order),
                     DriverBottomRestaurantOrderCard(
                         order: order.value as RestaurantOrder),
                   ]);

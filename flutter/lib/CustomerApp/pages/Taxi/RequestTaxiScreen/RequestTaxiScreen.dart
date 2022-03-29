@@ -25,6 +25,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   void initState() {
     viewWidgets =
         RequestTaxiScreenWidgets(requestTaxiController: viewController);
+    //TODO:FIX
     // fetch first without waiting 10seconds.
     // viewController.startFetchingOnlineDrivers();
     // // then keep it periodic each 10s
@@ -89,14 +90,16 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                     }
                   }
                 },
+              ),),
+              // --- <>
+              Obx(
+                () => LocationSearchBar(
+                    request: viewController.taxiRequest.value,
+                    locationSearchBarController:
+                        viewController.locationSearchBarController,
+                    newLocationChosenEvent:
+                        viewController.updateModelAndHandoffToLocationPicker),
               ),
-            ),
-              LocationSearchBar(
-                  request: viewController.taxiRequest.value,
-                  locationSearchBarController:
-                      viewController.locationSearchBarController,
-                  newLocationChosenEvent:
-                      viewController.updateModelAndHandoffToLocationPicker),
               viewController.pickedFromTo.value
                   // from , to
                   ? TaxiReqBottomBar(
