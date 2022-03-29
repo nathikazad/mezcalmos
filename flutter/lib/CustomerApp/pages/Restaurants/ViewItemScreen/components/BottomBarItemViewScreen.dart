@@ -53,7 +53,9 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
       height: 60,
       width: Get.width,
       color: Colors.red,
-      child: Center(child: Text("${_i18n()["notAvailable"]}")),
+      child: Center(
+        child: Text("${_i18n()["notAvailable"]}"),
+      ),
     );
   }
 
@@ -93,10 +95,9 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
             child: TextButton(
               style: TextButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(fontWeight: FontWeight.bold),
+                textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               onPressed: () async {
                 if (auth.fireAuthUser != null) {
@@ -134,28 +135,18 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                               height: 30,
                               child: Text(_i18n()["leftBtn"]),
                             ),
-                          ),
-                          buttonLeftStyle: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.grey[300]),
-                            height: 30,
-                            child: Text(_i18n()["leftBtn"]),
-                          ),
-                          buttonRightStyle: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.blue[800]),
-                            height: 30,
-                            child: Text(
-                              _i18n()["rightBtn"],
-                              style: TextStyle(color: Colors.white),
+                            buttonRightStyle: Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Colors.blue[800]),
+                              height: 30,
+                              child: Text(
+                                _i18n()["rightBtn"],
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
-                          ),
-                          body: _i18n()["subtitle"],
-                        );
+                            body: _i18n()["subtitle"]);
                         if (clickedYes == YesNoDialogButton.Yes) {
                           Get.back<void>();
                           await Get.toNamed<void>(kCartRoute);

@@ -92,10 +92,10 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               _orderNoteComponent(),
               const SizedBox(height: 20),
               orderSummaryCard(context),
+              bottomButton(context),
             ],
           ),
-          bottomButton(context),
-        ],
+        ),
       ),
     );
   }
@@ -247,16 +247,11 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                   ),
                 ),
                 child: Container(
-<<<<<<< HEAD
-                    padding: EdgeInsets.all(12),
-                    child: Text(_i18n()["signInToMakeOrder"])),
-=======
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(12),
                   child: Text(
                     _i18n()["signInToMakeOrder"],
                   ),
                 ),
->>>>>>> Hamza-Refactor
               ),
       ),
     );
@@ -294,15 +289,11 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               color: Colors.white,
             )
           : Container(
-<<<<<<< HEAD
-              padding: EdgeInsets.all(12), child: Text(_i18n()['orderNow'])),
-=======
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(12),
               child: Text(
                 _i18n()['orderNow'],
               ),
             ),
->>>>>>> Hamza-Refactor
     );
   }
 }
