@@ -70,10 +70,11 @@ class DW_EXIT_REASONS(Enum):
     REACH_THE_LAZY_SAAD = -10000
 
 class Launcher:
-    def __init__(self , user_args , conf) -> None:
+    def __init__(self , user_args , conf , isWindows=False) -> None:
         self.user_args = user_args
         self.conf = conf
-        self.isWin = False
+        self.isWin = isWindows
+        self.pathname_separator = '/' if not self.isWin else '\\'
         # self.last_app = Config.chSum(user_args['app'])
         try:
             self.__launch__()
@@ -120,20 +121,21 @@ class Launcher:
         # Patching Android - Ios icons:
         PRINTLN("[~] Setting-up App-Icons for android/ios ...")
         _userArgsAppName = self.user_args["app"].lower().replace("app" , "")
-        if not os.path.exists('../assets/icons'):
-            os.mkdir('../assets/icons' , mode=755)
+        _project_icons_path = '..|assets|icons|'.replace('|' , self.pathname_separator)
+        if not os.path.exists(_project_icons_path):
+            os.system(f'mkdir {_project_icons_path}')
             
         # Android first:
         originalAndroidIconsBytes = open(f'assets/{_userArgsAppName}/icons/android.png' , 'rb').read()
         originalPlayStoreBytes = open(f'assets/{_userArgsAppName}/icons/playstore.png' , 'rb').read()
-        open('../assets/icons/android.png' , 'wb+').write(originalAndroidIconsBytes)
-        open('../assets/icons/playstore.png' , 'wb+').write(originalPlayStoreBytes)
+        open(f'{_project_icons_path}android.png' , 'wb+').write(originalAndroidIconsBytes)
+        open(f'{_project_icons_path}playstore.png' , 'wb+').write(originalPlayStoreBytes)
         PRINTLN(f"\t- ✅ Android:{_userArgsAppName} => Setting Android App-Icon Done.")
         # Then iOS :
         originalIosIconsBytes = open(f'assets/{_userArgsAppName}/icons/ios.png' , 'rb').read()
         originalAppStoreBytes = open(f'assets/{_userArgsAppName}/icons/appstore.png' , 'rb').read()
-        open('../assets/icons/ios.png' , 'wb+').write(originalIosIconsBytes)
-        open('../assets/icons/appstore.png' , 'wb+').write(originalAppStoreBytes)
+        open(f'{_project_icons_path}ios.png' , 'wb+').write(originalIosIconsBytes)
+        open(f'{_project_icons_path}appstore.png' , 'wb+').write(originalAppStoreBytes)
         # xassets-AppIcon:
 
         PRINTLN(f"\t- ✅ iOS:{_userArgsAppName} => Setting iOS App-Icon Done.")
@@ -195,9 +197,9 @@ class Launcher:
         open(_project_main_manifest , 'w+').write(_cloned)
 
         # profile :
-        _project_profile_manifest = "../android/app/src/profile/AndroidManifest.xml"
+        _project_profile_manifest = "..|android|app|src|profile|AndroidManifest.xml".replace('|' , self.pathname_separator)
         if not os.path.exists(os.path.dirname(_project_profile_manifest)):
-            os.mkdir(os.path.dirname(_project_profile_manifest))
+            os.system(f'mkdir {os.path.dirname(_project_profile_manifest)}')
         
         if os.path.exists(_project_profile_manifest):
             os.system('mv ../android/app/src/profile/AndroidManifest.xml ../android/app/src/profile/AndroidManifest.xml.backup')
@@ -207,10 +209,10 @@ class Launcher:
 
 
         # debug:
-        _project_debug_manifest = "../android/app/src/debug/AndroidManifest.xml"
+        _project_debug_manifest = "..|android|app|src|debug|AndroidManifest.xml".replace('|' , self.pathname_separator)
         
         if not os.path.exists(os.path.dirname(_project_debug_manifest)):
-            os.mkdir(os.path.dirname(_project_debug_manifest))
+            os.system(f'mkdir {os.path.dirname(_project_debug_manifest)}')
         
         if os.path.exists(_project_debug_manifest):
             os.system('mv ../android/app/src/debug/AndroidManifest.xml ../android/app/src/debug/AndroidManifest.xml.backup')
@@ -530,10 +532,13 @@ class Config:
     def __init__(self , args) -> None:
         print(f"\n- MezLauncher v{VERSION}\n")
         global rm_lambda
+        global is_windows
         if platform.startswith('win'):
-            self.isWin = True
+            is_windows = True
             # cuz CMD is dumb xd
             rm_lambda = lambda path : f'del {path}'# && rd {path}
+        else:
+            is_windows = False
 
         self.args = args
         self.__check_args_validity__()
@@ -550,7 +555,7 @@ class Config:
 
         if self.user_args['pymode'] == "launch":
             # it's a launch operation !
-            Launcher(self.user_args , self.conf)
+            Launcher(self.user_args , self.conf , is_windows)
 
         # elif self.user_args['pymode'] == "build":
         #     # it's a build operation !
