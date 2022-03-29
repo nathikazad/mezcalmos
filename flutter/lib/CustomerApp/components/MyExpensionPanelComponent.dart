@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
-class MyExpensionPanelComponent extends StatefulWidget {
+class MyExpansionPanelComponent extends StatefulWidget {
   final Widget child;
   final ValueChanged<bool>? onExpansionChanged;
   final List<Widget> children;
@@ -10,43 +10,64 @@ class MyExpensionPanelComponent extends StatefulWidget {
   final bool maintainState;
   final GestureTapCallback? onEdit;
 
-  MyExpensionPanelComponent(
-      {required this.child,
-      this.onExpansionChanged,
-      required this.children,
-      this.initiallyExpanded = false,
-      this.maintainState = false,
-      this.onEdit});
+  const MyExpansionPanelComponent({
+    required this.child,
+    this.onExpansionChanged,
+    required this.children,
+    this.initiallyExpanded = false,
+    this.maintainState = false,
+    this.onEdit,
+  });
 
   @override
-  _MyExpensionPanelComponentState createState() =>
-      _MyExpensionPanelComponentState();
+  _MyExpansionPanelComponentState createState() =>
+      _MyExpansionPanelComponentState();
 }
 
-class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
+class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
     with SingleTickerProviderStateMixin {
+  /// _easeOutTween
   static final Animatable<double> _easeOutTween =
       CurveTween(curve: Curves.easeOut);
+
+  /// _easeInTween
   static final Animatable<double> _easeInTween =
       CurveTween(curve: Curves.easeIn);
+
+  /// _halfTween
   static final Animatable<double> _halfTween =
       Tween<double>(begin: 0.0, end: 0.5);
+
+  /// _controller
   late AnimationController _controller;
+
+  /// _iconTurns
   late Animation<double> _iconTurns;
+
+  /// _heightFactor
   late Animation<double> _heightFactor;
 
+  /// _isExpanded
   bool _isExpanded = false;
 
   @override
   void initState() {
+    super.initState();
+
+    /// Initialize _controller
     _controller = AnimationController(duration: _kExpand, vsync: this);
+
+    /// Initialize _heightFactor
     _heightFactor = _controller.drive(_easeInTween);
+
+    /// Initialize _iconTurns
     _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
-    _isExpanded = PageStorage.of(context)?.readState(context) as bool? ??
+
+    /// Initialize _isExpanded
+    _isExpanded = (PageStorage.of(context)?.readState(context) as bool?) ??
         widget.initiallyExpanded;
 
     if (_isExpanded) _controller.value = 1.0;
-    super.initState();
   }
 
   @override
@@ -79,24 +100,26 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Container(
             decoration: BoxDecoration(
-                borderRadius: !_isExpanded
-                    ? BorderRadius.circular(8)
-                    : BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8)),
-                color: const Color(0xffffffff)),
+              borderRadius: !_isExpanded
+                  ? BorderRadius.circular(8)
+                  : BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8),
+                    ),
+              color: Colors.white,
+            ),
             child: Column(
-              children: [
+              children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     widget.child,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
+                      children: <Widget>[
                         InkWell(
                           child: Container(
                             width: 30,
@@ -114,9 +137,7 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
                           ),
                           onTap: widget.onEdit,
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                         InkWell(
                           child: Container(
                             width: 30,
@@ -130,15 +151,13 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
                               turns: _iconTurns,
                               child: const Icon(
                                 Icons.expand_more,
-                                color: Color(0xffffffff),
+                                color: Colors.white,
                               ),
                             ),
                           ),
                           onTap: _handleTap,
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                       ],
                     ),
                   ],
@@ -148,8 +167,9 @@ class _MyExpensionPanelComponentState extends State<MyExpensionPanelComponent>
           ),
           ClipRRect(
             borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(8),
-                bottomRight: Radius.circular(8)),
+              bottomLeft: Radius.circular(8),
+              bottomRight: Radius.circular(8),
+            ),
             child: Align(
               alignment: Alignment.center,
               heightFactor: _heightFactor.value,

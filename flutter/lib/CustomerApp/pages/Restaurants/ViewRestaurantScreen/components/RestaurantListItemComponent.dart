@@ -2,14 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Utils/GenerateTheNameExtension.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 class RestaurantsListItemsOfComponent extends StatefulWidget {
-  RestaurantsListItemsOfComponent({Key? key, required this.item, this.function})
-      : super(key: key);
+  const RestaurantsListItemsOfComponent({
+    Key? key,
+    required this.item,
+    this.function,
+  }) : super(key: key);
+
   final Item item;
   final GestureTapCallback? function;
 
@@ -20,10 +26,13 @@ class RestaurantsListItemsOfComponent extends StatefulWidget {
 
 class _RestaurantsListItemsOfComponentState
     extends State<RestaurantsListItemsOfComponent> {
+  /// LanguageType
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
+
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
-    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+    final TextTheme txt = Theme.of(context).textTheme;
     return InkWell(
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -35,7 +44,7 @@ class _RestaurantsListItemsOfComponentState
             CachedNetworkImage(
               imageUrl: widget.item.image!,
               fit: BoxFit.cover,
-              imageBuilder: (context, imageProvider) => Container(
+              imageBuilder: (_, ImageProvider imageProvider) => Container(
                 height: 63,
                 width: 63,
                 child: ClipOval(
@@ -43,48 +52,64 @@ class _RestaurantsListItemsOfComponentState
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.cover),
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
               ),
-              placeholder: (context, url) => Container(
-                height: 63,
-                width: 63,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-              errorWidget: (context, url, error) => Container(
+              placeholder: (_, __) {
+                return Shimmer.fromColors(
+                  child: Container(
+                    height: 63,
+                    width: 63,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  highlightColor: Colors.grey[400]!,
+                  baseColor: Colors.grey[300]!,
+                  direction: ShimmerDirection.ltr,
+                );
+              },
+              errorWidget: (_, __, ___) {
+                return Container(
                   height: 63,
                   width: 63,
-                  child: Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.grey.shade300),
-                      child: Icon(
-                        Icons.image,
-                        color: Colors.grey,
-                        size: 20,
-                      ))),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[400],
+                    shape: BoxShape.circle,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "${widget.item.name[userLanguage]!.capitalizeFirstofEach}"
+                        .generateTheName(),
+                    style: const TextStyle(
+                      color: Color.fromRGBO(172, 89, 252, 0.8),
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              },
             ),
-            SizedBox(
-              width: 15,
-            ),
+            const SizedBox(width: 15),
             Expanded(
               child: Column(
-                children: [
-                  SizedBox(
-                    height: 8,
-                  ),
+                children: <Widget>[
+                  const SizedBox(height: 8),
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                        "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
-                        style: txt.headline3!.copyWith(fontSize: 13.sp)),
+                      "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
+                      style: txt.headline3!.copyWith(
+                        fontSize: 13.sp,
+                      ),
+                    ),
                   ),
-                  SizedBox(
-                    height: 7,
-                  ),
+                  const SizedBox(height: 7),
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text("\$${widget.item.cost}", style: txt.headline3),

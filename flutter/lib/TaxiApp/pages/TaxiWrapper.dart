@@ -1,35 +1,42 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
+import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/TaxiApp/notificationHandler.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 class TaxiWrapper extends StatefulWidget {
+  const TaxiWrapper({Key? key}) : super(key: key);
+
   @override
   _TaxiWrapperState createState() => _TaxiWrapperState();
 }
 
 class _TaxiWrapperState extends State<TaxiWrapper> {
+  ///
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
+
+  ///
   StreamSubscription<bool>? _locationStreamSub;
+
+  ///
   AuthController _authController = Get.find<AuthController>();
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
 
@@ -49,7 +56,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         handleState(taxiState);
       } else {
         mezDbgPrint("inside else  = $taxiState");
-        _taxiAuthController.stateStream.first.then((_taxiState) {
+        _taxiAuthController.stateStream.first.then((TaxiState? _taxiState) {
           mezDbgPrint("inside else -> then  = $_taxiState");
           handleState(_taxiState);
         });
@@ -61,7 +68,9 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
     listenForLocationPermissions();
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
-            taxiNotificationsNode(userId), taxiNotificationHandler);
+      taxiNotificationsNode(userId),
+      taxiNotificationHandler,
+    );
     super.initState();
   }
 
@@ -77,7 +86,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
     });
   }
 
-  void handleState(TaxiState? state) async {
+  Future<void> handleState(TaxiState? state) async {
     mezDbgPrint(state);
     if (state != null) {
       mezDbgPrint("Current order ====> ${state.currentOrder}");
@@ -87,10 +96,10 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
       mezDbgPrint("TaxiWrapper::handleState ${state.toJson().toString()}");
       if (!state.isAuthorized) {
         mezDbgPrint("TaxiWrapper::handleState going to unauthorized");
-        Get.toNamed(kUnauthorizedRoute);
+        Get.toNamed<void>(kUnauthorizedRoute);
       } else if (state.currentOrder != null) {
         mezDbgPrint("TaxiWrapper::handleState going to current order");
-        Get.toNamed(kCurrentOrderRoute);
+        Get.toNamed<void>(kCurrentOrderRoute);
       } else if (state.inOrderNegotation != null) {
         await handleInNegotationMode(state.inOrderNegotation!);
       } else {

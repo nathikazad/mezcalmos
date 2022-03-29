@@ -9,11 +9,10 @@ import 'components/RestaurantSliverAppbar.dart';
 import 'components/buildRestaurantsItems.dart';
 import 'components/restaurantInfoTab.dart';
 
-final f = new DateFormat('hh:mm a');
+final DateFormat f = new DateFormat('hh:mm a');
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-["Restaurants"]["ViewRestaurantScreen"]["ViewRestaurantScreen"];
+    ["pages"]["Restaurants"]["ViewRestaurantScreen"]["ViewRestaurantScreen"];
 
 class ViewRestaurantScreen extends StatefulWidget {
   // final Restaurant restaurant;
@@ -27,13 +26,16 @@ class ViewRestaurantScreen extends StatefulWidget {
 }
 
 class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
+  /// restaurant
   Restaurant? restaurant;
+
   @override
   void initState() {
+    super.initState();
     restaurant = Get.arguments as Restaurant;
     mezDbgPrint(
-        "the length of opening hours is ${restaurant?.schedule?.openHours.length}");
-    super.initState();
+      "the length of opening hours is ${restaurant?.schedule?.openHours.length}",
+    );
   }
 
   @override
@@ -49,15 +51,9 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                 delegate: _SliverAppBarDelegate(
                   TabBar(
                     labelStyle: Theme.of(context).textTheme.bodyText1,
-                    tabs: [
-                      Tab(
-                        text:
-                            '${_i18n()["menu"]}',
-                      ),
-                      Tab(
-                        text:
-                            '${_i18n()["info"]}',
-                      ),
+                    tabs: <Tab>[
+                      Tab(text: '${_i18n()["menu"]}'),
+                      Tab(text: '${_i18n()["info"]}'),
                     ],
                   ),
                 ),
@@ -65,27 +61,28 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
               ),
             ];
           },
-          body: TabBarView(children: [
-            // -----------------------------FIRST TAB (MENU) --------------------------------------------//
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    buildResturantItems(restaurant!.items, restaurant!.info.id),
-                  ],
+          body: TabBarView(
+            children: <Widget>[
+              // -----------------------------FIRST TAB (MENU) --------------------------------------------//
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const SizedBox(height: 10),
+                      buildResturantItems(
+                        restaurant!.items,
+                        restaurant!.info.id,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            // -----------------------------SECOND TAB (INFOS) --------------------------------------------//
-            RestaurantInfoTab(
-              restaurant: restaurant!,
-            )
-          ]),
+              // -----------------------------SECOND TAB (INFOS) --------------------------------------------//
+              RestaurantInfoTab(restaurant: restaurant!)
+            ],
+          ),
         ),
       ),
     );
@@ -99,6 +96,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   double get minExtent => _tabBar.preferredSize.height;
+
   @override
   double get maxExtent => _tabBar.preferredSize.height;
 

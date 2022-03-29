@@ -12,14 +12,14 @@ class OrderDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Card(
       child: Container(
         padding: EdgeInsets.all(16),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Container(
               alignment: Alignment.center,
               child: Text(
@@ -27,53 +27,39 @@ class OrderDetailsCard extends StatelessWidget {
                 style: txt.headline3,
               ),
             ),
-            Divider(
-              thickness: 0.3,
-            ),
-            SizedBox(
-              height: 10,
-            ),
+            const Divider(thickness: 0.3),
+            const SizedBox(height: 10),
             Text(
               'Order shipping adress : ',
               style: txt.bodyText1,
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
-              children: [
+              children: <Widget>[
                 Icon(
                   Icons.place,
                   color: Theme.of(context).primaryColorLight,
                 ),
-                SizedBox(
-                  width: 5.w,
-                ),
+                SizedBox(width: 5.w),
                 Text(
                   order.to.address,
                   style: txt.bodyText2,
                 ),
               ],
             ),
-            Divider(
-              thickness: 0.2,
-            ),
+            const Divider(thickness: 0.2),
             Text(
               'Order Date : ',
               style: txt.bodyText1,
             ),
-            SizedBox(
-              height: 10.h,
-            ),
+            SizedBox(height: 10.h),
             Row(
-              children: [
+              children: <Widget>[
                 Icon(
                   Icons.watch_later,
                   color: Theme.of(context).primaryColorLight,
                 ),
-                SizedBox(
-                  width: 5.w,
-                ),
+                SizedBox(width: 5.w),
                 Text(
                   DateFormat('dd/MM/yyyy HH:mm').format(order.orderTime),
                   style: txt.bodyText2,

@@ -6,12 +6,14 @@ class ViewItemScreenCartComponent extends StatefulWidget {
   final GestureTapCallback? onTap;
   final ValueChanged<bool?>? onValueChanged;
   final bool? initialVal;
-  ViewItemScreenCartComponent(
-      {this.onTap,
-      this.onValueChanged,
-      this.title,
-      this.price,
-      this.initialVal = false});
+
+  const ViewItemScreenCartComponent({
+    this.onTap,
+    this.onValueChanged,
+    this.title,
+    this.price,
+    this.initialVal = false,
+  });
 
   @override
   _ViewItemScreenCartComponentState createState() =>
@@ -21,6 +23,7 @@ class ViewItemScreenCartComponent extends StatefulWidget {
 class _ViewItemScreenCartComponentState
     extends State<ViewItemScreenCartComponent> {
   bool? isTure;
+
   @override
   void initState() {
     isTure = widget.initialVal != null ? widget.initialVal : false;
@@ -29,7 +32,7 @@ class _ViewItemScreenCartComponentState
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
 
     isTure = widget.initialVal != null ? widget.initialVal : false;
     return Container(
@@ -47,12 +50,12 @@ class _ViewItemScreenCartComponentState
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+            children: <Widget>[
               Flexible(
                 child: Text(
                   "${widget.title}" +
                       "${(widget.price == null) ? " " : " +${widget.price}"}",
-                  style: txt.bodyText1,
+                  style: textTheme.bodyText1,
                 ),
               ),
               Theme(
@@ -65,13 +68,15 @@ class _ViewItemScreenCartComponentState
                   height: 25,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                            color: (isTure != null)
-                                ? Color.fromRGBO(172, 89, 252, 1)
-                                : Color(0xff5c7fff),
-                            width: 2)),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: (isTure != null)
+                            ? Color.fromRGBO(172, 89, 252, 1)
+                            : Color(0xff5c7fff),
+                        width: 2,
+                      ),
+                    ),
                     clipBehavior: Clip.hardEdge,
                     child: Transform.scale(
                       scale: 22 / Checkbox.width,
@@ -81,7 +86,7 @@ class _ViewItemScreenCartComponentState
                         activeColor: Color.fromRGBO(172, 89, 252, 1),
                         checkColor: Color(0xffffffff),
                         value: isTure,
-                        onChanged: (value) {
+                        onChanged: (bool? value) {
                           setState(() {
                             if (isTure!)
                               isTure = false;

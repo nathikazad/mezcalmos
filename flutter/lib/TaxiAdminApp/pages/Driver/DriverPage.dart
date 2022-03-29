@@ -199,7 +199,7 @@ class DriverPage extends GetView<DriverStatsController> {
                               initialLabelIndex: switcherIndex.value,
                               totalSwitches: 3,
                               fontSize: 15,
-                              labels: ['7', '15', "30"],
+                              labels: ['7', '15', '30'],
                               radiusStyle: true,
                               onToggle: (int? index) {
                                 switch (index) {
@@ -297,7 +297,7 @@ class DriverPage extends GetView<DriverStatsController> {
                               minWidth: 45,
                               minHeight: 35,
                               cornerRadius: 18.0,
-                              activeBgColors: [
+                              activeBgColors: <List<Color>>[
                                 [Color.fromRGBO(103, 121, 254, 1)],
                                 [Color.fromRGBO(103, 121, 254, 1)],
                                 [Color.fromRGBO(103, 121, 254, 1)]

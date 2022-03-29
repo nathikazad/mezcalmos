@@ -1,10 +1,8 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-typedef void OnCounterChange(int);
+typedef void OnCounterChange(int value);
 
 class MezLoadingCounter extends StatefulWidget {
   final Function() onCounterEnd;
@@ -13,17 +11,20 @@ class MezLoadingCounter extends StatefulWidget {
   final double circleSize;
   final Widget? childInsideCounter;
   final double loadingLineHeight;
+
   // final double? manualCounterValue;
   final bool reversed;
-  MezLoadingCounter(
-      {required this.onCounterEnd,
-      this.counterDurationInSeconds = 30,
-      required this.circleSize,
-      this.childInsideCounter,
-      this.onCounterChange,
-      // this.manualCounterValue,
-      this.reversed = false,
-      this.loadingLineHeight = 20});
+
+  const MezLoadingCounter({
+    required this.onCounterEnd,
+    this.counterDurationInSeconds = 30,
+    required this.circleSize,
+    this.childInsideCounter,
+    this.onCounterChange,
+    // this.manualCounterValue,
+    this.reversed = false,
+    this.loadingLineHeight = 20,
+  });
 
   @override
   _MezLoadingCounterState createState() => _MezLoadingCounterState(

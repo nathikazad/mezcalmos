@@ -4,8 +4,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 //import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
 
 dynamic _i18n() =>
-    Get.find<LanguageController>().strings['CustomerApp']['pages']
-['Laundry']['LaundryRequestView']['Components']['LaundryStepsComponent'];
+    Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
+        ['LaundryRequestView']['Components']['LaundryStepsComponent'];
 
 class LaundryStepsComponent extends StatefulWidget {
   const LaundryStepsComponent({
@@ -18,24 +18,23 @@ class LaundryStepsComponent extends StatefulWidget {
 
 class _LaundryStepsComponentState extends State<LaundryStepsComponent> {
   int index = 1;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(8),
       child: Column(
-        children: [
+        children: <Widget>[
           Row(
-            children: [
+            children: <Widget>[
               stepComponent(context, 1),
-              Expanded(child: Divider()),
+              const Expanded(child: Divider()),
               stepComponent(context, 2),
-              Expanded(child: Divider()),
+              const Expanded(child: Divider()),
               stepComponent(context, 3),
             ],
           ),
-          SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Card(
             child: Container(
               margin: const EdgeInsets.all(16),
@@ -48,7 +47,7 @@ class _LaundryStepsComponentState extends State<LaundryStepsComponent> {
                     .copyWith(height: 1.5),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

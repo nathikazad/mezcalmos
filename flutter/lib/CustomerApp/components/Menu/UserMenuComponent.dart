@@ -11,8 +11,12 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class UserMenu extends StatefulWidget {
+  const UserMenu({
+    Key? key,
+    required this.padding,
+  }) : super(key: key);
+
   final double padding;
-  UserMenu({Key? key, required this.padding}) : super(key: key);
 
   @override
   State<UserMenu> createState() => _UserMenuState();
@@ -21,38 +25,41 @@ class UserMenu extends StatefulWidget {
 class _UserMenuState extends State<UserMenu> {
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['components']['Menu']['UserMenuComponent'];
-  AuthController auth = Get.find<AuthController>();
-  OrderController orderController = Get.find<OrderController>();
+
+  /// AuthController
+  final AuthController auth = Get.find<AuthController>();
+
+  /// OrderController
+  final OrderController orderController = Get.find<OrderController>();
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(
+    return PopupMenuButton<Object>(
       padding: EdgeInsets.only(right: 12),
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      ),
       icon: UserMenuIcon(
         padding: widget.padding,
       ),
-      itemBuilder: (context) {
-        return [
-          PopupMenuItem(
+      itemBuilder: (BuildContext context) {
+        return <PopupMenuItem<int>>[
+          PopupMenuItem<int>(
             child: orderMenuItem(context),
             value: 0,
           ),
           if (Get.find<ForegroundNotificationsController>()
               .notifications
               .isNotEmpty)
-            PopupMenuItem(
+            PopupMenuItem<int>(
               child: notificationMenuItem(context),
               value: 1,
             ),
-          PopupMenuItem(
+          PopupMenuItem<int>(
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(Ionicons.map_outline),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   _i18n()['savedLocations'],
                 ),
@@ -60,13 +67,11 @@ class _UserMenuState extends State<UserMenu> {
             ),
             value: 2,
           ),
-          PopupMenuItem(
+          PopupMenuItem<int>(
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(Ionicons.person_outline),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   _i18n()["userInfo"],
                 ),
@@ -74,13 +79,11 @@ class _UserMenuState extends State<UserMenu> {
             ),
             value: 3,
           ),
-          PopupMenuItem(
+          PopupMenuItem<int>(
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(Ionicons.exit_outline),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   _i18n()["logout"],
                 ),
@@ -90,19 +93,19 @@ class _UserMenuState extends State<UserMenu> {
           ),
         ];
       },
-      onSelected: (value) {
+      onSelected: (Object? value) {
         switch (value) {
           case 0:
-            Get.toNamed(kOrdersRoute);
+            Get.toNamed<void>(kOrdersRoute);
             break;
           case 1:
-            Get.toNamed(kNotificationsRoute);
+            Get.toNamed<void>(kNotificationsRoute);
             break;
           case 2:
-            Get.toNamed(kSavedLocations);
+            Get.toNamed<void>(kSavedLocations);
             break;
           case 3:
-            Get.toNamed(kUserProfile);
+            Get.toNamed<void>(kUserProfile);
             break;
           case 4:
             auth.signOut();
@@ -115,23 +118,22 @@ class _UserMenuState extends State<UserMenu> {
 
   Row notificationMenuItem(BuildContext context) {
     return Row(
-      children: [
+      children: <Widget>[
         Badge(
-            badgeColor: Theme.of(context).primaryColorLight,
-            badgeContent: Text(
-              Get.find<ForegroundNotificationsController>()
-                  .notifications
-                  .length
-                  .toStringAsFixed(0),
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1!
-                  .copyWith(color: Colors.white),
-            ),
-            child: Icon(Ionicons.notifications_outline)),
-        SizedBox(
-          width: 10,
+          badgeColor: Theme.of(context).primaryColorLight,
+          badgeContent: Text(
+            Get.find<ForegroundNotificationsController>()
+                .notifications
+                .length
+                .toStringAsFixed(0),
+            style: Theme.of(context)
+                .textTheme
+                .subtitle1!
+                .copyWith(color: Colors.white),
+          ),
+          child: Icon(Ionicons.notifications_outline),
         ),
+        const SizedBox(width: 10),
         Text(" ${_i18n()['notifications']}"),
       ],
     );
@@ -139,7 +141,7 @@ class _UserMenuState extends State<UserMenu> {
 
   Row orderMenuItem(BuildContext context) {
     return Row(
-      children: [
+      children: <Widget>[
         (orderController.currentOrders.length > 0)
             ? Badge(
                 badgeColor: Theme.of(context).primaryColorLight,
@@ -150,11 +152,10 @@ class _UserMenuState extends State<UserMenu> {
                       .subtitle1!
                       .copyWith(color: Colors.white),
                 ),
-                child: Icon(Ionicons.time_outline))
+                child: Icon(Ionicons.time_outline),
+              )
             : Icon(Ionicons.time_outline),
-        SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Text(" ${_i18n()['orders']}"),
       ],
     );

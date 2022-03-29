@@ -4,8 +4,12 @@ class TextFieldComponent extends StatelessWidget {
   final TextEditingController textController;
   final String? hint;
   final Function? onChangeCallback;
-  TextFieldComponent(
-      {required this.textController, this.hint, this.onChangeCallback});
+
+  const TextFieldComponent({
+    required this.textController,
+    this.hint,
+    this.onChangeCallback,
+  });
 
   @override
   Widget build(BuildContext context) {

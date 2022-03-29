@@ -11,19 +11,21 @@ class NoUserIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(8),
-        child: CircleAvatar(
-            radius: 25,
-            backgroundImage: AssetImage(aDefaultAvatar),
-            child: Material(
-              shape: CircleBorder(),
-              clipBehavior: Clip.hardEdge,
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  Get.toNamed(kSignInRouteOptional);
-                },
-              ),
-            )));
+      padding: const EdgeInsets.all(8),
+      child: CircleAvatar(
+        radius: 25,
+        backgroundImage: AssetImage(aDefaultAvatar),
+        child: Material(
+          shape: CircleBorder(),
+          clipBehavior: Clip.hardEdge,
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              Get.toNamed<void>(kSignInRouteOptional);
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
