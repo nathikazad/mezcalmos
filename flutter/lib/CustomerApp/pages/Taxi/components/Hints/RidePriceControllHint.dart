@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 class RidePriceControllHint extends StatelessWidget {
   final String hintText;
 
-  RidePriceControllHint({required this.hintText});
+  const RidePriceControllHint({
+    Key? key,
+    required this.hintText,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        SizedBox(
-          height: 10,
-        ),
+      children: <Widget>[
+        const SizedBox(height: 10),
         Center(
           child: Text(
             hintText,
@@ -21,9 +22,7 @@ class RidePriceControllHint extends StatelessWidget {
             maxLines: 10,
           ),
         ),
-        SizedBox(
-          height: 10,
-        )
+        const SizedBox(height: 10)
       ],
     );
   }

@@ -42,8 +42,10 @@ class ViewTaxiOrderScreenWidgets {
       return Container(
         child: InkWell(
           onTap: () async {
-            YesNoDialogButton res = await yesNoDialog(
-                text: _i18n()['title'], body: _i18n()['question']);
+            final YesNoDialogButton res = await yesNoDialog(
+              text: _i18n()['title'],
+              body: _i18n()['question'],
+            );
             if (res == YesNoDialogButton.Yes) {
               await viewController.taxiController
                   .cancelTaxi(viewController.order.value!.orderId);
@@ -119,6 +121,6 @@ class ViewTaxiOrderScreenWidgets {
         ),
       );
     else
-      return SizedBox();
+      return const SizedBox();
   }
 }

@@ -43,19 +43,20 @@ class LaundryOrderStatusCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 messageButton(context),
               ],
             ),
           ),
         ),
         Container(
-            margin: EdgeInsets.all(5),
-            alignment: Alignment.center,
-            child: Text(
-              getOrderHelperText(order.status),
-              textAlign: TextAlign.center,
-            ))
+          margin: EdgeInsets.all(5),
+          alignment: Alignment.center,
+          child: Text(
+            getOrderHelperText(order.status),
+            textAlign: TextAlign.center,
+          ),
+        ),
       ],
     );
   }
@@ -66,14 +67,17 @@ class LaundryOrderStatusCard extends StatelessWidget {
       shape: CircleBorder(),
       child: InkWell(
         onTap: () {
-          Get.toNamed<void>(getMessagesRoute(
+          Get.toNamed<void>(
+            getMessagesRoute(
               orderId: order.orderId,
               chatId: order.orderId,
-              recipientType: ParticipantType.Laundry,),);
+              recipientType: ParticipantType.Laundry,
+            ),
+          );
         },
         customBorder: CircleBorder(),
         child: Stack(
-          children: [
+          children: <Widget>[
             Container(
               margin: EdgeInsets.all(12),
               child: Icon(

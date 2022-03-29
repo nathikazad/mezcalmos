@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/Menu/NoUserIcon.dart';
+import 'package:mezcalmos/CustomerApp/components/Menu/UserMenuComponent.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-
-import 'NoUserIcon.dart';
-import 'UserMenuComponent.dart';
 
 class MenuComponent extends StatelessWidget {
   const MenuComponent({

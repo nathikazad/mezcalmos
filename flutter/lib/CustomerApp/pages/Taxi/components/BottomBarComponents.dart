@@ -26,15 +26,19 @@ Widget verticalSeparator() {
 
 Widget rideCost(String estimatedPrice) {
   return Expanded(
-      flex: 1,
-      child: Center(
-          child: Text("\$" + estimatedPrice,
-              softWrap: false,
-              style: TextStyle(
-                  fontFamily: "psr",
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13.5.sp))));
+    flex: 1,
+    child: Center(
+      child: Text(
+        "\$" + estimatedPrice,
+        softWrap: false,
+        style: TextStyle(
+            fontFamily: "psr",
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 13.5.sp),
+      ),
+    ),
+  );
 }
 
 Widget rightRouteInfos(TaxiRequest taxiRequest) {
@@ -44,29 +48,25 @@ Widget rightRouteInfos(TaxiRequest taxiRequest) {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Row(
-          children: [
+          children: <Widget>[
             Icon(
               MezcalmosIcons.route,
               size: (Get.height * 0.015).sp,
             ),
-            SizedBox(
-              width: 2.w,
-            ),
+            SizedBox(width: 2.w),
             Text(taxiRequest.routeInformation?.distance.distanceStringInKm ??
                 "-"),
           ],
         ),
         Row(
-          children: [
+          children: <Widget>[
             Icon(
               MezcalmosIcons.stopwatch,
               size: (Get.height * 0.015).sp,
             ),
-            SizedBox(
-              width: 2.w,
-            ),
+            SizedBox(width: 2.w),
             Text(taxiRequest.routeInformation?.duration.longTextVersion ?? "-"),
           ],
         ),
@@ -75,12 +75,13 @@ Widget rightRouteInfos(TaxiRequest taxiRequest) {
   );
 }
 
-Widget taxiAvatarAndName(
-    {required BuildContext pContext,
-    required TaxiOrder? order,
-    String? description,
-    String? name,
-    String? asset}) {
+Widget taxiAvatarAndName({
+  required BuildContext pContext,
+  required TaxiOrder? order,
+  String? description,
+  String? name,
+  String? asset,
+}) {
   return Flexible(
     flex: 3,
     fit: FlexFit.tight,
@@ -89,58 +90,62 @@ Widget taxiAvatarAndName(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           CircleAvatar(
             radius: 14.sp,
             child: ClipOval(
-                clipBehavior: Clip.antiAlias,
-                child: mLoadImage(
-                    url: order?.serviceProvider?.image,
-                    assetInCaseFailed: asset ?? aDefaultAvatar,
-                    fit: BoxFit.cover,
-                    height: getSizeRelativeToScreen(
-                        100, pContext.height, pContext.width),
-                    width: getSizeRelativeToScreen(
-                        100, pContext.height, pContext.width))),
+              clipBehavior: Clip.antiAlias,
+              child: mLoadImage(
+                url: order?.serviceProvider?.image,
+                assetInCaseFailed: asset ?? aDefaultAvatar,
+                fit: BoxFit.cover,
+                height: getSizeRelativeToScreen(
+                    100, pContext.height, pContext.width),
+                width: getSizeRelativeToScreen(
+                  100,
+                  pContext.height,
+                  pContext.width,
+                ),
+              ),
+            ),
             backgroundColor:
                 Colors.grey.shade100, //Color.fromARGB(255, 222, 222, 222),
           ),
-          SizedBox(
-            width: 5.sp,
-          ),
+          SizedBox(width: 5.sp),
           Flexible(
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: description != null
-                    ? CrossAxisAlignment.start
-                    : CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    //  width: name == null ? 100.sp : null,
-                    child: Text(
-                      name ?? order?.serviceProvider?.name ?? "Taxi",
-                      style: TextStyle(
-                        fontSize: 13.sp,
-                        fontFamily: 'psb',
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      maxLines: 1,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: description != null
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  //  width: name == null ? 100.sp : null,
+                  child: Text(
+                    name ?? order?.serviceProvider?.name ?? "Taxi",
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      fontFamily: 'psb',
                     ),
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    maxLines: 1,
                   ),
-                  description != null
-                      ? Text(
-                          description,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontSize: 10.sp,
-                              fontFamily: 'psr',
-                              color: Colors.grey),
-                        )
-                      : SizedBox(),
-                ]),
+                ),
+                description != null
+                    ? Text(
+                        description,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontSize: 10.sp,
+                            fontFamily: 'psr',
+                            color: Colors.grey),
+                      )
+                    : const SizedBox(),
+              ],
+            ),
           ),
         ],
       ),

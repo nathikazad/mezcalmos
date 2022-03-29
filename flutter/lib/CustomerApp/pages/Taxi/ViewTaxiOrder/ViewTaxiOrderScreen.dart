@@ -60,7 +60,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     // To show that You can set it up before using it.
     animatedSliderController = AnimatedSliderController();
     viewController = ViewTaxiOrderController(
-        animatedSliderController: animatedSliderController,);
+      animatedSliderController: animatedSliderController,
+    );
     viewWidgets = ViewTaxiOrderScreenWidgets(viewController: viewController);
     counterOfferWidgets = CounterOfferWidgets(viewController: viewController);
   }
@@ -98,13 +99,14 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   /// The map view to show the route and location of the agents
   Container mGoogleMap() {
     return Container(
-        width: Get.width,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5), color: Colors.white),
-        child: MGoogleMap(
-          mGoogleMapController: viewController.mGoogleMapController,
-          periodicRerendering: true,
-        ));
+      width: Get.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5), color: Colors.white),
+      child: MGoogleMap(
+        mGoogleMapController: viewController.mGoogleMapController,
+        periodicRerendering: true,
+      ),
+    );
   }
 
   /// Show cancel button by default and show counter offers button when
@@ -117,18 +119,16 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           if (viewController.counterOffers.isNotEmpty &&
               viewController.order.value!.status ==
                   TaxiOrdersStatus.LookingForTaxi)
             Flexible(child: counterOfferWidgets.offersButton()),
           if (viewController.counterOffers.isNotEmpty)
-            SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
           Flexible(
-              child:
-                  viewWidgets.cancelButton(viewController.order.value!.status)),
+            child: viewWidgets.cancelButton(viewController.order.value!.status),
+          ),
         ],
       ),
     );

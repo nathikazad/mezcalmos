@@ -12,7 +12,10 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
 
-Notification customerNotificationHandler(String key, value) {
+Notification customerNotificationHandler(
+  String key,
+  value,
+) {
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {

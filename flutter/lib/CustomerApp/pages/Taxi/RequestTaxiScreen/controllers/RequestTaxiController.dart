@@ -110,7 +110,7 @@ class RequestTaxiController {
 
   /// Calls `TaxiController.fecthOnlineTaxiDrivers` and check if within 5KM then returns the driver.
   void startFetchingOnlineDrivers() {
-    controller.fecthOnlineTaxiDrivers().then((List<OnlineTaxiDriver> drivers) {
+    controller.fetchOnlineTaxiDrivers().then((List<OnlineTaxiDriver> drivers) {
       // Weo loop throught each driver and we call the mgoogleMap refresh from withing the controller
       drivers.forEach((OnlineTaxiDriver driver) {
         mezDbgPrint("======= [ driver ] ====== ${driver.toJson()}");

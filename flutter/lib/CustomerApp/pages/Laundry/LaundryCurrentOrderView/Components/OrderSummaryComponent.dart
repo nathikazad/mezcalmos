@@ -20,15 +20,15 @@ class OrderSummaryComponent extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(16),
         child: Column(
-          children: [
+          children: <Widget>[
             Text(
               "${_i18n()["orderSummary"]}",
               style: Theme.of(context).textTheme.headline3,
             ),
-            Divider(height: 15),
+            const Divider(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   "${_i18n()["orderCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
@@ -42,7 +42,7 @@ class OrderSummaryComponent extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   "${_i18n()["deliveryCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
@@ -56,7 +56,7 @@ class OrderSummaryComponent extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   "${_i18n()["totalCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
@@ -67,7 +67,7 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(height: 25),
+            const Divider(height: 25),
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -77,7 +77,7 @@ class OrderSummaryComponent extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Row(
-              children: [
+              children: <Widget>[
                 Icon(
                   Icons.place_rounded,
                   color: Theme.of(context).primaryColorLight,
@@ -98,17 +98,15 @@ class OrderSummaryComponent extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(16),
         child: Column(
-          children: [
+          children: <Widget>[
             Text(
               _i18n()['laundryPricing'],
               style: Theme.of(context).textTheme.headline3,
             ),
-            Divider(
-              height: 15,
-            ),
+            const Divider(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   _i18n()['fixedRate'],
                   style: Theme.of(context).textTheme.bodyText1,
@@ -121,12 +119,10 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   _i18n()['orderWeight'],
                   style: Theme.of(context).textTheme.bodyText1,
@@ -142,7 +138,7 @@ class OrderSummaryComponent extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   "${_i18n()["totalCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
@@ -155,15 +151,10 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
               ],
             ),
-            if (order.weight == null)
-              Column(
-                children: [
-                  Divider(height: 25),
-                ],
-              ),
+            if (order.weight == null) const Divider(height: 25),
             Row(
-              children: [
-                Icon(
+              children: <Widget>[
+                const Icon(
                   Icons.help_outline_rounded,
                 ),
                 const SizedBox(height: 10),

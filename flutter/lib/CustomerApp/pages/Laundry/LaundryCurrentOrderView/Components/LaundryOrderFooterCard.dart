@@ -112,14 +112,12 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
         margin: EdgeInsets.all(16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Icon(
               Icons.check_circle,
               color: Colors.green,
             ),
-            SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             Text(
               '${_i18n()["orderStatusDeliverd"]}',
               style: txt.headline3,
@@ -139,37 +137,49 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
           Text('${_i18n()["cancelOrderConfirm"]}'),
           SizedBox(height: 10.h),
           TextButton(
-              onPressed: () async {
-                _clickedCancel.value = true;
-                // to get back to the main view.
-                ServerResponse resp =
-                    await laundryController.cancelOrder(widget.order.orderId);
-                mezDbgPrint(resp.data.toString());
-                if (resp.success) {
-                  Get.until((route) => route.settings.name == kHomeRoute);
-                  MezSnackbar(
-                      _i18n()["titleSuccess"], _i18n()["orderCancelSuccess"],
-                      position: SnackPosition.TOP);
-                } else {
-                  _clickedCancel.value = false;
-                  MezSnackbar(
-                      _i18n()["titleFailed"], _i18n()["orderCancelFailed"],
-                      position: SnackPosition.TOP);
-                }
-              },
-              style: TextButton.styleFrom(
-                  backgroundColor: Colors.redAccent,
-                  padding: EdgeInsets.all(12)),
-              child: Container(
-                  alignment: Alignment.center,
-                  child: Text(_i18n()["cancelOrderDialogYes"]))),
+            onPressed: () async {
+              _clickedCancel.value = true;
+              // to get back to the main view.
+              final ServerResponse resp =
+                  await laundryController.cancelOrder(widget.order.orderId);
+              mezDbgPrint(resp.data.toString());
+              if (resp.success) {
+                Get.until((Route<dynamic> route) =>
+                    route.settings.name == kHomeRoute);
+                MezSnackbar(
+                  _i18n()["titleSuccess"],
+                  _i18n()["orderCancelSuccess"],
+                  position: SnackPosition.TOP,
+                );
+              } else {
+                _clickedCancel.value = false;
+                MezSnackbar(
+                  _i18n()["titleFailed"],
+                  _i18n()["orderCancelFailed"],
+                  position: SnackPosition.TOP,
+                );
+              }
+            },
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.redAccent,
+              padding: EdgeInsets.all(12),
+            ),
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                _i18n()["cancelOrderDialogYes"],
+              ),
+            ),
+          ),
           const SizedBox(height: 10),
           TextButton(
             onPressed: () {
               Get.back<void>();
             },
             style: TextButton.styleFrom(
-                backgroundColor: Colors.black, padding: EdgeInsets.all(12)),
+              backgroundColor: Colors.black,
+              padding: EdgeInsets.all(12),
+            ),
             child: Container(
               alignment: Alignment.center,
               child: Text(_i18n()["cancelOrderDialogNo"]),
@@ -181,7 +191,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
       return Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Center(
               child: CircularProgressIndicator(
             strokeWidth: 1.2,

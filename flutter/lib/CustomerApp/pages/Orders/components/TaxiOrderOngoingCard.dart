@@ -175,36 +175,40 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status, conttext) {
       );
     case TaxiOrdersStatus.LookingForTaxi:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/search.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/search.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.OnTheWay:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/taxiOnTheWay.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/taxiOnTheWay.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.InTransit:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/taxiOnTheWay.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/taxiOnTheWay.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.DroppedOff:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/taxi.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/taxi.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.Expired:
       return Icon(
         Icons.hourglass_disabled_sharp,
@@ -219,12 +223,13 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status, conttext) {
       );
     case TaxiOrdersStatus.ForwardingSuccessful:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/taxi.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/taxi.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.ForwardingUnsuccessful:
       return Icon(
         Icons.block,

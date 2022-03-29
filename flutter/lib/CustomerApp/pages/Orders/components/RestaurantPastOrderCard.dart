@@ -3,13 +3,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../../router.dart';
 
 class RestaurantPastOrderCard extends StatelessWidget {
   const RestaurantPastOrderCard({
@@ -66,7 +65,7 @@ class RestaurantPastOrderCard extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(
                           order.serviceProvider!.name,
                           overflow: TextOverflow.ellipsis,
@@ -85,12 +84,12 @@ class RestaurantPastOrderCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   !order.isCanceled()
-                      ? Icon(
+                      ? const Icon(
                           Ionicons.bag_check,
                           color: Colors.green,
                           size: 40,
                         )
-                      : Icon(
+                      : const Icon(
                           Ionicons.bag_remove,
                           color: Colors.red,
                           size: 40,

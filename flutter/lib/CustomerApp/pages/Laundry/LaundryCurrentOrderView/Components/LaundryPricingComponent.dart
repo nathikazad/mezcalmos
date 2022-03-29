@@ -20,7 +20,7 @@ class LaundryPricingCompnent extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(16),
         child: Column(
-          children: [
+          children: <Widget>[
             Text(
               _i18n()['laundryPricing'],
               style: Theme.of(context).textTheme.headline3,
@@ -28,7 +28,7 @@ class LaundryPricingCompnent extends StatelessWidget {
             const Divider(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   _i18n()['fixedRate'],
                   style: Theme.of(context).textTheme.bodyText1,
@@ -42,7 +42,7 @@ class LaundryPricingCompnent extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   _i18n()['orderWeight'],
                   style: Theme.of(context).textTheme.bodyText1,
@@ -58,7 +58,7 @@ class LaundryPricingCompnent extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   "${_i18n()["totalCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
@@ -71,11 +71,11 @@ class LaundryPricingCompnent extends StatelessWidget {
             ),
             if (order.weight == null)
               Column(
-                children: [
-                  Divider(height: 25),
+                children: <Widget>[
+                  const Divider(height: 25),
                   Row(
-                    children: [
-                      Icon(
+                    children: <Widget>[
+                      const Icon(
                         Icons.help_outline_rounded,
                       ),
                       const SizedBox(height: 10),

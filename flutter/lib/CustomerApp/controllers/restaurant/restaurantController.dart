@@ -20,6 +20,7 @@ class RestaurantController extends GetxController {
   StreamSubscription<dynamic>? _cartListener;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -105,7 +106,8 @@ class RestaurantController extends GetxController {
     }
 
     mezDbgPrint(
-        "@@saadf@@ restaurantController::addItem ---> addingItem and saving card !");
+      "@@saadf@@ restaurantController::addItem ---> addingItem and saving card !",
+    );
 
     cart.value.addItem(cartItem);
     await saveCart();

@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 import 'components/OrderFooterCard.dart';
@@ -16,12 +17,10 @@ import 'components/OrderSummaryCard.dart';
 import 'components/OrdersItemsCard.dart';
 import 'components/notesWidget.dart';
 
-final currency = new NumberFormat("#0", "en_US");
+final NumberFormat currency = new NumberFormat("#0", "en_US");
 ////////////===========
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
-
+    ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
   @override
@@ -30,11 +29,19 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 }
 
 class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
-  Rxn<RestaurantOrder> order = Rxn();
-  OrderController controller = Get.find<OrderController>();
-  RestaurantController restaurantController = Get.find<RestaurantController>();
-  StreamSubscription? _orderListener;
+  /// order
+  Rxn<RestaurantOrder> order = Rxn<RestaurantOrder>();
 
+  /// controller
+  OrderController controller = Get.find<OrderController>();
+
+  /// restaurantController
+  RestaurantController restaurantController = Get.find<RestaurantController>();
+
+  /// _orderListener
+  StreamSubscription<dynamic>? _orderListener;
+
+  /// _clickedButton
   bool _clickedButton = false;
 
   Future<void> onTapButtonsShowLoading(Function function) async {
@@ -72,7 +79,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   void initState() {
     super.initState();
 
-    String orderId = Get.parameters['orderId']!;
+    final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
     if (order.value == null) {
@@ -80,7 +87,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     } else {
       if (order.value!.inProcess()) {
         _orderListener =
-            controller.getCurrentOrderStream(orderId).listen((event) {
+            controller.getCurrentOrderStream(orderId).listen((Order? event) {
           if (event != null) {
             mezDbgPrint("===================" +
                 (event as RestaurantOrder).status.toString());
@@ -89,7 +96,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           } else {
             _orderListener?.cancel();
             _orderListener = null;
-            controller.getPastOrderStream(orderId).listen((event) {
+            controller.getPastOrderStream(orderId).listen((Order? event) {
               if (event != null) {
                 mezDbgPrint("the past order is ========== $event ==========");
                 order.value = event as RestaurantOrder;
@@ -108,7 +115,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   @override
   void didUpdateWidget(ViewRestaurantOrderScreen oldWidget) {
-    String orderId = Get.parameters['orderId']!;
+    final String orderId = Get.parameters['orderId']!;
     super.didUpdateWidget(oldWidget);
     mezDbgPrint("this widget is updated");
     if (order.value == null) {
@@ -126,61 +133,53 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
-        appBar: CustomerAppBar(
-          autoBack: true,
-          title:
-              '${_i18n()["orderStatus"]}',
-        ),
-        body: Obx(
-          () {
-            if (order.value != null) {
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      OrderStatusCard(
-                        order: order.value!,
-                        ordersStates: order.value!.status,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+      appBar: CustomerAppBar(
+        autoBack: true,
+        title: '${_i18n()["orderStatus"]}',
+      ),
+      body: Obx(
+        () {
+          if (order.value != null) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    const SizedBox(height: 10),
+                    OrderStatusCard(
+                      order: order.value!,
+                      ordersStates: order.value!.status,
+                    ),
+                    const SizedBox(height: 10),
 
-                      OrderItemsCard(
-                        items: order.value!.items,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      OrderSummaryCard(order: order.value!),
-                      //===============================>notes========================>
-                      order.value?.notes == null ||
-                              order.value!.notes!.length <= 0
-                          ? Container()
-                          : notesWidget(order),
-                      //===============================>button cancel===========================
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                          alignment: Alignment.center,
-                          child: OrderFooterCard(order: order.value!)),
-                    ],
-                  ),
+                    OrderItemsCard(
+                      items: order.value!.items,
+                    ),
+                    const SizedBox(height: 10),
+                    OrderSummaryCard(order: order.value!),
+                    //===============================>notes========================>
+                    order.value?.notes == null ||
+                            order.value!.notes!.length <= 0
+                        ? Container()
+                        : notesWidget(order),
+                    //===============================>button cancel===========================
+                    const SizedBox(height: 10),
+                    Container(
+                      alignment: Alignment.center,
+                      child: OrderFooterCard(order: order.value!),
+                    ),
+                  ],
                 ),
-              );
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ));
+              ),
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    );
   }
 }
-

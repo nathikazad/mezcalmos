@@ -11,15 +11,16 @@ class Customer {
   Customer.fromSnapshotData(dynamic data) {
     appVersion = data?["versionNumber"] ?? null;
     notificationInfo = data?["notificationInfo"];
-    List<SavedLocation> newSavedLocations = [];
+    final List<SavedLocation> newSavedLocations = <SavedLocation>[];
 
     mezDbgPrint("SavedLocations ===> ${data?["savedLocations"]}");
     if (data["savedLocations"] != null) {
       Map<String, dynamic>.from(data?["savedLocations"])
           .entries
           .forEach((entry) {
-        savedLocations
-            .add(SavedLocation.fromData(id: entry.key, data: entry.value));
+        savedLocations.add(
+          SavedLocation.fromData(id: entry.key, data: entry.value),
+        );
       });
     }
     // for (var locationId in ) {
@@ -35,8 +36,9 @@ class Customer {
 
   SavedLocation? getLocation(String locationId) {
     try {
-      return savedLocations
-          .firstWhere((savedLocation) => savedLocation.id == locationId);
+      return savedLocations.firstWhere(
+        (SavedLocation savedLocation) => savedLocation.id == locationId,
+      );
     } on StateError {
       return null;
     }
@@ -66,7 +68,7 @@ class SavedLocation {
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
-    Map<String, dynamic> json = (location != null)
+    final Map<String, dynamic> json = (location != null)
         ? location!.toFirebaseFormattedJson()
         : <String, dynamic>{};
 

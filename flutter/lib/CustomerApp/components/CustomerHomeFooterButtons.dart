@@ -61,7 +61,7 @@ class HomeFooterButtons extends StatelessWidget {
             fit: FlexFit.loose,
             child: InkWell(
               onTap: () async =>
-                  await launch(GetStorage().read(getxPrivacyPolicyLink)),
+                  launch(GetStorage().read(getxPrivacyPolicyLink)),
               child: Ink(
                 padding: EdgeInsets.all(12),
                 child: Row(

@@ -30,9 +30,9 @@ class LaundryCurrentOrderView extends StatefulWidget {
 
 class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   late String orderId;
-  Rxn<LaundryOrder> order = Rxn();
-  StreamSubscription? _orderListener;
-  OrderController controller = Get.find<OrderController>();
+  Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
+  StreamSubscription<dynamic>? _orderListener;
+  final OrderController controller = Get.find<OrderController>();
   final LocationPickerController locationPickerController =
       LocationPickerController();
 
@@ -101,28 +101,18 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
+                    children: <Widget>[
+                      const SizedBox(height: 20),
                       LaundryOrderStatusCard(order: order.value!),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       LaundryPricingCompnent(order: order.value!),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       LaundryOrderNoteComponent(order: order.value!),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       OrderSummaryComponent(
                         order: order.value!,
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       LaundryOrderFooterCard(order: order.value!)
                     ],
                   ),

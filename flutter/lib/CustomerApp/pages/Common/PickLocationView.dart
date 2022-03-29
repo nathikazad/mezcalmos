@@ -97,12 +97,14 @@ class _PickLocationViewState extends State<PickLocationView> {
     final String? address = await getAdressFromLatLng(currentLoc);
 
     setState(() {
-      locationPickerController.setLocation(Location.fromFirebaseData({
-        "address": address ??
-            currentLoc.latitude.toString() + ", ${currentLoc.longitude}",
-        "lat": currentLoc.latitude,
-        "lng": currentLoc.longitude,
-      }));
+      locationPickerController.setLocation(
+        Location.fromFirebaseData(<String, dynamic>{
+          "address": address ??
+              currentLoc.latitude.toString() + ", ${currentLoc.longitude}",
+          "lat": currentLoc.latitude,
+          "lng": currentLoc.longitude,
+        }),
+      );
     });
   }
 
@@ -117,13 +119,18 @@ class _PickLocationViewState extends State<PickLocationView> {
     return Scaffold(
       bottomNavigationBar: showScreenLoading == false
           ? ButtonComponent(
-              function: () async => await onPickButtonClick(context),
+              function: () async {
+                await onPickButtonClick(context);
+              },
               widget: Center(
-                  child: Text(_i18n()["pickLocation"],
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline2!
-                          .copyWith(color: Colors.white, fontSize: 12.sp))),
+                child: Text(
+                  _i18n()["pickLocation"],
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline2!
+                      .copyWith(color: Colors.white, fontSize: 12.sp),
+                ),
+              ),
             )
           : ButtonComponent(
               bgColor: Colors.grey.shade400,
@@ -170,12 +177,14 @@ class _PickLocationViewState extends State<PickLocationView> {
   }
 
   void setNewLocationOnController({required LatLng latlng, String? address}) {
-    locationPickerController.setLocation(Location.fromFirebaseData({
-      "address": address ??
-          latlng.latitude.toString() + ', ' + latlng.longitude.toString(),
-      "lat": latlng.latitude,
-      "lng": latlng.longitude,
-    }));
+    locationPickerController.setLocation(
+      Location.fromFirebaseData(<String, dynamic>{
+        "address": address ??
+            latlng.latitude.toString() + ', ' + latlng.longitude.toString(),
+        "lat": latlng.latitude,
+        "lng": latlng.longitude,
+      }),
+    );
     setState(() {});
   }
 
@@ -243,15 +252,12 @@ class _PickLocationViewState extends State<PickLocationView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 10,
-          ),
+        children: <Widget>[
+          const SizedBox(height: 10),
           Container(
             margin: const EdgeInsets.all(8),
             child: Text(_i18n()["pickLabele"]),
           ),
-
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 8),
             child: LocationSearchComponent(
@@ -269,34 +275,33 @@ class _PickLocationViewState extends State<PickLocationView> {
                   });
                 }),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          // stack
+          const SizedBox(height: 10),
           Expanded(
-              child: Container(
-            width: Get.width,
-            decoration: BoxDecoration(
+            child: Container(
+              width: Get.width,
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Colors.grey.shade200),
-            child: locationPickerController.location.value != null
-                ? LocationPicker(
-                    showBottomButton: false,
-                    locationPickerMapController: locationPickerController,
-                    notifyParentOfConfirm: (_) {},
-                    notifyParentOfLocationFinalized: (Location location) {
-                      setState(() {
-                        locationPickerController.setLocation(location);
-                      });
-                    },
-                  )
-                : Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.black,
-                      strokeWidth: 1,
+                color: Colors.grey.shade200,
+              ),
+              child: locationPickerController.location.value != null
+                  ? LocationPicker(
+                      showBottomButton: false,
+                      locationPickerMapController: locationPickerController,
+                      notifyParentOfConfirm: (_) {},
+                      notifyParentOfLocationFinalized: (Location location) {
+                        setState(() {
+                          locationPickerController.setLocation(location);
+                        });
+                      },
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                        strokeWidth: 1,
+                      ),
                     ),
-                  ),
-          )),
+            ),
+          ),
         ],
       ),
     );

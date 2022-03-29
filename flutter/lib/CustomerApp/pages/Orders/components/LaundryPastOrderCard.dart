@@ -7,8 +7,6 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
-import '../../../router.dart';
-
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['components']['LaundryPastOrderCard'];
 
@@ -33,11 +31,11 @@ class LaundryPastOrderCard extends StatelessWidget {
           padding: EdgeInsets.all(8),
           width: double.infinity,
           child: Column(
-            children: [
+            children: <Widget>[
               Row(
-                children: [
+                children: <Widget>[
                   Stack(
-                    children: [
+                    children: <Widget>[
                       CircleAvatar(
                         radius: 30,
                         backgroundColor: Colors.blueAccent,
@@ -62,15 +60,13 @@ class LaundryPastOrderCard extends StatelessWidget {
                       //         )))
                     ],
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                   Flexible(
                     flex: 5,
                     fit: FlexFit.tight,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(
                           order.serviceProvider?.name ?? "Laundry order",
                           overflow: TextOverflow.ellipsis,
@@ -87,7 +83,7 @@ class LaundryPastOrderCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   !order.isCanceled()
                       ? Icon(
                           Ionicons.checkmark_circle,
@@ -101,12 +97,12 @@ class LaundryPastOrderCard extends StatelessWidget {
                         ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Container(
                 padding: EdgeInsets.all(3),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Text(
                       " ${_i18n()["totalCost"]} : ${(order.getPrice() != null) ? '\$${order.getPrice()}' : '-'}",
                     ),

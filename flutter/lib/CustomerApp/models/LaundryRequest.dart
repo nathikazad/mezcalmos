@@ -20,7 +20,7 @@ class LaundryRequest {
   }
 
   Map<String, dynamic> asCloudFunctionParam() {
-    return {
+    return <String, dynamic>{
       "to": to?.toFirebaseFormattedJson(),
       "notes": notes,
       "paymentType": paymentType.toFirebaseFormatString(),

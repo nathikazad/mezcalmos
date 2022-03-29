@@ -56,7 +56,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               const SizedBox(height: 10),
               Container(
                 margin: const EdgeInsets.all(8),
@@ -104,13 +104,15 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       margin: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(_i18n()["notes"], style: Theme.of(context).textTheme.headline3),
           const SizedBox(height: 10),
           TextField(
             controller: _orderNote,
             decoration: InputDecoration(
-                filled: true, fillColor: Theme.of(context).primaryColor),
+              filled: true,
+              fillColor: Theme.of(context).primaryColor,
+            ),
           )
         ],
       ),
@@ -123,15 +125,15 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         width: double.infinity,
         padding: EdgeInsets.all(16),
         child: Column(
-          children: [
+          children: <Widget>[
             Text(
               "${_i18n()["orderSummary"]}",
               style: Theme.of(context).textTheme.headline3,
             ),
-            Divider(height: 15),
+            const Divider(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   "${_i18n()["orderCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
@@ -145,7 +147,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   "${_i18n()["deliveryCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
@@ -156,7 +158,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 ),
               ],
             ),
-            Divider(height: 25),
+            const Divider(height: 25),
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -166,7 +168,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             ),
             const SizedBox(height: 15),
             Row(
-              children: [
+              children: <Widget>[
                 Icon(
                   Icons.place_rounded,
                   color: Theme.of(context).primaryColorLight,
@@ -203,12 +205,13 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-              color: (defaultLoc == null)
-                  ? Colors.red
-                  : Theme.of(context).primaryColorLight),
+            color: (defaultLoc == null)
+                ? Colors.red
+                : Theme.of(context).primaryColorLight,
+          ),
         ),
         child: Row(
-          children: [
+          children: <Widget>[
             Icon(
               Icons.place_rounded,
               color: Theme.of(context).primaryColorLight,
@@ -262,8 +265,13 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       to: defaultLoc,
                       notes: _orderNote.text,
                       paymentType: PaymentType.Cash))
-                  .then((ServerResponse response) => popEverythingAndNavigateTo(
-                      getLaundyOrderRoute(response.data['orderId'])));
+                  .then(
+                    (ServerResponse response) => popEverythingAndNavigateTo(
+                      getLaundyOrderRoute(
+                        response.data['orderId'],
+                      ),
+                    ),
+                  );
             },
       child: (clicked.value)
           ? CircularProgressIndicator(

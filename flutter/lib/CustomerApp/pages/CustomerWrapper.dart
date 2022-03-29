@@ -35,20 +35,38 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     with WidgetsBindingObserver {
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['pages']['CustomerWrapper'];
+
+  /// AuthController
   AuthController auth = Get.find<AuthController>();
+
+  /// _orderController
   OrderController? _orderController;
+
+  /// appClosedTime
   DateTime? appClosedTime;
+
+  /// DeepLinkHandler
   final DeepLinkHandler _deepLinkHandler = DeepLinkHandler();
 
+  /// _notificationsStreamListener
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
+
+  /// _locationStreamSub
   StreamSubscription<bool>? _locationStreamSub;
+
+  /// numberOfCurrentOrders
   RxInt numberOfCurrentOrders = RxInt(0);
-  StreamSubscription? _orderCountListener;
-  StreamSubscription? _authStateChnagesListener;
+
+  /// _orderCountListener
+  StreamSubscription<dynamic>? _orderCountListener;
+
+  /// _authStateChnagesListener
+  StreamSubscription<dynamic>? _authStateChnagesListener;
 
   @override
   void initState() {
+    super.initState();
     Get.put(TaxiController(), permanent: true);
     Get.put(RestaurantController(), permanent: true);
     Get.put(RestaurantsInfoController(), permanent: true);
@@ -59,7 +77,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
-    super.initState();
   }
 
   @override
@@ -192,13 +209,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             .length ??
         0;
     if (noOfCurrentTaxiOrders == 0) {
-      Get.toNamed(kTaxiRequestRoute);
+      Get.toNamed<void>(kTaxiRequestRoute);
     } else {
       final String orderId = _orderController!.currentOrders
           .firstWhere(
               (Order currentOrder) => currentOrder.orderType == OrderType.Taxi)
           .orderId;
-      Get.toNamed(getTaxiOrderRoute(orderId));
+      Get.toNamed<void>(getTaxiOrderRoute(orderId));
     }
   }
 
@@ -253,7 +270,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                   orderType: OrderType.Taxi,
                   serviceRoute: kTaxiRequestRoute,
                   singleOrderRoute: (String orderId) {
-                    Get.toNamed(getTaxiOrderRoute(orderId));
+                    Get.toNamed<void>(getTaxiOrderRoute(orderId));
                   });
             },
           ),
@@ -270,7 +287,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                   orderType: OrderType.Restaurant,
                   serviceRoute: kRestaurantsRoute,
                   singleOrderRoute: (String orderId) {
-                    Get.toNamed(getRestaurantOrderRoute(orderId));
+                    Get.toNamed<void>(getRestaurantOrderRoute(orderId));
                   });
             },
           ),
@@ -287,7 +304,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                   orderType: OrderType.Laundry,
                   serviceRoute: kLaundryOrderRequest,
                   singleOrderRoute: (String v) {
-                    Get.toNamed(getLaundyOrderRoute(v));
+                    Get.toNamed<void>(getLaundyOrderRoute(v));
                   });
             },
           ),
@@ -299,7 +316,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   void getServiceRoute(
       {required OrderType orderType,
       required String serviceRoute,
-      required Function(String) singleOrderRoute}) {
+      required void Function(String) singleOrderRoute}) {
     if (Get.find<AuthController>().fireAuthUser != null) {
       final List<Order> orders = Get.find<OrderController>()
           .currentOrders
@@ -310,12 +327,12 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         //   Get.toNamed(getLaundyOrderRoute(orders[0].orderId));
         singleOrderRoute(orders[0].orderId);
       } else if (orders.length > 1) {
-        Get.toNamed(kOrdersRoute);
+        Get.toNamed<void>(kOrdersRoute);
       } else {
-        Get.toNamed(serviceRoute);
+        Get.toNamed<void>(serviceRoute);
       }
     } else {
-      Get.toNamed(serviceRoute);
+      Get.toNamed<void>(serviceRoute);
     }
   }
 
@@ -342,7 +359,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         .listen((bool locationPermission) {
       if (locationPermission == false &&
           Get.currentRoute != kLocationPermissionPage) {
-        Get.toNamed(kLocationPermissionPage);
+        Get.toNamed<void>(kLocationPermissionPage);
       }
     });
   }

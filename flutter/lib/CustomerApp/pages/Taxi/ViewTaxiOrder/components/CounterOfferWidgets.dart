@@ -115,8 +115,7 @@ class CounterOfferWidgets {
   }
 
   List<Widget> getCounterOffersListItems(BuildContext context) {
-    List<Widget> _widgets = <Widget>[];
-
+    final List<Widget> _widgets = <Widget>[];
     viewController.counterOffers().forEach(
       (CounterOffer offer) {
         _widgets.addAll(
@@ -131,7 +130,6 @@ class CounterOfferWidgets {
         );
       },
     );
-
     return _widgets;
   }
 
@@ -205,7 +203,7 @@ class CounterOfferWidgets {
                           viewController.clickedAccept.value = true;
 
                           // we accept counter offer and wait for it.
-                          ServerResponse _response = await viewController
+                          final ServerResponse _response = await viewController
                               .taxiController
                               .acceptCounterOffer(
                                   viewController.order.value!.orderId,

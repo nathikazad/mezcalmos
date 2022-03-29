@@ -22,12 +22,13 @@ class OnlineTaxiDriver {
     required dynamic data,
   }) {
     return OnlineTaxiDriver(
-        taxiId: taxiId,
-        name: data['name'],
-        position: data['position'],
-        online: data['online'] ?? false,
-        inOrder: data['inOrder'] ?? false,
-        lastUpdateTime: DateTime.parse(data['lastUpdateTime']));
+      taxiId: taxiId,
+      name: data['name'],
+      position: data['position'],
+      online: data['online'] ?? false,
+      inOrder: data['inOrder'] ?? false,
+      lastUpdateTime: DateTime.parse(data['lastUpdateTime']),
+    );
   }
 
   bool isDriverAvailable() {

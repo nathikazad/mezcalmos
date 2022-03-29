@@ -26,11 +26,6 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
 
   _ListRestaurantsScreenState() {}
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomerAppBar(

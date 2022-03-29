@@ -121,14 +121,12 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
         children: [
           Expanded(
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(
                   MezcalmosIcons.route,
                   size: 11.sp,
                 ),
-                SizedBox(
-                  width: 2.w,
-                ),
+                SizedBox(width: 2.w),
                 Text(
                   taxiRequest.routeInformation?.distance.distanceStringInKm ??
                       "-",
@@ -140,14 +138,12 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
           ),
           Expanded(
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(
                   MezcalmosIcons.stopwatch,
                   size: 11.sp,
                 ),
-                SizedBox(
-                  width: 2.w,
-                ),
+                SizedBox(width: 2.w),
                 Text(
                   taxiRequest.routeInformation?.duration.longTextVersion ?? "-",
                   overflow: TextOverflow.visible,

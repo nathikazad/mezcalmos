@@ -34,7 +34,7 @@ class _UserMenuState extends State<UserMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(
+    return PopupMenuButton<Object>(
       padding: EdgeInsets.only(right: 12),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -43,25 +43,23 @@ class _UserMenuState extends State<UserMenu> {
         padding: widget.padding,
       ),
       itemBuilder: (BuildContext context) {
-        return [
-          PopupMenuItem(
+        return <PopupMenuItem<int>>[
+          PopupMenuItem<int>(
             child: orderMenuItem(context),
             value: 0,
           ),
           if (Get.find<ForegroundNotificationsController>()
               .notifications
               .isNotEmpty)
-            PopupMenuItem(
+            PopupMenuItem<int>(
               child: notificationMenuItem(context),
               value: 1,
             ),
-          PopupMenuItem(
+          PopupMenuItem<int>(
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(Ionicons.map_outline),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   _i18n()['savedLocations'],
                 ),
@@ -69,13 +67,11 @@ class _UserMenuState extends State<UserMenu> {
             ),
             value: 2,
           ),
-          PopupMenuItem(
+          PopupMenuItem<int>(
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(Ionicons.person_outline),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   _i18n()["userInfo"],
                 ),
@@ -83,13 +79,11 @@ class _UserMenuState extends State<UserMenu> {
             ),
             value: 3,
           ),
-          PopupMenuItem(
+          PopupMenuItem<int>(
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(Ionicons.exit_outline),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Text(
                   _i18n()["logout"],
                 ),
@@ -102,16 +96,16 @@ class _UserMenuState extends State<UserMenu> {
       onSelected: (Object? value) {
         switch (value) {
           case 0:
-            Get.toNamed(kOrdersRoute);
+            Get.toNamed<void>(kOrdersRoute);
             break;
           case 1:
-            Get.toNamed(kNotificationsRoute);
+            Get.toNamed<void>(kNotificationsRoute);
             break;
           case 2:
-            Get.toNamed(kSavedLocations);
+            Get.toNamed<void>(kSavedLocations);
             break;
           case 3:
-            Get.toNamed(kUserProfile);
+            Get.toNamed<void>(kUserProfile);
             break;
           case 4:
             auth.signOut();
@@ -124,23 +118,22 @@ class _UserMenuState extends State<UserMenu> {
 
   Row notificationMenuItem(BuildContext context) {
     return Row(
-      children: [
+      children: <Widget>[
         Badge(
-            badgeColor: Theme.of(context).primaryColorLight,
-            badgeContent: Text(
-              Get.find<ForegroundNotificationsController>()
-                  .notifications
-                  .length
-                  .toStringAsFixed(0),
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1!
-                  .copyWith(color: Colors.white),
-            ),
-            child: Icon(Ionicons.notifications_outline)),
-        SizedBox(
-          width: 10,
+          badgeColor: Theme.of(context).primaryColorLight,
+          badgeContent: Text(
+            Get.find<ForegroundNotificationsController>()
+                .notifications
+                .length
+                .toStringAsFixed(0),
+            style: Theme.of(context)
+                .textTheme
+                .subtitle1!
+                .copyWith(color: Colors.white),
+          ),
+          child: Icon(Ionicons.notifications_outline),
         ),
+        const SizedBox(width: 10),
         Text(" ${_i18n()['notifications']}"),
       ],
     );
@@ -148,7 +141,7 @@ class _UserMenuState extends State<UserMenu> {
 
   Row orderMenuItem(BuildContext context) {
     return Row(
-      children: [
+      children: <Widget>[
         (orderController.currentOrders.length > 0)
             ? Badge(
                 badgeColor: Theme.of(context).primaryColorLight,
@@ -159,11 +152,10 @@ class _UserMenuState extends State<UserMenu> {
                       .subtitle1!
                       .copyWith(color: Colors.white),
                 ),
-                child: Icon(Ionicons.time_outline))
+                child: Icon(Ionicons.time_outline),
+              )
             : Icon(Ionicons.time_outline),
-        SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Text(" ${_i18n()['orders']}"),
       ],
     );

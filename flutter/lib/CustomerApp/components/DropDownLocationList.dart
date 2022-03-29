@@ -34,8 +34,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
   @override
   void initState() {
+    super.initState();
     // default ID: _pick_ , stands for our  Pick From Map
-
     getSavedLocation();
     pickLocationPlaceholder =
         SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
@@ -46,17 +46,15 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       dropDownListValue = pickLocationPlaceholder;
     } else {
       final SavedLocation passedInLocation = SavedLocation(
-          name: widget.passedInLocation!.address,
-          location: widget.passedInLocation,
-          id: 'new');
+        name: widget.passedInLocation!.address,
+        location: widget.passedInLocation,
+        id: 'new',
+      );
 
       dropDownListValue = passedInLocation;
       listOfSavedLoacations.add(passedInLocation);
     }
-
     // dropDownListValue = listOfSavedLoacations[0];
-
-    super.initState();
   }
 
   void getSavedLocation() {
@@ -73,13 +71,14 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            width: 1.5,
-            color: (dropDownListValue != pickLocationPlaceholder)
-                ? Theme.of(context).primaryColorLight
-                : Colors.red,
-          )),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          width: 1.5,
+          color: (dropDownListValue != pickLocationPlaceholder)
+              ? Theme.of(context).primaryColorLight
+              : Colors.red,
+        ),
+      ),
       child: DropdownButtonHideUnderline(
         child: Obx(() {
           return DropdownButton<SavedLocation>(
@@ -116,12 +115,14 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       dropDownListValue = newLocation;
       widget.passedInLocation = dropDownListValue!.location;
     });
+
     mezDbgPrint(widget.passedInLocation);
     // we will route the user back to the Map
     if (newLocation?.id == "_pick_") {
       final SavedLocation? saveLocation = await Get.toNamed<SavedLocation?>(
-          kPickLocationRoute,
-          arguments: true);
+        kPickLocationRoute,
+        arguments: true,
+      );
       mezDbgPrint("View Got result : $saveLocation");
       if (saveLocation != null) {
         setState(() {
@@ -140,28 +141,30 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   }
 
   DropdownMenuItem<SavedLocation> buildItems(
-      SavedLocation e, TextTheme textTheme) {
+    SavedLocation e,
+    TextTheme textTheme,
+  ) {
     return DropdownMenuItem<SavedLocation>(
       value: e,
       child: Container(
           child: Row(
-        children: [
+        children: <Widget>[
           Icon(
             Icons.location_on_outlined,
             size: 18,
             color: Color.fromRGBO(172, 89, 252, 1),
           ),
-          SizedBox(
-            width: 15,
-          ),
+          const SizedBox(width: 15),
           Flexible(
             child: Container(
               width: Get.width * 0.72,
               child: Text(
                 e.name,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.headline2!
-                    .copyWith(fontWeight: FontWeight.w400, fontSize: 12),
+                style: textTheme.headline2!.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                ),
               ),
             ),
           ),

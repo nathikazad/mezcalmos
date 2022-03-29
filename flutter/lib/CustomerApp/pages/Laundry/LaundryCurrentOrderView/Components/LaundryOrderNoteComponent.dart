@@ -23,7 +23,7 @@ class LaundryOrderNoteComponent extends StatelessWidget {
           padding: EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Container(
                 alignment: Alignment.center,
                 child: Text(
@@ -31,9 +31,7 @@ class LaundryOrderNoteComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
-              Divider(
-                height: 15,
-              ),
+              const Divider(height: 15),
               Text(order.notes ?? '')
             ],
           ),

@@ -109,7 +109,7 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                       topLeft: Radius.circular(8),
                       topRight: Radius.circular(8),
                     ),
-              color: const Color(0xffffffff),
+              color: Colors.white,
             ),
             child: Column(
               children: <Widget>[
@@ -137,9 +137,7 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                           ),
                           onTap: widget.onEdit,
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                         InkWell(
                           child: Container(
                             width: 30,
@@ -153,15 +151,13 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                               turns: _iconTurns,
                               child: const Icon(
                                 Icons.expand_more,
-                                color: Color(0xffffffff),
+                                color: Colors.white,
                               ),
                             ),
                           ),
                           onTap: _handleTap,
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                       ],
                     ),
                   ],
@@ -171,8 +167,9 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
           ),
           ClipRRect(
             borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(8),
-                bottomRight: Radius.circular(8)),
+              bottomLeft: Radius.circular(8),
+              bottomRight: Radius.circular(8),
+            ),
             child: Align(
               alignment: Alignment.center,
               heightFactor: _heightFactor.value,

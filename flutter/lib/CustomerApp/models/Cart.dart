@@ -21,15 +21,15 @@ class Cart {
     mezDbgPrint("@sa@d@: Cart.fromCartData ===> $cartData");
     if (restaurant != null) {
       cartData["items"]?.forEach((dynamic itemId, dynamic itemData) {
-        Item? item = restaurant!.findItemById(itemData["id"]);
+        final Item? item = restaurant!.findItemById(itemData["id"]);
         if (item == null) return;
-        CartItem cartItem = CartItem(item, restaurant!.info.id,
+        final CartItem cartItem = CartItem(item, restaurant!.info.id,
             id: itemId,
             quantity: itemData["quantity"],
             notes: itemData["notes"]);
         itemData["options"]?["chosenOneOptions"]
             .forEach((dynamic chooseOneOptionId, dynamic data) {
-          ChooseOneOptionListItem? chosenOneOptionListItem = item
+          final ChooseOneOptionListItem? chosenOneOptionListItem = item
               .findChooseOneOption(chooseOneOptionId)
               ?.findChooseOneOptionListItem(data["chosenOptionId"]);
           mezDbgPrint(chosenOneOptionListItem?.toJson());
@@ -61,7 +61,9 @@ class Cart {
   num itemsCost() {
     if (cartItems.length == 0) return 0;
     return cartItems.fold<num>(
-        0, (sum, cartItem) => sum + cartItem.totalCost());
+      0,
+      (sum, cartItem) => sum + cartItem.totalCost(),
+    );
   }
 
   num totalCost() {
@@ -72,31 +74,33 @@ class Cart {
     if (cartItem.id == null) {
       cartItem.id = getRandomString(5);
     } else {
-      int index = cartItems.indexWhere((element) => element.id == cartItem.id);
+      final int index =
+          cartItems.indexWhere((CartItem element) => element.id == cartItem.id);
       cartItems.removeAt(index);
     }
     cartItems.add(CartItem.clone(cartItem));
   }
 
   void incrementItem(String id, int quantity) {
-    CartItem? item = getItem(id);
+    final CartItem? item = getItem(id);
     if (item != null) item.quantity += quantity;
   }
 
   void deleteItem(String itemId) {
-    int index = cartItems.indexWhere((element) => element.id == itemId);
+    final int index =
+        cartItems.indexWhere((CartItem element) => element.id == itemId);
     cartItems.removeAt(index);
   }
 
   CartItem? getItem(String id) {
-    return cartItems.firstWhereOrNull((element) => element.id == id);
+    return cartItems.firstWhereOrNull((CartItem element) => element.id == id);
   }
 
   void setCartNotes(String? notes) => this.notes = notes;
 
   Map<String, dynamic> toFirebaseFormattedJson() {
-    Map<String, dynamic> items = {};
-    cartItems.forEach((element) {
+    final Map<String, dynamic> items = <String, dynamic>{};
+    cartItems.forEach((CartItem element) {
       items[element.id!] = element.toFirebaseFunctionFormattedJson();
     });
 
@@ -166,7 +170,7 @@ class CartItem {
       this.notes, this.cartChooseOneItems, this.cartChooseManyItems);
 
   factory CartItem.clone(CartItem cartItem) {
-    CartItem newCartItem = CartItem(
+    final CartItem newCartItem = CartItem(
       cartItem.item,
       cartItem.restaurantId,
       id: cartItem.id,
@@ -190,8 +194,10 @@ class CartItem {
   void setNewChooseOneItem(
       {required String chooseOneOptionId,
       required ChooseOneOptionListItem newChooseOneOptionListItem}) {
-    int index = cartChooseOneItems.indexWhere(
-        (chooseOneItem) => chooseOneItem.optionDetails.id == chooseOneOptionId);
+    final int index = cartChooseOneItems.indexWhere(
+      (CartChooseOneItem chooseOneItem) =>
+          chooseOneItem.optionDetails.id == chooseOneOptionId,
+    );
 
     if (index != -1) {
       cartChooseOneItems[index].chosenOptionDetails =
@@ -201,8 +207,10 @@ class CartItem {
 
   void setNewChooseManyItem(
       {required String chooseManyOptionId, required bool newVal}) {
-    int index = cartChooseManyItems.indexWhere((cartChooseManyItem) =>
-        cartChooseManyItem.optionDetails.id == chooseManyOptionId);
+    final int index = cartChooseManyItems.indexWhere(
+      (CartChooseManyItem cartChooseManyItem) =>
+          cartChooseManyItem.optionDetails.id == chooseManyOptionId,
+    );
     if (index != -1) {
       cartChooseManyItems[index].chosen = newVal;
     }
@@ -210,22 +218,24 @@ class CartItem {
 
   CartChooseOneItem? findChooseOneItemById(String id) {
     return cartChooseOneItems.firstWhereOrNull(
-      (chooseOneItem) => chooseOneItem.chosenOptionDetails.id == id,
+      (CartChooseOneItem chooseOneItem) =>
+          chooseOneItem.chosenOptionDetails.id == id,
     );
   }
 
   CartChooseManyItem? findChooseManyItemById(String id) {
-    return cartChooseManyItems.firstWhereOrNull((chooseManyItem) {
+    return cartChooseManyItems
+        .firstWhereOrNull((CartChooseManyItem chooseManyItem) {
       return chooseManyItem.optionDetails.id == id;
     });
   }
 
   num costPerOne() {
     num costPerOne = item.cost;
-    cartChooseOneItems.forEach((cartChooseOneItem) {
+    cartChooseOneItems.forEach((CartChooseOneItem cartChooseOneItem) {
       costPerOne += cartChooseOneItem.chosenOptionDetails.cost;
     });
-    cartChooseManyItems.forEach((cartChooseManyItem) {
+    cartChooseManyItems.forEach((CartChooseManyItem cartChooseManyItem) {
       if (cartChooseManyItem.chosen)
         costPerOne += cartChooseManyItem.optionDetails.cost;
     });
@@ -238,19 +248,22 @@ class CartItem {
   }
 
   Map<String, dynamic> toFirebaseFunctionFormattedJson() {
-    Map<String, dynamic> json = <String, dynamic>{
+    final Map<String, dynamic> json = <String, dynamic>{
       "id": item.id,
       "quantity": quantity,
       "totalCost": totalCost(),
       "costPerOne": costPerOne(),
       "name": item.name.toFirebaseFormat(),
       "image": item.image,
-      "options": {"chosenOneOptions": {}, "chosenManyOptions": {}},
+      "options": <String, dynamic>{
+        "chosenOneOptions": <String, dynamic>{},
+        "chosenManyOptions": <String, dynamic>{},
+      },
       "notes": notes
     };
-    cartChooseOneItems.forEach((cartChooseOneItem) {
+    cartChooseOneItems.forEach((CartChooseOneItem cartChooseOneItem) {
       json["options"]["chosenOneOptions"]
-          [cartChooseOneItem.optionDetails.id] = {
+          [cartChooseOneItem.optionDetails.id] = <String, dynamic>{
         "chosenOptionId": cartChooseOneItem.chosenOptionDetails.id,
         "chosenOptionName":
             cartChooseOneItem.chosenOptionDetails.name.toFirebaseFormat(),
@@ -259,9 +272,9 @@ class CartItem {
       };
     });
 
-    cartChooseManyItems.forEach((cartChooseManyItem) {
+    cartChooseManyItems.forEach((CartChooseManyItem cartChooseManyItem) {
       json["options"]["chosenManyOptions"]
-          [cartChooseManyItem.optionDetails.id] = {
+          [cartChooseManyItem.optionDetails.id] = <String, dynamic>{
         "chosenValue": cartChooseManyItem.chosen,
         "name": cartChooseManyItem.optionDetails.name.toFirebaseFormat(),
         "chosenValueCost": cartChooseManyItem.optionDetails.cost
@@ -272,9 +285,15 @@ class CartItem {
 }
 
 String getRandomString(int length) {
-  const _chars =
+  final String _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  Random _rnd = Random();
-  return String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+  final Random _rnd = Random();
+  return String.fromCharCodes(
+    Iterable.generate(
+      length,
+      (_) => _chars.codeUnitAt(
+        _rnd.nextInt(_chars.length),
+      ),
+    ),
+  );
 }

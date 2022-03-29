@@ -43,9 +43,9 @@ class RestaurantOngoingOrderCard extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Row(
-                children: [
+                children: <Widget>[
                   Stack(
-                    children: [
+                    children: <Widget>[
                       CircleAvatar(
                         radius: 25,
                         backgroundImage: mLoadImage(
@@ -67,7 +67,7 @@ class RestaurantOngoingOrderCard extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(width: 10),
@@ -89,7 +89,7 @@ class RestaurantOngoingOrderCard extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  OrderStatusImage((order as RestaurantOrder).status),
+                  orderStatusImage((order as RestaurantOrder).status),
                   const SizedBox(width: 10),
                 ],
               ),

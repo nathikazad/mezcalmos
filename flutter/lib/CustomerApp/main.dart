@@ -37,11 +37,7 @@ void main() {
   runMainGuarded(
     () => runApp(
       Sizer(
-        builder: (
-          BuildContext context,
-          Orientation orientation,
-          DeviceType deviceType,
-        ) {
+        builder: (_, __, ___) {
           return StartingPoint(
             appType: AppType.CustomerApp,
             appTheme: CustomerAppTheme.lightTheme,

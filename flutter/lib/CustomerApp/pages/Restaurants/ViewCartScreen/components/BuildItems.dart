@@ -20,15 +20,22 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["BuildItems"];
 
 class CartItemsBuilder extends StatelessWidget {
-  final RestaurantController controller = Get.find<RestaurantController>();
-  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+  const CartItemsBuilder({Key? key}) : super(key: key);
+
+  /// RestaurantController
+  static final RestaurantController _restaurantController =
+      Get.find<RestaurantController>();
+
+  /// LanguageType
+  static final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: controller.cart.value.cartItems.fold<List<Widget>>(<Widget>[],
-          (children, cartItem) {
-        var counter = cartItem.totalCost().obs;
+      children: _restaurantController.cart.value.cartItems
+          .fold<List<Widget>>(<Widget>[], (children, cartItem) {
+        final Rx<num> counter = cartItem.totalCost().obs;
         children.add(Container(
           margin: const EdgeInsets.all(5),
           child: MyExpansionPanelComponent(
@@ -38,16 +45,15 @@ class CartItemsBuilder extends StatelessWidget {
                 imageUrl: cartItem.item.image!,
                 itemName: cartItem.item.name[userLanguage]![0].toUpperCase() +
                     cartItem.item.name[userLanguage]!.substring(1),
-                restaurantName: controller.associatedRestaurant!.info.name,
+                restaurantName:
+                    _restaurantController.associatedRestaurant!.info.name,
                 itemsPrice: counter.value.toStringAsFixed(0),
               ),
             )),
             children: choosenOneOption(cartItem.cartChooseOneItems, context) +
                 choosenManyOption(cartItem.cartChooseManyItems, context) +
-                [
-                  SizedBox(
-                    height: 10,
-                  ),
+                <Widget>[
+                  const SizedBox(height: 10),
                   Container(
                     margin: const EdgeInsets.only(left: 10, right: 10),
                     width: Get.width,
@@ -58,40 +64,47 @@ class CartItemsBuilder extends StatelessWidget {
                   ),
                   Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
+                        horizontal: 15,
+                        vertical: 10,
+                      ),
                       child: Row(
-                        children: [
-                          Spacer(),
+                        children: <Widget>[
+                          const Spacer(),
                           IncrementalComponent(
                               minVal: 0,
                               increment: (_) {
                                 counter.value =
                                     counter.value + cartItem.costPerOne();
                                 print("${cartItem.item.id}");
-                                controller.incrementItem(cartItem.id!, 1);
-                                controller.refresh();
+                                _restaurantController.incrementItem(
+                                    cartItem.id!, 1);
+                                _restaurantController.refresh();
                               },
-                              onChangedToZero: (isZero) async {
+                              onChangedToZero: (bool isZero) async {
                                 if (isZero) {
-                                  controller.refresh();
-                                  YesNoDialogButton yesNoResult =
+                                  _restaurantController.refresh();
+                                  final YesNoDialogButton yesNoResult =
                                       await cancelAlertDialog(
-                                          title: _i18n()["deleteItem"],
-                                          body: _i18n()["deleteItemConfirm"],
-                                          icon: Container(
-                                            child: Icon(
-                                              Icons.highlight_off,
-                                              size: 65,
-                                              color: Color(0xffdb2846),
-                                            ),
-                                          ));
+                                    title: _i18n()["deleteItem"],
+                                    body: _i18n()["deleteItemConfirm"],
+                                    icon: Container(
+                                      child: Icon(
+                                        Icons.highlight_off,
+                                        size: 65,
+                                        color: Color(0xffdb2846),
+                                      ),
+                                    ),
+                                  );
                                   mezDbgPrint(
                                       " the returend value from the dailog $yesNoResult");
                                   if (yesNoResult == YesNoDialogButton.Yes) {
-                                    controller.deleteItem(cartItem.id!);
-                                    if (controller.cart.value.quantity() == 0) {
-                                      controller.clearCart();
-                                      Get.until((route) =>
+                                    _restaurantController
+                                        .deleteItem(cartItem.id!);
+                                    if (_restaurantController.cart.value
+                                            .quantity() ==
+                                        0) {
+                                      _restaurantController.clearCart();
+                                      Get.until((Route<dynamic> route) =>
                                           route.settings.name == kHomeRoute);
                                     }
                                     // controller.refresh();
@@ -104,8 +117,9 @@ class CartItemsBuilder extends StatelessWidget {
                                 } else {
                                   counter.value =
                                       counter.value + cartItem.costPerOne();
-                                  controller.incrementItem(cartItem.id!, -1);
-                                  controller.refresh();
+                                  _restaurantController.incrementItem(
+                                      cartItem.id!, -1);
+                                  _restaurantController.refresh();
                                 }
                               }),
                         ],
@@ -114,7 +128,7 @@ class CartItemsBuilder extends StatelessWidget {
             onEdit: () {
               mezDbgPrint(
                   " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
-              Get.toNamed(editCartItemRoute("${cartItem.id}"));
+              Get.toNamed<void>(editCartItemRoute("${cartItem.id}"));
             },
           ),
         ));

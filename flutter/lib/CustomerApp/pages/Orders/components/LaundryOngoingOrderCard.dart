@@ -31,10 +31,10 @@ class LaundryOngoigOrderCard extends StatelessWidget {
           padding: EdgeInsets.all(8),
           width: double.infinity,
           child: Column(
-            children: [
+            children: <Widget>[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   Stack(
                     children: [
                       CircleAvatar(
@@ -63,7 +63,7 @@ class LaundryOngoigOrderCard extends StatelessWidget {
                       //   ),
                     ],
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Flexible(
                     flex: 4,
                     fit: FlexFit.tight,
@@ -106,7 +106,7 @@ class LaundryOngoigOrderCard extends StatelessWidget {
       padding: EdgeInsets.all(3),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(
             " ${_i18n()["totalCost"]} : ${(order.getPrice() != null) ? '\$${order.getPrice()}' : '-'}",
           ),
@@ -123,7 +123,7 @@ class LaundryOngoigOrderCard extends StatelessWidget {
           const SizedBox(width: 10),
           Icon(
             Icons.arrow_forward_ios_rounded,
-          )
+          ),
         ],
       ),
     );

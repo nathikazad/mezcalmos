@@ -5,61 +5,63 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-    ["Restaurants"]["ViewCartScreen"]["components"]["BuildCart"];
-
+    ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["BuildCart"];
 
 class CartBuilder extends StatelessWidget {
-  CartBuilder({Key? key}) : super(key: key);
-  final RestaurantController controller = Get.find<RestaurantController>();
+  const CartBuilder({Key? key}) : super(key: key);
+
+  /// RestaurantController
+  static final RestaurantController controller =
+      Get.find<RestaurantController>();
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Column(
-      children: [
-        SizedBox(
-          height: 15,
-        ),
+      children: <Widget>[
+        const SizedBox(height: 15),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
-            children: [
+            children: <Widget>[
               Expanded(
-                  child: Container(
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.shopping_cart_outlined,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Container(
-                      child: Text(
-                        "${_i18n()["inCart"]}",
-                        style: txt.headline2,
+                child: Container(
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.shopping_cart_outlined,
+                        size: 20,
                       ),
-                    )
-                  ],
+                      const SizedBox(width: 5),
+                      Container(
+                        child: Text(
+                          "${_i18n()["inCart"]}",
+                          style: txt.headline2,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              )),
+              ),
               Expanded(
                   child: Container(
                 alignment: Alignment.centerRight,
                 child: Row(
-                  children: [
-                    Spacer(),
+                  children: <Widget>[
+                    const Spacer(),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(28)),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(28),
+                      ),
                       child: InkWell(
                         onTap: () async {
-                          YesNoDialogButton yesNoRes = await cancelAlertDialog(
+                          final YesNoDialogButton yesNoRes =
+                              await cancelAlertDialog(
                             title: _i18n()["clearCart"],
                             body: _i18n()["clearCartConfirm"],
                             icon: Container(
@@ -73,22 +75,17 @@ class CartBuilder extends StatelessWidget {
 
                           if (yesNoRes == YesNoDialogButton.Yes) {
                             controller.clearCart();
-                            Get.back();
+                            Get.back<void>();
                           }
                         },
-                        child: Container(
-                          child: Row(
-                            children: [
-                              Container(
-                                child: Text(
-                                    "${_i18n()["clear"]}"),
-                              ),
-                              Icon(
-                                Icons.delete_outline,
-                                size: 15,
-                              ),
-                            ],
-                          ),
+                        child: Row(
+                          children: <Widget>[
+                            Container(child: Text("${_i18n()["clear"]}")),
+                            const Icon(
+                              Icons.delete_outline,
+                              size: 15,
+                            ),
+                          ],
                         ),
                       ),
                     )

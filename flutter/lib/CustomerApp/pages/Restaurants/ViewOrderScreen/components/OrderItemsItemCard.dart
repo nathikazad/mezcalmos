@@ -16,23 +16,22 @@ class OrderItemsItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
-    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+    final TextTheme txt = Theme.of(context).textTheme;
+    final LanguageType userLanguage =
+        Get.find<LanguageController>().userLanguageKey;
     return Card(
       child: Container(
         padding: EdgeInsets.all(8),
         child: Column(
-          children: [
+          children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 CircleAvatar(
                   radius: 25,
                   backgroundImage: CachedNetworkImageProvider(item.image),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Flexible(
                   flex: 2,
                   fit: FlexFit.tight,
@@ -43,13 +42,13 @@ class OrderItemsItemCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   alignment: Alignment.centerRight,
                   decoration: BoxDecoration(
-                      color:
-                          Theme.of(context).primaryColorLight.withOpacity(0.2),
-                      shape: BoxShape.circle),
+                    color: Theme.of(context).primaryColorLight.withOpacity(0.2),
+                    shape: BoxShape.circle,
+                  ),
                   padding: EdgeInsets.all(12),
                   child: Text(
                     item.quantity.toStringAsFixed(0),
@@ -59,13 +58,13 @@ class OrderItemsItemCard extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
-              thickness: 0.3,
-            ),
+            const Divider(thickness: 0.3),
             Container(
               alignment: Alignment.bottomRight,
-              child: Text('\$' + item.totalCost.toInt().toString(),
-                  style: txt.bodyText1!.copyWith(fontSize: 14.sp)),
+              child: Text(
+                '\$' + item.totalCost.toInt().toString(),
+                style: txt.bodyText1!.copyWith(fontSize: 14.sp),
+              ),
             )
           ],
         ),

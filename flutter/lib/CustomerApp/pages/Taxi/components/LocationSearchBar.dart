@@ -23,7 +23,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 extension ParseSearchComponentTypeToString on SearchComponentType {
   String toShortString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -57,7 +57,7 @@ class LocationSearchBarController {
 
   void expandDropdown({int itemsCount = 2}) {
     /// eachItems = [itemMaxHeight] OF HEIGHT
-    double itemMaxHeight = 40.0 - (itemsCount == 2 ? 0 : itemsCount);
+    final double itemMaxHeight = 40.0 - (itemsCount == 2 ? 0 : itemsCount);
     double height = 2 * itemMaxHeight;
 
     if (itemsCount >= 2 && itemsCount <= 4) {
@@ -169,10 +169,11 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       color: Colors.white,
       boxShadow: <BoxShadow>[
         BoxShadow(
-            color: Color.fromARGB(60, 0, 0, 0),
-            spreadRadius: .5,
-            blurRadius: 4,
-            offset: Offset(0, 5)),
+          color: Color.fromARGB(60, 0, 0, 0),
+          spreadRadius: .5,
+          blurRadius: 4,
+          offset: Offset(0, 5),
+        ),
       ],
     );
   }
@@ -216,29 +217,35 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       child: Stack(
         alignment: Alignment.center,
         fit: StackFit.passthrough,
-        children: [
+        children: <Widget>[
           VerticalDivider(
             color: Color.fromARGB(255, 236, 236, 236),
             thickness: 1,
           ),
           Container(
             padding: EdgeInsets.all(
-                getSizeRelativeToScreen(2.5, Get.height, Get.width)),
+              getSizeRelativeToScreen(2.5, Get.height, Get.width),
+            ),
             height: getSizeRelativeToScreen(17, Get.height, Get.width),
             width: getSizeRelativeToScreen(17, Get.height, Get.width),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               boxShadow: <BoxShadow>[
                 BoxShadow(
-                    color: Color.fromARGB(255, 216, 225, 249),
-                    spreadRadius: 0,
-                    blurRadius: 5,
-                    offset: Offset(0, 7)),
+                  color: Color.fromARGB(255, 216, 225, 249),
+                  spreadRadius: 0,
+                  blurRadius: 5,
+                  offset: Offset(0, 7),
+                ),
               ],
-              gradient: LinearGradient(colors: [
-                Color.fromARGB(255, 97, 127, 255),
-                Color.fromARGB(255, 198, 90, 252),
-              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+              gradient: LinearGradient(
+                colors: <Color>[
+                  Color.fromARGB(255, 97, 127, 255),
+                  Color.fromARGB(255, 198, 90, 252),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
             child: Center(
               child: Image.asset('assets/images/shared/logoWhite.png'),
@@ -396,24 +403,31 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     dropDownItems.addAll(
       <LocationDropDownItem>[
         LocationDropDownItem(
-            function: () async {
-              final Location? _loc = await MapHelper.getCurrentLocation();
-              mezDbgPrint("zlaganga::root : ${_loc?.address}");
-              widget.newLocationChosenEvent(
-                  _loc, locationSearchBarController.focusedTextField.value);
-            },
-            title: "${_i18n()["currentLocation"]}",
-            icon: Icon(MezcalmosIcons.crosshairs,
-                size: 20, color: Colors.purple)),
+          function: () async {
+            final Location? _loc = await MapHelper.getCurrentLocation();
+            mezDbgPrint("zlaganga::root : ${_loc?.address}");
+            widget.newLocationChosenEvent(
+                _loc, locationSearchBarController.focusedTextField.value);
+          },
+          title: "${_i18n()["currentLocation"]}",
+          icon: Icon(
+            MezcalmosIcons.crosshairs,
+            size: 20,
+            color: Colors.purple,
+          ),
+        ),
         LocationDropDownItem(
-            function: () async {
-              widget.newLocationChosenEvent(
-                  await MapHelper.getCurrentLocation(),
-                  locationSearchBarController.focusedTextField.value);
-            },
-            title: "${_i18n()["pickFromMap"]}",
-            icon:
-                Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple))
+          function: () async {
+            widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
+                locationSearchBarController.focusedTextField.value);
+          },
+          title: "${_i18n()["pickFromMap"]}",
+          icon: Icon(
+            MezcalmosIcons.crosshairs,
+            size: 20,
+            color: Colors.purple,
+          ),
+        )
       ],
     );
     if (Get.find<AuthController>().fireAuthUser != null) {

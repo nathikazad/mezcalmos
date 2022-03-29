@@ -20,6 +20,7 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 final DateFormat f = new DateFormat('MM.dd.yyyy');
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
+
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
 
@@ -63,7 +64,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
             ? SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     if (controller.currentOrders.isNotEmpty)
                       OngoingOrderList(txt: txt, controller: controller),
                     if (controller.pastOrders.isNotEmpty)
@@ -126,8 +127,11 @@ class PastOrderList extends StatelessWidget {
         GroupedListView<Order, DateTime>(
           shrinkWrap: true,
           elements: controller.pastOrders(),
-          groupBy: (Order element) => DateTime(element.orderTime.year,
-              element.orderTime.month, element.orderTime.day),
+          groupBy: (Order element) => DateTime(
+            element.orderTime.year,
+            element.orderTime.month,
+            element.orderTime.day,
+          ),
           groupComparator: (DateTime value1, DateTime value2) =>
               value2.compareTo(value1),
           itemComparator: (Order element1, Order element2) =>
@@ -201,49 +205,52 @@ class OngoingOrderList extends StatelessWidget {
       color: Colors.green.withOpacity(0.3),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(
-        () => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              _i18n()['orders']["onGoingOrders"],
-              style: txt.headline3,
+        () => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                _i18n()['orders']["onGoingOrders"],
+                style: txt.headline3,
+              ),
             ),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            physics: NeverScrollableScrollPhysics(),
-            reverse: true,
-            itemCount: controller.currentOrders().length,
-            itemBuilder: (_, int index) {
-              switch (controller.currentOrders()[index].orderType) {
-                case OrderType.Taxi:
-                  return TaxiOngoingOrderCard(
-                    order: controller.currentOrders()[index],
-                  );
-                case OrderType.Restaurant:
-                  return RestaurantOngoingOrderCard(
-                    order: controller.currentOrders()[index],
-                  );
-                case OrderType.Laundry:
-                  return LaundryOngoigOrderCard(
-                    order: controller.currentOrders()[index] as LaundryOrder,
-                  );
+            ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              physics: NeverScrollableScrollPhysics(),
+              reverse: true,
+              itemCount: controller.currentOrders().length,
+              itemBuilder: (_, int index) {
+                switch (controller.currentOrders()[index].orderType) {
+                  case OrderType.Taxi:
+                    return TaxiOngoingOrderCard(
+                      order: controller.currentOrders()[index],
+                    );
+                  case OrderType.Restaurant:
+                    return RestaurantOngoingOrderCard(
+                      order: controller.currentOrders()[index],
+                    );
+                  case OrderType.Laundry:
+                    return LaundryOngoigOrderCard(
+                      order: controller.currentOrders()[index] as LaundryOrder,
+                    );
 
-                default:
-                  return const SizedBox.shrink();
-              }
-            },
-          ),
-          const SizedBox(height: 10)
-        ]),
+                  default:
+                    return const SizedBox.shrink();
+                }
+              },
+            ),
+            const SizedBox(height: 10)
+          ],
+        ),
       ),
     );
   }
 }
 
 int calculateDifference(DateTime date) {
-  DateTime now = DateTime.now();
+  final DateTime now = DateTime.now();
   return DateTime(date.year, date.month, date.day)
       .difference(DateTime(now.year, now.month, now.day))
       .inDays;

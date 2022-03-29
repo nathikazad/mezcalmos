@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,18 +18,39 @@ class ViewTaxiOrderController {
 
   ViewTaxiOrderController({required this.animatedSliderController});
 
+  /// OrderController
   final OrderController controller = Get.find<OrderController>();
+
+  /// TaxiController
   final TaxiController taxiController =
       Get.put<TaxiController>(TaxiController());
+
+  /// MGoogleMapController
   final MGoogleMapController mGoogleMapController = MGoogleMapController();
+
+  /// Rxn<TaxiOrder> order
   final Rxn<TaxiOrder> order = Rxn<TaxiOrder>();
+
+  /// orderListener
   StreamSubscription<Order?>? orderListener;
+
+  /// toMarkerId
   final String toMarkerId = "to";
+
+  /// bottomPadding
   RxDouble bottomPadding =
       ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
+
+  /// counterOffers
   RxList<CounterOffer> counterOffers = <CounterOffer>[].obs;
+
+  /// countOfferTimerValidator
   Timer? countOfferTimerValidator;
+
+  /// clickedAccept
   RxBool clickedAccept = false.obs;
+
+  /// offersBtnClicked
   RxBool offersBtnClicked = false.obs;
 
   void init(String orderId, {Function? orderCancelledCallback}) {

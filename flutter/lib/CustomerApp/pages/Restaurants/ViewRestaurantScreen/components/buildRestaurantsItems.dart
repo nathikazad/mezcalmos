@@ -10,19 +10,21 @@ Widget buildResturantItems(List<Item> items, String restaurantId) {
   return Column(
     children: items.fold<List<Widget>>(
       <Widget>[],
-      (children, item) {
+      (List<Widget> children, Item item) {
         children.add(
           RestaurantsListItemsOfComponent(
             item: item,
             function: () {
-              Get.toNamed(
+              Get.toNamed<void>(
                 getItemRoute(restaurantId, item.id),
-                arguments: {"mode": ViewItemScreenMode.AddItemMode},
+                arguments: <String, dynamic>{
+                  "mode": ViewItemScreenMode.AddItemMode,
+                },
               );
             },
           ),
         );
-        children.add(SizedBox(height: 1));
+        children.add(const SizedBox(height: 1));
         return children;
       },
     ),

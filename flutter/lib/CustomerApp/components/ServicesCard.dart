@@ -35,14 +35,12 @@ class ServicesCard extends StatelessWidget {
           padding: EdgeInsets.all(8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 5,
-              ),
+            children: <Widget>[
+              const SizedBox(width: 5),
               Flexible(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
+                  children: <Widget>[
                     //================= title=============
                     Container(
                       padding: const EdgeInsets.all(3),
@@ -52,7 +50,9 @@ class ServicesCard extends StatelessWidget {
                     //================ subtitle============
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 7, vertical: 3),
+                        horizontal: 7,
+                        vertical: 3,
+                      ),
                       alignment: Alignment.centerLeft,
                       // padding:
                       //     subtitle == null ? EdgeInsets.only(left: 10) : null,
@@ -66,9 +66,7 @@ class ServicesCard extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                width: 15,
-              ),
+              const SizedBox(width: 15),
               Container(
                 width: 20.w,
                 height: 20.w,

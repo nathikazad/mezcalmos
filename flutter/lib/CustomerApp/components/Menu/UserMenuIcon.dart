@@ -64,12 +64,13 @@ class UserMenuIcon extends StatelessWidget {
             .copyWith(color: Colors.white, fontWeight: FontWeight.w700),
       ),
       child: CircleAvatar(
-          backgroundImage: mLoadImage(
-        url: auth.user!.image != null
-            ? auth.user!.image
-            : auth.fireAuthUser!.photoURL,
-        assetInCaseFailed: aDefaultAvatar,
-      ).image),
+        backgroundImage: mLoadImage(
+          url: auth.user!.image != null
+              ? auth.user!.image
+              : auth.fireAuthUser!.photoURL,
+          assetInCaseFailed: aDefaultAvatar,
+        ).image,
+      ),
     );
   }
 }

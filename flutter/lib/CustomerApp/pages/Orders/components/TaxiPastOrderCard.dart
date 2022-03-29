@@ -41,12 +41,12 @@ class TaxiPastOrderCard extends StatelessWidget {
                       CircleAvatar(
                         radius: 25,
                         backgroundImage: mLoadImage(
-                                assetInCaseFailed:
-                                    'assets/images/customer/taxi/taxiDriverImg.png',
-                                url: (order.isOpenOrder())
-                                    ? null
-                                    : order.serviceProvider?.image)
-                            .image,
+                          assetInCaseFailed:
+                              'assets/images/customer/taxi/taxiDriverImg.png',
+                          url: (order.isOpenOrder())
+                              ? null
+                              : order.serviceProvider?.image,
+                        ).image,
                       ),
                       //  if (order.serviceProvider != null)
                       Positioned(

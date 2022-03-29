@@ -25,19 +25,22 @@ class TaxiController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
 
-  Future<List<OnlineTaxiDriver>> fecthOnlineTaxiDrivers() async {
-    List<OnlineTaxiDriver> _temp = [];
-    DataSnapshot _onlineTaxiDrivers = await _databaseHelper.firebaseDatabase
+  Future<List<OnlineTaxiDriver>> fetchOnlineTaxiDrivers() async {
+    final List<OnlineTaxiDriver> _temp = <OnlineTaxiDriver>[];
+    final DataSnapshot _onlineTaxiDrivers = await _databaseHelper
+        .firebaseDatabase
         .reference()
         .child(onlineTaxiDrivers())
         .once();
 
-    _onlineTaxiDrivers.value.keys.forEach((taxiId) {
+    _onlineTaxiDrivers.value.keys.forEach((String taxiId) {
       // _temp.add(value)
       mezDbgPrint("-----------==== @saad@ox ===-----------");
       mezDbgPrint("${_onlineTaxiDrivers.value[taxiId]}");
-      var _driver = OnlineTaxiDriver.fromData(
-          taxiId: taxiId, data: _onlineTaxiDrivers.value[taxiId]);
+      final OnlineTaxiDriver _driver = OnlineTaxiDriver.fromData(
+        taxiId: taxiId,
+        data: _onlineTaxiDrivers.value[taxiId],
+      );
       if (_driver.isDriverAvailable()) {
         _temp.add(_driver);
       } else {
@@ -50,11 +53,11 @@ class TaxiController extends GetxController {
   }
 
   Future<ServerResponse> cancelTaxi(String orderId) async {
-    HttpsCallable cancelTaxiFunction =
+    final HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-cancelFromCustomer');
     try {
-      HttpsCallableResult response =
-          await cancelTaxiFunction.call({"orderId": orderId});
+      final HttpsCallableResult<dynamic> response =
+          await cancelTaxiFunction.call(<String, String>{"orderId": orderId});
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,
@@ -64,12 +67,12 @@ class TaxiController extends GetxController {
 
   Future<ServerResponse> requestTaxi(TaxiRequest taxiRequest) async {
     if (taxiRequest.valid()) {
-      HttpsCallable requestTaxiFunction =
+      final HttpsCallable requestTaxiFunction =
           FirebaseFunctions.instance.httpsCallable("taxi-requestRide");
 
       try {
         mezDbgPrint(taxiRequest.asCloudFunctionParam());
-        HttpsCallableResult response =
+        final HttpsCallableResult<dynamic> response =
             await requestTaxiFunction.call(taxiRequest.asCloudFunctionParam());
 
         return ServerResponse.fromJson(response.data);
@@ -79,9 +82,11 @@ class TaxiController extends GetxController {
             errorMessage: "Server Error", errorCode: "serverError");
       }
     } else {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Invalid Request",
-          errorCode: "invalid taxi request or google map server down");
+      return ServerResponse(
+        ResponseStatus.Error,
+        errorMessage: "Invalid Request",
+        errorCode: "invalid taxi request or google map server down",
+      );
     }
   }
 
@@ -109,11 +114,16 @@ class TaxiController extends GetxController {
 
   void increaseNumOfTimesToolTipShownToUser() {
     GetStorage().write(
-        numOfToolTipsShownStorageAddress, numOfTimesToolTipShownToUser() + 1);
+      numOfToolTipsShownStorageAddress,
+      numOfTimesToolTipShownToUser() + 1,
+    );
   }
 
   Future<ServerResponse> acceptCounterOffer(
-      String orderId, String customerId, String driverId) async {
+    String orderId,
+    String customerId,
+    String driverId,
+  ) async {
     await _databaseHelper.firebaseDatabase
         .reference()
         .child(customersCounterOfferNode(orderId, customerId, driverId))
@@ -121,10 +131,10 @@ class TaxiController extends GetxController {
         .set(CounterOfferStatus.Accepted.toFirebaseFormatString());
 
     mezDbgPrint("Accept Taxi Called");
-    HttpsCallable acceptTaxiFunction =
+    final HttpsCallable acceptTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-acceptRide');
     try {
-      HttpsCallableResult response = await acceptTaxiFunction
+      final HttpsCallableResult<dynamic> response = await acceptTaxiFunction
           .call(<String, dynamic>{
         'orderId': orderId,
         'counterOfferDriverId': driverId
@@ -133,13 +143,19 @@ class TaxiController extends GetxController {
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       mezDbgPrint(e.toString());
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
+      return ServerResponse(
+        ResponseStatus.Error,
+        errorMessage: "Server Error",
+        errorCode: "serverError",
+      );
     }
   }
 
   Future<void> rejectCounterOffer(
-      String orderId, String customerId, String driverId) async {
+    String orderId,
+    String customerId,
+    String driverId,
+  ) async {
     await _databaseHelper.firebaseDatabase
         .reference()
         .child(customersCounterOfferNode(orderId, customerId, driverId))
