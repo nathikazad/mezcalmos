@@ -21,12 +21,13 @@ void main() {
       Sizer(
         builder: (_, __, ___) {
           return StartingPoint(
-              appType: AppType.DeliveryAdminApp,
-              appTheme: DeliveryAdminTheme.lightTheme,
-              signInCallback: signInCallback,
-              signOutCallback: signOutCallback,
-              routes: routes,
-              locationOn: false);
+            appType: AppType.DeliveryAdminApp,
+            appTheme: DeliveryAdminTheme.lightTheme,
+            signInCallback: signInCallback,
+            signOutCallback: signOutCallback,
+            routes: routes,
+            locationOn: false,
+          );
         },
       ),
     ),

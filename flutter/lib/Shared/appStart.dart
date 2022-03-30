@@ -20,7 +20,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
-import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -31,12 +30,14 @@ import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:new_version/new_version.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sizer/sizer.dart' as Sizer;
 
 final ThemeData _defaultAppTheme = ThemeData(
-    primaryColor: Colors.white,
-    visualDensity: VisualDensity.adaptivePlatformDensity);
+  primaryColor: Colors.white,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+);
 
 class StartingPoint extends StatefulWidget {
   final AppType appType;
@@ -65,43 +66,74 @@ class StartingPoint extends StatefulWidget {
 }
 
 class _StartingPointState extends State<StartingPoint> {
-  bool _initialized = false;
-  bool _error = false;
-
   _StartingPointState();
+
+  /// _initialized
+  bool _initialized = false;
+
+  /// _error
+  bool _error = false;
 
   /// AppUpdateInfo
   AppUpdateInfo? _updateInfo;
 
-  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
-
-  /// _flexibleUpdateAvailable
   bool _flexibleUpdateAvailable = false;
 
-  /// Platform messages are asynchronous, so we initialize in an async method.
+  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> checkForUpdate() async {
     await InAppUpdate.checkForUpdate().then((AppUpdateInfo info) {
       setState(() {
         _updateInfo = info;
       });
     }).catchError((e) {
-      showSnack(e.toString());
+      Get.snackbar('Ops!', e.toString());
     });
-  }
-
-  void showSnack(String text) {
-    if (_scaffoldKey.currentContext != null) {
-      ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(
-        SnackBar(content: Text(text)),
-      );
-    }
   }
 
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
+
+    /// initializeSetup
     initializeSetup();
+
+    /// Instantiate NewVersion manager object (Using GCP Console app as example)
+    final NewVersion newVersion = NewVersion(
+      iOSId: 'com.mezstaging.customer',
+      androidId: 'com.mezstaging.customer',
+    );
+
+    // You can let the plugin handle fetching the status and showing a dialog,
+    // or you can fetch the status and display your own dialog, or no dialog.
+    // const bool simpleBehavior = false;
+    //
+    // if (simpleBehavior) {
+    //   basicStatusCheck(newVersion);
+    // } else {
+    advancedStatusCheck(newVersion);
+    //}
+  }
+
+  void basicStatusCheck(NewVersion newVersion) {
+    newVersion.showAlertIfNecessary(context: context);
+  }
+
+  Future<void> advancedStatusCheck(NewVersion newVersion) async {
+    final VersionStatus? status = await newVersion.getVersionStatus();
+    if (status != null) {
+      debugPrint("releaseNotes: ${status.releaseNotes}");
+      debugPrint('appStoreLink: ${status.appStoreLink}');
+      debugPrint('appStoreLink: ${status.localVersion}');
+      debugPrint('storeVersion: ${status.storeVersion}');
+      debugPrint('canUpdate ${status.canUpdate.toString()}');
+      newVersion.showUpdateDialog(
+        context: context,
+        versionStatus: status,
+        dialogTitle: 'Custom Title',
+        dialogText: 'Custom Text',
+      );
+    }
   }
 
   @override
@@ -143,7 +175,8 @@ class _StartingPointState extends State<StartingPoint> {
       );
     } else {
       mezDbgPrint(
-          "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}");
+        "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}",
+      );
       return Sizer.Sizer(
         builder: (
           BuildContext context,
