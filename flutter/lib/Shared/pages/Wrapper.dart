@@ -49,7 +49,13 @@ class _WrapperState extends State<Wrapper> {
   //   checkIfNotInUpdateScreenAndPush(_appVersionController.appVersionInfos.value)
   //       .then((_) {
   //     // this listenr is distinct by the way.
-  //     _appVersionController.appVersionInfos.stream.listen((updateType) async {
+  // _appVersionController.needsUpdate.stream.listen((UpdateType hasUpdate) {
+
+  // if hasUpdate != UpdateType.Major:
+
+  // pushToRoute (flullScreen) - force the user to stay there
+  // alertDialog -> minor / patches
+  //}) ;
   //       await checkIfNotInUpdateScreenAndPush(updateType);
   //     });
   //   });

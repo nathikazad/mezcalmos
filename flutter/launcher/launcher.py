@@ -192,7 +192,7 @@ class Launcher:
 
         #  main ManifestXml:
         _project_main_manifest = "../android/app/src/main/AndroidManifest.xml"
-        os.system('mv ../android/app/src/main/AndroidManifest.xml ../android/app/src/main/AndroidManifest.xml.backup')
+        os.system(f'{"mv" if not self.isWin else "move"} ..|android|app|src|main|AndroidManifest.xml ..|android|app|src|main|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
         _cloned = open('patches/android/main/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions'])
         open(_project_main_manifest , 'w+').write(_cloned)
 
@@ -202,7 +202,7 @@ class Launcher:
             os.system(f'mkdir {os.path.dirname(_project_profile_manifest)}')
         
         if os.path.exists(_project_profile_manifest):
-            os.system('mv ../android/app/src/profile/AndroidManifest.xml ../android/app/src/profile/AndroidManifest.xml.backup')
+            os.system(f'{"mv" if not self.isWin else "move"} ..|android|app|src|profile|AndroidManifest.xml ..|android|app|src|profile|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
         
         _cloned = open('patches/android/profile/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions'])
         open(_project_profile_manifest , 'w+').write(_cloned)
@@ -215,7 +215,7 @@ class Launcher:
             os.system(f'mkdir {os.path.dirname(_project_debug_manifest)}')
         
         if os.path.exists(_project_debug_manifest):
-            os.system('mv ../android/app/src/debug/AndroidManifest.xml ../android/app/src/debug/AndroidManifest.xml.backup')
+            os.system(f'{"mv" if not self.isWin else "move"} ..|android|app|src|debug|AndroidManifest.xml ..|android|app|src|debug|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
         
         _cloned = open('patches/android/debug/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions'])
         open(_project_debug_manifest , 'w+').write(_cloned)

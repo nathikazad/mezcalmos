@@ -67,10 +67,11 @@ class SharedRouter {
         name: kSignInRouteRequired,
         page: () => SignIn(mode: SignInMode.RequiredSignIn)),
     GetPage(
-        name: kSignInRouteOptional,
-        page: () => SignIn(
-              mode: SignInMode.OptionalSignIn,
-            )),
+      name: kSignInRouteOptional,
+      page: () => SignIn(
+        mode: SignInMode.OptionalSignIn,
+      ),
+    ),
     GetPage(name: kOtpRoute, page: () => PhoneNumberScreen()),
     GetPage(name: kOtpConfirmRoute, page: () => OtpConfirmationScreen()),
     GetPage(

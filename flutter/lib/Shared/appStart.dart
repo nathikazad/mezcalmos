@@ -17,10 +17,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:in_app_update/in_app_update.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
-import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -34,9 +32,12 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:package_info/package_info.dart';
 import 'package:sizer/sizer.dart' as Sizer;
 
+import 'controllers/appVersionController.dart';
+
 final ThemeData _defaultAppTheme = ThemeData(
-    primaryColor: Colors.white,
-    visualDensity: VisualDensity.adaptivePlatformDensity);
+  primaryColor: Colors.white,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+);
 
 class StartingPoint extends StatefulWidget {
   final AppType appType;
@@ -64,51 +65,34 @@ class StartingPoint extends StatefulWidget {
 }
 
 class _StartingPointState extends State<StartingPoint> {
-  bool _initialized = false;
-  bool _error = false;
-
   _StartingPointState();
 
-  /// AppUpdateInfo
-  AppUpdateInfo? _updateInfo;
+  /// _initialized
+  bool _initialized = false;
 
-  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
-
-  /// _flexibleUpdateAvailable
-  bool _flexibleUpdateAvailable = false;
-
-  /// Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> checkForUpdate() async {
-    await InAppUpdate.checkForUpdate().then((AppUpdateInfo info) {
-      setState(() {
-        _updateInfo = info;
-      });
-    }).catchError((e) {
-      showSnack(e.toString());
-    });
-  }
-
-  void showSnack(String text) {
-    if (_scaffoldKey.currentContext != null) {
-      ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(
-        SnackBar(content: Text(text)),
-      );
-    }
-  }
+  /// _error
+  bool _error = false;
 
   @override
   void initState() {
     super.initState();
+    debugPrint(
+      "-------------------Start _StartingPointState ------------------------",
+    );
     WidgetsFlutterBinding.ensureInitialized();
+
+    /// initializeSetup
     initializeSetup();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations(<DeviceOrientation>[
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]);
+    SystemChrome.setPreferredOrientations(
+      <DeviceOrientation>[
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown
+      ],
+    );
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     if (_error) {
@@ -135,7 +119,8 @@ class _StartingPointState extends State<StartingPoint> {
               SplashScreen());
     } else {
       mezDbgPrint(
-          "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}");
+        "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}",
+      );
       return Sizer.Sizer(
           builder: (BuildContext context, Orientation orientation,
                   Sizer.DeviceType deviceType) =>
@@ -161,6 +146,11 @@ class _StartingPointState extends State<StartingPoint> {
 
       hookOnFlutterErrorsStdout();
       mezDbgPrint("Done : hookOnFlutterErrorsStdout");
+
+      /// AppVersionController
+      final AppVersionController _appVersionController =
+          Get.put<AppVersionController>(AppVersionController());
+      // _appVersionController.initTheNewVersion();
 
       setState(() => _initialized = true);
       mezDbgPrint("_initialized Set to : $_initialized");
@@ -238,16 +228,18 @@ class _StartingPointState extends State<StartingPoint> {
         .stream
         .first;
     Get.put<AuthController>(
-        AuthController(widget.signInCallback, widget.signOutCallback),
-        permanent: true);
-    Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
-        permanent: true);
+      AuthController(widget.signInCallback, widget.signOutCallback),
+      permanent: true,
+    );
+    Get.put<AppLifeCycleController>(
+      AppLifeCycleController(logs: true),
+      permanent: true,
+    );
     Get.put<SettingsController>(
-        SettingsController(
-            widget.appType, widget.sideMenuItems, widget.locationOn),
-        permanent: true);
-
-    // Get.lazyPut(() => AppVersionController(), fenix: true);
+      SettingsController(
+          widget.appType, widget.sideMenuItems, widget.locationOn),
+      permanent: true,
+    );
   }
 
   Future<void> waitForInitialization() async {

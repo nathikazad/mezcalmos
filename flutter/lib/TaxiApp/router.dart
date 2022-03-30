@@ -22,11 +22,14 @@ class XRouter {
   static dynamic mainRoutes = [
         GetPage(name: kCurrentOrderRoute, page: () => CurrentOrderScreen()),
         GetPage(
-            name: kIncomingOrdersListRoute, page: () => IncomingOrdersScreen()),
+          name: kIncomingOrdersListRoute,
+          page: () => IncomingOrdersScreen(),
+        ),
         GetPage(name: kHomeRoute, page: () => TaxiWrapper()),
         GetPage(
-            name: kIncomingOrdersViewRoute,
-            page: () => IncomingOrderViewScreen()),
+          name: kIncomingOrdersViewRoute,
+          page: () => IncomingOrderViewScreen(),
+        ),
       ] +
       SharedRouter.sharedRoutes;
 }
