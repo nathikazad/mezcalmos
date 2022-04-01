@@ -77,7 +77,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
     });
   }
 
-  void handleState(DeliveryDriverState? state) async {
+  void handleState(DeliveryDriverState? state) {
     mezDbgPrint(state);
     if (state != null) {
       // mezDbgPrint("Current order ====> ${state.currentOrder}");

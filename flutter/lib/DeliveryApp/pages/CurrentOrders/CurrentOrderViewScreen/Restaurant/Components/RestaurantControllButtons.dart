@@ -105,7 +105,7 @@ class RestaurantControllButtons extends StatelessWidget {
                     clicked.value = true;
                     await restaurantOrderController
                         .finishRestaurantDelivery(order.orderId);
-                    Get.back(closeOverlays: true);
+                    // Get.back(closeOverlays: true);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(5),

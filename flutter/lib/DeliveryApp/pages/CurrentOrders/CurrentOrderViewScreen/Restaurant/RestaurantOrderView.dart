@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
@@ -9,6 +10,7 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/DriverBottomRestaurantOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -22,8 +24,8 @@ class RestaurantOrderView extends StatefulWidget {
 }
 
 class _RestaurantOrderViewState extends State<RestaurantOrderView> {
-  MGoogleMapController mGoogleMapController = MGoogleMapController();
-  Rxn<Order> order = Rxn<Order>();
+  MGoogleMapController mapController = MGoogleMapController();
+  Rxn<RestaurantOrder> order = Rxn<RestaurantOrder>();
   OrderController controller = Get.find<OrderController>();
   StreamSubscription<Order?>? _orderListener;
   DeliveryAuthController deliveryAuthAuthController =
@@ -31,19 +33,65 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   @override
   void initState() {
     super.initState();
-
+    // TODO : Add Restaurant's Markers location.
     final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId);
+    order.value = controller.getOrder(orderId) as RestaurantOrder;
     if (order.value == null) {
       mezDbgPrint("ORDER NULL");
     } else {
+      mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+      mapController.periodicRerendering.value = true;
+      mapController.periodicRerendering.refresh();
+
+      mezDbgPrint(
+          "lat lng DeliveryDriver => ${deliveryAuthAuthController.currentLocation.toString()}");
+
+      if (order.value!.routeInformation != null) {
+        mapController.decodeAndAddPolyline(
+            encodedPolylineString: order.value!.routeInformation!.polyline);
+      }
+
+      Future.wait(<Future<void>>[
+        // DESTINATION MARKER
+        mapController.addOrUpdatePurpleDestinationMarker(
+          latLng: LatLng(
+            order.value!.to.latitude,
+            order.value!.to.longitude,
+          ),
+        ),
+        // USER MARKER
+        mapController.addOrUpdateUserMarker(
+          latLng: LatLng(
+            deliveryAuthAuthController.currentLocation.latitude!,
+            deliveryAuthAuthController.currentLocation.longitude!,
+          ),
+        ),
+        // Restaurant Marker
+        mapController.addOrUpdateUserMarker(
+          latLng: LatLng(
+            order.value!.restaurant.location.latitude,
+            order.value!.restaurant.location.longitude,
+          ),
+          markerId: order.value!.restaurantId,
+          customImgHttpUrl: order.value!.restaurant.image,
+        )
+      ]).then((_) {
+        mapController.setLocation(
+          Location.fromLocationData(
+            deliveryAuthAuthController.currentLocation,
+          ),
+        );
+        mapController.animateAndUpdateBounds();
+      });
+
       _orderListener =
           controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
         final DeliverableOrder? _order = controller.getOrder(orderId);
         if (_order == null) {
           Get.back<void>();
         } else {
+          handleRestaurantOrder(_order as RestaurantOrder);
           order.value = _order;
           order.refresh();
         }
@@ -59,56 +107,47 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
     super.dispose();
   }
 
-  AppBar getRightAppBar() {
-    mezDbgPrint("CCCCANNNNNNN GO BACK");
-
-    if (canGetBack()) {
-      mezDbgPrint("CCCCANNNNNNN GO BACK");
-      return deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back);
-    } else
-      return deliveryAppBar(AppBarLeftButtonType.Back);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => WillPopScope(
-        onWillPop: () async => canGetBack(),
-        child: Scaffold(
-          appBar: getRightAppBar(),
-          body: SingleChildScrollView(
-            child: Builder(
-              builder: (BuildContext context) {
-                if (order.value != null) {
-                  return Column(children: <Widget>[
-                    DriverOrderMapComponent(order: order),
-                    DriverBottomRestaurantOrderCard(
-                        order: order.value as RestaurantOrder),
-                  ]);
-                } else {
-                  return MezLogoAnimation(
-                    centered: true,
-                  );
-                }
-              },
-            ),
-          ),
+      () => Scaffold(
+        appBar: deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back),
+        body: SingleChildScrollView(
+          child: order.value != null
+              ? Column(children: <Widget>[
+                  DriverOrderMapComponent(
+                    order: order.value!,
+                    mapController: mapController,
+                  ),
+                  DriverBottomRestaurantOrderCard(
+                    order: order.value as RestaurantOrder,
+                  ),
+                ])
+              : MezLogoAnimation(
+                  centered: true,
+                ),
         ),
       ),
     );
   }
 
-  bool canGetBack() {
-    switch ((order.value! as RestaurantOrder).status) {
-      case RestaurantOrderStatus.CancelledByAdmin:
-      case RestaurantOrderStatus.CancelledByCustomer:
-      case RestaurantOrderStatus.Delivered:
-      case RestaurantOrderStatus.OrderReceieved:
-      case RestaurantOrderStatus.PreparingOrder:
-        return true;
+  /// this handles Restaurant Order.
+  void handleRestaurantOrder(RestaurantOrder order) {
+    switch (order.status) {
+      case RestaurantOrderStatus.ReadyForPickup:
+        break;
 
+      case RestaurantOrderStatus.OnTheWay:
+        mapController.animateMarkersPolyLinesBounds.value = true;
+        mapController.myLocationButtonEnabled.value = true;
+        // user marker
+        mapController.addOrUpdateUserMarker(
+          latLng: LatLng(order.dropoffDriver!.location!.latitude,
+              order.dropoffDriver!.location!.longitude),
+        );
+        mapController.animateAndUpdateBounds();
+        break;
       default:
-        return false;
     }
   }
 }

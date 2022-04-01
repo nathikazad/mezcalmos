@@ -43,7 +43,7 @@ class LaundryControllButtons extends StatelessWidget {
                   if (orderWeight != 0) {
                     await laundryOrderController.atLaundryOrder(
                         order.orderId, orderWeight);
-                    Get.back(closeOverlays: true);
+                    // Get.back(closeOverlays: true);
                   }
 
                   break;
@@ -52,7 +52,7 @@ class LaundryControllButtons extends StatelessWidget {
                   break;
                 case LaundryOrderStatus.OtwDelivery:
                   await laundryOrderController.deliveredOrder(order.orderId);
-                  Get.back(closeOverlays: true);
+                  // Get.back(closeOverlays: true);
                   break;
                 default:
                   null;
@@ -66,7 +66,7 @@ class LaundryControllButtons extends StatelessWidget {
     });
   }
 
-  orderWeightDialog(BuildContext context) async {
+  Future<void> orderWeightDialog(BuildContext context) async {
     orderWeight = await showDialog(
         context: context,
         builder: (ctx) {
@@ -114,9 +114,7 @@ class LaundryControllButtons extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Text('${_i18n()["confirm"]}'))),
                 TextButton(
-                    onPressed: () {
-                      Navigator.pop(context, 0);
-                    },
+                    onPressed: Get.back,
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),
