@@ -84,6 +84,7 @@ class ViewTaxiOrderController {
   }
 
   Future<void> initializeMap() async {
+    mGoogleMapController.periodicRerendering.value = true;
     mGoogleMapController.setLocation(order.value!.from);
     // add the polylines!
     mGoogleMapController.decodeAndAddPolyline(

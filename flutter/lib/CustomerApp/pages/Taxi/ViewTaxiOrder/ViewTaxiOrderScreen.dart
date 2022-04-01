@@ -97,7 +97,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
           borderRadius: BorderRadius.circular(5), color: Colors.white),
       child: MGoogleMap(
         mGoogleMapController: viewController.mGoogleMapController,
-        periodicRerendering: true,
       ),
     );
   }
