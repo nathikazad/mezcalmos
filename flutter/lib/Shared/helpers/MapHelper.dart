@@ -256,6 +256,7 @@ List<LatLng> loadUpPolyline(String? polyline) {
 
 /// To create our LatLngBounds , used so we can fit Map Componenets in the map depending on LatLng!
 LatLngBounds createMapBounds(List<LatLng> positions) {
+  mezDbgPrint("Called createMapBounds !!");
   final southwestLat = positions.map((p) => p.latitude).reduce(
       (value, element) => value < element ? value : element); //  snallest value
   final southwestLon = positions
