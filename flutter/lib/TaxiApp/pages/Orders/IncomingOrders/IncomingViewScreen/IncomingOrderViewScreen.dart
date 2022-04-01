@@ -69,7 +69,6 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                       mGoogleMapController:
                           iOrderViewController.mGoogleMapController,
                       debugString: "IncomingViewScreen",
-                      myLocationButtonEnabled: false,
                     ),
                     iOrderViewWidgets.absorbOrIgnoreUserTapWidget(),
                     IncomingPositionedBottomBar(

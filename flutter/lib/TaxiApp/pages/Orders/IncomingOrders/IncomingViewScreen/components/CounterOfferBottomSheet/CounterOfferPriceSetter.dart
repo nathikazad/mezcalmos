@@ -48,7 +48,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Padding(
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Center(
@@ -102,7 +102,7 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
               width: 80.w,
               child: Center(
                   child: Text(
-                -i18n()["sendOffer"],
+                _i18n()["sendOffer"],
                 style: TextStyle(color: Colors.white, fontFamily: 'psb'),
               )),
             ),
