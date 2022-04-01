@@ -1046,11 +1046,11 @@
 
                             },
                             "laundryControllButtons": {
-                                "pickupOrder": "Orden para recoger",
-                                "confirmPickup": "Confirmar la recogida de la orden",
+                                "pickupOrder": "Comenzar a recoger",
+                                "confirmPickup": "Confirmar la recogida",
                                 "atLaundry": "En la lavandería",
-                                "deliverOrder": "Encargar",
-                                "confirmDelivery": "Confirmar el envío",
+                                "deliverOrder": "Comenzar a Entregar",
+                                "confirmDelivery": "Confirmar el Entregado",
                                 "confirmOrderWeight": "Confirmar peso de orden",
                                 "orderWeightAlert": "Por favor ingrese un peso válido",
                                 "confirm": "Confirmar",
@@ -1069,7 +1069,7 @@
                                 "canceled": "Orden cancelada"
                             },
                             "RestaurantControllButtons": {
-                                "confirmPickup": "Confirmar la recogida de la orden",
+                                "confirmPickup": "Confirmar la recogida",
                                 "confirmDelivery": "Confirmar el envío"
 
                             }
