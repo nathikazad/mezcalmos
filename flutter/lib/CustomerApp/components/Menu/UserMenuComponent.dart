@@ -104,6 +104,11 @@ class _UserMenuState extends State<UserMenu> {
           case 3:
             Get.toNamed(kUserProfile);
             break;
+          case 5:
+            Get.toNamed<void>(kInAppReview);
+            // final InAppReview _inAppReview = InAppReview.instance;
+            // _inAppReview.requestReview();
+            break;
           case 4:
             auth.signOut();
             break;

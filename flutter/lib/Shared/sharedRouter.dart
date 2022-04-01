@@ -14,6 +14,8 @@ import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
 
+import 'pages/InAppReviewPage.dart';
+
 // Routes Keys.
 const String kWrapperRoute = '/wrapper';
 const String kHomeRoute = '/';
@@ -30,6 +32,7 @@ const String kUserProfile = '/user_profile';
 const String kPickToLocation = '/pick_to_location';
 const String kNotificationsRoute = '/notifications';
 const String kAppNeedsUpdate = '/needs_update';
+const String kInAppReview = '/in-app_review';
 
 String getMessagesRoute(
     {required String chatId,
@@ -61,6 +64,7 @@ class SharedRouter {
   static List<GetPage> sharedRoutes = [
     GetPage(name: kUserProfile, page: () => UserProfile()),
     GetPage(name: kAppNeedsUpdate, page: () => AppNeedsUpdated()),
+    GetPage(name: kInAppReview, page: () => InAppReviewPage()),
     GetPage(name: kWrapperRoute, page: () => Wrapper()),
     GetPage(name: kSplashRoute, page: () => SplashScreen()),
     GetPage(

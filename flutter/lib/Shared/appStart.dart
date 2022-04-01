@@ -270,10 +270,11 @@ class _StartingPointState extends State<StartingPoint> {
     }
   }
 
-  Widget mainApp(
-      {required AppType appType,
-      required ThemeData appTheme,
-      required List<GetPage<dynamic>> routes}) {
+  Widget mainApp({
+    required AppType appType,
+    required ThemeData appTheme,
+    required List<GetPage<dynamic>> routes,
+  }) {
     Future<void> _initializeConfig() async {
       // We will use this to Initialize anything at MaterialApp root init of app
       final BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
