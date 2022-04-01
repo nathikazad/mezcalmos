@@ -17,7 +17,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:in_app_update/in_app_update.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -30,9 +29,10 @@ import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:new_version/new_version.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sizer/sizer.dart' as Sizer;
+
+import 'controllers/appVersionController.dart';
 
 final ThemeData _defaultAppTheme = ThemeData(
   primaryColor: Colors.white,
@@ -74,74 +74,26 @@ class _StartingPointState extends State<StartingPoint> {
   /// _error
   bool _error = false;
 
-  /// AppUpdateInfo
-  AppUpdateInfo? _updateInfo;
-
-  bool _flexibleUpdateAvailable = false;
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> checkForUpdate() async {
-    await InAppUpdate.checkForUpdate().then((AppUpdateInfo info) {
-      setState(() {
-        _updateInfo = info;
-      });
-    }).catchError((e) {
-      Get.snackbar('Ops!', e.toString());
-    });
-  }
-
   @override
   void initState() {
     super.initState();
+    debugPrint(
+      "-------------------Start _StartingPointState ------------------------",
+    );
     WidgetsFlutterBinding.ensureInitialized();
 
     /// initializeSetup
     initializeSetup();
-
-    /// Instantiate NewVersion manager object (Using GCP Console app as example)
-    final NewVersion newVersion = NewVersion(
-      iOSId: 'com.mezstaging.customer',
-      androidId: 'com.mezstaging.customer',
-    );
-
-    // You can let the plugin handle fetching the status and showing a dialog,
-    // or you can fetch the status and display your own dialog, or no dialog.
-    // const bool simpleBehavior = false;
-    //
-    // if (simpleBehavior) {
-    //   basicStatusCheck(newVersion);
-    // } else {
-    advancedStatusCheck(newVersion);
-    //}
-  }
-
-  void basicStatusCheck(NewVersion newVersion) {
-    newVersion.showAlertIfNecessary(context: context);
-  }
-
-  Future<void> advancedStatusCheck(NewVersion newVersion) async {
-    final VersionStatus? status = await newVersion.getVersionStatus();
-    if (status != null) {
-      debugPrint("releaseNotes: ${status.releaseNotes}");
-      debugPrint('appStoreLink: ${status.appStoreLink}');
-      debugPrint('appStoreLink: ${status.localVersion}');
-      debugPrint('storeVersion: ${status.storeVersion}');
-      debugPrint('canUpdate ${status.canUpdate.toString()}');
-      newVersion.showUpdateDialog(
-        context: context,
-        versionStatus: status,
-        dialogTitle: 'Custom Title',
-        dialogText: 'Custom Text',
-      );
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations(<DeviceOrientation>[
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]);
+    SystemChrome.setPreferredOrientations(
+      <DeviceOrientation>[
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown
+      ],
+    );
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
@@ -207,6 +159,11 @@ class _StartingPointState extends State<StartingPoint> {
 
       hookOnFlutterErrorsStdout();
       mezDbgPrint("Done : hookOnFlutterErrorsStdout");
+
+      /// AppVersionController
+      final AppVersionController _appVersionController =
+          Get.put<AppVersionController>(AppVersionController());
+      // _appVersionController.initTheNewVersion();
 
       setState(() => _initialized = true);
       mezDbgPrint("_initialized Set to : $_initialized");
@@ -287,16 +244,18 @@ class _StartingPointState extends State<StartingPoint> {
         .stream
         .first;
     Get.put<AuthController>(
-        AuthController(widget.signInCallback, widget.signOutCallback),
-        permanent: true);
-    Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
-        permanent: true);
+      AuthController(widget.signInCallback, widget.signOutCallback),
+      permanent: true,
+    );
+    Get.put<AppLifeCycleController>(
+      AppLifeCycleController(logs: true),
+      permanent: true,
+    );
     Get.put<SettingsController>(
-        SettingsController(
-            widget.appType, widget.sideMenuItems, widget.locationOn),
-        permanent: true);
-
-    // Get.lazyPut(() => AppVersionController(), fenix: true);
+      SettingsController(
+          widget.appType, widget.sideMenuItems, widget.locationOn),
+      permanent: true,
+    );
   }
 
   Future<void> waitForInitialization() async {

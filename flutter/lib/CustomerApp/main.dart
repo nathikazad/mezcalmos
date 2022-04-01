@@ -53,3 +53,4 @@ void main() {
   );
 }
 // python launcher.py env=stage app=CustomerApp
+// python launcher.py env=prod app=CustomerApp
