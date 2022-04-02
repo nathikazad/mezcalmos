@@ -34,11 +34,11 @@ class _AppNeedsUpdatedState extends State<AppNeedsUpdated> {
   }
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
 
     /// checkForUpdateTypeAndPlatForm
-    _controller.checkForUpdateTypeAndPlatForm();
+    bool check = await _controller.checkForUpdateTypeAndPlatForm();
   }
 
   @override

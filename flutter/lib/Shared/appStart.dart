@@ -163,7 +163,7 @@ class _StartingPointState extends State<StartingPoint> {
       /// AppVersionController
       final AppVersionController _appVersionController =
           Get.put<AppVersionController>(AppVersionController());
-      // _appVersionController.initTheNewVersion();
+      _appVersionController.initTheNewVersion();
 
       setState(() => _initialized = true);
       mezDbgPrint("_initialized Set to : $_initialized");
@@ -286,10 +286,11 @@ class _StartingPointState extends State<StartingPoint> {
     }
   }
 
-  Widget mainApp(
-      {required AppType appType,
-      required ThemeData appTheme,
-      required List<GetPage<dynamic>> routes}) {
+  Widget mainApp({
+    required AppType appType,
+    required ThemeData appTheme,
+    required List<GetPage<dynamic>> routes,
+  }) {
     Future<void> _initializeConfig() async {
       // We will use this to Initialize anything at MaterialApp root init of app
       final BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(

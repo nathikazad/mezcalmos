@@ -2,19 +2,19 @@
 * Created By Mirai Devs.
 * On 4/1/2022.
 */
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgradeBase.dart';
+import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgraderMessage.dart';
+import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgraderUtils.dart';
 
 /// A widget to display the upgrade dialog.
-class _MezUpgradeAlert extends UpgradeBase {
-  /// The [child] contained by the widget.
-  final Widget? child;
-
-  _MezUpgradeAlert({
+class MezUpgradeAlert extends UpgradeBase {
+  MezUpgradeAlert({
     Key? key,
     AppcastConfiguration? appcastConfig,
-    UpgraderMessages? messages,
-    this.child,
+    MezUpgraderMessages? messages,
     bool? debugAlwaysUpgrade,
     bool? debugDisplayOnce,
     bool? debugLogging,
@@ -55,7 +55,7 @@ class _MezUpgradeAlert extends UpgradeBase {
 
   @override
   Widget build(BuildContext context, UpgradeBaseState state) {
-    if (Upgrader().debugLogging) {
+    if (MezUpgrader().debugLogging) {
       print('upgrader: build UpgradeAlert');
     }
 
@@ -65,9 +65,11 @@ class _MezUpgradeAlert extends UpgradeBase {
           if (processed.connectionState == ConnectionState.done &&
               processed.data != null &&
               processed.data!) {
-            Upgrader().checkVersion(context: context);
+            MezUpgrader().checkVersion(context: context);
           }
-          return child!;
+          return SizedBox.shrink();
         });
   }
+
+  void show() {}
 }

@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezUpgrader.dart';
+import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgraderWidget.dart';
 import 'package:mezcalmos/Utils/mez_in_app_update.dart';
 import 'package:new_version/new_version.dart';
 import 'package:store_redirect/store_redirect.dart';
@@ -28,7 +28,7 @@ class VersionSplit {
     required String stringToSplit,
     Pattern pattern = '.',
   }) {
-    final List<String> list = stringToSplit.split(pattern);
+    final List<String> list = stringToSplit.split(pattern); // [1.5.1}
     if (list.length == 3) {
       return VersionSplit(
         major: list.first,
@@ -226,7 +226,7 @@ class AppVersionController extends GetxController {
     return canUpdate;
   }
 
-  Future<void> checkForUpdateTypeAndPlatForm() async {
+  Future<bool> checkForUpdateTypeAndPlatForm() async {
     if (Platform.isAndroid) {
       /// checkForUpdate and get appVersionInfo...
       await checkForUpdate();
@@ -294,6 +294,7 @@ class AppVersionController extends GetxController {
         }
       });
     }
+    return false;
   }
 
   bool _checkAppInfoResultToForceUpdate() {

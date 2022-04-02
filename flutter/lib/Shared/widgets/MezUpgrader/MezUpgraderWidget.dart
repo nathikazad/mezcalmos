@@ -4,10 +4,12 @@
 */
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:upgrader/upgrader.dart';
+import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgradeAlert.dart';
 
 abstract class MezUpgrade {
   static void show() {
+    //MezUpgrader().initialize();
+    //MezUpgradeAlert();
     Get.dialog<void>(
       _MezUpgradeBody(),
     );
@@ -19,22 +21,30 @@ class _MezUpgradeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: UpgradeAlert(
-        debugLogging: true,
-        child: Center(
-          child: Container(
-            height: 100,
-            margin: EdgeInsets.symmetric(horizontal: 36),
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            alignment: Alignment.center,
-            child: Text('Checking...'),
-          ),
+    return WillPopScope(
+      onWillPop: () async {
+        if (Get.isDialogOpen!) {
+          Get.back<void>();
+        }
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: MezUpgradeAlert(
+          debugLogging: true,
+          // child: Center(
+          //   child: Container(
+          //     height: 100,
+          //     margin: EdgeInsets.symmetric(horizontal: 36),
+          //     padding: EdgeInsets.all(16),
+          //     decoration: BoxDecoration(
+          //       color: Colors.white,
+          //       borderRadius: BorderRadius.circular(10),
+          //     ),
+          //     alignment: Alignment.center,
+          //     child: Text('Checking...'),
+          //   ),
+          // ),
         ),
       ),
     );
