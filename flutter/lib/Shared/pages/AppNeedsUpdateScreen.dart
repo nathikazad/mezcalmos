@@ -19,7 +19,7 @@ class _AppNeedsUpdatedState extends State<AppNeedsUpdated> {
   /// AppVersionController
   final AppVersionController _controller = Get.find<AppVersionController>();
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   void showSnack(String text) {
     debugPrint('showSnack: $text');
