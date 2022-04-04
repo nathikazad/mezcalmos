@@ -15,11 +15,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
 class DriverCard extends StatelessWidget {
   final Order order;
   DeliveryDriverUserInfo? driver;
-  Function(DeliveryDriver?) callBack;
+  void Function(
+      {required DeliveryDriver deliveryDriver,
+      required bool changeDriver}) assignDriverCallback;
   DriverCard(
       {Key? key,
       required this.driver,
-      required this.callBack,
+      required this.assignDriverCallback,
       required this.order})
       : super(key: key);
 
@@ -74,7 +76,11 @@ class DriverCard extends StatelessWidget {
             final DeliveryDriver? newDriver =
                 await Get.toNamed(kDriversListRoute, arguments: order)
                     as DeliveryDriver;
-            callBack(newDriver);
+            if (newDriver != null)
+              assignDriverCallback(
+                deliveryDriver: newDriver,
+                changeDriver: false,
+              );
           };
         }
       } else {
@@ -82,10 +88,15 @@ class DriverCard extends StatelessWidget {
           final DeliveryDriver? newDriver =
               await Get.toNamed(kDriversListRoute, arguments: order)
                   as DeliveryDriver;
-          callBack(newDriver);
+          if (newDriver != null)
+            assignDriverCallback(
+              deliveryDriver: newDriver,
+              changeDriver: false,
+            );
         };
       }
     } else {
+      // TODO: @hamza change driver funcitonality
       return null;
     }
   }

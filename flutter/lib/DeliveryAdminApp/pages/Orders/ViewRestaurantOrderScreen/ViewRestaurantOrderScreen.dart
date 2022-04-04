@@ -123,9 +123,11 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       () => DriverCard(
                         driver: order.value!.dropoffDriver,
                         order: order.value!,
-                        callBack: (DeliveryDriver? newDriver) {
+                        assignDriverCallback: (
+                            {required DeliveryDriver deliveryDriver,
+                            required bool changeDriver}) {
                           deliveryDriverController.assignDeliveryDriver(
-                              deliveryDriverId: newDriver!.deliveryDriverId,
+                              deliveryDriverId: deliveryDriver.deliveryDriverId,
                               orderId: order.value!.orderId,
                               orderType: OrderType.Restaurant,
                               deliveryDriverType: DeliveryDriverType.DropOff);

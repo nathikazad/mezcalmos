@@ -49,7 +49,8 @@ class DeliveryDriverController extends GetxController {
       required String orderId,
       required OrderType orderType,
       DeliveryDriverType deliveryDriverType =
-          DeliveryDriverType.DropOff}) async {
+          DeliveryDriverType.DropOff,
+      bool changeDriver = false}) async {
     final HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('delivery-assignDriver');
     try {
@@ -57,7 +58,8 @@ class DeliveryDriverController extends GetxController {
         "orderId": orderId,
         "deliveryDriverType": deliveryDriverType.toFirebaseFormatString(),
         "deliveryDriverId": deliveryDriverId,
-        "orderType": orderType.toFirebaseFormatString()
+        "orderType": orderType.toFirebaseFormatString(),
+        "changeDriver": changeDriver
       });
       return ServerResponse.fromJson(response.data);
     } catch (e) {
