@@ -11,14 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezAppcast.dart';
-import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezITunesSearchAPI.dart';
-import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezPlayStoreSearchAPI.dart';
-import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgradeIO.dart';
 import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgraderMessage.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:version/version.dart';
 
 /// Signature of callbacks that have no arguments and return bool.
 typedef BoolCallback = bool Function();
@@ -29,26 +24,26 @@ enum UpgradeDialogStyle { cupertino, material }
 /// A class to define the configuration for the appcast. The configuration
 /// contains two parts: a URL to the appcast, and a list of supported OS
 /// names, such as "android", "ios".
-class AppcastConfiguration {
+class AppCastConfiguration {
   final List<String>? supportedOS;
   final String? url;
 
-  AppcastConfiguration({
+  AppCastConfiguration({
     this.supportedOS,
     this.url,
   });
 }
 
 /// A singleton class to configure the upgrade dialog.
-class MezUpgrader {
-  static MezUpgrader _singleton = MezUpgrader._internal();
+class MezUpgrade {
+  static MezUpgrade _singleton = MezUpgrade._internal();
 
-  /// The appcast configuration ([AppcastConfiguration]) used by [Appcast].
+  /// The appcast configuration ([AppCastConfiguration]) used by [Appcast].
   /// When an appcast is configured for iOS, the iTunes lookup is not used.
-  AppcastConfiguration? appcastConfig;
+  AppCastConfiguration? appCastConfig;
 
   /// Provide an Appcast that can be replaced for mock testing.
-  Appcast? appcast;
+  Appcast? appCast;
 
   /// Provide an HTTP Client that can be replaced for mock testing.
   http.Client? client = http.Client();
@@ -68,7 +63,7 @@ class MezUpgrader {
   /// The localized messages used for display in upgrader.
   MezUpgraderMessages? messages;
 
-  final notInitializedExceptionMessage =
+  final String notInitializedExceptionMessage =
       'initialize() not called. Must be called first.';
 
   /// Called when the ignore button is tapped or otherwise activated.
@@ -97,394 +92,73 @@ class MezUpgrader {
   /// Hide or show release notes (default: true)
   bool showReleaseNotes = true;
 
-  /// Can alert dialog be dismissed on tap outside of the alert dialog. Not used by [UpgradeCard]. (default: false)
-  bool canDismissDialog = false;
-
-  /// The country code that will override the system locale. Optional. Used only for iOS.
-  String? countryCode;
-
-  /// The minimum app version supported by this app. Earlier versions of this app
-  /// will be forced to update to the current version. Optional.
-  String? minAppVersion;
-
   /// The upgrade dialog style. Optional. Used only on UpgradeAlert. (default: material)
   UpgradeDialogStyle? dialogStyle = UpgradeDialogStyle.material;
 
   /// The target platform.
   TargetPlatform platform = defaultTargetPlatform;
 
-  /// The target operating system.
-  String operatingSystem = UpgradeIO.operatingSystem;
-
-  bool _displayed = false;
-  bool _initCalled = false;
-  PackageInfo? _packageInfo;
-
-  String? _installedVersion;
   String? _appStoreVersion;
   String? _appStoreListingURL;
-  String? _releaseNotes;
+
   String? _updateAvailable;
   DateTime? _lastTimeAlerted;
   String? _lastVersionAlerted;
   String? _userIgnoredVersion;
-  bool _hasAlerted = false;
-  bool _isCriticalUpdate = false;
 
-  factory MezUpgrader() {
+  factory MezUpgrade() {
     return _singleton;
   }
 
-  MezUpgrader._internal();
-
-  void installPackageInfo({PackageInfo? packageInfo}) {
-    _packageInfo = packageInfo;
-    _initCalled = false;
-  }
-
-  void installAppStoreVersion(String version) {
-    _appStoreVersion = version;
-  }
-
-  void installAppStoreListingURL(String url) {
-    _appStoreListingURL = url;
-  }
+  MezUpgrade._internal();
 
   Future<bool> initialize() async {
-    if (_initCalled) {
-      return true;
-    }
-
-    _initCalled = true;
-
     messages ??= MezUpgraderMessages();
-    if (messages!.languageCode.isEmpty) {
-      print('upgrader: error -> languageCode is empty');
-    } else if (debugLogging) {
-      print('upgrader: languageCode: ${messages!.languageCode}');
-    }
-
     await _getSavedPrefs();
 
-    if (debugLogging) {
-      print('upgrader: default operatingSystem: '
-          '${UpgradeIO.operatingSystem} ${UpgradeIO.operatingSystemVersion}');
-      print('upgrader: operatingSystem: $operatingSystem');
-      print('upgrader: platform: $platform');
-      print('upgrader: '
-          'isAndroid: ${UpgradeIO.isAndroid}, '
-          'isIOS: ${UpgradeIO.isIOS}, '
-          'isLinux: ${UpgradeIO.isLinux}, '
-          'isMacOS: ${UpgradeIO.isMacOS}, '
-          'isWindows: ${UpgradeIO.isWindows}, '
-          'isFuchsia: ${UpgradeIO.isFuchsia}, '
-          'isWeb: ${UpgradeIO.isWeb}');
-    }
-
-    if (_packageInfo == null) {
-      _packageInfo = await PackageInfo.fromPlatform();
-      if (debugLogging) {
-        print(
-            'upgrader: package info packageName: ${_packageInfo!.packageName}');
-        print('upgrader: package info appName: ${_packageInfo!.appName}');
-        print('upgrader: package info version: ${_packageInfo!.version}');
-      }
-    }
-
-    await _updateVersionInfo();
-
-    _installedVersion = _packageInfo!.version;
-
     return true;
   }
-
-  Future<bool> _updateVersionInfo() async {
-    // If there is an appcast for this platform
-    if (_isAppcastThisPlatform()) {
-      if (debugLogging) {
-        print('upgrader: appcast is available for this platform');
-      }
-
-      final appcast = this.appcast ?? Appcast(client: client);
-      await appcast.parseAppcastItemsFromUri(appcastConfig!.url!);
-      if (debugLogging) {
-        final count = appcast.items == null ? 0 : appcast.items!.length;
-        print('upgrader: appcast item count: $count');
-      }
-      final bestItem = appcast.bestItem();
-      if (bestItem != null &&
-          bestItem.versionString != null &&
-          bestItem.versionString!.isNotEmpty) {
-        if (debugLogging) {
-          print(
-              'upgrader: appcast best item version: ${bestItem.versionString}');
-        }
-        _appStoreVersion ??= bestItem.versionString;
-        _appStoreListingURL ??= bestItem.fileURL;
-        if (bestItem.isCriticalUpdate) {
-          _isCriticalUpdate = true;
-        }
-        _releaseNotes = bestItem.itemDescription;
-      }
-    } else {
-      if (_packageInfo == null || _packageInfo!.packageName.isEmpty) {
-        return false;
-      }
-
-      // The  country code of the locale, defaulting to `US`.
-      final country = countryCode ?? findCountryCode();
-      if (debugLogging) {
-        print('upgrader: countryCode: $country');
-      }
-
-      // Get Android version from Google Play Store, or
-      // get iOS version from iTunes Store.
-      if (platform == TargetPlatform.android) {
-        await _getAndroidStoreVersion();
-      } else if (platform == TargetPlatform.iOS) {
-        final iTunes = ITunesSearchAPI();
-        iTunes.client = client;
-        final response = await (iTunes
-            .lookupByBundleId(_packageInfo!.packageName, country: country));
-
-        if (response != null) {
-          _appStoreVersion ??= ITunesResults.version(response);
-          _appStoreListingURL ??= ITunesResults.trackViewUrl(response);
-          _releaseNotes ??= ITunesResults.releaseNotes(response);
-          final mav = ITunesResults.minAppVersion(response);
-          if (mav != null) {
-            minAppVersion = mav.toString();
-            print('upgrader: ITunesResults.minAppVersion: $minAppVersion');
-          }
-        }
-      }
-    }
-
-    return true;
-  }
-
-  /// Android info is fetched by parsing the html of the app store page.
-  Future<bool?> _getAndroidStoreVersion() async {
-    final id = _packageInfo!.packageName;
-    final playStore = PlayStoreSearchAPI();
-    playStore.client = client;
-    final response = await (playStore.lookupById(id));
-    if (response != null) {
-      _appStoreVersion ??= PlayStoreResults.version(response);
-      _appStoreListingURL ??= playStore.lookupURLById(id);
-      _releaseNotes ??= PlayStoreResults.releaseNotes(response);
-      final mav = PlayStoreResults.minAppVersion(response);
-      if (mav != null) {
-        minAppVersion = mav.toString();
-        print('upgrader: PlayStoreResults.minAppVersion: $minAppVersion');
-      }
-    }
-
-    return true;
-  }
-
-  bool _isAppcastThisPlatform() {
-    if (appcastConfig == null ||
-        appcastConfig!.url == null ||
-        appcastConfig!.url!.isEmpty) {
-      return false;
-    }
-
-    // Since this appcast config contains a URL, this appcast is valid.
-    // However, if the supported OS is not listed, it is not supported.
-    // When there are no supported OSes listed, they are all supported.
-    var supported = true;
-    if (appcastConfig!.supportedOS != null) {
-      supported = appcastConfig!.supportedOS!.contains(operatingSystem);
-    }
-    return supported;
-  }
-
-  bool _verifyInit() {
-    if (!_initCalled) {
-      throw (notInitializedExceptionMessage);
-    }
-    return true;
-  }
-
-  String appName() {
-    _verifyInit();
-    return _packageInfo?.appName ?? '';
-  }
-
-  String? currentAppStoreListingURL() => _appStoreListingURL;
-
-  String? currentAppStoreVersion() => _appStoreVersion;
-
-  String? currentInstalledVersion() => _installedVersion;
-
-  String? get releaseNotes => _releaseNotes;
 
   String message() {
     String msg = messages!.message(UpgraderMessage.body)!;
-    msg = msg.replaceAll('{{appName}}', appName());
+    msg = msg.replaceAll('{{appName}}', 'app Name');
+    msg =
+        msg.replaceAll('{{currentAppStoreVersion}}', 'currentAppStoreVersion');
     msg = msg.replaceAll(
-        '{{currentAppStoreVersion}}', currentAppStoreVersion() ?? '');
-    msg = msg.replaceAll(
-        '{{currentInstalledVersion}}', currentInstalledVersion() ?? '');
+        '{{currentInstalledVersion}}', 'currentInstalledVersion');
     return msg;
   }
 
   /// Only called by [UpgradeAlert].
-  void checkVersion({required BuildContext context}) {
-    if (!_displayed) {
-      final bool shouldDisplay = true;
-      if (debugLogging) {
-        print('upgrader: shouldDisplayUpgrade: $shouldDisplay');
-        print(
-            'upgrader: shouldDisplayReleaseNotes: ${shouldDisplayReleaseNotes()}');
-      }
-      if (shouldDisplay) {
-        _displayed = true;
-        Future.delayed(
-          const Duration(milliseconds: 0),
-          () {
-            _showDialog(
-              context: context,
-              title: messages!.message(UpgraderMessage.title),
-              message: message(),
-              releaseNotes: shouldDisplayReleaseNotes() ? _releaseNotes : null,
-              canDismissDialog: canDismissDialog,
-            );
-          },
-        );
-      }
-    }
-  }
-
-  /// Only called by [UpgradeAlert].
-  Widget mezCheckVersion({required BuildContext context}) {
-    return upgradeDialogBody(
-      context: context,
-      title: messages!.message(UpgraderMessage.title),
-      message: message(),
-      releaseNotes: shouldDisplayReleaseNotes() ? _releaseNotes : null,
-      canDismissDialog: canDismissDialog,
+  Widget checkVersion({required BuildContext context}) {
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: dialogStyle == UpgradeDialogStyle.material
+          ? _alertDialog(
+              messages!.message(UpgraderMessage.title)!,
+              message(),
+              '_releaseNotes',
+              context,
+            )
+          : _cupertinoAlertDialog(
+              messages!.message(UpgraderMessage.title)!,
+              message(),
+              '_releaseNotes',
+              context,
+            ),
     );
-  }
-
-  bool blocked() {
-    return belowMinAppVersion() || _isCriticalUpdate;
-  }
-
-  // bool shouldDisplayUpgrade() {
-  //   // final isBlocked = blocked();
-  //
-  //   if (debugLogging) {
-  //     //print('upgrader: blocked: $isBlocked');
-  //     print('upgrader: debugDisplayAlways: $debugDisplayAlways');
-  //     print('upgrader: debugDisplayOnce: $debugDisplayOnce');
-  //     print('upgrader: hasAlerted: $_hasAlerted');
-  //   }
-  //
-  //   // If installed version is below minimum app version, or is a critical update,
-  //   // disable ignore and later buttons.
-  //   // if (isBlocked) {
-  //   //   showIgnore = false;
-  //   //   showLater = false;
-  //   // }
-  //   if (debugDisplayAlways || (debugDisplayOnce && !_hasAlerted)) {
-  //     return true;
-  //   }
-  //   if (!isUpdateAvailable()) {
-  //     return false;
-  //   }
-  //   // if (isBlocked) {
-  //   //   return true;
-  //   // }
-  //   if (isTooSoon() || alreadyIgnoredThisVersion()) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
-
-  /// Is installed version below minimum app version?
-  bool belowMinAppVersion() {
-    var rv = false;
-    if (minAppVersion != null) {
-      try {
-        final minVersion = Version.parse(minAppVersion!);
-        final installedVersion = Version.parse(_installedVersion!);
-        rv = installedVersion < minVersion;
-      } catch (e) {
-        print(e);
-      }
-    }
-    return rv;
-  }
-
-  bool isTooSoon() {
-    if (_lastTimeAlerted == null) {
-      return false;
-    }
-
-    final lastAlertedDuration = DateTime.now().difference(_lastTimeAlerted!);
-    final rv = lastAlertedDuration < durationUntilAlertAgain;
-    if (rv && debugLogging) {
-      print('upgrader: isTooSoon: true');
-    }
-    return rv;
-  }
-
-  bool alreadyIgnoredThisVersion() {
-    final rv =
-        _userIgnoredVersion != null && _userIgnoredVersion == _appStoreVersion;
-    if (rv && debugLogging) {
-      print('upgrader: alreadyIgnoredThisVersion: true');
-    }
-    return rv;
-  }
-
-  bool isUpdateAvailable() {
-    if (debugLogging) {
-      print('upgrader: appStoreVersion: $_appStoreVersion');
-      print('upgrader: installedVersion: $_installedVersion');
-      print('upgrader: minAppVersion: $minAppVersion');
-    }
-    if (_appStoreVersion == null || _installedVersion == null) {
-      if (debugLogging) {
-        print('upgrader: isUpdateAvailable: false');
-      }
-      return false;
-    }
-
-    if (_updateAvailable == null) {
-      final appStoreVersion = Version.parse(_appStoreVersion!);
-      final installedVersion = Version.parse(_installedVersion!);
-
-      final available = appStoreVersion > installedVersion;
-      _updateAvailable = available ? _appStoreVersion : null;
-    }
-    if (debugLogging) {
-      print('upgrader: isUpdateAvailable: ${_updateAvailable != null}');
-    }
-    return _updateAvailable != null;
-  }
-
-  bool shouldDisplayReleaseNotes() {
-    return showReleaseNotes && (_releaseNotes?.isNotEmpty ?? false);
-  }
-
-  /// Determine the current country code, either from the context, or
-  /// from the system-reported default locale of the device. The default
-  /// is `US`.
-  String? findCountryCode({BuildContext? context}) {
-    Locale? locale;
-    if (context != null) {
-      locale = Localizations.maybeLocaleOf(context);
-    } else {
-      // Get the system locale
-      locale = WidgetsBinding.instance!.window.locale;
-    }
-    final code = locale == null || locale.countryCode == null
-        ? 'US'
-        : locale.countryCode;
-    return code;
+    // Future.delayed(
+    //   const Duration(milliseconds: 0),
+    //   () {
+    //     _showDialog(
+    //       context: context,
+    //       title: messages!.message(UpgraderMessage.title),
+    //       message: message(),
+    //       releaseNotes: '_releaseNotes',
+    //       canDismissDialog: true,
+    //     );
+    //   },
+    // );
   }
 
   void _showDialog({
@@ -494,60 +168,18 @@ class MezUpgrader {
     required String? releaseNotes,
     required bool canDismissDialog,
   }) {
-    if (debugLogging) {
-      print('upgrader: showDialog title: $title');
-      print('upgrader: showDialog message: $message');
-      print('upgrader: showDialog releaseNotes: $releaseNotes');
-    }
-
-    // Save the date/time as the last time alerted.
-    saveLastAlerted();
-
     showDialog(
       barrierDismissible: canDismissDialog,
       context: context,
       builder: (BuildContext context) {
         return WillPopScope(
-          onWillPop: () async => _shouldPopScope(),
+          onWillPop: () async => false,
           child: dialogStyle == UpgradeDialogStyle.material
               ? _alertDialog(title!, message, releaseNotes, context)
               : _cupertinoAlertDialog(title!, message, releaseNotes, context),
         );
       },
     );
-  }
-
-  Widget upgradeDialogBody({
-    required BuildContext context,
-    required String? title,
-    required String message,
-    required String? releaseNotes,
-    required bool canDismissDialog,
-  }) {
-    return WillPopScope(
-      onWillPop: () async => _shouldPopScope(),
-      child: dialogStyle == UpgradeDialogStyle.material
-          ? _alertDialog(title!, message, releaseNotes, context)
-          : _cupertinoAlertDialog(title!, message, releaseNotes, context),
-    );
-  }
-
-  /// Called when the user taps outside of the dialog and [canDismissDialog]
-  /// is false. Also called when the back button is pressed. Return true for
-  /// the screen to be popped. Defaults to false.
-  bool _shouldPopScope() {
-    if (debugLogging) {
-      print('upgrader: onWillPop called');
-    }
-    if (shouldPopScope != null) {
-      final should = shouldPopScope!();
-      if (debugLogging) {
-        print('upgrader: shouldPopScope=$should');
-      }
-      return should;
-    }
-
-    return false;
   }
 
   AlertDialog _alertDialog(
@@ -564,8 +196,12 @@ class MezUpgrader {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Text('Release Notes:',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text(
+              'Release Notes:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             Text(
               releaseNotes,
               maxLines: 15,
@@ -578,51 +214,68 @@ class MezUpgrader {
     return AlertDialog(
       title: Text(title),
       content: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(message),
-          Padding(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(message),
+            Padding(
               padding: const EdgeInsets.only(top: 15.0),
-              child: Text(messages!.message(UpgraderMessage.prompt)!)),
-          if (notes != null) notes,
-        ],
-      )),
+              child: Text(messages!.message(UpgraderMessage.prompt)!),
+            ),
+            if (notes != null) notes,
+          ],
+        ),
+      ),
       actions: <Widget>[
         if (showIgnore)
           TextButton(
-              child:
-                  Text(messages!.message(UpgraderMessage.buttonTitleIgnore)!),
-              onPressed: () => onUserIgnored(context, true)),
+            child: Text(
+              messages!.message(UpgraderMessage.buttonTitleIgnore)!,
+            ),
+            onPressed: () => onUserIgnored(context, true),
+          ),
         if (showLater)
           TextButton(
-              child: Text(messages!.message(UpgraderMessage.buttonTitleLater)!),
-              onPressed: () => onUserLater(context, true)),
+            child: Text(
+              messages!.message(UpgraderMessage.buttonTitleLater)!,
+            ),
+            onPressed: () => onUserLater(context, true),
+          ),
         TextButton(
-            child: Text(messages!.message(UpgraderMessage.buttonTitleUpdate)!),
-            onPressed: () => onUserUpdated(context, !blocked())),
+          child: Text(
+            messages!.message(UpgraderMessage.buttonTitleUpdate)!,
+          ),
+          onPressed: () => onUserUpdated(context, true),
+        ),
       ],
     );
   }
 
-  CupertinoAlertDialog _cupertinoAlertDialog(String title, String message,
-      String? releaseNotes, BuildContext context) {
+  CupertinoAlertDialog _cupertinoAlertDialog(
+    String title,
+    String message,
+    String? releaseNotes,
+    BuildContext context,
+  ) {
     Widget? notes;
     if (releaseNotes != null) {
       notes = Padding(
-          padding: const EdgeInsets.only(top: 15.0),
-          child: Column(
-            children: <Widget>[
-              const Text('Release Notes:',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              Text(
-                releaseNotes,
-                maxLines: 14,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ));
+        padding: const EdgeInsets.only(top: 15.0),
+        child: Column(
+          children: <Widget>[
+            const Text(
+              'Release Notes:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              releaseNotes,
+              maxLines: 14,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      );
     }
     return CupertinoAlertDialog(
       title: Text(title),
@@ -632,43 +285,38 @@ class MezUpgrader {
         children: <Widget>[
           Text(message),
           Padding(
-              padding: const EdgeInsets.only(top: 15.0),
-              child: Text(messages!.message(UpgraderMessage.prompt)!)),
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Text(messages!.message(UpgraderMessage.prompt)!),
+          ),
           if (notes != null) notes,
         ],
       ),
       actions: <Widget>[
         if (showIgnore)
           CupertinoDialogAction(
-              child:
-                  Text(messages!.message(UpgraderMessage.buttonTitleIgnore)!),
-              onPressed: () => onUserIgnored(context, true)),
+            child: Text(messages!.message(UpgraderMessage.buttonTitleIgnore)!),
+            onPressed: () => onUserIgnored(context, true),
+          ),
         if (showLater)
           CupertinoDialogAction(
-              child: Text(messages!.message(UpgraderMessage.buttonTitleLater)!),
-              onPressed: () => onUserLater(context, true)),
+            child: Text(messages!.message(UpgraderMessage.buttonTitleLater)!),
+            onPressed: () => onUserLater(context, true),
+          ),
         CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text(messages!.message(UpgraderMessage.buttonTitleUpdate)!),
-            onPressed: () => onUserUpdated(context, !blocked())),
+          isDefaultAction: true,
+          child: Text(messages!.message(UpgraderMessage.buttonTitleUpdate)!),
+          onPressed: () => onUserUpdated(context, true),
+        ),
       ],
     );
   }
 
   void onUserIgnored(BuildContext context, bool shouldPop) {
-    if (debugLogging) {
-      print('upgrader: button tapped: ignore');
-    }
-
     // If this callback has been provided, call it.
     bool doProcess = true;
     if (onIgnore != null) {
       doProcess = onIgnore!();
     }
-
-    // if (doProcess) {
-    //   _saveIgnored();
-    // }
 
     if (shouldPop) {
       Navigator.of(context).pop();
@@ -679,17 +327,11 @@ class MezUpgrader {
   }
 
   void onUserLater(BuildContext context, bool shouldPop) {
-    if (debugLogging) {
-      print('upgrader: button tapped: later');
-    }
-
     // If this callback has been provided, call it.
     bool doProcess = true;
     if (onLater != null) {
       doProcess = onLater!();
     }
-
-    if (doProcess) {}
 
     if (shouldPop) {
       Navigator.of(context).pop();
@@ -723,7 +365,7 @@ class MezUpgrader {
   }
 
   Future<bool> clearSavedSettings() async {
-    final prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('userIgnoredVersion');
     await prefs.remove('lastTimeAlerted');
     await prefs.remove('lastVersionAlerted');
@@ -735,12 +377,8 @@ class MezUpgrader {
     return true;
   }
 
-  static void resetSingleton() {
-    _singleton = MezUpgrader._internal();
-  }
-
   Future<bool> _saveIgnored() async {
-    final prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     _userIgnoredVersion = _appStoreVersion;
     await prefs.setString('userIgnoredVersion', _userIgnoredVersion!);
@@ -755,7 +393,6 @@ class MezUpgrader {
     _lastVersionAlerted = _appStoreVersion;
     await prefs.setString('lastVersionAlerted', _lastVersionAlerted!);
 
-    _hasAlerted = true;
     return true;
   }
 
@@ -793,6 +430,6 @@ class MezUpgrader {
           print('upgrader: launch to app store failed: $e');
         }
       }
-    } else {}
+    }
   }
 }

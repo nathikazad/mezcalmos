@@ -10,9 +10,10 @@ abstract class MezUpgrade {
   static void show() {
     //MezUpgrader().initialize();
     //MezUpgradeAlert();
-    Get.dialog<void>(
-      _MezUpgradeBody(),
-    );
+    MezUpgradeAlert();
+    // Get.dialog<void>(
+    //   _MezUpgradeBody(),
+    // );
   }
 }
 
@@ -30,22 +31,7 @@ class _MezUpgradeBody extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: MezUpgradeAlert(
-          debugLogging: true,
-          // child: Center(
-          //   child: Container(
-          //     height: 100,
-          //     margin: EdgeInsets.symmetric(horizontal: 36),
-          //     padding: EdgeInsets.all(16),
-          //     decoration: BoxDecoration(
-          //       color: Colors.white,
-          //       borderRadius: BorderRadius.circular(10),
-          //     ),
-          //     alignment: Alignment.center,
-          //     child: Text('Checking...'),
-          //   ),
-          // ),
-        ),
+        body: MezUpgradeAlert(),
       ),
     );
   }

@@ -16,13 +16,6 @@ import 'package:http/http.dart' as http;
 import 'package:version/version.dart';
 import 'package:xml/xml.dart';
 
-import 'MezUpgradeIO.dart';
-
-/// The [Appcast] class is used to download an Appcast, based on the Sparkle
-/// framework by Andy Matuschak.
-/// Documentation: https://sparkle-project.org/documentation/publishing/
-/// An Appcast is an RSS feed with one channel that has a collection of items
-/// that each describe one app version.
 class Appcast {
   /// Provide an HTTP Client that can be replaced for mock testing.
   http.Client? client;
@@ -75,7 +68,6 @@ class Appcast {
 
   /// Parse the Appcast from XML string.
   Future<List<AppcastItem>?> parseAppcastItems(String contents) async {
-    await _getDeviceInfo();
     return parseItemsFromXMLString(contents);
   }
 
@@ -180,28 +172,6 @@ class Appcast {
     }
 
     return items;
-  }
-
-  Future<bool> _getDeviceInfo() async {
-    final deviceInfo = DeviceInfoPlugin();
-    if (UpgradeIO.isAndroid) {
-      _androidInfo = await deviceInfo.androidInfo;
-      osVersionString = _androidInfo.version.baseOS;
-    } else if (UpgradeIO.isIOS) {
-      _iosInfo = await deviceInfo.iosInfo;
-      osVersionString = _iosInfo.systemVersion;
-    } else if (UpgradeIO.isWeb) {
-      osVersionString = '0.0.0';
-    }
-
-    // If the OS version string is not valid, don't use it.
-    try {
-      Version.parse(osVersionString!);
-    } catch (e) {
-      osVersionString = null;
-    }
-
-    return true;
   }
 }
 

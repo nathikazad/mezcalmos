@@ -7,8 +7,6 @@ import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
 import 'package:version/version.dart';
 
-// TODO: refactor the two store API classes to use more shared code.
-
 class PlayStoreSearchAPI {
   /// Play Store Search Api URL
   final String playStorePrefixURL = 'play.google.com';
