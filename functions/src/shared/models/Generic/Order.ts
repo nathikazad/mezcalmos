@@ -9,7 +9,7 @@ export interface Order {
   to: Location,
   customer: UserInfo,
   orderTime: string;
-  secondaryChats: Record<SecondaryChat, string>;
+  secondaryChats: Record<SecondaryChat, string | null>;
 }
 
 export enum OrderType {
@@ -44,11 +44,11 @@ export enum SecondaryChat {
 }
 
 export interface DeliverableOrder extends Order {
-  dropoffDriver: DeliveryDriverInfo
+  dropoffDriver?: DeliveryDriverInfo;
 }
 
 export interface TwoWayDeliverableOrder extends DeliverableOrder {
-  pickupDriver: DeliveryDriverInfo
+  pickupDriver?: DeliveryDriverInfo;
 }
 
 export interface DeliveryDriverInfo extends UserInfo {

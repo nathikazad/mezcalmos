@@ -14,7 +14,7 @@ import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { getInProcessOrder, getUserInfo } from "../shared/controllers/rootController";
 import { getDeliveryDriver } from "../shared/controllers/deliveryController";
 import { DeliveryDriver, DeliveryDriverType, NewDeliveryOrderNotification } from "../shared/models/Drivers/DeliveryDriver";
-import { pushChat } from "../shared/controllers/chatController";
+import { pushChat, deleteChat } from "../shared/controllers/chatController";
 import { Chat, ChatType, ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
@@ -61,30 +61,25 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-  // let orderParams: ConstructLaundryOrderParameters = <ConstructLaundryOrderParameters>data;
-  // TODO limit number of active orders
-  // let deliveryDriverOrders = (await customerNodes.inProcessOrders(customerId).once('value')).val();
-  // if (customerCurrentOrders && customerCurrentOrders.length >= 3) {
-  //   return {
-  //     status: "Error",
-  //     errorMessage: "Customer is already in laundry orders",
-  //     errorCode: "alreadyInLaundryOrder"
-  //   }
-  // }
 
   let deliveryDriverType: DeliveryDriverType = data.deliveryDriverType;
   let driverInfo: UserInfo = await getUserInfo(deliveryDriverId);
   let order: TwoWayDeliverableOrder = await getInProcessOrder(data.orderType, orderId);
-  let chatId: string = await pushChat();
 
   if (order.serviceProviderId == null) {
     return {
       status: ServerResponseStatus.Error,
-      errorMessage: `Order does not have a laundry service provider, call assign laundry first`,
+      errorMessage: `Order does not have a service provider, call assign laundry first`,
       errorCode: "laundryDontExist"
     }
   }
 
+  if (data.changeDriver) {
+    let returnVal = removeOldDriver(deliveryDriverType, order, orderId);
+    if (returnVal != null) return returnVal;
+  }
+
+  let chatId: string = await pushChat();
   order.secondaryChats = order.secondaryChats ?? {};
   switch (deliveryDriverType) {
     case DeliveryDriverType.DropOff:
@@ -149,4 +144,31 @@ export = functions.https.onCall(async (data, context) => {
     status: ServerResponseStatus.Success,
   }
 })
+
+function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDeliverableOrder, orderId: string) {
+  switch (deliveryDriverType) {
+    case DeliveryDriverType.DropOff:
+      if (order.dropoffDriver == null)
+        return {
+          status: ServerResponseStatus.Error,
+          errorMessage: "dropoffDriver is not set"
+        }
+      deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId);
+      delete order.dropoffDriver;
+      deleteChat(order.secondaryChats.deliveryAdminDropOffDriver!);
+      order.secondaryChats.deliveryAdminDropOffDriver = null;
+      return null;
+    case DeliveryDriverType.Pickup:
+      if (order.pickupDriver == null)
+        return {
+          status: ServerResponseStatus.Error,
+          errorMessage: "pickupDriver is not  set"
+        }
+      deliveryDriverNodes.inProcessOrders(order.pickupDriver.id, orderId)
+      delete order.pickupDriver;
+      deleteChat(order.secondaryChats.deliveryAdminPickupDriver!);
+      order.secondaryChats.deliveryAdminPickupDriver = null;
+      return null;
+  }
+}
 
