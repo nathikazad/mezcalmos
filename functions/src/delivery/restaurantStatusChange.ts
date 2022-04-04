@@ -98,7 +98,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
     await finishOrder(order, orderId);
   } else {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    restaurantNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+    restaurantNodes.inProcessOrders(order.restaurant.id!, orderId).update(order);
     rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
     await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order)
   }

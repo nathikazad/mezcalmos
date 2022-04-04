@@ -145,8 +145,8 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
     rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
     if (newStatus == LaundryOrderStatus.AtLaundry) {
-      await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).remove();
       await deliveryDriverNodes.pastOrders(deliveryDriverId, orderId).update(order)
+      await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).remove();
     } else {
       await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order);
     }

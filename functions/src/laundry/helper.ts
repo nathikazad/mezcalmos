@@ -9,24 +9,26 @@ export async function finishOrder(
   order: LaundryOrder,
   orderId: string) {
   // moving the order node from /customers/inProcessOrders => /customers/pastOrders/
-  await customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
   await customerNodes.pastOrders(order.customer.id!, orderId).set(order)
+  await customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
+
 
   // and finally remove from root /inProcessOrders   
-  await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).remove();
   await rootDbNodes.pastOrders(OrderType.Laundry, orderId).set(order)
+  await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).remove();
+
 
   if (order.laundry) {
-    laundryNodes.inProcessOrders(order.laundry.id).remove();
     laundryNodes.pastOrders(order.laundry.id).set(order);
+    laundryNodes.inProcessOrders(order.laundry.id).remove();
   }
 
   if (order.dropoffDriver) {
-    await deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id!, orderId).remove();
     await deliveryDriverNodes.pastOrders(order.dropoffDriver.id!, orderId).update(order)
+    await deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id!, orderId).remove();
   }
   if (order.pickupDriver) {
-    await deliveryDriverNodes.inProcessOrders(order.pickupDriver.id!, orderId).remove();
     await deliveryDriverNodes.pastOrders(order.pickupDriver.id!, orderId).update(order)
+    await deliveryDriverNodes.inProcessOrders(order.pickupDriver.id!, orderId).remove();
   }
 }
