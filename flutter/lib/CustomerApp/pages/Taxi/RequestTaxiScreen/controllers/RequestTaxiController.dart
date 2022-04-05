@@ -175,14 +175,10 @@ class RequestTaxiController {
   /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
   Future<void> waitForCurrentOrderStreamFirstTrigger(String orderId) async {
     if (Get.find<OrderController>().getOrder(orderId) == null) {
-      mezDbgPrint(
-          "[+] s@@d ==> [ REQUEST TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
       await Get.find<OrderController>()
           .getCurrentOrderStream(orderId)
           .firstWhere((Order? order) => order != null);
-    } else
-      mezDbgPrint(
-          "[+] s@@d ==> [ REQUEST TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
+    }
   }
 
   /// after confirm button is clicked on mez pick google map.

@@ -251,17 +251,11 @@ class MGoogleMapController {
   }
 
   void setBounds(LatLngBounds? bounds) {
-    mezDbgPrint(
-      "s44d : Called setBounds => new bounds hashCode : ${bounds.hashCode}",
-    );
     this.bounds = bounds;
   }
 
   // Animate the camera using widget.bounds
   Future<void> animateCameraWithNewBounds() async {
-    mezDbgPrint(
-      "s44d : Called  animateCameraWithNewBounds => controller:$controller && bounds:$bounds",
-    );
     if (controller != null && bounds != null) {
       final CameraUpdate _camUpdate =
           CameraUpdate.newLatLngBounds(bounds!, 100);
@@ -284,21 +278,14 @@ class MGoogleMapController {
   // adds up the markers the new markers latLn ot polyline's and calculate out of them all the latLngbounds
   LatLngBounds? _getMarkersAndPolylinesBounds() {
     final List<LatLng> _polyLinesBnds = _getLatLngBoundsFromPolyline(polylines);
-    mezDbgPrint(
-      "s44d : Called _getMarkersAndPolylinesBounds => _getLatLngBoundsFromPolyline::__len__  : ${_polyLinesBnds.length}  ",
-    );
 
     final List<LatLng> _bnds = <LatLng>[..._polyLinesBnds];
     markers.forEach((MezMarker _marker) {
       if (_marker.fitWithinBounds) {
-        mezDbgPrint(
-          "s44d-markers : Adding Marker - ${_marker.markerId.value} - to bounds.",
-        );
         _bnds.add(_marker.position);
       }
     });
 
-    mezDbgPrint("@s44d : final _bounds::len => ${_bnds.length}");
     return _bnds.isEmpty ? null : MapHelper.createMapBounds(_bnds);
   }
 
@@ -327,9 +314,6 @@ class MGoogleMapController {
 
   /// Main function for updating the bounds and start the animation
   Future<void> animateAndUpdateBounds() async {
-    mezDbgPrint(
-      "s44d: Called animateAndUpdateBounds : animateMarkersPolyLinesBounds.value = ${animateMarkersPolyLinesBounds.value}",
-    );
     setBounds(animateMarkersPolyLinesBounds.value
         ? _getMarkersAndPolylinesBounds()
         : null);

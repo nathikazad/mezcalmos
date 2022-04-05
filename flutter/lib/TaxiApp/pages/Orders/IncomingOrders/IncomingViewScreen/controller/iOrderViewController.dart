@@ -92,7 +92,7 @@ class IOrderViewController {
         .distinct()
         .listen((_counterOffer) async {
       // we start listening here and we make sure to duspose the StreamSub when it's disposed.
-      mezDbgPrint("#usaad# ====> ${_counterOffer?.toFirebaseFormattedJson()}");
+
       this.counterOffer.value = _counterOffer;
       if (this.counterOffer.value != null) {
         this.animatedSliderController.slideUp();
@@ -160,7 +160,7 @@ class IOrderViewController {
                     image: authController.user!.image!)))
         .then((value) {
       submittedCounterOffer.value = true;
-      this.animatedSliderController.slideUp();
+      animatedSliderController.slideUp();
     });
   }
 
@@ -168,13 +168,9 @@ class IOrderViewController {
   /// Uses : Make sure that the orderId has been written to the taxiState since we do not await it in backend.
   Future<void> waitForOrderToBeUpdatedAfterAccept(String orderId) async {
     if (taxiAuthController.taxiState?.currentOrder == null) {
-      mezDbgPrint(
-          "[+] s@@d ==> [ ACCEPT TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
       await taxiAuthController.stateStream
           .firstWhere((taxiState) => taxiState?.currentOrder != null);
-    } else
-      mezDbgPrint(
-          "[+] s@@d ==> [ ACCEPT TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
+    }
   }
 
   /// THIS is important to call upon a disposale of the State.

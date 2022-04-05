@@ -19,9 +19,7 @@ import 'components/notesWidget.dart';
 final currency = new NumberFormat("#0", "en_US");
 ////////////===========
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
-
+    ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
   @override
@@ -76,7 +74,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
     if (order.value == null) {
-      //Get.back();
+      Get.back();
     } else {
       if (order.value!.inProcess()) {
         _orderListener =
@@ -130,8 +128,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     return Scaffold(
         appBar: CustomerAppBar(
           autoBack: true,
-          title:
-              '${_i18n()["orderStatus"]}',
+          title: '${_i18n()["orderStatus"]}',
         ),
         body: Obx(
           () {
@@ -183,4 +180,3 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         ));
   }
 }
-

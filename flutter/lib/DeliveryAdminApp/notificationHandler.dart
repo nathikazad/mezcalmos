@@ -1,5 +1,4 @@
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -7,7 +6,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]["notificationHandler"];
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["notificationHandler"];
 
 Notification deliveryAdminNotificationHandler(String key, value) {
   final NotificationType notificationType =
@@ -56,7 +56,6 @@ Notification orderStatusChangeNotification(String key, value) {
           notificationAction:
               value["notificationAction"].toString().toNotificationAction());
     case OrderType.Taxi:
-      mezDbgPrint("Priiiiiint taxi nottiiiiiiiiiiif ----------");
       return Notification(
           id: key,
           linkUrl: getTaxiOrderRoute(value["orderId"]),
