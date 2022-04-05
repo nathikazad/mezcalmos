@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/controllers/ViewTaxiOrderController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
@@ -26,35 +25,36 @@ class CounterOfferWidgets {
           viewController.animatedSliderController.slideUp();
         },
         child: Container(
-            height: 50,
-            decoration: BoxDecoration(
-                color: Colors.purple.shade400,
-                borderRadius: BorderRadius.circular(10)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  _i18n()['offers'],
-                  style: TextStyle(
-                      fontFamily: "psr",
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 18),
+          height: 50,
+          decoration: BoxDecoration(
+              color: Colors.purple.shade400,
+              borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                _i18n()['offers'],
+                style: TextStyle(
+                    fontFamily: "psr",
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(width: 10),
+              Container(
+                height: 20,
+                width: 20,
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                child: Text(
+                  viewController.counterOffers.length.toString(),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(width: 10),
-                Container(
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.white),
-                  child: Text(
-                    viewController.counterOffers.length.toString(),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ],
-            )),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -63,7 +63,7 @@ class CounterOfferWidgets {
     return AnimatedSlider(
       isPositionedCoordinates:
           AnimatedSliderCoordinates(left: 0, right: 0, bottom: 0),
-      animatedSliderController: this.viewController.animatedSliderController,
+      animatedSliderController: viewController.animatedSliderController,
       child: !viewController.clickedAccept.value
           ? counterOffersScrollView(context)
           : MezLogoAnimation(
@@ -83,13 +83,13 @@ class CounterOfferWidgets {
           : Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: 50, right: 50),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+                    children: <Text>[
                       Text(
                         _i18n()['offers'],
                         style: Theme.of(context)
@@ -114,17 +114,19 @@ class CounterOfferWidgets {
   }
 
   List<Widget> getCounterOffersListItems(BuildContext context) {
-    List<Widget> _widgets = [];
+    final List<Widget> _widgets = <Widget>[];
 
-    viewController.counterOffers().forEach((offer) {
-      _widgets.addAll([
-        Padding(
-          padding: EdgeInsets.only(left: 50, right: 50, top: 5),
-          child: Divider(),
-        ),
-        buildContainer(offer, context)
-        // list items of CounterOffer
-      ]);
+    viewController.counterOffers().forEach((CounterOffer offer) {
+      _widgets.addAll(
+        <Widget>[
+          Padding(
+            padding: EdgeInsets.only(left: 50, right: 50, top: 5),
+            child: Divider(),
+          ),
+          buildContainer(offer, context)
+          // list items of CounterOffer
+        ],
+      );
     });
 
     return _widgets;
@@ -146,7 +148,7 @@ class CounterOfferWidgets {
             onCounterEnd: () {
               viewController.animatedSliderController.slideDown();
             },
-            onCounterChange: (price) {},
+            onCounterChange: (int price) {},
             childInsideCounter: Container(
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -159,11 +161,11 @@ class CounterOfferWidgets {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Text>[
                   Text(
                     offer.driverInfo.name,
                     style: Theme.of(context)
@@ -183,7 +185,7 @@ class CounterOfferWidgets {
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: Row(
-                children: [
+                children: <Widget>[
                   Container(
                     height: 35,
                     width: 35,
@@ -196,7 +198,7 @@ class CounterOfferWidgets {
                           viewController.clickedAccept.value = true;
 
                           // we accept counter offer and wait for it.
-                          ServerResponse _response = await viewController
+                          final ServerResponse _response = await viewController
                               .taxiController
                               .acceptCounterOffer(
                                   viewController.order.value!.orderId,
@@ -208,7 +210,7 @@ class CounterOfferWidgets {
                           } else {
                             viewController.offersBtnClicked.value = false;
                             viewController.animatedSliderController.slideDown();
-                            MezSnackbar("Oops", _response.errorMessage!);
+                            MezSnackbar("Oops", _i18n()['failedToAcceptOffer']);
                           }
                         },
                         child: Icon(
@@ -230,7 +232,7 @@ class CounterOfferWidgets {
                         shape: BoxShape.circle),
                     child: Center(
                       child: InkWell(
-                        onTap: () async {
+                        onTap: () {
                           viewController.taxiController
                               .rejectCounterOffer(
                                   viewController.order.value!.orderId,

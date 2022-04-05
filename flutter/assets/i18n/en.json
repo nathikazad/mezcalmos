@@ -323,7 +323,8 @@
                 "ViewTaxiOrder": {
                     "components": {
                         "CounterOfferWidgets": {
-                            "offers": "Offers"
+                            "offers": "Offers",
+                            "failedToAcceptOffer" : "Failed to accept the offer!"
                         },
                         "ViewTaxiOrderScreenWidgets": {
                             "title": "Confirm Cancelation.",
