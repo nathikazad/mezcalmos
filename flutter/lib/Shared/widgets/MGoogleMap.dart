@@ -39,10 +39,7 @@ class MGoogleMapState extends State<MGoogleMap> {
   @override
   void didUpdateWidget(MGoogleMap oldWidget) {
     super.didUpdateWidget(oldWidget);
-    mezDbgPrint("MGoogleMap didUpdateWidget $hashCode ${widget.debugString}");
-    mezDbgPrint(
-      "s44d-rerendring : MGoogleMap::perdiodicRendering : { activated : ${widget.mGoogleMapController.periodicRerendering.value} , duration : ${widget.rerenderDuration} }",
-    );
+
     if (widget.mGoogleMapController.periodicRerendering.value == false) {
       widget.mGoogleMapController.animateAndUpdateBounds();
     }
@@ -51,8 +48,6 @@ class MGoogleMapState extends State<MGoogleMap> {
   @override
   void initState() {
     super.initState();
-    mezDbgPrint(
-        "S44D MGoogleMap initstate $hashCode ${widget.debugString} | periodicRerendering : ${widget.mGoogleMapController.periodicRerendering.value}");
 
     // one time polylines LatLng points extraction.
     widget.mGoogleMapController.animateAndUpdateBounds();
@@ -69,14 +64,12 @@ class MGoogleMapState extends State<MGoogleMap> {
     widget.mGoogleMapController.periodicRerendering.stream
         .distinct()
         .listen((bool _shouldRerender) {
-      mezDbgPrint("s44d :: inside listener !!");
       _shouldRerenderOrNot(_shouldRerender);
     });
   }
 
   @override
   void dispose() {
-    mezDbgPrint("MGoogleMap disposed $hashCode ${widget.debugString}");
     _reRenderingTimer?.cancel();
     // gmapControlelr disposing.
     widget.mGoogleMapController.controller?.dispose();
@@ -87,17 +80,12 @@ class MGoogleMapState extends State<MGoogleMap> {
   void _shouldRerenderOrNot(bool _shouldRerender) {
     if (_shouldRerender) {
       widget.mGoogleMapController.animateAndUpdateBounds();
-      mezDbgPrint("s44d :: inside listener > if !!");
       // start new timer.
       _reRenderingTimer = Timer.periodic(widget.rerenderDuration, (_) {
-        mezDbgPrint("s44d :: inside listener > if > periodic !!");
-
         if (_reRenderingTimer == null) _.cancel();
         widget.mGoogleMapController.animateAndUpdateBounds();
       });
     } else {
-      mezDbgPrint("s44d :: inside listener > else !!");
-
       _reRenderingTimer?.cancel();
       _reRenderingTimer = null;
     }
