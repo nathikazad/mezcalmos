@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -33,7 +32,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       viewController.initiateTaxiOrderReCreation(Get.arguments as TaxiRequest);
     } else {
       // when no args passed we simply initialte the view and map with current user's loc.
-      viewController.initiateViewAndMapWithCurrentLocation();
+      viewController.initMapAndStartFetchingOnlineDrivers();
     }
     super.initState();
   }
@@ -75,7 +74,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                       } else if (!lockOnTaxiRequest) {
                         // lock to avoid the user Fast button taps aka fast-taps .
                         lockOnTaxiRequest = true;
-                        bool res = await viewController.requestTaxi();
+                        final bool res = await viewController.requestTaxi();
                         if (!res) {
                           lockOnTaxiRequest = false;
                         }

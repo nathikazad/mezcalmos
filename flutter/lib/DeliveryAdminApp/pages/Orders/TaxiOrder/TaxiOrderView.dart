@@ -41,33 +41,28 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
           .listen((TaxiOrder? newOrder) {
         if (newOrder != null) {
           order.value = taxiOrderController.getOrder(orderId);
-        } else {
-          Get.back();
-        }
-      });
-    } else if (order.value!.inProcess()) {
-      mezDbgPrint("process order stream ---------------------------");
-
-      _orderListener = taxiOrderController
-          .getInProcessOrderStream(orderId)
-          .listen((TaxiOrder? newOrder) {
-        if (newOrder != null) {
-          order.value = taxiOrderController.getOrder(orderId);
-        } else {
-          Get.back();
+        } else if (order.value!.inProcess()) {
+          _orderListener = taxiOrderController
+              .getInProcessOrderStream(orderId)
+              .listen((TaxiOrder? newOrder) {
+            if (newOrder != null) {
+              order.value = taxiOrderController.getOrder(orderId);
+            } else {
+              _orderListener = taxiOrderController
+                  .getPastOrderStrem(orderId)
+                  .listen((TaxiOrder? pastOrder) {
+                if (pastOrder != null) {
+                  order.value = taxiOrderController.getOrder(orderId);
+                } else {
+                  Get.back();
+                }
+              });
+            }
+          });
         }
       });
     } else {
-      mezDbgPrint("past order stream ---------------------------");
-      _orderListener = taxiOrderController
-          .getPastOrderStrem(orderId)
-          .listen((TaxiOrder? pastOrder) {
-        if (pastOrder != null) {
-          order.value = taxiOrderController.getOrder(orderId);
-        } else {
-          Get.back();
-        }
-      });
+      Get.back();
     }
 
     super.initState();

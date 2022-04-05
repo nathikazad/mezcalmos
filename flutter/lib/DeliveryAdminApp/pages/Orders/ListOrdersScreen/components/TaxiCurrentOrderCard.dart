@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -22,6 +23,7 @@ class TaxiCurrentOrderCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
+          mezDbgPrint("Clickeeed");
           Get.toNamed(getTaxiOrderRoute(order.orderId));
         },
         child: Container(
@@ -75,6 +77,7 @@ Color _getRightColor(TaxiOrdersStatus status) {
     case TaxiOrdersStatus.CancelledByCustomer:
     case TaxiOrdersStatus.ForwardingUnsuccessful:
     case TaxiOrdersStatus.CancelledByTaxi:
+    case TaxiOrdersStatus.Expired:
       return Colors.red;
 
     case TaxiOrdersStatus.DroppedOff:
