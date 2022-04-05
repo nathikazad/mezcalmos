@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -33,7 +34,9 @@ class OrderButtons {
                   end: Alignment(1.1447703838348389, 1.1694844961166382),
                   colors: [const Color(0xede21132), const Color(0xdbd11835)]));
           if (res) {
-            await controller.cancelOrder(orderId);
+            await controller
+                .cancelOrder(orderId)
+                .then((ServerResponse value) => Get.back(closeOverlays: true));
           }
         },
         widget: Text(_i18n()["cancel"].toUpperCase(),
@@ -93,7 +96,7 @@ class OrderButtons {
             await controller.readyForDeliveryOrder(order.orderId);
           }
         } else {
-          Get.snackbar('${_i18n()["error"]}', '${_i18n()["error"]}');
+          Get.snackbar('${_i18n()["error"]}', '${_i18n()["driverErrorAlert"]}');
         }
       },
     );

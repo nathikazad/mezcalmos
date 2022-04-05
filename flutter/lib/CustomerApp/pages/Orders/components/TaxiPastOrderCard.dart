@@ -22,7 +22,7 @@ class TaxiPastOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Card(
       child: InkWell(
         onTap: () {
@@ -38,15 +38,20 @@ class TaxiPastOrderCard extends StatelessWidget {
                 children: [
                   Stack(
                     children: [
-                      CircleAvatar(
-                          radius: 25,
-                          backgroundImage: mLoadImage(
-                                  assetInCaseFailed:
-                                      'assets/images/customer/taxi/taxiDriverImg.png',
-                                  url: (order.isOpenOrder())
-                                      ? null
-                                      : order.serviceProvider?.image)
-                              .image),
+                      (!order.isForwarded())
+                          ? CircleAvatar(
+                              radius: 25,
+                              backgroundImage: mLoadImage(
+                                      url: order.serviceProvider?.image ?? null,
+                                      assetInCaseFailed:
+                                          "assets/images/customer/taxi/taxiDriverImg.png")
+                                  .image,
+                            )
+                          : CircleAvatar(
+                              radius: 25,
+                              backgroundImage: AssetImage(
+                                  'assets/images/customer/taxi/taxiDriverImg.png'),
+                            ),
                       //  if (order.serviceProvider != null)
                       Positioned(
                           top: 0,
@@ -72,7 +77,7 @@ class TaxiPastOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          (order.isOpenOrder())
+                          (order.isForwarded())
                               ? "${_i18n()['taxiOrder']}"
                               : order.serviceProvider?.name ??
                                   "${_i18n()['taxiOrder']}",

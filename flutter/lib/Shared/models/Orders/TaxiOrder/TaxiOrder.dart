@@ -213,6 +213,18 @@ class TaxiOrder extends Order {
     }
   }
 
+  bool isForwarded() {
+    switch (status) {
+      case TaxiOrdersStatus.ForwardingSuccessful:
+      case TaxiOrdersStatus.ForwardingToLocalCompany:
+      case TaxiOrdersStatus.ForwardingUnsuccessful:
+        return true;
+
+      default:
+        return false;
+    }
+  }
+
   num numberOfTaxiSentNotificationTo() {
     return notificationStatuses.length;
   }
