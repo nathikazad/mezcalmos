@@ -25,13 +25,13 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
         margin: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             _orderStausAndTimer(context),
-            Divider(),
+            const Divider(),
             _orderCustomerInfo(context),
-            Divider(),
+            const Divider(),
             _driversStatsComponent(),
-            Divider(),
+            const Divider(),
             _orderFromToAdresses(context),
             TaxiOpenOrderControllButtons(
               order: order,
@@ -46,19 +46,17 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
   Widget _orderFromToAdresses(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(
           '${_i18n()['from']}' + order.from.address,
           style: Theme.of(context).textTheme.bodyText2,
         ),
-        SizedBox(
-          height: 8,
+        const SizedBox(height: 8),
+        Text(
+          '${_i18n()['to']}' + order.to.address,
+          style: Theme.of(context).textTheme.bodyText2,
         ),
-        Text('${_i18n()['to']}' + order.to.address,
-            style: Theme.of(context).textTheme.bodyText2),
-        SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8),
       ],
     );
   }

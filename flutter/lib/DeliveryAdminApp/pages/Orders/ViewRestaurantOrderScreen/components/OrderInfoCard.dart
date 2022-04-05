@@ -19,7 +19,11 @@ dynamic _i18n() =>
 
 class OrderInfoCard extends StatefulWidget {
   final Rxn<RestaurantOrder> order;
-  const OrderInfoCard({Key? key, required this.order}) : super(key: key);
+
+  const OrderInfoCard({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
 
   @override
   State<OrderInfoCard> createState() => _OrderInfoCardState();
@@ -31,7 +35,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.centerLeft,
@@ -39,9 +43,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
               style: Theme.of(context).textTheme.bodyText2,
               textAlign: TextAlign.left),
         ),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
           width: Get.width,
@@ -51,25 +53,26 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
             color: const Color(0x9affffff),
           ),
           child: Column(
-            children: [
+            children: <Widget>[
               BasicCellComponent(
                 url: (widget.order.value)!.customer.image,
                 title: (widget.order.value)!.customer.name,
                 traillingIcon: Container(
-                  child: Stack(children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.chat_bubble_outline,
-                        color: Color(0xff5c7fff),
+                  child: Stack(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(
+                          Icons.chat_bubble_outline,
+                          color: Color(0xff5c7fff),
+                        ),
+                        onPressed: () {
+                          Get.toNamed(getMessagesRoute(
+                              chatId: widget.order.value?.orderId ?? '',
+                              orderId: widget.order.value!.orderId,
+                              recipientType: ParticipantType.Customer));
+                        },
                       ),
-                      onPressed: () {
-                        Get.toNamed(getMessagesRoute(
-                            chatId: widget.order.value?.orderId ?? '',
-                            orderId: widget.order.value!.orderId,
-                            recipientType: ParticipantType.Customer));
-                      },
-                    ),
-                    Positioned(
+                      Positioned(
                         left: 28,
                         top: 10,
                         child: (controller.orderHaveNewMessageNotifications(
@@ -78,13 +81,16 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                                 width: 10,
                                 height: 10,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        color: const Color(0xfff6efff),
-                                        width: 2),
-                                    color: const Color(0xffff0000)))
-                            : Container())
-                  ]),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      color: const Color(0xfff6efff), width: 2),
+                                  color: const Color(0xffff0000),
+                                ),
+                              )
+                            : Container(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -97,13 +103,11 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
               if (widget.order.value?.inProcess() ?? false)
                 Row(
                   children: buildRestOrderButtons(widget.order),
-                )
+                ),
             ],
           ),
         ),
-        SizedBox(
-          height: 15,
-        ),
+        const SizedBox(height: 15),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.centerLeft,
@@ -111,13 +115,9 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
               style: Theme.of(context).textTheme.bodyText2,
               textAlign: TextAlign.left),
         ),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         buildOrdersItems(widget.order.value!.items),
-        SizedBox(
-          height: 15,
-        ),
+        const SizedBox(height: 15),
       ],
     );
   }

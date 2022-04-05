@@ -27,6 +27,7 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
 
   num taxiNumber = 0;
   RxBool btnClicked = RxBool(false);
+
   @override
   void initState() {
     // TODO: implement initState
@@ -42,7 +43,7 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
         margin: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -51,45 +52,43 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
             Container(
               margin: const EdgeInsets.symmetric(vertical: 5),
               child: Row(
-                children: [
-                  Text('${_i18n()['customer']} ',
-                      style: Theme.of(context).textTheme.subtitle1),
-                  Expanded(child: Divider())
+                children: <Widget>[
+                  Text(
+                    '${_i18n()['customer']} ',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Expanded(child: Divider()),
                 ],
               ),
             ),
             Row(
-              children: [
+              children: <Widget>[
                 CircleAvatar(
                   radius: 25,
                   backgroundImage:
                       CachedNetworkImageProvider(widget.order.customer.image),
                 ),
-                SizedBox(
-                  width: 8,
-                ),
+                const SizedBox(width: 8),
                 Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Text(
                         widget.order.customer.name,
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
             if (widget.order.serviceProvider != null) _orderTaxiDriver(context),
-            Divider(),
+            const Divider(),
             Container(
               child: Row(
-                children: [
+                children: <Widget>[
                   Text('${_i18n()['distance']}'),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  const SizedBox(width: 5),
                   Text(
                     widget.order.routeInformation!.distance.distanceStringInKm,
                     style: Theme.of(context).textTheme.bodyText2,
@@ -97,30 +96,28 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 8,
-            ),
+            const SizedBox(height: 8),
             Text(
               '${_i18n()['from']}' + widget.order.from.address,
               style: Theme.of(context).textTheme.bodyText2,
             ),
-            SizedBox(
-              height: 8,
+            const SizedBox(height: 8),
+            Text(
+              '${_i18n()['to']}' + widget.order.to.address,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
-            Text('${_i18n()['to']}' + widget.order.to.address,
-                style: Theme.of(context).textTheme.bodyText2),
-            SizedBox(
-              height: 10,
+            const SizedBox(height: 10),
+            Obx(
+              () {
+                if (!btnClicked.value) {
+                  return _getOrderBottomComponent(context);
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
             ),
-            Obx(() {
-              if (!btnClicked.value) {
-                return _getOrderBottomComponent(context);
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
           ],
         ),
       ),

@@ -25,24 +25,35 @@ final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 // ["Orders"]["ListOrdersScreen"];
 
 class ListOrdersScreen extends StatefulWidget {
+  const ListOrdersScreen({Key? key}) : super(key: key);
+
   @override
   _ListOrdersScreen createState() => _ListOrdersScreen();
 }
 
 class _ListOrdersScreen extends State<ListOrdersScreen> {
-  RxList<Order> inProcessOrders = RxList.empty();
-  RxList<Order> pastOrders = RxList.empty();
-  RxList<Order> laundryInProcessOrders = RxList.empty();
-  RxList<Order> laundryPastOrders = RxList.empty();
-  RxList<Order> taxiInProcessOrders = RxList.empty();
-  RxList<Order> taxiOpenOrders = RxList.empty();
-  RxList<Order> taxiPastOrders = RxList.empty();
-  RestaurantOrderController controller = Get.find<RestaurantOrderController>();
-  LaundryOrderController laundryOrderController =
+  RxList<Order> inProcessOrders = RxList<Order>.empty();
+  RxList<Order> pastOrders = RxList<Order>.empty();
+  RxList<Order> laundryInProcessOrders = RxList<Order>.empty();
+  RxList<Order> laundryPastOrders = RxList<Order>.empty();
+  RxList<Order> taxiInProcessOrders = RxList<Order>.empty();
+  RxList<Order> taxiOpenOrders = RxList<Order>.empty();
+  RxList<Order> taxiPastOrders = RxList<Order>.empty();
+
+  /// RestaurantOrderController
+  final RestaurantOrderController controller =
+      Get.find<RestaurantOrderController>();
+
+  /// LaundryOrderController
+  final LaundryOrderController laundryOrderController =
       Get.find<LaundryOrderController>();
+
+  /// TaxiOrderController
   TaxiOrderController taxiOrderController = Get.find<TaxiOrderController>();
+
   dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
       ["pages"]["Orders"]["ListOrdersScreen"]["ListOrdersScreen"];
+
   StreamSubscription? _ordersListener;
   StreamSubscription? _laundryOrdersListener;
   StreamSubscription? _taxiOrdersListener;
@@ -133,134 +144,133 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
-          controller.clearNewOrderNotifications();
-          return false;
-        },
-        child: DefaultTabController(
-          length: 3,
-          child: Scaffold(
-              key: Get.find<SideMenuDrawerController>().getNewKey(),
-              appBar: deliveryAdminAppBar(AppBarLeftButtonType.Menu,
-                  withOrder: false,
-                  tabbar: deliveryAdminTabbar(context),
-                  function: () =>
-                      Get.find<SideMenuDrawerController>().openMenu()),
-              // appBar: mezcalmosAppBar(
-              //     "menu", Get.find<SideMenuDraweController>().openMenu),
-              drawer: MezSideMenu(),
-              body: TabBarView(children: [
-                // Restaurant orders list view
-                RestaurantOrdersList(
-                    pastOrders: controller.pastOrders,
-                    currentOrders: controller.inProcessOrders),
-                // Laundry orders list view
-                LaundryOrdersList(
-                    pastOrders: laundryOrderController.pastOrders,
-                    currentOrders: laundryOrderController.inProcessOrders),
-                TaxiOrdersList(
-                    pastOrders: taxiOrderController.pastOrders,
-                    currentOrders: taxiOrderController.inProcessOrders,
-                    openOrders: taxiOrderController.openOrders)
-              ])),
-        ));
+      onWillPop: () async {
+        controller.clearNewOrderNotifications();
+        return false;
+      },
+      child: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          key: Get.find<SideMenuDrawerController>().getNewKey(),
+          appBar: deliveryAdminAppBar(AppBarLeftButtonType.Menu,
+              withOrder: false,
+              tabbar: deliveryAdminTabbar(context),
+              function: () => Get.find<SideMenuDrawerController>().openMenu()),
+          // appBar: mezcalmosAppBar(
+          //     "menu", Get.find<SideMenuDraweController>().openMenu),
+          drawer: MezSideMenu(),
+          body: TabBarView(
+            children: [
+              // Restaurant orders list view
+              RestaurantOrdersList(
+                  pastOrders: controller.pastOrders,
+                  currentOrders: controller.inProcessOrders),
+              // Laundry orders list view
+              LaundryOrdersList(
+                  pastOrders: laundryOrderController.pastOrders,
+                  currentOrders: laundryOrderController.inProcessOrders),
+              TaxiOrdersList(
+                  pastOrders: taxiOrderController.pastOrders,
+                  currentOrders: taxiOrderController.inProcessOrders,
+                  openOrders: taxiOrderController.openOrders)
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   TabBar deliveryAdminTabbar(BuildContext context) {
-    return TabBar(tabs: [
-      Obx(
-        () => Tab(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
+    return TabBar(
+      tabs: <Widget>[
+        Obx(
+          () => Tab(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
                   child: Text(
-                _i18n()['restaurantOrders'],
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(fontSize: 10.sp),
-              )),
-              SizedBox(
-                width: 5,
-              ),
-              if (inProcessOrders.isNotEmpty)
-                CircleAvatar(
-                  radius: 8,
-                  child: Text(
-                    '${inProcessOrders.length}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(color: Colors.white),
+                    _i18n()['restaurantOrders'],
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          fontSize: 10.sp,
+                        ),
                   ),
-                )
-            ],
+                ),
+                const SizedBox(width: 5),
+                if (inProcessOrders.isNotEmpty)
+                  CircleAvatar(
+                    radius: 8,
+                    child: Text(
+                      '${inProcessOrders.length}',
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                  )
+              ],
+            ),
           ),
         ),
-      ),
-      Obx(
-        () => Tab(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
+        Obx(
+          () => Tab(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
                   child: Text(
-                _i18n()['laundryOrders'],
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(fontSize: 10.sp),
-              )),
-              SizedBox(
-                width: 5,
-              ),
-              if (laundryInProcessOrders.isNotEmpty)
-                CircleAvatar(
-                  radius: 8,
-                  child: Text(
-                    '${laundryInProcessOrders.length}',
+                    _i18n()['laundryOrders'],
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1!
-                        .copyWith(color: Colors.white),
+                        .bodyText2!
+                        .copyWith(fontSize: 10.sp),
                   ),
-                )
-            ],
+                ),
+                const SizedBox(width: 5),
+                if (laundryInProcessOrders.isNotEmpty)
+                  CircleAvatar(
+                    radius: 8,
+                    child: Text(
+                      '${laundryInProcessOrders.length}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1!
+                          .copyWith(color: Colors.white),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
-      ),
-      Obx(
-        () => Tab(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
+        Obx(
+          () => Tab(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
                   child: Text(
-                _i18n()['taxiOrders'],
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(fontSize: 10.sp),
-              )),
-              SizedBox(
-                width: 5,
-              ),
-              if (taxiOpenOrders.isNotEmpty)
-                CircleAvatar(
-                  radius: 8,
-                  child: Text(
-                    '${taxiOpenOrders.length}',
+                    _i18n()['taxiOrders'],
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1!
-                        .copyWith(color: Colors.white),
+                        .bodyText2!
+                        .copyWith(fontSize: 10.sp),
                   ),
-                )
-            ],
+                ),
+                const SizedBox(width: 5),
+                if (taxiOpenOrders.isNotEmpty)
+                  CircleAvatar(
+                    radius: 8,
+                    child: Text(
+                      '${taxiOpenOrders.length}',
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                  )
+              ],
+            ),
           ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 }

@@ -28,22 +28,39 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
+  const ViewRestaurantOrderScreen({Key? key}) : super(key: key);
+
   @override
   _ViewRestaurantOrderScreen createState() => _ViewRestaurantOrderScreen();
 }
 
 class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
+  /// AuthController
   AuthController auth = Get.find<AuthController>();
+
+  /// RestaurantOrderController
   RestaurantOrderController controller = Get.find<RestaurantOrderController>();
+
+  /// DeliveryDriverController
   DeliveryDriverController deliveryDriverController = Get.find<
       DeliveryDriverController>(); // Since we have alot of buttons we check loading by name
 
+  /// driver
   DeliveryDriverUserInfo? driver;
+
+  /// hasNewMessage
   Rx<bool> hasNewMessage = false.obs;
-  Rxn<RestaurantOrder> order = Rxn();
+
+  /// RestaurantOrder
+  Rxn<RestaurantOrder> order = Rxn<RestaurantOrder>();
+
+  /// orderId
   late String orderId;
+
+  /// LanguageType
   LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
 
+  /// _orderListener
   StreamSubscription<RestaurantOrder?>? _orderListener;
 
   @override
@@ -90,16 +107,26 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           backgroundColor: Colors.grey.shade100,
           foregroundColor: Colors.purple.shade700,
           onPressed: () {
-            Clipboard.setData(ClipboardData(
-                    text: order.value?.clipBoardText(userLanguage)))
-                .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
-                    position: SnackPosition.TOP));
+            Clipboard.setData(
+              ClipboardData(
+                text: order.value?.clipBoardText(userLanguage),
+              ),
+            ).then(
+              (_) => MezSnackbar(
+                "Done :D",
+                "Copied to clipboard.",
+                position: SnackPosition.TOP,
+              ),
+            );
           },
           tooltip: 'Copy',
           child: new Icon(Icons.copy),
         ),
-        appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
-            withOrder: true, function: Get.back),
+        appBar: deliveryAdminAppBar(
+          AppBarLeftButtonType.Back,
+          withOrder: true,
+          function: Get.back,
+        ),
         backgroundColor: Colors.white,
         body: Obx(() {
           if (order.value == null) {
@@ -109,7 +136,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           } else {
             return SingleChildScrollView(
               child: Column(
-                children: [
+                children: <Widget>[
                   //====================Restaurant Info=======================
                   (!controller.isPast(order.value!))
                       ? CurrentOrderInfo(
@@ -123,14 +150,16 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       () => DriverCard(
                         driver: order.value!.dropoffDriver,
                         order: order.value!,
-                        assignDriverCallback: (
-                            {required DeliveryDriver deliveryDriver,
-                            required bool changeDriver}) {
+                        assignDriverCallback: ({
+                          required DeliveryDriver deliveryDriver,
+                          required bool changeDriver,
+                        }) {
                           deliveryDriverController.assignDeliveryDriver(
-                              deliveryDriverId: deliveryDriver.deliveryDriverId,
-                              orderId: order.value!.orderId,
-                              orderType: OrderType.Restaurant,
-                              deliveryDriverType: DeliveryDriverType.DropOff);
+                            deliveryDriverId: deliveryDriver.deliveryDriverId,
+                            orderId: order.value!.orderId,
+                            orderType: OrderType.Restaurant,
+                            deliveryDriverType: DeliveryDriverType.DropOff,
+                          );
                         },
                       ),
                     ),

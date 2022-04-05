@@ -13,11 +13,14 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["components"]["laundryProviderCard"];
 
 class LaundryProviderCard extends StatefulWidget {
-  final LaundryOrder order;
-  String? laundryID;
+  const LaundryProviderCard({
+    Key? key,
+    required this.laundryID,
+    required this.order,
+  }) : super(key: key);
 
-  LaundryProviderCard({Key? key, required this.laundryID, required this.order})
-      : super(key: key);
+  final LaundryOrder order;
+  final String? laundryID;
 
   @override
   State<LaundryProviderCard> createState() => _LaundryProviderCardState();
@@ -28,14 +31,14 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
       Get.find<LaundryInfoController>();
   LaundryOrderController controller = Get.find<LaundryOrderController>();
   Laundry? laundry;
+
   @override
   void initState() {
-    getLaundry();
-
     super.initState();
+    getLaundry();
   }
 
-  void getLaundry() async {
+  Future<void> getLaundry() async {
     if (widget.laundryID != null) {
       laundry = await laundryInfoController.getLaundry(widget.laundryID!);
       mezDbgPrint("Init laundry =====> $laundry");
@@ -51,7 +54,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
       padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Container(
             child: Text(
               '${_i18n()["laundry"]}',
@@ -60,25 +63,32 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
           ),
           Card(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(
-                  width: 1.5,
-                  color: (widget.order.laundry != null)
-                      ? Colors.green
-                      : Colors.redAccent,
-                )),
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(
+                width: 1.5,
+                color: (widget.order.laundry != null)
+                    ? Colors.green
+                    : Colors.redAccent,
+              ),
+            ),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: (widget.order.laundry == null)
                   ? () async {
-                      await Get.toNamed(kLaundriesListRoute,
-                              arguments: widget.order)!
-                          .then((value) {
-                        if (value != null) {
-                          controller.assignLaundry(
-                              widget.order.orderId, value.info.id);
-                        }
-                      });
+                      await Get.toNamed(
+                        kLaundriesListRoute,
+                        arguments: widget.order,
+                      )!
+                          .then(
+                        (value) {
+                          if (value != null) {
+                            controller.assignLaundry(
+                              widget.order.orderId,
+                              value.info.id,
+                            );
+                          }
+                        },
+                      );
                     }
                   : null,
               child: Container(
@@ -100,21 +110,19 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
   // CARD CONTENT WHEN THERE IS NO LAUNDRY ASSIGNED, LAUNDRY INFO  (LAUNDRY == NULL)
   Widget noLaundryComponent(BuildContext context, TextTheme textTheme) {
     return Row(
-      children: [
+      children: <Widget>[
         Icon(
           Icons.local_laundry_service,
           color: Theme.of(context).primaryColorLight,
           size: 50,
         ),
-        SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Text(
           '${_i18n()["noLaundry"]}',
           style: textTheme.bodyText1,
         ),
-        Spacer(),
-        Icon(Icons.arrow_forward)
+        const Spacer(),
+        Icon(Icons.arrow_forward),
       ],
     );
   }
@@ -122,28 +130,24 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
 // CARD CONTENT WHEN THERE IS LAUNDRY ASSIGNED, LAUNDRY INFO  (LAUNDRY != NULL)
   Widget laundryInfoComponent(TextTheme textTheme, BuildContext context) {
     return Row(
-      children: [
+      children: <Widget>[
         CircleAvatar(
           radius: 25,
           backgroundImage:
               CachedNetworkImageProvider(widget.order.laundry!.image),
         ),
-        SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Flexible(
           flex: 3,
           fit: FlexFit.tight,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
                 widget.order.laundry!.name,
                 style: textTheme.bodyText2,
               ),
-              SizedBox(
-                height: 5,
-              ),
+              const SizedBox(height: 5),
             ],
           ),
         ),

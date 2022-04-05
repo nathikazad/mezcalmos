@@ -22,18 +22,24 @@ class DriversListScreen extends StatefulWidget {
 }
 
 class _DriversListScreenState extends State<DriversListScreen> {
+  /// deliveryDrivers
   RxList<DeliveryDriver> deliveryDrivers = <DeliveryDriver>[].obs;
-  StreamSubscription? driversListener;
 
+  /// driversListener
+  StreamSubscription<dynamic>? driversListener;
+
+  /// deliveryDriverController
   DeliveryDriverController deliveryDriverController =
       Get.find<DeliveryDriverController>();
+
+  /// order
   Order? order;
+
   @override
   void initState() {
-    order = Get.arguments;
-    deliveryDrivers.value = deliveryDriverController.deliveryDrivers;
-
     super.initState();
+    order = Get.arguments as Order?;
+    deliveryDrivers.value = deliveryDriverController.deliveryDrivers;
   }
 
   @override
@@ -46,7 +52,7 @@ class _DriversListScreenState extends State<DriversListScreen> {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             DriversMapCompnonet(
               drivers: deliveryDrivers.value,
               order: order!,
@@ -65,16 +71,16 @@ class _DriversListScreenState extends State<DriversListScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: List.generate(
-              deliveryDrivers.length,
-              (int index) => DriverSelectCard(
-                    driver: deliveryDrivers[index],
-                    function:
-                        (deliveryDrivers[index].deliveryDriverState.isOnline)
-                            ? () {
-                                Get.back(result: deliveryDrivers[index]);
-                              }
-                            : null,
-                  )),
+            deliveryDrivers.length,
+            (int index) => DriverSelectCard(
+              driver: deliveryDrivers[index],
+              function: (deliveryDrivers[index].deliveryDriverState.isOnline)
+                  ? () {
+                      Get.back(result: deliveryDrivers[index]);
+                    }
+                  : null,
+            ),
+          ),
         ),
       ),
     );

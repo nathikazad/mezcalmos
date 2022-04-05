@@ -15,7 +15,8 @@ class DriverSelectCard extends StatelessWidget {
     required this.function,
   }) : super(key: key);
   final DeliveryDriver driver;
-  final Function()? function;
+  final void Function()? function;
+
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
@@ -26,39 +27,33 @@ class DriverSelectCard extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(8),
         child: Row(
-          children: [
+          children: <Widget>[
             CircleAvatar(
               radius: 30,
               backgroundImage:
                   CachedNetworkImageProvider(driver.driverInfo.image),
             ),
-            SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             Flexible(
               flex: 3,
               fit: FlexFit.tight,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Text(
                     driver.driverInfo.name,
                     style: txt.bodyText1,
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   (driver.deliveryDriverState.isOnline)
                       ? Row(
-                          children: [
+                          children: <Widget>[
                             Icon(
                               Icons.circle,
                               color: Colors.green,
                               size: 15,
                             ),
-                            SizedBox(
-                              width: 5,
-                            ),
+                            const SizedBox(width: 5),
                             Text(
                               '${_i18n()["available"]}',
                               style: txt.bodyText2,
@@ -66,15 +61,13 @@ class DriverSelectCard extends StatelessWidget {
                           ],
                         )
                       : Row(
-                          children: [
+                          children: <Widget>[
                             Icon(
                               Icons.circle,
                               color: Colors.redAccent,
                               size: 15,
                             ),
-                            SizedBox(
-                              width: 5,
-                            ),
+                            const SizedBox(width: 5),
                             Text(
                               '${_i18n()["unavailable"]}',
                               style: txt.bodyText2,
@@ -84,12 +77,12 @@ class DriverSelectCard extends StatelessWidget {
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Icon(
               Icons.arrow_forward,
               color: Theme.of(context).primaryColorLight,
               size: 35,
-            )
+            ),
           ],
         ),
       ),

@@ -5,18 +5,21 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class LaundryOrderSummary extends StatelessWidget {
   final LaundryOrder order;
-  LaundryOrderSummary({Key? key, required this.order}) : super(key: key);
+
+  const LaundryOrderSummary({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
 
   dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-      ["pages"] 
- ["Orders"]["LaundryOrder"]["Components"]["LaundryOrderSummary"];
+      ["pages"]["Orders"]["LaundryOrder"]["Components"]["LaundryOrderSummary"];
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Container(
           margin: const EdgeInsets.all(8),
           child: Text(
@@ -29,10 +32,10 @@ class LaundryOrderSummary extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             width: double.infinity,
             child: Column(
-              children: [
+              children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Text(
                       _i18n()['orderWeight'],
                       style: Theme.of(context).textTheme.bodyText1,
@@ -45,12 +48,10 @@ class LaundryOrderSummary extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Text(
                       "${_i18n()["orderCost"]} :",
                       style: Theme.of(context).textTheme.bodyText1,
@@ -63,12 +64,10 @@ class LaundryOrderSummary extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Text(
                       "${_i18n()["deliveryCost"]} :",
                       style: Theme.of(context).textTheme.bodyText1,
@@ -79,12 +78,10 @@ class LaundryOrderSummary extends StatelessWidget {
                     ),
                   ],
                 ),
-                Divider(
-                  height: 25,
-                ),
+                const Divider(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Text(
                       "${_i18n()["totalCost"]} :",
                       style: Theme.of(context).textTheme.bodyText1,
@@ -97,9 +94,7 @@ class LaundryOrderSummary extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                )
+                const SizedBox(height: 10),
               ],
             ),
           ),

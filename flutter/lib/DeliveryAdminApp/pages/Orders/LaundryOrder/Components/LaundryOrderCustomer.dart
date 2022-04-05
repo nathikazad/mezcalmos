@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class LaundryOrderCustomer extends StatelessWidget {
   final LaundryOrder order;
+
   LaundryOrderCustomer({Key? key, required this.order}) : super(key: key);
 
   dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -31,18 +32,16 @@ class LaundryOrderCustomer extends StatelessWidget {
         ),
         Card(
           child: Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
             width: double.infinity,
             child: Row(
-              children: [
+              children: <Widget>[
                 CircleAvatar(
                   radius: 25,
                   backgroundImage:
                       CachedNetworkImageProvider(order.customer.image),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Flexible(
                   flex: 4,
                   fit: FlexFit.tight,
@@ -51,27 +50,37 @@ class LaundryOrderCustomer extends StatelessWidget {
                     style: txt.bodyText1,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Material(
                   color: Theme.of(context).primaryColorLight,
                   shape: CircleBorder(),
                   child: InkWell(
                     onTap: () {
-                      Get.toNamed(getMessagesRoute(
+                      Get.toNamed<void>(
+                        getMessagesRoute(
                           chatId: order.orderId,
                           orderId: order.orderId,
-                          recipientType: ParticipantType.Customer));
+                          recipientType: ParticipantType.Customer,
+                        ),
+                      );
                     },
                     customBorder: CircleBorder(),
                     child: Stack(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(12),
-                          child: Icon(
-                            Icons.textsms,
-                            color: Colors.white,
+                      children: <Widget>[
+                        CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Color(0xFFAC59FC),
+                          child: Image.asset(
+                            'assets/images/deliveryAdmin/message.png',
                           ),
                         ),
+                        // Container(
+                        //   margin: EdgeInsets.all(12),
+                        //   child: Icon(
+                        //     Icons.textsms,
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
                         // Obx(
                         //   () => controller.orderHaveNewMessageNotifications(
                         //           order.orderId)

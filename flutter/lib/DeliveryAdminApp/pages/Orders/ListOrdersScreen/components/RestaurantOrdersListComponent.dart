@@ -21,7 +21,7 @@ class RestaurantOrdersList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: [
+        children: <Widget>[
           Container(
             margin: const EdgeInsets.all(8),
             alignment: Alignment.centerLeft,
@@ -29,16 +29,12 @@ class RestaurantOrdersList extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline1,
                 textAlign: TextAlign.left),
           ),
-          SizedBox(
-            height: 8,
-          ),
+          const SizedBox(height: 8),
           Obx(
             () => Container(
               child: currentOrders.value.length > 0
                   ? buildOrders(currentOrders)
-                  : Center(
-                      child: Text(i18n()['noOrders']),
-                    ),
+                  : Center(child: Text(i18n()['noOrders'])),
             ),
           ),
           Container(
@@ -48,16 +44,12 @@ class RestaurantOrdersList extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline1,
                 textAlign: TextAlign.left),
           ),
-          SizedBox(
-            height: 8,
-          ),
+          const SizedBox(height: 8),
           Obx(
             () => Container(
               child: pastOrders.value.length > 0
                   ? buildOrders(pastOrders)
-                  : Center(
-                      child: Text(i18n()['noOrders']),
-                    ),
+                  : Center(child: Text(i18n()['noOrders'])),
             ),
           ),
         ],

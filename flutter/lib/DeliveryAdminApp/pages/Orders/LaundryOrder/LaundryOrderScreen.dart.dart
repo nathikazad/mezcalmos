@@ -47,6 +47,10 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
 
   /// ------------------ variables ------------------//
   DeliveryDriverUserInfo? driver;
+
+  ValueNotifier<DeliveryDriverUserInfo?> _deliveryDriverUserInfoValueNotifier =
+      ValueNotifier<DeliveryDriverUserInfo?>(null);
+
   @override
   void initState() {
     super.initState();
@@ -71,6 +75,9 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
         }
       });
     }
+
+    /// Get Right driver
+    _deliveryDriverUserInfoValueNotifier.value = getRightDriver();
   }
 
   @override
@@ -82,6 +89,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    /// TextTheme
     final TextTheme txt = Theme.of(context).textTheme;
     return Obx(
       () => Scaffold(
@@ -92,32 +100,44 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   LaundryOrderStatusCard(
                     order: order.value!,
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
 
                   LaundryProviderCard(
-                      laundryID: order.value!.laundry?.id ?? null,
-                      order: order.value!),
+                    laundryID: order.value?.laundry?.id ?? null,
+                    order: order.value!,
+                  ),
 
                   //   if (order.value?.inProcess() ?? false)
 
-                  DriverCard(
-                    driver: getRightDriver(),
-                    order: order.value!,
-                    assignDriverCallback: (
-                        {required DeliveryDriver deliveryDriver,
-                        required bool changeDriver}) {
-                      deliveryDriverController.assignDeliveryDriver(
-                          deliveryDriverId: deliveryDriver.deliveryDriverId,
-                          orderId: order.value!.orderId,
-                          orderType: OrderType.Laundry,
-                          deliveryDriverType: getRightDeliveryDriverType(),
-                          changeDriver: changeDriver);
+                  ValueListenableBuilder<DeliveryDriverUserInfo?>(
+                    valueListenable: _deliveryDriverUserInfoValueNotifier,
+                    builder: (_, DeliveryDriverUserInfo? deliveryDriverUserInfo,
+                        __) {
+                      return DriverCard(
+                        driver: deliveryDriverUserInfo,
+                        order: order.value!,
+                        assignDriverCallback: ({
+                          required DeliveryDriver deliveryDriver,
+                          required bool changeDriver,
+                        }) {
+                          /// Get new driver
+                          _deliveryDriverUserInfoValueNotifier.value =
+                              deliveryDriver.driverInfo;
+
+                          /// assignDeliveryDriver
+                          deliveryDriverController.assignDeliveryDriver(
+                            deliveryDriverId: deliveryDriver.deliveryDriverId,
+                            orderId: order.value!.orderId,
+                            orderType: OrderType.Laundry,
+                            deliveryDriverType: getRightDeliveryDriverType(),
+                            changeDriver: changeDriver,
+                          );
+                        },
+                      );
                     },
                   ),
 
@@ -128,26 +148,16 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                         children: buildOrderButtons(order),
                       ),
                     ),
-                  LaundryOrderCustomer(
-                    order: order.value!,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  LaundryOrderCustomer(order: order.value!),
+                  const SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   LaundryOrderSummary(
                     order: order.value!,
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                   deliveryLocation(txt, context),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  orderNotes(txt)
+                  const SizedBox(height: 10),
+                  orderNotes(txt),
                 ],
               ),
             ),

@@ -11,6 +11,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
 
 class TaxiOpenOrderControllButtons extends StatefulWidget {
   final TaxiOrder order;
+
   const TaxiOpenOrderControllButtons({Key? key, required this.order})
       : super(key: key);
 
@@ -26,6 +27,7 @@ class _TaxiOpenOrderControllButtonsState
   TaxiOrderController _taxiOrderController = Get.find<TaxiOrderController>();
 
   num taxiNumber = 0;
+
   @override
   void initState() {
     btnClicked.value = false;
@@ -34,13 +36,15 @@ class _TaxiOpenOrderControllButtonsState
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (btnClicked.value == false) {
-        return _getBottomComponent(context);
-      } else {
-        return Center(child: CircularProgressIndicator());
-      }
-    });
+    return Obx(
+      () {
+        if (btnClicked.value == false) {
+          return _getBottomComponent(context);
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
   Widget _getBottomComponent(context) {
