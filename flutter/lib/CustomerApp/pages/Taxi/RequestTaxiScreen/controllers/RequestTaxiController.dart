@@ -94,6 +94,8 @@ class RequestTaxiController {
     locationPickerController.addOrUpdatePurpleDestinationMarker(
         latLng: LatLng(taxiRequest.value.to!.position.latitude!,
             taxiRequest.value.to!.position.longitude!));
+
+    locationPickerController.periodicRerendering.value = true;
     locationPickerController.hideFakeMarker();
     locationPickerController.setAnimateMarkersPolyLinesBounds(true);
     locationPickerController.animateAndUpdateBounds();
@@ -108,7 +110,6 @@ class RequestTaxiController {
     controller.fecthOnlineTaxiDrivers().then((List<OnlineTaxiDriver> drivers) {
       // Weo loop throught each driver and we call the mgoogleMap refresh from withing the controller
       drivers.forEach((OnlineTaxiDriver driver) {
-        mezDbgPrint("======= [ driver ] ====== ${driver.toJson()}");
         final LatLng driverLocation =
             LatLng(driver.position['lat'], driver.position['lng']);
 
@@ -121,8 +122,6 @@ class RequestTaxiController {
             5;
 
         if (isWithinRange) {
-          mezDbgPrint(
-              "[xdbg]Adding marker with driver name === ${driver.name} | id ${driver.taxiId}");
           locationPickerController.addOrUpdateTaxiDriverMarker(
               driver.taxiId, driverLocation,
               markerTitle: driver.name);
@@ -169,12 +168,14 @@ class RequestTaxiController {
     currentFocusedTextField.refresh();
     taxiRequest.refresh();
     if (taxiRequest.value.isFromToSet()) {
+      locationPickerController.periodicRerendering.value = true;
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
       locationPickerController.animateAndUpdateBounds();
       updateRouteInformation()
           .then((_) => locationPickerController.showConfirmButton());
       pickedFromTo.value = true;
     } else {
+      locationPickerController.periodicRerendering.value = false;
       locationPickerController.setAnimateMarkersPolyLinesBounds(false);
       locationPickerController.showGrayedOutButton();
       // locationPickerController.removeCircleMarker();

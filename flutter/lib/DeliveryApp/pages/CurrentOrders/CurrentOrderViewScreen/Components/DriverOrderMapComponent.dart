@@ -26,20 +26,6 @@ class DriverOrderMapComponent extends StatefulWidget {
 class _DriverOrderMapComponentState extends State<DriverOrderMapComponent> {
   @override
   void initState() {
-    // widget.order.listen((Order? order) {
-    //   if (order != null) {
-    //     switch (order.orderType) {
-    //       case OrderType.Laundry:
-    //         handleLaundryOrder(order as LaundryOrder);
-    //         break;
-    //       case OrderType.Restaurant:
-    //         handleRestaurantOrder(order as RestaurantOrder);
-    //         break;
-    //       default:
-    //         return;
-    //     }
-    //   }
-    // });
     super.initState();
   }
 
@@ -50,7 +36,6 @@ class _DriverOrderMapComponentState extends State<DriverOrderMapComponent> {
       // we do not need OBX here, since we're passing the Whole RxObject.
       child: MGoogleMap(
         mGoogleMapController: widget.mapController,
-        rerenderDuration: Duration(seconds: 30),
       ),
     );
   }

@@ -82,6 +82,9 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
             deliveryAuthAuthController.currentLocation,
           ),
         );
+        mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+        mapController.animateMarkersPolyLinesBounds.value = true;
+        mapController.periodicRerendering.value = true;
         mapController.animateAndUpdateBounds();
       });
 
@@ -135,8 +138,6 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     final LaundryOrderStatus _status = laundryOrder.status;
     switch (_status) {
       case LaundryOrderStatus.OtwPickup:
-        mapController.periodicRerendering.value = true;
-        mapController.myLocationButtonEnabled.value = true;
         // Driver marker
         mapController.addOrUpdateUserMarker(
           latLng: LatLng(
@@ -163,8 +164,6 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
         mapController.animateAndUpdateBounds();
         break;
       case LaundryOrderStatus.OtwDelivery:
-        mapController.periodicRerendering.value = true;
-        mapController.myLocationButtonEnabled.value = true;
         // DropOff driver Marker
         mapController.addOrUpdateUserMarker(
           latLng: LatLng(
