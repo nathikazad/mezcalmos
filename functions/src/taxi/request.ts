@@ -11,8 +11,10 @@ import { constructTaxiOrder } from "../shared/models/Services/Taxi/TaxiOrder";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
 import { orderUrl } from "../utilities/senders/appRoutes";
-import { ParticipantType } from "../shared/models/Generic/Chat";
+import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
+import * as chatController from "../shared/controllers/chatController";
+import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
 
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)
@@ -51,16 +53,30 @@ export = functions.https.onCall(async (data, context) => {
     let userInfo = await getUserInfo(customerId);
     let order = constructTaxiOrder(orderRequest, userInfo);
     let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
-    rootNodes.openOrders(OrderType.Taxi, orderRef.key!).set(order);
+    let orderId = orderRef.key!
+    rootNodes.openOrders(OrderType.Taxi,).set(order);
+
+    let chat: Chat = await buildChatForOrder(
+      orderId,
+      OrderType.Taxi,
+      order.customer.id,
+      {
+        ...order.customer,
+        particpantType: ParticipantType.Customer
+      },
+    );
+
+    await chatController.setChat(orderId, chat);
 
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderRef.key!)
+      addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
+      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
     })
 
     return {
       status: ServerResponseStatus.Success,
-      orderId: orderRef.key!
+      orderId: orderId
     }
   } catch (e) {
     functions.logger.error(e);
