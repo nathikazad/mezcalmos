@@ -19,47 +19,48 @@ class TaxiPastOrderCard extends StatelessWidget {
   }) : super(key: key);
 
   TaxiOrder order;
-
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Card(
       child: InkWell(
         onTap: () {
-          Get.toNamed(getTaxiOrderRoute(order.orderId));
+          Get.toNamed<void>(getTaxiOrderRoute(order.orderId));
         },
         borderRadius: BorderRadius.circular(10),
         child: Ink(
           padding: EdgeInsets.all(8),
           width: double.infinity,
           child: Column(
-            children: [
+            children: <Widget>[
               Row(
-                children: [
+                children: <Widget>[
                   Stack(
-                    children: [
+                    children: <Widget>[
                       CircleAvatar(
-                          radius: 25,
-                          backgroundImage: mLoadImage(
-                                  assetInCaseFailed:
-                                      'assets/images/customer/taxi/taxiDriverImg.png',
-                                  url: (order.isOpenOrder())
-                                      ? null
-                                      : order.serviceProvider?.image)
-                              .image),
+                        radius: 25,
+                        backgroundImage: mLoadImage(
+                                assetInCaseFailed:
+                                    'assets/images/customer/taxi/taxiDriverImg.png',
+                                url: (order.isOpenOrder())
+                                    ? null
+                                    : order.serviceProvider?.image)
+                            .image,
+                      ),
                       //  if (order.serviceProvider != null)
                       Positioned(
-                          top: 0,
-                          right: 0,
-                          child: CircleAvatar(
-                              radius: 12,
-                              backgroundColor: Colors.amber.shade500,
-                              child: Icon(
-                                Icons.local_taxi_rounded,
-                                size: 20,
-                                // size: 18.sp,
-                                color: Colors.white,
-                              )))
+                        top: 0,
+                        right: 0,
+                        child: CircleAvatar(
+                          radius: 12,
+                          backgroundColor: Colors.amber.shade500,
+                          child: Icon(
+                            Icons.local_taxi_rounded,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
