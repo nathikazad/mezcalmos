@@ -1,0 +1,126 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Operators/LaundryOperator.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+
+class LaundryOpAuthController extends GetxController {
+  Rxn<LaundryOperatorState> _state = Rxn();
+  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  AuthController _authController = Get.find<AuthController>();
+  OrderController _orderController = Get.find<OrderController>();
+  BackgroundNotificationsController _notificationsController =
+      Get.find<BackgroundNotificationsController>();
+  String? laundryId;
+
+  LaundryOperatorState? get laundryOperatorState => _state.value;
+  Stream<LaundryOperatorState?> get stateStream => _state.stream;
+
+  StreamSubscription<Event>? _LaundryOperatorNodeListener;
+
+  bool _checkedAppVersion = false;
+  String? _previousStateValue = "init";
+
+  @override
+  void onInit() {
+    // ------------------------------------------------------------------------
+    mezDbgPrint("LaundryAuthController: init ${this.hashCode}");
+    mezDbgPrint(
+        "LaundryAuthController: calling handle state change first time");
+    setupLaundryOperator(Get.find<AuthController>().fireAuthUser!);
+    super.onInit();
+  }
+
+  void setupLaundryOperator(User user) async {
+    mezDbgPrint("LaundryAuthController: handle state change user value");
+    mezDbgPrint(user);
+    // mezDbgPrint(_authController.fireAuthUser);
+
+    mezDbgPrint(
+        "LaundryAuthController: _DeliveryDriverStateNodeListener init ${deliveryDriverStateNode(user.uid)}");
+    await _LaundryOperatorNodeListener?.cancel();
+    _LaundryOperatorNodeListener = null;
+    _LaundryOperatorNodeListener = _databaseHelper.firebaseDatabase
+        .reference()
+        .child(operatorStateNode(
+            operatorType: OperatorType.Laundry, uid: user.uid))
+        .onValue
+        .listen((event) async {
+      mezDbgPrint(
+          "[++++++ = === ==] LaundryAuthController${this.hashCode}: _LaundryOperatorStateNodeListener event => ${event.snapshot.value}");
+      if (event.snapshot.value.toString() == _previousStateValue) {
+        mezDbgPrint(
+            'LaundryAuthController:: same state event fired again, skipping it');
+        return;
+      }
+      _previousStateValue = event.snapshot.value.toString();
+
+      if (event.snapshot.value != null) {
+        mezDbgPrint(event.snapshot.value);
+        _state.value = LaundryOperatorState.fromSnapshot(event.snapshot.value);
+
+        mezDbgPrint(
+            "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
+
+        saveAppVersionIfNecessary();
+        unawaited(saveNotificationToken());
+        if (laundryId != _state.value!.laundryId) {
+          // init controllers with new id
+          laundryId = _state.value!.laundryId;
+          _orderController.init(laundryId!);
+        }
+      }
+    });
+  }
+
+  Future<void> saveNotificationToken() async {
+    mezDbgPrint(
+        "LaundryAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
+    final String? deviceNotificationToken =
+        await _notificationsController.getToken();
+    if (deviceNotificationToken != null)
+      unawaited(_databaseHelper.firebaseDatabase
+          .reference()
+          .child(operatorNotificationsNode(
+              operatorType: OperatorType.Laundry,
+              uid: _authController.fireAuthUser!.uid))
+          .set(<String, String>{
+        'deviceNotificationToken': deviceNotificationToken
+      }));
+  }
+
+  void saveAppVersionIfNecessary() {
+    if (_checkedAppVersion == false) {
+      final String version = GetStorage().read(getxAppVersion);
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child(operatorAppVersionNode(
+              operatorType: OperatorType.Laundry,
+              uid: _authController.fireAuthUser!.uid))
+          .set(version);
+      _checkedAppVersion = true;
+    }
+  }
+
+  @override
+  void onClose() {
+    mezDbgPrint(
+        "[+] LaundryAuthController::dispose ---------> Was invoked ! ${this.hashCode}");
+
+    _LaundryOperatorNodeListener?.cancel();
+    _LaundryOperatorNodeListener = null;
+    super.onClose();
+  }
+}

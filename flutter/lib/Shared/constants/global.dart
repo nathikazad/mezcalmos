@@ -2,6 +2,8 @@
 // PLEASE DO NOT TOUCH ANYTHING IN CONNECTIVITY STRINGS , UNLESS YOU INFORM OTHERS.
 // import 'package:flutter/material.dart';
 
+// ignore_for_file: constant_identifier_names
+
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 
@@ -85,7 +87,8 @@ enum AppType {
   TaxiApp,
   TaxiAdminApp,
   DeliveryAdminApp,
-  DeliveryApp
+  DeliveryApp,
+  LaundryApp
 }
 
 extension ParseOrderTypeToString on AppType {

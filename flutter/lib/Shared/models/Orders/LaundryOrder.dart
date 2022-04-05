@@ -3,6 +3,7 @@
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 enum LaundryOrderStatus {
@@ -39,7 +40,7 @@ extension ParseStringToOrderStatus on String {
 class LaundryOrder extends TwoWayDeliverableOrder {
   num? weight;
   String? notes;
-  UserInfo? laundry;
+  ServiceUserInfo? laundry;
   LaundryOrderStatus status;
   num shippingCost;
   num costPerKilo;
@@ -87,7 +88,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         costPerKilo: data['costPerKilo'] ?? 20,
         notes: data["notes"],
         laundry: (data["laundry"] != null)
-            ? UserInfo.fromData(data["laundry"])
+            ? ServiceUserInfo.fromData(data["laundry"])
             : null,
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
