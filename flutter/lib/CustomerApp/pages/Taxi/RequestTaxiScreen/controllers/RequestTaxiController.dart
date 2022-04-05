@@ -35,8 +35,18 @@ class RequestTaxiController {
   RxBool pickedFromTo = false.obs;
   Timer? timer;
 
+  void startPollingOnlineDrivers() {
+    startFetchingOnlineDrivers();
+    // then keep it periodic each 10s
+    timer?.cancel();
+    timer = null;
+    timer = Timer.periodic(Duration(seconds: 10), (Timer timer) {
+      startFetchingOnlineDrivers();
+    });
+  }
+
   /// this is called at initState time , loads up the map and set the current location as the user's current loc.
-  void initiateViewAndMapWithCurrentLocation() {
+  void initMapAndStartFetchingOnlineDrivers() {
     locationPickerController.setOnMapTap(onTap: () {
       locationSearchBarController.unfocusAllFocusNodes.call();
     });
@@ -53,6 +63,7 @@ class RequestTaxiController {
       taxiRequest.value.from = Location("", locData);
       updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
       locationPickerController.setLocation(taxiRequest.value.from!);
+      startPollingOnlineDrivers();
     });
   }
 
@@ -88,8 +99,8 @@ class RequestTaxiController {
     locationPickerController.animateAndUpdateBounds();
     updateRouteInformation()
         .then((_) => locationPickerController.showConfirmButton());
-
     pickedFromTo.value = true;
+    startPollingOnlineDrivers();
   }
 
   /// Calls `TaxiController.fecthOnlineTaxiDrivers` and check if within 5KM then returns the driver.
