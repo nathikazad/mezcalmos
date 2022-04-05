@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryListView/Components/LaundrySelectCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]

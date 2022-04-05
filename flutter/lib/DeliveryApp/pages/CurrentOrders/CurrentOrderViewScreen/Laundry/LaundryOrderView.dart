@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverBottomLaundryOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -64,18 +62,14 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
   }
 
   AppBar getRightAppBar() {
-    if (canGetBack()) {
-      mezDbgPrint("CCCCANNNNNNN GO BACK");
-      return deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back);
-    } else
-      return deliveryAppBar(AppBarLeftButtonType.Back);
+    return mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back);
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => WillPopScope(
-        onWillPop: () async => canGetBack(),
+        onWillPop: () async => false,
         child: Scaffold(
           appBar: getRightAppBar(),
           body: SingleChildScrollView(
@@ -100,18 +94,5 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
         ),
       ),
     );
-  }
-
-  bool canGetBack() {
-    switch ((order.value! as LaundryOrder).status) {
-      case LaundryOrderStatus.CancelledByAdmin:
-      case LaundryOrderStatus.CancelledByCustomer:
-      case LaundryOrderStatus.Delivered:
-      case LaundryOrderStatus.AtLaundry:
-        return true;
-
-      default:
-        return false;
-    }
   }
 }

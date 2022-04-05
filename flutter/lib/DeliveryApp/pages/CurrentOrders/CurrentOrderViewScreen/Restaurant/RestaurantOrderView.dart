@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
@@ -61,19 +60,14 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
 
   AppBar getRightAppBar() {
     mezDbgPrint("CCCCANNNNNNN GO BACK");
-
-    if (canGetBack()) {
-      mezDbgPrint("CCCCANNNNNNN GO BACK");
-      return deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back);
-    } else
-      return deliveryAppBar(AppBarLeftButtonType.Back);
+    return mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back);
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => WillPopScope(
-        onWillPop: () async => canGetBack(),
+        onWillPop: () async => false,
         child: Scaffold(
           appBar: getRightAppBar(),
           body: SingleChildScrollView(
@@ -96,19 +90,5 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
         ),
       ),
     );
-  }
-
-  bool canGetBack() {
-    switch ((order.value! as RestaurantOrder).status) {
-      case RestaurantOrderStatus.CancelledByAdmin:
-      case RestaurantOrderStatus.CancelledByCustomer:
-      case RestaurantOrderStatus.Delivered:
-      case RestaurantOrderStatus.OrderReceieved:
-      case RestaurantOrderStatus.PreparingOrder:
-        return true;
-
-      default:
-        return false;
-    }
   }
 }

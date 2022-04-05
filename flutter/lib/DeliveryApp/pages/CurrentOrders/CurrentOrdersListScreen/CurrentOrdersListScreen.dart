@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNoOrdersComponent.dart';
@@ -57,7 +56,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         child: Scaffold(
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: MezSideMenu(),
-            appBar: deliveryAppBar(AppBarLeftButtonType.Menu),
+            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
