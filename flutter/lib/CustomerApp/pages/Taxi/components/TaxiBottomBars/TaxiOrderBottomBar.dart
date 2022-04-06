@@ -299,6 +299,8 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             ),
           ),
           Spacer(),
+          messageBtn(
+              order: widget.order.value!, margin: EdgeInsets.only(right: 5)),
           cancelBtn(widget.order.value!)
         ]);
         // widget.bottomPadding = 10.0;

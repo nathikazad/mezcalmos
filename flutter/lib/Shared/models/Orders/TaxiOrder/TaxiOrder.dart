@@ -106,6 +106,8 @@ class TaxiOrder extends Order {
   }
 
   factory TaxiOrder.fromData(id, data) {
+    mezDbgPrint("TAXI ORDER ------>>>>>>>>>>>>>>>>>>>> $data");
+    mezDbgPrint("TAXI ID ------>>>>>>>>>>>>>>>>>>>> $id");
     final TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
         driver: (data["driver"] != null)
@@ -195,17 +197,15 @@ class TaxiOrder extends Order {
   @override
   bool inProcess() {
     return status == TaxiOrdersStatus.InTransit ||
-        status == TaxiOrdersStatus.LookingForTaxi ||
+        // status == TaxiOrdersStatus.LookingForTaxi ||
+        status == TaxiOrdersStatus.ForwardingToLocalCompany ||
         status == TaxiOrdersStatus.DroppedOff ||
         status == TaxiOrdersStatus.OnTheWay;
   }
 
   bool isOpenOrder() {
     switch (status) {
-      // case TaxiOrdersStatus.ForwardingSuccessful:
       case TaxiOrdersStatus.LookingForTaxi:
-        // case TaxiOrdersStatus.ForwardingToLocalCompany:
-        //   case TaxiOrdersStatus.ForwardingUnsuccessful:
         return true;
 
       default:

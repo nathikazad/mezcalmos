@@ -24,7 +24,7 @@ class TaxiCurrentOrderCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: () {
           mezDbgPrint("Clickeeed");
-          Get.toNamed(getTaxiOrderRoute(order.orderId));
+          Get.toNamed(getTaxiOrderRoute(order.orderId,));
         },
         child: Container(
           margin: EdgeInsets.all(8),

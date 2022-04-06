@@ -109,8 +109,8 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                   DriverCard(
                     driver: getRightDriver(),
                     order: order.value!,
-                    callBack: (DeliveryDriver? newDriver) {
-                      deliveryDriverController.assignDeliveryDriver(
+                    callBack: (DeliveryDriver? newDriver) async {
+                      await deliveryDriverController.assignDeliveryDriver(
                           deliveryDriverId: newDriver!.deliveryDriverId,
                           orderId: order.value!.orderId,
                           orderType: OrderType.Laundry,

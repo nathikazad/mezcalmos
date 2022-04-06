@@ -27,7 +27,6 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
   StreamSubscription? _orderListener;
   @override
   void initState() {
-    mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
 
     order.value = taxiOrderController.getOrder(orderId);
@@ -40,14 +39,27 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
           .getOpenOrderStream(orderId)
           .listen((TaxiOrder? newOrder) {
         if (newOrder != null) {
+          mezDbgPrint("Getting from open orders §§§§§§§§§§§§§§§§");
           order.value = taxiOrderController.getOrder(orderId);
-        } else if (order.value!.inProcess()) {
+        } else {
+          //  Get.back();
+          _orderListener?.cancel();
+          _orderListener = null;
+          order.value = taxiOrderController.getOrder(orderId);
+          mezDbgPrint("Cant get from opeeen orders ..............§§§§§§§§§§§");
+          mezDbgPrint(taxiOrderController.inProcessOrders.length);
           _orderListener = taxiOrderController
               .getInProcessOrderStream(orderId)
               .listen((TaxiOrder? newOrder) {
+            mezDbgPrint("Geettting order from in process §§§§§");
             if (newOrder != null) {
-              order.value = taxiOrderController.getOrder(orderId);
+              order.value = newOrder;
+              mezDbgPrint(
+                  "geeettttting from in process orders §§§§§§§§§§§§§§§§§§§§§");
             } else {
+              _orderListener?.cancel();
+              _orderListener = null;
+
               _orderListener = taxiOrderController
                   .getPastOrderStrem(orderId)
                   .listen((TaxiOrder? pastOrder) {
@@ -61,8 +73,6 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
           });
         }
       });
-    } else {
-      Get.back();
     }
 
     super.initState();

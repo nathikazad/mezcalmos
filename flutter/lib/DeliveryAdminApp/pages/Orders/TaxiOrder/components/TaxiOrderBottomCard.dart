@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 import '../../../../../Shared/controllers/languageController.dart';
 
@@ -69,6 +70,8 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                   width: 8,
                 ),
                 Flexible(
+                  flex: 5,
+                  fit: FlexFit.tight,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -78,6 +81,19 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                       ),
                     ],
                   ),
+                ),
+                Spacer(),
+                IconButton(
+                    onPressed: () {
+                      Get.toNamed(
+                          getMessagesRoute(chatId: widget.order.orderId));
+                    },
+                    icon: Icon(
+                      Icons.message_rounded,
+                      color: Theme.of(context).primaryColorLight,
+                    )),
+                SizedBox(
+                  width: 5,
                 )
               ],
             ),
