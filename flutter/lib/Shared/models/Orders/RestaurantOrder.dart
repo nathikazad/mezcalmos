@@ -136,6 +136,11 @@ class RestaurantOrder extends DeliverableOrder {
         status == RestaurantOrderStatus.OnTheWay;
   }
 
+  bool inDeliveryPhase() {
+    return status == RestaurantOrderStatus.ReadyForPickup ||
+        status == RestaurantOrderStatus.OnTheWay;
+  }
+
   String clipBoardText(LanguageType languageType) {
     String text = "";
     text += "${restaurant.name}\n";

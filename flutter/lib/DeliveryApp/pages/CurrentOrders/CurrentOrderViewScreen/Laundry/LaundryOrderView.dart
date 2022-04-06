@@ -8,6 +8,7 @@ import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverBottomLaundryOrderCard.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverLaundryOrderButtons.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -114,6 +115,11 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back),
+      bottomNavigationBar: Obx(
+        () => DriverLaundryBottomButtons(
+          order: order.value!,
+        ),
+      ),
       body: Obx(
         () => order.value != null
             ? Column(
@@ -121,9 +127,11 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                   DriverOrderMapComponent(
                       mapController: mapController, order: order.value!),
                   Expanded(
-                    child: DriverBottomLaundryOrderCard(
-                        order: order.value as LaundryOrder),
-                  ),
+                    child: Container(
+                      child: DriverBottomLaundryOrderCard(
+                          order: order.value as LaundryOrder),
+                    ),
+                  )
                 ],
               )
             : MezLogoAnimation(

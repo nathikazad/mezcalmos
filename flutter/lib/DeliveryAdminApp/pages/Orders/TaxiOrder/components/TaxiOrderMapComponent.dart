@@ -7,7 +7,8 @@ import 'package:sizer/sizer.dart';
 
 class TaxiOrderMapComponent extends StatefulWidget {
   final TaxiOrder order;
-  TaxiOrderMapComponent({Key? key, required this.order}) : super(key: key);
+  const TaxiOrderMapComponent({Key? key, required this.order})
+      : super(key: key);
 
   @override
   _TaxiOrderMapComponentState createState() => _TaxiOrderMapComponentState();
@@ -37,7 +38,7 @@ class _TaxiOrderMapComponentState extends State<TaxiOrderMapComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60.h,
+      height: 45.h,
       child: MGoogleMap(
         mGoogleMapController: mapController,
       ),

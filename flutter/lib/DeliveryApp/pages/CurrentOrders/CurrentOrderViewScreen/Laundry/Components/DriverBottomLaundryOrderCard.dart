@@ -35,27 +35,30 @@ class _DriverBottomLaundryOrderCardState
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(5.0),
-      child: Card(
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                _getOrderStatus(),
-                style: textTheme.bodyText2,
-              ),
-              Divider(),
-              LaundryOrderHeader(order: widget.order),
-              Divider(),
-              // From to component
-              LaundryOrderFromToComponent(
-                order: widget.order,
-              ),
-              Divider(),
-              getBottomComponent(textTheme)
-            ],
+      child: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Card(
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  _getOrderStatus(),
+                  style: textTheme.bodyText2,
+                ),
+                Divider(),
+
+                LaundryOrderHeader(order: widget.order),
+                Divider(),
+                // From to component
+                LaundryOrderFromToComponent(
+                  order: widget.order,
+                ),
+                // Divider(),
+                // getBottomComponent(textTheme)
+              ],
+            ),
           ),
         ),
       ),

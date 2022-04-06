@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOpenOrderControllButtons.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -20,24 +19,24 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(8),
-      child: Container(
+    return SingleChildScrollView(
+      physics: ClampingScrollPhysics(),
+      child: Card(
         margin: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _orderStausAndTimer(context),
-            Divider(),
-            _orderCustomerInfo(context),
-            Divider(),
-            _driversStatsComponent(),
-            Divider(),
-            _orderFromToAdresses(context),
-            TaxiOpenOrderControllButtons(
-              order: order,
-            )
-          ],
+        child: Container(
+          margin: const EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _orderStausAndTimer(context),
+              Divider(),
+              _orderCustomerInfo(context),
+              Divider(),
+              _driversStatsComponent(),
+              Divider(),
+              _orderFromToAdresses(context),
+            ],
+          ),
         ),
       ),
     );

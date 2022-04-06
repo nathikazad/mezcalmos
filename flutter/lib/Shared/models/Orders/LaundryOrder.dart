@@ -131,6 +131,14 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.OtwDelivery;
   }
 
+  bool inDeliverPhase() {
+    return status == LaundryOrderStatus.OtwPickup ||
+        status == LaundryOrderStatus.OrderReceieved ||
+        status == LaundryOrderStatus.PickedUp ||
+        status == LaundryOrderStatus.ReadyForDelivery ||
+        status == LaundryOrderStatus.OtwDelivery;
+  }
+
   num? getPrice() {
     if (weight != null) {
       return weight! * 20;

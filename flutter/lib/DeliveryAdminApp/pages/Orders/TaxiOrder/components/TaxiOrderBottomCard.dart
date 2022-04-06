@@ -37,107 +37,112 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(8),
-      child: Container(
+    return SingleChildScrollView(
+      physics: ClampingScrollPhysics(),
+      child: Card(
         margin: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(_getOrderStatus()),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 5),
-              child: Row(
-                children: [
-                  Text('${_i18n()['customer']} ',
-                      style: Theme.of(context).textTheme.subtitle1),
-                  Expanded(child: Divider())
-                ],
+        child: Container(
+          margin: const EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(_getOrderStatus()),
               ),
-            ),
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage:
-                      CachedNetworkImageProvider(widget.order.customer.image),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  children: [
+                    Text('${_i18n()['customer']} ',
+                        style: Theme.of(context).textTheme.subtitle1),
+                    Expanded(child: Divider())
+                  ],
                 ),
-                SizedBox(
-                  width: 8,
-                ),
-                Flexible(
-                  flex: 5,
-                  fit: FlexFit.tight,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.order.customer.name,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ],
-                  ),
-                ),
-                Spacer(),
-                IconButton(
-                    onPressed: () {
-                      Get.toNamed(
-                          getMessagesRoute(chatId: widget.order.orderId));
-                    },
-                    icon: Icon(
-                      Icons.message_rounded,
-                      color: Theme.of(context).primaryColorLight,
-                    )),
-                SizedBox(
-                  width: 5,
-                )
-              ],
-            ),
-            if (widget.order.serviceProvider != null) _orderTaxiDriver(context),
-            Divider(),
-            Container(
-              child: Row(
+              ),
+              Row(
                 children: [
-                  Text('${_i18n()['distance']}'),
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundImage:
+                        CachedNetworkImageProvider(widget.order.customer.image),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Flexible(
+                    flex: 5,
+                    fit: FlexFit.tight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.order.customer.name,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  IconButton(
+                      onPressed: () {
+                        Get.toNamed(
+                            getMessagesRoute(chatId: widget.order.orderId));
+                      },
+                      icon: Icon(
+                        Icons.message_rounded,
+                        color: Theme.of(context).primaryColorLight,
+                      )),
                   SizedBox(
                     width: 5,
-                  ),
-                  Text(
-                    widget.order.routeInformation!.distance.distanceStringInKm,
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
+                  )
                 ],
               ),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Text(
-              '${_i18n()['from']}' + widget.order.from.address,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Text('${_i18n()['to']}' + widget.order.to.address,
-                style: Theme.of(context).textTheme.bodyText2),
-            SizedBox(
-              height: 10,
-            ),
-            Obx(() {
-              if (!btnClicked.value) {
-                return _getOrderBottomComponent(context);
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
-          ],
+              if (widget.order.serviceProvider != null)
+                _orderTaxiDriver(context),
+              Divider(),
+              Container(
+                child: Row(
+                  children: [
+                    Text('${_i18n()['distance']}'),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      widget
+                          .order.routeInformation!.distance.distanceStringInKm,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Text(
+                '${_i18n()['from']}' + widget.order.from.address,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Text('${_i18n()['to']}' + widget.order.to.address,
+                  style: Theme.of(context).textTheme.bodyText2),
+              SizedBox(
+                height: 10,
+              ),
+              // Obx(() {
+              //   if (!btnClicked.value) {
+              //     return _getOrderBottomComponent(context);
+              //   } else {
+              //     return Center(
+              //       child: CircularProgressIndicator(),
+              //     );
+              //   }
+              // }),
+            ],
+          ),
         ),
       ),
     );

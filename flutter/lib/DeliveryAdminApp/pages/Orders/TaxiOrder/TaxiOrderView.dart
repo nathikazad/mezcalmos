@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOpenOrderBottomCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOrderBottomCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOrderButtons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOrderMapComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -91,6 +92,13 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
       () => Scaffold(
           appBar: AppBar(
             title: Text('${_i18n()["order"]}'),
+          ),
+          bottomNavigationBar: Obx(
+            () {
+              return TaxiOrderButtons(
+                order: order.value!,
+              );
+            },
           ),
           body: Column(
             children: <Widget>[

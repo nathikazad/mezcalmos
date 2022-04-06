@@ -25,7 +25,9 @@ class LaundryControllButtons extends StatelessWidget {
     return Obx(() {
       if (clicked.value) {
         return Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            color: Colors.white,
+          ),
         );
       } else {
         return TextButton(
@@ -33,10 +35,10 @@ class LaundryControllButtons extends StatelessWidget {
               clicked.value = true;
               switch (order.status) {
                 case LaundryOrderStatus.OrderReceieved:
-                  laundryOrderController.otwPickupOrder(order.orderId);
+                  await laundryOrderController.otwPickupOrder(order.orderId);
                   break;
                 case LaundryOrderStatus.OtwPickup:
-                  laundryOrderController.pickedUpOrder(order.orderId);
+                  await laundryOrderController.pickedUpOrder(order.orderId);
                   break;
                 case LaundryOrderStatus.PickedUp:
                   await orderWeightDialog(context);
@@ -48,7 +50,7 @@ class LaundryControllButtons extends StatelessWidget {
 
                   break;
                 case LaundryOrderStatus.ReadyForDelivery:
-                  laundryOrderController.otwDeliveryOrder(order.orderId);
+                  await laundryOrderController.otwDeliveryOrder(order.orderId);
                   break;
                 case LaundryOrderStatus.OtwDelivery:
                   await laundryOrderController.deliveredOrder(order.orderId);
@@ -69,7 +71,7 @@ class LaundryControllButtons extends StatelessWidget {
   Future<void> orderWeightDialog(BuildContext context) async {
     orderWeight = await showDialog(
         context: context,
-        builder: (ctx) {
+        builder: (BuildContext ctx) {
           return AlertDialog(
             title: Text("${_i18n()["confirmOrderWeight"]}"),
             content: Column(
@@ -82,14 +84,14 @@ class LaundryControllButtons extends StatelessWidget {
                     FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
                   ],
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (v) {
+                  validator: (String? v) {
                     if (num.tryParse(v!) == null) {
                       return "${_i18n()["orderWeightAlert"]}";
                     } else {
                       return null;
                     }
                   },
-                  onChanged: (value) {
+                  onChanged: (String value) {
                     orderWeight = num.parse(value);
                   },
                   decoration: InputDecoration(

@@ -5,164 +5,184 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["TaxiOrder"]["components"]["taxiOrderBottomCard"];
 
-class TaxiOpenOrderControllButtons extends StatefulWidget {
+class TaxiOrderButtons extends StatefulWidget {
+  const TaxiOrderButtons({Key? key, required this.order}) : super(key: key);
   final TaxiOrder order;
-  const TaxiOpenOrderControllButtons({Key? key, required this.order})
-      : super(key: key);
-
   @override
-  State<TaxiOpenOrderControllButtons> createState() =>
-      _TaxiOpenOrderControllButtonsState();
+  State<TaxiOrderButtons> createState() => _TaxiOrderButtonsState();
 }
 
-class _TaxiOpenOrderControllButtonsState
-    extends State<TaxiOpenOrderControllButtons> {
-  RxBool btnClicked = RxBool(false);
+class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
+  bool btnClicked = false;
+  num taxiNumber = 0;
 
   TaxiOrderController _taxiOrderController = Get.find<TaxiOrderController>();
-
-  num taxiNumber = 0;
-  @override
-  void initState() {
-    btnClicked.value = false;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (btnClicked.value == false) {
-        return _getBottomComponent(context);
-      } else {
-        return Center(child: CircularProgressIndicator());
-      }
-    });
+    return Container(
+      height: 10.h,
+      child: (btnClicked)
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : _getOrderBottomComponent(context),
+    );
   }
 
-  Widget _getBottomComponent(context) {
+  Widget _getOrderBottomComponent(context) {
     switch (widget.order.status) {
       case TaxiOrdersStatus.LookingForTaxi:
         return TextButton(
+            style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
             onPressed: () async {
-              btnClicked.value = true;
+              setState(() {
+                btnClicked = true;
+              });
               await _taxiOrderController
-                  .forwardToLocalCompany(widget.order.orderId);
+                  .forwardToLocalCompany(widget.order.orderId)
+                  .then((ServerResponse value) {
+                setState(() {
+                  btnClicked = false;
+                });
+              });
             },
             child: Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(5),
                 child: Text(
                     '${_i18n()["TaxiOpenOrderControllButton"]["fwdToCompany"]}')));
+      case TaxiOrdersStatus.CancelledByCustomer:
+      case TaxiOrdersStatus.ForwardingUnsuccessful:
+      case TaxiOrdersStatus.CancelledByTaxi:
+      case TaxiOrdersStatus.Expired:
+        return Container(
+          color: Colors.white,
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            children: [
+              Icon(
+                Icons.cancel,
+                size: 50,
+                color: Colors.red,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Flexible(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _getOrderStatus(),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      '${_i18n()["at"]} ${DateFormat('dd MMM yyy hh:mm a').format(widget.order.orderTime.toLocal())}',
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      case TaxiOrdersStatus.DroppedOff:
+      case TaxiOrdersStatus.ForwardingSuccessful:
+        return Container(
+          color: Colors.white,
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                size: 50,
+                color: Colors.green,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Flexible(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _getOrderStatus(),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      '${_i18n()["at"]} ${DateFormat('dd MMM yyy hh:m a').format(widget.order.orderTime.toLocal())}',
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
       case TaxiOrdersStatus.ForwardingToLocalCompany:
-        return Column(
+        return Row(
+          mainAxisSize: MainAxisSize.max,
           children: [
-            TextButton(
-                onPressed: () async {
-                  final dynamic result = await taxiNumberDialog(context);
+            Flexible(
+              child: TextButton(
+                  style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
+                  onPressed: () async {
+                    setState(() {
+                      btnClicked = true;
+                    });
+                    final dynamic result = await taxiNumberDialog(context);
 
-                  if (result != 0) {
-                    btnClicked.value = true;
-                    await _taxiOrderController.submitForwardResult(
-                        orderId: widget.order.orderId,
-                        forwardSuccessful: true,
-                        taxiNumber: result.toString());
-                    Get.back(closeOverlays: true);
-                  }
-                },
-                child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(5),
-                    child: Text(
-                        '${_i18n()["TaxiOpenOrderControllButton"]["confirmTaxi"]}'))),
+                    if (result != 0) {
+                      await _taxiOrderController.submitForwardResult(
+                          orderId: widget.order.orderId,
+                          forwardSuccessful: true,
+                          taxiNumber: result.toString());
+                      setState(() {
+                        btnClicked = false;
+                      });
+                      Get.back(closeOverlays: true);
+                    }
+                  },
+                  child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(5),
+                      child: Text(
+                          '${_i18n()["TaxiOpenOrderControllButton"]["confirmTaxi"]}'))),
+            ),
             Container(
-              margin: const EdgeInsets.only(top: 8),
+              // margin: const EdgeInsets.only(top: 8),
               child: TextButton(
                   onPressed: () async {
-                    btnClicked.value = true;
-                    await _taxiOrderController.submitForwardResult(
-                        orderId: widget.order.orderId,
-                        forwardSuccessful: false);
+                    setState(() {
+                      btnClicked = true;
+                    });
+                    await _taxiOrderController
+                        .submitForwardResult(
+                            orderId: widget.order.orderId,
+                            forwardSuccessful: false)
+                        .then((ServerResponse value) {
+                      setState(() {
+                        btnClicked = false;
+                      });
+                    });
                     Get.back(closeOverlays: true);
                   },
-                  style:
-                      TextButton.styleFrom(backgroundColor: Colors.redAccent),
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.redAccent,
+                      shape: RoundedRectangleBorder()),
                   child: Container(
                       alignment: Alignment.center,
                       padding: EdgeInsets.all(5),
                       child: Text(
                           '${_i18n()["TaxiOpenOrderControllButton"]["cancel"]}'))),
-            ),
-          ],
-        );
-
-      case TaxiOrdersStatus.ForwardingUnsuccessful:
-      case TaxiOrdersStatus.CancelledByCustomer:
-      case TaxiOrdersStatus.CancelledByTaxi:
-        return Column(
-          children: [
-            Divider(),
-            Row(
-              children: [
-                Icon(
-                  Icons.cancel,
-                  size: 50,
-                  color: Colors.red,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Flexible(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _getOrderStatus(),
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    Text(
-                      '${_i18n()["at"]} ${DateFormat('dd MMM yyy hh:mm a').format(widget.order.orderTime.toLocal())}',
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ],
-                )),
-              ],
-            ),
-          ],
-        );
-      case TaxiOrdersStatus.ForwardingSuccessful:
-      case TaxiOrdersStatus.DroppedOff:
-        return Column(
-          children: [
-            Divider(),
-            Row(
-              children: [
-                Icon(
-                  Icons.check_circle,
-                  size: 50,
-                  color: Colors.green,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Flexible(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _getOrderStatus(),
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    Text(
-                      '${_i18n()["at"]} ${DateFormat('dd MMM yyy hh:mm a').format(widget.order.orderTime.toLocal())}',
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ],
-                )),
-              ],
             ),
           ],
         );
@@ -173,7 +193,7 @@ class _TaxiOpenOrderControllButtonsState
   }
 
   Future taxiNumberDialog(BuildContext context) async {
-    return await showDialog(
+    return showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext ctx) {

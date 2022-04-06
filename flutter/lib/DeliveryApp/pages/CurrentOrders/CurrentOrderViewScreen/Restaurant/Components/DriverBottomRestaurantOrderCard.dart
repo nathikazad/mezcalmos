@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantControllButtons.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -25,26 +24,26 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(5.0),
-      child: Card(
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                _getOrderStatus(),
-                style: textTheme.bodyText2,
-              ),
-              Divider(),
-              _orderHeaderInfo(context, textTheme),
-              Divider(),
-              // From to component
-              _orderFromToComponent(textTheme),
-              Divider(),
-              // Order bottom card footer component (to be refactored)
-              RestaurantControllButtons(order: order),
-            ],
+      child: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Card(
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  _getOrderStatus(),
+                  style: textTheme.bodyText2,
+                ),
+                Divider(),
+                _orderHeaderInfo(context, textTheme),
+                Divider(),
+                // From to component
+                _orderFromToComponent(textTheme),
+              ],
+            ),
           ),
         ),
       ),

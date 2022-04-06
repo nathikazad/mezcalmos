@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,6 +8,7 @@ import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/DriverBottomRestaurantOrderCard.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantControllButtons.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -112,6 +114,8 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
     return Obx(
       () => Scaffold(
         appBar: deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back),
+        bottomNavigationBar: Obx(() => BottomAppBar(
+            child: RestaurantControllButtons(order: order.value!))),
         body: order.value != null
             ? Column(children: <Widget>[
                 DriverOrderMapComponent(
