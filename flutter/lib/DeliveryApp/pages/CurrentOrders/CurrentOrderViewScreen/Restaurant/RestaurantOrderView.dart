@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -28,22 +27,19 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   Rxn<RestaurantOrder> order = Rxn<RestaurantOrder>();
   OrderController controller = Get.find<OrderController>();
   StreamSubscription<Order?>? _orderListener;
+  RestaurantOrderStatus? orderStatusSnapshot;
   DeliveryAuthController deliveryAuthAuthController =
       Get.find<DeliveryAuthController>();
   @override
   void initState() {
     super.initState();
-    // TODO : Add Restaurant's Markers location.
+
     final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder;
     if (order.value == null) {
       mezDbgPrint("ORDER NULL");
     } else {
-      mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
-      mapController.periodicRerendering.value = true;
-      mapController.periodicRerendering.refresh();
-
       mezDbgPrint(
           "lat lng DeliveryDriver => ${deliveryAuthAuthController.currentLocation.toString()}");
 
@@ -52,6 +48,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
             encodedPolylineString: order.value!.routeInformation!.polyline);
       }
 
+      // doing this once to avoid doing it constaintly in [handleRestaurantOrder::switch::default]
       Future.wait(<Future<void>>[
         // DESTINATION MARKER
         mapController.addOrUpdatePurpleDestinationMarker(
@@ -82,6 +79,9 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
             deliveryAuthAuthController.currentLocation,
           ),
         );
+        mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+        mapController.animateMarkersPolyLinesBounds.value = true;
+        mapController.periodicRerendering.value = true;
         mapController.animateAndUpdateBounds();
       });
 
@@ -135,19 +135,54 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   void handleRestaurantOrder(RestaurantOrder order) {
     switch (order.status) {
       case RestaurantOrderStatus.ReadyForPickup:
+        // only update once upon ReadyForPickUp
+        if (orderStatusSnapshot != order.status) {
+          // ignoring customer's marker (destination)
+          mapController.addOrUpdatePurpleDestinationMarker(
+            latLng: LatLng(
+              order.to.latitude,
+              order.to.longitude,
+            ),
+            fitWithinBounds: false,
+          );
+        }
+        // update position of our delivery Guy
+        mapController.addOrUpdateUserMarker(
+          latLng: LatLng(
+            order.dropoffDriver!.location!.latitude,
+            order.dropoffDriver!.location!.longitude,
+          ),
+        );
+        mapController.animateAndUpdateBounds();
+        orderStatusSnapshot = order.status;
         break;
 
       case RestaurantOrderStatus.OnTheWay:
-        mapController.animateMarkersPolyLinesBounds.value = true;
-        mapController.myLocationButtonEnabled.value = true;
-        // user marker
+        // only update once.
+        if (orderStatusSnapshot != order.status) {
+          // ignoring Restaurant's marker
+          mapController.addOrUpdateUserMarker(
+            latLng: LatLng(
+              order.restaurant.location.latitude,
+              order.restaurant.location.longitude,
+            ),
+            markerId: order.restaurantId,
+            customImgHttpUrl: order.restaurant.image,
+            fitWithinBounds: false,
+          );
+        }
+        // updating our delivery guy location
         mapController.addOrUpdateUserMarker(
-          latLng: LatLng(order.dropoffDriver!.location!.latitude,
-              order.dropoffDriver!.location!.longitude),
+          latLng: LatLng(
+            order.dropoffDriver!.location!.latitude,
+            order.dropoffDriver!.location!.longitude,
+          ),
         );
         mapController.animateAndUpdateBounds();
+        orderStatusSnapshot = order.status;
         break;
       default:
+        orderStatusSnapshot = order.status;
     }
   }
 }

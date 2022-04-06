@@ -54,7 +54,7 @@ export = functions.https.onCall(async (data, context) => {
     let order = constructTaxiOrder(orderRequest, userInfo);
     let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
     let orderId = orderRef.key!
-    rootNodes.openOrders(OrderType.Taxi,).set(order);
+    rootNodes.openOrders(OrderType.Taxi, orderId).set(order);
 
     let chat: Chat = await buildChatForOrder(
       orderId,

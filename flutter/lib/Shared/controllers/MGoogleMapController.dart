@@ -7,7 +7,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
@@ -25,6 +24,7 @@ class MGoogleMapController {
   Function? onMapTap;
   // this is used when we don't want to re-render the map periodically.
   RxBool periodicRerendering = false.obs;
+  RxBool recenterButtonEnabled = false.obs;
   late RxBool myLocationButtonEnabled;
 
   MGoogleMapController({bool myLocationButtonEnabled = false}) {
@@ -53,6 +53,9 @@ class MGoogleMapController {
 
   /// In Case we needed it
   void updateMarkersIconOnZoomChange({required double zoom}) {}
+
+  /// gets Called whenever a zoom Change happens in [MGoogleMap]
+  void onZoomChange(double newZoomValue) {}
 
   Future<void> addOrUpdateCircleMarker(LatLng latLng,
       {String markerId = "default", bool fitWithinBounds = true}) async {
@@ -314,10 +317,25 @@ class MGoogleMapController {
 
   /// Main function for updating the bounds and start the animation
   Future<void> animateAndUpdateBounds() async {
-    setBounds(animateMarkersPolyLinesBounds.value
-        ? _getMarkersAndPolylinesBounds()
-        : null);
-    await animateCameraWithNewBounds();
+    if (periodicRerendering.value) {
+      setBounds(animateMarkersPolyLinesBounds.value
+          ? _getMarkersAndPolylinesBounds()
+          : null);
+      await animateCameraWithNewBounds();
+    }
+  }
+
+  /// This locks In AutoZoom and AutoAnimate
+  void lockInAutoZoomAnimation() {
+    periodicRerendering.value = true;
+    recenterButtonEnabled.value = false;
+  }
+
+  /// Unlock AutoZoom and AutoAnimation and shows [Recenter Button]
+  void unlockAutoZoomAnimation() {
+    periodicRerendering.value = false;
+    myLocationButtonEnabled.value = false;
+    recenterButtonEnabled.value = true;
   }
 
   MinMaxZoomPreference getMapMinMaxZommPrefs() {

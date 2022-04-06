@@ -24,6 +24,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   bool lockOnTaxiRequest = false;
   @override
   void initState() {
+    viewController.locationPickerController.recenterButtonEnabled.value = false;
     viewWidgets =
         RequestTaxiScreenWidgets(requestTaxiController: viewController);
 
@@ -49,7 +50,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         child: Stack(
             clipBehavior: Clip.none,
             alignment: Alignment.topCenter,
-            children: [
+            children: <Widget>[
               Container(
                 width: Get.width,
                 decoration: BoxDecoration(
@@ -66,7 +67,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                     notifyParentOfLocationFinalized:
                         viewController.updateModelAndMaybeCalculateRoute,
                     notifyParentOfConfirm: (Location? _) async {
-                      if (GetStorage().read(getxLmodeKey) == "prod" &&
+                      if (GetStorage().read<String?>(getxLmodeKey) == "prod" &&
                           Get.find<AuthController>().fireAuthUser?.uid ==
                               testUserIdInProd) {
                         MezSnackbar("Oops",
@@ -87,6 +88,11 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                     request: viewController.taxiRequest.value,
                     locationSearchBarController:
                         viewController.locationSearchBarController,
+                    onClear: () {
+                      // we set that back to false
+                      viewController.locationPickerController
+                          .periodicRerendering.value = false;
+                    },
                     newLocationChosenEvent:
                         viewController.updateModelAndHandoffToLocationPicker),
               ),

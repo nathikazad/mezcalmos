@@ -87,17 +87,21 @@ class MessageController extends GetxController {
     if (chat.value == null) return null;
     if (recipientId != null) {
       for (String key in chat.value!.participants.keys.toList()) {
-        Participant participant = chat.value!.participants[key]!;
+        final Participant participant = chat.value!.participants[key]!;
         if (participant.id == recipientId) return participant;
       }
     }
     for (String key in chat.value!.participants.keys.toList()) {
-      Participant participant = chat.value!.participants[key]!;
+      final Participant participant = chat.value!.participants[key]!;
       if (participant.participantType == recipientType) {
         mezDbgPrint(
             "the user name is ${participant.name} and the type is ${participant.participantType.toString()}");
         return participant;
       }
+    }
+    for (String key in chat.value!.participants.keys.toList()) {
+      final Participant participant = chat.value!.participants[key]!;
+      if (participant.id != _authController.user!.id) return participant;
     }
     return null;
   }
