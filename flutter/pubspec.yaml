@@ -86,9 +86,6 @@ dependencies:
   in_app_update: ^3.0.0
   store_redirect: ^2.0.1
   in_app_review: ^2.0.4
-  os_detect: ^2.0.0
-  version: ^2.0.0
-
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.2

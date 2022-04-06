@@ -10,9 +10,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezAppcast.dart';
 import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgraderMessage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:store_redirect/store_redirect.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Signature of callbacks that have no arguments and return bool.
@@ -41,9 +41,6 @@ class MezUpgrade {
   /// The appcast configuration ([AppCastConfiguration]) used by [Appcast].
   /// When an appcast is configured for iOS, the iTunes lookup is not used.
   AppCastConfiguration? appCastConfig;
-
-  /// Provide an Appcast that can be replaced for mock testing.
-  Appcast? appCast;
 
   /// Provide an HTTP Client that can be replaced for mock testing.
   http.Client? client = http.Client();
@@ -119,52 +116,50 @@ class MezUpgrade {
     return true;
   }
 
-  String message() {
+  String message(
+    String appName,
+    String currentAppStoreVersion,
+    String currentInstalledVersion,
+  ) {
     String msg = messages!.message(UpgraderMessage.body)!;
-    msg = msg.replaceAll('{{appName}}', 'app Name');
+    msg = msg.replaceAll('{{appName}}', appName);
+    msg = msg.replaceAll('{{currentAppStoreVersion}}', currentAppStoreVersion);
     msg =
-        msg.replaceAll('{{currentAppStoreVersion}}', 'currentAppStoreVersion');
-    msg = msg.replaceAll(
-        '{{currentInstalledVersion}}', 'currentInstalledVersion');
+        msg.replaceAll('{{currentInstalledVersion}}', currentInstalledVersion);
     return msg;
   }
 
   /// Only called by [UpgradeAlert].
-  Widget checkVersion({required BuildContext context}) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: dialogStyle == UpgradeDialogStyle.material
-          ? _alertDialog(
-              messages!.message(UpgraderMessage.title)!,
-              message(),
-              '_releaseNotes',
-              context,
-            )
-          : _cupertinoAlertDialog(
-              messages!.message(UpgraderMessage.title)!,
-              message(),
-              '_releaseNotes',
-              context,
-            ),
-    );
-    // Future.delayed(
-    //   const Duration(milliseconds: 0),
-    //   () {
-    //     _showDialog(
-    //       context: context,
-    //       title: messages!.message(UpgraderMessage.title),
-    //       message: message(),
-    //       releaseNotes: '_releaseNotes',
-    //       canDismissDialog: true,
-    //     );
-    //   },
-    // );
+  Widget checkVersion({
+    required BuildContext context,
+    required String releaseNotes,
+    required String appName,
+    required String packageName,
+    required String currentAppStoreVersion,
+    required String currentInstalledVersion,
+  }) {
+    return dialogStyle == UpgradeDialogStyle.material
+        ? _alertDialog(
+            messages!.message(UpgraderMessage.title)!,
+            message(appName, currentAppStoreVersion, currentInstalledVersion),
+            packageName,
+            releaseNotes,
+            context,
+          )
+        : _cupertinoAlertDialog(
+            messages!.message(UpgraderMessage.title)!,
+            message(appName, currentAppStoreVersion, currentInstalledVersion),
+            packageName,
+            releaseNotes,
+            context,
+          );
   }
 
   void _showDialog({
     required BuildContext context,
     required String? title,
     required String message,
+    required String packageName,
     required String? releaseNotes,
     required bool canDismissDialog,
   }) {
@@ -175,8 +170,15 @@ class MezUpgrade {
         return WillPopScope(
           onWillPop: () async => false,
           child: dialogStyle == UpgradeDialogStyle.material
-              ? _alertDialog(title!, message, releaseNotes, context)
-              : _cupertinoAlertDialog(title!, message, releaseNotes, context),
+              ? _alertDialog(
+                  title!, message, packageName, releaseNotes, context)
+              : _cupertinoAlertDialog(
+                  title!,
+                  message,
+                  packageName,
+                  releaseNotes,
+                  context,
+                ),
         );
       },
     );
@@ -185,6 +187,7 @@ class MezUpgrade {
   AlertDialog _alertDialog(
     String title,
     String message,
+    String packageName,
     String? releaseNotes,
     BuildContext context,
   ) {
@@ -246,7 +249,7 @@ class MezUpgrade {
           child: Text(
             messages!.message(UpgraderMessage.buttonTitleUpdate)!,
           ),
-          onPressed: () => onUserUpdated(context, true),
+          onPressed: () => onUserUpdated(context, packageName, true),
         ),
       ],
     );
@@ -255,6 +258,7 @@ class MezUpgrade {
   CupertinoAlertDialog _cupertinoAlertDialog(
     String title,
     String message,
+    String packageName,
     String? releaseNotes,
     BuildContext context,
   ) {
@@ -305,7 +309,7 @@ class MezUpgrade {
         CupertinoDialogAction(
           isDefaultAction: true,
           child: Text(messages!.message(UpgraderMessage.buttonTitleUpdate)!),
-          onPressed: () => onUserUpdated(context, true),
+          onPressed: () => onUserUpdated(context, packageName, true),
         ),
       ],
     );
@@ -341,7 +345,7 @@ class MezUpgrade {
     }
   }
 
-  void onUserUpdated(BuildContext context, bool shouldPop) {
+  void onUserUpdated(BuildContext context, String packageName, bool shouldPop) {
     if (debugLogging) {
       print('upgrader: button tapped: update now');
     }
@@ -353,7 +357,11 @@ class MezUpgrade {
     }
 
     if (doProcess) {
-      _sendUserToAppStore();
+      StoreRedirect.redirect(
+        androidAppId: packageName,
+        iOSAppId: packageName,
+      );
+      //_sendUserToAppStore();
     }
 
     if (shouldPop) {
