@@ -92,6 +92,23 @@ class DeliveryDriver {
   }
 }
 
+enum DriverUserInfoAndUpdateStatus {
+  staring,
+  uploading,
+  success,
+  error,
+}
+
+class DeliveryDriverUserInfoAndUpdateStatus {
+  DeliveryDriverUserInfo? deliveryDriverUserInfo;
+  DriverUserInfoAndUpdateStatus driverUserInfoAndUpdateStatus;
+
+  DeliveryDriverUserInfoAndUpdateStatus({
+    this.deliveryDriverUserInfo,
+    this.driverUserInfoAndUpdateStatus = DriverUserInfoAndUpdateStatus.staring,
+  });
+}
+
 class DeliveryDriverUserInfo extends UserInfo {
   LatLng? location;
 

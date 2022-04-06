@@ -10,7 +10,6 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/Components/DriverCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/CurrentOrderInfo.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderInfoCard.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderNoteCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderShippingLocation.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderTotalCostCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/PastOrderInfo.dart';
@@ -24,6 +23,8 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+
+import 'components/OrderNoteCard.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 

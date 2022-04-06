@@ -18,6 +18,7 @@ class DriverCard extends StatelessWidget {
     required this.driver,
     required this.assignDriverCallback,
     required this.order,
+    this.driverUserInfoAndUpdateStatus,
   }) : super(key: key);
 
   final Order order;
@@ -26,6 +27,8 @@ class DriverCard extends StatelessWidget {
     required DeliveryDriver deliveryDriver,
     required bool changeDriver,
   }) assignDriverCallback;
+
+  final DriverUserInfoAndUpdateStatus? driverUserInfoAndUpdateStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -42,29 +45,47 @@ class DriverCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Card(
-            color: (navigateAndGetDriver() != null || driver != null)
-                ? Colors.white
-                : Colors.grey.shade400,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-              side: BorderSide(
-                width: 1.5,
-                color: (driver != null) ? Colors.green : Colors.redAccent,
-              ),
-            ),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap: navigateAndGetDriver(),
-              child: Container(
-                width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                child: (driver != null)
-                    ? driverInfoComponent(textTheme, context)
-                    : noDriverComponent(context, textTheme),
-              ),
-            ),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 1200),
+            child: (driverUserInfoAndUpdateStatus == null ||
+                    (driverUserInfoAndUpdateStatus != null &&
+                        driverUserInfoAndUpdateStatus ==
+                            DriverUserInfoAndUpdateStatus.staring))
+                ? Card(
+                    color: (navigateAndGetDriver() != null || driver != null)
+                        ? Colors.white
+                        : Colors.grey.shade400,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        width: 1.5,
+                        color:
+                            (driver != null) ? Colors.green : Colors.redAccent,
+                      ),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: navigateAndGetDriver(),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
+                        child: (driver != null)
+                            ? driverInfoComponent(textTheme, context)
+                            : noDriverComponent(context, textTheme),
+                      ),
+                    ),
+                  )
+                :
+                // else if (driverUserInfoAndUpdateStatus ==
+                //     DriverUserInfoAndUpdateStatus.uploading)
+                Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
           ),
         ],
       ),
@@ -190,7 +211,7 @@ class DriverCard extends StatelessWidget {
                   size: 18,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               IconButton(
                 onPressed: () {
                   getRightMessageRoute();

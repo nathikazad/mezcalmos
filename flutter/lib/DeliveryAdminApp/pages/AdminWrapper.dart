@@ -51,7 +51,7 @@ class _AdminWrapperState extends State<AdminWrapper> {
     super.initState();
   }
 
-  void handleAuthorization(bool authorized) async {
+  void handleAuthorization(bool authorized) {
     if (authorized) {
       mezDbgPrint("AdminWrapper::handleState going to in process orders");
       Get.toNamed<void>(kOrdersRoute);
@@ -65,12 +65,13 @@ class _AdminWrapperState extends State<AdminWrapper> {
   Widget build(BuildContext context) {
     mezDbgPrint("AdminWrapper:: build");
     return Scaffold(
-        key: Get.find<SideMenuDrawerController>().getNewKey(),
-        drawer: MezSideMenu(),
-        backgroundColor: Colors.white,
-        // appBar: mezcalmosAppBar(
-        //     "menu", Get.find<SideMenuDraweController>().openMenu),
-        body: MezLogoAnimation(centered: true));
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
+      drawer: MezSideMenu(),
+      backgroundColor: Colors.white,
+      // appBar: mezcalmosAppBar(
+      //     "menu", Get.find<SideMenuDraweController>().openMenu),
+      body: MezLogoAnimation(centered: true),
+    );
   }
 
   @override

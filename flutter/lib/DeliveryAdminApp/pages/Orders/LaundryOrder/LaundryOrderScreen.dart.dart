@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -48,8 +49,12 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   /// ------------------ variables ------------------//
   DeliveryDriverUserInfo? driver;
 
-  ValueNotifier<DeliveryDriverUserInfo?> _deliveryDriverUserInfoValueNotifier =
-      ValueNotifier<DeliveryDriverUserInfo?>(null);
+  /// DeliveryDriverUserInfoAndUpdateStatus
+  ValueNotifier<DeliveryDriverUserInfoAndUpdateStatus>
+      _deliveryDriverUserInfoAndUpdateStatusNotifier =
+      ValueNotifier<DeliveryDriverUserInfoAndUpdateStatus>(
+    DeliveryDriverUserInfoAndUpdateStatus(),
+  );
 
   @override
   void initState() {
@@ -77,7 +82,10 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
     }
 
     /// Get Right driver
-    _deliveryDriverUserInfoValueNotifier.value = getRightDriver();
+    _deliveryDriverUserInfoAndUpdateStatusNotifier.value =
+        DeliveryDriverUserInfoAndUpdateStatus(
+      deliveryDriverUserInfo: getRightDriver(),
+    );
   }
 
   @override
@@ -113,31 +121,94 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
 
                   //   if (order.value?.inProcess() ?? false)
 
-                  ValueListenableBuilder<DeliveryDriverUserInfo?>(
-                    valueListenable: _deliveryDriverUserInfoValueNotifier,
-                    builder: (_, DeliveryDriverUserInfo? deliveryDriverUserInfo,
-                        __) {
+                  ValueListenableBuilder<DeliveryDriverUserInfoAndUpdateStatus>(
+                    valueListenable:
+                        _deliveryDriverUserInfoAndUpdateStatusNotifier,
+                    builder: (
+                      _,
+                      DeliveryDriverUserInfoAndUpdateStatus
+                          deliveryDriverUserInfo,
+                      __,
+                    ) {
                       return DriverCard(
-                        driver: deliveryDriverUserInfo,
+                        driver: deliveryDriverUserInfo.deliveryDriverUserInfo,
                         order: order.value!,
+                        driverUserInfoAndUpdateStatus: deliveryDriverUserInfo
+                            .driverUserInfoAndUpdateStatus,
                         assignDriverCallback: ({
                           required DeliveryDriver deliveryDriver,
                           required bool changeDriver,
-                        }) {
-                          /// Get new driver
-                          _deliveryDriverUserInfoValueNotifier.value =
-                              deliveryDriver.driverInfo;
+                        }) async {
+                          /// Check That The driver has been changed!
+                          if (deliveryDriverUserInfo.deliveryDriverUserInfo !=
+                                  null &&
+                              (deliveryDriver.driverInfo.id !=
+                                  deliveryDriverUserInfo
+                                      .deliveryDriverUserInfo!.id)) {
+                            /// Uploading
+                            deliveryDriverUserInfo
+                                    .driverUserInfoAndUpdateStatus =
+                                DriverUserInfoAndUpdateStatus.uploading;
+
+                            /// notifyListeners
+                            _deliveryDriverUserInfoAndUpdateStatusNotifier
+                                .notifyListeners();
+                          }
 
                           /// assignDeliveryDriver
-                          deliveryDriverController.assignDeliveryDriver(
+                          final ServerResponse serverResponse =
+                              await deliveryDriverController
+                                  .assignDeliveryDriver(
                             deliveryDriverId: deliveryDriver.deliveryDriverId,
                             orderId: order.value!.orderId,
                             orderType: OrderType.Laundry,
                             deliveryDriverType: getRightDeliveryDriverType(),
                             changeDriver: changeDriver,
                           );
+
+                          if (serverResponse.status == ResponseStatus.Success) {
+                            /// Set the new driver
+                            _deliveryDriverUserInfoAndUpdateStatusNotifier
+                                .value = DeliveryDriverUserInfoAndUpdateStatus(
+                              deliveryDriverUserInfo: deliveryDriver.driverInfo,
+                              driverUserInfoAndUpdateStatus:
+                                  DriverUserInfoAndUpdateStatus.staring,
+                            );
+
+                            /// Them Show The notification
+
+                          } else {
+                            /// Error
+                            Get.snackbar(
+                              'Ops!',
+                              'Something went wrong, Please try to edit the driver again!',
+                            );
+
+                            /// Change status to staring
+                            deliveryDriverUserInfo
+                                    .driverUserInfoAndUpdateStatus =
+                                DriverUserInfoAndUpdateStatus.staring;
+
+                            /// notifyListeners
+                            _deliveryDriverUserInfoAndUpdateStatusNotifier
+                                .notifyListeners();
+                          }
                         },
                       );
+
+                      // if (deliveryDriverUserInfo
+                      //         .driverUserInfoAndUpdateStatus ==
+                      //     DriverUserInfoAndUpdateStatus.staring) {
+                      //
+                      // }
+                      // else if (deliveryDriverUserInfo
+                      //         .driverUserInfoAndUpdateStatus ==
+                      //     DriverUserInfoAndUpdateStatus.uploading) {
+                      //   return CircularProgressIndicator();
+                      // }
+                      // else {
+                      //   return const SizedBox.shrink();
+                      // }
                     },
                   ),
 

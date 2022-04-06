@@ -20,17 +20,29 @@ class ServerResponse {
   String? errorMessage;
   String? errorCode;
   dynamic data;
-  ServerResponse(this.status, {this.errorMessage, this.errorCode, this.data});
-  bool get success => this.status == ResponseStatus.Success;
+
+  ServerResponse(
+    this.status, {
+    this.errorMessage,
+    this.errorCode,
+    this.data,
+  });
+
+  bool get success => status == ResponseStatus.Success;
+
   factory ServerResponse.fromJson(dynamic json) {
     mezDbgPrint("printing the data inside ServerResponse");
     mezDbgPrint(json);
-    ResponseStatus status = json["status"].toString().toResponseStatus();
-    String? errorMessage = json["errorMessage"] ?? null;
-    String? errorCode = json["errorCode"] ?? null;
-    dynamic data = json;
-    return ServerResponse(status,
-        errorMessage: errorMessage, errorCode: errorCode, data: json);
+    final ResponseStatus status = json["status"].toString().toResponseStatus();
+    final String? errorMessage = json["errorMessage"] ?? null;
+    final String? errorCode = json["errorCode"] ?? null;
+    final dynamic data = json;
+    return ServerResponse(
+      status,
+      errorMessage: errorMessage,
+      errorCode: errorCode,
+      data: json,
+    );
   }
 
   @override

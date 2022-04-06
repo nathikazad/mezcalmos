@@ -160,19 +160,22 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
           //     "menu", Get.find<SideMenuDraweController>().openMenu),
           drawer: MezSideMenu(),
           body: TabBarView(
-            children: [
+            children: <Widget>[
               // Restaurant orders list view
               RestaurantOrdersList(
-                  pastOrders: controller.pastOrders,
-                  currentOrders: controller.inProcessOrders),
+                pastOrders: controller.pastOrders,
+                currentOrders: controller.inProcessOrders,
+              ),
               // Laundry orders list view
               LaundryOrdersList(
-                  pastOrders: laundryOrderController.pastOrders,
-                  currentOrders: laundryOrderController.inProcessOrders),
+                pastOrders: laundryOrderController.pastOrders,
+                currentOrders: laundryOrderController.inProcessOrders,
+              ),
               TaxiOrdersList(
-                  pastOrders: taxiOrderController.pastOrders,
-                  currentOrders: taxiOrderController.inProcessOrders,
-                  openOrders: taxiOrderController.openOrders)
+                pastOrders: taxiOrderController.pastOrders,
+                currentOrders: taxiOrderController.inProcessOrders,
+                openOrders: taxiOrderController.openOrders,
+              )
             ],
           ),
         ),
