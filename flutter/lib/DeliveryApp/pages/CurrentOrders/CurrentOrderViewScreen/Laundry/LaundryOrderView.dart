@@ -115,20 +115,20 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     return Scaffold(
       appBar: deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back),
       body: Obx(
-        () => SingleChildScrollView(
-          child: order.value != null
-              ? Column(
-                  children: <Widget>[
-                    DriverOrderMapComponent(
-                        mapController: mapController, order: order.value!),
-                    DriverBottomLaundryOrderCard(
+        () => order.value != null
+            ? Column(
+                children: <Widget>[
+                  DriverOrderMapComponent(
+                      mapController: mapController, order: order.value!),
+                  Expanded(
+                    child: DriverBottomLaundryOrderCard(
                         order: order.value as LaundryOrder),
-                  ],
-                )
-              : MezLogoAnimation(
-                  centered: true,
-                ),
-        ),
+                  ),
+                ],
+              )
+            : MezLogoAnimation(
+                centered: true,
+              ),
       ),
     );
   }

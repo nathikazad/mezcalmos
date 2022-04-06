@@ -112,21 +112,21 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
     return Obx(
       () => Scaffold(
         appBar: deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back),
-        body: SingleChildScrollView(
-          child: order.value != null
-              ? Column(children: <Widget>[
-                  DriverOrderMapComponent(
-                    order: order.value!,
-                    mapController: mapController,
-                  ),
-                  DriverBottomRestaurantOrderCard(
+        body: order.value != null
+            ? Column(children: <Widget>[
+                DriverOrderMapComponent(
+                  order: order.value!,
+                  mapController: mapController,
+                ),
+                Expanded(
+                  child: DriverBottomRestaurantOrderCard(
                     order: order.value as RestaurantOrder,
                   ),
-                ])
-              : MezLogoAnimation(
-                  centered: true,
                 ),
-        ),
+              ])
+            : MezLogoAnimation(
+                centered: true,
+              ),
       ),
     );
   }
