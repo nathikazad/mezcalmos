@@ -27,8 +27,10 @@ class RestaurantsInfoController extends GetxController {
     final List<Restaurant> restaurants = [];
     snapshot.value.forEach((key, value) {
       try {
-        restaurants.add(Restaurant.fromRestaurantData(
-            restaurantId: key, restaurantData: value));
+        if (value["state"]["available"] == true) {
+          restaurants.add(Restaurant.fromRestaurantData(
+              restaurantId: key, restaurantData: value));
+        }
       } catch (e) {
         mezDbgPrint("FREAKING EXCEPTION ===> $e");
       }
