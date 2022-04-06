@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -28,8 +29,10 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
       Get.find<LaundryInfoController>();
   LaundryOrderController controller = Get.find<LaundryOrderController>();
   Laundry? laundry;
+  bool btnClicked = false;
   @override
   void initState() {
+    btnClicked = false;
     getLaundry();
 
     super.initState();
@@ -59,24 +62,34 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
             ),
           ),
           Card(
+            color: (btnClicked) ? Colors.grey.shade400 : Colors.white,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
                 side: BorderSide(
                   width: 1.5,
-                  color: (widget.order.laundry != null)
+                  color: (widget.order.laundry != null && !btnClicked)
                       ? Colors.green
                       : Colors.redAccent,
                 )),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
-              onTap: (widget.order.laundry == null)
+              onTap: (widget.order.laundry == null && !btnClicked)
                   ? () async {
+                      setState(() {
+                        btnClicked = true;
+                      });
                       await Get.toNamed(kLaundriesListRoute,
                               arguments: widget.order)!
                           .then((value) {
                         if (value != null) {
-                          controller.assignLaundry(
-                              widget.order.orderId, value.info.id);
+                          controller
+                              .assignLaundry(
+                                  widget.order.orderId, value.info.id)
+                              .then((ServerResponse value) {
+                            setState(() {
+                              btnClicked = false;
+                            });
+                          });
                         }
                       });
                     }
@@ -84,9 +97,15 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
-                child: (widget.order.laundry != null)
-                    ? laundryInfoComponent(textTheme, context)
-                    : noLaundryComponent(context, textTheme),
+                child: (btnClicked)
+                    ? Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.all(8),
+                        child: CircularProgressIndicator(),
+                      )
+                    : (widget.order.laundry != null)
+                        ? laundryInfoComponent(textTheme, context)
+                        : noLaundryComponent(context, textTheme),
               ),
             ),
           ),
