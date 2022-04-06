@@ -17,7 +17,6 @@ class _TaxiOrderMapComponentState extends State<TaxiOrderMapComponent> {
   final MGoogleMapController mapController = MGoogleMapController();
   @override
   void initState() {
-    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
     if (widget.order.routeInformation != null) {
       mapController.decodeAndAddPolyline(
           encodedPolylineString: widget.order.routeInformation!.polyline);
@@ -31,6 +30,7 @@ class _TaxiOrderMapComponentState extends State<TaxiOrderMapComponent> {
 
     mapController.addOrUpdatePurpleDestinationMarker(
         latLng: LatLng(widget.order.to.latitude, widget.order.to.longitude));
+    mapController.lockInAutoZoomAnimation();
     super.initState();
   }
 

@@ -96,6 +96,7 @@ class LocationPickerState extends State<LocationPicker> {
             alignment: Alignment.center,
             children: <Widget>[
               MGoogleMap(
+                recenterBtnBottomPadding: 150,
                 mGoogleMapController: widget.locationPickerMapController,
                 notifyParentOfNewLocation:
                     widget.notifyParentOfLocationFinalized,

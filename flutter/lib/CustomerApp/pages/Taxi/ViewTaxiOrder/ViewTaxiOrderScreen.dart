@@ -96,7 +96,11 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5), color: Colors.white),
       child: MGoogleMap(
-        recenterBtnBottomPadding: 100,
+        recenterBtnBottomPadding:
+            viewController.order.value?.isPastOrder() == true ||
+                    viewController.order.value?.isForwarded() == true
+                ? 100
+                : 150,
         mGoogleMapController: viewController.mGoogleMapController,
       ),
     );

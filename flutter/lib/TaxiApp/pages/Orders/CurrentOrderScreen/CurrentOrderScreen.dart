@@ -63,7 +63,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           mGoogleMapController.moveToNewLatLng(
               order!.driver!.location!.latitude,
               order!.driver!.location!.longitude);
-
+        mGoogleMapController.lockInAutoZoomAnimation();
         // Listener
         _orderListener = controller
             .getCurrentOrderStream(orderId)
@@ -112,6 +112,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           body: order != null && mGoogleMapController.location.value != null
               ? Stack(alignment: Alignment.topCenter, children: <Widget>[
                   MGoogleMap(
+                    recenterBtnBottomPadding: 100,
                     mGoogleMapController: mGoogleMapController,
                     debugString: "CurrentOrderScreen",
                   ),

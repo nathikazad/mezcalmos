@@ -61,7 +61,7 @@ class IOrderViewController {
 
         // set initial position
         mGoogleMapController.setLocation(order.value!.from);
-
+        mGoogleMapController.lockInAutoZoomAnimation();
         // start Listening for the vailability of the iOrderViewController.order
         _orderListener =
             controller.getIncomingOrderStream(orderId).listen((order) {

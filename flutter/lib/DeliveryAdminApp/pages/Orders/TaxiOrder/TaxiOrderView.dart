@@ -92,15 +92,15 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
           appBar: AppBar(
             title: Text('${_i18n()["order"]}'),
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                TaxiOrderMapComponent(order: order.value!),
-                (order.value!.isOpenOrder())
+          body: Column(
+            children: <Widget>[
+              TaxiOrderMapComponent(order: order.value!),
+              Expanded(
+                child: order.value!.isOpenOrder()
                     ? TaxiOpenOrderBottomCard(order: order.value!)
                     : TaxiOrderBottomCard(order: order.value!),
-              ],
-            ),
+              )
+            ],
           )),
     );
   }

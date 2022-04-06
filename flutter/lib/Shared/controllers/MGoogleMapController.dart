@@ -327,15 +327,19 @@ class MGoogleMapController {
 
   /// This locks In AutoZoom and AutoAnimate
   void lockInAutoZoomAnimation() {
-    periodicRerendering.value = true;
-    recenterButtonEnabled.value = false;
+    if (!periodicRerendering.value) {
+      periodicRerendering.value = true;
+      recenterButtonEnabled.value = false;
+    }
   }
 
   /// Unlock AutoZoom and AutoAnimation and shows [Recenter Button]
   void unlockAutoZoomAnimation() {
-    periodicRerendering.value = false;
-    myLocationButtonEnabled.value = false;
-    recenterButtonEnabled.value = true;
+    if (periodicRerendering.value) {
+      periodicRerendering.value = false;
+      myLocationButtonEnabled.value = false;
+      recenterButtonEnabled.value = true;
+    }
   }
 
   MinMaxZoomPreference getMapMinMaxZommPrefs() {

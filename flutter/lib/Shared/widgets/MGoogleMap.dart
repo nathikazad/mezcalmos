@@ -272,6 +272,7 @@ class MGoogleMapGestures extends MezSmartPointer {
   @override
   void onMove() {
     // this beasically upon right and Left movements
+    mGoogleController.unlockAutoZoomAnimation();
   }
 
   @override

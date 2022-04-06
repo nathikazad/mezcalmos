@@ -20,12 +20,14 @@ class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
   @override
   void initState() {
     mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
+
     mapController.setAnimateMarkersPolyLinesBounds(true);
     mapController.setLocation(widget.order.to);
 
     getDriversMarkers();
     mapController.addOrUpdatePurpleDestinationMarker(
         latLng: LatLng(widget.order.to.latitude, widget.order.to.longitude));
+    mapController.lockInAutoZoomAnimation();
     super.initState();
   }
 
