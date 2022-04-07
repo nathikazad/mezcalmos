@@ -33,3 +33,4 @@ void main() {
     ),
   );
 }
+// python launcher.py env=stage app=DeliveryAdminApp

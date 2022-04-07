@@ -6,8 +6,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-    ["pages"]
-["Orders"]["LaundryOrder"]["Components"]["LaundryOrderStatusCard"];
+    ["pages"]["Orders"]["LaundryOrder"]["Components"]["LaundryOrderStatusCard"];
 
 class LaundryOrderStatusCard extends StatelessWidget {
   const LaundryOrderStatusCard({
@@ -19,14 +18,14 @@ class LaundryOrderStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Card(
       child: Container(
         width: double.infinity,
         margin: const EdgeInsets.all(12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: [
+          children: <Widget>[
             getOrderWidget(order.status),
             Flexible(
               flex: 8,
@@ -45,8 +44,6 @@ class LaundryOrderStatusCard extends StatelessWidget {
     );
   }
 }
-
-
 
 Widget getOrderWidget(LaundryOrderStatus status) {
   switch (status) {

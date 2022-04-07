@@ -21,9 +21,9 @@ class LaundriesListView extends StatelessWidget {
         title: Text('${_i18n()["title"]}'),
       ),
       body: SingleChildScrollView(
-          child: Column(
-        children: [
-          FutureBuilder<List<Laundry>>(
+        child: Column(
+          children: <Widget>[
+            FutureBuilder<List<Laundry>>(
               future: laundryInfoController.getLaundries(),
               builder: (BuildContext context,
                   AsyncSnapshot<List<Laundry>> snapshot) {
@@ -36,23 +36,26 @@ class LaundriesListView extends StatelessWidget {
 
                   case ConnectionState.done:
                     return Column(
-                        children: List.generate(
-                            snapshot.data!.length,
-                            (int index) => LaundrySelectCard(
-                                  laundry: snapshot.data![index],
-                                  function: () {
-                                    if (snapshot.data![index].state.available) {
-                                      Get.back(result: snapshot.data![index]);
-                                    } else
-                                      null;
-                                  },
-                                )));
+                      children: List.generate(
+                        snapshot.data!.length,
+                        (int index) => LaundrySelectCard(
+                          laundry: snapshot.data![index],
+                          function: () {
+                            if (snapshot.data![index].state.available) {
+                              Get.back(result: snapshot.data![index]);
+                            }
+                          },
+                        ),
+                      ),
+                    );
                   default:
                     return Container();
                 }
-              })
-        ],
-      )),
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

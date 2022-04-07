@@ -7,7 +7,11 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 //Displays the restaurant on charge with the order  and the order status with an animation
 
 class CurrentOrderInfo extends StatelessWidget {
-  CurrentOrderInfo({Key? key, required this.order}) : super(key: key);
+  const CurrentOrderInfo({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
+
   final RestaurantOrder order;
 
   @override
@@ -22,7 +26,7 @@ class CurrentOrderInfo extends StatelessWidget {
         color: const Color(0x9affffff),
       ),
       child: Column(
-        children: [
+        children: <Widget>[
           BasicCellComponent(
             url: "${order.restaurant.image}",
             title: "${order.restaurant.name}",

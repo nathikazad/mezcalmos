@@ -13,8 +13,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
 
 class TaxiOpenOrderBottomCard extends StatelessWidget {
   /// Bottom card of the open taxi order :  shows order info and buttons to handle the order
-  const TaxiOpenOrderBottomCard({Key? key, required this.order})
-      : super(key: key);
+  const TaxiOpenOrderBottomCard({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
+
   final TaxiOrder order;
 
   @override
@@ -25,13 +28,13 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
         margin: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             _orderStausAndTimer(context),
-            Divider(),
+            const Divider(),
             _orderCustomerInfo(context),
-            Divider(),
+            const Divider(),
             _driversStatsComponent(),
-            Divider(),
+            const Divider(),
             _orderFromToAdresses(context),
             TaxiOpenOrderControllButtons(
               order: order,
@@ -46,19 +49,15 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
   Widget _orderFromToAdresses(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(
           '${_i18n()['from']}' + order.from.address,
           style: Theme.of(context).textTheme.bodyText2,
         ),
-        SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8),
         Text('${_i18n()['to']}' + order.to.address,
             style: Theme.of(context).textTheme.bodyText2),
-        SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8),
       ],
     );
   }
@@ -66,18 +65,16 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
 // return the customer image and name and order distance
   Widget _orderCustomerInfo(BuildContext context) {
     return Row(
-      children: [
+      children: <Widget>[
         CircleAvatar(
           radius: 25,
           backgroundImage: CachedNetworkImageProvider(order.customer.image),
         ),
-        SizedBox(
-          width: 8,
-        ),
+        const SizedBox(width: 8),
         Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
                 order.customer.name,
                 style: Theme.of(context).textTheme.bodyText1,
@@ -85,15 +82,13 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(left: 5),
                 child: Row(
-                  children: [
+                  children: <Widget>[
                     Icon(
                       Icons.directions_outlined,
                       size: 16,
                       color: Theme.of(context).primaryColorLight,
                     ),
-                    SizedBox(
-                      width: 5,
-                    ),
+                    const SizedBox(width: 5),
                     Text(
                       order.routeInformation!.distance.distanceStringInKm,
                       style: Theme.of(context).textTheme.bodyText2,
@@ -114,20 +109,20 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       child: (order.status != TaxiOrdersStatus.LookingForTaxi)
           ? Container(
-              alignment: Alignment.center, child: Text(_getOrderStatus()))
+              alignment: Alignment.center,
+              child: Text(_getOrderStatus()),
+            )
           : Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(_getOrderStatus()),
-                Spacer(),
+                const Spacer(),
                 Icon(
                   Icons.timer,
                   size: 20,
                   color: Theme.of(context).primaryColorLight,
                 ),
-                SizedBox(
-                  width: 5,
-                ),
+                SizedBox(width: 5),
                 CountdownTimer(
                   endTime: order.orderTime.millisecondsSinceEpoch + 1000 * 300,
                   widgetBuilder: (_, CurrentRemainingTime? time) {
@@ -153,35 +148,32 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 5, left: 5, right: 5),
       child: Row(
-        children: [
+        children: <Widget>[
           Icon(
             Icons.taxi_alert,
             size: 14.sp,
             color: Colors.black,
           ),
-          SizedBox(
-            width: 5,
-          ),
+          const SizedBox(width: 5),
           Flexible(
             flex: 3,
             fit: FlexFit.tight,
             child: Text(
                 '${_i18n()['sentTo']} ${order.numberOfTaxiSentNotificationTo().toString()} '),
           ),
-          Spacer(),
+          const Spacer(),
           Icon(
             Icons.check_box,
             size: 14.sp,
             color: Colors.green,
           ),
-          SizedBox(
-            width: 5,
-          ),
+          const SizedBox(width: 5),
           Flexible(
             flex: 3,
             fit: FlexFit.tight,
             child: Text(
-                '${_i18n()['readBy']} ${order.numberOfTaxiReadNotification().toString()} '),
+              '${_i18n()['readBy']} ${order.numberOfTaxiReadNotification().toString()} ',
+            ),
           ),
         ],
       ),

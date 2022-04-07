@@ -39,14 +39,15 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   ///--------------- Controllers ------------------------//
 
   /// ------------------ variables ------------------//
-  Rxn<LaundryOrder> order = Rxn();
+  Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
 
   late String orderId;
   Rx<bool> hasNewMessage = false.obs;
-  StreamSubscription? _orderListener;
+  StreamSubscription<dynamic>? _orderListener;
 
   /// ------------------ variables ------------------//
   DeliveryDriverUserInfo? driver;
+
   @override
   void initState() {
     super.initState();
@@ -55,21 +56,21 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
     if (order.value == null) {
-      Get.back();
+      Get.back<void>();
     } else {
-      _orderListener = controller
-          .getCurrentOrderStream(orderId)
-          .listen((LaundryOrder? newOrder) {
-        if (newOrder != null) {
-          order.value = controller.getOrder(orderId);
+      _orderListener = controller.getCurrentOrderStream(orderId).listen(
+        (LaundryOrder? newOrder) {
+          if (newOrder != null) {
+            order.value = controller.getOrder(orderId);
 
-          if (order.value?.dropoffDriver != null) {
-            driver = order.value!.dropoffDriver;
+            if (order.value?.dropoffDriver != null) {
+              driver = order.value!.dropoffDriver;
+            }
+          } else {
+            //    Get.back();
           }
-        } else {
-          //    Get.back();
-        }
-      });
+        },
+      );
     }
   }
 
@@ -156,7 +157,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   Widget orderNotes(TextTheme txt) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Container(
           margin: const EdgeInsets.all(8),
           child: Text(

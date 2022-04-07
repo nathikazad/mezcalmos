@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/TwoAvatarsComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/global.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:intl/intl.dart';
 
 final f = new DateFormat('hh:mm a');
 
@@ -49,6 +49,7 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
   final String? quantity;
   final String? date;
   RestaurantOrderStatus? status;
+
   DeliveryAdminOrderComponent(
       {required this.type,
       required this.url,
@@ -71,7 +72,7 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         decoration: _getOrderColor(status!),
         child: Row(
-          children: [
+          children: <Widget>[
             TowAvatarsComponent(
               type: type,
               url: url,
@@ -83,80 +84,85 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   Text("$userName- $title",
                       style: const TextStyle(
-                          color: const Color(0xff000f1c),
+                          color: Color(0xff000f1c),
                           fontWeight: FontWeight.w700,
                           fontFamily: "ProductSans",
                           fontStyle: FontStyle.normal,
                           fontSize: 13.0),
                       textAlign: TextAlign.left),
                   Row(
-                    children: [
+                    children: <Widget>[
                       Icon(
                         Icons.attach_money,
                         size: 14,
                       ),
-                      Text(" $price",
-                          style: const TextStyle(
-                              color: const Color(0xff000f1c),
-                              fontWeight: FontWeight.w300,
-                              fontFamily: "FontAwesome5Pro",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 12.0),
-                          textAlign: TextAlign.left),
-                      Spacer(),
+                      Text(
+                        " $price",
+                        style: const TextStyle(
+                            color: Color(0xff000f1c),
+                            fontWeight: FontWeight.w300,
+                            fontFamily: "FontAwesome5Pro",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12.0),
+                        textAlign: TextAlign.left,
+                      ),
+                      const Spacer(),
                       Icon(
                         Icons.fiber_manual_record,
                         size: 5,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Icon(
                         Icons.shopping_bag_outlined,
                         size: 14,
                       ),
                       Text(" $quantity",
                           style: const TextStyle(
-                              color: const Color(0xff000f1c),
+                              color: Color(0xff000f1c),
                               fontWeight: FontWeight.w300,
                               fontFamily: "FontAwesome5Pro",
                               fontStyle: FontStyle.normal,
                               fontSize: 12.0),
                           textAlign: TextAlign.left),
-                      Spacer(),
+                      const Spacer(),
                       Icon(
                         Icons.fiber_manual_record,
                         size: 5,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Icon(
                         Icons.schedule_outlined,
                         size: 14,
                       ),
-                      Text(" $date",
-                          style: const TextStyle(
-                              color: const Color(0xff000f1c),
-                              fontWeight: FontWeight.w300,
-                              fontFamily: "FontAwesome5Pro",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 12.0),
-                          textAlign: TextAlign.left)
+                      Text(
+                        " $date",
+                        style: const TextStyle(
+                            color: Color(0xff000f1c),
+                            fontWeight: FontWeight.w300,
+                            fontFamily: "FontAwesome5Pro",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12.0),
+                        textAlign: TextAlign.left,
+                      ),
                     ],
                   )
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Expanded(
-                child: Center(
-              child: Container(
-                height: 50,
-                width: 50,
-                // padding: const EdgeInsets.only(top: 20),
-                child: _getOrderIcon(status!),
+              child: Center(
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  // padding: const EdgeInsets.only(top: 20),
+                  child: _getOrderIcon(status!),
+                ),
               ),
-            ))
+            ),
           ],
         ),
       ),

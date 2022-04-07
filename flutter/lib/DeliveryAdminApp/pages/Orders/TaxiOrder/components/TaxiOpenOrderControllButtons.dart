@@ -11,6 +11,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
 
 class TaxiOpenOrderControllButtons extends StatefulWidget {
   final TaxiOrder order;
+
   const TaxiOpenOrderControllButtons({Key? key, required this.order})
       : super(key: key);
 
@@ -26,6 +27,7 @@ class _TaxiOpenOrderControllButtonsState
   TaxiOrderController _taxiOrderController = Get.find<TaxiOrderController>();
 
   num taxiNumber = 0;
+
   @override
   void initState() {
     btnClicked.value = false;
@@ -34,29 +36,33 @@ class _TaxiOpenOrderControllButtonsState
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (btnClicked.value == false) {
-        return _getBottomComponent(context);
-      } else {
-        return Center(child: CircularProgressIndicator());
-      }
-    });
+    return Obx(
+      () {
+        if (btnClicked.value == false) {
+          return _getBottomComponent(context);
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
   Widget _getBottomComponent(context) {
     switch (widget.order.status) {
       case TaxiOrdersStatus.LookingForTaxi:
         return TextButton(
-            onPressed: () async {
-              btnClicked.value = true;
-              await _taxiOrderController
-                  .forwardToLocalCompany(widget.order.orderId);
-            },
-            child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(5),
-                child: Text(
-                    '${_i18n()["TaxiOpenOrderControllButton"]["fwdToCompany"]}')));
+          onPressed: () async {
+            btnClicked.value = true;
+            await _taxiOrderController
+                .forwardToLocalCompany(widget.order.orderId);
+          },
+          child: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(5),
+            child: Text(
+                '${_i18n()["TaxiOpenOrderControllButton"]["fwdToCompany"]}'),
+          ),
+        );
       case TaxiOrdersStatus.ForwardingToLocalCompany:
         return Column(
           children: [
@@ -81,20 +87,20 @@ class _TaxiOpenOrderControllButtonsState
             Container(
               margin: const EdgeInsets.only(top: 8),
               child: TextButton(
-                  onPressed: () async {
-                    btnClicked.value = true;
-                    await _taxiOrderController.submitForwardResult(
-                        orderId: widget.order.orderId,
-                        forwardSuccessful: false);
-                    Get.back(closeOverlays: true);
-                  },
-                  style:
-                      TextButton.styleFrom(backgroundColor: Colors.redAccent),
-                  child: Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(5),
-                      child: Text(
-                          '${_i18n()["TaxiOpenOrderControllButton"]["cancel"]}'))),
+                onPressed: () async {
+                  btnClicked.value = true;
+                  await _taxiOrderController.submitForwardResult(
+                      orderId: widget.order.orderId, forwardSuccessful: false);
+                  Get.back(closeOverlays: true);
+                },
+                style: TextButton.styleFrom(backgroundColor: Colors.redAccent),
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(5),
+                  child: Text(
+                      '${_i18n()["TaxiOpenOrderControllButton"]["cancel"]}'),
+                ),
+              ),
             ),
           ],
         );
@@ -112,9 +118,7 @@ class _TaxiOpenOrderControllButtonsState
                   size: 50,
                   color: Colors.red,
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Flexible(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,9 +149,7 @@ class _TaxiOpenOrderControllButtonsState
                   size: 50,
                   color: Colors.green,
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Flexible(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,75 +176,78 @@ class _TaxiOpenOrderControllButtonsState
 
   Future taxiNumberDialog(BuildContext context) async {
     return await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: Text(
-                '${_i18n()["TaxiOpenOrderControllButton"]["confirmFwd"]} '),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
-                  ],
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (String? value) {
-                    if (num.tryParse(value!) == null) {
-                      return '${_i18n()["TaxiOpenOrderControllButton"]["fwdAlertErrorText"]}';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChanged: (String value) {
-                    if (num.tryParse(value) != null) {
-                      taxiNumber = num.parse(value);
-                    }
-                  },
-                  decoration: InputDecoration(
-                      label: Text(
-                          '${_i18n()["TaxiOpenOrderControllButton"]["taxiNumber"]}'),
-                      filled: true,
-                      isDense: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8))),
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title:
+              Text('${_i18n()["TaxiOpenOrderControllButton"]["confirmFwd"]} '),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextFormField(
+                style: Theme.of(context).textTheme.bodyText2,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: <FilteringTextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                ],
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (String? value) {
+                  if (num.tryParse(value!) == null) {
+                    return '${_i18n()["TaxiOpenOrderControllButton"]["fwdAlertErrorText"]}';
+                  } else {
+                    return null;
+                  }
+                },
+                onChanged: (String value) {
+                  if (num.tryParse(value) != null) {
+                    taxiNumber = num.parse(value);
+                  }
+                },
+                decoration: InputDecoration(
+                  label: Text(
+                      '${_i18n()["TaxiOpenOrderControllButton"]["taxiNumber"]}'),
+                  filled: true,
+                  isDense: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
-                SizedBox(
-                  height: 10,
+              ),
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () {
+                  if (taxiNumber != 0) {
+                    //Navigator.pop(context, taxiNumber);
+                    Get.back(result: taxiNumber);
+                  }
+                },
+                child: Container(
+                  //  padding: EdgeInsets.all(5),
+                  alignment: Alignment.center,
+                  child: Text(
+                      '${_i18n()["TaxiOpenOrderControllButton"]["confirmFwd"]}'),
                 ),
-                TextButton(
-                    onPressed: () {
-                      if (taxiNumber != 0) {
-                        //Navigator.pop(context, taxiNumber);
-                        Get.back(result: taxiNumber);
-                      }
-                    },
-                    child: Container(
-                        //  padding: EdgeInsets.all(5),
-                        alignment: Alignment.center,
-                        child: Text(
-                            '${_i18n()["TaxiOpenOrderControllButton"]["confirmFwd"]}'))),
-                SizedBox(
-                  height: 5,
+              ),
+              const SizedBox(height: 5),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, 0);
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
                 ),
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context, 0);
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.red,
-                    ),
-                    child: Container(
-                        //    padding: EdgeInsets.all(5),
-                        child: Text(
-                            '${_i18n()["TaxiOpenOrderControllButton"]["cancel"]}')))
-              ],
-            ),
-          );
-        });
+                child: Container(
+                  //    padding: EdgeInsets.all(5),
+                  child: Text(
+                      '${_i18n()["TaxiOpenOrderControllButton"]["cancel"]}'),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   String _getOrderStatus() {
