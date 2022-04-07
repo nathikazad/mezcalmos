@@ -7,7 +7,6 @@ import 'package:mezcalmos/CustomerApp/components/MyCartAppBarIcon.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Utils/GenerateTheNameExtension.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RestaurantSliverAppBar extends StatelessWidget {
