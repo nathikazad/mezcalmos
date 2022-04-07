@@ -72,8 +72,9 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                     Positioned(
                         left: 28,
                         top: 10,
-                        child: (controller.orderHaveNewMessageNotifications(
-                                widget.order.value!.orderId))
+                        child: (controller
+                                .orderHaveNewMessageNotifications(
+                                    widget.order.value!.orderId))
                             ? Container(
                                 width: 10,
                                 height: 10,

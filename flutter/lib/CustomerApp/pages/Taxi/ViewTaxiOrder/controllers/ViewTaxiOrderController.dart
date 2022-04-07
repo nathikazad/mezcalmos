@@ -37,12 +37,15 @@ class ViewTaxiOrderController {
     if (order.value != null) {
       // set initial location
       initializeMap().then((_) => mezDbgPrint("Initialized Map!"));
-      if (order.value!.isOpenOrder()) {
-        // TODO @x544D HANDLE ORDER FROM OPEN ORDER NODE
-      }
-
+      // if (order.value!.isOpenOrder()) {
+      //   // TODO @x544D HANDLE ORDER FROM OPEN ORDER NODE
+      // }
+      mezDbgPrint(
+          "----->>>>>>>>>>>>>Stating init state ------------->>>>>>>>><");
       if (order.value!.inProcess()) {
         inProcessOrderStatusHandler(order.value!.status);
+        mezDbgPrint(
+            "----->>>>>>>>>>>>>order in process ------------->>>>>>>>><");
 
         /// Only start if the status is `TaxiOrdersStatus.LookingForTaxi`
         if (order.value!.status == TaxiOrdersStatus.LookingForTaxi) {
@@ -51,11 +54,14 @@ class ViewTaxiOrderController {
         orderListener = controller
             .getCurrentOrderStream(orderId)
             .listen((Order? currentOrder) async {
+          mezDbgPrint(
+              "----->>>>>>>>>>>>>INSIDE ORDER STREAM ------------->>>>>>>>><");
           if (currentOrder != null) {
             order.value = currentOrder as TaxiOrder;
             inProcessOrderStatusHandler(order.value!.status);
             // setState(() {});
           } else {
+            mezDbgPrint("----->>>>>>>>>>>>>ORDER NULL ------------->>>>>>>>><");
             await orderListener?.cancel();
             orderListener = null;
             // this is in case customer created the order and got expired :
@@ -64,11 +70,14 @@ class ViewTaxiOrderController {
             TaxiOrder? _order = controller.getOrder(orderId) as TaxiOrder?;
             // this else clause gets executed when the order becomes /pastOrders.
             if (_order == null) {
+              mezDbgPrint(
+                  "----->>>>>>>>>>>>>ORDER STIIIIIIIIIL NULL ------------->>>>>>>>><");
               if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
                 orderCancelledCallback?.call(_order);
               }
               _order = (await controller.getPastOrderStream(orderId).first)
                   as TaxiOrder?;
+              mezDbgPrint("----->>>>>>>>>>>>> $_order ------------->>>>>>>>><");
             }
 
             order.value = _order;

@@ -110,6 +110,7 @@ class LaundryOrderController extends GetxController {
   }
 
   bool orderHaveNewMessageNotifications(String orderId) {
+    
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>

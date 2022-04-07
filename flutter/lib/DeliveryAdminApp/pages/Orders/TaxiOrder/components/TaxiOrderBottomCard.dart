@@ -89,8 +89,9 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                     children: [
                       IconButton(
                           onPressed: () {
-                            Get.toNamed(
-                                getMessagesRoute(chatId: widget.order.orderId));
+                            Get.toNamed(getMessagesRoute(
+                                chatId: widget.order.orderId,
+                                orderId: widget.order.orderId));
                           },
                           icon: Icon(
                             Icons.message_rounded,

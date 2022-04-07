@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
@@ -154,6 +155,57 @@ class TaxiOrderController extends GetxController {
         // do nothing
         return null;
       }
+    });
+  }
+
+// NEW STREAMS
+  Stream<TaxiOrder?> getOrderStream(String orderId) {
+    return StreamGroup.merge(<Stream<TaxiOrder?>>[
+      _getOpenOrderStream(orderId),
+      _getInProcessOrderStream(orderId),
+      _getPastOrderStrem(orderId)
+    ]);
+  }
+
+  Stream<TaxiOrder?> _getOpenOrderStream(String orderId) {
+    return openOrders.stream.map<TaxiOrder?>((_) {
+      try {
+        return openOrders.firstWhere(
+          (TaxiOrder currentOrder) => currentOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
+        // return null;
+      }
+      return null;
+    });
+  }
+
+  Stream<TaxiOrder?> _getInProcessOrderStream(String orderId) {
+    return inProcessOrders.stream.map<TaxiOrder?>((_) {
+      try {
+        return inProcessOrders.firstWhere(
+          (TaxiOrder currentOrder) => currentOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
+        // return null;
+      }
+      return null;
+    });
+  }
+
+  Stream<TaxiOrder?> _getPastOrderStrem(String orderId) {
+    return pastOrders.stream.map<TaxiOrder?>((_) {
+      try {
+        return pastOrders.firstWhere(
+          (TaxiOrder currentOrder) => currentOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
+        // return null;
+      }
+      return null;
     });
   }
 

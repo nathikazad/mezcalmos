@@ -109,7 +109,8 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
         Spacer(),
         IconButton(
             onPressed: () {
-              Get.toNamed(getMessagesRoute(chatId: order.orderId));
+              Get.toNamed(getMessagesRoute(
+                  chatId: order.orderId, orderId: order.orderId));
             },
             icon: Icon(
               Icons.message_rounded,

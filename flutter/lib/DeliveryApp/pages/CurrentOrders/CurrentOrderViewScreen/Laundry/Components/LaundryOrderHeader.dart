@@ -64,7 +64,10 @@ class LaundryOrderHeader extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   Get.toNamed(getMessagesRoute(
-                      orderId: order.orderId,
+                      orderId:
+                          (order.getCurrentPhase() == LaundryOrderPhase.Pickup)
+                              ? order.pickupDriverChatId!
+                              : order.dropOffDriverChatId!,
                       chatId:
                           (order.getCurrentPhase() == LaundryOrderPhase.Pickup)
                               ? order.pickupDriverChatId!

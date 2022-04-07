@@ -201,7 +201,7 @@ class TaxiOrder extends Order {
   @override
   bool inProcess() {
     return status == TaxiOrdersStatus.InTransit ||
-        // status == TaxiOrdersStatus.LookingForTaxi ||
+        status == TaxiOrdersStatus.LookingForTaxi ||
         status == TaxiOrdersStatus.ForwardingToLocalCompany ||
         status == TaxiOrdersStatus.DroppedOff ||
         status == TaxiOrdersStatus.OnTheWay;

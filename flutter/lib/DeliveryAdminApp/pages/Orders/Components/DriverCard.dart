@@ -5,6 +5,7 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.da
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -206,21 +207,9 @@ class _DriverCardState extends State<DriverCard> {
                 children: [
                   _messageIcon(context),
                   if (widget.order.orderType == OrderType.Restaurant)
-                    Obx(
-                      () => Get.find<RestaurantOrderController>()
-                              .orderHaveNewMessageNotifications(
-                                  widget.order.orderId)
-                          ? _newMessageRedDot(context)
-                          : Container(),
-                    ),
+                    restaurantMessagesDot(context),
                   if (widget.order.orderType == OrderType.Laundry)
-                    Obx(
-                      () => Get.find<LaundryOrderController>()
-                              .orderHaveNewMessageNotifications(
-                                  widget.order.orderId)
-                          ? _newMessageRedDot(context)
-                          : Container(),
-                    )
+                    laundryMessagesRedDot(context)
                 ],
               ),
             ),
@@ -232,6 +221,43 @@ class _DriverCardState extends State<DriverCard> {
         //     icon: Icon(Icons.message_outlined)),
       ],
     );
+  }
+
+  Obx restaurantMessagesDot(BuildContext context) {
+    return Obx(
+      () => Get.find<RestaurantOrderController>()
+              .orderHaveNewMessageNotifications(
+                  (widget.order as DeliverableOrder).dropOffDriverChatId!)
+          ? _newMessageRedDot(context)
+          : Container(),
+    );
+  }
+
+  Widget laundryMessagesRedDot(BuildContext context) {
+    if ((widget.order as LaundryOrder).getCurrentPhase() ==
+        LaundryOrderPhase.Pickup) {
+      return Obx(
+        () => Get.find<LaundryOrderController>()
+                .orderHaveNewMessageNotifications(
+                    (widget.order as TwoWayDeliverableOrder)
+                        .pickupDriverChatId!)
+            ? _newMessageRedDot(context)
+            : Container(),
+      );
+    } else if ((widget.order as LaundryOrder).getCurrentPhase() ==
+        LaundryOrderPhase.Dropoff) {
+      return Obx(
+        () => Get.find<LaundryOrderController>()
+                .orderHaveNewMessageNotifications(
+                    (widget.order as TwoWayDeliverableOrder)
+                        .dropOffDriverChatId!)
+            ? _newMessageRedDot(context)
+            : Container(),
+      );
+    } else {
+      mezDbgPrint("NOOOOOTHING  ----------->>>> )))))))))))))))))))))))))))");
+      return Container();
+    }
   }
 
   Widget _messageIcon(BuildContext context) {

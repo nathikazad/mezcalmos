@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -26,16 +26,17 @@ class MessageController extends GetxController {
   void onInit() {
     super.onInit();
     mezDbgPrint("--------------------> messageController Initialized !");
-    this.appType = Get.find<SettingsController>().appType;
+    appType = Get.find<SettingsController>().appType;
   }
 
-  void loadChat({required String chatId, VoidCallback? onValueCallBack}) {
+  void loadChat(
+      {required String chatId, material.VoidCallback? onValueCallBack}) {
     chatListener?.cancel();
     chatListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(chatNode(chatId))
         .onValue
-        .listen((event) {
+        .listen((Event event) {
       if (event.snapshot.value != null) {
         // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
         chat.value = Chat.fromJson(event.snapshot.key, event.snapshot.value);
@@ -50,8 +51,9 @@ class MessageController extends GetxController {
       {required String message,
       required String chatId,
       String? orderId}) async {
-        
-    DatabaseReference messageNode = _databaseHelper.firebaseDatabase
+    mezDbgPrint("order id ----------------->>>>>> chat ---> $orderId");
+
+    final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
         .reference()
         .child('${chatNode(chatId)}/messages')
         .push();
@@ -99,6 +101,7 @@ class MessageController extends GetxController {
         return participant;
       }
     }
+    
     for (String key in chat.value!.participants.keys.toList()) {
       final Participant participant = chat.value!.participants[key]!;
       if (participant.id != _authController.user!.id) return participant;
@@ -108,14 +111,14 @@ class MessageController extends GetxController {
 
   void clearMessageNotifications({required String chatId}) {
     mezDbgPrint("Clearing message notifications");
-    ForegroundNotificationsController fbNotificationsController =
+    final ForegroundNotificationsController fbNotificationsController =
         Get.find<ForegroundNotificationsController>();
     fbNotificationsController
         .notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
             notification.chatId == chatId)
-        .forEach((notification) {
+        .forEach((Notification notification) {
       fbNotificationsController.removeNotification(notification.id);
     });
   }

@@ -222,21 +222,25 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
 
     controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
-
     return Scaffold(
         appBar: AppBar(
-          title: (recipientType == ParticipantType.DeliveryAdmin)
-              ? Text("Administrador")
-              : Obx(
-                  () => Text(
-                    controller
-                            .recipient(
-                                recipientType: recipientType,
-                                recipientId: recipientId)
-                            ?.name ??
-                        "User",
-                  ),
-                ),
+          title: Obx(
+            () {
+              return (controller
+                          .recipient(recipientType: recipientType)
+                          ?.participantType ==
+                      ParticipantType.DeliveryAdmin)
+                  ? Text("Administrador")
+                  : Text(
+                      controller
+                              .recipient(
+                                  recipientType: recipientType,
+                                  recipientId: recipientId)
+                              ?.name ??
+                          "User",
+                    );
+            },
+          ),
           actions: <Widget>[
             if (orderId != null && showViewOrderBtn == true)
               InkWell(
