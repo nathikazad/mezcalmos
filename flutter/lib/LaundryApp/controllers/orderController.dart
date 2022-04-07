@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:async/async.dart' show StreamGroup;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -69,7 +69,7 @@ class OrderController extends GetxController {
     });
   }
 
-  DeliverableOrder? getOrder(String orderId) {
+  LaundryOrder? getOrder(String orderId) {
     try {
       return currentOrders.firstWhere((DeliverableOrder order) {
         return order.orderId == orderId;
@@ -85,28 +85,35 @@ class OrderController extends GetxController {
     }
   }
 
-  Stream<Order?> getCurrentOrderStream(String orderId) {
-    return currentOrders.stream.map<Order?>((_) {
+  Stream<LaundryOrder?> getOrderStream(String orderId) {
+    return StreamGroup.merge(<Stream<LaundryOrder?>>[
+      _getCurrentOrderStream(orderId),
+      _getPastOrderStream(orderId)
+    ]);
+  }
+
+  Stream<LaundryOrder?> _getCurrentOrderStream(String orderId) {
+    return currentOrders.stream.map<LaundryOrder?>((_) {
       try {
         return currentOrders.firstWhere(
           (currentOrder) => currentOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
       }
     });
   }
 
-  Stream<Order?> getPastOrderStream(String orderId) {
-    return pastOrders.stream.map<Order?>((_) {
+  Stream<LaundryOrder?> _getPastOrderStream(String orderId) {
+    return pastOrders.stream.map<LaundryOrder?>((_) {
       try {
         return pastOrders.firstWhere(
           (pastOrder) => pastOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
       }
     });
   }

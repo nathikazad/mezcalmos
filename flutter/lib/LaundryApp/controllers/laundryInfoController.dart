@@ -32,4 +32,14 @@ class LaundryInfoController extends GetxController {
       mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
     });
   }
+
+  @override
+  void onClose() {
+    mezDbgPrint(
+        "[+] LaundryAuthController::dispose ---------> Was invoked ! ${this.hashCode}");
+
+    _laundryInfoListener?.cancel();
+    _laundryInfoListener = null;
+    super.onClose();
+  }
 }

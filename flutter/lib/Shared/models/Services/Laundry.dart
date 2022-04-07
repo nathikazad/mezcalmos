@@ -45,7 +45,7 @@ class Laundry extends Service {
 }
 
 class LaundryCosts {
-  List<LaundryCostLineItem> lineItems = [];
+  List<LaundryCostLineItem> lineItems = <LaundryCostLineItem>[];
   num minimumCost = 0;
 
   LaundryCosts();
@@ -54,6 +54,7 @@ class LaundryCosts {
     // ignore: prefer_final_locals
     LaundryCosts laundryCosts = LaundryCosts();
     laundryCosts.minimumCost = laundryCostsData['minimumCosts'];
+    // ignore: avoid_annotating_with_dynamic
     laundryCostsData["byTypes"].forEach((dynamic itemId, dynamic itemData) {
       laundryCosts.lineItems.add(LaundryCostLineItem.fromData(itemData));
     });
