@@ -1,16 +1,17 @@
+import 'dart:async';
+
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:get/get.dart';
-import 'dart:async';
-
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -19,10 +20,11 @@ class RestaurantController extends GetxController {
   StreamSubscription<dynamic>? _cartListener;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
+
   @override
   void onInit() {
     super.onInit();
-    print("--------------------> RestaurantsCartController Initialized !");
+    debugPrint("--------------------> RestaurantsCartController Initialized !");
     if (_authController.fireAuthUser != null) {
       _cartListener?.cancel();
       _cartListener = _databaseHelper.firebaseDatabase
@@ -104,7 +106,8 @@ class RestaurantController extends GetxController {
     }
 
     mezDbgPrint(
-        "@@saadf@@ restaurantController::addItem ---> addingItem and saving card !");
+      "@@saadf@@ restaurantController::addItem ---> addingItem and saving card !",
+    );
 
     cart.value.addItem(cartItem);
     await saveCart();

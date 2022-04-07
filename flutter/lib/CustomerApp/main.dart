@@ -20,29 +20,37 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
-      onPress: () {
-        Get.find<SideMenuDrawerController>().closeMenu();
-        Get.toNamed(kSavedLocations);
-      },
-      icon: Icon(
-        Icons.near_me_outlined,
-        color: Color.fromARGB(255, 103, 121, 254),
-        size: 25,
-      ),
-      title: "Saved Location")
+    onPress: () {
+      Get.find<SideMenuDrawerController>().closeMenu();
+      Get.toNamed<void>(kSavedLocations);
+    },
+    icon: Icon(
+      Icons.near_me_outlined,
+      color: Color.fromARGB(255, 103, 121, 254),
+      size: 25,
+    ),
+    title: "Saved Location",
+  )
 ];
 
 void main() {
   runMainGuarded(
-      () => runApp(Sizer(builder: (context, orientation, deviceType) {
-            return StartingPoint(
-              appType: AppType.CustomerApp,
-              appTheme: CustomerAppTheme.lightTheme,
-              signInCallback: signInCallback,
-              signOutCallback: signOutCallback,
-              routes: routes,
-              sideMenuItems: sideMenuItems,
-              locationOn: true,
-            );
-          })));
+    () => runApp(
+      Sizer(
+        builder: (_, __, ___) {
+          return StartingPoint(
+            appType: AppType.CustomerApp,
+            appTheme: CustomerAppTheme.lightTheme,
+            signInCallback: signInCallback,
+            signOutCallback: signOutCallback,
+            routes: routes,
+            sideMenuItems: sideMenuItems,
+            locationOn: true,
+          );
+        },
+      ),
+    ),
+  );
 }
+// python launcher.py env=stage app=CustomerApp
+// python launcher.py env=prod app=CustomerApp

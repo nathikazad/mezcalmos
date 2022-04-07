@@ -8,8 +8,12 @@ import 'package:rive/rive.dart';
 import 'package:sizer/sizer.dart';
 
 class LaundryOrderCard extends StatelessWidget {
+  const LaundryOrderCard({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
+
   final LaundryOrder order;
-  const LaundryOrderCard({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,44 +29,41 @@ class LaundryOrderCard extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(8),
           child: Row(
-            children: [
+            children: <Widget>[
               CircleAvatar(
                 radius: 30,
                 backgroundImage:
                     CachedNetworkImageProvider(order.customer.image),
               ),
-              SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       order.customer.name,
                       style: txt.bodyText1,
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
+                      children: <Widget>[
                         Text('\$40/KG'),
                         if (order.weight != null)
                           Text("\$${order.weight! * 40}"),
                         Row(
-                          children: [
+                          children: <Widget>[
                             Icon(
                               Icons.timelapse_rounded,
                               size: 16.sp,
                             ),
                             Text(
-                              DateFormat(' hh:mm a')
-                                  .format(order.orderTime.toLocal()),
+                              DateFormat(' hh:mm a').format(
+                                order.orderTime.toLocal(),
+                              ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     )
                   ],

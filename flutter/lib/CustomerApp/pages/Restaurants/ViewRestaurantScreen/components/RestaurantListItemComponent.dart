@@ -6,11 +6,12 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Utils/GenerateTheNameExtension.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
 class RestaurantsListItemsOfComponent extends StatefulWidget {
-  RestaurantsListItemsOfComponent({
+  const RestaurantsListItemsOfComponent({
     Key? key,
     required this.item,
     this.function,
@@ -26,6 +27,10 @@ class RestaurantsListItemsOfComponent extends StatefulWidget {
 
 class _RestaurantsListItemsOfComponentState
     extends State<RestaurantsListItemsOfComponent> {
+  /// LanguageType
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
+
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
@@ -41,7 +46,7 @@ class _RestaurantsListItemsOfComponentState
             CachedNetworkImage(
               imageUrl: widget.item.image!,
               fit: BoxFit.cover,
-              imageBuilder: (context, imageProvider) => Container(
+              imageBuilder: (_, ImageProvider imageProvider) => Container(
                 height: 63,
                 width: 63,
                 child: ClipOval(
@@ -49,7 +54,9 @@ class _RestaurantsListItemsOfComponentState
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.cover),
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -69,28 +76,6 @@ class _RestaurantsListItemsOfComponentState
                   direction: ShimmerDirection.ltr,
                 );
               },
-              // placeholder: (context, url) => Container(
-              //   height: 63,
-              //   width: 63,
-              //   child: Center(
-              //     child: CircularProgressIndicator(),
-              //   ),
-              // ),
-              // errorWidget: (context, url, error) => Container(
-              //   height: 63,
-              //   width: 63,
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       shape: BoxShape.circle,
-              //       color: Colors.grey.shade300,
-              //     ),
-              //     child: Icon(
-              //       Icons.image,
-              //       color: Colors.grey,
-              //       size: 20,
-              //     ),
-              //   ),
-              // ),
               errorWidget: (_, __, ___) {
                 return Container(
                   height: 63,
@@ -126,7 +111,7 @@ class _RestaurantsListItemsOfComponentState
                       ),
                     ),
                   ),
-                  SizedBox(height: 7),
+                  const SizedBox(height: 7),
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text("\$${widget.item.cost}", style: txt.headline3),

@@ -13,6 +13,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
 
 class TaxiOpenOrderCard extends StatelessWidget {
   final TaxiOrder order;
+
   const TaxiOpenOrderCard({Key? key, required this.order}) : super(key: key);
 
   @override
@@ -27,9 +28,9 @@ class TaxiOpenOrderCard extends StatelessWidget {
           margin: EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               _cardHeader(context),
-              Divider(),
+              const Divider(),
               _cardBottom(context),
             ],
           ),
@@ -42,7 +43,7 @@ class TaxiOpenOrderCard extends StatelessWidget {
   Widget _cardBottom(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      children: <Widget>[
         Flexible(
           child: Text(
             '${_i18n()["to"]}' + order.to.address,
@@ -54,14 +55,12 @@ class TaxiOpenOrderCard extends StatelessWidget {
         Container(
           padding: EdgeInsets.only(left: 5),
           child: Row(
-            children: [
+            children: <Widget>[
               Icon(
                 Icons.directions_outlined,
                 size: 16,
               ),
-              SizedBox(
-                width: 5,
-              ),
+              const SizedBox(width: 5),
               Text(
                 order.routeInformation!.distance.distanceStringInKm,
                 style: Theme.of(context).textTheme.bodyText2,
@@ -76,23 +75,21 @@ class TaxiOpenOrderCard extends StatelessWidget {
 // Return the header part of the card : Customer info + timer + drivers Stats
   Widget _cardHeader(BuildContext context) {
     return Row(
-      children: [
+      children: <Widget>[
         CircleAvatar(
           radius: 30,
           backgroundImage: CachedNetworkImageProvider(order.customer.image),
         ),
-        SizedBox(
-          width: 5,
-        ),
+        const SizedBox(width: 5),
         Flexible(
           flex: 5,
           fit: FlexFit.tight,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Text(
                     order.customer.name,
                     style: Theme.of(context)
@@ -100,15 +97,13 @@ class TaxiOpenOrderCard extends StatelessWidget {
                         .bodyText1!
                         .copyWith(fontSize: 11.sp),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Icon(
                     Icons.timer,
                     size: 20,
                     color: Theme.of(context).primaryColorLight,
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  const SizedBox(width: 5),
                   CountdownTimer(
                     endTime:
                         order.orderTime.millisecondsSinceEpoch + 1000 * 300,
@@ -126,9 +121,11 @@ class TaxiOpenOrderCard extends StatelessWidget {
                 ],
               ),
               Text(
-                  '${_i18n()["sentTo"]} ${order.numberOfTaxiSentNotificationTo().toString()} ${_i18n()["drivers"]}'),
+                '${_i18n()["sentTo"]} ${order.numberOfTaxiSentNotificationTo().toString()} ${_i18n()["drivers"]}',
+              ),
               Text(
-                  '${_i18n()["readBy"]} ${order.numberOfTaxiReadNotification().toString()} ${_i18n()["drivers"]}'),
+                '${_i18n()["readBy"]} ${order.numberOfTaxiReadNotification().toString()} ${_i18n()["drivers"]}',
+              ),
             ],
           ),
         ),

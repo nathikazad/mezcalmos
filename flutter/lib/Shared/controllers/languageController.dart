@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:io' show Platform;
+
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 
 class LanguageController extends GetxController {
   // default is english
   RxBool isLamgInitialized = false.obs;
-  Rx<LanguageType> _userLanguageKey = tDefaultLanguage.obs;
+  Rx<LanguageType> _userLanguageKey = sDefaultLanguage.obs;
 
   // jsonStrings will have:
   // {en : {}, es : {}}  <- so we avoid loading up each one onchanging lang

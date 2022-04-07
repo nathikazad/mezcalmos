@@ -11,7 +11,10 @@ typedef OnDropDownNewValue = void Function({String? newValue});
 class LaundryLocPicker extends StatefulWidget {
   final OnDropDownNewValue? onValueChangeCallback;
 
-  LaundryLocPicker({this.onValueChangeCallback, Key? key}) : super(key: key);
+  const LaundryLocPicker({
+    this.onValueChangeCallback,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _LaundryLocPickerState createState() => _LaundryLocPickerState();
@@ -29,6 +32,7 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
 
   @override
   void initState() {
+    super.initState();
     setState(() {
       // default ID: _pick_ , stands for our  Pick From Map
       loc = SavedLocation(name: _i18n()["pickLocation"], id: "_pick_");
@@ -46,36 +50,40 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
 
       // dropDownListValue = listOfSavedLoacations[0];
     });
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            width: 1.5,
-            color: (dropDownListValue != loc)
-                ? Theme.of(context).primaryColorLight
-                : Colors.red,
-          )),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          width: 1.5,
+          color: (dropDownListValue != loc)
+              ? Theme.of(context).primaryColorLight
+              : Colors.red,
+        ),
+      ),
       child: DropdownButtonHideUnderline(
         child: Obx(() {
           return DropdownButton<SavedLocation>(
-            selectedItemBuilder: (context) {
+            selectedItemBuilder: (_) {
               return listOfSavedLoacations
-                  .map<Widget>((item) => Container(
-                        alignment: Alignment.center,
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(item.name,
-                              style: txt.headline2!.copyWith(
-                                  fontWeight: FontWeight.w400, fontSize: 12)),
+                  .map<Widget>(
+                    (SavedLocation item) => Container(
+                      alignment: Alignment.center,
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          item.name,
+                          style: txt.headline2!.copyWith(
+                              fontWeight: FontWeight.w400, fontSize: 12),
                         ),
-                      ))
+                      ),
+                    ),
+                  )
                   .toList();
             },
             iconDisabledColor: Color.fromRGBO(172, 89, 252, 1),
@@ -90,36 +98,37 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
             icon: Icon(Icons.expand_more),
             items: listOfSavedLoacations
                 .map<DropdownMenuItem<SavedLocation>>(
-                    (e) => DropdownMenuItem<SavedLocation>(
-                          value: e,
-                          child: Container(
-                              child: Row(
-                            children: [
-                              Icon(
-                                Icons.location_on_outlined,
-                                size: 18,
-                                color: Color.fromRGBO(172, 89, 252, 1),
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Flexible(
-                                child: Container(
-                                  width: Get.width * 0.72,
-                                  child: Text(
-                                    e.name,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: txt.headline2!.copyWith(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12),
-                                  ),
+                  (SavedLocation e) => DropdownMenuItem<SavedLocation>(
+                    value: e,
+                    child: Container(
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.location_on_outlined,
+                            size: 18,
+                            color: Color.fromRGBO(172, 89, 252, 1),
+                          ),
+                          const SizedBox(width: 15),
+                          Flexible(
+                            child: Container(
+                              width: Get.width * 0.72,
+                              child: Text(
+                                e.name,
+                                overflow: TextOverflow.ellipsis,
+                                style: txt.headline2!.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
                                 ),
                               ),
-                            ],
-                          )),
-                        ))
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
                 .toList(),
-            onChanged: (newValue) async {
+            onChanged: (SavedLocation? newValue) async {
               mezDbgPrint(
                   "Changed value over to ====> ${newValue?.name} | Old one was : ${dropDownListValue?.name}");
 
@@ -128,8 +137,8 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
               });
               // we will route the user back to the Map
               if (newValue?.id == "_pick_") {
-                SavedLocation? saveLocation =
-                    await Get.toNamed(kPickLocationRoute, arguments: true)
+                final SavedLocation? saveLocation =
+                    await Get.toNamed<void>(kPickLocationRoute, arguments: true)
                         as SavedLocation?;
                 mezDbgPrint("View Got result : $saveLocation");
                 if (saveLocation != null) {

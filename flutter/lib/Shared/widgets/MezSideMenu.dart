@@ -2,20 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() =>
-    Get.find<LanguageController>().strings['Shared']['widgets']
-["MezSideMenu"];
+    Get.find<LanguageController>().strings['Shared']['widgets']["MezSideMenu"];
 
 class MezSideMenu extends GetWidget<AuthController> {
   SideMenuDrawerController _drawerController =
@@ -103,7 +102,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                 ),
                 Container(
                   child: Text(
-                    controller.user?.name ?? tDefaultUserName,
+                    controller.user?.name ?? sDefaultUserName,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontFamily: 'psb', fontSize: 18.5.sp),
                   ),
@@ -126,8 +125,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                           color: Color.fromARGB(255, 103, 121, 254),
                           size: 22.sp,
                         ),
-                        title: Text(
-                            _i18n()["userInfo"],
+                        title: Text(_i18n()["userInfo"],
                             style:
                                 TextStyle(fontFamily: 'psb', fontSize: 13.sp)),
                       )

@@ -24,14 +24,15 @@ extension TwoButtonExtension on TwoButtonDialogButton {
 }
 
 // ok button is not showing
-Future<void> oneButtonDialog(
-    {String? title,
-    required String body,
-    String? imagUrl,
-    Widget? buttonStyle,
-    Color? bodyTextColor,
-    double fontSize = 20,
-    String buttonText = "Ok"}) async {
+Future<void> oneButtonDialog({
+  String? title,
+  required String body,
+  String? imagUrl,
+  Widget? buttonStyle,
+  Color? bodyTextColor,
+  double fontSize = 20,
+  String buttonText = "Ok",
+}) async {
   await Get.defaultDialog(
     backgroundColor: Colors.white,
     contentPadding: const EdgeInsets.all(5),
@@ -92,19 +93,22 @@ Future<void> oneButtonDialog(
   );
 }
 
-Future<TwoButtonDialogButton?> twoButtonDialog(
-    {required String title,
-    required String body,
-    TextStyle? bodyTextStyle,
-    //required String leftButtonText,
-    bool? titleUp = false,
-    double? buttonsWidthSize = 80,
-    Function? leftButtonCallback,
-    // required String rightButtonText,
-    Widget? dailogIcon,
-    Widget? buttonLeftStyle,
-    Widget? buttonRightStyle,
-    Function? rightButtonCallback}) async {
+Future<TwoButtonDialogButton?> twoButtonDialog({
+  required String title,
+  required String body,
+  TextStyle? bodyTextStyle,
+  //required String leftButtonText,
+  bool? titleUp = false,
+  double? buttonsWidthSize = 80,
+  Function? leftButtonCallback,
+  // required String rightButtonText,
+  Widget? dialogIcon,
+  Widget? buttonLeftStyle,
+  Widget? buttonRightStyle,
+  Function? rightButtonCallback,
+  VoidCallback? onTapButtonLeft,
+  VoidCallback? onTapButtonRight,
+}) async {
   TwoButtonDialogButton? twoButtonDialogButton;
   await Get.defaultDialog<TwoButtonDialogButton>(
     onWillPop: () async {
@@ -120,82 +124,77 @@ Future<TwoButtonDialogButton?> twoButtonDialog(
       color: const Color(0xffffffff),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (titleUp)
-            SizedBox(
-              height: 10,
-            ),
-          (dailogIcon != null) ? dailogIcon : Container(),
+        children: <Widget>[
+          if (titleUp) const SizedBox(height: 10),
+          (dialogIcon != null) ? dialogIcon : Container(),
           if (titleUp)
             Container(
               padding: const EdgeInsets.only(top: 15),
-              child: Text(title,
-                  style: const TextStyle(
-                      color: Color(0xff000f1c),
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "ProductSans",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 25.0),
-                  textAlign: TextAlign.center),
+              child: Text(
+                title,
+                style: const TextStyle(
+                    color: Color(0xff000f1c),
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "ProductSans",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 25.0),
+                textAlign: TextAlign.center,
+              ),
             ),
-          if (titleUp)
-            SizedBox(
-              height: 8,
-            ),
-          Text(body,
-              style: bodyTextStyle ??
-                  const TextStyle(
-                      color: Color(0xff1d1d1d),
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "ProductSans",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 15.0),
-              textAlign: TextAlign.center),
-          SizedBox(
-            height: 20,
+          if (titleUp) const SizedBox(height: 8),
+          Text(
+            body,
+            style: bodyTextStyle ??
+                const TextStyle(
+                  color: Color(0xff1d1d1d),
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "ProductSans",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 15.0,
+                ),
+            textAlign: TextAlign.center,
           ),
+          const SizedBox(height: 20),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Expanded(
                   child: Container(
                     width: buttonsWidthSize,
                     child: InkWell(
                       child: buttonLeftStyle,
-                      onTap: () {
-                        Get.back();
-                        twoButtonDialogButton = TwoButtonDialogButton.Left;
-                        leftButtonCallback?.call();
+                      onTap: onTapButtonLeft ??
+                          () {
+                            Get.back();
+                            twoButtonDialogButton = TwoButtonDialogButton.Left;
+                            leftButtonCallback?.call();
 
-                        // onConform();
-                      },
+                            // onConform();
+                          },
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Container(
                     width: buttonsWidthSize,
                     child: InkWell(
                       child: buttonRightStyle,
-                      onTap: () {
-                        // onCancel();
-                        Get.back();
-                        twoButtonDialogButton = TwoButtonDialogButton.Right;
-                        rightButtonCallback?.call();
-                      },
+                      onTap: onTapButtonRight ??
+                          () {
+                            // onCancel();
+                            Get.back<void>();
+                            twoButtonDialogButton = TwoButtonDialogButton.Right;
+                            rightButtonCallback?.call();
+                          },
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
-          SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
         ],
       ),
     ),
@@ -217,7 +216,7 @@ Future<YesNoDialogButton> yesNoDialog(
     body: body,
     bodyTextStyle: bodyTextStyle,
     titleUp: titleUp,
-    dailogIcon: icon,
+    dialogIcon: icon,
     buttonLeftStyle: buttonLeftStyle,
     buttonRightStyle: buttonRightStyle,
   ));
@@ -233,7 +232,7 @@ Future<YesNoDialogButton> cancelAlertDialog(
   final TwoButtonDialogButton? _res = (await twoButtonDialog(
     title: title,
     body: body,
-    dailogIcon: icon,
+    dialogIcon: icon,
     buttonRightStyle: NoButtonStyle(),
     buttonLeftStyle: YesButtonStyle(),
   ));

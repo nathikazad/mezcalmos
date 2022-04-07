@@ -4,12 +4,13 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class LaundryOrderNoteComponent extends StatelessWidget {
-  LaundryOrderNoteComponent({
+  const LaundryOrderNoteComponent({
     Key? key,
     required this.order,
   }) : super(key: key);
 
   final LaundryOrder order;
+
   dynamic _i18n() =>
       Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
           ['LaundryCurrentOrderView']['Components']['LaundryOrderComponent'];
@@ -22,7 +23,7 @@ class LaundryOrderNoteComponent extends StatelessWidget {
           padding: EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Container(
                 alignment: Alignment.center,
                 child: Text(
@@ -30,9 +31,7 @@ class LaundryOrderNoteComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
-              Divider(
-                height: 15,
-              ),
+              const Divider(height: 15),
               Text(order.notes ?? '')
             ],
           ),

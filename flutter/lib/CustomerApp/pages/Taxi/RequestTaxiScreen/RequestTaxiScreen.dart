@@ -13,16 +13,23 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class RequestTaxiScreen extends StatefulWidget {
+  const RequestTaxiScreen({Key? key}) : super(key: key);
+
   @override
   _RequestTaxiScreenState createState() => _RequestTaxiScreenState();
 }
 
 class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
+  /// RequestTaxiController
   final RequestTaxiController viewController = RequestTaxiController();
+
+  /// RequestTaxiScreenWidgets
   late final RequestTaxiScreenWidgets viewWidgets;
   bool lockOnTaxiRequest = false;
+
   @override
   void initState() {
+    super.initState();
     viewWidgets =
         RequestTaxiScreenWidgets(requestTaxiController: viewController);
     //TODO:FIX
@@ -43,15 +50,16 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       // when no args passed we simply initialte the view and map with current user's loc.
       viewController.initiateViewAndMapWithCurrentLocation();
     }
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar:
-          mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () => Get.back()),
+      appBar: mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: () => Get.back<void>(),
+      ),
       backgroundColor: Colors.white,
       body: Container(
         color: Colors.white,
@@ -90,24 +98,27 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                     }
                   }
                 },
-              ),),
-              // --- <>
-              Obx(
-                () => LocationSearchBar(
-                    request: viewController.taxiRequest.value,
-                    locationSearchBarController:
-                        viewController.locationSearchBarController,
-                    newLocationChosenEvent:
-                        viewController.updateModelAndHandoffToLocationPicker),
               ),
-              viewController.pickedFromTo.value
-                  // from , to
-                  ? TaxiReqBottomBar(
-                      taxiRequest: viewController.taxiRequest.value,
-                    )
-                  : SizedBox(),
-              if (viewController.pickedFromTo.value) viewWidgets.getToolTip(),
-            ]),
+            ),
+            // --- <>
+            Obx(
+              () => LocationSearchBar(
+                request: viewController.taxiRequest.value,
+                locationSearchBarController:
+                    viewController.locationSearchBarController,
+                newLocationChosenEvent:
+                    viewController.updateModelAndHandoffToLocationPicker,
+              ),
+            ),
+            // from , to
+            viewController.pickedFromTo.value
+                ? TaxiReqBottomBar(
+                    taxiRequest: viewController.taxiRequest.value,
+                  )
+                : SizedBox(),
+            if (viewController.pickedFromTo.value) viewWidgets.getToolTip(),
+          ],
+        ),
       ),
     );
   }

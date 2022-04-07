@@ -8,10 +8,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:sizer/sizer.dart';
 //import 'package:sizer/sizer.dart';
@@ -34,7 +34,7 @@ class MGoogleMapController {
   MinMaxZoomPreference? minMaxZoomPrefs;
 
   void setOnMapTap({required Function onTap}) {
-    this.onMapTap = onTap;
+    onMapTap = onTap;
   }
 
   void _addOrUpdateMarker(Marker marker) {
@@ -71,10 +71,11 @@ class MGoogleMapController {
     }
   }
 
-  Future<void> addOrUpdateUserMarker(
-      {String? markerId,
-      required LatLng latLng,
-      String? customImgHttpUrl}) async {
+  Future<void> addOrUpdateUserMarker({
+    String? markerId,
+    required LatLng latLng,
+    String? customImgHttpUrl,
+  }) async {
     BitmapDescriptor icon;
 
     String? uImg = Get.find<AuthController>().user?.image ??
@@ -98,23 +99,26 @@ class MGoogleMapController {
     }
 
     // default userId is authenticated's
-    this._addOrUpdateMarker(Marker(
+    _addOrUpdateMarker(
+      Marker(
         markerId: MarkerId(
             markerId ?? Get.find<AuthController>().user?.id ?? 'ANONYMOUS'),
         icon: icon,
-        position: latLng));
+        position: latLng,
+      ),
+    );
   }
 
   Future<void> addOrUpdateTaxiDriverMarker(String markerId, LatLng latLng,
       {String? markerTitle}) async {
     // this check so we keep one single copy of the asset Bytes instead of re-croping again n again
-    if (this._taxiDriverImgDescruptorCopy == null) {
+    if (_taxiDriverImgDescruptorCopy == null) {
       _taxiDriverImgDescruptorCopy = await cropRonded(
           (await rootBundle.load(taxi_driver_marker_asset))
               .buffer
               .asUint8List());
     }
-    this._addOrUpdateMarker(Marker(
+    _addOrUpdateMarker(Marker(
         infoWindow: markerTitle == null
             ? InfoWindow.noText
             : InfoWindow(title: markerTitle),
@@ -142,16 +146,16 @@ class MGoogleMapController {
         isBytes: true);
     // markerId = markerId;
 
-    this._addOrUpdateMarker(
+    _addOrUpdateMarker(
         Marker(markerId: MarkerId(markerId), icon: icon, position: latLng));
   }
 
   void removeDestinationMarker({String id = "dest"}) {
-    this.removeMarkerById(id);
+    removeMarkerById(id);
   }
 
   void decodeAndAddPolyline({required String encodedPolylineString}) {
-    this.addPolyline(MapHelper.loadUpPolyline(encodedPolylineString)
+    addPolyline(MapHelper.loadUpPolyline(encodedPolylineString)
         .map<PointLatLng>((e) => PointLatLng(e.latitude, e.longitude))
         .toList());
   }
@@ -186,7 +190,7 @@ class MGoogleMapController {
     mezDbgPrint(
         "[   M GOOGLE MAP CONTROLLER AFTER ] ===> POLYLINES > $polylines");
 
-    this.animateMarkersPolyLinesBounds.value = true;
+    animateMarkersPolyLinesBounds.value = true;
   }
 
   void clearPolyline() {
@@ -194,7 +198,7 @@ class MGoogleMapController {
   }
 
   void setAnimateMarkersPolyLinesBounds(bool value) {
-    this.animateMarkersPolyLinesBounds.value = value;
+    animateMarkersPolyLinesBounds.value = value;
   }
 
   void moveToNewLatLng(double lat, double lng) async {
@@ -219,7 +223,7 @@ class MGoogleMapController {
   }
 
   void setLocation(Location newLocation) {
-    this.location.value = newLocation;
+    location.value = newLocation;
   }
 
   void setBounds(LatLngBounds? bounds) {
@@ -228,8 +232,8 @@ class MGoogleMapController {
 
   // Animate the camera using widget.bounds
   Future<void> animateCameraWithNewBounds() async {
-    if (controller != null && this.bounds != null) {
-      CameraUpdate _camUpdate = CameraUpdate.newLatLngBounds(this.bounds!, 100);
+    if (controller != null && bounds != null) {
+      CameraUpdate _camUpdate = CameraUpdate.newLatLngBounds(bounds!, 100);
       await controller!.animateCamera(_camUpdate);
       await _boundsReChecker(_camUpdate);
     }
@@ -284,19 +288,21 @@ class MGoogleMapController {
 
   // main function for updating the bounds and start the animation
   Future<void> animateAndUpdateBounds() async {
-    setBounds(animateMarkersPolyLinesBounds.value
-        ? _getMarkersAndPolylinesBounds()
-        : null);
+    setBounds(
+      animateMarkersPolyLinesBounds.value
+          ? _getMarkersAndPolylinesBounds()
+          : null,
+    );
     await animateCameraWithNewBounds();
   }
 
   MinMaxZoomPreference getMapMinMaxZommPrefs() {
-    if (this.minMaxZoomPrefs == null) {
-      return this.polylines.isNotEmpty
+    if (minMaxZoomPrefs == null) {
+      return polylines.isNotEmpty
           ? MinMaxZoomPreference.unbounded
           : MinMaxZoomPreference(16, 17);
     } else {
-      return this.minMaxZoomPrefs!;
+      return minMaxZoomPrefs!;
     }
   }
 }

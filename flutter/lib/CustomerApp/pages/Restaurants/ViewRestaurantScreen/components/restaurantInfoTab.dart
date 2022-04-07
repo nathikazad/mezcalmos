@@ -6,28 +6,31 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:sizer/sizer.dart';
 
-final f = new DateFormat('hh:mma');
+final DateFormat f = new DateFormat('hh:mma');
+
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-        ["pages"]
-["Restaurants"]["ViewRestaurantScreen"]["components"]["restaurantInfoTab"];
-
+        ["pages"]["Restaurants"]["ViewRestaurantScreen"]["components"]
+    ["restaurantInfoTab"];
 
 class RestaurantInfoTab extends StatelessWidget {
   final Restaurant restaurant;
+
   const RestaurantInfoTab({Key? key, required this.restaurant})
       : super(key: key);
 
+  /// LanguageType
+  static final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
+
   @override
   Widget build(BuildContext context) {
-    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Container(
               child: Text(
                 '${_i18n()["description"]} :',
@@ -40,7 +43,7 @@ class RestaurantInfoTab extends StatelessWidget {
             ),
             (restaurant.info.location != null)
                 ? Column(
-                    children: [
+                    children: <Widget>[
                       Container(
                         child: Text(
                           '${_i18n()["location"]} :',
@@ -53,9 +56,7 @@ class RestaurantInfoTab extends StatelessWidget {
                           width: double.infinity,
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                     ],
                   )
                 : Container(),
@@ -69,8 +70,8 @@ class RestaurantInfoTab extends StatelessWidget {
   }
 
   Widget getWorkingHoursWidget(Schedule? schedule, BuildContext context) {
-    var xDate = DateTime.now();
-    List<Widget> widgets = [
+    final DateTime xDate = DateTime.now();
+    final List<Widget> widgets = <Widget>[
       Container(
         alignment: Alignment.centerLeft,
         child: Text(
@@ -78,29 +79,25 @@ class RestaurantInfoTab extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
-      SizedBox(
-        height: 10,
-      )
+      const SizedBox(height: 10)
     ];
-    int pos = 0;
-    for (var i = 0; i < schedule!.openHours.length; i++) {
-      schedule.openHours.forEach((key, value) {
+    final int pos = 0;
+    for (int i = 0; i < schedule!.openHours.length; i++) {
+      schedule.openHours.forEach((Weekday key, OpenHours value) {
         if (key.index == i) {
-          widgets.add(WorkingHoursCart(
-            day:
-                "${_i18n()["weekDays"]["${key.toFirebaseFormatString()}"]}",
-            isOpen: value.isOpen,
-            openHour:
-                "${f.format(DateTime(xDate.year, xDate.month, xDate.day, value.from[0], value.from[1]))}",
-            closeHour:
-                "${f.format(DateTime(xDate.year, xDate.month, xDate.day, value.to[0], value.to[1]))}",
-          ));
-          ;
+          widgets.add(
+            WorkingHoursCart(
+              day: "${_i18n()["weekDays"]["${key.toFirebaseFormatString()}"]}",
+              isOpen: value.isOpen,
+              openHour:
+                  "${f.format(DateTime(xDate.year, xDate.month, xDate.day, value.from[0], value.from[1]))}",
+              closeHour:
+                  "${f.format(DateTime(xDate.year, xDate.month, xDate.day, value.to[0], value.to[1]))}",
+            ),
+          );
         }
       });
     }
-    return Column(
-      children: widgets,
-    );
+    return Column(children: widgets);
   }
 }

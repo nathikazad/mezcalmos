@@ -28,21 +28,39 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
+  const ViewRestaurantOrderScreen({Key? key}) : super(key: key);
+
   @override
   _ViewRestaurantOrderScreen createState() => _ViewRestaurantOrderScreen();
 }
 
 class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
-  AuthController auth = Get.find<AuthController>();
-  RestaurantOrderController controller = Get.find<RestaurantOrderController>();
-  DeliveryDriverController deliveryDriverController = Get.find<
+  /// AuthController
+  final AuthController auth = Get.find<AuthController>();
+
+  /// RestaurantOrderController
+  final RestaurantOrderController controller =
+      Get.find<RestaurantOrderController>();
+
+  /// DeliveryDriverController
+  final DeliveryDriverController deliveryDriverController = Get.find<
       DeliveryDriverController>(); // Since we have alot of buttons we check loading by name
 
+  /// DeliveryDriverUserInfo
   DeliveryDriverUserInfo? driver;
+
+  /// hasNewMessage
   Rx<bool> hasNewMessage = false.obs;
-  Rxn<RestaurantOrder> order = Rxn();
+
+  /// RestaurantOrder
+  Rxn<RestaurantOrder> order = Rxn<RestaurantOrder>();
+
+  /// orderId
   late String orderId;
-  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+
+  /// LanguageType
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
 
   StreamSubscription<RestaurantOrder?>? _orderListener;
 
@@ -83,25 +101,36 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: new FloatingActionButton(
-          focusColor: Colors.grey.shade100,
-          hoverColor: Colors.grey.shade100,
-          splashColor: Colors.grey.shade100,
-          backgroundColor: Colors.grey.shade100,
-          foregroundColor: Colors.purple.shade700,
-          onPressed: () {
-            Clipboard.setData(ClipboardData(
-                    text: order.value?.clipBoardText(userLanguage)))
-                .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
-                    position: SnackPosition.TOP));
-          },
-          tooltip: 'Copy',
-          child: new Icon(Icons.copy),
-        ),
-        appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
-            withOrder: true, function: Get.back),
-        backgroundColor: Colors.white,
-        body: Obx(() {
+      floatingActionButton: new FloatingActionButton(
+        focusColor: Colors.grey.shade100,
+        hoverColor: Colors.grey.shade100,
+        splashColor: Colors.grey.shade100,
+        backgroundColor: Colors.grey.shade100,
+        foregroundColor: Colors.purple.shade700,
+        onPressed: () {
+          Clipboard.setData(
+            ClipboardData(
+              text: order.value?.clipBoardText(userLanguage),
+            ),
+          ).then(
+            (_) => MezSnackbar(
+              "Done :D",
+              "Copied to clipboard.",
+              position: SnackPosition.TOP,
+            ),
+          );
+        },
+        tooltip: 'Copy',
+        child: new Icon(Icons.copy),
+      ),
+      appBar: deliveryAdminAppBar(
+        AppBarLeftButtonType.Back,
+        withOrder: true,
+        function: Get.back,
+      ),
+      backgroundColor: Colors.white,
+      body: Obx(
+        () {
           if (order.value == null) {
             return MezLogoAnimation(
               centered: true,
@@ -109,7 +138,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           } else {
             return SingleChildScrollView(
               child: Column(
-                children: [
+                children: <Widget>[
                   //====================Restaurant Info=======================
                   (!controller.isPast(order.value!))
                       ? CurrentOrderInfo(
@@ -144,6 +173,8 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
               ),
             );
           }
-        }));
+        },
+      ),
+    );
   }
 }

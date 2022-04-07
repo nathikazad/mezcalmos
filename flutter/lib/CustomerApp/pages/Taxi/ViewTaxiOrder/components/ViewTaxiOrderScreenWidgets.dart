@@ -9,12 +9,13 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]["Taxi"]
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Taxi"]
         ["ViewTaxiOrder"]["components"]["ViewTaxiOrderScreenWidgets"];
 
 class ViewTaxiOrderScreenWidgets {
   final ViewTaxiOrderController viewController;
+
   ViewTaxiOrderScreenWidgets({required this.viewController});
 
   /// this builds [MezToolTip] with the given [getHints()],
@@ -41,29 +42,34 @@ class ViewTaxiOrderScreenWidgets {
       return Container(
         child: InkWell(
           onTap: () async {
-            YesNoDialogButton res = await yesNoDialog(
-                text: _i18n()['title'], body: _i18n()['question']);
+            final YesNoDialogButton res = await yesNoDialog(
+              text: _i18n()['title'],
+              body: _i18n()['question'],
+            );
             if (res == YesNoDialogButton.Yes) {
               await viewController.taxiController
                   .cancelTaxi(viewController.order.value!.orderId);
             }
           },
           child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  color: Colors.red.shade400,
-                  borderRadius: BorderRadius.circular(10)),
-              child: Center(
-                child: Text(
-                  _i18n()['cancel'],
-                  style: TextStyle(
-                      fontFamily: "psr",
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 18),
-                  textAlign: TextAlign.center,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.red.shade400,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Text(
+                _i18n()['cancel'],
+                style: TextStyle(
+                  fontFamily: "psr",
+                  color: Colors.white,
+                  fontWeight: FontWeight.w300,
+                  fontSize: 18,
                 ),
-              )),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
         ),
       );
     }
@@ -71,7 +77,7 @@ class ViewTaxiOrderScreenWidgets {
 
   /// the hints [MezToolTipHint] that are related to this view !
   List<MezToolTipHint> getHints() {
-    return [
+    return <MezToolTipHint>[
       MezToolTipHint(
         hintWidget:
             RidePriceControllHint(hintText: _i18n()['taxiRidePriceTooltip']),
@@ -115,6 +121,6 @@ class ViewTaxiOrderScreenWidgets {
         ),
       );
     else
-      return SizedBox();
+      return const SizedBox();
   }
 }

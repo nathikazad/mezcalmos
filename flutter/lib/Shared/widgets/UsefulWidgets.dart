@@ -14,45 +14,49 @@ class MezcalmosSharedWidgets {
         fit: BoxFit.contain,
       );
 
-  static RichText mezcalmosTitle(
-          {double textSize = nDefaultMezcalmosTextSize, bool isBold = false}) =>
+  static RichText mezcalmosTitle({
+    double textSize = nDefaultMezcalmosTextSize,
+    bool isBold = false,
+  }) =>
       RichText(
-          text: TextSpan(
-        style: TextStyle(
-          fontFamily: 'psr',
-          color: Colors.black,
-          fontSize: textSize,
+        text: TextSpan(
+          style: TextStyle(
+            fontFamily: 'psr',
+            color: Colors.black,
+            fontSize: textSize,
+          ),
+          children: <TextSpan>[
+            TextSpan(
+              text: sMez,
+              style: TextStyle(
+                fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
+              ),
+            ),
+            TextSpan(
+              text: sCalmos,
+              style: TextStyle(
+                fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
+                color: Color.fromARGB(255, 103, 122, 253),
+              ),
+            ),
+          ],
         ),
-        children: <TextSpan>[
-          TextSpan(
-            text: tMez,
-            style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
-            ),
-          ),
-          TextSpan(
-            text: tCalmos,
-            style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
-              color: Color.fromARGB(255, 103, 122, 253),
-            ),
-          ),
-        ],
-      ));
+      );
 
   static Widget fillTitle(int actionLength) {
     return Container(
       width: Get.width * 0.55,
-
       //  width: ,
       child: FittedBox(
         // fit: BoxFit.scaleDown,
         alignment: Alignment.centerLeft,
         child: Row(
-          children: [
+          children: <Widget>[
             logo(size: getSizeRelativeToScreen(80, Get.width, Get.height)),
             Padding(
-                padding: EdgeInsets.only(left: 10), child: mezcalmosTitle()),
+              padding: EdgeInsets.only(left: 10),
+              child: mezcalmosTitle(),
+            ),
           ],
         ),
       ),

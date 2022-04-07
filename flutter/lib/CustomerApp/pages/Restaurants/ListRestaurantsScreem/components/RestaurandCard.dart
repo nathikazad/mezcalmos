@@ -24,7 +24,8 @@ class RestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+    final LanguageType userLanguage =
+        Get.find<LanguageController>().userLanguageKey;
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
       margin: EdgeInsets.all(8),
@@ -48,25 +49,25 @@ class RestaurantCard extends StatelessWidget {
                         restaurant.info.name,
                         style: txt.headline3,
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                         restaurant.description[userLanguage]!,
                         style: txt.subtitle1,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         alignment: Alignment.bottomLeft,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
+                          children: <Widget>[
                             Icon(
                               Icons.restaurant_menu,
                               color: Colors.deepPurple,
                               size: 15,
                             ),
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
                             Flexible(
                               child: Text(
                                 restaurant.items.length.toStringAsFixed(0) +
@@ -107,13 +108,6 @@ class RestaurantCard extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: restaurant.info.image,
                 fit: BoxFit.cover,
-                // placeholder: (_, __) => Container(
-                //   width: 15,
-                //   height: 15,
-                //   child: Center(
-                //     child: CircularProgressIndicator(),
-                //   ),
-                // ),
                 placeholder: (_, __) {
                   return Shimmer.fromColors(
                     child: Container(

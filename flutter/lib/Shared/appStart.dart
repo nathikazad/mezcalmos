@@ -19,7 +19,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
-import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -30,12 +29,15 @@ import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sizer/sizer.dart' as Sizer;
 
+import 'controllers/appVersionController.dart';
+
 final ThemeData _defaultAppTheme = ThemeData(
-    primaryColor: Colors.white,
-    visualDensity: VisualDensity.adaptivePlatformDensity);
+  primaryColor: Colors.white,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+);
 
 class StartingPoint extends StatefulWidget {
   final AppType appType;
@@ -49,72 +51,96 @@ class StartingPoint extends StatefulWidget {
   ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
   //  Sideminu
-  const StartingPoint(
-      {required this.appType,
-      this.appTheme = null,
-      required this.signInCallback,
-      required this.signOutCallback,
-      required this.routes,
-      this.sideMenuItems,
-      this.locationOn = true});
+  const StartingPoint({
+    required this.appType,
+    this.appTheme = null,
+    required this.signInCallback,
+    required this.signOutCallback,
+    required this.routes,
+    this.sideMenuItems,
+    this.locationOn = true,
+  });
 
   @override
   _StartingPointState createState() => _StartingPointState();
 }
 
 class _StartingPointState extends State<StartingPoint> {
-  bool _initialized = false;
-  bool _error = false;
-
   _StartingPointState();
+
+  /// _initialized
+  bool _initialized = false;
+
+  /// _error
+  bool _error = false;
 
   @override
   void initState() {
     super.initState();
+    debugPrint(
+      "-------------------Start _StartingPointState ------------------------",
+    );
     WidgetsFlutterBinding.ensureInitialized();
+
+    /// initializeSetup
     initializeSetup();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations(<DeviceOrientation>[
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]);
+    SystemChrome.setPreferredOrientations(
+      <DeviceOrientation>[
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown
+      ],
+    );
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    );
     if (_error) {
       MezSnackbar("Error", "Server connection failed !");
       return Sizer.Sizer(
-          builder: (BuildContext context, Orientation orientation,
-                  Sizer.DeviceType deviceType) =>
-              GetMaterialApp(
-                debugShowCheckedModeBanner: false,
-                home: Scaffold(
-                  body: Center(
-                    child: Icon(Icons.signal_wifi_bad,
-                        color: Colors.red.shade200,
-                        size:
-                            getSizeRelativeToScreen(50, Get.height, Get.width)),
-                  ),
-                ),
-              ));
+        builder: (
+          BuildContext context,
+          Orientation orientation,
+          Sizer.DeviceType deviceType,
+        ) =>
+            GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            body: Center(
+              child: Icon(
+                Icons.signal_wifi_bad,
+                color: Colors.red.shade200,
+                size: getSizeRelativeToScreen(50, Get.height, Get.width),
+              ),
+            ),
+          ),
+        ),
+      );
     }
     if (!_initialized) {
       return Sizer.Sizer(
-          builder: (BuildContext context, Orientation orientation,
-                  Sizer.DeviceType deviceType) =>
-              SplashScreen());
+        builder: (BuildContext context, Orientation orientation,
+                Sizer.DeviceType deviceType) =>
+            SplashScreen(),
+      );
     } else {
       mezDbgPrint(
-          "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}");
+        "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}",
+      );
       return Sizer.Sizer(
-          builder: (BuildContext context, Orientation orientation,
-                  Sizer.DeviceType deviceType) =>
-              mainApp(
-                  appType: widget.appType,
-                  appTheme: widget.appThemeGetter,
-                  routes: widget.routes));
+        builder: (
+          BuildContext context,
+          Orientation orientation,
+          Sizer.DeviceType deviceType,
+        ) =>
+            mainApp(
+          appType: widget.appType,
+          appTheme: widget.appThemeGetter,
+          routes: widget.routes,
+        ),
+      );
     }
   }
 
@@ -133,6 +159,11 @@ class _StartingPointState extends State<StartingPoint> {
 
       hookOnFlutterErrorsStdout();
       mezDbgPrint("Done : hookOnFlutterErrorsStdout");
+
+      /// AppVersionController
+      final AppVersionController _appVersionController =
+          Get.put<AppVersionController>(AppVersionController());
+      //_appVersionController.initTheNewVersion();
 
       setState(() => _initialized = true);
       mezDbgPrint("_initialized Set to : $_initialized");
@@ -174,10 +205,13 @@ class _StartingPointState extends State<StartingPoint> {
       throw Exception("Invalid Launch Mode");
     }
 
-    Get.put(FirebaseDb(
+    Get.put(
+      FirebaseDb(
         dbUrl: _host + dbRoot,
         firebaseDatabase: firebaseDb,
-        firebaseApp: _app));
+        firebaseApp: _app,
+      ),
+    );
   }
 
   Future<void> setGlobalVariables() async {
@@ -210,16 +244,18 @@ class _StartingPointState extends State<StartingPoint> {
         .stream
         .first;
     Get.put<AuthController>(
-        AuthController(widget.signInCallback, widget.signOutCallback),
-        permanent: true);
-    Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
-        permanent: true);
+      AuthController(widget.signInCallback, widget.signOutCallback),
+      permanent: true,
+    );
+    Get.put<AppLifeCycleController>(
+      AppLifeCycleController(logs: true),
+      permanent: true,
+    );
     Get.put<SettingsController>(
-        SettingsController(
-            widget.appType, widget.sideMenuItems, widget.locationOn),
-        permanent: true);
-
-    // Get.lazyPut(() => AppVersionController(), fenix: true);
+      SettingsController(
+          widget.appType, widget.sideMenuItems, widget.locationOn),
+      permanent: true,
+    );
   }
 
   Future<void> waitForInitialization() async {
@@ -239,21 +275,22 @@ class _StartingPointState extends State<StartingPoint> {
     switch (type) {
       case AppType.CustomerApp:
         await GetStorage()
-            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+            .write(getxPrivacyPolicyLink, sPrivacyPolicyCustomerApp);
         break;
       case AppType.TaxiApp:
-        await GetStorage().write(getxPrivacyPolicyLink, tPrivacyPolicyTaxiApp);
+        await GetStorage().write(getxPrivacyPolicyLink, sPrivacyPolicyTaxiApp);
         break;
       default:
         await GetStorage()
-            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+            .write(getxPrivacyPolicyLink, sPrivacyPolicyCustomerApp);
     }
   }
 
-  Widget mainApp(
-      {required AppType appType,
-      required ThemeData appTheme,
-      required List<GetPage<dynamic>> routes}) {
+  Widget mainApp({
+    required AppType appType,
+    required ThemeData appTheme,
+    required List<GetPage<dynamic>> routes,
+  }) {
     Future<void> _initializeConfig() async {
       // We will use this to Initialize anything at MaterialApp root init of app
       final BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(

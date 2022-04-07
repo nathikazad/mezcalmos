@@ -10,8 +10,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["ListOrdersScreen"]["components"]["taxiOrderCard"];
 
 class TaxiCurrentOrderCard extends StatelessWidget {
+  const TaxiCurrentOrderCard({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
+
   final TaxiOrder order;
-  const TaxiCurrentOrderCard({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,28 +31,24 @@ class TaxiCurrentOrderCard extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.all(8),
           child: Row(
-            children: [
+            children: <Widget>[
               CircleAvatar(
                 radius: 30,
                 backgroundImage:
                     CachedNetworkImageProvider(order.customer.image),
               ),
-              SizedBox(
-                width: 5,
-              ),
+              const SizedBox(width: 5),
               Flexible(
                 flex: 5,
                 fit: FlexFit.tight,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       order.customer.name,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Text(
                       '${_i18n()["to"]}' + order.to.address,
                       style: Theme.of(context).textTheme.subtitle1,
@@ -58,7 +58,7 @@ class TaxiCurrentOrderCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               _getTaxiOrderWidget(order.status)
             ],
           ),

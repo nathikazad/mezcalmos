@@ -7,30 +7,32 @@ import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 // ignore: must_be_immutable
 class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final GestureTapCallback? onLeadingTaped;
+  CustomerAppBar({
+    Key? key,
+    this.title,
+    this.color,
+    this.userMenu = true,
+    required this.autoBack,
+    this.myLeading,
+    this.onLeadingTaped,
+    this.center,
+  })  : preferredSize = Size.fromHeight(kToolbarHeight),
+        super(key: key);
 
+  final GestureTapCallback? onLeadingTaped;
   final String? title;
   final Widget? myLeading;
   final bool? center;
   final Color? color;
   final bool autoBack;
-  bool? userMenu = true;
-  CustomerAppBar(
-      {Key? key,
-      this.title,
-      this.color,
-      this.userMenu = true,
-      required this.autoBack,
-      this.myLeading,
-      this.onLeadingTaped,
-      this.center})
-      : preferredSize = Size.fromHeight(kToolbarHeight),
-        super(key: key);
+  bool userMenu;
 
-  AuthController _authController = Get.find<AuthController>();
+  /// AuthController
+  final AuthController _authController = Get.find<AuthController>();
 
   @override
   final Size preferredSize;
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -54,7 +56,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: MezcalmosSharedWidgets.fillTitle(1),
               ),
             ),
-      actions: [
+      actions: <Widget>[
         MyCartAppBarIcon(
           iconColor: Colors.black,
         ),

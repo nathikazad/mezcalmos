@@ -1,24 +1,26 @@
-import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 
 class Customer {
   // List<Order> currentOrders = [];
   String? appVersion;
   dynamic notificationInfo;
-  List<SavedLocation> savedLocations = [];
+  List<SavedLocation> savedLocations = <SavedLocation>[];
   dynamic data;
+
   Customer.fromSnapshotData(dynamic data) {
-    this.appVersion = data?["versionNumber"] ?? null;
-    this.notificationInfo = data?["notificationInfo"];
-    List<SavedLocation> newSavedLocations = [];
+    appVersion = data?["versionNumber"] ?? null;
+    notificationInfo = data?["notificationInfo"];
+    final List<SavedLocation> newSavedLocations = <SavedLocation>[];
 
     mezDbgPrint("SavedLocations ===> ${data?["savedLocations"]}");
     if (data["savedLocations"] != null) {
       Map<String, dynamic>.from(data?["savedLocations"])
           .entries
           .forEach((entry) {
-        savedLocations
-            .add(SavedLocation.fromData(id: entry.key, data: entry.value));
+        savedLocations.add(
+          SavedLocation.fromData(id: entry.key, data: entry.value),
+        );
       });
     }
     // for (var locationId in ) {
@@ -29,13 +31,14 @@ class Customer {
   }
 
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{"notificationInfo": this.notificationInfo};
+    return <String, dynamic>{"notificationInfo": notificationInfo};
   }
 
   SavedLocation? getLocation(String locationId) {
     try {
-      return savedLocations
-          .firstWhere((savedLocation) => savedLocation.id == locationId);
+      return savedLocations.firstWhere(
+        (SavedLocation savedLocation) => savedLocation.id == locationId,
+      );
     } on StateError {
       return null;
     }
@@ -46,18 +49,30 @@ class SavedLocation {
   String name;
   String? id;
   Location? location;
-  SavedLocation({required this.name, this.location, this.id});
-  factory SavedLocation.fromData({required String id, required dynamic data}) {
+
+  SavedLocation({
+    required this.name,
+    this.location,
+    this.id,
+  });
+
+  factory SavedLocation.fromData({
+    required String id,
+    required dynamic data,
+  }) {
     return SavedLocation(
-        name: data["name"], location: Location.fromFirebaseData(data), id: id);
+      name: data["name"],
+      location: Location.fromFirebaseData(data),
+      id: id,
+    );
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
-    Map<String, dynamic> json = (this.location != null)
-        ? this.location!.toFirebaseFormattedJson()
+    final Map<String, dynamic> json = (location != null)
+        ? location!.toFirebaseFormattedJson()
         : <String, dynamic>{};
 
-    json["name"] = this.name;
+    json["name"] = name;
     return json;
   }
 }

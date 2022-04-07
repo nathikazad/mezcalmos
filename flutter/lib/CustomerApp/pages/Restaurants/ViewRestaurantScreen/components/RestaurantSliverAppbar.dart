@@ -7,17 +7,21 @@ import 'package:mezcalmos/CustomerApp/components/MyCartAppBarIcon.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Utils/GenerateTheNameExtension.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RestaurantSliverAppBar extends StatelessWidget {
-  RestaurantSliverAppBar({
+  const RestaurantSliverAppBar({
     Key? key,
     required this.restaurant,
   }) : super(key: key);
 
   final Restaurant restaurant;
-  RestaurantController controller = Get.find<RestaurantController>();
-  AuthController _authController = Get.find<AuthController>();
+
+  /// static variable
+  static final RestaurantController controller =
+      Get.find<RestaurantController>();
+  static final AuthController _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -90,20 +94,6 @@ class RestaurantSliverAppBar extends StatelessWidget {
               direction: ShimmerDirection.ltr,
             );
           },
-          // placeholder: (context, url) => Container(
-          //   width: 15,
-          //   height: 15,
-          //   child: Center(
-          //     child: CircularProgressIndicator(),
-          //   ),
-          // ),
-          // errorWidget: (context, url, error) => Container(
-          //   width: 15,
-          //   height: 15,
-          //   child: Center(
-          //     child: Icon(Icons.error),
-          //   ),
-          // ),
           errorWidget: (_, __, ___) {
             return Container(
               height: 63,

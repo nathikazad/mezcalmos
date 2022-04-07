@@ -1,7 +1,6 @@
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 class TaxiRequest {
   Location? from;
@@ -9,6 +8,7 @@ class TaxiRequest {
   RouteInformation? routeInformation;
   int estimatedPrice;
   PaymentType paymentType;
+
   TaxiRequest({
     this.from,
     this.to,
@@ -18,9 +18,7 @@ class TaxiRequest {
   });
 
   bool valid() {
-    return (this.from != null &&
-        this.to != null &&
-        this.routeInformation != null);
+    return (from != null && to != null && routeInformation != null);
   }
 
   void setEstimatedPrice(int price) {
@@ -38,11 +36,11 @@ class TaxiRequest {
   }
 
   void setFromLocation(Location? loc) {
-    this.from = loc;
+    from = loc;
   }
 
   void setToLocation(Location? loc) {
-    this.to = loc;
+    to = loc;
   }
 
   void setRouteInformation(RouteInformation routeInformation) {
@@ -50,14 +48,14 @@ class TaxiRequest {
   }
 
   bool isFromToSet() {
-    return this.from?.address != null &&
-        this.from?.address != "" &&
-        this.to?.address != null &&
-        this.to?.address != "";
+    return from?.address != null &&
+        from?.address != "" &&
+        to?.address != null &&
+        to?.address != "";
   }
 
   Map<String, dynamic> asCloudFunctionParam() {
-    return {
+    return <String, dynamic>{
       "from": from?.toFirebaseFormattedJson(),
       "to": to?.toFirebaseFormattedJson(),
       "estimatedPrice": estimatedPrice,

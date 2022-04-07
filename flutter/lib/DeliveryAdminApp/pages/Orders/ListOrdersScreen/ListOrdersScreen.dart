@@ -30,22 +30,49 @@ class ListOrdersScreen extends StatefulWidget {
 }
 
 class _ListOrdersScreen extends State<ListOrdersScreen> {
-  RxList<Order> inProcessOrders = RxList.empty();
-  RxList<Order> pastOrders = RxList.empty();
-  RxList<Order> laundryInProcessOrders = RxList.empty();
-  RxList<Order> laundryPastOrders = RxList.empty();
-  RxList<Order> taxiInProcessOrders = RxList.empty();
-  RxList<Order> taxiOpenOrders = RxList.empty();
-  RxList<Order> taxiPastOrders = RxList.empty();
+  /// inProcessOrders
+  RxList<Order> inProcessOrders = RxList<Order>.empty();
+
+  /// pastOrders
+  RxList<Order> pastOrders = RxList<Order>.empty();
+
+  /// laundryInProcessOrders
+  RxList<Order> laundryInProcessOrders = RxList<Order>.empty();
+
+  /// laundryPastOrders
+  RxList<Order> laundryPastOrders = RxList<Order>.empty();
+
+  /// taxiInProcessOrders
+  RxList<Order> taxiInProcessOrders = RxList<Order>.empty();
+
+  /// taxiOpenOrders
+  RxList<Order> taxiOpenOrders = RxList<Order>.empty();
+
+  /// taxiPastOrders
+  RxList<Order> taxiPastOrders = RxList<Order>.empty();
+
+  /// RestaurantOrderController
   RestaurantOrderController controller = Get.find<RestaurantOrderController>();
+
+  /// LaundryOrderController
   LaundryOrderController laundryOrderController =
       Get.find<LaundryOrderController>();
+
+  /// TaxiOrderController
   TaxiOrderController taxiOrderController = Get.find<TaxiOrderController>();
+
+  /// ListOrdersScreen
   dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
       ["pages"]["Orders"]["ListOrdersScreen"]["ListOrdersScreen"];
-  StreamSubscription? _ordersListener;
-  StreamSubscription? _laundryOrdersListener;
-  StreamSubscription? _taxiOrdersListener;
+
+  /// _ordersListener
+  StreamSubscription<dynamic>? _ordersListener;
+
+  /// _laundryOrdersListener
+  StreamSubscription<dynamic>? _laundryOrdersListener;
+
+  /// _taxiOrdersListener
+  StreamSubscription<dynamic>? _taxiOrdersListener;
 
   // ScrollController _ordersListViewController = ScrollController();
   // int fetchedOrders = 1;
@@ -82,34 +109,49 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   @override
   void initState() {
+    /// controller
     controller.clearNewOrderNotifications();
+
+    /// laundryOrderController
     laundryOrderController.clearNewOrderNotifications();
 
+    /// inProcessOrders
     inProcessOrders.value = fetchByRange();
     controller.inProcessOrders.stream.listen((_) {
       inProcessOrders.value = fetchByRange();
     });
+
+    /// pastOrders
     pastOrders.value = fetchPastByRange();
     controller.pastOrders.stream.listen((_) {
       pastOrders.value = fetchPastByRange();
     });
+
+    /// taxiInProcessOrders
     taxiInProcessOrders.value = taxiCurrentFetchByRange();
     taxiOrderController.inProcessOrders.stream.listen((_) {
       taxiInProcessOrders.value = taxiCurrentFetchByRange();
     });
+
+    /// taxiOpenOrders
     taxiOpenOrders.value = taxiOpenFetchByRange();
     taxiOrderController.openOrders.stream.listen((_) {
       taxiOpenOrders.value = taxiOpenFetchByRange();
     });
+
+    /// taxiPastOrders
     taxiPastOrders.value = taxiFetchPastByRange();
     taxiOrderController.pastOrders.stream.listen((_) {
       taxiPastOrders.value = taxiFetchPastByRange();
     });
 
+    /// laundryInProcessOrders
     laundryInProcessOrders.value = laundryFetchByRange();
     laundryOrderController.inProcessOrders.stream.listen((_) {
       laundryInProcessOrders.value = laundryFetchByRange();
     });
+
+    /// laundryPastOrders
     laundryPastOrders.value = laundryFetchPastByRange();
     laundryOrderController.pastOrders.stream.listen((_) {
       laundryPastOrders.value = laundryFetchPastByRange();
@@ -140,16 +182,18 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         child: DefaultTabController(
           length: 3,
           child: Scaffold(
-              key: Get.find<SideMenuDrawerController>().getNewKey(),
-              appBar: deliveryAdminAppBar(AppBarLeftButtonType.Menu,
-                  withOrder: false,
-                  tabbar: deliveryAdminTabbar(context),
-                  function: () =>
-                      Get.find<SideMenuDrawerController>().openMenu()),
-              // appBar: mezcalmosAppBar(
-              //     "menu", Get.find<SideMenuDraweController>().openMenu),
-              drawer: MezSideMenu(),
-              body: TabBarView(children: [
+            key: Get.find<SideMenuDrawerController>().getNewKey(),
+            appBar: deliveryAdminAppBar(
+              AppBarLeftButtonType.Menu,
+              withOrder: false,
+              tabbar: deliveryAdminTabbar(context),
+              function: () => Get.find<SideMenuDrawerController>().openMenu(),
+            ),
+            // appBar: mezcalmosAppBar(
+            //     "menu", Get.find<SideMenuDraweController>().openMenu),
+            drawer: MezSideMenu(),
+            body: TabBarView(
+              children: [
                 // Restaurant orders list view
                 RestaurantOrdersList(
                     pastOrders: controller.pastOrders,
@@ -162,105 +206,108 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                     pastOrders: taxiOrderController.pastOrders,
                     currentOrders: taxiOrderController.inProcessOrders,
                     openOrders: taxiOrderController.openOrders)
-              ])),
+              ],
+            ),
+          ),
         ));
   }
 
   TabBar deliveryAdminTabbar(BuildContext context) {
-    return TabBar(tabs: [
-      Obx(
-        () => Tab(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                  child: Text(
-                _i18n()['restaurantOrders'],
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(fontSize: 10.sp),
-              )),
-              SizedBox(
-                width: 5,
-              ),
-              if (inProcessOrders.isNotEmpty)
-                CircleAvatar(
-                  radius: 8,
-                  child: Text(
-                    '${inProcessOrders.length}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(color: Colors.white),
-                  ),
-                )
-            ],
+    return TabBar(
+      tabs: [
+        Obx(
+          () => Tab(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                    child: Text(
+                  _i18n()['restaurantOrders'],
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(fontSize: 10.sp),
+                )),
+                SizedBox(
+                  width: 5,
+                ),
+                if (inProcessOrders.isNotEmpty)
+                  CircleAvatar(
+                    radius: 8,
+                    child: Text(
+                      '${inProcessOrders.length}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1!
+                          .copyWith(color: Colors.white),
+                    ),
+                  )
+              ],
+            ),
           ),
         ),
-      ),
-      Obx(
-        () => Tab(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                  child: Text(
-                _i18n()['laundryOrders'],
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(fontSize: 10.sp),
-              )),
-              SizedBox(
-                width: 5,
-              ),
-              if (laundryInProcessOrders.isNotEmpty)
-                CircleAvatar(
-                  radius: 8,
-                  child: Text(
-                    '${laundryInProcessOrders.length}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(color: Colors.white),
-                  ),
-                )
-            ],
+        Obx(
+          () => Tab(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                    child: Text(
+                  _i18n()['laundryOrders'],
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(fontSize: 10.sp),
+                )),
+                SizedBox(
+                  width: 5,
+                ),
+                if (laundryInProcessOrders.isNotEmpty)
+                  CircleAvatar(
+                    radius: 8,
+                    child: Text(
+                      '${laundryInProcessOrders.length}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1!
+                          .copyWith(color: Colors.white),
+                    ),
+                  )
+              ],
+            ),
           ),
         ),
-      ),
-      Obx(
-        () => Tab(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
+        Obx(
+          () => Tab(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
                   child: Text(
-                _i18n()['taxiOrders'],
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(fontSize: 10.sp),
-              )),
-              SizedBox(
-                width: 5,
-              ),
-              if (taxiOpenOrders.isNotEmpty)
-                CircleAvatar(
-                  radius: 8,
-                  child: Text(
-                    '${taxiOpenOrders.length}',
+                    _i18n()['taxiOrders'],
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1!
-                        .copyWith(color: Colors.white),
+                        .bodyText2!
+                        .copyWith(fontSize: 10.sp),
                   ),
-                )
-            ],
+                ),
+                const SizedBox(width: 5),
+                if (taxiOpenOrders.isNotEmpty)
+                  CircleAvatar(
+                    radius: 8,
+                    child: Text(
+                      '${taxiOpenOrders.length}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1!
+                          .copyWith(color: Colors.white),
+                    ),
+                  )
+              ],
+            ),
           ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 }

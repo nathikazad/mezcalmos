@@ -20,24 +20,23 @@ class OrderStatusCard extends StatelessWidget {
   }) : super(key: key);
 
   final RestaurantOrder order;
-
   final RestaurantOrderStatus ordersStates;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Card(
           child: Container(
             width: double.infinity,
             margin: const EdgeInsets.all(12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                OrderStatusImage(ordersStates),
+              children: <Widget>[
+                orderStatusImage(ordersStates),
                 _orderStatusText(context),
-                Spacer(),
+                const Spacer(),
                 _orderMessageButton(context),
               ],
             ),
@@ -64,12 +63,13 @@ class OrderStatusCard extends StatelessWidget {
 
   Widget _orderHelperText(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(5),
-        alignment: Alignment.center,
-        child: Text(
-          getOrderHelperText(ordersStates),
-          textAlign: TextAlign.center,
-        ));
+      margin: EdgeInsets.all(5),
+      alignment: Alignment.center,
+      child: Text(
+        getOrderHelperText(ordersStates),
+        textAlign: TextAlign.center,
+      ),
+    );
   }
 
   Widget _orderMessageButton(BuildContext context) {
@@ -78,14 +78,17 @@ class OrderStatusCard extends StatelessWidget {
       shape: CircleBorder(),
       child: InkWell(
         onTap: () {
-          Get.toNamed(getMessagesRoute(
+          Get.toNamed<void>(
+            getMessagesRoute(
               chatId: order.orderId,
               orderId: order.orderId,
-              recipientType: ParticipantType.Restaurant));
+              recipientType: ParticipantType.Restaurant,
+            ),
+          );
         },
-        customBorder: CircleBorder(),
+        customBorder: const CircleBorder(),
         child: Stack(
-          children: [
+          children: <Widget>[
             _messageIcon(context),
             Obx(
               () => Get.find<OrderController>()
@@ -118,14 +121,15 @@ Widget _newMessageRedDot(BuildContext context) {
       width: 13,
       height: 13,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: const Color(0xfff6efff), width: 2),
-          color: const Color(0xffff0000)),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xfff6efff), width: 2),
+        color: const Color(0xffff0000),
+      ),
     ),
   );
 }
 
-Widget OrderStatusImage(RestaurantOrderStatus status) {
+Widget orderStatusImage(RestaurantOrderStatus status) {
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
       return Padding(

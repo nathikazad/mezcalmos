@@ -11,7 +11,11 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
-Notification customerNotificationHandler(String key, value) {
+
+Notification customerNotificationHandler(
+  String key,
+  value,
+) {
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
@@ -45,17 +49,18 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
       getLaundryOrderStatusFields(newOrdersStatus)!;
   mezDbgPrint(dynamicFields);
   return Notification(
-      id: key,
-      linkUrl: getLaundyOrderRoute(value['orderId']),
-      linkText: _i18n()['viewOrder'],
-      body: dynamicFields["body"],
-      imgUrl: dynamicFields["imgUrl"],
-      title: dynamicFields["title"],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.OrderStatusChange,
-      notificationAction:
-          value["notificationAction"].toString().toNotificationAction(),
-      variableParams: value);
+    id: key,
+    linkUrl: getLaundyOrderRoute(value['orderId']),
+    linkText: _i18n()['viewOrder'],
+    body: dynamicFields["body"],
+    imgUrl: dynamicFields["imgUrl"],
+    title: dynamicFields["title"],
+    timestamp: DateTime.parse(value['time']),
+    notificationType: NotificationType.OrderStatusChange,
+    notificationAction:
+        value["notificationAction"].toString().toNotificationAction(),
+    variableParams: value,
+  );
 }
 
 Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
@@ -67,17 +72,18 @@ Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
       getTaxiOrderStatusFields(newOrdersStatus)!;
   mezDbgPrint(dynamicFields);
   return Notification(
-      id: key,
-      linkUrl: getTaxiOrderRoute(value['orderId']),
-      linkText: _i18n()['viewOrder'],
-      body: dynamicFields["body"],
-      imgUrl: dynamicFields["imgUrl"],
-      title: dynamicFields["title"],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.OrderStatusChange,
-      notificationAction:
-          value["notificationAction"].toString().toNotificationAction(),
-      variableParams: value);
+    id: key,
+    linkUrl: getTaxiOrderRoute(value['orderId']),
+    linkText: _i18n()['viewOrder'],
+    body: dynamicFields["body"],
+    imgUrl: dynamicFields["imgUrl"],
+    title: dynamicFields["title"],
+    timestamp: DateTime.parse(value['time']),
+    notificationType: NotificationType.OrderStatusChange,
+    notificationAction:
+        value["notificationAction"].toString().toNotificationAction(),
+    variableParams: value,
+  );
 }
 
 Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
@@ -86,17 +92,18 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   final Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
   return Notification(
-      id: key,
-      linkUrl: getRestaurantOrderRoute(value['orderId']),
-      linkText: _i18n()['viewOrder'],
-      body: dynamicFields["body"],
-      imgUrl: dynamicFields["imgUrl"],
-      title: dynamicFields["title"],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.OrderStatusChange,
-      notificationAction:
-          value["notificationAction"].toString().toNotificationAction(),
-      variableParams: value);
+    id: key,
+    linkUrl: getRestaurantOrderRoute(value['orderId']),
+    linkText: _i18n()['viewOrder'],
+    body: dynamicFields["body"],
+    imgUrl: dynamicFields["imgUrl"],
+    title: dynamicFields["title"],
+    timestamp: DateTime.parse(value['time']),
+    notificationType: NotificationType.OrderStatusChange,
+    notificationAction:
+        value["notificationAction"].toString().toNotificationAction(),
+    variableParams: value,
+  );
 }
 
 // TODO: needs to be formatted for laundry
@@ -273,8 +280,8 @@ Notification newMessageNotification(String key, value) {
       id: key,
       linkUrl: (value['chatId'] == null)
           ? getMessageUrl(value['orderId']!)
-          : getMessageUrl(value[
-              'chatId']!), // just for backwards compatibility, future make it just value['orderId']
+          : getMessageUrl(value['chatId']!),
+      // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
