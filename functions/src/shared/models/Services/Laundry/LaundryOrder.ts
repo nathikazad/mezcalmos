@@ -32,13 +32,15 @@ export interface ConstructLaundryOrderParameters {
 }
 
 export function constructLaundryOrder(
-  params: ConstructLaundryOrderParameters, customer: UserInfo): LaundryOrder {
+  params: ConstructLaundryOrderParameters, customer: UserInfo, laundry: UserInfo): LaundryOrder {
   return <LaundryOrder>{
     customer: customer,
     orderType: OrderType.Laundry,
     status: LaundryOrderStatus.OrderReceieved,
     orderTime: (new Date()).toISOString(),
     notes: params.notes,
+    laundry: laundry,
+    serviceProviderId: laundry.id,
     cost: 0,
     paymentType: params.paymentType,
     to: params.to,

@@ -51,8 +51,7 @@ export const laundry = {
   requestLaundry: require("./laundry/laundryRequest"),
   readyForDeliveryOrder: laundryStatusChange.readyForDeliveryOrder,
   cancelFromCustomer: require("./laundry/cancelLaundryFromCustomer"),
-  cancelFromAdmin: laundryStatusChange.cancelOrder,
-  assignLaundry: laundryStatusChange.assignToLaundry
+  cancelFromAdmin: laundryStatusChange.cancelOrder
 }
 
 import * as laundryDelivery from './delivery/laundryStatusChange'

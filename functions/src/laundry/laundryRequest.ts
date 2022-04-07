@@ -12,7 +12,7 @@ import { Language, ServerResponseStatus } from "../shared/models/Generic/Generic
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootNodes from "../shared/databaseNodes/root";
-
+import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { isSignedIn } from "../shared/helper/authorizer";
 import * as chatController from "../shared/controllers/chatController";
@@ -21,6 +21,8 @@ import { setChat } from "../shared/controllers/chatController";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
+import { Laundry } from "../shared/models/Services/Laundry/Laundry";
+import { getLaundry } from "./laundryController";
 
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)
@@ -28,6 +30,13 @@ export = functions.https.onCall(async (data, context) => {
     return response;
 
   let customerId: string = context.auth!.uid;
+  if (!data.laundryId)
+    return {
+      status: "Error",
+      errorMessage: "laundry id is not present",
+      errorCode: "laundryIdNotPresent"
+    }
+  let laundry: Laundry = await getLaundry(data.laundryId);
   let orderParams: ConstructLaundryOrderParameters = <ConstructLaundryOrderParameters>data;
   // TODO limit number of active orders
   // let customerCurrentOrders = (await customerNodes.inProcessOrders(customerId).once('value')).val();
@@ -56,10 +65,11 @@ export = functions.https.onCall(async (data, context) => {
 
   try {
     let customerInfo: UserInfo = await getUserInfo(customerId);
-    const order: LaundryOrder = constructLaundryOrder(orderParams, customerInfo);
+    const order: LaundryOrder = constructLaundryOrder(orderParams, customerInfo, laundry.info);
 
     let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
     rootNodes.inProcessOrders(OrderType.Laundry, orderId).set(order);
+    laundryNodes.inProcessOrders(laundry.info.id, orderId).set(order);
 
     let chat: Chat = {
       chatType: ChatType.Order,
@@ -70,6 +80,10 @@ export = functions.https.onCall(async (data, context) => {
           ...customerInfo,
           particpantType: ParticipantType.Customer
         },
+        [laundry.info.id]: {
+          ...laundry.info,
+          particpantType: ParticipantType.
+        }
       }
     }
     await chatController.setChat(orderId, chat);

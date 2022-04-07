@@ -13,8 +13,6 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { getLaundry } from "./laundryController";
-import { Laundry } from "../shared/models/Services/Laundry/Laundry";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
 let statusArrayInSeq: Array<LaundryOrderStatus> =
@@ -140,66 +138,66 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
 }
 
 
-export const assignToLaundry = functions.https.onCall(async (data, context) => {
+// export const assignToLaundry = functions.https.onCall(async (data, context) => {
 
-  let response = await isSignedIn(context.auth)
-  if (response != undefined) {
-    return response;
-  }
+//   let response = await isSignedIn(context.auth)
+//   if (response != undefined) {
+//     return response;
+//   }
 
-  response = await checkDeliveryAdmin(context.auth!.uid)
-  if (response != undefined) {
-    return response;
-  }
+//   response = await checkDeliveryAdmin(context.auth!.uid)
+//   if (response != undefined) {
+//     return response;
+//   }
 
-  if (data.orderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected order id`,
-      errorCode: "orderIdNotGiven"
-    }
-  }
+//   if (data.orderId == null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Expected order id`,
+//       errorCode: "orderIdNotGiven"
+//     }
+//   }
 
-  if (data.laundryId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected laundry id`,
-      errorCode: "orderIdNotGiven"
-    }
-  }
+//   if (data.laundryId == null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Expected laundry id`,
+//       errorCode: "orderIdNotGiven"
+//     }
+//   }
 
-  let orderId: string = data.orderId;
-  let laundryId: string = data.laundryId;
-  let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
-  if (order == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order does not exist`,
-      errorCode: "orderDontExist"
-    }
-  }
+//   let orderId: string = data.orderId;
+//   let laundryId: string = data.laundryId;
+//   let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
+//   if (order == null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Order does not exist`,
+//       errorCode: "orderDontExist"
+//     }
+//   }
 
-  if (order.serviceProviderId != null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order already has a laundry`,
-      errorCode: "laundryAlreadyExist"
-    }
-  }
+//   if (order.serviceProviderId != null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Order already has a laundry`,
+//       errorCode: "laundryAlreadyExist"
+//     }
+//   }
 
-  let laundry: Laundry = await getLaundry(laundryId);
-  if (laundry == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Laundry does not exist`,
-      errorCode: "laundryDontExist"
-    }
-  }
+//   let laundry: Laundry = await getLaundry(laundryId);
+//   if (laundry == null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Laundry does not exist`,
+//       errorCode: "laundryDontExist"
+//     }
+//   }
 
-  order.serviceProviderId = laundryId;
-  order.laundry = laundry.info;
-  laundryNodes.inProcessOrders(laundryId, orderId).set(order);
-  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-  await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-  return response
-});
+//   order.serviceProviderId = laundryId;
+//   order.laundry = laundry.info;
+  
+//   customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+//   await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+//   return response
+// });
