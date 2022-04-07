@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -81,24 +82,24 @@ class LaundryOrderStatusCard extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            // Obx(
-            //   () => Get.find<OrderController>()
-            //           .orderHaveNewMessageNotifications(order.orderId)
-            //       ? Positioned(
-            //           left: 27,
-            //           top: 10,
-            //           child: Container(
-            //             width: 13,
-            //             height: 13,
-            //             decoration: BoxDecoration(
-            //                 borderRadius: BorderRadius.circular(10),
-            //                 border: Border.all(
-            //                     color: const Color(0xfff6efff), width: 2),
-            //                 color: const Color(0xffff0000)),
-            //           ),
-            //         )
-            //       : Container(),
-            // )
+            Obx(
+              () => Get.find<OrderController>()
+                      .orderHaveNewMessageNotifications(order.orderId)
+                  ? Positioned(
+                      left: 0,
+                      top: 0,
+                      child: Container(
+                        width: 13,
+                        height: 13,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: const Color(0xfff6efff), width: 2),
+                            color: const Color(0xffff0000)),
+                      ),
+                    )
+                  : Container(),
+            )
           ],
         ),
       ),

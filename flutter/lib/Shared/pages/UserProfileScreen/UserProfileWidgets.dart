@@ -26,21 +26,31 @@ class UserProfileWidgetsClass {
       required bool clickedSave}) {
     return [
       userInfoTitle(),
+      SizedBox(
+        height: 10,
+      ),
       Flexible(
-        flex: 2,
-        // fit: FlexFit.tight,
+        flex: 4,
+        fit: FlexFit.tight,
         child: pictureContainerWidget(
             onBrowsImageClick: onBrowsImageClick,
             isImageBeingUploaded: isImageBeingUploaded),
       ),
+      SizedBox(
+        height: 10,
+      ),
       Flexible(
-          flex: 1,
+          flex: 3,
+          fit: FlexFit.tight,
           child: showUserNameOrTextField(
               isImageBeingUploaded: isImageBeingUploaded)),
+      SizedBox(
+        height: 10,
+      ),
       Flexible(
         flex: 2,
         child: Container(
-            margin: EdgeInsets.only(bottom: 50, left: 50, right: 50),
+            margin: EdgeInsets.all(5),
             child: showEditOrSaveAndCancelButton(
                 onSaveClick: onSaveClick,
                 onStartEdit: onEditButtonClick,
@@ -123,11 +133,11 @@ class UserProfileWidgetsClass {
   /// this is the top title of the userProfileScreen
   Flexible userInfoTitle() {
     return Flexible(
-      flex: 1,
+      flex: 2,
       child: Center(
           child: Text(
         _i18n()['title'],
-        style: TextStyle(fontSize: 30),
+        style: TextStyle(fontSize: 20.sp),
       )),
     );
   }
@@ -184,7 +194,7 @@ class UserProfileWidgetsClass {
                 enabled: !isImageBeingUploaded,
                 style: TextStyle(color: Colors.purple.shade400, fontSize: 15),
                 controller: userProfileController.textEditingController,
-                onChanged: (value) {
+                onChanged: (String value) {
                   userProfileController.userName.value = value;
                 }),
           ),

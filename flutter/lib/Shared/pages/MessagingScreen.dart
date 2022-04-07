@@ -229,7 +229,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
               ? Text("Administrador")
               : Obx(
                   () => Text(
-                    controller.recipient(recipientType: recipientType)?.name ??
+                    controller
+                            .recipient(
+                                recipientType: recipientType,
+                                recipientId: recipientId)
+                            ?.name ??
                         "User",
                   ),
                 ),

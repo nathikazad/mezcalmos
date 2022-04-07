@@ -85,15 +85,26 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                     ),
                   ),
                   Spacer(),
-                  IconButton(
-                      onPressed: () {
-                        Get.toNamed(
-                            getMessagesRoute(chatId: widget.order.orderId));
-                      },
-                      icon: Icon(
-                        Icons.message_rounded,
-                        color: Theme.of(context).primaryColorLight,
-                      )),
+                  Stack(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Get.toNamed(
+                                getMessagesRoute(chatId: widget.order.orderId));
+                          },
+                          icon: Icon(
+                            Icons.message_rounded,
+                            color: Theme.of(context).primaryColorLight,
+                          )),
+                      Obx(
+                        () => Get.find<TaxiOrderController>()
+                                .orderHaveNewMessageNotifications(
+                                    widget.order.orderId)
+                            ? _newMessageRedDot(context)
+                            : Container(),
+                      )
+                    ],
+                  ),
                   SizedBox(
                     width: 5,
                   )
@@ -132,18 +143,24 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
               SizedBox(
                 height: 10,
               ),
-              // Obx(() {
-              //   if (!btnClicked.value) {
-              //     return _getOrderBottomComponent(context);
-              //   } else {
-              //     return Center(
-              //       child: CircularProgressIndicator(),
-              //     );
-              //   }
-              // }),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _newMessageRedDot(BuildContext context) {
+    return Positioned(
+      left: 0,
+      top: 0,
+      child: Container(
+        width: 13,
+        height: 13,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: const Color(0xfff6efff), width: 2),
+            color: const Color(0xffff0000)),
       ),
     );
   }

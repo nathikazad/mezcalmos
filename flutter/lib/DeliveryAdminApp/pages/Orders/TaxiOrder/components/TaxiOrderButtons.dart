@@ -128,63 +128,69 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
           ),
         );
       case TaxiOrdersStatus.ForwardingToLocalCompany:
-        return Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Flexible(
-              child: TextButton(
-                  style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
-                  onPressed: () async {
-                    setState(() {
-                      btnClicked = true;
-                    });
-                    final dynamic result = await taxiNumberDialog(context);
-
-                    if (result != 0) {
-                      await _taxiOrderController.submitForwardResult(
-                          orderId: widget.order.orderId,
-                          forwardSuccessful: true,
-                          taxiNumber: result.toString());
+        return Container(
+          padding: EdgeInsets.all(5),
+          color: Colors.white,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Flexible(
+                child: TextButton(
+                    onPressed: () async {
                       setState(() {
-                        btnClicked = false;
+                        btnClicked = true;
+                      });
+                      final dynamic result = await taxiNumberDialog(context);
+
+                      if (result != 0) {
+                        await _taxiOrderController.submitForwardResult(
+                            orderId: widget.order.orderId,
+                            forwardSuccessful: true,
+                            taxiNumber: result.toString());
+                        setState(() {
+                          btnClicked = false;
+                        });
+                        Get.back(closeOverlays: true);
+                      }
+                    },
+                    child: Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(5),
+                        child: Text(
+                            '${_i18n()["TaxiOpenOrderControllButton"]["confirmTaxi"]}'))),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Container(
+                // margin: const EdgeInsets.only(top: 8),
+                child: TextButton(
+                    onPressed: () async {
+                      setState(() {
+                        btnClicked = true;
+                      });
+                      await _taxiOrderController
+                          .submitForwardResult(
+                              orderId: widget.order.orderId,
+                              forwardSuccessful: false)
+                          .then((ServerResponse value) {
+                        setState(() {
+                          btnClicked = false;
+                        });
                       });
                       Get.back(closeOverlays: true);
-                    }
-                  },
-                  child: Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(5),
-                      child: Text(
-                          '${_i18n()["TaxiOpenOrderControllButton"]["confirmTaxi"]}'))),
-            ),
-            Container(
-              // margin: const EdgeInsets.only(top: 8),
-              child: TextButton(
-                  onPressed: () async {
-                    setState(() {
-                      btnClicked = true;
-                    });
-                    await _taxiOrderController
-                        .submitForwardResult(
-                            orderId: widget.order.orderId,
-                            forwardSuccessful: false)
-                        .then((ServerResponse value) {
-                      setState(() {
-                        btnClicked = false;
-                      });
-                    });
-                    Get.back(closeOverlays: true);
-                  },
-                  style: TextButton.styleFrom(
+                    },
+                    style: TextButton.styleFrom(
                       backgroundColor: Colors.redAccent,
-                      shape: RoundedRectangleBorder()),
-                  child: Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(5),
-                      child: Text(
-                          '${_i18n()["TaxiOpenOrderControllButton"]["cancel"]}'))),
-            ),
-          ],
+                    ),
+                    child: Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(5),
+                        child: Text(
+                            '${_i18n()["TaxiOpenOrderControllButton"]["cancel"]}'))),
+              ),
+            ],
+          ),
         );
 
       default:

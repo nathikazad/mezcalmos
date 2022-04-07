@@ -31,26 +31,28 @@ class TaxiOrderBottomBar extends StatefulWidget {
 class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 25,
-      right: 15,
-      left: 15,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        margin: EdgeInsets.only(
-            bottom:
-                (widget.order.value!.status == TaxiOrdersStatus.LookingForTaxi)
-                    ? 45
-                    : 0),
-        height: 70,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-                width: 1, color: Theme.of(context).scaffoldBackgroundColor),
-            color: Colors.white),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: buildBottomBatByStatus(context),
+    return Obx(
+      () => Positioned(
+        bottom: 25,
+        right: 15,
+        left: 15,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          margin: EdgeInsets.only(
+              bottom: (widget.order.value!.status ==
+                      TaxiOrdersStatus.LookingForTaxi)
+                  ? 45
+                  : 0),
+          height: 70,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                  width: 1, color: Theme.of(context).scaffoldBackgroundColor),
+              color: Colors.white),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: buildBottomBatByStatus(context),
+          ),
         ),
       ),
     );
@@ -299,9 +301,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             ),
           ),
           Spacer(),
-          messageBtn(
-              order: widget.order.value!, margin: EdgeInsets.only(right: 5)),
-          cancelBtn(widget.order.value!)
+          buildMsgAndCancelBtn(widget.order.value!)
         ]);
         // widget.bottomPadding = 10.0;
         break;

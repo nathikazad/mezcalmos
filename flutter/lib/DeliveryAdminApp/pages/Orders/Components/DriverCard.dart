@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
@@ -96,12 +98,20 @@ class _DriverCardState extends State<DriverCard> {
               btnClicked = true;
             });
             final DeliveryDriver? newDriver =
-                await Get.toNamed(kDriversListRoute, arguments: widget.order)
-                    as DeliveryDriver;
-            await widget.callBack(newDriver).then((value) {
-              setState(() {
-                btnClicked = false;
-              });
+                await Get.toNamed(kDriversListRoute, arguments: widget.order)!
+                    .then((value) async {
+              if (value != null) {
+                await widget.callBack(value).whenComplete(() {
+                  setState(() {
+                    btnClicked = false;
+                  });
+                });
+              } else {
+                setState(() {
+                  btnClicked = false;
+                });
+              }
+              return null;
             });
           };
         }
@@ -111,12 +121,20 @@ class _DriverCardState extends State<DriverCard> {
             btnClicked = true;
           });
           final DeliveryDriver? newDriver =
-              await Get.toNamed(kDriversListRoute, arguments: widget.order)
-                  as DeliveryDriver;
-          await widget.callBack(newDriver).then((value) {
-            setState(() {
-              btnClicked = false;
-            });
+              await Get.toNamed(kDriversListRoute, arguments: widget.order)!
+                  .then((value) async {
+            if (value != null) {
+              await widget.callBack(value).whenComplete(() {
+                setState(() {
+                  btnClicked = false;
+                });
+              });
+            } else {
+              setState(() {
+                btnClicked = false;
+              });
+            }
+            return null;
           });
         };
       }
@@ -176,12 +194,68 @@ class _DriverCardState extends State<DriverCard> {
         ),
         Spacer(),
         if (widget.order.inProcess())
-          IconButton(
-              onPressed: () {
+          Material(
+            color: Theme.of(context).primaryColorLight,
+            shape: CircleBorder(),
+            child: InkWell(
+              onTap: () {
                 getRightMessageRoute();
               },
-              icon: Icon(Icons.message_outlined)),
+              customBorder: CircleBorder(),
+              child: Stack(
+                children: [
+                  _messageIcon(context),
+                  if (widget.order.orderType == OrderType.Restaurant)
+                    Obx(
+                      () => Get.find<RestaurantOrderController>()
+                              .orderHaveNewMessageNotifications(
+                                  widget.order.orderId)
+                          ? _newMessageRedDot(context)
+                          : Container(),
+                    ),
+                  if (widget.order.orderType == OrderType.Laundry)
+                    Obx(
+                      () => Get.find<LaundryOrderController>()
+                              .orderHaveNewMessageNotifications(
+                                  widget.order.orderId)
+                          ? _newMessageRedDot(context)
+                          : Container(),
+                    )
+                ],
+              ),
+            ),
+          )
+        // IconButton(
+        //     onPressed: () {
+        //       getRightMessageRoute();
+        //     },
+        //     icon: Icon(Icons.message_outlined)),
       ],
+    );
+  }
+
+  Widget _messageIcon(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(12),
+      child: Icon(
+        Icons.textsms,
+        color: Colors.white,
+      ),
+    );
+  }
+
+  Widget _newMessageRedDot(BuildContext context) {
+    return Positioned(
+      left: 0,
+      top: 0,
+      child: Container(
+        width: 13,
+        height: 13,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: const Color(0xfff6efff), width: 2),
+            color: const Color(0xffff0000)),
+      ),
     );
   }
 

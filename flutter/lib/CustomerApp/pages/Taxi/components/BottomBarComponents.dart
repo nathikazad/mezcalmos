@@ -176,11 +176,11 @@ Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
             Obx(
               () => orderController.hasNewMessageNotification(order.orderId)
                   ? Positioned(
-                      top: 5,
-                      right: 5,
+                      top: 0,
+                      right: 0,
                       child: Container(
-                        height: 6,
-                        width: 6,
+                        height: 10,
+                        width: 10,
                         decoration: BoxDecoration(
                             color: Colors.red, shape: BoxShape.circle),
                       ))

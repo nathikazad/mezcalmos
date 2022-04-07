@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -32,7 +31,9 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
   bool btnClicked = false;
   @override
   void initState() {
-    btnClicked = false;
+    setState(() {
+      btnClicked = false;
+    });
     getLaundry();
 
     super.initState();
@@ -85,10 +86,14 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
                           controller
                               .assignLaundry(
                                   widget.order.orderId, value.info.id)
-                              .then((ServerResponse value) {
+                              .whenComplete(() {
                             setState(() {
                               btnClicked = false;
                             });
+                          });
+                        } else {
+                          setState(() {
+                            btnClicked = false;
                           });
                         }
                       });

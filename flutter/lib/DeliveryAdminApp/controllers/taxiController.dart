@@ -7,6 +7,7 @@ import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
@@ -106,6 +107,15 @@ class TaxiOrderController extends GetxController {
 
   bool isPast(TaxiOrder order) {
     return pastOrders.contains(order);
+  }
+
+  bool orderHaveNewMessageNotifications(String orderId) {
+    return _fbNotificationsController
+        .notifications()
+        .where((Notification notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            notification.orderId == orderId)
+        .isNotEmpty;
   }
 
   Stream<TaxiOrder?> getOpenOrderStream(String orderId) {

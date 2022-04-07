@@ -9,63 +9,101 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
     ["DriverBottomLaundryOrderCard"]["laundryControllButtons"];
 
-class LaundryControllButtons extends StatelessWidget {
+class LaundryControllButtons extends StatefulWidget {
   /// UI : shows two buttons one to controll the order status and other to cancel the order
   /// PARAMETER : Deliverable order as laundry order
   /// LOGIC : first button text and onPressed function depends on order status
 
   LaundryControllButtons({Key? key, required this.order}) : super(key: key);
-  final LaundryOrder order;
+  LaundryOrder order;
+
+  @override
+  State<LaundryControllButtons> createState() => _LaundryControllButtonsState();
+}
+
+class _LaundryControllButtonsState extends State<LaundryControllButtons> {
   LaundryOrderController laundryOrderController =
       Get.find<LaundryOrderController>();
+
   num orderWeight = 0;
-  RxBool clicked = RxBool(false);
+
+  bool clicked = false;
+
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (clicked.value) {
-        return Center(
-          child: CircularProgressIndicator(
-            color: Colors.white,
-          ),
-        );
-      } else {
-        return TextButton(
-            onPressed: () async {
-              clicked.value = true;
-              switch (order.status) {
-                case LaundryOrderStatus.OrderReceieved:
-                  await laundryOrderController.otwPickupOrder(order.orderId);
-                  break;
-                case LaundryOrderStatus.OtwPickup:
-                  await laundryOrderController.pickedUpOrder(order.orderId);
-                  break;
-                case LaundryOrderStatus.PickedUp:
-                  await orderWeightDialog(context);
-                  if (orderWeight != 0) {
-                    await laundryOrderController.atLaundryOrder(
-                        order.orderId, orderWeight);
-                    // Get.back(closeOverlays: true);
-                  }
-
-                  break;
-                case LaundryOrderStatus.ReadyForDelivery:
-                  await laundryOrderController.otwDeliveryOrder(order.orderId);
-                  break;
-                case LaundryOrderStatus.OtwDelivery:
-                  await laundryOrderController.deliveredOrder(order.orderId);
+    if (clicked) {
+      return Center(
+        child: CircularProgressIndicator(
+          color: Colors.white,
+        ),
+      );
+    } else {
+      return TextButton(
+          onPressed: () async {
+            setState(() {
+              clicked = true;
+            });
+            switch (widget.order.status) {
+              case LaundryOrderStatus.OrderReceieved:
+                await laundryOrderController
+                    .otwPickupOrder(widget.order.orderId)
+                    .whenComplete(() {
+                  setState(() {
+                    clicked = false;
+                  });
+                });
+                break;
+              case LaundryOrderStatus.OtwPickup:
+                await laundryOrderController
+                    .pickedUpOrder(widget.order.orderId)
+                    .whenComplete(() {
+                  setState(() {
+                    clicked = false;
+                  });
+                });
+                break;
+              case LaundryOrderStatus.PickedUp:
+                await orderWeightDialog(context);
+                if (orderWeight != 0) {
+                  await laundryOrderController
+                      .atLaundryOrder(widget.order.orderId, orderWeight)
+                      .whenComplete(() {
+                    setState(() {
+                      clicked = false;
+                    });
+                  });
                   // Get.back(closeOverlays: true);
-                  break;
-                default:
-                  null;
-              }
-            },
-            child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(8),
-                child: Text(_getActionButtonText())));
-      }
-    });
+                }
+
+                break;
+              case LaundryOrderStatus.ReadyForDelivery:
+                await laundryOrderController
+                    .otwDeliveryOrder(widget.order.orderId)
+                    .whenComplete(() {
+                  setState(() {
+                    clicked = false;
+                  });
+                });
+                break;
+              case LaundryOrderStatus.OtwDelivery:
+                await laundryOrderController
+                    .deliveredOrder(widget.order.orderId)
+                    .whenComplete(() {
+                  setState(() {
+                    clicked = false;
+                  });
+                });
+                // Get.back(closeOverlays: true);
+                break;
+              default:
+                null;
+            }
+          },
+          child: Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(8),
+              child: Text(_getActionButtonText())));
+    }
   }
 
   Future<void> orderWeightDialog(BuildContext context) async {
@@ -130,7 +168,7 @@ class LaundryControllButtons extends StatelessWidget {
   }
 
   String _getActionButtonText() {
-    switch (order.status) {
+    switch (widget.order.status) {
       case LaundryOrderStatus.OrderReceieved:
         return '${_i18n()["pickupOrder"]}';
       case LaundryOrderStatus.OtwPickup:

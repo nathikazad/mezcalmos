@@ -67,7 +67,15 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
             driver = order.value!.dropoffDriver;
           }
         } else {
-          //    Get.back();
+          _orderListener = controller
+              .getPastOrderStream(orderId)
+              .listen((LaundryOrder? newOrder) {
+            if (newOrder != null) {
+              order.value = newOrder;
+            } else {
+              Get.back();
+            }
+          });
         }
       });
     }

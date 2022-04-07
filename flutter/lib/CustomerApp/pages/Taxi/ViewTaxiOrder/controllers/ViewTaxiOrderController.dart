@@ -1,9 +1,10 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -36,6 +37,9 @@ class ViewTaxiOrderController {
     if (order.value != null) {
       // set initial location
       initializeMap().then((_) => mezDbgPrint("Initialized Map!"));
+      if (order.value!.isOpenOrder()) {
+        // TODO @x544D HANDLE ORDER FROM OPEN ORDER NODE
+      }
 
       if (order.value!.inProcess()) {
         inProcessOrderStatusHandler(order.value!.status);
