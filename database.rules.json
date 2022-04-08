@@ -329,21 +329,21 @@
         "$uid": {
           ".read": "$uid === auth.uid",
           "notificationInfo": {
-            ".write": "$uid === auth.uid"
+            ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
           },
           "details": {
-            ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
+            ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
           },
           "state": {
             "isOnline": {
-              ".write": "$uid === auth.uid"
+              ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
             }
           },
           "versionNumber": {
-            ".write": "$uid === auth.uid"
+            ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
           },
           "location": {
-            ".write": "$uid === auth.uid"
+            ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
           }
         }
       },
