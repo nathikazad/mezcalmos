@@ -72,7 +72,8 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
         .listen((locationPermission) {
       if (locationPermission == false &&
           Get.currentRoute != kLocationPermissionPage) {
-        Get.toNamed(kLocationPermissionPage);
+        Get.toNamed(kLocationPermissionPage,
+            arguments: {"withBackground": true});
       }
     });
   }
