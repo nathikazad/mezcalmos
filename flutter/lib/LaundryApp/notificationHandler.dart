@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -62,7 +61,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
-  mezDbgPrint(" =================> RESSSSSSTAURANT stausssss notifier ");
+
   return Notification(
       id: key,
       linkUrl: getLinkUrl(
@@ -119,8 +118,6 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
       value['status'].toString().toLaundryOrderStatus();
   final Map<String, dynamic> dynamicFields =
       getLaundryOrderStatusFields(newOrdersStatus)!;
-  mezDbgPrint(
-      " =================> Laundryyyyyyyyyyyyyyyyyy stausssss notifier ${value["orderId"]}");
 
   return Notification(
       id: key,

@@ -1,4 +1,3 @@
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 
 String operatorsNode({required OperatorType operatorType}) {

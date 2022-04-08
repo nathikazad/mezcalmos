@@ -32,27 +32,31 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
   void initState() {
     // Get.put(LaundryInfoController(), permanent: true);
 
-    mezDbgPrint("DeliveryWrapper::init state");
+    mezDbgPrint("LaundryWrapper::init state");
     Future.microtask(() {
-      mezDbgPrint("DeliveryWrapper::microtask handleState first time");
+      mezDbgPrint("LaundryWrapper::microtask handleState first time");
       final LaundryOperatorState? laundryOperatorState =
           Get.find<LaundryOpAuthController>().laundryOperatorState;
-      mezDbgPrint("deliveryDriverState = $laundryOperatorState");
+      mezDbgPrint("laundryOpState = $laundryOperatorState");
       if (laundryOperatorState != null) {
         mezDbgPrint("inside if  = $laundryOperatorState");
 
         handleState(laundryOperatorState);
       } else {
         mezDbgPrint("inside else  = $laundryOperatorState");
-        mezDbgPrint("${Get.find<LaundryOpAuthController>().stateStream.first}");
 
-        Get.find<LaundryOpAuthController>()
-            .stateStream
-            .first
-            .then((LaundryOperatorState? _laundryOpState) {
+        mezDbgPrint(
+            " LAUNDRY OPERATOR AS STREAM ----->  ${Get.find<LaundryOpAuthController>().stateStream.first.asStream()}");
+
+        Get.find<LaundryOpAuthController>().stateStream.first.then(
+            (LaundryOperatorState? _laundryOpState) {
           mezDbgPrint("inside else -> then  = $_laundryOpState");
           handleState(_laundryOpState);
-        });
+        }).catchError((Object? error, StackTrace stackTrace) {
+          mezDbgPrint("HAVING EROOOOOOR ON STREAM -------------------->>>");
+          mezDbgPrint(error);
+        }).whenComplete(
+            () => mezDbgPrint("----->>>STREAM COMPLETED____________________"));
       }
     });
 
@@ -99,7 +103,7 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
       await Get.toNamed(kDashboardView);
       // }
     } else {
-      mezDbgPrint("DeliveryWrapper::handleState state is null, ERROR");
+      mezDbgPrint("LaundryWrappper::handleState state is null, ERROR");
     }
   }
 

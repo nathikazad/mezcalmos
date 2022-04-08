@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/LaundryOperator.dart';
@@ -43,15 +42,16 @@ class LaundryOpAuthController extends GetxController {
     super.onInit();
   }
 
-  void setupLaundryOperator(User user) async {
+  Future<void> setupLaundryOperator(User user) async {
     mezDbgPrint("LaundryAuthController: handle state change user value");
     mezDbgPrint(user);
     // mezDbgPrint(_authController.fireAuthUser);
 
     mezDbgPrint(
-        "LaundryAuthController: _DeliveryDriverStateNodeListener init ${deliveryDriverStateNode(user.uid)}");
+        "LaundryAuthController: laundryNode =======>>>>>> init ${operatorStateNode(operatorType: OperatorType.Laundry, uid: user.uid)}");
     await _LaundryOperatorNodeListener?.cancel();
     _LaundryOperatorNodeListener = null;
+
     _LaundryOperatorNodeListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(operatorStateNode(

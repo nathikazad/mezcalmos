@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 class LaundryOperatorState {
@@ -6,6 +7,8 @@ class LaundryOperatorState {
   LaundryOperatorState({required this.userInfo, required this.laundryId});
 
   factory LaundryOperatorState.fromSnapshot(data) {
+    mezDbgPrint("--------->>LAUNDRY OP DATA <<<___________________");
+    mezDbgPrint(data);
     final UserInfo userInfo = UserInfo.fromData(data['info']);
     final String laundryId = data['laundryId'];
     return LaundryOperatorState(userInfo: userInfo, laundryId: laundryId);
