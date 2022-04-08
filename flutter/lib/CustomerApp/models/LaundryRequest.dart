@@ -4,10 +4,12 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 class LaundryRequest {
+  String laundryId;
   String? notes;
   Location? to;
   PaymentType paymentType;
   LaundryRequest({
+    required this.laundryId,
     this.notes,
     this.to,
     this.paymentType = PaymentType.Cash,

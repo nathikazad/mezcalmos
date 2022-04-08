@@ -82,7 +82,7 @@ export = functions.https.onCall(async (data, context) => {
         },
         [laundry.info.id]: {
           ...laundry.info,
-          particpantType: ParticipantType.
+          particpantType: ParticipantType.LaundryOperator
         }
       }
     }

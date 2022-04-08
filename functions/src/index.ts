@@ -48,7 +48,7 @@ export const taxi = {
 
 import * as laundryStatusChange from './laundry/adminStatusChanges'
 export const laundry = {
-  requestLaundry: require("./laundry/laundryRequest"),
+  requestLaundryTwo: require("./laundry/laundryRequest"),
   readyForDeliveryOrder: laundryStatusChange.readyForDeliveryOrder,
   cancelFromCustomer: require("./laundry/cancelLaundryFromCustomer"),
   cancelFromAdmin: laundryStatusChange.cancelOrder
