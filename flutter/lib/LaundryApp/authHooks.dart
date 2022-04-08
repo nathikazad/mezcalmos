@@ -26,9 +26,11 @@ class AuthHooks {
 
     Get.put(ForegroundNotificationsController(), permanent: true);
     Get.put(BackgroundNotificationsController(), permanent: true);
-    Get.put(LaundryOpAuthController(), permanent: true);
+
     Get.put(LaundryInfoController(), permanent: true);
+
     Get.put(OrderController(), permanent: true);
+    Get.put(LaundryOpAuthController(), permanent: true);
 
     Get.put(MessageController(), permanent: true);
   }
