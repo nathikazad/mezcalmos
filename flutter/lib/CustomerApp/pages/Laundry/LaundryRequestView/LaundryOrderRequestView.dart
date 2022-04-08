@@ -275,6 +275,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               clicked.value = true;
               laundryController
                   .requestLaundryService(LaundryRequest(
+                      laundryId: "fYlin8EkPo5v6VnmG1e4QuiJ2ti6",
                       to: defaultLoc,
                       notes: _orderNote.text,
                       paymentType: PaymentType.Cash))
