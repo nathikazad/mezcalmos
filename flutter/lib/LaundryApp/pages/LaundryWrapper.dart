@@ -34,29 +34,25 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
 
     mezDbgPrint("LaundryWrapper::init state");
     Future.microtask(() {
-      mezDbgPrint("LaundryWrapper::microtask handleState first time");
-      final LaundryOperatorState? laundryOperatorState =
-          Get.find<LaundryOpAuthController>().laundryOperatorState;
-      mezDbgPrint("laundryOpState = $laundryOperatorState");
-      if (laundryOperatorState != null) {
-        mezDbgPrint("inside if  = $laundryOperatorState");
+      mezDbgPrint("DeliveryWrapper::microtask handleState first time");
+      final LaundryOperator? laundryOperator =
+          Get.find<LaundryOpAuthController>().operator.value;
+      mezDbgPrint("deliveryDriverState = $laundryOperator");
+      if (laundryOperator != null) {
+        mezDbgPrint("inside if  = $laundryOperator");
 
-        handleState(laundryOperatorState);
+        handleState(laundryOperator);
       } else {
-        mezDbgPrint("inside else  = $laundryOperatorState");
+        mezDbgPrint("inside else  = $laundryOperator");
+        // mezDbgPrint("${Get.find<LaundryOpAuthController>().operatorInfoStream.first}");
 
-        mezDbgPrint(
-            " LAUNDRY OPERATOR AS STREAM ----->  ${Get.find<LaundryOpAuthController>().stateStream.first.asStream()}");
-
-        Get.find<LaundryOpAuthController>().stateStream.first.then(
-            (LaundryOperatorState? _laundryOpState) {
-          mezDbgPrint("inside else -> then  = $_laundryOpState");
-          handleState(_laundryOpState);
-        }).catchError((Object? error, StackTrace stackTrace) {
-          mezDbgPrint("HAVING EROOOOOOR ON STREAM -------------------->>>");
-          mezDbgPrint(error);
-        }).whenComplete(
-            () => mezDbgPrint("----->>>STREAM COMPLETED____________________"));
+        Get.find<LaundryOpAuthController>()
+            .operatorInfoStream
+            .first
+            .then((LaundryOperator? _laundryOperator) {
+          mezDbgPrint("inside else -> then  = $_laundryOperator");
+          handleState(_laundryOperator);
+        });
       }
     });
 
@@ -82,26 +78,11 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
     });
   }
 
-  void handleState(LaundryOperatorState? state) async {
-    mezDbgPrint(state);
-    if (state != null) {
-      // mezDbgPrint("Current order ====> ${state.currentOrder}");
-      // mezDbgPrint("isAuthorized ====> ${state.isAuthorized}");
-      // mezDbgPrint("isLooking ====> ${state.isLooking}");
-
-      // mezDbgPrint("DeliveryWrapper::handleState ${state.toJson().toString()}");
-      // if (!state.isAuthorized) {
-      //   mezDbgPrint("DeliveryWrapper::handleState going to unauthorized");
-      //   Get.toNamed(kUnauthorizedRoute);
-      //   // } else if (state.currentOrder != null) {
-      //   //   mezDbgPrint("DeliveryWrapper::handleState going to current order");
-      //   //   Get.toNamed(kCurrentOrderRoute);
-      // } else {
-      //   mezDbgPrint("DeliveryWrapper::handleState going to incoming orders");
-      mezDbgPrint(
-          "----------------- STAAAAAAAARTTTTT --------------------------");
-      await Get.toNamed(kDashboardView);
-      // }
+  void handleState(LaundryOperator? operator) async {
+    mezDbgPrint(operator);
+    if (operator != null && operator.state.laundryId != null) {
+      // ignore: unawaited_futures, inference_failure_on_function_invocation
+      Get.toNamed(kDashboardView);
     } else {
       mezDbgPrint("LaundryWrappper::handleState state is null, ERROR");
     }

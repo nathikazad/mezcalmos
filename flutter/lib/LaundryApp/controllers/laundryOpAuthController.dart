@@ -16,7 +16,7 @@ import 'package:mezcalmos/Shared/models/Operators/LaundryOperator.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 
 class LaundryOpAuthController extends GetxController {
-  Rxn<LaundryOperatorState> _state = Rxn();
+  Rxn<LaundryOperator> operator = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
   LaundryInfoController _laundryInfoController =
@@ -26,8 +26,8 @@ class LaundryOpAuthController extends GetxController {
       Get.find<BackgroundNotificationsController>();
   String? laundryId;
 
-  LaundryOperatorState? get laundryOperatorState => _state.value;
-  Stream<LaundryOperatorState?> get stateStream => _state.stream;
+  LaundryOperatorState? get laundryOperatorState => operator.value?.state;
+  Stream<LaundryOperator?> get operatorInfoStream => operator.stream;
 
   StreamSubscription<Event>? _LaundryOperatorNodeListener;
 
@@ -56,7 +56,8 @@ class LaundryOpAuthController extends GetxController {
 
     _LaundryOperatorNodeListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(operatorStateNode(
+        .child(
+            operatorAuthNode(
             operatorType: OperatorType.Laundry, uid: user.uid))
         .onValue
         .listen((Event event) async {
@@ -71,16 +72,17 @@ class LaundryOpAuthController extends GetxController {
 
       if (event.snapshot.value != null) {
         mezDbgPrint(event.snapshot.value);
-        _state.value = LaundryOperatorState.fromSnapshot(event.snapshot.value);
+        operator.value =
+            LaundryOperator.fromData(user.uid, event.snapshot.value);
 
         mezDbgPrint(
-            "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
+            "/////////////////////////////////////////////${operator.value?.toJson()}////////////////////////////////////////////////////");
 
         saveAppVersionIfNecessary();
         unawaited(saveNotificationToken());
-        if (laundryId != _state.value!.laundryId) {
+        if (laundryId != operator.value!.state.laundryId) {
           // init controllers with new id
-          laundryId = _state.value!.laundryId;
+          laundryId = operator.value!.state.laundryId;
           await _orderController.init(laundryId!);
           await _laundryInfoController.init(laundryId!);
         }
