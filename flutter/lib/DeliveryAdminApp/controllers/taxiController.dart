@@ -211,7 +211,6 @@ class TaxiOrderController extends GetxController {
 
   Future<ServerResponse> forwardToLocalCompany(String orderId) async {
     mezDbgPrint('Function called');
-
     return _callTaxiCloudFunction("forwardToLocalCompany", orderId);
   }
 

@@ -32,7 +32,6 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
   void initState() {
     orderId = Get.parameters['orderId']!;
     order.value = taxiOrderController.getOrder(orderId);
-    order.value = taxiOrderController.getOrder(orderId);
     _orderListener = taxiOrderController
         .getOrderStream(orderId)
         .listen((TaxiOrder? newOrderEvent) {
@@ -41,54 +40,29 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
       }
     });
 
-    // if order value is null and
-    if (order.value == null) {
-      Timer(Duration(seconds: 5), () {
-        if (order.value == null) {
-          // ignore: inference_failure_on_function_invocation
+    waitForOrderIfNotLoaded().then((value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future.delayed(Duration.zero, () {
           Get.back();
           MezSnackbar("Error", "Order does not exist");
-        }
-      });
-    }
-
-    // _openOrderListener = taxiOrderController
-    //     .getOpenOrderStream(orderId)
-    //     .listen((TaxiOrder? newOrder) {
-    //   mezDbgPrint(
-    //       " OPEN ORDER STREAM ===========================>>>>>>>>>>>>> $newOrder");
-    //   if (newOrder != null) {
-    //     mezDbgPrint("========<<<<<<<<<< OPEN ORDER SAVED ======<<<<<<<<<<<<<");
-    //     order.value = taxiOrderController.getOrder(orderId);
-    //   }
-    // });
-
-    // _inProcessOrderListener = taxiOrderController
-    //     .getInProcessOrderStream(orderId)
-    //     .listen((TaxiOrder? newOrder) {
-    //   mezDbgPrint(
-    //       " INPROCESS ORDER STREAM ===========================>>>>>>>>>>>>> $newOrder");
-    //   if (newOrder != null) {
-    //     mezDbgPrint(
-    //         "========<<<<<<<<<< INPROCESSSS ORDER SAVED ======<<<<<<<<<<<<<");
-    //     order.value = taxiOrderController.getOrder(orderId);
-    //     mezDbgPrint(order.value);
-    //   }
-    // });
-
-    // _pastOrderListener = taxiOrderController
-    //     .getPastOrderStrem(orderId)
-    //     .listen((TaxiOrder? newOrder) {
-    //   mezDbgPrint(
-    //       " PAST STREAM ===========================>>>>>>>>>>>>> $newOrder");
-    //   if (newOrder != null) {
-    //     mezDbgPrint(
-    //         "========<<<<<<<<<< PAAAST ORDER SAVED ======<<<<<<<<<<<<<");
-    //     order.value = taxiOrderController.getOrder(orderId);
-    //   }
-    // });
+        });
+      }
+    });
 
     super.initState();
+  }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
+      });
+      return completer.future;
+    }
   }
 
   @override
