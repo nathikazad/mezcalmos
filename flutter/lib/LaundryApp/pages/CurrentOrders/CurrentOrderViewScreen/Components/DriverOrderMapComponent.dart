@@ -62,10 +62,10 @@ class _DriverOrderMapComponentState extends State<DriverOrderMapComponent> {
   Widget build(BuildContext context) {
     return Container(
       height: 45.h,
-      child: MGoogleMap(
-        mGoogleMapController: mapController,
-        periodicRerendering: true,
-      ),
+      // child: MGoogleMap(
+      //   : mapController,
+      //   periodicRerendering: true,
+      // ),
     );
   }
 

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
+import 'package:mezcalmos/LaundryApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 
 class DriverNoOrdersComponent extends StatelessWidget {
   /// Shows an image from asset and text telling the driver that there is no current orders right now
-  DriverNoOrdersComponent({Key? key}) : super(key: key);
-  dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
-          ["pages"]
-  ["CurrentOrders"]["CurrentOrdersListScreen"]["Components"]["DriverNoOrdersComponent"];
+  const DriverNoOrdersComponent({Key? key}) : super(key: key);
+  dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
+          ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"]["Components"]
+      ["DriverNoOrdersComponent"];
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';

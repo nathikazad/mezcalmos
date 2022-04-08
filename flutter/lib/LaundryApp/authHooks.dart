@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';

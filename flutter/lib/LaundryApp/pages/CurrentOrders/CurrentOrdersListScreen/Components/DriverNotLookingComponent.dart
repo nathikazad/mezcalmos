@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
+import 'package:mezcalmos/LaundryApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 
 class DriverNotLookingComponent extends StatelessWidget {
   ///  Shows an image from assets and text telling the drive he is offline
 
-  DriverNotLookingComponent({Key? key}) : super(key: key);
-  dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
-          ["pages"]
-  ["CurrentOrders"]["CurrentOrdersListScreen"]["Components"]["DriverNotLookingComponent"];
+  const DriverNotLookingComponent({Key? key}) : super(key: key);
+  dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
+          ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"]["Components"]
+      ["DriverNotLookingComponent"];
   @override
   Widget build(BuildContext context) {
     return Column(

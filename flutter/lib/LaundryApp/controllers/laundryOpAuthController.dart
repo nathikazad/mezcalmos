@@ -4,8 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
@@ -15,15 +13,14 @@ import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/LaundryOperator.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
-import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 class LaundryOpAuthController extends GetxController {
   Rxn<LaundryOperatorState> _state = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
-  LaundryInfoController _laundryInfoController =
-      Get.find<LaundryInfoController>();
-  OrderController _orderController = Get.find<OrderController>();
+  // LaundryInfoController _laundryInfoController =
+  //     Get.find<LaundryInfoController>();
+  // OrderController _orderController = Get.find<OrderController>();
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
   String? laundryId;
@@ -39,7 +36,7 @@ class LaundryOpAuthController extends GetxController {
   @override
   void onInit() {
     // ------------------------------------------------------------------------
-    mezDbgPrint("LaundryAuthController: init ${this.hashCode}");
+    mezDbgPrint("LaundryAuthController: init $hashCode");
     mezDbgPrint(
         "LaundryAuthController: calling handle state change first time");
     setupLaundryOperator(Get.find<AuthController>().fireAuthUser!);
@@ -60,9 +57,9 @@ class LaundryOpAuthController extends GetxController {
         .child(operatorStateNode(
             operatorType: OperatorType.Laundry, uid: user.uid))
         .onValue
-        .listen((event) async {
+        .listen((Event event) async {
       mezDbgPrint(
-          "[++++++ = === ==] LaundryAuthController${this.hashCode}: _LaundryOperatorStateNodeListener event => ${event.snapshot.value}");
+          "[++++++ = === ==] LaundryAuthController$hashCode: _LaundryOperatorStateNodeListener event => ${event.snapshot.value}");
       if (event.snapshot.value.toString() == _previousStateValue) {
         mezDbgPrint(
             'LaundryAuthController:: same state event fired again, skipping it');
@@ -82,8 +79,8 @@ class LaundryOpAuthController extends GetxController {
         if (laundryId != _state.value!.laundryId) {
           // init controllers with new id
           laundryId = _state.value!.laundryId;
-          await _orderController.init(laundryId!);
-          await _laundryInfoController.init(laundryId!);
+          //  await _orderController.init(laundryId!);
+          // await _laundryInfoController.init(laundryId!);
         }
       }
     });
@@ -121,7 +118,7 @@ class LaundryOpAuthController extends GetxController {
   @override
   void onClose() {
     mezDbgPrint(
-        "[+] LaundryAuthController::dispose ---------> Was invoked ! ${this.hashCode}");
+        "[+] LaundryAuthController::dispose ---------> Was invoked ! $hashCode");
 
     _LaundryOperatorNodeListener?.cancel();
     _LaundryOperatorNodeListener = null;

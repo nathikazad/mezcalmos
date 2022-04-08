@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/DeliveryApp/authHooks.dart';
-import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/DeliveryApp/theme.dart';
+import 'package:mezcalmos/LaundryApp/authHooks.dart';
+import 'package:mezcalmos/LaundryApp/constants/assets.dart';
+//import 'package:mezcalmos/LaundryApp/constants/assets.dart';
+//import 'package:mezcalmos/LaundryApp/theme.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/LaundryApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -18,11 +20,12 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 void main() {
   loadBitmaps();
   runMainGuarded(() => runApp(
-        Sizer(builder: (context, orientation, deviceType) {
+        Sizer(builder: (BuildContext context, Orientation orientation,
+            DeviceType deviceType) {
           return StartingPoint(
               appType: AppType.LaundryApp,
               signInCallback: signInCallback,
-              appTheme: DeliveryAppTheme.lightTheme,
+              appTheme: LaundryAppTheme.lightTheme,
               signOutCallback: signOutCallback,
               routes: routes);
         }),

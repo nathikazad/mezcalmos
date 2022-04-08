@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/LaundryControllButtons.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/LaundryOrderHeader.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/laundryOrderFromToComponent.dart';
+import 'package:mezcalmos/LaundryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/LaundryOrderHeader.dart';
+import 'package:mezcalmos/LaundryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/laundryOrderFromToComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
-        ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
+dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
+        ["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
     ["DriverBottomLaundryOrderCard"];
 
 class DriverBottomLaundryOrderCard extends StatefulWidget {
   final LaundryOrder order;
-  DriverBottomLaundryOrderCard({Key? key, required this.order})
+  const DriverBottomLaundryOrderCard({Key? key, required this.order})
       : super(key: key);
 
   @override
@@ -27,12 +25,10 @@ class DriverBottomLaundryOrderCard extends StatefulWidget {
 class _DriverBottomLaundryOrderCardState
     extends State<DriverBottomLaundryOrderCard> {
   Laundry? laundry;
-  LaundryOrderController laundryOrderController =
-      Get.find<LaundryOrderController>();
-
+ 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
@@ -66,7 +62,7 @@ class _DriverBottomLaundryOrderCardState
   Widget getBottomComponent(textTheme) {
     if (widget.order.inProcess() &&
         widget.order.status != LaundryOrderStatus.AtLaundry) {
-      return LaundryControllButtons(order: widget.order);
+      return Container(height: 5,);
     } else if (widget.order.status == LaundryOrderStatus.Delivered ||
         widget.order.status == LaundryOrderStatus.AtLaundry) {
       return _orderDeliveredBottomComponent(textTheme);

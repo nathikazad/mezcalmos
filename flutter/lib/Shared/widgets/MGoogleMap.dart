@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,8 +9,8 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
+import 'package:sizer/sizer.dart';
 
 class MGoogleMap extends StatefulWidget {
   final MapHelper.LocationChangesNotifier? notifyParentOfNewLocation;
@@ -20,13 +21,17 @@ class MGoogleMap extends StatefulWidget {
   // this is used when we don't want to re-render the map periodically.
   final bool periodicRerendering;
   final bool myLocationButtonEnabled;
-  MGoogleMap(
+  const MGoogleMap(
       {Key? key,
       this.notifyParentOfNewLocation,
       this.periodicRerendering = true,
       this.myLocationButtonEnabled = false,
       // required this.initialLocation,
       this.debugString,
+   
+     // this.mGoogleMapController,
+      
+     // this.periodicRerenderingis.debugString,
       this.rerenderDuration = const Duration(seconds: 2),
       required this.mGoogleMapController})
       : super(key: key);
@@ -45,14 +50,14 @@ class MGoogleMapState extends State<MGoogleMap> {
   void didUpdateWidget(MGoogleMap oldWidget) {
     super.didUpdateWidget(oldWidget);
     mezDbgPrint(
-        "MGoogleMap didUpdateWidget ${this.hashCode} ${widget.debugString}");
+        "MGoogleMap didUpdateWidget ${hashCode} ${widget.debugString}");
     widget.mGoogleMapController.animateAndUpdateBounds();
   }
 
   @override
   void initState() {
     super.initState();
-    mezDbgPrint("MGoogleMap initstate ${this.hashCode} ${widget.debugString}");
+    mezDbgPrint("MGoogleMap initstate ${hashCode} ${widget.debugString}");
     // one time polylines LatLng points extraction.
     widget.mGoogleMapController.animateAndUpdateBounds();
     // attach Callback onResume to avoid Map going black in some devices after going back from background to foreGround.
@@ -81,7 +86,7 @@ class MGoogleMapState extends State<MGoogleMap> {
 
   Future<LocationData?> _currentLocation() async {
     LocationData? currentLocation;
-    var location = new Location();
+    Location location = new Location();
     try {
       currentLocation = await location.getLocation();
       widget.notifyParentOfNewLocation?.call(
@@ -113,7 +118,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                   mapToolbarEnabled: false,
                   minMaxZoomPreference:
                       widget.mGoogleMapController.getMapMinMaxZommPrefs(),
-                  onCameraMove: (camMove) {
+                  onCameraMove: (CameraPosition camMove) {
                     widget.mGoogleMapController
                         .updateMarkersIconOnZoomChange(zoom: camMove.zoom);
                   },
@@ -149,9 +154,9 @@ class MGoogleMapState extends State<MGoogleMap> {
                 bottom: 10,
                 child: InkWell(
                   onTap: () async {
-                    LocationData? _tmpCurrentLoc = await _currentLocation();
+                    final LocationData? _tmpCurrentLoc = await _currentLocation();
                     if (_tmpCurrentLoc != null) {
-                      widget.mGoogleMapController.controller
+                      await widget.mGoogleMapController.controller
                           ?.animateCamera(CameraUpdate.newCameraPosition(
                         CameraPosition(
                           target: LatLng(_tmpCurrentLoc.latitude!,

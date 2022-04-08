@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverBottomLaundryOrderCard.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
+import 'package:mezcalmos/LaundryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
+import 'package:mezcalmos/LaundryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverBottomLaundryOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -67,26 +67,26 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-          appBar: getRightAppBar(),
-          body: SingleChildScrollView(
-            child: Builder(
-              builder: (BuildContext context) {
-                if (order.value != null) {
-                  return Column(
-                    children: <Widget>[
-                      DriverOrderMapComponent(order: order),
-                      DriverBottomLaundryOrderCard(
-                          order: order.value as LaundryOrder),
-                    ],
-                  );
-                } else {
-                  return MezLogoAnimation(
-                    centered: true,
-                  );
-                }
-              },
-            ),
+        appBar: getRightAppBar(),
+        body: SingleChildScrollView(
+          child: Builder(
+            builder: (BuildContext context) {
+              if (order.value != null) {
+                return Column(
+                  children: <Widget>[
+                    DriverOrderMapComponent(order: order),
+                    DriverBottomLaundryOrderCard(
+                        order: order.value as LaundryOrder),
+                  ],
+                );
+              } else {
+                return MezLogoAnimation(
+                  centered: true,
+                );
+              }
+            },
           ),
+        ),
       ),
     );
   }

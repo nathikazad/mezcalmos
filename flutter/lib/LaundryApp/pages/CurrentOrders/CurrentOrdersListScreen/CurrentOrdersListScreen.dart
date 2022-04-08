@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNoOrdersComponent.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNotLookingComponent.dart';
+import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
+import 'package:mezcalmos/LaundryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNoOrdersComponent.dart';
+import 'package:mezcalmos/LaundryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNotLookingComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -14,8 +14,8 @@ import 'package:sizer/sizer.dart';
 import 'Components/DriverOrderCard.dart';
 import 'Components/MezSwitch.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
-    ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"];
+dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
+    ["CurrentOrders"]["CurrentOrdersListScreen"];
 
 class CurrentOrdersListScreen extends StatefulWidget {
   @override

@@ -7,8 +7,8 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
-        ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
+dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
+        ["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
     ["DriverBottomLaundryOrderCard"]["laundeyOrderHeader"];
 
 class LaundryOrderHeader extends StatelessWidget {
@@ -19,7 +19,7 @@ class LaundryOrderHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
 
     return Row(
       children: [

@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Operators/LaundryOperator.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -31,10 +30,12 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
   StreamSubscription<bool>? _locationStreamSub;
   @override
   void initState() {
+    // Get.put(LaundryInfoController(), permanent: true);
+
     mezDbgPrint("DeliveryWrapper::init state");
     Future.microtask(() {
       mezDbgPrint("DeliveryWrapper::microtask handleState first time");
-      LaundryOperatorState? laundryOperatorState =
+      final LaundryOperatorState? laundryOperatorState =
           Get.find<LaundryOpAuthController>().laundryOperatorState;
       mezDbgPrint("deliveryDriverState = $laundryOperatorState");
       if (laundryOperatorState != null) {
@@ -48,14 +49,14 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
         Get.find<LaundryOpAuthController>()
             .stateStream
             .first
-            .then((_laundryOpState) {
+            .then((LaundryOperatorState? _laundryOpState) {
           mezDbgPrint("inside else -> then  = $_laundryOpState");
           handleState(_laundryOpState);
         });
       }
     });
 
-    String userId = Get.find<AuthController>().fireAuthUser!.uid;
+    final String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
     listenForLocationPermissions();
     Get.find<ForegroundNotificationsController>()
@@ -69,7 +70,7 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
     _locationStreamSub?.cancel();
     _locationStreamSub = Get.find<LocationController>().locationPermissionStream
         // .distinct()
-        .listen((locationPermission) {
+        .listen((bool locationPermission) {
       if (locationPermission == false &&
           Get.currentRoute != kLocationPermissionPage) {
         Get.toNamed(kLocationPermissionPage);
@@ -93,7 +94,9 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
       //   //   Get.toNamed(kCurrentOrderRoute);
       // } else {
       //   mezDbgPrint("DeliveryWrapper::handleState going to incoming orders");
-      Get.toNamed(kCurrentOrdersListRoute);
+      mezDbgPrint(
+          "----------------- STAAAAAAAARTTTTT --------------------------");
+      await Get.toNamed(kDashboardView);
       // }
     } else {
       mezDbgPrint("DeliveryWrapper::handleState state is null, ERROR");

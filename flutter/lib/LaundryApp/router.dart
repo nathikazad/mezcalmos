@@ -1,11 +1,11 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/LaundryOrderView.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/RestaurantOrderView.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/CurrentOrdersListScreen.dart';
-import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
+import 'package:mezcalmos/LaundryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/LaundryOrderView.dart';
+import 'package:mezcalmos/LaundryApp/pages/DashboardView/DashboardView.dart';
+import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-const String kCurrentOrdersListRoute = '/currentOrders';
+// const String kCurrentOrdersListRoute = '/currentOrders';
+const String kDashboardView = '/dahboard';
 const String kLaundryOrderView = '/currentOrders/laundry/:orderId';
 const String kRestaurantOrderView = '/currentOrders/restaurant/:orderId';
 
@@ -20,10 +20,11 @@ String getRestaurantOrderRoute(String orderId) {
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
-        GetPage(
-            name: kCurrentOrdersListRoute,
-            page: () => CurrentOrdersListScreen()),
-        GetPage(name: kHomeRoute, page: () => DeliveryWrapper()),
+        GetPage(name: kDashboardView, page: () => DashboardView()),
+        // GetPage(
+        //     name: kCurrentOrdersListRoute,
+        //     page: () => CurrentOrdersListScreen()),
+        GetPage(name: kHomeRoute, page: () => LaundryWrapper()),
         GetPage(name: kLaundryOrderView, page: () => LaundryOrderView()),
       ] +
       SharedRouter.sharedRoutes;

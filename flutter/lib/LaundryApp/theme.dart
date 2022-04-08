@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class DeliveryAppTheme {
+class LaundryAppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       //---------------------------------------------------- COLORS ------------------------------------------------------------------------//
