@@ -330,11 +330,13 @@
                             "title": "Confirm Cancelation.",
                             "question": "Are you sure you want to cancel your Order ?",
                             "cancel": "Cancel",
-                            "taxiRidePriceTooltip": "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out."
+                            "taxiRidePriceTooltip": "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out.",
+                            "serverCommunicationError": "Failed to communicate with the server :("
+
                         }
                     },
                     "ViewTaxiOrderScreen": {
-                        "orderCancelSuccess": "Order cancelled successfully."
+                        "orderCancelSuccess": "Order cancelled successfully."                        
                     }
                 }
             },

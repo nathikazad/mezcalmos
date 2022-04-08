@@ -331,7 +331,8 @@
                             "title": "Confirmar cancelación.",
                             "question": "Estás seguro de que deseas cancelar tu pedido?",
                             "cancel": "Cancelar",
-                            "taxiRidePriceTooltip": "Haga clic en + - para aumentar/disminuir su precio en 5. Si ve que su pedido no se acepta, pruébelos."
+                            "taxiRidePriceTooltip": "Haga clic en + - para aumentar/disminuir su precio en 5. Si ve que su pedido no se acepta, pruébelos.",
+                            "serverCommunicationError": "No se pudo comunicar con el servidor :("
                         }
                     },
                     "ViewTaxiOrderScreen": {
