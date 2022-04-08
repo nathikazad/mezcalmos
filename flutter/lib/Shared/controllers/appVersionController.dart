@@ -8,9 +8,10 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezUpgrader.dart';
+import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgraderWidget.dart';
 import 'package:mezcalmos/Utils/mez_in_app_update.dart';
 import 'package:new_version/new_version.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:store_redirect/store_redirect.dart';
 
 class VersionSplit {
@@ -28,7 +29,7 @@ class VersionSplit {
     required String stringToSplit,
     Pattern pattern = '.',
   }) {
-    final List<String> list = stringToSplit.split(pattern);
+    final List<String> list = stringToSplit.split(pattern); // [1.5.1}
     if (list.length == 3) {
       return VersionSplit(
         major: list.first,
@@ -114,7 +115,14 @@ class AppVersionController extends GetxController {
     }
   }
 
-  void checkUpdateType({required UpdateType updateType}) {
+  void checkUpdateType({
+    required UpdateType updateType,
+    required String releaseNotes,
+    required String appName,
+    required String packageName,
+    required String currentAppStoreVersion,
+    required String currentInstalledVersion,
+  }) {
     debugPrint('updateType: ${updateType.toString()}');
     switch (updateType) {
 // 			- if major :
@@ -123,19 +131,37 @@ class AppVersionController extends GetxController {
 // 					- package:in_app_update -> performImmediateUpdate
       case UpdateType.Major:
         Get.toNamed<void>(kAppNeedsUpdate);
-        //MezUpgrade.show();
+        // MezUpgrade.show(
+        //   releaseNotes: releaseNotes,
+        //   appName: appName,
+        //   packageName: packageName,
+        //   currentAppStoreVersion: currentAppStoreVersion,
+        //   currentInstalledVersion: currentInstalledVersion,
+        // );
         break;
       case UpdateType.Minor:
         if (Platform.isAndroid) {
           Get.toNamed<void>(kAppNeedsUpdate);
         } else if (Platform.isIOS) {
-          MezUpgrade.show();
+          MezUpgrade.show(
+            releaseNotes: releaseNotes,
+            appName: appName,
+            packageName: packageName,
+            currentAppStoreVersion: currentAppStoreVersion,
+            currentInstalledVersion: currentInstalledVersion,
+          );
         }
         break;
       case UpdateType.Patches:
         if (Platform.isIOS) {
 // 				- iOS : we show a dismissible alert dialog (user can cancel) - with link to app page on app store
-          MezUpgrade.show();
+          MezUpgrade.show(
+            releaseNotes: releaseNotes,
+            appName: appName,
+            packageName: packageName,
+            currentAppStoreVersion: currentAppStoreVersion,
+            currentInstalledVersion: currentInstalledVersion,
+          );
         } else if (Platform.isAndroid) {
 // 				- android : we show a dismissible (user can cancel) alert with button (onPress) -> executes : package:in_app_update:startFlexibleUpdate() ->
 // 					which runs completeFlexibleUpdate()  upon complete.
@@ -183,6 +209,9 @@ class AppVersionController extends GetxController {
       "-------------------Start advancedStatusCheck ------------------------",
     );
 
+    /// PackageInfo
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
     /// Get Version Status
     status.value = await newVersion.getVersionStatus();
     status.refresh();
@@ -215,7 +244,14 @@ class AppVersionController extends GetxController {
         );
 
         /// Check update type
-        checkUpdateType(updateType: updateType.value);
+        checkUpdateType(
+          updateType: updateType.value,
+          releaseNotes: "${status.value?.releaseNotes}",
+          appName: packageInfo.appName,
+          packageName: packageInfo.packageName,
+          currentInstalledVersion: '${status.value?.localVersion}',
+          currentAppStoreVersion: '${status.value?.storeVersion}',
+        );
       }
     } else {
       debugPrint("getVersionStatus: null");
@@ -226,7 +262,7 @@ class AppVersionController extends GetxController {
     return canUpdate;
   }
 
-  Future<void> checkForUpdateTypeAndPlatForm() async {
+  Future<bool> checkForUpdateTypeAndPlatForm() async {
     if (Platform.isAndroid) {
       /// checkForUpdate and get appVersionInfo...
       await checkForUpdate();
@@ -294,6 +330,7 @@ class AppVersionController extends GetxController {
         }
       });
     }
+    return false;
   }
 
   bool _checkAppInfoResultToForceUpdate() {

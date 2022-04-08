@@ -6,8 +6,9 @@ class FirebaseDb {
   final FirebaseApp firebaseApp;
   final String dbUrl;
 
-  FirebaseDb(
-      {required this.dbUrl,
-      required this.firebaseDatabase,
-      required this.firebaseApp});
+  FirebaseDb({
+    required this.dbUrl,
+    required this.firebaseDatabase,
+    required this.firebaseApp,
+  });
 }

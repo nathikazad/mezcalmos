@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -14,9 +15,10 @@ enum CustomerDeepLinkType {
 }
 
 extension on String {
-  CustomerDeepLinkType? toCustomerDeepLinkType() => CustomerDeepLinkType.values
-      .firstWhereOrNull((CustomerDeepLinkType elem) =>
-          elem.name.toLowerCase() == toLowerCase());
+  CustomerDeepLinkType? toCustomerDeepLinkType() =>
+      CustomerDeepLinkType.values.firstWhereOrNull(
+        (CustomerDeepLinkType elem) => elem.name.toLowerCase() == toLowerCase(),
+      );
 }
 
 class DeepLinkHandler {
@@ -27,9 +29,11 @@ class DeepLinkHandler {
   /// and Check if that type is one of `CustomerDeepLinkType.values` , then calls `_handleRoutingByType()` to handle routing.
   Future<void> _checkQueryValidityAndHandleRouting(Uri deepLink) async {
     mezDbgPrint("@deepLink@ ===> ${deepLink.host}");
-    deepLink.queryParameters.forEach((String key, String value) {
-      mezDbgPrint("Key = $key | Value : $value");
-    });
+    deepLink.queryParameters.forEach(
+      (String key, String value) {
+        mezDbgPrint("Key = $key | Value : $value");
+      },
+    );
 
     if (deepLink.queryParameters.containsKey('type') == true &&
         deepLink.queryParameters.containsKey('id') == true) {
@@ -45,15 +49,18 @@ class DeepLinkHandler {
       // accepted type - We handle it
       if (providerType != null) {
         await _handleRoutingByType(
-            providerId: providerId, providerType: providerType);
+          providerId: providerId,
+          providerType: providerType,
+        );
       }
     }
   }
 
   /// This Do the routing magic depending on [providerType] given.
-  Future<void> _handleRoutingByType(
-      {required String providerId,
-      required CustomerDeepLinkType providerType}) async {
+  Future<void> _handleRoutingByType({
+    required String providerId,
+    required CustomerDeepLinkType providerType,
+  }) async {
     switch (providerType) {
       case CustomerDeepLinkType.Restaurant:
         mezDbgPrint("@deepLink@ ===> handling restaurant routing ! ");
@@ -61,9 +68,12 @@ class DeepLinkHandler {
             .getRestaurant(providerId);
         if (_rest != null) {
           Future<void>.delayed(
-              Duration.zero,
-              () => Get.toNamed<void>(getRestaurantRoute(providerId),
-                  arguments: _rest));
+            Duration.zero,
+            () => Get.toNamed<void>(
+              getRestaurantRoute(providerId),
+              arguments: _rest,
+            ),
+          );
         }
         break;
       default:
@@ -107,6 +117,7 @@ class DeepLinkHandler {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
   /// We're calling this upon an AppLifeCycle change to resumed, in order to cancel the listener,

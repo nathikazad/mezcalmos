@@ -22,7 +22,8 @@ class LaundryController extends GetxController {
   }
 
   Future<ServerResponse> requestLaundryService(
-      LaundryRequest laundryRequest) async {
+    LaundryRequest laundryRequest,
+  ) async {
     if (laundryRequest.valid()) {
       final HttpsCallable requestTaxiFunction =
           FirebaseFunctions.instance.httpsCallable("laundry-requestLaundry");

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:rxdart/rxdart.dart';
@@ -13,6 +14,7 @@ class AutoCompleteTextView extends StatefulWidget {
   final tfStyle;
   final tfTextDecoration;
   final tfTextAlign;
+
   //Suggestiondrop Down properties
   final suggestionStyle;
   final String? tfInitialText;
@@ -29,46 +31,48 @@ class AutoCompleteTextView extends StatefulWidget {
   final double? dropDownDxOffset;
   final FocusNode? focusNode;
 
-  AutoCompleteTextView(
-      {required this.controller,
-      this.tfHint = "",
-      this.onTapCallback,
-      this.tfInitialText = null,
-      this.readOnly = false,
-      this.maxHeight = 200,
-      this.tfCursorColor = Colors.white,
-      this.tfCursorWidth = 2.0,
-      this.tfStyle = const TextStyle(
-        color: Colors.black87,
-        fontSize: 15,
-        fontFamily: 'psb',
-        fontWeight: FontWeight.w500,
-      ),
-      this.tfTextDecoration = const InputDecoration(),
-      this.tfTextAlign = TextAlign.left,
-      this.suggestionStyle = const TextStyle(
-        color: Colors.black87,
-        fontSize: 15,
-        fontFamily: 'psb',
-        fontWeight: FontWeight.w500,
-      ),
-      this.suggestionTextAlign = TextAlign.left,
-      required this.getSuggestionsMethod,
-      required this.focusGained,
-      this.suggestionsApiFetchDelay = 0,
-      this.dropDownDxOffset,
-      this.dropDownWidth,
-      this.focusNode,
-      required this.focusLost,
-      required this.onValueChanged});
+  AutoCompleteTextView({
+    required this.controller,
+    this.tfHint = "",
+    this.onTapCallback,
+    this.tfInitialText = null,
+    this.readOnly = false,
+    this.maxHeight = 200,
+    this.tfCursorColor = Colors.white,
+    this.tfCursorWidth = 2.0,
+    this.tfStyle = const TextStyle(
+      color: Colors.black87,
+      fontSize: 15,
+      fontFamily: 'psb',
+      fontWeight: FontWeight.w500,
+    ),
+    this.tfTextDecoration = const InputDecoration(),
+    this.tfTextAlign = TextAlign.left,
+    this.suggestionStyle = const TextStyle(
+      color: Colors.black87,
+      fontSize: 15,
+      fontFamily: 'psb',
+      fontWeight: FontWeight.w500,
+    ),
+    this.suggestionTextAlign = TextAlign.left,
+    required this.getSuggestionsMethod,
+    required this.focusGained,
+    this.suggestionsApiFetchDelay = 0,
+    this.dropDownDxOffset,
+    this.dropDownWidth,
+    this.focusNode,
+    required this.focusLost,
+    required this.onValueChanged,
+  });
+
   @override
   _AutoCompleteTextViewState createState() => _AutoCompleteTextViewState();
 
-  //This funciton is called when a user clicks on a suggestion
-  // @override
-  // void onTappedSuggestion(String suggestion) {
-  //   onTapCallback(suggestion);
-  // }
+//This funciton is called when a user clicks on a suggestion
+// @override
+// void onTappedSuggestion(String suggestion) {
+//   onTapCallback(suggestion);
+// }
 }
 
 class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
@@ -78,6 +82,7 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
   LayerLink _layerLink = LayerLink();
   final suggestionsStreamController = new BehaviorSubject<List<String>>();
   List<String> suggestionShowList = <String>[];
+
   // place_id => description aka name
   Map<String, String> idWithDescription = {};
 

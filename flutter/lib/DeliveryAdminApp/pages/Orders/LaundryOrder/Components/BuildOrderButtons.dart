@@ -9,14 +9,14 @@ List<Widget> buildOrderButtons(
   Rxn<LaundryOrder> order,
 ) {
   if (order.value!.inProcess()) {
-    return [
+    return <Widget>[
       changeStatusButton(order)!,
       OrderButtons.cancelButtonWidget(
         order.value!.orderId,
       )
     ];
   } else
-    return [];
+    return <Widget>[];
 }
 
 Widget? changeStatusButton(
@@ -25,9 +25,10 @@ Widget? changeStatusButton(
   switch (order.value!.status) {
     case (LaundryOrderStatus.AtLaundry):
       return Expanded(
-          child: OrderButtons.readyForDeliveryButton(order.value!));
+        child: OrderButtons.readyForDeliveryButton(order.value!),
+      );
 
     default:
-      return SizedBox();
+      return const SizedBox();
   }
 }

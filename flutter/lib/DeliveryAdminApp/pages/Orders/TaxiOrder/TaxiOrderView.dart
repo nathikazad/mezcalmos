@@ -21,10 +21,18 @@ class TaxiOrderView extends StatefulWidget {
 }
 
 class _TaxiOrderViewState extends State<TaxiOrderView> {
+  /// taxiOrderController
   TaxiOrderController taxiOrderController = Get.find<TaxiOrderController>();
-  Rxn<TaxiOrder> order = Rxn();
+
+  /// order
+  Rxn<TaxiOrder> order = Rxn<TaxiOrder>();
+
+  /// orderId
   late String orderId;
-  StreamSubscription? _orderListener;
+
+  /// _orderListener
+  StreamSubscription<dynamic>? _orderListener;
+
   @override
   void initState() {
     mezDbgPrint("ViewOrderScreen");
@@ -32,7 +40,7 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
 
     order.value = taxiOrderController.getOrder(orderId);
     if (order.value == null) {
-      Get.back();
+      Get.back<void>();
     } else if (order.value!.isOpenOrder()) {
       mezDbgPrint("open order stream ---------------------------");
 
@@ -42,7 +50,7 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
         if (newOrder != null) {
           order.value = taxiOrderController.getOrder(orderId);
         } else {
-          Get.back();
+          Get.back<void>();
         }
       });
     } else if (order.value!.inProcess()) {
@@ -54,7 +62,7 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
         if (newOrder != null) {
           order.value = taxiOrderController.getOrder(orderId);
         } else {
-          Get.back();
+          Get.back<void>();
         }
       });
     } else {
@@ -65,7 +73,7 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
         if (pastOrder != null) {
           order.value = taxiOrderController.getOrder(orderId);
         } else {
-          Get.back();
+          Get.back<void>();
         }
       });
     }
@@ -84,19 +92,20 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-          appBar: AppBar(
-            title: Text('${_i18n()["order"]}'),
+        appBar: AppBar(
+          title: Text('${_i18n()["order"]}'),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              TaxiOrderMapComponent(order: order.value!),
+              (order.value!.isOpenOrder())
+                  ? TaxiOpenOrderBottomCard(order: order.value!)
+                  : TaxiOrderBottomCard(order: order.value!),
+            ],
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                TaxiOrderMapComponent(order: order.value!),
-                (order.value!.isOpenOrder())
-                    ? TaxiOpenOrderBottomCard(order: order.value!)
-                    : TaxiOrderBottomCard(order: order.value!),
-              ],
-            ),
-          )),
+        ),
+      ),
     );
   }
 }

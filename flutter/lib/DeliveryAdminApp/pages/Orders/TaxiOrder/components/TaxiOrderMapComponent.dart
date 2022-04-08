@@ -7,7 +7,11 @@ import 'package:sizer/sizer.dart';
 
 class TaxiOrderMapComponent extends StatefulWidget {
   final TaxiOrder order;
-  TaxiOrderMapComponent({Key? key, required this.order}) : super(key: key);
+
+  const TaxiOrderMapComponent({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
 
   @override
   _TaxiOrderMapComponentState createState() => _TaxiOrderMapComponentState();
@@ -15,6 +19,7 @@ class TaxiOrderMapComponent extends StatefulWidget {
 
 class _TaxiOrderMapComponentState extends State<TaxiOrderMapComponent> {
   final MGoogleMapController mapController = MGoogleMapController();
+
   @override
   void initState() {
     mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;

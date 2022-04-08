@@ -9,7 +9,7 @@ import 'components/RestaurantSliverAppbar.dart';
 import 'components/buildRestaurantsItems.dart';
 import 'components/restaurantInfoTab.dart';
 
-final f = new DateFormat('hh:mm a');
+final DateFormat f = new DateFormat('hh:mm a');
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewRestaurantScreen"]["ViewRestaurantScreen"];
@@ -26,14 +26,16 @@ class ViewRestaurantScreen extends StatefulWidget {
 }
 
 class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
+  /// restaurant
   Restaurant? restaurant;
 
   @override
   void initState() {
+    super.initState();
     restaurant = Get.arguments as Restaurant;
     mezDbgPrint(
-        "the length of opening hours is ${restaurant?.schedule?.openHours.length}");
-    super.initState();
+      "the length of opening hours is ${restaurant?.schedule?.openHours.length}",
+    );
   }
 
   @override

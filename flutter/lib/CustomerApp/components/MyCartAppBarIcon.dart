@@ -7,42 +7,50 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 class MyCartAppBarIcon extends StatelessWidget {
-  Color iconColor;
-  MyCartAppBarIcon({
+  const MyCartAppBarIcon({
     Key? key,
     required this.iconColor,
   }) : super(key: key);
 
-  AuthController _authController = Get.find<AuthController>();
+  final Color iconColor;
+
+  /// AuthController
+  static final AuthController _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => _authController.isUserSignedIn &&
-            Get.find<RestaurantController>().cart.value.cartItems.length > 0
-        ? Padding(
-            padding: const EdgeInsets.only(right: 5.0, bottom: 8.0),
-            child: IconButton(
+    return Obx(
+      () => _authController.isUserSignedIn &&
+              Get.find<RestaurantController>().cart.value.cartItems.length > 0
+          ? Padding(
+              padding: const EdgeInsets.only(right: 5.0, bottom: 8.0),
+              child: IconButton(
                 onPressed: () {
-                  Get.toNamed(kCartRoute);
+                  Get.toNamed<void>(kCartRoute);
                 },
                 icon: Badge(
-                    padding: EdgeInsets.all(6),
-                    badgeContent: Text(
-                      Get.find<RestaurantController>()
-                          .cart
-                          .value
-                          .cartItems
-                          .length
-                          .toStringAsFixed(0),
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                          color: Colors.white, fontWeight: FontWeight.w700),
-                    ),
-                    badgeColor: Theme.of(context).primaryColorLight,
-                    child: Icon(
-                      Ionicons.cart,
-                      color: iconColor,
-                    ))),
-          )
-        : Container());
+                  padding: EdgeInsets.all(6),
+                  badgeContent: Text(
+                    Get.find<RestaurantController>()
+                        .cart
+                        .value
+                        .cartItems
+                        .length
+                        .toStringAsFixed(0),
+                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  badgeColor: Theme.of(context).primaryColorLight,
+                  child: Icon(
+                    Ionicons.cart,
+                    color: iconColor,
+                  ),
+                ),
+              ),
+            )
+          : Container(),
+    );
   }
 }

@@ -6,13 +6,15 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-["Taxi"]["components"]["TaxiBottomBars"]["TaxiReqBottomBar"];
+    ["pages"]["Taxi"]["components"]["TaxiBottomBars"]["TaxiReqBottomBar"];
 
 class TaxiReqBottomBar extends StatefulWidget {
   final TaxiRequest taxiRequest;
-  const TaxiReqBottomBar({Key? key, required this.taxiRequest})
-      : super(key: key);
+
+  const TaxiReqBottomBar({
+    Key? key,
+    required this.taxiRequest,
+  }) : super(key: key);
 
   @override
   _TaxiReqBottomBarState createState() => _TaxiReqBottomBarState();
@@ -28,17 +30,21 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
       child: Container(
         padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.only(bottom: 45),
-        height: 60, // getSizeRelativeToScreen(25, Get.height, Get.width),
+        height: 60,
+        // getSizeRelativeToScreen(25, Get.height, Get.width),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-                width: 1, color: Theme.of(context).scaffoldBackgroundColor),
-            color: Colors.white),
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(
+            width: 1,
+            color: Theme.of(context).scaffoldBackgroundColor,
+          ),
+          color: Colors.white,
+        ),
         child: Row(
-          children: [
+          children: <Widget>[
             incrementDecrementPrice(),
             Expanded(flex: 1, child: VerticalDivider()),
-            rightRouteInfos(widget.taxiRequest)
+            rightRouteInfos(widget.taxiRequest),
           ],
         ),
       ),
@@ -54,7 +60,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Material(
               shape: CircleBorder(),
               child: IconButton(
@@ -76,7 +82,10 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
             Text(
               '\$' + widget.taxiRequest.estimatedPrice.toString(),
               style: TextStyle(
-                  color: Colors.black, fontFamily: 'psb', fontSize: 13.sp),
+                color: Colors.black,
+                fontFamily: 'psb',
+                fontSize: 13.sp,
+              ),
             ),
             Material(
               shape: CircleBorder(),
@@ -112,14 +121,12 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
         children: [
           Expanded(
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(
                   MezcalmosIcons.route,
                   size: 11.sp,
                 ),
-                SizedBox(
-                  width: 2.w,
-                ),
+                SizedBox(width: 2.w),
                 Text(
                   taxiRequest.routeInformation?.distance.distanceStringInKm ??
                       "-",
@@ -131,14 +138,12 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
           ),
           Expanded(
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(
                   MezcalmosIcons.stopwatch,
                   size: 11.sp,
                 ),
-                SizedBox(
-                  width: 2.w,
-                ),
+                SizedBox(width: 2.w),
                 Text(
                   taxiRequest.routeInformation?.duration.longTextVersion ?? "-",
                   overflow: TextOverflow.visible,

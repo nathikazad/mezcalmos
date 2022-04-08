@@ -17,16 +17,21 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
   loadBitmaps();
-  runMainGuarded(() => runApp(
-        Sizer(builder: (context, orientation, deviceType) {
+  runMainGuarded(
+    () => runApp(
+      Sizer(
+        builder: (_, __, ___) {
           return StartingPoint(
-              appType: AppType.DeliveryApp,
-              signInCallback: signInCallback,
-              appTheme: DeliveryAppTheme.lightTheme,
-              signOutCallback: signOutCallback,
-              routes: routes);
-        }),
-      ));
+            appType: AppType.DeliveryApp,
+            signInCallback: signInCallback,
+            appTheme: DeliveryAppTheme.lightTheme,
+            signOutCallback: signOutCallback,
+            routes: routes,
+          );
+        },
+      ),
+    ),
+  );
 }
 
 void loadBitmaps() async {

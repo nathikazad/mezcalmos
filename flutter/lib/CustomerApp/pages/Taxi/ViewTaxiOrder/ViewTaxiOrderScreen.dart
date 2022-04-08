@@ -17,6 +17,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
 
 class ViewTaxiOrderScreen extends StatefulWidget {
+  const ViewTaxiOrderScreen({Key? key}) : super(key: key);
+
   @override
   _ViewTaxiOrderScreenState createState() => _ViewTaxiOrderScreenState();
 }
@@ -31,15 +33,20 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
 
   @override
   void initState() {
+    super.initState();
+    dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+        ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
     initializeLateControllers();
     // Order handling
-    final String orderId = Get.parameters['orderId']!;
-    viewController.init(orderId, orderCancelledCallback: (TaxiOrder order) {
-      Get.back<void>();
-      oneButtonDialog(
-          body: _i18n()['orderCancelSuccess'], imagUrl: order.customer.image);
-    });
-    super.initState();
+    String orderId = Get.parameters['orderId']!;
+    viewController.init(
+      orderId,
+      orderCancelledCallback: (TaxiOrder order) {
+        Get.back();
+        oneButtonDialog(
+            body: _i18n()['orderCancelSuccess'], imagUrl: order.customer.image);
+      },
+    );
   }
 
   @override
@@ -53,7 +60,8 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     // To show that You can set it up before using it.
     animatedSliderController = AnimatedSliderController();
     viewController = ViewTaxiOrderController(
-        animatedSliderController: animatedSliderController);
+      animatedSliderController: animatedSliderController,
+    );
     viewWidgets = ViewTaxiOrderScreenWidgets(viewController: viewController);
     counterOfferWidgets = CounterOfferWidgets(viewController: viewController);
   }
@@ -61,17 +69,16 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
-        // appBar: AppBar(),
-        backgroundColor: Colors.white,
-        body: Obx(
-          () => viewController.order.value != null
-              ? getViewStack(context)
-              : MezLogoAnimation(
-                  centered: true,
-                ),
-        ));
+      resizeToAvoidBottomInset: false,
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
+      // appBar: AppBar(),
+      backgroundColor: Colors.white,
+      body: Obx(
+        () => viewController.order.value != null
+            ? getViewStack(context)
+            : MezLogoAnimation(centered: true),
+      ),
+    );
   }
 
   Stack getViewStack(BuildContext context) {
@@ -120,9 +127,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
               child: counterOfferWidgets.offersButton(),
             ),
           if (viewController.counterOffers.isNotEmpty)
-            SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
           Flexible(
             child: viewWidgets.cancelButton(viewController.order.value!.status),
           ),

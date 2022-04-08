@@ -5,28 +5,24 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
-["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderNoteCard"];
+        ["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderNoteCard"];
 
 // Display the notte of the order inside the order view
 Widget orderNoteCard(Rxn<RestaurantOrder> order) {
-
   return Column(
-    children: [
+    children: <Widget>[
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.centerLeft,
-        child: Text(
-            "${_i18n()['notes']}",
+        child: Text("${_i18n()['notes']}",
             style: const TextStyle(
-                color: const Color(0xff000f1c),
+                color: Color(0xff000f1c),
                 fontFamily: "psb",
                 fontStyle: FontStyle.normal,
                 fontSize: 14.0),
             textAlign: TextAlign.left),
       ),
-      SizedBox(
-        height: 15,
-      ),
+      const SizedBox(height: 15),
       Container(
         alignment: Alignment.center,
         margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -43,16 +39,14 @@ Widget orderNoteCard(Rxn<RestaurantOrder> order) {
           child: Text(
               order.value!.notes == null ? "Nothing" : "${order.value!.notes} ",
               style: const TextStyle(
-                  color: const Color(0xff000f1c),
+                  color: Color(0xff000f1c),
                   fontFamily: "psr",
                   fontStyle: FontStyle.normal,
                   fontSize: 16.0),
               textAlign: TextAlign.left),
         ),
       ),
-      SizedBox(
-        height: 30,
-      ),
+      const SizedBox(height: 30),
     ],
   );
 }

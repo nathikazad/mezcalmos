@@ -7,7 +7,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
@@ -42,15 +41,13 @@ class _ViewCartBodyState extends State<ViewCartBody> {
     return Container(
       child: Obx(
         () => Column(
-          children: [
+          children: <Widget>[
             (controller.cart.value.quantity() >= 1)
                 ? Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children: const <Widget>[
                       CartBuilder(),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 10),
                       CartItemsBuilder()
                     ],
                   )

@@ -13,15 +13,16 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["components"]["driverOrderCard"];
 
 class DriverCard extends StatelessWidget {
+  const DriverCard({
+    Key? key,
+    required this.driver,
+    required this.callBack,
+    required this.order,
+  }) : super(key: key);
+
   final Order order;
-  DeliveryDriverUserInfo? driver;
-  Function(DeliveryDriver?) callBack;
-  DriverCard(
-      {Key? key,
-      required this.driver,
-      required this.callBack,
-      required this.order})
-      : super(key: key);
+  final DeliveryDriverUserInfo? driver;
+  final void Function(DeliveryDriver?) callBack;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class DriverCard extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Container(
             child: Text(
               '${_i18n()["driver"]}',
@@ -42,11 +43,12 @@ class DriverCard extends StatelessWidget {
                 ? Colors.white
                 : Colors.grey.shade400,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(
-                  width: 1.5,
-                  color: (driver != null) ? Colors.green : Colors.redAccent,
-                )),
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(
+                width: 1.5,
+                color: (driver != null) ? Colors.green : Colors.redAccent,
+              ),
+            ),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: navigateAndGetDriver(),

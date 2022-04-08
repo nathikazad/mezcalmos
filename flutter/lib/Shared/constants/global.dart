@@ -32,19 +32,19 @@ const int nQualityCompressionOfUserImage = 10;
 const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;
 
 // ----------------- Costants Strings ----------------- //
-const String tPrivacyPolicyCustomerApp =
+const String sPrivacyPolicyCustomerApp =
     "https://www.mezcalmos.com/privacy-policy.html";
-const String tPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
+const String sPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
 
-const LanguageType tDefaultLanguage = LanguageType.ES;
-const String tDefaultTheme = "light";
+const LanguageType sDefaultLanguage = LanguageType.ES;
+const String sDefaultTheme = "light";
 
-const String tMez = "MEZ";
-const String tCalmos = "CALMOS";
-const String tMezcalmos = "MEZCALMOS";
+const String sMez = "MEZ";
+const String sCalmos = "CALMOS";
+const String sMezcalmos = "MEZCALMOS";
 
-const String tDefaultUserName = "Unknown";
-const String tDefaultCustomerName = "Unknown";
+const String sDefaultUserName = "Unknown";
+const String sDefaultCustomerName = "Unknown";
 
 // ----------------- GetStorage Strings ----------------- //
 const String getxPrivacyPolicyLink = "ppLink";
@@ -90,7 +90,7 @@ enum AppType {
 
 extension ParseOrderTypeToString on AppType {
   String toShortString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 
@@ -105,12 +105,15 @@ extension ParseOrderTypeToString on AppType {
       case AppType.DeliveryAdminApp:
         return ParticipantType.DeliveryAdmin;
       default:
+        return null;
     }
   }
 }
 
 extension StringToParseOrderType on String {
   AppType convertStringToAppType() {
-    return AppType.values.firstWhere((e) => e.toShortString() == this);
+    return AppType.values.firstWhere(
+      (AppType appType) => appType.toShortString() == this,
+    );
   }
 }

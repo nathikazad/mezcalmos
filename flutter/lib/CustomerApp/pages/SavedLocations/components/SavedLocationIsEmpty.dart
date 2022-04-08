@@ -4,20 +4,19 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-["SavedLocations"]["components"]["SavedLocationIsEmpty"];
+    ["pages"]["SavedLocations"]["components"]["SavedLocationIsEmpty"];
 
-class SavedlocationISEmpty extends StatelessWidget {
-  const SavedlocationISEmpty({Key? key}) : super(key: key);
-  
+class SavedLocationISEmpty extends StatelessWidget {
+  const SavedLocationISEmpty({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Container(
             width: 80.w,
             height: 80.w,
@@ -25,14 +24,12 @@ class SavedlocationISEmpty extends StatelessWidget {
               "assets/images/shared/noSavedLoc.png",
             ),
           ),
-          SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
           Container(
             child: Text(
               //customer.savedLocations.savedLocationsListEmpty
-              _i18n().strings['customer']
-                  ['savedLocations']['savedLocationsListEmpty'],
+              _i18n().strings['customer']['savedLocations']
+                  ['savedLocationsListEmpty'],
               textAlign: TextAlign.center,
               style: txt.headline2!.copyWith(
                 fontWeight: FontWeight.w700,
@@ -40,15 +37,15 @@ class SavedlocationISEmpty extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Container(
             child: Text(
               _i18n()['clickBtnToAddNewLocation'],
               textAlign: TextAlign.center,
-              style: txt.subtitle1!
-                  .copyWith(fontWeight: FontWeight.w500, fontSize: 13),
+              style: txt.subtitle1!.copyWith(
+                fontWeight: FontWeight.w500,
+                fontSize: 13,
+              ),
             ),
           )
         ],
