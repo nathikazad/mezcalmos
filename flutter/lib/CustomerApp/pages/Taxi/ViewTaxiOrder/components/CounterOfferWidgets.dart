@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/controllers/ViewTaxiOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
@@ -204,7 +205,7 @@ class CounterOfferWidgets {
                                   viewController.order.value!.orderId,
                                   viewController.order.value!.customer.id,
                                   offer.driverInfo.id);
-                          if (!_response.success) {
+                          if (_response.success) {
                             viewController.clickedAccept.value = false;
                             viewController.animatedSliderController.slideDown();
                           } else {
