@@ -231,6 +231,7 @@ class _StartingPointState extends State<StartingPoint> {
       final PackageInfo pInfos = await PackageInfo.fromPlatform();
       mezDbgPrint("[ GET STORAGE ] version number ${pInfos.version}");
       await GetStorage().write(getxPackageName, pInfos.packageName);
+      await GetStorage().write(getxAppName, pInfos.appName);
       await GetStorage().write(getxAppVersion, pInfos.version);
       await GetStorage().write(getxGmapBottomPaddingKey,
           Platform.isAndroid ? 38.0.sp : Get.height / 35);

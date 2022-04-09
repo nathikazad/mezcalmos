@@ -24,7 +24,7 @@ class OrderController extends GetxController {
 
   StreamSubscription<dynamic>? _currentOrdersListener;
   StreamSubscription<dynamic>? _pastOrdersListener;
-  Rx<FilterStatus> filterStatus = FilterStatus.All.obs;
+
 
   @override
   void onInit() {

@@ -150,8 +150,7 @@ class _AppNeedsUpdatedState extends State<AppNeedsUpdated> {
                                   ElevatedButton(
                                     child: Text('Update'),
                                     onPressed: () async {
-                                      await _controller
-                                          .checkForUpdateTypeAndPlatForm();
+                                      await _controller.updateApp();
                                     },
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.symmetric(

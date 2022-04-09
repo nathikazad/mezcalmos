@@ -18,9 +18,16 @@ MezPlatform getPlatformType() {
 }
 
 String getPackageName() {
-  return GetStorage().read(getxPackageName).toString();
+  return GetStorage()
+      .read(getxPackageName)
+      .toString()
+      .replaceFirst('mezstaging', 'mezcalmos');
 }
 
 String getLocalVersionName() {
   return GetStorage().read(getxAppVersion);
+}
+
+String getAppName() {
+  return GetStorage().read(getxAppName);
 }
