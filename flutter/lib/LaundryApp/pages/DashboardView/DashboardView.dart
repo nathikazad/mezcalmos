@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/LaundryApp/pages/DashboardView/CategoryView/LaundryOpCategoriesView.dart';
+import 'package:mezcalmos/LaundryApp/pages/DashboardView/InfoView/LaundryOpInfoView.dart';
+import 'package:mezcalmos/LaundryApp/pages/DashboardView/OrdersListView/LaundryOpOrdersListView.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 class DashboardView extends StatefulWidget {
@@ -14,9 +17,15 @@ class _DashboardViewState extends State<DashboardView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
+      body: getCurrentScreen(currentIndex),
       bottomNavigationBar: BottomNavigationBar(
+          selectedLabelStyle: Theme.of(context)
+              .textTheme
+              .bodyText2
+              ?.copyWith(fontWeight: FontWeight.w600),
+          unselectedLabelStyle: Theme.of(context).textTheme.subtitle1,
           selectedItemColor: Theme.of(context).primaryColorLight,
-          unselectedItemColor: Colors.grey.shade600,
+          unselectedItemColor: Colors.grey.shade700,
           currentIndex: currentIndex,
           onTap: (int newIndex) {
             setState(() {
@@ -32,13 +41,18 @@ class _DashboardViewState extends State<DashboardView> {
           ]),
     );
   }
-  // Widget getCurrentScreen(int index){
-  //   switch (index) {
-  //     case 0 :
-  //     return
 
-  //       break;
-  //     default:
-  //   }
-  // }
+  Widget getCurrentScreen(int index) {
+    switch (index) {
+      case 0:
+        return LaundryOpOrdersListView();
+      case 1:
+        return LaundryOpCategoriesView();
+      case 2:
+        return LaundryOpInfoView();
+
+      default:
+        return LaundryOpOrdersListView();
+    }
+  }
 }

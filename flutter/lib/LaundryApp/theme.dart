@@ -32,7 +32,7 @@ class LaundryAppTheme {
           iconTheme: IconThemeData(color: Colors.black),
           actionsIconTheme: IconThemeData(color: Colors.black)),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Color(0xFFAC59FC), elevation: 1.0),
+          backgroundColor: Colors.white, elevation: 1.0),
       bottomAppBarTheme:
           BottomAppBarTheme(color: Color(0xFFAC59FC), elevation: 1.0),
 
