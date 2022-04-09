@@ -182,35 +182,23 @@ class AppVersionController extends GetxController {
   Future<bool> initTheNewVersion() async {
     bool canUpdate = false;
 
+    /// PackageInfo
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
     /// Instantiate NewVersion manager object (Using GCP Console app as example)
     debugPrint("------------------- NewVersion ------------------------");
+    final String packageName = packageInfo.packageName.contains('mezstaging')
+        ? packageInfo.packageName.replaceFirst('mezstaging', 'mezcalmos')
+        : 'com.mezcalmos.customer';
     final NewVersion newVersion = NewVersion(
-      iOSId: 'com.mezcalmos.customer',
-      androidId: 'com.mezcalmos.customer',
+      iOSId: packageName,
+      androidId:
+          packageName, // packageInfo.packageName // 'com.mezcalmos.customer'
     );
-    //    [major].[minor].[patches]
-
-// Periodic-timer -> works kol 3h :
-// 	- fte7 app mn idid : first run dial timer
-// 		- if new version : update (major - minor/patches)
-// 			- if major :
-// 				- IOS : full screen w fiha button -> appStore (link).
-// 				- Android : full Screen w fiha button ->
-// 					- package:in_app_update -> performImmediateUpdate
-
-// 			- if Minor :
-// 				- iOS : we show a dismissible alert dialog (user can cancel) - with link to app page on app store
-// 				- android : we show a dismissible (user can cancel) alert with button (onPress) -> executes : package:in_app_update:startFlexibleUpdate() ->
-// 					which runs completeFlexibleUpdate()  upon complete.
-
-// 			main yokel update : We can close - open app (reload the app).
 
     debugPrint(
       "-------------------Start advancedStatusCheck ------------------------",
     );
-
-    /// PackageInfo
-    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     /// Get Version Status
     status.value = await newVersion.getVersionStatus();
@@ -223,6 +211,8 @@ class AppVersionController extends GetxController {
       debugPrint('canUpdate ${status.value?.canUpdate.toString()}');
       if (status.value!.canUpdate) {
         canUpdate = true;
+
+        /// To Know if we can let the user back to the home screen
         checkUpdateResult.value = true;
 
         /// localVersion

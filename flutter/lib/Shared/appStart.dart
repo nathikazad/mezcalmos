@@ -163,7 +163,7 @@ class _StartingPointState extends State<StartingPoint> {
       /// AppVersionController
       final AppVersionController _appVersionController =
           Get.put<AppVersionController>(AppVersionController());
-      //_appVersionController.initTheNewVersion();
+      _appVersionController.initTheNewVersion();
 
       setState(() => _initialized = true);
       mezDbgPrint("_initialized Set to : $_initialized");
