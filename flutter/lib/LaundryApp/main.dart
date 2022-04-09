@@ -27,7 +27,9 @@ void main() {
               signInCallback: signInCallback,
               appTheme: LaundryAppTheme.lightTheme,
               signOutCallback: signOutCallback,
-              routes: routes);
+            routes: routes,
+            locationOn: false,
+          );
         }),
       ));
 }

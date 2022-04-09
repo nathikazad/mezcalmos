@@ -54,11 +54,17 @@ class LaundryOpAuthController extends GetxController {
     await _LaundryOperatorNodeListener?.cancel();
     _LaundryOperatorNodeListener = null;
 
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(
+            operatorAuthNode(operatorType: OperatorType.Laundry, uid: user.uid))
+        .once()
+        .then((value) => mezDbgPrint(value.value));
+    // mezDbgPrint("Listening");
     _LaundryOperatorNodeListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(
-            operatorAuthNode(
-            operatorType: OperatorType.Laundry, uid: user.uid))
+            operatorAuthNode(operatorType: OperatorType.Laundry, uid: user.uid))
         .onValue
         .listen((Event event) async {
       mezDbgPrint(
@@ -95,15 +101,16 @@ class LaundryOpAuthController extends GetxController {
         "LaundryAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
-    if (deviceNotificationToken != null)
+    if (deviceNotificationToken != null) {
       unawaited(_databaseHelper.firebaseDatabase
           .reference()
-          .child(operatorNotificationsNode(
+          .child(operatorNotificationInfoNode(
               operatorType: OperatorType.Laundry,
               uid: _authController.fireAuthUser!.uid))
           .set(<String, String>{
         'deviceNotificationToken': deviceNotificationToken
       }));
+    }
   }
 
   void saveAppVersionIfNecessary() {

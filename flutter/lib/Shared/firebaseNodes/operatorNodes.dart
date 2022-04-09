@@ -20,6 +20,12 @@ String operatorAppVersionNode(
       '/versionNumber';
 }
 
+String operatorNotificationInfoNode(
+    {required OperatorType operatorType, required String uid}) {
+  return operatorAuthNode(operatorType: operatorType, uid: uid) +
+      '/notificationInfo';
+}
+
 String operatorNotificationsNode(
     {required OperatorType operatorType, required String uid}) {
   return 'notifications/${operatorType.toFirebaseFormatString()}Operator/$uid';
