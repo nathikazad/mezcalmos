@@ -75,7 +75,12 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
                 SizedBox(
                   width: 5,
                 ),
-                Text(laundry.value?.info.location?.address ?? 'Laundry adress')
+                Flexible(
+                    child: Text(
+                  laundry.value?.info.location?.address ?? 'Laundry adress',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ))
               ],
             ),
           ),
