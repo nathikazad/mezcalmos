@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/LaundryApp/pages/DashboardView/OrdersListView/components/OrderCard.dart';
 
 class LaundryOpOrdersListView extends StatefulWidget {
   const LaundryOpOrdersListView({Key? key}) : super(key: key);
@@ -50,14 +51,26 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => ListView(
-        padding: const EdgeInsets.all(8),
-        children: [
-          Text("Orders view"),
-          Text("${inProcessOrders.length}"),
-          Text("${pastOrders.length}"),
-          //   Text("Orders view"),
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    return Scrollbar(
+      child: ListView(
+        padding: const EdgeInsets.all(26),
+        children: <Widget>[
+          Text(
+            "My Orders",
+            style: textTheme.headline3,
+          ),
+          const SizedBox(height: 18),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: 20,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (_, int index) {
+              return OrderCard(
+                textTheme: textTheme,
+              );
+            },
+          ),
         ],
       ),
     );

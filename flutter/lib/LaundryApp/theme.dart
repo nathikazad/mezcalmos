@@ -112,6 +112,12 @@ class LaundryAppTheme {
           fontSize: 16.sp,
           color: Colors.black,
         ),
+        headline4: TextStyle(
+          fontFamily: "Nunito",
+          fontWeight: FontWeight.w600,
+          fontSize: 14.sp,
+          color: Colors.black,
+        ),
         bodyText1: TextStyle(
             fontFamily: "Montserrat",
             fontWeight: FontWeight.w600,
