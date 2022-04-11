@@ -26,6 +26,7 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
   StreamSubscription<bool>? _locationStreamSub;
+
   @override
   void initState() {
     // Get.put(LaundryInfoController(), permanent: true);
@@ -46,12 +47,13 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
     _notificationsStreamListener = initializeShowNotificationsListener();
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
-            deliveryDriverNotificationsNode(userId),
-            laundryNotificationHandler);
+      deliveryDriverNotificationsNode(userId),
+      laundryNotificationHandler,
+    );
     super.initState();
   }
 
-  void handleState(LaundryOperator? operator) async {
+  void handleState(LaundryOperator? operator) {
     mezDbgPrint(operator);
     if (operator != null && operator.state.laundryId != null) {
       // ignore: unawaited_futures, inference_failure_on_function_invocation

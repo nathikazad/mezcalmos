@@ -4,6 +4,7 @@
 
 // ignore_for_file: constant_identifier_names
 
+import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 
@@ -117,3 +118,5 @@ extension StringToParseOrderType on String {
     return AppType.values.firstWhere((e) => e.toShortString() == this);
   }
 }
+
+const Color keyAppColor = Color(0xFFAC59FC);

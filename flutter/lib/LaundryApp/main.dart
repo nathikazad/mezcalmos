@@ -19,28 +19,35 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
   loadBitmaps();
-  runMainGuarded(() => runApp(
-        Sizer(builder: (BuildContext context, Orientation orientation,
-            DeviceType deviceType) {
+  runMainGuarded(
+    () => runApp(
+      Sizer(
+        builder: (_, __, ___) {
           return StartingPoint(
-              appType: AppType.LaundryApp,
-              signInCallback: signInCallback,
-              appTheme: LaundryAppTheme.lightTheme,
-              signOutCallback: signOutCallback,
+            appType: AppType.LaundryApp,
+            signInCallback: signInCallback,
+            appTheme: LaundryAppTheme.lightTheme,
+            signOutCallback: signOutCallback,
             routes: routes,
             locationOn: false,
           );
-        }),
-      ));
+        },
+      ),
+    ),
+  );
 }
 
 void loadBitmaps() async {
   mezDbgPrint("[+] L O A D I N G .... BITMAP_DESCRIPTORS !");
   if (await GetStorage.init()) {
-    await GetStorage().write(getxTaxiDescriptor,
-        await bitmapDescriptorLoader(taxi_driver_marker_asset, 60, 60));
+    await GetStorage().write(
+      getxTaxiDescriptor,
+      await bitmapDescriptorLoader(taxi_driver_marker_asset, 60, 60),
+    );
 
-    await GetStorage().write(getxDestinationDescriptor,
-        await bitmapDescriptorLoader(purple_destination_marker_asset, 60, 60));
+    await GetStorage().write(
+      getxDestinationDescriptor,
+      await bitmapDescriptorLoader(purple_destination_marker_asset, 60, 60),
+    );
   }
 }
