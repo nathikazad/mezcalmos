@@ -106,7 +106,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     await finishOrder(order, orderId);
   else if (newStatus == LaundryOrderStatus.ReadyForDelivery) {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    laundryNodes.inProcessOrders(order.laundry.id).update(order);
+    laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
     await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
     deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
   }

@@ -13,7 +13,7 @@ import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessa
 import { finishOrder } from "../laundry/helper";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-
+import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 let statusArrayInSeq: Array<LaundryOrderStatus> =
   [LaundryOrderStatus.OrderReceieved,
   LaundryOrderStatus.OtwPickup,
@@ -144,6 +144,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   } else {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
     rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+    laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
     if (newStatus == LaundryOrderStatus.AtLaundry) {
       await deliveryDriverNodes.pastOrders(deliveryDriverId, orderId).update(order)
       await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).remove();
