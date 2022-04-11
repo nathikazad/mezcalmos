@@ -56,11 +56,12 @@ class LaundryCosts {
   factory LaundryCosts.fromData(laundryCostsData) {
     // ignore: prefer_final_locals
     LaundryCosts laundryCosts = LaundryCosts();
-    laundryCosts.minimumCost = laundryCostsData['minimumCosts'];
+    laundryCosts.minimumCost = laundryCostsData['minimumCost'];
     // ignore: avoid_annotating_with_dynamic
-    laundryCostsData["byTypes"].forEach((dynamic itemId, dynamic itemData) {
-      laundryCosts.lineItems.add(LaundryCostLineItem.fromData(itemData));
-    });
+    for (var item in laundryCostsData["byType"]) {
+      mezDbgPrint(item);
+      laundryCosts.lineItems.add(LaundryCostLineItem.fromData(item));
+    }
     return laundryCosts;
   }
 }
@@ -74,6 +75,6 @@ class LaundryCostLineItem {
   factory LaundryCostLineItem.fromData(laundryCostLineItemData) {
     return LaundryCostLineItem(
         name: convertToLanguageMap(laundryCostLineItemData['name']),
-        cost: laundryCostLineItemData['cost']);
+        cost: laundryCostLineItemData['costPerKilo']);
   }
 }

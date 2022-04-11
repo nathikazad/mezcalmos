@@ -23,13 +23,11 @@ class LaundryInfoController extends GetxController {
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
         .listen((Event event) {
-      mezDbgPrint("eveeeeeeennnnnnnnnnnnnnnnnnnnnnnnnnnnt ====> $event ");
+      mezDbgPrint(
+          "eveeeeeeennnnnnnnnnnnnnnnnnnnnnnnnnnnt ====> ${event.snapshot.value} ");
       if (event.snapshot.value != null) {
-        event.snapshot.value.keys.forEach((value) {
-          mezDbgPrint("Hndling laundryyyyyyyyyyyy : $value");
-          laundry.value = Laundry.fromLaundryData(
-              laundryId: laundryId, laundryData: event.snapshot.value[value]);
-        });
+        laundry.value = Laundry.fromLaundryData(
+            laundryId: laundryId, laundryData: event.snapshot.value);
       }
     }, onError: (error) {
       mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
