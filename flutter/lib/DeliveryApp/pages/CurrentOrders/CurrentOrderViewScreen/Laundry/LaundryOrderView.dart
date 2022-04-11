@@ -152,6 +152,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
             laundryOrder.pickupDriver!.location!.latitude,
             laundryOrder.pickupDriver!.location!.longitude,
           ),
+          fitWithinBounds: false,
         );
         // Landry Marker
         mapController.addOrUpdateUserMarker(
@@ -164,11 +165,11 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
         );
         // Destination Marker
         mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: LatLng(
-              laundryOrder.to.latitude,
-              laundryOrder.to.longitude,
-            ),
-            fitWithinBounds: false);
+          latLng: LatLng(
+            laundryOrder.to.latitude,
+            laundryOrder.to.longitude,
+          ),
+        );
         mapController.animateAndUpdateBounds();
         break;
       case LaundryOrderStatus.OtwDelivery:
