@@ -1,7 +1,7 @@
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 String _serviceProviderNode({required OrderType orderType}) {
-  return '${orderType.toPlural()}/info';
+  return '${orderType.toPlural()}';
 }
 
 String serviceProviderInfos(

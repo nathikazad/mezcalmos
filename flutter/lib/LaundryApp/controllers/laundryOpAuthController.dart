@@ -59,7 +59,7 @@ class LaundryOpAuthController extends GetxController {
         .child(
             operatorAuthNode(operatorType: OperatorType.Laundry, uid: user.uid))
         .once()
-        .then((value) => mezDbgPrint(value.value));
+        .then((DataSnapshot value) => mezDbgPrint(value.value));
     // mezDbgPrint("Listening");
     _LaundryOperatorNodeListener = _databaseHelper.firebaseDatabase
         .reference()
@@ -87,6 +87,8 @@ class LaundryOpAuthController extends GetxController {
         saveAppVersionIfNecessary();
         unawaited(saveNotificationToken());
         if (laundryId != operator.value!.state.laundryId) {
+          mezDbgPrint(
+              ">>>>>>>>>>>>>>>>>>>>>>Start getting laundry ...... $laundryId");
           // init controllers with new id
           laundryId = operator.value!.state.laundryId;
           await _orderController.init(laundryId!);

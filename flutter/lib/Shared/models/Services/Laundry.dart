@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -14,7 +15,9 @@ class Laundry extends Service {
   factory Laundry.fromLaundryData(
       // ignore: avoid_annotating_with_dynamic
       {required String laundryId,
-      required dynamic laundryData}) {
+      required laundryData}) {
+    mezDbgPrint("Laundry info daaaaaatttttta");
+    mezDbgPrint(laundryData);
     final ServiceState laundryState = ServiceState(
         laundryData["state"]?["authorizationStatus"]
                 ?.toString()
@@ -24,7 +27,7 @@ class Laundry extends Service {
 
     final Schedule schedule =
         Schedule.fromData(laundryData["details"]["schedule"]);
-      
+
     final LaundryCosts laundryCosts =
         LaundryCosts.fromData(laundryData["details"]["costs"]);
 
@@ -50,7 +53,7 @@ class LaundryCosts {
 
   LaundryCosts();
 
-  factory LaundryCosts.fromData(dynamic laundryCostsData) {
+  factory LaundryCosts.fromData(laundryCostsData) {
     // ignore: prefer_final_locals
     LaundryCosts laundryCosts = LaundryCosts();
     laundryCosts.minimumCost = laundryCostsData['minimumCosts'];
@@ -68,7 +71,7 @@ class LaundryCostLineItem {
 
   LaundryCostLineItem({required this.name, required this.cost});
 
-  factory LaundryCostLineItem.fromData(dynamic laundryCostLineItemData) {
+  factory LaundryCostLineItem.fromData(laundryCostLineItemData) {
     return LaundryCostLineItem(
         name: convertToLanguageMap(laundryCostLineItemData['name']),
         cost: laundryCostLineItemData['cost']);

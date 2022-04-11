@@ -1,5 +1,7 @@
 import 'dart:async';
+
 import 'package:async/async.dart' show StreamGroup;
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -9,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
 class OrderController extends GetxController {
@@ -31,12 +32,13 @@ class OrderController extends GetxController {
         .child(serviceProviderPastOrders(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
-        .listen((event) {
-      List<LaundryOrder> orders = [];
+        .listen((Event event) {
+      final List<LaundryOrder> orders = [];
       if (event.snapshot.value != null) {
-        event.snapshot.value.keys.forEach((String orderId) {
-          mezDbgPrint("Hndling Order : $orderId");
-          dynamic orderData = event.snapshot.value[orderId];
+        event.snapshot.value.keys.forEach((orderId) {
+          mezDbgPrint("-------------------->>>>>>>>>>Hndling Order : $orderId");
+          final dynamic orderData = event.snapshot.value[orderId];
+          mezDbgPrint("Order Data ======================> $orderData");
           orders.add(LaundryOrder.fromData(orderId, orderData));
         });
       }
@@ -53,15 +55,15 @@ class OrderController extends GetxController {
         .child(serviceProviderInProcessOrders(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
-        .listen((event) {
+        .listen((Event event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
 
-      List<LaundryOrder> orders = [];
+      final List<LaundryOrder> orders = [];
       if (event.snapshot.value != null) {
         // mezDbgPrint("orderController: new incoming order data");
         event.snapshot.value.keys?.forEach((orderId) {
           // mezDbgPrint("Hndling Order : $orderId");
-          dynamic orderData = event.snapshot.value[orderId];
+          final dynamic orderData = event.snapshot.value[orderId];
           orders.add(LaundryOrder.fromData(orderId, orderData));
         });
       }
@@ -96,12 +98,13 @@ class OrderController extends GetxController {
     return currentOrders.stream.map<LaundryOrder?>((_) {
       try {
         return currentOrders.firstWhere(
-          (currentOrder) => currentOrder.orderId == orderId,
+          (LaundryOrder currentOrder) => currentOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
         // return null;
       }
+      return null;
     });
   }
 
@@ -109,19 +112,20 @@ class OrderController extends GetxController {
     return pastOrders.stream.map<LaundryOrder?>((_) {
       try {
         return pastOrders.firstWhere(
-          (pastOrder) => pastOrder.orderId == orderId,
+          (LaundryOrder pastOrder) => pastOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
         // return null;
       }
+      return null;
     });
   }
 
   bool hasNewMessageNotification(String orderId) {
     return _foregroundNotificationsController
         .notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
             notification.orderId! == orderId)
         .isNotEmpty;
@@ -130,11 +134,11 @@ class OrderController extends GetxController {
   void clearOrderNotifications(String orderId) {
     _foregroundNotificationsController
         .notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             notification.notificationType ==
                 NotificationType.OrderStatusChange &&
             notification.orderId! == orderId)
-        .forEach((notification) {
+        .forEach((Notification notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
     });
   }
@@ -147,10 +151,10 @@ class OrderController extends GetxController {
   Future<ServerResponse> _callLaundryCloudFunction(
       String functionName, String orderId,
       {Map<String, dynamic>? optionalParams}) async {
-    HttpsCallable cloudFunction =
+    final HttpsCallable cloudFunction =
         FirebaseFunctions.instance.httpsCallable('laundry-$functionName');
     try {
-      HttpsCallableResult response = await cloudFunction
+      final HttpsCallableResult response = await cloudFunction
           .call({"orderId": orderId, ...optionalParams ?? {}});
       return ServerResponse.fromJson(response.data);
     } catch (e) {
@@ -162,7 +166,7 @@ class OrderController extends GetxController {
   @override
   void onClose() {
     mezDbgPrint(
-        "CURRENT ORDER CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! ${this.hashCode}");
+        "CURRENT ORDER CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! $hashCode");
     mezDbgPrint(
         "--------------------> CurrentOrderController::onClose called  !");
     print("[+] Orderontroller::onClose ---------> Was invoked !");

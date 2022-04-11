@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
@@ -18,8 +17,7 @@ Notification laundryNotificationHandler(String key, value) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          linkUrl: getLinkUrl(value['orderType'].toString().toOrderType(),
-              value['orderId']), // needs to be changed, need to add laundry
+          linkUrl: "", // needs to be changed, need to add laundry
           body: '${_i18n()['driverNotifBody']}', // needs to be changed
           imgUrl:
               'assets/images/shared/notifications/deliveryNotif.png', // needs to be changed
@@ -45,16 +43,16 @@ Notification laundryNotificationHandler(String key, value) {
   }
 }
 
-String getLinkUrl(OrderType orderType, String orderId) {
-  switch (orderType) {
-    case OrderType.Laundry:
-      return getLaundryOrderRoute(orderId);
-    case OrderType.Restaurant:
-      return getRestaurantOrderRoute(orderId);
-    default:
-      return kHomeRoute;
-  }
-}
+// String getLinkUrl(OrderType orderType, String orderId) {
+//   switch (orderType) {
+//     case OrderType.Laundry:
+//       return getLaundryOrderRoute(orderId);
+//     case OrderType.Restaurant:
+//       return getRestaurantOrderRoute(orderId);
+//     default:
+//       return kHomeRoute;
+//   }
+// }
 
 Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   final RestaurantOrderStatus newOrdersStatus =
@@ -64,8 +62,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl: getLinkUrl(
-          value['orderType'].toString().toOrderType(), value["orderId"]),
+      linkUrl: '',
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -121,7 +118,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl: getLaundryOrderRoute(value["orderId"]),
+      linkUrl: '',
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
