@@ -5,7 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/controllers/addCategoryController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 
 AppBar addCategoryAppBar({
   required AddCategoryController addCategoryController,
@@ -13,17 +12,6 @@ AppBar addCategoryAppBar({
   required BuildContext context,
 }) {
   return AppBar(
-    elevation: 0,
-    centerTitle: true,
-    backgroundColor: Colors.white,
-    leading: IconButton(
-      padding: EdgeInsets.zero,
-      constraints: const BoxConstraints(),
-      onPressed: () {
-        Get.back<void>();
-      },
-      icon: Icon(Icons.arrow_back_ios),
-    ),
     title: Text(
       'Add category',
       style: Get.theme.textTheme.headline3,

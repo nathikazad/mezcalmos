@@ -55,6 +55,12 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
             },
             icon: Icon(Icons.edit),
             label: Text("Edit my informations")),
+        TextButton.icon(
+            onPressed: () {
+              Get.toNamed(kAddCategoryScreen);
+            },
+            icon: Icon(Icons.edit),
+            label: Text("Categories")),
         SizedBox(
           height: 15,
         ),

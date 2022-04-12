@@ -4,8 +4,8 @@
 */
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/controllers/addCategoryController.dart';
 import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/components/AddCategoryAppBar.dart';
+import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/controllers/addCategoryController.dart';
 
 class AddCategoryScreen extends StatefulWidget {
   const AddCategoryScreen({Key? key}) : super(key: key);
@@ -22,18 +22,27 @@ class _AddCategoryScreenState extends State<AddCategoryScreen>
 
   @override
   void initState() {
-    super.initState();
     _addCategoryController.tabController = TabController(
       vsync: this,
       length: 2,
     );
+    _addCategoryController.getTabs();
+    _addCategoryController.getTabPages();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _addCategoryController.tabController?.dispose();
+    _addCategoryController.tabController = null;
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    _addCategoryController.getTabs();
-    _addCategoryController.getTabPages();
+
     return Scaffold(
       appBar: addCategoryAppBar(
         addCategoryController: _addCategoryController,
