@@ -106,8 +106,8 @@ class TaxiOrder extends Order {
   }
 
   factory TaxiOrder.fromData(id, data) {
-    mezDbgPrint("TAXI ORDER ------>>>>>>>>>>>>>>>>>>>> $data");
-    mezDbgPrint("TAXI ID ------>>>>>>>>>>>>>>>>>>>> $id");
+    // mezDbgPrint("TAXI ORDER ------>>>>>>>>>>>>>>>>>>>> $data");
+    // mezDbgPrint("TAXI ID ------>>>>>>>>>>>>>>>>>>>> $id");
     final TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
         driver: (data["driver"] != null)
@@ -118,7 +118,7 @@ class TaxiOrder extends Order {
         rideStartTime: data['rideStartTime'],
         status: data['status'].toString().toTaxiOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
-        cost: data['cost'],
+        cost: data['cost'] ?? 35,
         // from: Location("", LocationData.fromMap({"lat":})),
         from: Location.fromFirebaseData(data['from']),
         to: Location.fromFirebaseData(data['to']),

@@ -87,7 +87,7 @@ class TaxiUserInfo extends UserInfo {
       : super(id: id, name: name, image: image, language: language);
 
   factory TaxiUserInfo.fromData(data) {
-    mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
+    // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
     final LatLng? location = data["location"] != null
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])

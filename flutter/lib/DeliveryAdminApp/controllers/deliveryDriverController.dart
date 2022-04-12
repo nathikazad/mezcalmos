@@ -33,11 +33,15 @@ class DeliveryDriverController extends GetxController {
       final List<DeliveryDriver> _deliveryDrivers = [];
       if (event.snapshot.value != null) {
         for (var deliveryDriverId in event.snapshot.value.keys) {
-          final dynamic deliveryDriverData =
-              event.snapshot.value[deliveryDriverId];
+          try {
+            final dynamic deliveryDriverData =
+                event.snapshot.value[deliveryDriverId];
 
-          _deliveryDrivers.add(
-              DeliveryDriver.fromData(deliveryDriverId, deliveryDriverData));
+            _deliveryDrivers.add(
+                DeliveryDriver.fromData(deliveryDriverId, deliveryDriverData));
+          } catch (e) {
+            mezDbgPrint("Driver id $deliveryDriverId error");
+          }
         }
       }
       deliveryDrivers.value = _deliveryDrivers;
