@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/pages/DashboardView/InfoView/components/CategoryCard.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
@@ -55,15 +57,44 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
             },
             icon: Icon(Icons.edit),
             label: Text("Edit my informations")),
-        TextButton.icon(
-            onPressed: () {
-              Get.toNamed(kAddCategoryScreen);
-            },
-            icon: Icon(Icons.edit),
-            label: Text("Categories")),
-        SizedBox(
-          height: 15,
+        Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Categories',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            Card(
+              color: Colors.white,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(10),
+                onTap: () {},
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.add,
+                          color: keyAppColor,
+                        ),
+                        Text(
+                          'Add Category',
+                        ),
+                      ]),
+                ),
+              ),
+            )
+          ],
         ),
+        Column(
+            children: List.generate(
+                laundry.value!.laundryCosts.lineItems.length,
+                (int index) => CategoryCard(
+                    laundryCostLineItem:
+                        laundry.value!.laundryCosts.lineItems[index]))),
+        Divider(),
         Text(
           'Location',
           style: Theme.of(context).textTheme.bodyText1,

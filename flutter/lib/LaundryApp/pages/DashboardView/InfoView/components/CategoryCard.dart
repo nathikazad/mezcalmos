@@ -4,21 +4,19 @@
 */
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
     Key? key,
-    required this.title,
-    required this.weight,
-    required this.textTheme,
+    required this.laundryCostLineItem,
   }) : super(key: key);
 
-  final TextTheme textTheme;
-  final String title;
-  final String weight;
-
+  final LaundryCostLineItem laundryCostLineItem;
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 11),
       padding: const EdgeInsets.all(20),
@@ -30,14 +28,14 @@ class CategoryCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            title,
+            laundryCostLineItem.name[LanguageType.EN] ?? "null",
             style: textTheme.bodyText1,
           ),
           RichText(
             text: TextSpan(
               children: <TextSpan>[
                 TextSpan(
-                  text: '$weight\$ ',
+                  text: '${laundryCostLineItem.cost}\$ ',
                   style: textTheme.bodyText1?.copyWith(
                     color: keyAppColor,
                     fontWeight: FontWeight.w600,
