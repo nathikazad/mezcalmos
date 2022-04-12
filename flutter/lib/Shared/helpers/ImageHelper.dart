@@ -124,8 +124,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             Icons.photo_library_outlined,
                             color: Colors.white,
                           ),
-                          Text(
-                              _i18n()['gallery'])
+                          Text(_i18n()['gallery'])
                         ],
                       ))),
             ],
@@ -151,8 +150,7 @@ Future<imPicker.XFile?> imagePicker(
           _i18n()['cameraAccessOffTitle'], _i18n()['cameraAccessOffBody'],
           position: SnackPosition.TOP);
     } else if (exception.code == 'photo_access_denied') {
-      MezSnackbar(
-          _i18n()['photoAccessOffTitle'], _i18n()['photoAccessOffBody'],
+      MezSnackbar(_i18n()['photoAccessOffTitle'], _i18n()['photoAccessOffBody'],
           position: SnackPosition.TOP);
     } else {
       return await picker.pickImage(

@@ -105,12 +105,10 @@ class LaundryOrderController extends GetxController {
   }
 
   void clearNewOrderNotifications() {
-   
     _fbNotificationsController.notifications
         .where((notification) =>
             notification.notificationType == NotificationType.NewOrder)
         .forEach((notification) {
-     
       _fbNotificationsController.removeNotification(notification.id);
     });
   }
@@ -137,7 +135,6 @@ class LaundryOrderController extends GetxController {
     return _callLaundryCloudFunction("readyForDeliveryOrder", orderId);
   }
 
-  
   Future<ServerResponse> assignLaundry(String orderId, String laundryId) async {
     return _callLaundryCloudFunction("assignLaundry", orderId,
         optionalParams: <String, dynamic>{"laundryId": laundryId});

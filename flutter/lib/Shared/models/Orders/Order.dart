@@ -31,17 +31,17 @@ abstract class Order {
   bool inProcess();
   bool isCanceled();
 
-  String driverDatabaseAddress(){
+  String driverDatabaseAddress() {
     switch (orderType) {
       case OrderType.Laundry:
-          switch ((this as LaundryOrder).getCurrentPhase()) {
-            case LaundryOrderPhase.Dropoff:
-                return "dropoffDriver";      
-            case LaundryOrderPhase.Pickup:
-                return "pickupDriver";
-            case LaundryOrderPhase.Neither:
-              return "dropoffDriver";
-          }
+        switch ((this as LaundryOrder).getCurrentPhase()) {
+          case LaundryOrderPhase.Dropoff:
+            return "dropoffDriver";
+          case LaundryOrderPhase.Pickup:
+            return "pickupDriver";
+          case LaundryOrderPhase.Neither:
+            return "dropoffDriver";
+        }
       case OrderType.Restaurant:
         return "dropoffDriver";
       default:
@@ -54,8 +54,6 @@ abstract class Order {
 
 enum OrderType { Taxi, Restaurant, Laundry, Water }
 
-
-
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
@@ -64,15 +62,15 @@ extension ParseOrderTypeToString on OrderType {
 
   String toPlural() {
     switch (this) {
-    case OrderType.Taxi:
-      return "taxis";
-    case OrderType.Restaurant:
-      return "restaurants";
-    case OrderType.Laundry:
-      return "laundries";
-    case OrderType.Water:
-      return "waters";
-  }
+      case OrderType.Taxi:
+        return "taxis";
+      case OrderType.Restaurant:
+        return "restaurants";
+      case OrderType.Laundry:
+        return "laundries";
+      case OrderType.Water:
+        return "waters";
+    }
   }
 }
 

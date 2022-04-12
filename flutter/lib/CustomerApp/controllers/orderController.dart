@@ -25,7 +25,6 @@ class OrderController extends GetxController {
   StreamSubscription<dynamic>? _currentOrdersListener;
   StreamSubscription<dynamic>? _pastOrdersListener;
 
-
   @override
   void onInit() {
     super.onInit();

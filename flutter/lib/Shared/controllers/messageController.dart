@@ -50,7 +50,6 @@ class MessageController extends GetxController {
       {required String message,
       required String chatId,
       String? orderId}) async {
-        
     DatabaseReference messageNode = _databaseHelper.firebaseDatabase
         .reference()
         .child('${chatNode(chatId)}/messages')

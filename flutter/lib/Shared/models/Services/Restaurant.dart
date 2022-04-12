@@ -77,7 +77,7 @@ class Restaurant extends Service {
                 DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
             var dateOfClose =
                 DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
-           
+
             if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
               isOpen = true;
             }

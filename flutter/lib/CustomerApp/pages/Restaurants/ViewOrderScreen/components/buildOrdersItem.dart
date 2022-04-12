@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/BasicCellComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/generalPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Utils/Utils.dart';
 import 'package:sizer/sizer.dart';
 
 Widget buildOrdersItems(List<RestaurantOrderItem> items) {
@@ -15,7 +15,7 @@ Widget buildOrdersItems(List<RestaurantOrderItem> items) {
     child: Column(
       children: items.fold<List<Widget>>(
         <Widget>[],
-        (children, element) {
+        (List<Widget> children, RestaurantOrderItem element) {
           children.add(
             Column(
               children: <Widget>[
@@ -83,7 +83,7 @@ Widget buildOrdersItems(List<RestaurantOrderItem> items) {
                           ),
                           alignment: Alignment.centerRight,
                           child: Text(
-                            "\$${Utils.currency.format(element.totalCost)}",
+                            "\$${MezFormatter.currency.format(element.totalCost)}",
                             style: TextStyle(
                                 color: const Color(0xff000f1c),
                                 fontFamily: "psb",

@@ -7,7 +7,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]["notificationHandler"];
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
+    ["notificationHandler"];
 
 Notification deliveryAdminNotificationHandler(String key, value) {
   final NotificationType notificationType =

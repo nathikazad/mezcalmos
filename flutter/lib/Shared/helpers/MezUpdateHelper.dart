@@ -1,30 +1,25 @@
-/*
-* Created By Mirai Devs.
-* On 3/30/2022.
-*/
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 
-class MezInstallStatus {
-  MezInstallStatus._();
+// class MezInstallStatus {
+//   MezInstallStatus._();
 
-  static int get unknown => 0;
+//   static int get unknown => 0;
 
-  static int get pending => 1;
+//   static int get pending => 1;
 
-  static int get downloading => 2;
+//   static int get downloading => 2;
 
-  static int get installing => 3;
+//   static int get installing => 3;
 
-  static int get installed => 4;
+//   static int get installed => 4;
 
-  static int get failed => 5;
+//   static int get failed => 5;
 
-  static int get canceled => 6;
+//   static int get canceled => 6;
 
-  static int get downloaded => 11;
-}
+//   static int get downloaded => 11;
+// }
 
 class MezUpdateAvailability {
   MezUpdateAvailability._();
@@ -47,6 +42,9 @@ enum MezAppUpdateResult {
 
   /// Some other error prevented either the user from providing consent or the update to proceed.
   inAppUpdateFailed,
+
+  /// User got redirected to The platform Store, to manually update the app.
+  redirectedToStore
 }
 
 class MezInAppUpdate {
@@ -68,7 +66,6 @@ class MezInAppUpdate {
       result['availableVersionCode'],
       result['installStatus'],
       result['packageName'],
-      // packageName,
       result['clientVersionStalenessDays'],
       result['updatePriority'],
     );
@@ -117,7 +114,7 @@ class MezInAppUpdate {
   /// Installs the update downloaded via [startFlexibleUpdate].
   /// [startFlexibleUpdate] has to be completed successfully.
   static Future<void> completeFlexibleUpdate() async {
-    return await _channel.invokeMethod('completeFlexibleUpdate');
+    return _channel.invokeMethod('completeFlexibleUpdate');
   }
 }
 

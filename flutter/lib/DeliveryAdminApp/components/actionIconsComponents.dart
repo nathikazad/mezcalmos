@@ -5,7 +5,6 @@ import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-
 enum ButtonColorType { ButtonLightColor, ButtonDarkColor }
 LinearGradient gradientLightColor = LinearGradient(
   begin: Alignment(0.1689453125, 0),

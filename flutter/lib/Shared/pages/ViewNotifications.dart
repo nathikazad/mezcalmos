@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
-["ViewNotifications"];
+    ["ViewNotifications"];
 
 class ViewNotifications extends StatefulWidget {
   ViewNotifications({Key? key}) : super(key: key);
@@ -128,10 +128,8 @@ class ClearNotifButton extends StatelessWidget {
                   iconSize: 20,
                   onPressed: () async {
                     YesNoDialogButton yesNoRes = await cancelAlertDialog(
-                        title:
-                            "${_i18n()["alertClearNotificationTitle"]}",
-                        body:
-                            "${_i18n()["alertClearNotificationTitle"]}",
+                        title: "${_i18n()["alertClearNotificationTitle"]}",
+                        body: "${_i18n()["alertClearNotificationTitle"]}",
                         icon: Container(
                           child: Icon(
                             Icons.highlight_off,

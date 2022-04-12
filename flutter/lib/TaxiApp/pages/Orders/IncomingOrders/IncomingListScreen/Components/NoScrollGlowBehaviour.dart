@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart'
-    show mezDbgPrint;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart' show mezDbgPrint;
 
 class NoScrollGlowBehaviour extends ScrollBehavior {
   String? testCaller = null;

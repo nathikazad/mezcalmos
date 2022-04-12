@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
+// ignore: constant_identifier_names
 enum DropDownResult { Null, String }
 
 class ViewCartScreen extends StatefulWidget {

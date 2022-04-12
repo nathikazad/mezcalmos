@@ -10,8 +10,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 const mypadding = EdgeInsets.only(left: 15, right: 15);
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
-["AuthScreens"]["SMS"]["PhoneNumberScreen"];
-
+    ["AuthScreens"]["SMS"]["PhoneNumberScreen"];
 
 class PhoneNumberScreen extends StatefulWidget {
   @override
