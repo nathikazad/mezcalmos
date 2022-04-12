@@ -7,18 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:shimmer/shimmer.dart';
 
-class OrderCard extends StatelessWidget {
-  const OrderCard({
+class LaundryOpOrderCard extends StatelessWidget {
+  const LaundryOpOrderCard({
     Key? key,
-    required this.textTheme,
   }) : super(key: key);
-
-  final TextTheme textTheme;
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
-      // height: 86,
       margin: const EdgeInsets.symmetric(vertical: 10),
       padding: const EdgeInsetsDirectional.only(
         start: 10,
@@ -35,7 +32,7 @@ class OrderCard extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              _OrderImage(),
+              _orderImageComponent(),
               const SizedBox(width: 24),
               Expanded(
                 child: Column(
@@ -94,48 +91,43 @@ class OrderCard extends StatelessWidget {
   }
 }
 
-class _OrderImage extends StatelessWidget {
-  const _OrderImage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    const double imageSize = 46;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(5),
-      child: CachedNetworkImage(
-        imageUrl: '',
-        fit: BoxFit.fill,
-        placeholder: (_, __) {
-          return Shimmer.fromColors(
-            child: Container(
-              color: Colors.grey,
+Widget _orderImageComponent() {
+  const double imageSize = 46;
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(5),
+    child: CachedNetworkImage(
+      imageUrl: '',
+      fit: BoxFit.fill,
+      placeholder: (_, __) {
+        return Shimmer.fromColors(
+          child: Container(
+            color: Colors.grey,
+          ),
+          highlightColor: Colors.grey[400]!,
+          baseColor: Colors.grey[300]!,
+          direction: ShimmerDirection.ltr,
+          period: const Duration(seconds: 1),
+        );
+      },
+      errorWidget: (_, __, ___) {
+        return Container(
+          height: imageSize,
+          width: imageSize,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: keyAppColor,
+            shape: BoxShape.circle,
+          ),
+          child: Text(
+            'C n'.toUpperCase(),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
             ),
-            highlightColor: Colors.grey[400]!,
-            baseColor: Colors.grey[300]!,
-            direction: ShimmerDirection.ltr,
-            period: const Duration(seconds: 1),
-          );
-        },
-        errorWidget: (_, __, ___) {
-          return Container(
-            height: imageSize,
-            width: imageSize,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: keyAppColor,
-              shape: BoxShape.circle,
-            ),
-            child: Text(
-              'C n'.toUpperCase(),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
+          ),
+        );
+      },
+    ),
+  );
 }

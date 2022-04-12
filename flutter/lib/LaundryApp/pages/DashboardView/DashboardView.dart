@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/LaundryApp/pages/DashboardView/CategoryView/LaundryOpCategoriesView.dart';
 import 'package:mezcalmos/LaundryApp/pages/DashboardView/InfoView/LaundryOpInfoView.dart';
 import 'package:mezcalmos/LaundryApp/pages/DashboardView/OrdersListView/LaundryOpOrdersListView.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -35,8 +34,8 @@ class _DashboardViewState extends State<DashboardView> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
                 icon: Icon(Icons.timelapse), label: 'Orders'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.local_laundry_service), label: 'Categories'),
+            // BottomNavigationBarItem(
+            //     icon: Icon(Icons.local_laundry_service), label: 'Categories'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Info'),
           ]),
     );
@@ -47,8 +46,6 @@ class _DashboardViewState extends State<DashboardView> {
       case 0:
         return LaundryOpOrdersListView();
       case 1:
-        return LaundryOpCategoriesView();
-      case 2:
         return LaundryOpInfoView();
 
       default:

@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
+import 'package:mezcalmos/LaundryApp/pages/DashboardView/OrdersListView/components/LaundryOpOrderCard.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/LaundryApp/pages/DashboardView/OrdersListView/components/OrderCard.dart';
 
 class LaundryOpOrdersListView extends StatefulWidget {
   const LaundryOpOrdersListView({Key? key}) : super(key: key);
@@ -54,21 +54,33 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Scrollbar(
       child: ListView(
-        padding: const EdgeInsets.all(26),
+        padding: const EdgeInsets.all(10),
         children: <Widget>[
           Text(
-            "My Orders",
-            style: textTheme.headline3,
+            "Current  Orders",
+            style: textTheme.bodyText1,
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 5),
           ListView.builder(
             shrinkWrap: true,
-            itemCount: 20,
+            itemCount: 2,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (_, int index) {
-              return OrderCard(
-                textTheme: textTheme,
-              );
+              return LaundryOpOrderCard();
+            },
+          ),
+          Divider(),
+          Text(
+            "Past  Orders",
+            style: textTheme.bodyText1,
+          ),
+          const SizedBox(height: 5),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: 5,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (_, int index) {
+              return LaundryOpOrderCard();
             },
           ),
         ],
