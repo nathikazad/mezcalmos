@@ -32,8 +32,6 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sizer/sizer.dart' as Sizer;
 
-import 'controllers/appVersionController.dart';
-
 final ThemeData _defaultAppTheme = ThemeData(
   primaryColor: Colors.white,
   visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -159,11 +157,6 @@ class _StartingPointState extends State<StartingPoint> {
 
       hookOnFlutterErrorsStdout();
       mezDbgPrint("Done : hookOnFlutterErrorsStdout");
-
-      /// AppVersionController
-      final AppVersionController _appVersionController =
-          Get.put<AppVersionController>(AppVersionController());
-      _appVersionController.initTheNewVersion();
 
       setState(() => _initialized = true);
       mezDbgPrint("_initialized Set to : $_initialized");

@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,10 +7,12 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/AppUpdate.dart';
+import 'package:mezcalmos/Shared/helpers/MezUpdateHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgraderWidget.dart';
+import 'package:new_version/new_version.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -20,66 +22,95 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
   AuthController authController = Get.find<AuthController>();
-  // AppVersionController _appVersionController = Get.find<AppVersionController>();
-
+  late AppVersionController _appVersionController;
   late bool databaseUserLastSnapshot;
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   void initState() {
-    Future.delayed(Duration.zero, () {
+    // Create instance of our appVersionController.
+    _appVersionController =
+        AppVersionController(onNewUpdateAvailable: _onNewUpdateAvailable);
+
+    Future<void>.microtask(() {
       handleAuthStateChange(Get.find<AuthController>().fireAuthUser);
       Get.find<AuthController>().authStateStream.listen((user) {
         handleAuthStateChange(user);
       });
-      // handleAppVersionUpdatesAndStartListener();
+      // init appVersionController.
+      _appVersionController.init();
     });
     super.initState();
   }
 
-  /// This parts Checks the snapshot at [AppVersionController.isNewVersionOut] if it is not null
-  ///
-  /// and then start a listener in case there there is updates.
-  // void handleAppVersionUpdatesAndStartListener() {
-  //   // first we check the snapshot
-  //   checkIfNotInUpdateScreenAndPush(_appVersionController.appVersionInfos.value)
-  //       .then((_) {
-  //     // this listenr is distinct by the way.
-  // _appVersionController.needsUpdate.stream.listen((UpdateType hasUpdate) {
+  @override
+  void dispose() {
+    _appVersionController.dispose();
+    super.dispose();
+  }
 
-  // if hasUpdate != UpdateType.Major:
-
-  // pushToRoute (flullScreen) - force the user to stay there
-  // alertDialog -> minor / patches
-  //}) ;
-  //       await checkIfNotInUpdateScreenAndPush(updateType);
-  //     });
-  //   });
-  // }
-
-  Future<void> checkIfNotInUpdateScreenAndPush(
-      AppUpdate? appVersionInfos) async {
-    bool _diff = appVersionInfos?.areLocalAndRemoteVersionsDiffrent() == true;
-    if (Get.currentRoute == kAppNeedsUpdate && !_diff) {
-      Get.back();
-    } else if (Get.currentRoute != kAppNeedsUpdate && _diff) {
-      await Get.toNamed(kAppNeedsUpdate);
+  /// Called each time there is a new update.
+  void _onNewUpdateAvailable(UpdateType updateType, VersionStatus status) {
+    switch (updateType) {
+      case UpdateType.Major:
+        Get.toNamed<void>(
+          kAppNeedsUpdate,
+          arguments: <String, dynamic>{
+            "updateType": updateType,
+            "versionStatus": status,
+          },
+        );
+        break;
+      case UpdateType.Minor:
+        if (Platform.isAndroid) {
+          Get.toNamed<void>(
+            kAppNeedsUpdate,
+            arguments: <String, dynamic>{
+              "updateType": updateType,
+              "versionStatus": status,
+            },
+          );
+        } else if (Platform.isIOS) {
+          MezUpgrade.show(
+            releaseNotes: status.releaseNotes!,
+            appName: getAppName(),
+            packageName: getPackageName()!,
+            currentAppStoreVersion: status.storeVersion,
+            currentInstalledVersion: status.localVersion,
+          );
+        }
+        break;
+      case UpdateType.Patches:
+        if (Platform.isIOS) {
+          MezUpgrade.show(
+            releaseNotes: status.releaseNotes!,
+            appName: getAppName(),
+            packageName: getPackageName()!,
+            currentAppStoreVersion: status.storeVersion,
+            currentInstalledVersion: status.localVersion,
+          );
+        } else if (Platform.isAndroid) {
+          MezInAppUpdate.completeFlexibleUpdate().then((_) {
+            debugPrint("Success!");
+          }).catchError((Object? e) {
+            debugPrint("Error:completeFlexibleUpdate ${e.toString()}");
+          });
+        }
+        break;
+      case UpdateType.Null:
+      default:
     }
   }
 
-  void handleAuthStateChange(fireAuth.User? user) async {
+  void handleAuthStateChange(fireAuth.User? user) {
     // We should Priotorize the AppNeedsUpdate route to force users to update
     if (Get.currentRoute != kAppNeedsUpdate) {
       if (user == null) {
         if (AppType.CustomerApp == settingsController.appType) {
           // if (Get.currentRoute != kSignInRouteOptional) {
-          Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+          Get.offNamedUntil<void>(
+              kHomeRoute, ModalRoute.withName(kWrapperRoute));
         } else {
-          Get.offNamedUntil(
+          Get.offNamedUntil<void>(
               kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
         }
       } else {
@@ -138,9 +169,9 @@ class _WrapperState extends State<Wrapper> {
 
   void checkIfSignInRouteOrRedirectToHome() {
     if (Get.currentRoute == kSignInRouteOptional) {
-      Get.back();
+      Get.back<void>();
     } else {
-      Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      Get.offNamedUntil<void>(kHomeRoute, ModalRoute.withName(kWrapperRoute));
     }
   }
 
