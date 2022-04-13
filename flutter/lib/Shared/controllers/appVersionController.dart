@@ -20,7 +20,7 @@ class VersionSplit {
     required this.patches,
   });
 
-  UpdateType compareSplitVersions({
+  UpdateType compareVersions({
     required VersionSplit versionToCompare,
   }) {
     if (major != versionToCompare.major) {
@@ -75,23 +75,43 @@ typedef void OnNewUpdateAvailable(
 
 class AppVersionController {
   Timer? _versionPeriodicTimer;
-  final OnNewUpdateAvailable onNewUpdateAvailable;
+  late final OnNewUpdateAvailable onNewUpdateAvailable;
+// this is tom implement singleton instead of using GetxController just to use Get.find ..
+  static AppVersionController? _instance;
+  // AppVersionController({required this.onNewUpdateAvailable});
+  AppVersionController._internal();
 
-  AppVersionController({required this.onNewUpdateAvailable});
+  /// This is a Singleton Class, Basically upon a first-time Instanciation, onNewUpdateAvailable is required,
+  ///
+  /// if AppVersionController have never been instanciated before, and onNewUpdateAvailable was null, An assertion error will be thrown.
+  ///
+  /// In case AppVersionController was already Instanciated before, you dont have to pass onNewUpdateAvailable.
+  static AppVersionController instance({
+    OnNewUpdateAvailable? onNewUpdateAvailable,
+  }) {
+    if (_instance == null) {
+      assert(onNewUpdateAvailable != null);
+      _instance = AppVersionController._internal();
+      _instance!.onNewUpdateAvailable = onNewUpdateAvailable!;
+    }
+    return _instance!;
+  }
 
   /// This init the controller flow, by setting a 3h periodic timer that checks for new version availabality.
   void init({Duration autoUpdatesCheckerDuration = const Duration(hours: 3)}) {
+    // to avoid Multi '_checkForNewUpdates' Execution.
+    assert(autoUpdatesCheckerDuration.inMinutes > 20);
     // call Asyncronously first then start timer
     _checkForNewUpdates();
 
     /// init timer - check each 3 hours
     _versionPeriodicTimer = Timer.periodic(
       autoUpdatesCheckerDuration,
-      (Timer _t) async {
+      (Timer _t) {
         if (_versionPeriodicTimer == null) {
           _t.cancel();
         }
-        await _checkForNewUpdates();
+        _checkForNewUpdates();
         // execute the callback.
       },
     );
@@ -117,30 +137,18 @@ class AppVersionController {
       debugPrint('storeVersion: ${status.storeVersion}');
       debugPrint('canUpdate ${status.canUpdate.toString()}');
 
-      // To Know if we can let the user back to the home screen
-      // checkUpdateResult.value = true;
-
       // localVersion
       final VersionSplit _localVersion = VersionSplit.split(
         stringToSplit: status.localVersion,
       );
 
       // Compare split versions
-      _updateType = _localVersion.compareSplitVersions(
+      _updateType = _localVersion.compareVersions(
         versionToCompare: VersionSplit.split(
           stringToSplit: status.storeVersion,
         ),
       );
 
-      // Check update type
-      // processUpdateType(
-      //   updateType: _updateType,
-      //   releaseNotes: "${status.releaseNotes}",
-      //   appName: getAppName(),
-      //   packageName: getPackageName()!,
-      //   currentInstalledVersion: '${status.localVersion}',
-      //   currentAppStoreVersion: '${status.storeVersion}',
-      // );
       if (_updateType != UpdateType.Null) {
         // we make sure to set this to true.
         onNewUpdateAvailable.call(_updateType, status);
@@ -149,23 +157,17 @@ class AppVersionController {
   }
 
   /// Returns bool. if the user canUpdate return true, otherwise return false;
-
   Future<MezAppUpdateResult?> startAppUpdate(UpdateType updateType) async {
     if (Platform.isAndroid) {
       MezAppUpdateResult? _appUpdateResult;
 
       /// checkForUpdate and get appVersionInfo...
-      MezAppUpdateInfo? _versionInfos = await _getNewVersionInfos();
+      final MezAppUpdateInfo? _versionInfos = await _getNewVersionInfos();
 
       if (_versionInfos != null &&
           _versionInfos.updateAvailability ==
               MezUpdateAvailability.updateAvailable) {
-        /// A new version is being downloaded
         if (updateType == UpdateType.Major) {
-          /// Downloading....
-          /// Perform immediate update
-          // isDownloading.value = true;
-          //isDownloading.refresh();
           try {
             _appUpdateResult = await MezInAppUpdate.performImmediateUpdate();
           } catch (e) {
@@ -176,17 +178,7 @@ class AppVersionController {
               backgroundColor: Colors.grey[300],
             );
           }
-
-          // isDownloading.value = false;
-          //isDownloading.refresh();
-          // debugPrint('isDownloading.value ${isDownloading.value}');
         } else if (updateType == UpdateType.Minor) {
-          /// Downloading....
-          /// Start flexible update
-          // isDownloading.value = true;
-          // startFlexibleUpdate.value = true;
-          //isDownloading.refresh();
-
           try {
             _appUpdateResult = await MezInAppUpdate.startFlexibleUpdate();
           } catch (e) {
@@ -197,39 +189,15 @@ class AppVersionController {
               backgroundColor: Colors.grey[300],
             );
           }
-
-          // isDownloading.value = false;
-          //isDownloading.refresh();
-          // startFlexibleUpdate.value = false;
         }
-
-        /// check App Info Result To Force Update
-        // checkUpdateResult.value = _checkAppInfoResultToForceUpdate();
         return _appUpdateResult;
       }
     } else if (Platform.isIOS) {
-      /// Update Type is Major 100%,
-      /// We check the update type is Platform.isIOS and UpdateType,Major. then navigate to this route.
-      /// Navigate to app store and get the result
-      ///
       await StoreRedirect.redirect(
         iOSAppId: getPackageName(platform: MezPlatform.IOS),
       );
 
       return MezAppUpdateResult.redirectedToStore;
-
-      /// Returns bool. if the user canUpdate return true, otherwise return false;
-      //   final bool canUpdate = await checkForNewUpdates();
-      //   if (canUpdate) {
-      //     Get.snackbar(
-      //       'Attention!',
-      //       'There is a new version. Please make sure to update the app',
-      //     );
-      //   } else {
-      //     /// Now we can let the user back to the home screen!
-      //     checkUpdateResult.value = false;
-      //   }
-      // });
     }
     return null;
   }
@@ -252,27 +220,6 @@ class AppVersionController {
       return null;
     }
   }
-
-  // bool _checkAppInfoResultToForceUpdate(MezAppUpdateResult result) {
-  //   if (Platform.isAndroid) {
-  //     bool updated = false;
-  //     switch (result) {
-  //       case MezAppUpdateResult.success:
-  //         updated = true;
-  //         break;
-  //       case MezAppUpdateResult.userDeniedUpdate:
-  //       case MezAppUpdateResult.inAppUpdateFailed:
-  //         updated = false;
-  //     }
-  //     if (updateType.value == UpdateType.Major) {
-  //       return !updated;
-  //     } else if (updateType.value == UpdateType.Minor) {
-  //       return !(startFlexibleUpdate.value && updated);
-  //     }
-  //   }
-
-  //   return false;
-  // }
 
   void dispose() {
     _versionPeriodicTimer?.cancel();

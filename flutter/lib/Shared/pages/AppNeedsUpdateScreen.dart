@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/helpers/MezUpdateHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:new_version/new_version.dart';
 import 'package:store_redirect/store_redirect.dart';
@@ -17,11 +19,12 @@ class AppNeedsUpdated extends StatefulWidget {
 }
 
 class _AppNeedsUpdatedState extends State<AppNeedsUpdated> {
-  final AppVersionController _controller = Get.find<AppVersionController>();
-  MezAppUpdateResult? _results;
+  final AppVersionController _controller = AppVersionController.instance();
+  // Rxn<MezAppUpdateResult> _results = Rxn<MezAppUpdateResult>();
   RxBool _isDownloading = false.obs;
   UpdateType _updateType = UpdateType.Null;
   VersionStatus? _versionStatus;
+  String? _iosAppleAppIdSnapshot;
 
   @override
   void initState() {
@@ -32,63 +35,58 @@ class _AppNeedsUpdatedState extends State<AppNeedsUpdated> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      floatingActionButton: _floatingActionBtn(),
-      appBar: mezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        onClick: _results != MezAppUpdateResult.success ? null : Get.back,
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Flex(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            direction: Axis.vertical,
-            children: <Widget>[
-              Flexible(
-                flex: 2,
-                child: Container(
-                  child: Image.asset(
-                    aUpdate,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30),
-              Flexible(
-                flex: 1,
-                child: Obx(
-                  () {
-                    if (_versionStatus != null) {
-                      return Text(
-                        "New version ${_versionStatus?.storeVersion} is out!", //remoteVersion
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              fontSize: 18,
-                              color: Colors.purple.shade900,
-                            ),
-                      );
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
-              ),
-              //if (_controller.appVersionInfo.value?.updateNews != null)
-              Flexible(
-                flex: Platform.isAndroid ? 3 : 2,
-                child: Platform.isAndroid
-                    ? _androidUpdateInfosAndButton()
-                    : _iosUpdateInfos(context),
-              ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        floatingActionButton: _floatingActionBtn(),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back),
+        body: Center(
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Obx(
+                () => Flex(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  direction: Axis.vertical,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 2,
+                      child: Container(
+                        child: Image.asset(
+                          aUpdate,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    if (_versionStatus != null)
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          "New version ${_versionStatus?.storeVersion} is out!", //remoteVersion
+                          textAlign: TextAlign.center,
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontSize: 18,
+                                    color: Colors.purple.shade900,
+                                  ),
+                        ),
+                      ),
+                    //if (_controller.appVersionInfo.value?.updateNews != null)
+                    Flexible(
+                      flex: Platform.isAndroid ? 3 : 2,
+                      child: Platform.isAndroid
+                          ? _androidUpdateInfosAndButton()
+                          : _iosUpdateInfos(context),
+                    ),
 
-              isDownloadInProgress(context),
+                    isDownloadInProgress(context),
 
-              //else
-            ],
-          ),
+                    //else
+                  ],
+                ),
+              )),
         ),
       ),
     );
@@ -104,9 +102,16 @@ class _AppNeedsUpdatedState extends State<AppNeedsUpdated> {
             splashColor: Colors.white,
             foregroundColor: Colors.purple.shade400,
             backgroundColor: Colors.white,
-            onPressed: () {
+            onPressed: () async {
+              _iosAppleAppIdSnapshot ??=
+                  await MethodChannel('penf00k.ru/env_native')
+                      .invokeMethod<String?>('getString', 'MezAppleAppId');
+
+              mezDbgPrint(
+                "[BundleID] => ${getPackageName(platform: MezPlatform.IOS)} | [ID] => $_iosAppleAppIdSnapshot",
+              );
+              // ignore: unawaited_futures
               StoreRedirect.redirect(
-                androidAppId: getPackageName(platform: MezPlatform.ANDROID),
                 iOSAppId: getPackageName(platform: MezPlatform.IOS),
               );
             },
@@ -114,22 +119,20 @@ class _AppNeedsUpdatedState extends State<AppNeedsUpdated> {
           );
   }
 
-  Obx isDownloadInProgress(BuildContext context) {
-    return Obx(
-      () => Flexible(
-        flex: 1,
-        child: _isDownloading.value
-            ? Text(
-                "A new version is being downloaded...",
-                //remoteVersion
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      fontSize: 16,
-                      color: Colors.purple.shade900,
-                    ),
-              )
-            : const SizedBox.shrink(),
-      ),
+  Flexible isDownloadInProgress(BuildContext context) {
+    return Flexible(
+      flex: 1,
+      child: _isDownloading.value
+          ? Text(
+              "A new version is being downloaded...",
+              //remoteVersion
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    fontSize: 16,
+                    color: Colors.purple.shade900,
+                  ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 
@@ -163,23 +166,12 @@ class _AppNeedsUpdatedState extends State<AppNeedsUpdated> {
   Column _androidUpdateInfosAndButton() {
     return Column(
       children: <Widget>[
-        Obx(
-          () {
-            if (_versionStatus != null) {
-              return Column(
-                children: <Widget>[
-                  Center(
-                    child: Text(
-                      'Update info: ${_versionStatus.toString()}',
-                    ),
-                  ),
-                ],
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
-          },
-        ),
+        if (_versionStatus != null)
+          Center(
+            child: Text(
+              'Update info: ${_versionStatus.toString()}',
+            ),
+          ),
         const SizedBox(height: 26),
         ElevatedButton(
           child: Text('Update'),
@@ -204,10 +196,10 @@ class _AppNeedsUpdatedState extends State<AppNeedsUpdated> {
   void _handleUpdateResults(MezAppUpdateResult? _result) {
     switch (_result) {
       case MezAppUpdateResult.success:
-        // TODO : reopen app
+        // TODO : reopen app.
         break;
       case MezAppUpdateResult.inAppUpdateFailed:
-      //
+
       case MezAppUpdateResult.redirectedToStore:
       case MezAppUpdateResult.userDeniedUpdate:
       default:

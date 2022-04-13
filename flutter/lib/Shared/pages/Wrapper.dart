@@ -27,18 +27,20 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   void initState() {
-    // Create instance of our appVersionController.
-    _appVersionController =
-        AppVersionController(onNewUpdateAvailable: _onNewUpdateAvailable);
+    // Create instance of our Singleton AappVersionController class.
+    _appVersionController = AppVersionController.instance(
+      onNewUpdateAvailable: _onNewUpdateAvailable,
+    );
 
     Future<void>.microtask(() {
-      handleAuthStateChange(Get.find<AuthController>().fireAuthUser);
-      Get.find<AuthController>().authStateStream.listen((user) {
+      handleAuthStateChange(authController.fireAuthUser);
+      authController.authStateStream.listen((user) {
         handleAuthStateChange(user);
       });
-      // init appVersionController.
-      _appVersionController.init();
     });
+    // Delayed init of the appVersionController - that way we make sure that the NavigationStack is correct,
+    // Which makes it easy for us to push NeedUpdateScreen on top in case there is update.
+    Future<void>.delayed(Duration(seconds: 5), _appVersionController.init);
     super.initState();
   }
 
