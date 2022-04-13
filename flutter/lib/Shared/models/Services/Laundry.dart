@@ -34,11 +34,11 @@ class Laundry extends Service {
 
     final LaundryCosts laundryCosts =
         LaundryCosts.fromData(laundryData["details"]["costs"]);
-      
+
     final LanguageType primaryLanguage =
-        laundryData["details"]["language"]["first"] ?? LanguageType.ES;
+        laundryData["details"]?["language"]?["first"] ?? LanguageType.ES;
     final LanguageType secondaryLanguage =
-        laundryData["details"]["language"]["second"] ?? LanguageType.ES;
+        laundryData["details"]?["language"]?["second"] ?? LanguageType.ES;
 
     final Laundry laundry = Laundry(
         userInfo: ServiceUserInfo.fromData(laundryData["info"]),
