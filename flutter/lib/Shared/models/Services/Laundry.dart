@@ -5,11 +5,15 @@ import 'package:mezcalmos/Shared/models/Services/Service.dart';
 
 class Laundry extends Service {
   LaundryCosts laundryCosts;
+  LanguageType primaryLanguage;
+  LanguageType? secondaryLanguage;
   Laundry(
       {required ServiceUserInfo userInfo,
       required Schedule schedule,
       required ServiceState laundryState,
-      required this.laundryCosts})
+      required this.laundryCosts,
+      required this.primaryLanguage,
+      this.secondaryLanguage})
       : super(info: userInfo, schedule: schedule, state: laundryState);
 
   factory Laundry.fromLaundryData(
@@ -30,12 +34,19 @@ class Laundry extends Service {
 
     final LaundryCosts laundryCosts =
         LaundryCosts.fromData(laundryData["details"]["costs"]);
+      
+    final LanguageType primaryLanguage =
+        laundryData["details"]["language"]["first"] ?? LanguageType.ES;
+    final LanguageType secondaryLanguage =
+        laundryData["details"]["language"]["second"] ?? LanguageType.ES;
 
     final Laundry laundry = Laundry(
         userInfo: ServiceUserInfo.fromData(laundryData["info"]),
         schedule: schedule,
         laundryState: laundryState,
-        laundryCosts: laundryCosts);
+        laundryCosts: laundryCosts,
+        primaryLanguage: primaryLanguage,
+        secondaryLanguage: secondaryLanguage);
     return laundry;
   }
 

@@ -28,6 +28,14 @@ class OpenHours {
   List<int> from;
   List<int> to;
   OpenHours(this.isOpen, this.from, this.to);
+
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "from": from.join(":"),
+      "to": to.join(":"),
+      "isOpen": isOpen
+    };
+  }
 }
 
 class Schedule {
@@ -72,6 +80,15 @@ class Schedule {
         now.minute > todayHours.from[0] &&
         now.hour < todayHours.to[0] &&
         now.minute < todayHours.to[0]);
+  }
+
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    Map<String, dynamic> json = <String, dynamic>{};
+    Weekday.values.forEach((weekday) {
+      json[weekday.toFirebaseFormatString()] =
+          _openHours[weekday]?.toFirebaseFormattedJson();
+    });
+    return json;
   }
 }
 
