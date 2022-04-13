@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -22,31 +23,34 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
   AuthController authController = Get.find<AuthController>();
-  late AppVersionController _appVersionController;
+  AppVersionController? _appVersionController;
   late bool databaseUserLastSnapshot;
 
   @override
   void initState() {
-    // Create instance of our Singleton AappVersionController class.
-    _appVersionController = AppVersionController.instance(
-      onNewUpdateAvailable: _onNewUpdateAvailable,
-    );
-
+    if (GetStorage().read<String>(getxLmodeKey) == "prod") {
+      // Create instance of our Singleton AappVersionController class.
+      _appVersionController = AppVersionController.instance(
+        onNewUpdateAvailable: _onNewUpdateAvailable,
+      );
+      // Delayed init of the appVersionController - that way we make sure that the NavigationStack is correct,
+      // Which makes it easy for us to push NeedUpdateScreen on top in case there is update.
+      Future<void>.delayed(Duration(seconds: 5), _appVersionController!.init);
+    }
+    // this will execute first and much faster since it's a microtask.
     Future<void>.microtask(() {
       handleAuthStateChange(authController.fireAuthUser);
       authController.authStateStream.listen((user) {
         handleAuthStateChange(user);
       });
     });
-    // Delayed init of the appVersionController - that way we make sure that the NavigationStack is correct,
-    // Which makes it easy for us to push NeedUpdateScreen on top in case there is update.
-    Future<void>.delayed(Duration(seconds: 5), _appVersionController.init);
+
     super.initState();
   }
 
   @override
   void dispose() {
-    _appVersionController.dispose();
+    _appVersionController?.dispose();
     super.dispose();
   }
 

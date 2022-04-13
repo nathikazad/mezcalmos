@@ -23,6 +23,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
@@ -225,6 +226,10 @@ class _StartingPointState extends State<StartingPoint> {
       mezDbgPrint("[ GET STORAGE ] version number ${pInfos.version}");
       await GetStorage().write(getxPackageName, pInfos.packageName);
       await GetStorage().write(getxAppName, pInfos.appName);
+      // We need appStoreId only in prod mode and ios platforms.
+      if (Platform.isIOS && _launchMode == "prod") {
+        await setupIosAppStoreId(pInfos.appName);
+      }
       await GetStorage().write(getxAppVersion, pInfos.version);
       await GetStorage().write(getxGmapBottomPaddingKey,
           Platform.isAndroid ? 38.0.sp : Get.height / 35);
@@ -278,6 +283,18 @@ class _StartingPointState extends State<StartingPoint> {
         await GetStorage()
             .write(getxPrivacyPolicyLink, sPrivacyPolicyCustomerApp);
     }
+  }
+
+  Future<void> setupIosAppStoreId(String appName) async {
+    String? res = (await Get.find<FirebaseDb>()
+            .firebaseDatabase
+            .reference()
+            .child(appStoreIdNode(appName))
+            .once())
+        .value
+        .toString();
+    mezDbgPrint("Got setupIosAppStoreId @ ==> $res");
+    await GetStorage().write(getxAppStoreId, res);
   }
 
   Widget mainApp({

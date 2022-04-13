@@ -71,7 +71,7 @@ void popUntilAndNavigateTo(
 class SharedRouter {
   static List<GetPage> sharedRoutes = [
     GetPage(name: kUserProfile, page: () => UserProfile()),
-    GetPage(name: kAppNeedsUpdate, page: () => AppNeedsUpdated()),
+    GetPage(name: kAppNeedsUpdate, page: () => AppNeedsUpdateScreen()),
     GetPage(name: kWrapperRoute, page: () => Wrapper()),
     GetPage(name: kSplashRoute, page: () => SplashScreen()),
     GetPage(

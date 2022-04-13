@@ -56,6 +56,7 @@ const String getxUserId = "userid";
 const String getxAppVersion = "version";
 const String getxAppName = "appName";
 const String getxPackageName = "packageName";
+const String getxAppStoreId = "iosAppStoreId";
 const String defaultUserImgUrl =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
 

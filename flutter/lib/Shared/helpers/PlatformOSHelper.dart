@@ -9,6 +9,14 @@ extension PlateformString on MezPlatform {
   String toShortString() => toString().toLowerCase().split('.').last;
 }
 
+/// FOR IOS - PROD - to get the save
+String? getAppStoreId() {
+  if (Platform.isIOS && GetStorage().read<String>(getxLmodeKey) == "prod") {
+    return GetStorage().read<String?>(getxAppStoreId);
+  }
+  return null;
+}
+
 MezPlatform getPlatformType() {
   if (Platform.isAndroid) {
     return MezPlatform.ANDROID;

@@ -11,14 +11,14 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:new_version/new_version.dart';
 import 'package:store_redirect/store_redirect.dart';
 
-class AppNeedsUpdated extends StatefulWidget {
-  const AppNeedsUpdated({Key? key}) : super(key: key);
+class AppNeedsUpdateScreen extends StatefulWidget {
+  const AppNeedsUpdateScreen({Key? key}) : super(key: key);
 
   @override
-  State<AppNeedsUpdated> createState() => _AppNeedsUpdatedState();
+  State<AppNeedsUpdateScreen> createState() => _AppNeedsUpdateScreenState();
 }
 
-class _AppNeedsUpdatedState extends State<AppNeedsUpdated> {
+class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
   final AppVersionController _controller = AppVersionController.instance();
   // Rxn<MezAppUpdateResult> _results = Rxn<MezAppUpdateResult>();
   RxBool _isDownloading = false.obs;
