@@ -5,15 +5,19 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 class LaundryInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  late String laundryId;
   Rxn<Laundry> laundry = Rxn();
   StreamSubscription? _laundryInfoListener;
   Future<void> init(String laundryId) async {
+    this.laundryId = laundryId;
     mezDbgPrint(
         "--------------------> Start listening service providers info  ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: laundryId)}");
     await _laundryInfoListener?.cancel();
@@ -34,7 +38,37 @@ class LaundryInfoController extends GetxController {
     });
   }
 
-  void setSchedule(Schedule schedule) {}
+  Future<void> setSchedule(Schedule schedule) {
+    return _databaseHelper.firebaseDatabase
+        .reference()
+        .child(serviceProviderPrimaryLanguage(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(schedule.toFirebaseFormattedJson());
+  }
+
+  Future<void> setPrimaryLanguage(LanguageType lang) {
+    return _databaseHelper.firebaseDatabase
+        .reference()
+        .child(serviceProviderPrimaryLanguage(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(lang.toFirebaseFormatString());
+  }
+
+  Future<void> setSecondaryLanguage(LanguageType lang) {
+    return _databaseHelper.firebaseDatabase
+        .reference()
+        .child(serviceProviderSecondaryLanguage(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(lang.toFirebaseFormatString());
+  }
+
+  Future<void> setLocation(Location loc) {
+    return _databaseHelper.firebaseDatabase
+        .reference()
+        .child(serviceProviderLocation(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(loc.toFirebaseFormattedJson());
+  }
 
   @override
   void onClose() {
