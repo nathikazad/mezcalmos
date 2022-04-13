@@ -3,7 +3,6 @@
 * On 4/11/2022.
 */
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
@@ -37,7 +36,7 @@ class CategoryCard extends StatelessWidget {
                 TextSpan(
                   text: '${laundryCostLineItem.cost}\$ ',
                   style: textTheme.bodyText1?.copyWith(
-                    color: keyAppColor,
+                    color: Theme.of(context).primaryColorLight,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

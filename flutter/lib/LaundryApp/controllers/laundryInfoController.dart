@@ -34,7 +34,24 @@ class LaundryInfoController extends GetxController {
     });
   }
 
-  void setSchedule(Schedule schedule) {}
+  void setSchedule(Schedule newSchedule) {
+
+  }
+
+
+
+  Future<void> setLaundryName(String newName) async {
+    mezDbgPrint(
+        "------->>> ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: laundry.value!.info.id)}/name");
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(serviceProviderInfos(
+                orderType: OrderType.Laundry,
+                providerId: laundry.value!.info.id) +
+            '/info')
+        .child('name')
+        .set(newName);
+  }
 
   @override
   void onClose() {

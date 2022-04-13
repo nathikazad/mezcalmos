@@ -600,6 +600,24 @@
             }
         },
         "widgets": {
+            "MezWorkingHours": {
+                "workingHours": "Horas Laborales",
+                "weekDays": {
+                    "monday": "Lunes",
+                    "tuesday": "martes",
+                    "wednesday": "miércoles",
+                    "thursday": "jueves",
+                    "friday": "Viernes",
+                    "saturday": "sábado",
+                    "sunday": "Domingo"
+                },
+                "workingHoursCard": {
+                    "open": "Abierto",
+                    "closed": "Cerrada"
+                }
+            },
+
+
             "LocationSearchComponent": {
                 "address": "Ingresa Dirección"
             },

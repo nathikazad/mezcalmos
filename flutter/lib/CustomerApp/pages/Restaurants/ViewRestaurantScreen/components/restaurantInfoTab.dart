@@ -69,7 +69,7 @@ class RestaurantInfoTab extends StatelessWidget {
   }
 
   Widget getWorkingHoursWidget(Schedule? schedule, BuildContext context) {
-    var xDate = DateTime.now();
+   var xDate = DateTime.now();
     List<Widget> widgets = [
       Container(
         alignment: Alignment.centerLeft,
