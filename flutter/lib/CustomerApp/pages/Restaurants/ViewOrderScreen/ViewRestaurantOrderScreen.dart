@@ -8,7 +8,9 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 import 'components/OrderFooterCard.dart';
 import 'components/OrderStatusCard.dart';
@@ -19,9 +21,7 @@ import 'components/notesWidget.dart';
 final currency = new NumberFormat("#0", "en_US");
 ////////////===========
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
-
+    ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
   @override
@@ -33,8 +33,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   Rxn<RestaurantOrder> order = Rxn();
   OrderController controller = Get.find<OrderController>();
   RestaurantController restaurantController = Get.find<RestaurantController>();
-  StreamSubscription? _orderListener;
-
+  StreamSubscription<Order?>? _orderListener;
   bool _clickedButton = false;
 
   Future<void> onTapButtonsShowLoading(Function function) async {
@@ -73,38 +72,45 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     super.initState();
 
     String orderId = Get.parameters['orderId']!;
-    controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as RestaurantOrder?;
-    if (order.value == null) {
-      //Get.back();
-    } else {
-      if (order.value!.inProcess()) {
-        _orderListener =
-            controller.getCurrentOrderStream(orderId).listen((event) {
-          if (event != null) {
-            mezDbgPrint("===================" +
-                (event as RestaurantOrder).status.toString());
 
-            order.value = event;
-          } else {
-            _orderListener?.cancel();
-            _orderListener = null;
-            controller.getPastOrderStream(orderId).listen((event) {
-              if (event != null) {
-                mezDbgPrint("the past order is ========== $event ==========");
-                order.value = event as RestaurantOrder;
-              } else {
-                mezDbgPrint("the past order is ========== 'empty' ==========");
-              }
-            });
-            order.value = controller.getOrder(orderId) as RestaurantOrder?;
-          }
+    if (Get.parameters['orderId'] != null) {
+      orderId = Get.parameters['orderId']!;
+    } else {
+      mezDbgPrint("Order id null from the parameters ######");
+      Get.back();
+    }
+    order.value = controller.getOrder(orderId) as RestaurantOrder?;
+    _orderListener =
+        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent as RestaurantOrder?;
+      }
+    });
+
+    waitForOrderIfNotLoaded().then((void value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<Null>.delayed(Duration.zero, () {
+          Get.back<Null>();
+          MezSnackbar("Error", "Order does not exist");
         });
       }
-      //mezDbgPrint("=========> ${order.value}");
-    }
+    });
     super.initState();
   }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
+      });
+      return completer.future;
+    }
+  }
+
 
   @override
   void didUpdateWidget(ViewRestaurantOrderScreen oldWidget) {
@@ -119,8 +125,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   @override
   void dispose() {
     _orderListener?.cancel();
-    _orderListener = null;
-
     super.dispose();
   }
 
@@ -130,8 +134,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     return Scaffold(
         appBar: CustomerAppBar(
           autoBack: true,
-          title:
-              '${_i18n()["orderStatus"]}',
+          title: '${_i18n()["orderStatus"]}',
         ),
         body: Obx(
           () {
@@ -183,4 +186,3 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         ));
   }
 }
-

@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:async/async.dart' show StreamGroup;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -98,8 +98,15 @@ class OrderController extends GetxController {
     }
   }
 
-  Stream<Order?> getCurrentOrderStream(String orderId) {
-    return currentOrders.stream.map<Order?>((_) {
+  Stream<DeliverableOrder?> getOrderStream(String orderId) {
+    return StreamGroup.merge(<Stream<DeliverableOrder?>>[
+      _getInProcessOrderStream(orderId),
+      _getPastOrderStream(orderId)
+    ]);
+  }
+
+  Stream<DeliverableOrder?> _getInProcessOrderStream(String orderId) {
+    return currentOrders.stream.map<DeliverableOrder?>((_) {
       try {
         return currentOrders.firstWhere(
           (currentOrder) => currentOrder.orderId == orderId,
@@ -111,8 +118,8 @@ class OrderController extends GetxController {
     });
   }
 
-  Stream<Order?> getPastOrderStream(String orderId) {
-    return pastOrders.stream.map<Order?>((_) {
+  Stream<DeliverableOrder?> _getPastOrderStream(String orderId) {
+    return pastOrders.stream.map<DeliverableOrder?>((_) {
       try {
         return pastOrders.firstWhere(
           (pastOrder) => pastOrder.orderId == orderId,

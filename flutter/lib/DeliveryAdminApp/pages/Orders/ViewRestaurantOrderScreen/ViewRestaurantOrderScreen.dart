@@ -60,21 +60,23 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId);
-    if (order.value == null) {
-      Get.back();
-    } else {
-      _orderListener = controller
-          .getCurrentOrderStream(orderId)
-          .listen((RestaurantOrder? newOrder) {
-        if (newOrder != null) {
-          order.value = controller.getOrder(orderId);
 
-          if (order.value?.dropoffDriver != null) {
-            driver = order.value!.dropoffDriver;
-          }
-        } else {
+    order.value = controller.getOrder(orderId);
+    _orderListener = controller
+        .getOrderStream(orderId)
+        .listen((RestaurantOrder? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent;
+      }
+    });
+
+    // if order value is null and
+    if (order.value == null) {
+      Timer(Duration(seconds: 5), () {
+        if (order.value == null) {
+          // ignore: inference_failure_on_function_invocation
           Get.back();
+          MezSnackbar("Error", "Order does not exist");
         }
       });
     }

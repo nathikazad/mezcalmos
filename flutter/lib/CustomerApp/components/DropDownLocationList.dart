@@ -58,7 +58,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   }
 
   getSavedLocation() {
-    customerAuthController.customerRxn.value?.savedLocations.forEach((element) {
+    customerAuthController.customer.value?.savedLocations.forEach((element) {
       listOfSavedLoacations.add(element);
     });
   }

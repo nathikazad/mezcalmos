@@ -4,11 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/AppUpdate.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -20,8 +17,6 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
   AuthController authController = Get.find<AuthController>();
-  // AppVersionController _appVersionController = Get.find<AppVersionController>();
-
   late bool databaseUserLastSnapshot;
 
   @override
@@ -33,68 +28,42 @@ class _WrapperState extends State<Wrapper> {
   void initState() {
     Future.delayed(Duration.zero, () {
       handleAuthStateChange(Get.find<AuthController>().fireAuthUser);
-      Get.find<AuthController>().authStateStream.listen((user) {
+      Get.find<AuthController>().authStateStream.listen((fireAuth.User? user) {
         handleAuthStateChange(user);
       });
-      // handleAppVersionUpdatesAndStartListener();
     });
     super.initState();
   }
 
-  /// This parts Checks the snapshot at [AppVersionController.isNewVersionOut] if it is not null
-  ///
-  /// and then start a listener in case there there is updates.
-  // void handleAppVersionUpdatesAndStartListener() {
-  //   // first we check the snapshot
-  //   checkIfNotInUpdateScreenAndPush(_appVersionController.appVersionInfos.value)
-  //       .then((_) {
-  //     // this listenr is distinct by the way.
-  //     _appVersionController.appVersionInfos.stream.listen((updateType) async {
-  //       await checkIfNotInUpdateScreenAndPush(updateType);
-  //     });
-  //   });
-  // }
-
-  Future<void> checkIfNotInUpdateScreenAndPush(
-      AppUpdate? appVersionInfos) async {
-    bool _diff = appVersionInfos?.areLocalAndRemoteVersionsDiffrent() == true;
-    if (Get.currentRoute == kAppNeedsUpdate && !_diff) {
-      Get.back();
-    } else if (Get.currentRoute != kAppNeedsUpdate && _diff) {
-      await Get.toNamed(kAppNeedsUpdate);
-    }
-  }
-
-  void handleAuthStateChange(fireAuth.User? user) async {
+  Future<void> handleAuthStateChange(fireAuth.User? user) async {
     // We should Priotorize the AppNeedsUpdate route to force users to update
-    if (Get.currentRoute != kAppNeedsUpdate) {
-      if (user == null) {
-        if (AppType.CustomerApp == settingsController.appType) {
-          // if (Get.currentRoute != kSignInRouteOptional) {
-          Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
-        } else {
-          Get.offNamedUntil(
-              kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
-        }
+    // if (Get.currentRoute != kAppNeedsUpdate) {
+    if (user == null) {
+      if (AppType.CustomerApp == settingsController.appType) {
+        // if (Get.currentRoute != kSignInRouteOptional) {
+        await Get.offNamedUntil<void>(
+            kHomeRoute, ModalRoute.withName(kWrapperRoute));
       } else {
-        if (Get.find<AuthController>().user != null) {
-          redirectIfUserInfosNotSet();
-        } else
-          startListeningForUserModelChanges();
+        await Get.offNamedUntil<void>(
+            kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
       }
     } else {
-      if (authController.user != null) {
-        redirectIfUserInfosNotSet();
-      } else {
-        startListeningForUserModelChanges();
-      }
+      await waitTillUserInfoLoaded();
+      redirectIfUserInfosNotSet();
     }
   }
 
-  void startListeningForUserModelChanges() {
-    Get.find<AuthController>().userInfoStream.first.then((event) {
-      redirectIfUserInfosNotSet();
-    });
+  Future<void> waitTillUserInfoLoaded() {
+    if (Get.find<AuthController>().user != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Get.find<AuthController>()
+          .userInfoStream
+          .first
+          .then((value) => completer.complete());
+      return completer.future;
+    }
   }
 
   void redirectIfUserInfosNotSet() {
@@ -132,7 +101,7 @@ class _WrapperState extends State<Wrapper> {
 
   void checkIfSignInRouteOrRedirectToHome() {
     if (Get.currentRoute == kSignInRouteOptional) {
-      Get.back();
+      Get.back<Null>();
     } else {
       Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
     }

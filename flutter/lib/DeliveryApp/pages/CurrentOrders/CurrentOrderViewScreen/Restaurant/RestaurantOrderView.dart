@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class RestaurantOrderView extends StatefulWidget {
   const RestaurantOrderView({Key? key}) : super(key: key);
@@ -35,21 +36,36 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
     final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
-    if (order.value == null) {
-      mezDbgPrint("ORDER NULL");
+    _orderListener =
+        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent;
+      }
+    });
+
+    waitForOrderIfNotLoaded().then((void value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<Null>.delayed(Duration.zero, () {
+          Get.back<Null>();
+          MezSnackbar("Error", "Order does not exist");
+        });
+      }
+    });
+  }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
     } else {
-      _orderListener =
-          controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
-        final DeliverableOrder? _order = controller.getOrder(orderId);
-        if (_order == null) {
-          Get.back<void>();
-        } else {
-          order.value = _order;
-          order.refresh();
-        }
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
       });
+      return completer.future;
     }
   }
+
 
   @override
   void dispose() {

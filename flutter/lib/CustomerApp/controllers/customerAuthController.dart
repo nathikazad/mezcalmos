@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
@@ -11,18 +12,16 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class CustomerAuthController extends GetxController {
-  Rxn<Customer> _customer = Rxn();
+  
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
-
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
 
-  Rxn<Customer> get customerRxn => _customer;
-
   bool _checkedAppVersion = false;
+  Rxn<Customer> customer = Rxn();
 
-  StreamSubscription? _customerNodeListener;
+  StreamSubscription<Event>? _customerNodeListener;
 
   @override
   void onInit() async {
@@ -39,7 +38,7 @@ class CustomerAuthController extends GetxController {
           .child(customerNode(_authController.fireAuthUser!.uid))
           .onValue
           .listen((event) async {
-        _customer.value = Customer.fromSnapshotData(event.snapshot.value);
+        customer.value = Customer.fromSnapshotData(event.snapshot.value);
 
         if (_checkedAppVersion == false) {
           String VERSION = GetStorage().read(getxAppVersion);
@@ -64,7 +63,7 @@ class CustomerAuthController extends GetxController {
           'deviceNotificationToken': deviceNotificationToken
         });
       print(
-          "/////////////////////////////////////////////${_customer.value?.toJson()}////////////////////////////////////////////////////");
+          "/////////////////////////////////////////////${customer.value?.toJson()}////////////////////////////////////////////////////");
     } else {
       mezDbgPrint("User is not signed it to init customer auth controller");
     }
@@ -96,7 +95,7 @@ class CustomerAuthController extends GetxController {
 
   Location? getLocationById(String locationId) {
     // we get the user Location by it's id!
-    return _customer.value?.savedLocations
+    return customer.value?.savedLocations
         .firstWhere((savedLocation) => savedLocation.id == locationId,
             orElse: null)
         .location;

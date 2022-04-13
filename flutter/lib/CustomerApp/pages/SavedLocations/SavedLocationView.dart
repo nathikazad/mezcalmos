@@ -38,13 +38,13 @@ class _SavedLocationViewState extends State<SavedLocationView> {
     mezDbgPrint("==============");
     setState(() {
       savedLocations.assignAll(
-          _customerAuthController.customerRxn.value?.savedLocations ?? []);
+          _customerAuthController.customer.value?.savedLocations ?? []);
     });
     mezDbgPrint("==============");
     mezDbgPrint(savedLocations);
     mezDbgPrint("==============");
     // then start a listener in case there are changes in /savedLocations db node!
-    savedLocationsStreamSub = _customerAuthController.customerRxn
+    savedLocationsStreamSub = _customerAuthController.customer
         .map<List<SavedLocation>>((customerInstance) {
       return customerInstance?.savedLocations ?? [];
     }).listen((_savedLocations) {

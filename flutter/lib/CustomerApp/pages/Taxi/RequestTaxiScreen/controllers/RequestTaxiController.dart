@@ -173,17 +173,17 @@ class RequestTaxiController {
 
   /// Call this right after customer presses Confirm button
   /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
-  Future<void> waitForCurrentOrderStreamFirstTrigger(String orderId) async {
-    if (Get.find<OrderController>().getOrder(orderId) == null) {
-      mezDbgPrint(
-          "[+] s@@d ==> [ REQUEST TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
-      await Get.find<OrderController>()
-          .getCurrentOrderStream(orderId)
-          .firstWhere((Order? order) => order != null);
-    } else
-      mezDbgPrint(
-          "[+] s@@d ==> [ REQUEST TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
-  }
+  // Future<void> waitForCurrentOrderStreamFirstTrigger(String orderId) async {
+  //   if (Get.find<OrderController>().getOrder(orderId) == null) {
+  //     mezDbgPrint(
+  //         "[+] s@@d ==> [ REQUEST TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
+  //     await Get.find<OrderController>()
+  //         ._getInProcessOrderStream(orderId)
+  //         .firstWhere((Order? order) => order != null);
+  //   } else
+  //     mezDbgPrint(
+  //         "[+] s@@d ==> [ REQUEST TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
+  // }
 
   /// after confirm button is clicked on mez pick google map.
   ///
@@ -197,7 +197,7 @@ class RequestTaxiController {
         await controller.requestTaxi(taxiRequest.value);
     if (response.success) {
       final String orderId = response.data["orderId"];
-      await waitForCurrentOrderStreamFirstTrigger(orderId);
+      // await waitForCurrentOrderStreamFirstTrigger(orderId);
       // in case the widget is still mounted , then make dart scheduale this delayed call as soon as possible ,
       // so we don't fall into assertion error ('!_debugLocked': is not true.)
       await Future<void>.delayed(Duration.zero, () {

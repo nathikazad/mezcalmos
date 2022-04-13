@@ -1,6 +1,7 @@
 import 'dart:async';
-
+import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -17,13 +18,15 @@ class LaundryOrderController extends GetxController {
       Get.find<ForegroundNotificationsController>();
   RxList<LaundryOrder> inProcessOrders = <LaundryOrder>[].obs;
   RxList<LaundryOrder> pastOrders = <LaundryOrder>[].obs;
-  StreamSubscription? _currentOrdersListener;
-  StreamSubscription? _pastOrdersListener;
+  
+
+  StreamSubscription<Event>? _inProcessOrdersListener;
+  StreamSubscription<Event>? _pastOrdersListener;
 
   @override
   void onInit() {
     mezDbgPrint("--------------------> LaundrysOrderController Initialized !");
-    _currentOrdersListener = _databaseHelper.firebaseDatabase
+    _inProcessOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(rootInProcessOrdersNode(orderType: OrderType.Laundry))
         .onValue
@@ -53,9 +56,9 @@ class LaundryOrderController extends GetxController {
   }
 
   @override
-  void onClose() async {
+  void onClose() {
     mezDbgPrint("[+] OrderController::dispose ---------> Was invoked !");
-    _currentOrdersListener?.cancel();
+    _inProcessOrdersListener?.cancel();
     _pastOrdersListener?.cancel();
     pastOrders.clear();
     inProcessOrders.clear();
@@ -78,11 +81,18 @@ class LaundryOrderController extends GetxController {
     }
   }
 
+  Stream<LaundryOrder?> getOrderStream(String orderId) {
+    return StreamGroup.merge(<Stream<LaundryOrder?>>[
+      _getCurrentOrderStream(orderId),
+      _getPastOrderStream(orderId)
+    ]);
+  }
+
   bool isPast(LaundryOrder order) {
     return pastOrders.contains(order);
   }
 
-  Stream<LaundryOrder?> getCurrentOrderStream(String orderId) {
+  Stream<LaundryOrder?> _getCurrentOrderStream(String orderId) {
     return inProcessOrders.stream.map<LaundryOrder?>((_) {
       try {
         return inProcessOrders.firstWhere(
@@ -90,7 +100,20 @@ class LaundryOrderController extends GetxController {
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
+      }
+    });
+  }
+
+  Stream<LaundryOrder?> _getPastOrderStream(String orderId) {
+    return inProcessOrders.stream.map<LaundryOrder?>((_) {
+      try {
+        return pastOrders.firstWhere(
+          (pastOrder) => pastOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
+        // return null;
       }
     });
   }

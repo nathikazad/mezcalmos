@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ['pages']['Orders']["LaundryOrder"]["LaundryOrderScreen"];
@@ -54,20 +55,21 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
-    if (order.value == null) {
-      Get.back();
-    } else {
-      _orderListener = controller
-          .getCurrentOrderStream(orderId)
-          .listen((LaundryOrder? newOrder) {
-        if (newOrder != null) {
-          order.value = controller.getOrder(orderId);
+    _orderListener = controller
+        .getOrderStream(orderId)
+        .listen((LaundryOrder? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent;
+      }
+    });
 
-          if (order.value?.dropoffDriver != null) {
-            driver = order.value!.dropoffDriver;
-          }
-        } else {
-          //    Get.back();
+    // if order value is null and
+    if (order.value == null) {
+      Timer(Duration(seconds: 5), () {
+        if (order.value == null) {
+          // ignore: inference_failure_on_function_invocation
+          Get.back();
+          MezSnackbar("Error", "Order does not exist");
         }
       });
     }

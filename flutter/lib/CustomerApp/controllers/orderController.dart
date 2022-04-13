@@ -1,6 +1,7 @@
 import 'dart:async';
-
+import 'package:async/async.dart' show StreamGroup;
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -20,11 +21,9 @@ class OrderController extends GetxController {
       Get.find<ForegroundNotificationsController>();
   RxList<Order> currentOrders = <Order>[].obs;
   RxList<Order> pastOrders = <Order>[].obs;
-  String lastPastOrderId = "";
 
-  StreamSubscription? _currentOrdersListener;
-  StreamSubscription? _pastOrdersListener;
-  Rx<FilterStatus> filterStatus = FilterStatus.All.obs;
+  StreamSubscription<Event>? _currentOrdersListener;
+  StreamSubscription<Event>? _pastOrdersListener;  
 
   @override
   void onInit() {
@@ -126,6 +125,7 @@ class OrderController extends GetxController {
         .isNotEmpty;
   }
 
+
   Order? getOrder(String orderId) {
     try {
       return currentOrders.firstWhere((Order order) {
@@ -142,7 +142,14 @@ class OrderController extends GetxController {
     }
   }
 
-  Stream<Order?> getCurrentOrderStream(String orderId) {
+  Stream<Order?> getOrderStream(String orderId) {
+    return StreamGroup.merge(<Stream<Order?>>[
+      _getInProcessOrderStream(orderId),
+      _getPastOrderStream(orderId)
+    ]);
+  }
+
+  Stream<Order?> _getInProcessOrderStream(String orderId) {
     return currentOrders.stream.map<Order?>((_) {
       try {
         return currentOrders.firstWhere(
@@ -150,12 +157,12 @@ class OrderController extends GetxController {
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
       }
     });
   }
 
-  Stream<Order?> getPastOrderStream(String orderId) {
+  Stream<Order?> _getPastOrderStream(String orderId) {
     return pastOrders.stream.map<Order?>((_) {
       try {
         return pastOrders.firstWhere(
@@ -163,7 +170,7 @@ class OrderController extends GetxController {
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
       }
     });
   }

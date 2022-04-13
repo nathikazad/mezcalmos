@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ViewTaxiOrderController {
   final AnimatedSliderController animatedSliderController;
@@ -21,7 +22,7 @@ class ViewTaxiOrderController {
       Get.put<TaxiController>(TaxiController());
   final MGoogleMapController mGoogleMapController = MGoogleMapController();
   final Rxn<TaxiOrder> order = Rxn<TaxiOrder>();
-  StreamSubscription<Order?>? orderListener;
+  StreamSubscription<Order?>? _orderListener;
   final String toMarkerId = "to";
   RxDouble bottomPadding =
       ((GetStorage().read(getxGmapBottomPaddingKey) as double) + 15.0).obs;
@@ -30,57 +31,56 @@ class ViewTaxiOrderController {
   RxBool clickedAccept = false.obs;
   RxBool offersBtnClicked = false.obs;
 
-  void init(String orderId, {Function? orderCancelledCallback}) {
+  Future<bool> init(String orderId, {Function? orderCancelledCallback}) {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as TaxiOrder?;
-    if (order.value != null) {
-      // set initial location
-      initializeMap().then((_) => mezDbgPrint("Initialized Map!"));
+    _orderListener =
+        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent as TaxiOrder?;
+      }
+    });
 
-      if (order.value!.inProcess()) {
-        inProcessOrderStatusHandler(order.value!.status);
+    return waitForInitialization().then<bool>((bool orderLoaded) {
+      if (orderLoaded) {
+        processOrder(orderCancelledCallback);
+        initializeMap().then((_) => mezDbgPrint("Initialized Map!"));
+      }
+      return orderLoaded;
+    });
+  }
 
-        /// Only start if the status is `TaxiOrdersStatus.LookingForTaxi`
-        if (order.value!.status == TaxiOrdersStatus.LookingForTaxi) {
-          startCountOffersValidityCheckPeriodically();
-        }
-        orderListener = controller
-            .getCurrentOrderStream(orderId)
-            .listen((Order? currentOrder) async {
-          if (currentOrder != null) {
-            order.value = currentOrder as TaxiOrder;
-            inProcessOrderStatusHandler(order.value!.status);
-            // setState(() {});
-          } else {
-            await orderListener?.cancel();
-            orderListener = null;
-            // this is in case customer created the order and got expired :
-            _cancelPeriodicCounterOffersTimer();
+  void processOrder(Function? orderCancelledCallback) {
+    if (order.value!.inProcess()) {
+      inProcessOrderStatusHandler(order.value!.status);
 
-            TaxiOrder? _order = controller.getOrder(orderId) as TaxiOrder?;
-            // this else clause gets executed when the order becomes /pastOrders.
-            if (_order == null) {
-              if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
-                orderCancelledCallback?.call(_order);
-              }
-              _order = (await controller.getPastOrderStream(orderId).first)
-                  as TaxiOrder?;
-            }
-
-            order.value = _order;
-            // one time execution :
-            mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
-            pastOrderStatusHandler(order.value!.status);
-          }
-          order.refresh();
-        });
+      /// Only start if the status is `TaxiOrdersStatus.LookingForTaxi`
+      if (order.value!.status == TaxiOrdersStatus.LookingForTaxi) {
+        startCountOffersValidityCheckPeriodically();
       } else {
-        // it's in past orders!
-        pastOrderStatusHandler(order.value!.status);
+        _cancelPeriodicCounterOffersTimer();
       }
     } else {
-      mezDbgPrint("Error :Unfound Order !");
+      if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
+        orderCancelledCallback?.call(order.value);
+      }
+      mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
+      pastOrderStatusHandler(order.value!.status);
     }
+  }
+
+  Future<bool> waitForInitialization() async {
+    if (order.value != null) return Future<bool>.value(true);
+    final Completer<bool> c = new Completer<bool>();
+    Timer(Duration(seconds: 5), () {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        c.complete(false);
+      } else
+        c.complete(true);
+    });
+
+    return c.future;
   }
 
   Future<void> initializeMap() async {
@@ -201,8 +201,8 @@ class ViewTaxiOrderController {
   }
 
   void dispose() {
-    orderListener?.cancel();
-    orderListener = null;
+    _orderListener?.cancel();
+    _orderListener = null;
     _cancelPeriodicCounterOffersTimer();
   }
 }

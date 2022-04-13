@@ -1,6 +1,7 @@
 import 'dart:async';
-
+import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -16,9 +17,10 @@ class TaxiOrderController extends GetxController {
   RxList<TaxiOrder> inProcessOrders = <TaxiOrder>[].obs;
   RxList<TaxiOrder> pastOrders = <TaxiOrder>[].obs;
   RxList<TaxiOrder> openOrders = <TaxiOrder>[].obs;
-  StreamSubscription? inProcessOrdersListener;
-  StreamSubscription? _pastOrdersListener;
-  StreamSubscription? _openOrdersListener;
+
+  StreamSubscription<Event>? _inProcessOrdersListener;
+  StreamSubscription<Event>? _pastOrdersListener;
+  StreamSubscription<Event>? _openOrdersListener;
 
   @override
   void onInit() {
@@ -28,7 +30,7 @@ class TaxiOrderController extends GetxController {
         .reference()
         .child(taxiOpenOrdersNode())
         .onValue
-        .listen((event) {
+        .listen((Event event) {
       List<TaxiOrder> orders = [];
       if (event.snapshot.value != null) {
         for (var orderId in event.snapshot.value.keys) {
@@ -39,11 +41,11 @@ class TaxiOrderController extends GetxController {
       openOrders.value = orders;
     });
 
-    inProcessOrdersListener = _databaseHelper.firebaseDatabase
+    _inProcessOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(taxiInProcessOrdersNode())
         .onValue
-        .listen((event) {
+        .listen((Event event) {
       List<TaxiOrder> orders = [];
       if (event.snapshot.value != null) {
         for (var orderId in event.snapshot.value.keys) {
@@ -60,7 +62,7 @@ class TaxiOrderController extends GetxController {
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAdded
-        .listen((event) {
+        .listen((Event event) {
       pastOrders
           .add(TaxiOrder.fromData(event.snapshot.key, event.snapshot.value));
     });
@@ -69,9 +71,9 @@ class TaxiOrderController extends GetxController {
   }
 
   @override
-  void onClose() async {
+  void onClose() {
     mezDbgPrint("[+] OrderController::dispose ---------> Was invoked !");
-    inProcessOrdersListener?.cancel();
+    _inProcessOrdersListener?.cancel();
     _pastOrdersListener?.cancel();
     _openOrdersListener?.cancel();
     pastOrders.clear();
@@ -82,13 +84,13 @@ class TaxiOrderController extends GetxController {
 
   TaxiOrder? getOrder(String orderId) {
     try {
-      return openOrders.firstWhere((order) {
+      return openOrders.firstWhere((TaxiOrder order) {
         return order.orderId == orderId;
       },
-          orElse: () => inProcessOrders.firstWhere((order) {
+          orElse: () => inProcessOrders.firstWhere((TaxiOrder order) {
                 return order.orderId == orderId;
               },
-                  orElse: () => pastOrders.firstWhere((order) {
+                  orElse: () => pastOrders.firstWhere((TaxiOrder order) {
                         return order.orderId == orderId;
                       })));
     } on StateError {
@@ -100,41 +102,51 @@ class TaxiOrderController extends GetxController {
     return pastOrders.contains(order);
   }
 
-  Stream<TaxiOrder?> getOpenOrderStream(String orderId) {
+  Stream<TaxiOrder?> getOrderStream(String orderId) {
+    return StreamGroup.merge(<Stream<TaxiOrder?>>[
+      _getOpenOrderStream(orderId),
+      _getInProcessOrderStream(orderId),
+      _getPastOrderStream(orderId)
+    ]);
+  }
+
+
+
+  Stream<TaxiOrder?> _getOpenOrderStream(String orderId) {
     return openOrders.stream.map<TaxiOrder?>((_) {
       try {
         return openOrders.firstWhere(
-          (currentOrder) => currentOrder.orderId == orderId,
+          (TaxiOrder currentOrder) => currentOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
       }
     });
   }
 
-  Stream<TaxiOrder?> getInProcessOrderStream(String orderId) {
+  Stream<TaxiOrder?> _getInProcessOrderStream(String orderId) {
     return inProcessOrders.stream.map<TaxiOrder?>((_) {
       try {
         return inProcessOrders.firstWhere(
-          (currentOrder) => currentOrder.orderId == orderId,
+          (TaxiOrder currentOrder) => currentOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
       }
     });
   }
 
-  Stream<TaxiOrder?> getPastOrderStrem(String orderId) {
+  Stream<TaxiOrder?> _getPastOrderStream(String orderId) {
     return pastOrders.stream.map<TaxiOrder?>((_) {
       try {
         return pastOrders.firstWhere(
-          (currentOrder) => currentOrder.orderId == orderId,
+          (TaxiOrder currentOrder) => currentOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
       }
     });
   }

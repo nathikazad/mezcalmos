@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class LaundryOrderView extends StatefulWidget {
   const LaundryOrderView({Key? key}) : super(key: key);
@@ -35,23 +36,33 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
-    if (order.value == null) {
-      Get.back<void>();
+    _orderListener =
+        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent;
+      }
+    });
+
+    waitForOrderIfNotLoaded().then((void value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<Null>.delayed(Duration.zero, () {
+          Get.back<Null>();
+          MezSnackbar("Error", "Order does not exist");
+        });
+      }
+    });
+  }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
     } else {
-      _orderListener =
-          controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
-        if (newOrder != null) {
-          order.value = controller.getOrder(orderId);
-        } else {
-          controller.getPastOrderStream(orderId).listen((Order? pastOrder) {
-            if (pastOrder != null) {
-              order.value = pastOrder;
-            } else {
-              Get.back<void>();
-            }
-          });
-        }
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
       });
+      return completer.future;
     }
   }
 
