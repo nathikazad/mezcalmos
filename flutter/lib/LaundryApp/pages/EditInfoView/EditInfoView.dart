@@ -36,123 +36,134 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
-      body: ListView(
-        padding: const EdgeInsets.all(10),
-        children: [
-          // image
-          CircleAvatar(
-              radius: 70,
-              backgroundImage: CachedNetworkImageProvider(
-                  editInfoController.currentImageUrl),
-              child: Material(
-                shape: CircleBorder(),
-                clipBehavior: Clip.hardEdge,
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () => {},
-                  child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black.withOpacity(0.3)),
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      )),
-                ),
-              )),
-          // Laundry name fiels
-          SizedBox(
-            height: 10,
-          ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // padding: const EdgeInsets.all(10),
 
-          Text('Laundry name'),
-          SizedBox(
-            height: 5,
-          ),
-          TextFormField(
-            controller: editInfoController.laundryNameController,
-            decoration: InputDecoration(filled: true, fillColor: Colors.white),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text('Default launguage'),
-          LanguageSelectorComponent(
-            languagePriority: LanguagePriority.PrimaryLanguage,
-            langValue: primaryLang,
-            oppositeLang: secondaryLang,
-          ),
-
-          SizedBox(
-            height: 5,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text('Secondary launguage'),
-          SizedBox(
-            height: 5,
-          ),
-          LanguageSelectorComponent(
-            languagePriority: LanguagePriority.SecondaryLanguage,
-            langValue: secondaryLang,
-            oppositeLang: primaryLang,
-            // langValue: editInfoController.secondaryLang.value,
-            // oppositeLang: editInfoController.primaryLang.value,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text('Location'),
-          SizedBox(
-            height: 5,
-          ),
-          Card(
-            child: InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap: () {
-                // TODO @m66are change the pick location view to shared page and work with it here
-              },
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.place_rounded,
-                      color: Theme.of(context).primaryColorLight,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Flexible(
-                        child: Text(
-                      laundry.value?.info.location?.address ?? 'Laundry adress',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+            children: [
+              // image
+              Center(
+                child: CircleAvatar(
+                    radius: 70,
+                    backgroundImage: CachedNetworkImageProvider(
+                        editInfoController.currentImageUrl),
+                    child: Material(
+                      shape: CircleBorder(),
+                      clipBehavior: Clip.hardEdge,
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () => {},
+                        child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black.withOpacity(0.3)),
+                            child: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                            )),
+                      ),
                     )),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: keyAppColor,
-                    )
-                  ],
+              ),
+              // Laundry name fiels
+              SizedBox(
+                height: 10,
+              ),
+
+              Text('Laundry name'),
+              SizedBox(
+                height: 5,
+              ),
+              TextFormField(
+                controller: editInfoController.laundryNameController,
+                decoration:
+                    InputDecoration(filled: true, fillColor: Colors.white),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Text('Default launguage'),
+              LanguageSelectorComponent(
+                languagePriority: LanguagePriority.PrimaryLanguage,
+                laundry: laundry,
+              ),
+
+              SizedBox(
+                height: 5,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Text('Secondary launguage'),
+              SizedBox(
+                height: 5,
+              ),
+              LanguageSelectorComponent(
+                languagePriority: LanguagePriority.SecondaryLanguage,
+
+                laundry: laundry,
+
+                // langValue: editInfoController.secondaryLang.value,
+                // oppositeLang: editInfoController.primaryLang.value,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Text('Location'),
+              SizedBox(
+                height: 5,
+              ),
+              Card(
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(10),
+                  onTap: () {
+                    // TODO @m66are change the pick location view to shared page and work with it here
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.place_rounded,
+                          color: Theme.of(context).primaryColorLight,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Flexible(
+                            child: Text(
+                          laundry.value?.info.location?.address ??
+                              'Laundry adress',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        )),
+                        Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: keyAppColor,
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          MezWorkingHours(
-            schedule: laundry.value!.schedule!,
-            editMode: true,
-          ),
+              SizedBox(
+                height: 15,
+              ),
+              MezWorkingHours(
+                schedule: laundry.value!.schedule!,
+                editMode: true,
+              ),
 
-          SizedBox(
-            height: 15,
+              SizedBox(
+                height: 15,
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       bottomNavigationBar: Container(
         height: 50,

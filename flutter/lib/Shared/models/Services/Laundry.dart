@@ -37,8 +37,8 @@ class Laundry extends Service {
 
     final LanguageType primaryLanguage =
         laundryData["details"]?["language"]?["first"] ?? LanguageType.ES;
-    final LanguageType secondaryLanguage =
-        laundryData["details"]?["language"]?["second"] ?? LanguageType.ES;
+    final LanguageType? secondaryLanguage =
+        laundryData["details"]?["language"]?["second"] ?? null;
 
     final Laundry laundry = Laundry(
         userInfo: ServiceUserInfo.fromData(laundryData["info"]),
