@@ -1,5 +1,6 @@
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 
 class UserInfo {
   String id;
@@ -79,4 +80,24 @@ class MainUserInfo {
         "phone": phone,
         "bigImage": bigImage,
       };
+}
+
+class ServiceInfo extends UserInfo {
+  Location location;
+
+  ServiceInfo({
+    required this.location,
+    required String id,
+    required String image,
+    required String name,
+    LanguageType? lang,
+  }) : super(id: id, image: image, name: name, language: lang);
+
+  factory ServiceInfo.fromData(dynamic data) {
+    return ServiceInfo(
+        location: Location.fromFirebaseData(data['location']),
+        id: data['id'],
+        image: data['image'],
+        name: data['name']);
+  }
 }

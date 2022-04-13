@@ -47,7 +47,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CustomerAppBar(
         title: '${_i18n()["title"]}',
@@ -114,15 +114,15 @@ class PastOrderList extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       GroupedListView<Order, DateTime>(
           elements: controller.pastOrders(),
-          groupBy: (element) => DateTime(element.orderTime.year,
+          groupBy: (Order element) => DateTime(element.orderTime.year,
               element.orderTime.month, element.orderTime.day),
           groupComparator: (DateTime value1, DateTime value2) =>
               value2.compareTo(value1),
-          itemComparator: (element1, element2) =>
+          itemComparator: (Order element1, Order element2) =>
               element2.orderTime.compareTo(element1.orderTime),
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          groupHeaderBuilder: (element) {
+          groupHeaderBuilder: (Order element) {
             return Container(
               margin: const EdgeInsets.all(8),
               child: Text(
@@ -138,7 +138,7 @@ class PastOrderList extends StatelessWidget {
           separator: SizedBox(
             height: 5,
           ),
-          itemBuilder: (context, element) {
+          itemBuilder: (BuildContext context, Order element) {
             switch (element.orderType) {
               case OrderType.Taxi:
                 return TaxiPastOrderCard(order: element as TaxiOrder);
@@ -207,7 +207,7 @@ class OngoingOrderList extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               reverse: true,
               itemCount: controller.currentOrders().length,
-              itemBuilder: (context, index) {
+              itemBuilder: (BuildContext context, int index) {
                 switch (controller.currentOrders()[index].orderType) {
                   case OrderType.Taxi:
                     return TaxiOngoingOrderCard(
@@ -237,7 +237,7 @@ class OngoingOrderList extends StatelessWidget {
 }
 
 int calculateDifference(DateTime date) {
-  DateTime now = DateTime.now();
+  final DateTime now = DateTime.now();
   return DateTime(date.year, date.month, date.day)
       .difference(DateTime(now.year, now.month, now.day))
       .inDays;

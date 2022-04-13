@@ -39,7 +39,7 @@ extension ParseStringToOrderStatus on String {
 class LaundryOrder extends TwoWayDeliverableOrder {
   num? weight;
   String? notes;
-  UserInfo? laundry;
+  ServiceInfo? laundry;
   LaundryOrderStatus status;
   num shippingCost;
   num costPerKilo;
@@ -87,7 +87,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         costPerKilo: data['costPerKilo'] ?? 20,
         notes: data["notes"],
         laundry: (data["laundry"] != null)
-            ? UserInfo.fromData(data["laundry"])
+            ? ServiceInfo.fromData(data["laundry"])
             : null,
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
@@ -103,7 +103,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   }
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         "customer": customer,
         "estimatedPrice": cost,
         "status": status,
@@ -111,7 +111,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         "orderTime": orderTime,
         "paymentType": paymentType,
         "weight": weight,
-        "notes": notes
+        "notes": notes,
       };
 
   @override
@@ -127,6 +127,14 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.OtwPickup ||
         status == LaundryOrderStatus.PickedUp ||
         status == LaundryOrderStatus.AtLaundry ||
+        status == LaundryOrderStatus.ReadyForDelivery ||
+        status == LaundryOrderStatus.OtwDelivery;
+  }
+
+  bool inDeliverPhase() {
+    return status == LaundryOrderStatus.OtwPickup ||
+        status == LaundryOrderStatus.OrderReceieved ||
+        status == LaundryOrderStatus.PickedUp ||
         status == LaundryOrderStatus.ReadyForDelivery ||
         status == LaundryOrderStatus.OtwDelivery;
   }

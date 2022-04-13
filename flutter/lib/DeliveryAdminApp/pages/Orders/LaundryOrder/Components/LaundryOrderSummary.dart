@@ -8,8 +8,7 @@ class LaundryOrderSummary extends StatelessWidget {
   LaundryOrderSummary({Key? key, required this.order}) : super(key: key);
 
   dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-      ["pages"] 
- ["Orders"]["LaundryOrder"]["Components"]["LaundryOrderSummary"];
+      ["pages"]["Orders"]["LaundryOrder"]["Components"]["LaundryOrderSummary"];
 
   @override
   Widget build(BuildContext context) {
@@ -70,11 +69,11 @@ class LaundryOrderSummary extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${_i18n()["deliveryCost"]} :",
+                      "${_i18n()["deliveryCost"]} : ",
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Text(
-                      "\$5",
+                      order.shippingCost.toString(),
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ],
@@ -86,7 +85,7 @@ class LaundryOrderSummary extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${_i18n()["totalCost"]} :",
+                      "${_i18n()["totalCost"]} : ",
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Text(

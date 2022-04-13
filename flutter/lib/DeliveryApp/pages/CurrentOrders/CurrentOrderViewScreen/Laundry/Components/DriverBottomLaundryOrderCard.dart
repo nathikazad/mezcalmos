@@ -15,7 +15,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["DriverBottomLaundryOrderCard"];
 
 class DriverBottomLaundryOrderCard extends StatefulWidget {
-  final LaundryOrder order;
+  LaundryOrder order;
   DriverBottomLaundryOrderCard({Key? key, required this.order})
       : super(key: key);
 
@@ -32,30 +32,33 @@ class _DriverBottomLaundryOrderCardState
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(5.0),
-      child: Card(
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                _getOrderStatus(),
-                style: textTheme.bodyText2,
-              ),
-              Divider(),
-              LaundryOrderHeader(order: widget.order),
-              Divider(),
-              // From to component
-              LaundryOrderFromToComponent(
-                order: widget.order,
-              ),
-              Divider(),
-              getBottomComponent(textTheme)
-            ],
+      child: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Card(
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  _getOrderStatus(),
+                  style: textTheme.bodyText2,
+                ),
+                Divider(),
+
+                LaundryOrderHeader(order: widget.order),
+                Divider(),
+                // From to component
+                LaundryOrderFromToComponent(
+                  order: widget.order,
+                ),
+                // Divider(),
+                // getBottomComponent(textTheme)
+              ],
+            ),
           ),
         ),
       ),

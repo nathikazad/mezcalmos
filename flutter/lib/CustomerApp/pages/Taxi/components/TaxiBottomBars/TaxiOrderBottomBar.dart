@@ -17,13 +17,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Taxi"]["components"]["TaxiBottomBars"]["TaxiOrderBottomBar"];
 
 class TaxiOrderBottomBar extends StatefulWidget {
-  Rxn<TaxiOrder> order;
-
   /// Show a bottom bar that depends on the status
   /// normally shows taxi avatar and name but if order is looking
   /// then shows increment and decrement price buttons
-  TaxiOrderBottomBar({Key? key, required this.order}) : super(key: key);
-
+  const TaxiOrderBottomBar({Key? key, required this.order}) : super(key: key);
+  final Rxn<TaxiOrder> order;
   @override
   _TaxiOrderBottomBarState createState() => _TaxiOrderBottomBarState();
 }
@@ -31,26 +29,28 @@ class TaxiOrderBottomBar extends StatefulWidget {
 class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 25,
-      right: 15,
-      left: 15,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        margin: EdgeInsets.only(
-            bottom:
-                (widget.order.value!.status == TaxiOrdersStatus.LookingForTaxi)
-                    ? 45
-                    : 0),
-        height: 70,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-                width: 1, color: Theme.of(context).scaffoldBackgroundColor),
-            color: Colors.white),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: buildBottomBatByStatus(context),
+    return Obx(
+      () => Positioned(
+        bottom: 25,
+        right: 15,
+        left: 15,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          margin: EdgeInsets.only(
+              bottom: (widget.order.value!.status ==
+                      TaxiOrdersStatus.LookingForTaxi)
+                  ? 45
+                  : 0),
+          height: 70,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                  width: 1, color: Theme.of(context).scaffoldBackgroundColor),
+              color: Colors.white),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: buildBottomByStatus(context),
+          ),
         ),
       ),
     );
@@ -204,7 +204,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
     );
   }
 
-  List<Widget> buildBottomBatByStatus(BuildContext pContext) {
+  List<Widget> buildBottomByStatus(BuildContext pContext) {
     final List<Widget> _widgies = [];
     switch (widget.order.value!.status) {
       case TaxiOrdersStatus.LookingForTaxi:
@@ -229,8 +229,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               widget.order.value!.toTaxiRequest().estimatedPrice.toString()),
           VerticalDivider(),
           messageBtn(
-              order: widget.order.value!,
-              margin: EdgeInsets.symmetric(horizontal: 6))
+              order: widget.order, margin: EdgeInsets.symmetric(horizontal: 6))
         ]);
         break;
 
@@ -255,8 +254,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               pContext: pContext,
               description: _i18n()?['rideCancelledByTaxi']),
           messageBtn(
-              order: widget.order.value!,
-              margin: EdgeInsets.symmetric(horizontal: 6)),
+              order: widget.order, margin: EdgeInsets.symmetric(horizontal: 6)),
           RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest()),
         ]);
         // widget.bottomPadding = 10.0;
@@ -299,7 +297,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             ),
           ),
           Spacer(),
-          cancelBtn(widget.order.value!)
+          buildMsgAndCancelBtn(widget.order)
         ]);
         // widget.bottomPadding = 10.0;
         break;
@@ -365,7 +363,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           rideCost(
               widget.order.value!.toTaxiRequest().estimatedPrice.toString()),
           verticalSeparator(),
-          buildMsgAndCancelBtn(widget.order.value!)
+          buildMsgAndCancelBtn(widget.order)
         ]);
       // widget.bottomPadding = 10.0;
     }

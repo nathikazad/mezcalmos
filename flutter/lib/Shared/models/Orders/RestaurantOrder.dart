@@ -37,7 +37,7 @@ class RestaurantOrder extends DeliverableOrder {
   List<RestaurantOrderItem> items = <RestaurantOrderItem>[];
   String? notes;
   RestaurantOrderStatus status;
-  UserInfo get restaurant => serviceProvider!;
+  ServiceInfo get restaurant => serviceProvider! as ServiceInfo;
   RestaurantOrder(
       {required String orderId,
       required this.status,
@@ -46,7 +46,7 @@ class RestaurantOrder extends DeliverableOrder {
       required PaymentType paymentType,
       required DateTime orderTime,
       required num cost,
-      required UserInfo restaurant,
+      required ServiceInfo restaurant,
       required UserInfo customer,
       required Location to,
       DeliveryDriverUserInfo? dropoffDriver,
@@ -79,7 +79,7 @@ class RestaurantOrder extends DeliverableOrder {
         cost: data["cost"],
         notes: data["notes"],
         to: Location.fromFirebaseData(data['to']),
-        restaurant: UserInfo.fromData(data["restaurant"]),
+        restaurant: ServiceInfo.fromData(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]),
         itemsCost: data['itemsCost'],
         shippingCost: data['shippingCost'],
@@ -133,6 +133,11 @@ class RestaurantOrder extends DeliverableOrder {
     return status == RestaurantOrderStatus.OrderReceieved ||
         status == RestaurantOrderStatus.PreparingOrder ||
         status == RestaurantOrderStatus.ReadyForPickup ||
+        status == RestaurantOrderStatus.OnTheWay;
+  }
+
+  bool inDeliveryPhase() {
+    return status == RestaurantOrderStatus.ReadyForPickup ||
         status == RestaurantOrderStatus.OnTheWay;
   }
 

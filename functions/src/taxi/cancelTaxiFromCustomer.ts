@@ -100,8 +100,9 @@ export = functions.https.onCall(async (data, context) => {
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
     rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
-    customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
-    customerNodes.pastOrders(order.customer.id!, orderId).set(order);
+    await customerNodes.pastOrders(order.customer.id!, orderId).set(order);
+    await customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
+    
     if (order.driver !=  null)
     {
       taxiNodes.inProcessOrders(order.driver.id, orderId).remove();

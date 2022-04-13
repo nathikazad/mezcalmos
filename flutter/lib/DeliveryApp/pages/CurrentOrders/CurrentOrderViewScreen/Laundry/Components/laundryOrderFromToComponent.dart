@@ -32,7 +32,7 @@ class _LaundryOrderFromToComponentState
     super.initState();
   }
 
-  getLaundry() async {
+  void getLaundry() async {
     if (widget.order.laundry != null) {
       await laundryInfoController
           .getLaundry(widget.order.laundry!.id)

@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantControllButtons.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -25,26 +25,26 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(5.0),
-      child: Card(
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                _getOrderStatus(),
-                style: textTheme.bodyText2,
-              ),
-              Divider(),
-              _orderHeaderInfo(context, textTheme),
-              Divider(),
-              // From to component
-              _orderFromToComponent(textTheme),
-              Divider(),
-              // Order bottom card footer component (to be refactored)
-              RestaurantControllButtons(order: order),
-            ],
+      child: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Card(
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  _getOrderStatus(),
+                  style: textTheme.bodyText2,
+                ),
+                Divider(),
+                _orderHeaderInfo(context, textTheme),
+                Divider(),
+                // From to component
+                _orderFromToComponent(textTheme),
+              ],
+            ),
           ),
         ),
       ),
@@ -89,19 +89,46 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
           ),
         ),
         Spacer(),
-        IconButton(
-            onPressed: () {
-              Get.toNamed(getMessagesRoute(
-                  orderId: order.orderId,
-                  chatId: order.dropOffDriverChatId!,
-                  // recipientId: order.serviceProviderId,
-                  recipientType: ParticipantType.DeliveryAdmin));
-            },
-            icon: Icon(
-              Icons.textsms_rounded,
-              color: Theme.of(context).primaryColorLight,
-            )),
+        Stack(
+          children: [
+            IconButton(
+                onPressed: () {
+                  Get.toNamed(getMessagesRoute(
+                      orderId: order.orderId,
+                      chatId: order.dropOffDriverChatId!,
+                      // recipientId: order.serviceProviderId,
+                      recipientType: ParticipantType.DeliveryAdmin));
+                },
+                icon: Icon(
+                  Icons.textsms_rounded,
+                  color: Theme.of(context).primaryColorLight,
+                )),
+            Obx(
+              () {
+                return Get.find<OrderController>()
+                        .hasNewMessageNotification(order.orderId)
+                    ? _newMessageRedDot(context)
+                    : Container();
+              },
+            )
+          ],
+        ),
       ],
+    );
+  }
+
+  Widget _newMessageRedDot(BuildContext context) {
+    return Positioned(
+      left: 0,
+      top: 0,
+      child: Container(
+        width: 13,
+        height: 13,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: const Color(0xfff6efff), width: 2),
+            color: const Color(0xffff0000)),
+      ),
     );
   }
 

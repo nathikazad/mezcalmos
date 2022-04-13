@@ -11,7 +11,6 @@ import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -31,10 +30,8 @@ String generateRandomString(int len) {
 ///
 /// and reduce the quality down to [qualityCompressionOfUserImage = 25%].
 Future<Uint8List> compressImageBytes(Uint8List originalImg) async {
-  mezDbgPrint("s@s:beforeCompress => ${originalImg.lengthInBytes}");
   final result = await FlutterImageCompress.compressWithList(originalImg,
       quality: nQualityCompressionOfUserImage);
-  mezDbgPrint("s@s:after => ${result.lengthInBytes}");
   return result;
 }
 
@@ -124,8 +121,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                             Icons.photo_library_outlined,
                             color: Colors.white,
                           ),
-                          Text(
-                              _i18n()['gallery'])
+                          Text(_i18n()['gallery'])
                         ],
                       ))),
             ],
@@ -151,8 +147,7 @@ Future<imPicker.XFile?> imagePicker(
           _i18n()['cameraAccessOffTitle'], _i18n()['cameraAccessOffBody'],
           position: SnackPosition.TOP);
     } else if (exception.code == 'photo_access_denied') {
-      MezSnackbar(
-          _i18n()['photoAccessOffTitle'], _i18n()['photoAccessOffBody'],
+      MezSnackbar(_i18n()['photoAccessOffTitle'], _i18n()['photoAccessOffBody'],
           position: SnackPosition.TOP);
     } else {
       return await picker.pickImage(
