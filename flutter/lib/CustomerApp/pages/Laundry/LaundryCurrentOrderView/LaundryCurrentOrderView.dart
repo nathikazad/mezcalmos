@@ -3,17 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
-import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
-import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderNoteComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryPricingComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderSummaryComponent.dart';
+import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -55,7 +55,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     } else {
       if (order.value!.inProcess()) {
         _orderListener =
-            controller.getCurrentOrderStream(orderId).listen((event) {
+            controller.getCurrentOrderStream(orderId).listen((Order? event) {
           if (event != null) {
             mezDbgPrint("===================" +
                 (event as LaundryOrder).status.toString());
@@ -64,7 +64,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           } else {
             _orderListener?.cancel();
             _orderListener = null;
-            controller.getPastOrderStream(orderId).listen((event) {
+            controller.getPastOrderStream(orderId).listen((Order? event) {
               if (event != null) {
                 order.value = event as LaundryOrder;
               }
@@ -87,7 +87,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,

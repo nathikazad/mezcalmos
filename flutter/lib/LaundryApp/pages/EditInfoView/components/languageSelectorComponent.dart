@@ -4,16 +4,26 @@ import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoCont
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
-import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+
+typedef bool OnChangeShouldUpdateLang(
+  LanguageType languageType,
+);
 
 class LanguageSelectorComponent extends StatefulWidget {
   const LanguageSelectorComponent({
     Key? key,
-    required this.languagePriority,
-    required this.laundry,
+    required this.languageValue,
+    required this.onChangeShouldUpdateLang,
+    this.showDeleteIcon = false,
+    // required this.languagePriority,
+    // required this.laundry,
   }) : super(key: key);
-  final LanguagePriority languagePriority;
-  final Rxn<Laundry> laundry;
+  // final LanguagePriority languagePriority;
+  // final Laundry laundry;
+  final Rxn<LanguageType> languageValue;
+  final OnChangeShouldUpdateLang onChangeShouldUpdateLang;
+  final bool showDeleteIcon;
+  //final Rxn<String> oppositeLangValue;
 
   @override
   State<LanguageSelectorComponent> createState() =>
@@ -23,89 +33,87 @@ class LanguageSelectorComponent extends StatefulWidget {
 class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
   EditInfoController editInfoController = EditInfoController();
   // String? _currentSelectedValue;
-  String? newPrimaryLanguage;
-  String? newSecondaryLanguage;
+
   @override
   void initState() {
-    newPrimaryLanguage = toLanguageName(widget.laundry.value!.primaryLanguage);
-    newSecondaryLanguage =
-        toLanguageName(widget.laundry.value!.secondaryLanguage);
-
     mezDbgPrint("innnnit state");
-    // editInfoController.init();
+    //  editInfoController.init();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint("Rebuiils");
+
     return Container(
-      child: FormField<String>(
-        builder: (FormFieldState<String> state) {
-          return InputDecorator(
-            decoration: InputDecoration(
-                errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
-                filled: true,
-                fillColor: Colors.white,
-                isDense: true,
-                label: Text(getRightLabel(widget.languagePriority)),
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                suffixIcon: (widget.languagePriority ==
-                            LanguagePriority.SecondaryLanguage &&
-                        getLanguageName() != null)
-                    ? IconButton(
-                        onPressed: () {
-                          editInfoController.secondaryLang.value = null;
-                          setState(() {
-                            newSecondaryLanguage = null;
-                          });
-                        },
-                        icon: Icon(Icons.delete))
-                    : null,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0))),
-            isEmpty: getLanguageName() == null,
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: getLanguageName(),
-                isDense: true,
-                onChanged: (String? newValue) {
-                  if (widget.languagePriority ==
-                      LanguagePriority.PrimaryLanguage) {
-                    setPrimaryLanguage(newValue);
-                  } else if (widget.languagePriority ==
-                      LanguagePriority.SecondaryLanguage) {
-                    setSecondaryLang(newValue);
-                  }
-                  //   if (newValue != newPrimaryLanguage) {
-                  //     setState(() {
-                  //       newSecondaryLanguage = newValue;
-                  //     });
-                  //   } else {
-                  //     Get.snackbar("Error",
-                  //         "Primary and secondary launguage can't be the same language");
-                  //   }
-                  // }
-                  mezDbgPrint("primary $newPrimaryLanguage");
-                  mezDbgPrint("Secondary $newSecondaryLanguage");
-                },
-                items: [
-                  "English",
-                  'Spanish',
-                ].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Row(children: [
-                      CircleAvatar(
-                        radius: 10,
-                        backgroundImage: AssetImage(getRightFlag(value)),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(value)
-                    ]),
-                  );
-                }).toList(),
+      child: FormField<LanguageType>(
+        builder: (FormFieldState<LanguageType> state) {
+          return Obx(
+            () => InputDecorator(
+              decoration: InputDecoration(
+                  errorStyle:
+                      TextStyle(color: Colors.redAccent, fontSize: 16.0),
+                  filled: true,
+                  fillColor: Colors.white,
+                  isDense: true,
+                  label: Text("None"),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  suffixIcon: (widget.showDeleteIcon &&
+                          widget.languageValue.value != null)
+                      ? IconButton(
+                          onPressed: () {
+                            widget.languageValue.value = null;
+                          },
+                          icon: Icon(Icons.close))
+                      : null,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0))),
+              isEmpty: widget.languageValue.value == null,
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<LanguageType>(
+                  value: widget.languageValue.value,
+                  isDense: true,
+                  onChanged: (LanguageType? newValue) {
+                    if (newValue != null) {
+                      //mezDbgPrint(newValue);
+
+                      final bool result =
+                          widget.onChangeShouldUpdateLang(newValue);
+                      // mezDbgPrint("$result");
+
+                      if (result) {
+                        widget.languageValue.value = newValue;
+                        widget.languageValue.refresh();
+                      }
+                    }
+                    // if (newValue != newPrimaryLanguage) {
+                    //   setState(() {
+                    //     newSecondaryLanguage = newValue;
+                    //   });
+                    // } else {
+                    //   Get.snackbar("Error",
+                    //       "Primary and secondary launguage can't be the same language");
+                    // }
+                  },
+                  items: [
+                    LanguageType.EN,
+                    LanguageType.ES,
+                  ].map((LanguageType value) {
+                    return DropdownMenuItem<LanguageType>(
+                      value: value,
+                      child: Row(children: [
+                        CircleAvatar(
+                          radius: 10,
+                          backgroundImage: AssetImage(getRightFlag(value)),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(getRightName(value))
+                      ]),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           );
@@ -114,56 +122,72 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
     );
   }
 
-  void setSecondaryLang(String? value) {
-    mezDbgPrint("SEEEEEET SECOND WHILE PRIMARY === $newPrimaryLanguage");
-    if (newPrimaryLanguage != null) {
-      if (value != newPrimaryLanguage) {
-        setState(() {
-          
-          newSecondaryLanguage = value;
-        });
-      } else {
-        Get.snackbar("Error", "Error");
-      }
-    }
-  }
+  // void setSecondaryLang(String? value) {
+  //   if (newPrimaryLanguage != null) {
+  //     if (value != newPrimaryLanguage) {
+  //       setState(() {
+  //         newSecondaryLanguage = value;
+  //       });
+  //     } else {
+  //       Get.snackbar("Error", "Same languge");
+  //     }
+  //   } else {
+  //     Get.snackbar("Error", "Put primary first");
+  //   }
+  //   mezDbgPrint("Primarry -------------> $newPrimaryLanguage");
+  //   mezDbgPrint("Secodary -------------> $newPrimaryLanguage");
+  // }
 
-  void setPrimaryLanguage(String? value) {
-    if (newSecondaryLanguage != null) {
-      mezDbgPrint("SETTING PRIMARY AND SEC NOT NULL");
-      if (value != newSecondaryLanguage) {
-        setState(() {
-          newPrimaryLanguage = value;
-        });
-      } else {
-        Get.snackbar("Error", "Error");
-      }
-    } else {
-      mezDbgPrint("SETTING PRIMARY AND SEC IS NULL");
-      setState(() {
-        newPrimaryLanguage = value;
-      });
-    }
-  }
+  // void setPrimaryLanguage(String? value) {
+  //   if (newSecondaryLanguage != null) {
+  //     if (value != newSecondaryLanguage) {
+  //       setState(() {
+  //         newPrimaryLanguage = value;
+  //       });
+  //     } else {
+  //       Get.snackbar("Error", "Same language");
+  //     }
+  //   } else {
+  //     setState(() {
+  //       newPrimaryLanguage = value;
+  //     });
+  //   }
+  //   mezDbgPrint("Primarry -------------> $newPrimaryLanguage");
+  //   mezDbgPrint("Secodary -------------> $newPrimaryLanguage");
+  // }
 
-  String? getLanguageName() {
-    if (widget.languagePriority == LanguagePriority.PrimaryLanguage) {
-      //  return toLanguageName(laundry.primaryLanguage);
-      return newPrimaryLanguage;
-    } else {
-      //  return toLanguageName(laundry.secondaryLanguage);
-      return newSecondaryLanguage;
-    }
+//   String? getLanguageName() {
+//     if (widget.languagePriority == LanguagePriority.PrimaryLanguage) {
+//       //  return toLanguageName(laundry.primaryLanguage);
+//       return editInfoController.primaryLang.value;
+//     } else {
+//       //  return toLanguageName(laundry.secondaryLanguage);
+//       return editInfoController.secondaryLang.value;
+//     }
+//   }
+// }
+}
+
+String getRightFlag(LanguageType value) {
+  switch (value) {
+    case LanguageType.EN:
+      return aUsaFlag;
+
+    case LanguageType.ES:
+      return aMexicoFlag;
+
+    default:
+      return "";
   }
 }
 
-String getRightFlag(String value) {
+String getRightName(LanguageType value) {
   switch (value) {
-    case "English":
-      return aUsaFlag;
+    case LanguageType.EN:
+      return "English";
 
-    case "Spanish":
-      return aMexicoFlag;
+    case LanguageType.ES:
+      return "Spanish";
 
     default:
       return "";

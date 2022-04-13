@@ -5,9 +5,10 @@ class Location {
   String address;
   LocationData position;
   Location(this.address, this.position);
-  factory Location.fromFirebaseData(dynamic location) {
+  factory Location.fromFirebaseData(location) {
     // mezDbgPrint("Building LocData => $location");
-    LocationData position = buildLocationData(location["lat"], location["lng"]);
+    final LocationData position =
+        buildLocationData(location["lat"], location["lng"]);
     return Location(location["address"], position);
   }
 
@@ -21,7 +22,7 @@ class Location {
   }
 
   Map<String, String> toJson() =>
-      {"address": this.address, "position": this.position.toString()};
+      {"address": address, "position": position.toString()};
 
   dynamic get latitude => position.latitude;
   dynamic get longitude => position.longitude;
@@ -33,4 +34,14 @@ class Location {
       "lng": position.longitude
     };
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Location && other.address == address;
+  }
+
+  @override
+  int get hashCode => address.hashCode;
 }

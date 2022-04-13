@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 enum AuthorizationStatus { InReview, Authorized, Unauthorized }
 
 extension ParseAuthorizationStatusToString on AuthorizationStatus {
@@ -17,20 +19,27 @@ extension ParseStringToAuthorizationStatus on String {
 
 enum LanguageType { EN, ES }
 
-
-
 extension ParseLanugaugeTypeToString on LanguageType {
   String toFirebaseFormatString() {
     final String str = toString().split('.').last;
+
     return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 }
 
 extension ParseStringToLanugaugeType on String {
   LanguageType toLanguageType() {
-    return LanguageType.values.firstWhere(
-        (LanguageType e) => e.toFirebaseFormatString().toLowerCase() == this,
-        orElse: () => LanguageType.ES);
+    return (LanguageType.values.firstWhereOrNull(
+          (LanguageType e) => e.toFirebaseFormatString().toLowerCase() == this,
+        )) ??
+        LanguageType.ES;
+  }
+
+  LanguageType? toNullableLanguageType() {
+    return (LanguageType.values.firstWhereOrNull(
+          (LanguageType e) => e.toFirebaseFormatString().toLowerCase() == this,
+        )) ??
+        null;
   }
 }
 

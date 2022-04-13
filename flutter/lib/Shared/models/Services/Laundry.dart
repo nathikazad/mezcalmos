@@ -20,8 +20,7 @@ class Laundry extends Service {
       // ignore: avoid_annotating_with_dynamic
       {required String laundryId,
       required laundryData}) {
-    mezDbgPrint("Laundry info daaaaaatttttta");
-    mezDbgPrint(laundryData);
+    
     final ServiceState laundryState = ServiceState(
         laundryData["state"]?["authorizationStatus"]
                 ?.toString()
@@ -36,9 +35,13 @@ class Laundry extends Service {
         LaundryCosts.fromData(laundryData["details"]["costs"]);
 
     final LanguageType primaryLanguage =
-        laundryData["details"]?["language"]?["first"] ?? LanguageType.ES;
-    final LanguageType? secondaryLanguage =
-        laundryData["details"]?["language"]?["second"] ?? null;
+        laundryData["details"]?["language"]?["first"].toLanguageType() ??
+            LanguageType.ES;
+
+    final LanguageType? secondaryLanguage = laundryData["details"]?["language"]
+                ?["second"]
+            .toNullableLanguageType() ??
+        null;
 
     final Laundry laundry = Laundry(
         userInfo: ServiceUserInfo.fromData(laundryData["info"]),

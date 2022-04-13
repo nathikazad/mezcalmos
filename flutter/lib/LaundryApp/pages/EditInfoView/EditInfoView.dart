@@ -5,9 +5,11 @@ import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/languageSelectorComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezWorkingHours.dart';
+import 'package:mezcalmos/Shared/widgets/mezEditableWorkingHours.dart';
 
 class LaundryOpEditInfoView extends StatefulWidget {
   const LaundryOpEditInfoView({Key? key}) : super(key: key);
@@ -45,28 +47,45 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
 
             children: [
               // image
-              Center(
-                child: CircleAvatar(
-                    radius: 70,
-                    backgroundImage: CachedNetworkImageProvider(
-                        editInfoController.currentImageUrl),
-                    child: Material(
-                      shape: CircleBorder(),
-                      clipBehavior: Clip.hardEdge,
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () => {},
-                        child: Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.black.withOpacity(0.3)),
-                            child: Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                            )),
-                      ),
-                    )),
+              Obx(
+                () => Center(
+                  child: CircleAvatar(
+                      radius: 70,
+                      backgroundImage: (editInfoController.newImageFile.value !=
+                              null)
+                          ? FileImage(editInfoController.newImageFile.value!)
+                          : CachedNetworkImageProvider(
+                                  editInfoController.newImageUrl.value ??
+                                      editInfoController.currentImageUrl)
+                              as ImageProvider,
+                      child: Material(
+                        shape: CircleBorder(),
+                        clipBehavior: Clip.hardEdge,
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            // imagePickerChoiceDialog(context);
+                            //  editImage(context);
+                            editInfoController.editImage(context);
+                          },
+                          child: (editInfoController.imageLoading.value)
+                              ? Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.5)),
+                                  child: CircularProgressIndicator())
+                              : Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.black.withOpacity(0.3)),
+                                  child: Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                  )),
+                        ),
+                      )),
+                ),
               ),
               // Laundry name fiels
               SizedBox(
@@ -87,9 +106,9 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
               ),
               Text('Default launguage'),
               LanguageSelectorComponent(
-                languagePriority: LanguagePriority.PrimaryLanguage,
-                laundry: laundry,
-              ),
+                  languageValue: editInfoController.primaryLang,
+                  onChangeShouldUpdateLang:
+                      editInfoController.validatePrimaryLanguUpdate),
 
               SizedBox(
                 height: 5,
@@ -102,12 +121,10 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
                 height: 5,
               ),
               LanguageSelectorComponent(
-                languagePriority: LanguagePriority.SecondaryLanguage,
-
-                laundry: laundry,
-
-                // langValue: editInfoController.secondaryLang.value,
-                // oppositeLang: editInfoController.primaryLang.value,
+                languageValue: editInfoController.secondaryLang,
+                onChangeShouldUpdateLang:
+                    editInfoController.validateSecondaryLanguUpdate,
+                showDeleteIcon: true,
               ),
               SizedBox(
                 height: 15,
@@ -116,36 +133,48 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
               SizedBox(
                 height: 5,
               ),
-              Card(
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(10),
-                  onTap: () {
-                    // TODO @m66are change the pick location view to shared page and work with it here
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    width: double.infinity,
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.place_rounded,
-                          color: Theme.of(context).primaryColorLight,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Flexible(
-                            child: Text(
-                          laundry.value?.info.location?.address ??
-                              'Laundry adress',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        )),
-                        Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          color: keyAppColor,
-                        )
-                      ],
+              Obx(
+                () => Card(
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10),
+                    onTap: () async {
+                      // TODO @m66are change the pick location view to shared page and work with it here
+
+                      await Get.toNamed(kPickLocation)!.then((value) {
+                        if (value != null) {
+                          mezDbgPrint("newwwww loc $value");
+                          editInfoController.setNewLocation(value);
+                        }
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.place_rounded,
+                            color: Theme.of(context).primaryColorLight,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Flexible(
+                              flex: 5,
+                              fit: FlexFit.tight,
+                              child: Text(
+                                editInfoController.newLocation.value?.address ??
+                                    'Laundry adress',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              )),
+                          Spacer(),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: keyAppColor,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -153,8 +182,8 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
               SizedBox(
                 height: 15,
               ),
-              MezWorkingHours(
-                schedule: laundry.value!.schedule!,
+              MezEditableWorkingHours(
+                schedule: editInfoController.newSchedule,
                 editMode: true,
               ),
 
@@ -167,15 +196,25 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
       ),
       bottomNavigationBar: Container(
         height: 50,
-        child: TextButton(
-            style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
-            onPressed: () {
-              laundryInfoController
-                  .setLaundryName(editInfoController.laundryNameController.text)
-                  .then((value) => Get.back());
-            },
-            child: Container(
-                alignment: Alignment.center, child: Text('Save info'))),
+        child: Obx(
+          () => TextButton(
+              style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
+              onPressed: (editInfoController.btnClicked.value)
+                  ? null
+                  : () {
+                      editInfoController
+                          .updateLaundryInfo()
+                          .then((value) => Get.back());
+                    },
+              child: (editInfoController.btnClicked.value)
+                  ? Container(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Container(
+                      alignment: Alignment.center, child: Text('Save info'))),
+        ),
       ),
     );
   }

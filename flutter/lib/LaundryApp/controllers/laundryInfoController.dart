@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
@@ -38,6 +41,27 @@ class LaundryInfoController extends GetxController {
     });
   }
 
+  Future<String> uploadUserImgToFbStorage(
+      {required File imageFile, bool isCompressed = false}) async {
+    String _uploadedImgUrl;
+    final List<String> splitted = imageFile.path.split('.');
+    final String imgPath =
+        "laundries/${laundry.value?.info.id}/avatar/${laundry.value?.info.id}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
+          .putFile(imageFile);
+    } on firebase_core.FirebaseException catch (e) {
+      mezDbgPrint(e.message.toString());
+    } finally {
+      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
+          .getDownloadURL();
+    }
+
+    return _uploadedImgUrl;
+  }
+
   Future<void> setLaundryName(String newName) async {
     mezDbgPrint(
         "------->>> ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: laundry.value!.info.id)}/name");
@@ -49,6 +73,19 @@ class LaundryInfoController extends GetxController {
             '/info')
         .child('name')
         .set(newName);
+  }
+
+  Future<void> setLaundryImage(String newImage) async {
+    mezDbgPrint(
+        "------->>> ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: laundry.value!.info.id)}/name");
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(serviceProviderInfos(
+                orderType: OrderType.Laundry,
+                providerId: laundry.value!.info.id) +
+            '/info')
+        .child('image')
+        .set(newImage);
   }
 
   Future<void> setSchedule(Schedule schedule) {

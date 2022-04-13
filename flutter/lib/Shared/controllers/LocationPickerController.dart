@@ -64,7 +64,7 @@ class LocationPicker extends StatefulWidget {
   // Location location;
   final LocationPickerController locationPickerMapController;
   final bool showBottomButton;
-  LocationPicker(
+  const LocationPicker(
       {this.showBottomButton = true,
       this.onSuccessSignIn,
       required this.notifyParentOfLocationFinalized,
@@ -108,7 +108,7 @@ class LocationPickerState extends State<LocationPicker> {
               widget.locationPickerMapController._showBlackScreen.value
                   ? gestureDetector()
                   : SizedBox(),
-              this.widget.showBottomButton ? bottomButton() : SizedBox()
+              widget.showBottomButton ? bottomButton() : SizedBox()
             ],
           )
         : Center(child: CircularProgressIndicator()));
@@ -175,7 +175,7 @@ class LocationPickerState extends State<LocationPicker> {
         child: InkWell(
           onTap: notifier != null
               ? () async {
-                  var _loc = await getCenterAndGeoCode();
+                  final Location _loc = await getCenterAndGeoCode();
                   notifier.call(_loc);
                   widget.locationPickerMapController._showFakeMarker.value =
                       false;
@@ -271,13 +271,13 @@ class LocationPickerState extends State<LocationPicker> {
 /******************************  helper functions ************************************/
   Future<Location> getCenterAndGeoCode() async {
     mezDbgPrint("zlaganga ==> called");
-    LatLng _mapCenter =
-        await this.widget.locationPickerMapController.getMapCenter();
+    final LatLng _mapCenter =
+        await widget.locationPickerMapController.getMapCenter();
 
-    GeoLoc.LocationData _newLocationData =
+    final GeoLoc.LocationData _newLocationData =
         Location.buildLocationData(_mapCenter.latitude, _mapCenter.longitude);
 
-    double kmDistance = MapHelper.calculateDistance(
+    final double kmDistance = MapHelper.calculateDistance(
         _newLocationData,
         Location.buildLocationData(
             widget.locationPickerMapController.location.value!.latitude,
@@ -293,7 +293,7 @@ class LocationPickerState extends State<LocationPicker> {
           widget.locationPickerMapController.location.value!.address;
     }
 
-    Location finalResult = Location(formattedAddress, _newLocationData);
+    final Location finalResult = Location(formattedAddress, _newLocationData);
 
     mezDbgPrint("@===> new location : ${finalResult.toString()}");
 

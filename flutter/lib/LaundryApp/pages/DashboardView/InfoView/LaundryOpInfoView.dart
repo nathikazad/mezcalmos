@@ -126,7 +126,7 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
           SizedBox(
             height: 15,
           ),
-          MezWorkingHours(schedule: laundry.value!.schedule!),
+          MezWorkingHours(schedule: laundry.value!.schedule!)
         ],
       ),
     );

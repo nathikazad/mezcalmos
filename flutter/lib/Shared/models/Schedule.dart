@@ -5,21 +5,21 @@ enum Weekday { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 extension AddDayOfWeekToDateTime on DateTime {
   Weekday getDayOfWeek() {
     return Weekday.values
-        .firstWhere((weekday) => this.weekday == weekday.index + 1);
+        .firstWhere((Weekday weekday) => this.weekday == weekday.index + 1);
   }
 }
 
 extension ParseWeekdayToString on Weekday {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
 
 extension ParseStringToDaysOfWeek on String {
   Weekday toWeekDay() {
-    return Weekday.values
-        .firstWhere((e) => e.toFirebaseFormatString().toLowerCase() == this);
+    return Weekday.values.firstWhere(
+        (Weekday e) => e.toFirebaseFormatString().toLowerCase() == this);
   }
 }
 
@@ -40,23 +40,25 @@ class OpenHours {
 
 class Schedule {
   Map<Weekday, OpenHours> _openHours;
-  Map<Weekday, OpenHours> get openHours => this._openHours;
+  Map<Weekday, OpenHours> get openHours => _openHours;
 
   Schedule(this._openHours);
 
-  factory Schedule.fromData(dynamic data) {
-    Map<Weekday, OpenHours> openHours = {};
-    data.forEach((dynamic day, dynamic openHour) {
+  factory Schedule.fromData(data) {
+    mezDbgPrint("schedulllllllllllllllllllle =============> $data");
+    final Map<Weekday, OpenHours> openHours = {};
+
+    data.forEach((day, openHour) {
       try {
-        List<int> from = openHour["from"]
+        final List<int> from = openHour["from"]
             .toString()
             .split(':')
-            .map((val) => int.parse(val))
+            .map((String val) => int.parse(val))
             .toList();
-        List<int> to = openHour["to"]
+        final List<int> to = openHour["to"]
             .toString()
             .split(':')
-            .map((val) => int.parse(val))
+            .map((String val) => int.parse(val))
             .toList();
 
         openHours[day.toString().toWeekDay()] =
@@ -70,9 +72,9 @@ class Schedule {
   }
 
   bool isOpen() {
-    DateTime now = DateTime.now();
-    Weekday currentWeekDay = now.getDayOfWeek();
-    OpenHours? todayHours = this._openHours[currentWeekDay];
+    final DateTime now = DateTime.now();
+    final Weekday currentWeekDay = now.getDayOfWeek();
+    final OpenHours? todayHours = _openHours[currentWeekDay];
     if (todayHours?.isOpen ?? false) {
       return false;
     }
@@ -83,8 +85,8 @@ class Schedule {
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
-    Map<String, dynamic> json = <String, dynamic>{};
-    Weekday.values.forEach((weekday) {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    Weekday.values.forEach((Weekday weekday) {
       json[weekday.toFirebaseFormatString()] =
           _openHours[weekday]?.toFirebaseFormattedJson();
     });
