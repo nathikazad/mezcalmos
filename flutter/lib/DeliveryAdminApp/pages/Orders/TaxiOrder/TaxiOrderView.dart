@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOpenOrderBottomCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOrderBottomCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOrderButtons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOrderMapComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -29,9 +30,7 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
 
   @override
   void initState() {
-    mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
-
     order.value = taxiOrderController.getOrder(orderId);
     _orderListener = taxiOrderController
         .getOrderStream(orderId)
@@ -41,17 +40,29 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
       }
     });
 
-    // if order value is null and
-    if (order.value == null) {
-      Timer(Duration(seconds: 5), () {
-        if (order.value == null) {
-          // ignore: inference_failure_on_function_invocation
+    waitForOrderIfNotLoaded().then((value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future.delayed(Duration.zero, () {
           Get.back();
           MezSnackbar("Error", "Order does not exist");
-        }
-      });
-    }
+        });
+      }
+    });
+
     super.initState();
+  }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
+      });
+      return completer.future;
+    }
   }
 
   @override
@@ -63,20 +74,31 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Scaffold(
-          appBar: AppBar(
-            title: Text('${_i18n()["order"]}'),
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                TaxiOrderMapComponent(order: order.value!),
-                (order.value!.isOpenOrder())
-                    ? TaxiOpenOrderBottomCard(order: order.value!)
-                    : TaxiOrderBottomCard(order: order.value!),
-              ],
+      () {
+        mezDbgPrint(
+            "ORDER OBX ==================> ${order.value!.status.toFirebaseFormatString()}");
+        return Scaffold(
+            appBar: AppBar(
+              title: Text('${_i18n()["order"]}'),
             ),
-          )),
+            bottomNavigationBar: Obx(
+              () {
+                return TaxiOrderButtons(
+                  order: order.value!,
+                );
+              },
+            ),
+            body: Column(
+              children: <Widget>[
+                TaxiOrderMapComponent(order: order.value!),
+                Expanded(
+                  child: order.value!.isOpenOrder()
+                      ? TaxiOpenOrderBottomCard(order: order.value!)
+                      : TaxiOrderBottomCard(order: order.value!),
+                )
+              ],
+            ));
+      },
     );
   }
 }

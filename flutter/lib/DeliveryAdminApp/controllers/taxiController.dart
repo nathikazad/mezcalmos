@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -7,6 +8,7 @@ import 'package:mezcalmos/DeliveryAdminApp/constants/databaseNodes.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
@@ -31,10 +33,15 @@ class TaxiOrderController extends GetxController {
         .child(taxiOpenOrdersNode())
         .onValue
         .listen((Event event) {
-      List<TaxiOrder> orders = [];
+      final List<TaxiOrder> orders = [];
+
+      mezDbgPrint("DATTTAAA ------------------> ${event.snapshot.value}");
       if (event.snapshot.value != null) {
+        // mezDbgPrint("Priiiiint ------> bfore for ${event.snapshot.value}");
         for (var orderId in event.snapshot.value.keys) {
-          dynamic orderData = event.snapshot.value[orderId];
+          mezDbgPrint("Priiiiint ------> Data ${event.snapshot.value}");
+          mezDbgPrint("Priiiiint ------> orderID $orderId");
+          final dynamic orderData = event.snapshot.value[orderId];
           orders.add(TaxiOrder.fromData(orderId, orderData));
         }
       }
@@ -46,10 +53,12 @@ class TaxiOrderController extends GetxController {
         .child(taxiInProcessOrdersNode())
         .onValue
         .listen((Event event) {
-      List<TaxiOrder> orders = [];
+      final List<TaxiOrder> orders = [];
       if (event.snapshot.value != null) {
+        mezDbgPrint(
+            "new data for inprocess orders -----------§§§§§§§§§§§§§§§§§§§§");
         for (var orderId in event.snapshot.value.keys) {
-          dynamic orderData = event.snapshot.value[orderId];
+          final dynamic orderData = event.snapshot.value[orderId];
           orders.add(TaxiOrder.fromData(orderId, orderData));
         }
       }
@@ -110,7 +119,14 @@ class TaxiOrderController extends GetxController {
     ]);
   }
 
-
+  bool orderHaveNewMessageNotifications(String orderId) {
+    return _fbNotificationsController
+        .notifications()
+        .where((Notification notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            notification.orderId == orderId)
+        .isNotEmpty;
+  }
 
   Stream<TaxiOrder?> _getOpenOrderStream(String orderId) {
     return openOrders.stream.map<TaxiOrder?>((_) {
@@ -153,7 +169,6 @@ class TaxiOrderController extends GetxController {
 
   Future<ServerResponse> forwardToLocalCompany(String orderId) async {
     mezDbgPrint('Function called');
-
     return _callTaxiCloudFunction("forwardToLocalCompany", orderId);
   }
 
@@ -172,10 +187,10 @@ class TaxiOrderController extends GetxController {
       String functionName, String orderId,
       {Map<String, dynamic>? optionalParams}) async {
     mezDbgPrint('Function called');
-    HttpsCallable dropOrderFunction =
+    final HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-$functionName');
     try {
-      HttpsCallableResult response = await dropOrderFunction
+      final HttpsCallableResult response = await dropOrderFunction
           .call({"orderId": orderId, ...optionalParams ?? {}});
       return ServerResponse.fromJson(response.data);
     } catch (e) {

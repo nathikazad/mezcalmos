@@ -72,12 +72,13 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
         .listen((locationPermission) {
       if (locationPermission == false &&
           Get.currentRoute != kLocationPermissionPage) {
-        Get.toNamed(kLocationPermissionPage);
+        Get.toNamed(kLocationPermissionPage,
+            arguments: {"withBackground": true});
       }
     });
   }
 
-  void handleState(DeliveryDriverState? state) async {
+  void handleState(DeliveryDriverState? state) {
     mezDbgPrint(state);
     if (state != null) {
       // mezDbgPrint("Current order ====> ${state.currentOrder}");

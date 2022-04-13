@@ -24,7 +24,9 @@ class LocationPickerController extends MGoogleMapController {
   RxBool _showBlackScreen = false.obs;
   Rx<BottomButtomToShow> _bottomButtomToShow = BottomButtomToShow.Pick.obs;
   RxDouble blackScreenBottomTextMargin = 0.0.obs;
-  RxBool myLocationButtonEnabled = true.obs;
+
+  LocationPickerController({bool myLocationButtonEnabled = true})
+      : super(myLocationButtonEnabled: myLocationButtonEnabled);
 
   void showOrHideBlackScreen(bool value) {
     _showBlackScreen.value = value;
@@ -64,7 +66,7 @@ class LocationPicker extends StatefulWidget {
   // Location location;
   final LocationPickerController locationPickerMapController;
   final bool showBottomButton;
-  LocationPicker(
+  const LocationPicker(
       {this.showBottomButton = true,
       this.onSuccessSignIn,
       required this.notifyParentOfLocationFinalized,
@@ -92,15 +94,12 @@ class LocationPickerState extends State<LocationPicker> {
     return Obx(() => widget.locationPickerMapController.location.value != null
         ? Stack(
             alignment: Alignment.center,
-            children: [
+            children: <Widget>[
               MGoogleMap(
+                recenterBtnBottomPadding: 150,
                 mGoogleMapController: widget.locationPickerMapController,
                 notifyParentOfNewLocation:
                     widget.notifyParentOfLocationFinalized,
-                periodicRerendering: false,
-                //   periodicRedrendring: false,
-                myLocationButtonEnabled: widget
-                    .locationPickerMapController.myLocationButtonEnabled.value,
               ),
               widget.locationPickerMapController._showFakeMarker.value
                   ? pickerMarker()
@@ -108,7 +107,7 @@ class LocationPickerState extends State<LocationPicker> {
               widget.locationPickerMapController._showBlackScreen.value
                   ? gestureDetector()
                   : SizedBox(),
-              this.widget.showBottomButton ? bottomButton() : SizedBox()
+              widget.showBottomButton ? bottomButton() : SizedBox()
             ],
           )
         : Center(child: CircularProgressIndicator()));
@@ -147,7 +146,7 @@ class LocationPickerState extends State<LocationPicker> {
         } else {
           return buildBottomButton(_i18n()["signInToMakeOrder"],
               notifier: (_) async {
-            await Get.toNamed(kSignInRouteOptional);
+            await Get.toNamed<void>(kSignInRouteOptional);
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
             widget.onSuccessSignIn?.call();
             setState(() {});
@@ -175,7 +174,7 @@ class LocationPickerState extends State<LocationPicker> {
         child: InkWell(
           onTap: notifier != null
               ? () async {
-                  var _loc = await getCenterAndGeoCode();
+                  final Location _loc = await getCenterAndGeoCode();
                   notifier.call(_loc);
                   widget.locationPickerMapController._showFakeMarker.value =
                       false;
@@ -192,11 +191,11 @@ class LocationPickerState extends State<LocationPicker> {
               borderRadius: BorderRadius.circular(5),
               gradient: LinearGradient(
                   colors: notifier != null
-                      ? [
+                      ? <Color>[
                           Color.fromRGBO(81, 132, 255, 1),
                           Color.fromRGBO(206, 73, 252, 1)
                         ]
-                      : [Colors.grey.shade400, Colors.grey.shade400],
+                      : <Color>[Colors.grey.shade400, Colors.grey.shade400],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight),
             ),
@@ -241,7 +240,7 @@ class LocationPickerState extends State<LocationPicker> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 2.0, right: 5),
               child: Icon(
@@ -270,14 +269,13 @@ class LocationPickerState extends State<LocationPicker> {
 
 /******************************  helper functions ************************************/
   Future<Location> getCenterAndGeoCode() async {
-    mezDbgPrint("zlaganga ==> called");
-    LatLng _mapCenter =
-        await this.widget.locationPickerMapController.getMapCenter();
+    final LatLng _mapCenter =
+        await widget.locationPickerMapController.getMapCenter();
 
-    GeoLoc.LocationData _newLocationData =
+    final GeoLoc.LocationData _newLocationData =
         Location.buildLocationData(_mapCenter.latitude, _mapCenter.longitude);
 
-    double kmDistance = MapHelper.calculateDistance(
+    final double kmDistance = MapHelper.calculateDistance(
         _newLocationData,
         Location.buildLocationData(
             widget.locationPickerMapController.location.value!.latitude,
@@ -293,7 +291,7 @@ class LocationPickerState extends State<LocationPicker> {
           widget.locationPickerMapController.location.value!.address;
     }
 
-    Location finalResult = Location(formattedAddress, _newLocationData);
+    final Location finalResult = Location(formattedAddress, _newLocationData);
 
     mezDbgPrint("@===> new location : ${finalResult.toString()}");
 

@@ -73,12 +73,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
     String orderId = Get.parameters['orderId']!;
 
-    if (Get.parameters['orderId'] != null) {
-      orderId = Get.parameters['orderId']!;
-    } else {
-      mezDbgPrint("Order id null from the parameters ######");
-      Get.back();
-    }
+    if (Get.parameters['orderId'] == null) Get.back();
+    orderId = Get.parameters['orderId']!;
+    controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
     _orderListener =
         controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
@@ -110,7 +107,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       return completer.future;
     }
   }
-
 
   @override
   void didUpdateWidget(ViewRestaurantOrderScreen oldWidget) {

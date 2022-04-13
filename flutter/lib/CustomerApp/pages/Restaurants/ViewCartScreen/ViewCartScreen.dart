@@ -12,11 +12,13 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
+// ignore: constant_identifier_names
 enum DropDownResult { Null, String }
 
 class ViewCartScreen extends StatefulWidget {
@@ -141,20 +143,16 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   // }
 
 //itemviewscreen
-  void checkoutActionButton() async {
+  Future<void> checkoutActionButton() async {
     if (nbClicks == 0) {
-      mezDbgPrint("Called : checkoutActionButton : DdResult ($ddResult}");
       if (orderToLocation != null) {
         setState(() {
           _clickedOrderNow = true;
         });
         controller.cart.value.toLocation = orderToLocation;
         controller.cart.value.notes = textcontoller.text;
-        mezDbgPrint(
-            "@ssss@ OOOORRRDDEEEEER :: ${controller.cart.value.toFirebaseFormattedJson().toString()}");
-        //     controller.cart.value.restaurant!.id = "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx";
 
-        var response = await controller.checkout();
+        final ServerResponse response = await controller.checkout();
 
         if (response.success) {
           // await avoidCheckoutRaceCondition(response.data["orderId"]);
@@ -183,22 +181,30 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   }
 
   bool checkRestaurantAvailability({Schedule? schedule}) {
-    var dayNane = DateFormat('EEEE').format(DateTime.now());
-
-    //var xx = DateFormat.jm().format(DateFormat("hh:mm a").parse("9:00 AM"));
-    var x = DateTime.now();
+    final String dayNane = DateFormat('EEEE').format(DateTime.now());
+    final DateTime _timeNow = DateTime.now();
 
     if (schedule != null) {
       bool isOpen = false;
-      schedule.openHours.forEach((key, value) {
+      schedule.openHours.forEach((Weekday key, OpenHours value) {
         if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
-          var dateOfStart =
-              DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
-          var dateOfClose =
-              DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
+          final DateTime dateOfStart = DateTime(
+            _timeNow.year,
+            _timeNow.month,
+            _timeNow.day,
+            value.from[0],
+            value.from[1],
+          );
+          final DateTime dateOfClose = DateTime(
+            _timeNow.year,
+            _timeNow.month,
+            _timeNow.day,
+            value.to[0],
+            value.to[1],
+          );
           mezDbgPrint(dateOfStart.toString());
           mezDbgPrint(dateOfClose.toString());
-          if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
+          if (dateOfStart.isBefore(_timeNow) && dateOfClose.isAfter(_timeNow)) {
             mezDbgPrint("Today is $dayNane");
             isOpen = true;
           }

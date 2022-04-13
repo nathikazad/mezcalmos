@@ -148,52 +148,53 @@ Widget taxiAvatarAndName(
   );
 }
 
-Widget messageBtn({required TaxiOrder order, EdgeInsets? margin}) {
-  return GestureDetector(
-    onTap: () {
-      Get.toNamed<void>(
-        getTaxiMessagesRoute(order.orderId),
-      );
-    },
-    child: Container(
-      margin: margin ?? EdgeInsets.only(left: 6),
-      height: getSizeRelativeToScreen(16, Get.height, Get.width),
-      width: getSizeRelativeToScreen(16, Get.height, Get.width),
-      decoration: BoxDecoration(
-        color: Color.fromARGB(255, 232, 239, 254),
-        borderRadius: BorderRadius.circular(4),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Color.fromARGB(255, 216, 225, 249),
-              spreadRadius: 0,
-              blurRadius: 4,
-              offset: Offset(0, 2))
-        ],
-      ),
-      child: Center(
-        child: Stack(
-          children: <Widget>[
-            Obx(
-              () => orderController.hasNewMessageNotification(order.orderId)
-                  ? Positioned(
-                      top: 5,
-                      right: 5,
-                      child: Container(
-                        height: 6,
-                        width: 6,
-                        decoration: BoxDecoration(
-                            color: Colors.red, shape: BoxShape.circle),
-                      ))
-                  : SizedBox(),
-            ),
-            Center(
-              child: Icon(
-                Icons.mail,
-                color: Color.fromARGB(255, 103, 121, 254),
-                size: 16,
-              ),
-            )
+Widget messageBtn({required Rxn<TaxiOrder>  order, EdgeInsets? margin}) {
+  return Obx(
+    ()=> GestureDetector(
+      onTap: () {
+        Get.toNamed<void>(
+          getTaxiMessagesRoute(order.value!.orderId),
+        );
+      },
+      child: Container(
+        margin: margin ?? EdgeInsets.only(left: 6),
+        height: getSizeRelativeToScreen(16, Get.height, Get.width),
+        width: getSizeRelativeToScreen(16, Get.height, Get.width),
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 232, 239, 254),
+          borderRadius: BorderRadius.circular(4),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Color.fromARGB(255, 216, 225, 249),
+                spreadRadius: 0,
+                blurRadius: 4,
+                offset: Offset(0, 2))
           ],
+        ),
+        child: Center(
+          child: Stack(
+            children: <Widget>[
+             orderController.hasNewMessageNotification(order.value!.orderId)
+                    ? Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          height: 10,
+                          width: 10,
+                          decoration: BoxDecoration(
+                              color: Colors.red, shape: BoxShape.circle),
+                        ))
+                    : SizedBox(),
+              
+              Center(
+                child: Icon(
+                  Icons.mail,
+                  color: Color.fromARGB(255, 103, 121, 254),
+                  size: 16,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     ),
@@ -240,7 +241,7 @@ Widget cancelBtn(TaxiOrder order) {
   );
 }
 
-Widget buildMsgAndCancelBtn(TaxiOrder order) {
+Widget buildMsgAndCancelBtn(Rxn<TaxiOrder> order) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: <Widget>[
@@ -248,7 +249,7 @@ Widget buildMsgAndCancelBtn(TaxiOrder order) {
       SizedBox(
         width: 5,
       ),
-      cancelBtn(order)
+      cancelBtn(order.value!)
     ],
   );
 }

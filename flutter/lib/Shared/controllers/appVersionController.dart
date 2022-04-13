@@ -16,9 +16,6 @@ class AppVersionController extends GetxController {
     String packageName = getPackageName().replaceAll('.', '-');
     // At start we set it to the same as current
     String platform = getPlatformType().toShortString();
-    mezDbgPrint("s@a@a@d : packageName $packageName");
-    mezDbgPrint("s@a@a@d : platform $platform");
-    mezDbgPrint("s@a@a@d : Listening on  version/$packageName-$platform");
 
     _versionListener = _databaseHelper.firebaseDatabase
         .reference()
@@ -26,10 +23,7 @@ class AppVersionController extends GetxController {
         .onValue
         .distinct()
         .listen((appUpdateInfos) {
-      mezDbgPrint("s@a@a@d : GOT IT   ");
-
       dynamic payload = appUpdateInfos.snapshot.value;
-      mezDbgPrint("s@a@a@d : remoteUpdateInfos $payload");
 
       if (payload != null) {
         appVersionInfos.value = AppUpdate.fromSnapshotData(payload);

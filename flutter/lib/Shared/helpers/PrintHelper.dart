@@ -3,8 +3,11 @@ import 'dart:async';
 
 import 'package:intl/intl.dart';
 
-void mezDbgPrint(dynamic log) {
-  String d = DateFormat('HH:mm:ss').format(DateTime.now());
+void mezDbgPrint(dynamic log, {bool showMilliSeconds = false}) {
+  String d = DateFormat(!showMilliSeconds
+          ? 'HH:mm:ss'
+          : 'HH:mm:ss:${DateTime.now().millisecondsSinceEpoch}')
+      .format(DateTime.now());
   String caller = StackTrace.current.toString().split('\n').lastWhere(
       (element) => element.contains(':mezcalmos/'),
       orElse: () => '');
@@ -20,7 +23,7 @@ void mezcalmosLogger(String text, {bool isError = false}) =>
     mezDbgPrint("[MZL][ GETX ] $text");
 
 // This is to get all kind of exception in our code!
-runMainGuarded(Function runMain) {
+void runMainGuarded(Function runMain) {
   runZonedGuarded(() async {
     runMain();
   }, (error, stacktrace) {

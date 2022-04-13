@@ -33,16 +33,12 @@ class TaxiController extends GetxController {
 
     _onlineTaxiDrivers.value.keys.forEach((taxiId) {
       // _temp.add(value)
-      mezDbgPrint("-----------==== @saad@ox ===-----------");
-      mezDbgPrint("${_onlineTaxiDrivers.value[taxiId]}");
+
       var _driver = OnlineTaxiDriver.fromData(
           taxiId: taxiId, data: _onlineTaxiDrivers.value[taxiId]);
       if (_driver.isDriverAvailable()) {
         _temp.add(_driver);
-      } else {
-        mezDbgPrint("Driver Not available!");
       }
-      mezDbgPrint("-----------==== @saad@ox ===-----------");
     });
 
     return _temp;

@@ -90,6 +90,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     if (order?.driver?.location != null)
       mGoogleMapController.moveToNewLatLng(order!.driver!.location!.latitude,
           order!.driver!.location!.longitude);
+    mGoogleMapController.lockInAutoZoomAnimation();
   }
 
   @override
@@ -113,8 +114,8 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           body: order != null && mGoogleMapController.location.value != null
               ? Stack(alignment: Alignment.topCenter, children: <Widget>[
                   MGoogleMap(
+                    recenterBtnBottomPadding: 100,
                     mGoogleMapController: mGoogleMapController,
-                    myLocationButtonEnabled: false,
                     debugString: "CurrentOrderScreen",
                   ),
                   CurrentPositionedBottomBar(order!),

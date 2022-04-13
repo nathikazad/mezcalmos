@@ -70,30 +70,30 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                     width: 10,
                   ),
                   Flexible(
-                      fit: FlexFit.tight,
-                      flex: 8,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${order.customer.name} Ride ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12.sp),
-                          ),
-                          Text(
-                            -i18n()["orderCancelled"],
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(fontSize: 10.sp),
-                          ),
-                        ],
-                      )),
+                    fit: FlexFit.tight,
+                    flex: 8,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${order.customer.name} Ride ',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(
+                                  fontWeight: FontWeight.bold, fontSize: 12.sp),
+                        ),
+                        Text(
+                          _i18n()["orderCancelled"],
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(fontSize: 10.sp),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               )
             : Flex(

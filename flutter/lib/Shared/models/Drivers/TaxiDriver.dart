@@ -18,13 +18,13 @@ class TaxiState {
   TaxiState(this.isAuthorized, this.isLooking,
       [this.currentOrder, this.inOrderNegotation]);
 
-  factory TaxiState.fromSnapshot(dynamic data) {
-    mezDbgPrint("TaxiDriver ${data}");
-    bool isAuthorized =
+  factory TaxiState.fromSnapshot(data) {
+    mezDbgPrint("TaxiDriver $data");
+    final bool isAuthorized =
         data == null ? false : data['authorizationStatus'] == "authorized";
-    bool isLooking = data == null ? false : data['isLooking'] == true;
-    String? currentOrder = data == null ? null : data['currentOrderId'];
-    InCounterOfferNegotiation? _inOrderNegotation =
+    final bool isLooking = data == null ? false : data['isLooking'] == true;
+    final String? currentOrder = data == null ? null : data['currentOrderId'];
+    final InCounterOfferNegotiation? _inOrderNegotation =
         data?['inNegotiation'] == null
             ? null
             : InCounterOfferNegotiation(
@@ -34,9 +34,9 @@ class TaxiState {
   }
 
   Map<String, dynamic> toJson() => {
-        "authorizationStatus": this.isAuthorized,
-        "isLooking": this.isLooking,
-        "currentOrderId": this.currentOrder,
+        "authorizationStatus": isAuthorized,
+        "isLooking": isLooking,
+        "currentOrderId": currentOrder,
       };
 }
 
@@ -48,12 +48,12 @@ class TaxiDriver {
   TaxiDriver(this.taxiState, this.driverLocation, this.lastLocationUpdateTime);
 
   factory TaxiDriver.fromSnapshot(DataSnapshot snapshot) {
-    TaxiState taxiState = TaxiState.fromSnapshot(snapshot.value['state']);
-    dynamic driverLocation = snapshot.value['location'] == null
+    final TaxiState taxiState = TaxiState.fromSnapshot(snapshot.value['state']);
+    final dynamic driverLocation = snapshot.value['location'] == null
         ? null
         : LatLng(snapshot.value["location"]["position"]["lat"],
             snapshot.value["location"]["position"]["lng"]);
-    DateTime? lastLocationUpdateTime = snapshot.value['location'] == null
+    final DateTime? lastLocationUpdateTime = snapshot.value['location'] == null
         ? null
         : DateTime.parse(snapshot.value['location']['lastUpdateTime']);
     return TaxiDriver(taxiState, driverLocation, lastLocationUpdateTime);
@@ -61,9 +61,9 @@ class TaxiDriver {
 
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => {
-        "authorizationStatus": this.taxiState.isAuthorized,
-        "isLooking": this.taxiState.isLooking,
-        "currentOrder": this.taxiState.currentOrder,
+        "authorizationStatus": taxiState.isAuthorized,
+        "isLooking": taxiState.isLooking,
+        "currentOrder": taxiState.currentOrder,
         "driverLocation": driverLocation.toJson(),
         "lastLocationUpdateTime":
             lastLocationUpdateTime?.toUtc().toIso8601String()
@@ -86,13 +86,13 @@ class TaxiUserInfo extends UserInfo {
       required this.location})
       : super(id: id, name: name, image: image, language: language);
 
-  factory TaxiUserInfo.fromData(dynamic data) {
+  factory TaxiUserInfo.fromData(data) {
     // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
-    LatLng? location = data["location"] != null
+    final LatLng? location = data["location"] != null
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])
         : null;
-    LanguageType? language = data["language"] != null
+    final LanguageType? language = data["language"] != null
         ? data["language"].toString().toLanguageType()
         : null;
     return TaxiUserInfo(

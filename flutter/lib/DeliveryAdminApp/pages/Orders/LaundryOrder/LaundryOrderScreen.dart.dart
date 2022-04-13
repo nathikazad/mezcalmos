@@ -64,14 +64,26 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
     });
 
     // if order value is null and
-    if (order.value == null) {
-      Timer(Duration(seconds: 5), () {
-        if (order.value == null) {
-          // ignore: inference_failure_on_function_invocation
+    waitForOrderIfNotLoaded().then((value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future.delayed(Duration.zero, () {
           Get.back();
           MezSnackbar("Error", "Order does not exist");
-        }
+        });
+      }
+    });
+  }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
       });
+      return completer.future;
     }
   }
 
@@ -111,8 +123,8 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                   DriverCard(
                     driver: getRightDriver(),
                     order: order.value!,
-                    callBack: (DeliveryDriver? newDriver) {
-                      deliveryDriverController.assignDeliveryDriver(
+                    callBack: (DeliveryDriver? newDriver) async {
+                      await deliveryDriverController.assignDeliveryDriver(
                           deliveryDriverId: newDriver!.deliveryDriverId,
                           orderId: order.value!.orderId,
                           orderType: OrderType.Laundry,
