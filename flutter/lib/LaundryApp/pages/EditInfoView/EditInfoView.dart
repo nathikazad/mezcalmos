@@ -35,6 +35,13 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
   }
 
   @override
+  void dispose() {
+    editInfoController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),

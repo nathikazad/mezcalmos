@@ -145,6 +145,20 @@ class EditInfoController {
       }
     }
   }
+
+  void dispose() {
+    laundry = laundryInfoController.laundry;
+    if (laundry.value != null) {
+      mezDbgPrint("Controlllller Dispose =======>");
+      laundryNameController.text = laundry.value?.info.name ?? '';
+      currentImageUrl = laundry.value?.info.image ?? '';
+      newLocation.value = laundry.value!.info.location;
+      newImageUrl.value = laundry.value?.info.image ?? '';
+      primaryLang.value = laundry.value!.primaryLanguage;
+      secondaryLang.value = laundry.value!.secondaryLanguage;
+      newSchedule.value = laundry.value!.schedule;
+    }
+  }
 }
 
 enum LanguagePriority { PrimaryLanguage, SecondaryLanguage }
