@@ -13,12 +13,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["ListOrdersScreen"]["components"]["TaxiPastOrderCard"];
 
 class TaxiPastOrderCard extends StatelessWidget {
-  const TaxiPastOrderCard({
+  TaxiOrder order;
+  TaxiPastOrderCard({
     Key? key,
     required this.order,
   }) : super(key: key);
-
-  final TaxiOrder order;
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +36,21 @@ class TaxiPastOrderCard extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Stack(
-                    children: <Widget>[
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundImage: mLoadImage(
-                          assetInCaseFailed:
-                              'assets/images/customer/taxi/taxiDriverImg.png',
-                          url: (order.isOpenOrder())
-                              ? null
-                              : order.serviceProvider?.image,
-                        ).image,
-                      ),
+                    children: [
+                      (!order.isForwarded())
+                          ? CircleAvatar(
+                              radius: 25,
+                              backgroundImage: mLoadImage(
+                                      url: order.serviceProvider?.image ?? null,
+                                      assetInCaseFailed:
+                                          "assets/images/customer/taxi/taxiDriverImg.png")
+                                  .image,
+                            )
+                          : CircleAvatar(
+                              radius: 25,
+                              backgroundImage: AssetImage(
+                                  'assets/images/customer/taxi/taxiDriverImg.png'),
+                            ),
                       //  if (order.serviceProvider != null)
                       Positioned(
                         top: 0,
@@ -58,11 +61,10 @@ class TaxiPastOrderCard extends StatelessWidget {
                           child: Icon(
                             Icons.local_taxi_rounded,
                             size: 20,
-                            // size: 18.sp,
                             color: Colors.white,
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                   const SizedBox(width: 10),
@@ -73,7 +75,7 @@ class TaxiPastOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          (order.isOpenOrder())
+                          (order.isForwarded())
                               ? "${_i18n()['taxiOrder']}"
                               : order.serviceProvider?.name ??
                                   "${_i18n()['taxiOrder']}",

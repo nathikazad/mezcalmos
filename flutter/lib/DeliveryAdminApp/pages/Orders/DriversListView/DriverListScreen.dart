@@ -49,39 +49,28 @@ class _DriversListScreenState extends State<DriversListScreen> {
       appBar: AppBar(
         title: Text('${_i18n()["title"]}'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            DriversMapCompnonet(
-              drivers: deliveryDrivers.value,
-              order: order!,
-            ),
-            _driversListComponent(),
-          ],
-        ),
-      ),
-    );
-  }
-
-// Drivers list component where the user can select a driver by clicking the card
-  Widget _driversListComponent() {
-    return Obx(
-      () => Container(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: List.generate(
-            deliveryDrivers.length,
-            (int index) => DriverSelectCard(
-              driver: deliveryDrivers[index],
-              function: (deliveryDrivers[index].deliveryDriverState.isOnline)
-                  ? () {
-                      Get.back(result: deliveryDrivers[index]);
-                    }
-                  : null,
-            ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          DriversMapCompnonet(
+            drivers: deliveryDrivers(),
+            order: order!,
           ),
-        ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: deliveryDrivers.length,
+              itemBuilder: (_, int index) {
+                return DriverSelectCard(
+                  driver: deliveryDrivers[index],
+                  function:
+                      (deliveryDrivers[index].deliveryDriverState.isOnline)
+                          ? () => Get.back(result: deliveryDrivers[index])
+                          : null,
+                );
+              },
+            ),
+          )
+        ],
       ),
     );
   }

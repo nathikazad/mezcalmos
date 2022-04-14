@@ -7,11 +7,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-
-import '../../Shared/helpers/PrintHelper.dart';
 
 class DeliveryDriverController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -34,12 +33,15 @@ class DeliveryDriverController extends GetxController {
       final List<DeliveryDriver> _deliveryDrivers = <DeliveryDriver>[];
       if (event.snapshot.value != null) {
         for (var deliveryDriverId in event.snapshot.value.keys) {
-          final dynamic deliveryDriverData =
-              event.snapshot.value[deliveryDriverId];
-
-          _deliveryDrivers.add(
-            DeliveryDriver.fromData(deliveryDriverId, deliveryDriverData),
-          );
+          try {
+            final dynamic deliveryDriverData =
+                event.snapshot.value[deliveryDriverId];
+            _deliveryDrivers.add(
+              DeliveryDriver.fromData(deliveryDriverId, deliveryDriverData),
+            );
+          } catch (e) {
+            mezDbgPrint("Driver id $deliveryDriverId error");
+          }
         }
       }
       deliveryDrivers.value = _deliveryDrivers;

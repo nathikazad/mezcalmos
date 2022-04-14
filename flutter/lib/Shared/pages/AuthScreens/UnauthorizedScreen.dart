@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
@@ -16,7 +15,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["AuthScreens"]["UnauthorizedScreen"];
 
 class UnauthorizedScreen extends StatefulWidget {
-  UnauthorizedScreen({Key? key}) : super(key: key);
+  const UnauthorizedScreen({Key? key}) : super(key: key);
 
   @override
   _UnauthorizedScreenState createState() => _UnauthorizedScreenState();
@@ -99,8 +98,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                         text: TextSpan(
                           children: <TextSpan>[
                             TextSpan(
-                                text:
-                                    '${_i18n()['subTitle1']} ',
+                                text: '${_i18n()['subTitle1']} ',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'psr',
@@ -114,8 +112,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                                     fontFamily: 'psr',
                                     fontWeight: FontWeight.bold)),
                             TextSpan(
-                                text:
-                                    '${_i18n()['subTitle2']}',
+                                text: '${_i18n()['subTitle2']}',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: 'psr',

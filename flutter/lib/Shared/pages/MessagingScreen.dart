@@ -54,7 +54,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     chatId = Get.parameters['chatId']!;
     orderId = Get.parameters['orderId'];
-    showViewOrderBtn = Get.arguments?['showViewOrderBtn'];
+    showViewOrderBtn = Get.arguments?['showViewOrderBtn'] ??
+        Get.parameters['showViewOrderBtn'] == "1";
     if (Get.parameters['recipientId'] != null)
       recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {
@@ -221,17 +222,25 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
 
     controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
-
     return Scaffold(
         appBar: AppBar(
-          title: (recipientType == ParticipantType.DeliveryAdmin)
-              ? Text("Administrador")
-              : Obx(
-                  () => Text(
-                    controller.recipient(recipientType: recipientType)?.name ??
-                        "User",
-                  ),
-                ),
+          title: Obx(
+            () {
+              return (controller
+                          .recipient(recipientType: recipientType)
+                          ?.participantType ==
+                      ParticipantType.DeliveryAdmin)
+                  ? Text("Administrador")
+                  : Text(
+                      controller
+                              .recipient(
+                                  recipientType: recipientType,
+                                  recipientId: recipientId)
+                              ?.name ??
+                          "User",
+                    );
+            },
+          ),
           actions: <Widget>[
             if (orderId != null && showViewOrderBtn == true)
               InkWell(

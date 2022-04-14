@@ -54,11 +54,12 @@ abstract class Order {
 
 }
 
+// ignore: constant_identifier_names
 enum OrderType { Taxi, Restaurant, Laundry, Water }
 
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 
@@ -95,73 +96,68 @@ extension ParsePaymentTypeToString on PaymentType {
 extension ParseStringToPaymentType on String {
   PaymentType toPaymentType() {
     return PaymentType.values.firstWhere(
-      (e) => e.toFirebaseFormatString().toLowerCase() == this.toLowerCase(),
-    );
+        (e) => e.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
 abstract class DeliverableOrder extends Order {
   DeliveryDriverUserInfo? dropoffDriver;
   String? dropOffDriverChatId;
-
-  DeliverableOrder({
-    required String orderId,
-    String? serviceProviderId,
-    required PaymentType paymentType,
-    required DateTime orderTime,
-    required num cost,
-    UserInfo? serviceProvider,
-    required UserInfo customer,
-    required Location to,
-    required OrderType orderType,
-    this.dropoffDriver,
-    required this.dropOffDriverChatId,
-    RouteInformation? routeInformation,
-  }) : super(
-          orderId: orderId,
-          orderType: orderType,
-          serviceProviderId: serviceProviderId,
-          paymentType: paymentType,
-          orderTime: orderTime,
-          cost: cost,
-          customer: customer,
-          serviceProvider: serviceProvider,
-          to: to,
-          routeInformation: routeInformation,
-        );
+  DeliverableOrder(
+      {required String orderId,
+      String? serviceProviderId,
+      required PaymentType paymentType,
+      required DateTime orderTime,
+      required num cost,
+      ServiceInfo? serviceProvider,
+      required UserInfo customer,
+      required Location to,
+      required OrderType orderType,
+      this.dropoffDriver,
+      required this.dropOffDriverChatId,
+      RouteInformation? routeInformation})
+      : super(
+            orderId: orderId,
+            orderType: orderType,
+            serviceProviderId: serviceProviderId,
+            paymentType: paymentType,
+            orderTime: orderTime,
+            cost: cost,
+            customer: customer,
+            serviceProvider: serviceProvider,
+            to: to,
+            routeInformation: routeInformation);
 }
 
 abstract class TwoWayDeliverableOrder extends DeliverableOrder {
   DeliveryDriverUserInfo? pickupDriver;
   String? pickupDriverChatId;
-
-  TwoWayDeliverableOrder({
-    required String orderId,
-    String? serviceProviderId,
-    required PaymentType paymentType,
-    required DateTime orderTime,
-    required num cost,
-    UserInfo? serviceProvider,
-    required UserInfo customer,
-    required Location to,
-    required OrderType orderType,
-    RouteInformation? routeInformation,
-    DeliveryDriverUserInfo? dropoffDriver,
-    required dropOffDriverChatId,
-    this.pickupDriver,
-    required this.pickupDriverChatId,
-  }) : super(
-          orderId: orderId,
-          orderType: orderType,
-          serviceProviderId: serviceProviderId,
-          paymentType: paymentType,
-          orderTime: orderTime,
-          cost: cost,
-          customer: customer,
-          serviceProvider: serviceProvider,
-          to: to,
-          routeInformation: routeInformation,
-          dropoffDriver: dropoffDriver,
-          dropOffDriverChatId: dropOffDriverChatId,
-        );
+  TwoWayDeliverableOrder(
+      {required String orderId,
+      String? serviceProviderId,
+      required PaymentType paymentType,
+      required DateTime orderTime,
+      required num cost,
+      ServiceInfo? serviceProvider,
+      required UserInfo customer,
+      required Location to,
+      required OrderType orderType,
+      RouteInformation? routeInformation,
+      DeliveryDriverUserInfo? dropoffDriver,
+      required String? dropOffDriverChatId,
+      this.pickupDriver,
+      required this.pickupDriverChatId})
+      : super(
+            orderId: orderId,
+            orderType: orderType,
+            serviceProviderId: serviceProviderId,
+            paymentType: paymentType,
+            orderTime: orderTime,
+            cost: cost,
+            customer: customer,
+            serviceProvider: serviceProvider,
+            to: to,
+            routeInformation: routeInformation,
+            dropoffDriver: dropoffDriver,
+            dropOffDriverChatId: dropOffDriverChatId);
 }

@@ -127,16 +127,13 @@ class PastOrderList extends StatelessWidget {
         GroupedListView<Order, DateTime>(
           shrinkWrap: true,
           elements: controller.pastOrders(),
-          groupBy: (Order element) => DateTime(
-            element.orderTime.year,
-            element.orderTime.month,
-            element.orderTime.day,
-          ),
+          groupBy: (Order element) => DateTime(element.orderTime.year,
+              element.orderTime.month, element.orderTime.day),
           groupComparator: (DateTime value1, DateTime value2) =>
               value2.compareTo(value1),
           itemComparator: (Order element1, Order element2) =>
               element2.orderTime.compareTo(element1.orderTime),
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           groupHeaderBuilder: (Order element) {
             return Container(
               margin: const EdgeInsets.all(8),
@@ -150,8 +147,10 @@ class PastOrderList extends StatelessWidget {
               ),
             );
           },
-          separator: const SizedBox(height: 5),
-          itemBuilder: (_, Order element) {
+          separator: SizedBox(
+            height: 5,
+          ),
+          itemBuilder: (BuildContext context, Order element) {
             switch (element.orderType) {
               case OrderType.Taxi:
                 return TaxiPastOrderCard(order: element as TaxiOrder);
@@ -221,7 +220,7 @@ class OngoingOrderList extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               reverse: true,
               itemCount: controller.currentOrders().length,
-              itemBuilder: (_, int index) {
+              itemBuilder: (BuildContext context, int index) {
                 switch (controller.currentOrders()[index].orderType) {
                   case OrderType.Taxi:
                     return TaxiOngoingOrderCard(

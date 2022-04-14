@@ -31,10 +31,8 @@ String generateRandomString(int len) {
 ///
 /// and reduce the quality down to [qualityCompressionOfUserImage = 25%].
 Future<Uint8List> compressImageBytes(Uint8List originalImg) async {
-  mezDbgPrint("s@s:beforeCompress => ${originalImg.lengthInBytes}");
   final result = await FlutterImageCompress.compressWithList(originalImg,
       quality: nQualityCompressionOfUserImage);
-  mezDbgPrint("s@s:after => ${result.lengthInBytes}");
   return result;
 }
 

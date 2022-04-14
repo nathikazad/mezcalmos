@@ -61,7 +61,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
     super.initState();
     mezDbgPrint("Laaaaaaauuuuuuuuuundryyyy screeennnnnnnnnn");
     orderId = Get.parameters['orderId']!;
-    controller.clearOrderNotifications(orderId);
+    controller.clearNewOrderNotifications();
     order.value = controller.getOrder(orderId);
     if (order.value == null) {
       Get.back<void>();
@@ -195,20 +195,6 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                           }
                         },
                       );
-
-                      // if (deliveryDriverUserInfo
-                      //         .driverUserInfoAndUpdateStatus ==
-                      //     DriverUserInfoAndUpdateStatus.staring) {
-                      //
-                      // }
-                      // else if (deliveryDriverUserInfo
-                      //         .driverUserInfoAndUpdateStatus ==
-                      //     DriverUserInfoAndUpdateStatus.uploading) {
-                      //   return CircularProgressIndicator();
-                      // }
-                      // else {
-                      //   return const SizedBox.shrink();
-                      // }
                     },
                   ),
 

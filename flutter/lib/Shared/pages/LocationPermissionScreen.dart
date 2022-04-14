@@ -21,13 +21,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 
 class LocationPermissionScreen extends StatelessWidget {
   final LocationController _locationController = Get.find<LocationController>();
-
+  final bool? bgLocatinAccess = Get.arguments?['withBackground'];
   final SideMenuDrawerController _sideMenuDraweController =
       Get.find<SideMenuDrawerController>();
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("Onlocation screeeeeen !");
+    mezDbgPrint("[544D] WithBackgroundLocation => $bgLocatinAccess");
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -193,9 +193,45 @@ class LocationPermissionScreen extends StatelessWidget {
 
         // on granted !
         case PermissionStatus.granted:
+          if (bgLocatinAccess == true) {
+            final bool isBgOn = await Location().isBackgroundModeEnabled();
+            mezDbgPrint("[544D] isBgOn => $isBgOn");
+
+            if (!isBgOn) {
+              try {
+                await Location().enableBackgroundMode();
+              } catch (e) {
+                mezDbgPrint("[OOPS] => BG LOCATION => $e");
+                await oneButtonDialog(
+                  body:
+                      "Please Allow Background Location.\nClick Ok to open Settings.",
+                );
+                await openAppSettings();
+                break;
+              }
+            }
+          }
           Get.back<void>(closeOverlays: true);
           break;
         case PermissionStatus.grantedLimited:
+          if (bgLocatinAccess == true) {
+            final bool isBgOn = await Location().isBackgroundModeEnabled();
+            mezDbgPrint("[544D] isBgOn => $isBgOn");
+
+            if (!isBgOn) {
+              try {
+                await Location().enableBackgroundMode();
+              } catch (e) {
+                mezDbgPrint("[OOPS] => BG LOCATION => $e");
+                await oneButtonDialog(
+                  body:
+                      "Please Allow Background Location.\nClick Ok to open Settings.",
+                );
+                await openAppSettings();
+                break;
+              }
+            }
+          }
           Get.back<void>(closeOverlays: true);
           break;
         // Default

@@ -57,7 +57,6 @@ Notification orderStatusChangeNotification(String key, value) {
           notificationAction:
               value["notificationAction"].toString().toNotificationAction());
     case OrderType.Taxi:
-      mezDbgPrint("Priiiiiint taxi nottiiiiiiiiiiif ----------");
       return Notification(
           id: key,
           linkUrl: getTaxiOrderRoute(value["orderId"]),
@@ -120,19 +119,20 @@ Notification newOrderNotification(String key, value) {
 
 Notification newMessageNotification(String key, value) {
   return Notification(
-    id: key,
-    linkUrl: getMessagesRoute(
+      id: key,
+      linkUrl: getMessagesRoute(
         chatId: value['chatId'] ?? value['orderId'],
         orderId: value['orderId'],
-        recipientId: value['sender']['id']),
-    body: value['message'],
-    imgUrl: value['sender']['image'],
-    title: value['sender']['name'],
-    timestamp: DateTime.parse(value['time']),
-    notificationType: NotificationType.NewMessage,
-    variableParams: value,
-    notificationAction:
-        value["notificationAction"]?.toString().toNotificationAction() ??
-            NotificationAction.ShowSnackbarOnlyIfNotOnPage,
-  );
+        recipientId: value['sender']['id'],
+        showViewOrderBtn: true,
+      ),
+      body: value['message'],
+      imgUrl: value['sender']['image'],
+      title: value['sender']['name'],
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.NewMessage,
+      variableParams: value,
+      notificationAction:
+          value["notificationAction"]?.toString().toNotificationAction() ??
+              NotificationAction.ShowSnackbarOnlyIfNotOnPage);
 }

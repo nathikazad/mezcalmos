@@ -36,9 +36,14 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
 
   /// Laundry
   Laundry? laundry;
-
+  bool btnClicked = false;
   @override
   void initState() {
+    setState(() {
+      btnClicked = false;
+    });
+    getLaundry();
+
     super.initState();
     getLaundry();
   }
@@ -67,6 +72,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
             ),
           ),
           Card(
+            color: (btnClicked) ? Colors.grey.shade400 : Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
               side: BorderSide(
@@ -78,30 +84,43 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
             ),
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
-              onTap: (widget.order.laundry == null)
+              onTap: (widget.order.laundry == null && !btnClicked)
                   ? () async {
-                      await Get.toNamed(
-                        kLaundriesListRoute,
-                        arguments: widget.order,
-                      )!
-                          .then(
-                        (value) {
-                          if (value != null) {
-                            controller.assignLaundry(
-                              widget.order.orderId,
-                              value.info.id,
-                            );
-                          }
-                        },
-                      );
+                      setState(() {
+                        btnClicked = true;
+                      });
+                      await Get.toNamed(kLaundriesListRoute,
+                              arguments: widget.order)!
+                          .then((value) {
+                        if (value != null) {
+                          controller
+                              .assignLaundry(
+                                  widget.order.orderId, value.info.id)
+                              .whenComplete(() {
+                            setState(() {
+                              btnClicked = false;
+                            });
+                          });
+                        } else {
+                          setState(() {
+                            btnClicked = false;
+                          });
+                        }
+                      });
                     }
                   : null,
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
-                child: (widget.order.laundry != null)
-                    ? laundryInfoComponent(textTheme, context)
-                    : noLaundryComponent(context, textTheme),
+                child: (btnClicked)
+                    ? Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.all(8),
+                        child: CircularProgressIndicator(),
+                      )
+                    : (widget.order.laundry != null)
+                        ? laundryInfoComponent(textTheme, context)
+                        : noLaundryComponent(context, textTheme),
               ),
             ),
           ),

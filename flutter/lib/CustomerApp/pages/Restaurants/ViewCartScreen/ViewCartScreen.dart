@@ -156,29 +156,21 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
   Future<void> avoidCheckoutRaceCondition(String orderId) async {
     if (Get.find<OrderController>().getOrder(orderId) == null) {
-      mezDbgPrint(
-          "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ]  RACING CONDITION HAPPENING ... ");
       await Get.find<OrderController>()
           .getCurrentOrderStream(orderId)
           .firstWhere((Order? order) => order != null);
-    } else
-      mezDbgPrint(
-          "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ] NO RACING CONDITION HAPPEND ! ");
+    }
   }
 
 //itemviewscreen
-  void checkoutActionButton() async {
+  Future<void> checkoutActionButton() async {
     if (nbClicks == 0) {
-      mezDbgPrint("Called : checkoutActionButton : DdResult ($ddResult}");
       if (orderToLocation != null) {
         setState(() {
           _clickedOrderNow = true;
         });
         _restaurantController.cart.value.toLocation = orderToLocation;
         _restaurantController.cart.value.notes = _textEditingController.text;
-        mezDbgPrint(
-            "@ssss@ OOOORRRDDEEEEER :: ${_restaurantController.cart.value.toFirebaseFormattedJson().toString()}");
-        //     controller.cart.value.restaurant!.id = "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx";
 
         final ServerResponse _serverResponse =
             await _restaurantController.checkout();
@@ -212,21 +204,29 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   bool checkRestaurantAvailability({Schedule? schedule}) {
     final String dayNane = DateFormat('EEEE').format(DateTime.now());
-
-    //var xx = DateFormat.jm().format(DateFormat("hh:mm a").parse("9:00 AM"));
-    final DateTime x = DateTime.now();
+    final DateTime _timeNow = DateTime.now();
 
     if (schedule != null) {
       bool isOpen = false;
       schedule.openHours.forEach((Weekday key, OpenHours value) {
         if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
-          final DateTime dateOfStart =
-              DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
-          final DateTime dateOfClose =
-              DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
+          final DateTime dateOfStart = DateTime(
+            _timeNow.year,
+            _timeNow.month,
+            _timeNow.day,
+            value.from[0],
+            value.from[1],
+          );
+          final DateTime dateOfClose = DateTime(
+            _timeNow.year,
+            _timeNow.month,
+            _timeNow.day,
+            value.to[0],
+            value.to[1],
+          );
           mezDbgPrint(dateOfStart.toString());
           mezDbgPrint(dateOfClose.toString());
-          if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
+          if (dateOfStart.isBefore(_timeNow) && dateOfClose.isAfter(_timeNow)) {
             mezDbgPrint("Today is $dayNane");
             isOpen = true;
           }

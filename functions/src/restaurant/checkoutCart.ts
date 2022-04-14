@@ -85,6 +85,7 @@ export = functions.https.onCall(async (data, context) => {
 
     let chat: Chat = await buildChatForOrder(
       orderId,
+      OrderType.Restaurant,
       customerId,
       {
         ...customerInfo,
@@ -95,7 +96,7 @@ export = functions.https.onCall(async (data, context) => {
         ...restaurant.info,
         particpantType: ParticipantType.Restaurant
       },
-      OrderType.Restaurant);
+    );
 
     await chatController.setChat(orderId, chat);
 

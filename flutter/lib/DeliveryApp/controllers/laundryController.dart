@@ -6,15 +6,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
 class LaundryOrderController extends GetxController {
-  // bool orderHaveNewMessageNotifications(String orderId) {
-  //   return _fbNotificationsController
-  //       .notifications()
-  //       .where((notification) =>
-  //           notification.notificationType == NotificationType.NewMessage &&
-  //           notification.orderId! == orderId)
-  //       .isNotEmpty;
-  // }
-
   // void clearNewOrderNotifications() {
   //   _fbNotificationsController.notifications.value.forEach((element) {
   //     // mezDbgPrint(element.notificationType.toFirebaseFormatString());
@@ -65,11 +56,11 @@ class LaundryOrderController extends GetxController {
   Future<ServerResponse> _callLaundryCloudFunction(
       String functionName, String orderId,
       {Map<String, dynamic>? optionalParams}) async {
-    HttpsCallable dropOrderFunction =
+    final HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('delivery-$functionName');
     mezDbgPrint("Drop order");
     try {
-      HttpsCallableResult response = await dropOrderFunction
+      final HttpsCallableResult response = await dropOrderFunction
           .call({"orderId": orderId, ...optionalParams ?? {}});
       return ServerResponse.fromJson(response.data);
     } catch (e) {

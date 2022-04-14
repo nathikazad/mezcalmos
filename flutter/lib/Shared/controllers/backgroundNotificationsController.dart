@@ -57,8 +57,19 @@ class BackgroundNotificationsController extends GetxController {
     mezDbgPrint("_____________________________________________");
     mezDbgPrint(message.data["linkUrl"]);
     if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
-    Future<void>.delayed(Duration(milliseconds: 100),
-        () => Get.toNamed<void>(message.data["linkUrl"]));
+    if (message.data['linkUrl'].toString().contains('/messages/')) {
+      Future<void>.delayed(
+        Duration(milliseconds: 100),
+        () => Get.toNamed<void>(
+          message.data["linkUrl"],
+          arguments: <String, bool>{'showViewOrderBtn': true},
+        ),
+      );
+    } else
+      Future<void>.delayed(
+        Duration(milliseconds: 100),
+        () => Get.toNamed<void>(message.data["linkUrl"]),
+      );
   }
 
   Future<NotificationSettings> requestPermission() async {

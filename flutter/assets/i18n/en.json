@@ -323,17 +323,20 @@
                 "ViewTaxiOrder": {
                     "components": {
                         "CounterOfferWidgets": {
-                            "offers": "Offers"
+                            "offers": "Offers",
+                            "failedToAcceptOffer" : "Failed to accept the offer!"
                         },
                         "ViewTaxiOrderScreenWidgets": {
                             "title": "Confirm Cancelation.",
                             "question": "Are you sure you want to cancel your Order ?",
                             "cancel": "Cancel",
-                            "taxiRidePriceTooltip": "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out."
+                            "taxiRidePriceTooltip": "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out.",
+                            "serverCommunicationError": "Failed to communicate with the server :("
+
                         }
                     },
                     "ViewTaxiOrderScreen": {
-                        "orderCancelSuccess": "Order cancelled successfully."
+                        "orderCancelSuccess": "Order cancelled successfully."                        
                     }
                 }
             },
@@ -852,7 +855,8 @@
                             "orderSummary": "Order Summary",
                             "orderWeight": "Order Weight",
                             "orderCost": "Order Cost",
-                            "totalCost": "Total Cost"
+                            "totalCost": "Total Cost",
+                            "deliveryCost" : "Shipping Cost"
                         }
                     },
                     "LaundryOrderScreen": {
@@ -1042,10 +1046,10 @@
                                 "laundryOrder": "Laundry Order"
                             },
                             "laundryControllButtons": {
-                                "pickupOrder": "Pickup Order",
+                                "pickupOrder": "Start Pickup",
                                 "confirmPickup": "Confirm Order Pickup",
                                 "atLaundry": "At laundry",
-                                "deliverOrder": "Deliver Order",
+                                "deliverOrder": "Start Delivery",
                                 "confirmDelivery": "Confirm Delivery",
                                 "confirmOrderWeight": "Confirm Order weight",
                                 "orderWeightAlert": "Please enter a valid weight",

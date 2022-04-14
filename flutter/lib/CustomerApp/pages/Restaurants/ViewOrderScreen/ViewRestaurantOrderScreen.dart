@@ -83,7 +83,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
     if (order.value == null) {
-      //Get.back();
+      Get.back();
     } else {
       if (order.value!.inProcess()) {
         _orderListener =
@@ -147,18 +147,24 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    const SizedBox(height: 10),
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
                     OrderStatusCard(
                       order: order.value!,
                       ordersStates: order.value!.status,
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 10,
+                    ),
 
                     OrderItemsCard(
                       items: order.value!.items,
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 10,
+                    ),
                     OrderSummaryCard(order: order.value!),
                     //===============================>notes========================>
                     order.value?.notes == null ||
@@ -166,11 +172,12 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                         ? Container()
                         : notesWidget(order),
                     //===============================>button cancel===========================
-                    const SizedBox(height: 10),
-                    Container(
-                      alignment: Alignment.center,
-                      child: OrderFooterCard(order: order.value!),
+                    SizedBox(
+                      height: 10,
                     ),
+                    Container(
+                        alignment: Alignment.center,
+                        child: OrderFooterCard(order: order.value!)),
                   ],
                 ),
               ),

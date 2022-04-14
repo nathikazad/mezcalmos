@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -154,8 +157,6 @@ class DriverCard extends StatelessWidget {
   }
 
   // ------ LOCAL COMPONENTS ---------//
-
-// CARD CONTENT WHEN THERE IS NO DRIVER (DRIVER == NULL)
   Widget noDriverComponent(BuildContext context, TextTheme textTheme) {
     return Row(
       children: <Widget>[
@@ -230,8 +231,66 @@ class DriverCard extends StatelessWidget {
     );
   }
 
+  Obx restaurantMessagesDot(BuildContext context) {
+    return Obx(
+      () => Get.find<RestaurantOrderController>()
+              .orderHaveNewMessageNotifications(
+                  (order as DeliverableOrder).dropOffDriverChatId!)
+          ? _newMessageRedDot(context)
+          : Container(),
+    );
+  }
+
+  Widget laundryMessagesRedDot(BuildContext context) {
+    if ((order as LaundryOrder).getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return Obx(
+        () => Get.find<LaundryOrderController>()
+                .orderHaveNewMessageNotifications(
+                    (order as TwoWayDeliverableOrder).pickupDriverChatId!)
+            ? _newMessageRedDot(context)
+            : Container(),
+      );
+    } else if ((order as LaundryOrder).getCurrentPhase() ==
+        LaundryOrderPhase.Dropoff) {
+      return Obx(
+        () => Get.find<LaundryOrderController>()
+                .orderHaveNewMessageNotifications(
+                    (order as TwoWayDeliverableOrder).dropOffDriverChatId!)
+            ? _newMessageRedDot(context)
+            : Container(),
+      );
+    } else {
+      mezDbgPrint("NOOOOOTHING  ----------->>>> )))))))))))))))))))))))))))");
+      return Container();
+    }
+  }
+
+  Widget _messageIcon(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(12),
+      child: Icon(
+        Icons.textsms,
+        color: Colors.white,
+      ),
+    );
+  }
+
+  Widget _newMessageRedDot(BuildContext context) {
+    return Positioned(
+      left: 0,
+      top: 0,
+      child: Container(
+        width: 13,
+        height: 13,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: const Color(0xfff6efff), width: 2),
+            color: const Color(0xffff0000)),
+      ),
+    );
+  }
+
 // ------ FUNCTIONS ---------//
-// function to assign the right routing function depending on order type and order phase
   void getRightMessageRoute() {
     if (order.orderType == OrderType.Laundry) {
       // START OF LAUNDRY ORDER LOGIC (PHASES)

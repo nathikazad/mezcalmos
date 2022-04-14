@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -8,22 +7,29 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/models/MezMarker.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:sizer/sizer.dart';
-//import 'package:sizer/sizer.dart';
 
 class MGoogleMapController {
   RxSet<Polyline> polylines = <Polyline>{}.obs;
-  RxList<Marker> markers = <Marker>[].obs;
-  Rxn<Location> location = Rxn();
+  RxList<MezMarker> markers = <MezMarker>[].obs;
+  Rxn<Location> location = Rxn<Location>();
   RxBool animateMarkersPolyLinesBounds = false.obs;
   GoogleMapController? controller;
   LatLngBounds? bounds;
   Function? onMapTap;
+  // this is used when we don't want to re-render the map periodically.
+  RxBool periodicRerendering = false.obs;
+  RxBool recenterButtonEnabled = false.obs;
+  late RxBool myLocationButtonEnabled;
+
+  MGoogleMapController({bool myLocationButtonEnabled = false}) {
+    this.myLocationButtonEnabled = RxBool(myLocationButtonEnabled);
+  }
 
   /// Instead of going over the cropping rounded process everytime we update Taxi Markers,
   ///
@@ -37,48 +43,59 @@ class MGoogleMapController {
     onMapTap = onTap;
   }
 
-  void _addOrUpdateMarker(Marker marker) {
+  void _addOrUpdateMarker(MezMarker marker) {
     markers.removeWhere(
-        (element) => element.markerId.value == marker.markerId.value);
+      (Marker _marker) => _marker.markerId.value == marker.markerId.value,
+    );
     markers.add(marker);
+    markers.refresh();
   }
 
   /// In Case we needed it
   void updateMarkersIconOnZoomChange({required double zoom}) {}
 
+  /// gets Called whenever a zoom Change happens in [MGoogleMap]
+  void onZoomChange(double newZoomValue) {}
+
   Future<void> addOrUpdateCircleMarker(LatLng latLng,
-      {String markerId = "default"}) async {
-    markers.removeWhere((element) => element.markerId.value == markerId);
-    markers.add(Marker(
+      {String markerId = "default", bool fitWithinBounds = true}) async {
+    markers.removeWhere((Marker _marker) => _marker.markerId.value == markerId);
+    markers.add(
+      MezMarker(
+        fitWithinBounds: fitWithinBounds,
         markerId: MarkerId(markerId),
         icon: await BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(), aPurpleLocationCircle),
+          ImageConfiguration(),
+          aPurpleLocationCircle,
+        ),
         flat: true,
-        position: latLng));
+        position: latLng,
+      ),
+    );
   }
 
   void removeCircleMarker({String markerId = "default"}) {
-    markers.removeWhere((element) => element.markerId.value == markerId);
+    markers.removeWhere((Marker _marker) => _marker.markerId.value == markerId);
   }
 
   double _calculateMarkersSize() {
-    var res = markersDefaultSize.value;
+    final double _res = markersDefaultSize.value;
 
     if (SizerUtil.height <= 868) {
       return 60;
     } else {
-      return res;
+      return _res;
     }
   }
 
-  Future<void> addOrUpdateUserMarker({
-    String? markerId,
-    required LatLng latLng,
-    String? customImgHttpUrl,
-  }) async {
+  Future<void> addOrUpdateUserMarker(
+      {String? markerId,
+      bool fitWithinBounds = true,
+      required LatLng latLng,
+      String? customImgHttpUrl}) async {
     BitmapDescriptor icon;
 
-    String? uImg = Get.find<AuthController>().user?.image ??
+    final String? uImg = Get.find<AuthController>().user?.image ??
         Get.find<AuthController>().user?.bigImage;
 
     if (uImg == null) {
@@ -98,11 +115,14 @@ class MGoogleMapController {
           isBytes: true);
     }
 
+    final String mId =
+        (markerId ?? Get.find<AuthController>().user?.id ?? 'ANONYMOUS');
+
     // default userId is authenticated's
     _addOrUpdateMarker(
-      Marker(
-        markerId: MarkerId(
-            markerId ?? Get.find<AuthController>().user?.id ?? 'ANONYMOUS'),
+      MezMarker(
+        fitWithinBounds: fitWithinBounds,
+        markerId: MarkerId(mId),
         icon: icon,
         position: latLng,
       ),
@@ -110,7 +130,7 @@ class MGoogleMapController {
   }
 
   Future<void> addOrUpdateTaxiDriverMarker(String markerId, LatLng latLng,
-      {String? markerTitle}) async {
+      {String? markerTitle, bool fitWithinBounds = true}) async {
     // this check so we keep one single copy of the asset Bytes instead of re-croping again n again
     if (_taxiDriverImgDescruptorCopy == null) {
       _taxiDriverImgDescruptorCopy = await cropRonded(
@@ -118,25 +138,34 @@ class MGoogleMapController {
               .buffer
               .asUint8List());
     }
-    _addOrUpdateMarker(Marker(
-        infoWindow: markerTitle == null
-            ? InfoWindow.noText
-            : InfoWindow(title: markerTitle),
-        markerId: MarkerId(markerId),
-        icon: await bitmapDescriptorLoader(
-            (await cropRonded((await rootBundle.load(taxi_driver_marker_asset))
-                .buffer
-                .asUint8List())),
+
+    _addOrUpdateMarker(
+      MezMarker(
+          fitWithinBounds: fitWithinBounds,
+          infoWindow: markerTitle == null
+              ? InfoWindow.noText
+              : InfoWindow(title: markerTitle),
+          markerId: MarkerId(markerId),
+          icon: await bitmapDescriptorLoader(
+            (await cropRonded(
+              (await rootBundle.load(taxi_driver_marker_asset))
+                  .buffer
+                  .asUint8List(),
+            )),
             _calculateMarkersSize(),
             _calculateMarkersSize(),
-            isBytes: true),
-        flat: true,
-        position: latLng));
+            isBytes: true,
+          ),
+          flat: true,
+          position: latLng),
+    );
   }
 
   Future<void> addOrUpdatePurpleDestinationMarker(
-      {String markerId = "dest", required LatLng latLng}) async {
-    BitmapDescriptor icon = await bitmapDescriptorLoader(
+      {String markerId = "dest",
+      required LatLng latLng,
+      bool fitWithinBounds = true}) async {
+    final BitmapDescriptor icon = await bitmapDescriptorLoader(
         (await cropRonded(
             (await rootBundle.load(purple_destination_marker_asset))
                 .buffer
@@ -147,7 +176,13 @@ class MGoogleMapController {
     // markerId = markerId;
 
     _addOrUpdateMarker(
-        Marker(markerId: MarkerId(markerId), icon: icon, position: latLng));
+      MezMarker(
+        fitWithinBounds: fitWithinBounds,
+        markerId: MarkerId(markerId),
+        icon: icon,
+        position: latLng,
+      ),
+    );
   }
 
   void removeDestinationMarker({String id = "dest"}) {
@@ -156,25 +191,22 @@ class MGoogleMapController {
 
   void decodeAndAddPolyline({required String encodedPolylineString}) {
     addPolyline(MapHelper.loadUpPolyline(encodedPolylineString)
-        .map<PointLatLng>((e) => PointLatLng(e.latitude, e.longitude))
+        .map<PointLatLng>((LatLng e) => PointLatLng(e.latitude, e.longitude))
         .toList());
   }
 
   void removeMarkerById(String markerId) {
-    markers.removeWhere((element) => element.markerId.value == markerId);
+    markers.removeWhere((Marker _marker) => _marker.markerId.value == markerId);
   }
 
   void removerAuthenticatedUserMarker() {
-    markers.removeWhere((element) =>
-        element.markerId.value ==
-        (Get.find<AuthController>().user?.id ?? 'ANONYMOUS'));
+    final String _mId = (Get.find<AuthController>().user?.id ?? 'ANONYMOUS');
+    markers.removeWhere((Marker _marker) => _marker.markerId.value == _mId);
   }
 
-  void addPolyline(List<PointLatLng> latLngPoints) {
-    mezDbgPrint("---< $latLngPoints");
-    mezDbgPrint(
-        "[   M GOOGLE MAP CONTROLLER BEFORE ] ===> POLYLINES > $polylines");
-    Polyline _poly = Polyline(
+  void addPolyline(List<PointLatLng> latLngPoints,
+      {bool fitWithinBounds = true}) {
+    final Polyline _poly = Polyline(
         color: Color.fromARGB(255, 172, 89, 252),
         jointType: JointType.round,
         width: 2,
@@ -183,13 +215,9 @@ class MGoogleMapController {
         polylineId: PolylineId('_poly_'),
         visible: true,
         points: latLngPoints
-            .map<LatLng>((e) => LatLng(e.latitude, e.longitude))
+            .map<LatLng>((PointLatLng e) => LatLng(e.latitude, e.longitude))
             .toList());
     polylines.assign(_poly);
-
-    mezDbgPrint(
-        "[   M GOOGLE MAP CONTROLLER AFTER ] ===> POLYLINES > $polylines");
-
     animateMarkersPolyLinesBounds.value = true;
   }
 
@@ -201,14 +229,13 @@ class MGoogleMapController {
     animateMarkersPolyLinesBounds.value = value;
   }
 
-  void moveToNewLatLng(double lat, double lng) async {
+  Future<void> moveToNewLatLng(double lat, double lng) async {
     await controller?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
   }
 
   Future<LatLng> getMapCenter() async {
-    LatLngBounds? visibleRegion = await controller?.getVisibleRegion();
-
-    LatLng centerLatLng = visibleRegion == null
+    final LatLngBounds? visibleRegion = await controller?.getVisibleRegion();
+    final LatLng centerLatLng = visibleRegion == null
         ? LatLng(0, 0)
         : LatLng(
             (visibleRegion.northeast.latitude +
@@ -233,7 +260,8 @@ class MGoogleMapController {
   // Animate the camera using widget.bounds
   Future<void> animateCameraWithNewBounds() async {
     if (controller != null && bounds != null) {
-      CameraUpdate _camUpdate = CameraUpdate.newLatLngBounds(bounds!, 100);
+      final CameraUpdate _camUpdate =
+          CameraUpdate.newLatLngBounds(bounds!, 100);
       await controller!.animateCamera(_camUpdate);
       await _boundsReChecker(_camUpdate);
     }
@@ -241,10 +269,9 @@ class MGoogleMapController {
 
   // Cheker -> Animate first and Double check if the bounds fit well the MapScreen
   Future<void> _boundsReChecker(CameraUpdate u) async {
-    controller?.animateCamera(u);
-    controller?.animateCamera(u);
-    LatLngBounds? l1 = await controller?.getVisibleRegion();
-    LatLngBounds? l2 = await controller?.getVisibleRegion();
+    await controller?.animateCamera(u);
+    final LatLngBounds? l1 = await controller?.getVisibleRegion();
+    final LatLngBounds? l2 = await controller?.getVisibleRegion();
     if (l1 != null && l2 != null) {
       if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90)
         await _boundsReChecker(u);
@@ -253,13 +280,15 @@ class MGoogleMapController {
 
   // adds up the markers the new markers latLn ot polyline's and calculate out of them all the latLngbounds
   LatLngBounds? _getMarkersAndPolylinesBounds() {
-    List<LatLng> _bnds = [..._getLatLngBoundsFromPolyline(polylines)];
-    // mezDbgPrint("+ Added Polyline ${_bnds} TO BOUNDS!");
+    final List<LatLng> _polyLinesBnds = _getLatLngBoundsFromPolyline(polylines);
 
-    markers.forEach((cmarker) {
-      // mezDbgPrint("+ ADDING MARKER ${cmarker.markerId.value} TO BOUNDS!");
-      _bnds.add(cmarker.position);
+    final List<LatLng> _bnds = <LatLng>[..._polyLinesBnds];
+    markers.forEach((MezMarker _marker) {
+      if (_marker.fitWithinBounds) {
+        _bnds.add(_marker.position);
+      }
     });
+
     return _bnds.isEmpty ? null : MapHelper.createMapBounds(_bnds);
   }
 
@@ -271,8 +300,8 @@ class MGoogleMapController {
       double minLong = p.first.points.first.longitude;
       double maxLat = p.first.points.first.latitude;
       double maxLong = p.first.points.first.longitude;
-      p.forEach((poly) {
-        poly.points.forEach((point) {
+      p.forEach((Polyline poly) {
+        poly.points.forEach((LatLng point) {
           if (point.latitude < minLat) minLat = point.latitude;
           if (point.latitude > maxLat) maxLat = point.latitude;
           if (point.longitude < minLong) minLong = point.longitude;
@@ -280,20 +309,37 @@ class MGoogleMapController {
         });
       });
 
-      return [LatLng(minLat, minLong), LatLng(maxLat, maxLong)];
+      return <LatLng>[LatLng(minLat, minLong), LatLng(maxLat, maxLong)];
     } else {
-      return [];
+      return <LatLng>[];
     }
   }
 
-  // main function for updating the bounds and start the animation
+  /// Main function for updating the bounds and start the animation
   Future<void> animateAndUpdateBounds() async {
-    setBounds(
-      animateMarkersPolyLinesBounds.value
+    if (periodicRerendering.value) {
+      setBounds(animateMarkersPolyLinesBounds.value
           ? _getMarkersAndPolylinesBounds()
-          : null,
-    );
-    await animateCameraWithNewBounds();
+          : null);
+      await animateCameraWithNewBounds();
+    }
+  }
+
+  /// This locks In AutoZoom and AutoAnimate
+  void lockInAutoZoomAnimation() {
+    if (!periodicRerendering.value) {
+      periodicRerendering.value = true;
+      recenterButtonEnabled.value = false;
+    }
+  }
+
+  /// Unlock AutoZoom and AutoAnimation and shows [Recenter Button]
+  void unlockAutoZoomAnimation() {
+    if (periodicRerendering.value) {
+      periodicRerendering.value = false;
+      myLocationButtonEnabled.value = false;
+      recenterButtonEnabled.value = true;
+    }
   }
 
   MinMaxZoomPreference getMapMinMaxZommPrefs() {

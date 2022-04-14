@@ -32,8 +32,8 @@ class LocationPickerController extends MGoogleMapController {
   /// blackScreenBottomTextMargin
   RxDouble blackScreenBottomTextMargin = 0.0.obs;
 
-  /// myLocationButtonEnabled
-  RxBool myLocationButtonEnabled = true.obs;
+  LocationPickerController({bool myLocationButtonEnabled = true})
+      : super(myLocationButtonEnabled: myLocationButtonEnabled);
 
   void showOrHideBlackScreen(bool value) {
     _showBlackScreen.value = value;
@@ -66,14 +66,6 @@ class LocationPickerController extends MGoogleMapController {
 }
 
 class LocationPicker extends StatefulWidget {
-  const LocationPicker({
-    this.showBottomButton = true,
-    this.onSuccessSignIn,
-    required this.notifyParentOfLocationFinalized,
-    required this.notifyParentOfConfirm,
-    required this.locationPickerMapController,
-  });
-
   /// notifyParentOfLocationFinalized
   final MapHelper.LocationChangesNotifier notifyParentOfLocationFinalized;
 
@@ -88,7 +80,12 @@ class LocationPicker extends StatefulWidget {
 
   /// showBottomButton
   final bool showBottomButton;
-
+  const LocationPicker(
+      {this.showBottomButton = true,
+      this.onSuccessSignIn,
+      required this.notifyParentOfLocationFinalized,
+      required this.notifyParentOfConfirm,
+      required this.locationPickerMapController});
   @override
   LocationPickerState createState() => LocationPickerState();
 }
@@ -108,30 +105,26 @@ class LocationPickerState extends State<LocationPicker> {
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-    return Obx(
-      () => widget.locationPickerMapController.location.value != null
-          ? Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                MGoogleMap(
-                  mGoogleMapController: widget.locationPickerMapController,
-                  notifyParentOfNewLocation:
-                      widget.notifyParentOfLocationFinalized,
-                  periodicRerendering: false,
-                  myLocationButtonEnabled: widget.locationPickerMapController
-                      .myLocationButtonEnabled.value,
-                ),
-                widget.locationPickerMapController._showFakeMarker.value
-                    ? pickerMarker()
-                    : const SizedBox(),
-                widget.locationPickerMapController._showBlackScreen.value
-                    ? gestureDetector()
-                    : const SizedBox(),
-                widget.showBottomButton ? bottomButton() : const SizedBox()
-              ],
-            )
-          : Center(child: CircularProgressIndicator()),
-    );
+    return Obx(() => widget.locationPickerMapController.location.value != null
+        ? Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              MGoogleMap(
+                recenterBtnBottomPadding: 150,
+                mGoogleMapController: widget.locationPickerMapController,
+                notifyParentOfNewLocation:
+                    widget.notifyParentOfLocationFinalized,
+              ),
+              widget.locationPickerMapController._showFakeMarker.value
+                  ? pickerMarker()
+                  : SizedBox(),
+              widget.locationPickerMapController._showBlackScreen.value
+                  ? gestureDetector()
+                  : SizedBox(),
+              widget.showBottomButton ? bottomButton() : SizedBox()
+            ],
+          )
+        : Center(child: CircularProgressIndicator()));
   }
 
   /******************************  Widgets ************************************/
@@ -207,23 +200,21 @@ class LocationPickerState extends State<LocationPicker> {
         child: Container(
           height: 45,
           margin: EdgeInsets.only(
-            bottom:
-                widget.locationPickerMapController.myLocationButtonEnabled.value
-                    ? 2
-                    : 15,
-          ),
+              bottom: widget
+                      .locationPickerMapController.myLocationButtonEnabled.value
+                  ? 2
+                  : 15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             gradient: LinearGradient(
-              colors: notifier != null
-                  ? <Color>[
-                      Color.fromRGBO(81, 132, 255, 1),
-                      Color.fromRGBO(206, 73, 252, 1)
-                    ]
-                  : <Color>[Colors.grey.shade400, Colors.grey.shade400],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+                colors: notifier != null
+                    ? <Color>[
+                        Color.fromRGBO(81, 132, 255, 1),
+                        Color.fromRGBO(206, 73, 252, 1)
+                      ]
+                    : <Color>[Colors.grey.shade400, Colors.grey.shade400],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight),
           ),
           child: Center(
             child: buttonText != null
@@ -305,7 +296,6 @@ class LocationPickerState extends State<LocationPicker> {
 
   /******************************  helper functions ************************************/
   Future<Location> getCenterAndGeoCode() async {
-    mezDbgPrint("zlaganga ==> called");
     final LatLng _mapCenter =
         await widget.locationPickerMapController.getMapCenter();
 
@@ -313,12 +303,10 @@ class LocationPickerState extends State<LocationPicker> {
         Location.buildLocationData(_mapCenter.latitude, _mapCenter.longitude);
 
     final double kmDistance = MapHelper.calculateDistance(
-      _newLocationData,
-      Location.buildLocationData(
-        widget.locationPickerMapController.location.value!.latitude,
-        widget.locationPickerMapController.location.value!.longitude,
-      ),
-    );
+        _newLocationData,
+        Location.buildLocationData(
+            widget.locationPickerMapController.location.value!.latitude,
+            widget.locationPickerMapController.location.value!.longitude));
 
     String formattedAddress =
         widget.locationPickerMapController.location.value!.address;

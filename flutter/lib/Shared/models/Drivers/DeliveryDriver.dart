@@ -12,11 +12,9 @@ class DeliveryDriverState {
   });
 
   factory DeliveryDriverState.fromSnapshot(data) {
-    // mezDbgPrint("DeliveryDriver ${data}");
     final bool isAuthorized =
         data == null ? false : data['authorizationStatus'] == "authorized";
     final bool isOnline = data == null ? false : data['isOnline'] == true;
-    // String? currentOrder = data == null ? null : data['currentOrderId'];
     return DeliveryDriverState(isAuthorized: isAuthorized, isOnline: isOnline);
   }
 
@@ -24,11 +22,6 @@ class DeliveryDriverState {
         "authorizationStatus": isAuthorized,
         "isOnline": isOnline,
       };
-
-  @override
-  String toString() {
-    return 'DeliveryDriverState{isAuthorized: $isAuthorized, isOnline: $isOnline}';
-  }
 }
 
 // used by delivery admin app
@@ -126,7 +119,6 @@ class DeliveryDriverUserInfo extends UserInfo {
         );
 
   factory DeliveryDriverUserInfo.fromData(data) {
-    // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
     final LatLng? location = data["location"] != null
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])
@@ -148,6 +140,7 @@ class DeliveryDriverUserInfo extends UserInfo {
   }
 }
 
+// ignore: constant_identifier_names
 enum DeliveryDriverType { Pickup, DropOff }
 
 extension ParseDeliveryDriverTypeToString on DeliveryDriverType {

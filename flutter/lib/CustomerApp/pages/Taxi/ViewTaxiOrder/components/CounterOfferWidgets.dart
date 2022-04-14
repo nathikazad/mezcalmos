@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/controllers/ViewTaxiOrderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
@@ -37,21 +38,18 @@ class CounterOfferWidgets {
               Text(
                 _i18n()['offers'],
                 style: TextStyle(
-                  fontFamily: "psr",
-                  color: Colors.white,
-                  fontWeight: FontWeight.w300,
-                  fontSize: 18,
-                ),
+                    fontFamily: "psr",
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 18),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: 10),
               Container(
                 height: 20,
                 width: 20,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
                 child: Text(
                   viewController.counterOffers.length.toString(),
                   textAlign: TextAlign.center,
@@ -90,7 +88,7 @@ class CounterOfferWidgets {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
+                    children: <Text>[
                       Text(
                         _i18n()['offers'],
                         style: Theme.of(context)
@@ -116,20 +114,20 @@ class CounterOfferWidgets {
 
   List<Widget> getCounterOffersListItems(BuildContext context) {
     final List<Widget> _widgets = <Widget>[];
-    viewController.counterOffers().forEach(
-      (CounterOffer offer) {
-        _widgets.addAll(
-          <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 50, right: 50, top: 5),
-              child: Divider(),
-            ),
-            buildContainer(offer, context)
-            // list items of CounterOffer
-          ],
-        );
-      },
-    );
+
+    viewController.counterOffers().forEach((CounterOffer offer) {
+      _widgets.addAll(
+        <Widget>[
+          Padding(
+            padding: EdgeInsets.only(left: 50, right: 50, top: 5),
+            child: Divider(),
+          ),
+          buildContainer(offer, context)
+          // list items of CounterOffer
+        ],
+      );
+    });
+
     return _widgets;
   }
 
@@ -166,26 +164,25 @@ class CounterOfferWidgets {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  offer.driverInfo.name,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(fontWeight: FontWeight.bold, fontSize: 12.sp),
-                ),
-                Text(
-                  "\$${offer.price}",
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(fontWeight: FontWeight.bold, fontSize: 11.sp),
-                ),
-              ],
-            ),
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Text>[
+                  Text(
+                    offer.driverInfo.name,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(fontWeight: FontWeight.bold, fontSize: 12.sp),
+                  ),
+                  Text(
+                    "\$${offer.price}",
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(fontWeight: FontWeight.bold, fontSize: 11.sp),
+                  ),
+                ]),
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: Row(
@@ -209,13 +206,13 @@ class CounterOfferWidgets {
                                   viewController.order.value!.orderId,
                                   viewController.order.value!.customer.id,
                                   offer.driverInfo.id);
-                          if (!_response.success) {
+                          if (_response.success) {
                             viewController.clickedAccept.value = false;
                             viewController.animatedSliderController.slideDown();
                           } else {
                             viewController.offersBtnClicked.value = false;
                             viewController.animatedSliderController.slideDown();
-                            MezSnackbar("Oops", _response.errorMessage!);
+                            MezSnackbar("Oops", _i18n()['failedToAcceptOffer']);
                           }
                         },
                         child: Icon(
@@ -235,8 +232,8 @@ class CounterOfferWidgets {
                         shape: BoxShape.circle),
                     child: Center(
                       child: InkWell(
-                        onTap: () async {
-                          await viewController.taxiController
+                        onTap: () {
+                          viewController.taxiController
                               .rejectCounterOffer(
                                   viewController.order.value!.orderId,
                                   viewController.order.value!.customer.id,

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["TaxiOrder"]["components"]["taxiOrderBottomCard"];
@@ -35,89 +36,131 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(8),
-      child: Container(
+    return SingleChildScrollView(
+      physics: ClampingScrollPhysics(),
+      child: Card(
         margin: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(_getOrderStatus()),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 5),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    '${_i18n()['customer']} ',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                  Expanded(child: Divider()),
-                ],
+        child: Container(
+          margin: const EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(_getOrderStatus()),
               ),
-            ),
-            Row(
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage:
-                      CachedNetworkImageProvider(widget.order.customer.image),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  children: [
+                    Text('${_i18n()['customer']} ',
+                        style: Theme.of(context).textTheme.subtitle1),
+                    Expanded(child: Divider())
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        widget.order.customer.name,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
+              ),
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundImage:
+                        CachedNetworkImageProvider(widget.order.customer.image),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Flexible(
+                    flex: 5,
+                    fit: FlexFit.tight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.order.customer.name,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  Stack(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Get.toNamed(getMessagesRoute(
+                                chatId: widget.order.orderId,
+                                orderId: widget.order.orderId));
+                          },
+                          icon: Icon(
+                            Icons.message_rounded,
+                            color: Theme.of(context).primaryColorLight,
+                          )),
+                      Obx(
+                        () => Get.find<TaxiOrderController>()
+                                .orderHaveNewMessageNotifications(
+                                    widget.order.orderId)
+                            ? _newMessageRedDot(context)
+                            : Container(),
+                      )
                     ],
                   ),
-                ),
-              ],
-            ),
-            if (widget.order.serviceProvider != null) _orderTaxiDriver(context),
-            const Divider(),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Text('${_i18n()['distance']}'),
-                  const SizedBox(width: 5),
-                  Text(
-                    widget.order.routeInformation!.distance.distanceStringInKm,
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
+                  SizedBox(
+                    width: 5,
+                  )
                 ],
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '${_i18n()['from']}' + widget.order.from.address,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '${_i18n()['to']}' + widget.order.to.address,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            const SizedBox(height: 10),
-            Obx(
-              () {
-                if (!btnClicked.value) {
-                  return _getOrderBottomComponent(context);
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            ),
-          ],
+              if (widget.order.serviceProvider != null)
+                _orderTaxiDriver(context),
+              Divider(),
+              Container(
+                child: Row(
+                  children: [
+                    Text('${_i18n()['distance']}'),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      widget
+                          .order.routeInformation!.distance.distanceStringInKm,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Text(
+                '${_i18n()['from']}' + widget.order.from.address,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Text('${_i18n()['to']}' + widget.order.to.address,
+                  style: Theme.of(context).textTheme.bodyText2),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget _newMessageRedDot(BuildContext context) {
+    return Positioned(
+      left: 0,
+      top: 0,
+      child: Container(
+        width: 13,
+        height: 13,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: const Color(0xfff6efff), width: 2),
+            color: const Color(0xffff0000)),
       ),
     );
   }

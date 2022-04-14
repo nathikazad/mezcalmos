@@ -47,8 +47,18 @@ class RequestTaxiController {
   /// Timer
   Timer? timer;
 
+  void startPollingOnlineDrivers() {
+    startFetchingOnlineDrivers();
+    // then keep it periodic each 10s
+    timer?.cancel();
+    timer = null;
+    timer = Timer.periodic(Duration(seconds: 10), (Timer timer) {
+      startFetchingOnlineDrivers();
+    });
+  }
+
   /// this is called at initState time , loads up the map and set the current location as the user's current loc.
-  void initiateViewAndMapWithCurrentLocation() {
+  void initMapAndStartFetchingOnlineDrivers() {
     locationPickerController.setOnMapTap(onTap: () {
       locationSearchBarController.unfocusAllFocusNodes.call();
     });
@@ -65,6 +75,7 @@ class RequestTaxiController {
       taxiRequest.value.from = Location("", locData);
       updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
       locationPickerController.setLocation(taxiRequest.value.from!);
+      startPollingOnlineDrivers();
     });
   }
 
@@ -98,14 +109,15 @@ class RequestTaxiController {
     locationPickerController.addOrUpdatePurpleDestinationMarker(
         latLng: LatLng(taxiRequest.value.to!.position.latitude!,
             taxiRequest.value.to!.position.longitude!));
+
+    locationPickerController.periodicRerendering.value = true;
     locationPickerController.hideFakeMarker();
     locationPickerController.setAnimateMarkersPolyLinesBounds(true);
     locationPickerController.animateAndUpdateBounds();
-    updateRouteInformation().then(
-      (_) => locationPickerController.showConfirmButton(),
-    );
-
+    updateRouteInformation()
+        .then((_) => locationPickerController.showConfirmButton());
     pickedFromTo.value = true;
+    startPollingOnlineDrivers();
   }
 
   /// Calls `TaxiController.fecthOnlineTaxiDrivers` and check if within 5KM then returns the driver.
@@ -113,7 +125,6 @@ class RequestTaxiController {
     controller.fetchOnlineTaxiDrivers().then((List<OnlineTaxiDriver> drivers) {
       // Weo loop throught each driver and we call the mgoogleMap refresh from withing the controller
       drivers.forEach((OnlineTaxiDriver driver) {
-        mezDbgPrint("======= [ driver ] ====== ${driver.toJson()}");
         final LatLng driverLocation =
             LatLng(driver.position['lat'], driver.position['lng']);
 
@@ -126,8 +137,6 @@ class RequestTaxiController {
             5;
 
         if (isWithinRange) {
-          mezDbgPrint(
-              "[xdbg]Adding marker with driver name === ${driver.name} | id ${driver.taxiId}");
           locationPickerController.addOrUpdateTaxiDriverMarker(
               driver.taxiId, driverLocation,
               markerTitle: driver.name);
@@ -177,12 +186,14 @@ class RequestTaxiController {
     currentFocusedTextField.refresh();
     taxiRequest.refresh();
     if (taxiRequest.value.isFromToSet()) {
+      locationPickerController.periodicRerendering.value = true;
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
       locationPickerController.animateAndUpdateBounds();
       updateRouteInformation()
           .then((_) => locationPickerController.showConfirmButton());
       pickedFromTo.value = true;
     } else {
+      locationPickerController.periodicRerendering.value = false;
       locationPickerController.setAnimateMarkersPolyLinesBounds(false);
       locationPickerController.showGrayedOutButton();
       // locationPickerController.removeCircleMarker();
@@ -194,14 +205,10 @@ class RequestTaxiController {
   /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
   Future<void> waitForCurrentOrderStreamFirstTrigger(String orderId) async {
     if (Get.find<OrderController>().getOrder(orderId) == null) {
-      mezDbgPrint(
-          "[+] s@@d ==> [ REQUEST TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
       await Get.find<OrderController>()
           .getCurrentOrderStream(orderId)
           .firstWhere((Order? order) => order != null);
-    } else
-      mezDbgPrint(
-          "[+] s@@d ==> [ REQUEST TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
+    }
   }
 
   /// after confirm button is clicked on mez pick google map.

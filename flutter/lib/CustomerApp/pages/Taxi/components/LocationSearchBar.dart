@@ -89,11 +89,13 @@ class LocationSearchBar extends StatefulWidget {
   final TaxiRequest request;
   final SearchLocationNotifier newLocationChosenEvent;
   final LocationSearchBarController locationSearchBarController;
+  final void Function()? onClear;
 
-  const LocationSearchBar({
+  LocationSearchBar({
     required this.request,
     required this.newLocationChosenEvent,
     required this.locationSearchBarController,
+    this.onClear = null,
   });
 
   @override
@@ -342,6 +344,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   /******************************  EVENT HANDLERS ************************************/
 // To Text Field Callbacks ---------------------------------------------------------------------------
   void textFieldOnClear(SearchComponentType _type) {
+    widget.onClear?.call();
     setState(() {
       if (_type == SearchComponentType.From) {
         locationSearchBarController.fromTextFieldFocusNode.requestFocus();

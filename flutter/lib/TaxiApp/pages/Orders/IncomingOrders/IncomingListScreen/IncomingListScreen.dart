@@ -257,7 +257,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
     );
   }
 
-  /// When there are no Orders in [_restaurantController.orders] we show this Widget
+  /// When there are no Orders in [mGoogleController.orders] we show this Widget
   Widget noOrdersScreen() {
     return Center(
         child: Column(

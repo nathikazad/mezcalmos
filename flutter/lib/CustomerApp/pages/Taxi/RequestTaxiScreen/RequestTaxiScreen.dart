@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.da
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiReqBottomBar.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -29,7 +30,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
   @override
   void initState() {
-    super.initState();
+    viewController.locationPickerController.recenterButtonEnabled.value = false;
     viewWidgets =
         RequestTaxiScreenWidgets(requestTaxiController: viewController);
 
@@ -38,8 +39,9 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       viewController.initiateTaxiOrderReCreation(Get.arguments as TaxiRequest);
     } else {
       // when no args passed we simply initialte the view and map with current user's loc.
-      viewController.initiateViewAndMapWithCurrentLocation();
+      viewController.initMapAndStartFetchingOnlineDrivers();
     }
+    super.initState();
   }
 
   @override
@@ -60,46 +62,48 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
             Container(
               width: Get.width,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.white,
-              ),
+                  borderRadius: BorderRadius.circular(5), color: Colors.white),
               child: LocationPicker(
-                /// [onSuccessSignIn] THIS WILL GETS EXECUTED IF USER GOT SIGNED IN SUCCESSFULY
-                // AFTER HE CREATED HIS TAXI REQUESTED WHILE HE WAS SIGNEDOUT
-                onSuccessSignIn: viewController.onSuccessSignInUpdateUserMarker,
-                locationPickerMapController:
-                    viewController.locationPickerController,
-                notifyParentOfLocationFinalized:
-                    viewController.updateModelAndMaybeCalculateRoute,
-                notifyParentOfConfirm: (_) async {
-                  if (GetStorage().read<String>(getxLmodeKey) == "prod" &&
-                      Get.find<AuthController>().fireAuthUser?.uid ==
-                          testUserIdInProd) {
-                    MezSnackbar(
-                      "Oops",
-                      "This prod version is live and running , we can't let you do that :( !",
-                    );
-                  } else if (!lockOnTaxiRequest) {
-                    // lock to avoid the user Fast button taps aka fast-taps .
-                    lockOnTaxiRequest = true;
-                    bool res = await viewController.requestTaxi();
-                    if (!res) {
-                      lockOnTaxiRequest = false;
+
+                  /// [onSuccessSignIn] THIS WILL GETS EXECUTED IF USER GOT SIGNED IN SUCCESSFULY
+                  // AFTER HE CREATED HIS TAXI REQUESTED WHILE HE WAS SIGNEDOUT
+                  onSuccessSignIn:
+                      viewController.onSuccessSignInUpdateUserMarker,
+                  locationPickerMapController:
+                      viewController.locationPickerController,
+                  notifyParentOfLocationFinalized:
+                      viewController.updateModelAndMaybeCalculateRoute,
+                  notifyParentOfConfirm: (Location? _) async {
+                    if (GetStorage().read<String?>(getxLmodeKey) == "prod" &&
+                        Get.find<AuthController>().fireAuthUser?.uid ==
+                            testUserIdInProd) {
+                      MezSnackbar("Oops",
+                          "This prod version is live and running , we can't let you do that :( !");
+                    } else if (!lockOnTaxiRequest) {
+                      // lock to avoid the user Fast button taps aka fast-taps .
+                      lockOnTaxiRequest = true;
+                      final bool res = await viewController.requestTaxi();
+                      if (!res) {
+                        lockOnTaxiRequest = false;
+                      }
                     }
-                  }
-                },
-              ),
+                  }),
             ),
             // --- <>
             Obx(
               () => LocationSearchBar(
-                request: viewController.taxiRequest.value,
-                locationSearchBarController:
-                    viewController.locationSearchBarController,
-                newLocationChosenEvent:
-                    viewController.updateModelAndHandoffToLocationPicker,
-              ),
+                  request: viewController.taxiRequest.value,
+                  locationSearchBarController:
+                      viewController.locationSearchBarController,
+                  onClear: () {
+                    // we set that back to false
+                    viewController.locationPickerController.periodicRerendering
+                        .value = false;
+                  },
+                  newLocationChosenEvent:
+                      viewController.updateModelAndHandoffToLocationPicker),
             ),
+
             // from , to
             viewController.pickedFromTo.value
                 ? TaxiReqBottomBar(

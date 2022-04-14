@@ -17,16 +17,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Taxi"]["components"]["TaxiBottomBars"]["TaxiOrderBottomBar"];
 
 class TaxiOrderBottomBar extends StatefulWidget {
-  final Rxn<TaxiOrder> order;
-
   /// Show a bottom bar that depends on the status
   /// normally shows taxi avatar and name but if order is looking
   /// then shows increment and decrement price buttons
-  const TaxiOrderBottomBar({
-    Key? key,
-    required this.order,
-  }) : super(key: key);
-
+  const TaxiOrderBottomBar({Key? key, required this.order}) : super(key: key);
+  final Rxn<TaxiOrder> order;
   @override
   _TaxiOrderBottomBarState createState() => _TaxiOrderBottomBarState();
 }
@@ -34,30 +29,28 @@ class TaxiOrderBottomBar extends StatefulWidget {
 class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 25,
-      right: 15,
-      left: 15,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        margin: EdgeInsets.only(
-          bottom:
-              (widget.order.value!.status == TaxiOrdersStatus.LookingForTaxi)
+    return Obx(
+      () => Positioned(
+        bottom: 25,
+        right: 15,
+        left: 15,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          margin: EdgeInsets.only(
+              bottom: (widget.order.value!.status ==
+                      TaxiOrdersStatus.LookingForTaxi)
                   ? 45
-                  : 0,
-        ),
-        height: 70,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            width: 1,
-            color: Theme.of(context).scaffoldBackgroundColor,
+                  : 0),
+          height: 70,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                  width: 1, color: Theme.of(context).scaffoldBackgroundColor),
+              color: Colors.white),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: buildBottomByStatus(context),
           ),
-          color: Colors.white,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: buildBottomBatByStatus(context),
         ),
       ),
     );
@@ -210,8 +203,8 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
     );
   }
 
-  List<Widget> buildBottomBatByStatus(BuildContext pContext) {
-    final List<Widget> _widgies = <Widget>[];
+  List<Widget> buildBottomByStatus(BuildContext pContext) {
+    final List<Widget> _widgies = [];
     switch (widget.order.value!.status) {
       case TaxiOrdersStatus.LookingForTaxi:
         _widgies.assignAll(
@@ -226,24 +219,18 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
         break;
 
       case TaxiOrdersStatus.DroppedOff:
-        _widgies.assignAll(
-          <Widget>[
-            taxiAvatarAndName(
+        _widgies.assignAll(<Widget>[
+          taxiAvatarAndName(
               description: _i18n()?['rideFinished'],
               pContext: pContext,
-              order: widget.order.value!,
-            ),
-            const VerticalDivider(),
-            rideCost(
-              widget.order.value!.toTaxiRequest().estimatedPrice.toString(),
-            ),
-            const VerticalDivider(),
-            messageBtn(
-              order: widget.order.value!,
-              margin: EdgeInsets.symmetric(horizontal: 6),
-            )
-          ],
-        );
+              order: widget.order.value!),
+          VerticalDivider(),
+          rideCost(
+              widget.order.value!.toTaxiRequest().estimatedPrice.toString()),
+          VerticalDivider(),
+          messageBtn(
+              order: widget.order, margin: EdgeInsets.symmetric(horizontal: 6))
+        ]);
         break;
       case TaxiOrdersStatus.Expired:
         _widgies.assignAll(
@@ -264,19 +251,15 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
         break;
 
       case TaxiOrdersStatus.CancelledByTaxi:
-        _widgies.assignAll(
-          <Widget>[
-            taxiAvatarAndName(
-                order: widget.order.value!,
-                pContext: pContext,
-                description: _i18n()?['rideCancelledByTaxi']),
-            messageBtn(
-                order: widget.order.value!,
-                margin: EdgeInsets.symmetric(horizontal: 6)),
-            RecreateOrderButton(
-                taxiRequest: widget.order.value!.toTaxiRequest()),
-          ],
-        );
+        _widgies.assignAll([
+          taxiAvatarAndName(
+              order: widget.order.value!,
+              pContext: pContext,
+              description: _i18n()?['rideCancelledByTaxi']),
+          messageBtn(
+              order: widget.order, margin: EdgeInsets.symmetric(horizontal: 6)),
+          RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest()),
+        ]);
         // widget.bottomPadding = 10.0;
         break;
 
@@ -299,31 +282,29 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
         // widget.bottomPadding = 10.0;
         break;
       case TaxiOrdersStatus.ForwardingToLocalCompany:
-        _widgies.assignAll(
-          <Widget>[
-            CircleAvatar(
-              radius: 17,
-              child: Icon(
-                Icons.local_taxi,
-                color: Colors.white,
-              ),
+        _widgies.assignAll(<Widget>[
+          CircleAvatar(
+            radius: 17,
+            child: Icon(
+              Icons.local_taxi,
+              color: Colors.white,
             ),
-            const SizedBox(width: 5),
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 7,
-              child: Text(
-                '${_i18n()["forwarding"]}',
-                style: Theme.of(pContext)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(fontSize: 11.sp),
-              ),
+          ),
+          const SizedBox(width: 5),
+          Flexible(
+            fit: FlexFit.tight,
+            flex: 7,
+            child: Text(
+              '${_i18n()["forwarding"]}',
+              style: Theme.of(pContext)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(fontSize: 11.sp),
             ),
-            const Spacer(),
-            cancelBtn(widget.order.value!)
-          ],
-        );
+          ),
+          Spacer(),
+          buildMsgAndCancelBtn(widget.order)
+        ]);
         // widget.bottomPadding = 10.0;
         break;
       case TaxiOrdersStatus.ForwardingSuccessful:
@@ -380,19 +361,17 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
         // widget.bottomPadding = 10.0;
         break;
       default:
-        _widgies.assignAll(
-          <Widget>[
-            taxiAvatarAndName(
-              order: widget.order.value!,
-              pContext: pContext,
-            ),
-            verticalSeparator(),
-            rideCost(
-                widget.order.value!.toTaxiRequest().estimatedPrice.toString()),
-            verticalSeparator(),
-            buildMsgAndCancelBtn(widget.order.value!)
-          ],
-        );
+        _widgies.assignAll([
+          taxiAvatarAndName(
+            order: widget.order.value!,
+            pContext: pContext,
+          ),
+          verticalSeparator(),
+          rideCost(
+              widget.order.value!.toTaxiRequest().estimatedPrice.toString()),
+          verticalSeparator(),
+          buildMsgAndCancelBtn(widget.order)
+        ]);
       // widget.bottomPadding = 10.0;
     }
     return _widgies;

@@ -13,8 +13,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["notificationHandler"];
 
 Notification deliveryDriverNotificationHandler(String key, value) {
+  mezDbgPrint(
+      "Notif type ========&&&&&&&&&&& ====== $key ===> type :  ${value['notificationType']}");
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
+
+  mezDbgPrint(notificationType);
   switch (notificationType) {
     case NotificationType.NewOrder:
       return Notification(
@@ -26,7 +30,7 @@ Notification deliveryDriverNotificationHandler(String key, value) {
               'assets/images/shared/notifications/deliveryNotif.png', // needs to be changed
           title: '${_i18n()['driverNotifTitle']}',
           timestamp: DateTime.parse(value['time']),
-          notificationType: NotificationType.NewMessage,
+          notificationType: NotificationType.NewOrder,
           notificationAction:
               (value["notificationAction"] as String).toNotificationAction(),
           variableParams: value);
