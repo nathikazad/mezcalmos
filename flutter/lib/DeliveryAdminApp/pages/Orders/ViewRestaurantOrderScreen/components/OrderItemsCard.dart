@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/BasicCellComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 // build the order items inside the order info component
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
@@ -34,7 +34,9 @@ Widget buildOrdersItems(List<RestaurantOrderItem> items) {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
                         //height: 43,
                         child: BasicCellComponent(
                           title: "${element.name[userLanguage]!.inCaps}",
@@ -42,18 +44,16 @@ Widget buildOrdersItems(List<RestaurantOrderItem> items) {
                           traillingIcon: Container(
                             width: 25,
                             height: 25,
-                            child: Text(
-                              "${element.quantity}",
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: Color(0xff5c7fff),
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "ProductSans",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 20.0,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
+                            child: Text("${element.quantity}",
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: Color(0xff5c7fff),
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "ProductSans",
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: 20.0,
+                                ),
+                                textAlign: TextAlign.center),
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(65)),

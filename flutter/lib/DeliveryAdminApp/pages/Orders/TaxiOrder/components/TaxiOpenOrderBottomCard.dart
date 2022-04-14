@@ -55,8 +55,10 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyText2,
         ),
         const SizedBox(height: 8),
-        Text('${_i18n()['to']}' + order.to.address,
-            style: Theme.of(context).textTheme.bodyText2),
+        Text(
+          '${_i18n()['to']}' + order.to.address,
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
         const SizedBox(height: 8),
       ],
     );

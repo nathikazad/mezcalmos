@@ -93,7 +93,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
 
   if (newStatus == LaundryOrderStatus.OtwPickup || newStatus == LaundryOrderStatus.PickedUp
     || newStatus == LaundryOrderStatus.AtLaundry) {
-    if (order.pickupDriver.id != deliveryDriverId) {
+    if (order.pickupDriver?.id != deliveryDriverId) {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: `Order does not belong to this delivery driver`,
@@ -102,7 +102,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   }
 
   if (newStatus == LaundryOrderStatus.OtwDelivery || newStatus == LaundryOrderStatus.Delivered) {
-    if (order.dropoffDriver.id != deliveryDriverId) {
+    if (order.dropoffDriver?.id != deliveryDriverId) {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: `Order does not belong to this delivery driver`,
@@ -145,8 +145,8 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
     rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
     if (newStatus == LaundryOrderStatus.AtLaundry) {
-      await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).remove();
       await deliveryDriverNodes.pastOrders(deliveryDriverId, orderId).update(order)
+      await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).remove();
     } else {
       await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order);
     }

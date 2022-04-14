@@ -53,11 +53,11 @@ class LaundrySelectCard extends StatelessWidget {
                                 color: Colors.green,
                                 size: 15,
                               ),
-                              const SizedBox(width: 5),
+                              SizedBox(width: 5),
                               Text(
                                 '${_i18n()["available"]}',
                                 style: txt.bodyText2,
-                              ),
+                              )
                             ],
                           )
                         : Row(

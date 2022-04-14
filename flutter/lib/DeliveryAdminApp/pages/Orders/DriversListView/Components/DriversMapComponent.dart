@@ -8,8 +8,12 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 class DriversMapCompnonet extends StatefulWidget {
   List<DeliveryDriver> drivers = [];
   final Order order;
-  DriversMapCompnonet({Key? key, required this.drivers, required this.order})
-      : super(key: key);
+
+  DriversMapCompnonet({
+    Key? key,
+    required this.drivers,
+    required this.order,
+  }) : super(key: key);
 
   @override
   _DriversMapCompnonetState createState() => _DriversMapCompnonetState();
@@ -17,6 +21,7 @@ class DriversMapCompnonet extends StatefulWidget {
 
 class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
   final MGoogleMapController mapController = MGoogleMapController();
+
   @override
   void initState() {
     mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
@@ -41,7 +46,7 @@ class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
     );
   }
 
-  getDriversMarkers() {
+  void getDriversMarkers() {
     widget.drivers.forEach((element) {
       mapController.addOrUpdateUserMarker(
           latLng: element.driverLocation,

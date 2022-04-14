@@ -9,9 +9,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["laundryListView"]["laundriesListView"];
 
 class LaundriesListView extends StatelessWidget {
-  LaundriesListView({Key? key}) : super(key: key);
+  const LaundriesListView({Key? key}) : super(key: key);
 
-  LaundryInfoController laundryInfoController =
+  /// LaundryInfoController
+  static final LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
 
   @override

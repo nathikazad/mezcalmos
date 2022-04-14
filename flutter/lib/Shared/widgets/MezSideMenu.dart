@@ -17,10 +17,14 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['widgets']["MezSideMenu"];
 
 class MezSideMenu extends GetWidget<AuthController> {
+  /// _drawerController
   SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
+
+  /// languageController
   LanguageController languageController = Get.find<LanguageController>();
 
+  /// lmd, VERSION
   String lmd = GetStorage().read(getxLmodeKey);
   String VERSION = GetStorage().read(getxAppVersion);
 
@@ -31,8 +35,9 @@ class MezSideMenu extends GetWidget<AuthController> {
 
     responsiveSize(context);
 
-    final sw = MediaQuery.of(context).size.width;
-    final sh = MediaQuery.of(context).size.height;
+    /// size
+    final double sw = MediaQuery.of(context).size.width;
+    final double sh = MediaQuery.of(context).size.height;
 
     return Drawer(
       child: Scaffold(
@@ -48,12 +53,12 @@ class MezSideMenu extends GetWidget<AuthController> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+          children: <Widget>[
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Container(
                   height: 100.sp,
                   width: 100.sp,
@@ -97,9 +102,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                           ),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 Container(
                   child: Text(
                     controller.user?.name ?? sDefaultUserName,
@@ -107,29 +110,35 @@ class MezSideMenu extends GetWidget<AuthController> {
                     style: TextStyle(fontFamily: 'psb', fontSize: 18.5.sp),
                   ),
                 ),
-                SizedBox(height: 50)
+                const SizedBox(height: 50),
               ],
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Obx(() => controller.user != null
-                    ? ListTile(
-                        onTap: () {
-                          _drawerController.closeMenu();
-                          Get.toNamed(kUserProfile);
-                        },
-                        leading: Icon(
-                          Icons.account_circle_outlined,
-                          color: Color.fromARGB(255, 103, 121, 254),
-                          size: 22.sp,
-                        ),
-                        title: Text(_i18n()["userInfo"],
-                            style:
-                                TextStyle(fontFamily: 'psb', fontSize: 13.sp)),
-                      )
-                    : SizedBox()),
+              children: <Widget>[
+                Obx(
+                  () => controller.user != null
+                      ? ListTile(
+                          onTap: () {
+                            _drawerController.closeMenu();
+                            Get.toNamed<void>(kUserProfile);
+                          },
+                          leading: Icon(
+                            Icons.account_circle_outlined,
+                            color: Color.fromARGB(255, 103, 121, 254),
+                            size: 22.sp,
+                          ),
+                          title: Text(
+                            _i18n()["userInfo"],
+                            style: TextStyle(
+                              fontFamily: 'psb',
+                              fontSize: 13.sp,
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                ),
 
 //@jamal TODO: pass in a list of listTiles that gets sent by the app at the time of initialization,
 //this datastructure, should basically just have a name and a link
@@ -138,40 +147,44 @@ class MezSideMenu extends GetWidget<AuthController> {
                 controller.fireAuthUser != null
                     ? _buildSideMenuItem()
                     : Container(),
-                Obx(() => controller.user != null
-                    ? ListTile(
-                        onTap: () async {
-                          _drawerController.closeMenu();
-                          await controller.signOut();
-                        },
-                        leading: Icon(
-                          MezcalmosIcons.power_off,
-                          color: Color.fromARGB(255, 103, 121, 254),
-                          size: 22.sp,
-                        ),
-                        title: Obx(
-                          () => Text(
-                            _i18n()["logout"],
-                            style:
-                                TextStyle(fontFamily: 'psb', fontSize: 13.sp),
+                Obx(
+                  () => controller.user != null
+                      ? ListTile(
+                          onTap: () async {
+                            _drawerController.closeMenu();
+                            await controller.signOut();
+                          },
+                          leading: Icon(
+                            MezcalmosIcons.power_off,
+                            color: Color.fromARGB(255, 103, 121, 254),
+                            size: 22.sp,
                           ),
-                        ))
-                    : SizedBox()),
+                          title: Obx(
+                            () => Text(
+                              _i18n()["logout"],
+                              style:
+                                  TextStyle(fontFamily: 'psb', fontSize: 13.sp),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                ),
                 ListTile(
-                    onTap: () async =>
-                        await launch(GetStorage().read(getxPrivacyPolicyLink)),
-                    leading: Icon(
-                      Icons.lock_sharp,
-                      color: Color.fromARGB(255, 103, 121, 254),
-                      size: 22.sp,
+                  onTap: () => launch(GetStorage().read(getxPrivacyPolicyLink)),
+                  leading: Icon(
+                    Icons.lock_sharp,
+                    color: Color.fromARGB(255, 103, 121, 254),
+                    size: 22.sp,
+                  ),
+                  title: Obx(
+                    () => Text(
+                      _i18n()["legal"],
+                      style: TextStyle(fontFamily: 'psb', fontSize: 13.sp),
                     ),
-                    title: Obx(
-                      () => Text(
-                        _i18n()["legal"],
-                        style: TextStyle(fontFamily: 'psb', fontSize: 13.sp),
-                      ),
-                    )),
-                Obx(() => ListTile(
+                  ),
+                ),
+                Obx(
+                  () => ListTile(
                     onTap: () {
                       languageController.changeUserLanguage();
                       _drawerController.closeMenu();
@@ -185,8 +198,12 @@ class MezSideMenu extends GetWidget<AuthController> {
                               image:
                                   AssetImage(languageController.oppositFlag))),
                     ),
-                    title: Text(languageController.oppositToLang,
-                        style: TextStyle(fontFamily: 'psb', fontSize: 13.sp)))),
+                    title: Text(
+                      languageController.oppositToLang,
+                      style: TextStyle(fontFamily: 'psb', fontSize: 13.sp),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
@@ -206,12 +223,13 @@ class MezSideMenu extends GetWidget<AuthController> {
 }
 
 class SideMenuItem extends StatefulWidget {
-  SideMenuItem({
+  const SideMenuItem({
     Key? key,
     required this.onPress,
     required this.icon,
     required this.title,
   }) : super(key: key);
+
   final GestureTapCallback onPress;
   final Widget icon;
   final String title;
@@ -224,11 +242,14 @@ class _SideMenuItemState extends State<SideMenuItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: ListTile(
-      onTap: widget.onPress,
-      leading: widget.icon,
-      title: Text("${widget.title}",
-          style: TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
-    ));
+      child: ListTile(
+        onTap: widget.onPress,
+        leading: widget.icon,
+        title: Text(
+          "${widget.title}",
+          style: TextStyle(fontFamily: 'psb', fontSize: 16.sp),
+        ),
+      ),
+    );
   }
 }

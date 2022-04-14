@@ -14,7 +14,7 @@ dynamic _i18n() =>
 
 // the styles of status buttons inside the order screen
 class ButtonsStyle {
-  // this button for cancel order
+  /// this button for cancel order
   static Widget cancelButtonWidget(String orderId) {
     final RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
@@ -62,6 +62,7 @@ class ButtonsStyle {
 
   // this button for PreparingOrder
   static Widget preparingOrderButtonWidget(RestaurantOrder order) {
+    /// RestaurantOrderController
     final RestaurantOrderController controller =
         Get.find<RestaurantOrderController>();
 
@@ -73,19 +74,18 @@ class ButtonsStyle {
               fontSize: 16.0.sp),
           textAlign: TextAlign.center),
       gradient: LinearGradient(
-          begin: Alignment(-0.10374055057764053, 0),
-          end: Alignment(1.1447703838348389, 1.1694844961166382),
-          colors: <Color>[
-            // const Color(0xede29211),
-            const Color(0xffd3bc0b),
-            const Color(0xdbd17c18)
-          ]),
+        begin: Alignment(-0.10374055057764053, 0),
+        end: Alignment(1.1447703838348389, 1.1694844961166382),
+        colors: <Color>[
+          // const Color(0xede29211),
+          const Color(0xffd3bc0b),
+          const Color(0xdbd17c18)
+        ],
+      ),
       function: (order.dropoffDriver == null)
           ? () {
               Get.snackbar(
-                "${_i18n()["Error"]}",
-                "${_i18n()["driverErrorAlert"]}",
-              );
+                  "${_i18n()["Error"]}", "${_i18n()["driverErrorAlert"]}");
             }
           : () async {
               final bool res = await dialogComponent(
@@ -101,7 +101,7 @@ class ButtonsStyle {
                 LinearGradient(
                   begin: Alignment(-0.10374055057764053, 0),
                   end: Alignment(1.1447703838348389, 1.1694844961166382),
-                  colors: <Color>[
+                  colors: [
                     // const Color(0xede29211),
                     const Color(0xffd3bc0b),
                     const Color(0xdbd17c18)
@@ -164,16 +164,13 @@ class ButtonsStyle {
         Get.find<RestaurantOrderController>();
 
     return ButtonComponent(
-      widget: Text(
-        _i18n()["preparing"],
-        style: TextStyle(
-          color: const Color(0xffffffff),
-          fontFamily: "psb",
-          fontStyle: FontStyle.normal,
-          fontSize: 16.0.sp,
-        ),
-        textAlign: TextAlign.center,
-      ),
+      widget: Text(_i18n()["preparing"],
+          style: TextStyle(
+              color: const Color(0xffffffff),
+              fontFamily: "psb",
+              fontStyle: FontStyle.normal,
+              fontSize: 16.0.sp),
+          textAlign: TextAlign.center),
       gradient: LinearGradient(
         begin: Alignment(-0.10374055057764053, 0),
         end: Alignment(1.1447703838348389, 1.1694844961166382),
@@ -211,20 +208,16 @@ class ButtonsStyle {
         Get.find<RestaurantOrderController>();
 
     return ButtonComponent(
-      widget: Text(
-        _i18n()["received"],
-        style: TextStyle(
-          color: const Color(0xffffffff),
-          fontFamily: "psb",
-          fontSize: 16.0.sp,
-        ),
-        textAlign: TextAlign.center,
-      ),
+      widget: Text(_i18n()["received"],
+          style: TextStyle(
+              color: const Color(0xffffffff),
+              fontFamily: "psb",
+              fontSize: 16.0.sp),
+          textAlign: TextAlign.center),
       gradient: LinearGradient(
-        begin: Alignment(-0.10374055057764053, 0),
-        end: Alignment(1.1447703838348389, 1.1694844961166382),
-        colors: <Color>[const Color(0xff13cb29), const Color(0xdb219125)],
-      ),
+          begin: Alignment(-0.10374055057764053, 0),
+          end: Alignment(1.1447703838348389, 1.1694844961166382),
+          colors: [const Color(0xff13cb29), const Color(0xdb219125)]),
       function: () async {
         final bool res = await dialogComponent(
           _i18n()["deliveredAlertTitle"],
@@ -239,7 +232,7 @@ class ButtonsStyle {
           LinearGradient(
             begin: Alignment(-0.10374055057764053, 0),
             end: Alignment(1.1447703838348389, 1.1694844961166382),
-            colors: <Color>[const Color(0xff13cb29), const Color(0xdb219125)],
+            colors: [const Color(0xff13cb29), const Color(0xdb219125)],
           ),
         );
         if (res) {

@@ -15,25 +15,30 @@ Widget buildOrders(RxList<Order> inProcessOrders) {
   inProcessOrders.value.sort((a, b) => b.orderTime.compareTo(a.orderTime));
   return SingleChildScrollView(
     child: Column(
-      children:
-          inProcessOrders.fold<List<Widget>>(<Widget>[], (children, element) {
-        var s = element as RestaurantOrder;
-        // mezDbgPrint("${s.restaurantOrderStatus}");
-        children.add(DeliveryAdminOrderComponent(
-          type: OrderType.Restaurant,
-          status: s.status,
-          url: s.restaurant.image,
-          image: "${s.customer.image}",
-          userName: "${s.customer.name}",
-          title: "${s.restaurant.name}",
-          price: "${currency.format(element.cost)}",
-          quantity: "${element.quantity}",
-          date: "${f.format(element.orderTime.toLocal())}",
-          ontap: () => Get.toNamed(getRestaurantOrderRoute(element.orderId)),
-        ));
+      children: inProcessOrders.fold<List<Widget>>(
+        <Widget>[],
+        (children, element) {
+          RestaurantOrder s = element as RestaurantOrder;
+          // mezDbgPrint("${s.restaurantOrderStatus}");
+          children.add(
+            DeliveryAdminOrderComponent(
+              type: OrderType.Restaurant,
+              status: s.status,
+              url: s.restaurant.image,
+              image: "${s.customer.image}",
+              userName: "${s.customer.name}",
+              title: "${s.restaurant.name}",
+              price: "${currency.format(element.cost)}",
+              quantity: "${element.quantity}",
+              date: "${f.format(element.orderTime.toLocal())}",
+              ontap: () =>
+                  Get.toNamed(getRestaurantOrderRoute(element.orderId)),
+            ),
+          );
 
-        return children;
-      }),
+          return children;
+        },
+      ),
     ),
   );
 }
@@ -50,19 +55,19 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
   final String? date;
   RestaurantOrderStatus? status;
 
-  DeliveryAdminOrderComponent(
-      {required this.type,
-      required this.url,
-      required this.ontap,
-      this.image,
-      this.title,
-      this.userName,
-      this.price,
-      this.quantity,
-      this.date,
-      this.status,
-      Key? key})
-      : super(key: key);
+  DeliveryAdminOrderComponent({
+    required this.type,
+    required this.url,
+    required this.ontap,
+    this.image,
+    this.title,
+    this.userName,
+    this.price,
+    this.quantity,
+    this.date,
+    this.status,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -119,14 +124,16 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
                         Icons.shopping_bag_outlined,
                         size: 14,
                       ),
-                      Text(" $quantity",
-                          style: const TextStyle(
-                              color: Color(0xff000f1c),
-                              fontWeight: FontWeight.w300,
-                              fontFamily: "FontAwesome5Pro",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 12.0),
-                          textAlign: TextAlign.left),
+                      Text(
+                        " $quantity",
+                        style: const TextStyle(
+                            color: Color(0xff000f1c),
+                            fontWeight: FontWeight.w300,
+                            fontFamily: "FontAwesome5Pro",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12.0),
+                        textAlign: TextAlign.left,
+                      ),
                       const Spacer(),
                       Icon(
                         Icons.fiber_manual_record,
@@ -140,11 +147,12 @@ class DeliveryAdminOrderComponent extends StatelessWidget {
                       Text(
                         " $date",
                         style: const TextStyle(
-                            color: Color(0xff000f1c),
-                            fontWeight: FontWeight.w300,
-                            fontFamily: "FontAwesome5Pro",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12.0),
+                          color: Color(0xff000f1c),
+                          fontWeight: FontWeight.w300,
+                          fontFamily: "FontAwesome5Pro",
+                          fontStyle: FontStyle.normal,
+                          fontSize: 12.0,
+                        ),
                         textAlign: TextAlign.left,
                       ),
                     ],

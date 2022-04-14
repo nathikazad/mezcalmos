@@ -9,21 +9,18 @@ import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-import 'ChangeStatusButtons.dart';
-import 'OrderItemsCard.dart';
-
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
         ["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderInfoCard"];
 //Display the order customer and items
 
 class OrderInfoCard extends StatefulWidget {
+  final Rxn<RestaurantOrder> order;
+
   const OrderInfoCard({
     Key? key,
     required this.order,
   }) : super(key: key);
-
-  final Rxn<RestaurantOrder> order;
 
   @override
   State<OrderInfoCard> createState() => _OrderInfoCardState();
@@ -88,7 +85,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                                 ),
                               )
                             : Container(),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -101,7 +98,9 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                 ),
               ),
               if (widget.order.value?.inProcess() ?? false)
-                Row(children: buildRestOrderButtons(widget.order))
+                Row(
+                  children: buildRestOrderButtons(widget.order),
+                ),
             ],
           ),
         ),

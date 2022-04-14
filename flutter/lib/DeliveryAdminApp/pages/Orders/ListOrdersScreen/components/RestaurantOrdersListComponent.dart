@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/buildOrders.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-
-import '../../../../../Shared/controllers/languageController.dart';
-import 'buildOrders.dart';
 
 dynamic i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["ListOrdersScreen"]["ListOrdersScreen"];
@@ -45,11 +44,9 @@ class RestaurantOrdersList extends StatelessWidget {
           Container(
             margin: const EdgeInsets.all(8),
             alignment: Alignment.centerLeft,
-            child: Text(
-              i18n()['pastOrders'],
-              style: Theme.of(context).textTheme.headline1,
-              textAlign: TextAlign.left,
-            ),
+            child: Text(i18n()['pastOrders'],
+                style: Theme.of(context).textTheme.headline1,
+                textAlign: TextAlign.left),
           ),
           const SizedBox(height: 8),
           Obx(

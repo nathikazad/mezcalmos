@@ -41,11 +41,13 @@ class CurrentOrderInfo extends StatelessWidget {
           Container(
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Obx(() {
-                return (order.status != RestaurantOrderStatus.Delivered)
-                    ? buildWigetOnOrderStatus(order.status, order.orderTime)
-                    : Container();
-              }),
+              child: Obx(
+                () {
+                  return (order.status != RestaurantOrderStatus.Delivered)
+                      ? buildWigetOnOrderStatus(order.status, order.orderTime)
+                      : Container();
+                },
+              ),
             ),
           )
         ],

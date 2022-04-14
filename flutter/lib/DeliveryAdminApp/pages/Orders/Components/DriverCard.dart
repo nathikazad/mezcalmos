@@ -16,13 +16,19 @@ class DriverCard extends StatelessWidget {
   const DriverCard({
     Key? key,
     required this.driver,
-    required this.callBack,
+    required this.assignDriverCallback,
     required this.order,
+    this.driverUserInfoAndUpdateStatus,
   }) : super(key: key);
 
   final Order order;
   final DeliveryDriverUserInfo? driver;
-  final void Function(DeliveryDriver?) callBack;
+  final void Function({
+    required DeliveryDriver deliveryDriver,
+    required bool changeDriver,
+  }) assignDriverCallback;
+
+  final DriverUserInfoAndUpdateStatus? driverUserInfoAndUpdateStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -38,57 +44,112 @@ class DriverCard extends StatelessWidget {
               style: textTheme.bodyText1,
             ),
           ),
-          Card(
-            color: (navigateAndGetDriver() != null || driver != null)
-                ? Colors.white
-                : Colors.grey.shade400,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-              side: BorderSide(
-                width: 1.5,
-                color: (driver != null) ? Colors.green : Colors.redAccent,
-              ),
-            ),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap: navigateAndGetDriver(),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(8),
-                child: (driver != null)
-                    ? driverInfoComponent(textTheme, context)
-                    : noDriverComponent(context, textTheme),
-              ),
-            ),
+          const SizedBox(height: 10),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 1200),
+            child: (driverUserInfoAndUpdateStatus == null ||
+                    (driverUserInfoAndUpdateStatus != null &&
+                        driverUserInfoAndUpdateStatus ==
+                            DriverUserInfoAndUpdateStatus.staring))
+                ? Card(
+                    color: (navigateAndGetDriver() != null || driver != null)
+                        ? Colors.white
+                        : Colors.grey.shade400,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        width: 1.5,
+                        color:
+                            (driver != null) ? Colors.green : Colors.redAccent,
+                      ),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: navigateAndGetDriver(),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
+                        child: (driver != null)
+                            ? driverInfoComponent(textTheme, context)
+                            : noDriverComponent(context, textTheme),
+                      ),
+                    ),
+                  )
+                :
+                // else if (driverUserInfoAndUpdateStatus ==
+                //     DriverUserInfoAndUpdateStatus.uploading)
+                Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
           ),
         ],
       ),
     );
   }
 
+  Future<void> _getNewDriverWhenDriverIsNull() async {
+    final DeliveryDriver? newDriver = await Get.toNamed<DeliveryDriver?>(
+      kDriversListRoute,
+      arguments: order,
+    );
+    if (newDriver != null)
+      assignDriverCallback(
+        deliveryDriver: newDriver,
+        changeDriver: false,
+      );
+  }
+
+  Future<void> _getNewDriverWhenDriverIsNotNull() async {
+    /// Navigate to kDriversListRoute and get DeliveryDriver.
+    final DeliveryDriver? newDriver = await Get.toNamed<dynamic>(
+      kDriversListRoute,
+      arguments: order,
+    ) as DeliveryDriver?;
+    debugPrint(
+        '_getNewDriverWhenDriverIsNotNull: newDriver ${newDriver.toString()}');
+    if (newDriver != null)
+      assignDriverCallback(
+        deliveryDriver: newDriver,
+        changeDriver: true,
+      );
+  }
+
   void Function()? navigateAndGetDriver() {
     if (driver == null) {
+      debugPrint('navigateAndGetDriver driver ');
       if (order.orderType == OrderType.Laundry) {
         if ((order as LaundryOrder).laundry == null) {
           return null;
         } else {
           return () async {
-            final DeliveryDriver? newDriver =
-                await Get.toNamed(kDriversListRoute, arguments: order)
-                    as DeliveryDriver;
-            callBack(newDriver);
+            await _getNewDriverWhenDriverIsNull();
           };
         }
       } else {
         return () async {
-          final DeliveryDriver? newDriver =
-              await Get.toNamed(kDriversListRoute, arguments: order)
-                  as DeliveryDriver;
-          callBack(newDriver);
+          await _getNewDriverWhenDriverIsNull();
         };
       }
     } else {
-      return null;
+      // TODO: @hamza change driver funcitonality
+      if (order.orderType == OrderType.Laundry) {
+        if ((order as LaundryOrder).laundry == null) {
+          return null;
+        } else {
+          return () async {
+            await _getNewDriverWhenDriverIsNotNull();
+          };
+        }
+      } else {
+        return () async {
+          await _getNewDriverWhenDriverIsNotNull();
+        };
+      }
     }
   }
 
@@ -97,15 +158,13 @@ class DriverCard extends StatelessWidget {
 // CARD CONTENT WHEN THERE IS NO DRIVER (DRIVER == NULL)
   Widget noDriverComponent(BuildContext context, TextTheme textTheme) {
     return Row(
-      children: [
+      children: <Widget>[
         Icon(
           Icons.moped_rounded,
           color: Theme.of(context).primaryColorLight,
           size: 50,
         ),
-        SizedBox(
-          width: 10,
-        ),
+        SizedBox(width: 10),
         Text(
           '${_i18n()["noDriver"]}',
           style: textTheme.bodyText1,
@@ -119,37 +178,54 @@ class DriverCard extends StatelessWidget {
 // CARD CONTENT WHEN THERE IS DRIVER ASSIGNED, DRIVER INFO AND MESSAGE BUTTON (DRIVER != NULL)
   Widget driverInfoComponent(TextTheme textTheme, BuildContext context) {
     return Row(
-      children: [
+      children: <Widget>[
         CircleAvatar(
           radius: 25,
           backgroundImage: CachedNetworkImageProvider(driver!.image),
         ),
-        SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Flexible(
           flex: 3,
           fit: FlexFit.tight,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
                 driver!.name,
                 style: textTheme.bodyText2,
               ),
-              SizedBox(
-                height: 5,
-              ),
+              const SizedBox(height: 5),
             ],
           ),
         ),
-        Spacer(),
+        const Spacer(),
         if (order.inProcess())
-          IconButton(
-              onPressed: () {
-                getRightMessageRoute();
-              },
-              icon: Icon(Icons.message_outlined)),
+          Row(
+            children: <Widget>[
+              CircleAvatar(
+                radius: 16,
+                backgroundColor: Color(0xFF70A9A9A9),
+                child: Icon(
+                  Icons.edit,
+                  color: Colors.black,
+                  size: 18,
+                ),
+              ),
+              const SizedBox(height: 16),
+              IconButton(
+                onPressed: () {
+                  getRightMessageRoute();
+                },
+                icon: CircleAvatar(
+                  radius: 16,
+                  backgroundColor: Color(0xFFAC59FC),
+                  child: Image.asset(
+                    'assets/images/deliveryAdmin/message.png',
+                  ),
+                ),
+              ),
+            ],
+          ),
       ],
     );
   }

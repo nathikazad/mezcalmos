@@ -55,7 +55,7 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                     '${_i18n()['customer']} ',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
-                  const Expanded(child: Divider()),
+                  Expanded(child: Divider()),
                 ],
               ),
             ),
@@ -77,7 +77,7 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
             if (widget.order.serviceProvider != null) _orderTaxiDriver(context),
@@ -100,18 +100,22 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
               style: Theme.of(context).textTheme.bodyText2,
             ),
             const SizedBox(height: 8),
-            Text('${_i18n()['to']}' + widget.order.to.address,
-                style: Theme.of(context).textTheme.bodyText2),
+            Text(
+              '${_i18n()['to']}' + widget.order.to.address,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
             const SizedBox(height: 10),
-            Obx(() {
-              if (!btnClicked.value) {
-                return _getOrderBottomComponent(context);
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
+            Obx(
+              () {
+                if (!btnClicked.value) {
+                  return _getOrderBottomComponent(context);
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
           ],
         ),
       ),

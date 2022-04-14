@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class TowAvatarsComponent extends StatelessWidget {
   final OrderType type;
   final String url;
 
   final String? customerImage;
+
   TowAvatarsComponent(
       {required this.type, required this.url, this.customerImage, Key? key})
       : super(key: key);
@@ -29,20 +30,22 @@ class TowAvatarsComponent extends StatelessWidget {
                   padding: const EdgeInsets.all(0),
                   alignment: Alignment.center,
                   child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: ClipOval(
-                        child: Container(
-                            width: 30,
-                            height: 30,
-                            child: mLoadImage(
-                                url: customerImage,
-                                assetInCaseFailed: aDefaultAvatar)
-                            // Image.network(
-                            //   "$customerImage",
-                            //   fit: BoxFit.cover,
-                            // ),
-                            ),
-                      )),
+                    backgroundColor: Colors.white,
+                    child: ClipOval(
+                      child: Container(
+                          width: 30,
+                          height: 30,
+                          child: mLoadImage(
+                            url: customerImage,
+                            assetInCaseFailed: aDefaultAvatar,
+                          )
+                          // Image.network(
+                          //   "$customerImage",
+                          //   fit: BoxFit.cover,
+                          // ),
+                          ),
+                    ),
+                  ),
                 ),
               ),
             ),

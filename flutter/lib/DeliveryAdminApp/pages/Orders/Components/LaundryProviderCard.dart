@@ -39,8 +39,8 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
 
   @override
   void initState() {
-    getLaundry();
     super.initState();
+    getLaundry();
   }
 
   Future<void> getLaundry() async {
@@ -80,14 +80,20 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
               borderRadius: BorderRadius.circular(10),
               onTap: (widget.order.laundry == null)
                   ? () async {
-                      await Get.toNamed(kLaundriesListRoute,
-                              arguments: widget.order)!
-                          .then((value) {
-                        if (value != null) {
-                          controller.assignLaundry(
-                              widget.order.orderId, value.info.id);
-                        }
-                      });
+                      await Get.toNamed(
+                        kLaundriesListRoute,
+                        arguments: widget.order,
+                      )!
+                          .then(
+                        (value) {
+                          if (value != null) {
+                            controller.assignLaundry(
+                              widget.order.orderId,
+                              value.info.id,
+                            );
+                          }
+                        },
+                      );
                     }
                   : null,
               child: Container(
@@ -121,7 +127,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
           style: textTheme.bodyText1,
         ),
         const Spacer(),
-        Icon(Icons.arrow_forward)
+        Icon(Icons.arrow_forward),
       ],
     );
   }

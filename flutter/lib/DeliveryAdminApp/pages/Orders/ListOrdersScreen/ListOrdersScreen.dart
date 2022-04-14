@@ -25,54 +25,38 @@ final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 // ["Orders"]["ListOrdersScreen"];
 
 class ListOrdersScreen extends StatefulWidget {
+  const ListOrdersScreen({Key? key}) : super(key: key);
+
   @override
   _ListOrdersScreen createState() => _ListOrdersScreen();
 }
 
 class _ListOrdersScreen extends State<ListOrdersScreen> {
-  /// inProcessOrders
   RxList<Order> inProcessOrders = RxList<Order>.empty();
-
-  /// pastOrders
   RxList<Order> pastOrders = RxList<Order>.empty();
-
-  /// laundryInProcessOrders
   RxList<Order> laundryInProcessOrders = RxList<Order>.empty();
-
-  /// laundryPastOrders
   RxList<Order> laundryPastOrders = RxList<Order>.empty();
-
-  /// taxiInProcessOrders
   RxList<Order> taxiInProcessOrders = RxList<Order>.empty();
-
-  /// taxiOpenOrders
   RxList<Order> taxiOpenOrders = RxList<Order>.empty();
-
-  /// taxiPastOrders
   RxList<Order> taxiPastOrders = RxList<Order>.empty();
 
   /// RestaurantOrderController
-  RestaurantOrderController controller = Get.find<RestaurantOrderController>();
+  final RestaurantOrderController controller =
+      Get.find<RestaurantOrderController>();
 
   /// LaundryOrderController
-  LaundryOrderController laundryOrderController =
+  final LaundryOrderController laundryOrderController =
       Get.find<LaundryOrderController>();
 
   /// TaxiOrderController
   TaxiOrderController taxiOrderController = Get.find<TaxiOrderController>();
 
-  /// ListOrdersScreen
   dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
       ["pages"]["Orders"]["ListOrdersScreen"]["ListOrdersScreen"];
 
-  /// _ordersListener
-  StreamSubscription<dynamic>? _ordersListener;
-
-  /// _laundryOrdersListener
-  StreamSubscription<dynamic>? _laundryOrdersListener;
-
-  /// _taxiOrdersListener
-  StreamSubscription<dynamic>? _taxiOrdersListener;
+  StreamSubscription? _ordersListener;
+  StreamSubscription? _laundryOrdersListener;
+  StreamSubscription? _taxiOrdersListener;
 
   // ScrollController _ordersListViewController = ScrollController();
   // int fetchedOrders = 1;
@@ -175,71 +159,70 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
-          controller.clearNewOrderNotifications();
-          return false;
-        },
-        child: DefaultTabController(
-          length: 3,
-          child: Scaffold(
-            key: Get.find<SideMenuDrawerController>().getNewKey(),
-            appBar: deliveryAdminAppBar(
-              AppBarLeftButtonType.Menu,
+      onWillPop: () async {
+        controller.clearNewOrderNotifications();
+        return false;
+      },
+      child: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          key: Get.find<SideMenuDrawerController>().getNewKey(),
+          appBar: deliveryAdminAppBar(AppBarLeftButtonType.Menu,
               withOrder: false,
               tabbar: deliveryAdminTabbar(context),
-              function: () => Get.find<SideMenuDrawerController>().openMenu(),
-            ),
-            // appBar: mezcalmosAppBar(
-            //     "menu", Get.find<SideMenuDraweController>().openMenu),
-            drawer: MezSideMenu(),
-            body: TabBarView(
-              children: [
-                // Restaurant orders list view
-                RestaurantOrdersList(
-                    pastOrders: controller.pastOrders,
-                    currentOrders: controller.inProcessOrders),
-                // Laundry orders list view
-                LaundryOrdersList(
-                    pastOrders: laundryOrderController.pastOrders,
-                    currentOrders: laundryOrderController.inProcessOrders),
-                TaxiOrdersList(
-                    pastOrders: taxiOrderController.pastOrders,
-                    currentOrders: taxiOrderController.inProcessOrders,
-                    openOrders: taxiOrderController.openOrders)
-              ],
-            ),
+              function: () => Get.find<SideMenuDrawerController>().openMenu()),
+          // appBar: mezcalmosAppBar(
+          //     "menu", Get.find<SideMenuDraweController>().openMenu),
+          drawer: MezSideMenu(),
+          body: TabBarView(
+            children: <Widget>[
+              // Restaurant orders list view
+              RestaurantOrdersList(
+                pastOrders: controller.pastOrders,
+                currentOrders: controller.inProcessOrders,
+              ),
+              // Laundry orders list view
+              LaundryOrdersList(
+                pastOrders: laundryOrderController.pastOrders,
+                currentOrders: laundryOrderController.inProcessOrders,
+              ),
+              TaxiOrdersList(
+                pastOrders: taxiOrderController.pastOrders,
+                currentOrders: taxiOrderController.inProcessOrders,
+                openOrders: taxiOrderController.openOrders,
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   TabBar deliveryAdminTabbar(BuildContext context) {
     return TabBar(
-      tabs: [
+      tabs: <Widget>[
         Obx(
           () => Tab(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Flexible(
-                    child: Text(
-                  _i18n()['restaurantOrders'],
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(fontSize: 10.sp),
-                )),
-                SizedBox(
-                  width: 5,
+                  child: Text(
+                    _i18n()['restaurantOrders'],
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          fontSize: 10.sp,
+                        ),
+                  ),
                 ),
+                const SizedBox(width: 5),
                 if (inProcessOrders.isNotEmpty)
                   CircleAvatar(
                     radius: 8,
                     child: Text(
                       '${inProcessOrders.length}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(color: Colors.white),
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                            color: Colors.white,
+                          ),
                     ),
                   )
               ],
@@ -250,18 +233,17 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
           () => Tab(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Flexible(
-                    child: Text(
-                  _i18n()['laundryOrders'],
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(fontSize: 10.sp),
-                )),
-                SizedBox(
-                  width: 5,
+                  child: Text(
+                    _i18n()['laundryOrders'],
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(fontSize: 10.sp),
+                  ),
                 ),
+                const SizedBox(width: 5),
                 if (laundryInProcessOrders.isNotEmpty)
                   CircleAvatar(
                     radius: 8,
@@ -272,7 +254,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                           .subtitle1!
                           .copyWith(color: Colors.white),
                     ),
-                  )
+                  ),
               ],
             ),
           ),
@@ -297,10 +279,9 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
                     radius: 8,
                     child: Text(
                       '${taxiOpenOrders.length}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .copyWith(color: Colors.white),
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                            color: Colors.white,
+                          ),
                     ),
                   )
               ],

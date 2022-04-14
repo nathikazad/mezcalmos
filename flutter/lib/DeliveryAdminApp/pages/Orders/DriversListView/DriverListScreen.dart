@@ -28,19 +28,18 @@ class _DriversListScreenState extends State<DriversListScreen> {
   /// driversListener
   StreamSubscription<dynamic>? driversListener;
 
-  /// DeliveryDriverController
-  final DeliveryDriverController deliveryDriverController =
+  /// deliveryDriverController
+  DeliveryDriverController deliveryDriverController =
       Get.find<DeliveryDriverController>();
 
-  /// Order
+  /// order
   Order? order;
 
   @override
   void initState() {
-    order = Get.arguments;
-    deliveryDrivers.value = deliveryDriverController.deliveryDrivers;
-
     super.initState();
+    order = Get.arguments as Order?;
+    deliveryDrivers.value = deliveryDriverController.deliveryDrivers;
   }
 
   @override

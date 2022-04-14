@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/LaundryOrderCard.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-
-import '../../../../../Shared/controllers/languageController.dart';
-import 'LaundryOrderCard.dart';
 
 dynamic i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["ListOrdersScreen"]["ListOrdersScreen"];
@@ -18,8 +17,6 @@ class LaundryOrdersList extends StatelessWidget {
 
   final RxList<LaundryOrder> pastOrders;
   final RxList<LaundryOrder> currentOrders;
-
-  /// LanguageController
   static final LanguageController lang = Get.find<LanguageController>();
 
   @override
@@ -32,9 +29,11 @@ class LaundryOrdersList extends StatelessWidget {
             Container(
               margin: const EdgeInsets.all(8),
               alignment: Alignment.centerLeft,
-              child: Text(i18n()["title"],
-                  style: Theme.of(context).textTheme.headline1,
-                  textAlign: TextAlign.left),
+              child: Text(
+                i18n()["title"],
+                style: Theme.of(context).textTheme.headline1,
+                textAlign: TextAlign.left,
+              ),
             ),
             const SizedBox(height: 8),
             Obx(

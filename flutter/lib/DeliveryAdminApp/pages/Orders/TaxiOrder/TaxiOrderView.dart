@@ -23,15 +23,9 @@ class TaxiOrderView extends StatefulWidget {
 class _TaxiOrderViewState extends State<TaxiOrderView> {
   /// taxiOrderController
   TaxiOrderController taxiOrderController = Get.find<TaxiOrderController>();
-
-  /// order
   Rxn<TaxiOrder> order = Rxn<TaxiOrder>();
-
-  /// orderId
   late String orderId;
-
-  /// _orderListener
-  StreamSubscription<dynamic>? _orderListener;
+  StreamSubscription? _orderListener;
 
   @override
   void initState() {
@@ -44,15 +38,15 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
     } else if (order.value!.isOpenOrder()) {
       mezDbgPrint("open order stream ---------------------------");
 
-      _orderListener = taxiOrderController
-          .getOpenOrderStream(orderId)
-          .listen((TaxiOrder? newOrder) {
-        if (newOrder != null) {
-          order.value = taxiOrderController.getOrder(orderId);
-        } else {
-          Get.back<void>();
-        }
-      });
+      _orderListener = taxiOrderController.getOpenOrderStream(orderId).listen(
+        (TaxiOrder? newOrder) {
+          if (newOrder != null) {
+            order.value = taxiOrderController.getOrder(orderId);
+          } else {
+            Get.back();
+          }
+        },
+      );
     } else if (order.value!.inProcess()) {
       mezDbgPrint("process order stream ---------------------------");
 

@@ -70,7 +70,7 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
                         fontSize: 20.0.sp,
                       ),
                       textAlign: TextAlign.right,
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -89,16 +89,13 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
                 child: Row(
                   children: <Widget>[
                     // Total
-                    Text(
-                      "${_i18n()['total']}",
-                      style: const TextStyle(
-                        color: Color(0xff000f1c),
-                        fontFamily: "psr",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 20.0,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
+                    Text("${_i18n()['total']}",
+                        style: const TextStyle(
+                            color: Color(0xff000f1c),
+                            fontFamily: "psr",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 20.0),
+                        textAlign: TextAlign.left),
                     const Spacer(),
                     Text(
                       "  \$${currency.format(order.value!.cost)}",

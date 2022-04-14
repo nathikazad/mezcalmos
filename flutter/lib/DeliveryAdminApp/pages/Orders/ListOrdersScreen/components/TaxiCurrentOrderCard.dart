@@ -10,19 +10,20 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["ListOrdersScreen"]["components"]["taxiOrderCard"];
 
 class TaxiCurrentOrderCard extends StatelessWidget {
+  final TaxiOrder order;
+
   const TaxiCurrentOrderCard({
     Key? key,
     required this.order,
   }) : super(key: key);
 
-  final TaxiOrder order;
-
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-          side: BorderSide(color: _getRightColor(order.status), width: 1)),
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(color: _getRightColor(order.status), width: 1),
+      ),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
@@ -59,7 +60,7 @@ class TaxiCurrentOrderCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              _getTaxiOrderWidget(order.status)
+              _getTaxiOrderWidget(order.status),
             ],
           ),
         ),
@@ -98,38 +99,42 @@ Widget _getTaxiOrderWidget(TaxiOrdersStatus status) {
       );
     case TaxiOrdersStatus.LookingForTaxi:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/search.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/search.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.OnTheWay:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/taxiOnTheWay.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/taxiOnTheWay.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.InTransit:
     case TaxiOrdersStatus.ForwardingToLocalCompany:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/taxiOnTheWay.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/taxiOnTheWay.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.DroppedOff:
     case TaxiOrdersStatus.ForwardingSuccessful:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/taxi.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/taxi.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.Expired:
       return Icon(
         Icons.hourglass_disabled_sharp,

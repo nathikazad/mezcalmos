@@ -3,15 +3,15 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
-import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -163,13 +163,14 @@ Future<imPicker.XFile?> imagePicker(
   }
 }
 
-Image mLoadImage(
-    {required String? url,
-    Uint8List? memoryImage,
-    double? height,
-    double? width,
-    fit: BoxFit.cover,
-    String assetInCaseFailed = aNoImgAsset}) {
+Image mLoadImage({
+  required String? url,
+  Uint8List? memoryImage,
+  double? height,
+  double? width,
+  fit: BoxFit.cover,
+  String assetInCaseFailed = aNoImgAsset,
+}) {
   Image _img;
 
   if (url == null ||

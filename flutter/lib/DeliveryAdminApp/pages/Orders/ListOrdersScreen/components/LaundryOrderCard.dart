@@ -8,12 +8,9 @@ import 'package:rive/rive.dart';
 import 'package:sizer/sizer.dart';
 
 class LaundryOrderCard extends StatelessWidget {
-  const LaundryOrderCard({
-    Key? key,
-    required this.order,
-  }) : super(key: key);
-
   final LaundryOrder order;
+
+  const LaundryOrderCard({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

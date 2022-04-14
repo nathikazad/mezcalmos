@@ -1,11 +1,11 @@
+import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["notificationHandler"];
@@ -120,18 +120,19 @@ Notification newOrderNotification(String key, value) {
 
 Notification newMessageNotification(String key, value) {
   return Notification(
-      id: key,
-      linkUrl: getMessagesRoute(
-          chatId: value['chatId'] ?? value['orderId'],
-          orderId: value['orderId'],
-          recipientId: value['sender']['id']),
-      body: value['message'],
-      imgUrl: value['sender']['image'],
-      title: value['sender']['name'],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.NewMessage,
-      variableParams: value,
-      notificationAction:
-          value["notificationAction"]?.toString().toNotificationAction() ??
-              NotificationAction.ShowSnackbarOnlyIfNotOnPage);
+    id: key,
+    linkUrl: getMessagesRoute(
+        chatId: value['chatId'] ?? value['orderId'],
+        orderId: value['orderId'],
+        recipientId: value['sender']['id']),
+    body: value['message'],
+    imgUrl: value['sender']['image'],
+    title: value['sender']['name'],
+    timestamp: DateTime.parse(value['time']),
+    notificationType: NotificationType.NewMessage,
+    variableParams: value,
+    notificationAction:
+        value["notificationAction"]?.toString().toNotificationAction() ??
+            NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+  );
 }

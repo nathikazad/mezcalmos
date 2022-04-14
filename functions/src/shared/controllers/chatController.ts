@@ -18,6 +18,10 @@ export async function updateChat(chatId: string, chat: Chat) {
   return (await chatNode(chatId).update(chat))
 }
 
+export async function deleteChat(chatId: string) {
+  return (await chatNode(chatId).remove())
+}
+
 export async function setChatMessageNotifiedAsTrue(chatId: string, messageId: string) {
   return chatMessageNotifiedNode(chatId, messageId).set(true);
 }

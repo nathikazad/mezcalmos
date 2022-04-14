@@ -24,9 +24,7 @@ Widget? changeStatusButton(
 ) {
   switch (order.value!.status) {
     case (LaundryOrderStatus.AtLaundry):
-      return Expanded(
-        child: OrderButtons.readyForDeliveryButton(order.value!),
-      );
+      return Expanded(child: OrderButtons.readyForDeliveryButton(order.value!));
 
     default:
       return const SizedBox();

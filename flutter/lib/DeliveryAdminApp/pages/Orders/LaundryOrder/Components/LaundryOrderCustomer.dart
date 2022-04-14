@@ -36,7 +36,7 @@ class LaundryOrderCustomer extends StatelessWidget {
         ),
         Card(
           child: Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
             width: double.infinity,
             child: Row(
               children: <Widget>[
@@ -60,21 +60,31 @@ class LaundryOrderCustomer extends StatelessWidget {
                   shape: CircleBorder(),
                   child: InkWell(
                     onTap: () {
-                      Get.toNamed(getMessagesRoute(
+                      Get.toNamed<void>(
+                        getMessagesRoute(
                           chatId: order.orderId,
                           orderId: order.orderId,
-                          recipientType: ParticipantType.Customer));
+                          recipientType: ParticipantType.Customer,
+                        ),
+                      );
                     },
                     customBorder: CircleBorder(),
                     child: Stack(
                       children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.all(12),
-                          child: Icon(
-                            Icons.textsms,
-                            color: Colors.white,
+                        CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Color(0xFFAC59FC),
+                          child: Image.asset(
+                            'assets/images/deliveryAdmin/message.png',
                           ),
                         ),
+                        // Container(
+                        //   margin: EdgeInsets.all(12),
+                        //   child: Icon(
+                        //     Icons.textsms,
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
                         // Obx(
                         //   () => controller.orderHaveNewMessageNotifications(
                         //           order.orderId)

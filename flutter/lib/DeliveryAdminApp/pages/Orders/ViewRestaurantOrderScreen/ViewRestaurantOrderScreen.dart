@@ -36,17 +36,16 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 
 class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   /// AuthController
-  final AuthController auth = Get.find<AuthController>();
+  AuthController auth = Get.find<AuthController>();
 
   /// RestaurantOrderController
-  final RestaurantOrderController controller =
-      Get.find<RestaurantOrderController>();
+  RestaurantOrderController controller = Get.find<RestaurantOrderController>();
 
   /// DeliveryDriverController
-  final DeliveryDriverController deliveryDriverController = Get.find<
+  DeliveryDriverController deliveryDriverController = Get.find<
       DeliveryDriverController>(); // Since we have alot of buttons we check loading by name
 
-  /// DeliveryDriverUserInfo
+  /// driver
   DeliveryDriverUserInfo? driver;
 
   /// hasNewMessage
@@ -59,9 +58,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   late String orderId;
 
   /// LanguageType
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
 
+  /// _orderListener
   StreamSubscription<RestaurantOrder?>? _orderListener;
 
   @override
@@ -152,12 +151,16 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                       () => DriverCard(
                         driver: order.value!.dropoffDriver,
                         order: order.value!,
-                        callBack: (DeliveryDriver? newDriver) {
+                        assignDriverCallback: ({
+                          required DeliveryDriver deliveryDriver,
+                          required bool changeDriver,
+                        }) {
                           deliveryDriverController.assignDeliveryDriver(
-                              deliveryDriverId: newDriver!.deliveryDriverId,
-                              orderId: order.value!.orderId,
-                              orderType: OrderType.Restaurant,
-                              deliveryDriverType: DeliveryDriverType.DropOff);
+                            deliveryDriverId: deliveryDriver.deliveryDriverId,
+                            orderId: order.value!.orderId,
+                            orderType: OrderType.Restaurant,
+                            deliveryDriverType: DeliveryDriverType.DropOff,
+                          );
                         },
                       ),
                     ),

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/TaxiCurrentOrderCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/TaxiOpenOrderCard.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
-
-import '../../../../../Shared/controllers/languageController.dart';
-import 'TaxiCurrentOrderCard.dart';
-import 'TaxiOpenOrderCard.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
@@ -48,7 +47,7 @@ class TaxiOrdersList extends StatelessWidget {
                     ? Column(
                         children: List.generate(
                           openOrders.length,
-                          (int index) =>
+                          (index) =>
                               TaxiOpenOrderCard(order: openOrders[index]),
                         ),
                       )
@@ -92,9 +91,10 @@ class TaxiOrdersList extends StatelessWidget {
                 child: pastOrders.isNotEmpty
                     ? Column(
                         children: List.generate(
-                            pastOrders.length,
-                            (int index) => TaxiCurrentOrderCard(
-                                order: pastOrders[index])).reversed.toList(),
+                          pastOrders.length,
+                          (int index) =>
+                              TaxiCurrentOrderCard(order: pastOrders[index]),
+                        ).reversed.toList(),
                       )
                     : Center(child: Text("${_i18n()["noOrders"]}")),
               ),

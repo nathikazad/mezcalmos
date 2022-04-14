@@ -110,7 +110,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
     laundryNodes.inProcessOrders(order.laundry.id).update(order);
     await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver!.id, orderId).update(order);
   }
 
   let notification: Notification = {
