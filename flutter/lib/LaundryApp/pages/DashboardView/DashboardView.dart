@@ -12,6 +12,14 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +52,7 @@ class _DashboardViewState extends State<DashboardView> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Info'),
         ]);
   }
+
 // function to switch between tabs and get right view from bottom navbar
   Widget getCurrentScreen(int index) {
     switch (index) {

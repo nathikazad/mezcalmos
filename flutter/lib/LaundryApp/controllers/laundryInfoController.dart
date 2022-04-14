@@ -91,7 +91,7 @@ class LaundryInfoController extends GetxController {
   Future<void> setSchedule(Schedule schedule) {
     return _databaseHelper.firebaseDatabase
         .reference()
-        .child(serviceProviderPrimaryLanguage(
+        .child(serviceProviderSchedule(
             orderType: OrderType.Laundry, providerId: laundryId))
         .set(schedule.toFirebaseFormattedJson());
   }
@@ -104,12 +104,12 @@ class LaundryInfoController extends GetxController {
         .set(lang.toFirebaseFormatString());
   }
 
-  Future<void> setSecondaryLanguage(LanguageType lang) {
+  Future<void> setSecondaryLanguage(LanguageType? lang) {
     return _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderSecondaryLanguage(
             orderType: OrderType.Laundry, providerId: laundryId))
-        .set(lang.toFirebaseFormatString());
+        .set(lang?.toFirebaseFormatString() ?? null);
   }
 
   Future<void> setLocation(Location loc) {

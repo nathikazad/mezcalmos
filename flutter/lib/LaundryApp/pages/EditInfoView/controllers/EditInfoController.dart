@@ -14,35 +14,45 @@ import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 class EditInfoController {
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
-  Rxn<Laundry> laundry = Rxn<Laundry>();
+  final Rxn<Laundry> laundry = Rxn<Laundry>();
   TextEditingController laundryNameController = TextEditingController();
-  String currentImageUrl = '';
-  Rxn<String> newImageUrl = Rxn();
-  Rxn<Location> newLocation = Rxn();
-  Rxn<Schedule> newSchedule = Rxn<Schedule>();
+  final Rxn<String> newImageUrl = Rxn();
+  final Rxn<Location> newLocation = Rxn();
 
-  Rxn<LanguageType> primaryLang = Rxn();
-  Rxn<LanguageType> secondaryLang = Rxn();
-  Rxn<File> newImageFile = Rxn();
+  final Rxn<LanguageType> primaryLang = Rxn();
+  final Rxn<LanguageType> secondaryLang = Rxn();
+  final Rxn<File> newImageFile = Rxn();
 
-  RxBool imageLoading = RxBool(false);
-  RxBool btnClicked = RxBool(false);
+  final RxBool imageLoading = RxBool(false);
+  final RxBool btnClicked = RxBool(false);
+  final Rxn<Schedule> newSchedule = Rxn();
+  final Rxn<Schedule> schedulePreview = Rxn();
+  final Rxn<Schedule> oldSchedule = Rxn();
+
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
 
-  // Rx<Null> secondaryLang = null.obs;
-
   void init() {
-    laundry = laundryInfoController.laundry;
+    // laundryInfoController.laundry.stream.
+    laundry.value = laundryInfoController.laundry.value;
+    //laundry = laundry
     if (laundry.value != null) {
       mezDbgPrint("Controlllller init =======>");
+
       laundryNameController.text = laundry.value?.info.name ?? '';
-      currentImageUrl = laundry.value?.info.image ?? '';
+      settingSchedules();
+
       newLocation.value = laundry.value!.info.location;
       newImageUrl.value = laundry.value?.info.image ?? '';
       primaryLang.value = laundry.value!.primaryLanguage;
       secondaryLang.value = laundry.value!.secondaryLanguage;
-      newSchedule.value = laundry.value!.schedule;
     }
+  }
+
+  void settingSchedules() {
+    mezDbgPrint("AFFFFFFECTIN clone -------------------------------->");
+    newSchedule.value = Schedule.clone(laundry.value!.schedule!);
+    schedulePreview.value = Schedule.clone(newSchedule.value!);
+    oldSchedule.value = Schedule.clone(laundry.value!.schedule!);
   }
 
   Future updateLaundryInfo() async {
@@ -63,6 +73,21 @@ class EditInfoController {
         newLocation.value?.address != laundry.value?.info.location?.address) {
       await laundryInfoController.setLocation(newLocation.value!);
     }
+    if (primaryLang.value != null &&
+        primaryLang.value != laundry.value?.primaryLanguage) {
+      await laundryInfoController.setPrimaryLanguage(primaryLang.value!);
+    }
+    if (secondaryLang.value != null &&
+        secondaryLang.value != laundry.value?.secondaryLanguage) {
+      await laundryInfoController.setSecondaryLanguage(secondaryLang.value!);
+    } else if (secondaryLang.value == null) {
+      await laundryInfoController.setSecondaryLanguage(null);
+    }
+   
+    if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
+      await laundryInfoController.setSchedule(newSchedule.value!);
+    }
+
     btnClicked.value = false;
   }
 
@@ -146,19 +171,22 @@ class EditInfoController {
     }
   }
 
-  void dispose() {
-    laundry = laundryInfoController.laundry;
-    if (laundry.value != null) {
-      mezDbgPrint("Controlllller Dispose =======>");
-      laundryNameController.text = laundry.value?.info.name ?? '';
-      currentImageUrl = laundry.value?.info.image ?? '';
-      newLocation.value = laundry.value!.info.location;
-      newImageUrl.value = laundry.value?.info.image ?? '';
-      primaryLang.value = laundry.value!.primaryLanguage;
-      secondaryLang.value = laundry.value!.secondaryLanguage;
-      newSchedule.value = laundry.value!.schedule;
-    }
+  void dispose() async {
+    laundry.value = laundryInfoController.laundry.value;
+
+    mezDbgPrint("Controlllller Dispose =======>");
+    laundryNameController.text = laundry.value?.info.name ?? '';
+
+    newLocation.value = laundry.value!.info.location;
+    newImageUrl.value = laundry.value?.info.image ?? '';
+    primaryLang.value = laundry.value!.primaryLanguage;
+    secondaryLang.value = laundry.value!.secondaryLanguage;
+
+    // //  laundry.close();
+    // //newSchedule.close();
+    // mezDbgPrint("schedulllllllllllllllllllle $newSchedule");
   }
 }
 
-enum LanguagePriority { PrimaryLanguage, SecondaryLanguage }
+
+// enum LanguagePriority { PrimaryLanguage, SecondaryLanguage }

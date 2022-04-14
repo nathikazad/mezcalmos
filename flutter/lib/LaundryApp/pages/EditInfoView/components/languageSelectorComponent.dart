@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -31,7 +30,6 @@ class LanguageSelectorComponent extends StatefulWidget {
 }
 
 class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
-  EditInfoController editInfoController = EditInfoController();
   // String? _currentSelectedValue;
 
   @override
@@ -194,18 +192,18 @@ String getRightName(LanguageType value) {
   }
 }
 
-String getRightLabel(LanguagePriority languagePriority) {
-  switch (languagePriority) {
-    case LanguagePriority.PrimaryLanguage:
-      return "Select Primary language";
+// String getRightLabel(LanguagePriority languagePriority) {
+//   switch (languagePriority) {
+//     case LanguagePriority.PrimaryLanguage:
+//       return "Select Primary language";
 
-    case LanguagePriority.SecondaryLanguage:
-      return "None";
+//     case LanguagePriority.SecondaryLanguage:
+//       return "None";
 
-    default:
-      return "None";
-  }
-}
+//     default:
+//       return "None";
+//   }
+// }
 
 String? toLanguageName(LanguageType? languageType) {
   if (languageType != null) {

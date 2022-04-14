@@ -77,9 +77,12 @@ Widget _workingHourCard(
             flex: 3,
             child: Container(
               //  padding: const EdgeInsets.symmetric(horizontal: 8),
-              color: openHours.isOpen
-                  ? Color.fromRGBO(101, 225, 137, 0.6)
-                  : Color.fromRGBO(252, 89, 99, 0.6),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: openHours.isOpen
+                    ? Color.fromRGBO(101, 225, 137, 0.6)
+                    : Color.fromRGBO(252, 89, 99, 0.6),
+              ),
               child: Center(
                   child: Text(openHours.isOpen
                       ? "${_i18n()["workingHoursCard"]["open"]}"

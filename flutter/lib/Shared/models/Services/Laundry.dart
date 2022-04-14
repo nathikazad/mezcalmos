@@ -20,7 +20,6 @@ class Laundry extends Service {
       // ignore: avoid_annotating_with_dynamic
       {required String laundryId,
       required laundryData}) {
-    
     final ServiceState laundryState = ServiceState(
         laundryData["state"]?["authorizationStatus"]
                 ?.toString()
@@ -34,12 +33,15 @@ class Laundry extends Service {
     final LaundryCosts laundryCosts =
         LaundryCosts.fromData(laundryData["details"]["costs"]);
 
-    final LanguageType primaryLanguage =
-        laundryData["details"]?["language"]?["first"].toLanguageType() ??
-            LanguageType.ES;
+    final LanguageType primaryLanguage = laundryData["details"]?["language"]
+                ?["primary"]
+            .toString()
+            .toLanguageType() ??
+        LanguageType.ES;
 
     final LanguageType? secondaryLanguage = laundryData["details"]?["language"]
-                ?["second"]
+                ?["secondary"]
+            .toString()
             .toNullableLanguageType() ??
         null;
 

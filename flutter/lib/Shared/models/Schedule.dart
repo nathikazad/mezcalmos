@@ -36,16 +36,26 @@ class OpenHours {
       "isOpen": isOpen
     };
   }
+
+  void setOpenHours({
+    required bool isOpen,
+  }) {
+    this.isOpen = isOpen;
+  }
+
+  OpenHours.clone(OpenHours openHours)
+      : this(openHours.isOpen, openHours.from.toList(), openHours.to.toList());
 }
 
 class Schedule {
-  Map<Weekday, OpenHours> _openHours;
-  Map<Weekday, OpenHours> get openHours => _openHours;
+  Map<Weekday, OpenHours> openHours;
+  Map<Weekday, OpenHours> get getOpenHours => openHours;
 
-  Schedule(this._openHours);
+  Schedule({
+    required this.openHours,
+  });
 
   factory Schedule.fromData(data) {
-    mezDbgPrint("schedulllllllllllllllllllle =============> $data");
     final Map<Weekday, OpenHours> openHours = {};
 
     data.forEach((day, openHour) {
@@ -68,13 +78,13 @@ class Schedule {
       }
     });
 
-    return Schedule(openHours);
+    return Schedule(openHours: openHours);
   }
 
   bool isOpen() {
     final DateTime now = DateTime.now();
     final Weekday currentWeekDay = now.getDayOfWeek();
-    final OpenHours? todayHours = _openHours[currentWeekDay];
+    final OpenHours? todayHours = openHours[currentWeekDay];
     if (todayHours?.isOpen ?? false) {
       return false;
     }
@@ -88,19 +98,19 @@ class Schedule {
     final Map<String, dynamic> json = <String, dynamic>{};
     Weekday.values.forEach((Weekday weekday) {
       json[weekday.toFirebaseFormatString()] =
-          _openHours[weekday]?.toFirebaseFormattedJson();
+          openHours[weekday]?.toFirebaseFormattedJson();
     });
     return json;
   }
-}
 
-// retaurants
-//   info
-//     $id
-//       info
-//         schedule
-//           monday
-//             isOpen: true
-//             from: 09:00
-//             to: 17:00
-//           tuesda
+  factory Schedule.clone(Schedule schedule) {
+    final Map<Weekday, OpenHours> _cloneSchedule = {};
+    schedule.openHours.forEach((Weekday key, OpenHours value) {
+      _cloneSchedule[key] = OpenHours.clone(value);
+    });
+
+    final Schedule newSchedule = Schedule(openHours: _cloneSchedule);
+
+    return newSchedule;
+  }
+}

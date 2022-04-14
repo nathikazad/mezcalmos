@@ -11,6 +11,7 @@ abstract class Service {
       {required this.info,
       this.schedule,
       required this.state});
+      
 }
 
 class ServiceState {

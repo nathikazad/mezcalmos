@@ -87,6 +87,7 @@ class _PickLocationViewState extends State<PickLocationView> {
             ? Container(
                 height: 50,
                 child: TextButton(
+                  style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
                   onPressed: () async => await onPickButtonClick(context),
                   child: Center(
                       child: Text(_i18n()["pickLocation"],
