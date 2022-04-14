@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dar
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
+import 'package:mezcalmos/Shared/pages/InAppReviewPage.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
@@ -30,6 +31,7 @@ const String kUserProfile = '/user_profile';
 const String kPickToLocation = '/pick_to_location';
 const String kNotificationsRoute = '/notifications';
 const String kAppNeedsUpdate = '/needs_update';
+const String kInAppReview = '/in-app_review';
 
 String getMessagesRoute({
   required String chatId,
@@ -72,6 +74,7 @@ class SharedRouter {
   static List<GetPage> sharedRoutes = [
     GetPage(name: kUserProfile, page: () => UserProfile()),
     GetPage(name: kAppNeedsUpdate, page: () => AppNeedsUpdateScreen()),
+    GetPage(name: kInAppReview, page: () => InAppReviewPage()),
     GetPage(name: kWrapperRoute, page: () => Wrapper()),
     GetPage(name: kSplashRoute, page: () => SplashScreen()),
     GetPage(

@@ -17,11 +17,6 @@ class RestaurantSliverAppBar extends StatelessWidget {
 
   final Restaurant restaurant;
 
-  /// static variable
-  static final RestaurantController controller =
-      Get.find<RestaurantController>();
-  static final AuthController _authController = Get.find<AuthController>();
-
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
