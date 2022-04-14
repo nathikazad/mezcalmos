@@ -25,6 +25,7 @@ class RestaurantsInfoController extends GetxController {
 
     mezDbgPrint("Got restorantes ===> ${snapshot.value}");
     final List<Restaurant> restaurants = [];
+    if (snapshot.value == null) return restaurants;
     snapshot.value.forEach((key, value) {
       try {
         if (value["state"]["available"] == true) {
