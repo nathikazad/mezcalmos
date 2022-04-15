@@ -79,10 +79,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     startAuthListener();
 
     /// Check if app was opened through a DeepLink
-    Future<void>.delayed(
-      Duration(seconds: 1),
-      _deepLinkHandler.startDynamicLinkCheckRoutine,
-    );
+    _deepLinkHandler.startDynamicLinkCheckRoutine();
+    // Future<void>.delayed(
+    //   Duration(seconds: 1),
+    //   ,
+    // );
     // .then(
     //   (_) => _deepLinkHandler.cancelDeepLinkListener(
     //     duration: Duration(seconds: 1),

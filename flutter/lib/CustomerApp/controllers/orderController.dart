@@ -194,5 +194,3 @@ class OrderController extends GetxController {
     super.onClose();
   }
 }
-
-enum FilterStatus { All, Done, Canceled }
