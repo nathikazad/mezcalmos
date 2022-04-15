@@ -108,12 +108,9 @@ class DeepLinkHandler {
 
       if (deepLink != null) {
         mezDbgPrint("@deepLink@ ===> deepLink != null");
-
         await _checkQueryValidityAndHandleRouting(deepLink);
-      } else {
-        mezDbgPrint("@deepLink@ ===> deeplink==null ");
-        _startOnLinkListener();
       }
+      _startOnLinkListener();
     } catch (e) {
       print(e.toString());
     }

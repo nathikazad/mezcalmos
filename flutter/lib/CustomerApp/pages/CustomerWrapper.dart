@@ -77,6 +77,17 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
+
+    /// Check if app was opened through a DeepLink
+    Future<void>.delayed(
+      Duration(seconds: 1),
+      _deepLinkHandler.startDynamicLinkCheckRoutine,
+    );
+    // .then(
+    //   (_) => _deepLinkHandler.cancelDeepLinkListener(
+    //     duration: Duration(seconds: 1),
+    //   ),
+    // );
   }
 
   @override
@@ -93,15 +104,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      /// Check of app was opened through a DeepLink
-      Future<void>.delayed(
-        Duration(seconds: 1),
-        _deepLinkHandler.startDynamicLinkCheckRoutine,
-      ).then(
-        (_) => _deepLinkHandler.cancelDeepLinkListener(
-          duration: Duration(seconds: 1),
-        ),
-      );
       if (appClosedTime != null &&
           _orderController != null &&
           DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
