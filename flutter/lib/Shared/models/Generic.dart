@@ -34,9 +34,11 @@ extension ParseStringToLanugaugeType on String {
   }
 }
 
-Map<LanguageType, String> convertToLanguageMap(Map data) {
+typedef LanguageMap = Map<LanguageType, String>;
+
+LanguageMap convertToLanguageMap(Map data) {
   // mezDbgPrint("@sa@d@: Trying to convert $data convertToLanguageMap !");
-  Map<LanguageType, String> map = {};
+  LanguageMap map = {};
   data.forEach((dynamic language, dynamic string) {
     if (language == LanguageType.EN.toFirebaseFormatString() ||
         language == LanguageType.ES.toFirebaseFormatString()) {
@@ -46,7 +48,7 @@ Map<LanguageType, String> convertToLanguageMap(Map data) {
   return map;
 }
 
-extension LanguageMapToFirebaseFormat on Map<LanguageType, String> {
+extension LanguageMapToFirebaseFormat on LanguageMap {
   Map<String, String> toFirebaseFormat() {
     Map<String, String> _tempMap = {};
     this.keys.forEach((key) {

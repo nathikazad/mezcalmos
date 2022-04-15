@@ -3,6 +3,7 @@ import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 //ignore_for_file:constant_identifier_names
@@ -98,22 +99,15 @@ class RestaurantOrder extends DeliverableOrder {
           image: itemData["image"],
           quantity: itemData["quantity"],
           notes: itemData["notes"]);
-      itemData["options"]?["chosenManyOptions"]
-          ?.forEach((dynamic id, dynamic data) {
-        restaurantOrderItem.chooseManyOptions.add(ChooseManyOption(
-            optionId: id,
-            optionName: convertToLanguageMap(data["name"]),
-            chosenValueCost: data["chosenValueCost"],
-            chosenOptionValue: data["chosenValue"]));
-      });
-      itemData["options"]?["chosenOneOptions"]
-          ?.forEach((dynamic id, dynamic data) {
-        restaurantOrderItem.chooseOneOptions.add(ChooseOneOption(
-            optionId: id,
-            optionName: convertToLanguageMap(data["name"]),
-            chosenOptionId: data["chosenOptionId"],
-            chosenOptionCost: data["chosenOptionCost"],
-            chosenOptionName: convertToLanguageMap(data["chosenOptionName"])));
+
+      itemData["chosenChoices"]?.forEach((String optionId, dynamic optionData) {
+        restaurantOrderItem.chosenChoices[optionId] = <Choice>[];
+        restaurantOrderItem.optionNames[optionId] =
+            convertToLanguageMap(optionData["optionNames"]);
+        optionData["choices"].forEach((dynamic choiceData) {
+          restaurantOrderItem.chosenChoices[optionId]!
+              .add(Choice.fromData(choiceData));
+        });
       });
       restaurantOrder.items.add(restaurantOrderItem);
     });
@@ -148,14 +142,15 @@ class RestaurantOrder extends DeliverableOrder {
         items.fold<String>("", (String mainString, RestaurantOrderItem item) {
       mainString +=
           "  ${item.name[languageType]} x${item.quantity} ${item.totalCost}\n";
-      mainString += item.chooseOneOptions.fold("",
-          (String secondString, ChooseOneOption chooseOneOption) {
-        return "$secondString    ${chooseOneOption.optionName[languageType]}: ${chooseOneOption.chosenOptionName[languageType]}\n";
-      });
-      mainString += item.chooseManyOptions.fold("",
-          (String secondString, ChooseManyOption chooseManyOption) {
-        mezDbgPrint(chooseManyOption.optionName[languageType]);
-        return "$secondString    ${chooseManyOption.optionName[languageType]}\n";
+
+      item.optionNames.forEach((String optionId, LanguageMap languageMap) {
+        if (item.chosenChoices.containsKey(optionId)) {
+          mainString += "    ${languageMap[languageType]}\n";
+          mainString += item.chosenChoices[optionId]!.fold("",
+              (String thirdString, Choice choice) {
+            return "$thirdString    ${choice.name[languageType]}\n";
+          });
+        }
       });
       mainString += "    ${item.notes}\n";
       return mainString;
@@ -176,12 +171,14 @@ class RestaurantOrderItem {
   num totalCost;
   String idInCart;
   String idInRestaurant;
-  Map<LanguageType, String> name;
+  LanguageMap name;
   String image;
   int quantity;
   String? notes;
-  List<ChooseManyOption> chooseManyOptions = <ChooseManyOption>[];
-  List<ChooseOneOption> chooseOneOptions = <ChooseOneOption>[];
+  //optionId and list of choices for that option
+  Map<String, List<Choice>> chosenChoices = <String, List<Choice>>{};
+  //optionId and list of choices for that option
+  Map<String, LanguageMap> optionNames = <String, LanguageMap>{};
   RestaurantOrderItem(
       {required this.costPerOne,
       required this.totalCost,
@@ -193,28 +190,3 @@ class RestaurantOrderItem {
       this.notes});
 }
 
-class ChooseOneOption {
-  String optionId;
-  Map<LanguageType, String> optionName;
-  String chosenOptionId;
-  Map<LanguageType, String> chosenOptionName;
-  num chosenOptionCost;
-  ChooseOneOption(
-      {required this.optionId,
-      required this.optionName,
-      required this.chosenOptionId,
-      required this.chosenOptionCost,
-      required this.chosenOptionName});
-}
-
-class ChooseManyOption {
-  String optionId;
-  Map<LanguageType, String> optionName;
-  bool chosenOptionValue;
-  num chosenValueCost;
-  ChooseManyOption(
-      {required this.optionId,
-      required this.optionName,
-      required this.chosenValueCost,
-      required this.chosenOptionValue});
-}

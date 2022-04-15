@@ -24,18 +24,19 @@ class RestaurantsInfoController extends GetxController {
         .once();
 
     mezDbgPrint("Got restorantes ===> ${snapshot.value}");
+    mezDbgPrint(serviceProviderInfos(orderType: OrderType.Restaurant));
     final List<Restaurant> restaurants = [];
+    if (snapshot.value == null) return restaurants;
     snapshot.value.forEach((key, value) {
-      try {
+      // try {
         if (value["state"]["available"] == true) {
           restaurants.add(Restaurant.fromRestaurantData(
               restaurantId: key, restaurantData: value));
         }
-      } catch (e) {
-        mezDbgPrint("FREAKING EXCEPTION ===> $e");
-      }
+      // } catch (e) {
+      //   mezDbgPrint(e);
+      // }
     });
-
     restaurants.sort((Restaurant a, Restaurant b) {
       if (a.isAvailable() && !b.isAvailable()) {
         return 1;

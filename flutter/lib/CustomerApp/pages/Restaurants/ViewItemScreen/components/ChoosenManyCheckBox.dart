@@ -29,19 +29,20 @@ class ChooseManyCheckBoxes extends StatelessWidget {
         ...getHeadTitles(),
         ...chooseManyOptions.map((manyOptions) {
           mezDbgPrint(
-              "====>> Chosen Item ? ${cartItem.value!.findChooseManyItemById(manyOptions.id)?.chosen}");
+              "====>> Chosen Item ? ${cartItem.value!.findChooseManyItemById(manyOptions.idInCart)?.chosen}");
           return ViewItemScreenCartComponent(
             title: manyOptions.name[userLanguage]!,
             price: manyOptions.cost > 0
                 ? "\$${currency.format(manyOptions.cost)}"
                 : null,
             initialVal: cartItem.value!
-                    .findChooseManyItemById(manyOptions.id)
+                    .findChooseManyItemById(manyOptions.idInCart)
                     ?.chosen ==
                 true,
             onValueChanged: (val) {
               cartItem.value!.setNewChooseManyItem(
-                  chooseManyOptionId: manyOptions.id, newVal: val ?? false);
+                  chooseManyOptionId: manyOptions.idInCart,
+                  newVal: val ?? false);
               cartItem.refresh();
             },
           );

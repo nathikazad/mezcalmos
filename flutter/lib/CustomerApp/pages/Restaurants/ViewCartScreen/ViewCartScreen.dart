@@ -48,7 +48,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     // if yes redirect to home page
     controller.cart.value.cartItems.map((item) {
       mezDbgPrint(
-          "+++ From ViewCartScreen ==> ${item.id} <= notes => ${item.notes}");
+          "+++ From ViewCartScreen ==> ${item.idInCart} <= notes => ${item.notes}");
     });
   }
 

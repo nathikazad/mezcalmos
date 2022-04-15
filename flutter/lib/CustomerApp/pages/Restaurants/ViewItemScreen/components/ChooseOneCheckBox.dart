@@ -35,16 +35,16 @@ class ChooseOneCheckBox extends StatelessWidget {
                 () => ViewItemScreenCartComponent(
                   title: oneOptionItem.name[userLanguage],
                   initialVal: cartItem.value
-                          ?.findChooseOneItemById(oneOptionItem.id)
+                          ?.findChooseOneItemById(oneOptionItem.idInCart)
                           ?.chosenOptionDetails
-                          .id !=
+                          .idInCart !=
                       null,
                   price: oneOptionItem.cost > 1
                       ? "\$${currency.format(oneOptionItem.cost)}"
                       : null,
                   onValueChanged: (val) {
                     cartItem.value!.setNewChooseOneItem(
-                        chooseOneOptionId: oneOption.id,
+                        chooseOneOptionId: oneOption.idInCart,
                         newChooseOneOptionListItem: oneOptionItem);
                     cartItem.refresh();
                   },

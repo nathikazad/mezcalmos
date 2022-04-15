@@ -73,7 +73,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     } else {
       this.cartItem.value = CartItem.clone(
           restaurantCartController.cart.value.cartItems.firstWhere((item) {
-        return item.id == Get.parameters["cartItemId"];
+        return item.idInCart == Get.parameters["cartItemId"];
       }));
       controller.getRestaurant(this.cartItem.value!.restaurantId).then((value) {
         setState(() {

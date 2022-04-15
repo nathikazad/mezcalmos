@@ -77,7 +77,7 @@ class Restaurant extends Service {
                 DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
             var dateOfClose =
                 DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
-           
+
             if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
               isOpen = true;
             }
@@ -93,76 +93,105 @@ class Restaurant extends Service {
   }
 }
 
-class ChooseManyOption {
-  String id;
-  bool selectedByDefault;
-  num cost;
-  Map<LanguageType, String> name;
+enum OptionType { ChooseOne, ChooseMany, Custom }
 
-  ChooseManyOption(
-      {required this.id,
-      this.selectedByDefault = false,
-      this.cost = 0,
-      required this.name});
-
-  factory ChooseManyOption.fromData(String id, dynamic data) {
-    return ChooseManyOption(
-        id: id,
-        name: convertToLanguageMap(data["name"]),
-        cost: data["cost"],
-        selectedByDefault: data["default"] ?? false);
+extension ParseOrderTypeToString on OptionType {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
   }
-  Map<String, dynamic> toJson() => {"id": id, "cost": cost, "name": name};
 }
 
-class ChooseOneOption {
+extension ParseStringToOrderType on String {
+  OptionType toOptionType() {
+    return OptionType.values
+        .firstWhere((e) => e.toFirebaseFormatString() == this);
+  }
+}
+
+class Option {
   String id;
+  OptionType optionType;
   Map<LanguageType, String> name;
-  String? dialog;
-  List<ChooseOneOptionListItem> chooseOneOptionListItems = [];
-
-  ChooseOneOption({required this.id, required this.name, this.dialog});
-
-  factory ChooseOneOption.fromData(String id, dynamic data) {
-    ChooseOneOption chooseOneOption = ChooseOneOption(
+  List<Choice> choices = <Choice>[];
+  num minimumChoice = 0;
+  num freeChoice = 0;
+  num maximumChoice = 0;
+  num costPerExtra = 0;
+  Option({required this.id, required this.optionType, required this.name});
+  factory Option.fromData(String id, dynamic data) {
+    Option option = Option(
         id: id,
         name: convertToLanguageMap(data["name"]),
-        // data["name"].toLanguageMap(),
-        //TODO:change this
-        dialog: data["dialog"]["es"]);
-    data["options"].forEach((dynamic optionId, dynamic optionData) {
-      //mezDbgPrint(optionData["name"]);
-      ChooseOneOptionListItem chooseOneOptionListItem = ChooseOneOptionListItem(
-          optionId,
-          convertToLanguageMap(optionData["name"]),
-          optionData["cost"]);
-      chooseOneOption.chooseOneOptionListItems.add(chooseOneOptionListItem);
+        optionType: data["optionType"].toString().toOptionType());
+    data["choices"].forEach((dynamic optionData) {
+      Choice choice = Choice.fromData(optionData);
+      option.choices.add(choice);
     });
-    return chooseOneOption;
+    option.changeOptionType(
+      option.optionType,
+      minimumChoice: data["minimumChoice"],
+      freeChoice: data["freeChoice"],
+      maximumChoice: data["maximumChoice"],
+      costPerExtra: data["costPerExtra"],
+    );
+    return option;
   }
 
-  ChooseOneOptionListItem? findChooseOneOptionListItem(String id) {
-    if (this.chooseOneOptionListItems.length == 0) return null;
-    return this
-        .chooseOneOptionListItems
-        .firstWhereOrNull((element) => element.id == id);
+  void changeOptionType(
+    OptionType optionType, {
+    num? minimumChoice,
+    num? freeChoice,
+    num? maximumChoice,
+    num? costPerExtra,
+  }) {
+    switch (optionType) {
+      case OptionType.ChooseOne:
+        this.minimumChoice = 1;
+        this.freeChoice = 1;
+        this.maximumChoice = 1;
+        break;
+      case OptionType.ChooseMany:
+        this.minimumChoice = 0;
+        this.freeChoice = choices.length;
+        this.maximumChoice = choices.length;
+        break;
+      case OptionType.Custom:
+        this.minimumChoice = minimumChoice ?? 0;
+        this.freeChoice = freeChoice ?? 0;
+        this.maximumChoice = maximumChoice ?? choices.length;
+        this.costPerExtra = costPerExtra ?? 0;
+        break;
+    }
+  }
+
+  Choice? findChoice(Map<LanguageType, String> name) {
+    Choice? selected;
+    choices.forEach((Choice choice) {
+      if (choice.name.toFirebaseFormat().toString() ==
+          name.toFirebaseFormat().toString()) selected = choice;
+    });
+    return selected;
   }
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "dialog": dialog,
-        "chooseOneOptionListItems": jsonEncode(chooseOneOptionListItems)
+        "optionType": optionType.toFirebaseFormatString(),
+        "chooseOneOptionListItems": jsonEncode(choices)
       };
 }
 
-class ChooseOneOptionListItem {
-  String id;
+class Choice {
   num cost = 0;
   Map<LanguageType, String> name;
-  ChooseOneOptionListItem(this.id, this.name, this.cost);
+  Choice({required this.name, required this.cost});
+
+  factory Choice.fromData(dynamic data) {
+    return Choice(name: convertToLanguageMap(data["name"]), cost: data["cost"]);
+  }
   Map<String, dynamic> toJson() =>
-      {"id": id, "cost": cost, "name": name.toFirebaseFormat()};
+      {"cost": cost, "name": name.toFirebaseFormat()};
 }
 
 class Item {
@@ -172,16 +201,16 @@ class Item {
   String? image;
   Map<LanguageType, String> name;
   num cost = 0;
-  List<ChooseOneOption> chooseOneOptions = [];
-  List<ChooseManyOption> chooseManyOptions = [];
-  // Sides sides = new Sides();
+  List<Option> options = <Option>[];
+  
   Item(
       {required this.id,
       this.available = false,
       this.description,
       this.image,
       required this.name,
-      required this.cost});
+    required this.cost,
+  });
 
   factory Item.itemFromData(String itemId, dynamic itemData) {
     Item item = Item(
@@ -193,18 +222,10 @@ class Item {
         name: convertToLanguageMap(itemData["name"]),
         //itemData["name"].toLanguageMap(),
         cost: itemData["cost"]);
-    if (itemData["options"]?["chooseOne"] != null) {
-      itemData["options"]["chooseOne"]
-          .forEach((dynamic optionId, dynamic optionData) {
-        item.chooseOneOptions
-            .add(ChooseOneOption.fromData(optionId, optionData));
-      });
-    }
-    if (itemData["options"]?["chooseMany"] != null) {
-      itemData["options"]["chooseMany"]
-          .forEach((dynamic optionId, dynamic optionData) {
-        item.chooseManyOptions
-            .add(ChooseManyOption.fromData(optionId, optionData));
+    // TODO: change to options
+    if (itemData["options2"] != null) {
+      itemData["options2"].forEach((dynamic optionId, dynamic optionData) {
+        item.options.add(Option.fromData(optionId, optionData));
       });
     }
     return item;
@@ -218,22 +239,12 @@ class Item {
       "image": image,
       "cost": cost,
       "name": name,
-      "chooseOneOptions": jsonEncode(chooseOneOptions),
-      "chooseManyOptions": jsonEncode(chooseManyOptions)
+      "options": jsonEncode(options),
     };
   }
 
-  ChooseOneOption? findChooseOneOption(String id) {
-    if (this.chooseOneOptions.length == 0) return null;
-    return this
-        .chooseOneOptions
-        .firstWhereOrNull((element) => element.id == id);
-  }
-
-  ChooseManyOption? findChooseManyOption(String id) {
-    if (this.chooseOneOptions.length == 0) return null;
-    return this
-        .chooseManyOptions
-        .firstWhereOrNull((element) => element.id == id);
+  Option? findOption(String id) {
+    if (options.length == 0) return null;
+    return options.firstWhereOrNull((element) => element.id == id);
   }
 }

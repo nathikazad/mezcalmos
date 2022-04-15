@@ -69,7 +69,7 @@ class CartItemsBuilder extends StatelessWidget {
                                 counter.value =
                                     counter.value + cartItem.costPerOne();
                                 print("${cartItem.item.id}");
-                                controller.incrementItem(cartItem.id!, 1);
+                                controller.incrementItem(cartItem.idInCart!, 1);
                                 controller.refresh();
                               },
                               onChangedToZero: (isZero) async {
@@ -89,7 +89,7 @@ class CartItemsBuilder extends StatelessWidget {
                                   mezDbgPrint(
                                       " the returend value from the dailog $yesNoResult");
                                   if (yesNoResult == YesNoDialogButton.Yes) {
-                                    controller.deleteItem(cartItem.id!);
+                                    controller.deleteItem(cartItem.idInCart!);
                                     if (controller.cart.value.quantity() == 0) {
                                       controller.clearCart();
                                       Get.until((route) =>
@@ -105,7 +105,8 @@ class CartItemsBuilder extends StatelessWidget {
                                 } else {
                                   counter.value =
                                       counter.value + cartItem.costPerOne();
-                                  controller.incrementItem(cartItem.id!, -1);
+                                  controller.incrementItem(
+                                      cartItem.idInCart!, -1);
                                   controller.refresh();
                                 }
                               }),
@@ -115,7 +116,7 @@ class CartItemsBuilder extends StatelessWidget {
             onEdit: () {
               mezDbgPrint(
                   " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
-              Get.toNamed(editCartItemRoute("${cartItem.id}"));
+              Get.toNamed(editCartItemRoute("${cartItem.idInCart}"));
             },
           ),
         ));
