@@ -67,8 +67,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       String? itemId = Get.parameters['itemId'];
       mezDbgPrint("got item id param => $itemId");
 
-      this.controller.getItem(restaurantId!, itemId!).then((value) {
-        this.cartItem.value = CartItem(value, restaurantId);
+      this.controller.getItem(restaurantId!, itemId!).then((Item item) {
+        this.cartItem.value = CartItem(item, restaurantId);
       });
     } else {
       this.cartItem.value = CartItem.clone(
@@ -171,25 +171,25 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  ChooseOneCheckBox(
-                    chooseOneOptions: cartItem.value!.item.chooseOneOptions,
-                    cartItem: cartItem,
-                  ),
+                  // ChooseOneCheckBox(
+                  //   chooseOneOptions: cartItem.value!.item.chooseOneOptions,
+                  //   cartItem: cartItem,
+                  // ),
                   SizedBox(
                     height: 20,
                   ),
-                  ChooseManyCheckBoxes(
-                      chooseManyOptions: cartItem.value!.item.chooseManyOptions,
-                      cartItem: cartItem),
-                  TextFieldComponent(
-                    textController: _noteTextEdittingController,
-                    hint: _i18n()["notes"],
-                    onChangeCallback: (String value) {
-                      mezDbgPrint(
-                          "@IOIOIO@ | ${cartItem.value} notes : $value");
-                      cartItem.value?.notes = value;
-                    },
-                  ),
+                  // ChooseManyCheckBoxes(
+                  //     chooseManyOptions: cartItem.value!.item.chooseManyOptions,
+                  //     cartItem: cartItem),
+                  // TextFieldComponent(
+                  //   textController: _noteTextEdittingController,
+                  //   hint: _i18n()["notes"],
+                  //   onChangeCallback: (String value) {
+                  //     mezDbgPrint(
+                  //         "@IOIOIO@ | ${cartItem.value} notes : $value");
+                  //     cartItem.value?.notes = value;
+                  //   },
+                  // ),
                   SizedBox(
                     height: 15,
                   )

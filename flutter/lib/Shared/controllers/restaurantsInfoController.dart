@@ -23,7 +23,7 @@ class RestaurantsInfoController extends GetxController {
         .child(serviceProviderInfos(orderType: OrderType.Restaurant))
         .once();
 
-    mezDbgPrint("Got restorantes ===> ${snapshot.value}");
+    // mezDbgPrint("Got restorantes ===> ${snapshot.value}");
     mezDbgPrint(serviceProviderInfos(orderType: OrderType.Restaurant));
     final List<Restaurant> restaurants = [];
     if (snapshot.value == null) return restaurants;

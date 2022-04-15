@@ -57,6 +57,7 @@ class Cart {
       "paymentType": paymentType.toFirebaseFormatString()
     };
   }
+
   int quantity() {
     if (cartItems.length == 0) return 0;
     return cartItems.fold(
@@ -77,8 +78,7 @@ class Cart {
     if (cartItem.idInCart == null) {
       cartItem.idInCart = getRandomString(5);
     } else {
-      int index =
-          this
+      int index = this
           .cartItems
           .indexWhere((element) => element.idInCart == cartItem.idInCart);
       this.cartItems.removeAt(index);
@@ -115,7 +115,7 @@ class CartItem {
   CartItem(this.item, this.restaurantId,
       {this.idInCart, this.quantity = 1, this.notes}) {
     item.options.forEach((Option option) {
-      chosenChoices[item.id] = <Choice>[];
+      chosenChoices[option.id] = <Choice>[];
     });
   }
 

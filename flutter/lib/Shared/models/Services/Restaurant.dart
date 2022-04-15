@@ -155,6 +155,7 @@ class Option {
         this.minimumChoice = 0;
         this.freeChoice = choices.length;
         this.maximumChoice = choices.length;
+        this.costPerExtra = 0;
         break;
       case OptionType.Custom:
         this.minimumChoice = minimumChoice ?? 0;
@@ -174,12 +175,14 @@ class Option {
     return selected;
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "optionType": optionType.toFirebaseFormatString(),
-        "chooseOneOptionListItems": jsonEncode(choices)
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name.toFirebaseFormat(),
+      "optionType": optionType.toFirebaseFormatString(),
+      "choices": jsonEncode(choices)
+    };
+  }
 }
 
 class Choice {
@@ -197,18 +200,18 @@ class Choice {
 class Item {
   String id;
   bool available;
-  Map<LanguageType, String>? description;
+  LanguageMap? description;
   String? image;
   Map<LanguageType, String> name;
   num cost = 0;
   List<Option> options = <Option>[];
-  
-  Item(
-      {required this.id,
-      this.available = false,
-      this.description,
-      this.image,
-      required this.name,
+
+  Item({
+    required this.id,
+    this.available = false,
+    this.description,
+    this.image,
+    required this.name,
     required this.cost,
   });
 
@@ -235,10 +238,10 @@ class Item {
     return <String, dynamic>{
       "id": id,
       "available": available,
-      "description": description,
+      "description": description?.toFirebaseFormat(),
       "image": image,
       "cost": cost,
-      "name": name,
+      "name": name.toFirebaseFormat(),
       "options": jsonEncode(options),
     };
   }

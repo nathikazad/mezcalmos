@@ -43,8 +43,9 @@ class CartItemsBuilder extends StatelessWidget {
                 itemsPrice: counter.value.toStringAsFixed(0),
               ),
             )),
-            children: choosenOneOption(cartItem.cartChooseOneItems, context) +
-                choosenManyOption(cartItem.cartChooseManyItems, context) +
+            children:
+                // choosenOneOption(cartItem.cartChooseOneItems, context) +
+                //     choosenManyOption(cartItem.cartChooseManyItems, context) +
                 [
                   SizedBox(
                     height: 10,
