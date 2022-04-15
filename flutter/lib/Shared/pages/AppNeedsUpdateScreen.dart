@@ -20,7 +20,7 @@ class AppNeedsUpdateScreen extends StatefulWidget {
 
 class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
   final AppVersionController _controller = AppVersionController.instance();
-  // Rxn<MezAppUpdateResult> _results = Rxn<MezAppUpdateResult>();
+
   RxBool _isDownloading = false.obs;
   UpdateType _updateType = UpdateType.Null;
   VersionStatus? _versionStatus;
