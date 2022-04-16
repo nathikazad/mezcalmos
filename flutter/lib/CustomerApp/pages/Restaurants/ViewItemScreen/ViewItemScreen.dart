@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/BottomBarItemViewScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ItemOptionCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -206,13 +207,13 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               ),
             ),
           ),
-          // BottomBarItemViewScreen(
-          //   isAvailable: checkRestaurantAvailability(
-          //       schedule: currentRestaurant?.schedule),
-          //   cartItem: cartItem,
-          //   mode: widget.viewItemScreenMode,
-          //   currentRestaurantId: currentRestaurant?.info.id,
-          // )
+          BottomBarItemViewScreen(
+            isAvailable: checkRestaurantAvailability(
+                schedule: currentRestaurant?.schedule),
+            cartItem: cartItem,
+            mode: widget.viewItemScreenMode,
+            currentRestaurantId: currentRestaurant?.info.id,
+          )
         ],
       ),
     );

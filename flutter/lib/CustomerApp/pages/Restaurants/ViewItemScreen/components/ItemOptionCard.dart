@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
@@ -19,24 +18,18 @@ class NewItemOptionCard extends StatefulWidget {
 
 class _NewItemOptionCardState extends State<NewItemOptionCard> {
   LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+  late String optionKey;
   @override
   void initState() {
+    // FOR TEST PURPOSES
     widget.option.minimumChoice = 3;
     widget.option.maximumChoice = 5;
-    // TODO: implement initState
+    // GETTING OPTION NAME AS A NORMAL STRING THE KEY INSIDE CHOSENCHOICES //
+    optionKey = widget.option.name[userLanguage].toString().toLowerCase();
+
     if (widget.option.minimumChoice > 0) {
-      for (int i = 0; i < widget.option.minimumChoice; i++) {
-        if (i <= widget.option.maximumChoice) {
-          widget.cartItem.value!.setNewChoices(
-              itemId: widget.option.name[userLanguage].toString().toLowerCase(),
-              newChoices: widget.cartItem.value!.chosenChoices[widget
-                      .option.name[userLanguage]
-                      .toString()
-                      .toLowerCase()]! +
-                  [widget.option.choices[i]]);
-        }
-      }
-    } else {}
+      assignMinimumChoices();
+    }
     super.initState();
   }
 
@@ -44,11 +37,14 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
+        margin: EdgeInsets.all(8),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               widget.option.name[userLanguage].toString(),
             ),
+            // TESTING PURPOSES //
             Text(
               "min : " + widget.option.minimumChoice.toString(),
             ),
@@ -58,6 +54,7 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
             Text(
               "type :" + widget.option.optionType.toString(),
             ),
+            // ENDIND TESTING PURPOSES //
             Column(
               children: List.generate(
                   widget.option.choices.length,
@@ -71,7 +68,10 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
     );
   }
 
-  Widget optionChoiceCard({required Choice choice}) {
+  // Single choice card  //
+  Widget optionChoiceCard({
+    required Choice choice,
+  }) {
     return Card(
       child: Container(
         margin: const EdgeInsets.all(8),
@@ -104,82 +104,95 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
               child: Checkbox(
                   activeColor: Get.theme.primaryColorLight,
                   shape: CircleBorder(),
-                  value: widget
-                      .cartItem
-                      .value!
-                      .chosenChoices[widget.option.name[userLanguage]
-                          .toString()
-                          .toLowerCase()]
+                  value: widget.cartItem.value!.chosenChoices[optionKey]
                       ?.contains(choice),
                   onChanged: (bool? v) {
-                    mezDbgPrint(
-                        widget.cartItem.value!.chosenChoices.toString());
-                    if (widget
-                        .cartItem
-                        .value!
-                        .chosenChoices[widget.option.name[userLanguage]
-                            .toString()
-                            .toLowerCase()]!
-                        .contains(choice)) {
-                      mezDbgPrint("tapppppped");
-                      if (widget
-                              .cartItem
-                              .value!
-                              .chosenChoices[widget.option.name[userLanguage]
-                                  .toString()
-                                  .toLowerCase()]!
-                              .length >
-                          widget.option.minimumChoice) {
-                        final List<Choice> newChoices = widget
-                            .cartItem
-                            .value!
-                            .chosenChoices[widget.option.name[userLanguage]
-                                .toString()
-                                .toLowerCase()]!
-                            .toList();
-                        newChoices.remove(choice);
-                        widget.cartItem.value!.setNewChoices(
-                            itemId: widget.option.name[userLanguage]
-                                .toString()
-                                .toLowerCase(),
-                            newChoices: newChoices);
-                      }
-                    } else if (widget.cartItem.value!.chosenChoices.length <
-                        widget.option.maximumChoice) {
-                      widget.cartItem.value!.setNewChoices(
-                          itemId: widget.option.name[userLanguage]
-                              .toString()
-                              .toLowerCase(),
-                          newChoices: widget.cartItem.value!.chosenChoices[
-                                  widget.option.name[userLanguage]
-                                      .toString()
-                                      .toLowerCase()]! +
-                              [choice]);
-                    } else if (widget.cartItem.value!.chosenChoices.length ==
-                        widget.option.maximumChoice) {
-                      widget
-                          .cartItem
-                          .value!
-                          .chosenChoices[widget.option.name[userLanguage]
-                              .toString()
-                              .toLowerCase()]!
-                          .removeLast();
-                      widget.cartItem.value!.setNewChoices(
-                          itemId: widget.option.name[userLanguage]
-                              .toString()
-                              .toLowerCase(),
-                          newChoices: widget.cartItem.value!.chosenChoices[
-                                  widget.option.name[userLanguage]
-                                      .toString()
-                                      .toLowerCase()]! +
-                              [choice]);
-                    }
-                    widget.cartItem.refresh();
+                    handleChoiceCheckBox(choice);
+                    // if (widget.cartItem.value!.chosenChoices[optionKey]!
+                    //     .contains(choice)) {
+                    //   if (widget.cartItem.value!.chosenChoices[optionKey]!
+                    //           .length >
+                    //       widget.option.minimumChoice) {
+                    //     final List<Choice> newChoices = widget
+                    //         .cartItem.value!.chosenChoices[optionKey]!
+                    //         .toList();
+                    //     newChoices.remove(choice);
+                    //     widget.cartItem.value!.setNewChoices(
+                    //         itemId: optionKey, newChoices: newChoices);
+                    //   }
+                    // } else if (widget.cartItem.value!.chosenChoices.length <
+                    //     widget.option.maximumChoice) {
+                    //   widget.cartItem.value!.setNewChoices(
+                    //       itemId: optionKey,
+                    //       newChoices:
+                    //           widget.cartItem.value!.chosenChoices[optionKey]! +
+                    //               [choice]);
+                    // } else if (widget.cartItem.value!.chosenChoices.length ==
+                    //     widget.option.maximumChoice) {
+                    //   widget.cartItem.value!.chosenChoices[optionKey]!
+                    //       .removeLast();
+                    //   widget.cartItem.value!.setNewChoices(
+                    //       itemId: optionKey,
+                    //       newChoices:
+                    //           widget.cartItem.value!.chosenChoices[optionKey]! +
+                    //               [choice]);
+                    // }
                   }),
             )
           ],
         ),
       ),
     );
+  }
+
+// FUNCTIONS //
+  void assignMinimumChoices() {
+    for (int i = 0; i < widget.option.minimumChoice; i++) {
+      if (i <= widget.option.maximumChoice) {
+        widget.cartItem.value!.setNewChoices(
+            itemId: optionKey,
+            newChoices: widget.cartItem.value!.chosenChoices[optionKey]! +
+                [widget.option.choices[i]]);
+      }
+    }
+  }
+
+  void handleChoiceCheckBox(Choice choice) {
+    if (widget.cartItem.value!.chosenChoices[optionKey]!.contains(choice)) {
+      removeChoice(choice);
+    } else if (widget.cartItem.value!.chosenChoices.length <
+        widget.option.maximumChoice) {
+      addNewChoice(choice);
+    } else if (widget.cartItem.value!.chosenChoices.length ==
+        widget.option.maximumChoice) {
+      addLastChoice(choice);
+    }
+    widget.cartItem.refresh();
+  }
+
+  void addLastChoice(Choice choice) {
+    widget.cartItem.value!.chosenChoices[optionKey]!.removeLast();
+    widget.cartItem.value!.setNewChoices(
+        itemId: optionKey,
+        newChoices:
+            widget.cartItem.value!.chosenChoices[optionKey]! + [choice]);
+  }
+
+  void addNewChoice(Choice choice) {
+    widget.cartItem.value!.setNewChoices(
+        itemId: optionKey,
+        newChoices:
+            widget.cartItem.value!.chosenChoices[optionKey]! + [choice]);
+  }
+
+  void removeChoice(Choice choice) {
+    if (widget.cartItem.value!.chosenChoices[optionKey]!.length >
+        widget.option.minimumChoice) {
+      final List<Choice> newChoices =
+          widget.cartItem.value!.chosenChoices[optionKey]!.toList();
+      newChoices.remove(choice);
+      widget.cartItem.value!
+          .setNewChoices(itemId: optionKey, newChoices: newChoices);
+    }
   }
 }
