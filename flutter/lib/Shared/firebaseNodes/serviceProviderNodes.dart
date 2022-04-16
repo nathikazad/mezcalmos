@@ -36,6 +36,12 @@ String serviceProviderSchedule(
       '/schedule';
 }
 
+String serviceProviderCosts(
+    {required OrderType orderType, required String providerId}) {
+  return serviceProviderDetails(orderType: orderType, providerId: providerId) +
+      '/costs';
+}
+
 String serviceProviderPrimaryLanguage(
     {required OrderType orderType, required String providerId}) {
   return serviceProviderDetails(orderType: orderType, providerId: providerId) +

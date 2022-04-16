@@ -3,19 +3,17 @@
 * On 4/11/2022.
 */
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/controllers/addCategoryController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 
 class AddCategorySlide extends StatelessWidget {
   const AddCategorySlide({
     Key? key,
-    required this.categoryNameController,
-    required this.categoryPricingController,
+    required this.addCategoryController,
     required this.selectedTab,
   }) : super(key: key);
 
-  final TextEditingController categoryNameController;
-  final TextEditingController categoryPricingController;
+  final AddCategoryController addCategoryController;
   final SelectedTab selectedTab;
 
   @override
@@ -28,48 +26,59 @@ class AddCategorySlide extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             children: <Widget>[
               Text(
-                selectedTab != SelectedTab.Spanish
+                selectedTab != SelectedTab.Secondary
                     ? "Category name"
-                    : "Category name in spanish ",
+                    : "Category name in ${addCategoryController.secondaryLang.value!.toLanguageName() ?? ""} ",
                 style: textTheme.headline4,
               ),
-              if (selectedTab != SelectedTab.English)
+              if (selectedTab != SelectedTab.Primary)
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     const SizedBox(height: 6),
                     Text(
-                      Get.find<AddCategoryController>()
-                          .categoryNameControllerEnglish
-                          .text,
+                      (selectedTab == SelectedTab.Primary)
+                          ? addCategoryController
+                              .categoryNameControllerEnglish.text
+                          : addCategoryController
+                              .categoryNameControllerSpanish.text,
                       style: textTheme.bodyText2,
                     ),
                   ],
                 ),
               const SizedBox(height: 8),
               _CustomTextField(
-                controller: categoryNameController,
+                controller: selectedTab == SelectedTab.Primary
+                    ? addCategoryController.categoryNameControllerEnglish
+                    : addCategoryController.categoryNameControllerEnglish,
                 hint: 'Enter a category name...',
-                showNext: selectedTab != SelectedTab.Spanish,
+                showNext: selectedTab == SelectedTab.Secondary,
               ),
               const SizedBox(height: 16),
-              if (selectedTab != SelectedTab.Spanish)
-                Text(
-                  "Category pricing per kilogramme",
-                  style: textTheme.headline4,
+              if (selectedTab != SelectedTab.Secondary)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Category pricing per kilogramme",
+                      style: textTheme.headline4,
+                    ),
+                  ],
                 ),
               const SizedBox(height: 8),
-              if (selectedTab != SelectedTab.Spanish)
-                _CustomTextField(
-                  controller: categoryPricingController,
-                  hint: 'Enter category pricing per kilogramme...',
-                ),
+              _CustomTextField(
+                controller: addCategoryController.categoryPricingController,
+                hint: 'Enter category pricing per kilogramme...',
+              ),
             ],
           ),
         ),
         TextButton(
-            onPressed: () {},
+            onPressed: () {
+              addCategoryController.addCategory();
+            },
+            style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
             child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(8),

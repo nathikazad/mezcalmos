@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/components/AddCategorySlide.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 /*
 * Created By Mirai Devs.
@@ -8,55 +12,87 @@ import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/components/AddCateg
 */
 
 // ignore_for_file: constant_identifier_names
-enum SelectedTab {
-  English,
-  Spanish,
-}
+enum SelectedTab { Primary, Secondary }
 
-class AddCategoryController extends GetxController {
+class AddCategoryController {
   /// TextEditingController English
   final TextEditingController categoryNameControllerEnglish =
       TextEditingController();
-  final TextEditingController categoryPricingControllerEnglish =
+  final TextEditingController categoryPricingController =
       TextEditingController();
 
   /// TextEditingController Spanish
   final TextEditingController categoryNameControllerSpanish =
       TextEditingController();
-  final TextEditingController categoryPricingControllerSpanish =
-      TextEditingController();
-
-  /// Tabs
-  List<Widget> tabs = <Widget>[];
-
-  /// Pages
-  List<Widget> tabPages = <Widget>[];
-
-  /// TabController
   TabController? tabController;
 
-  void getTabs() {
-    tabs = <Tab>[
-      Tab(
-        text: SelectedTab.English.name,
-      ),
-      Tab(
-        text: SelectedTab.Spanish.name,
-      ),
+  // @m66are Work //
+  LaundryInfoController laundryInfoController =
+      Get.find<LaundryInfoController>();
+  final Rxn<Laundry> laundry = Rxn<Laundry>();
+  final Rxn<LaundryCosts> laundryCosts = Rxn();
+  final Rxn<LanguageType> primaryLang = Rxn();
+  final Rxn<LanguageType> secondaryLang = Rxn();
+
+  RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
+  void init() {
+    laundry.value = laundryInfoController.laundry.value;
+    primaryLang.value = laundry.value!.primaryLanguage;
+    secondaryLang.value = laundry.value!.secondaryLanguage;
+
+    if (laundry.value != null) {
+      mezDbgPrint("Categories adding init state");
+      laundryCosts.value = laundry.value!.laundryCosts;
+      laundry.value!.laundryCosts.lineItems
+          .forEach((LaundryCostLineItem element) {
+        categories.value.add(element.copyWith());
+      });
+    }
+  }
+
+  void addCategory() {
+    categories.value.add(LaundryCostLineItem(name: {
+      LanguageType.EN: categoryNameControllerEnglish.text,
+      LanguageType.ES: categoryNameControllerSpanish.text,
+    }, cost: num.parse(categoryPricingController.text)));
+
+    laundryCosts.value!.lineItems = categories;
+    mezDbgPrint("After add ------------------------>");
+    laundryCosts.value!.lineItems.forEach((LaundryCostLineItem element) {});
+
+    laundryInfoController.setCosts(laundryCosts.value!).then((value) {
+      mezDbgPrint("Done");
+      Get.back();
+    });
+  }
+
+  // @m66are Work //
+  /// Tabs
+
+  /// Pages
+
+  /// TabController
+
+  List<Tab> getTabs() {
+    return <Tab>[
+      Tab(text: primaryLang.value!.toLanguageName()),
+      Tab(text: secondaryLang.value!.toLanguageName() ?? ""),
     ];
   }
 
-  void getTabPages() {
-    tabPages = <Widget>[
+  List<Widget> tabPages() {
+    return <Widget>[
       AddCategorySlide(
-        categoryNameController: categoryNameControllerEnglish,
-        categoryPricingController: categoryPricingControllerEnglish,
-        selectedTab: SelectedTab.English,
+        // categoryNameController: categoryNameControllerEnglish,
+        // categoryPricingController: categoryPricingController,
+        addCategoryController: this,
+        selectedTab: SelectedTab.Primary,
       ),
       AddCategorySlide(
-        categoryNameController: categoryNameControllerSpanish,
-        categoryPricingController: categoryPricingControllerSpanish,
-        selectedTab: SelectedTab.Spanish,
+        // categoryNameController: categoryNameControllerSpanish,
+        // categoryPricingController: categoryPricingController,
+        addCategoryController: this,
+        selectedTab: SelectedTab.Secondary,
       ),
     ];
   }

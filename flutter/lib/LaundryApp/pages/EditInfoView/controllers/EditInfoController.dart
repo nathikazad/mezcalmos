@@ -28,6 +28,8 @@ class EditInfoController {
   final Rxn<Schedule> newSchedule = Rxn();
   final Rxn<Schedule> schedulePreview = Rxn();
   final Rxn<Schedule> oldSchedule = Rxn();
+  final Rxn<LaundryCosts> laundryCosts = Rxn();
+  final Rxn<List<LaundryCostLineItem>> categories = Rxn();
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
 
@@ -40,6 +42,12 @@ class EditInfoController {
 
       laundryNameController.text = laundry.value?.info.name ?? '';
       settingSchedules();
+
+      // laundryCosts.value = laundry.value!.laundryCosts;
+      // laundry.value!.laundryCosts.lineItems
+      //     .forEach((LaundryCostLineItem element) {
+      //   categories.value!.add(element.copyWith());
+      // });
 
       newLocation.value = laundry.value!.info.location;
       newImageUrl.value = laundry.value?.info.image ?? '';
@@ -83,7 +91,7 @@ class EditInfoController {
     } else if (secondaryLang.value == null) {
       await laundryInfoController.setSecondaryLanguage(null);
     }
-   
+
     if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
       await laundryInfoController.setSchedule(newSchedule.value!);
     }

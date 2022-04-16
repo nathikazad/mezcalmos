@@ -70,7 +70,9 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
                 color: Colors.white,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(10),
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(kAddCategoryScreen);
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     child: Row(
@@ -91,10 +93,11 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
           ),
           Column(
               children: List.generate(
-                  laundry.value!.laundryCosts.lineItems.length,
-                  (int index) => CategoryCard(
-                      laundryCostLineItem:
-                          laundry.value!.laundryCosts.lineItems[index]))),
+                  laundry.value!.laundryCosts.lineItems.length, (int index) {
+            return CategoryCard(
+                laundryCostLineItem:
+                    laundry.value!.laundryCosts.lineItems[index]);
+          })),
           Divider(),
           Text(
             'Location',

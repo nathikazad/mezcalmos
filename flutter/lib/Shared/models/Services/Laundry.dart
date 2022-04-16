@@ -66,7 +66,6 @@ class Laundry extends Service {
 class LaundryCosts {
   List<LaundryCostLineItem> lineItems = <LaundryCostLineItem>[];
   num minimumCost = 0;
-
   LaundryCosts();
 
   factory LaundryCosts.fromData(laundryCostsData) {
@@ -80,6 +79,22 @@ class LaundryCosts {
     }
     return laundryCosts;
   }
+
+  Map<String, dynamic> toFirebasFormat() {
+    return {
+      'byType': lineItems
+          .map((LaundryCostLineItem item) => item.toFirebaseFormat())
+          .toList(),
+      'minimumCost': minimumCost,
+    };
+  }
+
+  //  factory LaundryCosts.clone(LaundryCosts laundryCosts) {
+  //   final Map<Weekday, OpenHours> _cloneSchedule = {};
+  //   laundryCosts.lineItems.forEach((LaundryCostLineItem element) { })
+
+  //   return newSchedule;
+  // }
 }
 
 class LaundryCostLineItem {
@@ -91,6 +106,23 @@ class LaundryCostLineItem {
   factory LaundryCostLineItem.fromData(laundryCostLineItemData) {
     return LaundryCostLineItem(
         name: convertToLanguageMap(laundryCostLineItemData['name']),
-        cost: laundryCostLineItemData['costPerKilo']);
+        cost: laundryCostLineItemData['cost']);
+  }
+
+  Map<String, dynamic> toFirebaseFormat() {
+    return {
+      'name': name.toFirebaseFormat(),
+      'cost': cost,
+    };
+  }
+
+  LaundryCostLineItem copyWith({
+    Map<LanguageType, String>? name,
+    num? cost,
+  }) {
+    return LaundryCostLineItem(
+      name: name ?? this.name,
+      cost: cost ?? this.cost,
+    );
   }
 }

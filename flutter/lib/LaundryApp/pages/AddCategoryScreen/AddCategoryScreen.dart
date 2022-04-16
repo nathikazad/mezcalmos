@@ -3,8 +3,6 @@
 * On 4/11/2022.
 */
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/components/AddCategoryAppBar.dart';
 import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/controllers/addCategoryController.dart';
 
 class AddCategoryScreen extends StatefulWidget {
@@ -17,17 +15,17 @@ class AddCategoryScreen extends StatefulWidget {
 class _AddCategoryScreenState extends State<AddCategoryScreen>
     with TickerProviderStateMixin {
   /// AddCategoryController
-  final AddCategoryController _addCategoryController =
-      Get.find<AddCategoryController>();
+  AddCategoryController _addCategoryController = AddCategoryController();
 
   @override
   void initState() {
+    _addCategoryController.init();
     _addCategoryController.tabController = TabController(
       vsync: this,
       length: 2,
     );
     _addCategoryController.getTabs();
-    _addCategoryController.getTabPages();
+
     super.initState();
   }
 
@@ -44,14 +42,15 @@ class _AddCategoryScreenState extends State<AddCategoryScreen>
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: addCategoryAppBar(
-        addCategoryController: _addCategoryController,
-        textTheme: textTheme,
-        context: context,
+      appBar: AppBar(
+        title: Text("Add category"),
+        bottom: TabBar(
+            controller: _addCategoryController.tabController,
+            tabs: _addCategoryController.getTabs()),
       ),
       body: TabBarView(
         controller: _addCategoryController.tabController,
-        children: _addCategoryController.tabPages,
+        children: _addCategoryController.tabPages(),
       ),
     );
   }

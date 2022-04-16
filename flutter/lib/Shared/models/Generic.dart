@@ -25,6 +25,19 @@ extension ParseLanugaugeTypeToString on LanguageType {
 
     return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
+
+  String? toLanguageName() {
+    final String str = toString().split('.').last;
+    switch (str) {
+      case "EN":
+        return "English";
+      case "ES":
+        return "Spanish";
+
+      default:
+        return null;
+    }
+  }
 }
 
 extension ParseStringToLanugaugeType on String {

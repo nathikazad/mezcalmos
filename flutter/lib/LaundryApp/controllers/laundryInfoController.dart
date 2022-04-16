@@ -96,6 +96,14 @@ class LaundryInfoController extends GetxController {
         .set(schedule.toFirebaseFormattedJson());
   }
 
+  Future<void> setCosts(LaundryCosts laundryCosts) {
+    return _databaseHelper.firebaseDatabase
+        .reference()
+        .child(serviceProviderCosts(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(laundryCosts.toFirebasFormat());
+  }
+
   Future<void> setPrimaryLanguage(LanguageType lang) {
     return _databaseHelper.firebaseDatabase
         .reference()

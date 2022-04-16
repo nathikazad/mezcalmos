@@ -1,6 +1,5 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/AddCategoryScreen.dart';
-import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/bindings/addCategoryBinding.dart';
 import 'package:mezcalmos/LaundryApp/pages/DashboardView/DashboardView.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/EditInfoView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
@@ -30,7 +29,6 @@ class XRouter {
         GetPage(
           name: kAddCategoryScreen,
           page: () => AddCategoryScreen(),
-          binding: AddCategoryBinding(),
         ),
       ] +
       SharedRouter.sharedRoutes;

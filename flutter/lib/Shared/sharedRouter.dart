@@ -26,6 +26,7 @@ const String kNoInternetConnectionPage = '/offline';
 const String kOtpRoute = '/sign_in_otp';
 const String kOtpConfirmRoute = '/sign_in_otp_confirm';
 const String kMessagesRoute = '/messages/:chatId';
+const String kMultiLanguagesRoute = '/multiLanguage/:id';
 const String kUnauthorizedRoute = '/unauthorized';
 const String kUserProfile = '/user_profile';
 const String kPickToLocation = '/pick_to_location';
