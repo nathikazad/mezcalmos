@@ -8,8 +8,8 @@ import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 
 class Restaurant extends Service {
-  Map<LanguageType, String>? description;
-  List<Item> items = [];
+  LanguageMap? description;
+  List<Category> categories = <Category>[];
 
   Restaurant(
       {required ServiceUserInfo userInfo,
@@ -29,7 +29,7 @@ class Restaurant extends Service {
                 .toAuthorizationStatus() ??
             AuthorizationStatus.Unauthorized,
         restaurantData["state"]?["available"] ?? false);
-    Map<LanguageType, String>? description;
+    LanguageMap? description;
     if (restaurantData["details"]["description"] != null) {
       description =
           convertToLanguageMap(restaurantData["details"]["description"]);
@@ -44,27 +44,29 @@ class Restaurant extends Service {
         description: description,
         schedule: schedule,
         restaurantState: restaurantState);
-    restaurantData["menu"].forEach((itemId, itemData) {
-      restaurant.items.add(Item.itemFromData(itemId, itemData));
+    restaurantData["menu"].forEach((dynamic categoryId, dynamic categoryData) {
+      restaurant.categories.add(Category.fromData(categoryId, categoryData));
     });
-
-    restaurant.items.sort((Item a, Item b) => a.position.compareTo(b.position));
-
+    restaurant.categories
+        .sort((Category a, Category b) => a.position.compareTo(b.position));
     return restaurant;
   }
 
   Item? findItemById(String id) {
-    return items.firstWhereOrNull((Item item) {
-      mezDbgPrint("@sa@d@: findItemById:: item Id ${item.id} == $id ");
-      return item.id == id;
+    Item? returnVal;
+    categories.forEach((Category category) {
+      category.items.forEach((Item item) {
+        if (item.id == id) returnVal = item;
+      });
     });
+    return returnVal;
   }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      "description": description,
+      "description": description?.toFirebaseFormat(),
       "info": info.toJson(),
-      "items": jsonEncode(items),
+      "categories": jsonEncode(categories),
       "restaurantState": state.toJson()
     };
   }
@@ -99,6 +101,110 @@ class Restaurant extends Service {
   }
 }
 
+class Category {
+  LanguageMap name;
+  String id;
+  LanguageMap? description;
+  int position = 0;
+  List<Item> items = <Item>[];
+
+  Category({
+    required this.name,
+    required this.id,
+    this.position = 0,
+    this.description,
+  });
+
+  factory Category.fromData(String categoryId, dynamic categoryData) {
+    Category category = Category(
+        name: convertToLanguageMap(categoryData["name"]),
+        id: categoryId,
+        position: categoryData["position"] ?? 0);
+    if (categoryData["description"])
+      category.description = convertToLanguageMap(categoryData["description"]);
+    categoryData["items"].forEach((dynamic itemId, dynamic itemData) {
+      category.items.add(Item.itemFromData(itemId, itemData));
+    });
+    category.sortItems();
+    return category;
+  }
+
+  void sortItems() {
+    items.sort((Item a, Item b) => a.position.compareTo(b.position));
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      "name": name.toFirebaseFormat(),
+      "description": description?.toFirebaseFormat(),
+      "position": position,
+      "items": jsonEncode(items),
+    };
+  }
+}
+
+class Item {
+  String id;
+  bool available;
+  LanguageMap? description;
+  String? image;
+  Map<LanguageType, String> name;
+  num cost = 0;
+  List<Option> options = <Option>[];
+  int position = 0;
+  Item(
+      {required this.id,
+      this.available = false,
+      this.description,
+      this.image,
+      required this.name,
+      required this.cost,
+      this.position = 0});
+
+  factory Item.itemFromData(String itemId, dynamic itemData) {
+    Item item = Item(
+        id: itemId,
+        available: itemData["available"],
+        description: convertToLanguageMap(itemData["description"]),
+        //itemData["description"].toLanguageMap(),
+        image: itemData["image"],
+        position: itemData["position"] ?? 0,
+        name: convertToLanguageMap(itemData["name"]),
+        //itemData["name"].toLanguageMap(),
+        cost: itemData["cost"]);
+    // TODO: change to options
+    if (itemData["options2"] != null) {
+      itemData["options2"].forEach((dynamic optionId, dynamic optionData) {
+        item.options.add(Option.fromData(optionId, optionData));
+      });
+      item.sortOptions();
+    }
+    return item;
+  }
+
+  void sortOptions() {
+    options.sort((Option a, Option b) => a.position.compareTo(b.position));
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      "id": id,
+      "available": available,
+      "description": description?.toFirebaseFormat(),
+      "image": image,
+      "cost": cost,
+      "name": name.toFirebaseFormat(),
+      "options": jsonEncode(options),
+      "position": position
+    };
+  }
+
+  Option? findOption(String id) {
+    if (options.length == 0) return null;
+    return options.firstWhereOrNull((element) => element.id == id);
+  }
+}
+
 enum OptionType { ChooseOne, ChooseMany, Custom }
 
 extension ParseOrderTypeToString on OptionType {
@@ -120,11 +226,11 @@ class Option {
   OptionType optionType;
   Map<LanguageType, String> name;
   List<Choice> choices = <Choice>[];
+  int position = 0;
   num minimumChoice = 0;
   num freeChoice = 0;
   num maximumChoice = 0;
   num costPerExtra = 0;
-  num position;
   Option(
       {required this.id,
       required this.optionType,
@@ -209,64 +315,4 @@ class Choice {
   }
   Map<String, dynamic> toJson() =>
       {"cost": cost, "name": name.toFirebaseFormat()};
-}
-
-class Item {
-  String id;
-  bool available;
-  LanguageMap? description;
-  String? image;
-  Map<LanguageType, String> name;
-  num cost = 0;
-  List<Option> options = <Option>[];
-  num position;
-
-  Item({
-    required this.id,
-    this.available = false,
-    this.description,
-    this.image,
-    this.position = 0,
-    required this.name,
-    required this.cost,
-  });
-
-  factory Item.itemFromData(String itemId, itemData) {
-    final Item item = Item(
-        id: itemId,
-        available: itemData["available"],
-        description: convertToLanguageMap(itemData["description"]),
-        //itemData["description"].toLanguageMap(),
-        image: itemData["image"],
-        position: itemData["position"] ?? 0,
-        name: convertToLanguageMap(itemData["name"]),
-        //itemData["name"].toLanguageMap(),
-        cost: itemData["cost"]);
-    // TODO: change to options
-    if (itemData["options2"] != null) {
-      itemData["options2"].forEach((optionId, optionData) {
-        item.options.add(Option.fromData(optionId, optionData));
-      });
-      item.options
-          .sort((Option a, Option b) => a.position.compareTo(b.position));
-    }
-    return item;
-  }
-
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      "id": id,
-      "available": available,
-      "description": description?.toFirebaseFormat(),
-      "image": image,
-      "cost": cost,
-      "name": name.toFirebaseFormat(),
-      "options": jsonEncode(options),
-    };
-  }
-
-  Option? findOption(String id) {
-    if (options.length == 0) return null;
-    return options.firstWhereOrNull((Option element) => element.id == id);
-  }
 }
