@@ -22,12 +22,6 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
   late String optionId;
   @override
   void initState() {
-    // FOR TEST PURPOSES
-    // widget.option.minimumChoice = 1;
-    // widget.option.maximumChoice = 1;
-    // widget.option.freeChoice = 1;
-    // widget.option.costPerExtra = 500;
-    // GETTING OPTION NAME AS A NORMAL STRING THE KEY INSIDE CHOSENCHOICES //
     optionId = widget.option.name[userLanguage].toString().toLowerCase();
 
     assignMinimumChoices();
@@ -39,24 +33,14 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
-        margin: EdgeInsets.all(8),
+        margin: EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               widget.option.name[userLanguage].toString(),
+              style: Get.theme.textTheme.bodyText2,
             ),
-            // TESTING PURPOSES //
-            Text(
-              "min : " + widget.option.minimumChoice.toString(),
-            ),
-            Text(
-              "max :" + widget.option.maximumChoice.toString(),
-            ),
-            Text(
-              "type :" + widget.option.optionType.toString(),
-            ),
-            // ENDIND TESTING PURPOSES //
             Column(
               children: List.generate(
                   widget.option.choices.length,
@@ -93,7 +77,7 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
                     height: 5,
                   ),
                   Text(
-                    "${choice.cost} \$ ",
+                    (choice.cost > 0) ? "${choice.cost.round()} \$ " : "Free",
                     style: Get.theme.textTheme.headline3!
                         .copyWith(color: Get.theme.primaryColorLight),
                   ),
@@ -109,37 +93,7 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
                   value: widget.cartItem.value!.chosenChoices[optionId]
                       ?.contains(choice),
                   onChanged: (bool? v) {
-                    mezDbgPrint(widget.cartItem.value!.chosenChoices);
                     handleChoiceCheckBox(choice);
-                    // if (widget.cartItem.value!.chosenChoices[optionKey]!
-                    //     .contains(choice)) {
-                    //   if (widget.cartItem.value!.chosenChoices[optionKey]!
-                    //           .length >
-                    //       widget.option.minimumChoice) {
-                    //     final List<Choice> newChoices = widget
-                    //         .cartItem.value!.chosenChoices[optionKey]!
-                    //         .toList();
-                    //     newChoices.remove(choice);
-                    //     widget.cartItem.value!.setNewChoices(
-                    //         itemId: optionKey, newChoices: newChoices);
-                    //   }
-                    // } else if (widget.cartItem.value!.chosenChoices.length <
-                    //     widget.option.maximumChoice) {
-                    //   widget.cartItem.value!.setNewChoices(
-                    //       itemId: optionKey,
-                    //       newChoices:
-                    //           widget.cartItem.value!.chosenChoices[optionKey]! +
-                    //               [choice]);
-                    // } else if (widget.cartItem.value!.chosenChoices.length ==
-                    //     widget.option.maximumChoice) {
-                    //   widget.cartItem.value!.chosenChoices[optionKey]!
-                    //       .removeLast();
-                    //   widget.cartItem.value!.setNewChoices(
-                    //       itemId: optionKey,
-                    //       newChoices:
-                    //           widget.cartItem.value!.chosenChoices[optionKey]! +
-                    //               [choice]);
-                    // }
                   }),
             )
           ],
@@ -161,10 +115,10 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
   void handleChoiceCheckBox(Choice choice) {
     if (widget.cartItem.value!.chosenChoices[optionId]!.contains(choice)) {
       removeChoice(choice);
-    } else if (widget.cartItem.value!.chosenChoices.length <
+    } else if (widget.cartItem.value!.chosenChoices[optionId]!.length <
         widget.option.maximumChoice) {
       addNewChoice(choice);
-    } else if (widget.cartItem.value!.chosenChoices.length ==
+    } else if (widget.cartItem.value!.chosenChoices[optionId]!.length ==
         widget.option.maximumChoice) {
       addLastChoice(choice);
     }
@@ -172,6 +126,7 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
   }
 
   void addLastChoice(Choice choice) {
+    mezDbgPrint("Adding for last timee ========>");
     widget.cartItem.value!.chosenChoices[optionId]!.removeLast();
     widget.cartItem.value!.setNewChoices(
         optionId: optionId,
@@ -179,6 +134,7 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
   }
 
   void addNewChoice(Choice choice) {
+    mezDbgPrint("Adding for first time ========>");
     widget.cartItem.value!.setNewChoices(
         optionId: optionId,
         newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);

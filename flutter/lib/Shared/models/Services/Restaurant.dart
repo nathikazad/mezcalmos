@@ -47,6 +47,9 @@ class Restaurant extends Service {
     restaurantData["menu"].forEach((itemId, itemData) {
       restaurant.items.add(Item.itemFromData(itemId, itemData));
     });
+
+    restaurant.items.sort((Item a, Item b) => a.position.compareTo(b.position));
+
     return restaurant;
   }
 
@@ -121,13 +124,20 @@ class Option {
   num freeChoice = 0;
   num maximumChoice = 0;
   num costPerExtra = 0;
-  Option({required this.id, required this.optionType, required this.name});
+  num position;
+  Option(
+      {required this.id,
+      required this.optionType,
+      required this.name,
+      this.position = 0});
   factory Option.fromData(String id, data) {
     mezDbgPrint("Opppppppption -----------------> $data");
     final Option option = Option(
         id: id,
         name: convertToLanguageMap(data["name"]),
+        position: data["position"] ?? 0,
         optionType: data["optionType"].toString().toOptionType());
+
     data["choices"].forEach((optionData) {
       final Choice choice = Choice.fromData(optionData);
       option.choices.add(choice);
@@ -209,12 +219,14 @@ class Item {
   Map<LanguageType, String> name;
   num cost = 0;
   List<Option> options = <Option>[];
+  num position;
 
   Item({
     required this.id,
     this.available = false,
     this.description,
     this.image,
+    this.position = 0,
     required this.name,
     required this.cost,
   });
@@ -226,6 +238,7 @@ class Item {
         description: convertToLanguageMap(itemData["description"]),
         //itemData["description"].toLanguageMap(),
         image: itemData["image"],
+        position: itemData["position"] ?? 0,
         name: convertToLanguageMap(itemData["name"]),
         //itemData["name"].toLanguageMap(),
         cost: itemData["cost"]);
@@ -234,6 +247,8 @@ class Item {
       itemData["options2"].forEach((optionId, optionData) {
         item.options.add(Option.fromData(optionId, optionData));
       });
+      item.options
+          .sort((Option a, Option b) => a.position.compareTo(b.position));
     }
     return item;
   }
