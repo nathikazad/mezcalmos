@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:soundpool/soundpool.dart';
@@ -22,21 +23,17 @@ class SettingsController extends GetxController {
   int? _selectedNotificationsSoundId;
 
   final List<SideMenuItem>? sideMenuItems;
-  bool locationOn = true;
+  final LocationPermissionType locationType;
   AppType appType;
   ThemeController get appTheme => _appTheme;
   LanguageController get appLanguage => _appLanguage;
-  SettingsController(this.appType, this.sideMenuItems, this.locationOn);
+  SettingsController(this.appType, this.sideMenuItems, this.locationType);
   StreamSubscription<InternetConnectionStatus>?
       _internetConnectionStatusListener;
 
   @override
   void onInit() async {
-    super.onInit();
-
-    if (this.locationOn) {
-      Get.put(LocationController(), permanent: true);
-    }
+    Get.put(LocationController(locationType: locationType), permanent: true);
     // here --------
     // FOR NOW WE SET IT TO EN (default  if not passed to LangController)
     _appTheme = Get.put(ThemeController(), permanent: true);
@@ -54,6 +51,7 @@ class SettingsController extends GetxController {
     }
     // start Listening on Internet Connectivity !
     // startListeningForConnectivity();
+    super.onInit();
   }
 
   Future playNotificationSound({int? soundId}) async {

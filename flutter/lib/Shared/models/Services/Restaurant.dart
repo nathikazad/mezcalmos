@@ -44,6 +44,11 @@ class Restaurant extends Service {
     restaurantData["menu"].forEach((dynamic itemId, dynamic itemData) {
       restaurant.items.add(Item.itemFromData(itemId, itemData));
     });
+    try {
+      int i = "" as int;
+    } catch (e, st) {
+      throw e;
+    }
     return restaurant;
   }
 

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
@@ -38,6 +39,12 @@ String? getPackageName({MezPlatform? platform}) {
     default:
       return _packName;
   }
+}
+
+Future<int> getAndroidSdkVersion() async {
+  final AndroidDeviceInfo androidDeviceInfo =
+      await DeviceInfoPlugin().androidInfo;
+  return androidDeviceInfo.version.sdkInt!;
 }
 
 String getLocalVersionName() {

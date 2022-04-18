@@ -65,7 +65,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
 
     String userId = _authController.fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
-    listenForLocationPermissions();
+    // listenForLocationPermissions();
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
       taxiNotificationsNode(userId),
@@ -74,17 +74,17 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
     super.initState();
   }
 
-  void listenForLocationPermissions() {
-    _locationStreamSub?.cancel();
-    _locationStreamSub = Get.find<LocationController>().locationPermissionStream
-        // .distinct()
-        .listen((locationPermission) {
-      if (locationPermission == false &&
-          Get.currentRoute != kLocationPermissionPage) {
-        Get.toNamed(kLocationPermissionPage);
-      }
-    });
-  }
+  // void listenForLocationPermissions() {
+  //   _locationStreamSub?.cancel();
+  //   _locationStreamSub = Get.find<LocationController>().locationPermissionStream
+  //       // .distinct()
+  //       .listen((locationPermission) {
+  //     if (locationPermission == false &&
+  //         Get.currentRoute != kLocationPermissionPage) {
+  //       Get.toNamed(kLocationPermissionPage);
+  //     }
+  //   });
+  // }
 
   Future<void> handleState(TaxiState? state) async {
     mezDbgPrint(state);
