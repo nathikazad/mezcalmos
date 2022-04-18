@@ -104,7 +104,7 @@ class Restaurant extends Service {
 class Category {
   LanguageMap name;
   String id;
-  LanguageMap? description;
+  LanguageMap? dialog;
   int position = 0;
   List<Item> items = <Item>[];
 
@@ -112,7 +112,7 @@ class Category {
     required this.name,
     required this.id,
     this.position = 0,
-    this.description,
+    this.dialog,
   });
 
   factory Category.fromData(String categoryId, dynamic categoryData) {
@@ -121,7 +121,7 @@ class Category {
         id: categoryId,
         position: categoryData["position"] ?? 0);
     if (categoryData["description"])
-      category.description = convertToLanguageMap(categoryData["description"]);
+      category.dialog = convertToLanguageMap(categoryData["dialog"]);
     categoryData["items"].forEach((dynamic itemId, dynamic itemData) {
       category.items.add(Item.itemFromData(itemId, itemData));
     });
@@ -136,7 +136,7 @@ class Category {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       "name": name.toFirebaseFormat(),
-      "description": description?.toFirebaseFormat(),
+      "dialog": dialog?.toFirebaseFormat(),
       "position": position,
       "items": jsonEncode(items),
     };
