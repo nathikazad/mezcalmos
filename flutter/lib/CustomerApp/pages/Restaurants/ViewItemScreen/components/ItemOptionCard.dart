@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
@@ -18,18 +19,19 @@ class NewItemOptionCard extends StatefulWidget {
 
 class _NewItemOptionCardState extends State<NewItemOptionCard> {
   LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
-  late String optionKey;
+  late String optionId;
   @override
   void initState() {
     // FOR TEST PURPOSES
-    widget.option.minimumChoice = 3;
-    widget.option.maximumChoice = 5;
+    // widget.option.minimumChoice = 1;
+    // widget.option.maximumChoice = 1;
+    // widget.option.freeChoice = 1;
+    // widget.option.costPerExtra = 500;
     // GETTING OPTION NAME AS A NORMAL STRING THE KEY INSIDE CHOSENCHOICES //
-    optionKey = widget.option.name[userLanguage].toString().toLowerCase();
+    optionId = widget.option.name[userLanguage].toString().toLowerCase();
 
-    if (widget.option.minimumChoice > 0) {
-      assignMinimumChoices();
-    }
+    assignMinimumChoices();
+
     super.initState();
   }
 
@@ -104,9 +106,10 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
               child: Checkbox(
                   activeColor: Get.theme.primaryColorLight,
                   shape: CircleBorder(),
-                  value: widget.cartItem.value!.chosenChoices[optionKey]
+                  value: widget.cartItem.value!.chosenChoices[optionId]
                       ?.contains(choice),
                   onChanged: (bool? v) {
+                    mezDbgPrint(widget.cartItem.value!.chosenChoices);
                     handleChoiceCheckBox(choice);
                     // if (widget.cartItem.value!.chosenChoices[optionKey]!
                     //     .contains(choice)) {
@@ -148,17 +151,15 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
 // FUNCTIONS //
   void assignMinimumChoices() {
     for (int i = 0; i < widget.option.minimumChoice; i++) {
-      if (i <= widget.option.maximumChoice) {
-        widget.cartItem.value!.setNewChoices(
-            itemId: optionKey,
-            newChoices: widget.cartItem.value!.chosenChoices[optionKey]! +
-                [widget.option.choices[i]]);
-      }
+      widget.cartItem.value!.setNewChoices(
+          optionId: optionId,
+          newChoices: widget.cartItem.value!.chosenChoices[optionId]! +
+              [widget.option.choices[i]]);
     }
   }
 
   void handleChoiceCheckBox(Choice choice) {
-    if (widget.cartItem.value!.chosenChoices[optionKey]!.contains(choice)) {
+    if (widget.cartItem.value!.chosenChoices[optionId]!.contains(choice)) {
       removeChoice(choice);
     } else if (widget.cartItem.value!.chosenChoices.length <
         widget.option.maximumChoice) {
@@ -171,28 +172,26 @@ class _NewItemOptionCardState extends State<NewItemOptionCard> {
   }
 
   void addLastChoice(Choice choice) {
-    widget.cartItem.value!.chosenChoices[optionKey]!.removeLast();
+    widget.cartItem.value!.chosenChoices[optionId]!.removeLast();
     widget.cartItem.value!.setNewChoices(
-        itemId: optionKey,
-        newChoices:
-            widget.cartItem.value!.chosenChoices[optionKey]! + [choice]);
+        optionId: optionId,
+        newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);
   }
 
   void addNewChoice(Choice choice) {
     widget.cartItem.value!.setNewChoices(
-        itemId: optionKey,
-        newChoices:
-            widget.cartItem.value!.chosenChoices[optionKey]! + [choice]);
+        optionId: optionId,
+        newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);
   }
 
   void removeChoice(Choice choice) {
-    if (widget.cartItem.value!.chosenChoices[optionKey]!.length >
+    if (widget.cartItem.value!.chosenChoices[optionId]!.length >
         widget.option.minimumChoice) {
       final List<Choice> newChoices =
-          widget.cartItem.value!.chosenChoices[optionKey]!.toList();
+          widget.cartItem.value!.chosenChoices[optionId]!.toList();
       newChoices.remove(choice);
       widget.cartItem.value!
-          .setNewChoices(itemId: optionKey, newChoices: newChoices);
+          .setNewChoices(optionId: optionId, newChoices: newChoices);
     }
   }
 }

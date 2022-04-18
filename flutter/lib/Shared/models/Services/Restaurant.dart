@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 
 class Restaurant extends Service {
-  Map<LanguageType, String> description;
+  Map<LanguageType, String>? description;
   List<Item> items = [];
 
   Restaurant(
@@ -19,36 +19,39 @@ class Restaurant extends Service {
       : super(info: userInfo, schedule: schedule, state: restaurantState);
 
   factory Restaurant.fromRestaurantData(
-      {required String restaurantId, required dynamic restaurantData}) {
+      {required String restaurantId, required restaurantData}) {
     // List<Object?> availableLanguages =
     //     restaurantData["details"]["languages"] as List<Object?>;
 
-    ServiceState restaurantState = ServiceState(
+    final ServiceState restaurantState = ServiceState(
         restaurantData["state"]?["authorizationStatus"]
                 ?.toString()
                 .toAuthorizationStatus() ??
             AuthorizationStatus.Unauthorized,
         restaurantData["state"]?["available"] ?? false);
-    Map<LanguageType, String> description =
-        convertToLanguageMap(restaurantData["details"]["description"]);
-    //restaurantData["details"]["description"].toLanguageMap();
-    Schedule? schedule = restaurantData["details"]["schedule"] != null
+    Map<LanguageType, String>? description;
+    if (restaurantData["details"]["description"] != null) {
+      description =
+          convertToLanguageMap(restaurantData["details"]["description"]);
+    }
+
+    final Schedule? schedule = restaurantData["details"]["schedule"] != null
         ? Schedule.fromData(restaurantData["details"]["schedule"])
         : null;
 
-    Restaurant restaurant = Restaurant(
+    final Restaurant restaurant = Restaurant(
         userInfo: ServiceUserInfo.fromData(restaurantData["info"]),
         description: description,
         schedule: schedule,
         restaurantState: restaurantState);
-    restaurantData["menu"].forEach((dynamic itemId, dynamic itemData) {
+    restaurantData["menu"].forEach((itemId, itemData) {
       restaurant.items.add(Item.itemFromData(itemId, itemData));
     });
     return restaurant;
   }
 
   Item? findItemById(String id) {
-    return this.items.firstWhereOrNull((item) {
+    return items.firstWhereOrNull((Item item) {
       mezDbgPrint("@sa@d@: findItemById:: item Id ${item.id} == $id ");
       return item.id == id;
     });
@@ -64,18 +67,18 @@ class Restaurant extends Service {
   }
 
   bool isAvailable() {
-    var dayNane = DateFormat('EEEE').format(DateTime.now());
+    final String dayNane = DateFormat('EEEE').format(DateTime.now());
 
-    var x = DateTime.now();
+    final DateTime x = DateTime.now();
 
-    if (this.schedule != null) {
+    if (schedule != null) {
       bool isOpen = false;
-      schedule!.openHours.forEach((key, value) {
+      schedule!.openHours.forEach((Weekday key, OpenHours value) {
         if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
           if (value.isOpen == true) {
-            var dateOfStart =
+            final DateTime dateOfStart =
                 DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
-            var dateOfClose =
+            final DateTime dateOfClose =
                 DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
 
             if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
@@ -105,7 +108,7 @@ extension ParseOrderTypeToString on OptionType {
 extension ParseStringToOrderType on String {
   OptionType toOptionType() {
     return OptionType.values
-        .firstWhere((e) => e.toFirebaseFormatString() == this);
+        .firstWhere((OptionType e) => e.toFirebaseFormatString() == this);
   }
 }
 
@@ -119,13 +122,14 @@ class Option {
   num maximumChoice = 0;
   num costPerExtra = 0;
   Option({required this.id, required this.optionType, required this.name});
-  factory Option.fromData(String id, dynamic data) {
-    Option option = Option(
+  factory Option.fromData(String id, data) {
+    mezDbgPrint("Opppppppption -----------------> $data");
+    final Option option = Option(
         id: id,
         name: convertToLanguageMap(data["name"]),
         optionType: data["optionType"].toString().toOptionType());
-    data["choices"].forEach((dynamic optionData) {
-      Choice choice = Choice.fromData(optionData);
+    data["choices"].forEach((optionData) {
+      final Choice choice = Choice.fromData(optionData);
       option.choices.add(choice);
     });
     option.changeOptionType(
@@ -190,7 +194,7 @@ class Choice {
   Map<LanguageType, String> name;
   Choice({required this.name, required this.cost});
 
-  factory Choice.fromData(dynamic data) {
+  factory Choice.fromData(data) {
     return Choice(name: convertToLanguageMap(data["name"]), cost: data["cost"]);
   }
   Map<String, dynamic> toJson() =>
@@ -215,8 +219,8 @@ class Item {
     required this.cost,
   });
 
-  factory Item.itemFromData(String itemId, dynamic itemData) {
-    Item item = Item(
+  factory Item.itemFromData(String itemId, itemData) {
+    final Item item = Item(
         id: itemId,
         available: itemData["available"],
         description: convertToLanguageMap(itemData["description"]),
@@ -227,7 +231,7 @@ class Item {
         cost: itemData["cost"]);
     // TODO: change to options
     if (itemData["options2"] != null) {
-      itemData["options2"].forEach((dynamic optionId, dynamic optionData) {
+      itemData["options2"].forEach((optionId, optionData) {
         item.options.add(Option.fromData(optionId, optionData));
       });
     }
@@ -248,6 +252,6 @@ class Item {
 
   Option? findOption(String id) {
     if (options.length == 0) return null;
-    return options.firstWhereOrNull((element) => element.id == id);
+    return options.firstWhereOrNull((Option element) => element.id == id);
   }
 }

@@ -1,14 +1,14 @@
 // ignore_for_file: avoid_annotating_with_dynamic
 
 import 'dart:convert';
+import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'dart:math';
-import 'package:collection/collection.dart';
 
 class Cart {
   List<CartItem> cartItems = <CartItem>[];
@@ -78,12 +78,11 @@ class Cart {
     if (cartItem.idInCart == null) {
       cartItem.idInCart = getRandomString(5);
     } else {
-      int index = this
-          .cartItems
-          .indexWhere((element) => element.idInCart == cartItem.idInCart);
-      this.cartItems.removeAt(index);
+      final int index = cartItems.indexWhere(
+          (CartItem element) => element.idInCart == cartItem.idInCart);
+      cartItems.removeAt(index);
     }
-    this.cartItems.add(CartItem.clone(cartItem));
+    cartItems.add(CartItem.clone(cartItem));
   }
 
   void incrementItem(String id, int quantity) {
@@ -136,7 +135,7 @@ class CartItem {
       if (item.options.contains(optionId)) {
         cartItem.chosenChoices[optionId] = <Choice>[];
         optionData["choices"].forEach((dynamic choiceData) {
-          Choice? choice = item
+          final Choice? choice = item
               .findOption(optionId)!
               .findChoice(convertToLanguageMap(choiceData["name"]));
           if (choice != null) cartItem.chosenChoices[optionId]!.add(choice);
@@ -147,7 +146,7 @@ class CartItem {
   }
 
   Map<String, dynamic> toFirebaseFunctionFormattedJson() {
-    Map<String, dynamic> json = <String, dynamic>{
+    final Map<String, dynamic> json = <String, dynamic>{
       "id": item.id,
       "quantity": quantity,
       "totalCost": totalCost(),
@@ -182,15 +181,15 @@ class CartItem {
   }
 
   void setNewChoices(
-      {required String itemId, required List<Choice> newChoices}) {
-    chosenChoices[itemId] = newChoices;
+      {required String optionId, required List<Choice> newChoices}) {
+    chosenChoices[optionId] = newChoices;
   }
 
   num costPerOne() {
     num costPerOne = item.cost;
     // if(chosenChoices.length > item.options
     chosenChoices.forEach((String optionId, List<Choice> choices) {
-      Option option = item.findOption(optionId)!;
+      final Option option = item.findOption(optionId)!;
       if (choices.length > option.freeChoice) {
         costPerOne +=
             (choices.length - option.freeChoice) * option.costPerExtra;
@@ -209,9 +208,9 @@ class CartItem {
 }
 
 String getRandomString(int length) {
-  const _chars =
+  const String _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  Random _rnd = Random();
+  final Random _rnd = Random();
   return String.fromCharCodes(Iterable.generate(
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 }
