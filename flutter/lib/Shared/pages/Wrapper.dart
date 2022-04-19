@@ -7,9 +7,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MezUpdateHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgraderWidget.dart';
@@ -25,32 +28,59 @@ class _WrapperState extends State<Wrapper> {
   AuthController authController = Get.find<AuthController>();
   AppVersionController? _appVersionController;
   late bool databaseUserLastSnapshot;
+  final LocationController _locationController = Get.find<LocationController>();
+  StreamSubscription<LocationPermissionsStatus>? locationStatusListener;
 
   @override
   void initState() {
-    if (GetStorage().read<String>(getxLmodeKey) == "prod") {
-      // Create instance of our Singleton AappVersionController class.
-      _appVersionController = AppVersionController.instance(
-        onNewUpdateAvailable: _onNewUpdateAvailable,
-      );
-      // Delayed init of the appVersionController - that way we make sure that the NavigationStack is correct,
-      // Which makes it easy for us to push NeedUpdateScreen on top in case there is update.
-      Future<void>.delayed(Duration(seconds: 5), _appVersionController!.init);
-    }
     // this will execute first and much faster since it's a microtask.
     Future<void>.microtask(() {
       handleAuthStateChange(authController.fireAuthUser);
       authController.authStateStream.listen((user) {
         handleAuthStateChange(user);
       });
+    }).then((_) {
+      // only when we use location permissions
+      if (_locationController.locationType != LocationPermissionType.Null) {
+        startListeningOnLocationPermission();
+      }
+
+      // then check if we're in prod - check appUpdate
+      if (GetStorage().read<String>(getxLmodeKey) == "prod") {
+        // Create instance of our Singleton AappVersionController class.
+        _appVersionController = AppVersionController.instance(
+          onNewUpdateAvailable: _onNewUpdateAvailable,
+        );
+        // Delayed init of the appVersionController - that way we make sure that the NavigationStack is correct,
+        // Which makes it easy for us to push NeedUpdateScreen on top in case there is update.
+        Future<void>.delayed(Duration(seconds: 2), _appVersionController!.init);
+      }
     });
 
     super.initState();
   }
 
+  void startListeningOnLocationPermission() {
+    locationStatusListener = _locationController
+        .locationPermissionChecker()
+        .distinct()
+        .listen((LocationPermissionsStatus event) {
+      mezDbgPrint("Wrapper lvl => $event");
+      if (event != LocationPermissionsStatus.Ok) {
+        //  bool preventDuplicates = true (byDefault om GetX)
+        Future<void>.delayed(
+          Duration(milliseconds: 500),
+          () => Get.toNamed<void>(kLocationPermissionPage),
+        );
+      }
+    });
+  }
+
   @override
   void dispose() {
     _appVersionController?.dispose();
+    locationStatusListener?.cancel();
+    locationStatusListener = null;
     super.dispose();
   }
 

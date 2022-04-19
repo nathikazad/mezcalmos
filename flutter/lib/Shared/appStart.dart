@@ -4,6 +4,8 @@
 
 // =============================
 
+// ignore_for_file: constant_identifier_names
+
 import 'dart:async';
 import 'dart:io';
 
@@ -24,6 +26,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
@@ -45,7 +48,7 @@ class StartingPoint extends StatefulWidget {
   final Function signOutCallback;
   final List<GetPage<dynamic>> routes;
   final List<SideMenuItem>? sideMenuItems;
-  final bool locationOn;
+  final LocationPermissionType locationType;
 
   ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
@@ -57,7 +60,7 @@ class StartingPoint extends StatefulWidget {
     required this.signOutCallback,
     required this.routes,
     this.sideMenuItems,
-    this.locationOn = true,
+    this.locationType = LocationPermissionType.Null,
   });
 
   @override
@@ -252,7 +255,7 @@ class _StartingPointState extends State<StartingPoint> {
     );
     Get.put<SettingsController>(
       SettingsController(
-          widget.appType, widget.sideMenuItems, widget.locationOn),
+          widget.appType, widget.sideMenuItems, widget.locationType),
       permanent: true,
     );
   }

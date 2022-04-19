@@ -26,7 +26,6 @@ void main() {
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,
             routes: routes,
-            locationOn: false,
           );
         },
       ),

@@ -8,6 +8,7 @@ import 'package:mezcalmos/DeliveryApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
 
@@ -27,6 +28,7 @@ void main() {
             appTheme: DeliveryAppTheme.lightTheme,
             signOutCallback: signOutCallback,
             routes: routes,
+            locationType: LocationPermissionType.ForegroundAndBackground,
           );
         },
       ),

@@ -1,65 +1,126 @@
+// ignore_for_file: always_specify_types
+
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class LocationController extends GetxController {
-  StreamController<bool> _hasLocationPermissionStreamController =
-      StreamController<bool>.broadcast(sync: false);
+  final LocationPermissionType locationType;
+  Rxn<LocationPermissionsStatus> statusSnapshot = Rxn();
 
-  Stream<bool> get locationPermissionStream =>
-      _hasLocationPermissionStreamController.stream;
-  Timer? _locationListenerTimer;
+  LocationController({required this.locationType});
 
-  @override
-  void onInit() async {
-    super.onInit();
-    startPeriodicLocationPermissionsListener();
+  Future<LocationPermissionsStatus> serviceIsOff() {
+    statusSnapshot.value = LocationPermissionsStatus.ServiceOff;
+    return Future.value(statusSnapshot.value);
   }
 
-  /// this Calls [requestPermission] on [package:location/location.dart] , and emmit a new event to
-  ///
-  /// [this._hasLocationPermissionStreamController] if Permissions were given.
-  ///
-  /// the return of this is  Future of [PermissionStatus].
-  Future<PermissionStatus> requestLocationPermissions() async {
-    PermissionStatus status = await Location().requestPermission();
-    if (status == PermissionStatus.granted ||
-        status == PermissionStatus.grantedLimited) {
-      // send new event to LocationStreamController saying that the location permissions has been given Successfully!
-      _hasLocationPermissionStreamController.add(true);
-    } else {
-      _hasLocationPermissionStreamController.add(false);
+  // handle foreground Cases.
+  Future<LocationPermissionsStatus> _handleForegroundLocation() async {
+    // Allow while in app use.
+
+    // if Service is not enabled , we request Service and check the result if service is anabled or not.
+    if (!await Location().serviceEnabled()) {
+      return serviceIsOff();
     }
-    return status;
+    // Checking if app has permissions
+    final PermissionStatus _status = await Location().hasPermission();
+
+    switch (_status) {
+      case PermissionStatus.denied:
+        statusSnapshot.value = LocationPermissionsStatus.Denied;
+        mezDbgPrint(statusSnapshot.value);
+        return Future.value(statusSnapshot.value);
+      case PermissionStatus.deniedForever:
+        statusSnapshot.value = LocationPermissionsStatus.ForeeverDenied;
+        mezDbgPrint(statusSnapshot.value);
+
+        return Future.value(statusSnapshot.value);
+      case PermissionStatus.grantedLimited:
+        statusSnapshot.value = LocationPermissionsStatus.Ok;
+        mezDbgPrint(statusSnapshot.value);
+
+        return Future.value(statusSnapshot.value);
+      case PermissionStatus.granted:
+        statusSnapshot.value = LocationPermissionsStatus.Ok;
+        mezDbgPrint(statusSnapshot.value);
+
+        return Future.value(statusSnapshot.value);
+    }
   }
 
-  void startPeriodicLocationPermissionsListener() {
-    _locationListenerTimer =
-        Timer.periodic(Duration(milliseconds: 500), (Timer t) async {
-      _locationListenerTimer?.cancel();
-      _locationListenerTimer = null;
-      bool locationPermission = await _getLocationPermission();
-      if (!locationPermission && Get.currentRoute != kLocationPermissionPage) {
-        Future.delayed(Duration.zero, () {
-          Get.toNamed(kLocationPermissionPage);
-        });
-      }
-      _hasLocationPermissionStreamController.add(locationPermission);
-      startPeriodicLocationPermissionsListener();
-    });
+  Future<bool> _checkBg() async {
+    bool _v = false;
+
+    try {
+      _v = await Location().enableBackgroundMode();
+      mezDbgPrint("bachGroud Enableeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed _checkBg $_v");
+    } catch (e) {
+      mezDbgPrint("ERRRRRRRRRRRRRROOOOOOOOOR _checkBg");
+    }
+    return _v;
   }
 
-  Future<bool> _getLocationPermission() async {
-    bool serviceEnabled = await Location().serviceEnabled();
-    if (!serviceEnabled) return false;
-    PermissionStatus _tempLoca = await Location().hasPermission();
+  /// handling the bg location
+  Future<LocationPermissionsStatus> _handleBackgroundLocation() async {
+    // if Service is not enabled , we request Service and check the result if service is anabled or not.
+    if (!await Location().serviceEnabled()) {
+      return serviceIsOff();
+    }
+    // Checking if app has permissions
+    final PermissionStatus _status = await Location().hasPermission();
+    switch (_status) {
+      case PermissionStatus.denied:
+        statusSnapshot.value = LocationPermissionsStatus.Denied;
+        return Future.value(statusSnapshot.value);
+      case PermissionStatus.deniedForever:
+        statusSnapshot.value = LocationPermissionsStatus.ForeeverDenied;
+        return Future.value(statusSnapshot.value);
+      // We can not use background location if it's limited
+      case PermissionStatus.grantedLimited:
+        // mezDbgPrint("@loc@saad : PermissionStatus.grantedLimited");
+        if (await _checkBg()) {
+          statusSnapshot.value = LocationPermissionsStatus.Ok;
+          return Future.value(statusSnapshot.value);
+        } else {
+          statusSnapshot.value =
+              LocationPermissionsStatus.BackgroundAccessDenied;
+          return Future.value(statusSnapshot.value);
+        }
+      case PermissionStatus.granted:
+        if (await _checkBg()) {
+          //mezDbgPrint("@loc@saad : PermissionStatus.granted");
+          statusSnapshot.value = LocationPermissionsStatus.Ok;
+          return Future.value(statusSnapshot.value);
+        } else {
+          //mezDbgPrint("@loc@saad : PermissionStatus.granted");
 
-    return _tempLoca == PermissionStatus.granted;
+          statusSnapshot.value =
+              LocationPermissionsStatus.BackgroundAccessDenied;
+          return Future.value(statusSnapshot.value);
+        }
+    }
+  
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Stream<LocationPermissionsStatus> locationPermissionChecker(
+    {Duration duration = const Duration(seconds: 1)}) async* {
+    yield* Stream<Future<LocationPermissionsStatus>>.periodic(
+      duration,
+      (_) {
+        switch (locationType) {
+          case LocationPermissionType.Foreground:
+            return _handleForegroundLocation();
+          case LocationPermissionType.ForegroundAndBackground:
+            return _handleBackgroundLocation();
+          default:
+            return Future.value(LocationPermissionsStatus.Ok);
+        }
+      },
+    ).asyncMap<LocationPermissionsStatus>(
+      (Future<LocationPermissionsStatus> locPermission) async => locPermission,
+    );
   }
 }

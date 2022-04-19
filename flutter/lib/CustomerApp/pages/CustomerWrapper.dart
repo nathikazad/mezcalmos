@@ -79,10 +79,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     startAuthListener();
 
     /// Check if app was opened through a DeepLink
-    Future<void>.delayed(
-      Duration(seconds: 1),
-      _deepLinkHandler.startDynamicLinkCheckRoutine,
-    );
+    _deepLinkHandler.startDynamicLinkCheckRoutine();
+    // Future<void>.delayed(
+    //   Duration(seconds: 1),
+    //   ,
+    // );
     // .then(
     //   (_) => _deepLinkHandler.cancelDeepLinkListener(
     //     duration: Duration(seconds: 1),
@@ -190,7 +191,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     final String? userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
     // listening for notification Permissions!
-    listenForLocationPermissions();
+    // listenForLocationPermissions();
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             customerNotificationsNode(userId!), customerNotificationHandler);
@@ -354,15 +355,15 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     }
   }
 
-  void listenForLocationPermissions() {
-    _locationStreamSub?.cancel();
-    _locationStreamSub = Get.find<LocationController>().locationPermissionStream
-        // .distinct()
-        .listen((bool locationPermission) {
-      if (locationPermission == false &&
-          Get.currentRoute != kLocationPermissionPage) {
-        Get.toNamed<void>(kLocationPermissionPage);
-      }
-    });
-  }
+  // void listenForLocationPermissions() {
+  //   _locationStreamSub?.cancel();
+  //   _locationStreamSub = Get.find<LocationController>().locationPermissionStream
+  //       // .distinct()
+  //       .listen((bool locationPermission) {
+  //     if (locationPermission == false &&
+  //         Get.currentRoute != kLocationPermissionPage) {
+  //       Get.toNamed<void>(kLocationPermissionPage);
+  //     }
+  //   });
+  // }
 }

@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/Utils/GenerateTheNameExtension.dart';
 import 'package:mezcalmos/CustomerApp/components/Menu/MenuComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/MyCartAppBarIcon.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart'
+    show TwoLettersGenerator;
 
 class RestaurantSliverAppBar extends StatelessWidget {
   const RestaurantSliverAppBar({
@@ -98,7 +96,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                restaurant.info.name.generateTheName(),
+                restaurant.info.name.generateTwoFirstLetters(),
                 style: const TextStyle(
                   color: Color.fromRGBO(172, 89, 252, 0.8),
                   fontSize: 18.0,

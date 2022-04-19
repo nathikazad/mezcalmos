@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/Utils/GenerateTheNameExtension.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -86,7 +85,7 @@ class _RestaurantsListItemsOfComponentState
                   alignment: Alignment.center,
                   child: Text(
                     "${widget.item.name[userLanguage]!.capitalizeFirstofEach}"
-                        .generateTheName(),
+                        .generateTwoFirstLetters(),
                     style: const TextStyle(
                       color: Color.fromRGBO(172, 89, 252, 0.8),
                       fontSize: 18.0,

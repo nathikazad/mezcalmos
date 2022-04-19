@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/TaxiApp/authHooks.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -27,6 +28,7 @@ void main() {
             appTheme: TaxiAppTheme.lightTheme,
             signOutCallback: signOutCallback,
             routes: routes,
+            locationType: LocationPermissionType.ForegroundAndBackground,
           );
         },
       ),
