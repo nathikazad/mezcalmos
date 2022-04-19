@@ -5,9 +5,9 @@ const firebaseAdmin = require("firebase-admin");
 //   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
 // }, "production");
 
-const firebase = firebaseAdmin.initializeApp({
-  databaseURL: "http://localhost:9000/?ns=mezcalmos-31f1c-default-rtdb"
-});
+// const firebase = firebaseAdmin.initializeApp({
+//   databaseURL: "http://localhost:9000/?ns=mezcalmos-31f1c-default-rtdb"
+// });
 
 async function saveFile() {
   let db = (await firebase.database().ref(`/`).once('value')).val();
@@ -20,60 +20,79 @@ async function saveFile() {
 
 async function writeToDB() {
 
-  // await deleteUsers()
-  // await deleteDrivers()
-  // await deleteOrders()
-  // return
-  let data = JSON.parse(fs.readFileSync('data/db-snapshot.json'));
-  let restaurants = data.restaurants.info
+  let restaurants = JSON.parse(fs.readFileSync('data/db-snapshot.json'));
 
   // var count = 0;
   for (let restaurantId in restaurants) {
     let restaurant = restaurants[restaurantId]
-    // console.log(restaurant.menu)
-
-    for (let itemId in restaurant.menu) {
-      let item = restaurant.menu[itemId]
-      // console.log(item.options)
-      let options2 = {}
-      let order = 1;
-      if (item.options.chooseOne) {
-        for (let chooseOneItemId in item.options.chooseOne) {
-          let chooseOneItem = item.options.chooseOne[chooseOneItemId]
-          options2[chooseOneItemId] = {
-            name: chooseOneItem.name,
-            order: order,
-            optionType: "chooseOne",
-            choices: []
-          }
-          order++
-          for (let chooseOneOptionId in chooseOneItem.options) {
-            let chooseOneOption = chooseOneItem.options[chooseOneOptionId];
-            // console.log(chooseOneOption)
-            options2[chooseOneItemId].choices.push(chooseOneOption)
-          }
-        }
+    restaurants[restaurantId]["menu2"] = {
+      noCategory: {
+        items: restaurant["menu"]
       }
-      if (item.options.chooseMany) {
-        options2["extras"] = {
-          name: {
-            "en": "Extras",
-            "es": "Extras"
-          },
-          order: order,
-          optionType: "chooseMany",
-          choices: []
-        }
-        for (let chooseManyItemId in item.options.chooseMany) {
-          let chooseManyItem = item.options.chooseMany[chooseManyItemId]
-          options2["extras"].choices.push(chooseManyItem)
-        }
-      }
-      // console.log(options2)
-      restaurants[restaurantId].menu[itemId].options2 = options2
     }
+    for (let itemId in restaurants) {
+      delete restaurants[restaurantId]["menu2"]["noCategory"]["items"][itemId]["options"]
+    }
+    restaurant
   }
-  firebase.database().ref(`/restaurants/info`).set(restaurants)
+
+
+  fs.writeFileSync('data/new-db-snapshot.json', JSON.stringify(restaurants));
+}
+
+
+// saveFile()
+writeToDB()
+
+// *********** Options 2 ******************
+  // var count = 0;
+  // for (let restaurantId in restaurants) {
+  //   let restaurant = restaurants[restaurantId]
+  //   // console.log(restaurant.menu)
+
+  //   for (let itemId in restaurant.menu) {
+  //     let item = restaurant.menu[itemId]
+  //     // console.log(item.options)
+  //     let options2 = {}
+  //     let order = 1;
+  //     if (item.options.chooseOne) {
+  //       for (let chooseOneItemId in item.options.chooseOne) {
+  //         let chooseOneItem = item.options.chooseOne[chooseOneItemId]
+  //         options2[chooseOneItemId] = {
+  //           name: chooseOneItem.name,
+  //           order: order,
+  //           optionType: "chooseOne",
+  //           choices: []
+  //         }
+  //         order++
+  //         for (let chooseOneOptionId in chooseOneItem.options) {
+  //           let chooseOneOption = chooseOneItem.options[chooseOneOptionId];
+  //           // console.log(chooseOneOption)
+  //           options2[chooseOneItemId].choices.push(chooseOneOption)
+  //         }
+  //       }
+  //     }
+  //     if (item.options.chooseMany) {
+  //       options2["extras"] = {
+  //         name: {
+  //           "en": "Extras",
+  //           "es": "Extras"
+  //         },
+  //         order: order,
+  //         optionType: "chooseMany",
+  //         choices: []
+  //       }
+  //       for (let chooseManyItemId in item.options.chooseMany) {
+  //         let chooseManyItem = item.options.chooseMany[chooseManyItemId]
+  //         options2["extras"].choices.push(chooseManyItem)
+  //       }
+  //     }
+  //     // console.log(options2)
+  //     restaurants[restaurantId].menu[itemId].options2 = options2
+  //   }
+  // }
+  // firebase.database().ref(`/restaurants/info`).set(restaurants)
+// *********** OLD transform ******************
 
   //   let user = users[userId]
   //   delete user.notificationInfo
@@ -140,8 +159,3 @@ async function writeToDB() {
   // newObj["restaurants"] = data.restaurants
   // newObj["orders"]["past"] = Object.assign({}, data.orders, data.orders)
   // fs.writeFileSync('data/new-db-snapshot.json', JSON.stringify(newObj));
-}
-
-
-// saveFile()
-writeToDB()
