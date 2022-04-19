@@ -4,8 +4,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
-class CartItemChosenChoice extends StatelessWidget {
-  CartItemChosenChoice({
+class ItemChosenChoiceComponent extends StatelessWidget {
+  ItemChosenChoiceComponent({
     Key? key,
     required this.optionName,
     required this.choices,
@@ -20,10 +20,7 @@ class CartItemChosenChoice extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          optionName,
-        ),
-        Text(
-          choices.length.toString(),
+          optionName + "  (${choices.length.toString()})",
         ),
         SizedBox(
           height: 5,

@@ -14,7 +14,7 @@ class UserInfo {
       required this.image,
       this.language});
 
-  factory UserInfo.fromData(dynamic data) {
+  factory UserInfo.fromData(data) {
     return UserInfo(
         id: data["id"],
         name: data["name"],
@@ -52,7 +52,7 @@ class MainUserInfo {
       this.email,
       this.phone});
 
-  factory MainUserInfo.fromData(dynamic data) {
+  factory MainUserInfo.fromData(data) {
     return MainUserInfo(
         id: data["id"],
         name: data["name"],
@@ -83,7 +83,7 @@ class MainUserInfo {
 }
 
 class ServiceInfo extends UserInfo {
-  Location location;
+  Location? location;
 
   ServiceInfo({
     required this.location,
@@ -93,9 +93,11 @@ class ServiceInfo extends UserInfo {
     LanguageType? lang,
   }) : super(id: id, image: image, name: name, language: lang);
 
-  factory ServiceInfo.fromData(dynamic data) {
+  factory ServiceInfo.fromData(data) {
     return ServiceInfo(
-        location: Location.fromFirebaseData(data['location']),
+        location: (data['location'] != null)
+            ? Location.fromFirebaseData(data['location'])
+            : null,
         id: data['id'],
         image: data['image'],
         name: data['name']);

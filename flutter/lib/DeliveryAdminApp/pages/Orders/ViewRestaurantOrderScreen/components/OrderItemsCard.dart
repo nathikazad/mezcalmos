@@ -2,20 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/BasicCellComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/itemChosenChoices.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 // build the order items inside the order info component
-final currency = new NumberFormat("#,##0.00", "en_US");
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
+List<Widget> buildChoices(Map<String, List<Choice>> choices) {
+  final List<Widget> viewWidgets = [];
+  choices.forEach((String key, List<Choice> value) {
+    viewWidgets.add(ItemChosenChoiceComponent(
+      choices: value,
+      optionName: key,
+    ));
+  });
+  return viewWidgets;
+}
 
 Widget buildOrdersItems(List<RestaurantOrderItem> items) {
-  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
   return Container(
       child: Column(
-    children: items.fold<List<Widget>>(<Widget>[], (children, element) {
+    children: items.fold<List<Widget>>(<Widget>[],
+        (List<Widget> children, RestaurantOrderItem element) {
       children.add(
         Column(
           children: [
@@ -43,7 +57,7 @@ Widget buildOrdersItems(List<RestaurantOrderItem> items) {
                           child: Text("${element.quantity}",
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                color: const Color(0xff5c7fff),
+                                color: Color(0xff5c7fff),
                                 fontWeight: FontWeight.w400,
                                 fontFamily: "ProductSans",
                                 fontStyle: FontStyle.normal,

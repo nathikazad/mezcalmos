@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/MyExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/itemChosenChoices.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenChoices.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewcartScreen/components/ItemInformationCart.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -144,7 +144,7 @@ class CartItemsBuilder extends StatelessWidget {
   List<Widget> buildChoices(Map<String, List<Choice>> choices) {
     final List<Widget> viewWidgets = [];
     choices.forEach((String key, List<Choice> value) {
-      viewWidgets.add(CartItemChosenChoice(
+      viewWidgets.add(ItemChosenChoiceComponent(
         choices: value,
         optionName: key,
       ));

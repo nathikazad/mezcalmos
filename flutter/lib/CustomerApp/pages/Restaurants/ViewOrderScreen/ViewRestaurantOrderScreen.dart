@@ -6,17 +6,18 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrdersItemsCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 import 'components/OrderFooterCard.dart';
 import 'components/OrderStatusCard.dart';
 import 'components/OrderSummaryCard.dart';
-import 'components/OrdersItemsCard.dart';
 import 'components/notesWidget.dart';
 
-final currency = new NumberFormat("#0", "en_US");
+final NumberFormat currency = new NumberFormat("#0", "en_US");
 ////////////===========
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
@@ -70,7 +71,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   void initState() {
     super.initState();
 
-    String orderId = Get.parameters['orderId']!;
+    final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
     if (order.value == null) {
@@ -78,7 +79,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     } else {
       if (order.value!.inProcess()) {
         _orderListener =
-            controller.getCurrentOrderStream(orderId).listen((event) {
+            controller.getCurrentOrderStream(orderId).listen((Order? event) {
           if (event != null) {
             mezDbgPrint("===================" +
                 (event as RestaurantOrder).status.toString());
@@ -87,7 +88,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           } else {
             _orderListener?.cancel();
             _orderListener = null;
-            controller.getPastOrderStream(orderId).listen((event) {
+            controller.getPastOrderStream(orderId).listen((Order? event) {
               if (event != null) {
                 mezDbgPrint("the past order is ========== $event ==========");
                 order.value = event as RestaurantOrder;
@@ -106,7 +107,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   @override
   void didUpdateWidget(ViewRestaurantOrderScreen oldWidget) {
-    String orderId = Get.parameters['orderId']!;
+    final String orderId = Get.parameters['orderId']!;
     super.didUpdateWidget(oldWidget);
     mezDbgPrint("this widget is updated");
     if (order.value == null) {
@@ -124,7 +125,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
         appBar: CustomerAppBar(
           autoBack: true,
@@ -153,6 +154,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                       OrderItemsCard(
                         items: order.value!.items,
                       ),
+
                       SizedBox(
                         height: 10,
                       ),

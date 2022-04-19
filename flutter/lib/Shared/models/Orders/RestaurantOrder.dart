@@ -100,13 +100,22 @@ class RestaurantOrder extends DeliverableOrder {
           quantity: itemData["quantity"],
           notes: itemData["notes"]);
 
-      itemData["chosenChoices"]?.forEach((String optionId, dynamic optionData) {
+      itemData["chosenChoices"]?.forEach((optionId, optionData) {
         restaurantOrderItem.chosenChoices[optionId] = <Choice>[];
         restaurantOrderItem.optionNames[optionId] =
-            convertToLanguageMap(optionData["optionNames"]);
-        optionData["choices"].forEach((dynamic choiceData) {
+            convertToLanguageMap(optionData["optionName"]);
+        mezDbgPrint(optionData);
+        mezDbgPrint(optionId);
+        mezDbgPrint(
+            "option+Choice ========================>>>>>>>> ${optionData["choices"]}");
+        mezDbgPrint(
+            "option+name ========================>>>>>>>> ${optionData["optionName"]}");
+        optionData["choices"].forEach((choiceData) {
+          mezDbgPrint("choice --------------->>>>> $choiceData");
+
           restaurantOrderItem.chosenChoices[optionId]!
               .add(Choice.fromData(choiceData));
+          //TODO FIX CHOICES NOT THERE
         });
       });
       restaurantOrder.items.add(restaurantOrderItem);
@@ -189,4 +198,3 @@ class RestaurantOrderItem {
       required this.quantity,
       this.notes});
 }
-

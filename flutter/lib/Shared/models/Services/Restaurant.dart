@@ -140,7 +140,7 @@ class Category {
       id: categoryId,
       position: categoryData["position"] ?? 0,
     );
-    if (categoryData["name"])
+    if (categoryData["name"] != null)
       category.name = convertToLanguageMap(categoryData["name"]);
     if (categoryData["dialog"] != null)
       category.dialog = convertToLanguageMap(categoryData["dialog"]);

@@ -19,27 +19,31 @@ class RestaurantCategoriesList extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       child: Column(
           children: List.generate(
-              restaurant.categories.length,
+              restaurant.getCategories.length,
               (int index) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        restaurant.categories[index].name?[userLanguage] ?? "",
+                        restaurant.getCategories[index].name?[userLanguage] ??
+                            "",
                         style: Get.theme.textTheme.bodyText1,
                       ),
                       SizedBox(
                         height: 5,
                       ),
-                      if (restaurant.categories[index].dialog?[userLanguage] !=
+                      if (restaurant
+                              .getCategories[index].dialog?[userLanguage] !=
                           null)
                         Text(restaurant
-                            .categories[index].dialog![userLanguage]!),
+                            .getCategories[index].dialog![userLanguage]!),
                       SizedBox(
                         height: 5,
                       ),
-                      _buildResturantItems(restaurant.categories[index].items,
+                      _buildResturantItems(
+                          restaurant.getCategories[index].items,
                           restaurant.info.id),
-                      if (index != restaurant.categories.length - 1) Divider(),
+                      if (index != restaurant.getCategories.length - 1)
+                        Divider(),
                     ],
                   ))),
     );
