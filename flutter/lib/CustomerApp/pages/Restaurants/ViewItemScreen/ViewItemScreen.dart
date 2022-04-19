@@ -103,7 +103,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               : "",
           autoBack: true,
         ),
-        body: (cartItem.value?.item == null)
+        body: (cartItem.value == null)
             ? Container(
                 alignment: Alignment.center,
                 child: CircularProgressIndicator(),
@@ -127,7 +127,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     ),
                     alignment: Alignment.center,
                     child: CachedNetworkImage(
-                      imageUrl: cartItem.value!.item.image!,
+                      imageUrl: cartItem.value?.item.image ?? "",
                       imageBuilder: (BuildContext context,
                           ImageProvider<Object> imageProvider) {
                         return Container(
@@ -171,7 +171,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Text(
-                        "${cartItem.value!.item.description![userLanguage]!.inCaps}",
+                        "${cartItem.value!.item.description?[userLanguage]!.inCaps}",
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme

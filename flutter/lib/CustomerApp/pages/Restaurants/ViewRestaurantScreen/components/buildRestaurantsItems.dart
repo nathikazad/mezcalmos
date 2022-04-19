@@ -24,7 +24,7 @@ class RestaurantCategoriesList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        restaurant.categories[index].name[userLanguage] ?? "",
+                        restaurant.categories[index].name?[userLanguage] ?? "",
                         style: Get.theme.textTheme.bodyText1,
                       ),
                       SizedBox(

@@ -24,16 +24,12 @@ class RestaurantsInfoController extends GetxController {
         .once();
 
     // mezDbgPrint("Got restorantes ===> ${snapshot.value}");
-    mezDbgPrint(serviceProviderInfos(orderType: OrderType.Restaurant));
+
     final List<Restaurant> restaurants = [];
     if (snapshot.value == null) return restaurants;
     snapshot.value.forEach((key, value) {
-      
-      mezDbgPrint(
-          "priiiiiiiiiiiiiiiinnnnnnnnnt ----------->  -------------------> $value");
       try {
         if (value["state"]["available"] == true) {
-          mezDbgPrint("ADDing restaurant ==============>");
           restaurants.add(Restaurant.fromRestaurantData(
               restaurantId: key, restaurantData: value));
         }

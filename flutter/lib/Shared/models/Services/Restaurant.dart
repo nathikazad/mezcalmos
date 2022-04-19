@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -22,7 +21,7 @@ class Restaurant extends Service {
       {required String restaurantId, required restaurantData}) {
     // List<Object?> availableLanguages =
     //     restaurantData["details"]["languages"] as List<Object?>;
-    mezDbgPrint("RESTAU+RANTT -------------->>>>> $restaurantData");
+
     final ServiceState restaurantState = ServiceState(
         restaurantData["state"]?["authorizationStatus"]
                 ?.toString()
@@ -47,8 +46,8 @@ class Restaurant extends Service {
     restaurantData["menu2"].forEach((categoryId, categoryData) {
       restaurant.categories.add(Category.fromData(categoryId, categoryData));
     });
-    restaurant.categories
-        .sort((Category a, Category b) => a.position.compareTo(b.position));
+    // restaurant.categories
+    //     .sort((Category a, Category b) => a.position.compareTo(b.position));
 
     return restaurant;
   }
@@ -124,16 +123,15 @@ class Category {
     this.dialog,
   });
 
-  factory Category.fromData(String categoryId, categoryData) {
+  factory Category.fromData(categoryId, categoryData) {
     final Category category =
         Category(id: categoryId, position: categoryData["position"] ?? 0);
-    if (categoryData["name"])
+    if (categoryData["name"] != null)
       category.name = convertToLanguageMap(categoryData["name"]);
-    if (categoryData["description"])
+    if (categoryData["dialog"] != null)
       category.dialog = convertToLanguageMap(categoryData["dialog"]);
-    categoryData["items"].forEach((itemId, itemData) {
-      // mezDbgPrint(itemId + itemData);
 
+    categoryData["items"].forEach((itemId, itemData) {
       category.items.add(Item.itemFromData(itemId, itemData));
     });
     category.sortItems();

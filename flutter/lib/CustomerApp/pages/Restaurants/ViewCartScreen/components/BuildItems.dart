@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
@@ -38,7 +39,8 @@ class CartItemsBuilder extends StatelessWidget {
                 imageUrl: cartItem.item.image!,
                 itemName: cartItem.item.name[userLanguage]![0].toUpperCase() +
                     cartItem.item.name[userLanguage]!.substring(1),
-                restaurantName: controller.associatedRestaurant!.info.name,
+                restaurantName:
+                    controller.associatedRestaurant?.info.name ?? "",
                 itemsPrice: counter.value.toStringAsFixed(0),
               ),
             )),
@@ -51,13 +53,14 @@ class CartItemsBuilder extends StatelessWidget {
                 margin: EdgeInsets.all(8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: List.generate(
-                      cartItem.chosenChoices.length,
-                      (int index) => CartItemChosenChoice(
-                          optionName:
-                              cartItem.chosenChoices.keys.toList()[index],
-                          choices:
-                              cartItem.chosenChoices.values.toList()[index])),
+                  children: buildChoices(cartItem.chosenChoices),
+                  // children: List.generate(
+                  //     cartItem.chosenChoices.length,
+                  //     (int index) => CartItemChosenChoice(
+                  //         optionName:
+                  //             cartItem.chosenChoices.keys.toList()[index],
+                  //         choices:
+                  //             cartItem.chosenChoices.values.toList()[index])),
                 ),
               ),
               SizedBox(
@@ -136,5 +139,16 @@ class CartItemsBuilder extends StatelessWidget {
         return children;
       }),
     );
+  }
+
+  List<Widget> buildChoices(Map<String, List<Choice>> choices) {
+    final List<Widget> viewWidgets = [];
+    choices.forEach((String key, List<Choice> value) {
+      viewWidgets.add(CartItemChosenChoice(
+        choices: value,
+        optionName: key,
+      ));
+    });
+    return viewWidgets;
   }
 }

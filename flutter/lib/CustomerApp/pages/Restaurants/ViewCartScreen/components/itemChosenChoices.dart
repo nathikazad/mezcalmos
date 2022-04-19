@@ -22,6 +22,9 @@ class CartItemChosenChoice extends StatelessWidget {
         Text(
           optionName,
         ),
+        Text(
+          choices.length.toString(),
+        ),
         SizedBox(
           height: 5,
         ),

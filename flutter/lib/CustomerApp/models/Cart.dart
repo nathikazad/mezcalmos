@@ -134,6 +134,7 @@ class CartItem {
     );
     itemData["chosenChoices"].forEach((optionId, optionData) {
       if (item.options.contains(optionId)) {
+        mezDbgPrint("TRUE ---------------------------------------------");
         cartItem.chosenChoices[optionId] = <Choice>[];
         optionData["choices"].forEach((dynamic choiceData) {
           final Choice? choice = item
@@ -141,6 +142,8 @@ class CartItem {
               .findChoice(convertToLanguageMap(choiceData["name"]));
           if (choice != null) cartItem.chosenChoices[optionId]!.add(choice);
         });
+      } else {
+        mezDbgPrint("FALSE ---------------------------------------------");
       }
     });
 
