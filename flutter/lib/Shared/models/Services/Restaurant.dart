@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/models/Services/Service.dart';
 class Restaurant extends Service {
   LanguageMap? description;
   List<Category> categories = <Category>[];
-
+  List<Item> itemsWithoutCategory = <Item>[];
   Restaurant(
       {required ServiceUserInfo userInfo,
       required this.description,
@@ -45,7 +45,16 @@ class Restaurant extends Service {
         schedule: schedule,
         restaurantState: restaurantState);
     restaurantData["menu2"].forEach((dynamic categoryId, dynamic categoryData) {
-      restaurant.categories.add(Category.fromData(categoryId, categoryData));
+      if (categoryId != "noCategory")
+        restaurant.categories.add(Category.fromData(categoryId, categoryData));
+      else {
+        categoryData["items"].forEach((dynamic itemId, dynamic itemData) {
+          restaurant.itemsWithoutCategory
+              .add(Item.itemFromData(itemId, itemData));
+          restaurant.itemsWithoutCategory
+              .sort((Item a, Item b) => a.position.compareTo(b.position));
+        });
+      }
     });
     restaurant.categories
         .sort((Category a, Category b) => a.position.compareTo(b.position));
@@ -67,6 +76,7 @@ class Restaurant extends Service {
       "description": description?.toFirebaseFormat(),
       "info": info.toJson(),
       "categories": jsonEncode(categories),
+      "itemsWithoutCategory": jsonEncode(itemsWithoutCategory),
       "restaurantState": state.toJson()
     };
   }
@@ -118,8 +128,9 @@ class Category {
   factory Category.fromData(String categoryId, dynamic categoryData) {
     Category category =
         Category(
-        id: categoryId,
-        position: categoryData["position"] ?? 0);
+      id: categoryId,
+      position: categoryData["position"] ?? 0,
+    );
     if (categoryData["name"])
       category.name = convertToLanguageMap(categoryData["name"]);
     if (categoryData["description"])
