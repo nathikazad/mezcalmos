@@ -2,13 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 class RestaurantsListItemsOfComponent extends StatefulWidget {
-  RestaurantsListItemsOfComponent({Key? key, required this.item, this.function})
+  const RestaurantsListItemsOfComponent(
+      {Key? key, required this.item, this.function})
       : super(key: key);
   final Item item;
   final GestureTapCallback? function;
@@ -22,12 +23,13 @@ class _RestaurantsListItemsOfComponentState
     extends State<RestaurantsListItemsOfComponent> {
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
-    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+    final TextTheme txt = Theme.of(context).textTheme;
+    final LanguageType userLanguage =
+        Get.find<LanguageController>().userLanguageKey;
     return InkWell(
       child: Container(
         padding: const EdgeInsets.all(8),
-        margin: const EdgeInsets.all(5),
+        // margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Row(
@@ -35,7 +37,9 @@ class _RestaurantsListItemsOfComponentState
             CachedNetworkImage(
               imageUrl: widget.item.image!,
               fit: BoxFit.cover,
-              imageBuilder: (context, imageProvider) => Container(
+              imageBuilder:
+                  (BuildContext context, ImageProvider<Object> imageProvider) =>
+                      Container(
                 height: 63,
                 width: 63,
                 child: ClipOval(
@@ -48,24 +52,26 @@ class _RestaurantsListItemsOfComponentState
                   ),
                 ),
               ),
-              placeholder: (context, url) => Container(
+              placeholder: (BuildContext context, String url) => Container(
                 height: 63,
                 width: 63,
                 child: Center(
                   child: CircularProgressIndicator(),
                 ),
               ),
-              errorWidget: (context, url, error) => Container(
-                  height: 63,
-                  width: 63,
-                  child: Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.grey.shade300),
-                      child: Icon(
-                        Icons.image,
-                        color: Colors.grey,
-                        size: 20,
-                      ))),
+              errorWidget: (BuildContext context, String url, error) =>
+                  Container(
+                      height: 63,
+                      width: 63,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey.shade300),
+                          child: Icon(
+                            Icons.image,
+                            color: Colors.grey,
+                            size: 20,
+                          ))),
             ),
             SizedBox(
               width: 15,

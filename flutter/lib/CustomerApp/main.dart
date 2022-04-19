@@ -33,16 +33,17 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
 ];
 
 void main() {
-  runMainGuarded(
-      () => runApp(Sizer(builder: (context, orientation, deviceType) {
-            return StartingPoint(
-              appType: AppType.CustomerApp,
-              appTheme: CustomerAppTheme.lightTheme,
-              signInCallback: signInCallback,
-              signOutCallback: signOutCallback,
-              routes: routes,
-              sideMenuItems: sideMenuItems,
-              locationOn: true,
-            );
-          })));
+  mezDbgPrint("STARTING CUSTOMER");
+  runMainGuarded(() => runApp(Sizer(builder: (BuildContext context,
+          Orientation orientation, DeviceType deviceType) {
+        return StartingPoint(
+          appType: AppType.CustomerApp,
+          appTheme: CustomerAppTheme.lightTheme,
+          signInCallback: signInCallback,
+          signOutCallback: signOutCallback,
+          routes: routes,
+          sideMenuItems: sideMenuItems,
+          locationOn: true,
+        );
+      })));
 }

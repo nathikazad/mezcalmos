@@ -1,14 +1,16 @@
 import 'dart:async';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 
 class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn();
@@ -33,18 +35,20 @@ class CustomerAuthController extends GetxController {
           "User from CustomerAuthController >> ${_authController.fireAuthUser?.uid}");
       mezDbgPrint(
           "CustomerAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
-      _customerNodeListener?.cancel();
+      _customer.value = customerRxn.value;
+      await _customerNodeListener?.cancel();
       _customerNodeListener = _databaseHelper.firebaseDatabase
           .reference()
           .child(customerNode(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((event) async {
+          .listen((Event event) async {
+        mezDbgPrint("insiiiiiiide event ================> $event");
         _customer.value = Customer.fromSnapshotData(event.snapshot.value);
 
         if (_checkedAppVersion == false) {
-          String VERSION = GetStorage().read(getxAppVersion);
+          final String VERSION = GetStorage().read(getxAppVersion);
           print("[+] Customer currently using App v$VERSION");
-          _databaseHelper.firebaseDatabase
+          await _databaseHelper.firebaseDatabase
               .reference()
               .child(customerAppVersionNode(_authController.fireAuthUser!.uid))
               .set(VERSION);
@@ -53,10 +57,10 @@ class CustomerAuthController extends GetxController {
         }
       });
 
-      String? deviceNotificationToken =
+      final String? deviceNotificationToken =
           await _notificationsController.getToken();
       if (deviceNotificationToken != null)
-        _databaseHelper.firebaseDatabase
+        await _databaseHelper.firebaseDatabase
             .reference()
             .child(
                 customerNotificationInfoNode(_authController.fireAuthUser!.uid))
@@ -97,7 +101,8 @@ class CustomerAuthController extends GetxController {
   Location? getLocationById(String locationId) {
     // we get the user Location by it's id!
     return _customer.value?.savedLocations
-        .firstWhere((savedLocation) => savedLocation.id == locationId,
+        .firstWhere(
+            (SavedLocation savedLocation) => savedLocation.id == locationId,
             orElse: null)
         .location;
   }
@@ -105,7 +110,7 @@ class CustomerAuthController extends GetxController {
   @override
   void onClose() async {
     print("[+] CustomerAuthController::onClose ---------> Was invoked !");
-    _customerNodeListener?.cancel();
+    await _customerNodeListener?.cancel();
     _customerNodeListener = null;
     super.onClose();
   }

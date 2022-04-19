@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_annotating_with_dynamic
 
-import 'dart:convert';
+//import 'dart:convert';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
@@ -22,8 +22,9 @@ class Cart {
   Cart.fromCartData(dynamic cartData, this.restaurant) {
     mezDbgPrint("@sa@d@: Cart.fromCartData ===> $cartData");
     if (restaurant != null) {
-      cartData["items"]?.forEach((dynamic itemIdInCart, dynamic itemData) {
+      cartData["items"].forEach((itemIdInCart, itemData) {
         final Item? item = restaurant!.findItemById(itemData["id"]);
+        mezDbgPrint("inside fore eaaaadchhchc");
         if (item != null)
           cartItems.add(CartItem.fromData(
               itemData: itemData,
@@ -131,7 +132,7 @@ class CartItem {
       quantity: itemData["quantity"],
       notes: itemData["notes"],
     );
-    itemData["chosenChoices"]?.forEach((String optionId, dynamic optionData) {
+    itemData["chosenChoices"].forEach((optionId, optionData) {
       if (item.options.contains(optionId)) {
         cartItem.chosenChoices[optionId] = <Choice>[];
         optionData["choices"].forEach((dynamic choiceData) {
@@ -142,6 +143,7 @@ class CartItem {
         });
       }
     });
+
     return cartItem;
   }
 
@@ -156,13 +158,20 @@ class CartItem {
       "chosenChoices": {},
       "notes": notes
     };
+
     chosenChoices.forEach((String optionId, List<Choice> choices) {
-      json["chosenChoices"][optionId] = {};
+      final List data = [];
+      choices.forEach((Choice element) {
+        data.add(element.toJson());
+      });
+
+      json["chosenChoices"][optionId] = <String, dynamic>{};
       json["chosenChoices"][optionId]["optionName"] =
-          jsonEncode(item.findOption(optionId)?.name.toFirebaseFormat());
-      json["chosenChoices"][optionId]["choices"] = jsonEncode(choices);
+          item.findOption(optionId)?.name.toFirebaseFormat();
+      json["chosenChoices"][optionId]["choices"] = data;
     });
 
+    mezDbgPrint("Printint retuuuuuuuuuuuuuuuurn ----------> $json");
     return json;
   }
 

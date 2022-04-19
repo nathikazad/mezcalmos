@@ -79,7 +79,9 @@ class RestaurantCard extends StatelessWidget {
                             ),
                             Flexible(
                               child: Text(
-                                restaurant.items.length.toStringAsFixed(0) +
+                                restaurant
+                                        .getNumberOfitems()
+                                        .toStringAsFixed(0) +
                                     ' ${_i18n()["items"]}',
                                 style: txt.bodyText2,
                               ),

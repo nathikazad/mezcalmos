@@ -28,10 +28,12 @@ class RestaurantsInfoController extends GetxController {
     final List<Restaurant> restaurants = [];
     if (snapshot.value == null) return restaurants;
     snapshot.value.forEach((key, value) {
+      
       mezDbgPrint(
-          "priiiiiiiiiiiiiiiinnnnnnnnnt ----------->  -------------------> $key");
+          "priiiiiiiiiiiiiiiinnnnnnnnnt ----------->  -------------------> $value");
       try {
         if (value["state"]["available"] == true) {
+          mezDbgPrint("ADDing restaurant ==============>");
           restaurants.add(Restaurant.fromRestaurantData(
               restaurantId: key, restaurantData: value));
         }
@@ -66,12 +68,12 @@ class RestaurantsInfoController extends GetxController {
     });
   }
 
-  Future<Item> getItem(String restaurantId, String itemId) {
+  Future<Item> getItem(String restaurantId, String categoryId, String itemId) {
     return _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderInfos(
             orderType: OrderType.Restaurant, providerId: restaurantId))
-        .child('menu/$itemId')
+        .child('/menu/$categoryId/items/$itemId')
         .once()
         .then<Item>((DataSnapshot snapshot) => Item.itemFromData(
               itemId,

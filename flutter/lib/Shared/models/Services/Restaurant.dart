@@ -22,7 +22,7 @@ class Restaurant extends Service {
       {required String restaurantId, required restaurantData}) {
     // List<Object?> availableLanguages =
     //     restaurantData["details"]["languages"] as List<Object?>;
-
+    mezDbgPrint("RESTAU+RANTT -------------->>>>> $restaurantData");
     final ServiceState restaurantState = ServiceState(
         restaurantData["state"]?["authorizationStatus"]
                 ?.toString()
@@ -41,14 +41,15 @@ class Restaurant extends Service {
 
     final Restaurant restaurant = Restaurant(
         userInfo: ServiceUserInfo.fromData(restaurantData["info"]),
-        description: description,
+        description: description ?? null,
         schedule: schedule,
         restaurantState: restaurantState);
-    restaurantData["menu"].forEach((dynamic categoryId, dynamic categoryData) {
+    restaurantData["menu"].forEach((categoryId, categoryData) {
       restaurant.categories.add(Category.fromData(categoryId, categoryData));
     });
     restaurant.categories
         .sort((Category a, Category b) => a.position.compareTo(b.position));
+
     return restaurant;
   }
 
@@ -69,6 +70,14 @@ class Restaurant extends Service {
       "categories": jsonEncode(categories),
       "restaurantState": state.toJson()
     };
+  }
+
+  int getNumberOfitems() {
+    int numberOfItems = 0;
+    categories.forEach((Category element) {
+      numberOfItems = numberOfItems + element.items.length;
+    });
+    return numberOfItems;
   }
 
   bool isAvailable() {
@@ -115,14 +124,18 @@ class Category {
     this.dialog,
   });
 
-  factory Category.fromData(String categoryId, dynamic categoryData) {
-    Category category = Category(
+  factory Category.fromData(String categoryId, categoryData) {
+    final Category category = Category(
         name: convertToLanguageMap(categoryData["name"]),
         id: categoryId,
         position: categoryData["position"] ?? 0);
-    if (categoryData["description"])
+    if (categoryData["dialog"] != null) {
       category.dialog = convertToLanguageMap(categoryData["dialog"]);
-    categoryData["items"].forEach((dynamic itemId, dynamic itemData) {
+    }
+
+    categoryData["items"].forEach((itemId, itemData) {
+      // mezDbgPrint(itemId + itemData);
+
       category.items.add(Item.itemFromData(itemId, itemData));
     });
     category.sortItems();
@@ -161,8 +174,8 @@ class Item {
       required this.cost,
       this.position = 0});
 
-  factory Item.itemFromData(String itemId, dynamic itemData) {
-    Item item = Item(
+  factory Item.itemFromData(String itemId, itemData) {
+    final Item item = Item(
         id: itemId,
         available: itemData["available"],
         description: convertToLanguageMap(itemData["description"]),
@@ -174,7 +187,7 @@ class Item {
         cost: itemData["cost"]);
     // TODO: change to options
     if (itemData["options2"] != null) {
-      itemData["options2"].forEach((dynamic optionId, dynamic optionData) {
+      itemData["options2"].forEach((optionId, optionData) {
         item.options.add(Option.fromData(optionId, optionData));
       });
       item.sortOptions();
@@ -201,7 +214,7 @@ class Item {
 
   Option? findOption(String id) {
     if (options.length == 0) return null;
-    return options.firstWhereOrNull((element) => element.id == id);
+    return options.firstWhereOrNull((Option element) => element.id == id);
   }
 }
 
@@ -237,7 +250,6 @@ class Option {
       required this.name,
       this.position = 0});
   factory Option.fromData(String id, data) {
-    mezDbgPrint("Opppppppption -----------------> $data");
     final Option option = Option(
         id: id,
         name: convertToLanguageMap(data["name"]),

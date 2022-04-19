@@ -9,11 +9,10 @@ import 'components/RestaurantSliverAppbar.dart';
 import 'components/buildRestaurantsItems.dart';
 import 'components/restaurantInfoTab.dart';
 
-final f = new DateFormat('hh:mm a');
+final DateFormat f = new DateFormat('hh:mm a');
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-["Restaurants"]["ViewRestaurantScreen"]["ViewRestaurantScreen"];
+    ["pages"]["Restaurants"]["ViewRestaurantScreen"]["ViewRestaurantScreen"];
 
 class ViewRestaurantScreen extends StatefulWidget {
   // final Restaurant restaurant;
@@ -51,12 +50,10 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                     labelStyle: Theme.of(context).textTheme.bodyText1,
                     tabs: [
                       Tab(
-                        text:
-                            '${_i18n()["menu"]}',
+                        text: '${_i18n()["menu"]}',
                       ),
                       Tab(
-                        text:
-                            '${_i18n()["info"]}',
+                        text: '${_i18n()["info"]}',
                       ),
                     ],
                   ),
@@ -76,7 +73,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    buildResturantItems(restaurant!.items, restaurant!.info.id),
+                    RestaurantCategoriesList(restaurant: restaurant!)
                   ],
                 ),
               ),

@@ -65,8 +65,15 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       final String? itemId = Get.parameters['itemId'];
       mezDbgPrint("got item id param => $itemId");
 
-      controller.getItem(restaurantId!, itemId!).then((Item item) {
-        cartItem.value = CartItem(item, restaurantId);
+      controller.getRestaurant(restaurantId!).then((Restaurant? restaurant) {
+        if (restaurant?.findItemById(itemId!) != null) {
+          cartItem.value =
+              CartItem(restaurant!.findItemById(itemId!)!, restaurantId);
+        } else {
+          Future.delayed(Duration.zero, () {
+            Get.back();
+          });
+        }
       });
     } else {
       cartItem.value = CartItem.clone(restaurantCartController

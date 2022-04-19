@@ -1,14 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantListItemComponent.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
-import '../../../../router.dart';
-import 'RestaurantListItemComponent.dart';
+class RestaurantCategoriesList extends StatelessWidget {
+  RestaurantCategoriesList({Key? key, required this.restaurant})
+      : super(key: key);
+  final Restaurant restaurant;
+  LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
 
-Widget buildResturantItems(List<Item> items, String restaurantId) {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(5),
+      child: Column(
+          children: List.generate(
+              restaurant.categories.length,
+              (int index) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        restaurant.categories[index].name[userLanguage] ?? "",
+                        style: Get.theme.textTheme.bodyText1,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      if (restaurant.categories[index].dialog?[userLanguage] !=
+                          null)
+                        Text(restaurant
+                            .categories[index].dialog![userLanguage]!),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      _buildResturantItems(restaurant.categories[index].items,
+                          restaurant.info.id),
+                      if (index != restaurant.categories.length - 1) Divider(),
+                    ],
+                  ))),
+    );
+  }
+}
+
+Widget _buildResturantItems(List<Item> items, String restaurantId) {
   return Column(
-    children: items.fold<List<Widget>>(<Widget>[], (children, item) {
+    children: items.fold<List<Widget>>(<Widget>[],
+        (List<Widget> children, Item item) {
       children.add(RestaurantsListItemsOfComponent(
           item: item,
           function: () {
@@ -18,7 +59,7 @@ Widget buildResturantItems(List<Item> items, String restaurantId) {
             );
           }));
       children.add(SizedBox(
-        height: 1,
+        height: 8,
       ));
       return children;
     }),
