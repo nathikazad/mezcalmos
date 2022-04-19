@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/models/Services/Service.dart';
 
 class Restaurant extends Service {
   LanguageMap? description;
-  List<Category> categories = <Category>[];
+  List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
   Restaurant(
       {required ServiceUserInfo userInfo,
@@ -45,25 +45,28 @@ class Restaurant extends Service {
         schedule: schedule,
         restaurantState: restaurantState);
     restaurantData["menu2"].forEach((dynamic categoryId, dynamic categoryData) {
-      if (categoryId != "noCategory")
-        restaurant.categories.add(Category.fromData(categoryId, categoryData));
-      else {
-        categoryData["items"].forEach((dynamic itemId, dynamic itemData) {
-          restaurant.itemsWithoutCategory
-              .add(Item.itemFromData(itemId, itemData));
-          restaurant.itemsWithoutCategory
-              .sort((Item a, Item b) => a.position.compareTo(b.position));
-        });
-      }
+      restaurant._categories.add(Category.fromData(categoryId, categoryData));
     });
-    restaurant.categories
+    restaurant._categories
         .sort((Category a, Category b) => a.position.compareTo(b.position));
     return restaurant;
   }
 
+  List<Category> get getCategories {
+    return _categories
+        .where((Category category) => category.id != "noCategory")
+        .toList();
+  }
+
+  List<Item>? get getItemsWithoutCategory {
+    return _categories
+        .firstWhere((Category category) => category.id == "noCategory")
+        .items;
+  }
+
   Item? findItemById(String id) {
     Item? returnVal;
-    categories.forEach((Category category) {
+    _categories.forEach((Category category) {
       category.items.forEach((Item item) {
         if (item.id == id) returnVal = item;
       });
@@ -75,7 +78,7 @@ class Restaurant extends Service {
     return <String, dynamic>{
       "description": description?.toFirebaseFormat(),
       "info": info.toJson(),
-      "categories": jsonEncode(categories),
+      "categories": jsonEncode(_categories),
       "itemsWithoutCategory": jsonEncode(itemsWithoutCategory),
       "restaurantState": state.toJson()
     };
@@ -126,8 +129,7 @@ class Category {
   });
 
   factory Category.fromData(String categoryId, dynamic categoryData) {
-    Category category =
-        Category(
+    Category category = Category(
       id: categoryId,
       position: categoryData["position"] ?? 0,
     );
