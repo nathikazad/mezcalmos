@@ -51,6 +51,19 @@ class LocationController extends GetxController {
     }
   }
 
+  Future<bool> _checkBg() async {
+    bool _v = false;
+
+    try {
+      _v = await Location().enableBackgroundMode();
+      mezDbgPrint("bachGroud Enableeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed _checkBg $_v");
+    } catch (e) {
+      mezDbgPrint("ERRRRRRRRRRRRRROOOOOOOOOR _checkBg");
+    }
+    return _v;
+  }
+
+  /// handling the bg location
   Future<LocationPermissionsStatus> _handleBackgroundLocation() async {
     // if Service is not enabled , we request Service and check the result if service is anabled or not.
     if (!await Location().serviceEnabled()) {
@@ -67,26 +80,33 @@ class LocationController extends GetxController {
         return Future.value(statusSnapshot.value);
       // We can not use background location if it's limited
       case PermissionStatus.grantedLimited:
-        mezDbgPrint("@loc@saad : PermissionStatus.grantedLimited");
-        statusSnapshot.value = LocationPermissionsStatus.BackgroundAccessDenied;
-        return Future.value(statusSnapshot.value);
+        // mezDbgPrint("@loc@saad : PermissionStatus.grantedLimited");
+        if (await _checkBg()) {
+          statusSnapshot.value = LocationPermissionsStatus.Ok;
+          return Future.value(statusSnapshot.value);
+        } else {
+          statusSnapshot.value =
+              LocationPermissionsStatus.BackgroundAccessDenied;
+          return Future.value(statusSnapshot.value);
+        }
       case PermissionStatus.granted:
-        mezDbgPrint("@loc@saad : PermissionStatus.granted");
-        statusSnapshot.value = LocationPermissionsStatus.Ok;
-        return Future.value(statusSnapshot.value);
+        if (await _checkBg()) {
+          //mezDbgPrint("@loc@saad : PermissionStatus.granted");
+          statusSnapshot.value = LocationPermissionsStatus.Ok;
+          return Future.value(statusSnapshot.value);
+        } else {
+          //mezDbgPrint("@loc@saad : PermissionStatus.granted");
+
+          statusSnapshot.value =
+              LocationPermissionsStatus.BackgroundAccessDenied;
+          return Future.value(statusSnapshot.value);
+        }
     }
-
-    // Android :
-    //  - Android =+11 => User Gives permissions manually.
-    //  - Android =-10 || iOS => Programatically get it.
-
-    // Message:
-    //  - Android 11+ => Please Click [Always Allow].
-    //  - Android =-10 =>
+  
   }
 
   Stream<LocationPermissionsStatus> locationPermissionChecker(
-      {Duration duration = const Duration(seconds: 1)}) async* {
+    {Duration duration = const Duration(seconds: 1)}) async* {
     yield* Stream<Future<LocationPermissionsStatus>>.periodic(
       duration,
       (_) {
