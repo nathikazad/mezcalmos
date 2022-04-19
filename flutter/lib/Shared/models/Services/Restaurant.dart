@@ -8,8 +8,8 @@ import 'package:mezcalmos/Shared/models/Services/Service.dart';
 
 class Restaurant extends Service {
   LanguageMap? description;
-  List<Category> categories = <Category>[];
-
+  List<Category> _categories = <Category>[];
+  List<Item> itemsWithoutCategory = <Item>[];
   Restaurant(
       {required ServiceUserInfo userInfo,
       required this.description,
@@ -44,17 +44,28 @@ class Restaurant extends Service {
         schedule: schedule,
         restaurantState: restaurantState);
     restaurantData["menu2"].forEach((categoryId, categoryData) {
-      restaurant.categories.add(Category.fromData(categoryId, categoryData));
+      restaurant._categories.add(Category.fromData(categoryId, categoryData));
     });
-    // restaurant.categories
-    //     .sort((Category a, Category b) => a.position.compareTo(b.position));
-
+    restaurant._categories
+        .sort((Category a, Category b) => a.position.compareTo(b.position));
     return restaurant;
+  }
+
+  List<Category> get getCategories {
+    return _categories
+        .where((Category category) => category.id != "noCategory")
+        .toList();
+  }
+
+  List<Item>? get getItemsWithoutCategory {
+    return _categories
+        .firstWhere((Category category) => category.id == "noCategory")
+        .items;
   }
 
   Item? findItemById(String id) {
     Item? returnVal;
-    categories.forEach((Category category) {
+    _categories.forEach((Category category) {
       category.items.forEach((Item item) {
         if (item.id == id) returnVal = item;
       });
@@ -66,14 +77,15 @@ class Restaurant extends Service {
     return <String, dynamic>{
       "description": description?.toFirebaseFormat(),
       "info": info.toJson(),
-      "categories": jsonEncode(categories),
+      "categories": jsonEncode(_categories),
+      "itemsWithoutCategory": jsonEncode(itemsWithoutCategory),
       "restaurantState": state.toJson()
     };
   }
 
   int getNumberOfitems() {
     int numberOfItems = 0;
-    categories.forEach((Category element) {
+    _categories.forEach((Category element) {
       numberOfItems = numberOfItems + element.items.length;
     });
     return numberOfItems;
@@ -123,10 +135,12 @@ class Category {
     this.dialog,
   });
 
-  factory Category.fromData(categoryId, categoryData) {
-    final Category category =
-        Category(id: categoryId, position: categoryData["position"] ?? 0);
-    if (categoryData["name"] != null)
+  factory Category.fromData(String categoryId, categoryData) {
+    final Category category = Category(
+      id: categoryId,
+      position: categoryData["position"] ?? 0,
+    );
+    if (categoryData["name"])
       category.name = convertToLanguageMap(categoryData["name"]);
     if (categoryData["dialog"] != null)
       category.dialog = convertToLanguageMap(categoryData["dialog"]);
