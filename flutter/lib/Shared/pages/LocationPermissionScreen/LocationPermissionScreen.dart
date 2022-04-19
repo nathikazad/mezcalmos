@@ -172,6 +172,9 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                             Icons.error,
                             color: Colors.red,
                           ),
+                          SizedBox(
+                            width: 5,
+                          ),
                           Flexible(
                             child: Text(
                               viewController.errorText!,
