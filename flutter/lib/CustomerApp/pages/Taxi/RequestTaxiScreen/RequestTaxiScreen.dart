@@ -30,7 +30,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
   @override
   void initState() {
-    viewController.locationPickerController.recenterButtonEnabled.value = false;
+    // lock the zoom and always fit bounds.
+    viewController.locationPickerController.lockInAutoZoomAnimation();
     viewWidgets =
         RequestTaxiScreenWidgets(requestTaxiController: viewController);
 
@@ -97,8 +98,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                       viewController.locationSearchBarController,
                   onClear: () {
                     // we set that back to false
-                    viewController.locationPickerController.periodicRerendering
-                        .value = false;
+                    // viewController.locationPickerController.periodicRerendering
+                    //     .value = false;
                   },
                   newLocationChosenEvent:
                       viewController.updateModelAndHandoffToLocationPicker),

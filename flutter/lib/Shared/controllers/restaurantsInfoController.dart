@@ -32,8 +32,8 @@ class RestaurantsInfoController extends GetxController {
           restaurants.add(Restaurant.fromRestaurantData(
               restaurantId: key, restaurantData: value));
         }
-      } catch (e) {
-        mezDbgPrint("FREAKING EXCEPTION ===> $e");
+      } catch (e, s) {
+        mezDbgPrint("FREAKING EXCEPTION ===> $s");
       }
     });
 

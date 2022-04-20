@@ -92,7 +92,6 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               _orderNoteComponent(),
               const SizedBox(height: 20),
               orderSummaryCard(context),
-              bottomButton(context),
             ],
           ),
         ),

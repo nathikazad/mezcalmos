@@ -67,7 +67,7 @@ class RequestTaxiController {
     locationSearchBarController.focusedTextField.value =
         currentFocusedTextField.value;
     // set the location Enabled Button to be false
-    locationPickerController.myLocationButtonEnabled.value = false;
+    // locationPickerController.myLocationButtonEnabled.value = false;
     // set blackScreenBottom 110
     locationPickerController.blackScreenBottomTextMargin.value = 80;
 
@@ -75,7 +75,7 @@ class RequestTaxiController {
       taxiRequest.value.from = Location("", locData);
       updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
       locationPickerController.setLocation(taxiRequest.value.from!);
-      startPollingOnlineDrivers();
+      // startPollingOnlineDrivers();
     });
   }
 
@@ -90,7 +90,7 @@ class RequestTaxiController {
     // set current SearchComponent:
     locationSearchBarController.focusedTextField(currentFocusedTextField.value);
     // set the location Enabled Button to be false
-    locationPickerController.myLocationButtonEnabled.value = false;
+    // locationPickerController.myLocationButtonEnabled.value = false;
     // set blackScreenBottom 110
 
     locationPickerController.blackScreenBottomTextMargin.value = 80;
@@ -110,14 +110,14 @@ class RequestTaxiController {
         latLng: LatLng(taxiRequest.value.to!.position.latitude!,
             taxiRequest.value.to!.position.longitude!));
 
-    locationPickerController.periodicRerendering.value = true;
+    // locationPickerController.periodicRerendering.value = true;
     locationPickerController.hideFakeMarker();
     locationPickerController.setAnimateMarkersPolyLinesBounds(true);
     locationPickerController.animateAndUpdateBounds();
     updateRouteInformation()
         .then((_) => locationPickerController.showConfirmButton());
     pickedFromTo.value = true;
-    startPollingOnlineDrivers();
+    // startPollingOnlineDrivers();
   }
 
   /// Calls `TaxiController.fecthOnlineTaxiDrivers` and check if within 5KM then returns the driver.
@@ -186,14 +186,14 @@ class RequestTaxiController {
     currentFocusedTextField.refresh();
     taxiRequest.refresh();
     if (taxiRequest.value.isFromToSet()) {
-      locationPickerController.periodicRerendering.value = true;
+      // locationPickerController.periodicRerendering.value = true;
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
       locationPickerController.animateAndUpdateBounds();
       updateRouteInformation()
           .then((_) => locationPickerController.showConfirmButton());
       pickedFromTo.value = true;
     } else {
-      locationPickerController.periodicRerendering.value = false;
+      // locationPickerController.periodicRerendering.value = false;
       locationPickerController.setAnimateMarkersPolyLinesBounds(false);
       locationPickerController.showGrayedOutButton();
       // locationPickerController.removeCircleMarker();
