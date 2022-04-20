@@ -22,7 +22,7 @@ class Cart {
   Cart.fromCartData(dynamic cartData, this.restaurant) {
     mezDbgPrint("@sa@d@: Cart.fromCartData ===> $cartData");
     if (restaurant != null) {
-      cartData["items"].forEach((itemIdInCart, itemData) {
+      cartData["items"]?.forEach((itemIdInCart, itemData) {
         final Item? item = restaurant!.findItemById(itemData["id"]);
         mezDbgPrint("inside fore eaaaadchhchc");
         if (item != null)
@@ -114,7 +114,7 @@ class CartItem {
 
   CartItem(this.item, this.restaurantId,
       {this.idInCart, this.quantity = 1, this.notes}) {
-    item.options.forEach((Option option) {
+    item.options?.forEach((Option option) {
       chosenChoices[option.id] = <Choice>[];
     });
   }
@@ -132,7 +132,7 @@ class CartItem {
       quantity: itemData["quantity"],
       notes: itemData["notes"],
     );
-    itemData["chosenChoices"].forEach((optionId, optionData) {
+    itemData["chosenChoices"]?.forEach((optionId, optionData) {
       if (item.findOption(optionId) != null) {
         mezDbgPrint("TRUE ---------------------------------------------");
         cartItem.chosenChoices[optionId] = <Choice>[];

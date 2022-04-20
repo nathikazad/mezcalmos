@@ -181,15 +181,16 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  Column(
-                    children: List.generate(
-                        cartItem.value!.item.options.length,
-                        (int index) => ItemOptionCard(
-                            cartItem: cartItem,
-                            editMode: widget.viewItemScreenMode ==
-                                ViewItemScreenMode.EditItemMode,
-                            option: cartItem.value!.item.options[index])),
-                  ),
+                  if (cartItem.value!.item.options != null)
+                    Column(
+                      children: List.generate(
+                          cartItem.value!.item.options!.length,
+                          (int index) => ItemOptionCard(
+                              cartItem: cartItem,
+                              editMode: widget.viewItemScreenMode ==
+                                  ViewItemScreenMode.EditItemMode,
+                              option: cartItem.value!.item.options![index])),
+                    ),
                   // ChooseOneCheckBox(
                   //   chooseOneOptions: cartItem.value!.item.chooseOneOptions,
                   //   cartItem: cartItem,

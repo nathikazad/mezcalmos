@@ -63,14 +63,29 @@ class RestaurantCategoriesList extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  if (restaurant.getItemsWithoutCategory!.isNotEmpty)
-                    Column(
-                      children: List.generate(
-                          restaurant.getItemsWithoutCategory!.length,
-                          (int index) => RestaurantsListOfItemsComponent(
-                              item:
-                                  restaurant.getItemsWithoutCategory![index])),
-                    ),
+                  Column(
+                    children: List.generate(
+                        restaurant.getItemsWithoutCategory!.length,
+                        (int index) => Container(
+                              padding: EdgeInsets.symmetric(vertical: 4),
+                              child: RestaurantsListOfItemsComponent(
+                                item:
+                                    restaurant.getItemsWithoutCategory![index],
+                                function: () {
+                                  Get.toNamed(
+                                    getItemRoute(
+                                        restaurant.info.id,
+                                        restaurant
+                                            .getItemsWithoutCategory![index]
+                                            .id),
+                                    arguments: {
+                                      "mode": ViewItemScreenMode.AddItemMode
+                                    },
+                                  );
+                                },
+                              ),
+                            )),
+                  ),
                 ],
               ),
             )
