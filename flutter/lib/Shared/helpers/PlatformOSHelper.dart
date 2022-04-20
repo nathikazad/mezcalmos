@@ -26,10 +26,9 @@ MezPlatform getPlatformType() {
 }
 
 String? getPackageName({MezPlatform? platform}) {
-  final String _packName = GetStorage()
-      .read<String>(getxPackageName)
-      .toString()
-      .replaceFirst('mezstaging', 'mezcalmos');
+  final String _packName =
+      GetStorage().read<String>(getxPackageName).toString();
+  // .replaceFirst('mezstaging', 'mezcalmos');
 
   switch (platform) {
     case MezPlatform.ANDROID:

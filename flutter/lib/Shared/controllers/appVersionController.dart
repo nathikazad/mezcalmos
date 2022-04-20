@@ -117,9 +117,10 @@ class AppVersionController {
     );
   }
 
-  /// This is a private func , we keep calling it each 3h in `init`
-  Future<void> _checkForNewUpdates() async {
-    UpdateType _updateType = UpdateType.Null;
+  /// Call this to check once if there is any Updates Available,
+  ///
+  /// through [_isUpdateAvailable().canUpdate]
+  Future<VersionStatus?> _isUpdateAvailable() async {
     // Instanciating newVersion
     final NewVersion newVersion = NewVersion(
       iOSId: getPackageName(platform: MezPlatform.IOS),
@@ -130,12 +131,22 @@ class AppVersionController {
 
     // Get Version Status
     final VersionStatus? status = await newVersion.getVersionStatus();
+    return status;
+  }
+
+  /// This is a private func , we keep calling it each 3h in `init`
+  Future<void> _checkForNewUpdates() async {
+    UpdateType _updateType = UpdateType.Null;
+    // Get Version Status
+    final VersionStatus? status = await _isUpdateAvailable();
+
     if (status != null && status.canUpdate) {
       debugPrint("releaseNotes: ${status.releaseNotes}");
       debugPrint('appStoreLink: ${status.appStoreLink}');
       debugPrint('localVersion: ${status.localVersion}');
       debugPrint('storeVersion: ${status.storeVersion}');
       debugPrint('canUpdate ${status.canUpdate.toString()}');
+      debugPrint('packageName ${status.canUpdate.toString()}');
 
       // localVersion
       final VersionSplit _localVersion = VersionSplit.split(
