@@ -1,5 +1,5 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/LaundryApp/pages/AddCategoryScreen/AddCategoryScreen.dart';
+import 'package:mezcalmos/LaundryApp/pages/CategoryScreens/CategoryScreen.dart';
 import 'package:mezcalmos/LaundryApp/pages/DashboardView/DashboardView.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/EditInfoView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
@@ -10,11 +10,12 @@ const String kDashboardView = '/dahboard';
 const String kEditInfoView = '/editInfo';
 const String kLaundryOrderView = '/currentOrders/laundry/:orderId';
 const String kRestaurantOrderView = '/currentOrders/restaurant/:orderId';
-const String kAddCategoryScreen = '/addCategoryScreen';
+const String kCategoryScreen = '/categoryScreen/';
+const String kEditCategoryScreen = '/categoryScreen/:id';
 
-// String getLaundryOrderRoute(String orderId) {
-//   return kLaundryOrderView.replaceFirst(":orderId", orderId);
-// }
+String getCategoryEditRoute(String categoryId) {
+  return kEditCategoryScreen.replaceFirst(":id", categoryId);
+}
 
 // String getRestaurantOrderRoute(String orderId) {
 //   return kRestaurantOrderView.replaceFirst(":orderId", orderId);
@@ -27,8 +28,12 @@ class XRouter {
         GetPage(name: kEditInfoView, page: () => LaundryOpEditInfoView()),
         GetPage(name: kHomeRoute, page: () => LaundryWrapper()),
         GetPage(
-          name: kAddCategoryScreen,
-          page: () => AddCategoryScreen(),
+          name: kCategoryScreen,
+          page: () => LaundryOpCategoryScreen(),
+        ),
+        GetPage(
+          name: kEditCategoryScreen,
+          page: () => LaundryOpCategoryScreen(),
         ),
       ] +
       SharedRouter.sharedRoutes;

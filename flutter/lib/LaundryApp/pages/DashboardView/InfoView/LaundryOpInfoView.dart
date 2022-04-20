@@ -31,106 +31,119 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => ListView(
-        padding: const EdgeInsets.all(10),
-        children: [
-          CircleAvatar(
-            radius: 50,
-            backgroundImage:
-                CachedNetworkImageProvider(laundry.value?.info.image ?? ''),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Container(
-            alignment: Alignment.center,
-            child: Text(
-              laundry.value?.info.name ?? 'Laundry name',
-              style: Theme.of(context).textTheme.headline3,
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          TextButton.icon(
-              onPressed: () {
-                Get.toNamed(kEditInfoView);
-              },
-              icon: Icon(Icons.edit),
-              label: Text("Edit my informations")),
-          Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      () => SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Center(
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: CachedNetworkImageProvider(
+                      laundry.value?.info.image ?? ''),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: Text(
+                  laundry.value?.info.name ?? 'Laundry name',
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: TextButton.icon(
+                    onPressed: () {
+                      Get.toNamed(kEditInfoView);
+                    },
+                    icon: Icon(Icons.edit),
+                    label: Text("Edit my informations")),
+              ),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Categories',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Card(
+                    color: Colors.white,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        Get.toNamed(kCategoryScreen);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.add,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
+                              Text(
+                                'Add Category',
+                              ),
+                            ]),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              if (laundry.value!.laundryCosts.lineItems.isNotEmpty)
+                Column(
+                    children: List.generate(
+                        laundry.value!.laundryCosts.lineItems.length,
+                        (int index) {
+                  return CategoryCard(
+                      laundryCostLineItem:
+                          laundry.value!.laundryCosts.lineItems[index]);
+                })),
+              Divider(),
               Text(
-                'Categories',
+                'Location',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               Card(
-                color: Colors.white,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(10),
-                  onTap: () {
-                    Get.toNamed(kAddCategoryScreen);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.add,
-                            color: Theme.of(context).primaryColorLight,
-                          ),
-                          Text(
-                            'Add Category',
-                          ),
-                        ]),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.place_rounded,
+                        color: Theme.of(context).primaryColorLight,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Flexible(
+                          child: Text(
+                        laundry.value?.info.location?.address ??
+                            'Laundry adress',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ))
+                    ],
                   ),
                 ),
-              )
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Obx(() => MezWorkingHours(schedule: laundry.value!.schedule!))
             ],
           ),
-          Column(
-              children: List.generate(
-                  laundry.value!.laundryCosts.lineItems.length, (int index) {
-            return CategoryCard(
-                laundryCostLineItem:
-                    laundry.value!.laundryCosts.lineItems[index]);
-          })),
-          Divider(),
-          Text(
-            'Location',
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-          Card(
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              width: double.infinity,
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.place_rounded,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Flexible(
-                      child: Text(
-                    laundry.value?.info.location?.address ?? 'Laundry adress',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ))
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Obx(() => MezWorkingHours(schedule: laundry.value!.schedule!))
-        ],
+        ),
       ),
     );
   }

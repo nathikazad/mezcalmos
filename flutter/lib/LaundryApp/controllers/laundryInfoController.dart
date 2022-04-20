@@ -17,6 +17,8 @@ import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 class LaundryInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   late String laundryId;
+  Rxn<LanguageType> laundryPrimaryLanguage = Rxn();
+  Rxn<LanguageType> laundrySecondaryLanguage = Rxn();
   Rxn<Laundry> laundry = Rxn();
   StreamSubscription? _laundryInfoListener;
   Future<void> init(String laundryId) async {
