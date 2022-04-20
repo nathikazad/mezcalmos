@@ -25,15 +25,17 @@ class RestaurantsInfoController extends GetxController {
 
     // mezDbgPrint("Got restorantes ===> ${snapshot.value}");
 
-    final List<Restaurant> restaurants = [];
+    final List<Restaurant> restaurants = <Restaurant>[];
     if (snapshot.value == null) return restaurants;
-    snapshot.value.forEach((key, value) {
+    // ignore: avoid_annotating_with_dynamic
+    snapshot.value.forEach((String restaurantId, dynamic restaurantData) {
       try {
-        if (value["state"]["available"] == true) {
+        if (restaurantData["state"]["available"] == true) {
           restaurants.add(Restaurant.fromRestaurantData(
-              restaurantId: key, restaurantData: value));
+              restaurantId: restaurantId, restaurantData: restaurantData));
         }
       } catch (e) {
+        mezDbgPrint("Restaurant add Exception id:$restaurantId");
         mezDbgPrint(e);
         mezDbgPrint(StackTrace.current);
       }
@@ -62,18 +64,5 @@ class RestaurantsInfoController extends GetxController {
       }
       return null;
     });
-  }
-
-  Future<Item> getItem(String restaurantId, String categoryId, String itemId) {
-    return _databaseHelper.firebaseDatabase
-        .reference()
-        .child(serviceProviderInfos(
-            orderType: OrderType.Restaurant, providerId: restaurantId))
-        .child('/menu/$categoryId/items/$itemId')
-        .once()
-        .then<Item>((DataSnapshot snapshot) => Item.itemFromData(
-              itemId,
-              snapshot.value,
-            ));
   }
 }

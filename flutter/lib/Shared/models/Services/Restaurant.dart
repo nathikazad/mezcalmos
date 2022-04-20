@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 
 class Restaurant extends Service {
+  static String kNoCategoryNode = "noCategory";
   LanguageMap? description;
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
@@ -53,7 +54,7 @@ class Restaurant extends Service {
 
   List<Category> get getCategories {
     final List<Category> categories = _categories
-        .where((Category category) => category.id != "noCategory")
+        .where((Category category) => category.id != kNoCategoryNode)
         .toList();
     categories.forEach((Category category) {
       category.sortItems();
@@ -63,7 +64,7 @@ class Restaurant extends Service {
 
   List<Item>? get getItemsWithoutCategory {
     final List<Item>? items = _categories
-        .firstWhereOrNull((Category category) => category.id == "noCategory")
+        .firstWhereOrNull((Category category) => category.id == kNoCategoryNode)
         ?._items;
     items?.sort((Item a, Item b) => a.position.compareTo(b.position));
     return items;
