@@ -52,21 +52,27 @@ class Restaurant extends Service {
   }
 
   List<Category> get getCategories {
-    return _categories
+    final List<Category> categories = _categories
         .where((Category category) => category.id != "noCategory")
         .toList();
+    categories.forEach((Category category) {
+      category.sortItems();
+    });
+    return categories;
   }
 
   List<Item>? get getItemsWithoutCategory {
-    return _categories
+    final List<Item>? items = _categories
         .firstWhereOrNull((Category category) => category.id == "noCategory")
-        ?.items;
+        ?._items;
+    items?.sort((Item a, Item b) => a.position.compareTo(b.position));
+    return items;
   }
 
   Item? findItemById(String id) {
     Item? returnVal;
     _categories.forEach((Category category) {
-      category.items.forEach((Item item) {
+      category._items.forEach((Item item) {
         if (item.id == id) returnVal = item;
       });
     });
@@ -126,7 +132,12 @@ class Category {
   String id;
   LanguageMap? dialog;
   int position = 0;
-  List<Item> items = <Item>[];
+  List<Item> _items = <Item>[];
+
+  List<Item> get items {
+    sortItems();
+    return _items;
+  }
 
   Category({
     this.name,
@@ -144,16 +155,15 @@ class Category {
       category.name = convertToLanguageMap(categoryData["name"]);
     if (categoryData["dialog"] != null)
       category.dialog = convertToLanguageMap(categoryData["dialog"]);
-
     categoryData["items"].forEach((itemId, itemData) {
-      category.items.add(Item.itemFromData(itemId, itemData));
+      category._items.add(Item.itemFromData(itemId, itemData));
     });
     category.sortItems();
     return category;
   }
 
   void sortItems() {
-    items.sort((Item a, Item b) => a.position.compareTo(b.position));
+    _items.sort((Item a, Item b) => a.position.compareTo(b.position));
   }
 
   Map<String, dynamic> toJson() {
@@ -161,7 +171,7 @@ class Category {
       "name": name?.toFirebaseFormat(),
       "dialog": dialog?.toFirebaseFormat(),
       "position": position,
-      "items": jsonEncode(items),
+      "items": jsonEncode(_items),
     };
   }
 }
@@ -173,7 +183,13 @@ class Item {
   String? image;
   Map<LanguageType, String> name;
   num cost = 0;
-  List<Option> options = <Option>[];
+  List<Option> _options = <Option>[];
+
+  List<Option>? get options {
+    sortOptions();
+    return _options;
+  }
+
   int position = 0;
   Item(
       {required this.id,
@@ -198,7 +214,7 @@ class Item {
     // TODO: change to options
     if (itemData["options2"] != null) {
       itemData["options2"].forEach((optionId, optionData) {
-        item.options.add(Option.fromData(optionId, optionData));
+        item._options.add(Option.fromData(optionId, optionData));
       });
       item.sortOptions();
     }
@@ -206,7 +222,7 @@ class Item {
   }
 
   void sortOptions() {
-    options.sort((Option a, Option b) => a.position.compareTo(b.position));
+    _options.sort((Option a, Option b) => a.position.compareTo(b.position));
   }
 
   Map<String, dynamic> toJson() {
@@ -217,14 +233,14 @@ class Item {
       "image": image,
       "cost": cost,
       "name": name.toFirebaseFormat(),
-      "options": jsonEncode(options),
+      "options": jsonEncode(_options),
       "position": position
     };
   }
 
   Option? findOption(String id) {
-    if (options.length == 0) return null;
-    return options.firstWhereOrNull((Option element) => element.id == id);
+    if (_options.length == 0) return null;
+    return _options.firstWhereOrNull((Option element) => element.id == id);
   }
 }
 
