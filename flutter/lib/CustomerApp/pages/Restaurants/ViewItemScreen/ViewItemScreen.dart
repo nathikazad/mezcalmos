@@ -61,9 +61,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
           currentRestaurant = value;
         });
       });
-      mezDbgPrint("got rest id param => $restaurantId");
       final String? itemId = Get.parameters['itemId'];
-      mezDbgPrint("got item id param => $itemId");
 
       controller.getRestaurant(restaurantId!).then((Restaurant? restaurant) {
         if (restaurant?.findItemById(itemId!) != null) {
@@ -184,32 +182,16 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   if (cartItem.value!.item.options != null)
                     Column(
                       children: List.generate(
-                          cartItem.value!.item.options!.length,
+                          cartItem.value!.item.options.length,
                           (int index) => ItemOptionCard(
                               cartItem: cartItem,
                               editMode: widget.viewItemScreenMode ==
                                   ViewItemScreenMode.EditItemMode,
-                              option: cartItem.value!.item.options![index])),
+                              option: cartItem.value!.item.options[index])),
                     ),
-                  // ChooseOneCheckBox(
-                  //   chooseOneOptions: cartItem.value!.item.chooseOneOptions,
-                  //   cartItem: cartItem,
-                  // ),
                   SizedBox(
                     height: 20,
                   ),
-                  // ChooseManyCheckBoxes(
-                  //     chooseManyOptions: cartItem.value!.item.chooseManyOptions,
-                  //     cartItem: cartItem),
-                  // TextFieldComponent(
-                  //   textController: _noteTextEdittingController,
-                  //   hint: _i18n()["notes"],
-                  //   onChangeCallback: (String value) {
-                  //     mezDbgPrint(
-                  //         "@IOIOIO@ | ${cartItem.value} notes : $value");
-                  //     cartItem.value?.notes = value;
-                  //   },
-                  // ),
                   SizedBox(
                     height: 15,
                   )

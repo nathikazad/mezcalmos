@@ -26,8 +26,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   late String optionId;
   @override
   void initState() {
-    optionId = widget.option.name[userLanguage].toString().toLowerCase();
-
+    optionId = widget.option.id;
     if (!widget.editMode) {
       assignMinimumChoices();
     }
@@ -37,14 +36,13 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Container(
+    return Container(
         margin: EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.option.name[userLanguage].toString(),
+            widget.option.name[userLanguage].toString(),
               style: Get.theme.textTheme.bodyText2,
             ),
             Column(
@@ -54,8 +52,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                         choice: widget.option.choices[index],
                       )),
             )
-          ],
-        ),
+        ],
       ),
     );
   }
@@ -91,6 +88,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               ),
             ),
             Spacer(),
+            Obx(() =>
             Transform.scale(
               scale: 2.0,
               child: Checkbox(
@@ -101,7 +99,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                   onChanged: (bool? v) {
                     handleChoiceCheckBox(choice);
                   }),
-            )
+                ))
           ],
         ),
       ),
@@ -110,12 +108,10 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
 
 // FUNCTIONS //
   void assignMinimumChoices() {
-    for (int i = 0; i < widget.option.minimumChoice; i++) {
-      widget.cartItem.value!.setNewChoices(
-          optionId: optionId,
-          newChoices: widget.cartItem.value!.chosenChoices[optionId]! +
-              [widget.option.choices[i]]);
-    }
+    widget.cartItem.value!.setNewChoices(
+        optionId: optionId,
+        newChoices: widget.option.choices
+            .sublist(0, (widget.option.minimumChoice as int)));
   }
 
   void handleChoiceCheckBox(Choice choice) {

@@ -23,12 +23,10 @@ class RestaurantsInfoController extends GetxController {
         .child(serviceProviderInfos(orderType: OrderType.Restaurant))
         .once();
 
-    // mezDbgPrint("Got restorantes ===> ${snapshot.value}");
-
     final List<Restaurant> restaurants = <Restaurant>[];
     if (snapshot.value == null) return restaurants;
     // ignore: avoid_annotating_with_dynamic
-    snapshot.value.forEach((String restaurantId, dynamic restaurantData) {
+    snapshot.value.forEach((dynamic restaurantId, dynamic restaurantData) {
       try {
         if (restaurantData["state"]["available"] == true) {
           restaurants.add(Restaurant.fromRestaurantData(

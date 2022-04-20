@@ -114,7 +114,7 @@ class CartItem {
 
   CartItem(this.item, this.restaurantId,
       {this.idInCart, this.quantity = 1, this.notes}) {
-    item.options?.forEach((Option option) {
+    item.options.forEach((Option option) {
       chosenChoices[option.id] = <Choice>[];
     });
   }
@@ -199,14 +199,16 @@ class CartItem {
     num costPerOne = item.cost;
     // if(chosenChoices.length > item.options
     chosenChoices.forEach((String optionId, List<Choice> choices) {
-      final Option option = item.findOption(optionId)!;
-      if (choices.length > option.freeChoice) {
-        costPerOne +=
-            (choices.length - option.freeChoice) * option.costPerExtra;
+      final Option? option = item.findOption(optionId);
+      if (option != null) {
+        if (choices.length > option.freeChoice) {
+          costPerOne +=
+              (choices.length - option.freeChoice) * option.costPerExtra;
+        }
+        choices.forEach((Choice choice) {
+          costPerOne += choice.cost;
+        });
       }
-      choices.forEach((Choice choice) {
-        costPerOne += choice.cost;
-      });
     });
     return costPerOne;
   }

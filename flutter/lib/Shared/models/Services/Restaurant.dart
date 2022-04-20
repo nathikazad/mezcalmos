@@ -186,7 +186,7 @@ class Item {
   num cost = 0;
   List<Option> _options = <Option>[];
 
-  List<Option>? get options {
+  List<Option> get options {
     sortOptions();
     return _options;
   }

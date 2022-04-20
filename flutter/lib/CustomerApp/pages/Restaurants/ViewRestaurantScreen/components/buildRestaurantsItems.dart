@@ -56,13 +56,6 @@ class RestaurantCategoriesList extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    //   margin: const EdgeInsets.all(8),
-                    child: Text("Default Category"),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
                   Column(
                     children: List.generate(
                         restaurant.getItemsWithoutCategory!.length,
