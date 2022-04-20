@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 dynamic _i18n() =>
@@ -39,7 +40,9 @@ Widget orderNoteCard(Rxn<RestaurantOrder> order) {
         child: Container(
           alignment: Alignment.centerLeft,
           child: Text(
-              order.value!.notes == null ? "Nothing" : "${order.value!.notes} ",
+              (order.value!.notes == null || order.value!.notes!.length == 0)
+                  ? "Nothing"
+                  : "${order.value!.notes} ",
               style: const TextStyle(
                   color: Color(0xff000f1c),
                   fontFamily: "psr",

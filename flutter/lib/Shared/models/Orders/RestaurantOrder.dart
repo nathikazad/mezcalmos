@@ -156,11 +156,12 @@ class RestaurantOrder extends DeliverableOrder {
           mainString += "    ${languageMap[languageType]}\n";
           mainString += item.chosenChoices[optionId]!.fold("",
               (String thirdString, Choice choice) {
-            return "$thirdString    ${choice.name[languageType]}\n";
+            return "$thirdString      ${choice.name[languageType]}\n";
           });
         }
       });
-      mainString += "    ${item.notes}\n";
+      if (item.notes != null && item.notes!.length > 0)
+        mainString += "    ${item.notes}\n";
       return mainString;
     });
     text += "$notes\n";
