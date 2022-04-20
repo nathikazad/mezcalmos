@@ -123,10 +123,14 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
     linkUrl: orderUrl(ParticipantType.Customer, OrderType.Restaurant, orderId)
   }
 
-  pushNotification(order.customer.id!, notification);
-  notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Restaurant, orderId)  
-  if (order.dropoffDriver)
-    pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
+  pushNotification(order.customer.id!, notification).then(() => {
+    if (order.dropoffDriver) {
+      notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Restaurant, orderId);
+      pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
+    }
+  });
+
+
 
   return { status: ServerResponseStatus.Success }
 }
