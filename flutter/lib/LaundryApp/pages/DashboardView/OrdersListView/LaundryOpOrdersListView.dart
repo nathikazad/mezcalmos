@@ -53,37 +53,45 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Scrollbar(
-      child: ListView(
-        padding: const EdgeInsets.all(10),
-        children: <Widget>[
-          Text(
-            "Current  Orders",
-            style: textTheme.bodyText1,
-          ),
-          const SizedBox(height: 5),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: 2,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (_, int index) {
-              return LaundryOpOrderCard();
-            },
-          ),
-          Divider(),
-          Text(
-            "Past  Orders",
-            style: textTheme.bodyText1,
-          ),
-          const SizedBox(height: 5),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: 5,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (_, int index) {
-              return LaundryOpOrderCard();
-            },
-          ),
-        ],
+      child: SingleChildScrollView(
+        padding: EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // padding: const EdgeInsets.all(10),
+          children: <Widget>[
+            Text(
+              "Current  Orders",
+              style: textTheme.bodyText1,
+            ),
+            const SizedBox(height: 5),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: inProcessOrders.length,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (_, int index) {
+                return LaundryOpOrderCard(
+                  laundryOrder: inProcessOrders[index],
+                );
+              },
+            ),
+            Divider(),
+            Text(
+              "Past  Orders",
+              style: textTheme.bodyText1,
+            ),
+            const SizedBox(height: 5),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: pastOrders.length,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (_, int index) {
+                return LaundryOpOrderCard(
+                  laundryOrder: pastOrders[index],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,16 +1,18 @@
-/*
-* Created By Mirai Devs.
-* On 4/11/2022.
-*/
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:rive/rive.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LaundryOpOrderCard extends StatelessWidget {
   const LaundryOpOrderCard({
     Key? key,
+    required this.laundryOrder,
   }) : super(key: key);
+
+  final LaundryOrder laundryOrder;
 
   @override
   Widget build(BuildContext context) {
@@ -40,23 +42,17 @@ class LaundryOpOrderCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Customer name",
+                      laundryOrder.customer.name,
                       style: textTheme.bodyText1,
                     ),
                     Text(
-                      "Customer address",
+                      laundryOrder.to.address,
                       style: textTheme.bodyText2,
                     ),
                   ],
                 ),
               ),
-              CircleAvatar(
-                backgroundColor: Color(0xFF65E189),
-                child: Icon(
-                  Icons.check,
-                  color: Colors.white,
-                ),
-              ),
+              getOrderWidget()
             ],
           ),
           const Padding(
@@ -71,13 +67,13 @@ class LaundryOpOrderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  "Total cost : 50.00 \$",
+                  "Total cost : \$ ${laundryOrder.cost}",
                   style: textTheme.bodyText2,
                 ),
                 const SizedBox(width: 24),
                 Flexible(
                   child: Text(
-                    "Date :  12/04/2021 at 08:20 AM",
+                    "Date :  ${DateFormat("dd/MMM/yyyy h:ma").format(laundryOrder.orderTime)}",
                     style: textTheme.bodyText2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -89,15 +85,20 @@ class LaundryOpOrderCard extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _orderImageComponent() {
-  const double imageSize = 46;
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(5),
-    child: CachedNetworkImage(
-      imageUrl: '',
+  Widget _orderImageComponent() {
+    return CachedNetworkImage(
+      imageUrl: laundryOrder.customer.image,
       fit: BoxFit.fill,
+      imageBuilder: (BuildContext context, ImageProvider<Object> image) {
+        return Container(
+          height: 50,
+          width: 50,
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(image: image, fit: BoxFit.cover)),
+        );
+      },
       placeholder: (_, __) {
         return Shimmer.fromColors(
           child: Container(
@@ -111,8 +112,8 @@ Widget _orderImageComponent() {
       },
       errorWidget: (_, __, ___) {
         return Container(
-          height: imageSize,
-          width: imageSize,
+          height: 50,
+          width: 50,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: keyAppColor,
@@ -128,6 +129,95 @@ Widget _orderImageComponent() {
           ),
         );
       },
-    ),
-  );
+    );
+  }
+
+  Widget getOrderWidget() {
+    switch (laundryOrder.status) {
+      case LaundryOrderStatus.CancelledByAdmin:
+        return Padding(
+          padding: const EdgeInsets.only(right: 5.0),
+          child: Icon(
+            Icons.cancel,
+            size: 50,
+            color: Colors.red,
+          ),
+        );
+
+      case LaundryOrderStatus.CancelledByCustomer:
+        return Padding(
+          padding: const EdgeInsets.only(right: 5.0),
+          child: Icon(
+            Icons.cancel,
+            size: 50,
+            color: Colors.red,
+          ),
+        );
+
+      case LaundryOrderStatus.OrderReceieved:
+        return Padding(
+          padding: const EdgeInsets.only(right: 5.0),
+          child: Icon(
+            Icons.hourglass_bottom_rounded,
+            size: 50,
+            color: Colors.grey,
+          ),
+        );
+      case LaundryOrderStatus.OtwPickup:
+        return Container(
+          height: 50,
+          width: 60,
+          child: RiveAnimation.asset(
+            "assets/animation/motorbikeWithSmokeAnimation.riv",
+            fit: BoxFit.cover,
+          ),
+        );
+      case LaundryOrderStatus.PickedUp:
+        return Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: Icon(
+            Icons.check_circle,
+            size: 50,
+            color: Colors.grey,
+          ),
+        );
+      case LaundryOrderStatus.AtLaundry:
+        return Padding(
+          padding: const EdgeInsets.only(right: 5.0),
+          child: Icon(
+            Icons.local_laundry_service_rounded,
+            size: 50,
+            color: Color(0xFFAC59FC),
+          ),
+        );
+
+      case LaundryOrderStatus.ReadyForDelivery:
+        return Padding(
+          padding: const EdgeInsets.only(right: 5.0),
+          child: Icon(
+            Icons.dry_cleaning_rounded,
+            size: 50,
+            color: Color(0xFFAC59FC),
+          ),
+        );
+      case LaundryOrderStatus.OtwDelivery:
+        return Container(
+          height: 50,
+          width: 60,
+          child: RiveAnimation.asset(
+            "assets/animation/motorbikeWithSmokeAnimation.riv",
+            fit: BoxFit.cover,
+          ),
+        );
+      case LaundryOrderStatus.Delivered:
+        return Padding(
+          padding: const EdgeInsets.only(right: 5.0),
+          child: Icon(
+            Icons.check_circle,
+            size: 50,
+            color: Colors.green,
+          ),
+        );
+    }
+  }
 }

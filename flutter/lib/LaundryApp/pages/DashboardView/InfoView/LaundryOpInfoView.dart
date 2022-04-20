@@ -37,114 +37,129 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: CachedNetworkImageProvider(
-                      laundry.value?.info.image ?? ''),
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  laundry.value?.info.name ?? 'Laundry name',
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                alignment: Alignment.center,
-                child: TextButton.icon(
-                    onPressed: () {
-                      Get.toNamed(kEditInfoView);
-                    },
-                    icon: Icon(Icons.edit),
-                    label: Text("Edit my informations")),
-              ),
+              _laundryInfoComponent(context),
               Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Categories',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Card(
-                    color: Colors.white,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      onTap: () {
-                        Get.toNamed(kCategoryScreen);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.add,
-                                color: Theme.of(context).primaryColorLight,
-                              ),
-                              Text(
-                                'Add Category',
-                              ),
-                            ]),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              if (laundry.value!.laundryCosts.lineItems.isNotEmpty)
-                Column(
-                    children: List.generate(
-                        laundry.value!.laundryCosts.lineItems.length,
-                        (int index) {
-                  return CategoryCard(
-                      laundryCostLineItem:
-                          laundry.value!.laundryCosts.lineItems[index]);
-                })),
+              _laundryCategoriesComponent(context),
               Divider(),
-              Text(
-                'Location',
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-              Card(
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.place_rounded,
-                        color: Theme.of(context).primaryColorLight,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Flexible(
-                          child: Text(
-                        laundry.value?.info.location?.address ??
-                            'Laundry adress',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ))
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
+              _laundryLocationComponent(context),
+              Divider(),
               Obx(() => MezWorkingHours(schedule: laundry.value!.schedule!))
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _laundryLocationComponent(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Location',
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+        Card(
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            width: double.infinity,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.place_rounded,
+                  color: Theme.of(context).primaryColorLight,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Flexible(
+                    child: Text(
+                  laundry.value?.info.location?.address ?? 'Laundry adress',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ))
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _laundryCategoriesComponent(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Categories',
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+          Card(
+            color: Colors.white,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onTap: () {
+                Get.toNamed(kCategoryScreen);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Icon(
+                    Icons.add,
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                  Text(
+                    'Add Category',
+                  ),
+                ]),
+              ),
+            ),
+          )
+        ],
+      ),
+      if (laundry.value!.laundryCosts.lineItems.isNotEmpty)
+        Column(
+            children: List.generate(
+                laundry.value!.laundryCosts.lineItems.length, (int index) {
+          return CategoryCard(
+              laundryCostLineItem:
+                  laundry.value!.laundryCosts.lineItems[index]);
+        })),
+    ]);
+  }
+
+  Widget _laundryInfoComponent(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CircleAvatar(
+          radius: 50,
+          backgroundImage:
+              CachedNetworkImageProvider(laundry.value?.info.image ?? ''),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          child: Text(
+            laundry.value?.info.name ?? 'Laundry name',
+            style: Theme.of(context).textTheme.headline3,
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          child: TextButton.icon(
+              onPressed: () {
+                Get.toNamed(kEditInfoView);
+              },
+              icon: Icon(Icons.edit),
+              label: Text("Edit my informations")),
+        ),
+      ],
     );
   }
 }

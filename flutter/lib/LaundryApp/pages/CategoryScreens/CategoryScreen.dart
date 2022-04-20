@@ -57,7 +57,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen>
     );
   }
 
-  Container _addCategoryFooterButton() {
+  Widget _addCategoryFooterButton() {
     return Container(
       height: 60,
       child: TextButton(
