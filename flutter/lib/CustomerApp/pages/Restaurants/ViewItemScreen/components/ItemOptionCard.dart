@@ -6,25 +6,31 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
-class NewItemOptionCard extends StatefulWidget {
-  const NewItemOptionCard(
-      {Key? key, required this.option, required this.cartItem})
+class ItemOptionCard extends StatefulWidget {
+  const ItemOptionCard(
+      {Key? key,
+      required this.option,
+      required this.cartItem,
+      this.editMode = false})
       : super(key: key);
   final Option option;
+  final bool editMode;
   final Rxn<CartItem> cartItem;
 
   @override
-  State<NewItemOptionCard> createState() => _NewItemOptionCardState();
+  State<ItemOptionCard> createState() => _ItemOptionCardState();
 }
 
-class _NewItemOptionCardState extends State<NewItemOptionCard> {
+class _ItemOptionCardState extends State<ItemOptionCard> {
   LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
   late String optionId;
   @override
   void initState() {
     optionId = widget.option.name[userLanguage].toString().toLowerCase();
 
-    assignMinimumChoices();
+    if (!widget.editMode) {
+      assignMinimumChoices();
+    }
 
     super.initState();
   }

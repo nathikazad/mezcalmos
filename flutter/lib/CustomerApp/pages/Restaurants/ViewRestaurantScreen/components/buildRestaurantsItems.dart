@@ -18,34 +18,64 @@ class RestaurantCategoriesList extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(5),
       child: Column(
-          children: List.generate(
-              restaurant.getCategories.length,
-              (int index) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        restaurant.getCategories[index].name?[userLanguage] ??
-                            "",
-                        style: Get.theme.textTheme.bodyText1,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      if (restaurant
-                              .getCategories[index].dialog?[userLanguage] !=
-                          null)
-                        Text(restaurant
-                            .getCategories[index].dialog![userLanguage]!),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      _buildResturantItems(
-                          restaurant.getCategories[index].items,
-                          restaurant.info.id),
-                      if (index != restaurant.getCategories.length - 1)
-                        Divider(),
-                    ],
-                  ))),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+              children: List.generate(
+                  restaurant.getCategories.length,
+                  (int index) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            restaurant
+                                    .getCategories[index].name?[userLanguage] ??
+                                "",
+                            style: Get.theme.textTheme.bodyText1,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          if (restaurant
+                                  .getCategories[index].dialog?[userLanguage] !=
+                              null)
+                            Text(restaurant
+                                .getCategories[index].dialog![userLanguage]!),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          _buildResturantItems(
+                              restaurant.getCategories[index].items,
+                              restaurant.info.id),
+                          if (index != restaurant.getCategories.length - 1)
+                            Divider(),
+                        ],
+                      ))),
+          // NOCATEGORY
+          if (restaurant.getItemsWithoutCategory != null)
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    //   margin: const EdgeInsets.all(8),
+                    child: Text("Default Category"),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  if (restaurant.getItemsWithoutCategory!.isNotEmpty)
+                    Column(
+                      children: List.generate(
+                          restaurant.getItemsWithoutCategory!.length,
+                          (int index) => RestaurantsListOfItemsComponent(
+                              item:
+                                  restaurant.getItemsWithoutCategory![index])),
+                    ),
+                ],
+              ),
+            )
+        ],
+      ),
     );
   }
 }
@@ -54,7 +84,7 @@ Widget _buildResturantItems(List<Item> items, String restaurantId) {
   return Column(
     children: items.fold<List<Widget>>(<Widget>[],
         (List<Widget> children, Item item) {
-      children.add(RestaurantsListItemsOfComponent(
+      children.add(RestaurantsListOfItemsComponent(
           item: item,
           function: () {
             Get.toNamed(

@@ -59,8 +59,8 @@ class Restaurant extends Service {
 
   List<Item>? get getItemsWithoutCategory {
     return _categories
-        .firstWhere((Category category) => category.id == "noCategory")
-        .items;
+        .firstWhereOrNull((Category category) => category.id == "noCategory")
+        ?.items;
   }
 
   Item? findItemById(String id) {

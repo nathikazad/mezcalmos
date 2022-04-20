@@ -133,31 +133,15 @@ class CartItem {
       notes: itemData["notes"],
     );
     itemData["chosenChoices"].forEach((optionId, optionData) {
-      mezDbgPrint(
-          "option daaata ---------------------------------------------");
-      mezDbgPrint(optionData);
-      mezDbgPrint("option id ---------------------------------------------");
-      mezDbgPrint(optionId);
-      mezDbgPrint(item.options.toString());
-      if (item.options.contains(optionId)) {
+      if (item.findOption(optionId) != null) {
         mezDbgPrint("TRUE ---------------------------------------------");
         cartItem.chosenChoices[optionId] = <Choice>[];
-        optionData["choices"].forEach((dynamic choiceData) {
+        optionData["choices"]?.forEach((dynamic choiceData) {
           final Choice? choice = item
               .findOption(optionId)!
               .findChoice(convertToLanguageMap(choiceData["name"]));
           if (choice != null) cartItem.chosenChoices[optionId]!.add(choice);
         });
-      } else {
-        mezDbgPrint("FAAAAALSE ---------------------------------->");
-        if (optionData["choices"] != null) {
-          optionData["choices"].forEach((dynamic choiceData) {
-            final Choice? choice = item
-                .findOption(optionId)!
-                .findChoice(convertToLanguageMap(choiceData["name"]));
-            if (choice != null) cartItem.chosenChoices[optionId]!.add(choice);
-          });
-        }
       }
     });
 

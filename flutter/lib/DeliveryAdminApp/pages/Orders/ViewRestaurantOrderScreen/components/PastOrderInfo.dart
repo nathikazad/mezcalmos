@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
-["Orders"]["ViewRestaurantOrderScreen"]["components"]["PastOrderInfo"];
+        ["Orders"]["ViewRestaurantOrderScreen"]["components"]["PastOrderInfo"];
 
 // Goes on top of the  order screen to show the order final staus and time only on past order
 class PastOrderInfo extends StatelessWidget {
@@ -22,27 +22,31 @@ class PastOrderInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              (order.status == RestaurantOrderStatus.Delivered)
-                  ? Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                    )
-                  : Icon(
-                      Icons.cancel,
-                      color: Colors.red,
-                    ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                getOrderStatus(order.status),
-                style: Theme.of(context).textTheme.headline3,
-              ),
-            ],
+        Card(
+          child: Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.all(12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                (order.status == RestaurantOrderStatus.Delivered)
+                    ? Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                      )
+                    : Icon(
+                        Icons.cancel,
+                        color: Colors.red,
+                      ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  getOrderStatus(order.status),
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+              ],
+            ),
           ),
         ),
         Container(

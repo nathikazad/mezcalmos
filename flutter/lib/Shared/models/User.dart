@@ -83,7 +83,7 @@ class MainUserInfo {
 }
 
 class ServiceInfo extends UserInfo {
-  Location? location;
+  Location location;
 
   ServiceInfo({
     required this.location,
@@ -95,9 +95,7 @@ class ServiceInfo extends UserInfo {
 
   factory ServiceInfo.fromData(data) {
     return ServiceInfo(
-        location: (data['location'] != null)
-            ? Location.fromFirebaseData(data['location'])
-            : null,
+        location: Location.fromFirebaseData(data['location']),
         id: data['id'],
         image: data['image'],
         name: data['name']);

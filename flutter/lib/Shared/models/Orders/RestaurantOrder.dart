@@ -110,12 +110,11 @@ class RestaurantOrder extends DeliverableOrder {
             "option+Choice ========================>>>>>>>> ${optionData["choices"]}");
         mezDbgPrint(
             "option+name ========================>>>>>>>> ${optionData["optionName"]}");
-        optionData["choices"].forEach((choiceData) {
+        optionData["choices"]?.forEach((choiceData) {
           mezDbgPrint("choice --------------->>>>> $choiceData");
 
           restaurantOrderItem.chosenChoices[optionId]!
               .add(Choice.fromData(choiceData));
-          //TODO FIX CHOICES NOT THERE
         });
       });
       restaurantOrder.items.add(restaurantOrderItem);

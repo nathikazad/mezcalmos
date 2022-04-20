@@ -61,6 +61,7 @@ const String defaultUserImgUrl =
 // ----------------- Assets Strings ----------------- //
 const String aDefaultNotificationsSound = 'assets/sounds/notif-alert.mp3';
 const String aLogoPath = "assets/images/shared/logo.png";
+const String aNoImage = "assets/images/shared/noImage.png";
 const String a404 = "assets/images/shared/404.png";
 const String aUpdate = "assets/images/shared/update.png";
 const String aDefaultDbUserImgAsset =
@@ -90,7 +91,7 @@ enum AppType {
 
 extension ParseOrderTypeToString on AppType {
   String toShortString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 
@@ -106,11 +107,12 @@ extension ParseOrderTypeToString on AppType {
         return ParticipantType.DeliveryAdmin;
       default:
     }
+    return null;
   }
 }
 
 extension StringToParseOrderType on String {
   AppType convertStringToAppType() {
-    return AppType.values.firstWhere((e) => e.toShortString() == this);
+    return AppType.values.firstWhere((AppType e) => e.toShortString() == this);
   }
 }

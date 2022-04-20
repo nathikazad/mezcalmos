@@ -42,12 +42,14 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
           height: 10,
         ),
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10),
+          margin: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
           width: Get.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(4)),
             border: Border.all(color: const Color(0xffececec), width: 0.5),
-            color: const Color(0x9affffff),
+            color: Colors.white,
           ),
           child: Column(
             children: [
@@ -94,8 +96,11 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                 ),
               ),
               if (widget.order.value?.inProcess() ?? false)
-                Row(
-                  children: buildRestOrderButtons(widget.order),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  child: Row(
+                    children: buildRestOrderButtons(widget.order),
+                  ),
                 )
             ],
           ),
@@ -104,9 +109,6 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
           height: 15,
         ),
 
-        Divider(
-          thickness: 1,
-        ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.centerLeft,

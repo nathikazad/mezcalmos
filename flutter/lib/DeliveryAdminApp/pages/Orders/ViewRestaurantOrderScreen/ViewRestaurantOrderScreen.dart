@@ -100,7 +100,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         ),
         appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
             withOrder: true, function: Get.back),
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         body: Obx(() {
           if (order.value == null) {
             return MezLogoAnimation(
@@ -108,38 +108,41 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             );
           } else {
             return SingleChildScrollView(
-              child: Column(
-                children: [
-                  //====================Restaurant Info=======================
-                  (!controller.isPast(order.value!))
-                      ? CurrentOrderInfo(
-                          order: order.value!,
-                        )
-                      : PastOrderInfo(order: order.value!),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    //====================Restaurant Info=======================
+                    (!controller.isPast(order.value!))
+                        ? CurrentOrderInfo(
+                            order: order.value!,
+                          )
+                        : PastOrderInfo(order: order.value!),
 
-                  //============================= Customer info====================
-                  if (order.value?.inProcess() ?? false)
-                    DriverCard(
-                      driver: order.value!.dropoffDriver,
-                      order: order.value!,
-                      callBack: (DeliveryDriver? newDriver) async {
-                        await deliveryDriverController.assignDeliveryDriver(
-                            deliveryDriverId: newDriver!.deliveryDriverId,
-                            orderId: order.value!.orderId,
-                            orderType: OrderType.Restaurant,
-                            deliveryDriverType: DeliveryDriverType.DropOff);
-                      },
-                    ),
+                    //============================= Customer info====================
+                    if (order.value?.inProcess() ?? false)
+                      DriverCard(
+                        driver: order.value!.dropoffDriver,
+                        order: order.value!,
+                        callBack: (DeliveryDriver? newDriver) async {
+                          await deliveryDriverController.assignDeliveryDriver(
+                              deliveryDriverId: newDriver!.deliveryDriverId,
+                              orderId: order.value!.orderId,
+                              orderType: OrderType.Restaurant,
+                              deliveryDriverType: DeliveryDriverType.DropOff);
+                        },
+                      ),
 
-                  //getCustomerInfoCart(),
-                  OrderInfoCard(order: order),
-                  //==========================>total cost=====================================
-                  orderTotalCostCard(order),
-                  //=========== location========================
-                  orderShippingLocation(order),
-                  //===============================>notes========================>
-                  orderNoteCard(order)
-                ],
+                    //getCustomerInfoCart(),
+                    OrderInfoCard(order: order),
+                    //==========================>total cost=====================================
+                    orderTotalCostCard(order),
+                    //=========== location========================
+                    orderShippingLocation(order),
+                    //===============================>notes========================>
+                    orderNoteCard(order)
+                  ],
+                ),
               ),
             );
           }

@@ -7,20 +7,20 @@ import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
 
-class RestaurantsListItemsOfComponent extends StatefulWidget {
-  const RestaurantsListItemsOfComponent(
+class RestaurantsListOfItemsComponent extends StatefulWidget {
+  const RestaurantsListOfItemsComponent(
       {Key? key, required this.item, this.function})
       : super(key: key);
   final Item item;
   final GestureTapCallback? function;
 
   @override
-  _RestaurantsListItemsOfComponentState createState() =>
-      _RestaurantsListItemsOfComponentState();
+  _RestaurantsListOfItemsComponentState createState() =>
+      _RestaurantsListOfItemsComponentState();
 }
 
-class _RestaurantsListItemsOfComponentState
-    extends State<RestaurantsListItemsOfComponent> {
+class _RestaurantsListOfItemsComponentState
+    extends State<RestaurantsListOfItemsComponent> {
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
