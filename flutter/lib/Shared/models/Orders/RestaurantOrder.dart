@@ -1,4 +1,3 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -104,15 +103,8 @@ class RestaurantOrder extends DeliverableOrder {
         restaurantOrderItem.chosenChoices[optionId] = <Choice>[];
         restaurantOrderItem.optionNames[optionId] =
             convertToLanguageMap(optionData["optionName"]);
-        mezDbgPrint(optionData);
-        mezDbgPrint(optionId);
-        mezDbgPrint(
-            "option+Choice ========================>>>>>>>> ${optionData["choices"]}");
-        mezDbgPrint(
-            "option+name ========================>>>>>>>> ${optionData["optionName"]}");
-        optionData["choices"]?.forEach((choiceData) {
-          mezDbgPrint("choice --------------->>>>> $choiceData");
 
+        optionData["choices"]?.forEach((choiceData) {
           restaurantOrderItem.chosenChoices[optionId]!
               .add(Choice.fromData(choiceData));
         });
@@ -170,7 +162,7 @@ class RestaurantOrder extends DeliverableOrder {
     text += "${to.address}\n";
     text +=
         "https://www.google.com/maps/dir/?api=1&destination=${to.latitude},${to.longitude}";
-    mezDbgPrint(text);
+
     return text;
   }
 }

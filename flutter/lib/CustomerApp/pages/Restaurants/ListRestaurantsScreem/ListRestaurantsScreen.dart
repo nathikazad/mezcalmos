@@ -59,7 +59,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
   }
 
   Widget buildRestaurant(BuildContext context, List<Restaurant>? restos) {
-    mezDbgPrint("build restaurant");
+   
     if (restos == null) return Container();
     return Container(
       child: restos.length > 0

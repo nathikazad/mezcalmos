@@ -35,7 +35,7 @@ class CustomerAuthController extends GetxController {
           "User from CustomerAuthController >> ${_authController.fireAuthUser?.uid}");
       mezDbgPrint(
           "CustomerAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
-      _customer.value = customerRxn.value;
+
       await _customerNodeListener?.cancel();
       _customerNodeListener = _databaseHelper.firebaseDatabase
           .reference()
@@ -48,7 +48,8 @@ class CustomerAuthController extends GetxController {
         if (_checkedAppVersion == false) {
           final String VERSION = GetStorage().read(getxAppVersion);
           print("[+] Customer currently using App v$VERSION");
-          await _databaseHelper.firebaseDatabase
+          // ignore: unawaited_futures
+          _databaseHelper.firebaseDatabase
               .reference()
               .child(customerAppVersionNode(_authController.fireAuthUser!.uid))
               .set(VERSION);
@@ -110,7 +111,8 @@ class CustomerAuthController extends GetxController {
   @override
   void onClose() async {
     print("[+] CustomerAuthController::onClose ---------> Was invoked !");
-    await _customerNodeListener?.cancel();
+    // ignore: unawaited_futures
+    _customerNodeListener?.cancel();
     _customerNodeListener = null;
     super.onClose();
   }

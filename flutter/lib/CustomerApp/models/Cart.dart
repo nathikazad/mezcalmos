@@ -4,7 +4,6 @@
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -20,11 +19,11 @@ class Cart {
   Cart({this.restaurant});
 
   Cart.fromCartData(dynamic cartData, this.restaurant) {
-    mezDbgPrint("@sa@d@: Cart.fromCartData ===> $cartData");
+    
     if (restaurant != null) {
       cartData["items"]?.forEach((itemIdInCart, itemData) {
         final Item? item = restaurant!.findItemById(itemData["id"]);
-        mezDbgPrint("inside fore eaaaadchhchc");
+       
         if (item != null)
           cartItems.add(CartItem.fromData(
               itemData: itemData,
@@ -134,7 +133,7 @@ class CartItem {
     );
     itemData["chosenChoices"]?.forEach((optionId, optionData) {
       if (item.findOption(optionId) != null) {
-        mezDbgPrint("TRUE ---------------------------------------------");
+      
         cartItem.chosenChoices[optionId] = <Choice>[];
         optionData["choices"]?.forEach((dynamic choiceData) {
           final Choice? choice = item
@@ -172,7 +171,7 @@ class CartItem {
       json["chosenChoices"][optionId]["choices"] = data;
     });
 
-    mezDbgPrint("Printint retuuuuuuuuuuuuuuuurn ----------> $json");
+   
     return json;
   }
 
