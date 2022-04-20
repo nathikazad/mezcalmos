@@ -26,7 +26,6 @@ class TaxiOrderController extends GetxController {
   @override
   void onInit() {
     mezDbgPrint("--------------------> TaxisOrderController Initialized !");
-
     _openOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(taxiOpenOrdersNode())

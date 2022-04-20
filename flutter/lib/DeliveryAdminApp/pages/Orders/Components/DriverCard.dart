@@ -96,7 +96,7 @@ class DriverCard extends StatelessWidget {
   }
 
   Future<void> _getNewDriverWhenDriverIsNull() async {
-    final DeliveryDriver? newDriver = await Get.toNamed<DeliveryDriver?>(
+    final DeliveryDriver? newDriver = await Get.toNamed<dynamic>(
       kDriversListRoute,
       arguments: order,
     );
@@ -309,7 +309,7 @@ class DriverCard extends StatelessWidget {
 
 // restaurant order driver message route function
   void restaurantDriverMessageRoute() {
-    Get.toNamed(getMessagesRoute(
+    Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
         chatId: (order as DeliverableOrder).dropOffDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
@@ -317,7 +317,7 @@ class DriverCard extends StatelessWidget {
 
 // laundry order  dropoff driver message route function
   void _laundryDropOffDriverMessageRoute() {
-    Get.toNamed(getMessagesRoute(
+    Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
         chatId: (order as DeliverableOrder).dropOffDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
@@ -325,7 +325,7 @@ class DriverCard extends StatelessWidget {
 
 // laundry order pickup driver message route function
   void _laundryPickupDriverMessageRoute() {
-    Get.toNamed(getMessagesRoute(
+    Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
         chatId: (order as TwoWayDeliverableOrder).pickupDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
