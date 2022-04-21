@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/LaundryApp/pages/CategoryScreens/controllers/addCategoryController.dart';
+import 'package:mezcalmos/LaundryApp/pages/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';

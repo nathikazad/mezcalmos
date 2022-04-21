@@ -64,15 +64,17 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
               style: textTheme.bodyText1,
             ),
             const SizedBox(height: 5),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: inProcessOrders.length,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (_, int index) {
-                return LaundryOpOrderCard(
-                  laundryOrder: inProcessOrders[index],
-                );
-              },
+            Obx(
+              () => ListView.builder(
+                shrinkWrap: true,
+                itemCount: inProcessOrders.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (_, int index) {
+                  return LaundryOpOrderCard(
+                    laundryOrder: inProcessOrders[index],
+                  );
+                },
+              ),
             ),
             Divider(),
             Text(
@@ -80,15 +82,17 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
               style: textTheme.bodyText1,
             ),
             const SizedBox(height: 5),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: pastOrders.length,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (_, int index) {
-                return LaundryOpOrderCard(
-                  laundryOrder: pastOrders[index],
-                );
-              },
+            Obx(
+              () => ListView.builder(
+                shrinkWrap: true,
+                itemCount: pastOrders.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (_, int index) {
+                  return LaundryOpOrderCard(
+                    laundryOrder: pastOrders[index],
+                  );
+                },
+              ),
             ),
           ],
         ),

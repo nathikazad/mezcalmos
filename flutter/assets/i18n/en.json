@@ -1117,5 +1117,28 @@
             "driverNotifBody": "You got a new order"
 
         }
+    },
+    "LaundryApp": {
+
+        "pages": {
+            "OrderView": {
+                "Components": {
+                    "LaundryOpOrderStatusCard": {
+                        "status": {
+                            "canceled": "Order Cancelled",
+                            "orderReceived": "Order Received",
+                            "otwPickUp": "Pick-up on the way",
+                            "pickedUp": "Order Picked-up",
+                            "atLaundry": "At laundry",
+                            "readyForDelivery": "Ready for Delivery",
+                            "otwDelivery": "Delivery on the way",
+                            "delivered": "Order Delivered"
+                        }
+
+                    }
+                }
+            }
+        }
+
     }
 }

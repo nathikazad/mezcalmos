@@ -35,7 +35,7 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            //  crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _laundryInfoComponent(context),
               Divider(),
@@ -132,7 +132,7 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
 
   Widget _laundryInfoComponent(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         CircleAvatar(
           radius: 50,
@@ -157,7 +157,9 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
                 Get.toNamed(kEditInfoView);
               },
               icon: Icon(Icons.edit),
-              label: Text("Edit my informations")),
+              label: Container(
+                  padding: const EdgeInsets.all(5),
+                  child: Text("Edit my informations"))),
         ),
       ],
     );

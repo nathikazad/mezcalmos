@@ -3,7 +3,7 @@
 * On 4/11/2022.
 */
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/LaundryApp/pages/CategoryScreens/controllers/addCategoryController.dart';
+import 'package:mezcalmos/LaundryApp/pages/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 
 class AddCategorySlide extends StatelessWidget {

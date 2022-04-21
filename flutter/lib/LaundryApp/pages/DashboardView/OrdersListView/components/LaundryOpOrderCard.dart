@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
@@ -17,71 +19,67 @@ class LaundryOpOrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsetsDirectional.only(
-        start: 10,
-        top: 8,
-        bottom: 8,
-        end: 20,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
+    return Card(
+      child: InkWell(
         borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Row(
+        onTap: () {
+          Get.toNamed(getLaundryOpOrderRoute(laundryOrder.orderId));
+        },
+        child: Container(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              _orderImageComponent(),
-              const SizedBox(width: 24),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
+                children: <Widget>[
+                  _orderImageComponent(),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          laundryOrder.customer.name,
+                          style: textTheme.bodyText1,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          laundryOrder.to.address,
+                          style: textTheme.bodyText2,
+                        ),
+                      ],
+                    ),
+                  ),
+                  getOrderWidget()
+                ],
+              ),
+              const Divider(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      laundryOrder.customer.name,
-                      style: textTheme.bodyText1,
-                    ),
-                    Text(
-                      laundryOrder.to.address,
+                      "Total cost : \$ ${laundryOrder.cost}",
                       style: textTheme.bodyText2,
+                    ),
+                    const SizedBox(width: 24),
+                    Flexible(
+                      child: Text(
+                        "Date :  ${DateFormat("dd/MMM/yyyy h:ma").format(laundryOrder.orderTime)}",
+                        style: textTheme.bodyText2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              getOrderWidget()
+              )
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40.0),
-            child: Divider(
-              color: Color(0xFFEDEDED),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Total cost : \$ ${laundryOrder.cost}",
-                  style: textTheme.bodyText2,
-                ),
-                const SizedBox(width: 24),
-                Flexible(
-                  child: Text(
-                    "Date :  ${DateFormat("dd/MMM/yyyy h:ma").format(laundryOrder.orderTime)}",
-                    style: textTheme.bodyText2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
@@ -92,8 +90,8 @@ class LaundryOpOrderCard extends StatelessWidget {
       fit: BoxFit.fill,
       imageBuilder: (BuildContext context, ImageProvider<Object> image) {
         return Container(
-          height: 50,
-          width: 50,
+          height: 60,
+          width: 60,
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(image: image, fit: BoxFit.cover)),

@@ -132,6 +132,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.OtwDelivery;
   }
 
+  bool isAtLaundry() {
+    return status == LaundryOrderStatus.AtLaundry;
+  }
+
   num? getPrice() {
     if (weight != null) {
       return weight! * 20;
