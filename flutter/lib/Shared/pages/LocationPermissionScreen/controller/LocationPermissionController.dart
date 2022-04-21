@@ -10,7 +10,7 @@ import 'package:permission_handler/permission_handler.dart'
     show openAppSettings;
 
 typedef void OnLocationPermissionChange(LocationPermissionsStatus? status);
-typedef String LangValueRefGetter();
+typedef String? LangValueRefGetter();
 
 class LocationPermissionController {
   final LocationController locationController = Get.find<LocationController>();

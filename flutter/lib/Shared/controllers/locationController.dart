@@ -51,14 +51,13 @@ class LocationController extends GetxController {
     }
   }
 
-  Future<bool> _checkBg() async {
+  Future<bool> _checkIfBackgroundEnabled() async {
     bool _v = false;
 
     try {
       _v = await Location().enableBackgroundMode();
-      mezDbgPrint("bachGroud Enableeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed _checkBg $_v");
     } catch (e) {
-      mezDbgPrint("ERRRRRRRRRRRRRROOOOOOOOOR _checkBg");
+      // do nothing
     }
     return _v;
   }
@@ -81,7 +80,7 @@ class LocationController extends GetxController {
       // We can not use background location if it's limited
       case PermissionStatus.grantedLimited:
         // mezDbgPrint("@loc@saad : PermissionStatus.grantedLimited");
-        if (await _checkBg()) {
+        if (await _checkIfBackgroundEnabled()) {
           statusSnapshot.value = LocationPermissionsStatus.Ok;
           return Future.value(statusSnapshot.value);
         } else {
@@ -90,7 +89,7 @@ class LocationController extends GetxController {
           return Future.value(statusSnapshot.value);
         }
       case PermissionStatus.granted:
-        if (await _checkBg()) {
+        if (await _checkIfBackgroundEnabled()) {
           //mezDbgPrint("@loc@saad : PermissionStatus.granted");
           statusSnapshot.value = LocationPermissionsStatus.Ok;
           return Future.value(statusSnapshot.value);
@@ -102,11 +101,10 @@ class LocationController extends GetxController {
           return Future.value(statusSnapshot.value);
         }
     }
-  
   }
 
   Stream<LocationPermissionsStatus> locationPermissionChecker(
-    {Duration duration = const Duration(seconds: 1)}) async* {
+      {Duration duration = const Duration(seconds: 5)}) async* {
     yield* Stream<Future<LocationPermissionsStatus>>.periodic(
       duration,
       (_) {
