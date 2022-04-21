@@ -45,8 +45,7 @@ class CartItemsBuilder extends StatelessWidget {
               ),
             )),
             children:
-                // choosenOneOption(cartItem.cartChooseOneItems, context) +
-                //     choosenManyOption(cartItem.cartChooseManyItems, context) +
+
                 [
               Container(
                 alignment: Alignment.centerLeft,
@@ -54,13 +53,6 @@ class CartItemsBuilder extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: buildChoices(cartItem.chosenChoices),
-                  // children: List.generate(
-                  //     cartItem.chosenChoices.length,
-                  //     (int index) => CartItemChosenChoice(
-                  //         optionName:
-                  //             cartItem.chosenChoices.keys.toList()[index],
-                  //         choices:
-                  //             cartItem.chosenChoices.values.toList()[index])),
                 ),
               ),
               SizedBox(
