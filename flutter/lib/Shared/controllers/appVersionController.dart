@@ -99,7 +99,8 @@ class AppVersionController {
   }
 
   /// This init the controller flow, by setting a 3h periodic timer that checks for new version availabality.
-  void init({Duration autoUpdatesCheckerDuration = const Duration(hours: 3)}) {
+  void init(
+      {Duration autoUpdatesCheckerDuration = const Duration(minutes: 10)}) {
     // to avoid Multi '_checkForNewUpdates' Execution.
     assert(autoUpdatesCheckerDuration.inMinutes > 20);
     // call Asyncronously first then start timer
@@ -200,7 +201,7 @@ class AppVersionController {
               "startAppUpdate ==> updateType == UpdateType.Minor => $updateType");
 
           try {
-            _appUpdateResult = await MezInAppUpdate.startFlexibleUpdate();
+            _appUpdateResult = await MezInAppUpdate.performImmediateUpdate();
           } catch (e) {
             // keep null
             Get.snackbar(
