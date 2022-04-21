@@ -125,9 +125,11 @@ class _WrapperState extends State<Wrapper> {
             currentInstalledVersion: status.localVersion,
           );
         } else if (Platform.isAndroid) {
-          MezInAppUpdate.startFlexibleUpdate().then((_) {
-            MezInAppUpdate.completeFlexibleUpdate();
-            debugPrint("Success!");
+          MezInAppUpdate.startFlexibleUpdate().then((result) {
+            if (result == MezAppUpdateResult.success) {
+              debugPrint("Success!");
+              MezInAppUpdate.completeFlexibleUpdate();
+            }
           }).catchError((Object? e) {
             debugPrint("Error:completeFlexibleUpdate ${e.toString()}");
           });
