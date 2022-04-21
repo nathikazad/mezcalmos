@@ -22,20 +22,17 @@ class RestaurantsInfoController extends GetxController {
         .reference()
         .child(serviceProviderInfos(orderType: OrderType.Restaurant))
         .once();
-
     final List<Restaurant> restaurants = <Restaurant>[];
     if (snapshot.value == null) return restaurants;
     // ignore: avoid_annotating_with_dynamic
     snapshot.value.forEach((dynamic restaurantId, dynamic restaurantData) {
-      try {
-        if (restaurantData["state"]["available"] == true) {
+      if (restaurantData["state"]["available"] == true) {
+        try {
           restaurants.add(Restaurant.fromRestaurantData(
               restaurantId: restaurantId, restaurantData: restaurantData));
+        } catch (e) {
+          mezDbgPrint("Restaurant add error");
         }
-      } catch (e) {
-        mezDbgPrint("Restaurant add Exception id:$restaurantId");
-        mezDbgPrint(e);
-        mezDbgPrint(StackTrace.current);
       }
     });
     restaurants.sort((Restaurant a, Restaurant b) {

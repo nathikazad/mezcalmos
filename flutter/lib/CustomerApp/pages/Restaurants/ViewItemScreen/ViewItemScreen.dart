@@ -119,13 +119,14 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  if (cartItem.value?.item.image != null)
                   Container(
                     padding: const EdgeInsets.only(
                       top: 5,
                     ),
                     alignment: Alignment.center,
                     child: CachedNetworkImage(
-                      imageUrl: cartItem.value?.item.image ?? "",
+                        imageUrl: cartItem.value!.item.image!,
                       imageBuilder: (BuildContext context,
                           ImageProvider<Object> imageProvider) {
                         return Container(
@@ -166,10 +167,11 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   SizedBox(
                     height: 20,
                   ),
+                  if (cartItem.value?.item.description != null)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Text(
-                        "${cartItem.value!.item.description?[userLanguage]!.inCaps}",
+                          "${cartItem.value!.item.description![userLanguage]!.inCaps}",
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
