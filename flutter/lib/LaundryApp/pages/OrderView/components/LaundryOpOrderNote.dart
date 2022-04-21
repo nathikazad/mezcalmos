@@ -8,11 +8,11 @@ class LaundryOpOrderNote extends StatelessWidget {
     Key? key,
     required this.order,
   }) : super(key: key);
-// TODO FIX LANG 
+// TODO FIX LANG
   final LaundryOrder order;
-  dynamic _i18n() =>
-      Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
-          ['LaundryCurrentOrderView']['Components']['LaundryOrderComponent'];
+
+  dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']
+      ['pages']['OrderView']['Components']['LaundryOpOrderNote'];
 
   @override
   Widget build(BuildContext context) {

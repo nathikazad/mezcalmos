@@ -10,9 +10,13 @@ import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderNo
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderStatusCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCategoryComponent.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
+    ['OrderView']['LaundryOpOrderView'];
 
 class LaundryOpOrderView extends StatefulWidget {
   const LaundryOpOrderView({Key? key}) : super(key: key);
@@ -87,7 +91,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Order Date"),
+          Text("${_i18n()["customer"]}"),
           SizedBox(
             height: 5,
           ),
@@ -123,7 +127,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Customer"),
+          Text("${_i18n()["customer"]}"),
           SizedBox(
             height: 5,
           ),

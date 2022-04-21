@@ -15,8 +15,6 @@ class EditInfoWidgets {
 
   // List of weekdays  cards
   Widget editWorkingHoursComponent() {
-    // final DateFormat _dateFormat = new DateFormat('hh:mm');
-
     final List<Widget> widgets = [
       Container(
         alignment: Alignment.centerLeft,
@@ -166,7 +164,7 @@ class EditInfoWidgets {
                           value: editInfoController.schedulePreview.value!
                               .openHours[weekday]!.isOpen,
                           activeColor: keyAppColor,
-                          title: Text("Open"),
+                          title: Text('${_i18n()["workingHoursCard"]["open"]}'),
                           onChanged: (bool? value) {
                             editInfoController.schedulePreview.value!
                                 .openHours[weekday]!.isOpen = true;
@@ -182,7 +180,7 @@ class EditInfoWidgets {
                           .openHours[weekday]!.isOpen = false;
                       editInfoController.schedulePreview.refresh();
                     },
-                    title: Text("Closed"),
+                    title: Text("${_i18n()["workingHoursCard"]["closed"]}"),
                   )),
                 ],
               ),
@@ -193,7 +191,7 @@ class EditInfoWidgets {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("From : "),
+                  Text("${_i18n()["workingHoursCard"]["from"]}"),
                   Card(
                     child: InkWell(
                       borderRadius: BorderRadius.circular(10),
@@ -232,7 +230,7 @@ class EditInfoWidgets {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("To : "),
+                  Text("${_i18n()["workingHoursCard"]["to"]}"),
                   SizedBox(
                     height: 5,
                   ),
@@ -284,15 +282,15 @@ class EditInfoWidgets {
                 child: Container(
                     margin: const EdgeInsets.all(5),
                     alignment: Alignment.center,
-                    child: Text("Save"))),
+                    child: Text("${_i18n()["save"]}"))),
             TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.red,
                 ),
                 onPressed: () {
                   Future.delayed(Duration.zero, Get.back).then((value) {
-                    editInfoController.schedulePreview.value = Schedule.clone(
-                        editInfoController.newSchedule.value!);
+                    editInfoController.schedulePreview.value =
+                        Schedule.clone(editInfoController.newSchedule.value!);
                     editInfoController.schedulePreview.refresh();
                     //   editInfoController.theNewSchedule.refresh();
                   });
@@ -300,7 +298,7 @@ class EditInfoWidgets {
                 child: Container(
                     margin: const EdgeInsets.all(5),
                     alignment: Alignment.center,
-                    child: Text("Cancel")))
+                    child: Text("${_i18n()["cancel"]}")))
             // TimePickerDialog(initialTime: TimeOfDay.now()),
           ],
         ),

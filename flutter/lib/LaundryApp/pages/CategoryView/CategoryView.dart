@@ -1,14 +1,12 @@
-/*
-* Created By Mirai Devs.
-* On 4/11/2022.
-*/
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/LaundryApp/pages/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
+    ['CategoryView'];
 
 class LaundryOpCategoryScreen extends StatefulWidget {
   const LaundryOpCategoryScreen({Key? key}) : super(key: key);
@@ -29,7 +27,6 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen>
   @override
   void initState() {
     categoryName = Get.parameters["id"];
-    mezDbgPrint("-------------->>> $categoryName");
 
     _addCategoryController.init(categoryId: categoryName);
     _addCategoryController.tabController = TabController(
@@ -43,7 +40,6 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen>
   @override
   void dispose() {
     _addCategoryController.tabController?.dispose();
-    _addCategoryController.tabController = null;
 
     super.dispose();
   }
@@ -68,20 +64,20 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen>
           child: Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(8),
-            child: Text((_addCategoryController.copyOfCategory.value != null)
-                ? "Edit Category"
-                : "Add category"),
+            child: Text((_addCategoryController.editMode.value)
+                ? "${_i18n()["editCategory"]}"
+                : "${_i18n()["addCategory"]}"),
           )),
     );
   }
 
   AppBar _addCategoryAppBar() {
     return AppBar(
-      title: Text((_addCategoryController.copyOfCategory.value != null)
+      title: Text((_addCategoryController.editMode.value)
           ? _addCategoryController.copyOfCategory.value!.name[userLanguage]!
-          : "Add category"),
+          : "${_i18n()["addCategory"]}"),
       actions: [
-        if (_addCategoryController.copyOfCategory.value != null)
+        if (_addCategoryController.editMode.value)
           IconButton(
               onPressed: () {
                 _addCategoryController.deleteCategory();

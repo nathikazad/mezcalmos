@@ -9,9 +9,8 @@ class LaundryOpOrderSummaryCard extends StatelessWidget {
       : super(key: key);
 
   // TODO FIX LANG
-  dynamic _i18n() =>
-      Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
-          ['LaundryCurrentOrderView']['Components']['OrderSummaryComponent'];
+  dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']
+      ['pages']['OrderView']['Components']['LaundryOpOrderSummaryCard'];
   @override
   Widget build(BuildContext context) {
     return Card(

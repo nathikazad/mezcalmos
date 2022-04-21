@@ -42,8 +42,7 @@ class LaundryOpEditLocationCard extends StatelessWidget {
                     flex: 5,
                     fit: FlexFit.tight,
                     child: Text(
-                      editInfoController.newLocation.value?.address ??
-                          'Laundry adress',
+                      editInfoController.newLocation.value?.address ?? '',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     )),

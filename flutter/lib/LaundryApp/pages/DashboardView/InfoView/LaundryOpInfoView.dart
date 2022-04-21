@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/DashboardView/InfoView/components/CategoryCard.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/MezWorkingHours.dart';
 
 import '../../../controllers/laundryInfoController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
+    ['DashboardView']['InfoView']['LaundryOpInfoView'];
 
 class LaundryOpInfoView extends StatefulWidget {
   const LaundryOpInfoView({Key? key}) : super(key: key);
@@ -56,7 +60,7 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Location',
+          '${_i18n()["location"]}',
           style: Theme.of(context).textTheme.bodyText1,
         ),
         Card(
@@ -74,7 +78,7 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
                 ),
                 Flexible(
                     child: Text(
-                  laundry.value?.info.location?.address ?? 'Laundry adress',
+                  laundry.value?.info.location?.address ?? '',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ))
@@ -92,7 +96,7 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Categories',
+            '${_i18n()["categories"]}',
             style: Theme.of(context).textTheme.bodyText1,
           ),
           Card(
@@ -111,7 +115,7 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
                     color: Theme.of(context).primaryColorLight,
                   ),
                   Text(
-                    'Add Category',
+                    '${_i18n()["addCategory"]}',
                   ),
                 ]),
               ),
@@ -144,7 +148,7 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
         ),
         Container(
           child: Text(
-            laundry.value?.info.name ?? 'Laundry name',
+            laundry.value?.info.name ?? '',
             style: Theme.of(context).textTheme.headline3,
           ),
         ),
@@ -159,7 +163,7 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
               icon: Icon(Icons.edit),
               label: Container(
                   padding: const EdgeInsets.all(5),
-                  child: Text("Edit my informations"))),
+                  child: Text("${_i18n()["editMyInfo"]}"))),
         ),
       ],
     );

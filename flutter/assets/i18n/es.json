@@ -601,6 +601,8 @@
         },
         "widgets": {
             "MezWorkingHours": {
+                "save": "Guardar",
+                "cancel": "Cancelar",
                 "workingHours": "Horas Laborales",
                 "weekDays": {
                     "monday": "Lunes",
@@ -613,7 +615,9 @@
                 },
                 "workingHoursCard": {
                     "open": "Abierto",
-                    "closed": "Cerrada"
+                    "closed": "Cerrada",
+                    "from": "Desde :",
+                    "to": "Para :"
                 }
             },
 
@@ -1123,6 +1127,61 @@
     "LaundryApp": {
 
         "pages": {
+            "CategoryView": {
+                "components": {
+                    "AddCategorySlide": {
+                        "categoryName": "Nombre de la categoría",
+                        "categoryNameIn": "Nombre de categoría en",
+                        "categoryNameHint": "Ingrese un nombre de categoría",
+                        "categoryPrice": "Categoría Precios por kilogramo",
+                        "categoryPriceHint": "Entrar en la categoría Precios por kilogramo ..."
+
+                    }
+                },
+                "addCategory": "Añadir categoría",
+                "editCategory": "Editar categoria"
+
+            },
+            "DashboardView": {
+                "orders": "Pedidos",
+                "info": "Información",
+                "InfoView": {
+                    "LaundryOpInfoView": {
+                        "components": {},
+                        "location": "Localización",
+                        "categories": "Categorías",
+                        "addCategory": "Añadir categoría",
+                        "editMyInfo": "Editar mis informaciones"
+
+                    }
+                },
+                "OrdersListView": {
+                    "LaundryOpOrdersListView": {
+                        "components": {
+                            "LaundryOpOrderCard": {
+                                "date": "Fecha :",
+                                "totalCost": "Coste total :"
+                            }
+                        },
+                        "currentOrders": "Órdenes actuales",
+                        "pastOrders": "Órdenes pasadas"
+                    }
+                }
+            },
+            "EditInfoView": {
+                "components": {
+                    "LanguageSelectorComponent": {
+                        "none": "None"
+                    }
+                },
+                "EditInfoView": {
+                    "laundryName": "Nombre de lavandería",
+                    "defaultLaunguage": "Idioma predeterminado",
+                    "secondaryLaunguage": "Lenguaje secundario",
+                    "location": "Localización",
+                    "saveInfo": "Guardar información"
+                }
+            },
             "OrderView": {
                 "Components": {
                     "LaundryOpOrderStatusCard": {
@@ -1137,10 +1196,44 @@
                             "delivered": "Orden entregado"
                         }
 
+                    },
+                    "LaundryOpSetCategoryComponent": {
+                        "itemsWeights": "Artículos pesos",
+                        "newItemsWeight": "Nuevos artículos de peso",
+                        "itemsCategory": "Categoría de artículos",
+                        "itemsWeight": "Artículos de peso",
+                        "itemsWeightErrorText": "Por favor ingrese un peso válido",
+                        "saveItemsWeight": "Guardar artículos de peso",
+                        "cancel": "Cancelar",
+                        "setNewItemsWeight": "Set nuevos artículos de peso",
+                        "error": "error",
+                        "categoryError": "Por favor seleccione una categoría primero",
+                        "itemsWeightError": "Por favor ingrese un peso válido de peso"
+
+
+                    },
+                    "LaundryOpOrderNote": {
+                        "notes": "Notas"
+                    },
+                    " LaundryOpOrderSummaryCard": {
+                        "orderSummary": "Resumen de la orden",
+                        "orderCost": "Costo de la orden",
+                        "deliveryCost": "Costo de envío",
+                        "totalCost": "Costo Total",
+                        "deliveryLocation": "Lugar De Entrega",
+                        "laundryPricing": "Precios de lavandería",
+                        "fixedRate": "Costo por kilo",
+                        "orderWeight": "Peso de pedido",
+                        "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido."
                     }
+
+                },
+                "LaundryOpOrderView": {
+                    "customer": "Cliente",
+                    "orderDate": "Fecha de orden"
                 }
             }
         }
-
     }
+
 }

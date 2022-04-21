@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/DashboardView/InfoView/LaundryOpInfoView.dart';
 import 'package:mezcalmos/LaundryApp/pages/DashboardView/OrdersListView/LaundryOpOrdersListView.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
+    ['DashboardView'];
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -12,13 +17,6 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   int currentIndex = 0;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +44,10 @@ class _DashboardViewState extends State<DashboardView> {
           });
         },
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.timelapse), label: 'Orders'),
-          // BottomNavigationBarItem(
-          //     icon: Icon(Icons.local_laundry_service), label: 'Categories'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Info'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.timelapse), label: '${_i18n()["orders"]}'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person), label: '${_i18n()["info"]}'),
         ]);
   }
 

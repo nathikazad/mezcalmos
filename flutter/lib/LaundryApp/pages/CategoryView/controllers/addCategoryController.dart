@@ -7,22 +7,17 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
-/*
-* Created By Mirai Devs.
-* On 4/11/2022.
-*/
-
 // ignore_for_file: constant_identifier_names
 enum SelectedTab { Primary, Secondary }
 
 class AddCategoryController {
-  /// TextEditingController English
+  /// TextEditingController Primary
   final TextEditingController primaryCategoryNameController =
       TextEditingController();
   final TextEditingController categoryPricingController =
       TextEditingController();
 
-  /// TextEditingController Spanish
+  /// TextEditingController Secondary
   final TextEditingController secondaryCategoryNameController =
       TextEditingController();
   TabController? tabController;
@@ -41,6 +36,8 @@ class AddCategoryController {
   Rx<List<LanguageType>> languages = Rx([]);
   RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
   RxBool editMode = RxBool(false);
+
+  // INIT STATE ///
   void init({String? categoryId}) {
     laundry.value = laundryInfoController.laundry.value;
     if (laundry.value != null) {
@@ -76,7 +73,6 @@ class AddCategoryController {
     copyOfCategory.value = categories.value.firstWhereOrNull(
         (LaundryCostLineItem element) =>
             element.name[userLanguage] == categoryId);
-    mezDbgPrint(copyOfCategory.value!.name.toFirebaseFormat());
 
     if (copyOfCategory.value!.name[primaryLang.value] != null) {
       primaryCategoryNameController.text =
@@ -158,18 +154,6 @@ class AddCategoryController {
       addCategory();
     }
   }
-
-  // @m66are Work //
-  /// Tabs
-
-  /// Pages
-
-  /// TabController
-  ///
-  ///
-  ///
-  ///
-  ///
 
   Widget getSingleLanguageView() {
     return AddCategorySlide(

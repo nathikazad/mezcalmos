@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/DashboardView/OrdersListView/components/LaundryOpOrderCard.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
+    ['DashboardView']['OrdersListView']['LaundryOpOrdersListView'];
 
 class LaundryOpOrdersListView extends StatefulWidget {
   const LaundryOpOrdersListView({Key? key}) : super(key: key);
@@ -32,7 +36,6 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
     });
     _pastOrdersListener =
         orderController.pastOrders.stream.listen((List<LaundryOrder> event) {
-      mezDbgPrint("LENGHTS --------------------->>>>");
       mezDbgPrint(event.length);
       pastOrders.value = event;
       mezDbgPrint(pastOrders.value.length);
@@ -45,7 +48,7 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
   void dispose() {
     _pastOrdersListener?.cancel();
     _inProcessOrdersListener?.cancel();
-    // TODO: implement dispose
+
     super.dispose();
   }
 
@@ -60,7 +63,7 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
           // padding: const EdgeInsets.all(10),
           children: <Widget>[
             Text(
-              "Current  Orders",
+              "${_i18n()["currentOrders"]}",
               style: textTheme.bodyText1,
             ),
             const SizedBox(height: 5),
@@ -78,7 +81,7 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
             ),
             Divider(),
             Text(
-              "Past  Orders",
+              "${_i18n()["pastOrders"]}",
               style: textTheme.bodyText1,
             ),
             const SizedBox(height: 5),

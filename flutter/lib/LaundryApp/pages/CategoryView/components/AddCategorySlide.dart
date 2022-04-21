@@ -1,10 +1,11 @@
-/*
-* Created By Mirai Devs.
-* On 4/11/2022.
-*/
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/CategoryView/controllers/addCategoryController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
+    ['CategoryView']["components"]["AddCategorySlide"];
 
 class AddCategorySlide extends StatelessWidget {
   const AddCategorySlide({
@@ -26,9 +27,10 @@ class AddCategorySlide extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              selectedTab != SelectedTab.Secondary
-                  ? "Category name"
-                  : "Category name in ${addCategoryController.secondaryLang.value!.toLanguageName() ?? ""} ",
+              (selectedTab != SelectedTab.Secondary &&
+                      addCategoryController.secondaryLang.value == null)
+                  ? "${_i18n()["categoryName"]}"
+                  : "${_i18n()["categoryNameIn"]} ${addCategoryController.secondaryLang.value!.toLanguageName() ?? ""} ",
               style: textTheme.headline4,
             ),
             if (selectedTab != SelectedTab.Primary)
@@ -48,11 +50,11 @@ class AddCategorySlide extends StatelessWidget {
                 ],
               ),
             const SizedBox(height: 8),
-            _CustomTextField(
+            _customTextInput(
               controller: selectedTab == SelectedTab.Primary
                   ? addCategoryController.primaryCategoryNameController
                   : addCategoryController.secondaryCategoryNameController,
-              hint: 'Enter a category name...',
+              hint: '${_i18n()["categoryNameHint"]}',
               showNext: selectedTab == SelectedTab.Secondary,
             ),
             const SizedBox(height: 16),
@@ -61,13 +63,13 @@ class AddCategorySlide extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Category pricing per kilogramme",
+                    "${_i18n()["categoryPrice"]}",
                     style: textTheme.headline4,
                   ),
                   const SizedBox(height: 8),
-                  _CustomTextField(
+                  _customTextInput(
                     controller: addCategoryController.categoryPricingController,
-                    hint: 'Enter category pricing per kilogramme...',
+                    hint: '${_i18n()["categoryPriceHint"]}',
                   ),
                 ],
               ),
@@ -76,22 +78,12 @@ class AddCategorySlide extends StatelessWidget {
       ),
     );
   }
-}
 
-class _CustomTextField extends StatelessWidget {
-  const _CustomTextField({
-    Key? key,
-    required this.controller,
-    required this.hint,
-    this.showNext = false,
-  }) : super(key: key);
-
-  final TextEditingController controller;
-  final String hint;
-  final bool showNext;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _customTextInput({
+    required TextEditingController controller,
+    required String hint,
+    bool showNext = false,
+  }) {
     return SizedBox(
       height: 54,
       child: TextField(

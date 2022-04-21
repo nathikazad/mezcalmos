@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
+    ['EditInfoView']['components']['LanguageSelectorComponent'];
 
 typedef bool OnChangeShouldUpdateLang(
   LanguageType languageType,
@@ -14,15 +17,11 @@ class LanguageSelectorComponent extends StatefulWidget {
     required this.languageValue,
     required this.onChangeShouldUpdateLang,
     this.showDeleteIcon = false,
-    // required this.languagePriority,
-    // required this.laundry,
   }) : super(key: key);
-  // final LanguagePriority languagePriority;
-  // final Laundry laundry;
+
   final Rxn<LanguageType> languageValue;
   final OnChangeShouldUpdateLang onChangeShouldUpdateLang;
   final bool showDeleteIcon;
-  //final Rxn<String> oppositeLangValue;
 
   @override
   State<LanguageSelectorComponent> createState() =>
@@ -30,19 +29,13 @@ class LanguageSelectorComponent extends StatefulWidget {
 }
 
 class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
-  // String? _currentSelectedValue;
-
   @override
   void initState() {
-    mezDbgPrint("innnnit state");
-    //  editInfoController.init();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("Rebuiils");
-
     return Container(
       child: FormField<LanguageType>(
         builder: (FormFieldState<LanguageType> state) {
@@ -54,7 +47,7 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
                   filled: true,
                   fillColor: Colors.white,
                   isDense: true,
-                  label: Text("None"),
+                  label: Text("${_i18n()["none"]}"),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   suffixIcon: (widget.showDeleteIcon &&
                           widget.languageValue.value != null)
@@ -84,14 +77,6 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
                         widget.languageValue.refresh();
                       }
                     }
-                    // if (newValue != newPrimaryLanguage) {
-                    //   setState(() {
-                    //     newSecondaryLanguage = newValue;
-                    //   });
-                    // } else {
-                    //   Get.snackbar("Error",
-                    //       "Primary and secondary launguage can't be the same language");
-                    // }
                   },
                   items: [
                     LanguageType.EN,
@@ -107,7 +92,8 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
                         SizedBox(
                           width: 10,
                         ),
-                        Text(getRightName(value))
+                        if (value.toLanguageName() != null)
+                          Text(value.toLanguageName()!)
                       ]),
                     );
                   }).toList(),
@@ -119,51 +105,6 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
       ),
     );
   }
-
-  // void setSecondaryLang(String? value) {
-  //   if (newPrimaryLanguage != null) {
-  //     if (value != newPrimaryLanguage) {
-  //       setState(() {
-  //         newSecondaryLanguage = value;
-  //       });
-  //     } else {
-  //       Get.snackbar("Error", "Same languge");
-  //     }
-  //   } else {
-  //     Get.snackbar("Error", "Put primary first");
-  //   }
-  //   mezDbgPrint("Primarry -------------> $newPrimaryLanguage");
-  //   mezDbgPrint("Secodary -------------> $newPrimaryLanguage");
-  // }
-
-  // void setPrimaryLanguage(String? value) {
-  //   if (newSecondaryLanguage != null) {
-  //     if (value != newSecondaryLanguage) {
-  //       setState(() {
-  //         newPrimaryLanguage = value;
-  //       });
-  //     } else {
-  //       Get.snackbar("Error", "Same language");
-  //     }
-  //   } else {
-  //     setState(() {
-  //       newPrimaryLanguage = value;
-  //     });
-  //   }
-  //   mezDbgPrint("Primarry -------------> $newPrimaryLanguage");
-  //   mezDbgPrint("Secodary -------------> $newPrimaryLanguage");
-  // }
-
-//   String? getLanguageName() {
-//     if (widget.languagePriority == LanguagePriority.PrimaryLanguage) {
-//       //  return toLanguageName(laundry.primaryLanguage);
-//       return editInfoController.primaryLang.value;
-//     } else {
-//       //  return toLanguageName(laundry.secondaryLanguage);
-//       return editInfoController.secondaryLang.value;
-//     }
-//   }
-// }
 }
 
 String getRightFlag(LanguageType value) {
@@ -176,47 +117,5 @@ String getRightFlag(LanguageType value) {
 
     default:
       return "";
-  }
-}
-
-String getRightName(LanguageType value) {
-  switch (value) {
-    case LanguageType.EN:
-      return "English";
-
-    case LanguageType.ES:
-      return "Spanish";
-
-    default:
-      return "";
-  }
-}
-
-// String getRightLabel(LanguagePriority languagePriority) {
-//   switch (languagePriority) {
-//     case LanguagePriority.PrimaryLanguage:
-//       return "Select Primary language";
-
-//     case LanguagePriority.SecondaryLanguage:
-//       return "None";
-
-//     default:
-//       return "None";
-//   }
-// }
-
-String? toLanguageName(LanguageType? languageType) {
-  if (languageType != null) {
-    switch (languageType) {
-      case LanguageType.EN:
-        return "English";
-      case LanguageType.ES:
-        return "Spanish";
-
-      default:
-        return null;
-    }
-  } else {
-    return null;
   }
 }

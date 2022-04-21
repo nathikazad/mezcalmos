@@ -4,9 +4,14 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:rive/rive.dart';
 import 'package:shimmer/shimmer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
+        ['DashboardView']['OrdersListView']['LaundryOpOrdersListView']
+    ['components']['LaundryOpOrderCard'];
 
 class LaundryOpOrderCard extends StatelessWidget {
   const LaundryOpOrderCard({
@@ -63,13 +68,13 @@ class LaundryOpOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Total cost : \$ ${laundryOrder.cost}",
+                      "${_i18n()["totalCost"]} \$ ${laundryOrder.cost}",
                       style: textTheme.bodyText2,
                     ),
                     const SizedBox(width: 24),
                     Flexible(
                       child: Text(
-                        "Date :  ${DateFormat("dd/MMM/yyyy h:ma").format(laundryOrder.orderTime)}",
+                        "${_i18n()["date"]}  ${DateFormat("dd/MMM/yyyy h:ma").format(laundryOrder.orderTime)}",
                         style: textTheme.bodyText2,
                         overflow: TextOverflow.ellipsis,
                       ),
