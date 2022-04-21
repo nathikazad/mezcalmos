@@ -593,8 +593,39 @@
                 "locationPermissionDenied": "Oops, Sadly without location permissions you can not use our application!",
                 "locationPermissionDeniedForever": "Location permissions are denied forever! Please change that.",
                 "locationIsOff": "Location Service Turned Off",
-                "isAndroid_11": "We've detected that your android version is 11 or newer, thus we have to ask you to give us your location permissions."
-
+                "locationPermissionStatus": {
+                    "denied": "Access to your location is denied :(",
+                    "backgroundAccessDenied": "Access to background location is denied :(",
+                    "foreverDenied":
+                        "Click the button then go to permissions->location and check `Always`",
+                    "serviceOff": "Phone's Location service is disabled / off :("
+                  },
+                  "locationPermissionText": {
+                    "ios": {
+                      "foreground":
+                          "We need to access your location while using the app. Please Click `Keep Only While Using` .",
+                      "background":
+                          "We need to access your location even when the app is in background. Please change the location permissions on App's Settings to `Always Allow` ."
+                    },
+                    "android": {
+                      "foreground": {
+                        "android9":
+                            "We need to access your location while using the app. Please Click `Allow` .",
+                        "android10":
+                            "We need to access your location while using the app. Please Click `KEEP AND DON'T ASK AGAIN` .",
+                        "android11":
+                            "We need to access your location while using the app. Please Click `WHILE USING THE APP` ."
+                      },
+                      "background": {
+                        "android9":
+                            "We need to access your location even when the app is in background. Please Click  `Allow` .",
+                        "android10":
+                            "We need to access your location even when the app is in background. Please Click `ALLOW ALL THE TIME` .",
+                        "android11":
+                            "We need to access your location even when the app is in background. Please change the location permissions on App's Settings to `ALL THE TIME` ."
+                        }
+                    }
+                }
             }
         },
         "widgets": {

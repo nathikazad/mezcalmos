@@ -25,7 +25,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
 class RequestTaxiController {
   /// LocationPickerController
   final LocationPickerController locationPickerController =
-      LocationPickerController();
+      LocationPickerController(myLocationButtonEnabled: false)
+        ..enableMezSmartPointer = false;
 
   /// LocationSearchBarController
   final LocationSearchBarController locationSearchBarController =
@@ -73,6 +74,8 @@ class RequestTaxiController {
 
     GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
       taxiRequest.value.from = Location("", locData);
+      mezDbgPrint(
+          " GeoLoc.Location().getLocation ==> ${taxiRequest.value.from}");
       updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
       locationPickerController.setLocation(taxiRequest.value.from!);
       // startPollingOnlineDrivers();
@@ -186,7 +189,7 @@ class RequestTaxiController {
     currentFocusedTextField.refresh();
     taxiRequest.refresh();
     if (taxiRequest.value.isFromToSet()) {
-      // locationPickerController.periodicRerendering.value = true;
+      locationPickerController.periodicRerendering.value = true;
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
       locationPickerController.animateAndUpdateBounds();
       updateRouteInformation()

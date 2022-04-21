@@ -68,14 +68,8 @@ class MezSideMenu extends GetWidget<AuthController> {
                             controller.user?.image == ""
                         ? Icon(
                             Icons.account_circle_outlined,
-                            size: getSizeRelativeToScreen(285, sw, sh).sp,
+                            size: 100.sp,
                           )
-                        // Image.asset(
-                        //     aDefaultAvatar,
-                        //     width: getSizeRelativeToScreen(300, sw, sh).sp,
-                        //     height: getSizeRelativeToScreen(300, sw, sh).sp,
-                        //     fit: BoxFit.contain,
-                        //   )
                         : CachedNetworkImage(
                             imageUrl: controller.user!.image!,
                             fit: BoxFit.cover,
@@ -139,11 +133,6 @@ class MezSideMenu extends GetWidget<AuthController> {
                         )
                       : const SizedBox(),
                 ),
-
-//@jamal TODO: pass in a list of listTiles that gets sent by the app at the time of initialization,
-//this datastructure, should basically just have a name and a link
-//and then populate the middle of these tiles using this list
-
                 controller.fireAuthUser != null
                     ? _buildSideMenuItem()
                     : Container(),

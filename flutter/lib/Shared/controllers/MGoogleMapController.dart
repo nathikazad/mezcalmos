@@ -20,6 +20,7 @@ class MGoogleMapController {
   Rxn<Location> location = Rxn<Location>();
   RxBool animateMarkersPolyLinesBounds = false.obs;
   GoogleMapController? controller;
+  late bool enableMezSmartPointer;
   LatLngBounds? bounds;
   Function? onMapTap;
   // this is used when we don't want to re-render the map periodically.
@@ -27,8 +28,12 @@ class MGoogleMapController {
   RxBool recenterButtonEnabled = false.obs;
   late RxBool myLocationButtonEnabled;
 
-  MGoogleMapController({bool myLocationButtonEnabled = false}) {
+  MGoogleMapController({
+    bool myLocationButtonEnabled = false,
+    bool enableMezSmartPointer = true,
+  }) {
     this.myLocationButtonEnabled = RxBool(myLocationButtonEnabled);
+    this.enableMezSmartPointer = enableMezSmartPointer;
   }
 
   /// Instead of going over the cropping rounded process everytime we update Taxi Markers,

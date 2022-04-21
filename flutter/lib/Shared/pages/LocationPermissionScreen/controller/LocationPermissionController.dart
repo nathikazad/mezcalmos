@@ -10,19 +10,26 @@ import 'package:permission_handler/permission_handler.dart'
     show openAppSettings;
 
 typedef void OnLocationPermissionChange(LocationPermissionsStatus? status);
+typedef String LangValueRefGetter();
 
 class LocationPermissionController {
   final LocationController locationController = Get.find<LocationController>();
   StreamSubscription<LocationPermissionsStatus?>? locationStatusListener;
 
   // Text Shown to the user in the center of the body
-  Rxn<String> _askPermissionsText = Rxn<String>();
-  String? get askPermissionsText => _askPermissionsText.value;
-  set askPermissionsText(String? newVal) => _askPermissionsText.value = newVal;
+  Rxn<LangValueRefGetter> _askPermissionsText = Rxn<LangValueRefGetter>();
+  String? get askPermissionsText => _askPermissionsText.value?.call();
+  void setAskPermissionsTextByRefrence(LangValueRefGetter? textPointer) {
+    _askPermissionsText.value = Rxn<LangValueRefGetter>(textPointer).value;
+  }
+
   // Text Shown to the user when there is an error granting permissions to app
-  Rxn<String> _errorText = Rxn<String>();
-  String? get errorText => _errorText.value;
-  set errorText(String? newVal) => _errorText.value = newVal;
+  Rxn<LangValueRefGetter> _errorText = Rxn<LangValueRefGetter>();
+  String? get errorText => _errorText.value?.call();
+  void setErrorTextByRefrence(LangValueRefGetter? errorPtr) {
+    _errorText.value = Rxn<LangValueRefGetter>(errorPtr).value;
+  }
+
   // AndroidSdkVersion in case OS is android.
   int? adnroidSdkVersion;
   // LocationPermissionsStatus? _statusSnapshot;
@@ -45,7 +52,6 @@ class LocationPermissionController {
     // then start listening on snapshot.
     locationStatusListener = locationController.statusSnapshot.stream
         .listen((LocationPermissionsStatus? statusEvent) async {
-      mezDbgPrint("@saad@ => New LocationPermissionsStatus : $statusEvent");
       if (statusEvent == LocationPermissionsStatus.Ok) {
         dispose();
         Future<void>.delayed(Duration.zero, () => Get.back<void>());
@@ -53,7 +59,7 @@ class LocationPermissionController {
 
       // _statusSnapshot = statusEvent;
       // we check if Initial Text is not set , we set it depending on OS and Type of Permissions asked.
-      if (_askPermissionsText.value == null)
+      if (_askPermissionsText == null)
         await _setInitialPermissionsAskingText(
           initialIosBodyTextSetter,
           initialAndroidBodyTextSetter,

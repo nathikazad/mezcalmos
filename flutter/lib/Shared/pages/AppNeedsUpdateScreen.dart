@@ -166,10 +166,10 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
   Column _androidUpdateInfosAndButton() {
     return Column(
       children: <Widget>[
-        if (_versionStatus != null)
+        if (_versionStatus != null && _versionStatus!.releaseNotes != null)
           Center(
             child: Text(
-              'Update info: ${_versionStatus.toString()}',
+              'Update info: ${_versionStatus!.releaseNotes!}',
             ),
           ),
         const SizedBox(height: 26),
@@ -179,6 +179,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
             _isDownloading.value = true;
             final MezAppUpdateResult? _res =
                 await _controller.startAppUpdate(_updateType);
+            mezDbgPrint("Screen ==> _res = $_res");
             _handleUpdateResults(_res);
             _isDownloading.value = false;
           },

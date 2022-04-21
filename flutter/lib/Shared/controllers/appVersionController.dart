@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/MezUpdateHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:new_version/new_version.dart';
 import 'package:store_redirect/store_redirect.dart';
 
@@ -174,12 +175,17 @@ class AppVersionController {
 
       /// checkForUpdate and get appVersionInfo...
       final MezAppUpdateInfo? _versionInfos = await _getNewVersionInfos();
-
+      mezDbgPrint("startAppUpdate ==> _versionInfos => $_versionInfos");
       if (_versionInfos != null &&
           _versionInfos.updateAvailability ==
               MezUpdateAvailability.updateAvailable) {
+        mezDbgPrint("startAppUpdate ==> 1st if => $_versionInfos");
+
         if (updateType == UpdateType.Major) {
           try {
+            mezDbgPrint(
+                "startAppUpdate ==> updateType == UpdateType.Major => $updateType");
+
             _appUpdateResult = await MezInAppUpdate.performImmediateUpdate();
           } catch (e) {
             // keep null
@@ -190,6 +196,9 @@ class AppVersionController {
             );
           }
         } else if (updateType == UpdateType.Minor) {
+          mezDbgPrint(
+              "startAppUpdate ==> updateType == UpdateType.Minor => $updateType");
+
           try {
             _appUpdateResult = await MezInAppUpdate.startFlexibleUpdate();
           } catch (e) {
@@ -201,9 +210,13 @@ class AppVersionController {
             );
           }
         }
+        mezDbgPrint(
+            "startAppUpdate ==> returnung == _appUpdateResult => $_appUpdateResult");
         return _appUpdateResult;
       }
     } else if (Platform.isIOS) {
+      mezDbgPrint("startAppUpdate ==> isIOS");
+
       await StoreRedirect.redirect(
         iOSAppId: getPackageName(platform: MezPlatform.IOS),
       );

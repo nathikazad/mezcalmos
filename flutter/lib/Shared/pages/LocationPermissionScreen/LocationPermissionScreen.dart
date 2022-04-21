@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/controller/LocationPermissionController.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/widgets/LocationPermissionsWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -26,6 +28,7 @@ class LocationPermissionScreen extends StatefulWidget {
 class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   final LocationPermissionController viewController =
       LocationPermissionController();
+
   late final LocationPermissionWidgets viewWidgets;
   @override
   void initState() {
@@ -41,72 +44,80 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   @override
   void dispose() {
     viewController.dispose();
+
     super.dispose();
   }
 
   void _onLocationPermissionsChange(LocationPermissionsStatus? status) {
     switch (status) {
       case LocationPermissionsStatus.Denied:
-        viewController.errorText = "Access to your location is denied :(";
+        viewController
+            .setErrorText(() => _i18n()["locationPermissionStatus"]["denied"]);
         break;
       case LocationPermissionsStatus.BackgroundAccessDenied:
-        viewController.errorText = "Access to background location is denied :(";
+        viewController.setErrorText(() =>
+            _i18n()["locationPermissionStatus"]["backgroundAccessDenied"]);
         break;
       case LocationPermissionsStatus.ForeeverDenied:
-        viewController.errorText =
-            "Click the button then go to permissions->location and check `Always`";
+        viewController.setErrorText(
+            () => _i18n()["locationPermissionStatus"]["foreverDenied"]);
         break;
       case LocationPermissionsStatus.ServiceOff:
-        viewController.errorText =
-            "Phone's Location service is disabled / off :(";
+        viewController.setErrorText(
+            () => _i18n()["locationPermissionStatus"]["serviceOff"]);
         break;
       case LocationPermissionsStatus.Ok:
-        viewController.errorText = null;
+        viewController.setErrorText(null);
         break;
       default:
-        viewController.errorText = null;
+        viewController.setErrorText(null);
         break;
     }
   }
 
   void _updateIosPermissionAskingText() {
-    mezDbgPrint("_updateIosPermissionAskingText ==> called");
     if (viewController.locationController.locationType ==
         LocationPermissionType.Foreground) {
-      viewController.askPermissionsText =
-          "We need to access your location while using the app. Please Click `Keep Only While Using` .";
-    } else
-      viewController.askPermissionsText =
-          "We need to access your location even when the app is in background. Please change the location permissions on App's Settings to `Always Allow` .";
+      viewController.setAskPermissionsTextRefrence(
+          () => _i18n()['locationPermissionText']['ios']['foreground']);
+    } else {
+      viewController.setAskPermissionsTextRefrence(
+        () => _i18n()['locationPermissionText']['ios']['background'],
+      );
+    }
   }
 
   void _updateAndroidPermissionAskingText() {
-    mezDbgPrint("_updateAndroidPermissionAskingText ==> called");
-
     // This is a better scallable way to handle permissions in future,
     // in case there is location permissions related os changes
-    mezDbgPrint(
-        "adnroidSdkVersion@View => ${viewController.adnroidSdkVersion}");
     if (viewController.adnroidSdkVersion != null) {
       if (viewController.adnroidSdkVersion! <= 28) {
         // Android 9 (api 28) or less
         if (viewController.locationController.locationType ==
             LocationPermissionType.Foreground) {
-          viewController.askPermissionsText =
-              "We need to access your location while using the app. Please Click `Allow` .";
+          viewController.setAskPermissionsTextRefrence(
+            () => _i18n()['locationPermissionText']['android']['foreground']
+                ['android9'],
+          );
         } else
-          viewController.askPermissionsText =
-              "We need to access your location even when the app is in background. Please Click  `Allow` .";
+          viewController.setAskPermissionsTextRefrence(
+            () => _i18n()['locationPermissionText']['android']['background']
+                ['android9'],
+          );
         return;
       } else if (viewController.adnroidSdkVersion == 29) {
         // Android 10 - api 29
         if (viewController.locationController.locationType ==
             LocationPermissionType.Foreground) {
-          viewController.askPermissionsText =
-              "We need to access your location while using the app. Please Click `KEEP AND DON'T ASK AGAIN` .";
+          viewController.setAskPermissionsTextRefrence(
+            () => _i18n()['locationPermissionText']['android']['foreground']
+                ['android10'],
+          );
         } else
-          viewController.askPermissionsText =
-              "We need to access your location even when the app is in background. Please Click `ALLOW ALL THE TIME` .";
+          viewController.setAskPermissionsTextRefrence(
+            () => _i18n()['locationPermissionText']['android']['background']
+                ['android10'],
+          );
 
         return;
       }
@@ -114,11 +125,15 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
     // Android 11 - api 30 or more - is Default.
     if (viewController.locationController.locationType ==
         LocationPermissionType.Foreground) {
-      viewController.askPermissionsText =
-          "We need to access your location while using the app. Please Click `WHILE USING THE APP` .";
+      viewController.setAskPermissionsTextRefrence(
+        () => _i18n()['locationPermissionText']['android']['foreground']
+            ['android11'],
+      );
     } else
-      viewController.askPermissionsText =
-          "We need to access your location even when the app is in background. Please change the location permissions on App's Settings to `ALL THE TIME` .";
+      viewController.setAskPermissionsTextRefrence(
+        () => _i18n()['locationPermissionText']['android']['foreground']
+            ['android11'],
+      );
   }
 
 // TODO :  MAKE BUTTON TEXT DEPENDING ON STATUS

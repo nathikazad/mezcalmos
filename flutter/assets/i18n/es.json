@@ -598,7 +598,39 @@
                 "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
                 "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo.",
                 "locationIsOff": "Servicio de ubicación desactivado",
-                "isAndroid_11": "Detectamos que su versión de Android es 11 o más reciente, por lo tanto, debemos pedirle que nos dé permisos para usar la ubicación en segundo plano para mantener a sus clientes actualizados sobre su ubicación actual, incluso cuando la aplicación se ejecuta en segundo plano."
+                "locationPermissionStatus": {
+                    "denied": "El acceso a su ubicación está denegado :(",
+                    "backgroundAccessDenied": "El acceso a la ubicación de fondo está denegado :(",
+                    "foreverDenied":
+                        "Haga clic en el botón, luego vaya a permisos -> ubicación y marque `Siempre`",
+                    "serviceOff": "El servicio de ubicación del teléfono está deshabilitado/apagado :("
+                  },
+                  "locationPermissionText": {
+                    "ios": {
+                      "foreground":
+                          "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `Guardar solo mientras se usa`.",
+                      "background":
+                          "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Cambie los permisos de ubicación en la configuración de la aplicación a `Permitir siempre`."
+                    },
+                    "android": {
+                      "foreground": {
+                        "android9":
+                            "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `Permitir` .",
+                        "android10":
+                            "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `MANTENER Y NO PREGUNTAR DE NUEVO`.",
+                        "android11":
+                            "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `MIENTRAS UTILIZA LA APLICACIÓN`."
+                      },
+                      "background": {
+                        "android9":
+                            "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `Permitir` .",
+                        "android10":
+                            "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `PERMITIR TODO EL TIEMPO`.",
+                        "android11":
+                            "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Cambie los permisos de ubicación en la configuración de la aplicación a `TODO EL TIEMPO`."
+                        }
+                    }
+                }
             }
         },
         "widgets": {

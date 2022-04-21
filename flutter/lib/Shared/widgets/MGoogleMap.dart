@@ -262,8 +262,10 @@ class MGoogleMapGestures extends MezSmartPointer {
 
   @override
   void onDoubleTap() {
-    mGoogleController.unlockAutoZoomAnimation();
-    mGoogleController.controller?.animateCamera(CameraUpdate.zoomIn());
+    if (mGoogleController.enableMezSmartPointer) {
+      mGoogleController.unlockAutoZoomAnimation();
+      mGoogleController.controller?.animateCamera(CameraUpdate.zoomIn());
+    }
   }
 
   @override
@@ -274,8 +276,10 @@ class MGoogleMapGestures extends MezSmartPointer {
 
   @override
   void onMove() {
-    // this beasically upon right and Left movements
-    mGoogleController.unlockAutoZoomAnimation();
+    if (mGoogleController.enableMezSmartPointer) {
+      // this beasically upon right and Left movements
+      mGoogleController.unlockAutoZoomAnimation();
+    }
   }
 
   @override

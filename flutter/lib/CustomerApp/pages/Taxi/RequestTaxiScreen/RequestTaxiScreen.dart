@@ -30,8 +30,11 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
 
   @override
   void initState() {
-    // lock the zoom and always fit bounds.
-    viewController.locationPickerController.lockInAutoZoomAnimation();
+    // If from or to not picked :
+    //    - User is free to Wonder and move around the map.
+    // If from and to are picked:
+    //    - We Fit All everything.
+    customMapLock();
     viewWidgets =
         RequestTaxiScreenWidgets(requestTaxiController: viewController);
 
@@ -43,6 +46,12 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       viewController.initMapAndStartFetchingOnlineDrivers();
     }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
   }
 
   @override
@@ -98,8 +107,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                       viewController.locationSearchBarController,
                   onClear: () {
                     // we set that back to false
-                    // viewController.locationPickerController.periodicRerendering
-                    //     .value = false;
+                    viewController.locationPickerController.periodicRerendering
+                        .value = false;
                   },
                   newLocationChosenEvent:
                       viewController.updateModelAndHandoffToLocationPicker),
@@ -118,9 +127,9 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    viewController.dispose();
-    super.dispose();
+  void customMapLock() {
+    viewController.locationPickerController.myLocationButtonEnabled.value =
+        false;
+    viewController.locationPickerController.recenterButtonEnabled.value = false;
   }
 }

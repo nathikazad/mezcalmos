@@ -21,7 +21,7 @@ class IOrderViewWidgets {
   /// this holds the two Accept / Offer buttons.
   Positioned acceptAndOfferButtons() {
     return Positioned(
-      bottom: GetStorage().read(getxGmapBottomPaddingKey),
+      bottom: 10, // GetStorage().read(getxGmapBottomPaddingKey),
       left: 10,
       right: 10,
       child: Container(
