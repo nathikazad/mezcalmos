@@ -28,7 +28,8 @@ void main() {
             appTheme: TaxiAppTheme.lightTheme,
             signOutCallback: signOutCallback,
             routes: routes,
-            locationType: LocationPermissionType.ForegroundAndBackground,
+            locationPermissionType:
+                LocationPermissionType.ForegroundAndBackground,
           );
         },
       ),

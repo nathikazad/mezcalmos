@@ -48,7 +48,7 @@ class StartingPoint extends StatefulWidget {
   final Function signOutCallback;
   final List<GetPage<dynamic>> routes;
   final List<SideMenuItem>? sideMenuItems;
-  final LocationPermissionType locationType;
+  final LocationPermissionType locationPermissionType;
 
   ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
@@ -60,7 +60,7 @@ class StartingPoint extends StatefulWidget {
     required this.signOutCallback,
     required this.routes,
     this.sideMenuItems,
-    this.locationType = LocationPermissionType.Null,
+    this.locationPermissionType = LocationPermissionType.Null,
   });
 
   @override
@@ -255,7 +255,7 @@ class _StartingPointState extends State<StartingPoint> {
     );
     Get.put<SettingsController>(
       SettingsController(
-          widget.appType, widget.sideMenuItems, widget.locationType),
+          widget.appType, widget.sideMenuItems, widget.locationPermissionType),
       permanent: true,
     );
   }

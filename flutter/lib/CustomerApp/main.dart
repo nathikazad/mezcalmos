@@ -45,7 +45,7 @@ void main() {
             signOutCallback: signOutCallback,
             routes: routes,
             sideMenuItems: sideMenuItems,
-            locationType: LocationPermissionType.Foreground,
+            locationPermissionType: LocationPermissionType.Foreground,
           );
         },
       ),

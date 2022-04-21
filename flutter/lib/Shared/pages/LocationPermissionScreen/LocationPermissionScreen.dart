@@ -29,6 +29,21 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   final LocationPermissionController viewController =
       LocationPermissionController();
 
+  // Text Shown to the user in the center of the body
+  Rxn<LangValueRefGetter> _askPermissionsText = Rxn<LangValueRefGetter>();
+  String? get askPermissionsText => _askPermissionsText.value?.call();
+  void setAskPermissionsTextByRefrence(LangValueRefGetter? textPointer) {
+    _askPermissionsText.value = Rxn<LangValueRefGetter>(textPointer).value;
+  }
+
+  // Text Shown to the user when there is an error granting permissions to app
+  Rxn<LangValueRefGetter> _errorText = Rxn<LangValueRefGetter>();
+  String? get errorText => _errorText.value?.call();
+  void setErrorTextByRefrence(LangValueRefGetter? errorPtr) {
+    _errorText.value = Rxn<LangValueRefGetter>(errorPtr).value;
+  }
+
+
   late final LocationPermissionWidgets viewWidgets;
   @override
   void initState() {
@@ -51,26 +66,26 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   void _onLocationPermissionsChange(LocationPermissionsStatus? status) {
     switch (status) {
       case LocationPermissionsStatus.Denied:
-        viewController
-            .setErrorText(() => _i18n()["locationPermissionStatus"]["denied"]);
+        setErrorTextByRefrence(
+            () => _i18n()["locationPermissionStatus"]["denied"]);
         break;
       case LocationPermissionsStatus.BackgroundAccessDenied:
-        viewController.setErrorText(() =>
+        setErrorTextByRefrence(() =>
             _i18n()["locationPermissionStatus"]["backgroundAccessDenied"]);
         break;
-      case LocationPermissionsStatus.ForeeverDenied:
-        viewController.setErrorText(
+      case LocationPermissionsStatus.ForeverDenied:
+        setErrorTextByRefrence(
             () => _i18n()["locationPermissionStatus"]["foreverDenied"]);
         break;
       case LocationPermissionsStatus.ServiceOff:
-        viewController.setErrorText(
+        setErrorTextByRefrence(
             () => _i18n()["locationPermissionStatus"]["serviceOff"]);
         break;
       case LocationPermissionsStatus.Ok:
-        viewController.setErrorText(null);
+        setErrorTextByRefrence(null);
         break;
       default:
-        viewController.setErrorText(null);
+        setErrorTextByRefrence(null);
         break;
     }
   }
@@ -78,10 +93,10 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   void _updateIosPermissionAskingText() {
     if (viewController.locationController.locationType ==
         LocationPermissionType.Foreground) {
-      viewController.setAskPermissionsTextRefrence(
+      setAskPermissionsTextByRefrence(
           () => _i18n()['locationPermissionText']['ios']['foreground']);
     } else {
-      viewController.setAskPermissionsTextRefrence(
+      setAskPermissionsTextByRefrence(
         () => _i18n()['locationPermissionText']['ios']['background'],
       );
     }
@@ -90,31 +105,31 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   void _updateAndroidPermissionAskingText() {
     // This is a better scallable way to handle permissions in future,
     // in case there is location permissions related os changes
-    if (viewController.adnroidSdkVersion != null) {
-      if (viewController.adnroidSdkVersion! <= 28) {
+    if (viewController.androidSdkVersion != null) {
+      if (viewController.androidSdkVersion! <= 28) {
         // Android 9 (api 28) or less
         if (viewController.locationController.locationType ==
             LocationPermissionType.Foreground) {
-          viewController.setAskPermissionsTextRefrence(
+          setAskPermissionsTextByRefrence(
             () => _i18n()['locationPermissionText']['android']['foreground']
                 ['android9'],
           );
         } else
-          viewController.setAskPermissionsTextRefrence(
+          setAskPermissionsTextByRefrence(
             () => _i18n()['locationPermissionText']['android']['background']
                 ['android9'],
           );
         return;
-      } else if (viewController.adnroidSdkVersion == 29) {
+      } else if (viewController.androidSdkVersion == 29) {
         // Android 10 - api 29
         if (viewController.locationController.locationType ==
             LocationPermissionType.Foreground) {
-          viewController.setAskPermissionsTextRefrence(
+          setAskPermissionsTextByRefrence(
             () => _i18n()['locationPermissionText']['android']['foreground']
                 ['android10'],
           );
         } else
-          viewController.setAskPermissionsTextRefrence(
+          setAskPermissionsTextByRefrence(
             () => _i18n()['locationPermissionText']['android']['background']
                 ['android10'],
           );
@@ -125,12 +140,12 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
     // Android 11 - api 30 or more - is Default.
     if (viewController.locationController.locationType ==
         LocationPermissionType.Foreground) {
-      viewController.setAskPermissionsTextRefrence(
+      setAskPermissionsTextByRefrence(
         () => _i18n()['locationPermissionText']['android']['foreground']
             ['android11'],
       );
     } else
-      viewController.setAskPermissionsTextRefrence(
+      setAskPermissionsTextByRefrence(
         () => _i18n()['locationPermissionText']['android']['foreground']
             ['android11'],
       );
@@ -177,7 +192,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                 SizedBox(
                   height: getSizeRelativeToScreen(10, Get.height, Get.width),
                 ),
-                Obx(() => viewController.errorText != null
+                Obx(() => errorText != null
                     ? Flex(
                         direction: Axis.horizontal,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -192,7 +207,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                           ),
                           Flexible(
                             child: Text(
-                              viewController.errorText!,
+                              errorText!,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 14,
@@ -208,9 +223,9 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                   height: getSizeRelativeToScreen(10, Get.height, Get.width),
                 ),
                 Obx(
-                  () => viewController.askPermissionsText != null
+                  () => askPermissionsText != null
                       ? Text(
-                          viewController.askPermissionsText!,
+                          askPermissionsText!,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,

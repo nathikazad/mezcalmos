@@ -16,22 +16,9 @@ class LocationPermissionController {
   final LocationController locationController = Get.find<LocationController>();
   StreamSubscription<LocationPermissionsStatus?>? locationStatusListener;
 
-  // Text Shown to the user in the center of the body
-  Rxn<LangValueRefGetter> _askPermissionsText = Rxn<LangValueRefGetter>();
-  String? get askPermissionsText => _askPermissionsText.value?.call();
-  void setAskPermissionsTextByRefrence(LangValueRefGetter? textPointer) {
-    _askPermissionsText.value = Rxn<LangValueRefGetter>(textPointer).value;
-  }
-
-  // Text Shown to the user when there is an error granting permissions to app
-  Rxn<LangValueRefGetter> _errorText = Rxn<LangValueRefGetter>();
-  String? get errorText => _errorText.value?.call();
-  void setErrorTextByRefrence(LangValueRefGetter? errorPtr) {
-    _errorText.value = Rxn<LangValueRefGetter>(errorPtr).value;
-  }
 
   // AndroidSdkVersion in case OS is android.
-  int? adnroidSdkVersion;
+  int? androidSdkVersion;
   // LocationPermissionsStatus? _statusSnapshot;
 
   // inti of our controller.
@@ -57,14 +44,6 @@ class LocationPermissionController {
         Future<void>.delayed(Duration.zero, () => Get.back<void>());
       }
 
-      // _statusSnapshot = statusEvent;
-      // we check if Initial Text is not set , we set it depending on OS and Type of Permissions asked.
-      if (_askPermissionsText == null)
-        await _setInitialPermissionsAskingText(
-          initialIosBodyTextSetter,
-          initialAndroidBodyTextSetter,
-        );
-
       onLocationPermissionsStatusChange(statusEvent);
     });
   }
@@ -76,9 +55,9 @@ class LocationPermissionController {
       Function iosTextSetter, Function androidTextSetter) async {
     if (Platform.isAndroid) {
       // Handling if Android android
-      if (adnroidSdkVersion == null) {
-        adnroidSdkVersion = await getAndroidSdkVersion();
-        mezDbgPrint("viewController@adnroidSdkVersion => $adnroidSdkVersion");
+      if (androidSdkVersion == null) {
+        androidSdkVersion = await getAndroidSdkVersion();
+        mezDbgPrint("viewController@adnroidSdkVersion => $androidSdkVersion");
         androidTextSetter();
       }
     } else if (Platform.isIOS) {
@@ -109,7 +88,7 @@ class LocationPermissionController {
     }
 
     if (locationController.statusSnapshot.value ==
-        LocationPermissionsStatus.ForeeverDenied) {
+        LocationPermissionsStatus.ForeverDenied) {
       await openAppSettings();
       return;
     }
@@ -118,7 +97,7 @@ class LocationPermissionController {
     if (Platform.isAndroid) {
       if (locationController.locationType ==
               LocationPermissionType.ForegroundAndBackground &&
-          adnroidSdkVersion == 30) {
+          androidSdkVersion == 30) {
         // check if sdk 11 - background location needs manual accept
         // we redirect to
         await openAppSettings();

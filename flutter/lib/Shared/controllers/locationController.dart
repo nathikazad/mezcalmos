@@ -34,7 +34,7 @@ class LocationController extends GetxController {
         mezDbgPrint(statusSnapshot.value);
         return Future.value(statusSnapshot.value);
       case PermissionStatus.deniedForever:
-        statusSnapshot.value = LocationPermissionsStatus.ForeeverDenied;
+        statusSnapshot.value = LocationPermissionsStatus.ForeverDenied;
         mezDbgPrint(statusSnapshot.value);
 
         return Future.value(statusSnapshot.value);
@@ -75,7 +75,7 @@ class LocationController extends GetxController {
         statusSnapshot.value = LocationPermissionsStatus.Denied;
         return Future.value(statusSnapshot.value);
       case PermissionStatus.deniedForever:
-        statusSnapshot.value = LocationPermissionsStatus.ForeeverDenied;
+        statusSnapshot.value = LocationPermissionsStatus.ForeverDenied;
         return Future.value(statusSnapshot.value);
       // We can not use background location if it's limited
       case PermissionStatus.grantedLimited:

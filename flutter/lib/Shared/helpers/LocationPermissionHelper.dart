@@ -6,7 +6,7 @@ enum LocationPermissionsStatus {
   ServiceOff,
 
   /// When User pressed Deny Foreever
-  ForeeverDenied,
+  ForeverDenied,
 
   /// When user refuse to give us permissions
   Denied,
