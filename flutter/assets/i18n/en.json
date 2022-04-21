@@ -626,7 +626,14 @@
                         }
                     }
                 }
-            }
+            },
+            "AppNeedsUpdateScreen": {
+                "newVersion": "New version is out!",
+                "downloadNewVersion": "Download the new version!",
+                "downloading": "A new version is being downloaded.",
+                "news": "News",
+                "update": "Update now!"
+              }
         },
         "widgets": {
             "LocationSearchComponent": {

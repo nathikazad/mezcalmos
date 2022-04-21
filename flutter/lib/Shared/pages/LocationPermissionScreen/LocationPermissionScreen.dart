@@ -3,17 +3,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/controller/LocationPermissionController.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/widgets/LocationPermissionsWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['LocationPermissionScreen'];
@@ -33,16 +29,15 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   Rxn<LangValueRefGetter> _askPermissionsText = Rxn<LangValueRefGetter>();
   String? get askPermissionsText => _askPermissionsText.value?.call();
   void setAskPermissionsTextByRefrence(LangValueRefGetter? textPointer) {
-    _askPermissionsText.value = Rxn<LangValueRefGetter>(textPointer).value;
+    _askPermissionsText.value = textPointer;
   }
 
   // Text Shown to the user when there is an error granting permissions to app
   Rxn<LangValueRefGetter> _errorText = Rxn<LangValueRefGetter>();
   String? get errorText => _errorText.value?.call();
   void setErrorTextByRefrence(LangValueRefGetter? errorPtr) {
-    _errorText.value = Rxn<LangValueRefGetter>(errorPtr).value;
+    _errorText.value = errorPtr;
   }
-
 
   late final LocationPermissionWidgets viewWidgets;
   @override

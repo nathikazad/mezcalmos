@@ -26,6 +26,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
@@ -69,6 +70,7 @@ class StartingPoint extends StatefulWidget {
 
 class _StartingPointState extends State<StartingPoint> {
   _StartingPointState();
+  late final AppLaunchMode _launchMode;
 
   /// _initialized
   bool _initialized = false;
@@ -79,10 +81,11 @@ class _StartingPointState extends State<StartingPoint> {
   @override
   void initState() {
     super.initState();
-    debugPrint(
-      "-------------------Start _StartingPointState ------------------------",
-    );
+
     WidgetsFlutterBinding.ensureInitialized();
+    const String _tmpLmode =
+        String.fromEnvironment('LMODE', defaultValue: "prod");
+    _launchMode = _tmpLmode.toLaunchMode();
 
     /// initializeSetup
     initializeSetup();
@@ -176,8 +179,8 @@ class _StartingPointState extends State<StartingPoint> {
   Future<void> setupFirebase() async {
     const String _host =
         String.fromEnvironment('HOST', defaultValue: "http://127.0.0.1");
-    const String _launchMode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
+    // final AppLaunchMode _launchMode =
+    //     String.fromEnvironment('LMODE', defaultValue: "prod").toLaunchMode();
     mezDbgPrint('mode  -> $_launchMode');
     mezDbgPrint('host  -> $_host');
 
@@ -185,9 +188,9 @@ class _StartingPointState extends State<StartingPoint> {
     mezDbgPrint("[+] App Initialized under Name ${_app.name} .");
     late FirebaseDatabase firebaseDb;
 
-    if (_launchMode == "prod") {
+    if (_launchMode == AppLaunchMode.prod) {
       firebaseDb = FirebaseDatabase(app: _app);
-    } else if (_launchMode == "dev") {
+    } else if (_launchMode == AppLaunchMode.dev) {
       mezDbgPrint("DEV MODE");
       firebaseDb = FirebaseDatabase(app: _app, databaseURL: _host + dbRoot);
       await FirebaseDatabase.instance.setPersistenceEnabled(true);
@@ -195,7 +198,7 @@ class _StartingPointState extends State<StartingPoint> {
       await FirebaseAuth.instance.useEmulator(_host + authPort);
       FirebaseFunctions.instance
           .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
-    } else if (_launchMode == "stage") {
+    } else if (_launchMode == AppLaunchMode.stage) {
       mezDbgPrint("[+] Entered Staging check ----.");
       firebaseDb = FirebaseDatabase(app: _app, databaseURL: stagingDb);
     } else {
@@ -212,11 +215,9 @@ class _StartingPointState extends State<StartingPoint> {
   }
 
   Future<void> setGlobalVariables() async {
-    const String _launchMode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
     if (await GetStorage.init()) {
       mezDbgPrint("[ GET STORAGE ] INITIALIZED !");
-      await GetStorage().write(getxLmodeKey, _launchMode);
+      await GetStorage().write(getxLmodeKey, _launchMode.toShortString());
       // previewMode
       const bool _isPreviewMode = bool.hasEnvironment('PREVIEW');
       await GetStorage().write('previewMode', _isPreviewMode);
@@ -230,7 +231,7 @@ class _StartingPointState extends State<StartingPoint> {
       await GetStorage().write(getxPackageName, pInfos.packageName);
       await GetStorage().write(getxAppName, pInfos.appName);
       // We need appStoreId only in prod mode and ios platforms.
-      if (Platform.isIOS && _launchMode == "prod") {
+      if (Platform.isIOS && _launchMode == AppLaunchMode.prod) {
         await setupIosAppStoreId(pInfos.appName);
       }
       await GetStorage().write(getxAppVersion, pInfos.version);

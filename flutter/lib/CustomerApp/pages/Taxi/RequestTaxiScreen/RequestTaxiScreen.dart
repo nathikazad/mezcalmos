@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.da
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiReqBottomBar.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -84,7 +85,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   notifyParentOfLocationFinalized:
                       viewController.updateModelAndMaybeCalculateRoute,
                   notifyParentOfConfirm: (Location? _) async {
-                    if (GetStorage().read<String?>(getxLmodeKey) == "prod" &&
+                    if (getAppLaunchMode() == AppLaunchMode.prod &&
                         Get.find<AuthController>().fireAuthUser?.uid ==
                             testUserIdInProd) {
                       MezSnackbar("Oops",

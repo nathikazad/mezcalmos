@@ -4,12 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MezUpdateHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:new_version/new_version.dart';
 import 'package:store_redirect/store_redirect.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['AppNeedsUpdateScreen'];
 
 class AppNeedsUpdateScreen extends StatefulWidget {
   const AppNeedsUpdateScreen({Key? key}) : super(key: key);
@@ -64,7 +68,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
                       Flexible(
                         flex: 1,
                         child: Text(
-                          "New version ${_versionStatus?.storeVersion} is out!", //remoteVersion
+                          _i18n()['newVersion'], //remoteVersion
                           textAlign: TextAlign.center,
                           style:
                               Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -73,7 +77,6 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
                                   ),
                         ),
                       ),
-                    //if (_controller.appVersionInfo.value?.updateNews != null)
                     Flexible(
                       flex: Platform.isAndroid ? 3 : 2,
                       child: Platform.isAndroid
@@ -96,7 +99,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
     return Platform.isAndroid
         ? null
         : FloatingActionButton(
-            tooltip: "Download New version",
+            tooltip: _i18n()['downloadNewVersion'],
             focusColor: Colors.white,
             hoverColor: Colors.white,
             splashColor: Colors.white,
@@ -124,7 +127,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
       flex: 1,
       child: _isDownloading.value
           ? Text(
-              "A new version is being downloaded...",
+              _i18n()['downloading'],
               //remoteVersion
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -145,15 +148,15 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              "v${_versionStatus?.storeVersion} news:",
-              textAlign: TextAlign.start,
+              "v${_versionStatus?.storeVersion} ${_i18n()['news']}",
+              textAlign: TextAlign.center,
               style:
                   Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20),
             ),
             const SizedBox(height: 25),
             Text(
-              _versionStatus?.releaseNotes ?? "",
-              textAlign: TextAlign.start,
+              _versionStatus?.releaseNotes ?? "-",
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.subtitle2!.copyWith(),
             ),
           ],
@@ -166,15 +169,23 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
   Column _androidUpdateInfosAndButton() {
     return Column(
       children: <Widget>[
-        if (_versionStatus != null && _versionStatus!.releaseNotes != null)
+        if (_versionStatus != null && _versionStatus!.releaseNotes != null) ...[
           Center(
             child: Text(
-              'Update info: ${_versionStatus!.releaseNotes!}',
+              'v${_versionStatus?.storeVersion} ${_i18n()['news']}',
+              textAlign: TextAlign.center,
             ),
           ),
+          const SizedBox(height: 26),
+          Text(
+            _versionStatus?.releaseNotes ?? "-",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.subtitle2!.copyWith(),
+          )
+        ],
         const SizedBox(height: 26),
         ElevatedButton(
-          child: Text('Update'),
+          child: Text(_i18n()['update']),
           onPressed: () async {
             _isDownloading.value = true;
             final MezAppUpdateResult? _res =

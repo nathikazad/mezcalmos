@@ -102,7 +102,7 @@ class AppVersionController {
   void init(
       {Duration autoUpdatesCheckerDuration = const Duration(minutes: 10)}) {
     // to avoid Multi '_checkForNewUpdates' Execution.
-    assert(autoUpdatesCheckerDuration.inMinutes > 20);
+    assert(autoUpdatesCheckerDuration.inMinutes >= 10);
     // call Asyncronously first then start timer
     _checkForNewUpdates();
 

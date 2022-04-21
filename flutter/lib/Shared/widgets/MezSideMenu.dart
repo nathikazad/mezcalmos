@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -17,25 +18,16 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['widgets']["MezSideMenu"];
 
 class MezSideMenu extends GetWidget<AuthController> {
-  /// _drawerController
-  SideMenuDrawerController _drawerController =
+  final SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
 
-  /// languageController
-  LanguageController languageController = Get.find<LanguageController>();
+  final LanguageController languageController = Get.find<LanguageController>();
 
-  /// lmd, VERSION
-  String lmd = GetStorage().read(getxLmodeKey);
-  String VERSION = GetStorage().read(getxAppVersion);
+  final AppLaunchMode lmd = getAppLaunchMode();
+  final String version = GetStorage().read<String>(getxAppVersion) as String;
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("=========> ImgUrl ======<  ${controller.user?.image}");
-    mezDbgPrint(controller.user?.phone);
-
-    responsiveSize(context);
-
-    /// size
     final double sw = MediaQuery.of(context).size.width;
     final double sh = MediaQuery.of(context).size.height;
 
@@ -46,7 +38,8 @@ class MezSideMenu extends GetWidget<AuthController> {
           // padding: EdgeInsets.only(bottom: 20),
           child: Center(
             child: Text(
-              VERSION + (lmd != "prod" ? " $lmd" : " "),
+              version +
+                  (lmd != AppLaunchMode.prod ? " ${lmd.toShortString()}" : " "),
             ),
           ),
         ),
@@ -99,7 +92,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                 const SizedBox(height: 30),
                 Container(
                   child: Text(
-                    controller.user?.name ?? sDefaultUserName,
+                    controller.user?.name ?? "",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontFamily: 'psb', fontSize: 18.5.sp),
                   ),

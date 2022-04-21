@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MezUpdateHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
@@ -46,7 +47,7 @@ class _WrapperState extends State<Wrapper> {
       }
 
       // then check if we're in prod - check appUpdate
-      if (GetStorage().read<String>(getxLmodeKey) == "prod") {
+      if (getAppLaunchMode() == AppLaunchMode.prod) {
         // Create instance of our Singleton AappVersionController class.
         _appVersionController = AppVersionController.instance(
           onNewUpdateAvailable: _onNewUpdateAvailable,

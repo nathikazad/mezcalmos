@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -7,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
@@ -32,40 +34,36 @@ class TaxiAuthController extends GetxController {
   Rx<LocationData> get currentLocationRx => _currentLocation;
 
   StreamSubscription<LocationData>? _locationListener;
-  StreamSubscription? _taxiStateNodeListener;
+  StreamSubscription<dynamic>? _taxiStateNodeListener;
 
   bool _checkedAppVersion = false;
   String? _previousStateValue = "init";
-  final lmode = GetStorage().read(getxLmodeKey);
+  final AppLaunchMode lmode = getAppLaunchMode();
 
   @override
   void onInit() {
     // ------------------------------------------------------------------------
-    mezDbgPrint("TaxiAuthController: init ${this.hashCode}");
+    mezDbgPrint("TaxiAuthController: init $hashCode");
     mezDbgPrint("TaxiAuthController: calling handle state change first time");
     setupTaxi(Get.find<AuthController>().fireAuthUser!);
     super.onInit();
   }
 
-  void setupTaxi(User user) async {
+  Future<void> setupTaxi(User user) async {
     mezDbgPrint("TaxiAuthController: handle state change user value");
     mezDbgPrint(user);
     // mezDbgPrint(_authController.fireAuthUser);
 
     mezDbgPrint(
         "TaxiAuthController: _taxiStateNodeListener init ${taxiStateNode(user.uid)}");
-    _taxiStateNodeListener?.cancel();
+    await _taxiStateNodeListener?.cancel();
     _taxiStateNodeListener = null;
     _taxiStateNodeListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(taxiStateNode(user.uid))
         .onValue
-        .listen((event) async {
-      mezDbgPrint(
-          "[++++++ = === ==] TaxiAuthController${this.hashCode}: _taxiStateNodeListener event => ${event.snapshot.value}");
+        .listen((Event event) async {
       if (event.snapshot.value.toString() == _previousStateValue) {
-        mezDbgPrint(
-            'TaxiAuthController:: same state event fired again, skipping it');
         return;
       }
       _previousStateValue = event.snapshot.value.toString();
@@ -83,8 +81,6 @@ class TaxiAuthController extends GetxController {
           await Location().enableBackgroundMode(enable: true);
         _locationListener?.resume();
       }
-      mezDbgPrint(
-          "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
       if (_state.value?.isAuthorized ?? false) {
         saveAppVersionIfNecessary();
         saveNotificationToken();
@@ -97,8 +93,10 @@ class TaxiAuthController extends GetxController {
   void saveNotificationToken() async {
     mezDbgPrint(
         "TaxiAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
-    String? deviceNotificationToken = await _notificationsController.getToken();
+    final String? deviceNotificationToken =
+        await _notificationsController.getToken();
     if (deviceNotificationToken != null)
+      // ignore: unawaited_futures
       _databaseHelper.firebaseDatabase
           .reference()
           .child(
@@ -110,12 +108,12 @@ class TaxiAuthController extends GetxController {
 
   void saveAppVersionIfNecessary() {
     if (_checkedAppVersion == false) {
-      String VERSION = GetStorage().read(getxAppVersion);
-      mezDbgPrint("[+] TaxiDriver Currently using App v$VERSION");
+      final String _version = GetStorage().read(getxAppVersion);
+      mezDbgPrint("[+] TaxiDriver Currently using App v$_version");
       _databaseHelper.firebaseDatabase
           .reference()
           .child(taxiDriverAppVersionNode(_authController.fireAuthUser!.uid))
-          .set(VERSION);
+          .set(_version);
       _checkedAppVersion = true;
     }
   }

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 // ignore: constant_identifier_names
 enum MezPlatform { IOS, ANDROID }
@@ -12,7 +13,7 @@ extension PlateformString on MezPlatform {
 
 /// FOR IOS - PROD - to get the save
 String? getAppStoreId() {
-  if (Platform.isIOS && GetStorage().read<String>(getxLmodeKey) == "prod") {
+  if (Platform.isIOS && getAppLaunchMode() == AppLaunchMode.prod) {
     return GetStorage().read<String?>(getxAppStoreId);
   }
   return null;
