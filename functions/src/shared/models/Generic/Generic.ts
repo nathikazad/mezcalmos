@@ -22,6 +22,12 @@ export interface ServerResponse {
   [key: string]: any;
 }
 
+export interface ValidationPass {
+  ok: boolean,
+  error?: ServerResponse,
+  [key: string]: any;
+}
+
 export enum ServerResponseStatus {
   Success = "Success",
   Error = "Error"

@@ -11,6 +11,7 @@ export interface LaundryOrder extends TwoWayDeliverableOrder {
   shippingCost: number;
   costPerKilo: number;
   costsByType: CostsByType;
+  estimatedDeliveryTime: string
 }
 export interface CostsByType {
   byType: any;

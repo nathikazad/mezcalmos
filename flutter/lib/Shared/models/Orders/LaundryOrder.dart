@@ -46,6 +46,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   LaundryOrderStatus status;
   num shippingCost;
   LaundryOrderCosts? costsByType;
+  DateTime? estimatedDeliveryTime;
   LaundryOrder(
       {required String orderId,
       required num cost,
@@ -57,6 +58,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.laundry,
       required this.shippingCost,
       this.costsByType,
+      this.estimatedDeliveryTime,
       DeliveryDriverUserInfo? dropoffDriver,
       String? dropOffDriverChatId,
       DeliveryDriverUserInfo? pickupDriver,
@@ -88,8 +90,11 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         weight: data["weight"],
         shippingCost: data['shippingCost'] ?? 50,
         notes: data["notes"],
-        costsByType: (data["costsByType"] != null)
+        costsByType: (data["estimatedDeliveryTime"] != null)
             ? LaundryOrderCosts.fromData(data["costsByType"])
+            : null,
+        estimatedDeliveryTime: (data["estimatedDeliveryTime"] != null)
+            ? DateTime.parse(data["costsByType"])
             : null,
         laundry: (data["laundry"] != null)
             ? ServiceUserInfo.fromData(data["laundry"])
