@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantLocationCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/workinHoursCart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -37,30 +38,13 @@ class RestaurantInfoTab extends StatelessWidget {
               margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 15),
               child: Text(restaurant.description?[userLanguage] ?? ""),
             ),
-            (restaurant.info.location != null)
-                ? Column(
-                    children: [
-                      Container(
-                        child: Text(
-                          '${_i18n()["location"]} :',
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                      Card(
-                        child: Container(
-                          height: 250,
-                          width: double.infinity,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  )
-                : Container(),
             (restaurant.schedule != null)
                 ? getWorkingHoursWidget(restaurant.schedule, context)
-                : Container()
+                : Container(),
+            SizedBox(
+              height: 15,
+            ),
+            RestaurantLocationCard(restaurant: restaurant),
           ],
         ),
       ),

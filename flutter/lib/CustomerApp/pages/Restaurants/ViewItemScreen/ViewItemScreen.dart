@@ -42,6 +42,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   RestaurantsInfoController controller = Get.find<RestaurantsInfoController>();
   Restaurant? currentRestaurant;
   TextEditingController _noteTextEdittingController = TextEditingController();
+  RxBool showImage = RxBool(true);
 
   @override
   void dispose() {
@@ -119,65 +120,30 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  if (cartItem.value?.item.image != null)
-                  Container(
-                    padding: const EdgeInsets.only(
-                      top: 5,
-                    ),
-                    alignment: Alignment.center,
-                    child: CachedNetworkImage(
-                        imageUrl: cartItem.value!.item.image!,
-                      imageBuilder: (BuildContext context,
-                          ImageProvider<Object> imageProvider) {
-                        return Container(
-                          margin: EdgeInsets.only(top: 10),
-                          width: Get.width / 1.5,
-                          height: Get.width / 1.5,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover, image: imageProvider)),
-                        );
+                  if (cartItem.value?.item.image != null && showImage.value)
+                    CircleAvatar(
+                      radius: 120,
+                      backgroundImage: CachedNetworkImageProvider(
+                          cartItem.value!.item.image!),
+                      onBackgroundImageError:
+                          (Object obj, StackTrace? stackTrace) {
+                        showImage.value = false;
                       },
-                      fit: BoxFit.cover,
-                      placeholder: (BuildContext context, String url) {
-                        return Container(
-                          width: Get.width / 1.5,
-                          height: Get.width / 1.5,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      },
-                      errorWidget: (BuildContext context, String url, error) =>
-                          Container(
-                              height: Get.width / 1.5,
-                              width: Get.width / 1.5,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.grey.shade300),
-                                  child: Icon(
-                                    Icons.image,
-                                    color: Colors.grey,
-                                    size: 30,
-                                  ))),
                     ),
-                  ),
                   SizedBox(
                     height: 20,
                   ),
                   if (cartItem.value?.item.description != null)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Text(
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Text(
                           "${cartItem.value!.item.description![userLanguage]!.inCaps}",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .copyWith(fontSize: 12.sp)),
-                  ),
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(fontSize: 12.sp)),
+                    ),
                   SizedBox(
                     height: 20,
                   ),

@@ -37,21 +37,21 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
+      margin: EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
             widget.option.name[userLanguage].toString(),
-              style: Get.theme.textTheme.bodyText2,
-            ),
-            Column(
-              children: List.generate(
-                  widget.option.choices.length,
-                  (int index) => optionChoiceCard(
-                        choice: widget.option.choices[index],
-                      )),
-            )
+            style: Get.theme.textTheme.bodyText2,
+          ),
+          Column(
+            children: List.generate(
+                widget.option.choices.length,
+                (int index) => optionChoiceCard(
+                      choice: widget.option.choices[index],
+                    )),
+          )
         ],
       ),
     );
@@ -66,39 +66,33 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
         margin: const EdgeInsets.all(8),
         child: Row(
           children: [
-            Flexible(
-              flex: 5,
-              fit: FlexFit.tight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    choice.name[userLanguage].toString(),
-                    style: Get.theme.textTheme.bodyText1,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    (choice.cost > 0) ? "${choice.cost.round()} \$ " : "Free",
-                    style: Get.theme.textTheme.headline3!
-                        .copyWith(color: Get.theme.primaryColorLight),
-                  ),
-                ],
-              ),
+            Row(
+              children: [
+                Text(
+                  choice.name[userLanguage].toString(),
+                  style: Get.theme.textTheme.bodyText1,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
+                  style: Get.theme.textTheme.headline3!
+                      .copyWith(color: Get.theme.primaryColorLight),
+                ),
+              ],
             ),
             Spacer(),
-            Obx(() =>
-            Transform.scale(
-              scale: 2.0,
-              child: Checkbox(
-                  activeColor: Get.theme.primaryColorLight,
-                  shape: CircleBorder(),
-                  value: widget.cartItem.value!.chosenChoices[optionId]
-                      ?.contains(choice),
-                  onChanged: (bool? v) {
-                    handleChoiceCheckBox(choice);
-                  }),
+            Obx(() => Transform.scale(
+                  scale: 2.0,
+                  child: Checkbox(
+                      activeColor: Get.theme.primaryColorLight,
+                      shape: CircleBorder(),
+                      value: widget.cartItem.value!.chosenChoices[optionId]
+                          ?.contains(choice),
+                      onChanged: (bool? v) {
+                        handleChoiceCheckBox(choice);
+                      }),
                 ))
           ],
         ),

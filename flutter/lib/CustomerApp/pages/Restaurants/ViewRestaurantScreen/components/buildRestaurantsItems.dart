@@ -51,6 +51,9 @@ class RestaurantCategoriesList extends StatelessWidget {
                         ],
                       ))),
           // NOCATEGORY
+          Divider(
+            height: 30,
+          ),
           if (restaurant.getItemsWithoutCategory != null)
             Container(
               child: Column(
