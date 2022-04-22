@@ -72,11 +72,12 @@ class _RestaurantLocationCardState extends State<RestaurantLocationCard> {
 
   void initRestaurantLocationMapController() {
     mapController.periodicRerendering.value = true;
+
     mapController.setLocation(widget.restaurant.info.location);
     mapController.addOrUpdatePurpleDestinationMarker(
         latLng: getRestaurantLatLng()!);
 //TODO @m66are disable recentre button  enable mez pointer
-    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+    //  mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
 
     mapController.animateMarkersPolyLinesBounds.value = true;
     mapController.recenterButtonEnabled.value = false;

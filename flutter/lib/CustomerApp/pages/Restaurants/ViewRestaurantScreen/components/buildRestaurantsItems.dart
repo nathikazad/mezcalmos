@@ -51,14 +51,16 @@ class RestaurantCategoriesList extends StatelessWidget {
                         ],
                       ))),
           // NOCATEGORY
-          Divider(
-            height: 30,
-          ),
+
           if (restaurant.getItemsWithoutCategory != null)
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (restaurant.getCategories.isNotEmpty)
+                    Divider(
+                      height: 30,
+                    ),
                   Column(
                     children: List.generate(
                         restaurant.getItemsWithoutCategory!.length,
