@@ -4,10 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-
-import 'components/RestaurantSliverAppbar.dart';
-import 'components/buildRestaurantsItems.dart';
-import 'components/restaurantInfoTab.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantSliverAppbar.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/buildRestaurantsItems.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/restaurantInfoTab.dart';
 
 final DateFormat f = new DateFormat('hh:mm a');
 
@@ -51,9 +50,13 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
                 delegate: _SliverAppBarDelegate(
                   TabBar(
                     labelStyle: Theme.of(context).textTheme.bodyText1,
-                    tabs: <Tab>[
-                      Tab(text: '${_i18n()["menu"]}'),
-                      Tab(text: '${_i18n()["info"]}'),
+                    tabs: [
+                      Tab(
+                        text: '${_i18n()["menu"]}',
+                      ),
+                      Tab(
+                        text: '${_i18n()["info"]}',
+                      ),
                     ],
                   ),
                 ),
@@ -62,19 +65,18 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen> {
             ];
           },
           body: TabBarView(
-            children: <Widget>[
+            children: [
               // -----------------------------FIRST TAB (MENU) --------------------------------------------//
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const SizedBox(height: 10),
-                      buildResturantItems(
-                        restaurant!.items,
-                        restaurant!.info.id,
+                    children: [
+                      SizedBox(
+                        height: 10,
                       ),
+                      RestaurantCategoriesList(restaurant: restaurant!)
                     ],
                   ),
                 ),

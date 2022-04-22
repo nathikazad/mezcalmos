@@ -35,6 +35,7 @@ class CustomerAuthController extends GetxController {
           "User from CustomerAuthController >> ${_authController.fireAuthUser?.uid}");
       mezDbgPrint(
           "CustomerAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
+
       await _customerNodeListener?.cancel();
       _customerNodeListener = _databaseHelper.firebaseDatabase
           .reference()

@@ -66,7 +66,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     // if yes redirect to home page
     _restaurantController.cart.value.cartItems.map((CartItem item) {
       mezDbgPrint(
-          "+++ From ViewCartScreen ==> ${item.id} <= notes => ${item.notes}");
+          "+++ From ViewCartScreen ==> ${item.idInCart} <= notes => ${item.notes}");
     });
   }
 

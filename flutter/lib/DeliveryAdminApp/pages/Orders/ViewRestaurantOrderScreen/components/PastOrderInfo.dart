@@ -21,26 +21,32 @@ class PastOrderInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              (order.status == RestaurantOrderStatus.Delivered)
-                  ? Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                    )
-                  : Icon(
-                      Icons.cancel,
-                      color: Colors.red,
-                    ),
-              const SizedBox(width: 5),
-              Text(
-                getOrderStatus(order.status),
-                style: Theme.of(context).textTheme.headline3,
-              ),
-            ],
+      children: [
+        Card(
+          child: Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.all(12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                (order.status == RestaurantOrderStatus.Delivered)
+                    ? Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                      )
+                    : Icon(
+                        Icons.cancel,
+                        color: Colors.red,
+                      ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  getOrderStatus(order.status),
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+              ],
+            ),
           ),
         ),
         Container(

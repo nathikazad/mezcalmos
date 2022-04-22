@@ -8,35 +8,29 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
-class RestaurantsListItemsOfComponent extends StatefulWidget {
-  const RestaurantsListItemsOfComponent({
-    Key? key,
-    required this.item,
-    this.function,
-  }) : super(key: key);
-
+class RestaurantsListOfItemsComponent extends StatefulWidget {
+  const RestaurantsListOfItemsComponent(
+      {Key? key, required this.item, this.function})
+      : super(key: key);
   final Item item;
   final GestureTapCallback? function;
 
   @override
-  _RestaurantsListItemsOfComponentState createState() =>
-      _RestaurantsListItemsOfComponentState();
+  _RestaurantsListOfItemsComponentState createState() =>
+      _RestaurantsListOfItemsComponentState();
 }
 
-class _RestaurantsListItemsOfComponentState
-    extends State<RestaurantsListItemsOfComponent> {
-  /// LanguageType
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
-
+class _RestaurantsListOfItemsComponentState
+    extends State<RestaurantsListOfItemsComponent> {
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
-    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+    final LanguageType userLanguage =
+        Get.find<LanguageController>().userLanguageKey;
     return InkWell(
       child: Container(
         padding: const EdgeInsets.all(8),
-        margin: const EdgeInsets.all(5),
+        // margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Row(
@@ -44,7 +38,9 @@ class _RestaurantsListItemsOfComponentState
             CachedNetworkImage(
               imageUrl: widget.item.image!,
               fit: BoxFit.cover,
-              imageBuilder: (_, ImageProvider imageProvider) => Container(
+              imageBuilder:
+                  (BuildContext context, ImageProvider<Object> imageProvider) =>
+                      Container(
                 height: 63,
                 width: 63,
                 child: ClipOval(
@@ -59,41 +55,29 @@ class _RestaurantsListItemsOfComponentState
                   ),
                 ),
               ),
-              placeholder: (_, __) {
-                return Shimmer.fromColors(
-                  child: Container(
-                    height: 63,
-                    width: 63,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  highlightColor: Colors.grey[400]!,
-                  baseColor: Colors.grey[300]!,
-                  direction: ShimmerDirection.ltr,
-                );
-              },
-              errorWidget: (_, __, ___) {
-                return Container(
-                  height: 63,
-                  width: 63,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[400],
-                    shape: BoxShape.circle,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    "${widget.item.name[userLanguage]!.capitalizeFirstofEach}"
-                        .generateTwoFirstLetters(),
-                    style: const TextStyle(
-                      color: Color.fromRGBO(172, 89, 252, 0.8),
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                );
-              },
+              placeholder: (BuildContext context, String url) => Container(
+                height: 63,
+                width: 63,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+              errorWidget: (BuildContext context, String url, error) =>
+                  Container(
+                      height: 63,
+                      width: 63,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey.shade300),
+                          child: Icon(
+                            Icons.image,
+                            color: Colors.grey,
+                            size: 20,
+                          ))),
+            ),
+            SizedBox(
+              width: 15,
             ),
             const SizedBox(width: 15),
             Expanded(

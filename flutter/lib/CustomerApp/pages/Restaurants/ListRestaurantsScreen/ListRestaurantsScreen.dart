@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -55,8 +56,10 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
   }
 
   Widget buildRestaurant(BuildContext context, List<Restaurant>? restos) {
+   
+    if (restos == null) return Container();
     return Container(
-      child: restos!.length > 0
+      child: restos.length > 0
           ? SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

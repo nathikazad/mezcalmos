@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 
 // Displays the order costs [delivery + total]
 
-final currency = new NumberFormat("#,##0.00", "en_US");
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
         ["pages"]["Orders"]["ViewRestaurantOrderScreen"]["components"]
@@ -19,16 +19,16 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.centerLeft,
-        child: Text(
-          "${_i18n()['totalCost']}",
-          style: TextStyle(
-            color: const Color(0xff000f1c),
-            fontFamily: "psb",
-            fontStyle: FontStyle.normal,
-            fontSize: 14.0,
-          ),
-          textAlign: TextAlign.left,
-        ),
+        child: Text("${_i18n()['totalCost']}",
+            style: TextStyle(
+                color: const Color(0xff000f1c),
+                fontFamily: "psb",
+                fontStyle: FontStyle.normal,
+                fontSize: 14.0),
+            textAlign: TextAlign.left),
+      ),
+      SizedBox(
+        height: 10,
       ),
       const SizedBox(height: 10),
       Container(
@@ -38,7 +38,7 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4)),
           border: Border.all(color: const Color(0xffececec), width: 0.5),
-          color: const Color(0x80ffffff),
+          color: Colors.white,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -49,28 +49,22 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
-                  children: <Widget>[
-                    Text(
-                      "${_i18n()['deliveryCost']}",
-                      style: const TextStyle(
-                        color: Color(0xff000f1c),
-                        fontFamily: "psr",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 20.0,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                    const Spacer(),
-                    Text(
-                      " \$40.00",
-                      style: TextStyle(
-                        color: const Color(0xff000f1c),
-                        fontFamily: "psb",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 20.0.sp,
-                      ),
-                      textAlign: TextAlign.right,
-                    )
+                  children: [
+                    Text("${_i18n()['deliveryCost']}",
+                        style: const TextStyle(
+                            color: Color(0xff000f1c),
+                            fontFamily: "psr",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 20.0),
+                        textAlign: TextAlign.left),
+                    Spacer(),
+                    Text(" \$40.00",
+                        style: TextStyle(
+                            color: const Color(0xff000f1c),
+                            fontFamily: "psb",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 20.0.sp),
+                        textAlign: TextAlign.right)
                   ],
                 ),
               ),

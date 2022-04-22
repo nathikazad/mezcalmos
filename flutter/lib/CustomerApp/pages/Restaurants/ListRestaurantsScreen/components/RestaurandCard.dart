@@ -49,14 +49,22 @@ class RestaurantCard extends StatelessWidget {
                         restaurant.info.name,
                         style: txt.headline3,
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        restaurant.description[userLanguage]!,
-                        style: txt.subtitle1,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const Spacer(),
+                      if (restaurant.description != null)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              restaurant.description![userLanguage]!,
+                              style: txt.subtitle1,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      Spacer(),
                       Container(
                         alignment: Alignment.bottomLeft,
                         child: Row(
@@ -70,7 +78,9 @@ class RestaurantCard extends StatelessWidget {
                             const SizedBox(width: 5),
                             Flexible(
                               child: Text(
-                                restaurant.items.length.toStringAsFixed(0) +
+                                restaurant
+                                        .getNumberOfitems()
+                                        .toStringAsFixed(0) +
                                     ' ${_i18n()["items"]}',
                                 style: txt.bodyText2,
                               ),
@@ -108,16 +118,13 @@ class RestaurantCard extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: restaurant.info.image,
                 fit: BoxFit.cover,
-                placeholder: (_, __) {
-                  return Shimmer.fromColors(
-                    child: Container(
-                      color: Colors.grey,
-                    ),
-                    highlightColor: Colors.grey[400]!,
-                    baseColor: Colors.grey[300]!,
-                    direction: ShimmerDirection.ltr,
-                  );
-                },
+                placeholder: (BuildContext context, String url) => Container(
+                  width: 15,
+                  height: 15,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
               ),
             ),
             Container(

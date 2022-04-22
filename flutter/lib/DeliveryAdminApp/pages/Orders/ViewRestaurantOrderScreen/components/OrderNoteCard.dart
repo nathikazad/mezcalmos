@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 dynamic _i18n() =>
@@ -16,11 +17,10 @@ Widget orderNoteCard(Rxn<RestaurantOrder> order) {
         alignment: Alignment.centerLeft,
         child: Text("${_i18n()['notes']}",
             style: const TextStyle(
-              color: Color(0xff000f1c),
-              fontFamily: "psb",
-              fontStyle: FontStyle.normal,
-              fontSize: 14.0,
-            ),
+                color: Color(0xff000f1c),
+                fontFamily: "psb",
+                fontStyle: FontStyle.normal,
+                fontSize: 14.0),
             textAlign: TextAlign.left),
       ),
       const SizedBox(height: 15),
@@ -33,12 +33,14 @@ Widget orderNoteCard(Rxn<RestaurantOrder> order) {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4)),
           border: Border.all(color: const Color(0xffececec), width: 0.5),
-          color: const Color(0x80ffffff),
+          color: Colors.white,
         ),
         child: Container(
           alignment: Alignment.centerLeft,
           child: Text(
-              order.value!.notes == null ? "Nothing" : "${order.value!.notes} ",
+              (order.value!.notes == null || order.value!.notes!.length == 0)
+                  ? "Nothing"
+                  : "${order.value!.notes} ",
               style: const TextStyle(
                   color: Color(0xff000f1c),
                   fontFamily: "psr",

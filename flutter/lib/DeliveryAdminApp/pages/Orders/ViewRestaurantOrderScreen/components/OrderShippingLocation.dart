@@ -14,11 +14,10 @@ Widget orderShippingLocation(Rxn<RestaurantOrder> order) {
         alignment: Alignment.centerLeft,
         child: Text(_i18n()['deliveryLocation'],
             style: const TextStyle(
-              color: Color(0xff000f1c),
-              fontFamily: "psb",
-              fontStyle: FontStyle.normal,
-              fontSize: 14.0,
-            ),
+                color: Color(0xff000f1c),
+                fontFamily: "psb",
+                fontStyle: FontStyle.normal,
+                fontSize: 14.0),
             textAlign: TextAlign.left),
       ),
       const SizedBox(height: 15),
@@ -31,15 +30,12 @@ Widget orderShippingLocation(Rxn<RestaurantOrder> order) {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4)),
           border: Border.all(color: const Color(0xffececec), width: 0.5),
-          color: const Color(0x80ffffff),
+          color: Colors.white,
         ),
         child: Container(
           alignment: Alignment.centerLeft,
           child: Text(order.value!.to.address,
-              style: const TextStyle(
-                color: Color(0xff000f1c),
-                fontSize: 14.0,
-              ),
+              style: const TextStyle(color: Color(0xff000f1c), fontSize: 14.0),
               textAlign: TextAlign.left),
         ),
       ),

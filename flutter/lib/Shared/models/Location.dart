@@ -5,9 +5,10 @@ class Location {
   String address;
   LocationData position;
   Location(this.address, this.position);
-  factory Location.fromFirebaseData(dynamic location) {
+  factory Location.fromFirebaseData(location) {
     // mezDbgPrint("Building LocData => $location");
-    LocationData position = buildLocationData(location["lat"], location["lng"]);
+    final LocationData position =
+        buildLocationData(location["lat"], location["lng"]);
     return Location(location["address"], position);
   }
 

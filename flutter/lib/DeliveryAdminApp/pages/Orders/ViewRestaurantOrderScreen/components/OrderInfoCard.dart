@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/basicCellComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/ChangeStatusButtons.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderItemsCard.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/RestaurantOrderItems.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+
+import 'ChangeStatusButtons.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
@@ -42,12 +44,14 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10),
+          margin: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
           width: Get.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(4)),
             border: Border.all(color: const Color(0xffececec), width: 0.5),
-            color: const Color(0x9affffff),
+            color: Colors.white,
           ),
           child: Column(
             children: <Widget>[
@@ -72,9 +76,8 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                       Positioned(
                         left: 28,
                         top: 10,
-                        child: (controller
-                                .orderHaveNewMessageNotifications(
-                                    widget.order.value!.orderId))
+                        child: (controller.orderHaveNewMessageNotifications(
+                                widget.order.value!.orderId))
                             ? Container(
                                 width: 10,
                                 height: 10,
@@ -99,13 +102,19 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                 ),
               ),
               if (widget.order.value?.inProcess() ?? false)
-                Row(
-                  children: buildRestOrderButtons(widget.order),
-                ),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  child: Row(
+                    children: buildRestOrderButtons(widget.order),
+                  ),
+                )
             ],
           ),
         ),
-        const SizedBox(height: 15),
+        SizedBox(
+          height: 15,
+        ),
+
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.centerLeft,
@@ -113,9 +122,11 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
               style: Theme.of(context).textTheme.bodyText2,
               textAlign: TextAlign.left),
         ),
-        const SizedBox(height: 10),
-        buildOrdersItems(widget.order.value!.items),
-        const SizedBox(height: 15),
+        RestaurantOrderItemsComponent(items: widget.order.value!.items),
+        // buildOrdersItems(widget.order.value!.items),
+        SizedBox(
+          height: 15,
+        ),
       ],
     );
   }

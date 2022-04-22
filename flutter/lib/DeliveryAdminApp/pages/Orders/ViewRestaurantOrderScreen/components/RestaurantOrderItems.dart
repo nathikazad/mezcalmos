@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenChoices.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/itemChosenChoices.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -9,26 +9,46 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
 
-class OrderItemsItemCard extends StatefulWidget {
-  const OrderItemsItemCard({
+class RestaurantOrderItemsComponent extends StatefulWidget {
+  const RestaurantOrderItemsComponent({
     Key? key,
-    required this.item,
+    required this.items,
   }) : super(key: key);
 
-  final RestaurantOrderItem item;
+  final List<RestaurantOrderItem> items;
 
   @override
-  State<OrderItemsItemCard> createState() => _OrderItemsItemCardState();
+  State<RestaurantOrderItemsComponent> createState() =>
+      _RestaurantOrderItemsComponentState();
 }
 
-class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
-  bool imageLoded = true;
+class _RestaurantOrderItemsComponentState
+    extends State<RestaurantOrderItemsComponent> {
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
+  bool imageLoaded = true;
 
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
-    final LanguageType userLanguage =
-        Get.find<LanguageController>().userLanguageKey;
+    return Container(
+      child: Column(
+        children: [
+          ListView.builder(
+            padding: EdgeInsets.zero,
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: widget.items.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _orderItemsItemCard(item: widget.items[index]);
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _orderItemsItemCard({required RestaurantOrderItem item}) {
     return Card(
       child: Container(
         // padding: EdgeInsets.all(8),
@@ -43,11 +63,11 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                 children: [
                   CircleAvatar(
                     radius: 25,
-                    backgroundImage: (imageLoded)
-                        ? CachedNetworkImageProvider(widget.item.image,
+                    backgroundImage: (imageLoaded)
+                        ? CachedNetworkImageProvider(item.image,
                             errorListener: () {
                             setState(() {
-                              imageLoded = false;
+                              imageLoaded = false;
                             });
                           })
                         : AssetImage(aNoImage) as ImageProvider<Object>?,
@@ -55,13 +75,13 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   SizedBox(
                     width: 10,
                   ),
-                  if (widget.item.name[userLanguage] != null)
+                  if (item.name[userLanguage] != null)
                     Flexible(
                       flex: 2,
                       fit: FlexFit.tight,
                       child: Text(
-                        widget.item.name[userLanguage]!,
-                        style: txt.bodyText1,
+                        item.name[userLanguage]!,
+                        style: Get.theme.textTheme.bodyText1,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -70,15 +90,13 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   Container(
                     alignment: Alignment.centerRight,
                     decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .primaryColorLight
-                            .withOpacity(0.2),
+                        color: Get.theme.primaryColorLight.withOpacity(0.2),
                         shape: BoxShape.circle),
                     padding: EdgeInsets.all(12),
                     child: Text(
-                      widget.item.quantity.toStringAsFixed(0),
-                      style: txt.headline2!
-                          .copyWith(color: Theme.of(context).primaryColorLight),
+                      item.quantity.toStringAsFixed(0),
+                      style: Get.theme.textTheme.headline2!
+                          .copyWith(color: Get.theme.primaryColorLight),
                     ),
                   ),
                 ],
@@ -86,17 +104,17 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
             ),
             children: [
               Theme(
-                data: Theme.of(context)
-                    .copyWith(dividerColor: Colors.grey.shade400),
+                data: Get.theme.copyWith(dividerColor: Colors.grey.shade400),
                 child: Column(
-                  children: buildChoices(widget.item.chosenChoices),
+                  children: _buildChoices(item.chosenChoices),
                 ),
               ),
               Container(
                 margin: EdgeInsets.all(5),
                 alignment: Alignment.bottomRight,
-                child: Text('\$' + widget.item.totalCost.toInt().toString(),
-                    style: txt.bodyText1!.copyWith(fontSize: 17.sp)),
+                child: Text('\$' + item.totalCost.toInt().toString(),
+                    style: Get.theme.textTheme.bodyText1!
+                        .copyWith(fontSize: 17.sp)),
               )
             ],
           ),
@@ -105,7 +123,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
     );
   }
 
-  List<Widget> buildChoices(Map<String, List<Choice>> choices) {
+  List<Widget> _buildChoices(Map<String, List<Choice>> choices) {
     final List<Widget> viewWidgets = [];
     choices.forEach((String key, List<Choice> value) {
       viewWidgets.add(ItemChosenChoiceComponent(

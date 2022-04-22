@@ -67,7 +67,7 @@ class _LaundryOrderFromToComponentState
                   style: textTheme.bodyText1,
                 ),
                 Text(
-                  laundry?.info.location?.address ?? '',
+                  laundry?.info.location.address ?? '',
                   style: textTheme.subtitle1,
                 ),
               ],

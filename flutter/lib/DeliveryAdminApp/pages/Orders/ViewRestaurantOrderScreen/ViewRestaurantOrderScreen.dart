@@ -108,26 +108,16 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         foregroundColor: Colors.purple.shade700,
         onPressed: () {
           Clipboard.setData(
-            ClipboardData(
-              text: order.value?.clipBoardText(userLanguage),
-            ),
-          ).then(
-            (_) => MezSnackbar(
-              "Done :D",
-              "Copied to clipboard.",
-              position: SnackPosition.TOP,
-            ),
-          );
+                  ClipboardData(text: order.value?.clipBoardText(userLanguage)))
+              .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
+                  position: SnackPosition.TOP));
         },
         tooltip: 'Copy',
         child: new Icon(Icons.copy),
       ),
-      appBar: deliveryAdminAppBar(
-        AppBarLeftButtonType.Back,
-        withOrder: true,
-        function: Get.back,
-      ),
-      backgroundColor: Colors.white,
+      appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
+          withOrder: true, function: Get.back),
+      // backgroundColor: Colors.white,
       body: Obx(
         () {
           if (order.value == null) {
@@ -136,40 +126,45 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             );
           } else {
             return SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  //====================Restaurant Info=======================
-                  (!controller.isPast(order.value!))
-                      ? CurrentOrderInfo(
-                          order: order.value!,
-                        )
-                      : PastOrderInfo(order: order.value!),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    //====================Restaurant Info=======================
+                    (!controller.isPast(order.value!))
+                        ? CurrentOrderInfo(
+                            order: order.value!,
+                          )
+                        : PastOrderInfo(order: order.value!),
 
-                  //============================= Customer info====================
-                  if (order.value?.inProcess() ?? false)
-                    DriverCard(
-                      driver: order.value!.dropoffDriver,
-                      order: order.value!,
-                      assignDriverCallback: (
-                          {required bool changeDriver,
-                          required DeliveryDriver deliveryDriver}) async {
-                        await deliveryDriverController.assignDeliveryDriver(
+                    //============================= Customer info====================
+                    if (order.value?.inProcess() ?? false)
+                      DriverCard(
+                        driver: order.value!.dropoffDriver,
+                        order: order.value!,
+                        assignDriverCallback: (
+                            {required bool changeDriver,
+                            required DeliveryDriver deliveryDriver}) async {
+                          await deliveryDriverController.assignDeliveryDriver(
                             deliveryDriverId: deliveryDriver.deliveryDriverId,
                             orderId: order.value!.orderId,
                             orderType: OrderType.Restaurant,
-                            deliveryDriverType: DeliveryDriverType.DropOff);
-                      },
-                    ),
+                            deliveryDriverType: DeliveryDriverType.DropOff,
+                            changeDriver: changeDriver,
+                          );
+                        },
+                      ),
 
-                  //getCustomerInfoCart(),
-                  OrderInfoCard(order: order),
-                  //==========================>total cost=====================================
-                  orderTotalCostCard(order),
-                  //=========== location========================
-                  orderShippingLocation(order),
-                  //===============================>notes========================>
-                  orderNoteCard(order)
-                ],
+                    //getCustomerInfoCart(),
+                    OrderInfoCard(order: order),
+                    //==========================>total cost=====================================
+                    orderTotalCostCard(order),
+                    //=========== location========================
+                    orderShippingLocation(order),
+                    //===============================>notes========================>
+                    orderNoteCard(order)
+                  ],
+                ),
               ),
             );
           }

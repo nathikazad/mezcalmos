@@ -95,7 +95,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
                         if (value != null) {
                           controller
                               .assignLaundry(
-                                  widget.order.orderId, value.info.id)
+                                  widget.order.orderId, value.info.idInCart)
                               .whenComplete(() {
                             setState(() {
                               btnClicked = false;

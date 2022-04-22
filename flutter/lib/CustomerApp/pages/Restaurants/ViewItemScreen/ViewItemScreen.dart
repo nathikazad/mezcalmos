@@ -5,10 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/BottomBarItemViewScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ChooseOneCheckBox.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ChoosenManyCheckBox.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ItemOptionCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
@@ -27,11 +25,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewItemScreen"]["ViewItemScreen"];
 
 class ViewItemScreen extends StatefulWidget {
-  const ViewItemScreen({
-    Key? key,
-    required this.viewItemScreenMode,
-  }) : super(key: key);
-
+  const ViewItemScreen({Key? key, required this.viewItemScreenMode})
+      : super(key: key);
   final ViewItemScreenMode viewItemScreenMode;
 
   @override
@@ -79,20 +74,24 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
           currentRestaurant = value;
         });
       });
-      mezDbgPrint("got rest id param => $restaurantId");
       final String? itemId = Get.parameters['itemId'];
-      mezDbgPrint("got item id param => $itemId");
 
-      controller.getItem(restaurantId!, itemId!).then((value) {
-        cartItem.value = CartItem(value, restaurantId);
+      controller.getRestaurant(restaurantId!).then((Restaurant? restaurant) {
+        if (restaurant?.findItemById(itemId!) != null) {
+          cartItem.value =
+              CartItem(restaurant!.findItemById(itemId!)!, restaurantId);
+        } else {
+          Future.delayed(Duration.zero, () {
+            Get.back();
+          });
+        }
       });
     } else {
-      cartItem.value = CartItem.clone(
-        restaurantCartController.cart.value.cartItems
-            .firstWhere((CartItem item) {
-          return item.id == Get.parameters["cartItemId"];
-        }),
-      );
+      cartItem.value = CartItem.clone(restaurantCartController
+          .cart.value.cartItems
+          .firstWhere((CartItem item) {
+        return item.idInCart == Get.parameters["cartItemId"];
+      }));
       controller
           .getRestaurant(cartItem.value!.restaurantId)
           .then((Restaurant? value) {
@@ -115,7 +114,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               : "",
           autoBack: true,
         ),
-        body: (cartItem.value?.item == null)
+        body: (cartItem.value == null)
             ? Container(
                 alignment: Alignment.center,
                 child: CircularProgressIndicator(),
@@ -125,34 +124,35 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     );
   }
 
-  Column itemViewScreenBody(BuildContext context) {
-    return Column(
-      children: <Widget>[
+  Container itemViewScreenBody(BuildContext context) {
+    return Container(
+        child: Column(
+      children: [
         Expanded(
           child: SingleChildScrollView(
             child: Column(
-              children: <Widget>[
+              children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 5),
+                  padding: const EdgeInsets.only(
+                    top: 5,
+                  ),
                   alignment: Alignment.center,
                   child: CachedNetworkImage(
-                    imageUrl: cartItem.value!.item.image!,
-                    imageBuilder: (_, ImageProvider imageProvider) {
+                    imageUrl: cartItem.value?.item.image ?? "",
+                    imageBuilder: (BuildContext context,
+                        ImageProvider<Object> imageProvider) {
                       return Container(
                         margin: EdgeInsets.only(top: 10),
                         width: Get.width / 1.5,
                         height: Get.width / 1.5,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: imageProvider,
-                          ),
-                        ),
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                fit: BoxFit.cover, image: imageProvider)),
                       );
                     },
                     fit: BoxFit.cover,
-                    placeholder: (_, __) {
+                    placeholder: (BuildContext context, String url) {
                       return Container(
                         width: Get.width / 1.5,
                         height: Get.width / 1.5,
@@ -161,64 +161,66 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                         ),
                       );
                     },
-                    errorWidget: (_, __, ___) => Container(
-                      height: Get.width / 1.5,
-                      width: Get.width / 1.5,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey.shade300,
-                      ),
-                      child: Icon(
-                        Icons.image,
-                        color: Colors.grey,
-                        size: 30,
-                      ),
-                    ),
+                    errorWidget: (BuildContext context, String url, error) =>
+                        Container(
+                            height: Get.width / 1.5,
+                            width: Get.width / 1.5,
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.grey.shade300),
+                                child: Icon(
+                                  Icons.image,
+                                  color: Colors.grey,
+                                  size: 30,
+                                ))),
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
-                    "${cartItem.value!.item.description![userLanguage]!.inCaps}",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2!
-                        .copyWith(fontSize: 12.sp),
+                      "${cartItem.value!.item.description?[userLanguage]!.inCaps}",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(fontSize: 12.sp)),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                if (cartItem.value!.item.options != null)
+                  Column(
+                    children: List.generate(
+                        cartItem.value!.item.options.length,
+                        (int index) => ItemOptionCard(
+                            cartItem: cartItem,
+                            editMode: widget.viewItemScreenMode ==
+                                ViewItemScreenMode.EditItemMode,
+                            option: cartItem.value!.item.options[index])),
                   ),
+                SizedBox(
+                  height: 20,
                 ),
-                const SizedBox(height: 20),
-                ChooseOneCheckBox(
-                  chooseOneOptions: cartItem.value!.item.chooseOneOptions,
-                  cartItem: cartItem,
-                ),
-                const SizedBox(height: 20),
-                ChooseManyCheckBoxes(
-                    chooseManyOptions: cartItem.value!.item.chooseManyOptions,
-                    cartItem: cartItem),
-                TextFieldComponent(
-                  textController: _noteTextEditingController,
-                  hint: _i18n()["notes"],
-                  onChangeCallback: (String value) {
-                    mezDbgPrint("@IOIOIO@ | ${cartItem.value} notes : $value");
-                    cartItem.value?.notes = value;
-                  },
-                ),
-                const SizedBox(height: 15)
+                SizedBox(
+                  height: 15,
+                )
               ],
             ),
           ),
         ),
         BottomBarItemViewScreen(
+          currentRestaurantId: currentRestaurant?.info.id,
           isAvailable: checkRestaurantAvailability(
               schedule: currentRestaurant?.schedule),
           cartItem: cartItem,
           mode: widget.viewItemScreenMode,
-          currentRestaurantId: currentRestaurant?.info.id,
         ),
       ],
-    );
+    ));
   }
 
   bool checkRestaurantAvailability({Schedule? schedule}) {

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrdersItemsCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -14,7 +15,6 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'components/OrderFooterCard.dart';
 import 'components/OrderStatusCard.dart';
 import 'components/OrderSummaryCard.dart';
-import 'components/OrdersItemsCard.dart';
 import 'components/notesWidget.dart';
 
 final NumberFormat currency = new NumberFormat("#0", "en_US");
@@ -162,6 +162,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                     OrderItemsCard(
                       items: order.value!.items,
                     ),
+
                     SizedBox(
                       height: 10,
                     ),
