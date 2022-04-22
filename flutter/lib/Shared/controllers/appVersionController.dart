@@ -4,7 +4,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/helpers/MezUpdateHelper.dart';
+import 'package:in_app_update/in_app_update.dart';
+import 'package:mezcalmos/Shared/helpers/_MezUpdateHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:new_version/new_version.dart';
@@ -77,10 +78,22 @@ typedef void OnNewUpdateAvailable(
 class AppVersionController {
   Timer? _versionPeriodicTimer;
   late final OnNewUpdateAvailable onNewUpdateAvailable;
+  late final NewVersion _newVersion;
+  NewVersion get newVersionInstance => _newVersion;
 // this is tom implement singleton instead of using GetxController just to use Get.find ..
   static AppVersionController? _instance;
-  // AppVersionController({required this.onNewUpdateAvailable});
-  AppVersionController._internal();
+
+  /// never call thos from outside
+
+  AppVersionController._internal() {
+    // intanciating our NewVersion.
+    _newVersion = NewVersion(
+      iOSId: getPackageName(platform: MezPlatform.IOS),
+      androidId: getPackageName(
+        platform: MezPlatform.ANDROID,
+      ), // packageInfo.packageName // 'com.mezcalmos.customer'
+    );
+  }
 
   /// This is a Singleton Class, Basically upon a first-time Instanciation, onNewUpdateAvailable is required,
   ///
@@ -95,6 +108,7 @@ class AppVersionController {
       _instance = AppVersionController._internal();
       _instance!.onNewUpdateAvailable = onNewUpdateAvailable!;
     }
+
     return _instance!;
   }
 
@@ -123,16 +137,9 @@ class AppVersionController {
   ///
   /// through [_isUpdateAvailable().canUpdate]
   Future<VersionStatus?> _isUpdateAvailable() async {
-    // Instanciating newVersion
-    final NewVersion newVersion = NewVersion(
-      iOSId: getPackageName(platform: MezPlatform.IOS),
-      androidId: getPackageName(
-        platform: MezPlatform.ANDROID,
-      ), // packageInfo.packageName // 'com.mezcalmos.customer'
-    );
-
+    await InAppUpdate.checkForUpdate();
     // Get Version Status
-    final VersionStatus? status = await newVersion.getVersionStatus();
+    final VersionStatus? status = await _newVersion.getVersionStatus();
     return status;
   }
 
@@ -170,16 +177,18 @@ class AppVersionController {
   }
 
   /// Returns bool. if the user canUpdate return true, otherwise return false;
-  Future<MezAppUpdateResult?> startAppUpdate(UpdateType updateType) async {
+  ///
+  /// start Update is mainly called when Minor/Major because we force the update in both.
+  Future<AppUpdateResult?> startAppUpdate(UpdateType updateType) async {
     if (Platform.isAndroid) {
-      MezAppUpdateResult? _appUpdateResult;
+      AppUpdateResult? _appUpdateResult;
 
       /// checkForUpdate and get appVersionInfo...
-      final MezAppUpdateInfo? _versionInfos = await _getNewVersionInfos();
+      final AppUpdateInfo? _versionInfos = await _getNewVersionInfos();
       mezDbgPrint("startAppUpdate ==> _versionInfos => $_versionInfos");
       if (_versionInfos != null &&
           _versionInfos.updateAvailability ==
-              MezUpdateAvailability.updateAvailable) {
+              UpdateAvailability.updateAvailable) {
         mezDbgPrint("startAppUpdate ==> 1st if => $_versionInfos");
 
         if (updateType == UpdateType.Major) {
@@ -187,28 +196,20 @@ class AppVersionController {
             mezDbgPrint(
                 "startAppUpdate ==> updateType == UpdateType.Major => $updateType");
 
-            _appUpdateResult = await MezInAppUpdate.performImmediateUpdate();
+            _appUpdateResult = await InAppUpdate.performImmediateUpdate();
           } catch (e) {
             // keep null
-            Get.snackbar(
-              'Ops!',
-              e.toString(),
-              backgroundColor: Colors.grey[300],
-            );
+            mezDbgPrint("Oops : ${e.toString()}");
           }
         } else if (updateType == UpdateType.Minor) {
           mezDbgPrint(
               "startAppUpdate ==> updateType == UpdateType.Minor => $updateType");
 
           try {
-            _appUpdateResult = await MezInAppUpdate.performImmediateUpdate();
+            _appUpdateResult = await InAppUpdate.performImmediateUpdate();
           } catch (e) {
             // keep null
-            Get.snackbar(
-              'Ops!',
-              e.toString(),
-              backgroundColor: Colors.grey[300],
-            );
+            mezDbgPrint("Oops : ${e.toString()}");
           }
         }
         mezDbgPrint(
@@ -221,27 +222,16 @@ class AppVersionController {
       await StoreRedirect.redirect(
         iOSAppId: getPackageName(platform: MezPlatform.IOS),
       );
-
-      return MezAppUpdateResult.redirectedToStore;
     }
     return null;
   }
 
   /// Platform messages are asynchronous, so we initialize in an async method.
-  Future<MezAppUpdateInfo?> _getNewVersionInfos() async {
+  Future<AppUpdateInfo?> _getNewVersionInfos() async {
     try {
-      return await MezInAppUpdate.mezCheckForUpdate(
-        packageName: getPackageName()!,
-      );
+      return await InAppUpdate.checkForUpdate();
     } catch (e) {
-      debugPrint('catchError((e)  type ${e.runtimeType.toString()}');
-      debugPrint('checkForUpdate: ${e.toString()}');
-      Get.snackbar(
-        'Ops!',
-        e.toString(),
-        backgroundColor: Colors.grey[300],
-      );
-
+      debugPrint('catchError((e)  type ${e.toString()}');
       return null;
     }
   }

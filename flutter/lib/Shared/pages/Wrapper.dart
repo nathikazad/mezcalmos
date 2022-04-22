@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -11,13 +11,14 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
-import 'package:mezcalmos/Shared/helpers/MezUpdateHelper.dart';
+import 'package:mezcalmos/Shared/helpers/_MezUpdateHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgraderWidget.dart';
-import 'package:new_version/new_version.dart';
+import 'package:new_version/new_version.dart' show VersionStatus;
+// import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgraderWidget.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -107,32 +108,50 @@ class _WrapperState extends State<Wrapper> {
             },
           );
         } else if (Platform.isIOS) {
-          MezUpgrade.show(
-            releaseNotes: status.releaseNotes!,
-            appName: getAppName(),
-            packageName: getPackageName()!,
-            currentAppStoreVersion: status.storeVersion,
-            currentInstalledVersion: status.localVersion,
+          _appVersionController!.newVersionInstance.showUpdateDialog(
+            context: context,
+            versionStatus: status,
+            allowDismissal: false,
+            dialogTitle: "${getAppName()} v${status.storeVersion}!",
+            // dismissButtonText: "Skip",
+            dialogText: status.releaseNotes,
+            // dismissAction: () => Get.back<void>(),
           );
         }
         break;
       case UpdateType.Patches:
         if (Platform.isIOS) {
-          MezUpgrade.show(
-            releaseNotes: status.releaseNotes!,
-            appName: getAppName(),
-            packageName: getPackageName()!,
-            currentAppStoreVersion: status.storeVersion,
-            currentInstalledVersion: status.localVersion,
+          _appVersionController!.newVersionInstance.showUpdateDialog(
+            context: context,
+            versionStatus: status,
+            dialogTitle: "${getAppName()} v${status.storeVersion}!",
+            dismissButtonText: "Skip",
+            dialogText: status.releaseNotes,
+            dismissAction: () => Get.back<void>(),
           );
+
+          // MezUpgrade.show(
+          //   releaseNotes: status.releaseNotes!,
+          //   appName: getAppName(),
+          //   packageName: getPackageName()!,
+          //   currentAppStoreVersion: status.storeVersion,
+          //   currentInstalledVersion: status.localVersion,
+          // );
         } else if (Platform.isAndroid) {
-          MezInAppUpdate.startFlexibleUpdate().then((result) {
-            if (result == MezAppUpdateResult.success) {
-              debugPrint("Success!");
-              MezInAppUpdate.completeFlexibleUpdate();
-            }
-          }).catchError((Object? e) {
-            debugPrint("Error:completeFlexibleUpdate ${e.toString()}");
+          yesNoDialog(
+            text: "${getAppName()} v${status.storeVersion}!",
+            body: status.releaseNotes ??
+                "Do you want to update to the new version ?",
+          ).then((YesNoDialogButton result) {
+            if (result == YesNoDialogButton.Yes) {
+              InAppUpdate.startFlexibleUpdate().then((_) {
+                debugPrint("Success!");
+                InAppUpdate.completeFlexibleUpdate();
+              }).catchError((Object? e) {
+                debugPrint("Error:completeFlexibleUpdate ${e.toString()}");
+              });
+            } else
+              Get.back<void>();
           });
         }
         break;

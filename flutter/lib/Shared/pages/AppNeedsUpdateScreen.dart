@@ -2,14 +2,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/MezUpdateHelper.dart';
+import 'package:mezcalmos/Shared/helpers/_MezUpdateHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:new_version/new_version.dart';
+import 'package:new_version/new_version.dart' show VersionStatus;
 import 'package:store_redirect/store_redirect.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -165,7 +166,6 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
     );
   }
 
-  // com.mezcalmos.customer -> 1.0.0+1
   Column _androidUpdateInfosAndButton() {
     return Column(
       children: <Widget>[
@@ -188,10 +188,10 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
           child: Text(_i18n()['update']),
           onPressed: () async {
             _isDownloading.value = true;
-            final MezAppUpdateResult? _res =
+            final AppUpdateResult? _res =
                 await _controller.startAppUpdate(_updateType);
             mezDbgPrint("Screen ==> _res = $_res");
-            _handleUpdateResults(_res);
+            // _handleUpdateResults(_res);
             _isDownloading.value = false;
           },
           style: ElevatedButton.styleFrom(
@@ -205,16 +205,16 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
     );
   }
 
-  void _handleUpdateResults(MezAppUpdateResult? _result) {
-    switch (_result) {
-      case MezAppUpdateResult.success:
-        // TODO : reopen app.
-        break;
-      case MezAppUpdateResult.inAppUpdateFailed:
+  // void _handleUpdateResults(MezAppUpdateResult? _result) {
+  //   switch (_result) {
+  //     case MezAppUpdateResult.success:
+  //       // TODO : reopen app.
+  //       break;
+  //     case MezAppUpdateResult.inAppUpdateFailed:
 
-      case MezAppUpdateResult.redirectedToStore:
-      case MezAppUpdateResult.userDeniedUpdate:
-      default:
-    }
-  }
+  //     case MezAppUpdateResult.redirectedToStore:
+  //     case MezAppUpdateResult.userDeniedUpdate:
+  //     default:
+  //   }
+  // }
 }
