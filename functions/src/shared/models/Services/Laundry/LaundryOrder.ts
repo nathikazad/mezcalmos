@@ -7,10 +7,14 @@ import { Location } from "../../Generic/Generic";
 export interface LaundryOrder extends TwoWayDeliverableOrder {
   laundry: UserInfo;
   notes?: string;
-  weight?: number;
   status: LaundryOrderStatus;
   shippingCost: number;
   costPerKilo: number;
+  costsByType: CostsByType;
+}
+export interface CostsByType {
+  byType: any;
+  weighedCost: number;
 }
 
 export enum LaundryOrderStatus {

@@ -151,7 +151,15 @@ class OrderController extends GetxController {
 
   Future<ServerResponse> setAsReadyForDelivery(String orderId) async {
     return _callLaundryCloudFunction("readyForDeliveryOrder", orderId,
-        optionalParams: <String, dynamic>{});
+        optionalParams: <String, dynamic>{"fromLaundryOperator": true});
+  }
+
+  Future<ServerResponse> setOrderWeight(
+      String orderId, LaundryOrderCosts laundryOrderCosts) async {
+    return _callLaundryCloudFunction("setWeight", orderId, optionalParams: {
+      "fromLaundryOperator": true,
+      "costsByType": laundryOrderCosts.toFirebasFormat()
+    });
   }
 
   Future<ServerResponse> _callLaundryCloudFunction(

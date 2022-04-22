@@ -110,18 +110,6 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     }
   }
 
-  if (newStatus == LaundryOrderStatus.AtLaundry) {
-    if (!data.weight) {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `When at laundry, need to give weight`,
-        errorCode: "weightNotGiven"
-      }
-    }
-    order.weight = data.weight
-    order.cost = order.weight! * order.costPerKilo + order.shippingCost
-  }
-
   order.status = newStatus
 
   let notification: Notification = {

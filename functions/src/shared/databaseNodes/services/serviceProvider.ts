@@ -20,3 +20,7 @@ export function serviceProviderPastOrders(orderType: OrderType, providerId: stri
 export function serviceProviderInfo(orderType: OrderType, providerId: string) {
   return firebase.database().ref(`/${pluralizeOrderType(orderType)}/info/${providerId}`)
 }
+
+export function serviceProviderState(orderType: OrderType, providerId: string) {
+  return firebase.database().ref(`/${pluralizeOrderType(orderType)}/state/${providerId}`)
+}

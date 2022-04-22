@@ -32,6 +32,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                   _i18n()['fixedRate'],
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
+                // TODO: show cost by order type
                 Text(
                   "${order.costPerKilo} \$ / kg",
                   style: Theme.of(context).textTheme.bodyText1,

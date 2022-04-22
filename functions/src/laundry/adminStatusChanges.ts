@@ -47,11 +47,6 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     return response;
   }
 
-  response = await checkDeliveryAdmin(auth!.uid)
-  if (response != undefined) {
-    return response;
-  }
-
   if (data.orderId == null) {
     return {
       status: ServerResponseStatus.Error,
@@ -70,14 +65,17 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     }
   }
 
-  // TO ADD: when customers choose their laundry
-  // if (order.serviceProviderId == null) {
-  //   return {
-  //     status: ServerResponseStatus.Error,
-  //     errorMessage: `Order does not have a laundry`,
-  //     errorCode: "laundryDontExist"
-  //   }
-  // }
+  if (data.fromLaundryOperator) {
+    response = await checkLaundryOperator(order.laundry.id, auth!.uid)
+    if (response != undefined) {
+      return response;
+    }
+  } else {
+    response = await checkDeliveryAdmin(auth!.uid)
+    if (response != undefined) {
+      return response;
+    }
+  }
 
   if (newStatus == LaundryOrderStatus.CancelledByAdmin) {
     if (!orderInProcess(order.status))
@@ -137,6 +135,81 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   return { status: ServerResponseStatus.Success }
 }
 
+export const setWeight = functions.https.onCall(async (data, context) => {
+  let auth = context.auth;
+  let response = await isSignedIn(auth)
+  if (response != undefined) {
+    return response;
+  }
+  if (data.orderId == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Expected order id`,
+      errorCode: "orderIdNotGiven"
+    }
+  }
+
+  if (data.costsByType == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Expected costsByType`,
+      errorCode: "orderIdNotGiven"
+    }
+  }
+
+  let orderId: string = data.orderId;
+  let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
+  if (order == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Order does not exist`,
+      errorCode: "orderDontExist"
+    }
+  }
+
+  if (data.fromLaundryOperator) {
+    response = await checkLaundryOperator(order.laundry.id, auth!.uid)
+    if (response != undefined) {
+      return response;
+    }
+  } else {
+    response = await checkDeliveryAdmin(auth!.uid)
+    if (response != undefined) {
+      return response;
+    }
+  }
+
+  if (order.status != LaundryOrderStatus.AtLaundry) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Order weight can only be changed when status is at laundry`,
+      errorCode: "orderNotAtLaundry"
+    }
+  }
+
+  order.costsByType = data.costsByType;
+  order.cost = order.shippingCost + order.costsByType.weighedCost
+
+  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+  await laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
+  rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+  if (order.dropoffDriver)
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+
+  return response
+});
+
+async function checkLaundryOperator(laundryId: string, userId: string): Promise<ServerResponse | undefined> {
+  let operator = (await laundryNodes.laundryOperators(laundryId, userId).once('value')).val();
+  let isOperator = operator != null && operator == true
+  if (!isOperator) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: "Only authorized laundry operators can run this operation"
+    }
+  }
+  return undefined;
+}
 
 // export const assignToLaundry = functions.https.onCall(async (data, context) => {
 
