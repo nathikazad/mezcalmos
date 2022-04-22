@@ -162,7 +162,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
 //----------------------------------// ------>>>> FUNCTIONS <<<<----------//--------------------------------//
 // button click functions
   Function()? handleClick({required BuildContext context}) {
-    if (!order.isAtLaundry()) {
+    if (order.isAtLaundry()) {
       return assignNewCategory(context);
     } else {}
     return null;

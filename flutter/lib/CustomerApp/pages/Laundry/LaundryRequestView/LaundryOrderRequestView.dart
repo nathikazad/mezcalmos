@@ -279,8 +279,14 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       to: defaultLoc,
                       notes: _orderNote.text,
                       paymentType: PaymentType.Cash))
-                  .then((ServerResponse response) => popEverythingAndNavigateTo(
-                      getLaundyOrderRoute(response.data['orderId'])));
+                  .then((ServerResponse response) {
+                if (response.data['orderId'] != null) {
+                  popEverythingAndNavigateTo(
+                      getLaundyOrderRoute(response.data['orderId']));
+                } else {
+                  Get.snackbar("Error", "");
+                }
+              });
             },
       child: (clicked.value)
           ? CircularProgressIndicator(

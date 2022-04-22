@@ -36,8 +36,9 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
     });
     _pastOrdersListener =
         orderController.pastOrders.stream.listen((List<LaundryOrder> event) {
-      mezDbgPrint(event.length);
+      mezDbgPrint(" past orders lenght -----------------> ${event.length}");
       pastOrders.value = event;
+
       mezDbgPrint(pastOrders.value.length);
     });
 

@@ -1,7 +1,5 @@
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 class LaundryRequest {
   String laundryId;
@@ -16,15 +14,16 @@ class LaundryRequest {
   });
 
   bool valid() {
-    return (this.to != null);
+    return (to != null);
   }
 
   void setToLocation(Location? loc) {
-    this.to = loc;
+    to = loc;
   }
 
   Map<String, dynamic> asCloudFunctionParam() {
     return {
+      "laundryId": laundryId,
       "to": to?.toFirebaseFormattedJson(),
       "notes": notes,
       "paymentType": paymentType.toFirebaseFormatString(),

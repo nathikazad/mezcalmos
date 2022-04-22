@@ -56,30 +56,32 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            // order status
-            LaundryOpOrderStatusCard(order: order.value!),
-            const SizedBox(
-              height: 10,
-            ),
-            // Set categories components
-            LaundyOpSetCategoryComponent(
-              order: order.value!,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            // order Customer
-            _orderCustomerCard(),
+        child: Obx(
+          () => Column(
+            children: [
+              // order status
+              LaundryOpOrderStatusCard(order: order.value!),
+              const SizedBox(
+                height: 10,
+              ),
+              // Set categories components
+              LaundyOpSetCategoryComponent(
+                order: order.value!,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              // order Customer
+              _orderCustomerCard(),
 
-            // order notes
-            LaundryOpOrderNote(order: order.value!),
-            // order summary
-            LaundryOpOrderSummaryCard(order: order.value!),
-            // order Date
-            _orderDateComponent()
-          ],
+              // order notes
+              LaundryOpOrderNote(order: order.value!),
+              // order summary
+              LaundryOpOrderSummaryCard(order: order.value!),
+              // order Date
+              _orderDateComponent()
+            ],
+          ),
         ),
       ),
     );

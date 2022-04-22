@@ -34,7 +34,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                 ),
                 // TODO: show cost by order type
                 Text(
-                  "${order.costPerKilo} \$ / kg",
+                  "${order.costsByType} \$ / kg",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],

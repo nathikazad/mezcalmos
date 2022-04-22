@@ -67,29 +67,27 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-          appBar: getRightAppBar(),
-          body: SingleChildScrollView(
-            child: Builder(
-              builder: (BuildContext context) {
-                if (order.value != null) {
-                  return Column(
-                    children: <Widget>[
-                      DriverOrderMapComponent(order: order),
-                      DriverBottomLaundryOrderCard(
-                          order: order.value as LaundryOrder),
-                    ],
-                  );
-                } else {
-                  return MezLogoAnimation(
-                    centered: true,
-                  );
-                }
-              },
-            ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: getRightAppBar(),
+        body: SingleChildScrollView(
+          child: Builder(
+            builder: (BuildContext context) {
+              if (order.value != null) {
+                return Column(
+                  children: <Widget>[
+                    DriverOrderMapComponent(order: order),
+                    DriverBottomLaundryOrderCard(
+                        order: order.value as LaundryOrder),
+                  ],
+                );
+              } else {
+                return MezLogoAnimation(
+                  centered: true,
+                );
+              }
+            },
           ),
         ),
       ),
