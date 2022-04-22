@@ -176,11 +176,16 @@ class LaundryOrderCostLineItem extends LaundryCostLineItem {
   }) : super(cost: cost, name: name);
 
   factory LaundryOrderCostLineItem.fromData(laundryCostLineItemData) {
-    LaundryOrderCostLineItem li =
-        LaundryCostLineItem.fromData(laundryCostLineItemData)
-            as LaundryOrderCostLineItem;
-    li.weight = laundryCostLineItemData["weight"];
-    return li;
+    final LaundryOrderCostLineItem newLo = LaundryOrderCostLineItem(
+        weight: laundryCostLineItemData["weight"],
+        name: LaundryCostLineItem.fromData(laundryCostLineItemData).name,
+        cost: LaundryCostLineItem.fromData(laundryCostLineItemData).cost);
+
+    // final LaundryOrderCostLineItem li =
+    //     LaundryCostLineItem.fromData(laundryCostLineItemData)
+    //         as LaundryOrderCostLineItem;
+    // li.weight = laundryCostLineItemData["weight"];
+    return newLo;
   }
   @override
   Map<String, dynamic> toFirebaseFormat() {
@@ -208,9 +213,10 @@ class LaundryOrderCosts {
     LaundryOrderCosts laundryCosts = LaundryOrderCosts();
     laundryCosts.minimumCost = laundryCostsData['minimumCost'];
     // ignore: avoid_annotating_with_dynamic
-    for (var item in laundryCostsData["byType"]) {
+    laundryCostsData["byType"]?.forEach((item) {
       laundryCosts.lineItems.add(LaundryOrderCostLineItem.fromData(item));
-    }
+    });
+
     return laundryCosts;
   }
 

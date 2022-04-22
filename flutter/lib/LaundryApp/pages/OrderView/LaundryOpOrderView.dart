@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LAundryOpOrderSummaryCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderNote.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderStatusCard.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderSummaryCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCategoryComponent.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -64,7 +64,20 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               const SizedBox(
                 height: 10,
               ),
-              // Set categories components
+              TextButton(
+                  onPressed: () {
+                    controller.setAsReadyForDelivery(order.value!.orderId);
+                  },
+                  style:
+                      TextButton.styleFrom(backgroundColor: Colors.blueAccent),
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(8),
+                    child: Text("Order ready for delivery"),
+                  )),
+              const SizedBox(
+                height: 10,
+              ),
               LaundyOpSetCategoryComponent(
                 order: order.value!,
               ),
@@ -93,7 +106,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${_i18n()["customer"]}"),
+          Text("${_i18n()["orderDate"]}"),
           SizedBox(
             height: 5,
           ),

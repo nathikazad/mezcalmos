@@ -1204,6 +1204,7 @@
                         "cancel": "Cancel",
                         "setNewItemsWeight": "Set new items weight",
                         "error": "Error",
+                        "categoryExistError": "This category already exists",
                         "categoryError": "Please select a category first",
                         "itemsWeightError": "Please enter a valid items weight"
 

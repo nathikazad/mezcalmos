@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOrderWeightSelector.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
@@ -17,9 +21,14 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
   final LaundryOrder order;
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
+
+  OrderController orderController = Get.find<OrderController>();
+  LaundryInfoController laundryInfoController =
+      Get.find<LaundryInfoController>();
   Rxn<LaundryCostLineItem?> newCategory = Rxn();
   RxList<LaundryCostLineItem> laundryCategories = RxList.empty();
   TextEditingController itemsWeightController = TextEditingController();
+  RxBool isClicked = RxBool(false);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,14 +37,12 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
         SizedBox(
           height: 15,
         ),
-        Obx(
-          () => Column(
-            children: List.generate(
-                laundryCategories.length,
-                (int index) => _itemsWeightCard(
-                    laundryCostLineItem: laundryCategories[index],
-                    context: context)),
-          ),
+        Column(
+          children: List.generate(
+              order.costsByType?.lineItems.length ?? 0,
+              (int index) => _itemsWeightCard(
+                  laundryOrderCostLineItem: order.costsByType!.lineItems[index],
+                  context: context)),
         )
       ],
     );
@@ -56,7 +63,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
 
 // cards to show item weight after being added
   Widget _itemsWeightCard(
-      {required LaundryCostLineItem laundryCostLineItem,
+      {required LaundryOrderCostLineItem laundryOrderCostLineItem,
       required BuildContext context}) {
     return Card(
         child: Container(
@@ -65,11 +72,11 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            laundryCostLineItem.name[userLanguage] ?? "",
+            laundryOrderCostLineItem.name[userLanguage] ?? "",
             style: Theme.of(context).textTheme.bodyText1,
           ),
           Text(
-            "\$${laundryCostLineItem.cost}",
+            "\$${laundryOrderCostLineItem.cost}",
             style: Theme.of(context)
                 .textTheme
                 .bodyText1!
@@ -131,22 +138,34 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          TextButton(
-              onPressed: () {
-                saveItemsWeight();
-              },
-              child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(8),
-                child: Text("${_i18n()["saveItemsWeight"]}"),
-              )),
+          Obx(
+            () => TextButton(
+                onPressed: isClicked.value
+                    ? null
+                    : () {
+                        saveItemsWeight();
+                      },
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(8),
+                  child: (isClicked.value)
+                      ? SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text("${_i18n()["saveItemsWeight"]}"),
+                )),
+          ),
           SizedBox(
             height: 10,
           ),
           TextButton(
               onPressed: () {
-                disposeBottomSheet();
                 Get.back();
+                disposeBottomSheet();
               },
               style: TextButton.styleFrom(backgroundColor: Colors.red),
               child: Container(
@@ -190,14 +209,62 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
 
 // when click save button
   void saveItemsWeight() {
+    isClicked.value = true;
+    final LanguageType primaryLangauge =
+        laundryInfoController.laundry.value!.primaryLanguage;
     if (newCategory.value == null) {
-      Get.snackbar("${_i18n()["error"]}", "${_i18n()["categoryError"]}");
+      Get.snackbar(
+        "${_i18n()["error"]}",
+        "${_i18n()["categoryError"]}",
+        padding: EdgeInsets.all(16),
+        backgroundColor: Colors.grey.shade800,
+        colorText: Colors.white,
+      );
+      isClicked.value = false;
     } else if (num.tryParse(itemsWeightController.text) == null) {
-      Get.snackbar("${_i18n()["error"]}", "${_i18n()["itemsWeightError"]}");
+      Get.snackbar(
+        "${_i18n()["error"]}",
+        "${_i18n()["itemsWeightError"]}",
+        padding: EdgeInsets.all(16),
+        backgroundColor: Colors.grey.shade800,
+        colorText: Colors.white,
+      );
+      isClicked.value = false;
     } else {
-      laundryCategories.add(newCategory.value!);
-      Get.back();
-      disposeBottomSheet();
+      // final LaundryOrderCosts laundryCosts = LaundryOrderCosts();
+      final LaundryOrderCostLineItem newCostLineItem = LaundryOrderCostLineItem(
+          weight: num.parse(itemsWeightController.text),
+          name: newCategory.value!.name,
+          cost: newCategory.value!.cost);
+      final LaundryOrderCostLineItem? _tempCatgeory = order
+          .costsByType!.lineItems
+          .firstWhereOrNull((LaundryOrderCostLineItem element) =>
+              element.name[primaryLangauge] ==
+              newCostLineItem.name[primaryLangauge]);
+      if (_tempCatgeory != null) {
+        isClicked.value = false;
+        Get.snackbar(
+          "${_i18n()["error"]}",
+          "${_i18n()["categoryExistError"]}",
+          padding: EdgeInsets.all(16),
+          backgroundColor: Colors.grey.shade800,
+          colorText: Colors.white,
+        );
+      } else {
+        final LaundryOrderCosts? oldCosts = order.costsByType;
+        oldCosts?.lineItems.add(newCostLineItem);
+
+        orderController
+            .setOrderWeight(order.orderId, oldCosts!)
+            .then((ServerResponse value) {
+          mezDbgPrint("Done");
+          isClicked.value = true;
+          Get.back();
+          disposeBottomSheet();
+        }).whenComplete(() => isClicked.value = true);
+      }
+      //   laundryCategories.add(newCategory.value!);
+
     }
   }
 

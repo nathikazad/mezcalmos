@@ -1206,7 +1206,8 @@
                         "saveItemsWeight": "Guardar artículos de peso",
                         "cancel": "Cancelar",
                         "setNewItemsWeight": "Set nuevos artículos de peso",
-                        "error": "error",
+                        "error": "Error",
+                        "categoryExistError": "Esta categoría ya existe",
                         "categoryError": "Por favor seleccione una categoría primero",
                         "itemsWeightError": "Por favor ingrese un peso válido de peso"
 
