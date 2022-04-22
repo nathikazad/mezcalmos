@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,6 +50,19 @@ class MGoogleMapController {
     );
     markers.add(marker);
     markers.refresh();
+  }
+  //[menu] - [info]
+
+  /// this takes snapshot
+  Future<Image?> takeMapSnapshot() async {
+    // 1 - init the map without showing
+    // 2 - call take snapshot
+    // 3 - dispose map a
+    Uint8List? _tmp = await controller?.takeSnapshot();
+    if (_tmp != null) {
+      return Image.memory(_tmp);
+    }
+    return null;
   }
 
   /// In Case we needed it
