@@ -150,7 +150,7 @@ class OrderController extends GetxController {
   }
 
   Future<ServerResponse> setAsReadyForDelivery(String orderId) async {
-    return _callLaundryCloudFunction("readyForDeliveryOrder", orderId,
+    return _callLaundryCloudFunction("readyForDeliveryOrderTwo", orderId,
         optionalParams: <String, dynamic>{"fromLaundryOperator": true});
   }
 
@@ -160,6 +160,15 @@ class OrderController extends GetxController {
       "fromLaundryOperator": true,
       "costsByType": laundryOrderCosts.toFirebasFormat()
     });
+  }
+
+  Future<ServerResponse> setEstimatedDeliveryTime(
+      String orderId, DateTime estimatedTime) async {
+    return _callLaundryCloudFunction("setEstimatedDeliveryTime", orderId,
+        optionalParams: {
+          "fromLaundryOperator": true,
+          "estimatedDeliveryTime": estimatedTime.toUtc().toString()
+        });
   }
 
   Future<ServerResponse> _callLaundryCloudFunction(
