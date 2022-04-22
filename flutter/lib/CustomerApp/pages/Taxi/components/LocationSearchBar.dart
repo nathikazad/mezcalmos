@@ -58,12 +58,13 @@ class LocationSearchBarController {
   void expandDropdown({int itemsCount = 2}) {
     /// eachItems = [itemMaxHeight] OF HEIGHT
     final double itemMaxHeight = 40.0 - (itemsCount == 2 ? 0 : itemsCount);
-    double height = 2 * itemMaxHeight;
+    double height = (2 * itemMaxHeight) + itemMaxHeight;
 
     if (itemsCount >= 2 && itemsCount <= 4) {
       height = itemsCount * itemMaxHeight;
     } else if (itemsCount > 4) {
-      height = 4 * itemMaxHeight;
+      height =
+          (itemsCount * itemMaxHeight) + ((itemsCount * itemMaxHeight) / 2);
     }
 
     pickChoicesDropDownHeight.value = height;
@@ -288,56 +289,81 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   Widget pickChoicesDropDown() {
     return Obx(
       () => AnimatedContainer(
-        clipBehavior: Clip.hardEdge,
-        duration: Duration(milliseconds: 500),
-        curve: Curves.fastOutSlowIn,
-        height: locationSearchBarController.pickChoicesDropDownHeight.value,
-        width: Get.width,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey.shade200,
-            width: 1,
-          ),
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
-            topRight: Radius.circular(0),
-          ),
-        ),
-        child: SingleChildScrollView(
-          child: Center(
-            child: ListView.separated(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              shrinkWrap: true,
-              separatorBuilder: (_, __) {
-                return SizedBox(height: 10);
-              },
-              itemCount: dropDownItems.length,
-              itemBuilder: (_, int i) {
-                return InkWell(
-                  onTap: () {
-                    dropDownItems[i].function();
-                    locationSearchBarController.unfocusAllFocusNodes();
-                    setState(() {});
-                  },
-                  child: Row(
-                    children: <Widget>[
-                      const SizedBox(width: 20),
-                      dropDownItems[i].icon,
-                      const SizedBox(width: 10),
-                      Text(
-                        dropDownItems[i].title,
-                        style: TextStyle(fontFamily: 'psb'),
-                      ),
-                    ],
-                  ),
-                );
-              },
+          clipBehavior: Clip.hardEdge,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.fastOutSlowIn,
+          height: locationSearchBarController.pickChoicesDropDownHeight.value,
+          width: Get.width,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey.shade200,
+              width: 1,
+            ),
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+              topRight: Radius.circular(0),
             ),
           ),
-        ),
-      ),
+          child: Column(
+            children: dropDownItems
+                .map((d) => Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          d.function();
+                          locationSearchBarController.unfocusAllFocusNodes();
+                          setState(() {});
+                        },
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 20),
+                            d.icon,
+                            const SizedBox(width: 10),
+                            Text(
+                              d.title,
+                              style: TextStyle(fontFamily: 'psb'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ))
+                .toList(),
+          )
+
+          // SingleChildScrollView(
+          //   child: Center(
+          //     child: ListView.separated(
+          //       padding: EdgeInsets.symmetric(vertical: 15),
+          //       shrinkWrap: true,
+          //       separatorBuilder: (_, __) {
+          //         return SizedBox(height: 10);
+          //       },
+          //       itemCount: dropDownItems.length,
+          //       itemBuilder: (_, int i) {
+          //         return InkWell(
+          //           onTap: () {
+          //             dropDownItems[i].function();
+          //             locationSearchBarController.unfocusAllFocusNodes();
+          //             setState(() {});
+          //           },
+          //           child: Row(
+          //             children: <Widget>[
+          //               const SizedBox(width: 20),
+          //               dropDownItems[i].icon,
+          //               const SizedBox(width: 10),
+          //               Text(
+          //                 dropDownItems[i].title,
+          //                 style: TextStyle(fontFamily: 'psb'),
+          //               ),
+          //             ],
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // ),
+          ),
     );
   }
 
