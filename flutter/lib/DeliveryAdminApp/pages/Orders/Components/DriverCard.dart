@@ -36,61 +36,64 @@ class DriverCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    return Container(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child: Text(
-              '${_i18n()["driver"]}',
-              style: textTheme.bodyText1,
+    return Obx(
+      () => Container(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              child: Text(
+                '${_i18n()["driver"]}',
+                style: textTheme.bodyText1,
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 1200),
-            child: (driverUserInfoAndUpdateStatus == null ||
-                    (driverUserInfoAndUpdateStatus != null &&
-                        driverUserInfoAndUpdateStatus ==
-                            DriverUserInfoAndUpdateStatus.staring))
-                ? Card(
-                    color: (navigateAndGetDriver() != null || driver != null)
-                        ? Colors.white
-                        : Colors.grey.shade400,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(
-                        width: 1.5,
-                        color:
-                            (driver != null) ? Colors.green : Colors.redAccent,
+            const SizedBox(height: 10),
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 1200),
+              child: (driverUserInfoAndUpdateStatus == null ||
+                      (driverUserInfoAndUpdateStatus != null &&
+                          driverUserInfoAndUpdateStatus ==
+                              DriverUserInfoAndUpdateStatus.staring))
+                  ? Card(
+                      color: (navigateAndGetDriver() != null || driver != null)
+                          ? Colors.white
+                          : Colors.grey.shade400,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                          width: 1.5,
+                          color: (driver != null)
+                              ? Colors.green
+                              : Colors.redAccent,
+                        ),
+                      ),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: navigateAndGetDriver(),
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 10),
+                          child: (driver != null)
+                              ? driverInfoComponent(textTheme, context)
+                              : noDriverComponent(context, textTheme),
+                        ),
+                      ),
+                    )
+                  :
+                  // else if (driverUserInfoAndUpdateStatus ==
+                  //     DriverUserInfoAndUpdateStatus.uploading)
+                  Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(),
                       ),
                     ),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      onTap: navigateAndGetDriver(),
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 10),
-                        child: (driver != null)
-                            ? driverInfoComponent(textTheme, context)
-                            : noDriverComponent(context, textTheme),
-                      ),
-                    ),
-                  )
-                :
-                // else if (driverUserInfoAndUpdateStatus ==
-                //     DriverUserInfoAndUpdateStatus.uploading)
-                Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -113,7 +116,7 @@ class DriverCard extends StatelessWidget {
       kDriversListRoute,
       arguments: order,
     ) as DeliveryDriver?;
-    debugPrint(
+    mezDbgPrint(
         '_getNewDriverWhenDriverIsNotNull: newDriver ${newDriver.toString()}');
     if (newDriver != null)
       assignDriverCallback(
@@ -154,6 +157,7 @@ class DriverCard extends StatelessWidget {
         };
       }
     }
+    return null;
   }
 
   // ------ LOCAL COMPONENTS ---------//

@@ -131,7 +131,10 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                       __,
                     ) {
                       return DriverCard(
-                        driver: deliveryDriverUserInfo.deliveryDriverUserInfo,
+                        driver: (order.value!.getCurrentPhase() ==
+                                LaundryOrderPhase.Pickup)
+                            ? order.value!.pickupDriver
+                            : order.value!.dropoffDriver,
                         order: order.value!,
                         driverUserInfoAndUpdateStatus: deliveryDriverUserInfo
                             .driverUserInfoAndUpdateStatus,
@@ -165,6 +168,8 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                             deliveryDriverType: getRightDeliveryDriverType(),
                             changeDriver: changeDriver,
                           );
+                          mezDbgPrint(
+                              "mmmmmmmmmmmmmmmmzzzzzzzzzz $changeDriver");
 
                           if (serverResponse.status == ResponseStatus.Success) {
                             /// Set the new driver
