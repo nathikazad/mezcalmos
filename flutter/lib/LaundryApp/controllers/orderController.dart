@@ -150,6 +150,7 @@ class OrderController extends GetxController {
   }
 
   Future<ServerResponse> setAsReadyForDelivery(String orderId) async {
+    mezDbgPrint("Seeting order ready for delivery");
     return _callLaundryCloudFunction("readyForDeliveryOrderTwo", orderId,
         optionalParams: <String, dynamic>{"fromLaundryOperator": true});
   }
@@ -164,7 +165,8 @@ class OrderController extends GetxController {
 
   Future<ServerResponse> setEstimatedDeliveryTime(
       String orderId, DateTime estimatedTime) async {
-    return _callLaundryCloudFunction("setEstimatedDeliveryTime", orderId,
+    mezDbgPrint("inside clod set delivery time $estimatedTime");
+    return _callLaundryCloudFunction("setEstimatedTime", orderId,
         optionalParams: {
           "fromLaundryOperator": true,
           "estimatedDeliveryTime": estimatedTime.toUtc().toString()
@@ -174,13 +176,16 @@ class OrderController extends GetxController {
   Future<ServerResponse> _callLaundryCloudFunction(
       String functionName, String orderId,
       {Map<String, dynamic>? optionalParams}) async {
+    mezDbgPrint("calling cloud func");
     final HttpsCallable cloudFunction =
         FirebaseFunctions.instance.httpsCallable('laundry-$functionName');
     try {
       final HttpsCallableResult response = await cloudFunction
           .call({"orderId": orderId, ...optionalParams ?? {}});
+      mezDbgPrint("Response : ${response.data}");
       return ServerResponse.fromJson(response.data);
     } catch (e) {
+      mezDbgPrint("Errrooooooooor =======> $e");
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");
     }

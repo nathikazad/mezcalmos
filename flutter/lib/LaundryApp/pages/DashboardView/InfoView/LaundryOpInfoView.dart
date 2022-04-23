@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,10 +26,16 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
   Rxn<Laundry> laundry = Rxn();
+
+  StreamSubscription? laundryListener;
   @override
   void initState() {
 // get Laundry info
     laundry = laundryInfoController.laundry;
+    laundryListener =
+        laundryInfoController.laundry.stream.listen((Laundry? event) {
+      laundry.value = event;
+    });
 
     super.initState();
   }

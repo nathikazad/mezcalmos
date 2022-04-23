@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/DashboardView/InfoView/LaundryOpInfoView.dart';
 import 'package:mezcalmos/LaundryApp/pages/DashboardView/OrdersListView/LaundryOpOrdersListView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['DashboardView'];
@@ -19,9 +21,19 @@ class _DashboardViewState extends State<DashboardView> {
   int currentIndex = 0;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
+      drawer: MezSideMenu(),
+      appBar: mezcalmosAppBar(
+        AppBarLeftButtonType.Menu,
+      ),
       body: getCurrentScreen(currentIndex),
       bottomNavigationBar: laundryOpBottomNavBar(context),
     );

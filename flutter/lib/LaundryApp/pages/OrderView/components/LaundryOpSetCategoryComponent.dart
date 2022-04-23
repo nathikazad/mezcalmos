@@ -236,8 +236,9 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
           weight: num.parse(itemsWeightController.text),
           name: newCategory.value!.name,
           cost: newCategory.value!.cost);
+
       final LaundryOrderCostLineItem? _tempCatgeory = order
-          .costsByType!.lineItems
+          .costsByType?.lineItems
           .firstWhereOrNull((LaundryOrderCostLineItem element) =>
               element.name[primaryLangauge] ==
               newCostLineItem.name[primaryLangauge]);
@@ -251,17 +252,22 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
           colorText: Colors.white,
         );
       } else {
-        final LaundryOrderCosts? oldCosts = order.costsByType;
-        oldCosts?.lineItems.add(newCostLineItem);
+        LaundryOrderCosts? oldCosts = order.costsByType;
+        if (oldCosts != null) {
+          oldCosts.lineItems.add(newCostLineItem);
+        } else {
+          oldCosts = LaundryOrderCosts();
+          oldCosts.lineItems.add(newCostLineItem);
+        }
 
         orderController
-            .setOrderWeight(order.orderId, oldCosts!)
+            .setOrderWeight(order.orderId, oldCosts)
             .then((ServerResponse value) {
           mezDbgPrint("Done");
-          isClicked.value = true;
+
           Get.back();
           disposeBottomSheet();
-        }).whenComplete(() => isClicked.value = true);
+        }).whenComplete(() => isClicked.value = false);
       }
       //   laundryCategories.add(newCategory.value!);
 

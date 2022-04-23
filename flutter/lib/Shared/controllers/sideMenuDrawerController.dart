@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -23,7 +22,9 @@ class SideMenuDrawerController extends GetxController {
   }
 
   void openMenu() {
+    mezDbgPrint("Openning side menu");
     if (_scaffoldKey?.currentState?.isEndDrawerOpen == false) {
+      mezDbgPrint("Openning side menu");
       _scaffoldKey?.currentState?.openDrawer();
     } else {
       _scaffoldKey?.currentState?.openEndDrawer();

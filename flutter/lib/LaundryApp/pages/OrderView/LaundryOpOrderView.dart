@@ -9,6 +9,7 @@ import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderNo
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderStatusCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderSummaryCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCategoryComponent.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrderView/components/OrderEstimatedTimeComponent.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -84,6 +85,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               const SizedBox(
                 height: 10,
               ),
+              OrderEstimatedTimeComponent(order: order.value!),
               // order Customer
               _orderCustomerCard(),
 

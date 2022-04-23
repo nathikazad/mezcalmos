@@ -90,11 +90,11 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         weight: data["weight"],
         shippingCost: data['shippingCost'] ?? 50,
         notes: data["notes"],
-        costsByType: (data["estimatedDeliveryTime"] != null)
+        costsByType: (data["costsByType"] != null)
             ? LaundryOrderCosts.fromData(data["costsByType"])
             : null,
         estimatedDeliveryTime: (data["estimatedDeliveryTime"] != null)
-            ? DateTime.parse(data["costsByType"])
+            ? DateTime.parse(data["estimatedDeliveryTime"])
             : null,
         laundry: (data["laundry"] != null)
             ? ServiceUserInfo.fromData(data["laundry"])
