@@ -65,13 +65,6 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     }
   }
 
-  if (newStatus == LaundryOrderStatus.ReadyForDelivery && order.dropoffDriver == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order cannot be ready for delivery when drop off driver is null`,
-    }
-  }
-
   order.status = newStatus
   if (newStatus == LaundryOrderStatus.CancelledByAdmin)
     await finishOrder(order, orderId);
