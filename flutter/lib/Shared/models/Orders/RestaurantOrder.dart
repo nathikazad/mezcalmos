@@ -106,7 +106,7 @@ class RestaurantOrder extends DeliverableOrder {
 
         optionData["choices"]?.forEach((choiceData) {
           restaurantOrderItem.chosenChoices[optionId]!
-              .add(Choice.fromData(choiceData));
+              .add(Choice.fromData(choiceData["id"], choiceData));
         });
       });
       restaurantOrder.items.add(restaurantOrderItem);

@@ -35,6 +35,7 @@ class _RestaurantsListOfItemsComponentState
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Row(
           children: [
+            if (widget.item.image != null)
             CachedNetworkImage(
               imageUrl: widget.item.image!,
               fit: BoxFit.cover,

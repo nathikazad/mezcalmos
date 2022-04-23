@@ -52,13 +52,12 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   /// currentRestaurant
   Restaurant? currentRestaurant;
-
-  /// _noteTextEditingController
-  TextEditingController _noteTextEditingController = TextEditingController();
+  TextEditingController _noteTextEdittingController = TextEditingController();
+  RxBool showImage = RxBool(true);
 
   @override
   void dispose() {
-    _noteTextEditingController.dispose();
+    _noteTextEdittingController.dispose();
     super.dispose();
   }
 
@@ -126,101 +125,69 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   Container itemViewScreenBody(BuildContext context) {
     return Container(
-        child: Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(
-                    top: 5,
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  if (cartItem.value?.item.image != null && showImage.value)
+                    CircleAvatar(
+                      radius: 120,
+                      backgroundImage: CachedNetworkImageProvider(
+                          cartItem.value!.item.image!),
+                      onBackgroundImageError:
+                          (Object obj, StackTrace? stackTrace) {
+                        showImage.value = false;
+                      },
+                    ),
+                  SizedBox(
+                    height: 20,
                   ),
-                  alignment: Alignment.center,
-                  child: CachedNetworkImage(
-                    imageUrl: cartItem.value?.item.image ?? "",
-                    imageBuilder: (BuildContext context,
-                        ImageProvider<Object> imageProvider) {
-                      return Container(
-                        margin: EdgeInsets.only(top: 10),
-                        width: Get.width / 1.5,
-                        height: Get.width / 1.5,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                fit: BoxFit.cover, image: imageProvider)),
-                      );
-                    },
-                    fit: BoxFit.cover,
-                    placeholder: (BuildContext context, String url) {
-                      return Container(
-                        width: Get.width / 1.5,
-                        height: Get.width / 1.5,
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    },
-                    errorWidget: (BuildContext context, String url, error) =>
-                        Container(
-                            height: Get.width / 1.5,
-                            width: Get.width / 1.5,
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.grey.shade300),
-                                child: Icon(
-                                  Icons.image,
-                                  color: Colors.grey,
-                                  size: 30,
-                                ))),
+                  if (cartItem.value?.item.description != null)
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Text(
+                          "${cartItem.value!.item.description![userLanguage]!.inCaps}",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(fontSize: 12.sp)),
+                    ),
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(
-                      "${cartItem.value!.item.description?[userLanguage]!.inCaps}",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2!
-                          .copyWith(fontSize: 12.sp)),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                if (cartItem.value!.item.options != null)
-                  Column(
-                    children: List.generate(
-                        cartItem.value!.item.options.length,
-                        (int index) => ItemOptionCard(
-                            cartItem: cartItem,
-                            editMode: widget.viewItemScreenMode ==
-                                ViewItemScreenMode.EditItemMode,
-                            option: cartItem.value!.item.options[index])),
+                  if (cartItem.value!.item.options != null)
+                    Column(
+                      children: List.generate(
+                          cartItem.value!.item.options.length,
+                          (int index) => ItemOptionCard(
+                              cartItem: cartItem,
+                              editMode: widget.viewItemScreenMode ==
+                                  ViewItemScreenMode.EditItemMode,
+                              option: cartItem.value!.item.options[index])),
+                    ),
+                  SizedBox(
+                    height: 20,
                   ),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  height: 15,
-                )
-              ],
+                  SizedBox(
+                    height: 15,
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        BottomBarItemViewScreen(
-          currentRestaurantId: currentRestaurant?.info.id,
-          isAvailable: checkRestaurantAvailability(
-              schedule: currentRestaurant?.schedule),
-          cartItem: cartItem,
-          mode: widget.viewItemScreenMode,
-        ),
-      ],
-    ));
+          BottomBarItemViewScreen(
+            currentRestaurantId: currentRestaurant?.info.id,
+            isAvailable: checkRestaurantAvailability(
+                schedule: currentRestaurant?.schedule),
+            cartItem: cartItem,
+            mode: widget.viewItemScreenMode,
+          ),
+        ],
+      )
+    );
   }
 
   bool checkRestaurantAvailability({Schedule? schedule}) {
