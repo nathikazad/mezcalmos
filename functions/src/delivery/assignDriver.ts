@@ -153,7 +153,7 @@ function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDe
           status: ServerResponseStatus.Error,
           errorMessage: "dropoffDriver is not set"
         }
-      deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId);
+      deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).remove();
       delete order.dropoffDriver;
       deleteChat(order.secondaryChats.deliveryAdminDropOffDriver!);
       order.secondaryChats.deliveryAdminDropOffDriver = null;
@@ -164,7 +164,7 @@ function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDe
           status: ServerResponseStatus.Error,
           errorMessage: "pickupDriver is not  set"
         }
-      deliveryDriverNodes.inProcessOrders(order.pickupDriver.id, orderId)
+      deliveryDriverNodes.inProcessOrders(order.pickupDriver.id, orderId).remove();
       delete order.pickupDriver;
       deleteChat(order.secondaryChats.deliveryAdminPickupDriver!);
       order.secondaryChats.deliveryAdminPickupDriver = null;
