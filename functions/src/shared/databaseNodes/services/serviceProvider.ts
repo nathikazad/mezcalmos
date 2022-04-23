@@ -22,5 +22,5 @@ export function serviceProviderInfo(orderType: OrderType, providerId: string) {
 }
 
 export function serviceProviderState(orderType: OrderType, providerId: string) {
-  return firebase.database().ref(`/${pluralizeOrderType(orderType)}/state/${providerId}`)
+  return serviceProviderInfo(orderType, providerId).child("state")
 }

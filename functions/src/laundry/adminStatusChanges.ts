@@ -65,13 +65,6 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     }
   }
 
-  if (newStatus == LaundryOrderStatus.ReadyForDelivery && order.dropoffDriver == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order cannot be ready for delivery when drop off driver is null`,
-    }
-  }
-
   order.status = newStatus
   if (newStatus == LaundryOrderStatus.CancelledByAdmin)
     await finishOrder(order, orderId);
@@ -178,7 +171,7 @@ export const setEstimatedDeliveryTime = functions.https.onCall(async (data, cont
   }
 
   let orderId = data.orderId;
-  order.estimatedDeliveryTime = data.estimtedDeliveryTime;
+  order.estimatedDeliveryTime = data.estimatedDeliveryTime;
   order.cost = order.shippingCost + order.costsByType.weighedCost
 
   customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
@@ -191,6 +184,9 @@ export const setEstimatedDeliveryTime = functions.https.onCall(async (data, cont
 });
 
 async function checkLaundryOperator(laundryId: string, userId: string): Promise<ServerResponse | undefined> {
+  console.log(userId, laundryId)
+  console.log(laundryNodes.laundryOperators(laundryId, userId).toJSON());
+  console.log(laundryNodes.laundryOperators(laundryId, userId).toString());
   let operator = (await laundryNodes.laundryOperators(laundryId, userId).once('value')).val();
   let isOperator = operator != null && operator == true
   if (!isOperator) {
