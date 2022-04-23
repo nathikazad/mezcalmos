@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
 
 class LaundryOrderRequestView extends StatefulWidget {
   const LaundryOrderRequestView({Key? key}) : super(key: key);
@@ -191,8 +191,9 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   InkWell pickFromMapComponent(BuildContext context) {
     return InkWell(
       onTap: () async {
-        final Location? currentLoc =
-            await Get.toNamed<void>(kPickLocationNotAuth) as Location?;
+        // ignore: prefer_final_locals
+        Location? currentLoc =
+            await Get.toNamed(kPickLocationNotAuth) as Location?;
         if (currentLoc != null) {
           setState(() {
             defaultLoc = currentLoc;
@@ -238,7 +239,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             ? makeOrderButton(context)
             : TextButton(
                 onPressed: () async {
-                  await Get.toNamed<void>(kSignInRouteOptional);
+                  await Get.toNamed<void>(sharedRoute.kSignInRouteOptional);
                 },
                 style: TextButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -276,7 +277,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       notes: _orderNote.text,
                       paymentType: PaymentType.Cash))
                   .then(
-                    (ServerResponse response) => popEverythingAndNavigateTo(
+                    (ServerResponse response) =>
+                        sharedRoute.popEverythingAndNavigateTo(
                       getLaundyOrderRoute(
                         response.data['orderId'],
                       ),

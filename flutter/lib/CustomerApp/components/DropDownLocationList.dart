@@ -119,10 +119,10 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     mezDbgPrint(widget.passedInLocation);
     // we will route the user back to the Map
     if (newLocation?.id == "_pick_") {
-      final SavedLocation? saveLocation = await Get.toNamed<SavedLocation?>(
+      final SavedLocation? saveLocation = await Get.toNamed(
         kPickLocationRoute,
         arguments: true,
-      );
+      ) as SavedLocation;
       mezDbgPrint("View Got result : $saveLocation");
       if (saveLocation != null) {
         setState(() {

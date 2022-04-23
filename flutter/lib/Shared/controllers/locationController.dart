@@ -1,6 +1,7 @@
 // ignore_for_file: always_specify_types
 
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
@@ -45,7 +46,6 @@ class LocationController extends GetxController {
         return Future.value(statusSnapshot.value);
       case PermissionStatus.granted:
         statusSnapshot.value = LocationPermissionsStatus.Ok;
-        mezDbgPrint(statusSnapshot.value);
 
         return Future.value(statusSnapshot.value);
     }
