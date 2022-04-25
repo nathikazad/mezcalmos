@@ -48,6 +48,15 @@ class _RestaurantLocationCardState extends State<RestaurantLocationCard> {
           SizedBox(
             height: 10,
           ),
+          Container(
+            child: Text(
+              widget.restaurant.info.location.address,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
           IgnorePointer(
             ignoring: true,
             child: Card(
@@ -71,18 +80,22 @@ class _RestaurantLocationCardState extends State<RestaurantLocationCard> {
   }
 
   void initRestaurantLocationMapController() {
-    mapController.periodicRerendering.value = true;
-
+    // mapController.periodicRerendering.value = true;
+    mapController.recenterButtonEnabled.value = false;
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
+    // centering the map on the location marker
     mapController.setLocation(widget.restaurant.info.location);
+    mapController.moveToNewLatLng(widget.restaurant.info.location.latitude,
+        widget.restaurant.info.location.longitude);
     mapController.addOrUpdatePurpleDestinationMarker(
         latLng: getRestaurantLatLng()!);
 //TODO @m66are disable recentre button  enable mez pointer
     //  mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
-
-    mapController.animateMarkersPolyLinesBounds.value = true;
-    mapController.recenterButtonEnabled.value = false;
-
-    mapController.animateAndUpdateBounds();
+    // mapController.animateMarkersPolyLinesBounds.value = true;
+    // mapController.animateAndUpdateBounds();
+    mapController.onMapInitilized = () {
+      mapController.setZoomLvl(zoomLvl: 15.5);
+    };
   }
 
   LatLng? getRestaurantLatLng() {

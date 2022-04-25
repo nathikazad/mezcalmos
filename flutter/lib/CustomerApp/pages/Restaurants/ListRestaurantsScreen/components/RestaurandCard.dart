@@ -49,22 +49,15 @@ class RestaurantCard extends StatelessWidget {
                         restaurant.info.name,
                         style: txt.headline3,
                       ),
+                      const SizedBox(height: 10),
                       if (restaurant.description != null)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              restaurant.description![userLanguage]!,
-                              style: txt.subtitle1,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                        Text(
+                          restaurant.description![userLanguage]!,
+                          style: txt.subtitle1,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      Spacer(),
+                      if (restaurant.description != null) const Spacer(),
                       Container(
                         alignment: Alignment.bottomLeft,
                         child: Row(
@@ -118,13 +111,16 @@ class RestaurantCard extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: restaurant.info.image,
                 fit: BoxFit.cover,
-                placeholder: (BuildContext context, String url) => Container(
-                  width: 15,
-                  height: 15,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
+                placeholder: (_, __) {
+                  return Shimmer.fromColors(
+                    child: Container(
+                      color: Colors.grey,
+                    ),
+                    highlightColor: Colors.grey[400]!,
+                    baseColor: Colors.grey[300]!,
+                    direction: ShimmerDirection.ltr,
+                  );
+                },
               ),
             ),
             Container(

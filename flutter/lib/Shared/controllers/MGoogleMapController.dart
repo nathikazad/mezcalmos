@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
@@ -24,6 +24,7 @@ class MGoogleMapController {
   late bool enableMezSmartPointer;
   LatLngBounds? bounds;
   Function? onMapTap;
+  Function? onMapInitilized;
   // this is used when we don't want to re-render the map periodically.
   RxBool periodicRerendering = false.obs;
   RxBool recenterButtonEnabled = false.obs;
@@ -32,6 +33,7 @@ class MGoogleMapController {
   MGoogleMapController({
     bool myLocationButtonEnabled = false,
     bool enableMezSmartPointer = true,
+    this.onMapInitilized,
   }) {
     this.myLocationButtonEnabled = RxBool(myLocationButtonEnabled);
     this.enableMezSmartPointer = enableMezSmartPointer;
@@ -369,5 +371,16 @@ class MGoogleMapController {
     } else {
       return minMaxZoomPrefs!;
     }
+  }
+
+  /// This basically sets the ZoomLvl of the map manually.
+  ///
+  /// `periodicRerendering` should be false to do this , because if periodicRendering is true it will keep fitting/animating every `x` second.
+  ///
+  /// `minMaxZoomPrefs` shoud be unbounded, else You can not controll the zoom since it's already sat with a min/max.
+  void setZoomLvl({required double zoomLvl}) {
+    assert(periodicRerendering == false);
+    assert(minMaxZoomPrefs == MinMaxZoomPreference.unbounded);
+    controller?.animateCamera(CameraUpdate.zoomTo(zoomLvl));
   }
 }

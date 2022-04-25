@@ -163,6 +163,8 @@ class MGoogleMapState extends State<MGoogleMap> {
                   await _gController.setMapStyle(mezMapStyle);
                   await widget.mGoogleMapController.animateAndUpdateBounds();
                   _completer.complete(_gController);
+                  // Executing Callback that is depending on [widget.mGoogleMapController.controller].
+                  widget.mGoogleMapController.onMapInitilized?.call();
                 },
               ),
             ).detector,

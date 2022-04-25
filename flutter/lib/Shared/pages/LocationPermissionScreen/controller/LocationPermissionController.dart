@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:permission_handler/permission_handler.dart'
     show openAppSettings;
 
@@ -88,6 +89,7 @@ class LocationPermissionController {
 
     if (locationController.statusSnapshot.value ==
         LocationPermissionsStatus.ForeverDenied) {
+      MezSnackbar("I got you !", "That is the problem !");
       await openAppSettings();
       return;
     }
@@ -96,12 +98,14 @@ class LocationPermissionController {
         androidSdkVersion != null && androidSdkVersion! >= 30;
     // in iOS or Android 11+ case if the user clicks Dont allow which is (Denied) , when user re-clicks button,
     // he does not get the dialog poped up again, natively hadnled, thus we add this line :
-    if ((Platform.isIOS || _isAndroid11) &&
-        locationController.statusSnapshot.value ==
-            LocationPermissionsStatus.Denied) {
-      await openAppSettings();
-      return;
-    }
+
+    // if ((Platform.isIOS || _isAndroid11) &&
+    //     locationController.statusSnapshot.value ==
+    //         LocationPermissionsStatus.Denied) {
+    //   await openAppSettings();
+    //   return;
+    // }
+
     // Checking if android
     if (Platform.isAndroid) {
       if (locationController.locationType ==
