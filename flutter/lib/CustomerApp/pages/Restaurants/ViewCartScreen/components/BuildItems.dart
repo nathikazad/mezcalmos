@@ -33,7 +33,7 @@ class CartItemsBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Obx(() => Column(
       children: _restaurantController.cart.value.cartItems.fold<List<Widget>>(
           <Widget>[], (List<Widget> children, CartItem cartItem) {
         final Rx<num> counter = cartItem.totalCost().obs;
@@ -41,16 +41,15 @@ class CartItemsBuilder extends StatelessWidget {
           margin: const EdgeInsets.all(5),
           child: MyExpansionPanelComponent(
             child: Flexible(
-                child: Obx(
-              () => ItemInformationCart(
-                imageUrl: cartItem.item.image!,
+                  child: ItemInformationCart(
+                    imageUrl: cartItem.item.image,
                 itemName: cartItem.item.name[userLanguage]![0].toUpperCase() +
                     cartItem.item.name[userLanguage]!.substring(1),
                 restaurantName:
                     _restaurantController.associatedRestaurant?.info.name ?? "",
                 itemsPrice: counter.value.toStringAsFixed(0),
               ),
-            )),
+                ),
             children: [
               Container(
                 alignment: Alignment.centerLeft,
@@ -140,7 +139,7 @@ class CartItemsBuilder extends StatelessWidget {
         ));
         return children;
       }),
-    );
+        ));
   }
 
   List<Widget> buildChoices(Map<String, List<Choice>> choices) {

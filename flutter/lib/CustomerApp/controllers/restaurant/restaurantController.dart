@@ -39,12 +39,10 @@ class RestaurantController extends GetxController {
         final dynamic cartData = event.snapshot.value;
         // check if cart has data
         if (cartData != null) {
-          mezDbgPrint("@sa@d@: DATA ===> $cartData");
 
           // check if cart data is for restaurant
           if (cartData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
-            mezDbgPrint("@sa@d@: DATA  FOR RESTAU ===> $cartData");
 
             // check if already associated restaurant with cart is the same as current restaurant,
             // if not clear the old associated restaurant
@@ -65,8 +63,6 @@ class RestaurantController extends GetxController {
             }
 
             cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
-            mezDbgPrint(
-                "@sa@d@: DATA : cart.value  ===> ${cart.value.toFirebaseFormattedJson()} ");
           }
         } else {
           cart.value = Cart();
