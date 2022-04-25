@@ -13,8 +13,6 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["notificationHandler"];
 
 Notification deliveryDriverNotificationHandler(String key, value) {
-  mezDbgPrint(
-      "Notif type ========&&&&&&&&&&& ====== $key ===> type :  ${value['notificationType']}");
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
 
@@ -66,7 +64,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
-  mezDbgPrint(" =================> RESSSSSSTAURANT stausssss notifier ");
+
   return Notification(
       id: key,
       linkUrl: getLinkUrl(
@@ -123,8 +121,6 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
       value['status'].toString().toLaundryOrderStatus();
   final Map<String, dynamic> dynamicFields =
       getLaundryOrderStatusFields(newOrdersStatus)!;
-  mezDbgPrint(
-      " =================> Laundryyyyyyyyyyyyyyyyyy stausssss notifier ${value["orderId"]}");
 
   return Notification(
       id: key,

@@ -111,28 +111,29 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
+    return Scaffold(
         appBar: deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back),
-        bottomNavigationBar: Obx(() => BottomAppBar(
-            child: RestaurantControllButtons(order: order.value!))),
-        body: order.value != null
-            ? Column(children: <Widget>[
-                DriverOrderMapComponent(
-                  order: order.value!,
-                  mapController: mapController,
-                ),
-                Expanded(
-                  child: DriverBottomRestaurantOrderCard(
-                    order: order.value as RestaurantOrder,
-                  ),
-                ),
-              ])
-            : MezLogoAnimation(
-                centered: true,
+        bottomNavigationBar:
+            Obx(() => RestaurantControllButtons(order: order.value!)),
+        body: Obx(() {
+          if (order.value != null) {
+            return Column(children: <Widget>[
+              DriverOrderMapComponent(
+                order: order.value!,
+                mapController: mapController,
               ),
-      ),
-    );
+              Expanded(
+                child: DriverBottomRestaurantOrderCard(
+                  order: order.value as RestaurantOrder,
+                ),
+              ),
+            ]);
+          } else {
+            return MezLogoAnimation(
+              centered: true,
+            );
+          }
+        }));
   }
 
   /// this handles Restaurant Order.
