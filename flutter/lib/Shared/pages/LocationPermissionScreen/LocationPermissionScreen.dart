@@ -141,7 +141,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
       );
     } else
       setAskPermissionsTextByRefrence(
-        () => _i18n()['locationPermissionText']['android']['foreground']
+        () => _i18n()['locationPermissionText']['android']['background']
             ['android11'],
       );
   }

@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
@@ -23,6 +24,7 @@ class MGoogleMapController {
   late bool enableMezSmartPointer;
   LatLngBounds? bounds;
   Function? onMapTap;
+  Function? onMapInitilized;
   // this is used when we don't want to re-render the map periodically.
   RxBool periodicRerendering = false.obs;
   RxBool recenterButtonEnabled = false.obs;
@@ -31,6 +33,7 @@ class MGoogleMapController {
   MGoogleMapController({
     bool myLocationButtonEnabled = false,
     bool enableMezSmartPointer = true,
+    this.onMapInitilized,
   }) {
     this.myLocationButtonEnabled = RxBool(myLocationButtonEnabled);
     this.enableMezSmartPointer = enableMezSmartPointer;
@@ -54,6 +57,19 @@ class MGoogleMapController {
     );
     markers.add(marker);
     markers.refresh();
+  }
+  //[menu] - [info]
+
+  /// this takes snapshot
+  Future<Image?> takeMapSnapshot() async {
+    // 1 - init the map without showing
+    // 2 - call take snapshot
+    // 3 - dispose map a
+    Uint8List? _tmp = await controller?.takeSnapshot();
+    if (_tmp != null) {
+      return Image.memory(_tmp);
+    }
+    return null;
   }
 
   /// In Case we needed it
@@ -355,5 +371,16 @@ class MGoogleMapController {
     } else {
       return minMaxZoomPrefs!;
     }
+  }
+
+  /// This basically sets the ZoomLvl of the map manually.
+  ///
+  /// `periodicRerendering` should be false to do this , because if periodicRendering is true it will keep fitting/animating every `x` second.
+  ///
+  /// `minMaxZoomPrefs` shoud be unbounded, else You can not controll the zoom since it's already sat with a min/max.
+  void setZoomLvl({required double zoomLvl}) {
+    assert(periodicRerendering == false);
+    assert(minMaxZoomPrefs == MinMaxZoomPreference.unbounded);
+    controller?.animateCamera(CameraUpdate.zoomTo(zoomLvl));
   }
 }

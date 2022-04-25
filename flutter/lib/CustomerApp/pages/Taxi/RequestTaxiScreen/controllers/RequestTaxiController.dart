@@ -110,17 +110,17 @@ class RequestTaxiController {
 
     updateModelAndMarker(SearchComponentType.To, taxiRequest.value.to!);
     locationPickerController.addOrUpdatePurpleDestinationMarker(
+        markerId: SearchComponentType.To.toShortString(),
         latLng: LatLng(taxiRequest.value.to!.position.latitude!,
             taxiRequest.value.to!.position.longitude!));
 
     // locationPickerController.periodicRerendering.value = true;
     locationPickerController.hideFakeMarker();
     locationPickerController.setAnimateMarkersPolyLinesBounds(true);
-    locationPickerController.animateAndUpdateBounds();
     updateRouteInformation()
         .then((_) => locationPickerController.showConfirmButton());
     pickedFromTo.value = true;
-    // startPollingOnlineDrivers();
+    locationPickerController.lockInAutoZoomAnimation();
   }
 
   /// Calls `TaxiController.fecthOnlineTaxiDrivers` and check if within 5KM then returns the driver.
@@ -200,7 +200,7 @@ class RequestTaxiController {
       locationPickerController.setAnimateMarkersPolyLinesBounds(false);
       locationPickerController.showGrayedOutButton();
       // locationPickerController.removeCircleMarker();
-      pickedFromTo.value = true;
+      pickedFromTo.value = false;
     }
   }
 

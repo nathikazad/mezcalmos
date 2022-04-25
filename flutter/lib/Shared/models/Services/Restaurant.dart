@@ -38,7 +38,6 @@ class Restaurant extends Service {
     final Schedule? schedule = restaurantData["details"]["schedule"] != null
         ? Schedule.fromData(restaurantData["details"]["schedule"])
         : null;
-
     final Restaurant restaurant = Restaurant(
         userInfo: ServiceUserInfo.fromData(restaurantData["info"]),
         description: description ?? null,
@@ -205,7 +204,9 @@ class Item {
     final Item item = Item(
         id: itemId,
         available: itemData["available"],
-        description: convertToLanguageMap(itemData["description"]),
+        description: itemData["description"] != null
+            ? convertToLanguageMap(itemData["description"])
+            : null,
         //itemData["description"].toLanguageMap(),
         image: itemData["image"],
         position: itemData["position"] ?? 0,
@@ -265,12 +266,18 @@ class Option {
   String id;
   OptionType optionType;
   Map<LanguageType, String> name;
-  List<Choice> choices = <Choice>[];
+  List<Choice> _choices = <Choice>[];
   int position = 0;
   num minimumChoice = 0;
   num freeChoice = 0;
   num maximumChoice = 0;
   num costPerExtra = 0;
+
+  List<Choice> get choices {
+    sortChoices();
+    return _choices;
+  }
+
   Option(
       {required this.id,
       required this.optionType,
@@ -283,10 +290,11 @@ class Option {
         position: data["position"] ?? 0,
         optionType: data["optionType"].toString().toOptionType());
 
-    data["choices"].forEach((optionData) {
-      final Choice choice = Choice.fromData(optionData);
-      option.choices.add(choice);
+    data["choices"].forEach((optionKey, optionData) {
+      final Choice choice = Choice.fromData(optionKey, optionData);
+      option._choices.add(choice);
     });
+    option.sortChoices();
     option.changeOptionType(
       option.optionType,
       minimumChoice: data["minimumChoice"],
@@ -295,6 +303,10 @@ class Option {
       costPerExtra: data["costPerExtra"],
     );
     return option;
+  }
+
+  void sortChoices() {
+    _choices.sort((Choice a, Choice b) => a.position.compareTo(b.position));
   }
 
   void changeOptionType(
@@ -312,14 +324,14 @@ class Option {
         break;
       case OptionType.ChooseMany:
         this.minimumChoice = 0;
-        this.freeChoice = choices.length;
-        this.maximumChoice = choices.length;
+        this.freeChoice = _choices.length;
+        this.maximumChoice = _choices.length;
         this.costPerExtra = 0;
         break;
       case OptionType.Custom:
         this.minimumChoice = minimumChoice ?? 0;
         this.freeChoice = freeChoice ?? 0;
-        this.maximumChoice = maximumChoice ?? choices.length;
+        this.maximumChoice = maximumChoice ?? _choices.length;
         this.costPerExtra = costPerExtra ?? 0;
         break;
     }
@@ -339,19 +351,33 @@ class Option {
       "id": id,
       "name": name.toFirebaseFormat(),
       "optionType": optionType.toFirebaseFormatString(),
-      "choices": jsonEncode(choices)
+      "choices": jsonEncode(_choices)
     };
   }
 }
 
 class Choice {
+  String id;
   num cost = 0;
   Map<LanguageType, String> name;
-  Choice({required this.name, required this.cost});
+  int position = 0;
+  Choice(
+      {required this.id,
+      required this.name,
+      required this.cost,
+      this.position = 0});
 
-  factory Choice.fromData(data) {
-    return Choice(name: convertToLanguageMap(data["name"]), cost: data["cost"]);
+  factory Choice.fromData(key, data) {
+    return Choice(
+        id: key,
+        name: convertToLanguageMap(data["name"]),
+        cost: data["cost"],
+        position: data["position"] ?? 0);
   }
-  Map<String, dynamic> toJson() =>
-      {"cost": cost, "name": name.toFirebaseFormat()};
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "cost": cost,
+        "name": name.toFirebaseFormat(),
+        "position": position,
+      };
 }

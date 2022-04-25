@@ -164,8 +164,8 @@ class CartItem {
 
     chosenChoices.forEach((String optionId, List<Choice> choices) {
       final List data = [];
-      choices.forEach((Choice element) {
-        data.add(element.toJson());
+      choices.forEach((Choice choice) {
+        data.add(choice.toJson());
       });
 
       json["chosenChoices"][optionId] = <String, dynamic>{};

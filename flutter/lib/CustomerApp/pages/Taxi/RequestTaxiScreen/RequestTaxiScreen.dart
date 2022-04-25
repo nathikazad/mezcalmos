@@ -64,45 +64,46 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         onClick: () => Get.back<void>(),
       ),
       backgroundColor: Colors.white,
-      body: Container(
-        color: Colors.white,
-        child: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.topCenter,
-          children: <Widget>[
-            Container(
-              width: Get.width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5), color: Colors.white),
-              child: LocationPicker(
+      body: Obx(
+        () => Container(
+          color: Colors.white,
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.topCenter,
+            children: <Widget>[
+              Container(
+                width: Get.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white),
+                child: LocationPicker(
 
-                  /// [onSuccessSignIn] THIS WILL GETS EXECUTED IF USER GOT SIGNED IN SUCCESSFULY
-                  // AFTER HE CREATED HIS TAXI REQUESTED WHILE HE WAS SIGNEDOUT
-                  onSuccessSignIn:
-                      viewController.onSuccessSignInUpdateUserMarker,
-                  locationPickerMapController:
-                      viewController.locationPickerController,
-                  notifyParentOfLocationFinalized:
-                      viewController.updateModelAndMaybeCalculateRoute,
-                  notifyParentOfConfirm: (Location? _) async {
-                    if (getAppLaunchMode() == AppLaunchMode.prod &&
-                        Get.find<AuthController>().fireAuthUser?.uid ==
-                            testUserIdInProd) {
-                      MezSnackbar("Oops",
-                          "This prod version is live and running , we can't let you do that :( !");
-                    } else if (!lockOnTaxiRequest) {
-                      // lock to avoid the user Fast button taps aka fast-taps .
-                      lockOnTaxiRequest = true;
-                      final bool res = await viewController.requestTaxi();
-                      if (!res) {
-                        lockOnTaxiRequest = false;
+                    /// [onSuccessSignIn] THIS WILL GETS EXECUTED IF USER GOT SIGNED IN SUCCESSFULY
+                    // AFTER HE CREATED HIS TAXI REQUESTED WHILE HE WAS SIGNEDOUT
+                    onSuccessSignIn:
+                        viewController.onSuccessSignInUpdateUserMarker,
+                    locationPickerMapController:
+                        viewController.locationPickerController,
+                    notifyParentOfLocationFinalized:
+                        viewController.updateModelAndMaybeCalculateRoute,
+                    notifyParentOfConfirm: (Location? _) async {
+                      if (getAppLaunchMode() == AppLaunchMode.prod &&
+                          Get.find<AuthController>().fireAuthUser?.uid ==
+                              testUserIdInProd) {
+                        MezSnackbar("Oops",
+                            "This prod version is live and running , we can't let you do that :( !");
+                      } else if (!lockOnTaxiRequest) {
+                        // lock to avoid the user Fast button taps aka fast-taps .
+                        lockOnTaxiRequest = true;
+                        final bool res = await viewController.requestTaxi();
+                        if (!res) {
+                          lockOnTaxiRequest = false;
+                        }
                       }
-                    }
-                  }),
-            ),
-            // --- <>
-            Obx(
-              () => LocationSearchBar(
+                    }),
+              ),
+              // --- <>
+              LocationSearchBar(
                   request: viewController.taxiRequest.value,
                   locationSearchBarController:
                       viewController.locationSearchBarController,
@@ -113,16 +114,16 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   },
                   newLocationChosenEvent:
                       viewController.updateModelAndHandoffToLocationPicker),
-            ),
 
-            // from , to
-            viewController.pickedFromTo.value
-                ? TaxiReqBottomBar(
-                    taxiRequest: viewController.taxiRequest.value,
-                  )
-                : SizedBox(),
-            if (viewController.pickedFromTo.value) viewWidgets.getToolTip(),
-          ],
+              // from , to
+              viewController.pickedFromTo.value
+                  ? TaxiReqBottomBar(
+                      taxiRequest: viewController.taxiRequest.value,
+                    )
+                  : SizedBox(),
+              if (viewController.pickedFromTo.value) viewWidgets.getToolTip(),
+            ],
+          ),
         ),
       ),
     );
