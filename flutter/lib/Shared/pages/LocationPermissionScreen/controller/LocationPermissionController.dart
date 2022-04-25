@@ -16,7 +16,6 @@ class LocationPermissionController {
   final LocationController locationController = Get.find<LocationController>();
   StreamSubscription<LocationPermissionsStatus?>? locationStatusListener;
 
-
   // AndroidSdkVersion in case OS is android.
   int? androidSdkVersion;
   // LocationPermissionsStatus? _statusSnapshot;
@@ -93,26 +92,29 @@ class LocationPermissionController {
       return;
     }
 
+    final bool _isAndroid11 =
+        androidSdkVersion != null && androidSdkVersion! >= 30;
+    // in iOS or Android 11+ case if the user clicks Dont allow which is (Denied) , when user re-clicks button,
+    // he does not get the dialog poped up again, natively hadnled, thus we add this line :
+    if ((Platform.isIOS || _isAndroid11) &&
+        locationController.statusSnapshot.value ==
+            LocationPermissionsStatus.Denied) {
+      await openAppSettings();
+      return;
+    }
     // Checking if android
     if (Platform.isAndroid) {
       if (locationController.locationType ==
               LocationPermissionType.ForegroundAndBackground &&
-          androidSdkVersion == 30) {
+          _isAndroid11) {
         // check if sdk 11 - background location needs manual accept
         // we redirect to
         await openAppSettings();
         return;
       }
     }
+
     // rest just request is enough.
     await _loc.requestPermission();
-
-    // in iOS case if the user clicks Dont allow which is (Denied) , when user re-clicks button, he does not get the dialog poped up again.
-    // natively hadnled, thus we add this line :
-    if (Platform.isIOS &&
-        locationController.statusSnapshot.value ==
-            LocationPermissionsStatus.Denied) {
-      await openAppSettings();
-    }
   }
 }

@@ -3,9 +3,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:in_app_update/in_app_update.dart';
-import 'package:mezcalmos/Shared/helpers/_MezUpdateHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:new_version/new_version.dart';
