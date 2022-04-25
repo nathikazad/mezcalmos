@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOrderWeightSelector.dart';
@@ -29,6 +30,9 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
   RxList<LaundryCostLineItem> laundryCategories = RxList.empty();
   TextEditingController itemsWeightController = TextEditingController();
   RxBool isClicked = RxBool(false);
+  // RxBool deleteBtnClicked = RxBool(false);
+  RxnInt itemId = RxnInt();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,7 +47,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
               (int index) => _itemsWeightCard(
                   laundryOrderCostLineItem: order.costsByType!.lineItems[index],
                   context: context)),
-        )
+        ),
       ],
     );
   }
@@ -65,30 +69,96 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
   Widget _itemsWeightCard(
       {required LaundryOrderCostLineItem laundryOrderCostLineItem,
       required BuildContext context}) {
-    return Card(
+    return Obx(
+      () => Card(
         child: Container(
-      margin: EdgeInsets.all(12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            laundryOrderCostLineItem.name[userLanguage] ?? "",
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-          Text(
-            "\$${laundryOrderCostLineItem.cost}",
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1!
-                .copyWith(color: keyAppColor),
-          ),
-        ],
+            margin: EdgeInsets.all((5)),
+            alignment: Alignment.center,
+            child: (itemId.value == laundryOrderCostLineItem.hashCode)
+                ? Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: CircularProgressIndicator(),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          laundryOrderCostLineItem.name[userLanguage] ?? "",
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          "\$${laundryOrderCostLineItem.cost}",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: keyAppColor),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text("${laundryOrderCostLineItem.weight} KG",
+                            style: Theme.of(context).textTheme.subtitle1),
+                      ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                              isDismissible: false,
+                              useRootNavigator: false,
+                              isScrollControlled: true,
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              )),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return _setItemWeightBottomSheet(
+                                    context: context,
+                                    editMode: true,
+                                    laundryOrderCostLineItem:
+                                        laundryOrderCostLineItem);
+                              });
+                        },
+                        icon: Icon(Icons.edit),
+                        iconSize: 20,
+                        splashRadius: 25,
+                        padding: EdgeInsets.all(5),
+                        color: Colors.black,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          deleteItem(laundryOrderCostLineItem);
+                        },
+                        icon: Icon(Ionicons.trash),
+                        iconSize: 20,
+                        splashRadius: 25,
+                        color: Colors.red,
+                        splashColor: Colors.red.withOpacity(0.3),
+                      ),
+                    ],
+                  )),
       ),
-    ));
+    );
   }
 
 // List of widgets inside the bottom sheet when clicking the add new items
-  Widget _setItemWeightBottomSheet(BuildContext context) {
+  Widget _setItemWeightBottomSheet(
+      {required BuildContext context,
+      bool editMode = false,
+      LaundryOrderCostLineItem? laundryOrderCostLineItem}) {
+    if (editMode && laundryOrderCostLineItem != null) {
+      newCategory.value = laundryOrderCostLineItem;
+      itemsWeightController.text = laundryOrderCostLineItem.weight.toString();
+    }
+
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -99,16 +169,18 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
               alignment: Alignment.center,
               margin: const EdgeInsets.all(8),
               child: Text(
-                "${_i18n()["newItemsWeight"]}",
+                (editMode && laundryOrderCostLineItem != null)
+                    ? laundryOrderCostLineItem.name[userLanguage]!
+                    : "${_i18n()["newItemsWeight"]}",
                 style: Theme.of(context).textTheme.bodyText1,
               )),
           Divider(),
           Text("${_i18n()["itemsCategory"]}"),
-          // Category selector
+          //    Category selector
           LaundryOrderWeightSelector(
             newCategory: newCategory,
           ),
-          //
+
           SizedBox(
             height: 15,
           ),
@@ -143,7 +215,9 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
                 onPressed: isClicked.value
                     ? null
                     : () {
-                        saveItemsWeight();
+                        (editMode && laundryOrderCostLineItem != null)
+                            ? editItemsWeight(oldItem: laundryOrderCostLineItem)
+                            : saveItemsWeight();
                       },
                 child: Container(
                   alignment: Alignment.center,
@@ -156,7 +230,9 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
                             color: Colors.white,
                           ),
                         )
-                      : Text("${_i18n()["saveItemsWeight"]}"),
+                      : Text((editMode)
+                          ? "Edit items "
+                          : "${_i18n()["saveItemsWeight"]}"),
                 )),
           ),
           SizedBox(
@@ -182,13 +258,16 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
 // button click functions
   Function()? handleClick({required BuildContext context}) {
     if (order.isAtLaundry()) {
-      return assignNewCategory(context);
+      return assignNewCategory(context: context);
     } else {}
     return null;
   }
 
 // assign new items waight function
-  Function()? assignNewCategory(context) {
+  Function()? assignNewCategory(
+      {required BuildContext context,
+      bool editMode = false,
+      LaundryOrderCostLineItem? laundryOrderCostLineItem}) {
     return () {
       showModalBottomSheet(
           isDismissible: false,
@@ -202,12 +281,91 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
           )),
           context: context,
           builder: (BuildContext context) {
-            return _setItemWeightBottomSheet(context);
+            return _setItemWeightBottomSheet(
+                context: context, editMode: editMode);
           });
     };
   }
 
+  // delete item
+  void deleteItem(LaundryOrderCostLineItem item) {
+    final LaundryOrderCosts? oldCosts = order.costsByType;
+    if (oldCosts != null) {
+      if (oldCosts.lineItems.length > 1) {
+        itemId.value = item.hashCode;
+        oldCosts.lineItems.removeWhere(
+            (LaundryOrderCostLineItem element) => element.name == item.name);
+        orderController
+            .setOrderWeight(order.orderId, oldCosts)
+            .whenComplete(() => itemId.value = null);
+      } else {
+        Get.snackbar(
+          "${_i18n()["error"]}",
+          "Every laundry order must have at least one oder items weight",
+          padding: EdgeInsets.all(16),
+          backgroundColor: Colors.grey.shade800,
+          colorText: Colors.white,
+        );
+      }
+    }
+  }
+
+// edit items
+
+  void editItemsWeight({
+    required LaundryOrderCostLineItem oldItem,
+  }) {
+    isClicked.value = true;
+
+    final LanguageType primaryLangauge =
+        laundryInfoController.laundry.value!.primaryLanguage;
+    if (newCategory.value == null) {
+      Get.snackbar(
+        "${_i18n()["error"]}",
+        "${_i18n()["categoryError"]}",
+        padding: EdgeInsets.all(16),
+        backgroundColor: Colors.grey.shade800,
+        colorText: Colors.white,
+      );
+      isClicked.value = false;
+    } else if (num.tryParse(itemsWeightController.text) == null) {
+      Get.snackbar(
+        "${_i18n()["error"]}",
+        "${_i18n()["itemsWeightError"]}",
+        padding: EdgeInsets.all(16),
+        backgroundColor: Colors.grey.shade800,
+        colorText: Colors.white,
+      );
+      isClicked.value = false;
+    } else {
+      final LaundryOrderCostLineItem newCostLineItem = LaundryOrderCostLineItem(
+          weight: num.parse(itemsWeightController.text),
+          name: newCategory.value!.name,
+          cost: newCategory.value!.cost);
+      LaundryOrderCosts? oldCosts = order.costsByType;
+      if (oldCosts != null) {
+        oldCosts.lineItems.removeWhere((LaundryOrderCostLineItem element) =>
+            element.name[primaryLangauge] == oldItem.name[primaryLangauge]);
+        oldCosts.lineItems.add(newCostLineItem);
+      } else {
+        oldCosts = LaundryOrderCosts();
+        oldCosts.lineItems.add(newCostLineItem);
+      }
+
+      orderController
+          .setOrderWeight(order.orderId, oldCosts)
+          .then((ServerResponse value) {
+        mezDbgPrint("Done");
+        Get.back();
+        disposeBottomSheet();
+      }).whenComplete(() {
+        return isClicked.value = false;
+      });
+    }
+  }
+
 // when click save button
+
   void saveItemsWeight() {
     isClicked.value = true;
     final LanguageType primaryLangauge =

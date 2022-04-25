@@ -10,7 +10,6 @@ import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderSt
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderSummaryCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCategoryComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/OrderEstimatedTimeComponent.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -65,17 +64,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               const SizedBox(
                 height: 10,
               ),
-              TextButton(
-                  onPressed: () {
-                    controller.setAsReadyForDelivery(order.value!.orderId);
-                  },
-                  style:
-                      TextButton.styleFrom(backgroundColor: Colors.blueAccent),
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(8),
-                    child: Text("Order ready for delivery"),
-                  )),
+              _setReadyForDeliveryButton(),
               const SizedBox(
                 height: 10,
               ),
@@ -102,6 +91,27 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
     );
   }
 
+  Widget _setReadyForDeliveryButton() {
+    return Container(
+      child: TextButton(
+          onPressed: (order.value!.status == LaundryOrderStatus.AtLaundry)
+              ? () {
+                  controller.setAsReadyForDelivery(order.value!.orderId);
+                }
+              : null,
+          style: TextButton.styleFrom(
+              backgroundColor:
+                  (order.value!.status == LaundryOrderStatus.AtLaundry)
+                      ? Colors.blueAccent
+                      : Colors.grey),
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(8),
+            child: Text("Order ready for delivery"),
+          )),
+    );
+  }
+
   Widget _orderDateComponent() {
     return Container(
       margin: const EdgeInsets.all(8),
@@ -120,7 +130,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                   Icon(
                     Icons.watch_later,
                     size: 40,
-                    color: keyAppColor,
+                    color: Get.theme.primaryColorLight,
                   ),
                   SizedBox(
                     width: 15,
