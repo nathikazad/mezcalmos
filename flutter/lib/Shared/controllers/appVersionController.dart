@@ -1,9 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:async';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:in_app_update/in_app_update.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:new_version/new_version.dart';
@@ -111,8 +108,7 @@ class AppVersionController {
   }
 
   /// This init the controller flow, by setting a 3h periodic timer that checks for new version availabality.
-  void init(
-      {Duration autoUpdatesCheckerDuration = const Duration(minutes: 10)}) {
+  void init({Duration autoUpdatesCheckerDuration = const Duration(hours: 3)}) {
     // to avoid Multi '_checkForNewUpdates' Execution.
     assert(autoUpdatesCheckerDuration.inMinutes >= 10);
     // call Asyncronously first then start timer
@@ -131,29 +127,20 @@ class AppVersionController {
     );
   }
 
-  /// Call this to check once if there is any Updates Available,
-  ///
-  /// through [_isUpdateAvailable().canUpdate]
-  Future<VersionStatus?> _isUpdateAvailable() async {
-    await InAppUpdate.checkForUpdate();
-    // Get Version Status
-    final VersionStatus? status = await _newVersion.getVersionStatus();
-    return status;
-  }
-
   /// This is a private func , we keep calling it each 3h in `init`
   Future<void> _checkForNewUpdates() async {
     UpdateType _updateType = UpdateType.Null;
     // Get Version Status
-    final VersionStatus? status = await _isUpdateAvailable();
+    final VersionStatus? status = await _newVersion.getVersionStatus();
+    mezDbgPrint("_checkForNewUpdates->status: $status");
 
     if (status != null && status.canUpdate) {
-      debugPrint("releaseNotes: ${status.releaseNotes}");
-      debugPrint('appStoreLink: ${status.appStoreLink}');
-      debugPrint('localVersion: ${status.localVersion}');
-      debugPrint('storeVersion: ${status.storeVersion}');
-      debugPrint('canUpdate ${status.canUpdate.toString()}');
-      debugPrint('packageName ${status.canUpdate.toString()}');
+      mezDbgPrint("releaseNotes: ${status.releaseNotes}");
+      mezDbgPrint('appStoreLink: ${status.appStoreLink}');
+      mezDbgPrint('localVersion: ${status.localVersion}');
+      mezDbgPrint('storeVersion: ${status.storeVersion}');
+      mezDbgPrint('canUpdate ${status.canUpdate.toString()}');
+      mezDbgPrint('packageName ${status.canUpdate.toString()}');
 
       // localVersion
       final VersionSplit _localVersion = VersionSplit.split(
@@ -167,6 +154,8 @@ class AppVersionController {
         ),
       );
 
+      mezDbgPrint("_updateType -> $_updateType");
+
       if (_updateType != UpdateType.Null) {
         // we make sure to set this to true.
         onNewUpdateAvailable.call(_updateType, status);
@@ -177,61 +166,10 @@ class AppVersionController {
   /// Returns bool. if the user canUpdate return true, otherwise return false;
   ///
   /// start Update is mainly called when Minor/Major because we force the update in both.
-  Future<AppUpdateResult?> startAppUpdate(UpdateType updateType) async {
-    if (Platform.isAndroid) {
-      AppUpdateResult? _appUpdateResult;
-
-      /// checkForUpdate and get appVersionInfo...
-      final AppUpdateInfo? _versionInfos = await _getNewVersionInfos();
-      mezDbgPrint("startAppUpdate ==> _versionInfos => $_versionInfos");
-      if (_versionInfos != null &&
-          _versionInfos.updateAvailability ==
-              UpdateAvailability.updateAvailable) {
-        mezDbgPrint("startAppUpdate ==> 1st if => $_versionInfos");
-
-        if (updateType == UpdateType.Major) {
-          try {
-            mezDbgPrint(
-                "startAppUpdate ==> updateType == UpdateType.Major => $updateType");
-
-            _appUpdateResult = await InAppUpdate.performImmediateUpdate();
-          } catch (e) {
-            // keep null
-            mezDbgPrint("Oops : ${e.toString()}");
-          }
-        } else if (updateType == UpdateType.Minor) {
-          mezDbgPrint(
-              "startAppUpdate ==> updateType == UpdateType.Minor => $updateType");
-
-          try {
-            _appUpdateResult = await InAppUpdate.performImmediateUpdate();
-          } catch (e) {
-            // keep null
-            mezDbgPrint("Oops : ${e.toString()}");
-          }
-        }
-        mezDbgPrint(
-            "startAppUpdate ==> returnung == _appUpdateResult => $_appUpdateResult");
-        return _appUpdateResult;
-      }
-    } else if (Platform.isIOS) {
-      mezDbgPrint("startAppUpdate ==> isIOS");
-
-      await StoreRedirect.redirect(
-        iOSAppId: getPackageName(platform: MezPlatform.IOS),
-      );
-    }
-    return null;
-  }
-
-  /// Platform messages are asynchronous, so we initialize in an async method.
-  Future<AppUpdateInfo?> _getNewVersionInfos() async {
-    try {
-      return await InAppUpdate.checkForUpdate();
-    } catch (e) {
-      debugPrint('catchError((e)  type ${e.toString()}');
-      return null;
-    }
+  Future<void> openStoreAppPage() async {
+    await StoreRedirect.redirect(
+      iOSAppId: getPackageName(platform: getPlatformType()),
+    );
   }
 
   void dispose() {

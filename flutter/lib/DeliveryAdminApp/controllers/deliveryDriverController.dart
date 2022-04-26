@@ -68,7 +68,7 @@ class DeliveryDriverController extends GetxController {
           "changeDriver": changeDriver,
         },
       );
-      debugPrint('HttpsCallableResult response: ${response.data}');
+      mezDbgPrint('HttpsCallableResult response: ${response.data}');
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       return ServerResponse(

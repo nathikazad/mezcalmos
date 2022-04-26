@@ -17,7 +17,7 @@ void mezDbgPrint(dynamic log, {bool showMilliSeconds = false}) {
   if (caller.isNotEmpty) caller = caller.split('/').last.replaceAll(')', '');
 
   log.toString().split('\n').forEach((str) {
-    debugPrint("[MZL][$caller][$d] $str\n");
+    mezDbgPrint("[MZL][$caller][$d] $str\n");
   });
 }
 

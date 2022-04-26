@@ -127,7 +127,7 @@ class DriverCard extends StatelessWidget {
 
   void Function()? navigateAndGetDriver() {
     if (driver == null) {
-      debugPrint('navigateAndGetDriver driver ');
+      mezDbgPrint('navigateAndGetDriver driver ');
       if (order.orderType == OrderType.Laundry) {
         if ((order as LaundryOrder).laundry == null) {
           return null;

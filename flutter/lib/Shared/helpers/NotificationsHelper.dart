@@ -58,12 +58,12 @@ Future<void> decideWhichButtonDialogToUse(
     await twoButtonDialog(
       title: notification.title,
       body: notification.body,
-      buttonLeftStyle: MezDialogButtonStyle(
+      leftButton: MezDialogButtonStyle(
         buttonText: "Ok",
         buttonColor: Color(0xffffffff),
         buttonShadowColor: Color(0xfffdfdfd),
       ),
-      buttonRightStyle: MezDialogButtonStyle(
+      rightButton: MezDialogButtonStyle(
         buttonText: notification.linkText ?? _i18n()['view'],
         buttonColor: Color(0xffffffff),
         buttonShadowColor: Color(0xfffdfdfd),

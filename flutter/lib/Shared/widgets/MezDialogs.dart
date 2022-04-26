@@ -103,8 +103,8 @@ Future<TwoButtonDialogButton?> twoButtonDialog({
   Function? leftButtonCallback,
   // required String rightButtonText,
   Widget? dialogIcon,
-  Widget? buttonLeftStyle,
-  Widget? buttonRightStyle,
+  Widget? leftButton,
+  Widget? rightButton,
   Function? rightButtonCallback,
   VoidCallback? onTapButtonLeft,
   VoidCallback? onTapButtonRight,
@@ -163,7 +163,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog({
                   child: Container(
                     width: buttonsWidthSize,
                     child: InkWell(
-                      child: buttonLeftStyle,
+                      child: leftButton,
                       onTap: onTapButtonLeft ??
                           () {
                             Get.back();
@@ -180,7 +180,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog({
                   child: Container(
                     width: buttonsWidthSize,
                     child: InkWell(
-                      child: buttonRightStyle,
+                      child: rightButton,
                       onTap: onTapButtonRight ??
                           () {
                             // onCancel();
@@ -217,8 +217,8 @@ Future<YesNoDialogButton> yesNoDialog(
     bodyTextStyle: bodyTextStyle,
     titleUp: titleUp,
     dialogIcon: icon,
-    buttonLeftStyle: buttonLeftStyle,
-    buttonRightStyle: buttonRightStyle,
+    leftButton: buttonLeftStyle,
+    rightButton: buttonRightStyle,
   ));
   if (_res != null) {
     return _res.toYesNo(
@@ -233,8 +233,8 @@ Future<YesNoDialogButton> cancelAlertDialog(
     title: title,
     body: body,
     dialogIcon: icon,
-    buttonRightStyle: NoButtonStyle(),
-    buttonLeftStyle: YesButtonStyle(),
+    rightButton: NoButtonStyle(),
+    leftButton: YesButtonStyle(),
   ));
   if (_res != null) {
     return _res.toYesNo(

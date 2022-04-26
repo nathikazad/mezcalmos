@@ -1,16 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:in_app_update/in_app_update.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:new_version/new_version.dart' show VersionStatus;
-import 'package:store_redirect/store_redirect.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['AppNeedsUpdateScreen'];
@@ -24,15 +19,10 @@ class AppNeedsUpdateScreen extends StatefulWidget {
 
 class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
   final AppVersionController _controller = AppVersionController.instance();
-
-  RxBool _isDownloading = false.obs;
-  UpdateType _updateType = UpdateType.Null;
   VersionStatus? _versionStatus;
-  String? _iosAppleAppIdSnapshot;
 
   @override
   void initState() {
-    _updateType = Get.arguments?['updateType'];
     _versionStatus = Get.arguments?['versionStatus'];
     super.initState();
   }
@@ -84,8 +74,6 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
                           : _iosUpdateInfos(context),
                     ),
 
-                    isDownloadInProgress(context),
-
                     //else
                   ],
                 ),
@@ -106,37 +94,10 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
             foregroundColor: Colors.purple.shade400,
             backgroundColor: Colors.white,
             onPressed: () async {
-              _iosAppleAppIdSnapshot ??=
-                  await MethodChannel('penf00k.ru/env_native')
-                      .invokeMethod<String?>('getString', 'MezAppleAppId');
-
-              mezDbgPrint(
-                "[BundleID] => ${getPackageName(platform: MezPlatform.IOS)} | [ID] => $_iosAppleAppIdSnapshot",
-              );
-              // ignore: unawaited_futures
-              StoreRedirect.redirect(
-                iOSAppId: getPackageName(platform: MezPlatform.IOS),
-              );
+              await _controller.openStoreAppPage();
             },
             child: Icon(Icons.download),
           );
-  }
-
-  Flexible isDownloadInProgress(BuildContext context) {
-    return Flexible(
-      flex: 1,
-      child: _isDownloading.value
-          ? Text(
-              _i18n()['downloading'],
-              //remoteVersion
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    fontSize: 16,
-                    color: Colors.purple.shade900,
-                  ),
-            )
-          : const SizedBox.shrink(),
-    );
   }
 
   Container _iosUpdateInfos(BuildContext context) {
@@ -186,12 +147,8 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
         ElevatedButton(
           child: Text(_i18n()['update']),
           onPressed: () async {
-            _isDownloading.value = true;
-            final AppUpdateResult? _res =
-                await _controller.startAppUpdate(_updateType);
-            mezDbgPrint("Screen ==> _res = $_res");
+            await _controller.openStoreAppPage();
             // _handleUpdateResults(_res);
-            _isDownloading.value = false;
           },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(
@@ -203,17 +160,4 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
       ],
     );
   }
-
-  // void _handleUpdateResults(MezAppUpdateResult? _result) {
-  //   switch (_result) {
-  //     case MezAppUpdateResult.success:
-  //       // TODO : reopen app.
-  //       break;
-  //     case MezAppUpdateResult.inAppUpdateFailed:
-
-  //     case MezAppUpdateResult.redirectedToStore:
-  //     case MezAppUpdateResult.userDeniedUpdate:
-  //     default:
-  //   }
-  // }
 }

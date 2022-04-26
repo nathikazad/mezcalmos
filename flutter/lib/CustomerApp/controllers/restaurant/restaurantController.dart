@@ -28,7 +28,8 @@ class RestaurantController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    debugPrint("--------------------> RestaurantsCartController Initialized !");
+    mezDbgPrint(
+        "--------------------> RestaurantsCartController Initialized !");
     if (_authController.fireAuthUser != null) {
       _cartListener?.cancel();
       _cartListener = _databaseHelper.firebaseDatabase

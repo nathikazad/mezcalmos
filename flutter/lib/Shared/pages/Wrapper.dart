@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:in_app_update/in_app_update.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -11,13 +9,11 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:new_version/new_version.dart' show VersionStatus;
-// import 'package:mezcalmos/Shared/widgets/MezUpgrader/MezUpgraderWidget.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -88,74 +84,55 @@ class _WrapperState extends State<Wrapper> {
   /// Called each time there is a new update.
   void _onNewUpdateAvailable(UpdateType updateType, VersionStatus status) {
     switch (updateType) {
-      case UpdateType.Major:
+      case UpdateType.Null:
+      case UpdateType.Patches:
+        twoButtonDialog(
+            leftButton: Text(
+              "No thanks",
+              style: TextStyle(
+                color: Colors.grey.shade600,
+                fontFamily: 'psb',
+              ),
+            ),
+            onTapButtonLeft: () {
+              Get.back(closeOverlays: true);
+            },
+            rightButton: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.teal.shade900,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                "Yes!",
+                style: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontFamily: 'psb',
+                ),
+              ),
+            ),
+            onTapButtonRight: () {
+              _appVersionController!.openStoreAppPage();
+              Get.back(closeOverlays: true);
+            },
+            bodyTextStyle: TextStyle(
+              color: Colors.black,
+              fontFamily: 'psr',
+              fontSize: 12,
+            ),
+            title: "New Update!",
+            body:
+                "We recommand you to update to v${status.storeVersion} So you get all the new changes.\nDo you want to update now ?");
+
+        break;
+      default:
+        // Major/Minor - forcing the app to stay in AppNeedsUpdate
         Get.toNamed<void>(
           kAppNeedsUpdate,
           arguments: <String, dynamic>{
-            "updateType": updateType,
             "versionStatus": status,
           },
         );
-        break;
-      case UpdateType.Minor:
-        if (Platform.isAndroid) {
-          Get.toNamed<void>(
-            kAppNeedsUpdate,
-            arguments: <String, dynamic>{
-              "updateType": updateType,
-              "versionStatus": status,
-            },
-          );
-        } else if (Platform.isIOS) {
-          _appVersionController!.newVersionInstance.showUpdateDialog(
-            context: context,
-            versionStatus: status,
-            allowDismissal: false,
-            dialogTitle: "${getAppName()} v${status.storeVersion}!",
-            // dismissButtonText: "Skip",
-            dialogText: status.releaseNotes,
-            // dismissAction: () => Get.back<void>(),
-          );
-        }
-        break;
-      case UpdateType.Patches:
-        if (Platform.isIOS) {
-          _appVersionController!.newVersionInstance.showUpdateDialog(
-            context: context,
-            versionStatus: status,
-            dialogTitle: "${getAppName()} v${status.storeVersion}!",
-            dismissButtonText: "Skip",
-            dialogText: status.releaseNotes,
-            dismissAction: () => Get.back<void>(),
-          );
-
-          // MezUpgrade.show(
-          //   releaseNotes: status.releaseNotes!,
-          //   appName: getAppName(),
-          //   packageName: getPackageName()!,
-          //   currentAppStoreVersion: status.storeVersion,
-          //   currentInstalledVersion: status.localVersion,
-          // );
-        } else if (Platform.isAndroid) {
-          yesNoDialog(
-            text: "${getAppName()} v${status.storeVersion}!",
-            body: status.releaseNotes ??
-                "Do you want to update to the new version ?",
-          ).then((YesNoDialogButton result) {
-            if (result == YesNoDialogButton.Yes) {
-              InAppUpdate.startFlexibleUpdate().then((_) {
-                debugPrint("Success!");
-                InAppUpdate.completeFlexibleUpdate();
-              }).catchError((Object? e) {
-                debugPrint("Error:completeFlexibleUpdate ${e.toString()}");
-              });
-            } else
-              Get.back<void>();
-          });
-        }
-        break;
-      case UpdateType.Null:
-      default:
     }
   }
 
