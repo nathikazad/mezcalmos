@@ -66,21 +66,22 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
         margin: const EdgeInsets.all(8),
         child: Row(
           children: [
-            Row(
-              children: [
-                Text(
-                  choice.name[userLanguage].toString(),
-                  style: Get.theme.textTheme.bodyText1,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
-                  style: Get.theme.textTheme.headline3!
-                      .copyWith(color: Get.theme.primaryColorLight),
-                ),
-              ],
+            Flexible(
+              flex: 5,
+              fit: FlexFit.tight,
+              child: Text(
+                choice.name[userLanguage].toString(),
+                style: Get.theme.textTheme.bodyText1,
+                maxLines: 2,
+              ),
+            ),
+            // SizedBox(
+            //   width: 10,
+            // ),
+            Text(
+              (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
+              style: Get.theme.textTheme.headline3!
+                  .copyWith(color: Get.theme.primaryColorLight),
             ),
             Spacer(),
             Obx(() => Transform.scale(
