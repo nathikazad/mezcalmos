@@ -64,7 +64,7 @@ class _RestaurantOrderItemsComponentState
                   CircleAvatar(
                     radius: 25,
                     backgroundImage: (imageLoaded)
-                        ? CachedNetworkImageProvider(item.image,
+                        ? CachedNetworkImageProvider(item.image ?? '',
                             errorListener: () {
                             setState(() {
                               imageLoaded = false;

@@ -173,7 +173,7 @@ class RestaurantOrderItem {
   String idInCart;
   String idInRestaurant;
   LanguageMap name;
-  String image;
+  String? image;
   int quantity;
   String? notes;
   //optionId and list of choices for that option

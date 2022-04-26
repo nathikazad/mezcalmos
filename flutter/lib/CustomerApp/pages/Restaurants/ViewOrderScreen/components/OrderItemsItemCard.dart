@@ -44,7 +44,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   CircleAvatar(
                     radius: 25,
                     backgroundImage: (imageLoded)
-                        ? CachedNetworkImageProvider(widget.item.image,
+                        ? CachedNetworkImageProvider(widget.item.image ?? '',
                             errorListener: () {
                             setState(() {
                               imageLoded = false;

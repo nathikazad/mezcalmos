@@ -50,7 +50,7 @@ class UserProfileWidgetsClass {
       Flexible(
         flex: 2,
         child: Container(
-            margin: EdgeInsets.all(5),
+            margin: EdgeInsets.all(16),
             child: showEditOrSaveAndCancelButton(
                 onSaveClick: onSaveClick,
                 onStartEdit: onEditButtonClick,
@@ -71,8 +71,8 @@ class UserProfileWidgetsClass {
             ? onBrowsImageClick
             : () {},
         child: Container(
-          height: 150,
-          width: 150,
+          height: 200,
+          width: 200,
           decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,

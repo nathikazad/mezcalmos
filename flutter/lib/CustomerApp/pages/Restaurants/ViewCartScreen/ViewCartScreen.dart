@@ -178,7 +178,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         if (_serverResponse.success) {
           await avoidCheckoutRaceCondition(_serverResponse.data["orderId"]);
 
-          _restaurantController.clearCart();
           popEverythingAndNavigateTo(
               getRestaurantOrderRoute(_serverResponse.data["orderId"]));
         } else {
