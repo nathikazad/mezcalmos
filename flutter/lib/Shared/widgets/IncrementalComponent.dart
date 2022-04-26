@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-typedef void OnValueChanged(int newValue);
-
 class IncrementalComponent extends StatefulWidget {
-  final OnValueChanged increment;
-  final OnValueChanged decrement;
-  final int incrementBy;
-  final int decrementBy;
+  final VoidCallback incrementCallback;
+  final VoidCallback decrementCallback;
+
   final Color btnColors;
   final bool center;
-  final int value;
-  final int? maxVal;
-  final int? minVal;
-  final ValueChanged<bool>? onChangedToZero;
-  const IncrementalComponent(
+  final Color onMinValueBtnColor;
+  int value;
+  final int maxVal;
+  final int minVal;
+  final Function? onChangedToZero;
+  IncrementalComponent(
       {Key? key,
-      required this.increment,
+      required this.incrementCallback,
       required this.value,
-      required this.decrement,
-      this.incrementBy = 1,
-      this.decrementBy = 1,
+      required this.decrementCallback,
+      this.onMinValueBtnColor = const Color(0x808080),
       this.center = false,
       this.btnColors = const Color(0xffac59fc),
       this.onChangedToZero,
@@ -29,34 +26,10 @@ class IncrementalComponent extends StatefulWidget {
       : super(key: key);
 
   @override
-  _IncrementalComponentState createState() => _IncrementalComponentState(value);
+  _IncrementalComponentState createState() => _IncrementalComponentState();
 }
 
 class _IncrementalComponentState extends State<IncrementalComponent> {
-  int _value;
-  _IncrementalComponentState(this._value);
-  void _increment() {
-    if (_value < widget.maxVal!)
-      setState(() {
-        _value += widget.incrementBy;
-      });
-    else
-      return;
-  }
-
-  void _decrement() {
-    if (_value != widget.minVal) {
-      setState(() {
-        _value -= widget.decrementBy;
-      });
-      if (_value == 0) {
-        widget.onChangedToZero?.call(true);
-      } else
-        widget.onChangedToZero?.call(false);
-    } else
-      return;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -64,26 +37,25 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
           widget.center ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: <Widget>[
         InkWell(
-          child: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(32)),
-                color: (_value > widget.minVal!)
-                    ? const Color(0xffac59fc)
-                    : Colors.grey.shade400,
-              ),
-              child: Icon(
-                Icons.remove,
-                color: Colors.white,
-                size: 16.sp,
-              )),
-          onTap: (_value > widget.minVal!)
-              ? () {
-                  _decrement();
-                  widget.decrement(_value);
-                }
-              : null,
-        ),
+            child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(32)),
+                    color: (widget.value > widget.minVal)
+                        ? Theme.of(context).primaryColorLight
+                        : widget.onMinValueBtnColor),
+                child: Icon(
+                  Icons.remove,
+                  color: Colors.white,
+                  size: 16.sp,
+                )),
+            onTap: () {
+              if (widget.value > widget.minVal) {
+                widget.decrementCallback();
+              } else if (widget.value == widget.minVal) {
+                widget.onChangedToZero?.call();
+              }
+            }),
         SizedBox(
           width: 5,
         ),
@@ -92,7 +64,8 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Theme.of(context).primaryColorLight.withOpacity(0.2)),
-          child: Text("$_value", style: Theme.of(context).textTheme.headline3),
+          child: Text("${widget.value}",
+              style: Theme.of(context).textTheme.headline3),
         ),
         SizedBox(
           width: 5,
@@ -110,8 +83,9 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
                 color: Colors.white,
               )),
           onTap: () {
-            _increment();
-            widget.increment(_value);
+            if (widget.value < widget.maxVal) {
+              widget.incrementCallback();
+            }
           },
         ),
       ],
