@@ -147,6 +147,8 @@ class ViewTaxiOrderController {
       // basically length == 0, we set it as false to automatically hide the bottom sheet.
       if (counterOffers().isEmpty) {
         offersBtnClicked.value = false;
+        offersBtnClicked.refresh();
+        animatedSliderController.slideDown();
       }
     });
   }
