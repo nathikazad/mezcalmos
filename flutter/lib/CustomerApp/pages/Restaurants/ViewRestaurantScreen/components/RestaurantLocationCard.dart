@@ -82,7 +82,7 @@ class _RestaurantLocationCardState extends State<RestaurantLocationCard> {
   void initRestaurantLocationMapController() {
     // mapController.periodicRerendering.value = false;
     mapController.recenterButtonEnabled.value = false;
-    mapController.minMaxZoomPrefs = MinMaxZoomPreference(15.5, 15.6);
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference(15.1, 15.2);
     // centering the map on the location marker
     mapController.setLocation(widget.restaurant.info.location);
 
