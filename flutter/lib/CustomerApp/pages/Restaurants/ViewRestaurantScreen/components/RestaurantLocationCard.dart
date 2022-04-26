@@ -80,29 +80,24 @@ class _RestaurantLocationCardState extends State<RestaurantLocationCard> {
   }
 
   void initRestaurantLocationMapController() {
-    // mapController.periodicRerendering.value = true;
+    // mapController.periodicRerendering.value = false;
     mapController.recenterButtonEnabled.value = false;
-    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference(15.5, 15.6);
     // centering the map on the location marker
     mapController.setLocation(widget.restaurant.info.location);
-    mapController.moveToNewLatLng(widget.restaurant.info.location.latitude,
-        widget.restaurant.info.location.longitude);
+
     mapController.addOrUpdatePurpleDestinationMarker(
         latLng: getRestaurantLatLng()!);
 //TODO @m66are disable recentre button  enable mez pointer
     //  mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
     // mapController.animateMarkersPolyLinesBounds.value = true;
-    // mapController.animateAndUpdateBounds();
-    mapController.onMapInitilized = () {
-      mapController.setZoomLvl(zoomLvl: 15.5);
-    };
   }
 
   LatLng? getRestaurantLatLng() {
-    if (widget.restaurant.info.location.position.latitude != null &&
-        widget.restaurant.info.location.position.longitude != null) {
-      return LatLng(widget.restaurant.info.location.position.latitude!,
-          widget.restaurant.info.location.position.longitude!);
+    if (widget.restaurant.info.location.latitude != null &&
+        widget.restaurant.info.location.longitude != null) {
+      return LatLng(widget.restaurant.info.location.latitude!,
+          widget.restaurant.info.location.longitude!);
     }
     return null;
   }

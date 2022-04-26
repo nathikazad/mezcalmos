@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -7,10 +8,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/MezMarker.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:sizer/sizer.dart';
@@ -65,7 +66,7 @@ class MGoogleMapController {
     // 1 - init the map without showing
     // 2 - call take snapshot
     // 3 - dispose map a
-    Uint8List? _tmp = await controller?.takeSnapshot();
+    final Uint8List? _tmp = await controller?.takeSnapshot();
     if (_tmp != null) {
       return Image.memory(_tmp);
     }
@@ -251,6 +252,7 @@ class MGoogleMapController {
   }
 
   Future<void> moveToNewLatLng(double lat, double lng) async {
+    mezDbgPrint("controller ====> $controller");
     await controller?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
   }
 

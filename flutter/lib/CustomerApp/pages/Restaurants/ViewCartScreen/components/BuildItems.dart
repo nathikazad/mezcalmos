@@ -43,7 +43,7 @@ class CartItemsBuilder extends StatelessWidget {
             child: MyExpansionPanelComponent(
               child: Flexible(
                   child: ItemInformationCart(
-                imageUrl: cartItem.item.image!,
+                imageUrl: cartItem.item.image,
                 itemName: cartItem.item.name[userLanguage]![0].toUpperCase() +
                     cartItem.item.name[userLanguage]!.substring(1),
                 restaurantName:
