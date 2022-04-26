@@ -324,7 +324,7 @@
                     "components": {
                         "CounterOfferWidgets": {
                             "offers": "Offers",
-                            "failedToAcceptOffer" : "Failed to accept the offer!"
+                            "failedToAcceptOffer": "Failed to accept the offer!"
                         },
                         "ViewTaxiOrderScreenWidgets": {
                             "title": "Confirm Cancelation.",
@@ -336,7 +336,7 @@
                         }
                     },
                     "ViewTaxiOrderScreen": {
-                        "orderCancelSuccess": "Order cancelled successfully."                        
+                        "orderCancelSuccess": "Order cancelled successfully."
                     }
                 }
             },
@@ -443,7 +443,9 @@
                         "pickLocation": "Pick from map",
                         "orderNow": "ORDER NOW",
                         "signInToMakeOrder": "Sign in to make order",
-                        "notes": "Notes"
+                        "notes": "Notes",
+                        "error": "Error",
+                        "errorText": "Can't make an order please try again"
                     }
                 },
                 "LaundryPickLocView": {
@@ -596,33 +598,24 @@
                 "locationPermissionStatus": {
                     "denied": "Access to your location is denied :(",
                     "backgroundAccessDenied": "Access to background location is denied :(",
-                    "foreverDenied":
-                        "Click the button then go to permissions->location and check `Always`",
+                    "foreverDenied": "Click the button then go to permissions->location and check `Always`",
                     "serviceOff": "Phone's Location service is disabled / off :("
-                  },
-                  "locationPermissionText": {
+                },
+                "locationPermissionText": {
                     "ios": {
-                      "foreground":
-                          "We need to access your location while using the app. Please Click `Keep Only While Using` .",
-                      "background":
-                          "We need to access your location even when the app is in background. Please change the location permissions on App's Settings to `Always Allow` ."
+                        "foreground": "We need to access your location while using the app. Please Click `Keep Only While Using` .",
+                        "background": "We need to access your location even when the app is in background. Please change the location permissions on App's Settings to `Always Allow` ."
                     },
                     "android": {
-                      "foreground": {
-                        "android9":
-                            "We need to access your location while using the app. Please Click `Allow` .",
-                        "android10":
-                            "We need to access your location while using the app. Please Click `KEEP AND DON'T ASK AGAIN` .",
-                        "android11":
-                            "We need to access your location while using the app. Please Click `WHILE USING THE APP` ."
-                      },
-                      "background": {
-                        "android9":
-                            "We need to access your location even when the app is in background. Please Click  `Allow` .",
-                        "android10":
-                            "We need to access your location even when the app is in background. Please Click `ALLOW ALL THE TIME` .",
-                        "android11":
-                            "We need to access your location even when the app is in background. Please change the location permissions on App's Settings to `ALL THE TIME` ."
+                        "foreground": {
+                            "android9": "We need to access your location while using the app. Please Click `Allow` .",
+                            "android10": "We need to access your location while using the app. Please Click `KEEP AND DON'T ASK AGAIN` .",
+                            "android11": "We need to access your location while using the app. Please Click `WHILE USING THE APP` ."
+                        },
+                        "background": {
+                            "android9": "We need to access your location even when the app is in background. Please Click  `Allow` .",
+                            "android10": "We need to access your location even when the app is in background. Please Click `ALLOW ALL THE TIME` .",
+                            "android11": "We need to access your location even when the app is in background. Please change the location permissions on App's Settings to `ALL THE TIME` ."
                         }
                     }
                 }
@@ -633,7 +626,7 @@
                 "downloading": "A new version is being downloaded.",
                 "news": "News",
                 "update": "Update now!"
-              }
+            }
         },
         "widgets": {
             "LocationSearchComponent": {
@@ -894,7 +887,7 @@
                             "orderWeight": "Order Weight",
                             "orderCost": "Order Cost",
                             "totalCost": "Total Cost",
-                            "deliveryCost" : "Shipping Cost"
+                            "deliveryCost": "Shipping Cost"
                         }
                     },
                     "LaundryOrderScreen": {

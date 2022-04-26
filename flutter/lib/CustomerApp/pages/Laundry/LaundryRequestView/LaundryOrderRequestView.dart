@@ -270,20 +270,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       onPressed: (defaultLoc == null)
           ? null
           : () {
-              clicked.value = true;
-              laundryController
-                  .requestLaundryService(LaundryRequest(
-                      to: defaultLoc,
-                      notes: _orderNote.text,
-                      paymentType: PaymentType.Cash))
-                  .then(
-                    (ServerResponse response) =>
-                        sharedRoute.popEverythingAndNavigateTo(
-                      getLaundyOrderRoute(
-                        response.data['orderId'],
-                      ),
-                    ),
-                  );
+              _createLaundryOrder();
             },
       child: (clicked.value)
           ? CircularProgressIndicator(
@@ -296,5 +283,27 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               ),
             ),
     );
+  }
+
+  void _createLaundryOrder() {
+    clicked.value = true;
+    laundryController
+        .requestLaundryService(LaundryRequest(
+            to: defaultLoc,
+            notes: _orderNote.text,
+            paymentType: PaymentType.Cash))
+        .then(
+      (ServerResponse response) {
+        if (response.data['orderId'] != null) {
+          sharedRoute.popEverythingAndNavigateTo(
+            getLaundyOrderRoute(
+              response.data['orderId'],
+            ),
+          );
+        } else {
+          Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
+        }
+      },
+    ).whenComplete(() => clicked.value = false);
   }
 }

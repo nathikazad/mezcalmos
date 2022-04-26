@@ -150,7 +150,7 @@ class TaxiOrder extends Order {
         // DO NOTHING
       }
     });
-    mezDbgPrint("len #s#a#a#d ====> ${data['counterOffers']}");
+
     data["counterOffers"]?.forEach((driverId, counterOfferData) {
       try {
         mezDbgPrint("CounterOffer ===> $counterOfferData");

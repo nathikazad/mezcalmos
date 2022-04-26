@@ -325,7 +325,7 @@
                     "components": {
                         "CounterOfferWidgets": {
                             "offers": "ofertas",
-                            "failedToAcceptOffer" : "¡No se pudo aceptar la oferta!"
+                            "failedToAcceptOffer": "¡No se pudo aceptar la oferta!"
                         },
                         "ViewTaxiOrderScreenWidgets": {
                             "title": "Confirmar cancelación.",
@@ -442,7 +442,9 @@
                         "pickLocation": "Elegir del mapa",
                         "orderNow": "ORDENAR AHORA",
                         "signInToMakeOrder": "Iniciar sesión para hacer el pedido",
-                        "notes": "Notas"
+                        "notes": "Notas",
+                        "error": "Error",
+                        "errorText": "No puedo hacer un pedido por favor intente de nuevo"
                     }
                 },
                 "LaundryPickLocView": {
@@ -601,33 +603,24 @@
                 "locationPermissionStatus": {
                     "denied": "El acceso a su ubicación está denegado :(",
                     "backgroundAccessDenied": "El acceso a la ubicación de fondo está denegado :(",
-                    "foreverDenied":
-                        "Haga clic en el botón, luego vaya a permisos -> ubicación y marque `Siempre`",
+                    "foreverDenied": "Haga clic en el botón, luego vaya a permisos -> ubicación y marque `Siempre`",
                     "serviceOff": "El servicio de ubicación del teléfono está deshabilitado/apagado :("
-                  },
-                  "locationPermissionText": {
+                },
+                "locationPermissionText": {
                     "ios": {
-                      "foreground":
-                          "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `Guardar solo mientras se usa`.",
-                      "background":
-                          "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Cambie los permisos de ubicación en la configuración de la aplicación a `Permitir siempre`."
+                        "foreground": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `Guardar solo mientras se usa`.",
+                        "background": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Cambie los permisos de ubicación en la configuración de la aplicación a `Permitir siempre`."
                     },
                     "android": {
-                      "foreground": {
-                        "android9":
-                            "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `Permitir` .",
-                        "android10":
-                            "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `MANTENER Y NO PREGUNTAR DE NUEVO`.",
-                        "android11":
-                            "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `MIENTRAS UTILIZA LA APLICACIÓN`."
-                      },
-                      "background": {
-                        "android9":
-                            "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `Permitir` .",
-                        "android10":
-                            "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `PERMITIR TODO EL TIEMPO`.",
-                        "android11":
-                            "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Cambie los permisos de ubicación en la configuración de la aplicación a `TODO EL TIEMPO`."
+                        "foreground": {
+                            "android9": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `Permitir` .",
+                            "android10": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `MANTENER Y NO PREGUNTAR DE NUEVO`.",
+                            "android11": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `MIENTRAS UTILIZA LA APLICACIÓN`."
+                        },
+                        "background": {
+                            "android9": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `Permitir` .",
+                            "android10": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `PERMITIR TODO EL TIEMPO`.",
+                            "android11": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Cambie los permisos de ubicación en la configuración de la aplicación a `TODO EL TIEMPO`."
                         }
                     }
                 }
@@ -638,7 +631,7 @@
                 "downloading": "Se está descargando una nueva versión.",
                 "news": "Noticias",
                 "update": "¡Actualizar ahora!"
-              }
+            }
         },
         "widgets": {
             "LocationSearchComponent": {
