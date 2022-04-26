@@ -180,6 +180,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
           popEverythingAndNavigateTo(
               getRestaurantOrderRoute(_serverResponse.data["orderId"]));
+          //  _restaurantController.clearCart();
         } else {
           print(_serverResponse);
           if (_serverResponse.errorCode == "serverError") {

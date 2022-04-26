@@ -36,13 +36,13 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(
             childrenPadding: const EdgeInsets.all(8),
-            tilePadding: EdgeInsets.all(5),
+            //  tilePadding: EdgeInsets.all(5),
             title: Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    radius: 25,
+                    radius: 20,
                     backgroundImage: (imageLoded)
                         ? CachedNetworkImageProvider(widget.item.image ?? '',
                             errorListener: () {
