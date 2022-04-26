@@ -382,8 +382,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       }
       locationSearchBarController.focusedTextField.value = _type;
 
-      widget.newLocationChosenEvent(
-          null, locationSearchBarController.focusedTextField.value);
+      widget.newLocationChosenEvent(null, _type);
 
       // _toReadOnly = false;
       // hideFakeMarkerInCaseEmptyAddress();

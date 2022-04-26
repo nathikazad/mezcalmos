@@ -9,7 +9,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Taxi"]["components"]["TaxiBottomBars"]["TaxiReqBottomBar"];
 
 class TaxiReqBottomBar extends StatefulWidget {
-  final TaxiRequest taxiRequest;
+  final Rx<TaxiRequest> taxiRequest;
 
   const TaxiReqBottomBar({
     Key? key,
@@ -31,7 +31,6 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
         padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.only(bottom: 45),
         height: 60,
-        // getSizeRelativeToScreen(25, Get.height, Get.width),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           border: Border.all(
@@ -44,7 +43,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
           children: <Widget>[
             incrementDecrementPrice(),
             Expanded(flex: 1, child: VerticalDivider()),
-            rightRouteInfos(widget.taxiRequest),
+            rightRouteInfos(widget.taxiRequest.value),
           ],
         ),
       ),
@@ -69,7 +68,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
                 tooltip: _i18n()['decreasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  widget.taxiRequest.decrementPrice();
+                  widget.taxiRequest.value.decrementPrice();
                   setState(() {});
                 },
                 icon: Icon(
@@ -80,7 +79,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
               ),
             ),
             Text(
-              '\$' + widget.taxiRequest.estimatedPrice.toString(),
+              '\$' + widget.taxiRequest.value.estimatedPrice.toString(),
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: 'psb',
@@ -95,7 +94,7 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
                 tooltip: _i18n()['increasePrice'],
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  widget.taxiRequest.incrementPrice();
+                  widget.taxiRequest.value.incrementPrice();
                   setState(() {});
                 },
                 icon: Icon(
@@ -112,7 +111,6 @@ class _TaxiReqBottomBarState extends State<TaxiReqBottomBar> {
   }
 
   Widget rightRouteInfos(TaxiRequest taxiRequest) {
-    // setState(() {});
     return Expanded(
       flex: 1,
       child: Column(

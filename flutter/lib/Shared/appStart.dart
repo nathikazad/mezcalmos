@@ -85,7 +85,6 @@ class _StartingPointState extends State<StartingPoint> {
     WidgetsFlutterBinding.ensureInitialized();
     const String _tmpLmode =
         String.fromEnvironment('LMODE', defaultValue: "prod");
-    mezDbgPrint("=====> _TMPlMODE ==> $_tmpLmode");
     _launchMode = _tmpLmode.toLaunchMode();
 
     /// initializeSetup
@@ -105,29 +104,47 @@ class _StartingPointState extends State<StartingPoint> {
     );
     if (_error) {
       MezSnackbar("Error", "Server connection failed !");
-      return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(
-            child: Icon(
-              Icons.signal_wifi_bad,
-              color: Colors.red.shade200,
-              size: getSizeRelativeToScreen(50, Get.height, Get.width),
+      return Sizer.Sizer(
+        builder: (
+          BuildContext context,
+          Orientation orientation,
+          Sizer.DeviceType deviceType,
+        ) =>
+            GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            body: Center(
+              child: Icon(
+                Icons.signal_wifi_bad,
+                color: Colors.red.shade200,
+                size: getSizeRelativeToScreen(50, Get.height, Get.width),
+              ),
             ),
           ),
         ),
       );
     }
     if (!_initialized) {
-      return SplashScreen();
+      return Sizer.Sizer(
+        builder: (BuildContext context, Orientation orientation,
+                Sizer.DeviceType deviceType) =>
+            SplashScreen(),
+      );
     } else {
       mezDbgPrint(
         "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}",
       );
-      return mainApp(
-        appType: widget.appType,
-        appTheme: widget.appThemeGetter,
-        routes: widget.routes,
+      return Sizer.Sizer(
+        builder: (
+          BuildContext context,
+          Orientation orientation,
+          Sizer.DeviceType deviceType,
+        ) =>
+            mainApp(
+          appType: widget.appType,
+          appTheme: widget.appThemeGetter,
+          routes: widget.routes,
+        ),
       );
     }
   }

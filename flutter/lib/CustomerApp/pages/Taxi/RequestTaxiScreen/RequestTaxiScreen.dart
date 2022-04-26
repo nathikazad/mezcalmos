@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/components/RequestTaxiScreenWidgets.dart';
@@ -104,21 +103,22 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
               ),
               // --- <>
               LocationSearchBar(
-                  request: viewController.taxiRequest.value,
-                  locationSearchBarController:
-                      viewController.locationSearchBarController,
-                  onClear: () {
-                    // we set that back to false
-                    viewController.locationPickerController.periodicRerendering
-                        .value = false;
-                  },
-                  newLocationChosenEvent:
-                      viewController.updateModelAndHandoffToLocationPicker),
+                request: viewController.taxiRequest.value,
+                locationSearchBarController:
+                    viewController.locationSearchBarController,
+                onClear: () {
+                  // we set that back to false
+                  viewController.locationPickerController.periodicRerendering
+                      .value = false;
+                },
+                newLocationChosenEvent:
+                    viewController.updateModelAndHandoffToLocationPicker,
+              ),
 
               // from , to
               viewController.pickedFromTo.value
                   ? TaxiReqBottomBar(
-                      taxiRequest: viewController.taxiRequest.value,
+                      taxiRequest: viewController.taxiRequest,
                     )
                   : SizedBox(),
               if (viewController.pickedFromTo.value) viewWidgets.getToolTip(),

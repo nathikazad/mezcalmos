@@ -218,10 +218,10 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
               });
             },
             child: Icon(MezcalmosIcons.times_circle,
-                size: 16, color: Colors.black)),
+                size: 20, color: Colors.black)),
       );
     } else {
-      if (this.widget.showSearchIcon) {
+      if (widget.showSearchIcon) {
         return Icon(MezcalmosIcons.search, size: 16, color: Colors.black);
       } else
         return SizedBox();

@@ -158,11 +158,12 @@ class RequestTaxiController {
       Location? newLocation, SearchComponentType textFieldType) {
     mezDbgPrint(
         "zlaganga : $textFieldType | newLocationAddress : ${newLocation?.address}");
-
+    locationSearchBarController.collapseDropdown();
+    locationPickerController.clearPolyline();
     // locationPickerController.removeCircleMarker();
     if (newLocation != null) {
       currentFocusedTextField.value = textFieldType;
-      currentFocusedTextField.refresh();
+      // currentFocusedTextField.refresh();
       updateModelAndMarker(textFieldType, newLocation);
       locationPickerController.setLocation(newLocation);
       locationPickerController.moveToNewLatLng(
@@ -177,17 +178,25 @@ class RequestTaxiController {
       locationPickerController.showGrayedOutButton();
       pickedFromTo.value = false;
     }
-    locationSearchBarController.collapseDropdown();
-    locationPickerController.clearPolyline();
+    // mezDbgPrint("updateModelAndHandoffToLocationPicker@saad => $textFieldType",
+    //     showMilliSeconds: true);
+    // // reset the camera to any left marker if there is else, to currentLocation
+    // if (locationPickerController.markers.isNotEmpty) {
+    //   double lat = locationPickerController.markers.first.position.latitude;
+    //   double lng = locationPickerController.markers.first.position.latitude;
+    //   locationPickerController.moveToNewLatLng(lat, lng);
+    // } else {
+    //   MapHelper.getCurrentLocation().then((loc) {
+    //     locationPickerController.moveToNewLatLng(loc.latitude, loc.longitude);
+    //   });
+    // }
   }
 
 // after pick button is clicked after user verifies gps locaiton
   void updateModelAndMaybeCalculateRoute(Location newLocation) {
     locationPickerController.showOrHideBlackScreen(false);
-
     updateModelAndMarker(currentFocusedTextField.value, newLocation);
-    currentFocusedTextField.refresh();
-    taxiRequest.refresh();
+
     if (taxiRequest.value.isFromToSet()) {
       locationPickerController.periodicRerendering.value = true;
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
@@ -196,12 +205,11 @@ class RequestTaxiController {
           .then((_) => locationPickerController.showConfirmButton());
       pickedFromTo.value = true;
     } else {
-      // locationPickerController.periodicRerendering.value = false;
       locationPickerController.setAnimateMarkersPolyLinesBounds(false);
       locationPickerController.showGrayedOutButton();
-      // locationPickerController.removeCircleMarker();
       pickedFromTo.value = false;
     }
+    taxiRequest.refresh();
   }
 
   /// Call this right after customer presses Confirm button
@@ -260,7 +268,7 @@ class RequestTaxiController {
         latLng: newLocation.toLatLng(),
       );
     }
-    taxiRequest.refresh();
+    // taxiRequest.refresh();
   }
 
   void onSuccessSignInUpdateUserMarker() {
@@ -278,10 +286,14 @@ class RequestTaxiController {
           getEstimatedRidePriceInPesos(route.distance.distanceInMeters);
       taxiRequest.value.setEstimatedPrice(estimatedPrice);
       locationPickerController.addPolyline(route.polylineList);
-      taxiRequest.value.setRouteInformation(MapHelper.RouteInformation(
+      taxiRequest.value.setRouteInformation(
+        MapHelper.RouteInformation(
           polyline: route.encodedPolyLine,
           distance: route.distance,
-          duration: route.duration));
+          duration: route.duration,
+        ),
+      );
+      taxiRequest.refresh();
     } else {
       // TODO:handle route error
     }

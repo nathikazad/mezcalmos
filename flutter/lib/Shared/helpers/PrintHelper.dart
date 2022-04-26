@@ -1,14 +1,9 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 void mezDbgPrint(dynamic log, {bool showMilliSeconds = false}) {
-  final String d = DateFormat(!showMilliSeconds
-          ? 'HH:mm:ss'
-          : 'HH:mm:ss:${DateTime.now().millisecondsSinceEpoch}')
-      .format(DateTime.now());
+  String d = DateFormat('HH:mm:ss').format(DateTime.now());
   String caller = StackTrace.current.toString().split('\n').lastWhere(
         (String element) => element.contains(':mezcalmos/'),
         orElse: () => '',
@@ -17,7 +12,11 @@ void mezDbgPrint(dynamic log, {bool showMilliSeconds = false}) {
   if (caller.isNotEmpty) caller = caller.split('/').last.replaceAll(')', '');
 
   log.toString().split('\n').forEach((str) {
-    mezDbgPrint("[MZL][$caller][$d] $str\n");
+    if (showMilliSeconds) {
+      d += ":${DateTime.now().millisecondsSinceEpoch}";
+    }
+
+    print("[MZL][$caller][$d] $str\n");
   });
 }
 
