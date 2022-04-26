@@ -226,11 +226,16 @@ class _WrapperState extends State<Wrapper> {
   }
 
   void checkIfSignInRouteOrRedirectToHome() {
+    if (authController.preserveNavigationStackAfterSignIn)
+      Get.until((Route<dynamic> route) =>
+          route.settings.name == kSignInRouteOptional);
+
     if (Get.currentRoute == kSignInRouteOptional) {
       Get.back<void>();
     } else {
       Get.offNamedUntil<void>(kHomeRoute, ModalRoute.withName(kWrapperRoute));
     }
+    authController.preserveNavigationStackAfterSignIn = false;
   }
 
   @override

@@ -44,6 +44,20 @@ class LaundryPricingCompnent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
+                  "${_i18n()["minimumCost"]} :",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                Text(
+                  "50 \$",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
                   _i18n()['orderWeight'],
                   style: Theme.of(context).textTheme.bodyText1,
                 ),

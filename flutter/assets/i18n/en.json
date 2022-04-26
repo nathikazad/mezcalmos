@@ -406,6 +406,7 @@
                             "laundryPricing": "Laundry Pricing",
                             "fixedRate": "Cost Per Kilo",
                             "orderWeight": "Order Weight",
+                            "minimumCost": "Minimum Cost",
                             "totalCost": "Total Cost",
                             "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
                         },
@@ -438,6 +439,7 @@
                         "deliveryLocation": "Delivery Location",
                         "orderSummary": "Order Summary",
                         "orderCost": "Order Cost",
+                        "minimumCost": "Minimum Cost",
                         "deliveryCost": "Delivery Cost",
                         "noLocation": "No location selected",
                         "pickLocation": "Pick from map",

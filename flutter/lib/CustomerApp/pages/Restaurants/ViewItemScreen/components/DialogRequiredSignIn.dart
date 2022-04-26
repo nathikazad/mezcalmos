@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -50,6 +51,8 @@ void dialogRequiredSignIn() {
                   // to remove the SignIn popUp first!
                   Get.back<void>();
                   // then head to kSignInRoute.
+                  Get.find<AuthController>()
+                      .preserveNavigationStackAfterSignIn = true;
                   Get.toNamed<void>(kSignInRouteOptional);
                 },
                 child: Text(

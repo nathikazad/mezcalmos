@@ -80,8 +80,6 @@ export = functions.https.onCall(async (data, context) => {
     let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
     restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
     rootNodes.inProcessOrders(OrderType.Restaurant, orderId).set(order);
-    await customerNodes.cart(customerId).remove();
-
 
     let chat: Chat = await buildChatForOrder(
       orderId,
@@ -105,7 +103,7 @@ export = functions.https.onCall(async (data, context) => {
       addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
       notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
     })
-
+    setTimeout(() => customerNodes.cart(customerId).remove(), 1000);
     return {
       status: ServerResponseStatus.Success,
       orderId: orderId

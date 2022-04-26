@@ -160,7 +160,10 @@ class LocationPickerState extends State<LocationPicker> {
         } else {
           return buildBottomButton(_i18n()["signInToMakeOrder"],
               notifier: (_) async {
+            Get.find<AuthController>().preserveNavigationStackAfterSignIn =
+                true;
             await Get.toNamed<void>(kSignInRouteOptional);
+            
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
             widget.onSuccessSignIn?.call();
             setState(() {});

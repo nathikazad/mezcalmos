@@ -95,7 +95,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
         ));
   }
 
-  otpConfimCard(TextTheme txt, String _phonePassed, BuildContext context,
+  Widget otpConfimCard(TextTheme txt, String _phonePassed, BuildContext context,
       TextEditingController _otpCodeTextController) {
     return Card(
       child: Container(
@@ -235,7 +235,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
 
                     case false:
                       MezSnackbar("Oops ..",
-                          _i18n().strings['shared']['login']['wrongOTPCode']);
+                          _i18n()['wrongOTPCode']);
                       clickedSignInOtp.value = false;
                       break;
                   }

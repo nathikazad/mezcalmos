@@ -405,6 +405,7 @@
                             "laundryPricing": "Precios de lavandería",
                             "fixedRate": "Costo por kilo",
                             "orderWeight": "Peso de pedido",
+                            "minimumCost": "Costo Minimo",
                             "totalCost": "Costo Total",
                             "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido."
                         },
@@ -437,6 +438,7 @@
                         "deliveryLocation": "Lugar De Entrega",
                         "orderSummary": "Resumen de la orden",
                         "orderCost": "Costo de la orden",
+                        "minimumCost": "Costo Minimo",
                         "deliveryCost": "Costo de envío",
                         "noLocation": "No hay ubicación seleccionada",
                         "pickLocation": "Elegir del mapa",

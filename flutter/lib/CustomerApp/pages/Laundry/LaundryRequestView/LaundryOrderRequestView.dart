@@ -149,6 +149,20 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
+                  "${_i18n()["minimumCost"]} :",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                Text(
+                  "\$50",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
                   "${_i18n()["deliveryCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -239,6 +253,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             ? makeOrderButton(context)
             : TextButton(
                 onPressed: () async {
+                  Get.find<AuthController>()
+                      .preserveNavigationStackAfterSignIn = true;
                   await Get.toNamed<void>(sharedRoute.kSignInRouteOptional);
                 },
                 style: TextButton.styleFrom(
