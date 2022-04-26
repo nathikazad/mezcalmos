@@ -33,9 +33,12 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
   }
   let senderInfo = chat.participants[notificationForQueue.userId]
   senderInfo.id = notificationForQueue.userId
+  let particpantType: ParticipantType = chat.participants[notificationForQueue.userId].particpantType;
   delete chat.participants[notificationForQueue.userId]
   for (let participantId in chat.participants) {
     let participant = chat.participants[participantId]
+    if (participant.particpantType == particpantType)
+      continue
     let notification: Notification = {
       foreground: <NewMessageNotification>{
         chatId: notificationForQueue.chatId,
