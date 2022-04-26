@@ -1173,8 +1173,8 @@
                 },
                 "EditInfoView": {
                     "laundryName": "Laundry name",
-                    "defaultLaunguage": "Default language",
-                    "secondaryLaunguage": "Secondary language",
+                    "defaultLanguage": "Default language",
+                    "secondaryLanguage": "Secondary language",
                     "location": "Location",
                     "saveInfo": "Save info"
                 }

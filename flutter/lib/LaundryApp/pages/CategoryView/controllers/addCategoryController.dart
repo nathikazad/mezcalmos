@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/LaundryApp/pages/CategoryView/components/AddCategorySlide.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -155,35 +154,6 @@ class AddCategoryController {
     }
   }
 
-  Widget getSingleLanguageView() {
-    return AddCategorySlide(
-        addCategoryController: this, selectedTab: SelectedTab.Primary);
-  }
-
-  List<Tab> getTabs() {
-    return List.generate(
-        languages.value.length,
-        (int index) => Tab(
-              text: languages.value[index].toLanguageName(),
-            ));
-  }
-
-  List<Widget> tabPages() {
-    return List.generate(
-        languages.value.length,
-        (int index) => AddCategorySlide(
-            addCategoryController: this, selectedTab: getSelectedTabs(index)));
-  }
-
 // get selected tab priority based on list order of hte languages
-  SelectedTab getSelectedTabs(int index) {
-    switch (index) {
-      case 0:
-        return SelectedTab.Primary;
-      case 1:
-        return SelectedTab.Secondary;
-      default:
-        return SelectedTab.Primary;
-    }
-  }
+
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mezcalmos/LaundryApp/pages/CategoryView/components/AddCategorySlide.dart';
 import 'package:mezcalmos/LaundryApp/pages/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -26,7 +27,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen>
 
   @override
   void initState() {
-    categoryName = Get.parameters["id"];
+    categoryName = Get.parameters["categoryId"];
 
     _addCategoryController.init(categoryId: categoryName);
     _addCategoryController.tabController = TabController(
@@ -87,7 +88,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen>
       bottom: (_addCategoryController.languages.value.length > 1)
           ? TabBar(
               controller: _addCategoryController.tabController,
-              tabs: _addCategoryController.getTabs())
+              tabs: _getTabs())
           : null,
     );
   }
@@ -96,10 +97,40 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen>
     if (_addCategoryController.languages.value.length > 1) {
       return TabBarView(
         controller: _addCategoryController.tabController,
-        children: _addCategoryController.tabPages(),
+        children: _tabPages(),
       );
     } else {
-      return _addCategoryController.getSingleLanguageView();
+      return AddCategorySlide(
+          addCategoryController: _addCategoryController,
+          selectedTab: SelectedTab.Primary);
+    }
+  }
+
+  List<Tab> _getTabs() {
+    return List.generate(
+        _addCategoryController.languages.value.length,
+        (int index) => Tab(
+              text: _addCategoryController.languages.value[index]
+                  .toLanguageName(),
+            ));
+  }
+
+  List<Widget> _tabPages() {
+    return List.generate(
+        _addCategoryController.languages.value.length,
+        (int index) => AddCategorySlide(
+            addCategoryController: _addCategoryController,
+            selectedTab: _getSelectedTabs(index)));
+  }
+
+  SelectedTab _getSelectedTabs(int index) {
+    switch (index) {
+      case 0:
+        return SelectedTab.Primary;
+      case 1:
+        return SelectedTab.Secondary;
+      default:
+        return SelectedTab.Primary;
     }
   }
 }

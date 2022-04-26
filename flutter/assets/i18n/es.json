@@ -1176,8 +1176,8 @@
                 },
                 "EditInfoView": {
                     "laundryName": "Nombre de lavandería",
-                    "defaultLaunguage": "Idioma predeterminado",
-                    "secondaryLaunguage": "Lenguaje secundario",
+                    "defaultLanguage": "Idioma predeterminado",
+                    "secondaryLanguage": "Lenguaje secundario",
                     "location": "Localización",
                     "saveInfo": "Guardar información"
                 }

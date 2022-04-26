@@ -19,6 +19,7 @@ class OrderEstimatedTimeComponent extends StatefulWidget {
 class _OrderEstimatedTimeComponentState
     extends State<OrderEstimatedTimeComponent> {
   OrderController orderController = Get.find<OrderController>();
+  bool isClicked = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,47 +32,63 @@ class _OrderEstimatedTimeComponentState
             height: 5,
           ),
           Card(
-            child: InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap: () async {
-                mezDbgPrint("Tappppppped");
-                DateTime? selectedDate = widget.order.estimatedDeliveryTime;
+            child: (isClicked)
+                ? Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.all(5),
+                    child: CircularProgressIndicator())
+                : InkWell(
+                    borderRadius: BorderRadius.circular(10),
+                    onTap: () async {
+                      mezDbgPrint("Tappppppped");
+                      DateTime? selectedDate =
+                          widget.order.estimatedDeliveryTime;
 
-                await showDatePicker(
-                  context: context,
-                  initialDate: selectedDate ?? DateTime.now(),
-                  firstDate: widget.order.orderTime,
-                  lastDate: DateTime(2050),
-                ).then((DateTime? value) {
-                  setState(() {
-                    selectedDate = value;
-                    orderController.setEstimatedDeliveryTime(
-                        widget.order.orderId, value!);
-                  });
-                });
-              },
-              child: Container(
-                margin: const EdgeInsets.all(5),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.timelapse,
-                      size: 40,
-                      color: keyAppColor,
+                      await showDatePicker(
+                        context: context,
+                        initialDate: selectedDate ?? DateTime.now(),
+                        firstDate: widget.order.orderTime,
+                        lastDate: DateTime(2050),
+                      ).then((DateTime? value) {
+                        setState(() {
+                          selectedDate = value;
+                          setState(() {
+                            isClicked = true;
+                          });
+                          orderController
+                              .setEstimatedDeliveryTime(
+                                  widget.order.orderId, value!)
+                              .whenComplete(() {
+                            setState(() {
+                              isClicked = false;
+                            });
+                          });
+                        });
+                      });
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(5),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.timelapse,
+                            size: 40,
+                            color: keyAppColor,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            (widget.order.estimatedDeliveryTime != null)
+                                ? "${DateFormat("dd MMMM yyyy ").format(widget.order.estimatedDeliveryTime!.toLocal())}"
+                                : "Set Delivery esitmated time",
+                            style: Get.theme.textTheme.bodyText1,
+                          )
+                        ],
+                      ),
                     ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Text(
-                      (widget.order.estimatedDeliveryTime != null)
-                          ? "${DateFormat("dd MMMM yyyy ").format(widget.order.estimatedDeliveryTime!.toLocal())}"
-                          : "Set Delivery esitmated time",
-                      style: Get.theme.textTheme.bodyText1,
-                    )
-                  ],
-                ),
-              ),
-            ),
+                  ),
           ),
         ],
       ),
