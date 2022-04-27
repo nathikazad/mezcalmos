@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:app_settings/app_settings.dart' show AppSettings;
+
 enum LocationPermissionType { Null, Foreground, ForegroundAndBackground }
 enum LocationPermissionsStatus {
   /// When the actual Location Service is OFF
@@ -17,3 +19,5 @@ enum LocationPermissionsStatus {
   /// When The app Enough needed Permissions (depending on our checks)
   Ok
 }
+
+Future<void> openLocationSetting() async => AppSettings.openLocationSettings();
