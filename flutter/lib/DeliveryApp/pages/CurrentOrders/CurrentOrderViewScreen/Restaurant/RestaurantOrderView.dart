@@ -36,6 +36,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   void initState() {
     final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
+    
 
     if (controller.getOrder(orderId) == null) {
       mezDbgPrint("ORDER NULL");
