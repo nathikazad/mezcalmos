@@ -194,11 +194,11 @@ function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDe
 
 function addCancelledOrderToPast(driverId: string, order: TwoWayDeliverableOrder, orderId: string) {
   if (order.orderType == OrderType.Restaurant) {
-    let rOrder: RestaurantOrder = order as RestaurantOrder;
+    let rOrder: RestaurantOrder = <RestaurantOrder>{ ...order }
     rOrder.status = RestaurantOrderStatus.CancelledByAdmin;
     deliveryDriverNodes.pastOrders(driverId, orderId).update(rOrder)
   } else if (order.orderType == OrderType.Laundry) {
-    let lOrder: LaundryOrder = order as LaundryOrder;
+    let lOrder: LaundryOrder = <LaundryOrder>{ ...order }
     lOrder.status = LaundryOrderStatus.CancelledByAdmin;
     deliveryDriverNodes.pastOrders(driverId, orderId).update(lOrder)
   }

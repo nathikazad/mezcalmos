@@ -91,7 +91,6 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
       _orderListener =
           controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
-        mezDbgPrint("nEW oRDER LISTENET TRIGGER !!");
         final DeliverableOrder? _order = controller.getOrder(orderId);
         if (_order == null) {
           Get.back<void>();
