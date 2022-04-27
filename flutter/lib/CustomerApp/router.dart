@@ -65,6 +65,7 @@ String getRestaurantMessagesRoute(String orderId) {
     chatId: orderId,
     recipientType: ParticipantType.Restaurant,
     orderId: orderId,
+      showViewOrderBtn: true
   );
 }
 
@@ -75,6 +76,7 @@ String getTaxiMessagesRoute(
     chatId: orderId,
     recipientType: ParticipantType.Taxi,
     orderId: orderId,
+      showViewOrderBtn: true
   );
 }
 
@@ -85,6 +87,7 @@ String getLaundryMessagesRoute(
     chatId: orderId,
     recipientType: ParticipantType.Laundry,
     orderId: orderId,
+      showViewOrderBtn: true
   );
 }
 

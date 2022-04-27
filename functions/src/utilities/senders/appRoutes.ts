@@ -19,7 +19,7 @@ export function orderUrl(
 
 export function chatUrl(
   chatId: string): string {
-  return `/messages/${chatId}`
+  return `/messages/${chatId}?showViewOrderBtn=1`
 }
 
 export function taxiIncomingOrderUrl(
