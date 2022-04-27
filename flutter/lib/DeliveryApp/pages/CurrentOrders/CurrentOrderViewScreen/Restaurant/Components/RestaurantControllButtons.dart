@@ -33,7 +33,7 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return Container(
-      height: 10.h,
+      height: 60,
       // color: (order.inDeliveryPhase())
       //     ? Theme.of(context).primaryColorLight
       //     : Colors.grey,

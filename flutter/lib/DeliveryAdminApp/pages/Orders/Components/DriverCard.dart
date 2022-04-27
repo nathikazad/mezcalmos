@@ -217,17 +217,20 @@ class DriverCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              IconButton(
-                onPressed: () {
-                  getRightMessageRoute();
-                },
-                icon: CircleAvatar(
-                  radius: 16,
-                  backgroundColor: Color(0xFFAC59FC),
-                  child: Image.asset(
-                    'assets/images/deliveryAdmin/message.png',
-                  ),
-                ),
+              Stack(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        getRightMessageRoute();
+                      },
+                      icon: Icon(
+                        Icons.textsms_rounded,
+                        color: Get.theme.primaryColorLight,
+                      )),
+                  order.orderType == OrderType.Restaurant
+                      ? _restaurantMessagesDot(context)
+                      : _laundryMessagesRedDot(context),
+                ],
               ),
             ],
           ),
@@ -235,7 +238,7 @@ class DriverCard extends StatelessWidget {
     );
   }
 
-  Obx restaurantMessagesDot(BuildContext context) {
+  Widget _restaurantMessagesDot(BuildContext context) {
     return Obx(
       () => Get.find<RestaurantOrderController>()
               .orderHaveNewMessageNotifications(
@@ -245,7 +248,7 @@ class DriverCard extends StatelessWidget {
     );
   }
 
-  Widget laundryMessagesRedDot(BuildContext context) {
+  Widget _laundryMessagesRedDot(BuildContext context) {
     if ((order as LaundryOrder).getCurrentPhase() == LaundryOrderPhase.Pickup) {
       return Obx(
         () => Get.find<LaundryOrderController>()
@@ -281,7 +284,7 @@ class DriverCard extends StatelessWidget {
 
   Widget _newMessageRedDot(BuildContext context) {
     return Positioned(
-      left: 0,
+      right: 0,
       top: 0,
       child: Container(
         width: 13,
