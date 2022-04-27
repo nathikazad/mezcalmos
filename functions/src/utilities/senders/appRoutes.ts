@@ -18,8 +18,11 @@ export function orderUrl(
 }
 
 export function chatUrl(
-  chatId: string): string {
-  return `/messages/${chatId}?showViewOrderBtn=1`
+  chatId: string, orderId?: string): string {
+  let str = `/messages/${chatId}?showViewOrderBtn=1`;
+  if (orderId != null)
+    str += `&orderId=${orderId}`
+  return str
 }
 
 export function taxiIncomingOrderUrl(
