@@ -6,7 +6,8 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:permission_handler/permission_handler.dart'
+    show openAppSettings;
 
 typedef void OnLocationPermissionChange(LocationPermissionsStatus? status);
 typedef String? LangValueRefGetter();
@@ -71,7 +72,8 @@ class LocationPermissionController {
 
   Future<void> onGivePermissionsClick() async {
     final Location _loc = Location();
-
+    mezDbgPrint(
+        "locationController.statusSnapshot.value ==> ${locationController.statusSnapshot.value}");
     // cehcking service first
     if (locationController.statusSnapshot.value ==
         LocationPermissionsStatus.ServiceOff) {
@@ -87,8 +89,7 @@ class LocationPermissionController {
 
     if (locationController.statusSnapshot.value ==
         LocationPermissionsStatus.ForeverDenied) {
-      MezSnackbar("I got you !", "That is the problem !");
-      await openLocationSetting();
+      await openAppSettings();
       return;
     }
 
@@ -100,7 +101,7 @@ class LocationPermissionController {
     // if ((Platform.isIOS || _isAndroid11) &&
     //     locationController.statusSnapshot.value ==
     //         LocationPermissionsStatus.Denied) {
-    //   await openLocationSetting();
+    //   await openAppSettings();
     //   return;
     // }
 
@@ -111,7 +112,7 @@ class LocationPermissionController {
           _isAndroid11) {
         // check if sdk 11 - background location needs manual accept
         // we redirect to
-        await openLocationSetting();
+        await openAppSettings();
         return;
       }
     }
