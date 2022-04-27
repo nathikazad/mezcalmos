@@ -36,47 +36,56 @@ class _RestaurantsListOfItemsComponentState
         child: Row(
           children: [
             if (widget.item.image != null)
-            CachedNetworkImage(
-              imageUrl: widget.item.image!,
-              fit: BoxFit.cover,
-              imageBuilder:
-                  (BuildContext context, ImageProvider<Object> imageProvider) =>
-                      Container(
-                height: 63,
-                width: 63,
-                child: ClipOval(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
+              CachedNetworkImage(
+                imageUrl: widget.item.image!,
+                fit: BoxFit.cover,
+                imageBuilder: (BuildContext context,
+                        ImageProvider<Object> imageProvider) =>
+                    Container(
+                  height: 63,
+                  width: 63,
+                  child: ClipOval(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
                 ),
+                placeholder: (BuildContext context, String url) => Container(
+                    child: Shimmer.fromColors(
+                  child: Container(
+                    height: 63,
+                    width: 63,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  highlightColor: Colors.grey[400]!,
+                  enabled: true,
+                  //  period: Duration(milliseconds: 100),
+                  baseColor: Colors.grey[300]!,
+                  direction: ShimmerDirection.ltr,
+                )),
+                errorWidget: (BuildContext context, String url, error) =>
+                    Container(
+                        height: 63,
+                        width: 63,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey.shade300),
+                            child: Icon(
+                              Icons.image,
+                              color: Colors.grey,
+                              size: 20,
+                            ))),
               ),
-              placeholder: (BuildContext context, String url) => Container(
-                height: 63,
-                width: 63,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-              errorWidget: (BuildContext context, String url, error) =>
-                  Container(
-                      height: 63,
-                      width: 63,
-                      child: Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.grey.shade300),
-                          child: Icon(
-                            Icons.image,
-                            color: Colors.grey,
-                            size: 20,
-                          ))),
-            ),
             SizedBox(
               width: 15,
             ),

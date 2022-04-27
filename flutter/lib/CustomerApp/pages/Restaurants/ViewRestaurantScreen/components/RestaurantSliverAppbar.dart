@@ -41,7 +41,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
       floating: false,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.all(12),
-        collapseMode: CollapseMode.parallax,
+        // collapseMode: CollapseMode.parallax,
         centerTitle: true,
         title: Text(
           restaurant.info.name,
@@ -53,10 +53,11 @@ class RestaurantSliverAppBar extends StatelessWidget {
         background: CachedNetworkImage(
           imageUrl: restaurant.info.image,
           fit: BoxFit.cover,
-          imageBuilder: (_, __) => Container(
+          imageBuilder: (BuildContext context, ImageProvider<Object> image) =>
+              Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(restaurant.info.image),
+                image: image,
                 fit: BoxFit.cover,
               ),
             ),
@@ -75,11 +76,13 @@ class RestaurantSliverAppBar extends StatelessWidget {
           placeholder: (_, __) {
             return Shimmer.fromColors(
               child: Container(
-                  // color: Colors.grey,
-                  ),
+                color: Colors.grey,
+                width: double.infinity,
+                height: double.infinity,
+              ),
               highlightColor: Colors.grey[400]!,
               enabled: true,
-              period: Duration(milliseconds: 100),
+              //   period: Duration(milliseconds: 100),
               baseColor: Colors.grey[300]!,
               direction: ShimmerDirection.ltr,
             );
