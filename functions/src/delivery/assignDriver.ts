@@ -4,7 +4,7 @@
 // const hasura = new hasuraModule.Hasura(keys.hasura)
 
 import * as functions from "firebase-functions";
-import { TwoWayDeliverableOrder } from "../shared/models/Generic/Order";
+import { OrderType, TwoWayDeliverableOrder } from "../shared/models/Generic/Order";
 import { UserInfo } from "../shared/models/Generic/User";
 import { AuthorizationStatus, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as customerNodes from "../shared/databaseNodes/customer";
@@ -13,16 +13,18 @@ import *  as rootNodes from "../shared/databaseNodes/root";
 import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { getInProcessOrder, getUserInfo } from "../shared/controllers/rootController";
 import { getDeliveryDriver } from "../shared/controllers/deliveryController";
-import { DeliveryDriver, DeliveryDriverType, NewDeliveryOrderNotification } from "../shared/models/Drivers/DeliveryDriver";
+import { CancelDeliveryOrderNotification, DeliveryDriver, DeliveryDriverType, NewDeliveryOrderNotification } from "../shared/models/Drivers/DeliveryDriver";
 import { pushChat, deleteChat } from "../shared/controllers/chatController";
 import { Chat, ChatType, ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { deliveryNewOrderMessage } from "./bgNotificationMessages";
+import { deliveryCancelOrderMessage, deliveryNewOrderMessage } from "./bgNotificationMessages";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
 import { orderUrl } from "../utilities/senders/appRoutes";
+import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
+import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
 
 export = functions.https.onCall(async (data, context) => {
   if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
@@ -146,6 +148,19 @@ export = functions.https.onCall(async (data, context) => {
 })
 
 function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDeliverableOrder, orderId: string) {
+  let notification: Notification = {
+    foreground: <CancelDeliveryOrderNotification>{
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: order.orderType,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
+      orderId: orderId,
+      deliveryDriverType: deliveryDriverType,
+      status: order.orderType == OrderType.Laundry ? LaundryOrderStatus.CancelledByAdmin : RestaurantOrderStatus.CancelledByAdmin,
+    },
+    background: deliveryCancelOrderMessage,
+    linkUrl: orderUrl(ParticipantType.DeliveryDriver, order.orderType, orderId)
+  }
   switch (deliveryDriverType) {
     case DeliveryDriverType.DropOff:
       if (order.dropoffDriver == null)
@@ -154,9 +169,12 @@ function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDe
           errorMessage: "dropoffDriver is not set"
         }
       deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).remove();
+      addCancelledOrderToPast(order.dropoffDriver.id, order, orderId);
+      pushNotification(order.dropoffDriver.id, notification, ParticipantType.DeliveryDriver);
       delete order.dropoffDriver;
       deleteChat(order.secondaryChats.deliveryAdminDropOffDriver!);
       order.secondaryChats.deliveryAdminDropOffDriver = null;
+
       return null;
     case DeliveryDriverType.Pickup:
       if (order.pickupDriver == null)
@@ -165,6 +183,8 @@ function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDe
           errorMessage: "pickupDriver is not  set"
         }
       deliveryDriverNodes.inProcessOrders(order.pickupDriver.id, orderId).remove();
+      addCancelledOrderToPast(order.pickupDriver.id, order, orderId);
+      pushNotification(order.pickupDriver.id, notification, ParticipantType.DeliveryDriver);
       delete order.pickupDriver;
       deleteChat(order.secondaryChats.deliveryAdminPickupDriver!);
       order.secondaryChats.deliveryAdminPickupDriver = null;
@@ -172,3 +192,15 @@ function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDe
   }
 }
 
+function addCancelledOrderToPast(driverId: string, order: TwoWayDeliverableOrder, orderId: string) {
+  if (order.orderType == OrderType.Restaurant) {
+    let rOrder: RestaurantOrder = <RestaurantOrder>{ ...order }
+    rOrder.status = RestaurantOrderStatus.CancelledByAdmin;
+    deliveryDriverNodes.pastOrders(driverId, orderId).update(rOrder)
+  } else if (order.orderType == OrderType.Laundry) {
+    let lOrder: LaundryOrder = <LaundryOrder>{ ...order }
+    lOrder.status = LaundryOrderStatus.CancelledByAdmin;
+    deliveryDriverNodes.pastOrders(driverId, orderId).update(lOrder)
+  }
+
+}

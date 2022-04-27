@@ -19,3 +19,7 @@ export enum DeliveryDriverType {
 export interface NewDeliveryOrderNotification extends OrderNotification {
   deliveryDriverType: DeliveryDriverType
 }
+
+export interface CancelDeliveryOrderNotification extends OrderNotification {
+  deliveryDriverType: DeliveryDriverType
+}

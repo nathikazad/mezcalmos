@@ -13,4 +13,16 @@ export const deliveryNewOrderMessage: BackgroundNotification =
   }
 }
 
+export const deliveryCancelOrderMessage: BackgroundNotification =
+{
+  [Language.EN]: {
+    title: "Order Cancelled",
+    body: "Your order has been cancelled"
+  },
+  [Language.ES]: {
+    title: "Orden Cancellado",
+    body: "Tu orden ha sido cancelado"
+  }
+}
+
 
