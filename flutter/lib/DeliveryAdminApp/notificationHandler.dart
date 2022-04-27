@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -124,6 +124,7 @@ Notification newMessageNotification(String key, value) {
         chatId: value['chatId'] ?? value['orderId'],
         orderId: value['orderId'],
         recipientId: value['sender']['id'],
+        senderType: ParticipantType.DeliveryAdmin,
         showViewOrderBtn: true,
       ),
       body: value['message'],

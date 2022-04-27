@@ -37,28 +37,32 @@ String getMessagesRoute(
     String? orderId,
     bool showViewOrderBtn = false,
     ParticipantType recipientType = ParticipantType.Customer,
+    ParticipantType senderType = ParticipantType.Customer,
     String? recipientId}) {
   String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId);
+
   if (recipientId != null)
     mainUrl += "?recipientId=$recipientId";
   else
     mainUrl += "?recipientType=${recipientType.toFirebaseFormattedString()}";
   if (orderId != null) mainUrl += "&orderId=$orderId";
+
   if (showViewOrderBtn) mainUrl += "&showViewOrderBtn=1";
+  mainUrl += "&senderType=$senderType";
   return mainUrl;
 }
 
 void popEverythingAndNavigateTo(
-  dynamic route, {
-  dynamic args,
+  route, {
+  args,
 }) {
   popUntilAndNavigateTo(kHomeRoute, route, args: args);
 }
 
 void popUntilAndNavigateTo(
-  dynamic untilRoute,
-  dynamic toRoute, {
-  dynamic args,
+  untilRoute,
+  toRoute, {
+  args,
 }) {
   Get.offNamedUntil<void>(
     toRoute,

@@ -327,6 +327,8 @@ class DriverCard extends StatelessWidget {
     Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
         chatId: (order as DeliverableOrder).dropOffDriverChatId!,
+       
+        senderType: ParticipantType.DeliveryDriver,
         recipientType: ParticipantType.DeliveryDriver));
   }
 
@@ -335,6 +337,8 @@ class DriverCard extends StatelessWidget {
     Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
         chatId: (order as TwoWayDeliverableOrder).pickupDriverChatId!,
+        senderType: ParticipantType.DeliveryDriver,
+      
         recipientType: ParticipantType.DeliveryDriver));
   }
 }

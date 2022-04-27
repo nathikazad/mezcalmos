@@ -10,8 +10,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart'
+    as customerOrderController;
+import 'package:mezcalmos/CustomerApp/router.dart' as customerRouter;
+import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart'
+    as deliveryAdminLaundryOrderController;
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart'
+    as deliveryAdminOrderController;
+import 'package:mezcalmos/DeliveryAdminApp/router.dart' as deliveryAdminRouter;
+import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart'
+    as deliveryOrderController;
+import 'package:mezcalmos/DeliveryApp/router.dart' as deliverynRouter;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -19,7 +28,9 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now().toLocal();
@@ -40,22 +51,27 @@ class _MessagingScreenState extends State<MessagingScreen> {
   late final String chatId;
 
   ParticipantType recipientType = ParticipantType.Customer;
+  ParticipantType? senderType;
   String? recipientId;
   MessageController controller =
       Get.put<MessageController>(MessageController());
   @override
   void initState() {
-    super.initState();
     print("inside messaginScreen onInitState !");
 
     if (Get.parameters['chatId'] == null) {
       Get.snackbar("Error", "Does not have a valid chatId!");
       Get.back<void>();
     }
+    mezDbgPrint(
+        "===========>>>>> SENDER TYPE / ${Get.parameters["senderType"].toString()} <+++++++++++++++++++++++++");
     chatId = Get.parameters['chatId']!;
     orderId = Get.parameters['orderId'];
     showViewOrderBtn = Get.arguments?['showViewOrderBtn'] ??
         Get.parameters['showViewOrderBtn'] == "1";
+    if (Get.parameters["senderType"] != null) {
+      senderType = Get.parameters["senderType"]!.toString().toSenderType();
+    }
     if (Get.parameters['recipientId'] != null)
       recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {
@@ -64,6 +80,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     controller.clearMessageNotifications(chatId: chatId);
     mezDbgPrint("@AYROUT ===> ${Get.parameters} | ORDERID ==> $orderId");
+    mezDbgPrint(
+        "===========>>>>> SENDER TYPE / $senderType <+++++++++++++++++++++++++");
+
+    super.initState();
   }
 
   AuthController _authController = Get.find<AuthController>();
@@ -74,27 +94,80 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
   RxString _typedMsg = "".obs;
 
-  void navigateToOrderPage() {
+  void handleViewOrderRouting() {
+    switch (senderType) {
+      case ParticipantType.DeliveryAdmin:
+        navigateAdminToOrderPage();
+        break;
+      case ParticipantType.Customer:
+        navigateCustomerToOrderPage();
+        break;
+      case ParticipantType.DeliveryDriver:
+        navigateDriverToOrderPage();
+        break;
+    }
+  }
+
+  void navigateDriverToOrderPage() {
     final OrderType orderType =
-        Get.find<OrderController>().getOrder(orderId!)!.orderType;
+        Get.find<deliveryOrderController.OrderController>()
+            .getOrder(orderId!)!
+            .orderType;
+    switch (orderType) {
+      case OrderType.Laundry:
+        Get.toNamed<void>(deliverynRouter.getLaundryOrderRoute(orderId!));
+
+        break;
+      case OrderType.Restaurant:
+        Get.toNamed<void>(deliverynRouter.getRestaurantOrderRoute(orderId!));
+    }
+  }
+
+  void navigateAdminToOrderPage() {
+    final LaundryOrder? laundryOrder =
+        Get.find<deliveryAdminLaundryOrderController.LaundryOrderController>()
+            .getOrder(orderId!);
+    final RestaurantOrder? restaurantOrder =
+        Get.find<deliveryAdminOrderController.RestaurantOrderController>()
+            .getOrder(orderId!);
+    if (restaurantOrder != null) {
+      Get.toNamed(deliveryAdminRouter.getRestaurantOrderRoute(orderId!));
+    } else if (laundryOrder != null) {
+      deliveryAdminRouter.getLaundryOrderRoute(orderId!);
+    } else {
+      mezDbgPrint('no laundry no restaurant');
+      // Get.toNamed(deliveryAdminRouter.getLaundryOrderRoute(orderId!));
+    }
+  }
+
+  void navigateCustomerToOrderPage() {
+    final OrderType orderType =
+        Get.find<customerOrderController.OrderController>()
+            .getOrder(orderId!)!
+            .orderType;
     switch (orderType) {
       case OrderType.Taxi:
         // offNamedUntil : to avoid loop of same routes being on stack: (WORKS)
         // TaxiOrderRoute -> Messages -> TaxiOrderRoute -> messages ... (~)
 
         // this only works when User is comming from Notification and currentRoute != orderViewScreen
-        Get.offAndToNamed<void>(getTaxiOrderRoute(orderId!));
+        Get.offAndToNamed<void>(customerRouter.getTaxiOrderRoute(orderId!));
         break;
       case OrderType.Restaurant:
         // offNamedUntil : to avoid loop of same routes being on stack:
         // restaurantOrderRoute -> Messages -> restaurantOrderRoute -> messages ...
-        Get.offNamedUntil<void>(
-            getRestaurantOrderRoute(orderId!),
-            (Route<dynamic> route) =>
-                route.settings.name == getRestaurantOrderRoute(orderId!));
+
+        // Get.offNamedUntil<void>(
+        //     customerRouter.getRestaurantOrderRoute(orderId!),
+        //     (Route<dynamic> route) =>
+        //         route.settings.name ==
+        //         customerRouter.getRestaurantOrderRoute(orderId!));
+        Get.toNamed(customerRouter.getRestaurantOrderRoute(orderId!));
+
         break;
+
       case OrderType.Laundry:
-        Get.snackbar("Launcdry order", "Oups not implemented yet!");
+        Get.toNamed(customerRouter.getLaundyOrderRoute(orderId!));
         break;
       default:
     }
@@ -244,18 +317,17 @@ class _MessagingScreenState extends State<MessagingScreen> {
           actions: <Widget>[
             if (orderId != null && showViewOrderBtn == true)
               InkWell(
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: Text(
-                      "View\nOrder",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black),
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: Text(
+                        "View\nOrder",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ),
                   ),
-                ),
-                onTap: navigateToOrderPage,
-              )
+                  onTap: handleViewOrderRouting)
           ],
         ),
         body: Container(
