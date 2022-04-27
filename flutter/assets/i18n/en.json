@@ -620,7 +620,7 @@
                         "background": {
                             "android9": "We need to access your location even when the app is in background. Please Click  `Allow` .",
                             "android10": "We need to access your location even when the app is in background. Please Click `ALLOW ALL THE TIME` .",
-                            "android11": "We need to access your location even when the app is in background. Please change the location permissions on App's Settings to `ALL THE TIME` ."
+                            "android11": "We need to access your location even when the app is in background. Please Click Give Permissions -> Permissions -> Location -> All the time."
                         }
                     }
                 }

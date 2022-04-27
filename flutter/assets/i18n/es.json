@@ -628,7 +628,7 @@
                         "background": {
                             "android9": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `Permitir` .",
                             "android10": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `PERMITIR TODO EL TIEMPO`.",
-                            "android11": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Cambie los permisos de ubicación en la configuración de la aplicación a `TODO EL TIEMPO`."
+                            "android11": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en Dar permisos -> Permisos -> Ubicación -> Todo el tiempo."
                         }
                     }
                 }
