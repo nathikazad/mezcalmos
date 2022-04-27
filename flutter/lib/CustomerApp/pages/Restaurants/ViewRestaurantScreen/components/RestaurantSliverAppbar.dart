@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Menu/MenuComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/MyCartAppBarIcon.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart'
     show TwoLettersGenerator;
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:shimmer/shimmer.dart';
 
 class RestaurantSliverAppBar extends StatelessWidget {
   const RestaurantSliverAppBar({
@@ -25,7 +26,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
       titleSpacing: 16,
       leading: IconButton(
         onPressed: () {
-          Navigator.pop(context);
+          Get.back();
         },
         icon: Icon(
           Icons.arrow_back,
@@ -74,14 +75,11 @@ class RestaurantSliverAppBar extends StatelessWidget {
           placeholder: (_, __) {
             return Shimmer.fromColors(
               child: Container(
-                height: 63,
-                width: 63,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  shape: BoxShape.circle,
-                ),
-              ),
+                  // color: Colors.grey,
+                  ),
               highlightColor: Colors.grey[400]!,
+              enabled: true,
+              period: Duration(milliseconds: 100),
               baseColor: Colors.grey[300]!,
               direction: ShimmerDirection.ltr,
             );

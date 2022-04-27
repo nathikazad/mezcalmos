@@ -128,7 +128,9 @@
                         },
                         "BuildItems": {
                             "deleteItem": "Eliminar este artículo.",
-                            "deleteItemConfirm": "Quieres eliminar este artículo?"
+                            "deleteItemConfirm": "Quieres eliminar este artículo?",
+                            "itemNotes": "Notas de artículos :"
+
                         },
                         "ChoosenManyOption": {
                             "options": "Opciones"
@@ -181,7 +183,9 @@
                         }
                     },
                     "ViewItemScreen": {
-                        "notes": "Notas"
+                        "notes": "Notas",
+                        "itemNotes": "Notas de artículos :"
+
                     }
                 },
                 "ViewOrderScreen": {
@@ -217,7 +221,9 @@
                             "helperText-preparing": "Tu pedido está siendo preparado por el restaurante.",
                             "helperText-onTheWay": "Tu pedido está en camino",
                             "helperText-readyForPickUp": "Su pedido está preparado y listo para ser recogido por el conductor de la entrega.",
-                            "helperText-delivered": "Su pedido ha sido entregado con éxito."
+                            "helperText-delivered": "Su pedido ha sido entregado con éxito.",
+                            "itemNotes": "Notas de artículos :"
+
                         },
                         "OrderSummaryCard": {
                             "totalCost": "Costo Total",

@@ -125,68 +125,96 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   Container itemViewScreenBody(BuildContext context) {
     return Container(
-      child: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  if (cartItem.value?.item.image != null && showImage.value)
-                    CircleAvatar(
-                      radius: 120,
-                      backgroundImage: CachedNetworkImageProvider(
-                          cartItem.value!.item.image!),
-                      onBackgroundImageError:
-                          (Object obj, StackTrace? stackTrace) {
-                        showImage.value = false;
-                      },
-                    ),
-                  SizedBox(
-                    height: 20,
+        child: Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                if (cartItem.value?.item.image != null && showImage.value)
+                  CircleAvatar(
+                    radius: 120,
+                    backgroundImage:
+                        CachedNetworkImageProvider(cartItem.value!.item.image!),
+                    onBackgroundImageError:
+                        (Object obj, StackTrace? stackTrace) {
+                      showImage.value = false;
+                    },
                   ),
-                  if (cartItem.value?.item.description != null)
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Text(
-                          "${cartItem.value!.item.description![userLanguage]!.inCaps}",
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2!
-                              .copyWith(fontSize: 12.sp)),
-                    ),
-                  SizedBox(
-                    height: 20,
+                SizedBox(
+                  height: 20,
+                ),
+                if (cartItem.value?.item.description != null)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
+                        "${cartItem.value!.item.description![userLanguage]!.inCaps}",
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(fontSize: 12.sp)),
                   ),
-                  if (cartItem.value!.item.options != null)
-                    Column(
-                      children: List.generate(
-                          cartItem.value!.item.options.length,
-                          (int index) => ItemOptionCard(
-                              cartItem: cartItem,
-                              editMode: widget.viewItemScreenMode ==
-                                  ViewItemScreenMode.EditItemMode,
-                              option: cartItem.value!.item.options[index])),
-                    ),
-                  SizedBox(
-                    height: 20,
+                SizedBox(
+                  height: 20,
+                ),
+                if (cartItem.value!.item.options.isNotEmpty)
+                  Column(
+                    children: List.generate(
+                        cartItem.value!.item.options.length,
+                        (int index) => ItemOptionCard(
+                            cartItem: cartItem,
+                            editMode: widget.viewItemScreenMode ==
+                                ViewItemScreenMode.EditItemMode,
+                            option: cartItem.value!.item.options[index])),
                   ),
-                  SizedBox(
-                    height: 15,
-                  )
-                ],
-              ),
+                SizedBox(
+                  height: 20,
+                ),
+                _itemNotesComponent(),
+                SizedBox(
+                  height: 15,
+                )
+              ],
             ),
           ),
-          BottomBarItemViewScreen(
-            currentRestaurantId: currentRestaurant?.info.id,
-            isAvailable: checkRestaurantAvailability(
-                schedule: currentRestaurant?.schedule),
-            cartItem: cartItem,
-            mode: widget.viewItemScreenMode,
+        ),
+        BottomBarItemViewScreen(
+          currentRestaurantId: currentRestaurant?.info.id,
+          isAvailable: checkRestaurantAvailability(
+              schedule: currentRestaurant?.schedule),
+          cartItem: cartItem,
+          mode: widget.viewItemScreenMode,
+        ),
+      ],
+    ));
+  }
+
+  Container _itemNotesComponent() {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+              margin: EdgeInsets.all(5),
+              child: Text("${_i18n()["itemNotes"]}")),
+          TextFormField(
+            minLines: 3,
+            maxLines: 10,
+            onChanged: (String v) {
+              cartItem.value!.notes = v;
+            },
+            style: Get.textTheme.bodyText1,
+            decoration: InputDecoration(
+              alignLabelWithHint: false,
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              filled: true,
+              fillColor: Colors.white,
+            ),
           ),
         ],
-      )
+      ),
     );
   }
 

@@ -9,6 +9,10 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]
+        ["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
+
 class OrderItemsItemCard extends StatefulWidget {
   const OrderItemsItemCard({
     Key? key,
@@ -92,12 +96,32 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   children: buildChoices(widget.item.chosenChoices),
                 ),
               ),
+              if (widget.item.notes != null)
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Text("${_i18n()["itemNotes"]}"),
+                      ),
+                      Container(
+                        child: Text(
+                          widget.item.notes!,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ),
+                      Divider(color: Get.theme.dividerColor),
+                    ],
+                  ),
+                ),
               Container(
                 margin: EdgeInsets.all(5),
                 alignment: Alignment.bottomRight,
                 child: Text('\$' + widget.item.totalCost.toInt().toString(),
                     style: txt.bodyText1!.copyWith(fontSize: 17.sp)),
-              )
+              ),
             ],
           ),
         ),

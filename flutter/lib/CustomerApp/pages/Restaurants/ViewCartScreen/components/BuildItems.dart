@@ -59,6 +59,8 @@ class CartItemsBuilder extends StatelessWidget {
                     children: buildChoices(cartItem.chosenChoices),
                   ),
                 ),
+                if (cartItem.notes != null)
+                  _itemNotesComponent(cartItem, context),
                 SizedBox(
                   height: 10,
                 ),
@@ -136,6 +138,27 @@ class CartItemsBuilder extends StatelessWidget {
           ));
           return children;
         }),
+      ),
+    );
+  }
+
+  Container _itemNotesComponent(CartItem cartItem, BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      alignment: Alignment.centerLeft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            child: Text("${_i18n()["itemNotes"]}"),
+          ),
+          Container(
+            child: Text(
+              cartItem.notes!,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ),
+        ],
       ),
     );
   }

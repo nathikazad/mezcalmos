@@ -38,7 +38,8 @@ class OrderItemsCard extends StatelessWidget {
           itemBuilder: (_, int index) {
             return OrderItemsItemCard(item: items[index]);
           },
-        )
+        ),
+        
       ],
     );
   }
