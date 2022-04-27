@@ -650,7 +650,14 @@
             },
             "MezDialogs": {
                 "yes": "Si",
-                "no": "No"
+                "no": "No",
+                "mezUpdaterDialog" :{
+                    "updateAvailable" : "Actualización disponible!",
+                    "updatePlease" : "¡Siempre se recomienda instalar nuevas actualizaciones para obtener todas las nuevas funciones!",
+                    "doNotUpdate" : "No, gracias",
+                    "update" : "ACTUALIZAR"
+
+                }
             },
             "MezSideMenu": {
                 "userInfo": "Información del usuario",

@@ -235,8 +235,11 @@ class _StartingPointState extends State<StartingPoint> {
         await setupIosAppStoreId(pInfos.appName);
       }
       await GetStorage().write(getxAppVersion, pInfos.version);
-      await GetStorage().write(getxGmapBottomPaddingKey,
-          Platform.isAndroid ? 38.0.sp : Get.height / 35);
+      await GetStorage().write(
+        getxGmapBottomPaddingKey,
+        // Platform.isAndroid ? 38.0.sp : Get.height / 35,
+        10.0,
+      );
     } else
       mezDbgPrint("[ GET STORAGE ] FAILED TO INITIALIZE !");
   }

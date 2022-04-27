@@ -66,7 +66,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                   alignment: Alignment.topCenter,
                   children: <Widget>[
                     MGoogleMap(
-                      recenterBtnBottomPadding: 150,
+                      recenterBtnBottomPadding: 130,
                       mGoogleMapController:
                           iOrderViewController.mGoogleMapController,
                       debugString: "IncomingViewScreen",

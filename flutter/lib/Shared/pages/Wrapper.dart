@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
@@ -86,44 +87,12 @@ class _WrapperState extends State<Wrapper> {
     switch (updateType) {
       case UpdateType.Null:
       case UpdateType.Patches:
-        twoButtonDialog(
-            leftButton: Text(
-              "No thanks",
-              style: TextStyle(
-                color: Colors.grey.shade600,
-                fontFamily: 'psb',
-              ),
-            ),
-            onTapButtonLeft: () {
-              Get.back(closeOverlays: true);
-            },
-            rightButton: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.teal.shade900,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                "Yes!",
-                style: TextStyle(
-                  color: Colors.grey.shade600,
-                  fontFamily: 'psb',
-                ),
-              ),
-            ),
-            onTapButtonRight: () {
-              _appVersionController!.openStoreAppPage();
-              Get.back(closeOverlays: true);
-            },
-            bodyTextStyle: TextStyle(
-              color: Colors.black,
-              fontFamily: 'psr',
-              fontSize: 12,
-            ),
-            title: "New Update!",
-            body:
-                "We recommand you to update to v${status.storeVersion} So you get all the new changes.\nDo you want to update now ?");
-
+        MezUpdaterDialog.show(
+          context: context,
+          onUpdateClicked: () => openOsStore(
+            openIosStoreFunction: _appVersionController!.openStoreAppPage,
+          ),
+        );
         break;
       default:
         // Major/Minor - forcing the app to stay in AppNeedsUpdate

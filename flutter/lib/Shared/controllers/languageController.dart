@@ -33,8 +33,9 @@ class LanguageController extends GetxController {
     LanguageType.ES: {"fullName": "Español", "langImage": mexicoFlagAsset}
   };
   LanguageType get userLanguageKey => _userLanguageKey.value;
-  String get langFullName => languageDetails[_userLanguageKey.value].fullName;
-  String get langImage => languageDetails[_userLanguageKey.value].langImage;
+  String get langFullName =>
+      languageDetails[_userLanguageKey.value]['fullName'];
+  String get langImage => languageDetails[_userLanguageKey.value]['langImage'];
   dynamic get strings =>
       _jsonStrings[_userLanguageKey.value.toFirebaseFormatString()];
 

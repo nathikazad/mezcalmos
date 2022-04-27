@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:sizer/sizer.dart';
@@ -98,7 +99,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog({
   required String body,
   TextStyle? bodyTextStyle,
   //required String leftButtonText,
-  bool? titleUp = false,
+  bool titleUp = false,
   double? buttonsWidthSize = 80,
   Function? leftButtonCallback,
   // required String rightButtonText,
@@ -119,7 +120,7 @@ Future<TwoButtonDialogButton?> twoButtonDialog({
     contentPadding: const EdgeInsets.all(5),
     titlePadding: const EdgeInsets.all(5),
     radius: 8,
-    title: (titleUp!) ? title : "",
+    title: titleUp ? title : "",
     content: Container(
       color: const Color(0xffffffff),
       child: Column(
@@ -183,7 +184,6 @@ Future<TwoButtonDialogButton?> twoButtonDialog({
                       child: rightButton,
                       onTap: onTapButtonRight ??
                           () {
-                            // onCancel();
                             Get.back<void>();
                             twoButtonDialogButton = TwoButtonDialogButton.Right;
                             rightButtonCallback?.call();
@@ -202,15 +202,16 @@ Future<TwoButtonDialogButton?> twoButtonDialog({
   return Future.value(twoButtonDialogButton);
 }
 
-Future<YesNoDialogButton> yesNoDialog(
-    {required String text,
-    required String body,
-    TextStyle? bodyTextStyle,
-    Widget? icon,
-    Widget? buttonLeftStyle = const YesButtonStyle(),
-    Widget? buttonRightStyle = const NoButtonStyle(),
-    bool? titleUp = false,
-    String? imgUrl}) async {
+Future<YesNoDialogButton> yesNoDialog({
+  required String text,
+  required String body,
+  TextStyle? bodyTextStyle,
+  Widget? icon,
+  Widget? buttonLeftStyle = const YesButtonStyle(),
+  Widget? buttonRightStyle = const NoButtonStyle(),
+  bool titleUp = false,
+  String? imgUrl,
+}) async {
   final TwoButtonDialogButton? _res = (await twoButtonDialog(
     title: text,
     body: body,
@@ -350,5 +351,157 @@ class NoButtonStyle extends StatelessWidget {
             buttonText: _i18n()["no"],
             buttonColor: Color(0xfffdfdfd),
             buttonShadowColor: Color(0x334c504a));
+  }
+}
+
+class MezUpdaterDialog {
+  static Future<void> show({
+    required BuildContext context,
+    required VoidCallback onUpdateClicked,
+    String headerImg = "assets/icons/appstore.png",
+  }) async {
+    final LanguageController langController = Get.find<LanguageController>();
+
+    return showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return Center(
+            child: Container(
+              padding: const EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              height: 60.h,
+              width: 60.w,
+              child: Flex(
+                direction: Axis.vertical,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Obx(
+                    () => Align(
+                      alignment: Alignment.centerLeft,
+                      child: GestureDetector(
+                        onTap: langController.changeUserLanguage,
+                        child: Container(
+                          height: 20,
+                          width: 20,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image: AssetImage(langController.oppositFlag),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 3,
+                    child: Container(
+                      height: 90,
+                      width: 90,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.contain,
+                          image: AssetImage('assets/icons/appstore.png'),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Flexible(
+                    flex: 1,
+                    child: Obx(
+                      () => FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          _i18n()["mezUpdaterDialog"]["updateAvailable"],
+                          textAlign: TextAlign.center,
+                          style: Theme.of(ctx).textTheme.bodyText1!.copyWith(
+                                color: Colors.black.withAlpha(200),
+                                decoration: TextDecoration.none,
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  // flex: 3,
+                  Obx(
+                    () => Text(
+                      _i18n()["mezUpdaterDialog"]["updatePlease"],
+                      overflow: TextOverflow.visible,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(ctx).textTheme.bodyText1!.copyWith(
+                            color: Colors.black.withAlpha(200),
+                            decoration: TextDecoration.none,
+                            fontSize: 12.sp,
+                          ),
+                    ),
+                  ),
+
+                  Spacer(),
+                  Spacer(),
+                  Flexible(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: onUpdateClicked,
+                      child: Container(
+                        height: 40,
+                        child: Center(
+                          child: Obx(
+                            () => FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                _i18n()["mezUpdaterDialog"]["update"],
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.purple.shade400,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.none,
+                                  fontFamily: 'psr',
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      child: GestureDetector(
+                        onTap: () => Get.back<void>(closeOverlays: true),
+                        child: Obx(
+                          () => FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              _i18n()["mezUpdaterDialog"]["doNotUpdate"],
+                              textAlign: TextAlign.center,
+                              style:
+                                  Theme.of(ctx).textTheme.bodyText1!.copyWith(
+                                        color: Colors.black.withAlpha(200),
+                                        decoration: TextDecoration.none,
+                                        fontSize: 12.sp,
+                                      ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

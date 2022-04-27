@@ -100,8 +100,8 @@ class AppVersionController {
   }) {
     if (_instance == null) {
       assert(onNewUpdateAvailable != null);
-      _instance = AppVersionController._internal();
-      _instance!.onNewUpdateAvailable = onNewUpdateAvailable!;
+      _instance = AppVersionController._internal()
+        ..onNewUpdateAvailable = onNewUpdateAvailable!;
     }
 
     return _instance!;

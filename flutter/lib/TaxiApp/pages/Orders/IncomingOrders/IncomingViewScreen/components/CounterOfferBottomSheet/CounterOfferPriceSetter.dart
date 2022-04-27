@@ -76,11 +76,15 @@ class _CounterOfferPriceSetterState extends State<CounterOfferPriceSetter> {
               center: true,
               btnColors: Colors.black,
               incrementCallback: () {
-                _currentPrice += 5;
+                setState(() {
+                  _currentPrice += 5;
+                });
               },
               value: _currentPrice,
               decrementCallback: () {
-                _currentPrice -= 5;
+                setState(() {
+                  _currentPrice -= 5;
+                });
               },
             ),
           ),

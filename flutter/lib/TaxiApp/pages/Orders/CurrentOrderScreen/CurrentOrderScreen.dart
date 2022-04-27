@@ -112,7 +112,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           body: order != null && mGoogleMapController.location.value != null
               ? Stack(alignment: Alignment.topCenter, children: <Widget>[
                   MGoogleMap(
-                    recenterBtnBottomPadding: 100,
+                    recenterBtnBottomPadding: 80,
                     mGoogleMapController: mGoogleMapController,
                     debugString: "CurrentOrderScreen",
                   ),

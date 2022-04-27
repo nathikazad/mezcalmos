@@ -227,25 +227,21 @@ class MGoogleMapState extends State<MGoogleMap> {
           widget.mGoogleMapController.lockInAutoZoomAnimation();
         },
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 5),
-          height: 8.w,
-          width: 110,
+          padding: EdgeInsets.all(5),
+          height: 40,
+          width: 40,
           decoration: BoxDecoration(
-            color: Color(0xffffffff),
+            shape: BoxShape.circle,
+            color: Colors.white,
             boxShadow: <BoxShadow>[
               BoxShadow(blurRadius: 8, color: Colors.black38, spreadRadius: 1)
             ],
-            borderRadius: BorderRadius.circular(20),
           ),
           child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Flexible(
-                  child: Text("Recenter"),
-                ),
-              ],
+            child: Icon(
+              Icons.my_location_sharp,
+              color: Colors.black,
+              size: 25,
             ),
           ),
         ),

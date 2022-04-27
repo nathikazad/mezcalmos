@@ -24,7 +24,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
     return Positioned(
         left: 10,
         right: 10,
-        bottom: GetStorage().read(getxGmapBottomPaddingKey) + 10,
+        bottom: (GetStorage().read(getxGmapBottomPaddingKey) + 50) as double,
         child: Container(
             padding: EdgeInsets.all(5.sp),
             width: Get.width,

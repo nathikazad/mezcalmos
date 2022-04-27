@@ -642,7 +642,13 @@
             },
             "MezDialogs": {
                 "yes": "Yes",
-                "no": "No"
+                "no": "No",
+                "mezUpdaterDialog" :{
+                    "updateAvailable" : "Update Available!",
+                    "updatePlease" : "It is always recommended to install new updates in order to get all the new features!",
+                    "doNotUpdate" : "No Thanks",
+                    "update" : "UPDATE"
+                }
             },
             "MezSideMenu": {
                 "userInfo": "User Information",
