@@ -34,14 +34,15 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       Get.find<DeliveryAuthController>();
   @override
   void initState() {
-    super.initState();
-
     final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId) as RestaurantOrder;
-    if (order.value == null) {
+
+    if (controller.getOrder(orderId) == null) {
       mezDbgPrint("ORDER NULL");
+
+      Get.back();
     } else {
+      order.value = controller.getOrder(orderId) as RestaurantOrder;
       mezDbgPrint(
           "lat lng DeliveryDriver => ${deliveryAuthAuthController.currentLocation.toString()}");
 
@@ -99,6 +100,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
         }
       });
     }
+    super.initState();
   }
 
   @override
@@ -111,29 +113,32 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back),
-        bottomNavigationBar:
-            Obx(() => RestaurantControllButtons(order: order.value!)),
-        body: Obx(() {
-          if (order.value != null) {
-            return Column(children: <Widget>[
-              DriverOrderMapComponent(
-                order: order.value!,
-                mapController: mapController,
-              ),
-              Expanded(
-                child: DriverBottomRestaurantOrderCard(
-                  order: order.value as RestaurantOrder,
+    return Obx(
+      () {
+        if (order.value != null) {
+          return Scaffold(
+              appBar:
+                  deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back),
+              bottomNavigationBar:
+                  RestaurantControllButtons(order: order.value!),
+              body: Column(children: <Widget>[
+                DriverOrderMapComponent(
+                  order: order.value!,
+                  mapController: mapController,
                 ),
-              ),
-            ]);
-          } else {
-            return MezLogoAnimation(
-              centered: true,
-            );
-          }
-        }));
+                Expanded(
+                  child: DriverBottomRestaurantOrderCard(
+                    order: order.value as RestaurantOrder,
+                  ),
+                ),
+              ]));
+        } else {
+          return MezLogoAnimation(
+            centered: true,
+          );
+        }
+      },
+    );
   }
 
   /// this handles Restaurant Order.

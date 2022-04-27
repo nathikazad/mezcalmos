@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNoOrdersComponent.dart';
@@ -10,6 +10,7 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScree
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
@@ -56,7 +57,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         child: Scaffold(
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: MezSideMenu(),
-            appBar: deliveryAppBar(AppBarLeftButtonType.Menu),
+            appBar: deliveryAppBar(),
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -75,6 +76,20 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 ]),
               ),
             )));
+  }
+
+  AppBar deliveryAppBar() {
+    return mezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: [
+      InkWell(
+          customBorder: CircleBorder(),
+          onTap: () {
+            Get.toNamed(kNotificationsRoute);
+          },
+          child: Icon(
+            Ionicons.notifications,
+            color: Get.theme.primaryColorLight,
+          ))
+    ]);
   }
 
   Widget _pastOrdersList(BuildContext context) {
