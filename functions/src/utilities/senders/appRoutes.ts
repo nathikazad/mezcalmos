@@ -22,9 +22,9 @@ export function chatUrl(
   orderId?: string,
   orderType?: OrderType,
   participantType?: ParticipantType): string {
-  let str = `/messages/${chatId}?showViewOrderBtn=1`;
+  let str = `/messages/${chatId}`;
   if (orderId != null)
-    str += `&orderId=${orderId}`
+    str += `?orderId=${orderId}`
   if (orderType != null && participantType != null)
     str += `&orderLink=${orderUrl(participantType, orderType, orderId!)}`
   return str
