@@ -404,10 +404,12 @@ class CurrentPositionedBottomBar extends StatelessWidget {
 
   Future<void> mapLauncher(lat, lng) async {
     String url = "https://www.google.com/maps/dir/?api=1&destination=$lat,$lng";
-    if (await canLaunch(url))
+
+    try {
       await launch(url);
-    else {
-      MezSnackbar("Oops :(", _i18n()['failedMapLaunch']);
+    } catch (e) {
+      mezDbgPrint("Oops ==> ${_i18n()['failedMapLaunch']}");
+      await launch(url);
     }
   }
 }
