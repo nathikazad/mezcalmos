@@ -120,13 +120,7 @@ Notification newOrderNotification(String key, value) {
 Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: getMessagesRoute(
-        chatId: value['chatId'] ?? value['orderId'],
-        orderId: value['orderId'],
-        recipientId: value['sender']['id'],
-        senderType: ParticipantType.DeliveryAdmin,
-        showViewOrderBtn: true,
-      ),
+      linkUrl: value['linkUrl'],
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

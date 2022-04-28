@@ -39,6 +39,7 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
     let participant = chat.participants[participantId]
     if (participant.particpantType == particpantType)
       continue
+    let linkUrl = chatUrl(notificationForQueue.chatId, notificationForQueue.orderId, chat.orderType, participant.particpantType);
     let notification: Notification = {
       foreground: <NewMessageNotification>{
         chatId: notificationForQueue.chatId,
@@ -48,6 +49,7 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
         time: notificationForQueue.timestamp,
         notificationType: NotificationType.NewMessage,
         notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+        linkUrl: linkUrl
       },
       background: {
         en: {
@@ -59,7 +61,7 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
           body: notificationForQueue.message
         }
       },
-      linkUrl: chatUrl(notificationForQueue.chatId, notificationForQueue.orderId)
+      linkUrl: linkUrl
     }
     notifyUser.pushNotification(participantId, notification, participant.particpantType);
   }

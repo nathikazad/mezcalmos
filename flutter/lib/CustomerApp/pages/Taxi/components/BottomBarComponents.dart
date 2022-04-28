@@ -9,8 +9,10 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
@@ -158,7 +160,10 @@ Widget messageBtn({required Rxn<TaxiOrder>  order, EdgeInsets? margin}) {
     ()=> GestureDetector(
       onTap: () {
         Get.toNamed<void>(
-          getTaxiMessagesRoute(order.value!.orderId),
+            getMessagesRoute(
+            chatId: order.value!.orderId,
+            recipientType: ParticipantType.Taxi,
+            orderId: order.value!.orderId)
         );
       },
       child: Container(

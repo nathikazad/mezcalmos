@@ -60,36 +60,28 @@ String getLaundyOrderRoute(String orderId) {
   return kLaundryCurrentOrder.replaceFirst(":orderId", orderId);
 }
 
-String getRestaurantMessagesRoute(String orderId) {
+String getRestaurantMessagesRoute(
+    {required String orderId, String? orderLink}) {
   return getMessagesRoute(
-    chatId: orderId,
+      chatId: orderId,
     recipientType: ParticipantType.Restaurant,
-    orderId: orderId,
-      showViewOrderBtn: true
+      orderLink: orderLink,
+      orderId: orderId
   );
 }
 
 String getTaxiMessagesRoute(
-  String orderId,
+    {required String orderId, String? orderLink}
 ) {
   return getMessagesRoute(
-    chatId: orderId,
+      chatId: orderId,
     recipientType: ParticipantType.Taxi,
-    orderId: orderId,
-      showViewOrderBtn: true
+      orderLink: orderLink,
+      orderId: orderId
   );
 }
 
-String getLaundryMessagesRoute(
-  String orderId,
-) {
-  return getMessagesRoute(
-    chatId: orderId,
-    recipientType: ParticipantType.Laundry,
-    orderId: orderId,
-      showViewOrderBtn: true
-  );
-}
+
 
 // GetX based Router (For navigating)
 class XRouter {

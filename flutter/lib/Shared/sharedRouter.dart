@@ -34,10 +34,9 @@ const String kAppNeedsUpdate = '/needs_update';
 
 String getMessagesRoute(
     {required String chatId,
+    String? orderLink,
     String? orderId,
-    bool showViewOrderBtn = false,
     ParticipantType recipientType = ParticipantType.Customer,
-    ParticipantType senderType = ParticipantType.Customer,
     String? recipientId}) {
   String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId);
 
@@ -45,10 +44,8 @@ String getMessagesRoute(
     mainUrl += "?recipientId=$recipientId";
   else
     mainUrl += "?recipientType=${recipientType.toFirebaseFormattedString()}";
+  if (orderLink != null) mainUrl += "&orderLink=$orderLink";
   if (orderId != null) mainUrl += "&orderId=$orderId";
-
-  if (showViewOrderBtn) mainUrl += "&showViewOrderBtn=1";
-  mainUrl += "&senderType=$senderType";
   return mainUrl;
 }
 

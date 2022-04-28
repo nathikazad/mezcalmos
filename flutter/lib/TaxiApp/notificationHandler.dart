@@ -52,8 +52,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 Notification newMessageNotification(String key, dynamic value) {
   return Notification(
       id: key,
-      linkUrl: getMessagesRoute(
-          chatId: value['chatId'], recipientType: ParticipantType.Customer),
+      linkUrl: value['linkUrl'],
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

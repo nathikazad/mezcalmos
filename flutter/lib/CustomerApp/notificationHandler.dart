@@ -3,11 +3,13 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
@@ -276,11 +278,11 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
+  mezDbgPrint("MESSAGE NOTIFICATION ^^^^^^^^^^^^^");
+  mezDbgPrint(value['linkUrl']);
   return Notification(
       id: key,
-      linkUrl: (value['chatId'] == null)
-          ? getMessageUrl(value['orderId']!)
-          : getMessageUrl(value['chatId']!),
+      linkUrl: value['linkUrl'],
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],
@@ -306,18 +308,4 @@ Notification newCounterOfferNotification(String key, value) {
           value["notificationAction"]?.toString().toNotificationAction() ??
               NotificationAction.ShowSnackbarOnlyIfNotOnPage,
       variableParams: value);
-}
-
-// checking type
-String getMessageUrl(String orderId) {
-  switch (Get.find<OrderController>().getOrder(orderId)!.orderType) {
-    case OrderType.Restaurant:
-      return getRestaurantMessagesRoute(orderId);
-    case OrderType.Taxi:
-      return getTaxiMessagesRoute(orderId);
-    case OrderType.Laundry:
-      return getTaxiMessagesRoute(orderId);
-    default:
-      throw Exception('Invalid OrderType');
-  }
 }
