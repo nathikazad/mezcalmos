@@ -31,6 +31,8 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
   final DeliveryAuthController deliveryAuthAuthController =
       Get.find<DeliveryAuthController>();
   StreamSubscription<Order?>? _orderListener;
+  LaundryOrderStatus? _orderStatusSnapshot;
+
   @override
   void initState() {
     super.initState();
@@ -86,7 +88,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
         mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
         mapController.animateMarkersPolyLinesBounds.value = true;
         mapController.periodicRerendering.value = true;
-        mapController.animateAndUpdateBounds();
+        handleLaundryOrder(order.value as LaundryOrder);
       });
 
       _orderListener =
@@ -140,38 +142,64 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     );
   }
 
-  /// this handles Laundry Orders depending on it's Phase
-  void handleLaundryOrder(LaundryOrder laundryOrder) {
-    final LaundryOrderStatus _status = laundryOrder.status;
-    switch (_status) {
-      case LaundryOrderStatus.OtwPickup:
-        // Driver marker
+  /// This basically controlls if to fitBound or Not on Laundry and Customer Markers.
+  void _addOrUpdateLaundryAndCustomerMarkers(
+    LaundryOrder laundryOrder, {
+    required bool fitLaundryMarkerInBounds,
+    required bool fitCustomerMarlerInBounds,
+  }) {
+    // Landry Marker
+    mapController.addOrUpdateUserMarker(
+      latLng: LatLng(
+        laundryOrder.laundry!.location.latitude,
+        laundryOrder.laundry!.location.longitude,
+      ),
+      customImgHttpUrl: laundryOrder.laundry!.image,
+      markerId: laundryOrder.laundry!.id,
+      fitWithinBounds: fitLaundryMarkerInBounds,
+    );
+    // Destination Marker
+    mapController.addOrUpdatePurpleDestinationMarker(
+      latLng: LatLng(
+        laundryOrder.to.latitude,
+        laundryOrder.to.longitude,
+      ),
+      fitWithinBounds: fitCustomerMarlerInBounds,
+    );
+    _orderStatusSnapshot = laundryOrder.status;
+  }
+
+  /// When the phase is DropOff.
+  void _onDropOffPhase(LaundryOrder laundryOrder) {
+    switch (laundryOrder.status) {
+      case LaundryOrderStatus.ReadyForDelivery:
+        if (_orderStatusSnapshot != laundryOrder.status) {
+          _addOrUpdateLaundryAndCustomerMarkers(
+            laundryOrder,
+            fitLaundryMarkerInBounds: true,
+            fitCustomerMarlerInBounds: false,
+          );
+
+          _orderStatusSnapshot = laundryOrder.status;
+        }
+
         mapController.addOrUpdateUserMarker(
           latLng: LatLng(
-            laundryOrder.pickupDriver!.location!.latitude,
-            laundryOrder.pickupDriver!.location!.longitude,
+            laundryOrder.dropoffDriver!.location!.latitude,
+            laundryOrder.dropoffDriver!.location!.longitude,
           ),
-          fitWithinBounds: false,
+          fitWithinBounds: true,
         );
-        // Landry Marker
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            laundryOrder.laundry!.location.latitude,
-            laundryOrder.laundry!.location.longitude,
-          ),
-          customImgHttpUrl: laundryOrder.laundry!.image,
-          markerId: laundryOrder.laundry!.id,
-        );
-        // Destination Marker
-        mapController.addOrUpdatePurpleDestinationMarker(
-          latLng: LatLng(
-            laundryOrder.to.latitude,
-            laundryOrder.to.longitude,
-          ),
-        );
-        mapController.animateAndUpdateBounds();
         break;
       case LaundryOrderStatus.OtwDelivery:
+        if (_orderStatusSnapshot != laundryOrder.status) {
+          _addOrUpdateLaundryAndCustomerMarkers(
+            laundryOrder,
+            fitLaundryMarkerInBounds: false,
+            fitCustomerMarlerInBounds: true,
+          );
+          _orderStatusSnapshot = laundryOrder.status;
+        }
         // DropOff driver Marker
         mapController.addOrUpdateUserMarker(
           latLng: LatLng(
@@ -179,7 +207,94 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
             laundryOrder.dropoffDriver!.location!.longitude,
           ),
         );
-        // Laundry location marker
+        // mapController.moveToNewLatLng(
+        //   laundryOrder.dropoffDriver!.location!.latitude,
+        //   laundryOrder.dropoffDriver!.location!.longitude,
+        // );
+        mapController.animateAndUpdateBounds();
+        break;
+      default:
+    }
+  }
+
+  /// When the phase is PickUp.
+  void _onPickUpPhase(LaundryOrder laundryOrder) {
+    switch (laundryOrder.status) {
+      case LaundryOrderStatus.OtwPickup:
+        // Driver marker
+        if (_orderStatusSnapshot != laundryOrder.status) {
+          // Landry Marker
+          _addOrUpdateLaundryAndCustomerMarkers(
+            laundryOrder,
+            fitLaundryMarkerInBounds: false,
+            fitCustomerMarlerInBounds: true,
+          );
+          // set snapshot to currentSttaus so we don't need to re-update.
+          _orderStatusSnapshot = laundryOrder.status;
+        }
+        mapController.addOrUpdateUserMarker(
+          latLng: LatLng(
+            laundryOrder.pickupDriver!.location!.latitude,
+            laundryOrder.pickupDriver!.location!.longitude,
+          ),
+          fitWithinBounds: true,
+        );
+
+        mapController.animateAndUpdateBounds();
+        break;
+      case LaundryOrderStatus.PickedUp:
+        // user going from customer's to laundry
+        if (_orderStatusSnapshot != laundryOrder.status) {
+          _addOrUpdateLaundryAndCustomerMarkers(
+            laundryOrder,
+            fitLaundryMarkerInBounds: true,
+            fitCustomerMarlerInBounds: false,
+          );
+          _orderStatusSnapshot = laundryOrder.status;
+        }
+        mapController.addOrUpdateUserMarker(
+          latLng: LatLng(
+            laundryOrder.pickupDriver!.location!.latitude,
+            laundryOrder.pickupDriver!.location!.longitude,
+          ),
+          fitWithinBounds: true,
+        );
+        mapController.animateAndUpdateBounds();
+        break;
+      default:
+    }
+  }
+
+  /// this handles Laundry Orders depending on it's Phase
+  void handleLaundryOrder(LaundryOrder laundryOrder) {
+    final LaundryOrderPhase _phase = laundryOrder.getCurrentPhase();
+
+    if (_phase == LaundryOrderPhase.Pickup) {
+      _onPickUpPhase(laundryOrder);
+    } else if (_phase == LaundryOrderPhase.Dropoff) {
+      _onDropOffPhase(laundryOrder);
+    } else {
+      // Neither
+      // in case we later wanna do something for this.
+      // Calling this will reset to initial markers states (3 of them fit in)
+      if (_orderStatusSnapshot != laundryOrder.status) {
+        _orderStatusSnapshot = laundryOrder.status;
+        mapController.addOrUpdatePurpleDestinationMarker(
+          latLng: LatLng(
+            laundryOrder.to.latitude,
+            laundryOrder.to.longitude,
+          ),
+          fitWithinBounds: true,
+        );
+        // USER MARKER
+        mapController.addOrUpdateUserMarker(
+          latLng: LatLng(
+            deliveryAuthAuthController.currentLocation.latitude!,
+            deliveryAuthAuthController.currentLocation.longitude!,
+          ),
+          fitWithinBounds: true,
+        );
+        // LAUNDRY MARKER
         mapController.addOrUpdateUserMarker(
           latLng: LatLng(
             laundryOrder.laundry!.location.latitude,
@@ -187,24 +302,9 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
           ),
           customImgHttpUrl: laundryOrder.laundry!.image,
           markerId: laundryOrder.laundry!.id,
-          fitWithinBounds: false,
+          fitWithinBounds: true,
         );
-        // Destination Marker
-        mapController.addOrUpdatePurpleDestinationMarker(
-          latLng: LatLng(
-            laundryOrder.to.latitude,
-            laundryOrder.to.longitude,
-          ),
-        );
-        mapController.moveToNewLatLng(
-          laundryOrder.dropoffDriver!.location!.latitude,
-          laundryOrder.dropoffDriver!.location!.longitude,
-        );
-        mapController.animateAndUpdateBounds();
-
-        break;
-      default:
-        return;
+      }
     }
   }
 }

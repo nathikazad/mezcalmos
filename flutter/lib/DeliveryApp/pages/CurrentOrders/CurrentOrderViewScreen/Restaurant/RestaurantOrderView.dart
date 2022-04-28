@@ -36,7 +36,6 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   void initState() {
     final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    
 
     if (controller.getOrder(orderId) == null) {
       mezDbgPrint("ORDER NULL");
@@ -86,7 +85,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
         mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
         mapController.animateMarkersPolyLinesBounds.value = true;
         mapController.periodicRerendering.value = true;
-        mapController.animateAndUpdateBounds();
+        handleRestaurantOrder(order.value as RestaurantOrder);
       });
 
       _orderListener =
@@ -181,6 +180,14 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
             customImgHttpUrl: order.restaurant.image,
             fitWithinBounds: false,
           );
+
+          mapController.addOrUpdatePurpleDestinationMarker(
+            latLng: LatLng(
+              order.to.latitude,
+              order.to.longitude,
+            ),
+            fitWithinBounds: true,
+          );
         }
         // updating our delivery guy location
         mapController.addOrUpdateUserMarker(
@@ -188,6 +195,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
             order.dropoffDriver!.location!.latitude,
             order.dropoffDriver!.location!.longitude,
           ),
+          fitWithinBounds: true,
         );
         mapController.animateAndUpdateBounds();
         orderStatusSnapshot = order.status;

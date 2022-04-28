@@ -153,9 +153,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       case LaundryOrderStatus.OtwPickup:
         return LaundryOrderPhase.Pickup;
       case LaundryOrderStatus.ReadyForDelivery:
-
       case LaundryOrderStatus.OtwDelivery:
-        return LaundryOrderPhase.Dropoff;
       case LaundryOrderStatus.Delivered:
         return LaundryOrderPhase.Dropoff;
       default:
