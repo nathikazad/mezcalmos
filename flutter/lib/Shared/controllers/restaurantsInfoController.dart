@@ -35,10 +35,11 @@ class RestaurantsInfoController extends GetxController {
         }
       }
     });
+    restaurants.where((Restaurant a) => a.state.isAuthorized);
     restaurants.sort((Restaurant a, Restaurant b) {
-      if (a.isAvailable() && !b.isAvailable()) {
+      if (a.isOpen() && !b.isOpen()) {
         return 1;
-      } else if (!a.isAvailable() && b.isAvailable()) {
+      } else if (!a.isOpen() && b.isOpen()) {
         return -1;
       } else
         return 0;

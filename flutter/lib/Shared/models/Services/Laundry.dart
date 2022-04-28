@@ -14,12 +14,8 @@ class Laundry extends Service {
   factory Laundry.fromLaundryData(
       // ignore: avoid_annotating_with_dynamic
       {required String laundryId, required dynamic laundryData}) {
-    final ServiceState laundryState = ServiceState(
-        laundryData["state"]?["authorizationStatus"]
-                ?.toString()
-                .toAuthorizationStatus() ??
-            AuthorizationStatus.Unauthorized,
-        laundryData["state"]?["available"] ?? false);
+    final ServiceState laundryState =
+        ServiceState.fromServiceStateData(laundryData["state"]);
 
     final Schedule? schedule = laundryData["details"]["schedule"] != null
         ? Schedule.fromData(laundryData["details"]["schedule"])

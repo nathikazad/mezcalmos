@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/components/RestaurantFutureBody.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -41,24 +42,6 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
           return RestaurantFutureBody(snapshot: snapshot);
         },
       ),
-    );
-  }
-
-  void getAndSortRestaurants(List<Restaurant>? data) {
-    restaurants = data!
-        .where((Restaurant restaurant) => restaurant.state.available == true)
-        .toList(growable: true);
-    restaurants.sort(
-      (Restaurant a, Restaurant b) {
-        if (b.schedule != null) {
-          if (b.schedule!.isOpen() == true) {
-            return 0;
-          } else
-            return -1;
-        } else {
-          return 1;
-        }
-      },
     );
   }
 }

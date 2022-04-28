@@ -13,13 +13,26 @@ abstract class Service {
 class ServiceState {
   AuthorizationStatus authorizationStatus = AuthorizationStatus.Unauthorized;
   bool available = false;
-  ServiceState(this.authorizationStatus, this.available);
+  bool open = true;
+  ServiceState(this.authorizationStatus, this.available, this.open);
+
+  factory ServiceState.fromServiceStateData(stateData) {
+    return ServiceState(
+        stateData?["authorizationStatus"]?.toString().toAuthorizationStatus() ??
+            AuthorizationStatus.Unauthorized,
+        stateData?["available"] ?? false,
+        stateData?["open"] ?? true);
+  }
+
   Map<String, dynamic> toJson() => {
         "authorizationStatus": authorizationStatus.toFirebaseFormatString(),
-        "available": available
+        "available": available,
+        "open": open
       };
 
-  bool get authorized => authorizationStatus == AuthorizationStatus.Authorized;
+  bool get isAuthorized =>
+      authorizationStatus == AuthorizationStatus.Authorized;
+  bool get isOpen => open;
 }
 
 class ServiceUserInfo extends UserInfo {

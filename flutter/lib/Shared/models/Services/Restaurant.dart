@@ -23,12 +23,8 @@ class Restaurant extends Service {
     // List<Object?> availableLanguages =
     //     restaurantData["details"]["languages"] as List<Object?>;
 
-    final ServiceState restaurantState = ServiceState(
-        restaurantData["state"]?["authorizationStatus"]
-                ?.toString()
-                .toAuthorizationStatus() ??
-            AuthorizationStatus.Unauthorized,
-        restaurantData["state"]?["available"] ?? false);
+    final ServiceState restaurantState =
+        ServiceState.fromServiceStateData(restaurantData["state"]);
     LanguageMap? description;
     if (restaurantData["details"]["description"] != null) {
       description =
@@ -97,33 +93,8 @@ class Restaurant extends Service {
     return numberOfItems;
   }
 
-  bool isAvailable() {
-    final String dayNane = DateFormat('EEEE').format(DateTime.now());
-
-    final DateTime x = DateTime.now();
-
-    if (schedule != null) {
-      bool isOpen = false;
-      schedule!.openHours.forEach((Weekday key, OpenHours value) {
-        if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
-          if (value.isOpen == true) {
-            final DateTime dateOfStart =
-                DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
-            final DateTime dateOfClose =
-                DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
-
-            if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
-              isOpen = true;
-            }
-          } else {
-            isOpen = false;
-          }
-        }
-      });
-      return isOpen;
-    } else {
-      return true;
-    }
+  bool isOpen() {
+    return state.isOpen && (schedule?.isOpen() ?? false);
   }
 }
 

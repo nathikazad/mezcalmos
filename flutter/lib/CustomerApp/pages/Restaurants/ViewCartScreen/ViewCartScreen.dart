@@ -113,8 +113,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   Color getTheRightButtonColor() {
     // it returns the pruple or the grey color for the order now button
     if (orderToLocation == null ||
-        !checkRestaurantAvailability(
-            schedule: _restaurantController.associatedRestaurant?.schedule)) {
+        (_restaurantController.associatedRestaurant?.isOpen() ?? false)) {
       return Color(0xdddddddd);
     } else {
       return Color(0xffac59fc);
@@ -122,9 +121,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   }
 
   Widget getTheRightWidgetForOrderNowButton(bool clicked) {
-    if (!checkRestaurantAvailability(
-      schedule: _restaurantController.associatedRestaurant?.schedule,
-    )) {
+    if (!(_restaurantController.associatedRestaurant?.isOpen() ?? false)) {
       return Text(
         "${_i18n()["notAvailable"]}",
         style: Theme.of(context)
@@ -200,41 +197,5 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       }
     }
     nbClicks++;
-  }
-
-  bool checkRestaurantAvailability({Schedule? schedule}) {
-    final String dayNane = DateFormat('EEEE').format(DateTime.now());
-    final DateTime _timeNow = DateTime.now();
-
-    if (schedule != null) {
-      bool isOpen = false;
-      schedule.openHours.forEach((Weekday key, OpenHours value) {
-        if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
-          final DateTime dateOfStart = DateTime(
-            _timeNow.year,
-            _timeNow.month,
-            _timeNow.day,
-            value.from[0],
-            value.from[1],
-          );
-          final DateTime dateOfClose = DateTime(
-            _timeNow.year,
-            _timeNow.month,
-            _timeNow.day,
-            value.to[0],
-            value.to[1],
-          );
-          mezDbgPrint(dateOfStart.toString());
-          mezDbgPrint(dateOfClose.toString());
-          if (dateOfStart.isBefore(_timeNow) && dateOfClose.isAfter(_timeNow)) {
-            mezDbgPrint("Today is $dayNane");
-            isOpen = true;
-          }
-        }
-      });
-      return isOpen;
-    } else {
-      return true;
-    }
   }
 }

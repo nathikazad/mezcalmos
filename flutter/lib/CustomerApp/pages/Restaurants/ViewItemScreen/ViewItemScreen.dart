@@ -181,8 +181,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         ),
         BottomBarItemViewScreen(
           currentRestaurantId: currentRestaurant?.info.id,
-          isAvailable: checkRestaurantAvailability(
-              schedule: currentRestaurant?.schedule),
+          isAvailable: (currentRestaurant?.isOpen() ?? false),
           cartItem: cartItem,
           mode: widget.viewItemScreenMode,
         ),
@@ -216,36 +215,5 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
         ],
       ),
     );
-  }
-
-  bool checkRestaurantAvailability({Schedule? schedule}) {
-    final String dayNane = DateFormat('EEEE').format(DateTime.now());
-
-    final DateTime x = DateTime.now();
-
-    if (schedule != null) {
-      bool isOpen = false;
-      schedule.openHours.forEach((Weekday key, OpenHours value) {
-        if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
-          if (value.isOpen == true) {
-            final DateTime dateOfStart =
-                DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
-            final DateTime dateOfClose =
-                DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
-            mezDbgPrint(dateOfStart.toString());
-            mezDbgPrint(dateOfClose.toString());
-            if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
-              mezDbgPrint("Today is $dayNane");
-              isOpen = true;
-            }
-          } else {
-            isOpen = false;
-          }
-        }
-      });
-      return isOpen;
-    } else {
-      return true;
-    }
   }
 }
