@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -46,7 +47,23 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
+        appBar: mezcalmosAppBar(
+          AppBarLeftButtonType.Menu,
+          // actionIcons: [
+          //   if (Get.find<ForegroundNotificationsController>()
+          //       .notifications
+          //       .isNotEmpty)
+          //     InkWell(
+          //         customBorder: CircleBorder(),
+          //         onTap: () {
+          //           Get.toNamed(kNotificationsRoute);
+          //         },
+          //         child: Icon(
+          //           Ionicons.notifications,
+          //           color: Get.theme.primaryColorLight,
+          //         ))
+          // ]
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,

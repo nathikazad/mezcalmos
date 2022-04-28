@@ -13,7 +13,7 @@ export function orderUrl(
     case ParticipantType.DeliveryDriver:
       return `/${orderType}Orders/${orderId}`
     case ParticipantType.Taxi:
-      return `/currentOrder`;
+      return `/${orderType}Orders/${orderId}`;
     default:
       return "/";
   }
@@ -32,16 +32,4 @@ export function chatUrl(
   if (participantType == ParticipantType.Customer)
     str += `&recipientType=${orderType}`;
   return str
-}
-
-
-
-export function taxiIncomingOrderUrl(
-  orderId: string): string {
-  return `/incomingOrders/${orderId}`
-}
-
-export function taxiPastOrderUrl(
-  orderId: string): string {
-  return `/pastOrders/${orderId}`
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: unawaited_futures
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -99,7 +101,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         Get.toNamed<void>(kUnauthorizedRoute);
       } else if (state.currentOrder != null) {
         mezDbgPrint("TaxiWrapper::handleState going to current order");
-        Get.toNamed<void>(kCurrentOrderRoute);
+        Get.toNamed<void>(getTaxiOrderRoute(state.currentOrder!));
       } else if (state.inOrderNegotation != null) {
         await handleInNegotationMode(state.inOrderNegotation!);
       } else {

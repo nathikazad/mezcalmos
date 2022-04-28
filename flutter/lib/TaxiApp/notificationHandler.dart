@@ -1,9 +1,6 @@
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:get/get.dart';
 
 dynamic _i18n() =>
@@ -29,7 +26,7 @@ Notification orderStatusChangeNotificationHandler(String key, dynamic value) {
       getTaxiOrderStatusFields(newOrdersStatus)!;
   return Notification(
       id: key,
-      linkUrl: kCurrentOrderRoute,
+      linkUrl: dynamicFields["linkUrl"],
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],

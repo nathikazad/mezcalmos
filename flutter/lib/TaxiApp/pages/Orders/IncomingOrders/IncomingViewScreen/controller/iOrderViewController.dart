@@ -105,7 +105,7 @@ class IOrderViewController {
         // Go to CurrentOrder View !
         Future.delayed(Duration.zero, () {
           Get.offNamedUntil(
-              kCurrentOrderRoute, ModalRoute.withName(kHomeRoute));
+              getTaxiOrderRoute(orderId), ModalRoute.withName(kHomeRoute));
         });
       } else if (_counterOffer?.counterOfferStatus ==
           CounterOfferStatus.Rejected) {
@@ -125,7 +125,8 @@ class IOrderViewController {
       // canceling Subscription Just to Avoid possible Racing Conditions
       cancelStreamsSubscriptions();
       // Go to CurrentOrder View !
-      Get.offNamedUntil(kCurrentOrderRoute, ModalRoute.withName(kHomeRoute));
+      Get.offNamedUntil(
+          getTaxiOrderRoute(_orderId), ModalRoute.withName(kHomeRoute));
       // Notice the User !
     } else {
       // in case Taxi User failed accepting the iOrderViewController.order.

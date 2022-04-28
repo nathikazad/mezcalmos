@@ -18,8 +18,8 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedBottomBar.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/CurrentOrderScreen/CPositionedFromToBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/OrderViewScreen/CPositionedBottomBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/OrderViewScreen/CPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
@@ -40,9 +40,8 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   @override
   void initState() {
     mezDbgPrint("Inside _ViewCurrentOrderScreenState::InitState");
-    final String orderId = taxiAuthController.taxiState!.currentOrder!;
+    final String orderId = Get.parameters['orderId']!;
     mezDbgPrint("orderId :: $orderId");
-
     controller.clearOrderNotifications();
     // we need the first snapshot seprated !
     final TaxiOrder? _orderSnapshot = controller.getOrder(orderId);

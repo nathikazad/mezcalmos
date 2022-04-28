@@ -10,7 +10,7 @@ import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotifi
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { orderUrl, taxiPastOrderUrl } from "../utilities/senders/appRoutes";
+import { orderUrl } from "../utilities/senders/appRoutes";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 
@@ -118,7 +118,7 @@ export = functions.https.onCall(async (data, context) => {
           notificationAction: NotificationAction.ShowPopUp
         },
         background: taxiOrderStatusChangeMessages[TaxiOrderStatus.CancelledByCustomer],
-        linkUrl: taxiPastOrderUrl(orderId)
+        linkUrl: orderUrl(ParticipantType.Taxi, OrderType.Taxi, orderId)
       }
       
       pushNotification(order.driver.id, notification, ParticipantType.Taxi);
