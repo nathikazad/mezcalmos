@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
@@ -85,45 +87,34 @@ class DeepLinkHandler {
 
   /// This cancel itself and start once again listening if the app was opened using a deep Link.
   void _startOnLinkListener() {
-    cancelDeepLinkListener();
-    _inDeepLinkListener = FirebaseDynamicLinks.instance.onLink
-        .listen((PendingDynamicLinkData? data) async {
+    _inDeepLinkListener?.cancel();
+    _inDeepLinkListener = null;
+    _inDeepLinkListener = FirebaseDynamicLinks.instanceFor(
+      app: Get.find<FirebaseDb>().firebaseApp,
+    ).onLink.listen((PendingDynamicLinkData data) {
       mezDbgPrint(
-          "@deepLink@ ===> _startOnLinkListener with value : ${data?.link} ");
-      data?.link.queryParameters.forEach((String key, String value) {
+          "@deepLink@ ===> _startOnLinkListener with value : ${data.link} ");
+      data.link.queryParameters.forEach((String key, String value) {
         mezDbgPrint("Key = $key | Value : $value");
       });
-      if (data?.link != null)
-        await _checkQueryValidityAndHandleRouting(data!.link);
+      _checkQueryValidityAndHandleRouting(data.link);
     });
   }
 
   /// This actually do the whole thing, from Capturing Deep Links -> Validating -> Routing.
-  Future<String?> startDynamicLinkCheckRoutine() async {
+  Future<void> startDynamicLinkCheckRoutine() async {
     try {
-      mezDbgPrint("@deepLink@ ===> startedRoutine");
       final PendingDynamicLinkData? data =
-          await FirebaseDynamicLinks.instance.getInitialLink();
+          await FirebaseDynamicLinks.instanceFor(
+        app: Get.find<FirebaseDb>().firebaseApp,
+      ).getInitialLink();
       final Uri? deepLink = data?.link;
-
       if (deepLink != null) {
-        mezDbgPrint("@deepLink@ ===> deepLink != null");
         await _checkQueryValidityAndHandleRouting(deepLink);
       }
       _startOnLinkListener();
     } catch (e) {
-      print(e.toString());
+      mezDbgPrint("Exception ==> ${e.toString()}");
     }
-    return null;
-  }
-
-  /// We're calling this upon an AppLifeCycle change to resumed, in order to cancel the listener,
-  ///
-  /// make use of [duration] in order to controll the delay before canceling.
-  void cancelDeepLinkListener({Duration duration = Duration.zero}) {
-    Future<void>.delayed(duration, () async {
-      await _inDeepLinkListener?.cancel();
-      _inDeepLinkListener = null;
-    });
   }
 }

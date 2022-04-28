@@ -79,7 +79,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     startAuthListener();
 
     /// Check if app was opened through a DeepLink
-    _deepLinkHandler.startDynamicLinkCheckRoutine();
+    Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
     // Future<void>.delayed(
     //   Duration(seconds: 1),
     //   ,
@@ -105,6 +105,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
+      // Future.wait([_deepLinkHandler.oo()]);
       if (appClosedTime != null &&
           _orderController != null &&
           DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
