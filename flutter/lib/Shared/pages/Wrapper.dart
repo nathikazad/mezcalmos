@@ -89,9 +89,7 @@ class _WrapperState extends State<Wrapper> {
       case UpdateType.Patches:
         MezUpdaterDialog.show(
           context: context,
-          onUpdateClicked: () => openOsStore(
-            openIosStoreFunction: _appVersionController!.openStoreAppPage,
-          ),
+          onUpdateClicked: _appVersionController!.openStoreAppPage,
         );
         break;
       default:

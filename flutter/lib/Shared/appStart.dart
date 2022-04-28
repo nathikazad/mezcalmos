@@ -293,7 +293,7 @@ class _StartingPointState extends State<StartingPoint> {
   }
 
   Future<void> setupIosAppStoreId(String appName) async {
-    String? res = (await Get.find<FirebaseDb>()
+    final String? res = (await Get.find<FirebaseDb>()
             .firebaseDatabase
             .reference()
             .child(appStoreIdNode(appName))
@@ -301,7 +301,7 @@ class _StartingPointState extends State<StartingPoint> {
         .value
         .toString();
     mezDbgPrint("Got setupIosAppStoreId @ ==> $res");
-    await GetStorage().write(getxAppStoreId, res);
+    await GetStorage().write(getxAppStoreId, res ?? "");
   }
 
   Widget mainApp({
