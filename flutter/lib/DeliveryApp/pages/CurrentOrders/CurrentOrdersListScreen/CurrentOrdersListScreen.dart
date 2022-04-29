@@ -106,11 +106,11 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           ),
           Column(
             children: List.generate(
-                    orderController.pastOrders.length,
-                    (int index) => DriverOrderCard(
-                        order: orderController.pastOrders[index]))
-                .reversed
-                .toList(),
+                orderController.pastOrders.length,
+                (int index) => DriverOrderCard(
+                      order: orderController.pastOrders[index],
+                      isPastOrder: true,
+                    )).reversed.toList(),
           )
         ],
       );

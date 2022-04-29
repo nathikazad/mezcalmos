@@ -78,7 +78,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                         clicked = false;
                       });
                     });
-                    // Get.back(closeOverlays: true);
+                    Get.back(closeOverlays: true);
                   }
                 });
 
@@ -123,6 +123,8 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
     num newOrderWeight = 0;
     await showDialog(
         context: context,
+        barrierDismissible: false,
+        useRootNavigator: false,
         builder: (BuildContext ctx) {
           return AlertDialog(
             title: Text("${_i18n()["confirmOrderWeight"]}"),
@@ -159,8 +161,10 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                 ),
                 TextButton(
                     onPressed: () {
-                      if (orderWeight != 0) {
-                        Get.back(result: newOrderWeight);
+                      if (newOrderWeight != 0) {
+                        Get.back();
+                      } else {
+                        Get.snackbar("Error", "");
                       }
                     },
                     child: Container(
