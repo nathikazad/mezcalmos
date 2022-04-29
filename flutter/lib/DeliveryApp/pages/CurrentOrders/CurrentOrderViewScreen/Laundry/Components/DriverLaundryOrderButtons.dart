@@ -17,7 +17,7 @@ class DriverLaundryBottomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 10.h,
+        height: 60,
         color: (order.inDeliverPhase())
             ? Theme.of(context).primaryColorLight
             : Colors.transparent,
