@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -155,16 +154,14 @@ Widget taxiAvatarAndName({
   );
 }
 
-Widget messageBtn({required Rxn<TaxiOrder>  order, EdgeInsets? margin}) {
+Widget messageBtn({required Rxn<TaxiOrder> order, EdgeInsets? margin}) {
   return Obx(
-    ()=> GestureDetector(
+    () => GestureDetector(
       onTap: () {
-        Get.toNamed<void>(
-            getMessagesRoute(
+        Get.toNamed<void>(getMessagesRoute(
             chatId: order.value!.orderId,
-            recipientType: ParticipantType.Taxi,
-            orderId: order.value!.orderId)
-        );
+            orderId: order.value!.orderId,
+            recipientType: ParticipantType.Taxi));
       },
       child: Container(
         margin: margin ?? EdgeInsets.only(left: 6),
@@ -184,18 +181,17 @@ Widget messageBtn({required Rxn<TaxiOrder>  order, EdgeInsets? margin}) {
         child: Center(
           child: Stack(
             children: <Widget>[
-             orderController.hasNewMessageNotification(order.value!.orderId)
-                    ? Positioned(
-                        top: 0,
-                        right: 0,
-                        child: Container(
-                          height: 10,
-                          width: 10,
-                          decoration: BoxDecoration(
-                              color: Colors.red, shape: BoxShape.circle),
-                        ))
-                    : SizedBox(),
-              
+              orderController.hasNewMessageNotification(order.value!.orderId)
+                  ? Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Container(
+                        height: 10,
+                        width: 10,
+                        decoration: BoxDecoration(
+                            color: Colors.red, shape: BoxShape.circle),
+                      ))
+                  : SizedBox(),
               Center(
                 child: Icon(
                   Icons.mail,

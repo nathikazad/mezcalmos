@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/RestaurantOrdersListComponent.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -10,11 +9,11 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
@@ -118,7 +117,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                       : MaterialStateProperty.all(
                                           Color.fromARGB(255, 234, 51, 38)),
                             ),
-                            onPressed: !this.showLoadingCircleInButton.value
+                            onPressed: !showLoadingCircleInButton.value
                                 ? () async {
                                     showLoadingAnimation();
                                     await clickButton();
@@ -127,7 +126,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                                 : () => null,
                             child: Obx(
                               () => Center(
-                                  child: !this.showLoadingCircleInButton.value
+                                  child: !showLoadingCircleInButton.value
                                       ? Text(
                                           order.status !=
                                                   TaxiOrdersStatus.InTransit
@@ -217,8 +216,10 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                           GestureDetector(
                             onTap: () {
-                              Get.toNamed<void>(
-                                  getMessagesRoute(chatId: order.orderId));
+                              Get.toNamed<void>(getMessagesRoute(
+                                  chatId: order.orderId,
+                                  orderId: order.orderId,
+                                  recipientType: ParticipantType.Customer));
                             },
                             child: Container(
                               height: getSizeRelativeToScreen(
@@ -333,11 +334,11 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   }
 
   void showLoadingAnimation() {
-    this.showLoadingCircleInButton.value = true;
+    showLoadingCircleInButton.value = true;
   }
 
   void removeLoadingAnimation() {
-    this.showLoadingCircleInButton.value = false;
+    showLoadingCircleInButton.value = false;
   }
 
   Future<void> clickButton() async {
@@ -347,7 +348,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
       if ((MapHelper.calculateDistance(
               taxiAuthController.currentLocation, order.to.position) >
           0.5)) {
-        YesNoDialogButton clickedYes = await yesNoDialog(
+        final YesNoDialogButton clickedYes = await yesNoDialog(
             text: 'Oops!',
             icon: Container(
               child: Icon(
@@ -369,7 +370,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
       if (MapHelper.calculateDistance(
               taxiAuthController.currentLocation, order.from.position) >
           0.5) {
-        YesNoDialogButton clickedYes = await yesNoDialog(
+        final YesNoDialogButton clickedYes = await yesNoDialog(
             text: "Oops!", body: _i18n()["tooFarFromstartRide"]);
         if (clickedYes == YesNoDialogButton.Yes) {
           await startRide();
@@ -382,10 +383,10 @@ class CurrentPositionedBottomBar extends StatelessWidget {
 
   Future<void> finishRide() async {
     mezDbgPrint("CurrentPositionedBottomBar finishRide");
-    ServerResponse serverResponse = await controller.finishRide();
+    final ServerResponse serverResponse = await controller.finishRide();
     if (serverResponse.success) {
       mezDbgPrint("CurrentPositionedBottomBar finishRide success");
-      Get.offNamedUntil(
+      await Get.offNamedUntil(
           kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute));
     } else {
       // todo: SHOW ERROR MESSAGE
@@ -394,7 +395,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
 
   Future<void> startRide() async {
     mezDbgPrint("CurrentPositionedBottomBar startRide");
-    ServerResponse serverResponse = await controller.startRide();
+    final ServerResponse serverResponse = await controller.startRide();
     if (serverResponse.success) {
       mezDbgPrint("CurrentPositionedBottomBar startRide success");
     } else {
@@ -403,7 +404,8 @@ class CurrentPositionedBottomBar extends StatelessWidget {
   }
 
   Future<void> mapLauncher(lat, lng) async {
-    String url = "https://www.google.com/maps/dir/?api=1&destination=$lat,$lng";
+    final String url =
+        "https://www.google.com/maps/dir/?api=1&destination=$lat,$lng";
 
     try {
       await launch(url);

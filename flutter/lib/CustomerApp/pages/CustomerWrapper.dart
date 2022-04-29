@@ -16,10 +16,10 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -287,6 +287,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/customer/restaurants/restaurantService.png",
             subtitle: "${_i18n()['food']["subtitle"]}",
             onTap: () {
+              mezDbgPrint(DateTime.now().second);
               getServiceRoute(
                   orderType: OrderType.Restaurant,
                   serviceRoute: kRestaurantsRoute,
@@ -304,6 +305,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             subtitle: "${_i18n()['laundry']["subtitle"]}",
             url: "assets/images/customer/laundryService.png",
             onTap: () {
+              mezDbgPrint(DateTime.now().second);
               getServiceRoute(
                   orderType: OrderType.Laundry,
                   serviceRoute: kLaundryOrderRequest,
@@ -321,12 +323,12 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       {required OrderType orderType,
       required String serviceRoute,
       required void Function(String) singleOrderRoute}) {
+    mezDbgPrint(DateTime.now().second);
     if (Get.find<AuthController>().fireAuthUser != null) {
-      final List<Order> orders = Get.find<OrderController>()
-          .currentOrders
+      final List<Order> orders = _orderController!.currentOrders
           .where((Order p0) => p0.orderType == orderType)
           .toList();
-
+      mezDbgPrint(DateTime.now().second);
       if (orders.length == 1) {
         //   Get.toNamed(getLaundyOrderRoute(orders[0].orderId));
         singleOrderRoute(orders[0].orderId);

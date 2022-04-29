@@ -46,7 +46,17 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: [
+          InkWell(
+              customBorder: CircleBorder(),
+              onTap: () {
+                Get.toNamed(kNotificationsRoute);
+              },
+              child: Icon(
+                Ionicons.notifications,
+                color: Get.theme.primaryColorLight,
+              ))
+        ]),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
