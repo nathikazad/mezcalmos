@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -55,20 +56,22 @@ class RestaurantOrder extends DeliverableOrder {
       required this.shippingCost,
       this.notes})
       : super(
-            orderId: orderId,
-            orderType: OrderType.Restaurant,
-            serviceProviderId: serviceProviderId,
-            paymentType: paymentType,
-            orderTime: orderTime,
-            cost: cost,
-            customer: customer,
-            serviceProvider: restaurant,
-            to: to,
-            dropoffDriver: dropoffDriver,
-            dropOffDriverChatId: dropOffDriverChatId);
+          orderId: orderId,
+          orderType: OrderType.Restaurant,
+          serviceProviderId: serviceProviderId,
+          paymentType: paymentType,
+          orderTime: orderTime,
+          cost: cost,
+          customer: customer,
+          serviceProvider: restaurant,
+          to: to,
+          dropoffDriver: dropoffDriver,
+          dropOffDriverChatId: dropOffDriverChatId,
+        );
 
   //ignore_for_file:avoid_annotating_with_dynamic
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
+    mezDbgPrint("Order's Notes ==> ${data["notes"]}");
     final RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
         status: data["status"].toString().toRestaurantOrderStatus(),
@@ -115,6 +118,11 @@ class RestaurantOrder extends DeliverableOrder {
   }
 
   String get restaurantId => serviceProviderId!;
+
+  @override
+  String toString() {
+    return "{quantity : $quantity , itemCost: $itemsCost , items : ${items.length} , notes : $notes , status : $status}";
+  }
 
   @override
   bool isCanceled() {

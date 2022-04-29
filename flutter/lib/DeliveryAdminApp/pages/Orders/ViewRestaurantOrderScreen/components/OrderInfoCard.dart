@@ -9,8 +9,6 @@ import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-import 'ChangeStatusButtons.dart';
-
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["DeliveryAdminApp"]["pages"]
         ["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderInfoCard"];
@@ -30,7 +28,6 @@ class OrderInfoCard extends StatefulWidget {
 
 class _OrderInfoCardState extends State<OrderInfoCard> {
   RestaurantOrderController controller = Get.find<RestaurantOrderController>();
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -67,10 +64,12 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                           color: Color(0xff5c7fff),
                         ),
                         onPressed: () {
-                          Get.toNamed(getMessagesRoute(
-                              chatId: widget.order.value?.orderId ?? '',
-                              orderId: widget.order.value!.orderId,
-                              recipientType: ParticipantType.Customer));
+                          Get.toNamed(
+                            getMessagesRoute(
+                                chatId: widget.order.value?.orderId ?? '',
+                                orderId: widget.order.value!.orderId,
+                                recipientType: ParticipantType.Customer),
+                          );
                         },
                       ),
                       Positioned(

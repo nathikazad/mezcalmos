@@ -10,6 +10,7 @@ dynamic _i18n() =>
 
 // Display the notte of the order inside the order view
 Widget orderNoteCard(Rxn<RestaurantOrder> order) {
+  mezDbgPrint("Order ==> ${order.value.toString()}");
   return Column(
     children: <Widget>[
       Container(
