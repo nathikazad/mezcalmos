@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
@@ -9,9 +8,9 @@ import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart'
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -278,7 +277,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             ontap: () {
               getServiceRoute(
                   orderType: OrderType.Laundry,
-                  serviceRoute: kLaundryOrderRequest,
+                  serviceRoute: kLaundriesListRoute,
                   singleOrderRoute: (String v) {
                     Get.toNamed(getLaundyOrderRoute(v));
                   });

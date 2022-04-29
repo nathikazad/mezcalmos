@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
@@ -12,6 +13,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class LaundryOrderRequestView extends StatefulWidget {
@@ -33,6 +35,15 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       ['pages']['Laundry']['LaundryRequestView']['LaundryOrderRequestView'];
   Location? defaultLoc;
   RxBool clicked = false.obs;
+  Laundry? selectedLaundry;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    selectedLaundry = Get.arguments;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,6 +96,43 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                     SizedBox(
                       height: 10,
                     ),
+                    if (selectedLaundry != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            child: Text(
+                              "Laundry : ",
+                              style: Get.textTheme.headline3,
+                            ),
+                          ),
+                          Card(
+                            child: Container(
+                              margin: EdgeInsets.all(5),
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        selectedLaundry!.info.image),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    selectedLaundry!.info.name,
+                                    style: Get.textTheme.bodyText1,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     _orderNoteComponent(),
                     SizedBox(
                       height: 20,
@@ -197,39 +245,41 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     );
   }
 
-  InkWell pickFromMapComponent(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        final Location? currentLoc =
-            await Get.toNamed(kPickLocationNotAuth) as Location?;
-        if (currentLoc != null) {
-          setState(() {
-            defaultLoc = currentLoc;
-          });
-        }
-      },
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-                color: (defaultLoc == null)
-                    ? Colors.red
-                    : Theme.of(context).primaryColorLight)),
-        child: Row(
-          children: [
-            Icon(
-              Icons.place_rounded,
-              color: Theme.of(context).primaryColorLight,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Flexible(
-                child: Text(defaultLoc?.address ?? _i18n()['pickLocation'],
-                    maxLines: 1)),
-          ],
+  Widget pickFromMapComponent(BuildContext context) {
+    return Obx(
+      () => InkWell(
+        onTap: () async {
+          final Location? currentLoc =
+              await Get.toNamed(kPickLocationNotAuth) as Location?;
+          if (currentLoc != null) {
+            setState(() {
+              defaultLoc = currentLoc;
+            });
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                  color: (defaultLoc == null)
+                      ? Colors.red
+                      : Theme.of(context).primaryColorLight)),
+          child: Row(
+            children: [
+              Icon(
+                Icons.place_rounded,
+                color: Theme.of(context).primaryColorLight,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Flexible(
+                  child: Text(defaultLoc?.address ?? _i18n()['pickLocation'],
+                      maxLines: 1)),
+            ],
+          ),
         ),
       ),
     );
