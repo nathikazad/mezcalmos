@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -10,7 +9,6 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -47,15 +45,15 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
         appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: [
-          InkWell(
-              customBorder: CircleBorder(),
-              onTap: () {
-                Get.toNamed(kNotificationsRoute);
-              },
-              child: Icon(
-                Ionicons.notifications,
-                color: Get.theme.primaryColorLight,
-              ))
+          // InkWell(
+          //     customBorder: CircleBorder(),
+          //     onTap: () {
+          //       Get.toNamed(kNotificationsRoute);
+          //     },
+          //     child: Icon(
+          //       Ionicons.notifications,
+          //       color: Get.theme.primaryColorLight,
+          //     ))
         ]),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
