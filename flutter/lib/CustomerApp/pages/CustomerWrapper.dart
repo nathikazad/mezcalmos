@@ -195,7 +195,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         navigateToOrdersIfNecessary(_orderController!.currentOrders);
       });
     }
-    mezDbgPrint("Adding callback");
     appLifeCycleController.attachCallback(
         AppLifecycleState.resumed, appReturnFromBackground);
     appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
@@ -287,7 +286,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             url: "assets/images/customer/restaurants/restaurantService.png",
             subtitle: "${_i18n()['food']["subtitle"]}",
             onTap: () {
-              mezDbgPrint(DateTime.now().second);
               getServiceRoute(
                   orderType: OrderType.Restaurant,
                   serviceRoute: kRestaurantsRoute,
@@ -305,7 +303,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             subtitle: "${_i18n()['laundry']["subtitle"]}",
             url: "assets/images/customer/laundryService.png",
             onTap: () {
-              mezDbgPrint(DateTime.now().second);
               getServiceRoute(
                   orderType: OrderType.Laundry,
                   serviceRoute: kLaundryOrderRequest,
@@ -323,12 +320,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       {required OrderType orderType,
       required String serviceRoute,
       required void Function(String) singleOrderRoute}) {
-    mezDbgPrint(DateTime.now().second);
     if (Get.find<AuthController>().fireAuthUser != null) {
       final List<Order> orders = _orderController!.currentOrders
           .where((Order p0) => p0.orderType == orderType)
           .toList();
-      mezDbgPrint(DateTime.now().second);
       if (orders.length == 1) {
         //   Get.toNamed(getLaundyOrderRoute(orders[0].orderId));
         singleOrderRoute(orders[0].orderId);
@@ -344,7 +339,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   // when app resumes check if there are current orders and if yes navigate to orders page
   void navigateToOrdersIfNecessary(List<Order> currentOrders) {
-    mezDbgPrint(currentOrders.length);
     if (currentOrders.length == 1) {
       // Restaurant
       if (currentOrders[0].orderType == OrderType.Restaurant) {
