@@ -161,6 +161,19 @@ class OrderController extends GetxController {
     });
   }
 
+  void clearNewOrderNotificationsOfPastOrders() {
+    final List<String> currentOrderIds = <String>[];
+    currentOrders.forEach((Order order) => currentOrderIds.add(order.orderId));
+    _foregroundNotificationsController
+        .notifications()
+        .where((Notification notification) =>
+            notification.notificationType == NotificationType.NewOrder &&
+            !currentOrderIds.contains(notification.orderId!))
+        .forEach((Notification notification) {
+      _foregroundNotificationsController.removeNotification(notification.id);
+    });
+  }
+
   @override
   void onClose() {
     mezDbgPrint(

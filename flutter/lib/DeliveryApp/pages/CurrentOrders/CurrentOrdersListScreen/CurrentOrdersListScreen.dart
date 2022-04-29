@@ -41,6 +41,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
     orderController.pastOrders.stream.listen((List<DeliverableOrder> value) {
       pastOrders.value = value;
     });
+    orderController.clearNewOrderNotificationsOfPastOrders();
     super.initState();
   }
 
