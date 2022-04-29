@@ -99,48 +99,65 @@ class Launcher:
         except KeyboardInterrupt:
             PRINTLN("\n\nExiting the launcher .... bye bye!")
     
-    # def __f_checker__(self):
-    #     if not os.path.exists('flutter_hooks/pre-main'):
-    #         PRINTLN("[!] Error - No pre-main file neither in launcher files or flutter files !")
-    #         exit(DW_EXIT_REASONS.ROOT_MAIN_DART_FILE_NOT_FOUND)
-        
-    #     PRINTLN("[+] No ../lib/pre-main.dart found .. generating a new one !")
-        
-    #     prem = open('flutter_hooks/pre-main' , encoding='utf-8' , errors='ignore').read()
-    #     open('../lib/pre-main.dart' , 'w+').write(prem) 
+   
+    def __set_up_icons(self):
 
-    def __patcher__(self):
-        # PRINTLN("[+] Patching ../lib/pre-main.dart !")
-        # f_root_main = open('../lib/pre-main.dart' , encoding='utf-8' , errors='ignore').read()
-        self.user_args['lmode']
- 
-        # Writing new Valid App.
-        # open('../lib/pre-main.dart' , 'w+').write(f_root_main)
-        # PRINTLN("[+] Pacthed ../lib/pre-main.dart successfully !")
-
-        # Patching Android - Ios icons:
-        PRINTLN("[~] Setting-up App-Icons for android/ios ...")
         _userArgsAppName = self.user_args["app"].lower().replace("app" , "")
+        _userArgsEnvName = self.user_args["lmode"].lower()
+        if _userArgsEnvName != "prod":
+            _userArgsEnvName = "stage-dev"
+
+        _androidLauncherPath = f'assets/{_userArgsAppName}/icons/{_userArgsEnvName}/android'
+        _iosLauncherPath = f'assets/{_userArgsAppName}/icons/{_userArgsEnvName}/ios'
+        #   1. setting flutter projects assets icons --------------------------------------------------------------
+
+        PRINTLN("[~] Setting flutter - assets/icons ...")
+
         _project_icons_path = '..|assets|icons|'.replace('|' , self.pathname_separator)
         if not os.path.exists(_project_icons_path):
             os.system(f'mkdir {_project_icons_path}')
-            
+
+       
         # Android first:
-        originalAndroidIconsBytes = open(f'assets/{_userArgsAppName}/icons/android.png' , 'rb').read()
-        originalPlayStoreBytes = open(f'assets/{_userArgsAppName}/icons/playstore.png' , 'rb').read()
+        originalAndroidIconsBytes = open(f'{_androidLauncherPath}/android.png' , 'rb').read()
+        originalPlayStoreBytes = open(f'{_androidLauncherPath}/playstore.png' , 'rb').read()
         open(f'{_project_icons_path}android.png' , 'wb+').write(originalAndroidIconsBytes)
         open(f'{_project_icons_path}playstore.png' , 'wb+').write(originalPlayStoreBytes)
-        PRINTLN(f"\t- ✅ Android:{_userArgsAppName} => Setting Android App-Icon Done.")
+        PRINTLN(f"\t- ✅ Android:{_userArgsAppName} => Setting up assets/icons Done.")
         # Then iOS :
-        originalIosIconsBytes = open(f'assets/{_userArgsAppName}/icons/ios.png' , 'rb').read()
-        originalAppStoreBytes = open(f'assets/{_userArgsAppName}/icons/appstore.png' , 'rb').read()
+        originalIosIconsBytes = open(f'{_iosLauncherPath}/ios.png' , 'rb').read()
+        originalAppStoreBytes = open(f'{_iosLauncherPath}/appstore.png' , 'rb').read()
         open(f'{_project_icons_path}ios.png' , 'wb+').write(originalIosIconsBytes)
         open(f'{_project_icons_path}appstore.png' , 'wb+').write(originalAppStoreBytes)
-        # xassets-AppIcon:
 
-        PRINTLN(f"\t- ✅ iOS:{_userArgsAppName} => Setting iOS App-Icon Done.")
+        PRINTLN(f"\t- ✅ iOS:{_userArgsAppName} => Setting up assets/icons Done.")
+
+        #   2. setting mipmaps for Android in android/app/src/main/res --------------------------------------------
+        
+        PRINTLN("[~] Setting Android's mipmaps - android/app/src/main/res ...")
+        _project_mipmaps_dir = '..|android|app|src|main|res|'.replace('|' , self.pathname_separator)
 
         
+        rm_lambda(_project_mipmaps_dir+"mipmap") # -> this Executes : rm -rf android/app/src/main/res/mipmap*
+        os.system(f'cp -r {_androidLauncherPath}/mipmaps/* {_project_mipmaps_dir}') # Copies all the mipmaps to the original android/ folder
+
+        PRINTLN(f"\t- ✅ Android:{_userArgsAppName} => Setting up android/app/src/main/res/mipmap* Done.")
+
+        #   3. setting up appIconSet for iOS in flutter/ios/Runner/Assets.xcassets/AppIcon.appiconset  -----------
+
+        PRINTLN("[~] Setting iOS's appIconSet - flutter/ios/Runner/Assets/xcassets/AppIcon.appiconset ...")
+
+        _project_app_icon_set_dir = '..|ios|Runner|Assets.xcassets|'.replace('|' , self.pathname_separator)
+        rm_lambda(_project_app_icon_set_dir+"AppIcon") # -> this Executes : rm -rf flutter/ios/Runner/Assets/xcassets/AppIcon*
+        rm_lambda(_project_app_icon_set_dir+"Contents.json")
+        os.system(f'cp -r {_iosLauncherPath}/AppIcon.appiconset {_project_app_icon_set_dir}') # Copies the app's IconSet to the original ios/ folder
+
+        PRINTLN(f"\t- ✅ iOS:{_userArgsAppName} => Setting up flutter/ios/Runner/Assets/xcassets/AppIcon.appiconset Done.")
+
+    def __patcher__(self):
+      
+        # Patching Android - Ios icons:
+        self.__set_up_icons()
 
         # Writing Valid launcher.xml
         _launcherXmlFile = self.conf['settings']['launcher.xml']
@@ -234,7 +251,7 @@ class Launcher:
         
         # <mez-app-type> -> replaces project.pbxproj 's Icon Set
         _cloned = open('patches/ios/project.pbxproj').read()
-        _cloned = _cloned.replace('<mez-package>', _appPackageName).replace('<mez-app-type>' , _ios_app_folder_name)
+        _cloned = _cloned.replace('<mez-package>', _appPackageName) #.replace('<mez-app-type>' , _ios_app_folder_name)
         # Safe check for launching.
         if not self.user_args.get('version_name'):
             self.user_args['version_name'] = '1.0.1'

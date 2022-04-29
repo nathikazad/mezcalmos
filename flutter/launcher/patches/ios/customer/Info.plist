@@ -82,7 +82,7 @@
 	<dict>
 		<key>CFBundleIconFiles</key>
 		<array>
-			<string>AppIcon-<mez-app-type></string>
+			<string>AppIcon.appiconset</string>
 		</array>
 		<key>UIPrerenderedIcon</key>
 		<false/>
