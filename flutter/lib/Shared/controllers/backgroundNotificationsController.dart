@@ -34,6 +34,9 @@ Future<void> markInDb(String url) async {
 class BackgroundNotificationsController extends GetxController {
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
   StreamSubscription<RemoteMessage>? onMessageOpenedAppListener;
+  DateTime? _lastTimeBackgroundNotificationOpenedApp;
+  DateTime? get lastTimeBackgroundNotificationOpenedApp =>
+      _lastTimeBackgroundNotificationOpenedApp;
   @override
   void onInit() async {
     super.onInit();
@@ -47,6 +50,7 @@ class BackgroundNotificationsController extends GetxController {
         message != null ? notificationClickHandler(message) : null);
     onMessageOpenedAppListener =
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      _lastTimeBackgroundNotificationOpenedApp = DateTime.now();
       notificationClickHandler(message);
     });
   }

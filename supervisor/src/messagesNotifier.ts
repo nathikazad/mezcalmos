@@ -39,14 +39,13 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
     let participant = chat.participants[participantId]
     if (participant.particpantType == particpantType)
       continue
-    console.log(`orderType ${chat.orderType} participantType: ${participant.particpantType}`);
     let linkUrl = chatUrl(notificationForQueue.chatId, chat.orderId, chat.orderType, participant.particpantType);
     let notification: Notification = {
       foreground: <NewMessageNotification>{
         chatId: notificationForQueue.chatId,
         sender: senderInfo,
         message: notificationForQueue.message,
-        orderId: notificationForQueue.orderId ?? null,
+        orderId: chat.orderId ?? null,
         time: notificationForQueue.timestamp,
         notificationType: NotificationType.NewMessage,
         notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,

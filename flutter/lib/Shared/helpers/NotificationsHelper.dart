@@ -22,7 +22,7 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
     // mezDbgPrint("Notif::title ====> ${notification.title}");
     // mezDbgPrint("Notif::body ====> ${notification.body}");
     if (DateTime.now().difference(notification.timestamp) <
-        Duration(minutes: 10)) {
+        Duration(minutes: 1)) {
       _displayNotification(notification);
     }
   });

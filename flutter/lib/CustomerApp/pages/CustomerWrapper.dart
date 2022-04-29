@@ -13,7 +13,9 @@ import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
@@ -38,6 +40,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   /// AuthController
   AuthController auth = Get.find<AuthController>();
+
+  AppLifeCycleController appLifeCycleController =
+      Get.find<AppLifeCycleController>();
 
   /// _orderController
   OrderController? _orderController;
@@ -80,21 +85,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
     /// Check if app was opened through a DeepLink
     Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
-    // Future<void>.delayed(
-    //   Duration(seconds: 1),
-    //   ,
-    // );
-    // .then(
-    //   (_) => _deepLinkHandler.cancelDeepLinkListener(
-    //     duration: Duration(seconds: 1),
-    //   ),
-    // );
   }
 
   @override
   void dispose() {
-    // _firebaseDeepLinkListener?.cancel();
-    // _firebaseDeepLinkListener = null;
     _orderCountListener?.cancel();
     _orderCountListener = null;
     _authStateChnagesListener?.cancel();
@@ -102,18 +96,17 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     super.dispose();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      // Future.wait([_deepLinkHandler.oo()]);
+  void appReturnFromBackground() {
+    DateTime? lastBgNotAppOpen = Get.find<BackgroundNotificationsController>()
+        .lastTimeBackgroundNotificationOpenedApp;
+    if (lastBgNotAppOpen != null &&
+        DateTime.now().difference(lastBgNotAppOpen) >
+            Duration(seconds: 1)) 
       if (appClosedTime != null &&
-          _orderController != null &&
-          DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
-          Get.currentRoute != kLocationPermissionPage) {
-        navigateToOrdersIfNecessary(_orderController!.currentOrders);
-      }
-    } else if (state == AppLifecycleState.paused) {
-      appClosedTime = DateTime.now();
+        _orderController != null &&
+        DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
+        Get.currentRoute != kLocationPermissionPage) {
+      navigateToOrdersIfNecessary(_orderController!.currentOrders);
     }
   }
 
@@ -180,6 +173,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         _orderCountListener = null;
         _notificationsStreamListener?.cancel();
         _notificationsStreamListener = null;
+        appLifeCycleController.cleanAllCallbacks();
       }
     });
   }
@@ -201,6 +195,12 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         navigateToOrdersIfNecessary(_orderController!.currentOrders);
       });
     }
+    mezDbgPrint("Adding callback");
+    appLifeCycleController.attachCallback(
+        AppLifecycleState.resumed, appReturnFromBackground);
+    appLifeCycleController.attachCallback(AppLifecycleState.paused, () {
+      appClosedTime = DateTime.now();
+    });
   }
 
   void checkTaxiCurrentOrdersAndNavigate() {
@@ -344,6 +344,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   // when app resumes check if there are current orders and if yes navigate to orders page
   void navigateToOrdersIfNecessary(List<Order> currentOrders) {
+    mezDbgPrint(currentOrders.length);
     if (currentOrders.length == 1) {
       // Restaurant
       if (currentOrders[0].orderType == OrderType.Restaurant) {
@@ -352,6 +353,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         // Taxi
       } else if (currentOrders[0].orderType == OrderType.Taxi) {
         popEverythingAndNavigateTo(getTaxiOrderRoute(currentOrders[0].orderId));
+      } else if (currentOrders[0].orderType == OrderType.Laundry) {
+        popEverythingAndNavigateTo(
+            getLaundyOrderRoute(currentOrders[0].orderId));
       }
     } else if (currentOrders.length > 1) {
       popEverythingAndNavigateTo(kOrdersRoute);
