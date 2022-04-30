@@ -1,4 +1,3 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -71,7 +70,6 @@ class RestaurantOrder extends DeliverableOrder {
 
   //ignore_for_file:avoid_annotating_with_dynamic
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
-    mezDbgPrint("Order's Notes ==> ${data["notes"]}");
     final RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
         status: data["status"].toString().toRestaurantOrderStatus(),
