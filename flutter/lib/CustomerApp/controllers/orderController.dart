@@ -174,6 +174,10 @@ class OrderController extends GetxController {
     _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
+            (notification.notificationType ==
+                    NotificationType.OrderStatusChange ||
+                notification.notificationType ==
+                    NotificationType.NewCounterOffer) &&
             notification.orderId == orderId)
         .forEach((Notification notification) {
       _fbNotificationsController.removeNotification(notification.id);
