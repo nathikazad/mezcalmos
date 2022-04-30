@@ -22,14 +22,6 @@ class UserProfileController {
   Rxn<String> errorReport = Rxn();
 
   bool didUserChangedInfos() {
-    mezDbgPrint("ayono@ayono@ => usernameValue = ${userName.value}");
-    mezDbgPrint(
-      "ayono@ayono@ => userName::auth = ${_authController.user?.name}",
-    );
-    mezDbgPrint("ayono@ayono@ => userImg = ${userImg.value}");
-    mezDbgPrint(
-      "ayono@ayono@ => auth::userImg = ${_authController.user?.image}",
-    );
     return userName.value != _authController.user?.name &&
         userName.value != null &&
         userName.value!.length >= 4 &&

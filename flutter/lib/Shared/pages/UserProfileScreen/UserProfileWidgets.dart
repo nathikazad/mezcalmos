@@ -93,8 +93,8 @@ class UserProfileWidgetsClass {
   Center browsImageButton({required bool isImageBeingUploaded}) {
     return Center(
       child: Container(
-        height: 150,
-        width: 150,
+        height: 200,
+        width: 200,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.black.withOpacity(.66),
@@ -184,13 +184,14 @@ class UserProfileWidgetsClass {
             margin: EdgeInsets.symmetric(horizontal: 55),
             child: TextField(
                 decoration: InputDecoration(
-                    suffixIcon: Icon(
-                      Icons.perm_identity_rounded,
-                      color: Colors.purple.shade400,
-                    ),
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder()),
+                  suffixIcon: Icon(
+                    Icons.perm_identity_rounded,
+                    color: Colors.purple.shade400,
+                  ),
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(),
+                ),
                 enabled: !isImageBeingUploaded,
                 style: TextStyle(color: Colors.purple.shade400, fontSize: 15),
                 controller: userProfileController.textEditingController,
@@ -233,11 +234,12 @@ class UserProfileWidgetsClass {
   /// this shows either the edit infos Button or the Save button,
   ///
   /// depending on [UserProfileMode] , and in case the user has already his infos set up , a cancel button will shows up.
-  Widget showEditOrSaveAndCancelButton(
-      {required Function() onStartEdit,
-      required Function() onSaveClick,
-      required bool clickedSave,
-      required bool isImageBeingUploaded}) {
+  Widget showEditOrSaveAndCancelButton({
+    required Function() onStartEdit,
+    required Function() onSaveClick,
+    required bool clickedSave,
+    required bool isImageBeingUploaded,
+  }) {
     if (isImageBeingUploaded) {
       return ThreeDotsLoading(
         dotsColor: Colors.purple.shade400,
@@ -311,40 +313,36 @@ class UserProfileWidgetsClass {
     return Expanded(
       flex: 2,
       child: InkWell(
-          onTap: userProfileController.didUserChangedInfos() && !clickedSave
-              ? () async {
-                  await onSaveChangesClick();
-                }
-              : () {
-                  MezSnackbar("Oops", _i18n()['noChangesToApply'],
-                      position: SnackPosition.TOP);
-                },
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueGrey.shade100),
-                color:
-                    userProfileController.didUserChangedInfos() && !clickedSave
-                        ? Colors.purple.shade400
-                        : Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(15)),
-            height: 50,
-            // width: Get.width - 100,
-            child: Center(
-                child: !clickedSave
-                    ? Text(
-                        _i18n()['saveBtn'],
-                        style: TextStyle(
-                            fontSize: 12.sp,
-                            color: userProfileController.didUserChangedInfos()
-                                ? Colors.white
-                                : Colors.grey.shade400),
-                      )
-                    : CircularProgressIndicator(
-                        strokeWidth: 1,
-                        color: Colors.black,
-                      )),
-          )),
+        onTap: !clickedSave
+            ? () async {
+                await onSaveChangesClick();
+              }
+            : () {
+                MezSnackbar("Oops", _i18n()['noChangesToApply'],
+                    position: SnackPosition.TOP);
+              },
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.blueGrey.shade100),
+              color:
+                  !clickedSave ? Colors.purple.shade400 : Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(15)),
+          height: 50,
+          // width: Get.width - 100,
+          child: Center(
+            child: !clickedSave
+                ? Text(
+                    _i18n()['saveBtn'],
+                    style: TextStyle(fontSize: 12.sp, color: Colors.white),
+                  )
+                : CircularProgressIndicator(
+                    strokeWidth: 1,
+                    color: Colors.black,
+                  ),
+          ),
+        ),
+      ),
     );
   }
 }
