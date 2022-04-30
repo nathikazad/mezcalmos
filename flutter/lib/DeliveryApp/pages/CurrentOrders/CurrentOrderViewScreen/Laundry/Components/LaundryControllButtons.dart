@@ -172,7 +172,10 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                         alignment: Alignment.center,
                         child: Text('${_i18n()["confirm"]}'))),
                 TextButton(
-                    onPressed: Get.back,
+                    onPressed: () {
+                      newOrderWeight = 0;
+                      Get.back();
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),

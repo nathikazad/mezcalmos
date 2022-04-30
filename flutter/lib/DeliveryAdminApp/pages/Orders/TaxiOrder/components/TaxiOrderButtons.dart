@@ -250,6 +250,7 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
                   )),
               TextButton(
                 onPressed: () {
+                  newTaxiNumber = 0;
                   Get.back();
                 },
                 style: TextButton.styleFrom(
