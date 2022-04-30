@@ -6,7 +6,6 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["TaxiOrder"]["components"]["taxiOrderBottomCard"];
@@ -25,7 +24,7 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 10.h,
+      height: 70,
       child: (btnClicked)
           ? Center(
               child: CircularProgressIndicator(),
@@ -136,21 +135,24 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
               Flexible(
                 child: TextButton(
                     onPressed: () async {
-                      setState(() {
-                        btnClicked = true;
+                      await taxiNumberDialog(context).then((num value) async {
+                        if (value != 0) {
+                          setState(() {
+                            btnClicked = true;
+                          });
+                          await _taxiOrderController
+                              .submitForwardResult(
+                                  orderId: widget.order.orderId,
+                                  forwardSuccessful: true,
+                                  taxiNumber: value.toString())
+                              .whenComplete(() {
+                            setState(() {
+                              btnClicked = false;
+                            });
+                            Get.back(closeOverlays: true);
+                          });
+                        }
                       });
-                      final dynamic result = await taxiNumberDialog(context);
-
-                      if (result != 0) {
-                        await _taxiOrderController.submitForwardResult(
-                            orderId: widget.order.orderId,
-                            forwardSuccessful: true,
-                            taxiNumber: result.toString());
-                        setState(() {
-                          btnClicked = false;
-                        });
-                        Get.back(closeOverlays: true);
-                      }
                     },
                     child: Container(
                         alignment: Alignment.center,
@@ -197,8 +199,9 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
     }
   }
 
-  Future taxiNumberDialog(BuildContext context) async {
-    return showDialog(
+  Future<num> taxiNumberDialog(BuildContext context) async {
+    num newTaxiNumber = 0;
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext ctx) {
@@ -224,7 +227,7 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
                 },
                 onChanged: (String value) {
                   if (num.tryParse(value) != null) {
-                    taxiNumber = num.parse(value);
+                    newTaxiNumber = num.parse(value);
                   }
                 },
                 decoration: InputDecoration(
@@ -237,8 +240,17 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
               ),
               const SizedBox(height: 5),
               TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                        '${_i18n()["TaxiOpenOrderControllButton"]["confirmFwd"]}'),
+                  )),
+              TextButton(
                 onPressed: () {
-                  Navigator.pop(context, 0);
+                  Get.back();
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.red,
@@ -254,6 +266,7 @@ class _TaxiOrderButtonsState extends State<TaxiOrderButtons> {
         );
       },
     );
+    return newTaxiNumber;
   }
 
   String _getOrderStatus() {
