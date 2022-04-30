@@ -112,6 +112,7 @@ export = functions.https.onCall(async (data, context) => {
   let chat: Chat = {
     chatType: ChatType.Order,
     orderType: data.orderType,
+    orderId: orderId,
     chatId: chatId,
     participants: {
       [deliveryDriverId]: {
@@ -131,7 +132,7 @@ export = functions.https.onCall(async (data, context) => {
       time: (new Date()).toISOString(),
       notificationType: NotificationType.NewOrder,
       orderType: data.orderType,
-      notificationAction: NotificationAction.ShowSnackBarAlways,
+      notificationAction: NotificationAction.ShowPopUp,
       orderId: orderId,
       deliveryDriverType: deliveryDriverType
     },
@@ -153,7 +154,7 @@ function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDe
       time: (new Date()).toISOString(),
       notificationType: NotificationType.OrderStatusChange,
       orderType: order.orderType,
-      notificationAction: NotificationAction.ShowSnackBarAlways,
+      notificationAction: NotificationAction.ShowPopUp,
       orderId: orderId,
       deliveryDriverType: deliveryDriverType,
       status: order.orderType == OrderType.Laundry ? LaundryOrderStatus.CancelledByAdmin : RestaurantOrderStatus.CancelledByAdmin,
