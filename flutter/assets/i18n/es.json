@@ -240,7 +240,7 @@
                     "components": {
                         "restaurantInfoTab": {
                             "description": "Descripción",
-                            "location": "localización",
+                            "location": "Dirección",
                             "workingHours": "Horas Laborales",
                             "weekDays": {
                                 "monday": "Lunes",

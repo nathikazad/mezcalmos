@@ -65,21 +65,22 @@ class Schedule {
   bool isOpen() {
     bool isOpen = false;
     final String dayNane = DateFormat('EEEE').format(DateTime.now());
-    final DateTime x = DateTime.now();
+    final DateTime now = DateTime.now();
     openHours.forEach((Weekday key, OpenHours value) {
       if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
         if (value.isOpen == true) {
           final DateTime dateOfStart =
-              DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
+              DateTime(
+              now.year, now.month, now.day, value.from[0], value.from[1]);
           final DateTime dateOfClose =
-              DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
+              DateTime(now.year, now.month, now.day, value.to[0], value.to[1]);
 
-          if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
+          if (now.isAfter(dateOfStart) && now.isBefore(dateOfClose)) {
             isOpen = true;
           }
 
           if (dateOfClose.isBefore(dateOfStart)) {
-            isOpen = x.isBefore(dateOfStart) || x.isAfter(dateOfClose);
+            isOpen = now.isBefore(dateOfClose) || now.isAfter(dateOfStart);
           }
         } else {
           isOpen = false;
