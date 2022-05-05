@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
@@ -24,7 +23,7 @@ class LaundryController extends GetxController {
   Future<ServerResponse> requestLaundryService(
     LaundryRequest laundryRequest,
   ) async {
-    if (laundryRequest.valid()) {
+    if (laundryRequest.isFromToSet()) {
       final HttpsCallable requestTaxiFunction =
           FirebaseFunctions.instance.httpsCallable("laundry-requestLaundry");
 
@@ -48,7 +47,7 @@ class LaundryController extends GetxController {
       return ServerResponse(
         ResponseStatus.Error,
         errorMessage: "Invalid Request",
-        errorCode: "invalid taxi request or google map server down",
+        errorCode: "Both customer's and laundry's Location are required.",
       );
     }
   }

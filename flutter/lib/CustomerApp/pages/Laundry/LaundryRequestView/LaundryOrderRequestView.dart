@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
 
 class LaundryOrderRequestView extends StatefulWidget {
@@ -40,11 +41,19 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['pages']['Laundry']['LaundryRequestView']['LaundryOrderRequestView'];
 
-  /// Location
-  Location? defaultLoc;
+  late Laundry selectedLaundry;
+
+  /// Customer's Location
+  Location? customerLoc;
 
   /// RxBool clicked
   RxBool clicked = false.obs;
+
+  @override
+  void initState() {
+    selectedLaundry = Get.arguments['laundry'];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +87,10 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 () => Card(
                   child: authController.user != null
                       ? DropDownLocationList(
-                          passedInLocation: defaultLoc,
+                          passedInLocation: customerLoc,
                           onValueChangeCallback: ({Location? location}) {
                             setState(() {
-                              defaultLoc = location;
+                              customerLoc = location;
                             });
                           },
                         )
@@ -190,7 +199,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 const SizedBox(height: 5),
                 Flexible(
                   child: Text(
-                    defaultLoc?.address ?? _i18n()['noLocation'],
+                    customerLoc?.address ?? _i18n()['noLocation'],
                     maxLines: 1,
                   ),
                 ),
@@ -210,7 +219,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             await Get.toNamed(kPickLocationNotAuth) as Location?;
         if (currentLoc != null) {
           setState(() {
-            defaultLoc = currentLoc;
+            customerLoc = currentLoc;
           });
         }
       },
@@ -220,7 +229,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: (defaultLoc == null)
+            color: (customerLoc == null)
                 ? Colors.red
                 : Theme.of(context).primaryColorLight,
           ),
@@ -234,7 +243,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             const SizedBox(width: 5),
             Flexible(
               child: Text(
-                defaultLoc?.address ?? _i18n()['pickLocation'],
+                customerLoc?.address ?? _i18n()['pickLocation'],
                 maxLines: 1,
               ),
             ),
@@ -279,11 +288,11 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
-        backgroundColor: (defaultLoc != null)
+        backgroundColor: (customerLoc != null)
             ? Theme.of(context).primaryColorLight
             : Colors.grey,
       ),
-      onPressed: (defaultLoc == null)
+      onPressed: (customerLoc == null)
           ? null
           : () {
               _createLaundryOrder();
@@ -305,7 +314,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     clicked.value = true;
     laundryController
         .requestLaundryService(LaundryRequest(
-            to: defaultLoc,
+            to: customerLoc,
             notes: _orderNote.text,
             paymentType: PaymentType.Cash))
         .then(
