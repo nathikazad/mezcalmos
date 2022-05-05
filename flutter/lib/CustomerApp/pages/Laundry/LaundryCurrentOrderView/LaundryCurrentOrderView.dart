@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
@@ -105,6 +106,37 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                         height: 20,
                       ),
                       LaundryOrderStatusCard(order: order.value!),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Card(
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Laundry :", style: Get.textTheme.bodyText1),
+                              Divider(),
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        order.value!.laundry!.image),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    order.value!.laundry!.name,
+                                    style: Get.textTheme.bodyText1,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 20,
                       ),

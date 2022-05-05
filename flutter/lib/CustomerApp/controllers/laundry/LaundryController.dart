@@ -24,8 +24,9 @@ class LaundryController extends GetxController {
         try {
           laundries
               .add(Laundry.fromLaundryData(laundryId: key, laundryData: value));
-        } catch (e) {
-          print(e);
+        } catch (e, stacktrace) {
+          mezDbgPrint('Exception: ' + e.toString());
+          mezDbgPrint('Stacktrace: ' + stacktrace.toString());
         }
       });
       return laundries;

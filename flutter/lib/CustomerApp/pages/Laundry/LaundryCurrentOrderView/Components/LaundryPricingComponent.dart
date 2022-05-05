@@ -25,20 +25,20 @@ class LaundryPricingCompnent extends StatelessWidget {
             Divider(
               height: 15,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  _i18n()['fixedRate'],
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                // TODO: show cost by order type
-                Text(
-                  "${order.costsByType} \$ / kg",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text(
+            //       _i18n()['fixedRate'],
+            //       style: Theme.of(context).textTheme.bodyText1,
+            //     ),
+            //     // TODO: show cost by order type
+            //     Text(
+            //       "${order.costsByType} \$ / kg",
+            //       style: Theme.of(context).textTheme.bodyText1,
+            //     ),
+            //   ],
+            // ),
             SizedBox(
               height: 10,
             ),
