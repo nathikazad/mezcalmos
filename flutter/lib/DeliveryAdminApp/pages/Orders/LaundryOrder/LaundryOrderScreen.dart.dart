@@ -100,10 +100,6 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     height: 10,
                   ),
 
-                  LaundryProviderCard(
-                      laundryID: order.value!.laundry?.id ?? null,
-                      order: order.value!),
-
                   //   if (order.value?.inProcess() ?? false)
 
                   DriverCard(
@@ -125,6 +121,9 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                         children: buildOrderButtons(order),
                       ),
                     ),
+                  LaundryProviderCard(
+                      
+                      order: order.value!),
                   LaundryOrderCustomer(
                     order: order.value!,
                   ),
