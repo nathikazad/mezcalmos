@@ -419,7 +419,8 @@
                         }
                     },
                     "LaundryCurrentOrderView": {
-                        "orderStatus": "Order Status"
+                        "orderStatus": "Order Status",
+                        "laundry": "Laundry"
                     }
                 },
                 "LaundryRequestView": {

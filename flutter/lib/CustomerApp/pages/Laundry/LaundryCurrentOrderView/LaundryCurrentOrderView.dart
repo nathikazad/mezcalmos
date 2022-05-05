@@ -92,7 +92,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: '${_i18n()["orderStatus"]}',
+        title: '${_i18n()["laundry"]}',
       ),
       body: Obx(
         () => order.value != null
@@ -109,34 +109,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                       SizedBox(
                         height: 20,
                       ),
-                      Card(
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Laundry :", style: Get.textTheme.bodyText1),
-                              Divider(),
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundImage: CachedNetworkImageProvider(
-                                        order.value!.laundry!.image),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    order.value!.laundry!.name,
-                                    style: Get.textTheme.bodyText1,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      _laundryCard(),
                       SizedBox(
                         height: 20,
                       ),
@@ -164,5 +137,37 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
               ),
       ),
     );
+  }
+
+  Card _laundryCard() {
+    return Card(
+                      child: Container(
+                        margin: EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("${_i18n()["laundry"]} :",
+                                style: Get.textTheme.bodyText1),
+                            Divider(),
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      order.value!.laundry!.image),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  order.value!.laundry!.name,
+                                  style: Get.textTheme.bodyText1,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class LaundryPricingCompnent extends StatelessWidget {
@@ -22,8 +23,16 @@ class LaundryPricingCompnent extends StatelessWidget {
               _i18n()['laundryPricing'],
               style: Theme.of(context).textTheme.headline3,
             ),
-            Divider(
-              height: 15,
+            // Divider(
+            //   height: 15,
+            // ),
+            Column(
+              children: List.generate(order.costsByType?.lineItems.length ?? 0,
+                  (int index) {
+                return Container(
+                  child: Row(),
+                );
+              }),
             ),
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,41 +48,41 @@ class LaundryPricingCompnent extends StatelessWidget {
             //     ),
             //   ],
             // ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  _i18n()['orderWeight'],
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  (order.weight != null)
-                      ? order.weight.toString() + ' kg'
-                      : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "${_i18n()["totalCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  (order.weight != null) ? '${order.cost - 50} \$' : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            if (order.weight == null)
+            // SizedBox(
+            //   height: 10,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text(
+            //       _i18n()['orderWeight'],
+            //       style: Theme.of(context).textTheme.bodyText1,
+            //     ),
+            //     Text(
+            //       (order.weight != null)
+            //           ? order.weight.toString() + ' kg'
+            //           : '-',
+            //       style: Theme.of(context).textTheme.bodyText1,
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text(
+            //       "${_i18n()["totalCost"]} :",
+            //       style: Theme.of(context).textTheme.bodyText1,
+            //     ),
+            //     Text(
+            //       (order.weight != null) ? '${order.cost - 50} \$' : '-',
+            //       style: Theme.of(context).textTheme.bodyText1,
+            //     ),
+            //   ],
+            // ),
+            if (order.costsByType?.lineItems.isEmpty ?? true)
               Column(
                 children: [
                   Divider(
@@ -99,4 +108,17 @@ class LaundryPricingCompnent extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _costItemCard(LaundryOrderCostLineItem item) {
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
+  return Container(
+    child: Row(
+      children: [
+        Text(item.name[userLanguage]!),
+        Text(" \$${item.cost}"),
+      ],
+    ),
+  );
 }

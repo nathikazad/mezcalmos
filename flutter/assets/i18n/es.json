@@ -419,7 +419,8 @@
                         }
                     },
                     "LaundryCurrentOrderView": {
-                        "orderStatus": "Estado de la orden"
+                        "orderStatus": "Estado de la orden",
+                        "laundry": "Lavandería"
                     }
                 },
                 "LaundryRequestView": {
