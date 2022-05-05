@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -39,12 +38,8 @@ class LaundryControllButtons extends StatelessWidget {
                   await laundryOrderController.pickedUpOrder(order.orderId);
                   break;
                 case LaundryOrderStatus.PickedUp:
-                  orderWeightDialog(context);
-                  if (orderWeight != 0) {
-                    await laundryOrderController.atLaundryOrder(
-                        order.orderId, orderWeight);
-                    Get.back(closeOverlays: true);
-                  }
+                  await laundryOrderController.atLaundryOrder(order.orderId);
+                  Get.back(closeOverlays: true);
 
                   break;
                 case LaundryOrderStatus.ReadyForDelivery:
@@ -64,69 +59,6 @@ class LaundryControllButtons extends StatelessWidget {
                 child: Text(_getActionButtonText())));
       }
     });
-  }
-
-  void orderWeightDialog(BuildContext context) async {
-    orderWeight = await showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: Text("${_i18n()["confirmOrderWeight"]}"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  style: Theme.of(context).textTheme.bodyText1,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
-                  ],
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (String? v) {
-                    if (num.tryParse(v!) == null) {
-                      return "${_i18n()["orderWeightAlert"]}";
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChanged: (String value) {
-                    orderWeight = num.parse(value);
-                  },
-                  decoration: InputDecoration(
-                      label: Text('${_i18n()["orderWeight"]}'),
-                      filled: true,
-                      isDense: true,
-                      suffixText: 'KG',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8))),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextButton(
-                    onPressed: () {
-                      if (orderWeight != 0) {
-                        Navigator.pop(context, orderWeight);
-                      }
-                    },
-                    child: Container(
-                        padding: EdgeInsets.all(5),
-                        alignment: Alignment.center,
-                        child: Text('${_i18n()["confirm"]}'))),
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context, 0);
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.red,
-                    ),
-                    child: Container(
-                        padding: EdgeInsets.all(5),
-                        child: Text('${_i18n()["cancel"]}')))
-              ],
-            ),
-          );
-        });
   }
 
   String _getActionButtonText() {
