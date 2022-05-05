@@ -78,7 +78,6 @@ class DeliveryDriverUserInfo extends UserInfo {
       : super(id: id, name: name, image: image, language: language);
 
   factory DeliveryDriverUserInfo.fromData(data) {
-    // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
     final LatLng? location = data["location"] != null
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])
@@ -90,7 +89,7 @@ class DeliveryDriverUserInfo extends UserInfo {
         id: data["id"],
         name: data["name"],
         image: data["image"],
-        location: location,
+        location: location ?? null,
         language: language);
   }
 }
