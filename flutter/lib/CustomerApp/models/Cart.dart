@@ -1,13 +1,8 @@
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 // ignore_for_file: avoid_annotating_with_dynamic
-
-//import 'dart:convert';
-import 'dart:math';
-
-import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -20,6 +15,7 @@ class Cart {
   String? notes;
   PaymentType paymentType = PaymentType.Cash;
   final num shippingCost = 40;
+  RouteInformation? routeInformation;
 
   Cart({this.restaurant});
 
@@ -39,6 +35,17 @@ class Cart {
           ? Location.fromFirebaseData(cartData["to"])
           : null;
       notes = cartData["notes"];
+      routeInformation = cartData['routeInformation'] == null
+          ? null
+          : RouteInformation(
+              polyline: cartData['routeInformation']['polyline'],
+              distance: RideDistance.fromJson(
+                cartData['routeInformation']['distance'],
+              ),
+              duration: RideDuration.fromJson(
+                cartData['routeInformation']['duration'],
+              ),
+            );
     }
   }
 
@@ -50,6 +57,7 @@ class Cart {
 
     return <String, dynamic>{
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
+      "routeInformation": routeInformation?.toJson(),
       "serviceProviderId": restaurant?.info.id,
       "quantity": quantity(),
       "cost": totalCost().toInt(),

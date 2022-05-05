@@ -6,10 +6,10 @@ class LaundryRequest {
   String? notes;
 
   /// to means Customer's location.
-  Location? from;
+  Location? to;
 
   /// from means laundry's location (choosen by the customer)
-  Location? to;
+  Location? from;
   RouteInformation? routeInformation;
   PaymentType paymentType;
   LaundryRequest({
@@ -21,11 +21,11 @@ class LaundryRequest {
   });
 
   bool valid() {
-    return (from != null);
+    return (to != null);
   }
 
   void setToLocation(Location? loc) {
-    from = loc;
+    to = loc;
   }
 
   bool isFromToSet() {
@@ -34,7 +34,8 @@ class LaundryRequest {
 
   Map<String, dynamic> asCloudFunctionParam() {
     return <String, dynamic>{
-      "to": from?.toFirebaseFormattedJson(),
+      "to": to?.toFirebaseFormattedJson(),
+      "from": from?.toFirebaseFormattedJson(),
       "notes": notes,
       "paymentType": paymentType.toFirebaseFormatString(),
       "routeInformation": routeInformation?.toJson()

@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 
 class LaundryOrderRequestView extends StatefulWidget {
   const LaundryOrderRequestView({Key? key}) : super(key: key);
@@ -312,12 +313,27 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
 
   void _createLaundryOrder() {
     clicked.value = true;
-    laundryController
-        .requestLaundryService(LaundryRequest(
-            to: customerLoc,
-            notes: _orderNote.text,
-            paymentType: PaymentType.Cash))
-        .then(
+    final LaundryRequest _req = LaundryRequest(
+      from: selectedLaundry.info.location,
+      to: customerLoc,
+      notes: _orderNote.text,
+      paymentType: PaymentType.Cash,
+    );
+
+    // get route info
+    MapHelper.getDurationAndDistance(_req.from!, _req.to!)
+        .then((MapHelper.Route? route) {
+      if (route != null) {
+        _req.routeInformation = MapHelper.RouteInformation(
+          polyline: route.encodedPolyLine,
+          distance: route.distance,
+          duration: route.duration,
+        );
+      }
+    });
+
+    // Since routeInformation is nullable, we have to handle it in other apps.
+    laundryController.requestLaundryService(_req).then(
       (ServerResponse response) {
         if (response.data['orderId'] != null) {
           sharedRoute.popEverythingAndNavigateTo(
