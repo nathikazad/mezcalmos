@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart' show CapExtension;
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileScreen"]["UserProfileWidgets"];
@@ -151,11 +152,63 @@ class UserProfileWidgetsClass {
     if (userProfileController.checkIfUserHasAllInfosSet() &&
         !isImageBeingUploaded) {
       // return popable button
-      return mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: () => Get.back(closeOverlays: true));
+      return mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: () => Get.back(closeOverlays: true),
+        actionIcons: [
+          Obx(
+            () => Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                onTap: () =>
+                    Get.find<LanguageController>().changeUserLanguage(),
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.contain,
+                      image: AssetImage(
+                        Get.find<LanguageController>().oppositFlag,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      );
     } else {
       // none popable buttom
-      return mezcalmosAppBar(AppBarLeftButtonType.Back);
+      return mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        actionIcons: [
+          Obx(
+            () => Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                onTap: () =>
+                    Get.find<LanguageController>().changeUserLanguage(),
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.contain,
+                      image: AssetImage(
+                        Get.find<LanguageController>().oppositFlag,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      );
     }
   }
 
@@ -183,21 +236,23 @@ class UserProfileWidgetsClass {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 55),
             child: TextField(
-                decoration: InputDecoration(
-                  suffixIcon: Icon(
-                    Icons.perm_identity_rounded,
-                    color: Colors.purple.shade400,
-                  ),
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(),
-                  enabledBorder: OutlineInputBorder(),
+              decoration: InputDecoration(
+                suffixIcon: Icon(
+                  Icons.perm_identity_rounded,
+                  color: Colors.purple.shade400,
                 ),
-                enabled: !isImageBeingUploaded,
-                style: TextStyle(color: Colors.purple.shade400, fontSize: 15),
-                controller: userProfileController.textEditingController,
-                onChanged: (String value) {
-                  userProfileController.userName.value = value;
-                }),
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(),
+                enabledBorder: OutlineInputBorder(),
+                hintText: _i18n()['namePlaceHolder'],
+              ),
+              enabled: !isImageBeingUploaded,
+              style: TextStyle(color: Colors.purple.shade400, fontSize: 15),
+              controller: userProfileController.textEditingController,
+              onChanged: (String value) {
+                userProfileController.userName.value = value.inCaps;
+              },
+            ),
           ),
           if (userProfileController.errorReport.value != null)
             Container(
@@ -215,12 +270,15 @@ class UserProfileWidgetsClass {
                     width: 10,
                   ),
                   Flexible(
-                    child: Text(
-                      userProfileController.errorReport.value!,
-                      overflow: TextOverflow.visible,
-                      style: TextStyle(color: Colors.red),
-                      softWrap: true,
-                      maxLines: 4,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        userProfileController.errorReport.value!,
+                        overflow: TextOverflow.visible,
+                        style: TextStyle(color: Colors.red),
+                        softWrap: true,
+                        maxLines: 4,
+                      ),
                     ),
                   ),
                 ],

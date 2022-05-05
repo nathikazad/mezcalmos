@@ -571,11 +571,13 @@
             },
             "UserProfileScreen": {
                 "UserProfileScreen": {
-                    "mustSetUserNameHint": "Introduce un nombre\npara seguir usando la aplicación.",
-                    "mustSetUserImgHint": "Cargue una imagen\nhaciendo clic en 'Subir imagen'\npara seguir usando la aplicación.",
-                    "wrongName": "El nombre solo debe contener al menos 4 letras y espacios."
+                    "mustSetUserNameError": "Por favor, ponga su primer nombre.",
+                    "mustSetUserImgError": "Por favor, sube una imagen.",
+                    "nameMustBeLettersOnly" : "Tu primer nombre solo debe tener letras.",
+                    "nameMustBeFourLettersOrMore": "Tu nombre debe tener al menos 4 letras."
                 },
                 "UserProfileWidgets": {
+                    "namePlaceHolder" : "Ponga su primer nombre",
                     "uploadPic": "Subir imagen",
                     "title": " Información del usuario ",
                     "cancel": "Cancelar",
