@@ -420,7 +420,8 @@
                     },
                     "LaundryCurrentOrderView": {
                         "orderStatus": "Order Status",
-                        "laundry": "Laundry"
+                        "laundry": "Laundry",
+                        "estimatedDeliveryTime": "Estimated delivery time"
                     }
                 },
                 "LaundryRequestView": {

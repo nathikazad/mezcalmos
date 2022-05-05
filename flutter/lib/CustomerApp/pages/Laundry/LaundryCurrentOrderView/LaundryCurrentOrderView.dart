@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
@@ -10,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Comp
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryPricingComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderSummaryComponent.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -117,6 +119,8 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                       SizedBox(
                         height: 10,
                       ),
+                      if (order.value!.estimatedDeliveryTime != null)
+                        _orderEstimatedDeliveryTime(),
                       LaundryOrderNoteComponent(order: order.value!),
                       SizedBox(
                         height: 10,
@@ -139,35 +143,73 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     );
   }
 
+  Container _orderEstimatedDeliveryTime() {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "${_i18n()['estimatedDeliveryTime']}",
+            style: Get.textTheme.bodyText1,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Card(
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.timelapse,
+                    color: keyAppColor,
+                    size: 35,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "${DateFormat("dd MMMM yyyy").format(order.value!.estimatedDeliveryTime!.toLocal())}",
+                    style: Get.textTheme.bodyText1,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Card _laundryCard() {
     return Card(
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("${_i18n()["laundry"]} :",
-                                style: Get.textTheme.bodyText1),
-                            Divider(),
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage: CachedNetworkImageProvider(
-                                      order.value!.laundry!.image),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  order.value!.laundry!.name,
-                                  style: Get.textTheme.bodyText1,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
+      child: Container(
+        margin: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("${_i18n()["laundry"]} :", style: Get.textTheme.bodyText1),
+            Divider(),
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundImage:
+                      CachedNetworkImageProvider(order.value!.laundry!.image),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  order.value!.laundry!.name,
+                  style: Get.textTheme.bodyText1,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
