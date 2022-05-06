@@ -307,13 +307,10 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   }
 
   DeliveryDriverType getRightDeliveryDriverType() {
-    switch (order.value!.getCurrentPhase()) {
-      case (LaundryOrderPhase.Dropoff):
-        return DeliveryDriverType.DropOff;
-      case (LaundryOrderPhase.Pickup):
-        return DeliveryDriverType.Pickup;
-      default:
-        return DeliveryDriverType.DropOff;
+    if (order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return DeliveryDriverType.Pickup;
+    } else {
+      return DeliveryDriverType.DropOff;
     }
   }
 }

@@ -100,4 +100,12 @@ class ServiceInfo extends UserInfo {
         image: data['image'],
         name: data['name']);
   }
+
+  @override
+  Map<String, dynamic> toJson() => {
+        "uid": id,
+        "name": name,
+        "image": image,
+        "location": location.toFirebaseFormattedJson(),
+      };
 }

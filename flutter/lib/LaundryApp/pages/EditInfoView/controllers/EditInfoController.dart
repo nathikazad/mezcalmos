@@ -78,7 +78,7 @@ class EditInfoController {
       });
     }
     if (newLocation.value != null &&
-        newLocation.value?.address != laundry.value?.info.location?.address) {
+        newLocation.value?.address != laundry.value?.info.location.address) {
       await laundryInfoController.setLocation(newLocation.value!);
     }
     if (primaryLang.value != null &&

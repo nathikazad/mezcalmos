@@ -34,7 +34,10 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.cost > 0) ? ' \$ ${order.cost}' : "_",
+                  order.costsByType?.weighedCost.toString() ?? '-',
+                  // (order.costsByType.weighedCost != null)
+                  //     ? ' \$ ${order.costsByType.weighedCost}'
+                  //     : "_",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],

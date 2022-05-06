@@ -40,33 +40,39 @@ class _OrderEstimatedTimeComponentState
                     child: CircularProgressIndicator())
                 : InkWell(
                     borderRadius: BorderRadius.circular(10),
-                    onTap: () async {
-                      mezDbgPrint("Tappppppped");
-                      DateTime? selectedDate =
-                          widget.order.estimatedDeliveryTime;
+                    onTap: (widget.order.isAtLaundry())
+                        ? () async {
+                            mezDbgPrint("Tappppppped");
+                            final DateTime? selectedDate =
+                                widget.order.estimatedDeliveryTime;
 
-                      await showDatePicker(
-                        context: context,
-                        initialDate: selectedDate ?? DateTime.now(),
-                        firstDate: widget.order.orderTime,
-                        lastDate: DateTime(2050),
-                      ).then((DateTime? value) {
-                        setState(() {
-                          selectedDate = value;
-                          setState(() {
-                            isClicked = true;
-                          });
-                          orderController
-                              .setEstimatedDeliveryTime(
-                                  widget.order.orderId, value!)
-                              .whenComplete(() {
-                            setState(() {
-                              isClicked = false;
+                            await showDatePicker(
+                              context: context,
+                              initialDate: selectedDate ?? DateTime.now(),
+                              firstDate: widget.order.orderTime,
+                              lastDate: DateTime(2050),
+                            ).then((DateTime? date) {
+                              if (date != null) {
+                                showTimePicker(
+                                        context: context,
+                                        initialTime: TimeOfDay(
+                                            hour: widget.order.orderTime.hour,
+                                            minute:
+                                                widget.order.orderTime.minute))
+                                    .then((TimeOfDay? time) {
+                                  if (time != null) {
+                                    _setOrderEstTime(DateTime(
+                                        date.year,
+                                        date.month,
+                                        date.day,
+                                        time.hour,
+                                        time.minute));
+                                  }
+                                });
+                              }
                             });
-                          });
-                        });
-                      });
-                    },
+                          }
+                        : null,
                     child: Container(
                       margin: const EdgeInsets.all(5),
                       child: Row(
@@ -81,7 +87,7 @@ class _OrderEstimatedTimeComponentState
                           ),
                           Text(
                             (widget.order.estimatedDeliveryTime != null)
-                                ? "${DateFormat("dd MMMM yyyy ").format(widget.order.estimatedDeliveryTime!.toLocal())}"
+                                ? "${DateFormat("dd MMMM yyyy, HH:mm ").format(widget.order.estimatedDeliveryTime!.toLocal())}"
                                 : "Set Delivery esitmated time",
                             style: Get.theme.textTheme.bodyText1,
                           )
@@ -93,5 +99,18 @@ class _OrderEstimatedTimeComponentState
         ],
       ),
     );
+  }
+
+  void _setOrderEstTime(DateTime value) {
+    setState(() {
+      isClicked = true;
+    });
+    orderController
+        .setEstimatedDeliveryTime(widget.order.orderId, value)
+        .whenComplete(() {
+      setState(() {
+        isClicked = false;
+      });
+    });
   }
 }

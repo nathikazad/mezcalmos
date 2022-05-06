@@ -153,7 +153,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 ),
               ),
             ),
-          )
+          ),
+          bottomButton(context)
         ]));
   }
 

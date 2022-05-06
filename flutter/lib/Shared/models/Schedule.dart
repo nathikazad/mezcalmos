@@ -108,4 +108,24 @@ class Schedule {
     });
     return isOpen;
   }
+
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    Weekday.values.forEach((Weekday weekday) {
+      json[weekday.toFirebaseFormatString()] =
+          openHours[weekday]?.toFirebaseFormattedJson();
+    });
+    return json;
+  }
+
+  factory Schedule.clone(Schedule schedule) {
+    final Map<Weekday, OpenHours> _cloneSchedule = {};
+    schedule.openHours.forEach((Weekday key, OpenHours value) {
+      _cloneSchedule[key] = OpenHours.clone(value);
+    });
+
+    final Schedule newSchedule = Schedule(openHours: _cloneSchedule);
+
+    return newSchedule;
+  }
 }
