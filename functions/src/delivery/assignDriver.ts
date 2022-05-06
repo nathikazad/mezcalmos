@@ -25,6 +25,8 @@ import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
+import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
+import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 
 export = functions.https.onCall(async (data, context) => {
   if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
@@ -108,6 +110,13 @@ export = functions.https.onCall(async (data, context) => {
   rootNodes.inProcessOrders(data.orderType, orderId).update(order);
   deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order);
 
+  if (order.orderType == OrderType.Restaurant) {
+    let rOrder: RestaurantOrder = <RestaurantOrder>{ ...order }
+    restaurantNodes.inProcessOrders(rOrder.restaurant.id!, orderId).update(order);
+  } else if (order.orderType == OrderType.Laundry) {
+    let lOrder: LaundryOrder = <LaundryOrder>{ ...order }
+    laundryNodes.inProcessOrders(lOrder.laundry.id!, orderId).update(order);
+  }
 
   let chat: Chat = {
     chatType: ChatType.Order,
