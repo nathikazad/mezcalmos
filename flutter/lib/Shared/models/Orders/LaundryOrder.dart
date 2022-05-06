@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -43,35 +44,38 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   LaundryOrderStatus status;
   num shippingCost;
   num costPerKilo;
-  LaundryOrder(
-      {required String orderId,
-      required num cost,
-      required Location to,
-      required DateTime orderTime,
-      required PaymentType paymentType,
-      required this.status,
-      required UserInfo customer,
-      required this.laundry,
-      required this.shippingCost,
-      required this.costPerKilo,
-      DeliveryDriverUserInfo? dropoffDriver,
-      String? dropOffDriverChatId,
-      DeliveryDriverUserInfo? pickupDriver,
-      String? pickupDriverChatId,
-      this.weight,
-      this.notes})
-      : super(
-            orderTime: orderTime,
-            orderId: orderId,
-            paymentType: paymentType,
-            orderType: OrderType.Laundry,
-            cost: cost,
-            customer: customer,
-            to: to,
-            dropoffDriver: dropoffDriver,
-            dropOffDriverChatId: dropOffDriverChatId,
-            pickupDriver: pickupDriver,
-            pickupDriverChatId: pickupDriverChatId);
+  LaundryOrder({
+    required String orderId,
+    required num cost,
+    required Location to,
+    required DateTime orderTime,
+    required PaymentType paymentType,
+    required this.status,
+    required UserInfo customer,
+    required this.laundry,
+    required this.shippingCost,
+    required this.costPerKilo,
+    DeliveryDriverUserInfo? dropoffDriver,
+    String? dropOffDriverChatId,
+    DeliveryDriverUserInfo? pickupDriver,
+    String? pickupDriverChatId,
+    this.weight,
+    this.notes,
+    RouteInformation? routeInformation,
+  }) : super(
+          orderTime: orderTime,
+          orderId: orderId,
+          paymentType: paymentType,
+          orderType: OrderType.Laundry,
+          cost: cost,
+          customer: customer,
+          to: to,
+          dropoffDriver: dropoffDriver,
+          dropOffDriverChatId: dropOffDriverChatId,
+          pickupDriver: pickupDriver,
+          pickupDriverChatId: pickupDriverChatId,
+          routeInformation: routeInformation,
+        );
 
   factory LaundryOrder.fromData(id, data) {
     final LaundryOrder laundryOrder = LaundryOrder(
@@ -99,6 +103,17 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             : null,
         pickupDriverChatId: data['secondaryChats']
             ?['deliveryAdminPickupDriver']);
+
+    if (data["routeInformation"] != null) {
+      laundryOrder.routeInformation = RouteInformation(
+        polyline: data["routeInformation"]["polyline"],
+        distance: RideDistance.fromJson(data["routeInformation"]["distance"]),
+        duration: RideDuration.fromJson(
+          data["routeInformation"]["duration"],
+        ),
+      );
+    }
+
     return laundryOrder;
   }
 
