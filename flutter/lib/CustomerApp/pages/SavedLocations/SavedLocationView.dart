@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
@@ -9,15 +10,15 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
+
 import 'components/SavedLocationBody.dart';
 import 'components/SavedLocationIsEmpty.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-["SavedLocations"]["SavedLocationView"];
+    ["pages"]["SavedLocations"]["SavedLocationView"];
 
 class SavedLocationView extends StatefulWidget {
-  SavedLocationView({
+  const SavedLocationView({
     Key? key,
   }) : super(key: key);
 
@@ -26,12 +27,19 @@ class SavedLocationView extends StatefulWidget {
 }
 
 class _SavedLocationViewState extends State<SavedLocationView> {
+  /// CustomerAuthController
   CustomerAuthController _customerAuthController =
       Get.find<CustomerAuthController>();
+
+  /// savedLocations
   List<SavedLocation> savedLocations = <SavedLocation>[];
+
+  /// savedLocationsStreamSub
   StreamSubscription<List<SavedLocation>>? savedLocationsStreamSub;
+
   @override
   void initState() {
+    super.initState();
     // first get the old savedLocations , in-customer snapshot !
     mezDbgPrint("==============");
     mezDbgPrint(savedLocations);
@@ -45,9 +53,9 @@ class _SavedLocationViewState extends State<SavedLocationView> {
     mezDbgPrint("==============");
     // then start a listener in case there are changes in /savedLocations db node!
     savedLocationsStreamSub = _customerAuthController.customerRxn
-        .map<List<SavedLocation>>((customerInstance) {
-      return customerInstance?.savedLocations ?? [];
-    }).listen((_savedLocations) {
+        .map<List<SavedLocation>>((Customer? customerInstance) {
+      return customerInstance?.savedLocations ?? <SavedLocation>[];
+    }).listen((List<SavedLocation> _savedLocations) {
       mezDbgPrint("==============");
       mezDbgPrint(savedLocations);
       mezDbgPrint("==============");
@@ -57,8 +65,6 @@ class _SavedLocationViewState extends State<SavedLocationView> {
         savedLocations.assignAll(_savedLocations);
       });
     });
-
-    super.initState();
   }
 
   @override
@@ -74,28 +80,29 @@ class _SavedLocationViewState extends State<SavedLocationView> {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
-        appBar: CustomerAppBar(
-          title: "${_i18n()["title"]}",
-          autoBack: true,
-        ),
-        bottomNavigationBar: ButtonComponent(
-          widget: Center(
-            child: Text(
-              "${_i18n()["addNewLoc"]}",
-              style:
-                  txt.headline1!.copyWith(color: Colors.white, fontSize: 12.sp),
-            ),
+      appBar: CustomerAppBar(
+        title: "${_i18n()["title"]}",
+        autoBack: true,
+      ),
+      bottomNavigationBar: ButtonComponent(
+        widget: Center(
+          child: Text(
+            "${_i18n()["addNewLoc"]}",
+            style:
+                txt.headline1!.copyWith(color: Colors.white, fontSize: 12.sp),
           ),
-          function: () {
-            Get.toNamed(kPickLocationRoute, arguments: false);
-          },
         ),
-        body: savedLocations.length > 0
-            ? SavedLocationBody(
-                savedLocations: savedLocations,
-              )
-            : SavedlocationISEmpty());
+        function: () {
+          Get.toNamed<void>(kPickLocationRoute, arguments: false);
+        },
+      ),
+      body: savedLocations.length > 0
+          ? SavedLocationBody(
+              savedLocations: savedLocations,
+            )
+          : SavedLocationISEmpty(),
+    );
   }
 }

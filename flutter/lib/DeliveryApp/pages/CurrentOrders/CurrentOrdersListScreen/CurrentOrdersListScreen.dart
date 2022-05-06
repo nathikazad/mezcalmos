@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNoOrdersComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNotLookingComponent.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverOrderCard.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
-
-import 'Components/DriverOrderCard.dart';
-import 'Components/MezSwitch.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"];
@@ -40,6 +41,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
     orderController.pastOrders.stream.listen((List<DeliverableOrder> value) {
       pastOrders.value = value;
     });
+    orderController.clearNewOrderNotificationsOfPastOrders();
     super.initState();
   }
 
@@ -77,6 +79,20 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             )));
   }
 
+  AppBar deliveryAppBar() {
+    return mezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: [
+      InkWell(
+          customBorder: CircleBorder(),
+          onTap: () {
+            Get.toNamed(kNotificationsRoute);
+          },
+          child: Icon(
+            Ionicons.notifications,
+            color: Get.theme.primaryColorLight,
+          ))
+    ]);
+  }
+
   Widget _pastOrdersList(BuildContext context) {
     if (orderController.pastOrders.isNotEmpty) {
       return Column(
@@ -91,11 +107,11 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           ),
           Column(
             children: List.generate(
-                    orderController.pastOrders.length,
-                    (int index) => DriverOrderCard(
-                        order: orderController.pastOrders[index]))
-                .reversed
-                .toList(),
+                orderController.pastOrders.length,
+                (int index) => DriverOrderCard(
+                      order: orderController.pastOrders[index],
+                      isPastOrder: true,
+                    )).reversed.toList(),
           )
         ],
       );

@@ -170,15 +170,16 @@ class IncomingOrdersController extends GetxController {
         .reference()
         .child(inNegotationNode(_authController.fireAuthUser!.uid))
         .set({"orderId": orderId, "customerId": customerId});
-    
-        _databaseHelper.firebaseDatabase
+
+    _databaseHelper.firebaseDatabase
         .reference()
         .child('notificationQueue/${_authController.fireAuthUser!.uid}')
         .set(CounterOfferNotificationForQueue(
-          driver: _authController.user!.constructUserInfo(),
-          orderId: orderId, 
-          customerId: customerId, 
-          price: counterOffer.price).toFirebaseFormatJson());
+                driver: _authController.user!.constructUserInfo(),
+                orderId: orderId,
+                customerId: customerId,
+                price: counterOffer.price)
+            .toFirebaseFormatJson());
   }
 
   // Commented The event above cuz it won't work in case TaxiDriver got redirected to incommingOrderViewScreeen.

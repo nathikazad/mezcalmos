@@ -4,12 +4,17 @@ import 'package:rive/rive.dart' show RiveAnimation;
 class MezLogoAnimation extends StatelessWidget {
   final double? h;
   final double? w;
-  bool centered = false;
-  MezLogoAnimation({this.h, this.w, this.centered = false});
+  final bool centered;
+
+  const MezLogoAnimation({
+    this.h,
+    this.w,
+    this.centered = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Widget animationContainer = Container(
+    final Widget animationContainer = Container(
       height: h,
       width: w,
       child: RiveAnimation.asset(
@@ -17,7 +22,7 @@ class MezLogoAnimation extends StatelessWidget {
         fit: BoxFit.fill,
       ),
     );
-    if (this.centered) {
+    if (centered) {
       return Center(
         child: Container(
           height: 200,

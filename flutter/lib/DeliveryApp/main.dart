@@ -8,6 +8,7 @@ import 'package:mezcalmos/DeliveryApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,16 +18,23 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
   loadBitmaps();
-  runMainGuarded(() => runApp(
-        Sizer(builder: (context, orientation, deviceType) {
+  runMainGuarded(
+    () => runApp(
+      Sizer(
+        builder: (_, __, ___) {
           return StartingPoint(
-              appType: AppType.DeliveryApp,
-              signInCallback: signInCallback,
-              appTheme: DeliveryAppTheme.lightTheme,
-              signOutCallback: signOutCallback,
-              routes: routes);
-        }),
-      ));
+            appType: AppType.DeliveryApp,
+            signInCallback: signInCallback,
+            appTheme: DeliveryAppTheme.lightTheme,
+            signOutCallback: signOutCallback,
+            routes: routes,
+            locationPermissionType:
+                LocationPermissionType.ForegroundAndBackground,
+          );
+        },
+      ),
+    ),
+  );
 }
 
 void loadBitmaps() async {

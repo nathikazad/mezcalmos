@@ -96,12 +96,25 @@ class LaundryOrderController extends GetxController {
     });
   }
 
+  Stream<LaundryOrder?> getPastOrderStream(String orderId) {
+    return pastOrders.stream.map<LaundryOrder?>((_) {
+      try {
+        return pastOrders.firstWhere(
+          (LaundryOrder currentOrder) => currentOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
+        return null;
+      }
+    });
+  }
+
   bool orderHaveNewMessageNotifications(String orderId) {
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.orderId == orderId)
         .isNotEmpty;
   }
 

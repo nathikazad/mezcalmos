@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -11,44 +12,46 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
 
 class TaxiCurrentOrderCard extends StatelessWidget {
   final TaxiOrder order;
-  const TaxiCurrentOrderCard({Key? key, required this.order}) : super(key: key);
+
+  const TaxiCurrentOrderCard({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-          side: BorderSide(color: _getRightColor(order.status), width: 1)),
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(color: _getRightColor(order.status), width: 1),
+      ),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.toNamed(getTaxiOrderRoute(order.orderId));
+          mezDbgPrint("Clickeeed");
+          Get.toNamed(getTaxiOrderRoute(order.orderId,));
         },
         child: Container(
           margin: EdgeInsets.all(8),
           child: Row(
-            children: [
+            children: <Widget>[
               CircleAvatar(
                 radius: 30,
                 backgroundImage:
                     CachedNetworkImageProvider(order.customer.image),
               ),
-              SizedBox(
-                width: 5,
-              ),
+              const SizedBox(width: 5),
               Flexible(
                 flex: 5,
                 fit: FlexFit.tight,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       order.customer.name,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     Text(
                       '${_i18n()["to"]}' + order.to.address,
                       style: Theme.of(context).textTheme.subtitle1,
@@ -58,8 +61,8 @@ class TaxiCurrentOrderCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Spacer(),
-              _getTaxiOrderWidget(order.status)
+              const Spacer(),
+              _getTaxiOrderWidget(order.status),
             ],
           ),
         ),
@@ -75,6 +78,7 @@ Color _getRightColor(TaxiOrdersStatus status) {
     case TaxiOrdersStatus.CancelledByCustomer:
     case TaxiOrdersStatus.ForwardingUnsuccessful:
     case TaxiOrdersStatus.CancelledByTaxi:
+    case TaxiOrdersStatus.Expired:
       return Colors.red;
 
     case TaxiOrdersStatus.DroppedOff:
@@ -98,38 +102,42 @@ Widget _getTaxiOrderWidget(TaxiOrdersStatus status) {
       );
     case TaxiOrdersStatus.LookingForTaxi:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/search.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/search.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.OnTheWay:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/taxiOnTheWay.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/taxiOnTheWay.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.InTransit:
     case TaxiOrdersStatus.ForwardingToLocalCompany:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/taxiOnTheWay.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/taxiOnTheWay.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.DroppedOff:
     case TaxiOrdersStatus.ForwardingSuccessful:
       return Container(
-          height: 50,
-          width: 50,
-          child: Image.asset(
-            'assets/images/customer/taxi/taxi.png',
-            fit: BoxFit.contain,
-          ));
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          'assets/images/customer/taxi/taxi.png',
+          fit: BoxFit.contain,
+        ),
+      );
     case TaxiOrdersStatus.Expired:
       return Icon(
         Icons.hourglass_disabled_sharp,

@@ -9,3 +9,7 @@ String userLanguageNode(String? userId) {
 String userInfoNode(String? userId) {
   return 'users/$userId/info';
 }
+
+String appStoreIdNode(String appName) {
+  return 'metadata/appStoreIds/$appName';
+}

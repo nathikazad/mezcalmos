@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ViewCartBody.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/CartIsEmptyScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ViewCartBody.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/models/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
+// ignore: constant_identifier_names
 enum DropDownResult { Null, String }
 
 class ViewCartScreen extends StatefulWidget {
@@ -28,31 +29,48 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["ViewCartScreen"];
 
 class _ViewCartScreenState extends State<ViewCartScreen> {
-  RestaurantController controller = Get.find<RestaurantController>();
+  /// RestaurantController
+  RestaurantController _restaurantController = Get.find<RestaurantController>();
+
+  /// _clickedOrderNow
   bool _clickedOrderNow = false;
+
+  /// DropDownResult
   DropDownResult ddResult = DropDownResult.Null;
 
-  TextEditingController textcontoller = TextEditingController();
+  /// _textEditingController
+  TextEditingController _textEditingController = TextEditingController();
+
+  /// CustomerAuthController
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
-  var listOfSavedLoacations = <SavedLocation>[];
+
+  /// listOfSavedLocations
+  List<SavedLocation> listOfSavedLocations = <SavedLocation>[];
+
+  /// dropDownListValue
   SavedLocation? dropDownListValue;
+
+  /// orderToLocation
   Location? orderToLocation;
+
+  /// nbClicks
   int nbClicks = 0;
+
   @override
   void initState() {
     super.initState();
     // check if cart empty
     // if yes redirect to home page
-    controller.cart.value.cartItems.map((item) {
+    _restaurantController.cart.value.cartItems.map((CartItem item) {
       mezDbgPrint(
-          "+++ From ViewCartScreen ==> ${item.id} <= notes => ${item.notes}");
+          "+++ From ViewCartScreen ==> ${item.idInCart} <= notes => ${item.notes}");
     });
   }
 
   @override
   void dispose() {
-    textcontoller.dispose();
+    _textEditingController.dispose();
     super.dispose();
   }
 
@@ -64,35 +82,37 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         title: "${_i18n()["myCart"]}",
       ),
       body: Obx(() {
-        mezDbgPrint("@sa@d@: ${controller.cart.value.cartItems.length}");
-        if (controller.cart.value.cartItems.length > 0) {
+        mezDbgPrint(
+            "@sa@d@: ${_restaurantController.cart.value.cartItems.length}");
+        if (_restaurantController.cart.value.cartItems.length > 0) {
           return SingleChildScrollView(
-              child: ViewCartBody(
-            setLocationCallBack: ({Location? location}) {
-              setState(() {
-                orderToLocation = location;
-              });
-            },
-            notesTextController: textcontoller,
-          ));
+            child: ViewCartBody(
+              setLocationCallBack: ({Location? location}) {
+                setState(() {
+                  orderToLocation = location;
+                });
+                mezDbgPrint(orderToLocation);
+              },
+              notesTextController: _textEditingController,
+            ),
+          );
         } else {
           return CartIsEmptyScreen();
         }
       }),
       bottomNavigationBar: ButtonComponent(
-          bgColor: getTheRightButtonColor(),
-          widget: Center(
-              child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
-          function: !_clickedOrderNow ? checkoutActionButton : () {}),
+        bgColor: getTheRightButtonColor(),
+        widget:
+            Center(child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
+        function: !_clickedOrderNow ? checkoutActionButton : () {},
+      ),
     );
   }
 
   Color getTheRightButtonColor() {
     // it returns the pruple or the grey color for the order now button
-
     if (orderToLocation == null ||
-        !checkRestaurantAvailability(
-            schedule: controller.associatedRestaurant?.schedule)) {
+        !(_restaurantController.associatedRestaurant?.isOpen() ?? true)) {
       return Color(0xdddddddd);
     } else {
       return Color(0xffac59fc);
@@ -100,13 +120,14 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   }
 
   Widget getTheRightWidgetForOrderNowButton(bool clicked) {
-    if (!checkRestaurantAvailability(
-        schedule: controller.associatedRestaurant?.schedule)) {
-      return Text("${_i18n()["notAvailable"]}",
-          style: Theme.of(context)
-              .textTheme
-              .headline2!
-              .copyWith(color: Colors.black));
+    if (!(_restaurantController.associatedRestaurant?.isOpen() ?? false)) {
+      return Text(
+        "${_i18n()["notAvailable"]}",
+        style: Theme.of(context)
+            .textTheme
+            .headline2!
+            .copyWith(color: Colors.black),
+      );
     }
     if (clicked) {
       return Container(
@@ -118,11 +139,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         ),
       );
     } else {
-      return Text("${_i18n()['orderNow']}",
-          style: Theme.of(context)
-              .textTheme
-              .headline2!
-              .copyWith(color: Colors.white));
+      return Text(
+        "${_i18n()['orderNow']}",
+        style: Theme.of(context).textTheme.headline2!.copyWith(
+              color: Colors.white,
+            ),
+      );
     }
   }
 
@@ -130,45 +152,38 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
   Future<void> avoidCheckoutRaceCondition(String orderId) async {
     if (Get.find<OrderController>().getOrder(orderId) == null) {
-      mezDbgPrint(
-          "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ]  RACING CONDITION HAPPENING ... ");
       await Get.find<OrderController>()
           .getCurrentOrderStream(orderId)
-          .firstWhere((order) => order != null);
-    } else
-      mezDbgPrint(
-          "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ] NO RACING CONDITION HAPPEND ! ");
+          .firstWhere((Order? order) => order != null);
+    }
   }
 
 //itemviewscreen
-  void checkoutActionButton() async {
+  Future<void> checkoutActionButton() async {
     if (nbClicks == 0) {
-      mezDbgPrint("Called : checkoutActionButton : DdResult ($ddResult}");
       if (orderToLocation != null) {
         setState(() {
           _clickedOrderNow = true;
         });
-        controller.cart.value.toLocation = orderToLocation;
-        controller.cart.value.notes = textcontoller.text;
-        mezDbgPrint(
-            "@ssss@ OOOORRRDDEEEEER :: ${controller.cart.value.toFirebaseFormattedJson().toString()}");
-        //     controller.cart.value.restaurant!.id = "6Hr3Hc2hkkZa7LX7slnFo3zOTdxx";
+        _restaurantController.cart.value.toLocation = orderToLocation;
+        _restaurantController.cart.value.notes = _textEditingController.text;
 
-        var response = await controller.checkout();
+        final ServerResponse _serverResponse =
+            await _restaurantController.checkout();
 
-        if (response.success) {
-          await avoidCheckoutRaceCondition(response.data["orderId"]);
+        if (_serverResponse.success) {
+          await avoidCheckoutRaceCondition(_serverResponse.data["orderId"]);
 
-          controller.clearCart();
           popEverythingAndNavigateTo(
-              getRestaurantOrderRoute(response.data["orderId"]));
+              getRestaurantOrderRoute(_serverResponse.data["orderId"]));
+          //  _restaurantController.clearCart();
         } else {
-          print(response);
-          if (response.errorCode == "serverError") {
+          print(_serverResponse);
+          if (_serverResponse.errorCode == "serverError") {
             // do something
-          } else if (response.errorCode == "inMoreThanThreeOrders") {
+          } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
             // do something
-          } else if (response.errorCode == "restaurantClosed") {
+          } else if (_serverResponse.errorCode == "restaurantClosed") {
             // do something
           } else {
             // do something
@@ -181,33 +196,5 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       }
     }
     nbClicks++;
-  }
-
-  bool checkRestaurantAvailability({Schedule? schedule}) {
-    var dayNane = DateFormat('EEEE').format(DateTime.now());
-
-    //var xx = DateFormat.jm().format(DateFormat("hh:mm a").parse("9:00 AM"));
-    var x = DateTime.now();
-
-    if (schedule != null) {
-      bool isOpen = false;
-      schedule.openHours.forEach((key, value) {
-        if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
-          var dateOfStart =
-              DateTime(x.year, x.month, x.day, value.from[0], value.from[1]);
-          var dateOfClose =
-              DateTime(x.year, x.month, x.day, value.to[0], value.to[1]);
-          mezDbgPrint(dateOfStart.toString());
-          mezDbgPrint(dateOfClose.toString());
-          if (dateOfStart.isBefore(x) && dateOfClose.isAfter(x)) {
-            mezDbgPrint("Today is $dayNane");
-            isOpen = true;
-          }
-        }
-      });
-      return isOpen;
-    } else {
-      return true;
-    }
   }
 }

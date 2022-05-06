@@ -56,7 +56,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
 
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
-    listenForLocationPermissions();
+    // listenForLocationPermissions();
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             deliveryDriverNotificationsNode(userId),
@@ -64,19 +64,20 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
     super.initState();
   }
 
-  void listenForLocationPermissions() {
-    _locationStreamSub?.cancel();
-    _locationStreamSub = Get.find<LocationController>().locationPermissionStream
-        // .distinct()
-        .listen((locationPermission) {
-      if (locationPermission == false &&
-          Get.currentRoute != kLocationPermissionPage) {
-        Get.toNamed(kLocationPermissionPage);
-      }
-    });
-  }
+  // void listenForLocationPermissions() {
+  //   _locationStreamSub?.cancel();
+  //   _locationStreamSub = Get.find<LocationController>().locationPermissionStream
+  //       // .distinct()
+  //       .listen((locationPermission) {
+  //     if (locationPermission == false &&
+  //         Get.currentRoute != kLocationPermissionPage) {
+  //       Get.toNamed(kLocationPermissionPage,
+  //           arguments: {"withBackground": true});
+  //     }
+  //   });
+  // }
 
-  void handleState(DeliveryDriverState? state) async {
+  void handleState(DeliveryDriverState? state) {
     mezDbgPrint(state);
     if (state != null) {
       // mezDbgPrint("Current order ====> ${state.currentOrder}");

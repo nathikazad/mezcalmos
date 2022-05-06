@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // getX
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/pages/AppNeedsUpdated.dart';
+import 'package:mezcalmos/Shared/pages/AppNeedsUpdateScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
-import 'package:mezcalmos/Shared/pages/LocationPermissionScreen.dart';
+import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
-import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
@@ -36,45 +35,65 @@ const String kPickLocation = "/pick_location";
 
 String getMessagesRoute(
     {required String chatId,
+    String? orderLink,
     String? orderId,
     ParticipantType recipientType = ParticipantType.Customer,
     String? recipientId}) {
   String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId);
+
   if (recipientId != null)
     mainUrl += "?recipientId=$recipientId";
   else
     mainUrl += "?recipientType=${recipientType.toFirebaseFormattedString()}";
+  if (orderLink != null) mainUrl += "&orderLink=$orderLink";
   if (orderId != null) mainUrl += "&orderId=$orderId";
   return mainUrl;
 }
 
-void popEverythingAndNavigateTo(route, {args}) {
+void popEverythingAndNavigateTo(
+  route, {
+  args,
+}) {
   popUntilAndNavigateTo(kHomeRoute, route, args: args);
 }
 
-void popUntilAndNavigateTo(untilRoute, toRoute, {args}) {
-  Get.offNamedUntil(toRoute, (Route<dynamic> route) {
-    return (route.settings.name == untilRoute);
-  }, arguments: args);
+void popUntilAndNavigateTo(
+  untilRoute,
+  toRoute, {
+  args,
+}) {
+  Get.offNamedUntil<void>(
+    toRoute,
+    (Route<dynamic> route) {
+      return (route.settings.name == untilRoute);
+    },
+    arguments: args,
+  );
 }
 
 // GetX based Router (For navigating)
 class SharedRouter {
   static List<GetPage> sharedRoutes = [
     GetPage(name: kUserProfile, page: () => UserProfile()),
-    GetPage(name: kAppNeedsUpdate, page: () => AppNeedsUpdated()),
+    GetPage(name: kAppNeedsUpdate, page: () => AppNeedsUpdateScreen()),
+    // GetPage(name: kInAppReview, page: () => InAppReviewPage()),
     GetPage(name: kWrapperRoute, page: () => Wrapper()),
     GetPage(name: kSplashRoute, page: () => SplashScreen()),
     GetPage(
-        name: kSignInRouteRequired,
-        page: () => SignIn(mode: SignInMode.RequiredSignIn)),
+      name: kSignInRouteRequired,
+      page: () => SignIn(mode: SignInMode.RequiredSignIn),
+    ),
     GetPage(
-        name: kSignInRouteOptional,
-        page: () => SignIn(
-              mode: SignInMode.OptionalSignIn,
-            )),
+      name: kSignInRouteOptional,
+      page: () => SignIn(
+        mode: SignInMode.OptionalSignIn,
+      ),
+    ),
     GetPage(name: kOtpRoute, page: () => PhoneNumberScreen()),
-    GetPage(name: kOtpConfirmRoute, page: () => OtpConfirmationScreen()),
+    GetPage(
+      name: kOtpConfirmRoute,
+      page: () => OtpConfirmationScreen(),
+    ),
     GetPage(
       name: kMessagesRoute,
       page: () => MessagingScreen(),
@@ -82,12 +101,18 @@ class SharedRouter {
       transitionDuration: Duration(milliseconds: 500),
       // customTransition:
     ),
-    GetPage(name: kUnauthorizedRoute, page: () => UnauthorizedScreen()),
     GetPage(
-        name: kLocationPermissionPage, page: () => LocationPermissionScreen()),
+      name: kUnauthorizedRoute,
+      page: () => UnauthorizedScreen(),
+    ),
     GetPage(
-        name: kNoInternetConnectionPage,
-        page: () => NoInternetConnectionScreen()),
+      name: kLocationPermissionPage,
+      page: () => LocationPermissionScreen(),
+    ),
+
+    // GetPage(
+    //     name: kNoInternetConnectionPage,
+    //     page: () => NoInternetConnectionScreen()),
     GetPage(name: kNotificationsRoute, page: () => ViewNotifications()),
     GetPage(
         name: kPickLocation,

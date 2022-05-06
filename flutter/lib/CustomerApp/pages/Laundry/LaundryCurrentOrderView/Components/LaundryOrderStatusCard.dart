@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -23,7 +24,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
     final TextTheme txt = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Card(
           child: Container(
             width: double.infinity,
@@ -43,19 +44,20 @@ class LaundryOrderStatusCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 messageButton(context),
               ],
             ),
           ),
         ),
         Container(
-            margin: EdgeInsets.all(5),
-            alignment: Alignment.center,
-            child: Text(
-              getOrderHelperText(order.status),
-              textAlign: TextAlign.center,
-            ))
+          margin: EdgeInsets.all(5),
+          alignment: Alignment.center,
+          child: Text(
+            getOrderHelperText(order.status),
+            textAlign: TextAlign.center,
+          ),
+        ),
       ],
     );
   }
@@ -66,14 +68,14 @@ class LaundryOrderStatusCard extends StatelessWidget {
       shape: CircleBorder(),
       child: InkWell(
         onTap: () {
-          Get.toNamed(getMessagesRoute(
+          Get.toNamed<void>(getMessagesRoute(
               orderId: order.orderId,
               chatId: order.orderId,
-              recipientType: ParticipantType.Laundry));
+              recipientType: ParticipantType.DeliveryAdmin));
         },
         customBorder: CircleBorder(),
         child: Stack(
-          children: [
+          children: <Widget>[
             Container(
               margin: EdgeInsets.all(12),
               child: Icon(
@@ -81,24 +83,24 @@ class LaundryOrderStatusCard extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            // Obx(
-            //   () => Get.find<OrderController>()
-            //           .orderHaveNewMessageNotifications(order.orderId)
-            //       ? Positioned(
-            //           left: 27,
-            //           top: 10,
-            //           child: Container(
-            //             width: 13,
-            //             height: 13,
-            //             decoration: BoxDecoration(
-            //                 borderRadius: BorderRadius.circular(10),
-            //                 border: Border.all(
-            //                     color: const Color(0xfff6efff), width: 2),
-            //                 color: const Color(0xffff0000)),
-            //           ),
-            //         )
-            //       : Container(),
-            // )
+            Obx(
+              () => Get.find<OrderController>()
+                      .orderHaveNewMessageNotifications(order.orderId)
+                  ? Positioned(
+                      left: 0,
+                      top: 0,
+                      child: Container(
+                        width: 13,
+                        height: 13,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: const Color(0xfff6efff), width: 2),
+                            color: const Color(0xffff0000)),
+                      ),
+                    )
+                  : Container(),
+            )
           ],
         ),
       ),

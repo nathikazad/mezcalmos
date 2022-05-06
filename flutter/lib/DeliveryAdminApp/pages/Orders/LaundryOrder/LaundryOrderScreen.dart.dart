@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -40,38 +41,52 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   ///--------------- Controllers ------------------------//
 
   /// ------------------ variables ------------------//
-  Rxn<LaundryOrder> order = Rxn();
+  Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
 
   late String orderId;
   Rx<bool> hasNewMessage = false.obs;
-  StreamSubscription? _orderListener;
+  StreamSubscription<dynamic>? _orderListener;
 
   /// ------------------ variables ------------------//
   DeliveryDriverUserInfo? driver;
+
+  /// DeliveryDriverUserInfoAndUpdateStatus
+  ValueNotifier<DeliveryDriverUserInfoAndUpdateStatus>
+      _deliveryDriverUserInfoAndUpdateStatusNotifier =
+      ValueNotifier<DeliveryDriverUserInfoAndUpdateStatus>(
+    DeliveryDriverUserInfoAndUpdateStatus(),
+  );
+
   @override
   void initState() {
     super.initState();
     mezDbgPrint("Laaaaaaauuuuuuuuuundryyyy screeennnnnnnnnn");
     orderId = Get.parameters['orderId']!;
-    controller.clearOrderNotifications(orderId);
+    controller.clearNewOrderNotifications();
     order.value = controller.getOrder(orderId);
     if (order.value == null) {
-      Get.back();
+      Get.back<void>();
     } else {
-      _orderListener = controller
-          .getCurrentOrderStream(orderId)
-          .listen((LaundryOrder? newOrder) {
-        if (newOrder != null) {
-          order.value = controller.getOrder(orderId);
+      _orderListener = controller.getCurrentOrderStream(orderId).listen(
+        (LaundryOrder? newOrder) {
+          if (newOrder != null) {
+            order.value = controller.getOrder(orderId);
 
-          if (order.value?.dropoffDriver != null) {
-            driver = order.value!.dropoffDriver;
+            if (order.value?.dropoffDriver != null) {
+              driver = order.value!.dropoffDriver;
+            }
+          } else {
+            //    Get.back();
           }
-        } else {
-          //    Get.back();
-        }
-      });
+        },
+      );
     }
+
+    /// Get Right driver
+    _deliveryDriverUserInfoAndUpdateStatusNotifier.value =
+        DeliveryDriverUserInfoAndUpdateStatus(
+      deliveryDriverUserInfo: getRightDriver(),
+    );
   }
 
   @override
@@ -83,6 +98,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    /// TextTheme
     final TextTheme txt = Theme.of(context).textTheme;
     return Obx(
       () => Scaffold(
@@ -93,25 +109,93 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   LaundryOrderStatusCard(
                     order: order.value!,
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
 
                   //   if (order.value?.inProcess() ?? false)
 
-                  DriverCard(
-                    driver: getRightDriver(),
-                    order: order.value!,
-                    callBack: (DeliveryDriver? newDriver) {
-                      deliveryDriverController.assignDeliveryDriver(
-                          deliveryDriverId: newDriver!.deliveryDriverId,
-                          orderId: order.value!.orderId,
-                          orderType: OrderType.Laundry,
-                          deliveryDriverType: getRightDeliveryDriverType());
+                  ValueListenableBuilder<DeliveryDriverUserInfoAndUpdateStatus>(
+                    valueListenable:
+                        _deliveryDriverUserInfoAndUpdateStatusNotifier,
+                    builder: (
+                      _,
+                      DeliveryDriverUserInfoAndUpdateStatus
+                          deliveryDriverUserInfo,
+                      __,
+                    ) {
+                      return DriverCard(
+                        driver: (order.value!.getCurrentPhase() ==
+                                LaundryOrderPhase.Pickup)
+                            ? order.value!.pickupDriver
+                            : order.value!.dropoffDriver,
+                        order: order.value!,
+                        driverUserInfoAndUpdateStatus: deliveryDriverUserInfo
+                            .driverUserInfoAndUpdateStatus,
+                        assignDriverCallback: ({
+                          required DeliveryDriver deliveryDriver,
+                          required bool changeDriver,
+                        }) async {
+                          /// Check That The driver has been changed!
+                          if (deliveryDriverUserInfo.deliveryDriverUserInfo !=
+                                  null &&
+                              (deliveryDriver.driverInfo.id !=
+                                  deliveryDriverUserInfo
+                                      .deliveryDriverUserInfo!.id)) {
+                            /// Uploading
+                            deliveryDriverUserInfo
+                                    .driverUserInfoAndUpdateStatus =
+                                DriverUserInfoAndUpdateStatus.uploading;
+
+                            /// notifyListeners
+                            _deliveryDriverUserInfoAndUpdateStatusNotifier
+                                .notifyListeners();
+                          }
+
+                          /// assignDeliveryDriver
+                          final ServerResponse serverResponse =
+                              await deliveryDriverController
+                                  .assignDeliveryDriver(
+                            deliveryDriverId: deliveryDriver.deliveryDriverId,
+                            orderId: order.value!.orderId,
+                            orderType: OrderType.Laundry,
+                            deliveryDriverType: getRightDeliveryDriverType(),
+                            changeDriver: changeDriver,
+                          );
+                          mezDbgPrint(
+                              "mmmmmmmmmmmmmmmmzzzzzzzzzz $changeDriver");
+
+                          if (serverResponse.status == ResponseStatus.Success) {
+                            /// Set the new driver
+                            _deliveryDriverUserInfoAndUpdateStatusNotifier
+                                .value = DeliveryDriverUserInfoAndUpdateStatus(
+                              deliveryDriverUserInfo: deliveryDriver.driverInfo,
+                              driverUserInfoAndUpdateStatus:
+                                  DriverUserInfoAndUpdateStatus.staring,
+                            );
+
+                            /// Them Show The notification
+
+                          } else {
+                            /// Error
+                            Get.snackbar(
+                              'Ops!',
+                              'Something went wrong, Please try to edit the driver again!',
+                            );
+
+                            /// Change status to staring
+                            deliveryDriverUserInfo
+                                    .driverUserInfoAndUpdateStatus =
+                                DriverUserInfoAndUpdateStatus.staring;
+
+                            /// notifyListeners
+                            _deliveryDriverUserInfoAndUpdateStatusNotifier
+                                .notifyListeners();
+                          }
+                        },
+                      );
                     },
                   ),
 
@@ -141,14 +225,10 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                   LaundryOrderSummary(
                     order: order.value!,
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                   deliveryLocation(txt, context),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  orderNotes(txt)
+                  const SizedBox(height: 10),
+                  orderNotes(txt),
                 ],
               ),
             ),
@@ -160,7 +240,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   Widget orderNotes(TextTheme txt) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Container(
           margin: const EdgeInsets.all(8),
           child: Text(

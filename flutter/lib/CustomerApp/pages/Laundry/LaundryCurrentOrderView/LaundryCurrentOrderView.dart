@@ -32,9 +32,9 @@ class LaundryCurrentOrderView extends StatefulWidget {
 
 class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   late String orderId;
-  Rxn<LaundryOrder> order = Rxn();
-  StreamSubscription? _orderListener;
-  OrderController controller = Get.find<OrderController>();
+  Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
+  StreamSubscription<dynamic>? _orderListener;
+  final OrderController controller = Get.find<OrderController>();
   final LocationPickerController locationPickerController =
       LocationPickerController();
 
@@ -48,13 +48,13 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       orderId = Get.parameters['orderId']!;
     } else {
       mezDbgPrint("Order id null from the parameters ######");
-      Get.back();
+      Get.back<void>();
     }
-
+    controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as LaundryOrder?;
     if (order.value == null) {
       mezDbgPrint("Order null");
-      Get.back();
+      Get.back<void>();
     } else {
       if (order.value!.inProcess()) {
         _orderListener =
@@ -103,10 +103,8 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
+                    children: <Widget>[
+                      const SizedBox(height: 20),
                       LaundryOrderStatusCard(order: order.value!),
                       SizedBox(
                         height: 20,
@@ -122,23 +120,17 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                       if (order.value!.estimatedDeliveryTime != null)
                         _orderEstimatedDeliveryTime(),
                       LaundryOrderNoteComponent(order: order.value!),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       OrderSummaryComponent(
                         order: order.value!,
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       LaundryOrderFooterCard(order: order.value!)
                     ],
                   ),
                 ),
               )
-            : Center(
-                child: MezLogoAnimation(),
-              ),
+            : Center(child: MezLogoAnimation()),
       ),
     );
   }

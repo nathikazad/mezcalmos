@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/components/RequestTaxiScreenWidgets.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/controllers/RequestTaxiController.dart';
@@ -9,54 +8,68 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiR
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class RequestTaxiScreen extends StatefulWidget {
+  const RequestTaxiScreen({Key? key}) : super(key: key);
+
   @override
   _RequestTaxiScreenState createState() => _RequestTaxiScreenState();
 }
 
 class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
+  /// RequestTaxiController
   final RequestTaxiController viewController = RequestTaxiController();
+
+  /// RequestTaxiScreenWidgets
   late final RequestTaxiScreenWidgets viewWidgets;
   bool lockOnTaxiRequest = false;
+
   @override
   void initState() {
+    // If from or to not picked :
+    //    - User is free to Wonder and move around the map.
+    // If from and to are picked:
+    //    - We Fit All everything.
+    customMapLock();
     viewWidgets =
         RequestTaxiScreenWidgets(requestTaxiController: viewController);
-    //TODO:FIX
-    // fetch first without waiting 10seconds.
-    // viewController.startFetchingOnlineDrivers();
-    // // then keep it periodic each 10s
-    // viewController.timer = Timer.periodic(Duration(seconds: 10), (Timer timer) {
-    //   viewController.startFetchingOnlineDrivers();
-    // });
 
     if (Get.arguments != null) {
       // we re-create the TaxiRequest passed along args
       viewController.initiateTaxiOrderReCreation(Get.arguments as TaxiRequest);
     } else {
       // when no args passed we simply initialte the view and map with current user's loc.
-      viewController.initiateViewAndMapWithCurrentLocation();
+      viewController.initMapAndStartFetchingOnlineDrivers();
     }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar:
-          mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () => Get.back()),
+      appBar: mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: () => Get.back<void>(),
+      ),
       backgroundColor: Colors.white,
-      body: Container(
-        color: Colors.white,
-        child: Stack(
+      body: Obx(
+        () => Container(
+          color: Colors.white,
+          child: Stack(
             clipBehavior: Clip.none,
             alignment: Alignment.topCenter,
-            children: [
+            children: <Widget>[
               Container(
                 width: Get.width,
                 decoration: BoxDecoration(
@@ -73,7 +86,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                     notifyParentOfLocationFinalized:
                         viewController.updateModelAndMaybeCalculateRoute,
                     notifyParentOfConfirm: (Location? _) async {
-                      if (GetStorage().read(getxLmodeKey) == "prod" &&
+                      if (getAppLaunchMode() == AppLaunchMode.prod &&
                           Get.find<AuthController>().fireAuthUser?.uid ==
                               testUserIdInProd) {
                         MezSnackbar("Oops",
@@ -89,29 +102,36 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                     }),
               ),
               // --- <>
-              Obx(
-                () => LocationSearchBar(
-                    request: viewController.taxiRequest.value,
-                    locationSearchBarController:
-                        viewController.locationSearchBarController,
-                    newLocationChosenEvent:
-                        viewController.updateModelAndHandoffToLocationPicker),
+              LocationSearchBar(
+                request: viewController.taxiRequest.value,
+                locationSearchBarController:
+                    viewController.locationSearchBarController,
+                onClear: () {
+                  // we set that back to false
+                  viewController.locationPickerController.periodicRerendering
+                      .value = false;
+                },
+                newLocationChosenEvent:
+                    viewController.updateModelAndHandoffToLocationPicker,
               ),
+
+              // from , to
               viewController.pickedFromTo.value
-                  // from , to
                   ? TaxiReqBottomBar(
-                      taxiRequest: viewController.taxiRequest.value,
+                      taxiRequest: viewController.taxiRequest,
                     )
                   : SizedBox(),
               if (viewController.pickedFromTo.value) viewWidgets.getToolTip(),
-            ]),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  @override
-  void dispose() {
-    viewController.dispose();
-    super.dispose();
+  void customMapLock() {
+    viewController.locationPickerController.myLocationButtonEnabled.value =
+        false;
+    viewController.locationPickerController.recenterButtonEnabled.value = false;
   }
 }

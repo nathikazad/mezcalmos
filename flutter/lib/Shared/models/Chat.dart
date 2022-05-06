@@ -15,7 +15,7 @@ enum ParticipantType {
 
 extension ParseParticipantTypeToString on ParticipantType {
   String toFirebaseFormattedString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -24,8 +24,22 @@ extension ParseStringToParticipantType on String {
   ParticipantType toParticipantType() {
     mezDbgPrint(ParticipantType.values);
     mezDbgPrint(this);
-    return ParticipantType.values
-        .firstWhere((e) => e.toFirebaseFormattedString() == this);
+    return ParticipantType.values.firstWhere(
+        (ParticipantType e) => e.toFirebaseFormattedString() == this);
+  }
+
+  ParticipantType toSenderType() {
+    final String str = toString().split('.').last;
+    switch (str) {
+      case "DeliveryDriver":
+        return ParticipantType.DeliveryDriver;
+      case "DeliveryAdmin":
+        return ParticipantType.DeliveryAdmin;
+      case "Customer":
+        return ParticipantType.Customer;
+      default:
+        return ParticipantType.Customer;
+    }
   }
 }
 
@@ -48,8 +62,8 @@ class Message {
   late String userId;
   Message(message, timestamp, userId) {
     this.message = message;
-    this.timeStamp = timestamp;
-    this.formatedTime = timestamp == null
+    timeStamp = timestamp;
+    formatedTime = timestamp == null
         ? null
         : DateFormat('HH:mm').format(timestamp).toString();
     this.userId = userId;
@@ -68,10 +82,10 @@ class Chat {
       this.orderId);
 
   Chat.fromJson(key, _value) {
-    Map<String, dynamic> value = new Map<String, dynamic>.from(_value);
+    final Map<String, dynamic> value = new Map<String, dynamic>.from(_value);
 
-    Map<String, Participant> _participants = {};
-    List<Message> _messages = [];
+    final Map<String, Participant> _participants = {};
+    final List<Message> _messages = [];
 
     value['participants']?.forEach((key, p) {
       _participants[key] = Participant(
@@ -90,19 +104,19 @@ class Chat {
       }
     });
 
-    _messages.sort((after, before) {
+    _messages.sort((Message after, Message before) {
       if (before.timeStamp == null || after.timeStamp == null)
         return 0;
       else
         return before.timeStamp!.compareTo(after.timeStamp!);
     });
 
-    this.chatType = value['chatType'];
-    this.chatId = key;
-    this.orderId = value['orderId'];
-    this.orderType = value['orderType']?.toString().toOrderType();
-    this.participants = _participants;
-    this.messages = _messages;
+    chatType = value['chatType'];
+    chatId = key;
+    orderId = value['orderId'];
+    orderType = value['orderType']?.toString().toOrderType();
+    participants = _participants;
+    messages = _messages;
   }
 
   // Added for Debugging Perposes - Don't delete for now

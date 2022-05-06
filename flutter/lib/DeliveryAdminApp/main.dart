@@ -16,15 +16,19 @@ Function signOutCallback = AuthHooks.onSignOutHook;
 List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 void main() {
-  runMainGuarded(() => runApp(
-        Sizer(builder: (context, orientation, deviceType) {
+  runMainGuarded(
+    () => runApp(
+      Sizer(
+        builder: (_, __, ___) {
           return StartingPoint(
-              appType: AppType.DeliveryAdminApp,
-              appTheme: DeliveryAdminTheme.lightTheme,
-              signInCallback: signInCallback,
-              signOutCallback: signOutCallback,
-              routes: routes,
-              locationOn: false);
-        }),
-      ));
+            appType: AppType.DeliveryAdminApp,
+            appTheme: DeliveryAdminTheme.lightTheme,
+            signInCallback: signInCallback,
+            signOutCallback: signOutCallback,
+            routes: routes,
+          );
+        },
+      ),
+    ),
+  );
 }

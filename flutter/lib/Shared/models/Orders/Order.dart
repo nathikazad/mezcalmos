@@ -1,8 +1,6 @@
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
@@ -17,62 +15,65 @@ abstract class Order {
   Location to;
   num cost;
   RouteInformation? routeInformation;
-  Order(
-      {required this.orderId,
-      required this.orderType,
-      this.serviceProviderId,
-      required this.paymentType,
-      required this.orderTime,
-      required this.cost,
-      required this.customer,
-      this.serviceProvider,
-      required this.to,
-      this.routeInformation});
+
+  Order({
+    required this.orderId,
+    required this.orderType,
+    this.serviceProviderId,
+    required this.paymentType,
+    required this.orderTime,
+    required this.cost,
+    required this.customer,
+    this.serviceProvider,
+    required this.to,
+    this.routeInformation,
+  });
+
   bool inProcess();
+
   bool isCanceled();
 
-  String driverDatabaseAddress(){
+  String driverDatabaseAddress() {
     switch (orderType) {
       case OrderType.Laundry:
-          switch ((this as LaundryOrder).getCurrentPhase()) {
-            case LaundryOrderPhase.Dropoff:
-                return "dropoffDriver";      
-            case LaundryOrderPhase.Pickup:
-                return "pickupDriver";
-            case LaundryOrderPhase.Neither:
-              return "dropoffDriver";
-          }
+        switch ((this as LaundryOrder).getCurrentPhase()) {
+          case LaundryOrderPhase.Dropoff:
+            return "dropoffDriver";
+          case LaundryOrderPhase.Pickup:
+            return "pickupDriver";
+          case LaundryOrderPhase.Neither:
+            return "dropoffDriver";
+        }
       case OrderType.Restaurant:
         return "dropoffDriver";
       default:
         return "driver";
     }
   }
-  // Order.orderFromData(dynamic orderId, dynamic orderData){
+// Order.orderFromData(dynamic orderId, dynamic orderData){
 
 }
 
+// ignore: constant_identifier_names
 enum OrderType { Taxi, Restaurant, Laundry, Water }
-
-
 
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 
   String toPlural() {
     switch (this) {
-    case OrderType.Taxi:
-      return "taxis";
-    case OrderType.Restaurant:
-      return "restaurants";
-    case OrderType.Laundry:
-      return "laundries";
-    case OrderType.Water:
-      return "waters";
-  }
+      case OrderType.Taxi:
+        return "taxis";
+      case OrderType.Restaurant:
+        return "restaurants";
+      case OrderType.Laundry:
+        return "laundries";
+      case OrderType.Water:
+        return "waters";
+    }
   }
 }
 
@@ -95,7 +96,7 @@ extension ParsePaymentTypeToString on PaymentType {
 extension ParseStringToPaymentType on String {
   PaymentType toPaymentType() {
     return PaymentType.values.firstWhere(
-        (e) => e.toFirebaseFormatString().toLowerCase() == this.toLowerCase());
+        (e) => e.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -108,7 +109,7 @@ abstract class DeliverableOrder extends Order {
       required PaymentType paymentType,
       required DateTime orderTime,
       required num cost,
-      UserInfo? serviceProvider,
+      ServiceInfo? serviceProvider,
       required UserInfo customer,
       required Location to,
       required OrderType orderType,
@@ -137,13 +138,13 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required PaymentType paymentType,
       required DateTime orderTime,
       required num cost,
-      UserInfo? serviceProvider,
+      ServiceInfo? serviceProvider,
       required UserInfo customer,
       required Location to,
       required OrderType orderType,
       RouteInformation? routeInformation,
       DeliveryDriverUserInfo? dropoffDriver,
-      required dropOffDriverChatId,
+      required String? dropOffDriverChatId,
       this.pickupDriver,
       required this.pickupDriverChatId})
       : super(

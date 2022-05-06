@@ -39,21 +39,34 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-            key: Get.find<SideMenuDrawerController>().getNewKey(),
-            drawer: MezSideMenu(),
-            backgroundColor: Colors.white,
-            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
-            body: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  // Header that has the title + ON-OFF toggler!
-                  viewHeader(),
-                  //the rest of the View Body
-                  viewBody()
-                ])));
+      onWillPop: () async => false,
+      child: Scaffold(
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
+        drawer: MezSideMenu(),
+        backgroundColor: Colors.white,
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: [
+          // InkWell(
+          //     customBorder: CircleBorder(),
+          //     onTap: () {
+          //       Get.toNamed(kNotificationsRoute);
+          //     },
+          //     child: Icon(
+          //       Ionicons.notifications,
+          //       color: Get.theme.primaryColorLight,
+          //     ))
+        ]),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            // Header that has the title + ON-OFF toggler!
+            viewHeader(),
+            //the rest of the View Body
+            viewBody()
+          ],
+        ),
+      ),
+    );
   }
 
   Widget viewHeader() {
@@ -257,7 +270,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
     );
   }
 
-  /// When there are no Orders in [controller.orders] we show this Widget
+  /// When there are no Orders in [mGoogleController.orders] we show this Widget
   Widget noOrdersScreen() {
     return Center(
         child: Column(

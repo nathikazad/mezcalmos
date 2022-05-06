@@ -1,16 +1,20 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/AppUpdate.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:new_version/new_version.dart' show VersionStatus;
 
 class Wrapper extends StatefulWidget {
   @override
@@ -20,60 +24,95 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   SettingsController settingsController = Get.find<SettingsController>();
   AuthController authController = Get.find<AuthController>();
-  // AppVersionController _appVersionController = Get.find<AppVersionController>();
-
+  AppVersionController? _appVersionController;
   late bool databaseUserLastSnapshot;
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  final LocationController _locationController = Get.find<LocationController>();
+  StreamSubscription<LocationPermissionsStatus>? locationStatusListener;
 
   @override
   void initState() {
-    Future.delayed(Duration.zero, () {
-      handleAuthStateChange(Get.find<AuthController>().fireAuthUser);
-      Get.find<AuthController>().authStateStream.listen((user) {
+    // this will execute first and much faster since it's a microtask.
+    Future<void>.microtask(() {
+      handleAuthStateChange(authController.fireAuthUser);
+      authController.authStateStream.listen((user) {
         handleAuthStateChange(user);
       });
-      // handleAppVersionUpdatesAndStartListener();
+    }).then((_) {
+      // only when we use location permissions
+      if (_locationController.locationType != LocationPermissionType.Null) {
+        startListeningOnLocationPermission();
+      }
+
+      // then check if we're in prod - check appUpdate
+      if (getAppLaunchMode() == AppLaunchMode.prod) {
+        // Create instance of our Singleton AappVersionController class.
+        _appVersionController = AppVersionController.instance(
+          onNewUpdateAvailable: _onNewUpdateAvailable,
+        );
+        // Delayed init of the appVersionController - that way we make sure that the NavigationStack is correct,
+        // Which makes it easy for us to push NeedUpdateScreen on top in case there is update.
+        Future<void>.delayed(Duration(seconds: 2), _appVersionController!.init);
+      }
     });
+
     super.initState();
   }
 
-  /// This parts Checks the snapshot at [AppVersionController.isNewVersionOut] if it is not null
-  ///
-  /// and then start a listener in case there there is updates.
-  // void handleAppVersionUpdatesAndStartListener() {
-  //   // first we check the snapshot
-  //   checkIfNotInUpdateScreenAndPush(_appVersionController.appVersionInfos.value)
-  //       .then((_) {
-  //     // this listenr is distinct by the way.
-  //     _appVersionController.appVersionInfos.stream.listen((updateType) async {
-  //       await checkIfNotInUpdateScreenAndPush(updateType);
-  //     });
-  //   });
-  // }
+  void startListeningOnLocationPermission() {
+    locationStatusListener = _locationController
+        .locationPermissionChecker()
+        .distinct()
+        .listen((LocationPermissionsStatus event) {
+      mezDbgPrint("Wrapper lvl => $event");
+      if (event != LocationPermissionsStatus.Ok) {
+        //  bool preventDuplicates = true (byDefault om GetX)
+        Future<void>.delayed(
+          Duration(milliseconds: 500),
+          () => Get.toNamed<void>(kLocationPermissionPage),
+        );
+      }
+    });
+  }
 
-  Future<void> checkIfNotInUpdateScreenAndPush(
-      AppUpdate? appVersionInfos) async {
-    bool _diff = appVersionInfos?.areLocalAndRemoteVersionsDiffrent() == true;
-    if (Get.currentRoute == kAppNeedsUpdate && !_diff) {
-      Get.back();
-    } else if (Get.currentRoute != kAppNeedsUpdate && _diff) {
-      await Get.toNamed(kAppNeedsUpdate);
+  @override
+  void dispose() {
+    _appVersionController?.dispose();
+    locationStatusListener?.cancel();
+    locationStatusListener = null;
+    super.dispose();
+  }
+
+  /// Called each time there is a new update.
+  void _onNewUpdateAvailable(UpdateType updateType, VersionStatus status) {
+    switch (updateType) {
+      case UpdateType.Null:
+      case UpdateType.Patches:
+        MezUpdaterDialog.show(
+          context: context,
+          onUpdateClicked: _appVersionController!.openStoreAppPage,
+        );
+        break;
+      default:
+        // Major/Minor - forcing the app to stay in AppNeedsUpdate
+        Get.toNamed<void>(
+          kAppNeedsUpdate,
+          arguments: <String, dynamic>{
+            "versionStatus": status,
+          },
+        );
     }
   }
 
-  void handleAuthStateChange(fireAuth.User? user) async {
+  void handleAuthStateChange(fireAuth.User? user) {
     // We should Priotorize the AppNeedsUpdate route to force users to update
     if (Get.currentRoute != kAppNeedsUpdate) {
       if (user == null) {
         if (AppType.CustomerApp == settingsController.appType) {
           // if (Get.currentRoute != kSignInRouteOptional) {
-          Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+          Get.offNamedUntil<void>(
+              kHomeRoute, ModalRoute.withName(kWrapperRoute));
         } else {
-          Get.offNamedUntil(
+          Get.offNamedUntil<void>(
               kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
         }
       } else {
@@ -131,11 +170,16 @@ class _WrapperState extends State<Wrapper> {
   }
 
   void checkIfSignInRouteOrRedirectToHome() {
+    if (authController.preserveNavigationStackAfterSignIn)
+      Get.until((Route<dynamic> route) =>
+          route.settings.name == kSignInRouteOptional);
+
     if (Get.currentRoute == kSignInRouteOptional) {
-      Get.back();
+      Get.back<void>();
     } else {
-      Get.offNamedUntil(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      Get.offNamedUntil<void>(kHomeRoute, ModalRoute.withName(kWrapperRoute));
     }
+    authController.preserveNavigationStackAfterSignIn = false;
   }
 
   @override

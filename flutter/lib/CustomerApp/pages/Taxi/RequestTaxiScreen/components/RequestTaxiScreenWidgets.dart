@@ -11,11 +11,14 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
 
 class RequestTaxiScreenWidgets {
   final RequestTaxiController requestTaxiController;
-  RequestTaxiScreenWidgets({required this.requestTaxiController});
+
+  RequestTaxiScreenWidgets({
+    required this.requestTaxiController,
+  });
 
   /// the hints  [MezToolTipHint] that are related to this view !
   List<MezToolTipHint> getHints() {
-    return [
+    return <MezToolTipHint>[
       MezToolTipHint(
         hintWidget: RidePriceControllHint(
           hintText: _i18n()['taxiRequestPriceTooltip'],
@@ -33,7 +36,9 @@ class RequestTaxiScreenWidgets {
     if (requestTaxiController.controller.numOfTimesToolTipShownToUser() <=
         nMaxTimesToShowTTipsOnCustomerApp)
       return MezToolTip(
-          hintWidgetsList: getHints(), applyCacheIncrementing: false);
+        hintWidgetsList: getHints(),
+        applyCacheIncrementing: false,
+      );
     else
       return SizedBox();
   }

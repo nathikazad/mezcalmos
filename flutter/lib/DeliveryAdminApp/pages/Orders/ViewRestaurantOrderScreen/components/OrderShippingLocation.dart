@@ -5,25 +5,22 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 Widget orderShippingLocation(Rxn<RestaurantOrder> order) {
   dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-          ['pages']
-  ['Orders']["ViewRestaurantOrderScreen"]["components"]["OrderShippingLocation"];
+          ['pages']['Orders']["ViewRestaurantOrderScreen"]["components"]
+      ["OrderShippingLocation"];
   return Column(
-    children: [
+    children: <Widget>[
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.centerLeft,
-        child: Text(
-            _i18n()['deliveryLocation'],
+        child: Text(_i18n()['deliveryLocation'],
             style: const TextStyle(
-                color: const Color(0xff000f1c),
+                color: Color(0xff000f1c),
                 fontFamily: "psb",
                 fontStyle: FontStyle.normal,
                 fontSize: 14.0),
             textAlign: TextAlign.left),
       ),
-      SizedBox(
-        height: 15,
-      ),
+      const SizedBox(height: 15),
       Container(
         alignment: Alignment.center,
         margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -33,19 +30,16 @@ Widget orderShippingLocation(Rxn<RestaurantOrder> order) {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4)),
           border: Border.all(color: const Color(0xffececec), width: 0.5),
-          color: const Color(0x80ffffff),
+          color: Colors.white,
         ),
         child: Container(
           alignment: Alignment.centerLeft,
           child: Text(order.value!.to.address,
-              style: const TextStyle(
-                  color: const Color(0xff000f1c), fontSize: 14.0),
+              style: const TextStyle(color: Color(0xff000f1c), fontSize: 14.0),
               textAlign: TextAlign.left),
         ),
       ),
-      SizedBox(
-        height: 30,
-      ),
+      const SizedBox(height: 30),
     ],
   );
 }

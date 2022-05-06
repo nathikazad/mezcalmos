@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/CounterOfferBottomSheet/CounterOfferPriceSetter.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/CounterOfferBottomSheet/CounterOfferSentBottomSheet.dart';
@@ -21,7 +18,7 @@ class IOrderViewWidgets {
   /// this holds the two Accept / Offer buttons.
   Positioned acceptAndOfferButtons() {
     return Positioned(
-      bottom: GetStorage().read(getxGmapBottomPaddingKey),
+      bottom: 10, // GetStorage().read(getxGmapBottomPaddingKey),
       left: 10,
       right: 10,
       child: Container(
@@ -88,9 +85,6 @@ class IOrderViewWidgets {
                     order: iOrderViewController.order.value!,
                     onCountOfferSent: (num priceOffered) =>
                         iOrderViewController.onCountOfferSent(priceOffered),
-                    onPriceChanged: (int price) {
-                      mezDbgPrint("@szzaaad@ new price ===> $price");
-                    },
                   )));
   }
 
@@ -145,7 +139,7 @@ class IOrderViewWidgets {
       return InkWell(
         onTap: () {
           iOrderViewController.submittedCounterOffer.value = false;
-          this.iOrderViewController.animatedSliderController.slideDown();
+          iOrderViewController.animatedSliderController.slideDown();
         },
         child: Container(
           height: Get.height,

@@ -4,6 +4,8 @@
 
 // =============================
 
+// ignore_for_file: constant_identifier_names
+
 import 'dart:async';
 import 'dart:io';
 
@@ -23,19 +25,24 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:package_info/package_info.dart';
+// import 'package:package_info/package_info.dart';
 //import 'package:package_info_plus/package_info_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sizer/sizer.dart' as Sizer;
 
 final ThemeData _defaultAppTheme = ThemeData(
-    primaryColor: Colors.white,
-    visualDensity: VisualDensity.adaptivePlatformDensity);
+  primaryColor: Colors.white,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+);
 
 class StartingPoint extends StatefulWidget {
   final AppType appType;
@@ -44,77 +51,103 @@ class StartingPoint extends StatefulWidget {
   final Function signOutCallback;
   final List<GetPage<dynamic>> routes;
   final List<SideMenuItem>? sideMenuItems;
-  final bool locationOn;
+  final LocationPermissionType locationPermissionType;
 
   ThemeData get appThemeGetter => appTheme ?? _defaultAppTheme;
 
   //  Sideminu
-  const StartingPoint(
-      {required this.appType,
-      this.appTheme = null,
-      required this.signInCallback,
-      required this.signOutCallback,
-      required this.routes,
-      this.sideMenuItems,
-      this.locationOn = true});
+  const StartingPoint({
+    required this.appType,
+    this.appTheme = null,
+    required this.signInCallback,
+    required this.signOutCallback,
+    required this.routes,
+    this.sideMenuItems,
+    this.locationPermissionType = LocationPermissionType.Null,
+  });
 
   @override
   _StartingPointState createState() => _StartingPointState();
 }
 
 class _StartingPointState extends State<StartingPoint> {
-  bool _initialized = false;
-  bool _error = false;
-
   _StartingPointState();
+  late final AppLaunchMode _launchMode;
+
+  /// _initialized
+  bool _initialized = false;
+
+  /// _error
+  bool _error = false;
 
   @override
   void initState() {
     super.initState();
+
     WidgetsFlutterBinding.ensureInitialized();
+    const String _tmpLmode =
+        String.fromEnvironment('LMODE', defaultValue: "prod");
+    _launchMode = _tmpLmode.toLaunchMode();
+
+    /// initializeSetup
     initializeSetup();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations(<DeviceOrientation>[
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]);
+    SystemChrome.setPreferredOrientations(
+      <DeviceOrientation>[
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown
+      ],
+    );
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    );
     if (_error) {
       MezSnackbar("Error", "Server connection failed !");
       return Sizer.Sizer(
-          builder: (BuildContext context, Orientation orientation,
-                  Sizer.DeviceType deviceType) =>
-              GetMaterialApp(
-                debugShowCheckedModeBanner: false,
-                home: Scaffold(
-                  body: Center(
-                    child: Icon(Icons.signal_wifi_bad,
-                        color: Colors.red.shade200,
-                        size:
-                            getSizeRelativeToScreen(50, Get.height, Get.width)),
-                  ),
-                ),
-              ));
+        builder: (
+          BuildContext context,
+          Orientation orientation,
+          Sizer.DeviceType deviceType,
+        ) =>
+            GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            body: Center(
+              child: Icon(
+                Icons.signal_wifi_bad,
+                color: Colors.red.shade200,
+                size: getSizeRelativeToScreen(50, Get.height, Get.width),
+              ),
+            ),
+          ),
+        ),
+      );
     }
     if (!_initialized) {
       return Sizer.Sizer(
-          builder: (BuildContext context, Orientation orientation,
-                  Sizer.DeviceType deviceType) =>
-              SplashScreen());
+        builder: (BuildContext context, Orientation orientation,
+                Sizer.DeviceType deviceType) =>
+            SplashScreen(),
+      );
     } else {
       mezDbgPrint(
-          "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}");
+        "====> PreviewMode ===> ${GetStorage().read<bool?>('previewMode')}",
+      );
       return Sizer.Sizer(
-          builder: (BuildContext context, Orientation orientation,
-                  Sizer.DeviceType deviceType) =>
-              mainApp(
-                  appType: widget.appType,
-                  appTheme: widget.appThemeGetter,
-                  routes: widget.routes));
+        builder: (
+          BuildContext context,
+          Orientation orientation,
+          Sizer.DeviceType deviceType,
+        ) =>
+            mainApp(
+          appType: widget.appType,
+          appTheme: widget.appThemeGetter,
+          routes: widget.routes,
+        ),
+      );
     }
   }
 
@@ -148,8 +181,8 @@ class _StartingPointState extends State<StartingPoint> {
   Future<void> setupFirebase() async {
     const String _host =
         String.fromEnvironment('HOST', defaultValue: "http://127.0.0.1");
-    const String _launchMode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
+    // final AppLaunchMode _launchMode =
+    //     String.fromEnvironment('LMODE', defaultValue: "prod").toLaunchMode();
     mezDbgPrint('mode  -> $_launchMode');
     mezDbgPrint('host  -> $_host');
 
@@ -157,9 +190,9 @@ class _StartingPointState extends State<StartingPoint> {
     mezDbgPrint("[+] App Initialized under Name ${_app.name} .");
     late FirebaseDatabase firebaseDb;
 
-    if (_launchMode == "prod") {
+    if (_launchMode == AppLaunchMode.prod) {
       firebaseDb = FirebaseDatabase(app: _app);
-    } else if (_launchMode == "dev") {
+    } else if (_launchMode == AppLaunchMode.dev) {
       mezDbgPrint("DEV MODE");
       firebaseDb = FirebaseDatabase(app: _app, databaseURL: _host + dbRoot);
       await FirebaseDatabase.instance.setPersistenceEnabled(true);
@@ -167,25 +200,26 @@ class _StartingPointState extends State<StartingPoint> {
       await FirebaseAuth.instance.useEmulator(_host + authPort);
       FirebaseFunctions.instance
           .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
-    } else if (_launchMode == "stage") {
+    } else if (_launchMode == AppLaunchMode.stage) {
       mezDbgPrint("[+] Entered Staging check ----.");
       firebaseDb = FirebaseDatabase(app: _app, databaseURL: stagingDb);
     } else {
       throw Exception("Invalid Launch Mode");
     }
 
-    Get.put(FirebaseDb(
+    Get.put(
+      FirebaseDb(
         dbUrl: _host + dbRoot,
         firebaseDatabase: firebaseDb,
-        firebaseApp: _app));
+        firebaseApp: _app,
+      ),
+    );
   }
 
   Future<void> setGlobalVariables() async {
-    const String _launchMode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
     if (await GetStorage.init()) {
       mezDbgPrint("[ GET STORAGE ] INITIALIZED !");
-      await GetStorage().write(getxLmodeKey, _launchMode);
+      await GetStorage().write(getxLmodeKey, _launchMode.toShortString());
       // previewMode
       const bool _isPreviewMode = bool.hasEnvironment('PREVIEW');
       await GetStorage().write('previewMode', _isPreviewMode);
@@ -197,9 +231,17 @@ class _StartingPointState extends State<StartingPoint> {
       final PackageInfo pInfos = await PackageInfo.fromPlatform();
       mezDbgPrint("[ GET STORAGE ] version number ${pInfos.version}");
       await GetStorage().write(getxPackageName, pInfos.packageName);
+      await GetStorage().write(getxAppName, pInfos.appName);
+      // We need appStoreId only in prod mode and ios platforms.
+      if (Platform.isIOS && _launchMode == AppLaunchMode.prod) {
+        await setupIosAppStoreId(pInfos.appName);
+      }
       await GetStorage().write(getxAppVersion, pInfos.version);
-      await GetStorage().write(getxGmapBottomPaddingKey,
-          Platform.isAndroid ? 38.0.sp : Get.height / 35);
+      await GetStorage().write(
+        getxGmapBottomPaddingKey,
+        // Platform.isAndroid ? 38.0.sp : Get.height / 35,
+        10.0,
+      );
     } else
       mezDbgPrint("[ GET STORAGE ] FAILED TO INITIALIZE !");
   }
@@ -210,16 +252,18 @@ class _StartingPointState extends State<StartingPoint> {
         .stream
         .first;
     Get.put<AuthController>(
-        AuthController(widget.signInCallback, widget.signOutCallback),
-        permanent: true);
-    Get.put<AppLifeCycleController>(AppLifeCycleController(logs: true),
-        permanent: true);
+      AuthController(widget.signInCallback, widget.signOutCallback),
+      permanent: true,
+    );
+    Get.put<AppLifeCycleController>(
+      AppLifeCycleController(logs: true),
+      permanent: true,
+    );
     Get.put<SettingsController>(
-        SettingsController(
-            widget.appType, widget.sideMenuItems, widget.locationOn),
-        permanent: true);
-
-    // Get.lazyPut(() => AppVersionController(), fenix: true);
+      SettingsController(
+          widget.appType, widget.sideMenuItems, widget.locationPermissionType),
+      permanent: true,
+    );
   }
 
   Future<void> waitForInitialization() async {
@@ -239,21 +283,34 @@ class _StartingPointState extends State<StartingPoint> {
     switch (type) {
       case AppType.CustomerApp:
         await GetStorage()
-            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+            .write(getxPrivacyPolicyLink, sPrivacyPolicyCustomerApp);
         break;
       case AppType.TaxiApp:
-        await GetStorage().write(getxPrivacyPolicyLink, tPrivacyPolicyTaxiApp);
+        await GetStorage().write(getxPrivacyPolicyLink, sPrivacyPolicyTaxiApp);
         break;
       default:
         await GetStorage()
-            .write(getxPrivacyPolicyLink, tPrivacyPolicyCustomerApp);
+            .write(getxPrivacyPolicyLink, sPrivacyPolicyCustomerApp);
     }
   }
 
-  Widget mainApp(
-      {required AppType appType,
-      required ThemeData appTheme,
-      required List<GetPage<dynamic>> routes}) {
+  Future<void> setupIosAppStoreId(String appName) async {
+    final String? res = (await Get.find<FirebaseDb>()
+            .firebaseDatabase
+            .reference()
+            .child(appStoreIdNode(appName))
+            .once())
+        .value
+        .toString();
+    mezDbgPrint("Got setupIosAppStoreId @ ==> $res");
+    await GetStorage().write(getxAppStoreId, res ?? "");
+  }
+
+  Widget mainApp({
+    required AppType appType,
+    required ThemeData appTheme,
+    required List<GetPage<dynamic>> routes,
+  }) {
     Future<void> _initializeConfig() async {
       // We will use this to Initialize anything at MaterialApp root init of app
       final BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(

@@ -7,6 +7,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
@@ -56,6 +57,8 @@ class AuthController extends GetxController {
   AuthController(this._onSignInCallback, this._onSignOutCallback);
   String? _previousUserValue = "init";
 
+  bool preserveNavigationStackAfterSignIn = false;
+
   @override
   void onInit() {
     super.onInit();
@@ -93,7 +96,7 @@ class AuthController extends GetxController {
             .reference()
             .child(userInfoNode(user.uid))
             .onValue
-            .listen((event) {
+            .listen((Event event) {
           if (event.snapshot.value == null) return;
           if (event.snapshot.value['language'] == null) {
             event.snapshot.value['language'] = Get.find<LanguageController>()
@@ -132,7 +135,7 @@ class AuthController extends GetxController {
   Future<String> uploadUserImgToFbStorage(
       {required File imageFile, bool isCompressed = false}) async {
     String _uploadedImgUrl;
-    var splitted = imageFile.path.split('.');
+    List<String> splitted = imageFile.path.split('.');
     String imgPath =
         "users/${this._fireAuthUser.value!.uid}/avatar/${this._fireAuthUser.value!.uid}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
     try {
@@ -225,7 +228,8 @@ class AuthController extends GetxController {
         .timeout(Duration(seconds: 10),
             onTimeout: () =>
                 Future.error(Exception("Timed out , Check your Internet.")))
-        .then((value) {}, onError: ((Object e, StackTrace stackTrace) {
+        .then((fireAuth.UserCredential value) {},
+            onError: ((Object e, StackTrace stackTrace) {
       Get.snackbar("Failed to Sign you in!", e.toString(),
           snackPosition: SnackPosition.BOTTOM);
     }));
@@ -240,7 +244,7 @@ class AuthController extends GetxController {
       response = await sendOTPForLoginFunction.call(<String, dynamic>{
         'phoneNumber': phoneNumber,
         'messageType': 'SMS',
-        'language': tDefaultLanguage.toFirebaseFormatString(),
+        'language': sDefaultLanguage.toFirebaseFormatString(),
         // 'language': _settings.appLanguage.userLanguageKey,
       });
       // var c = json.decode(response.data);
@@ -275,7 +279,7 @@ class AuthController extends GetxController {
       response = await getAuthUsingOTPFunction.call(<String, dynamic>{
         'phoneNumber': phoneNumber,
         'OTPCode': otpCode,
-        'language': tDefaultLanguage.toFirebaseFormatString(),
+        'language': sDefaultLanguage.toFirebaseFormatString(),
         // 'language': _settings.appLanguage.userLanguageKey,
       });
 
@@ -309,7 +313,7 @@ class AuthController extends GetxController {
 
     if (result.status == LoginStatus.success) {
       // Create a credential from the access token
-      final facebookAuthCredential =
+      final fireAuth.OAuthCredential facebookAuthCredential =
           fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
       // Once signed in, return the UserCredential
       fireAuth.FirebaseAuth.instance
@@ -325,12 +329,13 @@ class AuthController extends GetxController {
     // include a nonce in the credential request. When signing in in with
     // Firebase, the nonce in the id token returned by Apple, is expected to
     // match the sha256 hash of `rawNonce`.
-    final rawNonce = generateNonce();
-    final nonce = sha256ofString(rawNonce);
+    final String rawNonce = generateNonce();
+    final String nonce = sha256ofString(rawNonce);
 
     try {
       // Request credential for the currently signed in Apple account.
-      final appleCredential = await SignInWithApple.getAppleIDCredential(
+      final AuthorizationCredentialAppleID appleCredential =
+          await SignInWithApple.getAppleIDCredential(
         scopes: [
           AppleIDAuthorizationScopes.email,
           AppleIDAuthorizationScopes.fullName,
@@ -341,7 +346,8 @@ class AuthController extends GetxController {
       mezDbgPrint(appleCredential.authorizationCode);
 
       // Create an `OAuthCredential` from the credential returned by Apple.
-      final oauthCredential = fireAuth.OAuthProvider("apple.com").credential(
+      final fireAuth.OAuthCredential oauthCredential =
+          fireAuth.OAuthProvider("apple.com").credential(
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
       );
@@ -366,16 +372,16 @@ class AuthController extends GetxController {
 }
 
 String generateNonce([int length = 32]) {
-  final charset =
+  final String charset =
       '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
-  final random = Random.secure();
+  final Random random = Random.secure();
   return List.generate(length, (_) => charset[random.nextInt(charset.length)])
       .join();
 }
 
 /// Returns the sha256 hash of [input] in hex notation.
 String sha256ofString(String input) {
-  final bytes = utf8.encode(input);
-  final digest = sha256.convert(bytes);
+  final List<int> bytes = utf8.encode(input);
+  final Digest digest = sha256.convert(bytes);
   return digest.toString();
 }

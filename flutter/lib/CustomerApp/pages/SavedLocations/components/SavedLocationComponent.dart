@@ -7,21 +7,24 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]
-["SavedLocations"]["components"]["SavedLocationComponent"];
+    ["pages"]["SavedLocations"]["components"]["SavedLocationComponent"];
 
 class SavedLocationComponent extends StatelessWidget {
-  SavedLocationComponent({required this.savelocation, Key? key})
-      : super(key: key);
+  const SavedLocationComponent({
+    required this.savelocation,
+    Key? key,
+  }) : super(key: key);
+
   final SavedLocation savelocation;
 
   // final GestureTapCallback onPress;
+  /// CustomerAuthController
+  static final CustomerAuthController _customerAuthController =
+      Get.find<CustomerAuthController>();
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
-    CustomerAuthController _customerAuthController =
-        Get.find<CustomerAuthController>();
+    final TextTheme txt = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
@@ -30,12 +33,12 @@ class SavedLocationComponent extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8), color: Colors.white),
       child: Row(
-        children: [
+        children: <Widget>[
           Expanded(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Spacer(),
+            children: <Widget>[
+              const Spacer(),
               //================location name=================
               Container(
                 child: Text(
@@ -44,20 +47,18 @@ class SavedLocationComponent extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.w700, fontSize: 12),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               //===============address================
               Container(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     Icon(
                       Icons.location_on_outlined,
                       size: 14,
                       color: Color.fromRGBO(172, 89, 252, 1),
                     ),
-                    SizedBox(
-                      width: 5,
-                    ),
+                    const SizedBox(width: 5),
                     Container(
                       width: Get.width * 0.8,
                       child: Text(
@@ -74,7 +75,7 @@ class SavedLocationComponent extends StatelessWidget {
                   ],
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               //================== divider================
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -82,46 +83,49 @@ class SavedLocationComponent extends StatelessWidget {
                 width: Get.width,
                 color: Color.fromRGBO(237, 237, 237, 1),
               ),
-              Spacer(),
+              const Spacer(),
               Container(
-                  child: Row(
-                children: [
-                  Expanded(
-                    child: IconSavedLocationButton(
-                      iCon: Icon(
-                        Icons.history_edu_outlined,
-                        size: 14,
-                        color: Colors.white,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: IconSavedLocationButton(
+                        iCon: Icon(
+                          Icons.history_edu_outlined,
+                          size: 14,
+                          color: Colors.white,
+                        ),
+                        iconColor: Colors.black,
+                        title: "${_i18n()["editLocation"]}",
+                        ontap: () {
+                          mezDbgPrint("edit saved lovation item");
+                          Get.toNamed<void>(
+                            kPickLocationEditRoute,
+                            parameters: <String, String>{
+                              "id": savelocation.id!
+                            },
+                          );
+                        },
                       ),
-                      iconColor: Colors.black,
-                      title:
-                          "${_i18n()["editLocation"]}",
-                      ontap: () {
-                        mezDbgPrint("edit saved lovation item");
-                        Get.toNamed(kPickLocationEditRoute,
-                            parameters: {"id": savelocation.id!});
-                      },
                     ),
-                  ),
-                  Expanded(
-                    child: IconSavedLocationButton(
-                      iCon: Icon(
-                        Icons.delete_outline,
-                        size: 14,
-                        color: Colors.white,
+                    Expanded(
+                      child: IconSavedLocationButton(
+                        iCon: Icon(
+                          Icons.delete_outline,
+                          size: 14,
+                          color: Colors.white,
+                        ),
+                        iconColor: Colors.red,
+                        title: "${_i18n()["deleteLocation"]}",
+                        ontap: () {
+                          mezDbgPrint("delete saved location item");
+                          _customerAuthController.deleteLocation(savelocation);
+                        },
                       ),
-                      iconColor: Colors.red,
-                      title:
-                          "${_i18n()["deleteLocation"]}",
-                      ontap: () {
-                        mezDbgPrint("delete saved location item");
-                        _customerAuthController.deleteLocation(savelocation);
-                      },
-                    ),
-                  )
-                ],
-              )),
-              Spacer()
+                    )
+                  ],
+                ),
+              ),
+              const Spacer(),
             ],
           ))
         ],
@@ -131,13 +135,14 @@ class SavedLocationComponent extends StatelessWidget {
 }
 
 class IconSavedLocationButton extends StatelessWidget {
-  const IconSavedLocationButton(
-      {required this.iCon,
-      required this.ontap,
-      required this.title,
-      required this.iconColor,
-      Key? key})
-      : super(key: key);
+  const IconSavedLocationButton({
+    required this.iCon,
+    required this.ontap,
+    required this.title,
+    required this.iconColor,
+    Key? key,
+  }) : super(key: key);
+
   final Widget iCon;
   final String title;
   final Color iconColor;
@@ -153,17 +158,18 @@ class IconSavedLocationButton extends StatelessWidget {
           color: const Color(0xffffffff),
         ),
         child: Row(
-          children: [
+          children: <Widget>[
             Container(
-                alignment: Alignment.center,
-                height: 20,
-                width: 20,
-                decoration: BoxDecoration(
-                    color: iconColor, borderRadius: BorderRadius.circular(25)),
-                child: iCon),
-            SizedBox(
-              width: 5,
+              alignment: Alignment.center,
+              height: 20,
+              width: 20,
+              decoration: BoxDecoration(
+                color: iconColor,
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: iCon,
             ),
+            const SizedBox(width: 5),
             Container(
               //width: Get.width * 0.25,
               child: Text(

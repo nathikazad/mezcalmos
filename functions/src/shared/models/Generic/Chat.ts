@@ -42,11 +42,12 @@ export interface Message {
 
 export async function buildChatForOrder(
   orderId: string,
+  orderType: OrderType,
   customerId: string,
   customerInfo: Participant,
-  serviceProviderId: string,
-  serviceProviderInfo: Participant,
-  orderType: OrderType): Promise<Chat> {
+  serviceProviderId?: string,
+  serviceProviderInfo?: Participant,
+): Promise<Chat> {
   let chat: Chat = {
     orderId: orderId,
     chatId: orderId,
@@ -54,8 +55,10 @@ export async function buildChatForOrder(
     orderType: orderType,
     participants: {
       [customerId]: customerInfo,
-      [serviceProviderId]: serviceProviderInfo,
     }
+  }
+  if (serviceProviderId && serviceProviderInfo) {
+    chat.participants[serviceProviderId] = serviceProviderInfo;
   }
   return chat;
 }

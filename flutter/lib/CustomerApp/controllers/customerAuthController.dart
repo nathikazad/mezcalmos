@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 
 class CustomerAuthController extends GetxController {
-  Rxn<Customer> _customer = Rxn();
+  Rxn<Customer> _customer = Rxn<Customer>();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
 
@@ -24,10 +24,10 @@ class CustomerAuthController extends GetxController {
 
   bool _checkedAppVersion = false;
 
-  StreamSubscription? _customerNodeListener;
+  StreamSubscription<dynamic>? _customerNodeListener;
 
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     super.onInit();
 
     if (_authController.fireAuthUser?.uid != null) {
@@ -63,12 +63,14 @@ class CustomerAuthController extends GetxController {
         await _databaseHelper.firebaseDatabase
             .reference()
             .child(
-                customerNotificationInfoNode(_authController.fireAuthUser!.uid))
+              customerNotificationInfoNode(_authController.fireAuthUser!.uid),
+            )
             .set(<String, String>{
           'deviceNotificationToken': deviceNotificationToken
         });
       print(
-          "/////////////////////////////////////////////${_customer.value?.toJson()}////////////////////////////////////////////////////");
+        "/////////////////////////////////////////////${_customer.value?.toJson()}////////////////////////////////////////////////////",
+      );
     } else {
       mezDbgPrint("User is not signed it to init customer auth controller");
     }
@@ -85,16 +87,22 @@ class CustomerAuthController extends GetxController {
   void editLocation(SavedLocation savedLocation) {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(savedLocationNode(
-            _authController.fireAuthUser!.uid, savedLocation.id!))
+        .child(
+          savedLocationNode(
+              _authController.fireAuthUser!.uid, savedLocation.id!),
+        )
         .set(savedLocation.toFirebaseFormattedJson());
   }
 
   void deleteLocation(SavedLocation savedLocation) {
     _databaseHelper.firebaseDatabase
         .reference()
-        .child(savedLocationNode(
-            _authController.fireAuthUser!.uid, savedLocation.id!))
+        .child(
+          savedLocationNode(
+            _authController.fireAuthUser!.uid,
+            savedLocation.id!,
+          ),
+        )
         .remove();
   }
 

@@ -9,12 +9,10 @@ import 'package:get/get.dart';
 final f = new DateFormat('dd/MM/yyyy hh:mm a');
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-    ["components"]
-["buildWidgetOnOrderStatus"];
+    ["components"]["buildWidgetOnOrderStatus"];
 
 Widget buildWigetOnOrderStatus(
     RestaurantOrderStatus status, DateTime orderTime) {
-  
   Widget? myWidget;
   switch (status) {
     case RestaurantOrderStatus.PreparingOrder:
@@ -33,8 +31,7 @@ Widget buildWigetOnOrderStatus(
             ),
           ),
           Container(
-            child: Text(
-                "${_i18n()["preparing"]}",
+            child: Text("${_i18n()["preparing"]}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",
@@ -52,8 +49,7 @@ Widget buildWigetOnOrderStatus(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            child: Text(
-                "${_i18n()["readyForPickUp"]}",
+            child: Text("${_i18n()["readyForPickUp"]}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",
@@ -72,8 +68,7 @@ Widget buildWigetOnOrderStatus(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            child: Text(
-                "${_i18n()["onTheWay"]}",
+            child: Text("${_i18n()["onTheWay"]}",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontWeight: FontWeight.w400,
@@ -164,8 +159,7 @@ Widget buildWigetOnOrderStatus(
                 color: Colors.red,
               )),
           Container(
-            child: Text(
-                "${_i18n()["canceledByCustomer"]} ",
+            child: Text("${_i18n()["canceledByCustomer"]} ",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",
@@ -191,8 +185,7 @@ Widget buildWigetOnOrderStatus(
                 color: Colors.red,
               )),
           Container(
-            child: Text(
-                "${_i18n()["canceledByAdmin"]} ",
+            child: Text("${_i18n()["canceledByAdmin"]} ",
                 style: const TextStyle(
                     color: const Color(0xff7e7a7a),
                     fontFamily: "psr",

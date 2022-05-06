@@ -1,8 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="<mez-package-name>">
     
-  <mez-permissions>
-  
+    <queries>
+      <intent>
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.BROWSABLE" />
+      <data android:scheme="https" />
+      </intent>
+    </queries>
+
+
+    <mez-permissions>
+
     <application
       android:label="@string/appName"
       android:icon="@mipmap/launcher_icon"

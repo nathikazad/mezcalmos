@@ -28,22 +28,39 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
 class ViewRestaurantOrderScreen extends StatefulWidget {
+  const ViewRestaurantOrderScreen({Key? key}) : super(key: key);
+
   @override
   _ViewRestaurantOrderScreen createState() => _ViewRestaurantOrderScreen();
 }
 
 class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
+  /// AuthController
   AuthController auth = Get.find<AuthController>();
+
+  /// RestaurantOrderController
   RestaurantOrderController controller = Get.find<RestaurantOrderController>();
+
+  /// DeliveryDriverController
   DeliveryDriverController deliveryDriverController = Get.find<
       DeliveryDriverController>(); // Since we have alot of buttons we check loading by name
 
+  /// driver
   DeliveryDriverUserInfo? driver;
+
+  /// hasNewMessage
   Rx<bool> hasNewMessage = false.obs;
-  Rxn<RestaurantOrder> order = Rxn();
+
+  /// RestaurantOrder
+  Rxn<RestaurantOrder> order = Rxn<RestaurantOrder>();
+
+  /// orderId
   late String orderId;
+
+  /// LanguageType
   LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
 
+  /// _orderListener
   StreamSubscription<RestaurantOrder?>? _orderListener;
 
   @override
@@ -83,67 +100,76 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: new FloatingActionButton(
-          focusColor: Colors.grey.shade100,
-          hoverColor: Colors.grey.shade100,
-          splashColor: Colors.grey.shade100,
-          backgroundColor: Colors.grey.shade100,
-          foregroundColor: Colors.purple.shade700,
-          onPressed: () {
-            Clipboard.setData(ClipboardData(
-                    text: order.value?.clipBoardText(userLanguage)))
-                .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
-                    position: SnackPosition.TOP));
-          },
-          tooltip: 'Copy',
-          child: new Icon(Icons.copy),
-        ),
-        appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
-            withOrder: true, function: Get.back),
-        backgroundColor: Colors.white,
-        body: Obx(() {
+      floatingActionButton: new FloatingActionButton(
+        focusColor: Colors.grey.shade100,
+        hoverColor: Colors.grey.shade100,
+        splashColor: Colors.grey.shade100,
+        backgroundColor: Colors.grey.shade100,
+        foregroundColor: Colors.purple.shade700,
+        onPressed: () {
+          Clipboard.setData(
+                  ClipboardData(text: order.value?.clipBoardText(userLanguage)))
+              .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
+                  position: SnackPosition.TOP));
+        },
+        tooltip: 'Copy',
+        child: new Icon(Icons.copy),
+      ),
+      appBar: deliveryAdminAppBar(AppBarLeftButtonType.Back,
+          withOrder: true, function: Get.back),
+      // backgroundColor: Colors.white,
+      body: Obx(
+        () {
           if (order.value == null) {
             return MezLogoAnimation(
               centered: true,
             );
           } else {
             return SingleChildScrollView(
-              child: Column(
-                children: [
-                  //====================Restaurant Info=======================
-                  (!controller.isPast(order.value!))
-                      ? CurrentOrderInfo(
-                          order: order.value!,
-                        )
-                      : PastOrderInfo(order: order.value!),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    //====================Restaurant Info=======================
+                    (!controller.isPast(order.value!))
+                        ? CurrentOrderInfo(
+                            order: order.value!,
+                          )
+                        : PastOrderInfo(order: order.value!),
 
-                  //============================= Customer info====================
-                  if (order.value?.inProcess() ?? false)
-                    Obx(
-                      () => DriverCard(
+                    //============================= Customer info====================
+                    if (order.value?.inProcess() ?? false)
+                      DriverCard(
                         driver: order.value!.dropoffDriver,
                         order: order.value!,
-                        callBack: (DeliveryDriver? newDriver) {
-                          deliveryDriverController.assignDeliveryDriver(
-                              deliveryDriverId: newDriver!.deliveryDriverId,
-                              orderId: order.value!.orderId,
-                              orderType: OrderType.Restaurant,
-                              deliveryDriverType: DeliveryDriverType.DropOff);
+                        assignDriverCallback: (
+                            {required bool changeDriver,
+                            required DeliveryDriver deliveryDriver}) async {
+                          await deliveryDriverController.assignDeliveryDriver(
+                            deliveryDriverId: deliveryDriver.deliveryDriverId,
+                            orderId: order.value!.orderId,
+                            orderType: OrderType.Restaurant,
+                            deliveryDriverType: DeliveryDriverType.DropOff,
+                            changeDriver: changeDriver,
+                          );
                         },
                       ),
-                    ),
-                  //getCustomerInfoCart(),
-                  OrderInfoCard(order: order),
-                  //==========================>total cost=====================================
-                  orderTotalCostCard(order),
-                  //=========== location========================
-                  orderShippingLocation(order),
-                  //===============================>notes========================>
-                  orderNoteCard(order)
-                ],
+
+                    //getCustomerInfoCart(),
+                    OrderInfoCard(order: order),
+                    //==========================>total cost=====================================
+                    orderTotalCostCard(order),
+                    //=========== location========================
+                    orderShippingLocation(order),
+                    //===============================>notes========================>
+                    orderNoteCard(order)
+                  ],
+                ),
               ),
             );
           }
-        }));
+        },
+      ),
+    );
   }
 }

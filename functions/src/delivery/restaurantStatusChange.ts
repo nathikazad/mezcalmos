@@ -62,7 +62,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
     }
   }
 
-  if (order.dropoffDriver.id != deliveryDriverId) {
+  if (order.dropoffDriver?.id != deliveryDriverId) {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: `Order does not belong to this delivery driver`,

@@ -2,10 +2,9 @@ import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
+// ignore: constant_identifier_names
 enum UserProfileMode { Edit, Show }
 
 class UserProfileController {
@@ -16,32 +15,24 @@ class UserProfileController {
   String? originalImgUrl;
   String? compressedImgUrl;
   Rx<UserProfileMode> stateMode = UserProfileMode.Show.obs;
-  Rxn<imPicker.XFile> userImg = Rxn();
-  Rxn<Uint8List> userImgBytes = Rxn();
-  Rxn<String> userName = Rxn();
-  Rxn<String> errorReport = Rxn();
+  Rxn<imPicker.XFile> userImg = Rxn<imPicker.XFile>();
+  Rxn<Uint8List> userImgBytes = Rxn<Uint8List>();
+  Rxn<String> userName = Rxn<String>();
+  Rxn<String> errorReport = Rxn<String>();
 
-  bool didUserChangedInfos() {
-    mezDbgPrint("ayono@ayono@ => usernameValue = ${userName.value}");
-    mezDbgPrint(
-      "ayono@ayono@ => userName::auth = ${_authController.user?.name}",
-    );
-    mezDbgPrint("ayono@ayono@ => userImg = ${userImg.value}");
-    mezDbgPrint(
-      "ayono@ayono@ => auth::userImg = ${_authController.user?.image}",
-    );
-    return userName.value != _authController.user?.name &&
-        userName.value != null &&
-        userName.value!.length >= 4 &&
-        (userImg.value != null ||
-            _authController.user?.image != defaultUserImgUrl);
-  }
+  // bool didUserChangedInfos() {
+  //   return userName.value != _authController.user?.name &&
+  //       userName.value != null &&
+  //       userName.value!.length >= 4 &&
+  //       (userImg.value != null ||
+  //           _authController.user?.image != defaultUserImgUrl);
+  // }
 
   /// Set Error Text to be shown to the user that takes [duration] as a rendring out time.
   void setErrorTextForXDuration(String error,
       {Duration duration = const Duration(seconds: 5)}) {
     errorReport.value = error;
-    Future.delayed(duration, () {
+    Future<void>.delayed(duration, () {
       errorReport.value = null;
     });
   }
@@ -58,11 +49,11 @@ class UserProfileController {
   }
 
   void setTextFieldText(String value) {
-    this.textEditingController.text = value;
+    textEditingController.text = value;
   }
 
   void setUserProfileMode(UserProfileMode _mode) {
-    this.stateMode.value = _mode;
+    stateMode.value = _mode;
   }
 
   void disposeController() {
@@ -74,11 +65,10 @@ class UserProfileController {
   }
 
   /// Check if the name only contains alphabet letters, and not null
-  bool nameIsValidString() {
-    if (userName.value != null) {
-      return userName.value!.replaceAll(' ', '').isAlphabetOnly;
-    }
-    return false;
+  bool nameLengthIsValid() {
+    return userName.value != null &&
+        userName.value!.isNotEmpty &&
+        userName.value!.replaceAll(' ', '').length >= 4;
   }
 
   /// This should be called on initState of the page, In order to do Initial Setup and checks.
@@ -95,6 +85,6 @@ class UserProfileController {
     }
 
     // Initial TextFieldValue.
-    this.setTextFieldText(userName.value!);
+    setTextFieldText(userName.value!);
   }
 }

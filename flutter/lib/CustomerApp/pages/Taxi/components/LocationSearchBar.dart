@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 
 // ignore: constant_identifier_names
@@ -17,23 +18,31 @@ enum SearchComponentType { From, To, None }
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Taxi"]["components"]["LocationSearchBar"];
 
+// Map<String, String>  get _i18n => Get.find<LanguageController>().strings["CustomerApp"]
+// ["pages"]["Taxi"]["components"]["LocationSearchBar"];
+
 extension ParseSearchComponentTypeToString on SearchComponentType {
   String toShortString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
 
 typedef SearchLocationNotifier = void Function(
-    Location? location, SearchComponentType locationType);
+  Location? location,
+  SearchComponentType locationType,
+);
 
 class LocationDropDownItem {
   final String title;
   final Icon icon;
   final VoidCallback function;
 
-  LocationDropDownItem(
-      {required this.icon, required this.function, required this.title});
+  const LocationDropDownItem({
+    required this.icon,
+    required this.function,
+    required this.title,
+  });
 }
 
 class LocationSearchBarController {
@@ -48,13 +57,14 @@ class LocationSearchBarController {
 
   void expandDropdown({int itemsCount = 2}) {
     /// eachItems = [itemMaxHeight] OF HEIGHT
-    double itemMaxHeight = 40.0 - (itemsCount == 2 ? 0 : itemsCount);
-    double height = 2 * itemMaxHeight;
+    final double itemMaxHeight = 40.0 - (itemsCount == 2 ? 0 : itemsCount);
+    double height = (2 * itemMaxHeight) + itemMaxHeight;
 
     if (itemsCount >= 2 && itemsCount <= 4) {
       height = itemsCount * itemMaxHeight;
     } else if (itemsCount > 4) {
-      height = 4 * itemMaxHeight;
+      height =
+          (itemsCount * itemMaxHeight) + ((itemsCount * itemMaxHeight) / 2);
     }
 
     pickChoicesDropDownHeight.value = height;
@@ -77,13 +87,17 @@ class LocationSearchBarController {
 }
 
 class LocationSearchBar extends StatefulWidget {
-  TaxiRequest request;
+  final TaxiRequest request;
   final SearchLocationNotifier newLocationChosenEvent;
   final LocationSearchBarController locationSearchBarController;
-  LocationSearchBar(
-      {required this.request,
-      required this.newLocationChosenEvent,
-      required this.locationSearchBarController});
+  final void Function()? onClear;
+
+  LocationSearchBar({
+    required this.request,
+    required this.newLocationChosenEvent,
+    required this.locationSearchBarController,
+    this.onClear = null,
+  });
 
   @override
   LocationSearchBarState createState() =>
@@ -93,13 +107,15 @@ class LocationSearchBar extends StatefulWidget {
 class LocationSearchBarState extends State<LocationSearchBar> {
   CustomerAuthController? _authController;
   LocationSearchBarController locationSearchBarController;
-  List<LocationDropDownItem> dropDownItems = [];
+  List<LocationDropDownItem> dropDownItems = <LocationDropDownItem>[];
+
   LocationSearchBarState(this.locationSearchBarController);
+
   /************  Init, build and other overrided function *********************************/
   @override
   void initState() {
-    loadDropdownItems();
     super.initState();
+    loadDropdownItems();
   }
 
   @override
@@ -111,13 +127,14 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: 5,
-        left: 10,
-        right: 10,
-        child: Container(
-            decoration: getDecoration(),
-            child: Center(
-                child: Column(children: [
+      top: 5,
+      left: 10,
+      right: 10,
+      child: Container(
+        decoration: getDecoration(),
+        child: Center(
+          child: Column(
+            children: <Widget>[
               Row(
                 children: <Widget>[
                   fromTextField(),
@@ -126,8 +143,12 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                 ],
               ),
               // SizedBox(height: 5),
-              pickChoicesDropDown()
-            ]))));
+              pickChoicesDropDown(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -151,13 +172,15 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       color: Colors.white,
       boxShadow: <BoxShadow>[
         BoxShadow(
-            color: Color.fromARGB(60, 0, 0, 0),
-            spreadRadius: .5,
-            blurRadius: 4,
-            offset: Offset(0, 5)),
+          color: Color.fromARGB(60, 0, 0, 0),
+          spreadRadius: .5,
+          blurRadius: 4,
+          offset: Offset(0, 5),
+        ),
       ],
     );
   }
+
   /******************************  Widgets ************************************/
 
   Widget fromTextField() {
@@ -182,7 +205,10 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         onFocusLost: textFieldOnFocusLost,
         notifyParent: (Location? location) {
           // This is notifying the parent when the user Clicks a suggestion from the suggestions list!
-          widget.newLocationChosenEvent(location, SearchComponentType.From);
+          widget.newLocationChosenEvent(
+            location,
+            SearchComponentType.From,
+          );
         },
       ),
     );
@@ -190,39 +216,47 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   Widget middleLogo() {
     return Expanded(
-        flex: 1,
-        child: Stack(
-            alignment: Alignment.center,
-            fit: StackFit.passthrough,
-            children: [
-              VerticalDivider(
-                color: Color.fromARGB(255, 236, 236, 236),
-                thickness: 1,
-              ),
-              Container(
-                padding: EdgeInsets.all(
-                    getSizeRelativeToScreen(2.5, Get.height, Get.width)),
-                height: getSizeRelativeToScreen(17, Get.height, Get.width),
-                width: getSizeRelativeToScreen(17, Get.height, Get.width),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Color.fromARGB(255, 216, 225, 249),
-                        spreadRadius: 0,
-                        blurRadius: 5,
-                        offset: Offset(0, 7)),
-                  ],
-                  gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 97, 127, 255),
-                    Color.fromARGB(255, 198, 90, 252),
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+      flex: 1,
+      child: Stack(
+        alignment: Alignment.center,
+        fit: StackFit.passthrough,
+        children: <Widget>[
+          VerticalDivider(
+            color: Color.fromARGB(255, 236, 236, 236),
+            thickness: 1,
+          ),
+          Container(
+            padding: EdgeInsets.all(
+              getSizeRelativeToScreen(2.5, Get.height, Get.width),
+            ),
+            height: getSizeRelativeToScreen(17, Get.height, Get.width),
+            width: getSizeRelativeToScreen(17, Get.height, Get.width),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Color.fromARGB(255, 216, 225, 249),
+                  spreadRadius: 0,
+                  blurRadius: 5,
+                  offset: Offset(0, 7),
                 ),
-                child: Center(
-                  child: Image.asset('assets/images/shared/logoWhite.png'),
-                ),
+              ],
+              gradient: LinearGradient(
+                colors: <Color>[
+                  Color.fromARGB(255, 97, 127, 255),
+                  Color.fromARGB(255, 198, 90, 252),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-            ]));
+            ),
+            child: Center(
+              child: Image.asset('assets/images/shared/logoWhite.png'),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget toTextField() {
@@ -261,58 +295,82 @@ class LocationSearchBarState extends State<LocationSearchBar> {
           height: locationSearchBarController.pickChoicesDropDownHeight.value,
           width: Get.width,
           decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey.shade200,
-                width: 1,
-              ),
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-                topRight: Radius.circular(0),
-              )),
-          child: SingleChildScrollView(
-            child: Center(
-              child: ListView.separated(
-                padding: EdgeInsets.symmetric(vertical: 15),
-                shrinkWrap: true,
-                separatorBuilder: (sContext, i) {
-                  return SizedBox(height: 10);
-                },
-                itemCount: dropDownItems.length,
-                itemBuilder: (bContext, i) {
-                  return InkWell(
-                    onTap: () {
-                      dropDownItems[i].function();
-                      locationSearchBarController.unfocusAllFocusNodes();
-                      setState(() {});
-                    },
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 20,
-                        ),
-                        dropDownItems[i].icon,
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          dropDownItems[i].title,
-                          style: TextStyle(fontFamily: 'psb'),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              ),
+            border: Border.all(
+              color: Colors.grey.shade200,
+              width: 1,
             ),
-          )),
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+              topRight: Radius.circular(0),
+            ),
+          ),
+          child: Column(
+            children: dropDownItems
+                .map((d) => Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          d.function();
+                          locationSearchBarController.unfocusAllFocusNodes();
+                          setState(() {});
+                        },
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 20),
+                            d.icon,
+                            const SizedBox(width: 10),
+                            Text(
+                              d.title,
+                              style: TextStyle(fontFamily: 'psb'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ))
+                .toList(),
+          )
+
+          // SingleChildScrollView(
+          //   child: Center(
+          //     child: ListView.separated(
+          //       padding: EdgeInsets.symmetric(vertical: 15),
+          //       shrinkWrap: true,
+          //       separatorBuilder: (_, __) {
+          //         return SizedBox(height: 10);
+          //       },
+          //       itemCount: dropDownItems.length,
+          //       itemBuilder: (_, int i) {
+          //         return InkWell(
+          //           onTap: () {
+          //             dropDownItems[i].function();
+          //             locationSearchBarController.unfocusAllFocusNodes();
+          //             setState(() {});
+          //           },
+          //           child: Row(
+          //             children: <Widget>[
+          //               const SizedBox(width: 20),
+          //               dropDownItems[i].icon,
+          //               const SizedBox(width: 10),
+          //               Text(
+          //                 dropDownItems[i].title,
+          //                 style: TextStyle(fontFamily: 'psb'),
+          //               ),
+          //             ],
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // ),
+          ),
     );
   }
 
-/******************************  EVENT HANDLERS ************************************/
+  /******************************  EVENT HANDLERS ************************************/
 // To Text Field Callbacks ---------------------------------------------------------------------------
   void textFieldOnClear(SearchComponentType _type) {
+    widget.onClear?.call();
     setState(() {
       if (_type == SearchComponentType.From) {
         locationSearchBarController.fromTextFieldFocusNode.requestFocus();
@@ -324,8 +382,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       }
       locationSearchBarController.focusedTextField.value = _type;
 
-      widget.newLocationChosenEvent(
-          null, locationSearchBarController.focusedTextField.value);
+      widget.newLocationChosenEvent(null, _type);
 
       // _toReadOnly = false;
       // hideFakeMarkerInCaseEmptyAddress();
@@ -337,7 +394,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       locationSearchBarController.collapseDropdown();
     } else {
       locationSearchBarController.expandDropdown(
-          itemsCount: dropDownItems.length);
+        itemsCount: dropDownItems.length,
+      );
     }
   }
 
@@ -355,7 +413,8 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     if (type == SearchComponentType.To && widget.request.to?.address == null ||
         widget.request.from?.address == "") {
       locationSearchBarController.expandDropdown(
-          itemsCount: dropDownItems.length);
+        itemsCount: dropDownItems.length,
+      );
       setState(() {
         locationSearchBarController.focusedTextField.value = type;
       });
@@ -372,24 +431,31 @@ class LocationSearchBarState extends State<LocationSearchBar> {
     dropDownItems.addAll(
       <LocationDropDownItem>[
         LocationDropDownItem(
-            function: () async {
-              final Location? _loc = await MapHelper.getCurrentLocation();
-              mezDbgPrint("zlaganga::root : ${_loc?.address}");
-              widget.newLocationChosenEvent(
-                  _loc, locationSearchBarController.focusedTextField.value);
-            },
-            title: "${_i18n()["currentLocation"]}",
-            icon: Icon(MezcalmosIcons.crosshairs,
-                size: 20, color: Colors.purple)),
+          function: () async {
+            final Location? _loc = await MapHelper.getCurrentLocation();
+            mezDbgPrint("zlaganga::root : ${_loc?.address}");
+            widget.newLocationChosenEvent(
+                _loc, locationSearchBarController.focusedTextField.value);
+          },
+          title: "${_i18n()["currentLocation"]}",
+          icon: Icon(
+            MezcalmosIcons.crosshairs,
+            size: 20,
+            color: Colors.purple,
+          ),
+        ),
         LocationDropDownItem(
-            function: () async {
-              widget.newLocationChosenEvent(
-                  await MapHelper.getCurrentLocation(),
-                  locationSearchBarController.focusedTextField.value);
-            },
-            title: "${_i18n()["pickFromMap"]}",
-            icon:
-                Icon(MezcalmosIcons.crosshairs, size: 20, color: Colors.purple))
+          function: () async {
+            widget.newLocationChosenEvent(await MapHelper.getCurrentLocation(),
+                locationSearchBarController.focusedTextField.value);
+          },
+          title: "${_i18n()["pickFromMap"]}",
+          icon: Icon(
+            MezcalmosIcons.crosshairs,
+            size: 20,
+            color: Colors.purple,
+          ),
+        )
       ],
     );
     if (Get.find<AuthController>().fireAuthUser != null) {
@@ -400,7 +466,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   List<LocationDropDownItem> getSavedLocationsWithCallbacks() {
     return _authController!.customerRxn.value?.savedLocations
-            .map<LocationDropDownItem>((e) {
+            .map<LocationDropDownItem>((SavedLocation e) {
           return LocationDropDownItem(
               icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
               function: () {
@@ -411,6 +477,6 @@ class LocationSearchBarState extends State<LocationSearchBar> {
               },
               title: e.name);
         }).toList() ??
-        [];
+        <LocationDropDownItem>[];
   }
 }

@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum Weekday { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
@@ -82,35 +83,29 @@ class Schedule {
   }
 
   bool isOpen() {
+    bool isOpen = false;
+    final String dayNane = DateFormat('EEEE').format(DateTime.now());
     final DateTime now = DateTime.now();
-    final Weekday currentWeekDay = now.getDayOfWeek();
-    final OpenHours? todayHours = openHours[currentWeekDay];
-    if (todayHours?.isOpen ?? false) {
-      return false;
-    }
-    return (now.hour > todayHours!.from[0] &&
-        now.minute > todayHours.from[0] &&
-        now.hour < todayHours.to[0] &&
-        now.minute < todayHours.to[0]);
-  }
+    openHours.forEach((Weekday key, OpenHours value) {
+      if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
+        if (value.isOpen == true) {
+          final DateTime dateOfStart = DateTime(
+              now.year, now.month, now.day, value.from[0], value.from[1]);
+          final DateTime dateOfClose =
+              DateTime(now.year, now.month, now.day, value.to[0], value.to[1]);
 
-  Map<String, dynamic> toFirebaseFormattedJson() {
-    final Map<String, dynamic> json = <String, dynamic>{};
-    Weekday.values.forEach((Weekday weekday) {
-      json[weekday.toFirebaseFormatString()] =
-          openHours[weekday]?.toFirebaseFormattedJson();
+          if (now.isAfter(dateOfStart) && now.isBefore(dateOfClose)) {
+            isOpen = true;
+          }
+
+          if (dateOfClose.isBefore(dateOfStart)) {
+            isOpen = now.isBefore(dateOfClose) || now.isAfter(dateOfStart);
+          }
+        } else {
+          isOpen = false;
+        }
+      }
     });
-    return json;
-  }
-
-  factory Schedule.clone(Schedule schedule) {
-    final Map<Weekday, OpenHours> _cloneSchedule = {};
-    schedule.openHours.forEach((Weekday key, OpenHours value) {
-      _cloneSchedule[key] = OpenHours.clone(value);
-    });
-
-    final Schedule newSchedule = Schedule(openHours: _cloneSchedule);
-
-    return newSchedule;
+    return isOpen;
   }
 }

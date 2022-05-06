@@ -106,6 +106,8 @@ class TaxiOrder extends Order {
   }
 
   factory TaxiOrder.fromData(id, data) {
+    // mezDbgPrint("TAXI ORDER ------>>>>>>>>>>>>>>>>>>>> $data");
+    // mezDbgPrint("TAXI ID ------>>>>>>>>>>>>>>>>>>>> $id");
     final TaxiOrder taxiOrder = TaxiOrder(
         orderId: id,
         driver: (data["driver"] != null)
@@ -116,7 +118,7 @@ class TaxiOrder extends Order {
         rideStartTime: data['rideStartTime'],
         status: data['status'].toString().toTaxiOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
-        cost: data['cost'],
+        cost: data['cost'] ?? 35,
         // from: Location("", LocationData.fromMap({"lat":})),
         from: Location.fromFirebaseData(data['from']),
         to: Location.fromFirebaseData(data['to']),
@@ -148,7 +150,7 @@ class TaxiOrder extends Order {
         // DO NOTHING
       }
     });
-    mezDbgPrint("len #s#a#a#d ====> ${data['counterOffers']}");
+
     data["counterOffers"]?.forEach((driverId, counterOfferData) {
       try {
         mezDbgPrint("CounterOffer ===> $counterOfferData");
@@ -183,6 +185,10 @@ class TaxiOrder extends Order {
         "distanceToClient": distanceToClient
       };
 
+  bool isPastOrder() {
+    return isCanceled() || status == TaxiOrdersStatus.DroppedOff;
+  }
+
   @override
   bool isCanceled() {
     // all of them are in /past node
@@ -196,16 +202,26 @@ class TaxiOrder extends Order {
   bool inProcess() {
     return status == TaxiOrdersStatus.InTransit ||
         status == TaxiOrdersStatus.LookingForTaxi ||
+        status == TaxiOrdersStatus.ForwardingToLocalCompany ||
         status == TaxiOrdersStatus.DroppedOff ||
         status == TaxiOrdersStatus.OnTheWay;
   }
 
   bool isOpenOrder() {
     switch (status) {
-      // case TaxiOrdersStatus.ForwardingSuccessful:
       case TaxiOrdersStatus.LookingForTaxi:
-        // case TaxiOrdersStatus.ForwardingToLocalCompany:
-        //   case TaxiOrdersStatus.ForwardingUnsuccessful:
+        return true;
+
+      default:
+        return false;
+    }
+  }
+
+  bool isForwarded() {
+    switch (status) {
+      case TaxiOrdersStatus.ForwardingSuccessful:
+      case TaxiOrdersStatus.ForwardingToLocalCompany:
+      case TaxiOrdersStatus.ForwardingUnsuccessful:
         return true;
 
       default:

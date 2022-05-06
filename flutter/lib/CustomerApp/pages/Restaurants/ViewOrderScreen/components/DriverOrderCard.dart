@@ -16,13 +16,13 @@ class DriverOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             (ordersStates == RestaurantOrderStatus.Delivered)
                 ? Icon(
                     Icons.check_circle,
@@ -42,9 +42,7 @@ class DriverOrderCard extends StatelessWidget {
                                 RestaurantOrderStatus.ReadyForPickup)
                         ? CircularProgressIndicator()
                         : Container(),
-            SizedBox(
-              width: 5,
-            ),
+            const SizedBox(width: 5),
             Flexible(
               child: Card(
                 color: (ordersStates == RestaurantOrderStatus.OnTheWay ||
@@ -56,7 +54,7 @@ class DriverOrderCard extends StatelessWidget {
                   width: double.infinity,
                   margin: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: Row(
-                    children: [
+                    children: <Widget>[
                       CircleAvatar(
                         radius: 30,
                         backgroundColor: Theme.of(context)
@@ -68,26 +66,25 @@ class DriverOrderCard extends StatelessWidget {
                           color: Theme.of(context).primaryColorLight,
                         ),
                       ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
+                      SizedBox(width: 10.w),
                       Flexible(
-                          flex: 3,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                order.restaurant.name,
-                                style: txt.subtitle1,
-                              ),
-                              Text(
-                                getDeliveryOrderStatus(ordersStates),
-                                style: txt.headline3,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          )),
+                        flex: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              order.restaurant.name,
+                              style: txt.subtitle1,
+                            ),
+                            Text(
+                              getDeliveryOrderStatus(ordersStates),
+                              style: txt.headline3,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -96,9 +93,12 @@ class DriverOrderCard extends StatelessWidget {
           ],
         ),
         Container(
-            margin: EdgeInsets.all(5),
-            alignment: Alignment.centerRight,
-            child: Text(getDeliveryOrderHelperText(ordersStates)))
+          margin: EdgeInsets.all(5),
+          alignment: Alignment.centerRight,
+          child: Text(
+            getDeliveryOrderHelperText(ordersStates),
+          ),
+        ),
       ],
     );
   }

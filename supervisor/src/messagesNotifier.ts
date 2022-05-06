@@ -33,18 +33,23 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
   }
   let senderInfo = chat.participants[notificationForQueue.userId]
   senderInfo.id = notificationForQueue.userId
+  let particpantType: ParticipantType = chat.participants[notificationForQueue.userId].particpantType;
   delete chat.participants[notificationForQueue.userId]
   for (let participantId in chat.participants) {
     let participant = chat.participants[participantId]
+    if (participant.particpantType == particpantType)
+      continue
+    let linkUrl = chatUrl(notificationForQueue.chatId, chat.orderId, chat.orderType, participant.particpantType);
     let notification: Notification = {
       foreground: <NewMessageNotification>{
         chatId: notificationForQueue.chatId,
         sender: senderInfo,
         message: notificationForQueue.message,
-        orderId: notificationForQueue.orderId ?? null,
+        orderId: chat.orderId ?? null,
         time: notificationForQueue.timestamp,
         notificationType: NotificationType.NewMessage,
         notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+        linkUrl: linkUrl
       },
       background: {
         en: {
@@ -56,7 +61,7 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
           body: notificationForQueue.message
         }
       },
-      linkUrl: chatUrl(notificationForQueue.chatId)
+      linkUrl: linkUrl
     }
     notifyUser.pushNotification(participantId, notification, participant.particpantType);
   }

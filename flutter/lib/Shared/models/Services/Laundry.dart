@@ -3,13 +3,14 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 class Laundry extends Service {
   LaundryCosts laundryCosts;
   LanguageType primaryLanguage;
   LanguageType? secondaryLanguage;
   Laundry(
-      {required ServiceUserInfo userInfo,
+      {required ServiceInfo userInfo,
       required Schedule schedule,
       required ServiceState laundryState,
       required this.laundryCosts,
@@ -19,14 +20,9 @@ class Laundry extends Service {
 
   factory Laundry.fromLaundryData(
       // ignore: avoid_annotating_with_dynamic
-      {required String laundryId,
-      required laundryData}) {
-    final ServiceState laundryState = ServiceState(
-        laundryData["state"]?["authorizationStatus"]
-                ?.toString()
-                .toAuthorizationStatus() ??
-            AuthorizationStatus.Unauthorized,
-        laundryData["state"]?["available"] ?? false);
+      {required String laundryId, required dynamic laundryData}) {
+    final ServiceState laundryState =
+        ServiceState.fromServiceStateData(laundryData["state"]);
 
     final Schedule schedule =
         Schedule.fromData(laundryData["details"]["schedule"]);
@@ -47,7 +43,7 @@ class Laundry extends Service {
         null;
 
     final Laundry laundry = Laundry(
-        userInfo: ServiceUserInfo.fromData(laundryData["info"]),
+        userInfo: ServiceInfo.fromData(laundryData["info"]),
         schedule: schedule,
         laundryState: laundryState,
         laundryCosts: laundryCosts,

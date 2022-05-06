@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/widgets/AutoCompleteTextField.dart';
 
 typedef TextFieldGotUpdated = void Function(String updatedText);
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['widgets']
-["LocationSearchComponent"];
-
+    ["LocationSearchComponent"];
 
 // Location Search component
 class LocationSearchComponent extends StatefulWidget {
   final bool useBorders;
   final bool readOnly;
+
   // raduis
   final double leftTopRadius;
   final double leftBotRaduis;
@@ -37,31 +37,34 @@ class LocationSearchComponent extends StatefulWidget {
   String? text;
   final FocusNode? focusNode;
 
-  LocationSearchComponent(
-      {this.label = "",
-      this.suffixPadding = EdgeInsets.zero,
-      this.showSearchIcon = false,
-      this.readOnly = false,
-      this.hintPadding = const EdgeInsets.only(left: 10, top: 20),
-      this.useBorders = true,
-      this.leftTopRadius = 6,
-      this.leftBotRaduis = 6,
-      this.rightTopRaduis = 6,
-      this.rightBotRaduis = 6,
-      this.bgColor = const Color(0xfff8f8f8),
-      this.labelStyle = const TextStyle(
-          fontWeight: FontWeight.w800, fontSize: 14, color: Colors.black87),
-      this.text,
-      required this.notifyParent,
-      required this.onClear,
-      this.onFocus,
-      this.onFocusLost,
-      this.onTextChange,
-      this.dropDownWidth,
-      this.dropDownDxOffset,
-      this.focusNode,
-      Key? key})
-      : super(key: key);
+  LocationSearchComponent({
+    this.label = "",
+    this.suffixPadding = EdgeInsets.zero,
+    this.showSearchIcon = false,
+    this.readOnly = false,
+    this.hintPadding = const EdgeInsets.only(left: 10, top: 20),
+    this.useBorders = true,
+    this.leftTopRadius = 6,
+    this.leftBotRaduis = 6,
+    this.rightTopRaduis = 6,
+    this.rightBotRaduis = 6,
+    this.bgColor = const Color(0xfff8f8f8),
+    this.labelStyle = const TextStyle(
+      fontWeight: FontWeight.w800,
+      fontSize: 14,
+      color: Colors.black87,
+    ),
+    this.text,
+    required this.notifyParent,
+    required this.onClear,
+    this.onFocus,
+    this.onFocusLost,
+    this.onTextChange,
+    this.dropDownWidth,
+    this.dropDownDxOffset,
+    this.focusNode,
+    Key? key,
+  }) : super(key: key);
 
   @override
   LocationSearchComponentState createState() => LocationSearchComponentState();
@@ -111,18 +114,20 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
             // padding: EdgeInsets.only(left: 0, top: 10),
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
-                border: widget.useBorders
-                    ? Border.all(color: const Color(0xffececec), width: 0.5)
-                    : null,
-                color: widget.bgColor,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(widget.leftTopRadius),
-                    topRight: Radius.circular(widget.rightTopRaduis),
-                    bottomLeft: Radius.circular(widget.leftBotRaduis),
-                    bottomRight: Radius.circular(widget.rightBotRaduis))),
+              border: widget.useBorders
+                  ? Border.all(color: const Color(0xffececec), width: 0.5)
+                  : null,
+              color: widget.bgColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(widget.leftTopRadius),
+                topRight: Radius.circular(widget.rightTopRaduis),
+                bottomLeft: Radius.circular(widget.leftBotRaduis),
+                bottomRight: Radius.circular(widget.rightBotRaduis),
+              ),
+            ),
             child: Stack(
               alignment: Alignment.topLeft,
-              children: [
+              children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0, top: 5),
                   child: Text(
@@ -213,10 +218,10 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
               });
             },
             child: Icon(MezcalmosIcons.times_circle,
-                size: 16, color: Colors.black)),
+                size: 20, color: Colors.black)),
       );
     } else {
-      if (this.widget.showSearchIcon) {
+      if (widget.showSearchIcon) {
         return Icon(MezcalmosIcons.search, size: 16, color: Colors.black);
       } else
         return SizedBox();

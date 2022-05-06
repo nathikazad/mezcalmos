@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 enum LaundryOrderStatus {
@@ -42,7 +41,7 @@ extension ParseStringToOrderStatus on String {
 class LaundryOrder extends TwoWayDeliverableOrder {
   num? weight;
   String? notes;
-  ServiceUserInfo? laundry;
+  ServiceInfo laundry;
   LaundryOrderStatus status;
   num shippingCost;
   LaundryOrderCosts? costsByType;
@@ -96,9 +95,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         estimatedDeliveryTime: (data["estimatedDeliveryTime"] != null)
             ? DateTime.parse(data["estimatedDeliveryTime"])
             : null,
-        laundry: (data["laundry"] != null)
-            ? ServiceUserInfo.fromData(data["laundry"])
-            : null,
+        laundry:  ServiceInfo.fromData(data["laundry"])
+            ,
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
             : null,
@@ -113,7 +111,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   }
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         "customer": customer,
         "estimatedPrice": cost,
         "status": status,
@@ -145,6 +143,13 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   bool isAtLaundry() {
     return status == LaundryOrderStatus.AtLaundry;
   }
+  bool inDeliverPhase() {
+    return status == LaundryOrderStatus.OtwPickup ||
+        status == LaundryOrderStatus.OrderReceieved ||
+        status == LaundryOrderStatus.PickedUp ||
+        status == LaundryOrderStatus.ReadyForDelivery ||
+        status == LaundryOrderStatus.OtwDelivery;
+  }
 
   num? getPrice() {
     if (weight != null) {
@@ -160,11 +165,11 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       case LaundryOrderStatus.OtwPickup:
         return LaundryOrderPhase.Pickup;
       case LaundryOrderStatus.ReadyForDelivery:
-
       case LaundryOrderStatus.OtwDelivery:
-        return LaundryOrderPhase.Dropoff;
       case LaundryOrderStatus.Delivered:
         return LaundryOrderPhase.Dropoff;
+      case LaundryOrderStatus.AtLaundry:
+        return LaundryOrderPhase.Neither;
       default:
         return LaundryOrderPhase.Neither;
     }

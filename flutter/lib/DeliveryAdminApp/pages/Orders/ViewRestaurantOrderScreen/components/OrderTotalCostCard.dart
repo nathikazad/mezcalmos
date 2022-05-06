@@ -7,21 +7,19 @@ import 'package:sizer/sizer.dart';
 
 // Displays the order costs [delivery + total]
 
-final currency = new NumberFormat("#,##0.00", "en_US");
-
+final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-        ["pages"]
-["Orders"]["ViewRestaurantOrderScreen"]["components"]["OrderTotalCostCard"];
+        ["pages"]["Orders"]["ViewRestaurantOrderScreen"]["components"]
+    ["OrderTotalCostCard"];
 
 Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
   return Column(
-    children: [
+    children: <Widget>[
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.centerLeft,
-        child: Text(
-            "${_i18n()['totalCost']}",
+        child: Text("${_i18n()['totalCost']}",
             style: TextStyle(
                 color: const Color(0xff000f1c),
                 fontFamily: "psb",
@@ -32,6 +30,7 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
       SizedBox(
         height: 10,
       ),
+      const SizedBox(height: 10),
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 10),
         width: Get.width,
@@ -39,22 +38,21 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4)),
           border: Border.all(color: const Color(0xffececec), width: 0.5),
-          color: const Color(0x80ffffff),
+          color: Colors.white,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Expanded(
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                   children: [
-                    Text(
-                        "${_i18n()['deliveryCost']}",
+                    Text("${_i18n()['deliveryCost']}",
                         style: const TextStyle(
-                            color: const Color(0xff000f1c),
+                            color: Color(0xff000f1c),
                             fontFamily: "psr",
                             fontStyle: FontStyle.normal,
                             fontSize: 20.0),
@@ -72,32 +70,37 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
               ),
             ),
             Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15),
-                width: Get.width,
-                height: 0.5,
-                decoration: BoxDecoration(color: const Color(0xffececec))),
+              margin: const EdgeInsets.symmetric(horizontal: 15),
+              width: Get.width,
+              height: 0.5,
+              decoration: BoxDecoration(
+                color: const Color(0xffececec),
+              ),
+            ),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
-                  children: [
+                  children: <Widget>[
                     // Total
-                    Text(
-                        "${_i18n()['total']}",
+                    Text("${_i18n()['total']}",
                         style: const TextStyle(
-                            color: const Color(0xff000f1c),
+                            color: Color(0xff000f1c),
                             fontFamily: "psr",
                             fontStyle: FontStyle.normal,
                             fontSize: 20.0),
                         textAlign: TextAlign.left),
-                    Spacer(),
-                    Text("  \$${currency.format(order.value!.cost)}",
-                        style: TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontFamily: "psb",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 20.0.sp),
-                        textAlign: TextAlign.right)
+                    const Spacer(),
+                    Text(
+                      "  \$${currency.format(order.value!.cost)}",
+                      style: TextStyle(
+                        color: const Color(0xff000f1c),
+                        fontFamily: "psb",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 20.0.sp,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
                   ],
                 ),
               ),
@@ -105,9 +108,7 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
           ],
         ),
       ),
-      SizedBox(
-        height: 20,
-      ),
+      const SizedBox(height: 20),
     ],
   );
 }

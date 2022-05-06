@@ -23,20 +23,43 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Taxi']['RequestTaxiScreen'];
 
 class RequestTaxiController {
+  /// LocationPickerController
   final LocationPickerController locationPickerController =
-      LocationPickerController();
+      LocationPickerController(myLocationButtonEnabled: false)
+        ..enableMezSmartPointer = false;
+
+  /// LocationSearchBarController
   final LocationSearchBarController locationSearchBarController =
       LocationSearchBarController();
+
+  /// TaxiController
   final TaxiController controller = Get.put<TaxiController>(TaxiController());
 
+  /// currentFocusedTextField
   Rx<SearchComponentType> currentFocusedTextField =
       SearchComponentType.From.obs;
+
+  /// taxiRequest
   Rx<TaxiRequest> taxiRequest = TaxiRequest().obs;
+
+  /// pickedFromTo
   RxBool pickedFromTo = false.obs;
+
+  /// Timer
   Timer? timer;
 
+  void startPollingOnlineDrivers() {
+    startFetchingOnlineDrivers();
+    // then keep it periodic each 10s
+    timer?.cancel();
+    timer = null;
+    timer = Timer.periodic(Duration(seconds: 10), (Timer timer) {
+      startFetchingOnlineDrivers();
+    });
+  }
+
   /// this is called at initState time , loads up the map and set the current location as the user's current loc.
-  void initiateViewAndMapWithCurrentLocation() {
+  void initMapAndStartFetchingOnlineDrivers() {
     locationPickerController.setOnMapTap(onTap: () {
       locationSearchBarController.unfocusAllFocusNodes.call();
     });
@@ -45,14 +68,17 @@ class RequestTaxiController {
     locationSearchBarController.focusedTextField.value =
         currentFocusedTextField.value;
     // set the location Enabled Button to be false
-    locationPickerController.myLocationButtonEnabled.value = false;
+    // locationPickerController.myLocationButtonEnabled.value = false;
     // set blackScreenBottom 110
     locationPickerController.blackScreenBottomTextMargin.value = 80;
 
     GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
       taxiRequest.value.from = Location("", locData);
+      mezDbgPrint(
+          " GeoLoc.Location().getLocation ==> ${taxiRequest.value.from}");
       updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
       locationPickerController.setLocation(taxiRequest.value.from!);
+      // startPollingOnlineDrivers();
     });
   }
 
@@ -67,7 +93,7 @@ class RequestTaxiController {
     // set current SearchComponent:
     locationSearchBarController.focusedTextField(currentFocusedTextField.value);
     // set the location Enabled Button to be false
-    locationPickerController.myLocationButtonEnabled.value = false;
+    // locationPickerController.myLocationButtonEnabled.value = false;
     // set blackScreenBottom 110
 
     locationPickerController.blackScreenBottomTextMargin.value = 80;
@@ -75,29 +101,33 @@ class RequestTaxiController {
     updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
     locationPickerController.setLocation(taxiRequest.value.from!);
     locationPickerController.addOrUpdateUserMarker(
-        markerId: SearchComponentType.From.toShortString(),
-        latLng: LatLng(taxiRequest.value.from!.latitude,
-            taxiRequest.value.from!.longitude));
+      markerId: SearchComponentType.From.toShortString(),
+      latLng: LatLng(
+        taxiRequest.value.from!.latitude,
+        taxiRequest.value.from!.longitude,
+      ),
+    );
 
     updateModelAndMarker(SearchComponentType.To, taxiRequest.value.to!);
     locationPickerController.addOrUpdatePurpleDestinationMarker(
+        markerId: SearchComponentType.To.toShortString(),
         latLng: LatLng(taxiRequest.value.to!.position.latitude!,
             taxiRequest.value.to!.position.longitude!));
+
+    // locationPickerController.periodicRerendering.value = true;
     locationPickerController.hideFakeMarker();
     locationPickerController.setAnimateMarkersPolyLinesBounds(true);
-    locationPickerController.animateAndUpdateBounds();
     updateRouteInformation()
         .then((_) => locationPickerController.showConfirmButton());
-
     pickedFromTo.value = true;
+    locationPickerController.lockInAutoZoomAnimation();
   }
 
   /// Calls `TaxiController.fecthOnlineTaxiDrivers` and check if within 5KM then returns the driver.
   void startFetchingOnlineDrivers() {
-    controller.fecthOnlineTaxiDrivers().then((List<OnlineTaxiDriver> drivers) {
+    controller.fetchOnlineTaxiDrivers().then((List<OnlineTaxiDriver> drivers) {
       // Weo loop throught each driver and we call the mgoogleMap refresh from withing the controller
       drivers.forEach((OnlineTaxiDriver driver) {
-        mezDbgPrint("======= [ driver ] ====== ${driver.toJson()}");
         final LatLng driverLocation =
             LatLng(driver.position['lat'], driver.position['lng']);
 
@@ -110,8 +140,6 @@ class RequestTaxiController {
             5;
 
         if (isWithinRange) {
-          mezDbgPrint(
-              "[xdbg]Adding marker with driver name === ${driver.name} | id ${driver.taxiId}");
           locationPickerController.addOrUpdateTaxiDriverMarker(
               driver.taxiId, driverLocation,
               markerTitle: driver.name);
@@ -124,20 +152,24 @@ class RequestTaxiController {
     });
   }
 
-/******************************  EVENT HANDLERS ************************************/
+  /******************************  EVENT HANDLERS ************************************/
 // when one of the dropdowns (pick current location, a saved location or a places suggestion clicked)
   void updateModelAndHandoffToLocationPicker(
       Location? newLocation, SearchComponentType textFieldType) {
     mezDbgPrint(
         "zlaganga : $textFieldType | newLocationAddress : ${newLocation?.address}");
-
+    locationSearchBarController.collapseDropdown();
+    locationPickerController.clearPolyline();
     // locationPickerController.removeCircleMarker();
     if (newLocation != null) {
       currentFocusedTextField.value = textFieldType;
+      // currentFocusedTextField.refresh();
       updateModelAndMarker(textFieldType, newLocation);
       locationPickerController.setLocation(newLocation);
       locationPickerController.moveToNewLatLng(
-          newLocation.latitude, newLocation.longitude);
+        newLocation.latitude,
+        newLocation.longitude,
+      );
       locationPickerController.showFakeMarkerAndPickButton();
       locationPickerController.showOrHideBlackScreen(true);
     } else {
@@ -146,18 +178,27 @@ class RequestTaxiController {
       locationPickerController.showGrayedOutButton();
       pickedFromTo.value = false;
     }
-    locationSearchBarController.collapseDropdown();
-    locationPickerController.clearPolyline();
+    // mezDbgPrint("updateModelAndHandoffToLocationPicker@saad => $textFieldType",
+    //     showMilliSeconds: true);
+    // // reset the camera to any left marker if there is else, to currentLocation
+    // if (locationPickerController.markers.isNotEmpty) {
+    //   double lat = locationPickerController.markers.first.position.latitude;
+    //   double lng = locationPickerController.markers.first.position.latitude;
+    //   locationPickerController.moveToNewLatLng(lat, lng);
+    // } else {
+    //   MapHelper.getCurrentLocation().then((loc) {
+    //     locationPickerController.moveToNewLatLng(loc.latitude, loc.longitude);
+    //   });
+    // }
   }
 
 // after pick button is clicked after user verifies gps locaiton
   void updateModelAndMaybeCalculateRoute(Location newLocation) {
     locationPickerController.showOrHideBlackScreen(false);
-
     updateModelAndMarker(currentFocusedTextField.value, newLocation);
-    currentFocusedTextField.refresh();
-    taxiRequest.refresh();
+
     if (taxiRequest.value.isFromToSet()) {
+      locationPickerController.periodicRerendering.value = true;
       locationPickerController.setAnimateMarkersPolyLinesBounds(true);
       locationPickerController.animateAndUpdateBounds();
       updateRouteInformation()
@@ -166,23 +207,19 @@ class RequestTaxiController {
     } else {
       locationPickerController.setAnimateMarkersPolyLinesBounds(false);
       locationPickerController.showGrayedOutButton();
-      // locationPickerController.removeCircleMarker();
-      pickedFromTo.value = true;
+      pickedFromTo.value = false;
     }
+    taxiRequest.refresh();
   }
 
   /// Call this right after customer presses Confirm button
   /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
   Future<void> waitForCurrentOrderStreamFirstTrigger(String orderId) async {
     if (Get.find<OrderController>().getOrder(orderId) == null) {
-      mezDbgPrint(
-          "[+] s@@d ==> [ REQUEST TAXI ORDER ]  RACING CONDITION HAPPENING ... ");
       await Get.find<OrderController>()
           .getCurrentOrderStream(orderId)
           .firstWhere((Order? order) => order != null);
-    } else
-      mezDbgPrint(
-          "[+] s@@d ==> [ REQUEST TAXI ORDER ] NO RACING CONDITION HAPPEND ! ");
+    }
   }
 
   /// after confirm button is clicked on mez pick google map.
@@ -212,27 +249,33 @@ class RequestTaxiController {
     }
   }
 
-/******************************  Helper function ************************************/
+  /******************************  Helper function ************************************/
   void updateModelAndMarker(
-      SearchComponentType textFieldType, Location newLocation) {
+    SearchComponentType textFieldType,
+    Location newLocation,
+  ) {
     if (textFieldType == SearchComponentType.From) {
       taxiRequest.value.setFromLocation(newLocation);
       //ignore_for_file:unawaited_futures
       locationPickerController.addOrUpdateUserMarker(
-          markerId: textFieldType.toShortString(),
-          latLng: newLocation.toLatLng());
+        markerId: textFieldType.toShortString(),
+        latLng: newLocation.toLatLng(),
+      );
     } else {
       taxiRequest.value.setToLocation(newLocation);
       locationPickerController.addOrUpdatePurpleDestinationMarker(
-          markerId: textFieldType.toShortString(),
-          latLng: newLocation.toLatLng());
+        markerId: textFieldType.toShortString(),
+        latLng: newLocation.toLatLng(),
+      );
     }
+    // taxiRequest.refresh();
   }
 
   void onSuccessSignInUpdateUserMarker() {
     locationPickerController.addOrUpdateUserMarker(
-        markerId: SearchComponentType.From.toShortString(),
-        latLng: taxiRequest.value.from!.toLatLng());
+      markerId: SearchComponentType.From.toShortString(),
+      latLng: taxiRequest.value.from!.toLatLng(),
+    );
   }
 
   Future<void> updateRouteInformation() async {
@@ -243,10 +286,14 @@ class RequestTaxiController {
           getEstimatedRidePriceInPesos(route.distance.distanceInMeters);
       taxiRequest.value.setEstimatedPrice(estimatedPrice);
       locationPickerController.addPolyline(route.polylineList);
-      taxiRequest.value.setRouteInformation(MapHelper.RouteInformation(
+      taxiRequest.value.setRouteInformation(
+        MapHelper.RouteInformation(
           polyline: route.encodedPolyLine,
           distance: route.distance,
-          duration: route.duration));
+          duration: route.duration,
+        ),
+      );
+      taxiRequest.refresh();
     } else {
       // TODO:handle route error
     }

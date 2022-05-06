@@ -1,8 +1,8 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 //ignore_for_file:constant_identifier_names
@@ -37,7 +37,7 @@ class RestaurantOrder extends DeliverableOrder {
   List<RestaurantOrderItem> items = <RestaurantOrderItem>[];
   String? notes;
   RestaurantOrderStatus status;
-  UserInfo get restaurant => serviceProvider!;
+  ServiceInfo get restaurant => serviceProvider! as ServiceInfo;
   RestaurantOrder(
       {required String orderId,
       required this.status,
@@ -46,7 +46,7 @@ class RestaurantOrder extends DeliverableOrder {
       required PaymentType paymentType,
       required DateTime orderTime,
       required num cost,
-      required UserInfo restaurant,
+      required ServiceInfo restaurant,
       required UserInfo customer,
       required Location to,
       DeliveryDriverUserInfo? dropoffDriver,
@@ -55,17 +55,18 @@ class RestaurantOrder extends DeliverableOrder {
       required this.shippingCost,
       this.notes})
       : super(
-            orderId: orderId,
-            orderType: OrderType.Restaurant,
-            serviceProviderId: serviceProviderId,
-            paymentType: paymentType,
-            orderTime: orderTime,
-            cost: cost,
-            customer: customer,
-            serviceProvider: restaurant,
-            to: to,
-            dropoffDriver: dropoffDriver,
-            dropOffDriverChatId: dropOffDriverChatId);
+          orderId: orderId,
+          orderType: OrderType.Restaurant,
+          serviceProviderId: serviceProviderId,
+          paymentType: paymentType,
+          orderTime: orderTime,
+          cost: cost,
+          customer: customer,
+          serviceProvider: restaurant,
+          to: to,
+          dropoffDriver: dropoffDriver,
+          dropOffDriverChatId: dropOffDriverChatId,
+        );
 
   //ignore_for_file:avoid_annotating_with_dynamic
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
@@ -79,7 +80,7 @@ class RestaurantOrder extends DeliverableOrder {
         cost: data["cost"],
         notes: data["notes"],
         to: Location.fromFirebaseData(data['to']),
-        restaurant: UserInfo.fromData(data["restaurant"]),
+        restaurant: ServiceInfo.fromData(data["restaurant"]),
         customer: UserInfo.fromData(data["customer"]),
         itemsCost: data['itemsCost'],
         shippingCost: data['shippingCost'],
@@ -98,22 +99,16 @@ class RestaurantOrder extends DeliverableOrder {
           image: itemData["image"],
           quantity: itemData["quantity"],
           notes: itemData["notes"]);
-      itemData["options"]?["chosenManyOptions"]
-          ?.forEach((dynamic id, dynamic data) {
-        restaurantOrderItem.chooseManyOptions.add(ChooseManyOption(
-            optionId: id,
-            optionName: convertToLanguageMap(data["name"]),
-            chosenValueCost: data["chosenValueCost"],
-            chosenOptionValue: data["chosenValue"]));
-      });
-      itemData["options"]?["chosenOneOptions"]
-          ?.forEach((dynamic id, dynamic data) {
-        restaurantOrderItem.chooseOneOptions.add(ChooseOneOption(
-            optionId: id,
-            optionName: convertToLanguageMap(data["name"]),
-            chosenOptionId: data["chosenOptionId"],
-            chosenOptionCost: data["chosenOptionCost"],
-            chosenOptionName: convertToLanguageMap(data["chosenOptionName"])));
+
+      itemData["chosenChoices"]?.forEach((optionId, optionData) {
+        restaurantOrderItem.chosenChoices[optionId] = <Choice>[];
+        restaurantOrderItem.optionNames[optionId] =
+            convertToLanguageMap(optionData["optionName"]);
+
+        optionData["choices"]?.forEach((choiceData) {
+          restaurantOrderItem.chosenChoices[optionId]!
+              .add(Choice.fromData(choiceData["id"], choiceData));
+        });
       });
       restaurantOrder.items.add(restaurantOrderItem);
     });
@@ -121,6 +116,11 @@ class RestaurantOrder extends DeliverableOrder {
   }
 
   String get restaurantId => serviceProviderId!;
+
+  @override
+  String toString() {
+    return "{quantity : $quantity , itemCost: $itemsCost , items : ${items.length} , notes : $notes , status : $status}";
+  }
 
   @override
   bool isCanceled() {
@@ -136,6 +136,11 @@ class RestaurantOrder extends DeliverableOrder {
         status == RestaurantOrderStatus.OnTheWay;
   }
 
+  bool inDeliveryPhase() {
+    return status == RestaurantOrderStatus.ReadyForPickup ||
+        status == RestaurantOrderStatus.OnTheWay;
+  }
+
   String clipBoardText(LanguageType languageType) {
     String text = "";
     text += "${restaurant.name}\n";
@@ -143,16 +148,18 @@ class RestaurantOrder extends DeliverableOrder {
         items.fold<String>("", (String mainString, RestaurantOrderItem item) {
       mainString +=
           "  ${item.name[languageType]} x${item.quantity} ${item.totalCost}\n";
-      mainString += item.chooseOneOptions.fold("",
-          (String secondString, ChooseOneOption chooseOneOption) {
-        return "$secondString    ${chooseOneOption.optionName[languageType]}: ${chooseOneOption.chosenOptionName[languageType]}\n";
+
+      item.optionNames.forEach((String optionId, LanguageMap languageMap) {
+        if (item.chosenChoices.containsKey(optionId)) {
+          mainString += "    ${languageMap[languageType]}\n";
+          mainString += item.chosenChoices[optionId]!.fold("",
+              (String thirdString, Choice choice) {
+            return "$thirdString      ${choice.name[languageType]}\n";
+          });
+        }
       });
-      mainString += item.chooseManyOptions.fold("",
-          (String secondString, ChooseManyOption chooseManyOption) {
-        mezDbgPrint(chooseManyOption.optionName[languageType]);
-        return "$secondString    ${chooseManyOption.optionName[languageType]}\n";
-      });
-      mainString += "    ${item.notes}\n";
+      if (item.notes != null && item.notes!.length > 0)
+        mainString += "    ${item.notes}\n";
       return mainString;
     });
     text += "$notes\n";
@@ -161,7 +168,7 @@ class RestaurantOrder extends DeliverableOrder {
     text += "${to.address}\n";
     text +=
         "https://www.google.com/maps/dir/?api=1&destination=${to.latitude},${to.longitude}";
-    mezDbgPrint(text);
+
     return text;
   }
 }
@@ -171,12 +178,14 @@ class RestaurantOrderItem {
   num totalCost;
   String idInCart;
   String idInRestaurant;
-  Map<LanguageType, String> name;
-  String image;
+  LanguageMap name;
+  String? image;
   int quantity;
   String? notes;
-  List<ChooseManyOption> chooseManyOptions = <ChooseManyOption>[];
-  List<ChooseOneOption> chooseOneOptions = <ChooseOneOption>[];
+  //optionId and list of choices for that option
+  Map<String, List<Choice>> chosenChoices = <String, List<Choice>>{};
+  //optionId and list of choices for that option
+  Map<String, LanguageMap> optionNames = <String, LanguageMap>{};
   RestaurantOrderItem(
       {required this.costPerOne,
       required this.totalCost,
@@ -186,30 +195,4 @@ class RestaurantOrderItem {
       required this.image,
       required this.quantity,
       this.notes});
-}
-
-class ChooseOneOption {
-  String optionId;
-  Map<LanguageType, String> optionName;
-  String chosenOptionId;
-  Map<LanguageType, String> chosenOptionName;
-  num chosenOptionCost;
-  ChooseOneOption(
-      {required this.optionId,
-      required this.optionName,
-      required this.chosenOptionId,
-      required this.chosenOptionCost,
-      required this.chosenOptionName});
-}
-
-class ChooseManyOption {
-  String optionId;
-  Map<LanguageType, String> optionName;
-  bool chosenOptionValue;
-  num chosenValueCost;
-  ChooseManyOption(
-      {required this.optionId,
-      required this.optionName,
-      required this.chosenValueCost,
-      required this.chosenOptionValue});
 }

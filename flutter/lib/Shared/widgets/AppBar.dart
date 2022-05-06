@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
-enum AppBarLeftButtonType { Back, Menu }
+enum AppBarLeftButtonType { Back, Menu, Lang }
 
-AppBar mezcalmosAppBar(
-  AppBarLeftButtonType leftBtnType, {
-  bgColor = Colors.white,
-  Function? onClick,
-  PreferredSizeWidget? tabbar,
-  List<Widget> actionIcons = const <Widget>[],
-}) {
+AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
+    {bgColor = Colors.white,
+    Function? onClick,
+    PreferredSizeWidget? tabBar,
+    List<Widget> actionIcons = const <Widget>[]}) {
   Widget btnIcon;
 
   switch (leftBtnType) {
@@ -35,12 +34,36 @@ AppBar mezcalmosAppBar(
         color: Colors.white,
         size: 16,
       );
+
+      break;
+    case AppBarLeftButtonType.Lang:
+      btnIcon = Obx(
+        () => Align(
+          alignment: Alignment.centerLeft,
+          child: GestureDetector(
+            onTap: () =>
+                onClick?.call() ??
+                Get.find<LanguageController>().changeUserLanguage(),
+            child: Container(
+              height: 24,
+              width: 24,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  fit: BoxFit.contain,
+                  image: AssetImage(Get.find<LanguageController>().oppositFlag),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
       break;
   }
   return AppBar(
     toolbarHeight: 80,
     elevation: 0,
-    bottom: tabbar,
+    bottom: tabBar,
     automaticallyImplyLeading: false,
     title: Column(
       children: [
@@ -50,44 +73,49 @@ AppBar mezcalmosAppBar(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Container(
-                height: 30,
-                width: 30,
-                child: GestureDetector(
-                  onTap: () {
-                    onClick?.call();
-                  },
-                  child: Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(255, 216, 225, 249),
-                          spreadRadius: 0,
-                          blurRadius: 7,
-                          offset: Offset(0, 7), // changes position of shadow
-                        ),
-                      ],
-                      gradient: LinearGradient(
-                          colors: onClick != null
-                              ? [
-                                  Color.fromARGB(255, 97, 127, 255),
-                                  Color.fromARGB(255, 198, 90, 252),
-                                ]
-                              : [Colors.grey.shade300, Colors.grey.shade300],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight),
+              if (leftBtnType != AppBarLeftButtonType.Lang)
+                Container(
+                  height: 30,
+                  width: 30,
+                  child: GestureDetector(
+                    onTap: () {
+                      onClick?.call();
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 216, 225, 249),
+                            spreadRadius: 0,
+                            blurRadius: 7,
+                            offset: Offset(0, 7), // changes position of shadow
+                          ),
+                        ],
+                        gradient: LinearGradient(
+                            colors: onClick != null
+                                ? [
+                                    Color.fromARGB(255, 97, 127, 255),
+                                    Color.fromARGB(255, 198, 90, 252),
+                                  ]
+                                : [Colors.grey.shade300, Colors.grey.shade300],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight),
+                      ),
+                      child: btnIcon,
                     ),
-                    child: btnIcon,
                   ),
-                ),
-              ),
+                )
+              else
+                btnIcon,
               Spacer(),
               MezcalmosSharedWidgets.fillTitle(actionIcons.length),
               Spacer(),
-              for (var i = 0; i < actionIcons.length; i++) ...[actionIcons[i]]
+              for (var i = 0; i < actionIcons.length; i++) ...<Widget>[
+                actionIcons[i]
+              ],
             ],
           ),
         ),

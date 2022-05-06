@@ -1,16 +1,21 @@
+import 'dart:async';
+
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:flutter/material.dart';
+import 'dart:convert';
+
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:get/get.dart';
-import 'dart:async';
-
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -19,10 +24,12 @@ class RestaurantController extends GetxController {
   StreamSubscription<dynamic>? _cartListener;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
+
   @override
   void onInit() {
     super.onInit();
-    print("--------------------> RestaurantsCartController Initialized !");
+    mezDbgPrint(
+        "--------------------> RestaurantsCartController Initialized !");
     if (_authController.fireAuthUser != null) {
       _cartListener?.cancel();
       _cartListener = _databaseHelper.firebaseDatabase
@@ -33,12 +40,10 @@ class RestaurantController extends GetxController {
         final dynamic cartData = event.snapshot.value;
         // check if cart has data
         if (cartData != null) {
-          mezDbgPrint("@sa@d@: DATA ===> $cartData");
 
           // check if cart data is for restaurant
           if (cartData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
-            mezDbgPrint("@sa@d@: DATA  FOR RESTAU ===> $cartData");
 
             // check if already associated restaurant with cart is the same as current restaurant,
             // if not clear the old associated restaurant
@@ -59,8 +64,6 @@ class RestaurantController extends GetxController {
             }
 
             cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
-            mezDbgPrint(
-                "@sa@d@: DATA : cart.value  ===> ${cart.value.toFirebaseFormattedJson()} ");
           }
         } else {
           cart.value = Cart();
@@ -104,7 +107,8 @@ class RestaurantController extends GetxController {
     }
 
     mezDbgPrint(
-        "@@saadf@@ restaurantController::addItem ---> addingItem and saving card !");
+      "@@saadf@@ restaurantController::addItem ---> addingItem and saving card !",
+    );
 
     cart.value.addItem(cartItem);
     await saveCart();

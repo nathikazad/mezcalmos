@@ -48,8 +48,13 @@ class RestaurantOrderController extends GetxController {
         .limitToLast(5)
         .onChildAdded
         .listen((Event event) {
-      pastOrders.add(
-          RestaurantOrder.fromData(event.snapshot.key, event.snapshot.value));
+      final dynamic _data = event.snapshot.value;
+      // adding this check because old data (past orders are corrupted , most of em don't have restaurant's location)
+      // didn't wanna erase the data, which is too much it seems.
+      if (_data?['restaurant']?['location'] != null) {
+        pastOrders.add(
+            RestaurantOrder.fromData(event.snapshot.key, event.snapshot.value));
+      }
     });
 
     super.onInit();
@@ -98,12 +103,12 @@ class RestaurantOrderController extends GetxController {
     });
   }
 
-  bool orderHaveNewMessageNotifications(String orderId) {
+  bool orderHaveNewMessageNotifications(String chatId) {
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId == orderId)
+            notification.chatId == chatId)
         .isNotEmpty;
   }
 

@@ -35,19 +35,19 @@ const int nQualityCompressionOfUserImage = 10;
 const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;
 
 // ----------------- Costants Strings ----------------- //
-const String tPrivacyPolicyCustomerApp =
+const String sPrivacyPolicyCustomerApp =
     "https://www.mezcalmos.com/privacy-policy.html";
-const String tPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
+const String sPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
 
-const LanguageType tDefaultLanguage = LanguageType.ES;
-const String tDefaultTheme = "light";
+const LanguageType sDefaultLanguage = LanguageType.ES;
+const String sDefaultTheme = "light";
 
-const String tMez = "MEZ";
-const String tCalmos = "CALMOS";
-const String tMezcalmos = "MEZCALMOS";
+const String sMez = "MEZ";
+const String sCalmos = "CALMOS";
+const String sMezcalmos = "MEZCALMOS";
 
-const String tDefaultUserName = "Unknown";
-const String tDefaultCustomerName = "Unknown";
+const String sDefaultUserName = "Unknown";
+const String sDefaultCustomerName = "Unknown";
 
 // ----------------- GetStorage Strings ----------------- //
 const String getxPrivacyPolicyLink = "ppLink";
@@ -57,13 +57,16 @@ const String getxTaxiDescriptor = "taxi_descriptor";
 const String getxDestinationDescriptor = "destination_descriptor";
 const String getxUserId = "userid";
 const String getxAppVersion = "version";
+const String getxAppName = "appName";
 const String getxPackageName = "packageName";
+const String getxAppStoreId = "iosAppStoreId";
 const String defaultUserImgUrl =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
 
 // ----------------- Assets Strings ----------------- //
 const String aDefaultNotificationsSound = 'assets/sounds/notif-alert.mp3';
 const String aLogoPath = "assets/images/shared/logo.png";
+const String aNoImage = "assets/images/shared/noImage.png";
 const String a404 = "assets/images/shared/404.png";
 const String aUpdate = "assets/images/shared/update.png";
 const String aDefaultDbUserImgAsset =
@@ -111,6 +114,7 @@ extension ParseOrderTypeToString on AppType {
       case AppType.DeliveryAdminApp:
         return ParticipantType.DeliveryAdmin;
       default:
+        return null;
     }
     return null;
   }

@@ -24,7 +24,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
       padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Container(
             child: Text(
               '${_i18n()["laundry"]}',
@@ -50,15 +50,13 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
   // CARD CONTENT WHEN THERE IS NO LAUNDRY ASSIGNED, LAUNDRY INFO  (LAUNDRY == NULL)
   Widget noLaundryComponent(BuildContext context, TextTheme textTheme) {
     return Row(
-      children: [
+      children: <Widget>[
         Icon(
           Icons.local_laundry_service,
           color: Theme.of(context).primaryColorLight,
           size: 50,
         ),
-        SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Text(
           'Error',
           style: textTheme.bodyText1,
@@ -70,28 +68,24 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
 // CARD CONTENT WHEN THERE IS LAUNDRY ASSIGNED, LAUNDRY INFO  (LAUNDRY != NULL)
   Widget laundryInfoComponent(TextTheme textTheme, BuildContext context) {
     return Row(
-      children: [
+      children: <Widget>[
         CircleAvatar(
           radius: 25,
           backgroundImage:
-              CachedNetworkImageProvider(widget.order.laundry!.image),
+              CachedNetworkImageProvider(widget.order.laundry.image),
         ),
-        SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Flexible(
           flex: 3,
           fit: FlexFit.tight,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
-                widget.order.laundry!.name,
+                widget.order.laundry.name,
                 style: textTheme.bodyText2,
               ),
-              SizedBox(
-                height: 5,
-              ),
+              const SizedBox(height: 5),
             ],
           ),
         ),

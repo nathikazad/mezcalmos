@@ -22,9 +22,8 @@ class OrderController extends GetxController {
   RxList<Order> pastOrders = <Order>[].obs;
   String lastPastOrderId = "";
 
-  StreamSubscription? _currentOrdersListener;
-  StreamSubscription? _pastOrdersListener;
-  Rx<FilterStatus> filterStatus = FilterStatus.All.obs;
+  StreamSubscription<dynamic>? _currentOrdersListener;
+  StreamSubscription<dynamic>? _pastOrdersListener;
 
   @override
   void onInit() {
@@ -37,41 +36,35 @@ class OrderController extends GetxController {
           .reference()
           .child(customerPastOrders(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((Event event) async {
-        mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
-        mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
-        //  mezDbgPrint("PAST ORDERS ==> ${event.snapshot.value} ");
+          .listen(
+        (Event event) async {
+          final List<Order> orders = <Order>[];
+          if (event.snapshot.value != null) {
+            for (String orderId in event.snapshot.value.keys) {
+              final dynamic orderData = event.snapshot.value[orderId];
+              try {
+                if (orderData["orderType"] ==
+                    OrderType.Restaurant.toFirebaseFormatString()) {
+                  orders.add(RestaurantOrder.fromData(orderId, orderData));
+                }
 
-        mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
-
-        mezDbgPrint("----------------- O R D E R CONTROLLER ----------------");
-
-        final List<Order> orders = [];
-        if (event.snapshot.value != null) {
-          for (var orderId in event.snapshot.value.keys) {
-            final dynamic orderData = event.snapshot.value[orderId];
-            try {
-              if (orderData["orderType"] ==
-                  OrderType.Restaurant.toFirebaseFormatString()) {
-                orders.add(RestaurantOrder.fromData(orderId, orderData));
+                if (orderData["orderType"] ==
+                    OrderType.Taxi.toFirebaseFormatString()) {
+                  orders.add(TaxiOrder.fromData(orderId, orderData));
+                }
+                if (orderData["orderType"] ==
+                    OrderType.Laundry.toFirebaseFormatString()) {
+                  orders.add(LaundryOrder.fromData(orderId, orderData));
+                }
+              } catch (e) {
+                mezDbgPrint(
+                    "past order error $orderId ==============" + e.toString());
               }
-
-              if (orderData["orderType"] ==
-                  OrderType.Taxi.toFirebaseFormatString()) {
-                orders.add(TaxiOrder.fromData(orderId, orderData));
-              }
-              if (orderData["orderType"] ==
-                  OrderType.Laundry.toFirebaseFormatString()) {
-                orders.add(LaundryOrder.fromData(orderId, orderData));
-              }
-            } catch (e) {
-              mezDbgPrint(
-                  "past order error $orderId ==============" + e.toString());
             }
           }
-        }
-        pastOrders.value = orders;
-      });
+          pastOrders.value = orders;
+        },
+      );
 
       _currentOrdersListener?.cancel();
       _currentOrdersListener = _databaseHelper.firebaseDatabase
@@ -79,11 +72,11 @@ class OrderController extends GetxController {
           .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
           .onValue
           .listen((Event event) async {
-        final List<Order> orders = [];
+        final List<Order> orders = <Order>[];
 
         if (event.snapshot.value != null) {
           // mezDbgPrint("my data : ${event.snapshot.value.toString()}");
-          for (var orderId in event.snapshot.value.keys) {
+          for (String orderId in event.snapshot.value.keys) {
             final dynamic orderData = event.snapshot.value[orderId];
             // if restaurant order
             if (orderData["orderType"] ==
@@ -201,5 +194,3 @@ class OrderController extends GetxController {
     super.onClose();
   }
 }
-
-enum FilterStatus { All, Done, Canceled }

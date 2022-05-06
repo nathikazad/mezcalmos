@@ -1,22 +1,16 @@
 import { OrderType, PaymentType } from '../../Generic/Order';
-import { Location } from '../../Generic/Generic';
-export interface ChosenOneOption {
-  chosenOptionName: string;
-  chosenOptionId: string;
-  name: string;
-  chosenOptionCost: number;
+import { Language, Location } from '../../Generic/Generic';
+
+export interface Option {
+  optionNames: Record<Language, string>;
+  choices: Array<Choice>
 }
 
-export interface ChosenManyOption {
-  name: string;
-  chosenValue: boolean;
-  chosenValueCost: number;
+export interface Choice {
+  name: Record<Language, string>;
+  cost: number;
 }
 
-export interface Options {
-  chosenOneOptions: Record<string, ChosenOneOption>;
-  chosenManyOptions: Record<string, ChosenManyOption>;
-}
 
 export interface Item {
   quantity: number;
@@ -26,7 +20,7 @@ export interface Item {
   image: string;
   costPerOne: number;
   name: string;
-  options: Options;
+  chosenChoices: Record<string, Option>;
 }
 
 export interface Cart {

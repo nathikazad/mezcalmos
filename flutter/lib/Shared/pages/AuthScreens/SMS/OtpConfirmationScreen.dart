@@ -14,7 +14,6 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["AuthScreens"]["SMS"]["OtpConfirmationScreen"];
 
-
 class OtpConfirmationScreen extends GetView<AuthController> {
   RxBool clickedSignInOtp = false.obs;
   RxInt _timeBetweenResending = 0.obs;
@@ -72,10 +71,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                 Obx(
                   () => Container(
                     margin: const EdgeInsets.all(5),
-                    child: Text(
-                        _i18n()["OtpConfirmation"],
-                        overflow: TextOverflow.visible,
-                        style: txt.headline1),
+                    child: Text(_i18n()["OtpConfirmation"],
+                        overflow: TextOverflow.visible, style: txt.headline1),
                   ),
                 ),
                 SizedBox(
@@ -98,7 +95,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
         ));
   }
 
-  otpConfimCard(TextTheme txt, String _phonePassed, BuildContext context,
+  Widget otpConfimCard(TextTheme txt, String _phonePassed, BuildContext context,
       TextEditingController _otpCodeTextController) {
     return Card(
       child: Container(
@@ -114,8 +111,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   style: txt.bodyText2,
                   children: <TextSpan>[
                     new TextSpan(
-                        text: _i18n()["enterOtpCode"],
-                        style: txt.bodyText2),
+                        text: _i18n()["enterOtpCode"], style: txt.bodyText2),
                     new TextSpan(
                         text: "  ${Get.arguments ?? _phonePassed}",
                         style: txt.bodyText1!.copyWith(
@@ -238,10 +234,8 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                       break;
 
                     case false:
-                      MezSnackbar(
-                          "Oops ..",
-                          _i18n().strings['shared']
-                              ['login']['wrongOTPCode']);
+                      MezSnackbar("Oops ..",
+                          _i18n()['wrongOTPCode']);
                       clickedSignInOtp.value = false;
                       break;
                   }

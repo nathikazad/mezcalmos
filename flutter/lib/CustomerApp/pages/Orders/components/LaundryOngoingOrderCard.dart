@@ -24,17 +24,17 @@ class LaundryOngoigOrderCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          Get.toNamed(getLaundyOrderRoute(order.orderId));
+          Get.toNamed<void>(getLaundyOrderRoute(order.orderId));
         },
         borderRadius: BorderRadius.circular(10),
         child: Ink(
           padding: EdgeInsets.all(8),
           width: double.infinity,
           child: Column(
-            children: [
+            children: <Widget>[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   Stack(
                     children: [
                       CircleAvatar(
@@ -46,38 +46,38 @@ class LaundryOngoigOrderCard extends StatelessWidget {
                           size: 35,
                         ),
                       ),
-                      //  if (order.serviceProvider != null)
-                      // Positioned(
+                      // if (order.serviceProvider != null)
+                      //   Positioned(
                       //     top: 0,
                       //     right: 0,
                       //     child: CircleAvatar(
-                      //         radius: 14,
-                      //         backgroundColor: Colors.blueAccent,
-                      //         child: Icon(
-                      //           Icons.local_laundry_service_rounded,
-                      //           size: 20,
-                      //           // size: 18.sp,
-                      //           color: Colors.white,
-                      //         )))
+                      //       radius: 14,
+                      //       backgroundColor: Colors.blueAccent,
+                      //       child: Icon(
+                      //         Icons.local_laundry_service_rounded,
+                      //         size: 20,
+                      //         // size: 18.sp,
+                      //         color: Colors.white,
+                      //       ),
+                      //     ),
+                      //   ),
                     ],
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Flexible(
                     flex: 4,
                     fit: FlexFit.tight,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(
                           order.serviceProvider?.name ?? "Laundry order",
                           style: txt.headline3,
                         ),
                         if (MediaQuery.of(context).size.width > 320)
                           Column(
-                            children: [
-                              SizedBox(
-                                height: 8,
-                              ),
+                            children: <Widget>[
+                              const SizedBox(height: 8),
                               Text(
                                 order.to.address,
                                 style: txt.subtitle1,
@@ -87,16 +87,12 @@ class LaundryOngoigOrderCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                   getLaundryOrderWidget((order).status),
-                  SizedBox(
-                    width: 10,
-                  )
+                  const SizedBox(width: 10)
                 ],
               ),
-              Divider(),
+              const Divider(),
               mezOrdercart(txt)
             ],
           ),
@@ -110,28 +106,24 @@ class LaundryOngoigOrderCard extends StatelessWidget {
       padding: EdgeInsets.all(3),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(
             " ${_i18n()["totalCost"]} : ${(order.getPrice() != null) ? '\$${order.getPrice()}' : '-'}",
           ),
-          Spacer(),
+          const Spacer(),
           Icon(
             Ionicons.time_outline,
             size: 16.sp,
           ),
-          SizedBox(
-            width: 5,
-          ),
+          const SizedBox(width: 5),
           Text(
             getLaundryOrderStatus((order).status),
             style: txt.bodyText2,
           ),
-          SizedBox(
-            width: 10,
-          ),
+          const SizedBox(width: 10),
           Icon(
             Icons.arrow_forward_ios_rounded,
-          )
+          ),
         ],
       ),
     );

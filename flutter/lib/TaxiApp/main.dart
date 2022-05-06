@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/TaxiApp/authHooks.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -18,14 +19,22 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 void main() {
   loadBitmaps();
   runMainGuarded(
-      () => runApp(Sizer(builder: (context, orientation, deviceType) {
-            return StartingPoint(
-                appType: AppType.TaxiApp,
-                signInCallback: signInCallback,
-                appTheme: TaxiAppTheme.lightTheme,
-                signOutCallback: signOutCallback,
-                routes: routes);
-          })));
+    () => runApp(
+      Sizer(
+        builder: (_, __, ___) {
+          return StartingPoint(
+            appType: AppType.TaxiApp,
+            signInCallback: signInCallback,
+            appTheme: TaxiAppTheme.lightTheme,
+            signOutCallback: signOutCallback,
+            routes: routes,
+            locationPermissionType:
+                LocationPermissionType.ForegroundAndBackground,
+          );
+        },
+      ),
+    ),
+  );
 }
 
 void loadBitmaps() async {
@@ -38,3 +47,5 @@ void loadBitmaps() async {
         await bitmapDescriptorLoader(purple_destination_marker_asset, 60, 60));
   }
 }
+
+// python launcher.py env=stage app=TaxiApp

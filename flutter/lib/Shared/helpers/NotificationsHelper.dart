@@ -22,7 +22,7 @@ StreamSubscription<notifs.Notification> initializeShowNotificationsListener() {
     // mezDbgPrint("Notif::title ====> ${notification.title}");
     // mezDbgPrint("Notif::body ====> ${notification.body}");
     if (DateTime.now().difference(notification.timestamp) <
-        Duration(minutes: 10)) {
+        Duration(minutes: 1)) {
       _displayNotification(notification);
     }
   });
@@ -46,78 +46,87 @@ Future<void> decideWhichButtonDialogToUse(
     notifs.Notification notification) async {
   if (Get.currentRoute == notification.linkUrl)
     await oneButtonDialog(
-        title: notification.title,
-        body: notification.body,
-        buttonStyle: MezDialogButtonStyle(
-            buttonText: "Ok",
-            buttonColor: Color(0xffffffff),
-            buttonShadowColor: Color(0xfffdfdfd)));
+      title: notification.title,
+      body: notification.body,
+      buttonStyle: MezDialogButtonStyle(
+        buttonText: "Ok",
+        buttonColor: Color(0xffffffff),
+        buttonShadowColor: Color(0xfffdfdfd),
+      ),
+    );
   else
     await twoButtonDialog(
-        title: notification.title,
-        body: notification.body,
-        buttonLeftStyle: MezDialogButtonStyle(
-            buttonText: "Ok",
-            buttonColor: Color(0xffffffff),
-            buttonShadowColor: Color(0xfffdfdfd)),
-        buttonRightStyle: MezDialogButtonStyle(
-            buttonText: notification.linkText ?? _i18n()['view'],
-            buttonColor: Color(0xffffffff),
-            buttonShadowColor: Color(0xfffdfdfd)),
-        rightButtonCallback: () {
-          
-          return Get.toNamed(notification.linkUrl);
-        },
-        leftButtonCallback: () {});
+      title: notification.title,
+      body: notification.body,
+      leftButton: MezDialogButtonStyle(
+        buttonText: "Ok",
+        buttonColor: Color(0xffffffff),
+        buttonShadowColor: Color(0xfffdfdfd),
+      ),
+      rightButton: MezDialogButtonStyle(
+        buttonText: notification.linkText ?? _i18n()['view'],
+        buttonColor: Color(0xffffffff),
+        buttonShadowColor: Color(0xfffdfdfd),
+      ),
+      rightButtonCallback: () {
+        return Get.toNamed(notification.linkUrl);
+      },
+      leftButtonCallback: () {},
+    );
 }
 
 void notificationSnackBar(
     String imgUrl, String title, String msg, String time, Function onClick) {
   Get.rawSnackbar(
-      onTap: (_) async {
-        mezDbgPrint("ONTAP ====> $_");
+    onTap: (_) async {
+      mezDbgPrint("ONTAP ====> $_");
 
-        await onClick();
-      },
-      maxWidth: Get.width,
-      margin: EdgeInsets.all(0),
-      duration: Duration(milliseconds: 5000),
-      icon: Container(
-        height: 50,
-        width: 10,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-                color: Colors.grey.shade100,
-                width: 1,
-                style: BorderStyle.solid)),
-        child: imgUrl.startsWith("http")
-            ? Image.network(
-                imgUrl,
-                fit: BoxFit.cover,
-                height: 50,
-                width: 10,
-              )
-            : Image.asset(imgUrl),
+      await onClick();
+    },
+    maxWidth: Get.width,
+    margin: EdgeInsets.all(0),
+    duration: Duration(milliseconds: 5000),
+    icon: Container(
+      height: 50,
+      width: 10,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.grey.shade100,
+          width: 1,
+          style: BorderStyle.solid,
+        ),
       ),
-      backgroundColor: Colors.white,
-      borderWidth: 1,
-      borderColor: const Color(0xECECEC),
-      borderRadius: 0,
-      messageText: Text(msg),
-      titleText: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
+      child: imgUrl.startsWith("http")
+          ? Image.network(
+              imgUrl,
+              fit: BoxFit.cover,
+              height: 50,
+              width: 10,
+            )
+          : Image.asset(imgUrl),
+    ),
+    backgroundColor: Colors.white,
+    borderWidth: 1,
+    borderColor: const Color(0xECECEC),
+    borderRadius: 0,
+    messageText: Text(msg),
+    titleText: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Flexible(
+          child: Text(
             title,
             style: TextStyle(fontFamily: 'psb'),
           ),
-          Text(time)
-        ],
-      ),
-      padding: EdgeInsets.all(25),
-      snackPosition: SnackPosition.TOP,
-      snackStyle: SnackStyle.GROUNDED);
+        ),
+        Text(time),
+      ],
+    ),
+    padding: EdgeInsets.all(25),
+    snackPosition: SnackPosition.TOP,
+    snackStyle: SnackStyle.GROUNDED,
+  );
 }

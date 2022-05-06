@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
 
 class LaundryOrderRequestView extends StatefulWidget {
   const LaundryOrderRequestView({Key? key}) : super(key: key);
@@ -25,15 +25,27 @@ class LaundryOrderRequestView extends StatefulWidget {
 }
 
 class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
+  /// TextEditingController
   TextEditingController _orderNote = TextEditingController();
+
+  /// LocationPickerController
   final LocationPickerController locationPickerController =
       LocationPickerController();
+
+  /// AuthController
   final AuthController authController = Get.find<AuthController>();
 
+  /// LaundryController
   LaundryController laundryController = Get.find<LaundryController>();
+
+  /// LanguageController
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['pages']['Laundry']['LaundryRequestView']['LaundryOrderRequestView'];
+
+  /// Location
   Location? defaultLoc;
+
+  /// RxBool clicked
   RxBool clicked = false.obs;
   Laundry? selectedLaundry;
 
@@ -47,10 +59,9 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomerAppBar(autoBack: true),
-      //  bottomNavigationBar: bottomButton(context),
-      body: Column(
-        children: [
+        appBar: CustomerAppBar(autoBack: true),
+        //  bottomNavigationBar: bottomButton(context),
+        body: Column(children: <Widget>[
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -142,11 +153,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 ),
               ),
             ),
-          ),
-          bottomButton(context),
-        ],
-      ),
-    );
+          )
+        ]));
   }
 
   Widget _orderNoteComponent() {
@@ -154,15 +162,15 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       margin: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(_i18n()["notes"], style: Theme.of(context).textTheme.headline3),
-          SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           TextField(
             controller: _orderNote,
             decoration: InputDecoration(
-                filled: true, fillColor: Theme.of(context).primaryColor),
+              filled: true,
+              fillColor: Theme.of(context).primaryColor,
+            ),
           )
         ],
       ),
@@ -175,17 +183,15 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         width: double.infinity,
         padding: EdgeInsets.all(16),
         child: Column(
-          children: [
+          children: <Widget>[
             Text(
               "${_i18n()["orderSummary"]}",
               style: Theme.of(context).textTheme.headline3,
             ),
-            Divider(
-              height: 15,
-            ),
+            const Divider(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   "${_i18n()["orderCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
@@ -196,12 +202,24 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
+                Text(
+                  "${_i18n()["minimumCost"]} :",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                Text(
+                  "\$50",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
                 Text(
                   "${_i18n()["deliveryCost"]} :",
                   style: Theme.of(context).textTheme.bodyText1,
@@ -212,9 +230,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 ),
               ],
             ),
-            Divider(
-              height: 25,
-            ),
+            const Divider(height: 25),
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -222,21 +238,20 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
-            SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Row(
-              children: [
+              children: <Widget>[
                 Icon(
                   Icons.place_rounded,
                   color: Theme.of(context).primaryColorLight,
                 ),
-                SizedBox(
-                  width: 5,
-                ),
+                const SizedBox(height: 5),
                 Flexible(
-                    child: Text(defaultLoc?.address ?? _i18n()['noLocation'],
-                        maxLines: 1)),
+                  child: Text(
+                    defaultLoc?.address ?? _i18n()['noLocation'],
+                    maxLines: 1,
+                  ),
+                ),
               ],
             )
           ],
@@ -245,41 +260,43 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     );
   }
 
-  Widget pickFromMapComponent(BuildContext context) {
-    return Obx(
-      () => InkWell(
-        onTap: () async {
-          final Location? currentLoc =
-              await Get.toNamed(kPickLocationNotAuth) as Location?;
-          if (currentLoc != null) {
-            setState(() {
-              defaultLoc = currentLoc;
-            });
-          }
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                  color: (defaultLoc == null)
-                      ? Colors.red
-                      : Theme.of(context).primaryColorLight)),
-          child: Row(
-            children: [
-              Icon(
-                Icons.place_rounded,
-                color: Theme.of(context).primaryColorLight,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Flexible(
-                  child: Text(defaultLoc?.address ?? _i18n()['pickLocation'],
-                      maxLines: 1)),
-            ],
+  InkWell pickFromMapComponent(BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        // ignore: prefer_final_locals
+        Location? currentLoc =
+            await Get.toNamed(kPickLocationNotAuth) as Location?;
+        if (currentLoc != null) {
+          setState(() {
+            defaultLoc = currentLoc;
+          });
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        alignment: Alignment.centerLeft,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: (defaultLoc == null)
+                ? Colors.red
+                : Theme.of(context).primaryColorLight,
           ),
+        ),
+        child: Row(
+          children: <Widget>[
+            Icon(
+              Icons.place_rounded,
+              color: Theme.of(context).primaryColorLight,
+            ),
+            const SizedBox(width: 5),
+            Flexible(
+              child: Text(
+                defaultLoc?.address ?? _i18n()['pickLocation'],
+                maxLines: 1,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -294,7 +311,9 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             ? makeOrderButton(context)
             : TextButton(
                 onPressed: () async {
-                  await Get.toNamed(kSignInRouteOptional);
+                  Get.find<AuthController>()
+                      .preserveNavigationStackAfterSignIn = true;
+                  await Get.toNamed<void>(sharedRoute.kSignInRouteOptional);
                 },
                 style: TextButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -302,8 +321,11 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                   ),
                 ),
                 child: Container(
-                    padding: EdgeInsets.all(12),
-                    child: Text(_i18n()["signInToMakeOrder"])),
+                  padding: EdgeInsets.all(12),
+                  child: Text(
+                    _i18n()["signInToMakeOrder"],
+                  ),
+                ),
               ),
       ),
     );
@@ -322,28 +344,41 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       onPressed: (defaultLoc == null)
           ? null
           : () {
-              clicked.value = true;
-              laundryController
-                  .requestLaundryService(LaundryRequest(
-                      laundryId: "fYlin8EkPo5v6VnmG1e4QuiJ2ti6",
-                      to: defaultLoc,
-                      notes: _orderNote.text,
-                      paymentType: PaymentType.Cash))
-                  .then((ServerResponse response) {
-                if (response.data['orderId'] != null) {
-                  popEverythingAndNavigateTo(
-                      getLaundyOrderRoute(response.data['orderId']));
-                } else {
-                  Get.snackbar("Error", "");
-                }
-              });
+              _createLaundryOrder();
             },
       child: (clicked.value)
           ? CircularProgressIndicator(
               color: Colors.white,
             )
           : Container(
-              padding: EdgeInsets.all(12), child: Text(_i18n()['orderNow'])),
+              padding: EdgeInsets.all(12),
+              child: Text(
+                _i18n()['orderNow'],
+              ),
+            ),
     );
+  }
+
+  void _createLaundryOrder() {
+    clicked.value = true;
+    laundryController
+        .requestLaundryService(LaundryRequest(
+            to: defaultLoc,
+            notes: _orderNote.text,
+            paymentType: PaymentType.Cash,
+            laundryId: selectedLaundry!.info.id))
+        .then(
+      (ServerResponse response) {
+        if (response.data['orderId'] != null) {
+          sharedRoute.popEverythingAndNavigateTo(
+            getLaundyOrderRoute(
+              response.data['orderId'],
+            ),
+          );
+        } else {
+          Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
+        }
+      },
+    ).whenComplete(() => clicked.value = false);
   }
 }

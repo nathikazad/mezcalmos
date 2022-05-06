@@ -10,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -19,7 +17,6 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now().toLocal();
@@ -34,27 +31,28 @@ class MessagingScreen extends StatefulWidget {
 
 // TODO : REFACTORING !
 class _MessagingScreenState extends State<MessagingScreen> {
+  late final String? orderLink;
   late final String? orderId;
-  late final bool? showViewOrderBtn;
-
   late final String chatId;
 
   ParticipantType recipientType = ParticipantType.Customer;
+  // ParticipantType? senderType;
   String? recipientId;
   MessageController controller =
       Get.put<MessageController>(MessageController());
   @override
   void initState() {
-    super.initState();
     print("inside messaginScreen onInitState !");
 
     if (Get.parameters['chatId'] == null) {
       Get.snackbar("Error", "Does not have a valid chatId!");
       Get.back<void>();
     }
+    mezDbgPrint(
+        "===========>>>>> SENDER TYPE / ${Get.parameters["senderType"].toString()} <+++++++++++++++++++++++++");
     chatId = Get.parameters['chatId']!;
-    orderId = Get.parameters['orderId'];
-    showViewOrderBtn = Get.arguments?['showViewOrderBtn'];
+    orderLink = Get.parameters['orderLink'];
+    orderId = Get.parameters['orderLink'];
     if (Get.parameters['recipientId'] != null)
       recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {
@@ -62,7 +60,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
           Get.parameters['recipientType']!.toString().toParticipantType();
     }
     controller.clearMessageNotifications(chatId: chatId);
-    mezDbgPrint("@AYROUT ===> ${Get.parameters} | ORDERID ==> $orderId");
+    mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
+
+    super.initState();
   }
 
   AuthController _authController = Get.find<AuthController>();
@@ -72,32 +72,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
   RxList<Widget> chatLines = <Widget>[].obs;
 
   RxString _typedMsg = "".obs;
-
-  void navigateToOrderPage() {
-    final OrderType orderType =
-        Get.find<OrderController>().getOrder(orderId!)!.orderType;
-    switch (orderType) {
-      case OrderType.Taxi:
-        // offNamedUntil : to avoid loop of same routes being on stack: (WORKS)
-        // TaxiOrderRoute -> Messages -> TaxiOrderRoute -> messages ... (~)
-
-        // this only works when User is comming from Notification and currentRoute != orderViewScreen
-        Get.offAndToNamed<void>(getTaxiOrderRoute(orderId!));
-        break;
-      case OrderType.Restaurant:
-        // offNamedUntil : to avoid loop of same routes being on stack:
-        // restaurantOrderRoute -> Messages -> restaurantOrderRoute -> messages ...
-        Get.offNamedUntil<void>(
-            getRestaurantOrderRoute(orderId!),
-            (Route<dynamic> route) =>
-                route.settings.name == getRestaurantOrderRoute(orderId!));
-        break;
-      case OrderType.Laundry:
-        Get.snackbar("Launcdry order", "Oups not implemented yet!");
-        break;
-      default:
-    }
-  }
 
   Widget singleChatComponent({
     required String message,
@@ -221,32 +195,39 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
 
     controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
-
     return Scaffold(
         appBar: AppBar(
-          title: (recipientType == ParticipantType.DeliveryAdmin)
-              ? Text("Administrador")
-              : Obx(
-                  () => Text(
-                    controller.recipient(recipientType: recipientType)?.name ??
-                        "User",
-                  ),
-                ),
+          title: Obx(
+            () {
+              return (controller
+                          .recipient(recipientType: recipientType)
+                          ?.participantType ==
+                      ParticipantType.DeliveryAdmin)
+                  ? Text("Administrador")
+                  : Text(
+                      controller
+                              .recipient(
+                                  recipientType: recipientType,
+                                  recipientId: recipientId)
+                              ?.name ??
+                          "User",
+                    );
+            },
+          ),
           actions: <Widget>[
-            if (orderId != null && showViewOrderBtn == true)
+            if (orderLink != null)
               InkWell(
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: Text(
-                      "View\nOrder",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black),
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: Text(
+                        "View\nOrder",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ),
                   ),
-                ),
-                onTap: navigateToOrderPage,
-              )
+                  onTap: () => Get.toNamed<void>(orderLink!))
           ],
         ),
         body: Container(
@@ -286,17 +267,18 @@ class SendMessageBox extends StatelessWidget {
       required RxString typedMsg,
       required TextEditingController textEditingController,
       required this.controller,
-      this.orderId,
-      required this.chatId})
+      required this.chatId,
+      this.orderId})
       : _typedMsg = typedMsg,
         _textEditingController = textEditingController,
         super(key: key);
 
   final RxString _typedMsg;
+  
   final TextEditingController _textEditingController;
   final MessageController controller;
-  final String? orderId;
   final String chatId;
+  final String? orderId;
   @override
   Widget build(BuildContext context) {
     return TextField(

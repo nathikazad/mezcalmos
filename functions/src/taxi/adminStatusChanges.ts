@@ -107,11 +107,11 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
 
   if (newStatus == TaxiOrderStatus.ForwardingToLocalCompany) {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    await rootDbNodes.openOrders(OrderType.Taxi, orderId).remove();
     await rootDbNodes.inProcessOrders(OrderType.Taxi, orderId).set(order);
+    await rootDbNodes.openOrders(OrderType.Taxi, orderId).remove();
   } else {
-    await rootDbNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
     await rootDbNodes.pastOrders(OrderType.Taxi, orderId).set(order);
+    await rootDbNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
     customerNodes.inProcessOrders(order.customer.id!, orderId).remove();
     customerNodes.pastOrders(order.customer.id!, orderId).set(order);
   }

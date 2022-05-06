@@ -128,7 +128,9 @@
                         },
                         "BuildItems": {
                             "deleteItem": "Eliminar este artículo.",
-                            "deleteItemConfirm": "Quieres eliminar este artículo?"
+                            "deleteItemConfirm": "Quieres eliminar este artículo?",
+                            "itemNotes": "Notas de artículos :"
+
                         },
                         "ChoosenManyOption": {
                             "options": "Opciones"
@@ -181,7 +183,9 @@
                         }
                     },
                     "ViewItemScreen": {
-                        "notes": "Notas"
+                        "notes": "Notas",
+                        "itemNotes": "Notas de artículos :"
+
                     }
                 },
                 "ViewOrderScreen": {
@@ -217,7 +221,9 @@
                             "helperText-preparing": "Tu pedido está siendo preparado por el restaurante.",
                             "helperText-onTheWay": "Tu pedido está en camino",
                             "helperText-readyForPickUp": "Su pedido está preparado y listo para ser recogido por el conductor de la entrega.",
-                            "helperText-delivered": "Su pedido ha sido entregado con éxito."
+                            "helperText-delivered": "Su pedido ha sido entregado con éxito.",
+                            "itemNotes": "Notas de artículos :"
+
                         },
                         "OrderSummaryCard": {
                             "totalCost": "Costo Total",
@@ -234,7 +240,7 @@
                     "components": {
                         "restaurantInfoTab": {
                             "description": "Descripción",
-                            "location": "localización",
+                            "location": "Dirección",
                             "workingHours": "Horas Laborales",
                             "weekDays": {
                                 "monday": "Lunes",
@@ -253,7 +259,7 @@
                     },
                     "ViewRestaurantScreen": {
                         "menu": "Menú",
-                        "info": "Informacións"
+                        "info": "Información"
                     }
                 }
             },
@@ -324,13 +330,15 @@
                 "ViewTaxiOrder": {
                     "components": {
                         "CounterOfferWidgets": {
-                            "offers": "ofertas"
+                            "offers": "ofertas",
+                            "failedToAcceptOffer": "¡No se pudo aceptar la oferta!"
                         },
                         "ViewTaxiOrderScreenWidgets": {
                             "title": "Confirmar cancelación.",
                             "question": "Estás seguro de que deseas cancelar tu pedido?",
                             "cancel": "Cancelar",
-                            "taxiRidePriceTooltip": "Haga clic en + - para aumentar/disminuir su precio en 5. Si ve que su pedido no se acepta, pruébelos."
+                            "taxiRidePriceTooltip": "Haga clic en + - para aumentar/disminuir su precio en 5. Si ve que su pedido no se acepta, pruébelos.",
+                            "serverCommunicationError": "No se pudo comunicar con el servidor :("
                         }
                     },
                     "ViewTaxiOrderScreen": {
@@ -403,6 +411,7 @@
                             "laundryPricing": "Precios de lavandería",
                             "fixedRate": "Costo por kilo",
                             "orderWeight": "Peso de pedido",
+                            "minimumCost": "Costo Minimo",
                             "totalCost": "Costo Total",
                             "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido."
                         },
@@ -437,12 +446,15 @@
                         "deliveryLocation": "Lugar De Entrega",
                         "orderSummary": "Resumen de la orden",
                         "orderCost": "Costo de la orden",
+                        "minimumCost": "Costo Minimo",
                         "deliveryCost": "Costo de envío",
                         "noLocation": "No hay ubicación seleccionada",
                         "pickLocation": "Elegir del mapa",
                         "orderNow": "ORDENAR AHORA",
                         "signInToMakeOrder": "Iniciar sesión para hacer el pedido",
-                        "notes": "Notas"
+                        "notes": "Notas",
+                        "error": "Error",
+                        "errorText": "No puedo hacer un pedido por favor intente de nuevo"
                     }
                 },
                 "LaundryPickLocView": {
@@ -561,11 +573,13 @@
             },
             "UserProfileScreen": {
                 "UserProfileScreen": {
-                    "mustSetUserNameHint": "Introduce un nombre\npara seguir usando la aplicación.",
-                    "mustSetUserImgHint": "Cargue una imagen\nhaciendo clic en 'Subir imagen'\npara seguir usando la aplicación.",
-                    "wrongName": "El nombre solo debe contener al menos 4 letras y espacios."
+                    "mustSetUserNameError": "Por favor, ponga su primer nombre.",
+                    "mustSetUserImgError": "Por favor, sube una imagen.",
+                    "nameMustBeLettersOnly" : "Tu primer nombre solo debe tener letras.",
+                    "nameMustBeFourLettersOrMore": "Tu nombre debe tener al menos 4 letras."
                 },
                 "UserProfileWidgets": {
+                    "namePlaceHolder" : "Ponga su primer nombre",
                     "uploadPic": "Subir imagen",
                     "title": " Información del usuario ",
                     "cancel": "Cancelar",
@@ -598,7 +612,37 @@
                 "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
                 "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo.",
                 "locationIsOff": "Servicio de ubicación desactivado",
-                "isAndroid_11": "Detectamos que su versión de Android es 11 o más reciente, por lo tanto, debemos pedirle que nos dé permisos para usar la ubicación en segundo plano para mantener a sus clientes actualizados sobre su ubicación actual, incluso cuando la aplicación se ejecuta en segundo plano."
+                "locationPermissionStatus": {
+                    "denied": "El acceso a su ubicación está denegado :(",
+                    "backgroundAccessDenied": "El acceso a la ubicación de fondo está denegado :(",
+                    "foreverDenied": "Haga clic en el botón, luego vaya a permisos -> ubicación y marque `Siempre`",
+                    "serviceOff": "El servicio de ubicación del teléfono está deshabilitado/apagado :("
+                },
+                "locationPermissionText": {
+                    "ios": {
+                        "foreground": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `Guardar solo mientras se usa`.",
+                        "background": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Cambie los permisos de ubicación en la configuración de la aplicación a `Permitir siempre`."
+                    },
+                    "android": {
+                        "foreground": {
+                            "android9": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `Permitir` .",
+                            "android10": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `MANTENER Y NO PREGUNTAR DE NUEVO`.",
+                            "android11": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `MIENTRAS UTILIZA LA APLICACIÓN`."
+                        },
+                        "background": {
+                            "android9": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `Permitir` .",
+                            "android10": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `PERMITIR TODO EL TIEMPO`.",
+                            "android11": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en Dar permisos -> Permisos -> Ubicación -> Todo el tiempo."
+                        }
+                    }
+                }
+            },
+            "AppNeedsUpdateScreen": {
+                "newVersion": "¡Ya salió la nueva versión!",
+                "downloadNewVersion": "Descarga la nueva versión!",
+                "downloading": "Se está descargando una nueva versión.",
+                "news": "Noticias",
+                "update": "¡Actualizar ahora!"
             }
         },
         "widgets": {
@@ -632,7 +676,14 @@
             },
             "MezDialogs": {
                 "yes": "Si",
-                "no": "No"
+                "no": "No",
+                "mezUpdaterDialog" :{
+                    "updateAvailable" : "Actualización disponible!",
+                    "updatePlease" : "¡Siempre se recomienda instalar nuevas actualizaciones para obtener todas las nuevas funciones!",
+                    "doNotUpdate" : "No, gracias",
+                    "update" : "ACTUALIZAR"
+
+                }
             },
             "MezSideMenu": {
                 "userInfo": "Información del usuario",
@@ -1070,11 +1121,11 @@
 
                             },
                             "laundryControllButtons": {
-                                "pickupOrder": "Orden para recoger",
-                                "confirmPickup": "Confirmar la recogida de la orden",
+                                "pickupOrder": "Comenzar a recoger",
+                                "confirmPickup": "Confirmar la recogida",
                                 "atLaundry": "En la lavandería",
-                                "deliverOrder": "Encargar",
-                                "confirmDelivery": "Confirmar el envío",
+                                "deliverOrder": "Comenzar a Entregar",
+                                "confirmDelivery": "Confirmar el Entregado",
                                 "confirmOrderWeight": "Confirmar peso de orden",
                                 "orderWeightAlert": "Por favor ingrese un peso válido",
                                 "confirm": "Confirmar",
@@ -1093,7 +1144,7 @@
                                 "canceled": "Orden cancelada"
                             },
                             "RestaurantControllButtons": {
-                                "confirmPickup": "Confirmar la recogida de la orden",
+                                "confirmPickup": "Confirmar la recogida",
                                 "confirmDelivery": "Confirmar el envío"
 
                             }

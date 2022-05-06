@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
-["Restaurants"]["ViewOrderScreen"]["components"]["OrderSummaryCard"];
+        ["Restaurants"]["ViewOrderScreen"]["components"]["OrderSummaryCard"];
 
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
@@ -14,11 +14,12 @@ class OrderSummaryCard extends StatelessWidget {
     required this.order,
   }) : super(key: key);
   final RestaurantOrder order;
+
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Column(
-      children: [
+      children: <Widget>[
         Container(
           margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           alignment: Alignment.centerLeft,
@@ -32,10 +33,10 @@ class OrderSummaryCard extends StatelessWidget {
             padding: EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Text(
                       '${_i18n()["deliveryCost"]}',
                       style: txt.bodyText1,
@@ -44,12 +45,10 @@ class OrderSummaryCard extends StatelessWidget {
                         style: txt.bodyText1!),
                   ],
                 ),
-                Divider(
-                  thickness: 0.2,
-                ),
+                const Divider(thickness: 0.2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Text(
                       '${_i18n()["total"]}',
                       style: txt.bodyText1,
@@ -64,9 +63,7 @@ class OrderSummaryCard extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         Container(
           margin: EdgeInsets.all(8),
           alignment: Alignment.centerLeft,
@@ -80,14 +77,12 @@ class OrderSummaryCard extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.all(12),
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(
                   Icons.place,
                   color: Theme.of(context).primaryColorLight,
                 ),
-                SizedBox(
-                  width: 5.w,
-                ),
+                SizedBox(width: 5.w),
                 Flexible(
                   child: Text(
                     order.to.address,

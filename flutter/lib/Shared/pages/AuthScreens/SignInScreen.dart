@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
@@ -28,10 +31,7 @@ class SignIn extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     responsiveSize(context);
-
-    final sw = MediaQuery.of(context).size.width;
-    final sh = MediaQuery.of(context).size.height;
-    final lmode = GetStorage().read(getxLmodeKey);
+    final AppLaunchMode lmode = getAppLaunchMode();
 
     return WillPopScope(
         onWillPop: () async => false,
@@ -89,7 +89,7 @@ class SignIn extends GetWidget<AuthController> {
         )));
   }
 
-  List<Widget> buildSignInButtons(String? lmode) {
+  List<Widget> buildSignInButtons(AppLaunchMode lmode) {
     if (clickedLogin.value) {
       return <Widget>[
         Container(
@@ -113,7 +113,7 @@ class SignIn extends GetWidget<AuthController> {
         SizedBox(
           height: 10,
         ),
-        if (lmode != "dev" && Platform.isIOS) appleLoginBtn(),
+        if (lmode != AppLaunchMode.dev && Platform.isIOS) appleLoginBtn(),
       ];
     }
   }
@@ -122,11 +122,11 @@ class SignIn extends GetWidget<AuthController> {
     return Container(
       width: double.infinity,
       child: TextButton(
-          onPressed: () async {
+          onPressed: () {
             clickedLogin.value = true;
             controller
                 .signInWithApple()
-                .onError((error, stackTrace) => clickedLogin.value = false);
+                .onError((_, __) => clickedLogin.value = false);
             // clickedLogin.value = false;
           },
           style: TextButton.styleFrom(
@@ -180,17 +180,17 @@ class SignIn extends GetWidget<AuthController> {
     );
   }
 
-  Widget facebookLoginBtn(String? lmode) {
+  Widget facebookLoginBtn(AppLaunchMode lmode) {
     return Container(
       width: double.infinity,
       child: TextButton(
           onPressed: () async {
             clickedLogin.value = true;
-            lmode != "dev"
+            lmode != AppLaunchMode.dev
                 ? controller
                     .signInWithFacebook()
-                    .onError((error, stackTrace) => clickedLogin.value = false)
-                : await Get.defaultDialog(
+                    .onError((_, __) => clickedLogin.value = false)
+                : await Get.defaultDialog<dynamic>(
                     title: "Choose Test User",
                     content: Column(
                       children: [
@@ -235,7 +235,7 @@ class SignIn extends GetWidget<AuthController> {
                 ),
                 Spacer(),
                 Text(
-                  lmode != "dev"
+                  lmode != AppLaunchMode.dev
                       ? _i18n()["fbBtn"]
                       : "test mode login",
                   style: TextStyle(fontWeight: FontWeight.bold),

@@ -15,6 +15,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
 Notification deliveryDriverNotificationHandler(String key, value) {
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
+
+  mezDbgPrint(notificationType);
   switch (notificationType) {
     case NotificationType.NewOrder:
       return Notification(
@@ -26,7 +28,7 @@ Notification deliveryDriverNotificationHandler(String key, value) {
               'assets/images/shared/notifications/deliveryNotif.png', // needs to be changed
           title: '${_i18n()['driverNotifTitle']}',
           timestamp: DateTime.parse(value['time']),
-          notificationType: NotificationType.NewMessage,
+          notificationType: NotificationType.NewOrder,
           notificationAction:
               (value["notificationAction"] as String).toNotificationAction(),
           variableParams: value);
@@ -62,7 +64,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
-  mezDbgPrint(" =================> RESSSSSSTAURANT stausssss notifier ");
+
   return Notification(
       id: key,
       linkUrl: getLinkUrl(
@@ -119,8 +121,6 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
       value['status'].toString().toLaundryOrderStatus();
   final Map<String, dynamic> dynamicFields =
       getLaundryOrderStatusFields(newOrdersStatus)!;
-  mezDbgPrint(
-      " =================> Laundryyyyyyyyyyyyyyyyyy stausssss notifier ${value["orderId"]}");
 
   return Notification(
       id: key,
@@ -196,9 +196,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
 Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: getMessagesRoute(
-          chatId: value['chatId'],
-          recipientType: ParticipantType.DeliveryAdmin),
+      linkUrl: value['linkUrl'],
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

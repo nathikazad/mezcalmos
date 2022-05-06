@@ -3,15 +3,21 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
-Notification customerNotificationHandler(String key, value) {
+
+Notification customerNotificationHandler(
+  String key,
+  value,
+) {
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
@@ -45,17 +51,18 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
       getLaundryOrderStatusFields(newOrdersStatus)!;
   mezDbgPrint(dynamicFields);
   return Notification(
-      id: key,
-      linkUrl: getLaundyOrderRoute(value['orderId']),
-      linkText: _i18n()['viewOrder'],
-      body: dynamicFields["body"],
-      imgUrl: dynamicFields["imgUrl"],
-      title: dynamicFields["title"],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.OrderStatusChange,
-      notificationAction:
-          value["notificationAction"].toString().toNotificationAction(),
-      variableParams: value);
+    id: key,
+    linkUrl: getLaundyOrderRoute(value['orderId']),
+    linkText: _i18n()['viewOrder'],
+    body: dynamicFields["body"],
+    imgUrl: dynamicFields["imgUrl"],
+    title: dynamicFields["title"],
+    timestamp: DateTime.parse(value['time']),
+    notificationType: NotificationType.OrderStatusChange,
+    notificationAction:
+        value["notificationAction"].toString().toNotificationAction(),
+    variableParams: value,
+  );
 }
 
 Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
@@ -67,17 +74,18 @@ Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
       getTaxiOrderStatusFields(newOrdersStatus)!;
   mezDbgPrint(dynamicFields);
   return Notification(
-      id: key,
-      linkUrl: getTaxiOrderRoute(value['orderId']),
-      linkText: _i18n()['viewOrder'],
-      body: dynamicFields["body"],
-      imgUrl: dynamicFields["imgUrl"],
-      title: dynamicFields["title"],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.OrderStatusChange,
-      notificationAction:
-          value["notificationAction"].toString().toNotificationAction(),
-      variableParams: value);
+    id: key,
+    linkUrl: getTaxiOrderRoute(value['orderId']),
+    linkText: _i18n()['viewOrder'],
+    body: dynamicFields["body"],
+    imgUrl: dynamicFields["imgUrl"],
+    title: dynamicFields["title"],
+    timestamp: DateTime.parse(value['time']),
+    notificationType: NotificationType.OrderStatusChange,
+    notificationAction:
+        value["notificationAction"].toString().toNotificationAction(),
+    variableParams: value,
+  );
 }
 
 Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
@@ -86,17 +94,18 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
   final Map<String, dynamic> dynamicFields =
       getRestaurantOrderStatusFields(newOrdersStatus)!;
   return Notification(
-      id: key,
-      linkUrl: getRestaurantOrderRoute(value['orderId']),
-      linkText: _i18n()['viewOrder'],
-      body: dynamicFields["body"],
-      imgUrl: dynamicFields["imgUrl"],
-      title: dynamicFields["title"],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.OrderStatusChange,
-      notificationAction:
-          value["notificationAction"].toString().toNotificationAction(),
-      variableParams: value);
+    id: key,
+    linkUrl: getRestaurantOrderRoute(value['orderId']),
+    linkText: _i18n()['viewOrder'],
+    body: dynamicFields["body"],
+    imgUrl: dynamicFields["imgUrl"],
+    title: dynamicFields["title"],
+    timestamp: DateTime.parse(value['time']),
+    notificationType: NotificationType.OrderStatusChange,
+    notificationAction:
+        value["notificationAction"].toString().toNotificationAction(),
+    variableParams: value,
+  );
 }
 
 // TODO: needs to be formatted for laundry
@@ -269,12 +278,12 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
+  mezDbgPrint("MESSAGE NOTIFICATION ^^^^^^^^^^^^^");
+  mezDbgPrint(value['linkUrl']);
   return Notification(
       id: key,
-      linkUrl: (value['chatId'] == null)
-          ? getMessageUrl(value['orderId']!)
-          : getMessageUrl(value[
-              'chatId']!), // just for backwards compatibility, future make it just value['orderId']
+      linkUrl: value['linkUrl'],
+      // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
@@ -294,23 +303,9 @@ Notification newCounterOfferNotification(String key, value) {
       imgUrl: value['driver']['image'],
       title: "${_i18n()["counterOfferTitle"]}",
       timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.NewMessage,
+      notificationType: NotificationType.NewCounterOffer,
       notificationAction:
           value["notificationAction"]?.toString().toNotificationAction() ??
               NotificationAction.ShowSnackbarOnlyIfNotOnPage,
       variableParams: value);
-}
-
-// checking type
-String getMessageUrl(String orderId) {
-  switch (Get.find<OrderController>().getOrder(orderId)!.orderType) {
-    case OrderType.Restaurant:
-      return getRestaurantMessagesRoute(orderId);
-    case OrderType.Taxi:
-      return getTaxiMessagesRoute(orderId);
-    case OrderType.Laundry:
-      return getTaxiMessagesRoute(orderId);
-    default:
-      throw Exception('Invalid OrderType');
-  }
 }

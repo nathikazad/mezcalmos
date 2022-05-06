@@ -2,38 +2,34 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() =>
-    Get.find<LanguageController>().strings['Shared']['widgets']
-["MezSideMenu"];
+    Get.find<LanguageController>().strings['Shared']['widgets']["MezSideMenu"];
 
 class MezSideMenu extends GetWidget<AuthController> {
-  SideMenuDrawerController _drawerController =
+  final SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
-  LanguageController languageController = Get.find<LanguageController>();
 
-  String lmd = GetStorage().read(getxLmodeKey);
-  String VERSION = GetStorage().read(getxAppVersion);
+  final LanguageController languageController = Get.find<LanguageController>();
+
+  final AppLaunchMode lmd = getAppLaunchMode();
+  final String version = GetStorage().read<String>(getxAppVersion) as String;
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("=========> ImgUrl ======<  ${controller.user?.image}");
-    mezDbgPrint(controller.user?.phone);
-
-    responsiveSize(context);
-
-    final sw = MediaQuery.of(context).size.width;
-    final sh = MediaQuery.of(context).size.height;
+    final double sw = MediaQuery.of(context).size.width;
+    final double sh = MediaQuery.of(context).size.height;
 
     return Drawer(
       child: Scaffold(
@@ -42,19 +38,20 @@ class MezSideMenu extends GetWidget<AuthController> {
           // padding: EdgeInsets.only(bottom: 20),
           child: Center(
             child: Text(
-              VERSION + (lmd != "prod" ? " $lmd" : " "),
+              version +
+                  (lmd != AppLaunchMode.prod ? " ${lmd.toShortString()}" : " "),
             ),
           ),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+          children: <Widget>[
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Container(
                   height: 100.sp,
                   width: 100.sp,
@@ -64,14 +61,8 @@ class MezSideMenu extends GetWidget<AuthController> {
                             controller.user?.image == ""
                         ? Icon(
                             Icons.account_circle_outlined,
-                            size: getSizeRelativeToScreen(285, sw, sh).sp,
+                            size: 100.sp,
                           )
-                        // Image.asset(
-                        //     aDefaultAvatar,
-                        //     width: getSizeRelativeToScreen(300, sw, sh).sp,
-                        //     height: getSizeRelativeToScreen(300, sw, sh).sp,
-                        //     fit: BoxFit.contain,
-                        //   )
                         : CachedNetworkImage(
                             imageUrl: controller.user!.image!,
                             fit: BoxFit.cover,
@@ -98,82 +89,84 @@ class MezSideMenu extends GetWidget<AuthController> {
                           ),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 Container(
                   child: Text(
-                    controller.user?.name ?? tDefaultUserName,
+                    controller.user?.name ?? "",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontFamily: 'psb', fontSize: 18.5.sp),
                   ),
                 ),
-                SizedBox(height: 50)
+                const SizedBox(height: 50),
               ],
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Obx(() => controller.user != null
-                    ? ListTile(
-                        onTap: () {
-                          _drawerController.closeMenu();
-                          Get.toNamed(kUserProfile);
-                        },
-                        leading: Icon(
-                          Icons.account_circle_outlined,
-                          color: Color.fromARGB(255, 103, 121, 254),
-                          size: 22.sp,
-                        ),
-                        title: Text(
+              children: <Widget>[
+                Obx(
+                  () => controller.user != null
+                      ? ListTile(
+                          onTap: () {
+                            _drawerController.closeMenu();
+                            Get.toNamed<void>(kUserProfile);
+                          },
+                          leading: Icon(
+                            Icons.account_circle_outlined,
+                            color: Color.fromARGB(255, 103, 121, 254),
+                            size: 22.sp,
+                          ),
+                          title: Text(
                             _i18n()["userInfo"],
-                            style:
-                                TextStyle(fontFamily: 'psb', fontSize: 13.sp)),
-                      )
-                    : SizedBox()),
-
-//@jamal TODO: pass in a list of listTiles that gets sent by the app at the time of initialization,
-//this datastructure, should basically just have a name and a link
-//and then populate the middle of these tiles using this list
-
+                            style: TextStyle(
+                              fontFamily: 'psb',
+                              fontSize: 13.sp,
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                ),
                 controller.fireAuthUser != null
                     ? _buildSideMenuItem()
                     : Container(),
-                Obx(() => controller.user != null
-                    ? ListTile(
-                        onTap: () async {
-                          _drawerController.closeMenu();
-                          await controller.signOut();
-                        },
-                        leading: Icon(
-                          MezcalmosIcons.power_off,
-                          color: Color.fromARGB(255, 103, 121, 254),
-                          size: 22.sp,
-                        ),
-                        title: Obx(
-                          () => Text(
-                            _i18n()["logout"],
-                            style:
-                                TextStyle(fontFamily: 'psb', fontSize: 13.sp),
+                Obx(
+                  () => controller.user != null
+                      ? ListTile(
+                          onTap: () async {
+                            _drawerController.closeMenu();
+                            await controller.signOut();
+                          },
+                          leading: Icon(
+                            MezcalmosIcons.power_off,
+                            color: Color.fromARGB(255, 103, 121, 254),
+                            size: 22.sp,
                           ),
-                        ))
-                    : SizedBox()),
+                          title: Obx(
+                            () => Text(
+                              _i18n()["logout"],
+                              style:
+                                  TextStyle(fontFamily: 'psb', fontSize: 13.sp),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                ),
                 ListTile(
-                    onTap: () async =>
-                        await launch(GetStorage().read(getxPrivacyPolicyLink)),
-                    leading: Icon(
-                      Icons.lock_sharp,
-                      color: Color.fromARGB(255, 103, 121, 254),
-                      size: 22.sp,
+                  onTap: () => launch(GetStorage().read(getxPrivacyPolicyLink)),
+                  leading: Icon(
+                    Icons.lock_sharp,
+                    color: Color.fromARGB(255, 103, 121, 254),
+                    size: 22.sp,
+                  ),
+                  title: Obx(
+                    () => Text(
+                      _i18n()["legal"],
+                      style: TextStyle(fontFamily: 'psb', fontSize: 13.sp),
                     ),
-                    title: Obx(
-                      () => Text(
-                        _i18n()["legal"],
-                        style: TextStyle(fontFamily: 'psb', fontSize: 13.sp),
-                      ),
-                    )),
-                Obx(() => ListTile(
+                  ),
+                ),
+                Obx(
+                  () => ListTile(
                     onTap: () {
                       languageController.changeUserLanguage();
                       _drawerController.closeMenu();
@@ -187,8 +180,12 @@ class MezSideMenu extends GetWidget<AuthController> {
                               image:
                                   AssetImage(languageController.oppositFlag))),
                     ),
-                    title: Text(languageController.oppositToLang,
-                        style: TextStyle(fontFamily: 'psb', fontSize: 13.sp)))),
+                    title: Text(
+                      languageController.oppositToLang,
+                      style: TextStyle(fontFamily: 'psb', fontSize: 13.sp),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
@@ -208,12 +205,13 @@ class MezSideMenu extends GetWidget<AuthController> {
 }
 
 class SideMenuItem extends StatefulWidget {
-  SideMenuItem({
+  const SideMenuItem({
     Key? key,
     required this.onPress,
     required this.icon,
     required this.title,
   }) : super(key: key);
+
   final GestureTapCallback onPress;
   final Widget icon;
   final String title;
@@ -226,11 +224,14 @@ class _SideMenuItemState extends State<SideMenuItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: ListTile(
-      onTap: widget.onPress,
-      leading: widget.icon,
-      title: Text("${widget.title}",
-          style: TextStyle(fontFamily: 'psb', fontSize: 16.sp)),
-    ));
+      child: ListTile(
+        onTap: widget.onPress,
+        leading: widget.icon,
+        title: Text(
+          "${widget.title}",
+          style: TextStyle(fontFamily: 'psb', fontSize: 16.sp),
+        ),
+      ),
+    );
   }
 }

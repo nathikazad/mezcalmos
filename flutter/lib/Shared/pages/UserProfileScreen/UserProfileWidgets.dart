@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart' show CapExtension;
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileScreen"]["UserProfileWidgets"];
@@ -26,21 +27,31 @@ class UserProfileWidgetsClass {
       required bool clickedSave}) {
     return [
       userInfoTitle(),
+      SizedBox(
+        height: 10,
+      ),
       Flexible(
-        flex: 2,
-        // fit: FlexFit.tight,
+        flex: 4,
+        fit: FlexFit.tight,
         child: pictureContainerWidget(
             onBrowsImageClick: onBrowsImageClick,
             isImageBeingUploaded: isImageBeingUploaded),
       ),
+      SizedBox(
+        height: 10,
+      ),
       Flexible(
-          flex: 1,
+          flex: 3,
+          fit: FlexFit.tight,
           child: showUserNameOrTextField(
               isImageBeingUploaded: isImageBeingUploaded)),
+      SizedBox(
+        height: 10,
+      ),
       Flexible(
         flex: 2,
         child: Container(
-            margin: EdgeInsets.only(bottom: 50, left: 50, right: 50),
+            margin: EdgeInsets.all(16),
             child: showEditOrSaveAndCancelButton(
                 onSaveClick: onSaveClick,
                 onStartEdit: onEditButtonClick,
@@ -61,8 +72,8 @@ class UserProfileWidgetsClass {
             ? onBrowsImageClick
             : () {},
         child: Container(
-          height: 150,
-          width: 150,
+          height: 200,
+          width: 200,
           decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
@@ -83,8 +94,8 @@ class UserProfileWidgetsClass {
   Center browsImageButton({required bool isImageBeingUploaded}) {
     return Center(
       child: Container(
-        height: 150,
-        width: 150,
+        height: 200,
+        width: 200,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.black.withOpacity(.66),
@@ -123,11 +134,11 @@ class UserProfileWidgetsClass {
   /// this is the top title of the userProfileScreen
   Flexible userInfoTitle() {
     return Flexible(
-      flex: 1,
+      flex: 2,
       child: Center(
           child: Text(
         _i18n()['title'],
-        style: TextStyle(fontSize: 30),
+        style: TextStyle(fontSize: 20.sp),
       )),
     );
   }
@@ -141,11 +152,63 @@ class UserProfileWidgetsClass {
     if (userProfileController.checkIfUserHasAllInfosSet() &&
         !isImageBeingUploaded) {
       // return popable button
-      return mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: () => Get.back(closeOverlays: true));
+      return mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: () => Get.back(closeOverlays: true),
+        actionIcons: [
+          Obx(
+            () => Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                onTap: () =>
+                    Get.find<LanguageController>().changeUserLanguage(),
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.contain,
+                      image: AssetImage(
+                        Get.find<LanguageController>().oppositFlag,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      );
     } else {
       // none popable buttom
-      return mezcalmosAppBar(AppBarLeftButtonType.Back);
+      return mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        actionIcons: [
+          Obx(
+            () => Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                onTap: () =>
+                    Get.find<LanguageController>().changeUserLanguage(),
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.contain,
+                      image: AssetImage(
+                        Get.find<LanguageController>().oppositFlag,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      );
     }
   }
 
@@ -173,20 +236,23 @@ class UserProfileWidgetsClass {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 55),
             child: TextField(
-                decoration: InputDecoration(
-                    suffixIcon: Icon(
-                      Icons.perm_identity_rounded,
-                      color: Colors.purple.shade400,
-                    ),
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder()),
-                enabled: !isImageBeingUploaded,
-                style: TextStyle(color: Colors.purple.shade400, fontSize: 15),
-                controller: userProfileController.textEditingController,
-                onChanged: (value) {
-                  userProfileController.userName.value = value;
-                }),
+              decoration: InputDecoration(
+                suffixIcon: Icon(
+                  Icons.perm_identity_rounded,
+                  color: Colors.purple.shade400,
+                ),
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(),
+                enabledBorder: OutlineInputBorder(),
+                hintText: _i18n()['namePlaceHolder'],
+              ),
+              enabled: !isImageBeingUploaded,
+              style: TextStyle(color: Colors.purple.shade400, fontSize: 15),
+              controller: userProfileController.textEditingController,
+              onChanged: (String value) {
+                userProfileController.userName.value = value.inCaps;
+              },
+            ),
           ),
           if (userProfileController.errorReport.value != null)
             Container(
@@ -204,12 +270,15 @@ class UserProfileWidgetsClass {
                     width: 10,
                   ),
                   Flexible(
-                    child: Text(
-                      userProfileController.errorReport.value!,
-                      overflow: TextOverflow.visible,
-                      style: TextStyle(color: Colors.red),
-                      softWrap: true,
-                      maxLines: 4,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        userProfileController.errorReport.value!,
+                        overflow: TextOverflow.visible,
+                        style: TextStyle(color: Colors.red),
+                        softWrap: true,
+                        maxLines: 4,
+                      ),
                     ),
                   ),
                 ],
@@ -223,11 +292,12 @@ class UserProfileWidgetsClass {
   /// this shows either the edit infos Button or the Save button,
   ///
   /// depending on [UserProfileMode] , and in case the user has already his infos set up , a cancel button will shows up.
-  Widget showEditOrSaveAndCancelButton(
-      {required Function() onStartEdit,
-      required Function() onSaveClick,
-      required bool clickedSave,
-      required bool isImageBeingUploaded}) {
+  Widget showEditOrSaveAndCancelButton({
+    required Function() onStartEdit,
+    required Function() onSaveClick,
+    required bool clickedSave,
+    required bool isImageBeingUploaded,
+  }) {
     if (isImageBeingUploaded) {
       return ThreeDotsLoading(
         dotsColor: Colors.purple.shade400,
@@ -301,40 +371,36 @@ class UserProfileWidgetsClass {
     return Expanded(
       flex: 2,
       child: InkWell(
-          onTap: userProfileController.didUserChangedInfos() && !clickedSave
-              ? () async {
-                  await onSaveChangesClick();
-                }
-              : () {
-                  MezSnackbar("Oops", _i18n()['noChangesToApply'],
-                      position: SnackPosition.TOP);
-                },
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueGrey.shade100),
-                color:
-                    userProfileController.didUserChangedInfos() && !clickedSave
-                        ? Colors.purple.shade400
-                        : Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(15)),
-            height: 50,
-            // width: Get.width - 100,
-            child: Center(
-                child: !clickedSave
-                    ? Text(
-                        _i18n()['saveBtn'],
-                        style: TextStyle(
-                            fontSize: 12.sp,
-                            color: userProfileController.didUserChangedInfos()
-                                ? Colors.white
-                                : Colors.grey.shade400),
-                      )
-                    : CircularProgressIndicator(
-                        strokeWidth: 1,
-                        color: Colors.black,
-                      )),
-          )),
+        onTap: !clickedSave
+            ? () async {
+                await onSaveChangesClick();
+              }
+            : () {
+                MezSnackbar("Oops", _i18n()['noChangesToApply'],
+                    position: SnackPosition.TOP);
+              },
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.blueGrey.shade100),
+              color:
+                  !clickedSave ? Colors.purple.shade400 : Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(15)),
+          height: 50,
+          // width: Get.width - 100,
+          child: Center(
+            child: !clickedSave
+                ? Text(
+                    _i18n()['saveBtn'],
+                    style: TextStyle(fontSize: 12.sp, color: Colors.white),
+                  )
+                : CircularProgressIndicator(
+                    strokeWidth: 1,
+                    color: Colors.black,
+                  ),
+          ),
+        ),
+      ),
     );
   }
 }
