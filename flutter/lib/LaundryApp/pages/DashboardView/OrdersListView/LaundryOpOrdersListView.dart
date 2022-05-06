@@ -89,6 +89,7 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
             Obx(
               () => ListView.builder(
                 shrinkWrap: true,
+                reverse: true,
                 itemCount: pastOrders.length,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (_, int index) {
