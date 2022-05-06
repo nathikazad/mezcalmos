@@ -3,6 +3,7 @@ import { OrderType, PaymentType, TwoWayDeliverableOrder } from '../../Generic/Or
 import { UserInfo } from '../../Generic/User';
 import { OrderNotification } from '../../Notification';
 import { Location } from "../../Generic/Generic";
+import { RouteInformation } from '../../Generic/RouteInformation';
 
 export interface LaundryOrder extends TwoWayDeliverableOrder {
   laundry: UserInfo;
@@ -11,6 +12,7 @@ export interface LaundryOrder extends TwoWayDeliverableOrder {
   status: LaundryOrderStatus;
   shippingCost: number;
   costPerKilo: number;
+  routeInformation?: RouteInformation;
 }
 
 export enum LaundryOrderStatus {
@@ -26,6 +28,7 @@ export enum LaundryOrderStatus {
 }
 
 export interface ConstructLaundryOrderParameters {
+  routeInformation?: RouteInformation,
   notes?: string,
   paymentType: PaymentType,
   to: Location
@@ -34,16 +37,17 @@ export interface ConstructLaundryOrderParameters {
 export function constructLaundryOrder(
   params: ConstructLaundryOrderParameters, customer: UserInfo): LaundryOrder {
   return <LaundryOrder>{
-    customer: customer,
-    orderType: OrderType.Laundry,
-    status: LaundryOrderStatus.OrderReceieved,
-    orderTime: (new Date()).toISOString(),
-    notes: params.notes,
-    cost: 0,
-    paymentType: params.paymentType,
-    to: params.to,
-    shippingCost: 50,
-    costPerKilo: 20
+    customer          : customer,
+    orderType         : OrderType.Laundry,
+    status            : LaundryOrderStatus.OrderReceieved,
+    orderTime         : (new Date()).toISOString(),
+    notes             : params.notes,
+    cost              : 0,
+    paymentType       : params.paymentType,
+    to                : params.to,
+    shippingCost      : 50,
+    costPerKilo       : 20,
+    routeInformation  : params.routeInformation
   }
 }
 
