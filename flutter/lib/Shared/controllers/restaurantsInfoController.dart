@@ -23,17 +23,21 @@ class RestaurantsInfoController extends GetxController {
         .child(serviceProviderInfos(orderType: OrderType.Restaurant))
         .once();
 
-    mezDbgPrint("Got restorantes ===> ${snapshot.value}");
-    final List<Restaurant> restaurants = [];
-    snapshot.value.forEach((key, value) {
+    final List<Restaurant> restaurants = <Restaurant>[];
+    if (snapshot.value == null) return restaurants;
+    // ignore: avoid_annotating_with_dynamic
+    snapshot.value.forEach((dynamic restaurantId, dynamic restaurantData) {
       try {
-        restaurants.add(Restaurant.fromRestaurantData(
-            restaurantId: key, restaurantData: value));
+        if (restaurantData["state"]["available"] == true) {
+          restaurants.add(Restaurant.fromRestaurantData(
+              restaurantId: restaurantId, restaurantData: restaurantData));
+        }
       } catch (e) {
-        mezDbgPrint("FREAKING EXCEPTION ===> $e");
+        mezDbgPrint("Restaurant add Exception id:$restaurantId");
+        mezDbgPrint(e);
+        mezDbgPrint(StackTrace.current);
       }
     });
-
     restaurants.sort((Restaurant a, Restaurant b) {
       if (a.isAvailable() && !b.isAvailable()) {
         return 1;
@@ -58,18 +62,5 @@ class RestaurantsInfoController extends GetxController {
       }
       return null;
     });
-  }
-
-  Future<Item> getItem(String restaurantId, String itemId) {
-    return _databaseHelper.firebaseDatabase
-        .reference()
-        .child(serviceProviderInfos(
-            orderType: OrderType.Restaurant, providerId: restaurantId))
-        .child('menu/$itemId')
-        .once()
-        .then<Item>((DataSnapshot snapshot) => Item.itemFromData(
-              itemId,
-              snapshot.value,
-            ));
   }
 }

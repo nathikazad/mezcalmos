@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Services/Service.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 class LaundryOrderFromToComponent extends StatefulWidget {
   /// shows order from info (service provider name image and adress) and destination info  (customer name image and adress)
@@ -19,8 +19,7 @@ class LaundryOrderFromToComponent extends StatefulWidget {
 
 class _LaundryOrderFromToComponentState
     extends State<LaundryOrderFromToComponent> {
-
-  ServiceUserInfo? laundry;
+  ServiceInfo? laundry;
 
   @override
   void initState() {
@@ -28,7 +27,7 @@ class _LaundryOrderFromToComponentState
     super.initState();
   }
 
-  void getLaundry() {
+  void getLaundry() async {
     if (widget.order.laundry != null) {
       laundry = widget.order.laundry;
     }
@@ -57,7 +56,7 @@ class _LaundryOrderFromToComponentState
                   style: textTheme.bodyText1,
                 ),
                 Text(
-                  laundry?.location?.address ?? '',
+                  laundry?.location.address ?? '',
                   style: textTheme.subtitle1,
                 ),
               ],

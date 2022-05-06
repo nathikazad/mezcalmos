@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart';
@@ -14,6 +15,7 @@ import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class DeliveryAuthController extends GetxController {
@@ -41,7 +43,7 @@ class DeliveryAuthController extends GetxController {
   @override
   void onInit() {
     // ------------------------------------------------------------------------
-    mezDbgPrint("DeliveryAuthController: init ${this.hashCode}");
+    mezDbgPrint("DeliveryAuthController: init $hashCode");
     mezDbgPrint(
         "DeliveryAuthController: calling handle state change first time");
     setupDeliveryDriver(Get.find<AuthController>().fireAuthUser!);
@@ -55,15 +57,15 @@ class DeliveryAuthController extends GetxController {
 
     mezDbgPrint(
         "DeliveryAuthController: _DeliveryDriverStateNodeListener init ${deliveryDriverStateNode(user.uid)}");
-    _DeliveryDriverStateNodeListener?.cancel();
+    await _DeliveryDriverStateNodeListener?.cancel();
     _DeliveryDriverStateNodeListener = null;
     _DeliveryDriverStateNodeListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(deliveryDriverStateNode(user.uid))
         .onValue
-        .listen((event) async {
+        .listen((Event event) async {
       mezDbgPrint(
-          "[++++++ = === ==] DeliveryAuthController${this.hashCode}: _DeliveryDriverStateNodeListener event => ${event.snapshot.value}");
+          "[++++++ = === ==] DeliveryAuthController$hashCode: _DeliveryDriverStateNodeListener event => ${event.snapshot.value}");
       if (event.snapshot.value.toString() == _previousStateValue) {
         mezDbgPrint(
             'DeliveryAuthController:: same state event fired again, skipping it');
@@ -99,9 +101,10 @@ class DeliveryAuthController extends GetxController {
   void saveNotificationToken() async {
     mezDbgPrint(
         "DeliveryAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
-    String? deviceNotificationToken = await _notificationsController.getToken();
+    final String? deviceNotificationToken =
+        await _notificationsController.getToken();
     if (deviceNotificationToken != null)
-      _databaseHelper.firebaseDatabase
+      await _databaseHelper.firebaseDatabase
           .reference()
           .child(
               '${deliveryDriverAuthNode(_authController.fireAuthUser?.uid ?? '')}/notificationInfo/')
@@ -112,7 +115,7 @@ class DeliveryAuthController extends GetxController {
 
   void saveAppVersionIfNecessary() {
     if (_checkedAppVersion == false) {
-      String VERSION = GetStorage().read(getxAppVersion);
+      final String VERSION = GetStorage().read(getxAppVersion);
       _databaseHelper.firebaseDatabase
           .reference()
           .child(
@@ -124,17 +127,17 @@ class DeliveryAuthController extends GetxController {
 
   Future<StreamSubscription<LocationData>> _listenForLocation() async {
     mezDbgPrint("Listening for location !");
-    Location location = Location();
+    final Location location = Location();
     await location.changeSettings(interval: 1000);
     // location.enableBackgroundMode(enable: true);
     return location.onLocationChanged.listen((LocationData currentLocation) {
       // mezDbgPrint("\t\t [DELIVERY AUTH CONTROLLER] LOCATION GOT UPDAAAATED !!");
-      DateTime currentTime = DateTime.now();
+      final DateTime currentTime = DateTime.now();
       if (currentLocation.latitude != null &&
           currentLocation.longitude != null) {
         _currentLocation.value = currentLocation;
 
-        Map<String, dynamic> positionUpdate = <String, dynamic>{
+        final Map<String, dynamic> positionUpdate = <String, dynamic>{
           "lastUpdateTime": currentTime.toUtc().toString(),
           "position": <String, dynamic>{
             "lat": currentLocation.latitude,
@@ -142,15 +145,15 @@ class DeliveryAuthController extends GetxController {
           }
         };
         try {
-          // mezDbgPrint(positionUpdate);
+          //mezDbgPrint(positionUpdate);
           _databaseHelper.firebaseDatabase
               .reference()
               .child(deliveryDriverAuthNode(_authController.fireAuthUser!.uid))
               .child('location')
               .set(positionUpdate);
-          OrderController _orderController = Get.find<OrderController>();
+          final OrderController _orderController = Get.find<OrderController>();
 
-          _orderController.currentOrders.forEach((order) {
+          _orderController.currentOrders.forEach((DeliverableOrder order) {
             // updating driver location in deliveryDrivers/inProcessOrders
             _databaseHelper.firebaseDatabase
                 .reference()
@@ -187,7 +190,7 @@ class DeliveryAuthController extends GetxController {
   @override
   void onClose() {
     mezDbgPrint(
-        "[+] DeliveryAuthController::dispose ---------> Was invoked ! ${this.hashCode}");
+        "[+] DeliveryAuthController::dispose ---------> Was invoked ! $hashCode");
 
     _DeliveryDriverStateNodeListener?.cancel();
     _DeliveryDriverStateNodeListener = null;

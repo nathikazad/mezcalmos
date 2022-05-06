@@ -37,6 +37,7 @@ const String kPickLocation = "/pick_location";
 String getMessagesRoute(
     {required String chatId,
     String? orderId,
+    bool showViewOrderBtn = false,
     ParticipantType recipientType = ParticipantType.Customer,
     String? recipientId}) {
   String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId);
@@ -45,6 +46,7 @@ String getMessagesRoute(
   else
     mainUrl += "?recipientType=${recipientType.toFirebaseFormattedString()}";
   if (orderId != null) mainUrl += "&orderId=$orderId";
+  if (showViewOrderBtn) mainUrl += "&showViewOrderBtn=1";
   return mainUrl;
 }
 

@@ -42,7 +42,7 @@ extension ParseStringToOrderStatus on String {
 class LaundryOrder extends TwoWayDeliverableOrder {
   num? weight;
   String? notes;
-  ServiceUserInfo? laundry;
+  ServiceInfo? laundry;
   LaundryOrderStatus status;
   num shippingCost;
   LaundryOrderCosts? costsByType;
@@ -97,7 +97,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             ? DateTime.parse(data["estimatedDeliveryTime"])
             : null,
         laundry: (data["laundry"] != null)
-            ? ServiceUserInfo.fromData(data["laundry"])
+            ? ServiceInfo.fromData(data["laundry"])
             : null,
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
@@ -113,7 +113,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   }
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         "customer": customer,
         "estimatedPrice": cost,
         "status": status,
@@ -122,7 +122,6 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         "paymentType": paymentType,
         "weight": weight,
         "notes": notes,
-        "costsByType": costsByType?.toFirebasFormat() ?? null
       };
 
   @override
@@ -142,8 +141,12 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.OtwDelivery;
   }
 
-  bool isAtLaundry() {
-    return status == LaundryOrderStatus.AtLaundry;
+  bool inDeliverPhase() {
+    return status == LaundryOrderStatus.OtwPickup ||
+        status == LaundryOrderStatus.OrderReceieved ||
+        status == LaundryOrderStatus.PickedUp ||
+        status == LaundryOrderStatus.ReadyForDelivery ||
+        status == LaundryOrderStatus.OtwDelivery;
   }
 
   num? getPrice() {

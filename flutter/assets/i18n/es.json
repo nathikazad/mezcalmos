@@ -324,13 +324,15 @@
                 "ViewTaxiOrder": {
                     "components": {
                         "CounterOfferWidgets": {
-                            "offers": "ofertas"
+                            "offers": "ofertas",
+                            "failedToAcceptOffer" : "¡No se pudo aceptar la oferta!"
                         },
                         "ViewTaxiOrderScreenWidgets": {
                             "title": "Confirmar cancelación.",
                             "question": "Estás seguro de que deseas cancelar tu pedido?",
                             "cancel": "Cancelar",
-                            "taxiRidePriceTooltip": "Haga clic en + - para aumentar/disminuir su precio en 5. Si ve que su pedido no se acepta, pruébelos."
+                            "taxiRidePriceTooltip": "Haga clic en + - para aumentar/disminuir su precio en 5. Si ve que su pedido no se acepta, pruébelos.",
+                            "serverCommunicationError": "No se pudo comunicar con el servidor :("
                         }
                     },
                     "ViewTaxiOrderScreen": {
@@ -1070,11 +1072,11 @@
 
                             },
                             "laundryControllButtons": {
-                                "pickupOrder": "Orden para recoger",
-                                "confirmPickup": "Confirmar la recogida de la orden",
+                                "pickupOrder": "Comenzar a recoger",
+                                "confirmPickup": "Confirmar la recogida",
                                 "atLaundry": "En la lavandería",
-                                "deliverOrder": "Encargar",
-                                "confirmDelivery": "Confirmar el envío",
+                                "deliverOrder": "Comenzar a Entregar",
+                                "confirmDelivery": "Confirmar el Entregado",
                                 "confirmOrderWeight": "Confirmar peso de orden",
                                 "orderWeightAlert": "Por favor ingrese un peso válido",
                                 "confirm": "Confirmar",
@@ -1093,7 +1095,7 @@
                                 "canceled": "Orden cancelada"
                             },
                             "RestaurantControllButtons": {
-                                "confirmPickup": "Confirmar la recogida de la orden",
+                                "confirmPickup": "Confirmar la recogida",
                                 "confirmDelivery": "Confirmar el envío"
 
                             }

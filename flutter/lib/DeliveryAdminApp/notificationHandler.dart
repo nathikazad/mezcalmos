@@ -120,9 +120,11 @@ Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
-          chatId: value['chatId'] ?? value['orderId'],
-          orderId: value['orderId'],
-          recipientId: value['sender']['id']),
+        chatId: value['chatId'] ?? value['orderId'],
+        orderId: value['orderId'],
+        recipientId: value['sender']['id'],
+        showViewOrderBtn: true,
+      ),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

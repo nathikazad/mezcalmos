@@ -68,7 +68,15 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
             driver = order.value!.dropoffDriver;
           }
         } else {
-          //    Get.back();
+          _orderListener = controller
+              .getPastOrderStream(orderId)
+              .listen((LaundryOrder? newOrder) {
+            if (newOrder != null) {
+              order.value = newOrder;
+            } else {
+              Get.back();
+            }
+          });
         }
       });
     }
@@ -106,8 +114,8 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                   DriverCard(
                     driver: getRightDriver(),
                     order: order.value!,
-                    callBack: (DeliveryDriver? newDriver) {
-                      deliveryDriverController.assignDeliveryDriver(
+                    callBack: (DeliveryDriver? newDriver) async {
+                      await deliveryDriverController.assignDeliveryDriver(
                           deliveryDriverId: newDriver!.deliveryDriverId,
                           orderId: order.value!.orderId,
                           orderType: OrderType.Laundry,

@@ -91,12 +91,15 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
 
   pushNotification(order.customer.id!, notification);
 
+  pushNotification(order.customer.id!, notification).then(() => {
+    notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Laundry, orderId)
+    if (order.dropoffDriver)
+      pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
+    else if (order.pickupDriver)
+      pushNotification(order.pickupDriver.id!, notification, ParticipantType.DeliveryDriver);
+  });
 
-  notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Laundry, orderId)  
-  if (order.dropoffDriver)
-    pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
-  else if (order.pickupDriver)
-    pushNotification(order.pickupDriver.id!, notification, ParticipantType.DeliveryDriver);
+
 
   return { status: ServerResponseStatus.Success }
 }

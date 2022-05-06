@@ -96,12 +96,26 @@ class LaundryOrderController extends GetxController {
     });
   }
 
+  Stream<LaundryOrder?> getPastOrderStream(String orderId) {
+    return pastOrders.stream.map<LaundryOrder?>((_) {
+      try {
+        return pastOrders.firstWhere(
+          (LaundryOrder currentOrder) => currentOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
+        return null;
+      }
+    });
+  }
+
   bool orderHaveNewMessageNotifications(String orderId) {
+    
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.orderId == orderId)
         .isNotEmpty;
   }
 
@@ -136,16 +150,9 @@ class LaundryOrderController extends GetxController {
     return _callLaundryCloudFunction("readyForDeliveryOrderTwo", orderId);
   }
 
-  // Future<ServerResponse> assignLaundry(String orderId, String laundryId) async {
-  //   return _callLaundryCloudFunction("assignLaundry", orderId,
-  //       optionalParams: <String, dynamic>{"laundryId": laundryId});
-  // }
-  Future<ServerResponse> setOrderWeight(
-      String orderId, LaundryOrderCosts laundryOrderCosts) async {
-    return _callLaundryCloudFunction("setWeight", orderId, optionalParams: {
-      "fromLaundryOperator": false,
-      "costsByType": laundryOrderCosts.toFirebasFormat()
-    });
+  Future<ServerResponse> assignLaundry(String orderId, String laundryId) async {
+    return _callLaundryCloudFunction("assignLaundry", orderId,
+        optionalParams: <String, dynamic>{"laundryId": laundryId});
   }
 
   Future<ServerResponse> _callLaundryCloudFunction(

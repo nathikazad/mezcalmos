@@ -6,13 +6,11 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:sizer/sizer.dart';
 
-final f = new DateFormat('hh:mma');
+final DateFormat f = new DateFormat('hh:mma');
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-        ["pages"]
-["Restaurants"]["ViewRestaurantScreen"]["components"]["restaurantInfoTab"];
-
+        ["pages"]["Restaurants"]["ViewRestaurantScreen"]["components"]
+    ["restaurantInfoTab"];
 
 class RestaurantInfoTab extends StatelessWidget {
   final Restaurant restaurant;
@@ -21,7 +19,8 @@ class RestaurantInfoTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
+    final LanguageType userLanguage =
+        Get.find<LanguageController>().userLanguageKey;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -36,7 +35,7 @@ class RestaurantInfoTab extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 15),
-              child: Text(restaurant.description[userLanguage]!),
+              child: Text(restaurant.description?[userLanguage] ?? ""),
             ),
             (restaurant.info.location != null)
                 ? Column(
@@ -69,8 +68,8 @@ class RestaurantInfoTab extends StatelessWidget {
   }
 
   Widget getWorkingHoursWidget(Schedule? schedule, BuildContext context) {
-   var xDate = DateTime.now();
-    List<Widget> widgets = [
+    final DateTime xDate = DateTime.now();
+    final List<Widget> widgets = [
       Container(
         alignment: Alignment.centerLeft,
         child: Text(
@@ -82,20 +81,18 @@ class RestaurantInfoTab extends StatelessWidget {
         height: 10,
       )
     ];
-    int pos = 0;
-    for (var i = 0; i < schedule!.openHours.length; i++) {
-      schedule.openHours.forEach((key, value) {
+    final int pos = 0;
+    for (int i = 0; i < schedule!.openHours.length; i++) {
+      schedule.openHours.forEach((Weekday key, OpenHours value) {
         if (key.index == i) {
           widgets.add(WorkingHoursCart(
-            day:
-                "${_i18n()["weekDays"]["${key.toFirebaseFormatString()}"]}",
+            day: "${_i18n()["weekDays"]["${key.toFirebaseFormatString()}"]}",
             isOpen: value.isOpen,
             openHour:
                 "${f.format(DateTime(xDate.year, xDate.month, xDate.day, value.from[0], value.from[1]))}",
             closeHour:
                 "${f.format(DateTime(xDate.year, xDate.month, xDate.day, value.to[0], value.to[1]))}",
           ));
-          ;
         }
       });
     }

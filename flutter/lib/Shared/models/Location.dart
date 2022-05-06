@@ -12,6 +12,10 @@ class Location {
     return Location(location["address"], position);
   }
 
+  factory Location.fromLocationData(LocationData locationData) {
+    return Location("", locationData);
+  }
+
   static LocationData buildLocationData(double lat, double lng) {
     return LocationData.fromMap(
         <String, dynamic>{"latitude": lat, "longitude": lng});

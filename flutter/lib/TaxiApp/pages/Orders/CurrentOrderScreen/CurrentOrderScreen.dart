@@ -63,7 +63,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           mGoogleMapController.moveToNewLatLng(
               order!.driver!.location!.latitude,
               order!.driver!.location!.longitude);
-
+        mGoogleMapController.lockInAutoZoomAnimation();
         // Listener
         _orderListener = controller
             .getCurrentOrderStream(orderId)
@@ -79,6 +79,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
             });
             // this will get the order inCase it moved to /past
             if (order?.status == TaxiOrdersStatus.CancelledByCustomer) {
+              Get.back<void>();
               oneButtonDialog(
                   body: _i18n()['cancelledMessage'],
                   imagUrl: aOrderUnavailable);
@@ -111,8 +112,8 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           body: order != null && mGoogleMapController.location.value != null
               ? Stack(alignment: Alignment.topCenter, children: <Widget>[
                   MGoogleMap(
+                    recenterBtnBottomPadding: 100,
                     mGoogleMapController: mGoogleMapController,
-                    myLocationButtonEnabled: false,
                     debugString: "CurrentOrderScreen",
                   ),
                   CurrentPositionedBottomBar(order!),

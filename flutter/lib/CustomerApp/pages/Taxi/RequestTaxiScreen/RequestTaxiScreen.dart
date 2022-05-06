@@ -24,22 +24,16 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   bool lockOnTaxiRequest = false;
   @override
   void initState() {
+    viewController.locationPickerController.recenterButtonEnabled.value = false;
     viewWidgets =
         RequestTaxiScreenWidgets(requestTaxiController: viewController);
-    //TODO:FIX
-    // fetch first without waiting 10seconds.
-    // viewController.startFetchingOnlineDrivers();
-    // // then keep it periodic each 10s
-    // viewController.timer = Timer.periodic(Duration(seconds: 10), (Timer timer) {
-    //   viewController.startFetchingOnlineDrivers();
-    // });
 
     if (Get.arguments != null) {
       // we re-create the TaxiRequest passed along args
       viewController.initiateTaxiOrderReCreation(Get.arguments as TaxiRequest);
     } else {
       // when no args passed we simply initialte the view and map with current user's loc.
-      viewController.initiateViewAndMapWithCurrentLocation();
+      viewController.initMapAndStartFetchingOnlineDrivers();
     }
     super.initState();
   }
@@ -56,7 +50,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
         child: Stack(
             clipBehavior: Clip.none,
             alignment: Alignment.topCenter,
-            children: [
+            children: <Widget>[
               Container(
                 width: Get.width,
                 decoration: BoxDecoration(
@@ -73,7 +67,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                     notifyParentOfLocationFinalized:
                         viewController.updateModelAndMaybeCalculateRoute,
                     notifyParentOfConfirm: (Location? _) async {
-                      if (GetStorage().read(getxLmodeKey) == "prod" &&
+                      if (GetStorage().read<String?>(getxLmodeKey) == "prod" &&
                           Get.find<AuthController>().fireAuthUser?.uid ==
                               testUserIdInProd) {
                         MezSnackbar("Oops",
@@ -94,6 +88,11 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                     request: viewController.taxiRequest.value,
                     locationSearchBarController:
                         viewController.locationSearchBarController,
+                    onClear: () {
+                      // we set that back to false
+                      viewController.locationPickerController
+                          .periodicRerendering.value = false;
+                    },
                     newLocationChosenEvent:
                         viewController.updateModelAndHandoffToLocationPicker),
               ),

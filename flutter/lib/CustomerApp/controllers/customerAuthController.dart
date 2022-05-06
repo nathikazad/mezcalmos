@@ -43,12 +43,14 @@ class CustomerAuthController extends GetxController {
           .child(customerNode(_authController.fireAuthUser!.uid))
           .onValue
           .listen((Event event) async {
+        mezDbgPrint("insiiiiiiide event ================> $event");
         _customer.value = Customer.fromSnapshotData(event.snapshot.value);
 
         if (_checkedAppVersion == false) {
           final String VERSION = GetStorage().read(getxAppVersion);
           print("[+] Customer currently using App v$VERSION");
-          await _databaseHelper.firebaseDatabase
+          // ignore: unawaited_futures
+          _databaseHelper.firebaseDatabase
               .reference()
               .child(customerAppVersionNode(_authController.fireAuthUser!.uid))
               .set(VERSION);
@@ -110,7 +112,8 @@ class CustomerAuthController extends GetxController {
   @override
   void onClose() async {
     print("[+] CustomerAuthController::onClose ---------> Was invoked !");
-    await _customerNodeListener?.cancel();
+    // ignore: unawaited_futures
+    _customerNodeListener?.cancel();
     _customerNodeListener = null;
     super.onClose();
   }

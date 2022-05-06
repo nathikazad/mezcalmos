@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 
 class DriversMapCompnonet extends StatefulWidget {
-  List<DeliveryDriver> drivers = [];
+  List<DeliveryDriver> drivers = <DeliveryDriver>[];
   final Order order;
   DriversMapCompnonet({Key? key, required this.drivers, required this.order})
       : super(key: key);
@@ -20,12 +20,14 @@ class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
   @override
   void initState() {
     mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
+
     mapController.setAnimateMarkersPolyLinesBounds(true);
     mapController.setLocation(widget.order.to);
 
     getDriversMarkers();
     mapController.addOrUpdatePurpleDestinationMarker(
         latLng: LatLng(widget.order.to.latitude, widget.order.to.longitude));
+    mapController.lockInAutoZoomAnimation();
     super.initState();
   }
 
@@ -41,12 +43,12 @@ class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
     );
   }
 
-  getDriversMarkers() {
-    widget.drivers.forEach((element) {
+  void getDriversMarkers() {
+    widget.drivers.forEach((DeliveryDriver _driver) {
       mapController.addOrUpdateUserMarker(
-          latLng: element.driverLocation,
-          customImgHttpUrl: element.driverInfo.image,
-          markerId: element.driverInfo.id);
+          latLng: _driver.driverLocation,
+          customImgHttpUrl: _driver.driverInfo.image,
+          markerId: _driver.driverInfo.id);
     });
   }
 }

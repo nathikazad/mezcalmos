@@ -23,8 +23,9 @@ class RestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
-    final txt = Theme.of(context).textTheme;
+    final LanguageType userLanguage =
+        Get.find<LanguageController>().userLanguageKey;
+    final TextTheme txt = Theme.of(context).textTheme;
     return Card(
       margin: EdgeInsets.all(8),
       child: InkWell(
@@ -47,15 +48,21 @@ class RestaurantCard extends StatelessWidget {
                         restaurant.info.name,
                         style: txt.headline3,
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        restaurant.description[userLanguage]!,
-                        style: txt.subtitle1,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      if (restaurant.description != null)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              restaurant.description![userLanguage]!,
+                              style: txt.subtitle1,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
                       Spacer(),
                       Container(
                         alignment: Alignment.bottomLeft,
@@ -72,7 +79,9 @@ class RestaurantCard extends StatelessWidget {
                             ),
                             Flexible(
                               child: Text(
-                                restaurant.items.length.toStringAsFixed(0) +
+                                restaurant
+                                        .getNumberOfitems()
+                                        .toStringAsFixed(0) +
                                     ' ${_i18n()["items"]}',
                                 style: txt.bodyText2,
                               ),
@@ -110,7 +119,7 @@ class RestaurantCard extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: restaurant.info.image,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
+                placeholder: (BuildContext context, String url) => Container(
                   width: 15,
                   height: 15,
                   child: Center(

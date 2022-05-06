@@ -7,11 +7,7 @@ abstract class Service {
   ServiceUserInfo info;
   Schedule? schedule;
   ServiceState state;
-  Service(
-      {required this.info,
-      this.schedule,
-      required this.state});
-      
+  Service({required this.info, this.schedule, required this.state});
 }
 
 class ServiceState {
@@ -23,12 +19,11 @@ class ServiceState {
         "available": available
       };
 
-  bool get authorized =>
-      this.authorizationStatus == AuthorizationStatus.Authorized;
+  bool get authorized => authorizationStatus == AuthorizationStatus.Authorized;
 }
 
 class ServiceUserInfo extends UserInfo {
-  Location? location;
+  Location location;
 
   ServiceUserInfo(
       {required String id,
@@ -37,10 +32,9 @@ class ServiceUserInfo extends UserInfo {
       required this.location})
       : super(id: id, name: name, image: image);
 
-  factory ServiceUserInfo.fromData(dynamic data) {
+  factory ServiceUserInfo.fromData(data) {
     // mezDbgPrint(" TaxiUserInfo.fromData ====> $data");
-    Location? location = data["location"] != null
-        ? Location.fromFirebaseData(data["location"]) : null;
+    final Location location = Location.fromFirebaseData(data["location"]);
     return ServiceUserInfo(
         id: data["id"],
         name: data["name"],
@@ -49,10 +43,10 @@ class ServiceUserInfo extends UserInfo {
   }
 
   @override
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "uid": id,
         "name": name,
         "image": image,
-        "location": location?.toFirebaseFormattedJson(),
+        "location": location.toFirebaseFormattedJson(),
       };
 }
