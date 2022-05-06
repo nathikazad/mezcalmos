@@ -79,6 +79,14 @@ class LaundryOrderController extends GetxController {
     }
   }
 
+  Future<ServerResponse> setOrderWeight(
+      String orderId, LaundryOrderCosts laundryOrderCosts) async {
+    return _callLaundryCloudFunction("setWeight", orderId, optionalParams: {
+      "fromLaundryOperator": true,
+      "costsByType": laundryOrderCosts.toFirebasFormat()
+    });
+  }
+
   bool isPast(LaundryOrder order) {
     return pastOrders.contains(order);
   }
@@ -153,13 +161,7 @@ class LaundryOrderController extends GetxController {
   //   return _callLaundryCloudFunction("assignLaundry", orderId,
   //       optionalParams: <String, dynamic>{"laundryId": laundryId});
   // }
-  Future<ServerResponse> setOrderWeight(
-      String orderId, LaundryOrderCosts laundryOrderCosts) async {
-    return _callLaundryCloudFunction("setWeight", orderId, optionalParams: {
-      "fromLaundryOperator": false,
-      "costsByType": laundryOrderCosts.toFirebasFormat()
-    });
-  }
+
 
   Future<ServerResponse> _callLaundryCloudFunction(
       String functionName, String orderId,
