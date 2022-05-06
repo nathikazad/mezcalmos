@@ -82,9 +82,19 @@ class LaundryOrderController extends GetxController {
   Future<ServerResponse> setOrderWeight(
       String orderId, LaundryOrderCosts laundryOrderCosts) async {
     return _callLaundryCloudFunction("setWeight", orderId, optionalParams: {
-      "fromLaundryOperator": true,
+      "fromLaundryOperator": false,
       "costsByType": laundryOrderCosts.toFirebasFormat()
     });
+  }
+
+  Future<ServerResponse> setEstimatedDeliveryTime(
+      String orderId, DateTime estimatedTime) async {
+    mezDbgPrint("inside clod set delivery time $estimatedTime");
+    return _callLaundryCloudFunction("setEstimatedTime", orderId,
+        optionalParams: {
+          "fromLaundryOperator": false,
+          "estimatedDeliveryTime": estimatedTime.toUtc().toString()
+        });
   }
 
   bool isPast(LaundryOrder order) {
@@ -161,7 +171,6 @@ class LaundryOrderController extends GetxController {
   //   return _callLaundryCloudFunction("assignLaundry", orderId,
   //       optionalParams: <String, dynamic>{"laundryId": laundryId});
   // }
-
 
   Future<ServerResponse> _callLaundryCloudFunction(
       String functionName, String orderId,

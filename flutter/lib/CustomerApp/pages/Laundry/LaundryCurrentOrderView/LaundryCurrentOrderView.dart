@@ -162,7 +162,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                     width: 10,
                   ),
                   Text(
-                    "${DateFormat("dd MMMM yyyy").format(order.value!.estimatedDeliveryTime!.toLocal())}",
+                    "${DateFormat("dd MMMM yyyy hh:mm a").format(order.value!.estimatedDeliveryTime!.toLocal())}",
                     style: Get.textTheme.bodyText1,
                   )
                 ],
@@ -188,13 +188,13 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                 CircleAvatar(
                   radius: 20,
                   backgroundImage:
-                      CachedNetworkImageProvider(order.value!.laundry!.image),
+                      CachedNetworkImageProvider(order.value!.laundry.image),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Text(
-                  order.value!.laundry!.name,
+                  order.value!.laundry.name,
                   style: Get.textTheme.bodyText1,
                 ),
               ],

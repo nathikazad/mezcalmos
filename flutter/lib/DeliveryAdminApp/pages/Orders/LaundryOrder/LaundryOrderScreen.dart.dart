@@ -12,6 +12,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderSummary.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/SetLaundryCostsComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/SetOrderEstTime.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -60,7 +61,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   @override
   void initState() {
     super.initState();
-    mezDbgPrint("Laaaaaaauuuuuuuuuundryyyy screeennnnnnnnnn");
+    // mezDbgPrint("Laaaaaaauuuuuuuuuundryyyy screeennnnnnnnnn");
     orderId = Get.parameters['orderId']!;
     controller.clearNewOrderNotifications();
     order.value = controller.getOrder(orderId);
@@ -76,7 +77,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
               driver = order.value!.dropoffDriver;
             }
           } else {
-            //    Get.back();
+            Get.back();
           }
         },
       );
@@ -210,6 +211,9 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     height: 10,
                   ),
                   SetLaundryOrderCostComponent(
+                    order: order.value!,
+                  ),
+                  SetOrderEstTimeComponent(
                     order: order.value!,
                   ),
                   LaundryProviderCard(order: order.value!),
