@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 enum LaundryOrderStatus {
@@ -147,6 +146,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.PickedUp ||
         status == LaundryOrderStatus.ReadyForDelivery ||
         status == LaundryOrderStatus.OtwDelivery;
+  }
+
+  bool isAtLaundry() {
+    return status == LaundryOrderStatus.AtLaundry;
   }
 
   num? getPrice() {

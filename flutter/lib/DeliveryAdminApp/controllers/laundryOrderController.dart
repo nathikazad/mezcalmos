@@ -79,6 +79,14 @@ class LaundryOrderController extends GetxController {
     }
   }
 
+  Future<ServerResponse> setOrderWeight(
+      String orderId, LaundryOrderCosts laundryOrderCosts) async {
+    return _callLaundryCloudFunction("setWeight", orderId, optionalParams: {
+      "fromLaundryOperator": true,
+      "costsByType": laundryOrderCosts.toFirebasFormat()
+    });
+  }
+
   bool isPast(LaundryOrder order) {
     return pastOrders.contains(order);
   }
@@ -110,7 +118,6 @@ class LaundryOrderController extends GetxController {
   }
 
   bool orderHaveNewMessageNotifications(String orderId) {
-    
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
