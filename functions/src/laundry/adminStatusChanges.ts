@@ -185,8 +185,8 @@ export const setEstimatedDeliveryTime = functions.https.onCall(async (data, cont
   return { status: ServerResponseStatus.Success }
 });
 
-async function checkLaundryOperator(laundryId: string, userId: string): Promise<ServerResponse | undefined> {
-  let operator = (await laundryNodes.laundryOperators(laundryId, userId).once('value')).val();
+async function checkLaundryOperator(laundryId: string, operatorId: string): Promise<ServerResponse | undefined> {
+  let operator = (await laundryNodes.laundryOperators(laundryId, operatorId).once('value')).val();
   let isOperator = operator != null && operator == true
   if (!isOperator) {
     return {

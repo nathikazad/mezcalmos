@@ -12,6 +12,7 @@ import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
+import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 
 // Customer Canceling
 export = functions.https.onCall(async (data, context) => {
@@ -58,15 +59,22 @@ export = functions.https.onCall(async (data, context) => {
   await finishOrder(order, orderId);
 
   deliveryAdminNodes.deliveryAdmins().once('value', (snapshot) => {
-    notifyOthersCancelledOrder(snapshot.val(), orderId, order);
+    let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
+    laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
+      let laundryOperators: Record<string, boolean> = snapshot.val();
+      notifyOthersCancelledOrder(deliveryAdmins, orderId, order, laundryOperators);
+    });
   });
 
   return { status: ServerResponseStatus.Success, orderId: data.orderId }
 });
 
 
-async function notifyOthersCancelledOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
-  orderId: string, order: LaundryOrder) {
+async function notifyOthersCancelledOrder(
+  deliveryAdmins: Record<string, DeliveryAdmin>,
+  orderId: string,
+  order: LaundryOrder,
+  laundryOperators: Record<string, boolean>) {
 
   let notification: Notification = {
     foreground: <LaundryOrderStatusChangeNotification>{
@@ -83,6 +91,10 @@ async function notifyOthersCancelledOrder(deliveryAdmins: Record<string, Deliver
 
   for (let adminId in deliveryAdmins) {
     pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  }
+
+  for (let operatorId in laundryOperators) {
+    pushNotification(operatorId, notification, ParticipantType.LaundryOperator);
   }
 
 

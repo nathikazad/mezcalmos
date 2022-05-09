@@ -14,14 +14,13 @@ import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 import { getInProcessOrder, getUserInfo } from "../shared/controllers/rootController";
 import { getDeliveryDriver } from "../shared/controllers/deliveryController";
 import { CancelDeliveryOrderNotification, DeliveryDriver, DeliveryDriverType, NewDeliveryOrderNotification } from "../shared/models/Drivers/DeliveryDriver";
-import { pushChat, deleteChat } from "../shared/controllers/chatController";
+import { pushChat, deleteChat, addParticipantsToChat } from "../shared/controllers/chatController";
 import { Chat, ChatType, ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { deliveryCancelOrderMessage, deliveryNewOrderMessage } from "./bgNotificationMessages";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
@@ -133,7 +132,12 @@ export = functions.https.onCall(async (data, context) => {
 
   deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
     let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    addDeliveryAdminsToChat(deliveryAdmins, chat, chatId)
+    addParticipantsToChat(Object.keys(deliveryAdmins), chat, chatId, ParticipantType.DeliveryAdmin)
+  })
+
+  laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
+    let laundryOperators: Record<string, boolean> = snapshot.val();
+    addParticipantsToChat(Object.keys(laundryOperators), chat, chatId, ParticipantType.LaundryOperator)
   })
 
   let notification: Notification = {
