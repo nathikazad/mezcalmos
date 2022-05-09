@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -39,11 +40,34 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                           style: Get.textTheme.bodyText1,
                         ),
                         Spacer(),
-                        IconButton(
-                            onPressed: () {
-                              _handleMessageRouting();
-                            },
-                            icon: Icon(Icons.sms_rounded))
+                        Stack(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  Get.toNamed(getMessagesRoute(
+                                      orderId: (order.getCurrentPhase() ==
+                                              LaundryOrderPhase.Pickup)
+                                          ? order.pickupDriverChatId!
+                                          : order.dropOffDriverChatId!,
+                                      chatId: (order.getCurrentPhase() ==
+                                              LaundryOrderPhase.Pickup)
+                                          ? order.pickupDriverChatId!
+                                          : order.dropOffDriverChatId!,
+                                      recipientType:
+                                          ParticipantType.DeliveryDriver));
+                                },
+                                icon: Icon(
+                                  Icons.textsms_rounded,
+                                  color: Theme.of(context).primaryColorLight,
+                                )),
+                            Obx(
+                              () => Get.find<OrderController>()
+                                      .hasNewMessageNotification(order.orderId)
+                                  ? _newMessageRedDot(context)
+                                  : Container(),
+                            )
+                          ],
+                        ),
                       ])
                     : Text(
                         "Still no driver assigned to this order",
@@ -60,6 +84,14 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
       return order.pickupDriver != null;
     } else {
       return order.dropoffDriver != null;
+    }
+  }
+
+  String _getCorrectChatId() {
+    if (order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return order.pickupDriverChatId!;
+    } else {
+      return order.dropOffDriverChatId!;
     }
   }
 
@@ -82,14 +114,29 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
   void _laundryDropOffDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
-        chatId: (order).dropOffDriverChatId!,
+        chatId: order.dropOffDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }
 
   void _laundryPickupDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
-        chatId: (order).pickupDriverChatId!,
+        chatId: order.pickupDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
+  }
+
+  Widget _newMessageRedDot(BuildContext context) {
+    return Positioned(
+      left: 0,
+      top: 0,
+      child: Container(
+        width: 13,
+        height: 13,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: const Color(0xfff6efff), width: 2),
+            color: const Color(0xffff0000)),
+      ),
+    );
   }
 }

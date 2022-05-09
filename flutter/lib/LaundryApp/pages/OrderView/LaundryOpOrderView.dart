@@ -12,9 +12,9 @@ import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderSu
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCategoryComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/OrderEstimatedTimeComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['LaundryOpOrderView'];
@@ -33,22 +33,39 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   @override
   void initState() {
     final String orderId = Get.parameters['orderId']!;
-    mezDbgPrint("orderId ========================> $orderId");
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId);
-    if (order.value == null) {
-      Get.back<void>();
+    order.value = controller.getOrder(orderId) as LaundryOrder;
+    _orderListener = controller
+        .getOrderStream(orderId)
+        .listen((LaundryOrder? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent;
+
+        order.refresh();
+      }
+    });
+
+    waitForOrderIfNotLoaded().then((void value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<Null>.delayed(Duration.zero, () {
+          Get.back<Null>();
+          MezSnackbar("Error", "Order does not exist");
+        });
+      }
+    });
+  }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
     } else {
-      _orderListener =
-          controller.getOrderStream(orderId).listen((LaundryOrder? newOrder) {
-        if (newOrder != null) {
-          order.value = controller.getOrder(orderId);
-        } else {
-          Get.back<void>();
-        }
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
       });
+      return completer.future;
     }
-    super.initState();
   }
 
   @override

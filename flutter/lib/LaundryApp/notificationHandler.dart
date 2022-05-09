@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -146,8 +145,8 @@ Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
-          chatId: value['chatId'],
-          recipientType: ParticipantType.DeliveryAdmin),
+        chatId: value['chatId'],
+      ),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
