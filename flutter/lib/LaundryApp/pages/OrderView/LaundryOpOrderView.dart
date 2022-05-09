@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpDriverCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderNote.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderStatusCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderSummaryCard.dart';
@@ -77,6 +78,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               OrderEstimatedTimeComponent(order: order.value!),
               // order Customer
               _orderCustomerCard(),
+              LaundryOpOrderDriverCard(order: order.value!),
 
               // order notes
               LaundryOpOrderNote(order: order.value!),
@@ -150,7 +152,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
 
   Widget _orderCustomerCard() {
     return Container(
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -174,7 +176,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                   Text(
                     order.value!.customer.name,
                     style: Get.theme.textTheme.bodyText1,
-                  )
+                  ),
                 ],
               ),
             ),

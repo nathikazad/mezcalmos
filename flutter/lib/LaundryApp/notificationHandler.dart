@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
-    ["notificationHandler"];
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["LaundryApp"]["notificationHandler"];
 
 Notification laundryNotificationHandler(String key, value) {
   final NotificationType notificationType =
@@ -16,11 +16,11 @@ Notification laundryNotificationHandler(String key, value) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          linkUrl: "", // needs to be changed, need to add laundry
-          body: '${_i18n()['driverNotifBody']}', // needs to be changed
+          linkUrl: getLaundryOpOrderRoute(value["orderId"]),
+          body: '${_i18n()['newOrderBody']}',
           imgUrl:
-              'assets/images/shared/notifications/deliveryNotif.png', // needs to be changed
-          title: '${_i18n()['driverNotifTitle']}',
+              'assets/images/laundryApp/washingMachine.png', // needs to be changed
+          title: '${_i18n()['newOrderTitle']}',
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewMessage,
           notificationAction:
@@ -28,15 +28,8 @@ Notification laundryNotificationHandler(String key, value) {
           variableParams: value);
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
-    // case NotificationType.OrderStatusChange:
-    //   switch (value['orderType'].toString().toOrderType()) {
-    //     case OrderType.Restaurant:
-    //       return restaurantOrderStatusChangeNotificationHandler(key, value);
-    //     case OrderType.Laundry:
-    //       return laundryOrderStatusChangeNotificationHandler(key, value);
-    //     default:
-    //       throw Exception("Unexpected Order Type $value['orderType']");
-    //   }
+    case NotificationType.OrderStatusChange:
+      return _laundryOpOrderChangesNotifier(key, value);
     default:
       throw StateError("Invalid Notification Type");
   }
@@ -53,15 +46,15 @@ Notification laundryNotificationHandler(String key, value) {
 //   }
 // }
 
-Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
-  final RestaurantOrderStatus newOrdersStatus =
-      value['status'].toString().toRestaurantOrderStatus();
+Notification _laundryOpOrderChangesNotifier(String key, value) {
+  final LaundryOrderStatus newOrdersStatus =
+      value['status'].toString().toLaundryOrderStatus();
   final Map<String, dynamic> dynamicFields =
-      getRestaurantOrderStatusFields(newOrdersStatus)!;
+      getLaundryOrderStatusFields(newOrdersStatus)!;
 
   return Notification(
       id: key,
-      linkUrl: '',
+      linkUrl: getLaundryOpOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -70,43 +63,6 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
       notificationAction:
           (value["notificationAction"] as String).toNotificationAction(),
       variableParams: value);
-}
-
-Map<String, dynamic>? getRestaurantOrderStatusFields(
-    RestaurantOrderStatus restaurantOrderStatus) {
-  switch (restaurantOrderStatus) {
-    case RestaurantOrderStatus.PreparingOrder:
-      return <String, dynamic>{
-        "title": "${_i18n()["preparingOrderTitle"]}",
-        "body": "${_i18n()["preparingOrderBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
-      };
-    case RestaurantOrderStatus.ReadyForPickup:
-      return <String, dynamic>{
-        "title": "${_i18n()["readyForPickupTitle"]}",
-        "body": "${_i18n()["readyForPickupBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
-      };
-    case RestaurantOrderStatus.CancelledByAdmin:
-      return <String, dynamic>{
-        "title": "${_i18n()["cancelledTitle"]}",
-        "body": "${_i18n()["cancelledBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
-      };
-    case RestaurantOrderStatus.CancelledByCustomer:
-      return <String, dynamic>{
-        "title": "${_i18n()["cancelledTitle"]}",
-        "body": "${_i18n()["cancelledBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
-      };
-    default:
-    // do nothing
-  }
-  return null;
 }
 
 Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
@@ -131,52 +87,52 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
 Map<String, dynamic>? getLaundryOrderStatusFields(
     LaundryOrderStatus laundryOrderStatus) {
   switch (laundryOrderStatus) {
-    case LaundryOrderStatus.OtwPickup:
-      return <String, dynamic>{
-        "title": "${_i18n()["laundryOtwPickupTitle"]}",
-        "body": "${_i18n()["laundryOtwPickupBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
-      };
-    case LaundryOrderStatus.PickedUp:
-      return <String, dynamic>{
-        "title": "${_i18n()["laundryPickedTitle"]}",
-        "body": "${_i18n()["laundryPickedBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
-      };
-    case LaundryOrderStatus.AtLaundry:
-      return <String, dynamic>{
-        "title": "${_i18n()["laundryAtLaundryTitle"]}",
-        "body": "${_i18n()["laundryAtLaundryBody"]}",
-        "imgUrl": "assets/images/shared/notifications/atLaundry.png",
-      };
-    case LaundryOrderStatus.ReadyForDelivery:
-      return <String, dynamic>{
-        "title": "${_i18n()["laundryReadyForDeliveryTitle"]}",
-        "body": "${_i18n()["laundryReadyForDeliveryBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
-      };
-    case LaundryOrderStatus.OtwDelivery:
-      return <String, dynamic>{
-        "title": "${_i18n()["laundryOtwDeliveryTitle"]}",
-        "body": "${_i18n()["laundryOtwDeliveryBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
-      };
-    case LaundryOrderStatus.Delivered:
-      return <String, dynamic>{
-        "title": "${_i18n()["laundryDeliveredTitle"]}",
-        "body": "${_i18n()["laundryDeliveredTitle"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
-      };
+    // case LaundryOrderStatus.OtwPickup:
+    //   return <String, dynamic>{
+    //     "title": "${_i18n()["laundryOtwPickupTitle"]}",
+    //     "body": "${_i18n()["laundryOtwPickupBody"]}",
+    //     "imgUrl":
+    //         "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+    //   };
+    // case LaundryOrderStatus.PickedUp:
+    //   return <String, dynamic>{
+    //     "title": "${_i18n()["laundryPickedTitle"]}",
+    //     "body": "${_i18n()["laundryPickedBody"]}",
+    //     "imgUrl":
+    //         "assets/images/shared/notifications/readyOrderNotificationIcon.png",
+    //   };
+    // case LaundryOrderStatus.AtLaundry:
+    //   return <String, dynamic>{
+    //     "title": "${_i18n()["laundryAtLaundryTitle"]}",
+    //     "body": "${_i18n()["laundryAtLaundryBody"]}",
+    //     "imgUrl": "assets/images/shared/notifications/atLaundry.png",
+    //   };
+    // case LaundryOrderStatus.ReadyForDelivery:
+    //   return <String, dynamic>{
+    //     "title": "${_i18n()["laundryReadyForDeliveryTitle"]}",
+    //     "body": "${_i18n()["laundryReadyForDeliveryBody"]}",
+    //     "imgUrl":
+    //         "assets/images/shared/notifications/readyOrderNotificationIcon.png",
+    //   };
+    // case LaundryOrderStatus.OtwDelivery:
+    //   return <String, dynamic>{
+    //     "title": "${_i18n()["laundryOtwDeliveryTitle"]}",
+    //     "body": "${_i18n()["laundryOtwDeliveryBody"]}",
+    //     "imgUrl":
+    //         "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+    //   };
+    // case LaundryOrderStatus.Delivered:
+    //   return <String, dynamic>{
+    //     "title": "${_i18n()["laundryDeliveredTitle"]}",
+    //     "body": "${_i18n()["laundryDeliveredTitle"]}",
+    //     "imgUrl":
+    //         "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+    //   };
     case LaundryOrderStatus.CancelledByAdmin:
     case LaundryOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
-        "title": "${_i18n()["cancelledTitle"]}",
-        "body": "${_i18n()["cancelledBody"]}",
+        "title": "${_i18n()["canceledOrderTitle"]}",
+        "body": "${_i18n()["canceledOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
       };

@@ -95,8 +95,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         estimatedDeliveryTime: (data["estimatedDeliveryTime"] != null)
             ? DateTime.parse(data["estimatedDeliveryTime"])
             : null,
-        laundry:  ServiceInfo.fromData(data["laundry"])
-            ,
+        laundry: ServiceInfo.fromData(data["laundry"]),
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
             : null,
@@ -143,6 +142,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   bool isAtLaundry() {
     return status == LaundryOrderStatus.AtLaundry;
   }
+
   bool inDeliverPhase() {
     return status == LaundryOrderStatus.OtwPickup ||
         status == LaundryOrderStatus.OrderReceieved ||

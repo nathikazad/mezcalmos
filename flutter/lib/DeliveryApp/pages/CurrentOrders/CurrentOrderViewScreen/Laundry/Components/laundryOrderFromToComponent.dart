@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class LaundryOrderFromToComponent extends StatefulWidget {
   /// shows order from info (service provider name image and adress) and destination info  (customer name image and adress)
@@ -23,12 +26,7 @@ class _LaundryOrderFromToComponentState
 
   @override
   void initState() {
-    getLaundry();
     super.initState();
-  }
-
-  void getLaundry() async {
-    laundry = widget.order.laundry;
   }
 
   @override
@@ -59,7 +57,22 @@ class _LaundryOrderFromToComponentState
                 ),
               ],
             ),
-          )
+          ),
+          Spacer(),
+          IconButton(
+              onPressed: () {
+                Get.toNamed(getMessagesRoute(
+                    orderId: (widget.order.getCurrentPhase() ==
+                            LaundryOrderPhase.Pickup)
+                        ? widget.order.pickupDriverChatId!
+                        : widget.order.dropOffDriverChatId!,
+                    chatId: (widget.order.getCurrentPhase() ==
+                            LaundryOrderPhase.Pickup)
+                        ? widget.order.pickupDriverChatId!
+                        : widget.order.dropOffDriverChatId!,
+                    recipientType: ParticipantType.LaundryOperator));
+              },
+              icon: Icon(Icons.textsms_rounded))
         ],
       ),
       Container(

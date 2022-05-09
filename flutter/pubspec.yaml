@@ -112,6 +112,7 @@ flutter:
     - assets/images/
     - assets/images/customer/
     - assets/images/shared/
+    - assets/images/laundryApp/
     - assets/images/shared/notifications/
     - assets/images/deliveryAdmin/
     - assets/images/customer/restaurants/

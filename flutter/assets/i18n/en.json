@@ -573,11 +573,11 @@
                 "UserProfileScreen": {
                     "mustSetUserNameError": "Please enter your first name.",
                     "mustSetUserImgError": "Please upload an image.",
-                    "nameMustBeLettersOnly" : "Your first name must only have letters.",
+                    "nameMustBeLettersOnly": "Your first name must only have letters.",
                     "nameMustBeFourLettersOrMore": "Your name must have at least 4 letters."
                 },
                 "UserProfileWidgets": {
-                    "namePlaceHolder" : "Enter your first name",
+                    "namePlaceHolder": "Enter your first name",
                     "uploadPic": "Upload Image",
                     "title": " User Information",
                     "cancel": "Cancel",
@@ -669,11 +669,11 @@
             "MezDialogs": {
                 "yes": "Yes",
                 "no": "No",
-                "mezUpdaterDialog" :{
-                    "updateAvailable" : "Update Available!",
-                    "updatePlease" : "It is always recommended to install new updates in order to get all the new features!",
-                    "doNotUpdate" : "No Thanks",
-                    "update" : "UPDATE"
+                "mezUpdaterDialog": {
+                    "updateAvailable": "Update Available!",
+                    "updatePlease": "It is always recommended to install new updates in order to get all the new features!",
+                    "doNotUpdate": "No Thanks",
+                    "update": "UPDATE"
                 }
             },
             "MezSideMenu": {
@@ -1281,6 +1281,13 @@
                     "orderDate": "Order Date"
                 }
             }
+        },
+        "notificationHandler": {
+            "newOrderTitle": "New Order",
+            "newOrderBody": "You got a new order",
+            "canceledOrderTitle": "Order canceled",
+            "canceledOrderBody": "Your order has been canceled"
+
         }
 
     }
