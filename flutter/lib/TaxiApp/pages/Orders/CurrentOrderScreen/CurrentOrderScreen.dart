@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -44,51 +45,52 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     mezDbgPrint("orderId :: $orderId");
 
     controller.clearOrderNotifications();
-    // we need the first snapshot seprated !
-    final TaxiOrder? _orderSnapshot = controller.getOrder(orderId);
-    mezDbgPrint("_orderSnapshot :: $_orderSnapshot");
 
-    if (_orderSnapshot == null) {
-      Get.back<void>();
-      mezcalmosDialogOrderNoMoreAvailable(context);
-    } else {
-      if (_orderSnapshot.inProcess()) {
-        // populate the LatLngPoints from the encoded PolyLine String + SetState!
-        mGoogleMapController.decodeAndAddPolyline(
-            encodedPolylineString: _orderSnapshot.routeInformation!.polyline);
-        mGoogleMapController.setLocation(_orderSnapshot.from);
-        updateOrder(orderStreamEvent: _orderSnapshot);
-        // set InitialPosition
-        if (order?.driver?.location != null)
-          mGoogleMapController.moveToNewLatLng(
-              order!.driver!.location!.latitude,
-              order!.driver!.location!.longitude);
-        mGoogleMapController.lockInAutoZoomAnimation();
-        // Listener
-        _orderListener = controller
-            .getCurrentOrderStream(orderId)
-            .listen((TaxiOrder? order) {
-          if (order != null) {
-            updateOrder(orderStreamEvent: order);
-          } else {
-            cancelOrderSubscription();
-            controller.getPastOrderStream(orderId).listen((TaxiOrder? order) {
-              if (order != null) {
-                updateOrder(orderStreamEvent: order);
-              }
-            });
-            // this will get the order inCase it moved to /past
-            if (order?.status == TaxiOrdersStatus.CancelledByCustomer) {
-              Get.back<void>();
-              oneButtonDialog(
-                  body: _i18n()['cancelledMessage'],
-                  imagUrl: aOrderUnavailable);
-            }
-          }
-        });
+    TaxiOrder? _orderSnapshot = controller.getOrder(orderId);
+    _orderListener =
+        controller.getOrderStream(orderId).listen((TaxiOrder? newOrderEvent) {
+      if (newOrderEvent != null) {
+        updateOrder(orderStreamEvent: _orderSnapshot!);
+        _orderSnapshot = newOrderEvent;
       }
-    }
+    });
+
+    waitForOrderIfNotLoaded(_orderSnapshot).then((void value) {
+      if (_orderSnapshot == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<Null>.delayed(Duration.zero, () {
+          Get.back<Null>();
+          MezSnackbar("Error", "Order does not exist");
+        });
+      } else {
+        initMap(_orderSnapshot!);
+      }
+    });
     super.initState();
+  }
+
+  Future<void> waitForOrderIfNotLoaded(TaxiOrder? order) {
+    if (order != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
+      });
+      return completer.future;
+    }
+  }
+
+  void initMap(TaxiOrder _orderSnapshot) {
+    mGoogleMapController.decodeAndAddPolyline(
+        encodedPolylineString: _orderSnapshot.routeInformation!.polyline);
+    mGoogleMapController.setLocation(_orderSnapshot.from);
+    updateOrder(orderStreamEvent: _orderSnapshot);
+    // set InitialPosition
+    if (order?.driver?.location != null)
+      mGoogleMapController.moveToNewLatLng(order!.driver!.location!.latitude,
+          order!.driver!.location!.longitude);
+    mGoogleMapController.lockInAutoZoomAnimation();
   }
 
   @override

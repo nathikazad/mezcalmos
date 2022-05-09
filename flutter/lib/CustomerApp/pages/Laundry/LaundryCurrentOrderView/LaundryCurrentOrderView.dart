@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
@@ -33,7 +34,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   LaundryOrderPhase? _phaseSnapshot;
 
   Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
-  StreamSubscription<dynamic>? _orderListener;
+  StreamSubscription? _orderListener;
   final OrderController controller = Get.find<OrderController>();
   final MGoogleMapController mapController = MGoogleMapController(
     enableMezSmartPointer: false,
@@ -53,42 +54,45 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     }
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as LaundryOrder?;
-    if (order.value == null) {
-      mezDbgPrint("Order null");
-      Get.back<void>();
-    } else {
-      initMap();
 
-      if (order.value!.inProcess()) {
-        updateMapByPhase(order.value!.getCurrentPhase());
-        _orderListener =
-            controller.getCurrentOrderStream(orderId).listen((Order? event) {
-          if (event != null) {
-            mezDbgPrint("===================" +
-                (event as LaundryOrder).status.toString());
-            updateMapByPhase(event.getCurrentPhase());
-            order.value = event;
-          } else {
-            _orderListener?.cancel();
-            _orderListener = null;
-            controller.getPastOrderStream(orderId).listen((Order? event) {
-              if (event != null) {
-                order.value = event as LaundryOrder;
-              }
-            });
-            order.value = controller.getOrder(orderId) as LaundryOrder?;
-          }
+    initMap();
+    _orderListener =
+        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent as LaundryOrder?;
+        if (order.value!.inProcess()) {
+          updateMapByPhase(order.value!.getCurrentPhase());
+        }
+      }
+    });
+
+    waitForOrderIfNotLoaded().then((void value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<Null>.delayed(Duration.zero, () {
+          Get.back<Null>();
+          MezSnackbar("Error", "Order does not exist");
         });
       }
-    }
-
+    });
     super.initState();
+  }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
+      });
+      return completer.future;
+    }
   }
 
   @override
   void dispose() {
     _orderListener?.cancel();
-    _orderListener = null;
     super.dispose();
   }
 

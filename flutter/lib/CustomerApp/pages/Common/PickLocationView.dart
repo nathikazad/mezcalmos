@@ -68,7 +68,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
       final String? x = Get.parameters["id"];
       savedLocation = Get.find<CustomerAuthController>()
-          .customerRxn()!
+          .customer()!
           .savedLocations
           .firstWhere((SavedLocation saved) => saved.id == x);
       GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {

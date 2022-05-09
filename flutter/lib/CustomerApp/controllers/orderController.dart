@@ -1,6 +1,7 @@
 import 'dart:async';
-
+import 'package:async/async.dart' show StreamGroup;
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -20,7 +21,6 @@ class OrderController extends GetxController {
       Get.find<ForegroundNotificationsController>();
   RxList<Order> currentOrders = <Order>[].obs;
   RxList<Order> pastOrders = <Order>[].obs;
-  String lastPastOrderId = "";
 
   StreamSubscription<dynamic>? _currentOrdersListener;
   StreamSubscription<dynamic>? _pastOrdersListener;
@@ -135,7 +135,14 @@ class OrderController extends GetxController {
     }
   }
 
-  Stream<Order?> getCurrentOrderStream(String orderId) {
+  Stream<Order?> getOrderStream(String orderId) {
+    return StreamGroup.merge(<Stream<Order?>>[
+      _getInProcessOrderStream(orderId),
+      _getPastOrderStream(orderId)
+    ]);
+  }
+
+  Stream<Order?> _getInProcessOrderStream(String orderId) {
     return currentOrders.stream.map<Order?>((_) {
       try {
         return currentOrders.firstWhere(
@@ -143,12 +150,12 @@ class OrderController extends GetxController {
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
       }
     });
   }
 
-  Stream<Order?> getPastOrderStream(String orderId) {
+  Stream<Order?> _getPastOrderStream(String orderId) {
     return pastOrders.stream.map<Order?>((_) {
       try {
         return pastOrders.firstWhere(
@@ -156,7 +163,7 @@ class OrderController extends GetxController {
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
       }
     });
   }

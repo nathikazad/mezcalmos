@@ -6,13 +6,12 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/CustomerApp/pages/SavedLocations/components/SavedLocationBody.dart';
+import 'package:mezcalmos/CustomerApp/pages/SavedLocations/components/SavedLocationIsEmpty.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
-
-import 'components/SavedLocationBody.dart';
-import 'components/SavedLocationIsEmpty.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["SavedLocationView"];
@@ -46,13 +45,13 @@ class _SavedLocationViewState extends State<SavedLocationView> {
     mezDbgPrint("==============");
     setState(() {
       savedLocations.assignAll(
-          _customerAuthController.customerRxn.value?.savedLocations ?? []);
+          _customerAuthController.customer.value?.savedLocations ?? []);
     });
     mezDbgPrint("==============");
     mezDbgPrint(savedLocations);
     mezDbgPrint("==============");
     // then start a listener in case there are changes in /savedLocations db node!
-    savedLocationsStreamSub = _customerAuthController.customerRxn
+    savedLocationsStreamSub = _customerAuthController.customer
         .map<List<SavedLocation>>((Customer? customerInstance) {
       return customerInstance?.savedLocations ?? <SavedLocation>[];
     }).listen((List<SavedLocation> _savedLocations) {

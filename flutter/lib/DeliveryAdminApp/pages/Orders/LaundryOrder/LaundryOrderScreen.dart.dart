@@ -22,6 +22,7 @@ import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ['pages']['Orders']["LaundryOrder"]["LaundryOrderScreen"];
@@ -67,35 +68,53 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   @override
   void initState() {
     super.initState();
-    initMap();
     orderId = Get.parameters['orderId']!;
     controller.clearNewOrderNotifications();
     order.value = controller.getOrder(orderId);
-    if (order.value == null) {
-      Get.back<void>();
-    } else {
-      updateMapByPhase(order.value!.getCurrentPhase());
-      _orderListener = controller.getCurrentOrderStream(orderId).listen(
-        (LaundryOrder? newOrder) {
-          if (newOrder != null) {
-            updateMapByPhase(newOrder.getCurrentPhase());
-            order.value = controller.getOrder(orderId);
+    initMap();
 
-            if (order.value?.dropoffDriver != null) {
-              driver = order.value!.dropoffDriver;
-            }
-          } else {
-            //    Get.back();
-          }
-        },
-      );
-    }
+    _orderListener = controller
+        .getOrderStream(orderId)
+        .listen((LaundryOrder? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent;
+        updateMapByPhase(newOrderEvent.getCurrentPhase());
+        order.value = controller.getOrder(orderId);
+
+        if (order.value?.dropoffDriver != null) {
+          driver = order.value!.dropoffDriver;
+        }
+      }
+    });
+
+    // if order value is null and
+    waitForOrderIfNotLoaded().then((value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<void>.delayed(Duration.zero, () {
+          Get.back<void>();
+          MezSnackbar("Error", "Order does not exist");
+        });
+      }
+    });
 
     /// Get Right driver
     _deliveryDriverUserInfoAndUpdateStatusNotifier.value =
         DeliveryDriverUserInfoAndUpdateStatus(
       deliveryDriverUserInfo: getRightDriver(),
     );
+  }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
+      });
+      return completer.future;
+    }
   }
 
   @override

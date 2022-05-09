@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
@@ -86,11 +86,18 @@ class RestaurantOrderController extends GetxController {
     }
   }
 
+  Stream<RestaurantOrder?> getOrderStream(String orderId) {
+    return StreamGroup.merge(<Stream<RestaurantOrder?>>[
+      _getCurrentOrderStream(orderId),
+      _getPastOrderStream(orderId)
+    ]);
+  }
+
   bool isPast(RestaurantOrder order) {
     return pastOrders.contains(order);
   }
 
-  Stream<RestaurantOrder?> getCurrentOrderStream(String orderId) {
+  Stream<RestaurantOrder?> _getCurrentOrderStream(String orderId) {
     return inProcessOrders.stream.map<RestaurantOrder?>((_) {
       try {
         return inProcessOrders.firstWhere(
@@ -98,7 +105,20 @@ class RestaurantOrderController extends GetxController {
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
+      }
+    });
+  }
+
+  Stream<RestaurantOrder?> _getPastOrderStream(String orderId) {
+    return inProcessOrders.stream.map<RestaurantOrder?>((_) {
+      try {
+        return pastOrders.firstWhere(
+          (pastOrder) => pastOrder.orderId == orderId,
+        );
+      } on StateError catch (_) {
+        // do nothing
+        // return null;
       }
     });
   }

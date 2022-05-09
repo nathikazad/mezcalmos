@@ -103,37 +103,39 @@ class _WrapperState extends State<Wrapper> {
     }
   }
 
-  void handleAuthStateChange(fireAuth.User? user) {
+  Future<void> handleAuthStateChange(fireAuth.User? user) async {
     // We should Priotorize the AppNeedsUpdate route to force users to update
     if (Get.currentRoute != kAppNeedsUpdate) {
       if (user == null) {
         if (AppType.CustomerApp == settingsController.appType) {
           // if (Get.currentRoute != kSignInRouteOptional) {
-          Get.offNamedUntil<void>(
+          await Get.offNamedUntil<void>(
               kHomeRoute, ModalRoute.withName(kWrapperRoute));
         } else {
-          Get.offNamedUntil<void>(
+          await Get.offNamedUntil<void>(
               kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
         }
       } else {
-        if (Get.find<AuthController>().user != null) {
-          redirectIfUserInfosNotSet();
-        } else
-          startListeningForUserModelChanges();
+        await Get.offNamedUntil<void>(
+            kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
       }
     } else {
-      if (authController.user != null) {
-        redirectIfUserInfosNotSet();
-      } else {
-        startListeningForUserModelChanges();
-      }
+      await waitTillUserInfoLoaded();
+      redirectIfUserInfosNotSet();
     }
   }
 
-  void startListeningForUserModelChanges() {
-    Get.find<AuthController>().userInfoStream.first.then((event) {
-      redirectIfUserInfosNotSet();
-    });
+  Future<void> waitTillUserInfoLoaded() {
+    if (Get.find<AuthController>().user != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Get.find<AuthController>()
+          .userInfoStream
+          .first
+          .then((value) => completer.complete());
+      return completer.future;
+    }
   }
 
   void redirectIfUserInfosNotSet() {

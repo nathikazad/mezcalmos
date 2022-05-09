@@ -14,15 +14,14 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 
 class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
+
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
-
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
 
-  Rxn<Customer> get customerRxn => _customer;
-
   bool _checkedAppVersion = false;
+  Rxn<Customer> customer = Rxn();
 
   StreamSubscription<dynamic>? _customerNodeListener;
 
@@ -32,7 +31,7 @@ class CustomerAuthController extends GetxController {
 
     if (_authController.fireAuthUser?.uid != null) {
       //
-      _customer.value = customerRxn.value;
+      _customer.value = customer.value;
       mezDbgPrint(
           "User from CustomerAuthController >> ${_authController.fireAuthUser?.uid}");
       mezDbgPrint(
@@ -68,9 +67,6 @@ class CustomerAuthController extends GetxController {
             .set(<String, String>{
           'deviceNotificationToken': deviceNotificationToken
         });
-      print(
-        "/////////////////////////////////////////////${_customer.value?.toJson()}////////////////////////////////////////////////////",
-      );
     } else {
       mezDbgPrint("User is not signed it to init customer auth controller");
     }

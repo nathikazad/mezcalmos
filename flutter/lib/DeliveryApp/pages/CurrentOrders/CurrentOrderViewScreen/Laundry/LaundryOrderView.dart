@@ -8,6 +8,7 @@ import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverBottomLaundryOrderCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverLaundryOrderButtons.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -15,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class LaundryOrderView extends StatefulWidget {
   const LaundryOrderView({Key? key}) : super(key: key);
@@ -39,68 +41,83 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as LaundryOrder;
-    if (order.value == null) {
-      Get.back<void>();
-    } else {
-      mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
-      mapController.periodicRerendering.value = true;
-      mapController.periodicRerendering.refresh();
 
-      mezDbgPrint(
-          "lat lng DeliveryDriver => ${deliveryAuthAuthController.currentLocation.toString()}");
-
-      if (order.value!.routeInformation != null) {
-        mapController.decodeAndAddPolyline(
-            encodedPolylineString: order.value!.routeInformation!.polyline);
+    _orderListener =
+        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent as LaundryOrder;
+        handleLaundryOrder(newOrderEvent);
+        order.refresh();
       }
+    });
 
-      Future.wait(<Future<void>>[
-        // DESTINATION MARKER
-        mapController.addOrUpdatePurpleDestinationMarker(
-          latLng: LatLng(
-            order.value!.to.latitude,
-            order.value!.to.longitude,
-          ),
+    Future.wait(<Future<void>>[
+      // DESTINATION MARKER
+      mapController.addOrUpdatePurpleDestinationMarker(
+        latLng: LatLng(
+          order.value!.to.latitude,
+          order.value!.to.longitude,
         ),
-        // USER MARKER
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            deliveryAuthAuthController.currentLocation.latitude!,
-            deliveryAuthAuthController.currentLocation.longitude!,
-          ),
+      ),
+      // USER MARKER
+      mapController.addOrUpdateUserMarker(
+        latLng: LatLng(
+          deliveryAuthAuthController.currentLocation.latitude!,
+          deliveryAuthAuthController.currentLocation.longitude!,
         ),
-        // LAUNDRY MARKER
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            order.value!.laundry!.location.latitude,
-            order.value!.laundry!.location.longitude,
-          ),
-          customImgHttpUrl: order.value!.laundry!.image,
-          markerId: order.value!.laundry!.id,
-        )
-      ]).then((_) {
-        mapController.setLocation(
-          Location.fromLocationData(
-            deliveryAuthAuthController.currentLocation,
-          ),
-        );
-        mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
-        mapController.animateMarkersPolyLinesBounds.value = true;
-        mapController.periodicRerendering.value = true;
-        handleLaundryOrder(order.value as LaundryOrder);
-      });
+      ),
+      // LAUNDRY MARKER
+      mapController.addOrUpdateUserMarker(
+        latLng: LatLng(
+          order.value!.laundry!.location.latitude,
+          order.value!.laundry!.location.longitude,
+        ),
+        customImgHttpUrl: order.value!.laundry!.image,
+        markerId: order.value!.laundry!.id,
+      )
+    ]).then((_) {
+      mapController.setLocation(
+        Location.fromLocationData(
+          deliveryAuthAuthController.currentLocation,
+        ),
+      );
+      mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+      mapController.animateMarkersPolyLinesBounds.value = true;
+      mapController.periodicRerendering.value = true;
+      handleLaundryOrder(order.value as LaundryOrder);
+    });
+    // _orderListener =
+    //     controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
+    //   final DeliverableOrder? _order = controller.getOrder(orderId);
+    //   if (_order == null) {
+    //     Get.back<void>();
+    //   } else {
+    //     handleLaundryOrder(_order as LaundryOrder);
+    //     order.value = _order;
+    //     order.refresh();
+    //   }
+    waitForOrderIfNotLoaded().then((void value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<Null>.delayed(Duration.zero, () {
+          Get.back<Null>();
+          MezSnackbar("Error", "Order does not exist");
+        });
+      } else {
+        initilializeMap(mapController, order, order.value!.laundry!);
+      }
+    });
+  }
 
-      _orderListener =
-          controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
-        final DeliverableOrder? _order = controller.getOrder(orderId);
-        if (_order == null) {
-          Get.back<void>();
-        } else {
-          handleLaundryOrder(_order as LaundryOrder);
-          order.value = _order;
-          order.refresh();
-        }
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
       });
+      return completer.future;
     }
   }
 

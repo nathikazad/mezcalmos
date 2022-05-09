@@ -151,13 +151,17 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   /// Call this right after customer presses Checkout
   /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
-  Future<void> avoidCheckoutRaceCondition(String orderId) async {
-    if (Get.find<OrderController>().getOrder(orderId) == null) {
-      await Get.find<OrderController>()
-          .getCurrentOrderStream(orderId)
-          .firstWhere((Order? order) => order != null);
-    }
-  }
+  // Future<void> avoidCheckoutRaceCondition(String orderId) async {
+  //   if (Get.find<OrderController>().getOrder(orderId) == null) {
+  //     mezDbgPrint(
+  //         "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ]  RACING CONDITION HAPPENING ... ");
+  //     await Get.find<OrderController>()
+  //         ._getInProcessOrderStream(orderId)
+  //         .firstWhere((order) => order != null);
+  //   } else
+  //     mezDbgPrint(
+  //         "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ] NO RACING CONDITION HAPPEND ! ");
+  // }
 
 //itemviewscreen
   Future<void> checkoutActionButton() async {
@@ -188,8 +192,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             await _restaurantController.checkout();
 
         if (_serverResponse.success) {
-          await avoidCheckoutRaceCondition(_serverResponse.data["orderId"]);
-
+          // await avoidCheckoutRaceCondition(response.data["orderId"]);
+          _restaurantController.clearCart();
           popEverythingAndNavigateTo(
               getRestaurantOrderRoute(_serverResponse.data["orderId"]));
           //  _restaurantController.clearCart();
