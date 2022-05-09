@@ -9,7 +9,6 @@ export interface LaundryOrder extends TwoWayDeliverableOrder {
   notes?: string;
   status: LaundryOrderStatus;
   shippingCost: number;
-  costPerKilo: number;
   costsByType: CostsByType;
   estimatedDeliveryTime: string
 }
@@ -49,8 +48,7 @@ export function constructLaundryOrder(
     cost: 0,
     paymentType: params.paymentType,
     to: params.to,
-    shippingCost: 50,
-    costPerKilo: 20
+    shippingCost: 50
   }
 }
 

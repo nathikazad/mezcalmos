@@ -64,7 +64,7 @@ class LaundryController extends GetxController {
   ) async {
     if (laundryRequest.valid()) {
       final HttpsCallable requestTaxiFunction =
-          FirebaseFunctions.instance.httpsCallable("laundry-requestLaundryTwo");
+          FirebaseFunctions.instance.httpsCallable("laundry-requestLaundry");
 
       try {
         mezDbgPrint(laundryRequest.asCloudFunctionParam());

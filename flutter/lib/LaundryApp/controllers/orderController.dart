@@ -151,7 +151,7 @@ class OrderController extends GetxController {
 
   Future<ServerResponse> setAsReadyForDelivery(String orderId) async {
     mezDbgPrint("Seeting order ready for delivery");
-    return _callLaundryCloudFunction("readyForDeliveryOrderTwo", orderId,
+    return _callLaundryCloudFunction("readyForDeliveryOrder", orderId,
         optionalParams: <String, dynamic>{"fromLaundryOperator": true});
   }
 
