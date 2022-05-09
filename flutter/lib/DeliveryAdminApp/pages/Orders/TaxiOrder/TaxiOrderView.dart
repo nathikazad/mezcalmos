@@ -7,6 +7,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/Tax
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOrderBottomCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOrderButtons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/TaxiOrder/components/TaxiOrderMapComponent.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
@@ -28,16 +29,22 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
   Rxn<TaxiOrder> order = Rxn<TaxiOrder>();
   late String orderId;
   StreamSubscription? _orderListener;
+  TaxiOrdersStatus? _statusSnapshot;
+  MGoogleMapController _mapController = MGoogleMapController();
 
   @override
   void initState() {
     orderId = Get.parameters['orderId']!;
     order.value = taxiOrderController.getOrder(orderId);
+    if (order.value != null) {
+      _updateMapByStatus(order.value!.status);
+    }
     _orderListener = taxiOrderController
         .getOrderStream(orderId)
         .listen((TaxiOrder? newOrderEvent) {
       if (newOrderEvent != null) {
         order.value = newOrderEvent;
+        _updateMapByStatus(newOrderEvent.status);
       }
     });
 
@@ -75,31 +82,53 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () {
-        mezDbgPrint(
-            "ORDER OBX ==================> ${order.value!.status.toFirebaseFormatString()}");
-        return Scaffold(
-            appBar: AppBar(
-              title: Text('${_i18n()["order"]}'),
+      () => Scaffold(
+        appBar: AppBar(
+          title: Text('${_i18n()["order"]}'),
+        ),
+        bottomNavigationBar: Obx(
+          () {
+            return TaxiOrderButtons(
+              order: order.value!,
+            );
+          },
+        ),
+        body: Column(
+          children: <Widget>[
+            TaxiOrderMapComponent(
+              order: order.value!,
+              mapController: _mapController,
             ),
-            bottomNavigationBar: Obx(
-              () {
-                return TaxiOrderButtons(
-                  order: order.value!,
-                );
-              },
-            ),
-            body: Column(
-              children: <Widget>[
-                TaxiOrderMapComponent(order: order.value!),
-                Expanded(
-                  child: order.value!.isOpenOrder()
-                      ? TaxiOpenOrderBottomCard(order: order.value!)
-                      : TaxiOrderBottomCard(order: order.value!),
-                )
-              ],
-            ));
-      },
+            Expanded(
+              child: order.value!.isOpenOrder()
+                  ? TaxiOpenOrderBottomCard(order: order.value!)
+                  : TaxiOrderBottomCard(order: order.value!),
+            )
+          ],
+        ),
+      ),
     );
+  }
+
+  void _updateMapByStatus(TaxiOrdersStatus status) {
+    if (status != _statusSnapshot) {
+      // we add the marker
+      _statusSnapshot = status;
+      if (_statusSnapshot == TaxiOrdersStatus.InTransit ||
+          _statusSnapshot == TaxiOrdersStatus.OnTheWay) {
+        mezDbgPrint("taxiMarker !!");
+        _mapController.addOrUpdateTaxiDriverMarker(
+          "taxi",
+          order.value!.driver!.location!,
+        );
+      }
+
+      // else we have to remove it
+      else {
+        _mapController.removeMarkerById("taxi");
+      }
+      _mapController.animateAndUpdateBounds();
+    }
+    mezDbgPrint("markers ${_mapController.markers.length}");
   }
 }

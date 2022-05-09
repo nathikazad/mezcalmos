@@ -7,32 +7,34 @@ import 'package:sizer/sizer.dart';
 
 class TaxiOrderMapComponent extends StatefulWidget {
   final TaxiOrder order;
-  const TaxiOrderMapComponent({Key? key, required this.order})
-      : super(key: key);
+  final MGoogleMapController mapController;
+  const TaxiOrderMapComponent({
+    Key? key,
+    required this.order,
+    required this.mapController,
+  }) : super(key: key);
 
   @override
   _TaxiOrderMapComponentState createState() => _TaxiOrderMapComponentState();
 }
 
 class _TaxiOrderMapComponentState extends State<TaxiOrderMapComponent> {
-  final MGoogleMapController mapController = MGoogleMapController();
-
   @override
   void initState() {
     if (widget.order.routeInformation != null) {
-      mapController.decodeAndAddPolyline(
+      widget.mapController.decodeAndAddPolyline(
           encodedPolylineString: widget.order.routeInformation!.polyline);
     }
-    mapController.setAnimateMarkersPolyLinesBounds(true);
-    mapController.setLocation(widget.order.to);
-    mapController.addOrUpdateUserMarker(
+    widget.mapController.setAnimateMarkersPolyLinesBounds(true);
+    widget.mapController.setLocation(widget.order.to);
+    widget.mapController.addOrUpdateUserMarker(
         customImgHttpUrl: widget.order.customer.image,
         latLng:
             LatLng(widget.order.from.latitude, widget.order.from.longitude));
 
-    mapController.addOrUpdatePurpleDestinationMarker(
+    widget.mapController.addOrUpdatePurpleDestinationMarker(
         latLng: LatLng(widget.order.to.latitude, widget.order.to.longitude));
-    mapController.lockInAutoZoomAnimation();
+    widget.mapController.lockInAutoZoomAnimation();
     super.initState();
   }
 
@@ -41,7 +43,7 @@ class _TaxiOrderMapComponentState extends State<TaxiOrderMapComponent> {
     return Container(
       height: 45.h,
       child: MGoogleMap(
-        mGoogleMapController: mapController,
+        mGoogleMapController: widget.mapController,
       ),
     );
   }
