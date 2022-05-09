@@ -152,10 +152,10 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Lang),
         resizeToAvoidBottomInset: false,
-        key: Get.find<SideMenuDrawerController>().getNewKey(),
-        drawer: MezSideMenu(),
+        // key: Get.find<SideMenuDrawerController>().getNewKey(),
+        // drawer: MezSideMenu(),
         backgroundColor: Colors.white,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),

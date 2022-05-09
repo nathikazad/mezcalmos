@@ -130,16 +130,6 @@ class OrderController extends GetxController {
   }
 
   bool hasNewMessageNotification(String orderId) {
-    _foregroundNotificationsController
-        .notifications()
-        .where((Notification notification) =>
-            notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
-        .forEach((Notification element) {
-      mezDbgPrint("NOTIF ID ========================> ${element.id}");
-      mezDbgPrint(
-          "NOTIF ID ========================> ${element.notificationType}");
-    });
     return _foregroundNotificationsController
         .notifications()
         .where((Notification notification) =>
@@ -156,6 +146,19 @@ class OrderController extends GetxController {
                     NotificationType.OrderStatusChange ||
                 notification.notificationType == NotificationType.NewOrder) &&
             notification.orderId! == orderId)
+        .forEach((Notification notification) {
+      _foregroundNotificationsController.removeNotification(notification.id);
+    });
+  }
+
+  void clearNewOrderNotificationsOfPastOrders() {
+    final List<String> currentOrderIds = <String>[];
+    currentOrders.forEach((Order order) => currentOrderIds.add(order.orderId));
+    _foregroundNotificationsController
+        .notifications()
+        .where((Notification notification) =>
+            notification.notificationType == NotificationType.NewOrder &&
+            !currentOrderIds.contains(notification.orderId!))
         .forEach((Notification notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
     });

@@ -55,17 +55,18 @@ class RestaurantOrder extends DeliverableOrder {
       required this.shippingCost,
       this.notes})
       : super(
-            orderId: orderId,
-            orderType: OrderType.Restaurant,
-            serviceProviderId: serviceProviderId,
-            paymentType: paymentType,
-            orderTime: orderTime,
-            cost: cost,
-            customer: customer,
-            serviceProvider: restaurant,
-            to: to,
-            dropoffDriver: dropoffDriver,
-            dropOffDriverChatId: dropOffDriverChatId);
+          orderId: orderId,
+          orderType: OrderType.Restaurant,
+          serviceProviderId: serviceProviderId,
+          paymentType: paymentType,
+          orderTime: orderTime,
+          cost: cost,
+          customer: customer,
+          serviceProvider: restaurant,
+          to: to,
+          dropoffDriver: dropoffDriver,
+          dropOffDriverChatId: dropOffDriverChatId,
+        );
 
   //ignore_for_file:avoid_annotating_with_dynamic
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
@@ -115,6 +116,11 @@ class RestaurantOrder extends DeliverableOrder {
   }
 
   String get restaurantId => serviceProviderId!;
+
+  @override
+  String toString() {
+    return "{quantity : $quantity , itemCost: $itemsCost , items : ${items.length} , notes : $notes , status : $status}";
+  }
 
   @override
   bool isCanceled() {

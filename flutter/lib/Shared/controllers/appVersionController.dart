@@ -163,13 +163,14 @@ class AppVersionController {
     }
   }
 
-  /// Returns bool. if the user canUpdate return true, otherwise return false;
-  ///
-  /// start Update is mainly called when Minor/Major because we force the update in both.
+  /// Launch the appStore depending on which Platform!
   Future<void> openStoreAppPage() async {
-    await StoreRedirect.redirect(
-      iOSAppId: getPackageName(platform: getPlatformType()),
-    );
+    await openOsStore(openIosStoreFunction: () async {
+      await StoreRedirect.redirect(
+        iOSAppId: getAppStoreId(),
+        androidAppId: getPackageName(platform: getPlatformType()),
+      );
+    });
   }
 
   void dispose() {

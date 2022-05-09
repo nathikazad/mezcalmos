@@ -30,18 +30,7 @@ MezPlatform getPlatformType() {
 }
 
 String? getPackageName({MezPlatform? platform}) {
-  final String _packName =
-      GetStorage().read<String>(getxPackageName).toString();
-  // .replaceFirst('mezstaging', 'mezcalmos');
-
-  switch (platform) {
-    case MezPlatform.ANDROID:
-      return getPlatformType() == MezPlatform.ANDROID ? _packName : null;
-    case MezPlatform.IOS:
-      return getPlatformType() == MezPlatform.IOS ? _packName : null;
-    default:
-      return _packName;
-  }
+  return GetStorage().read<String>(getxPackageName).toString();
 }
 
 Future<int> getAndroidSdkVersion() async {

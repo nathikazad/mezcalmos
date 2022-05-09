@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
@@ -15,7 +14,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -93,6 +91,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 setState(() {
                   orderToLocation = location;
                 });
+                mezDbgPrint(orderToLocation);
               },
               notesTextController: _textEditingController,
             ),
@@ -113,7 +112,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   Color getTheRightButtonColor() {
     // it returns the pruple or the grey color for the order now button
     if (orderToLocation == null ||
-        (_restaurantController.associatedRestaurant?.isOpen() ?? false)) {
+        !(_restaurantController.associatedRestaurant?.isOpen() ?? true)) {
       return Color(0xdddddddd);
     } else {
       return Color(0xffac59fc);

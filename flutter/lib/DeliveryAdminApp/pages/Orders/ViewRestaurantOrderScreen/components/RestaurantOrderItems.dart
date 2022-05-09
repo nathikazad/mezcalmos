@@ -109,6 +109,30 @@ class _RestaurantOrderItemsComponentState
                   children: _buildChoices(item.chosenChoices),
                 ),
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Item Notes",
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '\t\t${item.notes ?? "Nothing"}',
+                  style: Get.theme.textTheme.bodyText1,
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Divider(height: 2, color: Colors.grey),
+              SizedBox(
+                height: 5,
+              ),
               Container(
                 margin: EdgeInsets.all(5),
                 alignment: Alignment.bottomRight,

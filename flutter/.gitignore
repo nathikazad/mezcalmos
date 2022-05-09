@@ -17,7 +17,10 @@ android/app/src/debug/
 android/app/src/profile/
 android/app/src/main/AndroidManifest.xml
 android/app/src/main/kotlin/
+android/app/src/main/res/mipmap*
 assets/icons/*
+ios/Runner/Assets.xcassets/AppIcon*
+ios/Runner/Assets.xcassets/Contents.json
 
 pre-main.dart
 android/launcherPackage.properties

@@ -61,61 +61,66 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
-          return widget.userProfileWidgets.onWillPopScopeFunction(
-              isImageBeingUploaded: isUploadingImg.value);
-        },
-        child: Obx(
-          () => Scaffold(
-            appBar: widget.userProfileWidgets
-                .getRightAppBar(isImageBeingUploaded: isUploadingImg.value),
-            body: Stack(fit: StackFit.expand, children: [
+      onWillPop: () async {
+        return widget.userProfileWidgets
+            .onWillPopScopeFunction(isImageBeingUploaded: isUploadingImg.value);
+      },
+      child: Obx(
+        () => Scaffold(
+          appBar: widget.userProfileWidgets
+              .getRightAppBar(isImageBeingUploaded: isUploadingImg.value),
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
               Flex(
                 direction: Axis.vertical,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: widget.userProfileWidgets.bodyContent(
-                    onBrowsImageClick: onBrowsImageClick,
-                    onSaveClick: onSaveChangesClick,
-                    onEditButtonClick: onStartEdit,
-                    isImageBeingUploaded: isUploadingImg.value,
-                    clickedSave: clickedSave.value),
+                  onBrowsImageClick: onBrowsImageClick,
+                  onSaveClick: onSaveChangesClick,
+                  onEditButtonClick: onStartEdit,
+                  isImageBeingUploaded: isUploadingImg.value,
+                  clickedSave: clickedSave.value,
+                ),
               ),
-              getToolTips(),
-            ]),
+              // getToolTips(),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   // -------------------------------------------------------- Hints Setup ---------------------------------------------------------------
-  Widget getToolTips() {
-    final List<MezToolTipHint> _hints = <MezToolTipHint>[];
-    if (!Get.find<AuthController>().isDisplayNameSet()) {
-      _hints.add(MezToolTipHint(
-        hintWidget: NoUserNameSetHint(
-          hintText: _i18n()['mustSetUserNameHint'],
-        ),
-        left: Get.width / 2,
-        bodyLeft: Get.width / 4,
-        bottom: 280,
-        bodyBottom: 280,
-        // bodyBottom: 200
-      ));
-    }
-    if (!Get.find<AuthController>().isUserImgSet()) {
-      _hints.add(MezToolTipHint(
-        hintWidget: NoUserImageSetHint(
-          hintText: _i18n()['mustSetUserImgHint'],
-        ),
-        left: Get.width / 2,
-        bodyLeft: Get.width / 4,
-        bottom: 460,
-        bodyBottom: 460,
-      ));
-    }
+  // Widget getToolTips() {
+  //   final List<MezToolTipHint> _hints = <MezToolTipHint>[];
+  //   if (!Get.find<AuthController>().isDisplayNameSet()) {
+  //     _hints.add(MezToolTipHint(
+  //       hintWidget: NoUserNameSetHint(
+  //         hintText: _i18n()['mustSetUserNameHint'],
+  //       ),
+  //       left: Get.width / 2,
+  //       bodyLeft: Get.width / 4,
+  //       bottom: 280,
+  //       bodyBottom: 280,
+  //       // bodyBottom: 200
+  //     ));
+  //   }
+  //   if (!Get.find<AuthController>().isUserImgSet()) {
+  //     _hints.add(MezToolTipHint(
+  //       hintWidget: NoUserImageSetHint(
+  //         hintText: _i18n()['mustSetUserImgHint'],
+  //       ),
+  //       left: Get.width / 2,
+  //       bodyLeft: Get.width / 4,
+  //       bottom: 460,
+  //       bodyBottom: 460,
+  //     ));
+  //   }
 
-    return MezToolTip(hintWidgetsList: _hints, applyCacheIncrementing: false);
-  }
+  //   return MezToolTip(hintWidgetsList: _hints, applyCacheIncrementing: false);
+  // }
 
   // -------------------------------------------------------- Helper functions ---------------------------------------------------------------
 
@@ -131,22 +136,53 @@ class _UserProfileState extends State<UserProfile> {
   ///
   /// As for the compressed Image it is being Set to db right after it gets selected By user and uploaded to fbStorage.
   Future<void> onSaveChangesClick() async {
-    if (widget.userProfileController.nameIsValidString()) {
-      clickedSave.value = true;
-      if (_authController.user!.name !=
-          widget.userProfileController.userName.value) {
-        await _authController.editUserProfile(
-            widget.userProfileController.userName.value, null);
-      }
-      await Future.delayed(Duration(milliseconds: 500));
-      widget.userProfileController.reset();
-      widget.userProfileController.setUserProfileMode(UserProfileMode.Show);
-      clickedSave.value = false;
-    } else {
+    // first check if user has uploaded an Img successfully.
+    if (!widget.authController.isUserImgSet()) {
       widget.userProfileController.setErrorTextForXDuration(
-          _i18n()['wrongName'],
-          duration: Duration(seconds: 5));
+        _i18n()['mustSetUserImgError'],
+        duration: Duration(seconds: 5),
+      );
+      return;
     }
+
+    // 2. check if the name is not null or empty
+    if (widget.userProfileController.userName.value == null ||
+        widget.userProfileController.userName.value!.isEmpty) {
+      widget.userProfileController.setErrorTextForXDuration(
+        _i18n()['mustSetUserNameError'],
+        duration: Duration(seconds: 5),
+      );
+      return;
+    }
+
+    //3. check if name only letters
+    if (!widget.userProfileController.userName.value!.isAlphabetOnly) {
+      widget.userProfileController.setErrorTextForXDuration(
+        _i18n()['nameMustBeLettersOnly'],
+        duration: Duration(seconds: 5),
+      );
+      return;
+    }
+
+    // 4. check if the name contains at least 4 letters.
+    if (!widget.userProfileController.nameLengthIsValid()) {
+      widget.userProfileController.setErrorTextForXDuration(
+        _i18n()['nameMustBeFourLettersOrMore'],
+        duration: Duration(seconds: 5),
+      );
+      return;
+    }
+    // we set the new changes.
+    clickedSave.value = true;
+    if (_authController.user!.name !=
+        widget.userProfileController.userName.value) {
+      await _authController.editUserProfile(
+          widget.userProfileController.userName.value, null);
+    }
+    await Future<void>.delayed(Duration(milliseconds: 500));
+    widget.userProfileController.reset();
+    widget.userProfileController.setUserProfileMode(UserProfileMode.Show);
+    clickedSave.value = false;
   }
 
   /// this gets called when the user presses [browsImageButton()],
@@ -154,7 +190,7 @@ class _UserProfileState extends State<UserProfile> {
   /// It actually ask the user if he wants to take a picture or brows his gallery,
   ///
   /// And once the user actually selects something , it start uploading the compressed version first along with the original one.
-  void onBrowsImageClick() async {
+  Future<void> onBrowsImageClick() async {
     final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
     if (_from != null) {
       widget.userProfileController.reset();
@@ -208,9 +244,9 @@ class _UserProfileState extends State<UserProfile> {
             mezDbgPrint(
               "ayono@ayono@ widget.userProfileController.checkIfUserHasAllInfosSet() : ${widget.userProfileController.checkIfUserHasAllInfosSet()}",
             );
-            mezDbgPrint(
-              "ayono@ayono@ widget.userProfileController.didUserChangedInfos() : ${widget.userProfileController.didUserChangedInfos()}",
-            );
+            // mezDbgPrint(
+            //   "ayono@ayono@ widget.userProfileController.didUserChangedInfos() : ${widget.userProfileController.didUserChangedInfos()}",
+            // );
 
             // once uploaded we need to remove the temporary compressed version from user's device
             await compressedFile.delete();

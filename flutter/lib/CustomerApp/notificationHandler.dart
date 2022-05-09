@@ -303,7 +303,7 @@ Notification newCounterOfferNotification(String key, value) {
       imgUrl: value['driver']['image'],
       title: "${_i18n()["counterOfferTitle"]}",
       timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.NewMessage,
+      notificationType: NotificationType.NewCounterOffer,
       notificationAction:
           value["notificationAction"]?.toString().toNotificationAction() ??
               NotificationAction.ShowSnackbarOnlyIfNotOnPage,

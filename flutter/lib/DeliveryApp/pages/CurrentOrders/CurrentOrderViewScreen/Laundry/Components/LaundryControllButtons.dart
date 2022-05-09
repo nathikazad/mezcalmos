@@ -40,11 +40,11 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
     } else {
       return TextButton(
           onPressed: () async {
-            setState(() {
-              clicked = true;
-            });
             switch (widget.order.status) {
               case LaundryOrderStatus.OrderReceieved:
+                setState(() {
+                  clicked = true;
+                });
                 await laundryOrderController
                     .otwPickupOrder(widget.order.orderId)
                     .whenComplete(() {
@@ -54,6 +54,9 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                 });
                 break;
               case LaundryOrderStatus.OtwPickup:
+                setState(() {
+                  clicked = true;
+                });
                 await laundryOrderController
                     .pickedUpOrder(widget.order.orderId)
                     .whenComplete(() {
@@ -63,20 +66,27 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                 });
                 break;
               case LaundryOrderStatus.PickedUp:
-                await orderWeightDialog(context);
-                if (orderWeight != 0) {
-                  await laundryOrderController
-                      .atLaundryOrder(widget.order.orderId, orderWeight)
-                      .whenComplete(() {
+                await orderWeightDialog(context).then((num value) async {
+                  if (value != 0) {
                     setState(() {
-                      clicked = false;
+                      clicked = true;
                     });
-                  });
-                  // Get.back(closeOverlays: true);
-                }
+                    await laundryOrderController
+                        .atLaundryOrder(widget.order.orderId, value)
+                        .whenComplete(() {
+                      setState(() {
+                        clicked = false;
+                      });
+                    });
+                    Get.back(closeOverlays: true);
+                  }
+                });
 
                 break;
               case LaundryOrderStatus.ReadyForDelivery:
+                setState(() {
+                  clicked = true;
+                });
                 await laundryOrderController
                     .otwDeliveryOrder(widget.order.orderId)
                     .whenComplete(() {
@@ -86,6 +96,9 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                 });
                 break;
               case LaundryOrderStatus.OtwDelivery:
+                setState(() {
+                  clicked = true;
+                });
                 await laundryOrderController
                     .deliveredOrder(widget.order.orderId)
                     .whenComplete(() {
@@ -106,9 +119,12 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
     }
   }
 
-  Future<void> orderWeightDialog(BuildContext context) async {
-    orderWeight = await showDialog(
+  Future<num> orderWeightDialog(BuildContext context) async {
+    num newOrderWeight = 0;
+    await showDialog(
         context: context,
+        barrierDismissible: false,
+        useRootNavigator: false,
         builder: (BuildContext ctx) {
           return AlertDialog(
             title: Text("${_i18n()["confirmOrderWeight"]}"),
@@ -130,7 +146,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                     }
                   },
                   onChanged: (String value) {
-                    orderWeight = num.parse(value);
+                    newOrderWeight = num.parse(value);
                   },
                   decoration: InputDecoration(
                       label: Text('${_i18n()["orderWeight"]}'),
@@ -145,8 +161,10 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                 ),
                 TextButton(
                     onPressed: () {
-                      if (orderWeight != 0) {
-                        Navigator.pop(context, orderWeight);
+                      if (newOrderWeight != 0) {
+                        Get.back();
+                      } else {
+                        Get.snackbar("Error", "");
                       }
                     },
                     child: Container(
@@ -154,7 +172,10 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                         alignment: Alignment.center,
                         child: Text('${_i18n()["confirm"]}'))),
                 TextButton(
-                    onPressed: Get.back,
+                    onPressed: () {
+                      newOrderWeight = 0;
+                      Get.back();
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),
@@ -165,6 +186,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
             ),
           );
         });
+    return newOrderWeight;
   }
 
   String _getActionButtonText() {
