@@ -48,8 +48,8 @@ export const taxi = {
 
 import * as laundryStatusChange from './laundry/adminStatusChanges'
 export const laundry = {
-  requestLaundryTwo: require("./laundry/laundryRequest"),
-  readyForDeliveryOrderTwo: laundryStatusChange.readyForDeliveryOrder,
+  requestLaundry: require("./laundry/laundryRequest"),
+  readyForDeliveryOrder: laundryStatusChange.readyForDeliveryOrder,
   cancelFromCustomer: require("./laundry/cancelLaundryFromCustomer"),
   cancelFromAdmin: laundryStatusChange.cancelOrder,
   setWeight: laundryStatusChange.setWeight,
@@ -64,7 +64,7 @@ export const delivery = {
   restaurantFinishDelivery: restaurantDelivery.finishDelivery,
   laundryStartPickup: laundryDelivery.startPickup,
   laundryFinishPickup: laundryDelivery.finishPickup,
-  laundryAtFacilityTwo: laundryDelivery.atFacility,
+  laundryAtFacility: laundryDelivery.atFacility,
   laundryStartDropoff: laundryDelivery.startDropoff,
   laundryFinishDropoff: laundryDelivery.finishDropoff
 }
