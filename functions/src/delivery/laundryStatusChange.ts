@@ -13,7 +13,7 @@ import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessa
 import { finishOrder } from "../laundry/helper";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-
+import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 let statusArrayInSeq: Array<LaundryOrderStatus> =
   [LaundryOrderStatus.OrderReceieved,
   LaundryOrderStatus.OtwPickup,
@@ -110,21 +110,6 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     }
   }
 
-  if (newStatus == LaundryOrderStatus.AtLaundry) {
-    if (!data.weight) {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `When at laundry, need to give weight`,
-        errorCode: "weightNotGiven"
-      }
-    }
-    order.weight = data.weight
-    order.cost = order.weight! * order.costPerKilo
-    if (order.cost < 50)
-      order.cost = 50;
-    order.cost += order.shippingCost
-  }
-
   order.status = newStatus
 
   let notification: Notification = {
@@ -147,6 +132,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   } else {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
     rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+    laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
     if (newStatus == LaundryOrderStatus.AtLaundry) {
       await deliveryDriverNodes.pastOrders(deliveryDriverId, orderId).update(order)
       await deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).remove();

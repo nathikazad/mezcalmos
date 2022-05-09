@@ -40,9 +40,9 @@ class LaundryOrderController extends GetxController {
     return _callLaundryCloudFunction("laundryFinishPickup", orderId);
   }
 
-  Future<ServerResponse> atLaundryOrder(String orderId, num weight) async {
-    return _callLaundryCloudFunction("laundryAtFacility", orderId,
-        optionalParams: <String, dynamic>{"weight": weight});
+  Future<ServerResponse> atLaundryOrder(String orderId) async {
+    return _callLaundryCloudFunction("laundryAtFacilityTwo", orderId,
+        optionalParams: <String, dynamic>{});
   }
 
   Future<ServerResponse> otwDeliveryOrder(String orderId) async {

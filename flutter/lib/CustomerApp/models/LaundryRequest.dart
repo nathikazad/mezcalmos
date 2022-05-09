@@ -3,6 +3,7 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class LaundryRequest {
+  String laundryId;
   String? notes;
 
   /// to means Customer's location.
@@ -14,6 +15,7 @@ class LaundryRequest {
   PaymentType paymentType;
   LaundryRequest({
     this.routeInformation,
+    required this.laundryId,
     this.notes,
     this.from,
     this.to,
@@ -33,7 +35,8 @@ class LaundryRequest {
   }
 
   Map<String, dynamic> asCloudFunctionParam() {
-    return <String, dynamic>{
+    return {
+      "laundryId": laundryId,
       "to": to?.toFirebaseFormattedJson(),
       "from": from?.toFirebaseFormattedJson(),
       "notes": notes,

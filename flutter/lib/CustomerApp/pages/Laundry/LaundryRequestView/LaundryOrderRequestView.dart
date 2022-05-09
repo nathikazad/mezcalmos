@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
-import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/Components/LaundryStepsComponent.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -314,6 +314,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   void _createLaundryOrder() {
     clicked.value = true;
     final LaundryRequest _req = LaundryRequest(
+      laundryId: selectedLaundry.info.id,
       from: selectedLaundry.info.location,
       to: customerLoc,
       notes: _orderNote.text,

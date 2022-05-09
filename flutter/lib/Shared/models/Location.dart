@@ -38,4 +38,14 @@ class Location {
       "lng": position.longitude
     };
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Location && other.address == address;
+  }
+
+  @override
+  int get hashCode => address.hashCode;
 }

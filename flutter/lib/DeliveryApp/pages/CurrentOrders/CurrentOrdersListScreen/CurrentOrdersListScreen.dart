@@ -58,7 +58,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         child: Scaffold(
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: MezSideMenu(),
-            appBar: deliveryAppBar(),
+            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -79,7 +79,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             )));
   }
 
-  AppBar deliveryAppBar() {
+  Widget deliveryAppBar() {
     return mezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: [
       InkWell(
           customBorder: CircleBorder(),

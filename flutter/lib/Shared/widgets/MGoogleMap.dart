@@ -27,6 +27,10 @@ class MGoogleMap extends StatefulWidget {
       this.notifyParentOfNewLocation,
       this.recenterBtnBottomPadding = 15,
       this.debugString,
+
+      // this.mGoogleMapController,
+
+      // this.periodicRerenderingis.debugString,
       this.rerenderDuration = const Duration(seconds: 2),
       required this.mGoogleMapController})
       : super(key: key);

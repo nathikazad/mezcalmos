@@ -8,11 +8,16 @@ import { RouteInformation } from '../../Generic/RouteInformation';
 export interface LaundryOrder extends TwoWayDeliverableOrder {
   laundry: UserInfo;
   notes?: string;
-  weight?: number;
   status: LaundryOrderStatus;
   shippingCost: number;
   costPerKilo: number;
   routeInformation?: RouteInformation;
+  costsByType: CostsByType;
+  estimatedDeliveryTime: string
+}
+export interface CostsByType {
+  byType: any;
+  weighedCost: number;
 }
 
 export enum LaundryOrderStatus {
@@ -35,18 +40,20 @@ export interface ConstructLaundryOrderParameters {
 }
 
 export function constructLaundryOrder(
-  params: ConstructLaundryOrderParameters, customer: UserInfo): LaundryOrder {
+  params: ConstructLaundryOrderParameters, customer: UserInfo, laundry: UserInfo): LaundryOrder {
   return <LaundryOrder>{
-    customer          : customer,
-    orderType         : OrderType.Laundry,
-    status            : LaundryOrderStatus.OrderReceieved,
-    orderTime         : (new Date()).toISOString(),
-    notes             : params.notes,
-    cost              : 0,
-    paymentType       : params.paymentType,
-    to                : params.to,
-    shippingCost      : 50,
-    costPerKilo       : 20,
+    customer: customer,
+    orderType: OrderType.Laundry,
+    status: LaundryOrderStatus.OrderReceieved,
+    orderTime: (new Date()).toISOString(),
+    notes: params.notes,
+    laundry: laundry,
+    serviceProviderId: laundry.id,
+    cost: 0,
+    paymentType: params.paymentType,
+    to: params.to,
+    shippingCost: 50,
+    costPerKilo: 20,
     routeInformation  : params.routeInformation
   }
 }

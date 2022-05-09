@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
@@ -115,7 +114,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
       bottomNavigationBar: Obx(
         () => DriverLaundryBottomButtons(
           order: order.value!,

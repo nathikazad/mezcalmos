@@ -31,34 +31,31 @@ class CustomerAuthController extends GetxController {
     super.onInit();
 
     if (_authController.fireAuthUser?.uid != null) {
+      //
+      _customer.value = customerRxn.value;
       mezDbgPrint(
           "User from CustomerAuthController >> ${_authController.fireAuthUser?.uid}");
       mezDbgPrint(
           "CustomerAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
-
       await _customerNodeListener?.cancel();
       _customerNodeListener = _databaseHelper.firebaseDatabase
           .reference()
           .child(customerNode(_authController.fireAuthUser!.uid))
           .onValue
-          .listen(
-        (Event event) async {
-          _customer.value = Customer.fromSnapshotData(event.snapshot.value);
+          .listen((Event event) async {
+        _customer.value = Customer.fromSnapshotData(event.snapshot.value);
 
-          if (_checkedAppVersion == false) {
-            final String VERSION = GetStorage().read(getxAppVersion);
-            print("[+] Customer currently using App v$VERSION");
-            await _databaseHelper.firebaseDatabase
-                .reference()
-                .child(
-                  customerAppVersionNode(_authController.fireAuthUser!.uid),
-                )
-                .set(VERSION);
+        if (_checkedAppVersion == false) {
+          final String VERSION = GetStorage().read(getxAppVersion);
+          print("[+] Customer currently using App v$VERSION");
+          await _databaseHelper.firebaseDatabase
+              .reference()
+              .child(customerAppVersionNode(_authController.fireAuthUser!.uid))
+              .set(VERSION);
 
-            _checkedAppVersion = true;
-          }
-        },
-      );
+          _checkedAppVersion = true;
+        }
+      });
 
       final String? deviceNotificationToken =
           await _notificationsController.getToken();

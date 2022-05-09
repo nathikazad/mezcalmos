@@ -163,7 +163,7 @@ class LocationPickerState extends State<LocationPicker> {
             Get.find<AuthController>().preserveNavigationStackAfterSignIn =
                 true;
             await Get.toNamed<void>(kSignInRouteOptional);
-            
+
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
             widget.onSuccessSignIn?.call();
             setState(() {});
