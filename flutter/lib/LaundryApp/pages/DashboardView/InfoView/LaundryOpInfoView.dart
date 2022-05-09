@@ -86,7 +86,7 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
                 ),
                 Flexible(
                     child: Text(
-                  laundry.value?.info.location?.address ?? '',
+                  laundry.value?.info.location.address ?? '',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ))

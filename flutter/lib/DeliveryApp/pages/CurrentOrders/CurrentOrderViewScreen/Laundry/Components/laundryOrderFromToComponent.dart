@@ -40,7 +40,7 @@ class _LaundryOrderFromToComponentState
           CircleAvatar(
             radius: 20,
             backgroundImage:
-                CachedNetworkImageProvider(widget.order.laundry.image ?? ''),
+                CachedNetworkImageProvider(widget.order.laundry.image),
           ),
           SizedBox(
             width: 10,

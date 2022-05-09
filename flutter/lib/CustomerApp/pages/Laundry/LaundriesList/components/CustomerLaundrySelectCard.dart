@@ -51,7 +51,6 @@ class CustomerLaundrySelectCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            
                 Text(
                   laundry.info.name,
                   style: Get.textTheme.bodyText1,
@@ -63,7 +62,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                       color: keyAppColor,
                     ),
                     Flexible(
-                      child: Text(laundry.info.location?.address ?? "",
+                      child: Text(laundry.info.location.address,
                           softWrap: true,
                           overflow: TextOverflow.ellipsis,
                           style: Get.textTheme.subtitle1,

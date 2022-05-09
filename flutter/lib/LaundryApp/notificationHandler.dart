@@ -3,7 +3,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -29,15 +28,15 @@ Notification laundryNotificationHandler(String key, value) {
           variableParams: value);
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
-    case NotificationType.OrderStatusChange:
-      switch (value['orderType'].toString().toOrderType()) {
-        case OrderType.Restaurant:
-          return restaurantOrderStatusChangeNotificationHandler(key, value);
-        case OrderType.Laundry:
-          return laundryOrderStatusChangeNotificationHandler(key, value);
-        default:
-          throw Exception("Unexpected Order Type $value['orderType']");
-      }
+    // case NotificationType.OrderStatusChange:
+    //   switch (value['orderType'].toString().toOrderType()) {
+    //     case OrderType.Restaurant:
+    //       return restaurantOrderStatusChangeNotificationHandler(key, value);
+    //     case OrderType.Laundry:
+    //       return laundryOrderStatusChangeNotificationHandler(key, value);
+    //     default:
+    //       throw Exception("Unexpected Order Type $value['orderType']");
+    //   }
     default:
       throw StateError("Invalid Notification Type");
   }
