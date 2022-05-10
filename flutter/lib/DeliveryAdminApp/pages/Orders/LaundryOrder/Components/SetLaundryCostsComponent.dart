@@ -96,27 +96,29 @@ class SetLaundryOrderCostComponent extends StatelessWidget {
                       ),
                       Spacer(),
                       IconButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                              isDismissible: false,
-                              useRootNavigator: false,
-                              isScrollControlled: true,
-                              backgroundColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              )),
-                              context: context,
-                              builder: (BuildContext context) {
-                                return OrderCategoryBottomModal(
-                                  editMode: true,
-                                  oldItem: laundryOrderCostLineItem,
-                                  order: order,
-                                );
-                              });
-                        },
+                        onPressed: (order.isAtLaundry())
+                            ? () {
+                                showModalBottomSheet(
+                                    isDismissible: false,
+                                    useRootNavigator: false,
+                                    isScrollControlled: true,
+                                    backgroundColor: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10),
+                                    )),
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return OrderCategoryBottomModal(
+                                        editMode: true,
+                                        oldItem: laundryOrderCostLineItem,
+                                        order: order,
+                                      );
+                                    });
+                              }
+                            : null,
                         icon: Icon(Icons.edit),
                         iconSize: 20,
                         splashRadius: 25,
@@ -124,9 +126,11 @@ class SetLaundryOrderCostComponent extends StatelessWidget {
                         color: Colors.black,
                       ),
                       IconButton(
-                        onPressed: () {
-                          deleteItem(laundryOrderCostLineItem);
-                        },
+                        onPressed: (order.isAtLaundry())
+                            ? () {
+                                deleteItem(laundryOrderCostLineItem);
+                              }
+                            : null,
                         icon: Icon(Ionicons.trash),
                         iconSize: 20,
                         splashRadius: 25,

@@ -151,12 +151,12 @@ class LaundryOrderController extends GetxController {
     });
   }
 
-  bool orderHaveNewMessageNotifications(String orderId) {
+  bool orderHaveNewMessageNotifications(String chatId) {
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId == orderId)
+            notification.chatId == chatId)
         .isNotEmpty;
   }
 

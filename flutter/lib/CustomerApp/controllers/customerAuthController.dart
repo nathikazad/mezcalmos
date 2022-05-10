@@ -42,7 +42,7 @@ class CustomerAuthController extends GetxController {
           .child(customerNode(_authController.fireAuthUser!.uid))
           .onValue
           .listen((Event event) async {
-        _customer.value = Customer.fromSnapshotData(event.snapshot.value);
+        customer.value = Customer.fromSnapshotData(event.snapshot.value);
 
         if (_checkedAppVersion == false) {
           final String VERSION = GetStorage().read(getxAppVersion);

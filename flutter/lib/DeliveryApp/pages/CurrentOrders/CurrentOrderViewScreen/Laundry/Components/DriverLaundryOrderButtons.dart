@@ -17,7 +17,7 @@ class DriverLaundryBottomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 60,
+        height: 70,
         color: (order.inDeliverPhase())
             ? Theme.of(context).primaryColorLight
             : Colors.transparent,
@@ -43,7 +43,7 @@ class DriverLaundryBottomButtons extends StatelessWidget {
 // Component to be place at the bottom when order is canceled
   Widget _orderBottomCanceledComponent(TextTheme textTheme) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       color: Colors.white,
       child: Row(
         children: [
@@ -78,7 +78,7 @@ class DriverLaundryBottomButtons extends StatelessWidget {
 // Component to be place at the bottom when order is deliverd
   Widget _orderDeliveredBottomComponent(TextTheme textTheme) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       color: Colors.white,
       child: Row(
         children: [

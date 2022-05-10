@@ -363,7 +363,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     );
   }
 
-  void _createLaundryOrder() async {
+  void _createLaundryOrder() {
     clicked.value = true;
     final LaundryRequest _req = LaundryRequest(
       laundryId: selectedLaundry.info.id,
@@ -386,21 +386,27 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     });
 
     // Since routeInformation is nullable, we have to handle it in other apps.
-    await laundryController.requestLaundryService(_req).then(
-      (ServerResponse response) {
-        if (response.data['orderId'] != null) {
-          sharedRoute.popEverythingAndNavigateTo(
-            getLaundyOrderRoute(
-              response.data['orderId'],
-            ),
-          );
-        } else {
-          Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
-        }
-      },
-    ).whenComplete(() => clicked.value = false).onError((error, stackTrace){
-      mezDbgPrint("Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
-      mezDbgPrint("Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
-    } );
+    laundryController
+        .requestLaundryService(_req)
+        .then(
+          (ServerResponse response) {
+            if (response.data['orderId'] != null) {
+              sharedRoute.popEverythingAndNavigateTo(
+                getLaundyOrderRoute(
+                  response.data['orderId'],
+                ),
+              );
+            } else {
+              Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
+            }
+          },
+        )
+        .whenComplete(() => clicked.value = false)
+        .onError((Object? error, StackTrace stackTrace) {
+          mezDbgPrint(
+              "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
+          mezDbgPrint(
+              "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
+        });
   }
 }

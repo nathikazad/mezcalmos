@@ -83,61 +83,67 @@ class _DriverBottomLaundryOrderCardState
 
 // Component to be place at the bottom when order is canceled
   Widget _orderBottomCanceledComponent(TextTheme textTheme) {
-    return Row(
-      children: [
-        Icon(
-          Icons.cancel,
-          color: Colors.redAccent,
-          size: 30.sp,
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Flexible(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "${_i18n()["orderStatus"]["canceled"]}",
-              style: textTheme.bodyText1,
-            ),
-            Text(
-              DateFormat('dd MMM yy h:m').format(widget.order.orderTime),
-              style: textTheme.subtitle1,
-            )
-          ],
-        ))
-      ],
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: Row(
+        children: [
+          Icon(
+            Icons.cancel,
+            color: Colors.redAccent,
+            size: 30.sp,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Flexible(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${_i18n()["orderStatus"]["canceled"]}",
+                style: textTheme.bodyText1,
+              ),
+              Text(
+                DateFormat('dd MMM yy h:m').format(widget.order.orderTime),
+                style: textTheme.subtitle1,
+              )
+            ],
+          ))
+        ],
+      ),
     );
   }
 
 // Component to be place at the bottom when order is deliverd
   Widget _orderDeliveredBottomComponent(TextTheme textTheme) {
-    return Row(
-      children: [
-        Icon(
-          Icons.check_circle,
-          color: Colors.green,
-          size: 30.sp,
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Flexible(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "${_i18n()["orderStatus"]["delivered"]}",
-              style: textTheme.bodyText1,
-            ),
-            Text(
-              DateFormat('dd MMM yy h:m').format(widget.order.orderTime),
-              style: textTheme.subtitle1,
-            )
-          ],
-        ))
-      ],
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: Row(
+        children: [
+          Icon(
+            Icons.check_circle,
+            color: Colors.green,
+            size: 30.sp,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Flexible(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${_i18n()["orderStatus"]["delivered"]}",
+                style: textTheme.bodyText1,
+              ),
+              Text(
+                DateFormat('dd MMM yy h:m').format(widget.order.orderTime),
+                style: textTheme.subtitle1,
+              )
+            ],
+          ))
+        ],
+      ),
     );
   }
 

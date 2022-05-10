@@ -8,19 +8,20 @@ class Customer {
   List<SavedLocation> savedLocations = <SavedLocation>[];
   dynamic data;
 
-  Customer.fromSnapshotData(dynamic data) {
+  Customer.fromSnapshotData(data) {
     appVersion = data?["versionNumber"] ?? null;
     notificationInfo = data?["notificationInfo"];
-    final List<SavedLocation> newSavedLocations = <SavedLocation>[];
 
     mezDbgPrint("SavedLocations ===> ${data?["savedLocations"]}");
     if (data["savedLocations"] != null) {
       Map<String, dynamic>.from(data?["savedLocations"])
           .entries
-          .forEach((entry) {
+          .forEach((MapEntry<String, dynamic> entry) {
+       
         savedLocations.add(
           SavedLocation.fromData(id: entry.key, data: entry.value),
         );
+       
       });
     }
     // for (var locationId in ) {
@@ -58,7 +59,7 @@ class SavedLocation {
 
   factory SavedLocation.fromData({
     required String id,
-    required dynamic data,
+    required data,
   }) {
     return SavedLocation(
       name: data["name"],

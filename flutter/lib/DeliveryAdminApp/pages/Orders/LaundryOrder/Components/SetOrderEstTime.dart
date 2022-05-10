@@ -7,11 +7,13 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class SetOrderEstTimeComponent extends StatefulWidget {
-  const SetOrderEstTimeComponent({Key? key, required this.order}) : super(key: key);
+  const SetOrderEstTimeComponent({Key? key, required this.order})
+      : super(key: key);
   final LaundryOrder order;
 
   @override
-  State<SetOrderEstTimeComponent> createState() => _SetOrderEstTimeComponentState();
+  State<SetOrderEstTimeComponent> createState() =>
+      _SetOrderEstTimeComponentState();
 }
 
 class _SetOrderEstTimeComponentState extends State<SetOrderEstTimeComponent> {
@@ -78,7 +80,7 @@ class _SetOrderEstTimeComponentState extends State<SetOrderEstTimeComponent> {
                       child: Row(
                         children: [
                           Icon(
-                            Icons.timelapse,
+                            Icons.event,
                             size: 40,
                             color: keyAppColor,
                           ),

@@ -80,7 +80,7 @@ class _OrderEstimatedTimeComponentState
                       child: Row(
                         children: [
                           Icon(
-                            Icons.timelapse,
+                            Icons.event,
                             size: 40,
                             color: keyAppColor,
                           ),
