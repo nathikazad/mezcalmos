@@ -10,12 +10,12 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 
 class LaundryOrderRequestView extends StatefulWidget {
   const LaundryOrderRequestView({Key? key}) : super(key: key);
@@ -57,7 +57,6 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     selectedLaundry = Get.arguments;
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -129,13 +128,13 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                                   CircleAvatar(
                                     radius: 20,
                                     backgroundImage: CachedNetworkImageProvider(
-                                        selectedLaundry!.info.image),
+                                        selectedLaundry.info.image),
                                   ),
                                   SizedBox(
                                     width: 10,
                                   ),
                                   Text(
-                                    selectedLaundry!.info.name,
+                                    selectedLaundry.info.name,
                                     style: Get.textTheme.bodyText1,
                                   ),
                                 ],
