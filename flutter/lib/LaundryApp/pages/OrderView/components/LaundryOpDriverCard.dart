@@ -45,14 +45,8 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                             IconButton(
                                 onPressed: () {
                                   Get.toNamed(getMessagesRoute(
-                                      orderId: (order.getCurrentPhase() ==
-                                              LaundryOrderPhase.Pickup)
-                                          ? order.pickupDriverChatId!
-                                          : order.dropOffDriverChatId!,
-                                      chatId: (order.getCurrentPhase() ==
-                                              LaundryOrderPhase.Pickup)
-                                          ? order.pickupDriverChatId!
-                                          : order.dropOffDriverChatId!,
+                                      orderId: order.orderId,
+                                      chatId: _getCorrectChatId(),
                                       recipientType:
                                           ParticipantType.DeliveryDriver));
                                 },
@@ -62,7 +56,8 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                                 )),
                             Obx(
                               () => Get.find<OrderController>()
-                                      .hasNewMessageNotification(order.orderId)
+                                      .hasNewMessageNotification(
+                                          _getCorrectChatId())
                                   ? _newMessageRedDot(context)
                                   : Container(),
                             )

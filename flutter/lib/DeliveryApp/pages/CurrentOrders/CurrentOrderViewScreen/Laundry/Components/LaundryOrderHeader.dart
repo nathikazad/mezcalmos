@@ -70,10 +70,7 @@ class LaundryOrderHeader extends StatelessWidget {
                         : order.dropOffDriverChatId!,
                   );
                   Get.toNamed(getMessagesRoute(
-                      orderId:
-                          (order.getCurrentPhase() == LaundryOrderPhase.Pickup)
-                              ? order.pickupDriverChatId!
-                              : order.dropOffDriverChatId!,
+                      orderId: order.orderId,
                       chatId:
                           (order.getCurrentPhase() == LaundryOrderPhase.Pickup)
                               ? order.pickupDriverChatId!
