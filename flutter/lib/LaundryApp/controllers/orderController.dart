@@ -128,12 +128,12 @@ class OrderController extends GetxController {
     });
   }
 
-  bool hasNewMessageNotification(String orderId) {
+  bool hasNewMessageNotification(String chatId) {
     return _foregroundNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.chatId == chatId)
         .isNotEmpty;
   }
 
