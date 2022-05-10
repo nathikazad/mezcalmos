@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -363,7 +364,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     );
   }
 
-  void _createLaundryOrder() {
+  void _createLaundryOrder() async {
     clicked.value = true;
     final LaundryRequest _req = LaundryRequest(
       laundryId: selectedLaundry.info.id,
@@ -386,7 +387,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     });
 
     // Since routeInformation is nullable, we have to handle it in other apps.
-    laundryController.requestLaundryService(_req).then(
+    await laundryController.requestLaundryService(_req).then(
       (ServerResponse response) {
         if (response.data['orderId'] != null) {
           sharedRoute.popEverythingAndNavigateTo(
@@ -398,6 +399,9 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
           Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
         }
       },
-    ).whenComplete(() => clicked.value = false);
+    ).whenComplete(() => clicked.value = false).onError((error, stackTrace){
+      mezDbgPrint("Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
+      mezDbgPrint("Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
+    } );
   }
 }
