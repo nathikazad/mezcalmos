@@ -48,7 +48,6 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
   @override
   void initState() {
-    super.initState();
     // Handle Order id from the rooting
     if (Get.parameters['orderId'] != null) {
       orderId = Get.parameters['orderId']!;
@@ -59,7 +58,6 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as LaundryOrder?;
 
-    initMap();
     _orderListener =
         controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
       if (newOrderEvent != null) {
@@ -77,6 +75,8 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           Get.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
+      } else {
+        initMap();
       }
     });
     super.initState();
@@ -124,7 +124,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                       SizedBox(
                         height: 20,
                       ),
-                      _laundryCard(),
+                      if (order.value!.laundry != null) _laundryCard(),
                       SizedBox(
                         height: 20,
                       ),
@@ -174,13 +174,15 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       ),
     );
 
-    // restaurant ad customer's location are fixed (fit in bound at start)
-    mapController.addOrUpdateUserMarker(
-      latLng: order.value!.laundry!.location.toLatLng(),
-      markerId: order.value!.laundry!.id,
-      customImgHttpUrl: order.value!.laundry!.image,
-      fitWithinBounds: true,
-    );
+    if (order.value!.laundry != null) {
+      // restaurant ad customer's location are fixed (fit in bound at start)
+      mapController.addOrUpdateUserMarker(
+        latLng: order.value!.laundry!.location.toLatLng(),
+        markerId: order.value!.laundry!.id,
+        customImgHttpUrl: order.value!.laundry!.image,
+        fitWithinBounds: true,
+      );
+    }
     // customer's
     mapController.addOrUpdatePurpleDestinationMarker(
       latLng: order.value!.to.toLatLng(),
@@ -254,9 +256,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         break;
       default:
     }
- 
-}
- Container _orderEstimatedDeliveryTime() {
+  }
+
+  Container _orderEstimatedDeliveryTime() {
     return Container(
       margin: const EdgeInsets.all(8),
       child: Column(

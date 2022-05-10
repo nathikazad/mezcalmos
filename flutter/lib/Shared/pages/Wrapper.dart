@@ -104,6 +104,7 @@ class _WrapperState extends State<Wrapper> {
   }
 
   Future<void> handleAuthStateChange(fireAuth.User? user) async {
+
     // We should Priotorize the AppNeedsUpdate route to force users to update
     if (Get.currentRoute != kAppNeedsUpdate) {
       if (user == null) {
@@ -116,13 +117,10 @@ class _WrapperState extends State<Wrapper> {
               kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
         }
       } else {
-        await Get.offNamedUntil<void>(
-            kSignInRouteRequired, ModalRoute.withName(kWrapperRoute));
+        await waitTillUserInfoLoaded();
+        redirectIfUserInfosNotSet();
       }
-    } else {
-      await waitTillUserInfoLoaded();
-      redirectIfUserInfosNotSet();
-    }
+    } 
   }
 
   Future<void> waitTillUserInfoLoaded() {
