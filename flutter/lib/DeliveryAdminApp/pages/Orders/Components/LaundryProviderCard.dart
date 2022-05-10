@@ -72,7 +72,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
         CircleAvatar(
           radius: 25,
           backgroundImage:
-              CachedNetworkImageProvider(widget.order.laundry.image),
+              CachedNetworkImageProvider(widget.order.laundry!.image),
         ),
         const SizedBox(width: 10),
         Flexible(
@@ -82,7 +82,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.order.laundry.name,
+                widget.order.laundry!.name,
                 style: textTheme.bodyText2,
               ),
               const SizedBox(height: 5),

@@ -176,9 +176,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
-      latLng: order.value!.laundry.location.toLatLng(),
-      markerId: order.value!.laundry.id,
-      customImgHttpUrl: order.value!.laundry.image,
+      latLng: order.value!.laundry!.location.toLatLng(),
+      markerId: order.value!.laundry!.id,
+      customImgHttpUrl: order.value!.laundry!.image,
       fitWithinBounds: true,
     );
     // customer's
@@ -201,9 +201,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           _phaseSnapshot = phase;
           // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.laundry.location.toLatLng(),
-            markerId: order.value!.laundry.id,
-            customImgHttpUrl: order.value!.laundry.image,
+            latLng: order.value!.laundry!.location.toLatLng(),
+            markerId: order.value!.laundry!.id,
+            customImgHttpUrl: order.value!.laundry!.image,
             fitWithinBounds: true,
           );
           mapController.addOrUpdatePurpleDestinationMarker(
@@ -229,9 +229,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           _phaseSnapshot = phase;
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.laundry.location.toLatLng(),
-            markerId: order.value!.laundry.id,
-            customImgHttpUrl: order.value!.laundry.image,
+            latLng: order.value!.laundry!.location.toLatLng(),
+            markerId: order.value!.laundry!.id,
+            customImgHttpUrl: order.value!.laundry!.image,
             fitWithinBounds: false,
           );
           // we fit the destination into bounds
@@ -309,13 +309,13 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                 CircleAvatar(
                   radius: 20,
                   backgroundImage:
-                      CachedNetworkImageProvider(order.value!.laundry.image),
+                      CachedNetworkImageProvider(order.value!.laundry!.image),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Text(
-                  order.value!.laundry.name,
+                  order.value!.laundry!.name,
                   style: Get.textTheme.bodyText1,
                 ),
               ],
