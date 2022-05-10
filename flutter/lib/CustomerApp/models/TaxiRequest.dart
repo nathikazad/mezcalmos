@@ -8,7 +8,7 @@ class TaxiRequest {
   RouteInformation? routeInformation;
   int estimatedPrice;
   PaymentType paymentType;
-
+  DateTime? scheduledTime;
   TaxiRequest({
     this.from,
     this.to,
@@ -43,6 +43,10 @@ class TaxiRequest {
     to = loc;
   }
 
+  void setScheduledTime(DateTime scheduledTime) {
+    this.scheduledTime = scheduledTime;
+  }
+
   void setRouteInformation(RouteInformation routeInformation) {
     this.routeInformation = routeInformation;
   }
@@ -60,7 +64,8 @@ class TaxiRequest {
       "to": to?.toFirebaseFormattedJson(),
       "estimatedPrice": estimatedPrice,
       "paymentType": paymentType.toFirebaseFormatString(),
-      "routeInformation": routeInformation?.toJson()
+      "routeInformation": routeInformation?.toJson(),
+      "scheduledTime": scheduledTime?.toUtc().toString()
     };
   }
 }

@@ -5,7 +5,8 @@ export interface TaxiOrderRequest {
   from: Location,
   to: Location,
   estimatedPrice: number,
-  paymentType: PaymentType
+  paymentType: PaymentType,
+  scheduledTime?: string,
   routeInformation: {
     duration: string,
     distance: string,

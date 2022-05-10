@@ -162,6 +162,23 @@ class OrderController extends GetxController {
     }
   }
 
+  Future<ServerResponse> startScheduledRide() async {
+    mezDbgPrint("Start Taxi Called");
+    HttpsCallable startScheduledRideFunction =
+        FirebaseFunctions.instance.httpsCallable('taxi-startScheduledRide');
+    try {
+      HttpsCallableResult response = await startScheduledRideFunction.call({});
+      var res = ServerResponse.fromJson(response.data);
+      mezDbgPrint(res.data);
+      mezDbgPrint(res.errorMessage);
+      mezDbgPrint(res.errorCode);
+      return res;
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+
   Future<ServerResponse> startRide() async {
     mezDbgPrint("Start Taxi Called");
     HttpsCallable startRideFunction =

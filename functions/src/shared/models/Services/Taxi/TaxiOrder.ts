@@ -16,6 +16,7 @@ export interface TaxiOrder extends Order {
   acceptRideTime?: string,
   startRideTime?: string,
   finishRideTime?: string,
+  scheduledTime?: string,
   notificationStatus?: Record<string, NotificationStatus>;
   counterOffers?: Record<string, CounterOffer>;
   lock?: boolean;
@@ -28,13 +29,15 @@ export interface TaxiInfo extends UserInfo {
 }
 
 export enum TaxiOrderStatus {
-  DroppedOff = "droppedOff",
-  CancelledByCustomer = "cancelledByCustomer",
-  CancelledByTaxi = "cancelledByTaxi",
-  Expired = "expired",
+  LookingForTaxiScheduled = "lookingForTaxiScheduled",
+  Scheduled = "scheduled",
+  LookingForTaxi = "lookingForTaxi",
   OnTheWay = "onTheWay",
   InTransit = "inTransit",
-  LookingForTaxi = "lookingForTaxi",
+  DroppedOff = "droppedOff",
+  Expired = "expired",
+  CancelledByCustomer = "cancelledByCustomer",
+  CancelledByTaxi = "cancelledByTaxi",
   ForwardingToLocalCompany = "forwardingToLocalCompany",
   ForwardingSuccessful = "forwardingSuccessful",
   ForwardingUnsuccessful = "forwardingUnsuccessful"
@@ -56,7 +59,8 @@ export function constructTaxiOrder(
     {
       customer: customer,
       orderType: OrderType.Taxi,
-      status: TaxiOrderStatus.LookingForTaxi,
+      status: (requestCopy.scheduledTime) ?
+        TaxiOrderStatus.LookingForTaxiScheduled : TaxiOrderStatus.LookingForTaxi,
       orderTime: (new Date()).toISOString(),
     });
 }

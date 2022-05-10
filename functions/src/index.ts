@@ -37,6 +37,7 @@ export const restaurant = {
 // Taxi
 export const taxi = {
   requestRide: require("./taxi/request"),
+  startScheduledRide: require("./taxi/taxiStatusChange").startScheduledRide,
   acceptRide: require("./taxi/accept"),
   startRide: require("./taxi/taxiStatusChange").startRide,
   cancelFromCustomer: require("./taxi/cancelTaxiFromCustomer"),

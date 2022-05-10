@@ -15,10 +15,18 @@ import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
 let statusArrayInSeq: Array<TaxiOrderStatus> =
-  [TaxiOrderStatus.OnTheWay,
-  TaxiOrderStatus.InTransit,
-  TaxiOrderStatus.DroppedOff
+  [
+    TaxiOrderStatus.Scheduled,
+    TaxiOrderStatus.OnTheWay,
+    TaxiOrderStatus.InTransit,
+    TaxiOrderStatus.DroppedOff
   ]
+
+export const startScheduledRide =
+  functions.https.onCall(async (data, context) => {
+    let response: ServerResponse = await changeStatus(data, TaxiOrderStatus.OnTheWay, context.auth)
+    return response;
+  });
 
 export const startRide =
   functions.https.onCall(async (data, context) => {

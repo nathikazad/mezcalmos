@@ -87,7 +87,7 @@ export = functions.https.onCall(async (data, context) => {
       }
     }
 
-    if (order.status != TaxiOrderStatus.LookingForTaxi) {
+    if (order.status != TaxiOrderStatus.LookingForTaxi && order.status != TaxiOrderStatus.LookingForTaxiScheduled) {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: `${data.orderId} status is not lookingForTaxi but ${order.status}`
@@ -107,7 +107,7 @@ export = functions.https.onCall(async (data, context) => {
       order.cost = orderFromCustomerNode.counterOffers![data.counterOfferDriverId].price
     }
 
-    order.status = TaxiOrderStatus.OnTheWay;
+    order.status = (order.status == TaxiOrderStatus.LookingForTaxi) ? TaxiOrderStatus.OnTheWay : TaxiOrderStatus.Scheduled;
     order.acceptRideTime = (new Date()).toISOString()
     order.driver = <TaxiInfo>{
       id: taxiId,

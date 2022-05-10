@@ -8,13 +8,15 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 enum TaxiOrdersStatus {
+  LookingForTaxiScheduled,
+  Scheduled,
+  LookingForTaxi,
+  InTransit,
+  OnTheWay,
   DroppedOff,
   CancelledByCustomer,
   CancelledByTaxi,
   Expired,
-  OnTheWay,
-  InTransit,
-  LookingForTaxi,
   ForwardingToLocalCompany,
   ForwardingSuccessful,
   ForwardingUnsuccessful
@@ -40,12 +42,13 @@ class TaxiNotificationStatus {
   bool read = false;
   bool received = false;
   String uid;
-  TaxiNotificationStatus(
-      {required this.sent,
-      required this.sentCount,
-      required this.read,
-      required this.received,
-      required this.uid});
+  TaxiNotificationStatus({
+    required this.sent,
+    required this.sentCount,
+    required this.read,
+    required this.received,
+    required this.uid,
+  });
 }
 
 class TaxiOrder extends Order {
@@ -53,6 +56,7 @@ class TaxiOrder extends Order {
   String? acceptRideTime;
   String? rideFinishTime;
   String? rideStartTime;
+  DateTime? scheduledTime;
   TaxiOrdersStatus status;
   double distanceToClient = 0;
   TaxiUserInfo? get driver => serviceProvider as TaxiUserInfo?;
@@ -79,6 +83,7 @@ class TaxiOrder extends Order {
       required this.acceptRideTime,
       required this.rideFinishTime,
       required this.rideStartTime,
+      this.scheduledTime,
       required this.status,
       required UserInfo customer})
       : super(
@@ -118,6 +123,7 @@ class TaxiOrder extends Order {
         rideStartTime: data['rideStartTime'],
         status: data['status'].toString().toTaxiOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
+        scheduledTime: data['scheduledTime'],
         cost: data['cost'] ?? 35,
         // from: Location("", LocationData.fromMap({"lat":})),
         from: Location.fromFirebaseData(data['from']),

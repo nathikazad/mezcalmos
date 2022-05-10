@@ -4,6 +4,26 @@ import { TaxiOrderStatus } from "../shared/models/Services/Taxi/TaxiOrder";
 
 export const taxiOrderStatusChangeMessages:
   { [id in TaxiOrderStatus]: BackgroundNotification } = {
+  [TaxiOrderStatus.LookingForTaxiScheduled]: {
+    [Language.EN]: {
+      title: "Looking for a ride",
+      body: "We are finding you a taxi."
+    },
+    [Language.ES]: {
+      title: "Buscando para una taxi",
+      body: "Estamos buscandote un taxi"
+    }
+  },
+  [TaxiOrderStatus.Scheduled]: {
+    [Language.EN]: {
+      title: "Ride scheduled",
+      body: "A ride has been scheduled for you"
+    },
+    [Language.ES]: {
+      title: "Viaje programado",
+      body: "Se ha programado un viaje para usted"
+    }
+  },
   [TaxiOrderStatus.LookingForTaxi]: {
     [Language.EN]: {
       title: "Looking for a ride",
