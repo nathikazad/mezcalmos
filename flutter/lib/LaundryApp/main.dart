@@ -10,6 +10,7 @@ import 'package:mezcalmos/LaundryApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
 
@@ -29,7 +30,7 @@ void main() {
             appTheme: LaundryAppTheme.lightTheme,
             signOutCallback: signOutCallback,
             routes: routes,
-            locationOn: false,
+            locationPermissionType: LocationPermissionType.Foreground,
           );
         },
       ),

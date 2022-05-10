@@ -3,13 +3,14 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 class Laundry extends Service {
   LaundryCosts laundryCosts;
   LanguageType primaryLanguage;
   LanguageType? secondaryLanguage;
   Laundry(
-      {required ServiceUserInfo userInfo,
+      {required ServiceInfo userInfo,
       required Schedule schedule,
       required ServiceState laundryState,
       required this.laundryCosts,
@@ -43,7 +44,7 @@ class Laundry extends Service {
         null;
 
     final Laundry laundry = Laundry(
-        userInfo: ServiceUserInfo.fromData(laundryData["info"]),
+        userInfo: ServiceInfo.fromData(laundryData["info"]),
         schedule: schedule,
         laundryState: laundryState,
         laundryCosts: laundryCosts,

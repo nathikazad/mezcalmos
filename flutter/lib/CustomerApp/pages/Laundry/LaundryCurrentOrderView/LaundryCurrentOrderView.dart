@@ -1,6 +1,9 @@
 import 'dart:async';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
@@ -9,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Comp
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryPricingComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderSummaryComponent.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -101,7 +105,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: '${_i18n()["orderStatus"]}',
+        title: '${_i18n()["laundry"]}',
       ),
       body: Obx(
         () => order.value != null
@@ -117,8 +121,19 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                       if (order.value!.getCurrentPhase() !=
                           LaundryOrderPhase.Neither)
                         ..._mapWidget,
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _laundryCard(),
+                      SizedBox(
+                        height: 20,
+                      ),
                       LaundryPricingCompnent(order: order.value!),
-                      const SizedBox(height: 10),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      if (order.value!.estimatedDeliveryTime != null)
+                        _orderEstimatedDeliveryTime(),
                       LaundryOrderNoteComponent(order: order.value!),
                       const SizedBox(height: 10),
                       OrderSummaryComponent(
@@ -161,9 +176,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
-      latLng: order.value!.laundry!.location.toLatLng(),
-      markerId: order.value!.laundry!.id,
-      customImgHttpUrl: order.value!.laundry!.image,
+      latLng: order.value!.laundry.location.toLatLng(),
+      markerId: order.value!.laundry.id,
+      customImgHttpUrl: order.value!.laundry.image,
       fitWithinBounds: true,
     );
     // customer's
@@ -186,9 +201,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           _phaseSnapshot = phase;
           // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.laundry!.location.toLatLng(),
-            markerId: order.value!.laundry!.id,
-            customImgHttpUrl: order.value!.laundry!.image,
+            latLng: order.value!.laundry.location.toLatLng(),
+            markerId: order.value!.laundry.id,
+            customImgHttpUrl: order.value!.laundry.image,
             fitWithinBounds: true,
           );
           mapController.addOrUpdatePurpleDestinationMarker(
@@ -214,9 +229,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           _phaseSnapshot = phase;
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.laundry!.location.toLatLng(),
-            markerId: order.value!.laundry!.id,
-            customImgHttpUrl: order.value!.laundry!.image,
+            latLng: order.value!.laundry.location.toLatLng(),
+            markerId: order.value!.laundry.id,
+            customImgHttpUrl: order.value!.laundry.image,
             fitWithinBounds: false,
           );
           // we fit the destination into bounds
@@ -239,5 +254,75 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         break;
       default:
     }
+ 
+}
+ Container _orderEstimatedDeliveryTime() {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "${_i18n()['estimatedDeliveryTime']}",
+            style: Get.textTheme.bodyText1,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Card(
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.timelapse,
+                    color: keyAppColor,
+                    size: 35,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "${DateFormat("dd MMMM yyyy hh:mm a").format(order.value!.estimatedDeliveryTime!.toLocal())}",
+                    style: Get.textTheme.bodyText1,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Card _laundryCard() {
+    return Card(
+      child: Container(
+        margin: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("${_i18n()["laundry"]} :", style: Get.textTheme.bodyText1),
+            Divider(),
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundImage:
+                      CachedNetworkImageProvider(order.value!.laundry.image),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  order.value!.laundry.name,
+                  style: Get.textTheme.bodyText1,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

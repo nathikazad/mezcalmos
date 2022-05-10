@@ -10,7 +10,8 @@ enum ParticipantType {
   Laundry,
   DeliveryAdmin,
   Restaurant,
-  DeliveryDriver
+  DeliveryDriver,
+  LaundryOperator
 }
 
 extension ParseParticipantTypeToString on ParticipantType {
@@ -86,7 +87,8 @@ class Chat {
 
     final Map<String, Participant> _participants = {};
     final List<Message> _messages = [];
-
+    mezDbgPrint(
+        "Participants ------------------------------------>${value['participants']}");
     value['participants']?.forEach((key, p) {
       _participants[key] = Participant(
           image: p['image'],

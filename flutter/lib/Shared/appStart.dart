@@ -34,6 +34,8 @@ import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+// import 'package:package_info/package_info.dart';
+//import 'package:package_info_plus/package_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sizer/sizer.dart' as Sizer;
 

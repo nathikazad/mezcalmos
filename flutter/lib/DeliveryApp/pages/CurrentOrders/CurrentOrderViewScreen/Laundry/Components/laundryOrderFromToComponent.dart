@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 class LaundryOrderFromToComponent extends StatefulWidget {
@@ -24,7 +23,6 @@ class _LaundryOrderFromToComponentState
 
   @override
   void initState() {
-    getLaundry();
     super.initState();
   }
 
@@ -53,7 +51,7 @@ class _LaundryOrderFromToComponentState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.order.laundry?.name ?? 'Laundry Agency',
+                  widget.order.laundry?.name ?? '',
                   style: textTheme.bodyText1,
                 ),
                 Text(
@@ -62,7 +60,7 @@ class _LaundryOrderFromToComponentState
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
       Container(

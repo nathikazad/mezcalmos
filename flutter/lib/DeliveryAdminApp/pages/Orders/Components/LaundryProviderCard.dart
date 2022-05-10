@@ -1,62 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["Orders"]["components"]["laundryProviderCard"];
 
 class LaundryProviderCard extends StatefulWidget {
-  const LaundryProviderCard({
-    Key? key,
-    required this.laundryID,
-    required this.order,
-  }) : super(key: key);
-
   final LaundryOrder order;
-  final String? laundryID;
+
+  const LaundryProviderCard({Key? key, required this.order}) : super(key: key);
 
   @override
   State<LaundryProviderCard> createState() => _LaundryProviderCardState();
 }
 
 class _LaundryProviderCardState extends State<LaundryProviderCard> {
-  /// LaundryInfoController
-  final LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
-
-  /// LaundryOrderController
-  final LaundryOrderController controller = Get.find<LaundryOrderController>();
-
-  /// Laundry
-  Laundry? laundry;
-  bool btnClicked = false;
-  @override
-  void initState() {
-    setState(() {
-      btnClicked = false;
-    });
-    getLaundry();
-
-    super.initState();
-    getLaundry();
-  }
-
-  Future<void> getLaundry() async {
-    if (widget.laundryID != null) {
-      laundry = await laundryInfoController.getLaundry(widget.laundryID!);
-      mezDbgPrint("Init laundry =====> $laundry");
-    } else {
-      laundry = null;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -72,56 +32,12 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
             ),
           ),
           Card(
-            color: (btnClicked) ? Colors.grey.shade400 : Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-              side: BorderSide(
-                width: 1.5,
-                color: (widget.order.laundry != null)
-                    ? Colors.green
-                    : Colors.redAccent,
-              ),
-            ),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap: (widget.order.laundry == null && !btnClicked)
-                  ? () async {
-                      setState(() {
-                        btnClicked = true;
-                      });
-                      await Get.toNamed(kLaundriesListRoute,
-                              arguments: widget.order)!
-                          .then((value) {
-                        if (value != null) {
-                          controller
-                              .assignLaundry(widget.order.orderId,
-                                  (value as Laundry).info.id)
-                              .whenComplete(() {
-                            setState(() {
-                              btnClicked = false;
-                            });
-                          });
-                        } else {
-                          setState(() {
-                            btnClicked = false;
-                          });
-                        }
-                      });
-                    }
-                  : null,
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(8),
-                child: (btnClicked)
-                    ? Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.all(8),
-                        child: CircularProgressIndicator(),
-                      )
-                    : (widget.order.laundry != null)
-                        ? laundryInfoComponent(textTheme, context)
-                        : noLaundryComponent(context, textTheme),
-              ),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(8),
+              child: (widget.order.laundry != null)
+                  ? laundryInfoComponent(textTheme, context)
+                  : noLaundryComponent(context, textTheme),
             ),
           ),
         ],
@@ -142,11 +58,9 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
         ),
         const SizedBox(width: 10),
         Text(
-          '${_i18n()["noLaundry"]}',
+          'Error',
           style: textTheme.bodyText1,
         ),
-        const Spacer(),
-        Icon(Icons.arrow_forward),
       ],
     );
   }
@@ -158,7 +72,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
         CircleAvatar(
           radius: 25,
           backgroundImage:
-              CachedNetworkImageProvider(widget.order.laundry!.image),
+              CachedNetworkImageProvider(widget.order.laundry.image),
         ),
         const SizedBox(width: 10),
         Flexible(
@@ -168,7 +82,7 @@ class _LaundryProviderCardState extends State<LaundryProviderCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.order.laundry!.name,
+                widget.order.laundry.name,
                 style: textTheme.bodyText2,
               ),
               const SizedBox(height: 5),

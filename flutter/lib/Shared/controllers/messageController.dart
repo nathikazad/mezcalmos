@@ -31,6 +31,7 @@ class MessageController extends GetxController {
 
   void loadChat(
       {required String chatId, material.VoidCallback? onValueCallBack}) {
+    mezDbgPrint("Load chat id ------------->>>> $chatId");
     chatListener?.cancel();
     chatListener = _databaseHelper.firebaseDatabase
         .reference()

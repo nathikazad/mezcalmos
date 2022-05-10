@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -87,6 +88,24 @@ class LaundryOrderController extends GetxController {
     ]);
   }
 
+  Future<ServerResponse> setOrderWeight(
+      String orderId, LaundryOrderCosts laundryOrderCosts) async {
+    return _callLaundryCloudFunction("setWeight", orderId, optionalParams: {
+      "fromLaundryOperator": false,
+      "costsByType": laundryOrderCosts.toFirebasFormat()
+    });
+  }
+
+  Future<ServerResponse> setEstimatedDeliveryTime(
+      String orderId, DateTime estimatedTime) async {
+    mezDbgPrint("inside clod set delivery time $estimatedTime");
+    return _callLaundryCloudFunction("setEstimatedTime", orderId,
+        optionalParams: {
+          "fromLaundryOperator": false,
+          "estimatedDeliveryTime": estimatedTime.toUtc().toString()
+        });
+  }
+
   bool isPast(LaundryOrder order) {
     return pastOrders.contains(order);
   }
@@ -114,6 +133,7 @@ class LaundryOrderController extends GetxController {
         // do nothing
         // return null;
       }
+      return null;
     });
   }
 
@@ -121,12 +141,13 @@ class LaundryOrderController extends GetxController {
     return inProcessOrders.stream.map<LaundryOrder?>((_) {
       try {
         return pastOrders.firstWhere(
-          (pastOrder) => pastOrder.orderId == orderId,
+          (LaundryOrder pastOrder) => pastOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
         // return null;
       }
+      return null;
     });
   }
 
@@ -167,13 +188,13 @@ class LaundryOrderController extends GetxController {
   }
 
   Future<ServerResponse> readyForDeliveryOrder(String orderId) async {
-    return _callLaundryCloudFunction("readyForDeliveryOrderTwo", orderId);
+    return _callLaundryCloudFunction("readyForDeliveryOrder", orderId);
   }
 
-  Future<ServerResponse> assignLaundry(String orderId, String laundryId) async {
-    return _callLaundryCloudFunction("assignLaundry", orderId,
-        optionalParams: <String, dynamic>{"laundryId": laundryId});
-  }
+  // Future<ServerResponse> assignLaundry(String orderId, String laundryId) async {
+  //   return _callLaundryCloudFunction("assignLaundry", orderId,
+  //       optionalParams: <String, dynamic>{"laundryId": laundryId});
+  // }
 
   Future<ServerResponse> _callLaundryCloudFunction(
       String functionName, String orderId,

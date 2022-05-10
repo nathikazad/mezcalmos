@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
+// import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
-class OrderEstimatedTimeComponent extends StatefulWidget {
-  const OrderEstimatedTimeComponent({Key? key, required this.order})
-      : super(key: key);
+class SetOrderEstTimeComponent extends StatefulWidget {
+  const SetOrderEstTimeComponent({Key? key, required this.order}) : super(key: key);
   final LaundryOrder order;
 
   @override
-  State<OrderEstimatedTimeComponent> createState() =>
-      _OrderEstimatedTimeComponentState();
+  State<SetOrderEstTimeComponent> createState() => _SetOrderEstTimeComponentState();
 }
 
-class _OrderEstimatedTimeComponentState
-    extends State<OrderEstimatedTimeComponent> {
-  OrderController orderController = Get.find<OrderController>();
+class _SetOrderEstTimeComponentState extends State<SetOrderEstTimeComponent> {
+  LaundryOrderController orderController = Get.find<LaundryOrderController>();
   bool isClicked = false;
   @override
   Widget build(BuildContext context) {

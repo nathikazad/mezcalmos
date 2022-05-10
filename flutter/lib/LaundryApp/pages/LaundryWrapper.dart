@@ -8,11 +8,12 @@ import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Operators/LaundryOperator.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -47,7 +48,8 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
     _notificationsStreamListener = initializeShowNotificationsListener();
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
-      deliveryDriverNotificationsNode(userId),
+      operatorNotificationsNode(
+          uid: userId, operatorType: OperatorType.Laundry),
       laundryNotificationHandler,
     );
     super.initState();

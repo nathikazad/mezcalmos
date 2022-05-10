@@ -128,12 +128,12 @@ class OrderController extends GetxController {
     });
   }
 
-  bool hasNewMessageNotification(String orderId) {
+  bool hasNewMessageNotification(String chatId) {
     return _foregroundNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.chatId == chatId)
         .isNotEmpty;
   }
 
@@ -141,8 +141,9 @@ class OrderController extends GetxController {
     _foregroundNotificationsController
         .notifications()
         .where((Notification notification) =>
-            notification.notificationType ==
-                NotificationType.OrderStatusChange &&
+            (notification.notificationType ==
+                    NotificationType.OrderStatusChange ||
+                notification.notificationType == NotificationType.NewMessage) &&
             notification.orderId! == orderId)
         .forEach((Notification notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
@@ -151,7 +152,7 @@ class OrderController extends GetxController {
 
   Future<ServerResponse> setAsReadyForDelivery(String orderId) async {
     mezDbgPrint("Seeting order ready for delivery");
-    return _callLaundryCloudFunction("readyForDeliveryOrderTwo", orderId,
+    return _callLaundryCloudFunction("readyForDeliveryOrder", orderId,
         optionalParams: <String, dynamic>{"fromLaundryOperator": true});
   }
 

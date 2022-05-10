@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpDriverCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderNote.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderStatusCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderSummaryCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCategoryComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/OrderEstimatedTimeComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['LaundryOpOrderView'];
@@ -32,22 +33,39 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   @override
   void initState() {
     final String orderId = Get.parameters['orderId']!;
-    mezDbgPrint("orderId ========================> $orderId");
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId);
-    if (order.value == null) {
-      Get.back<void>();
+    order.value = controller.getOrder(orderId) as LaundryOrder;
+    _orderListener = controller
+        .getOrderStream(orderId)
+        .listen((LaundryOrder? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent;
+
+        order.refresh();
+      }
+    });
+
+    waitForOrderIfNotLoaded().then((void value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<Null>.delayed(Duration.zero, () {
+          Get.back<Null>();
+          MezSnackbar("Error", "Order does not exist");
+        });
+      }
+    });
+  }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
     } else {
-      _orderListener =
-          controller.getOrderStream(orderId).listen((LaundryOrder? newOrder) {
-        if (newOrder != null) {
-          order.value = controller.getOrder(orderId);
-        } else {
-          Get.back<void>();
-        }
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
       });
+      return completer.future;
     }
-    super.initState();
   }
 
   @override
@@ -77,6 +95,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               OrderEstimatedTimeComponent(order: order.value!),
               // order Customer
               _orderCustomerCard(),
+              LaundryOpOrderDriverCard(order: order.value!),
 
               // order notes
               LaundryOpOrderNote(order: order.value!),
@@ -150,7 +169,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
 
   Widget _orderCustomerCard() {
     return Container(
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -174,7 +193,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                   Text(
                     order.value!.customer.name,
                     style: Get.theme.textTheme.bodyText1,
-                  )
+                  ),
                 ],
               ),
             ),

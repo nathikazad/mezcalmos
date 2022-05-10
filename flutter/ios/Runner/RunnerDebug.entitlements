@@ -10,7 +10,7 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:mezstaging.page.link</string>
+		<string>applinks:mezprovs.page.link</string>
 		<string>applinks:mezprovs.page.link</string>
 	</array>
 </dict>

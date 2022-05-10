@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class LaundryPricingCompnent extends StatelessWidget {
@@ -25,69 +27,24 @@ class LaundryPricingCompnent extends StatelessWidget {
               _i18n()['laundryPricing'],
               style: Theme.of(context).textTheme.headline3,
             ),
-            const Divider(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  _i18n()['fixedRate'],
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                // TODO: show cost by order type
-                Text(
-                  "${order.costsByType} \$ / kg",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
+            Divider(
+              height: 15,
             ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "${_i18n()["minimumCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  "50 \$",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
+            ListView.separated(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: order.costsByType?.lineItems.length ?? 0,
+              itemBuilder: (BuildContext context, int index) {
+                return _costItemCard(order.costsByType!.lineItems[index]);
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider();
+              },
             ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  _i18n()['orderWeight'],
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  (order.weight != null)
-                      ? order.weight.toString() + ' kg'
-                      : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "${_i18n()["totalCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  (order.weight != null) ? '${order.cost - 50} \$' : '-',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            if (order.weight == null)
+            if (order.costsByType?.lineItems.isEmpty ?? true)
               Column(
-                children: <Widget>[
-                  const Divider(height: 25),
+                children: [
                   Row(
                     children: <Widget>[
                       const Icon(
@@ -109,4 +66,39 @@ class LaundryPricingCompnent extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _costItemCard(LaundryOrderCostLineItem item) {
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
+  return Container(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              item.name[userLanguage]!,
+              style: Get.textTheme.bodyText1,
+            ),
+            Text(" \$${item.cost} /KG"),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Weight : ${item.weight} KG",
+              style: Get.textTheme.bodyText2,
+            ),
+            Text(
+              "Total : \$${item.weighedCost}",
+              style: Get.textTheme.bodyText1!.copyWith(color: keyAppColor),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
 }

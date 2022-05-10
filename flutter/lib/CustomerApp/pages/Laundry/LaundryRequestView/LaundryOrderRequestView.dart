@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
@@ -52,61 +53,112 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
 
   @override
   void initState() {
-    selectedLaundry = Get.arguments['laundry'];
+    // TODO: implement initState
+    selectedLaundry = Get.arguments;
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomerAppBar(autoBack: true),
-      bottomNavigationBar: bottomButton(context),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(height: 10),
-              Container(
-                margin: const EdgeInsets.all(8),
-                child: Text(
-                  '${_i18n()['howItWorks']}',
-                  style: Theme.of(context).textTheme.headline3,
+        appBar: CustomerAppBar(autoBack: true),
+        //  bottomNavigationBar: bottomButton(context),
+        body: Column(children: <Widget>[
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      child: Text(
+                        '${_i18n()['howItWorks']}',
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    LaundryStepsComponent(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      child: Text(
+                        '${_i18n()["deliveryLocation"]} :',
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    Obx(
+                      () => Card(
+                        child: authController.user != null
+                            ? DropDownLocationList(
+                                passedInLocation: customerLoc,
+                                onValueChangeCallback: ({Location? location}) {
+                                  setState(() {
+                                    customerLoc = location;
+                                  });
+                                },
+                              )
+                            : pickFromMapComponent(context),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    if (selectedLaundry != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            child: Text(
+                              "Laundry : ",
+                              style: Get.textTheme.headline3,
+                            ),
+                          ),
+                          Card(
+                            child: Container(
+                              margin: EdgeInsets.all(5),
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        selectedLaundry!.info.image),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    selectedLaundry!.info.name,
+                                    style: Get.textTheme.bodyText1,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    _orderNoteComponent(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    orderSummaryCard(context)
+                  ],
                 ),
               ),
-              LaundryStepsComponent(),
-              const SizedBox(height: 20),
-              Container(
-                margin: const EdgeInsets.all(8),
-                child: Text(
-                  '${_i18n()["deliveryLocation"]} :',
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-              ),
-              Obx(
-                () => Card(
-                  child: authController.user != null
-                      ? DropDownLocationList(
-                          passedInLocation: customerLoc,
-                          onValueChangeCallback: ({Location? location}) {
-                            setState(() {
-                              customerLoc = location;
-                            });
-                          },
-                        )
-                      : pickFromMapComponent(context),
-                ),
-              ),
-              const SizedBox(height: 10),
-              _orderNoteComponent(),
-              const SizedBox(height: 20),
-              orderSummaryCard(context),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+          bottomButton(context)
+        ]));
   }
 
   Widget _orderNoteComponent() {
