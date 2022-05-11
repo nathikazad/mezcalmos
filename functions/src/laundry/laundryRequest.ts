@@ -91,9 +91,11 @@ export = functions.https.onCall(async (data, context) => {
     })
 
     laundryNodes.laundryOperators(data.laundryId).once('value').then((snapshot) => {
-      let laundryOperators: Record<string, boolean> = snapshot.val();
-      chatController.addParticipantsToChat(Object.keys(laundryOperators), chat, orderId, ParticipantType.LaundryOperator)
-      notifyParticipants(Object.keys(laundryOperators), orderId, ParticipantType.LaundryOperator)
+      if (snapshot.val() != null) {
+        let laundryOperators: Record<string, boolean> = snapshot.val();
+        chatController.addParticipantsToChat(Object.keys(laundryOperators), chat, orderId, ParticipantType.LaundryOperator)
+        notifyParticipants(Object.keys(laundryOperators), orderId, ParticipantType.LaundryOperator)
+      }
     })
 
     return {
