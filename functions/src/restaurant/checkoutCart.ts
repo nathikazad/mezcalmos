@@ -6,7 +6,7 @@
 import * as functions from "firebase-functions";
 import { Cart } from '../shared/models/Services/Restaurant/Cart';
 import { constructRestaurantOrder, NewRestaurantOrderNotification, RestaurantOrder } from '../shared/models/Services/Restaurant/RestaurantOrder';
-import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Generic/Chat";
+import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
 import { OrderType } from "../shared/models/Generic/Order";
 import { Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
 import { UserInfo } from "../shared/models/Generic/User";
@@ -81,29 +81,29 @@ export = functions.https.onCall(async (data, context) => {
     restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
     rootNodes.inProcessOrders(OrderType.Restaurant, orderId).set(order);
 
-    let chat: Chat = await buildChatForOrder(
+    let chat: ChatObject = await buildChatForOrder(
       orderId,
-      OrderType.Restaurant,
-      customerId,
+      OrderType.Restaurant)
+    chat.addParticipant(
       {
         ...customerInfo,
         particpantType: ParticipantType.Customer
-      },
-      cart.serviceProviderId,
+      });
+    chat.addParticipant(
       {
         ...restaurant.info,
         particpantType: ParticipantType.Restaurant
-      },
-    );
-
-    await chatController.setChat(orderId, chat);
+      });
 
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
+      addDeliveryAdminsToChat(chat, deliveryAdmins)
       notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
     })
-    setTimeout(() => customerNodes.cart(customerId).remove(), 1000);
+    setTimeout(() => customerNodes.cart(customerId).remove(), 100);
+
+    await chatController.setChat(orderId, chat.chatData);
+
     return {
       status: ServerResponseStatus.Success,
       orderId: orderId

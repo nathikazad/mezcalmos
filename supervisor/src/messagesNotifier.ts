@@ -1,4 +1,4 @@
-import { Chat, MessageNotificationForQueue, ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
+import { ChatData, MessageNotificationForQueue, Participant, ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
 import { getChat, setChatMessageNotifiedAsTrue } from "../../functions/src/shared/controllers/chatController";
 import * as notifyUser from "../../functions/src/utilities/senders/notifyUser";
 import { chatUrl, orderUrl } from "../../functions/src/utilities/senders/appRoutes";
@@ -27,43 +27,40 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
   // TO BE REMOVED, added for backwards compatibility in cases where message does not have chatId field
   notificationForQueue.chatId = notificationForQueue.chatId ?? notificationForQueue.orderId;
   // TILL HERE
-  let chat: Chat = await getChat(notificationForQueue.chatId);
-  if (chat.messages && chat.messages![notificationForQueue.messageId].notified) {
+  let chatData: ChatData = (await getChat(notificationForQueue.chatId)).chatData;
+
+  if (chatData.messages && chatData.messages![notificationForQueue.messageId].notified) {
     return
   }
-  let senderInfo = chat.participants[notificationForQueue.userId]
-  senderInfo.id = notificationForQueue.userId
-  let particpantType: ParticipantType = chat.participants[notificationForQueue.userId].particpantType;
-  delete chat.participants[notificationForQueue.userId]
-  for (let participantId in chat.participants) {
-    let participant = chat.participants[participantId]
-    if (participant.particpantType == particpantType)
-      continue
-    let linkUrl = chatUrl(notificationForQueue.chatId, chat.orderId, chat.orderType, participant.particpantType);
-    let notification: Notification = {
-      foreground: <NewMessageNotification>{
-        chatId: notificationForQueue.chatId,
-        sender: senderInfo,
-        message: notificationForQueue.message,
-        orderId: chat.orderId ?? null,
-        time: notificationForQueue.timestamp,
-        notificationType: NotificationType.NewMessage,
-        notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
-        linkUrl: linkUrl
-      },
-      background: {
-        en: {
-          title: `New message from ${senderInfo.name}`,
-          body: notificationForQueue.message
+  let senderInfo: Participant = chatData.participants[notificationForQueue.participantType]![notificationForQueue.userId]
+  delete chatData.participants[notificationForQueue.participantType];
+  for (let participantType in chatData.participants) {
+    for (let participantId in chatData.participants[participantType as ParticipantType]) {
+      let participant = chatData.participants[participantType as ParticipantType]![participantId]
+      let notification: Notification = {
+        foreground: <NewMessageNotification>{
+          chatId: notificationForQueue.chatId,
+          sender: senderInfo,
+          message: notificationForQueue.message,
+          orderId: notificationForQueue.orderId ?? null,
+          time: notificationForQueue.timestamp,
+          notificationType: NotificationType.NewMessage,
+          notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
         },
-        es: {
-          title: `Nueva mensaje de ${senderInfo.name}`,
-          body: notificationForQueue.message
-        }
-      },
-      linkUrl: linkUrl
+        background: {
+          en: {
+            title: `New message from ${senderInfo.name}`,
+            body: notificationForQueue.message
+          },
+          es: {
+            title: `Nueva mensaje de ${senderInfo.name}`,
+            body: notificationForQueue.message
+          }
+        },
+        linkUrl: chatUrl(notificationForQueue.chatId)
+      }
+      notifyUser.pushNotification(participantId, notification, participant.particpantType);
     }
-    notifyUser.pushNotification(participantId, notification, participant.particpantType);
   }
   setChatMessageNotifiedAsTrue(notificationForQueue.chatId, notificationForQueue.messageId);
 }

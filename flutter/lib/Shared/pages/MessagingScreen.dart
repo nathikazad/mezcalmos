@@ -178,15 +178,18 @@ class _MessagingScreenState extends State<MessagingScreen> {
     });
     void _fillCallBack() {
       chatLines.assignAll(controller.chat.value!.messages.map(
-        (Message e) {
+        (Message message) {
           // mezDbgPrint(
           //     " \t\t ${controller.value!.participants[e.userId]?.image}");
           return singleChatComponent(
             // parentContext: context,
-            message: e.message,
-            time: intl.DateFormat('hh:mm a').format(e.timeStamp!.toLocal()),
-            isMe: e.userId == _authController.user!.id,
-            userImage: controller.chat.value!.participants[e.userId]?.image,
+            message: message.message,
+            time:
+                intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
+            isMe: message.userId == _authController.user!.id,
+            userImage: controller.chat.value!
+                .getParticipant(message.participantType, message.userId)
+                ?.image,
           );
         },
       ));

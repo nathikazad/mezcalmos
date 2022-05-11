@@ -1,20 +1,21 @@
 import { chatMessageNotifiedNode, chatNode } from "../databaseNodes/chat";
-import { Chat } from "../models/Generic/Chat";
+import { ChatData, ChatObject } from "../models/Generic/Chat";
 
-export async function pushChat(chat?: Chat): Promise<string> {
+export async function pushChat(chat?: ChatData): Promise<string> {
   let chatId: string = (await chatNode().push(chat)).key!;
   return chatId;
 }
 
-export async function getChat(chatId: string): Promise<Chat> {
-  return (await chatNode(chatId).once('value')).val();
+export async function getChat(chatId: string): Promise<ChatObject> {
+  let chatData: ChatData = (await chatNode(chatId).once('value')).val();
+  return new ChatObject(chatData);
 }
 
-export async function setChat(chatId: string, chat: Chat) {
+export async function setChat(chatId: string, chat: ChatData) {
   return (await chatNode(chatId).set(chat))
 }
 
-export async function updateChat(chatId: string, chat: Chat) {
+export async function updateChat(chatId: string, chat: ChatData) {
   return (await chatNode(chatId).update(chat))
 }
 

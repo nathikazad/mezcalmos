@@ -51,7 +51,7 @@ LanguageMap convertToLanguageMap(Map data) {
 extension LanguageMapToFirebaseFormat on LanguageMap {
   Map<String, String> toFirebaseFormat() {
     Map<String, String> _tempMap = {};
-    this.keys.forEach((key) {
+    keys.forEach((key) {
       _tempMap[key.toFirebaseFormatString()] = this[key]!;
     });
     return _tempMap;

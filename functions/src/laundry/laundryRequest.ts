@@ -5,7 +5,7 @@
 
 import * as functions from "firebase-functions";
 import { constructLaundryOrder, ConstructLaundryOrderParameters, LaundryOrder, NewLaundryOrderNotification } from '../shared/models/Services/Laundry/LaundryOrder';
-import { buildChatForOrder, Chat, ParticipantType } from "../shared/models/Generic/Chat";
+import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
 import { OrderType } from "../shared/models/Generic/Order";
 import { UserInfo } from "../shared/models/Generic/User";
 import { Language, ServerResponseStatus } from "../shared/models/Generic/Generic";
@@ -17,10 +17,10 @@ import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { isSignedIn } from "../shared/helper/authorizer";
 import * as chatController from "../shared/controllers/chatController";
 import { getUserInfo } from "../shared/controllers/rootController";
-import { setChat } from "../shared/controllers/chatController";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
+import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
 
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)
@@ -61,23 +61,20 @@ export = functions.https.onCall(async (data, context) => {
     let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
     rootNodes.inProcessOrders(OrderType.Laundry, orderId).set(order);
 
-    let chat: Chat = await buildChatForOrder(
-      orderId,
-      OrderType.Laundry,
-      customerId,
-      {
-        ...customerInfo,
-        particpantType: ParticipantType.Customer
-      },
-    );
 
-    await chatController.setChat(orderId, chat);
+    let chat: ChatObject = buildChatForOrder(orderId, OrderType.Laundry);
+    chat.addParticipant({
+      ...customerInfo,
+      particpantType: ParticipantType.Customer
+    });
 
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      addDeliveryAdminsToChat(deliveryAdmins, chat, orderId)
+      addDeliveryAdminsToChat(chat, deliveryAdmins);
       notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
     })
+
+    await chatController.setChat(orderId, chat.chatData);
 
     return {
       status: ServerResponseStatus.Success,
@@ -94,22 +91,6 @@ export = functions.https.onCall(async (data, context) => {
     await customerNodes.lock(customerId).remove();
   }
 })
-
-
-async function addDeliveryAdminsToChat(
-  deliveryAdmins: Record<string, DeliveryAdmin>,
-  chat: Chat,
-  orderId: string) {
-  for (var deliveryAdminId in deliveryAdmins) {
-    var userInfo: UserInfo = await getUserInfo(deliveryAdminId);
-    chat.participants[deliveryAdminId] = {
-      ...userInfo,
-      particpantType: ParticipantType.DeliveryAdmin
-    }
-  }
-
-  setChat(orderId, chat);
-}
 
 
 async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>,

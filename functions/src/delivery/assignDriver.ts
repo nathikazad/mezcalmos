@@ -15,7 +15,8 @@ import { getInProcessOrder, getUserInfo } from "../shared/controllers/rootContro
 import { getDeliveryDriver } from "../shared/controllers/deliveryController";
 import { CancelDeliveryOrderNotification, DeliveryDriver, DeliveryDriverType, NewDeliveryOrderNotification } from "../shared/models/Drivers/DeliveryDriver";
 import { pushChat, deleteChat } from "../shared/controllers/chatController";
-import { Chat, ChatType, ParticipantType } from "../shared/models/Generic/Chat";
+import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
+import * as chatController from "../shared/controllers/chatController";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { deliveryCancelOrderMessage, deliveryNewOrderMessage } from "./bgNotificationMessages";
@@ -109,23 +110,18 @@ export = functions.https.onCall(async (data, context) => {
   deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order);
 
 
-  let chat: Chat = {
-    chatType: ChatType.Order,
-    orderType: data.orderType,
-    orderId: orderId,
-    chatId: chatId,
-    participants: {
-      [deliveryDriverId]: {
-        ...driverInfo,
-        particpantType: ParticipantType.DeliveryDriver
-      },
-    }
-  }
+  let chat: ChatObject = buildChatForOrder(chatId, data.orderType, orderId);
+  chat.addParticipant({
+    ...driverInfo,
+    particpantType: ParticipantType.DeliveryDriver
+  });
 
   deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
     let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    addDeliveryAdminsToChat(deliveryAdmins, chat, chatId)
+    addDeliveryAdminsToChat(chat, deliveryAdmins)
   })
+
+  await chatController.setChat(chatId, chat.chatData);
 
   let notification: Notification = {
     foreground: <NewDeliveryOrderNotification>{
