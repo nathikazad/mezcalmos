@@ -43,8 +43,7 @@ extension AppTypeToParticipantType on AppType {
 
 extension ParseStringToParticipantType on String {
   ParticipantType toParticipantType() {
-    return ParticipantType.values
-        .firstWhere(
+    return ParticipantType.values.firstWhere(
         (ParticipantType participantType) =>
             participantType.toFirebaseFormattedString() == this);
   }
@@ -94,9 +93,8 @@ class Chat {
   Participant? getParticipant(
           ParticipantType participantType, String participantId) =>
       _participants[participantType]?[participantId];
-  
-  Map<String, Participant>? getParticipants(
-          ParticipantType participantType) =>
+
+  Map<String, Participant>? getParticipants(ParticipantType participantType) =>
       _participants[participantType];
 
   Chat({
@@ -113,11 +111,11 @@ class Chat {
         orderType: chatData['orderType']?.toString().toOrderType() ?? null,
         orderId: chatData['orderId'] ?? null);
     chatData['participants']
-        ?.forEach((String participantTypeAsString, dynamic map) {
+        ?.forEach((dynamic participantTypeAsString, dynamic map) {
       final ParticipantType participantType =
           participantTypeAsString.toString().toParticipantType();
-      chatData['participants'][participantType]
-          .forEach((String participantId, dynamic participantData) {
+      chatData['participants'][participantTypeAsString]
+          .forEach((dynamic participantId, dynamic participantData) {
         if (chat._participants[participantType] == null)
           chat._participants[participantType] = <String, Participant>{};
         chat._participants[participantType]![participantId] = Participant(
@@ -129,13 +127,14 @@ class Chat {
     });
 
     // ignore: avoid_annotating_with_dynamic
-    chatData['messages']?.forEach((String messageId, dynamic messageData) {
+    chatData['messages']?.forEach((dynamic messageId, dynamic messageData) {
       try {
         chat._messages.add(Message(
           message: messageData['message'],
           timestamp: DateTime.parse(messageData['timestamp']),
           userId: messageData['userId'],
-          participantType: messageData['participantType'],
+          participantType:
+              messageData['participantType'].toString().toParticipantType(),
         ));
       } catch (e) {
         // _messages.add(Message(m['message'], null, m['userId']));

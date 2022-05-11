@@ -61,6 +61,9 @@ class MessageController extends GetxController {
     messageNode.set(<String, dynamic>{
       "message": message,
       "userId": _authController.user!.id,
+      "participantType": _settingsController.appType
+          .toParticipantTypefromAppType()
+          .toFirebaseFormattedString(),
       "timestamp": DateTime.now().toUtc().toString(),
       "chatId": chatId,
       "orderId": orderId

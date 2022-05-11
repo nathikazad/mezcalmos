@@ -95,15 +95,12 @@ export = functions.https.onCall(async (data, context) => {
         particpantType: ParticipantType.Restaurant
       });
 
-    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
-      let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      addDeliveryAdminsToChat(chat, deliveryAdmins)
-      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
-    })
-    setTimeout(() => customerNodes.cart(customerId).remove(), 100);
-
+    let deliveryAdmins: Record<string, DeliveryAdmin> = (await deliveryAdminNodes.deliveryAdmins().once('value')).val()
+    await addDeliveryAdminsToChat(chat, deliveryAdmins)
+    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
     await chatController.setChat(orderId, chat.chatData);
 
+    setTimeout(() => customerNodes.cart(customerId).remove(), 100);
     return {
       status: ServerResponseStatus.Success,
       orderId: orderId

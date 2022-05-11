@@ -66,12 +66,9 @@ export = functions.https.onCall(async (data, context) => {
       particpantType: ParticipantType.Customer
     })
 
-    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
-      let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      addDeliveryAdminsToChat(chat, deliveryAdmins)
-      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
-    })
-
+    let deliveryAdmins: Record<string, DeliveryAdmin> = (await deliveryAdminNodes.deliveryAdmins().once('value')).val()
+    await addDeliveryAdminsToChat(chat, deliveryAdmins)
+    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
     await chatController.setChat(orderId, chat.chatData);
 
     return {

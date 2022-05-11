@@ -1,4 +1,4 @@
-import { ChatData, MessageNotificationForQueue, Participant, ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
+import { ChatData, MessageNotificationForQueue, nonNotifiableParticipants, Participant, ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
 import { getChat, setChatMessageNotifiedAsTrue } from "../../functions/src/shared/controllers/chatController";
 import * as notifyUser from "../../functions/src/utilities/senders/notifyUser";
 import { chatUrl, orderUrl } from "../../functions/src/utilities/senders/appRoutes";
@@ -34,6 +34,9 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
   }
   let senderInfo: Participant = chatData.participants[notificationForQueue.participantType]![notificationForQueue.userId]
   delete chatData.participants[notificationForQueue.participantType];
+  for (let nonNotifiableParticipant in nonNotifiableParticipants) {
+    delete chatData.participants[nonNotifiableParticipants[nonNotifiableParticipant]];
+  }
   for (let participantType in chatData.participants) {
     for (let participantId in chatData.participants[participantType as ParticipantType]) {
       let participant = chatData.participants[participantType as ParticipantType]![participantId]

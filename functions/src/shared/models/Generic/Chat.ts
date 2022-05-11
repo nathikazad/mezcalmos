@@ -42,6 +42,8 @@ export enum ParticipantType {
   DeliveryDriver = "deliveryDriver"
 }
 
+export const nonNotifiableParticipants: Array<ParticipantType> = [ParticipantType.Restaurant];
+
 
 export interface Participant extends UserInfo {
   particpantType: ParticipantType
