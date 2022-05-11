@@ -50,7 +50,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     chatId = Get.parameters['chatId']!;
     orderLink = Get.parameters['orderLink'];
-    orderId = Get.parameters['orderLink'];
+    orderId = Get.parameters['orderId'];
     if (Get.parameters['recipientId'] != null)
       recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {

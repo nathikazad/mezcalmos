@@ -78,7 +78,7 @@ export = functions.https.onCall(async (data, context) => {
 
     chat.addParticipant({
       ...laundry.info,
-      particpantType: ParticipantType.LaundryOperator
+      particpantType: ParticipantType.Laundry
     });
 
     await chatController.setChat(orderId, chat.chatData);

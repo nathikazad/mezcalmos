@@ -35,6 +35,8 @@ extension AppTypeToParticipantType on AppType {
         return ParticipantType.DeliveryDriver;
       case AppType.DeliveryAdminApp:
         return ParticipantType.DeliveryAdmin;
+      case AppType.LaundryApp:
+        return ParticipantType.LaundryOperator;
       default:
         throw Exception(
             "App type $this cannot be converted to participantType");
