@@ -178,7 +178,7 @@
     },
     "chat": {
       "$orderId": {
-        ".read": "root.child('chat/' + $orderId + '/participants/' + auth.uid).exists() || root.child('taxiAdmins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
+        ".read": "root.child('chat/' + $orderId + '/authorizedUsers/' + auth.uid).exists()",
         "messages": {
           "$messageId": {
             ".write": "root.child('chat/' + $orderId + '/authorizedUsers/' + auth.uid).exists()",
