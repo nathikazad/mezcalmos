@@ -40,6 +40,8 @@ class MessageController extends GetxController {
         .onValue
         .listen((Event event) {
       if (event.snapshot.value != null) {
+        mezDbgPrint(
+            "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
         // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
         chat.value = Chat.fromJson(chatId, event.snapshot.value);
         if (onValueCallBack != null) onValueCallBack();
@@ -96,7 +98,7 @@ class MessageController extends GetxController {
     if (chat.value == null) return null;
     if (recipientId != null)
       return chat.value!.getParticipant(recipientType, recipientId);
-    Map<String, Participant>? participants =
+    final Map<String, Participant>? participants =
         chat.value!.getParticipants(recipientType);
     if (participants != null && participants.keys.length > 0) {
       return participants[participants.keys.toList()[0]];

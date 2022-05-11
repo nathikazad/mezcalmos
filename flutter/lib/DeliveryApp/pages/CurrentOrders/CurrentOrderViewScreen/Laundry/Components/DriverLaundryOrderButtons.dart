@@ -27,15 +27,85 @@ class DriverLaundryBottomButtons extends StatelessWidget {
   Widget getBottomComponent({required TextTheme textTheme}) {
     if (order.inProcess() && order.status != LaundryOrderStatus.AtLaundry) {
       return LaundryControllButtons(order: order);
-    } else if (order.status == LaundryOrderStatus.Delivered ||
-        order.status == LaundryOrderStatus.AtLaundry) {
+    } else if (order.status == LaundryOrderStatus.Delivered) {
       return _orderDeliveredBottomComponent(textTheme);
+    } else if (order.status == LaundryOrderStatus.AtLaundry) {
+      return _orderAtLaundry();
     } else if (order.status == LaundryOrderStatus.CancelledByAdmin ||
         order.status == LaundryOrderStatus.CancelledByCustomer) {
       return _orderBottomCanceledComponent(textTheme);
     } else {
       return Container(
         height: 1,
+      );
+    }
+  }
+
+  // Widget At laundry ......-------->>>>>>>>>>>
+  Widget _orderAtLaundry() {
+    if (order.dropoffDriver != null) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        color: Colors.white,
+        child: Row(
+          children: [
+            Icon(
+              Icons.timer,
+              color: Colors.grey.shade600,
+              size: 30.sp,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Flexible(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Waiting for order",
+                  style: Get.textTheme.bodyText1,
+                ),
+                Text(
+                  "Order is not ready for delivery yet .",
+                  style: Get.textTheme.subtitle1,
+                )
+              ],
+            ))
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        color: Colors.white,
+        child: Row(
+          children: [
+            Icon(
+              Icons.check_circle,
+              color: Colors.green,
+              size: 30.sp,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Flexible(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${_i18n()["orderStatus"]["delivered"]}",
+                  style: Get.textTheme.bodyText1,
+                ),
+                Text(
+                  DateFormat('dd MMM yy h:m').format(order.orderTime),
+                  style: Get.textTheme.subtitle1,
+                )
+              ],
+            ))
+          ],
+        ),
       );
     }
   }

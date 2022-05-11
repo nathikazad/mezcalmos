@@ -67,28 +67,18 @@ class LaundryOpAuthController extends GetxController {
             operatorAuthNode(operatorType: OperatorType.Laundry, uid: user.uid))
         .onValue
         .listen((Event event) async {
-      mezDbgPrint(
-          "[++++++ = === ==] LaundryAuthController$hashCode: _LaundryOperatorStateNodeListener event => ${event.snapshot.value}");
       if (event.snapshot.value.toString() == _previousStateValue) {
-        mezDbgPrint(
-            'LaundryAuthController:: same state event fired again, skipping it');
         return;
       }
       _previousStateValue = event.snapshot.value.toString();
 
       if (event.snapshot.value != null) {
-        mezDbgPrint(event.snapshot.value);
         operator.value =
             LaundryOperator.fromData(user.uid, event.snapshot.value);
-
-        mezDbgPrint(
-            "/////////////////////////////////////////////${operator.value?.toJson()}////////////////////////////////////////////////////");
 
         saveAppVersionIfNecessary();
         unawaited(saveNotificationToken());
         if (laundryId != operator.value!.state.laundryId) {
-          mezDbgPrint(
-              ">>>>>>>>>>>>>>>>>>>>>>Start getting laundry ...... $laundryId");
           // init controllers with new id
           laundryId = operator.value!.state.laundryId;
           await _orderController.init(laundryId!);
@@ -99,8 +89,6 @@ class LaundryOpAuthController extends GetxController {
   }
 
   Future<void> saveNotificationToken() async {
-    mezDbgPrint(
-        "LaundryAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
     if (deviceNotificationToken != null) {

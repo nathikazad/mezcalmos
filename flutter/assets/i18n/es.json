@@ -575,11 +575,11 @@
                 "UserProfileScreen": {
                     "mustSetUserNameError": "Por favor, ponga su primer nombre.",
                     "mustSetUserImgError": "Por favor, sube una imagen.",
-                    "nameMustBeLettersOnly" : "Tu primer nombre solo debe tener letras.",
+                    "nameMustBeLettersOnly": "Tu primer nombre solo debe tener letras.",
                     "nameMustBeFourLettersOrMore": "Tu nombre debe tener al menos 4 letras."
                 },
                 "UserProfileWidgets": {
-                    "namePlaceHolder" : "Ponga su primer nombre",
+                    "namePlaceHolder": "Ponga su primer nombre",
                     "uploadPic": "Subir imagen",
                     "title": " Información del usuario ",
                     "cancel": "Cancelar",
@@ -677,11 +677,11 @@
             "MezDialogs": {
                 "yes": "Si",
                 "no": "No",
-                "mezUpdaterDialog" :{
-                    "updateAvailable" : "Actualización disponible!",
-                    "updatePlease" : "¡Siempre se recomienda instalar nuevas actualizaciones para obtener todas las nuevas funciones!",
-                    "doNotUpdate" : "No, gracias",
-                    "update" : "ACTUALIZAR"
+                "mezUpdaterDialog": {
+                    "updateAvailable": "Actualización disponible!",
+                    "updatePlease": "¡Siempre se recomienda instalar nuevas actualizaciones para obtener todas las nuevas funciones!",
+                    "doNotUpdate": "No, gracias",
+                    "update": "ACTUALIZAR"
 
                 }
             },
@@ -1269,7 +1269,7 @@
                     "LaundryOpOrderNote": {
                         "notes": "Notas"
                     },
-                    " LaundryOpOrderSummaryCard": {
+                    "LaundryOpOrderSummaryCard": {
                         "orderSummary": "Resumen de la orden",
                         "orderCost": "Costo de la orden",
                         "deliveryCost": "Costo de envío",
@@ -1287,6 +1287,13 @@
                     "orderDate": "Fecha de orden"
                 }
             }
+        },
+        "notificationHandler": {
+            "newOrderTitle": "Nuevo orden",
+            "newOrderBody": "Tienes un nuevo pedido",
+            "canceledOrderTitle": "Orden cancelada",
+            "canceledOrderBody": "Su pedido ha sido cancelado"
+
         }
     }
 

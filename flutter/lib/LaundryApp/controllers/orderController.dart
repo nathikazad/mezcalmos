@@ -144,7 +144,7 @@ class OrderController extends GetxController {
             (notification.notificationType ==
                     NotificationType.OrderStatusChange ||
                 notification.notificationType == NotificationType.NewMessage) &&
-            notification.orderId! == orderId)
+            notification.orderId == orderId)
         .forEach((Notification notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
     });

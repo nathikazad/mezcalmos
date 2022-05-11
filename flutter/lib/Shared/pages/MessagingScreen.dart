@@ -48,8 +48,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
       Get.snackbar("Error", "Does not have a valid chatId!");
       Get.back<void>();
     }
-    mezDbgPrint(
-        "===========>>>>> SENDER TYPE / ${Get.parameters["senderType"].toString()} <+++++++++++++++++++++++++");
     chatId = Get.parameters['chatId']!;
     orderLink = Get.parameters['orderLink'];
     orderId = Get.parameters['orderLink'];
@@ -277,7 +275,7 @@ class SendMessageBox extends StatelessWidget {
         super(key: key);
 
   final RxString _typedMsg;
-  
+
   final TextEditingController _textEditingController;
   final MessageController controller;
   final String chatId;

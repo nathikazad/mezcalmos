@@ -3,14 +3,16 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
+    ['OrderView']['Components']['LaundryOpOrderSummaryCard'];
+
 class LaundryOpOrderSummaryCard extends StatelessWidget {
   final LaundryOrder order;
   const LaundryOpOrderSummaryCard({Key? key, required this.order})
       : super(key: key);
 
   // TODO FIX LANG
-  dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']
-      ['pages']['OrderView']['Components']['LaundryOpOrderSummaryCard'];
+
   @override
   Widget build(BuildContext context) {
     return Card(
