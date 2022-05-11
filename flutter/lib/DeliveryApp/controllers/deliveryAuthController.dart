@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class DeliveryAuthController extends GetxController {
@@ -35,7 +36,8 @@ class DeliveryAuthController extends GetxController {
   Rx<LocationData> get currentLocationRx => _currentLocation;
 
   StreamSubscription<LocationData>? _locationListener;
-  StreamSubscription? _DeliveryDriverStateNodeListener;
+  StreamSubscription<Event>? _deliveryDriverStateNodeListener;
+  StreamSubscription<MainUserInfo>? _userInfoStreamListener;
 
   bool _checkedAppVersion = false;
   String? _previousStateValue = "init";
@@ -46,7 +48,7 @@ class DeliveryAuthController extends GetxController {
     mezDbgPrint("DeliveryAuthController: init $hashCode");
     mezDbgPrint(
         "DeliveryAuthController: calling handle state change first time");
-    setupDeliveryDriver(Get.find<AuthController>().fireAuthUser!);
+    setupDeliveryDriver(_authController.fireAuthUser!);
     super.onInit();
   }
 
@@ -57,9 +59,9 @@ class DeliveryAuthController extends GetxController {
 
     mezDbgPrint(
         "DeliveryAuthController: _DeliveryDriverStateNodeListener init ${deliveryDriverStateNode(user.uid)}");
-    await _DeliveryDriverStateNodeListener?.cancel();
-    _DeliveryDriverStateNodeListener = null;
-    _DeliveryDriverStateNodeListener = _databaseHelper.firebaseDatabase
+    await _deliveryDriverStateNodeListener?.cancel();
+    _deliveryDriverStateNodeListener = null;
+    _deliveryDriverStateNodeListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(deliveryDriverStateNode(user.uid))
         .onValue
@@ -96,6 +98,15 @@ class DeliveryAuthController extends GetxController {
     });
     await _locationListener?.cancel();
     _locationListener = await _listenForLocation();
+
+    await _userInfoStreamListener?.cancel();
+    _authController.userInfoStream.listen((MainUserInfo? userInfo) {
+      if (userInfo != null)
+        _databaseHelper.firebaseDatabase
+            .reference()
+            .child(deliveryDriverInfoNode(user.uid))
+            .set(userInfo.toFirebaseFormatJson());
+    });
   }
 
   void saveNotificationToken() async {
@@ -192,8 +203,8 @@ class DeliveryAuthController extends GetxController {
     mezDbgPrint(
         "[+] DeliveryAuthController::dispose ---------> Was invoked ! $hashCode");
 
-    _DeliveryDriverStateNodeListener?.cancel();
-    _DeliveryDriverStateNodeListener = null;
+    _deliveryDriverStateNodeListener?.cancel();
+    _deliveryDriverStateNodeListener = null;
 
     _locationListener?.cancel();
     _locationListener = null;

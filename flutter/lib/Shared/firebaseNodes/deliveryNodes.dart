@@ -10,6 +10,10 @@ String deliveryDriverStateNode(String uid) {
   return 'deliveryDrivers/info/$uid/state';
 }
 
+String deliveryDriverInfoNode(String uid) {
+  return 'deliveryDrivers/info/$uid/info';
+}
+
 String deliveryDriverAppVersionNode(String uid) {
   return deliveryDriverAuthNode(uid) + '/versionNumber';
 }
