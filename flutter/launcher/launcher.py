@@ -380,12 +380,10 @@ class Config:
         + --build=<type> : to order the launcher to build where type is [apk, appbundle, ios] , requires app=<app> and env=<env>.
         + --lan : in case you want to launch to another device connected to the same network.
         + --preview : Passing this along , will result on launching the app in the device-preview for testing an try many resolutions.
-        + --set-version=<version> : Used to set the project's version to a specific version , this will set the version and quit.
+        + version=<version> : Used to set the project's version to a specific version.
        	+ --fix-pods : Special cmd for MAC M1 , meant for fixing pod problems on IOS.
-	+ help : show this help menu
+	    + help : show this help menu
      
-        === only in build ===
-        + version=<version> : example : 1.0.15+11
 
         PS : if an Error happend Send DW_EXIT_REASON.<NAME>.
         """)
@@ -611,10 +609,11 @@ class Config:
             exit(DW_EXIT_REASONS.RESOLVING_LAN_IP_FAILED)
 
     def __checker__(self , args) -> None:
-        _ = self.__get_arg_value__('--set-version=')
+        
+        _ = self.__get_arg_value__('version=')
         if _:
             self.__patch_version__(_)
-            exit(DW_EXIT_REASONS.NORMAL)
+            #exit(DW_EXIT_REASONS.NORMAL)
                 # Cmd to fix Pods Problems
         _ = self.__get_arg_value__('--fix-pods')
         if _:
@@ -693,7 +692,7 @@ class Config:
             exit(DW_EXIT_REASONS.WRONG_ENV_USED)
 
         self.user_args['lmode'] = self.__get_arg_value__('env=')
-               
+
         # THIS IS LAUNCHER BASED BUILD
         # TODO : Implement that using class:Builder
         _ = self.__get_arg_value__('--build=')
@@ -702,13 +701,22 @@ class Config:
                 PRINTLN(f'[!] --build={_} : Error Platform unsupported yet!')
                 exit(DW_EXIT_REASONS.PLATFORM_NOT_SUPPORTED_YET)
 
-            v_ = self.__get_arg_value__('version=')
-            if v_:
-                self.__patch_version__(v_)
+            # v_ = self.__get_arg_value__('version=')
+            # if v_:
+            #     self.__patch_version__(v_)
 
             self.user_args['build'] = _
 
-   
+        # check if same action as last one :
+        # from hashlib import md5
+        # currentBuild = md5(''.join(args[1:]).encode('utf-8')).hexdigest()
+        # lastBuild  = open('.checksum', 'r+').read().strip()
+        # if lastBuild == currentBuild:
+        #     PRINTLN(f"[+] Same build chsum <{currentBuild}> going straight forward to launch/build.")
+        #     self.user_args['same_build'] = True
+        # else:
+        #     self.user_args['same_build'] = False
+        #     open('.checksum', 'w+').write(currentBuild)
 
 if __name__ == "__main__":
     Config(argv)

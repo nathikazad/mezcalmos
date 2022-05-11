@@ -5,7 +5,7 @@
 
 import * as functions from "firebase-functions";
 import { constructLaundryOrder, ConstructLaundryOrderParameters, LaundryOrder, NewLaundryOrderNotification } from '../shared/models/Services/Laundry/LaundryOrder';
-import {  Chat, ChatType, ParticipantType } from "../shared/models/Generic/Chat";
+import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
 import { OrderType } from "../shared/models/Generic/Order";
 import { UserInfo } from "../shared/models/Generic/User";
 import { Language, ServerResponseStatus } from "../shared/models/Generic/Generic";
@@ -69,22 +69,20 @@ export = functions.https.onCall(async (data, context) => {
     rootNodes.inProcessOrders(OrderType.Laundry, orderId).set(order);
     laundryNodes.inProcessOrders(laundry.info.id, orderId).set(order);
 
-    let chat: Chat = {
-      chatType: ChatType.Order,
-      orderType: OrderType.Laundry,
-      chatId: orderId,
-      participants: {
-        [customerId]: {
-          ...customerInfo,
-          particpantType: ParticipantType.Customer
-        },
-        [laundry.info.id]: {
-          ...laundry.info,
-          particpantType: ParticipantType.LaundryOperator
-        }
-      }
-    }
-    await chatController.setChat(orderId, chat);
+
+    let chat: ChatObject = buildChatForOrder(orderId, OrderType.Laundry);
+    chat.addParticipant({
+      ...customerInfo,
+      particpantType: ParticipantType.Customer
+    });
+
+    chat.addParticipant({
+      ...laundry.info,
+      particpantType: ParticipantType.LaundryOperator
+    });
+
+    await chatController.setChat(orderId, chat.chatData);
+
 
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();

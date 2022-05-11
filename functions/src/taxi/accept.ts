@@ -11,7 +11,7 @@ import { UserInfo } from "../shared/models/Generic/User";
 import { Taxi } from "../shared/models/Drivers/Taxi";
 import { CounterOfferStatus, TaxiInfo, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
 import * as chatController from "../shared/controllers/chatController";
-import { Chat, ParticipantType } from "../shared/models/Generic/Chat";
+import { ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
@@ -127,13 +127,13 @@ export = functions.https.onCall(async (data, context) => {
 
 
 
-    let chat: Chat = await chatController.getChat(orderId);
-    chat.participants[taxiId] = {
+    let chat: ChatObject = await chatController.getChat(orderId);
+    chat.addParticipant({
       ...driverInfo,
       particpantType: ParticipantType.Taxi
-    }
+    });
 
-    await chatController.setChat(orderId, chat);
+    await chatController.setChat(orderId, chat.chatData);
 
     // Notify customer only if driver is the one initiating the accept
     // not notifying driver because driver will get response within 30 
