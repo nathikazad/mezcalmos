@@ -1,10 +1,12 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+// ignore_for_file: constant_identifier_names
+
+import 'package:collection/collection.dart';
 
 enum AuthorizationStatus { InReview, Authorized, Unauthorized }
 
 extension ParseAuthorizationStatusToString on AuthorizationStatus {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -12,7 +14,7 @@ extension ParseAuthorizationStatusToString on AuthorizationStatus {
 extension ParseStringToAuthorizationStatus on String {
   AuthorizationStatus toAuthorizationStatus() {
     return AuthorizationStatus.values.firstWhere(
-        (e) => e.toFirebaseFormatString() == this,
+        (AuthorizationStatus e) => e.toFirebaseFormatString() == this,
         orElse: () => AuthorizationStatus.Unauthorized);
   }
 }
@@ -21,16 +23,38 @@ enum LanguageType { EN, ES }
 
 extension ParseLanugaugeTypeToString on LanguageType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
+
     return str[0].toLowerCase() + str.substring(1).toLowerCase();
+  }
+
+  String? toLanguageName() {
+    final String str = toString().split('.').last;
+    switch (str) {
+      case "EN":
+        return "English";
+      case "ES":
+        return "Spanish";
+
+      default:
+        return null;
+    }
   }
 }
 
 extension ParseStringToLanugaugeType on String {
   LanguageType toLanguageType() {
-    return LanguageType.values.firstWhere(
-        (e) => e.toFirebaseFormatString().toLowerCase() == this,
-        orElse: () => LanguageType.ES);
+    return (LanguageType.values.firstWhereOrNull(
+          (LanguageType e) => e.toFirebaseFormatString().toLowerCase() == this,
+        )) ??
+        LanguageType.ES;
+  }
+
+  LanguageType? toNullableLanguageType() {
+    return (LanguageType.values.firstWhereOrNull(
+          (LanguageType e) => e.toFirebaseFormatString().toLowerCase() == this,
+        )) ??
+        null;
   }
 }
 
@@ -50,8 +74,8 @@ LanguageMap convertToLanguageMap(Map data) {
 
 extension LanguageMapToFirebaseFormat on LanguageMap {
   Map<String, String> toFirebaseFormat() {
-    Map<String, String> _tempMap = {};
-    keys.forEach((key) {
+    final Map<String, String> _tempMap = {};
+    keys.forEach((LanguageType key) {
       _tempMap[key.toFirebaseFormatString()] = this[key]!;
     });
     return _tempMap;

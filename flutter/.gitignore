@@ -5,13 +5,13 @@
 *.jks
 key.properties
 upload_certificate.pem
-
+ 
 # flutter plugins related files
 generated_plugin_registrant.dart
-
+ 
 #.lock files
 *.lock
-
+ 
 # -- patched files and dirs
 android/app/src/debug/
 android/app/src/profile/
@@ -21,7 +21,7 @@ android/app/src/main/res/mipmap*
 assets/icons/*
 ios/Runner/Assets.xcassets/AppIcon*
 ios/Runner/Assets.xcassets/Contents.json
-
+ 
 pre-main.dart
 android/launcherPackage.properties
 android/app/src/main/res/values/launcher.xml
@@ -30,18 +30,18 @@ GoogleService-Info.plist
 ios/Runner/Info.plist
 ios/Runner.xcodeproj/project.pbxproj
 *.backup
-
+ 
 # font awesome
 font_awesome_flutter/
-
+ 
 # Files and directories created by pub
 .dart_tool/
 .packages
 build/
-
+ 
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
-
+ 
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.
 doc/api/
@@ -58,5 +58,6 @@ doc/api/
 *~
 .flutter-plugins
 .flutter-plugins-dependencies
-
+ 
 .idea/
+ 

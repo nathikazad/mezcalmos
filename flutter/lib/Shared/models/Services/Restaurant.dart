@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 class Restaurant extends Service {
   static String kNoCategoryNode = "noCategory";
@@ -12,7 +12,7 @@ class Restaurant extends Service {
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
   Restaurant(
-      {required ServiceUserInfo userInfo,
+      {required ServiceInfo userInfo,
       required this.description,
       Schedule? schedule,
       required ServiceState restaurantState})
@@ -35,7 +35,7 @@ class Restaurant extends Service {
         ? Schedule.fromData(restaurantData["details"]["schedule"])
         : null;
     final Restaurant restaurant = Restaurant(
-        userInfo: ServiceUserInfo.fromData(restaurantData["info"]),
+        userInfo: ServiceInfo.fromData(restaurantData["info"]),
         description: description ?? null,
         schedule: schedule,
         restaurantState: restaurantState);

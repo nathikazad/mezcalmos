@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
-import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { orderInProcess, LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import * as customerNodes from "../shared/databaseNodes/customer";
@@ -13,8 +13,6 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { getLaundry } from "./laundryController";
-import { Laundry } from "../shared/models/Services/Laundry/Laundry";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
 let statusArrayInSeq: Array<LaundryOrderStatus> =
@@ -44,42 +42,13 @@ function expectedPreviousStatus(status: LaundryOrderStatus): LaundryOrderStatus 
 
 async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: AuthData): Promise<ServerResponse> {
 
-  let response = await isSignedIn(auth)
-  if (response != undefined) {
-    return response;
+  let validationPass: ValidationPass = await passChecksForLaundry(data, auth);
+  if (!validationPass.ok) {
+    return validationPass.error!;
   }
 
-  response = await checkDeliveryAdmin(auth!.uid)
-  if (response != undefined) {
-    return response;
-  }
-
-  if (data.orderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected order id`,
-      errorCode: "orderIdNotGiven"
-    }
-  }
-
-  let orderId: string = data.orderId;
-  let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
-  if (order == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order does not exist`,
-      errorCode: "orderDontExist"
-    }
-  }
-
-  // TO ADD: when customers choose their laundry
-  // if (order.serviceProviderId == null) {
-  //   return {
-  //     status: ServerResponseStatus.Error,
-  //     errorMessage: `Order does not have a laundry`,
-  //     errorCode: "laundryDontExist"
-  //   }
-  // }
+  let order: LaundryOrder = validationPass.order;
+  let orderId = data.orderId;
 
   if (newStatus == LaundryOrderStatus.CancelledByAdmin) {
     if (!orderInProcess(order.status))
@@ -96,19 +65,12 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     }
   }
 
-  if (newStatus == LaundryOrderStatus.ReadyForDelivery && order.dropoffDriver == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order cannot be ready for delivery when drop off driver is null`,
-    }
-  }
-
   order.status = newStatus
   if (newStatus == LaundryOrderStatus.CancelledByAdmin)
     await finishOrder(order, orderId);
   else if (newStatus == LaundryOrderStatus.ReadyForDelivery) {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    laundryNodes.inProcessOrders(order.laundry.id).update(order);
+    laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
     await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
     deliveryDriverNodes.inProcessOrders(order.dropoffDriver!.id, orderId).update(order);
   }
@@ -142,67 +104,215 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   return { status: ServerResponseStatus.Success }
 }
 
+export const setWeight = functions.https.onCall(async (data, context) => {
 
-export const assignToLaundry = functions.https.onCall(async (data, context) => {
-
-  let response = await isSignedIn(context.auth)
-  if (response != undefined) {
-    return response;
-  }
-
-  response = await checkDeliveryAdmin(context.auth!.uid)
-  if (response != undefined) {
-    return response;
-  }
-
-  if (data.orderId == null) {
+  if (data.costsByType == null) {
     return {
       status: ServerResponseStatus.Error,
-      errorMessage: `Expected order id`,
+      errorMessage: `Expected costsByType`,
       errorCode: "orderIdNotGiven"
     }
   }
 
-  if (data.laundryId == null) {
+  let validationPass = await passChecksForLaundry(data, context.auth);
+  if (!validationPass.ok) {
+    return validationPass.error;
+  }
+
+  let order: LaundryOrder = validationPass.order;
+
+  if (order.status != LaundryOrderStatus.AtLaundry) {
+    return {
+      ok: false,
+      error: {
+      status: ServerResponseStatus.Error,
+        errorMessage: `Order weight can only be changed when status is at laundry`,
+        errorCode: "orderNotAtLaundry"
+      }
+    }
+  }
+
+  let orderId = data.orderId;
+  order.costsByType = data.costsByType;
+  order.cost = order.shippingCost + order.costsByType.weighedCost
+
+  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+  await laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
+  rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+  if (order.dropoffDriver)
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+
+  return { status: ServerResponseStatus.Success }
+});
+
+export const setEstimatedDeliveryTime = functions.https.onCall(async (data, context) => {
+
+  if (data.estimatedDeliveryTime == null) {
     return {
       status: ServerResponseStatus.Error,
-      errorMessage: `Expected laundry id`,
+      errorMessage: `Expected costsByType`,
       errorCode: "orderIdNotGiven"
+    }
+  }
+
+  let validationPass = await passChecksForLaundry(data, context.auth);
+  if (!validationPass.ok) {
+    return validationPass.error;
+  }
+
+  let order: LaundryOrder = validationPass.order;
+
+  if (order.status != LaundryOrderStatus.AtLaundry) {
+    return {
+      ok: false,
+      error: {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Order weight can only be changed when status is at laundry`,
+        errorCode: "orderNotAtLaundry"
+      }
+    }
+  }
+
+  let orderId = data.orderId;
+  order.estimatedDeliveryTime = data.estimatedDeliveryTime;
+
+  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+  await laundryNodes.inProcessOrders(order.laundry.id, orderId).update(order);
+  rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+  if (order.dropoffDriver)
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+
+  return { status: ServerResponseStatus.Success }
+});
+
+async function checkLaundryOperator(laundryId: string, operatorId: string): Promise<ServerResponse | undefined> {
+  let operator = (await laundryNodes.laundryOperators(laundryId, operatorId).once('value')).val();
+  let isOperator = operator != null && operator == true
+  if (!isOperator) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: "Only authorized laundry operators can run this operation"
+    }
+  }
+  return undefined;
+}
+
+async function passChecksForLaundry(data: any, auth?: AuthData): Promise<ValidationPass> {
+  let response = await isSignedIn(auth)
+  if (response != undefined) {
+    return {
+      ok: false,
+      error: response
+    }
+  }
+  if (data.orderId == null) {
+    return {
+      ok: false,
+      error: {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Expected order id`,
+        errorCode: "orderIdNotGiven"
+      }
     }
   }
 
   let orderId: string = data.orderId;
-  let laundryId: string = data.laundryId;
   let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
   if (order == null) {
     return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order does not exist`,
-      errorCode: "orderDontExist"
+      ok: false,
+      error: {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Order does not exist`,
+        errorCode: "orderDontExist"
+      }
     }
   }
 
-  if (order.serviceProviderId != null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order already has a laundry`,
-      errorCode: "laundryAlreadyExist"
+  if (data.fromLaundryOperator) {
+    response = await checkLaundryOperator(order.laundry.id, auth!.uid)
+    if (response != undefined) {
+      return {
+        ok: false,
+        error: response
+      };
+    }
+  } else {
+    response = await checkDeliveryAdmin(auth!.uid)
+    if (response != undefined) {
+      return {
+        ok: false,
+        error: response
+      };
     }
   }
 
-  let laundry: Laundry = await getLaundry(laundryId);
-  if (laundry == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Laundry does not exist`,
-      errorCode: "laundryDontExist"
-    }
+  return {
+    ok: true,
+    order: order
   }
+}
 
-  order.serviceProviderId = laundryId;
-  order.laundry = laundry.info;
-  laundryNodes.inProcessOrders(laundryId, orderId).set(order);
-  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-  await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-  return response
-});
+// export const assignToLaundry = functions.https.onCall(async (data, context) => {
+
+//   let response = await isSignedIn(context.auth)
+//   if (response != undefined) {
+//     return response;
+//   }
+
+//   response = await checkDeliveryAdmin(context.auth!.uid)
+//   if (response != undefined) {
+//     return response;
+//   }
+
+//   if (data.orderId == null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Expected order id`,
+//       errorCode: "orderIdNotGiven"
+//     }
+//   }
+
+//   if (data.laundryId == null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Expected laundry id`,
+//       errorCode: "orderIdNotGiven"
+//     }
+//   }
+
+//   let orderId: string = data.orderId;
+//   let laundryId: string = data.laundryId;
+//   let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
+//   if (order == null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Order does not exist`,
+//       errorCode: "orderDontExist"
+//     }
+//   }
+
+//   if (order.serviceProviderId != null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Order already has a laundry`,
+//       errorCode: "laundryAlreadyExist"
+//     }
+//   }
+
+//   let laundry: Laundry = await getLaundry(laundryId);
+//   if (laundry == null) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: `Laundry does not exist`,
+//       errorCode: "laundryDontExist"
+//     }
+//   }
+
+//   order.serviceProviderId = laundryId;
+//   order.laundry = laundry.info;
+  
+//   customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+//   await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
+//   return response
+// });

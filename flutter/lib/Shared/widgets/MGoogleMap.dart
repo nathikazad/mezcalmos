@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSmartPointer.dart';
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
+import 'package:mezcalmos/Shared/widgets/MezSmartPointer.dart';
 import 'package:sizer/sizer.dart';
 
 class MGoogleMap extends StatefulWidget {
@@ -27,6 +28,10 @@ class MGoogleMap extends StatefulWidget {
       this.notifyParentOfNewLocation,
       this.recenterBtnBottomPadding = 15,
       this.debugString,
+
+      // this.mGoogleMapController,
+
+      // this.periodicRerenderingis.debugString,
       this.rerenderDuration = const Duration(seconds: 2),
       required this.mGoogleMapController})
       : super(key: key);

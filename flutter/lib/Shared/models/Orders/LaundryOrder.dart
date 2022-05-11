@@ -1,8 +1,11 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, always_specify_types
 
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 enum LaundryOrderStatus {
@@ -42,7 +45,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   ServiceInfo? laundry;
   LaundryOrderStatus status;
   num shippingCost;
-  num costPerKilo;
+  LaundryOrderCosts? costsByType;
+  DateTime? estimatedDeliveryTime;
+  RouteInformation? routeInformation;
+
   LaundryOrder(
       {required String orderId,
       required num cost,
@@ -53,7 +59,9 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required UserInfo customer,
       required this.laundry,
       required this.shippingCost,
-      required this.costPerKilo,
+      this.costsByType,
+      this.estimatedDeliveryTime,
+      this.routeInformation,
       DeliveryDriverUserInfo? dropoffDriver,
       String? dropOffDriverChatId,
       DeliveryDriverUserInfo? pickupDriver,
@@ -84,8 +92,13 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         paymentType: data["paymentType"].toString().toPaymentType(),
         weight: data["weight"],
         shippingCost: data['shippingCost'] ?? 50,
-        costPerKilo: data['costPerKilo'] ?? 20,
         notes: data["notes"],
+        costsByType: (data["costsByType"] != null)
+            ? LaundryOrderCosts.fromData(data["costsByType"])
+            : null,
+        estimatedDeliveryTime: (data["estimatedDeliveryTime"] != null)
+            ? DateTime.parse(data["estimatedDeliveryTime"])
+            : null,
         laundry: (data["laundry"] != null)
             ? ServiceInfo.fromData(data["laundry"])
             : null,
@@ -99,6 +112,17 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             : null,
         pickupDriverChatId: data['secondaryChats']
             ?['deliveryAdminPickupDriver']);
+
+    if (data["routeInformation"] != null) {
+      laundryOrder.routeInformation = RouteInformation(
+        polyline: data["routeInformation"]["polyline"],
+        distance: RideDistance.fromJson(data["routeInformation"]["distance"]),
+        duration: RideDuration.fromJson(
+          data["routeInformation"]["duration"],
+        ),
+      );
+    }
+
     return laundryOrder;
   }
 
@@ -112,6 +136,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         "paymentType": paymentType,
         "weight": weight,
         "notes": notes,
+        "costsByType": costsByType?.toFirebasFormat() ?? null
       };
 
   @override
@@ -139,6 +164,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.OtwDelivery;
   }
 
+  bool isAtLaundry() {
+    return status == LaundryOrderStatus.AtLaundry;
+  }
+
   num? getPrice() {
     if (weight != null) {
       return weight! * 20;
@@ -161,5 +190,70 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       default:
         return LaundryOrderPhase.Neither;
     }
+  }
+}
+
+class LaundryOrderCostLineItem extends LaundryCostLineItem {
+  num weight;
+  num get weighedCost => weight * cost;
+  LaundryOrderCostLineItem({
+    required this.weight,
+    required Map<LanguageType, String> name,
+    required num cost,
+  }) : super(cost: cost, name: name);
+
+  factory LaundryOrderCostLineItem.fromData(laundryCostLineItemData) {
+    final LaundryOrderCostLineItem newLo = LaundryOrderCostLineItem(
+        weight: laundryCostLineItemData["weight"],
+        name: LaundryCostLineItem.fromData(laundryCostLineItemData).name,
+        cost: LaundryCostLineItem.fromData(laundryCostLineItemData).cost);
+
+    // final LaundryOrderCostLineItem li =
+    //     LaundryCostLineItem.fromData(laundryCostLineItemData)
+    //         as LaundryOrderCostLineItem;
+    // li.weight = laundryCostLineItemData["weight"];
+    return newLo;
+  }
+  @override
+  Map<String, dynamic> toFirebaseFormat() {
+    return {
+      ...super.toFirebaseFormat(),
+      "weight": weight,
+      "weighedCost": weighedCost
+    };
+  }
+}
+
+class LaundryOrderCosts {
+  List<LaundryOrderCostLineItem> lineItems = <LaundryOrderCostLineItem>[];
+  num minimumCost = 0;
+  num get weighedCost {
+    final num totalCost =
+        lineItems.fold<num>(0, (sum, lineItem) => sum + lineItem.weighedCost);
+    return (totalCost > minimumCost) ? totalCost : minimumCost;
+  }
+
+  LaundryOrderCosts();
+
+  factory LaundryOrderCosts.fromData(laundryCostsData) {
+    // ignore: prefer_final_locals
+    LaundryOrderCosts laundryCosts = LaundryOrderCosts();
+    laundryCosts.minimumCost = laundryCostsData['minimumCost'];
+    // ignore: avoid_annotating_with_dynamic
+    laundryCostsData["byType"]?.forEach((item) {
+      laundryCosts.lineItems.add(LaundryOrderCostLineItem.fromData(item));
+    });
+
+    return laundryCosts;
+  }
+
+  Map<String, dynamic> toFirebasFormat() {
+    return {
+      'minimumCost': minimumCost,
+      'byType': lineItems
+          .map((LaundryCostLineItem item) => item.toFirebaseFormat())
+          .toList(),
+      'weighedCost': weighedCost,
+    };
   }
 }

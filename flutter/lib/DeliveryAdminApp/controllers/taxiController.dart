@@ -19,9 +19,10 @@ class TaxiOrderController extends GetxController {
   RxList<TaxiOrder> inProcessOrders = <TaxiOrder>[].obs;
   RxList<TaxiOrder> pastOrders = <TaxiOrder>[].obs;
   RxList<TaxiOrder> openOrders = <TaxiOrder>[].obs;
-  StreamSubscription? inProcessOrdersListener;
-  StreamSubscription? _pastOrdersListener;
-  StreamSubscription? _openOrdersListener;
+
+  StreamSubscription<Event>? _inProcessOrdersListener;
+  StreamSubscription<Event>? _pastOrdersListener;
+  StreamSubscription<Event>? _openOrdersListener;
 
   @override
   void onInit() {
@@ -46,7 +47,7 @@ class TaxiOrderController extends GetxController {
       openOrders.value = orders;
     });
 
-    inProcessOrdersListener = _databaseHelper.firebaseDatabase
+    _inProcessOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(taxiInProcessOrdersNode())
         .onValue
@@ -78,11 +79,11 @@ class TaxiOrderController extends GetxController {
   }
 
   @override
-  void onClose() async {
+  void onClose() {
     mezDbgPrint("[+] OrderController::dispose ---------> Was invoked !");
-    await inProcessOrdersListener?.cancel();
-    await _pastOrdersListener?.cancel();
-    await _openOrdersListener?.cancel();
+    _inProcessOrdersListener?.cancel();
+    _pastOrdersListener?.cancel();
+    _openOrdersListener?.cancel();
     pastOrders.clear();
     inProcessOrders.clear();
     openOrders.clear();
@@ -109,6 +110,14 @@ class TaxiOrderController extends GetxController {
     return pastOrders.contains(order);
   }
 
+  Stream<TaxiOrder?> getOrderStream(String orderId) {
+    return StreamGroup.merge(<Stream<TaxiOrder?>>[
+      _getOpenOrderStream(orderId),
+      _getInProcessOrderStream(orderId),
+      _getPastOrderStream(orderId)
+    ]);
+  }
+
   bool orderHaveNewMessageNotifications(String orderId) {
     return _fbNotificationsController
         .notifications()
@@ -116,54 +125,6 @@ class TaxiOrderController extends GetxController {
             notification.notificationType == NotificationType.NewMessage &&
             notification.orderId == orderId)
         .isNotEmpty;
-  }
-
-  Stream<TaxiOrder?> getOpenOrderStream(String orderId) {
-    return openOrders.stream.map<TaxiOrder?>((_) {
-      try {
-        return openOrders.firstWhere(
-          (TaxiOrder currentOrder) => currentOrder.orderId == orderId,
-        );
-      } on StateError catch (_) {
-        // do nothing
-        return null;
-      }
-    });
-  }
-
-  Stream<TaxiOrder?> getInProcessOrderStream(String orderId) {
-    return inProcessOrders.stream.map<TaxiOrder?>((_) {
-      try {
-        return inProcessOrders.firstWhere(
-          (TaxiOrder currentOrder) => currentOrder.orderId == orderId,
-        );
-      } on StateError catch (_) {
-        // do nothing
-        return null;
-      }
-    });
-  }
-
-  Stream<TaxiOrder?> getPastOrderStrem(String orderId) {
-    return pastOrders.stream.map<TaxiOrder?>((_) {
-      try {
-        return pastOrders.firstWhere(
-          (TaxiOrder currentOrder) => currentOrder.orderId == orderId,
-        );
-      } on StateError catch (_) {
-        // do nothing
-        return null;
-      }
-    });
-  }
-
-// NEW STREAMS
-  Stream<TaxiOrder?> getOrderStream(String orderId) {
-    return StreamGroup.merge(<Stream<TaxiOrder?>>[
-      _getOpenOrderStream(orderId),
-      _getInProcessOrderStream(orderId),
-      _getPastOrderStrem(orderId)
-    ]);
   }
 
   Stream<TaxiOrder?> _getOpenOrderStream(String orderId) {
@@ -176,7 +137,6 @@ class TaxiOrderController extends GetxController {
         // do nothing
         // return null;
       }
-      return null;
     });
   }
 
@@ -190,11 +150,10 @@ class TaxiOrderController extends GetxController {
         // do nothing
         // return null;
       }
-      return null;
     });
   }
 
-  Stream<TaxiOrder?> _getPastOrderStrem(String orderId) {
+  Stream<TaxiOrder?> _getPastOrderStream(String orderId) {
     return pastOrders.stream.map<TaxiOrder?>((_) {
       try {
         return pastOrders.firstWhere(
@@ -204,7 +163,6 @@ class TaxiOrderController extends GetxController {
         // do nothing
         // return null;
       }
-      return null;
     });
   }
 

@@ -226,8 +226,7 @@ class MGoogleMapController {
     markers.removeWhere((Marker _marker) => _marker.markerId.value == _mId);
   }
 
-  void addPolyline(List<PointLatLng> latLngPoints,
-      {bool fitWithinBounds = true}) {
+  void addPolyline(List<PointLatLng> latLngPoints) {
     final Polyline _poly = Polyline(
         color: Color.fromARGB(255, 172, 89, 252),
         jointType: JointType.round,
@@ -302,8 +301,10 @@ class MGoogleMapController {
   }
 
   // adds up the markers the new markers latLn ot polyline's and calculate out of them all the latLngbounds
-  LatLngBounds? _getMarkersAndPolylinesBounds() {
-    final List<LatLng> _polyLinesBnds = _getLatLngBoundsFromPolyline(polylines);
+  LatLngBounds? _getMarkersAndPolylinesBounds(bool shouldFitPolylineInBound) {
+    final List<LatLng> _polyLinesBnds = shouldFitPolylineInBound
+        ? _getLatLngBoundsFromPolyline(polylines)
+        : <LatLng>[];
 
     final List<LatLng> _bnds = <LatLng>[..._polyLinesBnds];
     markers.forEach((MezMarker _marker) {
@@ -339,10 +340,11 @@ class MGoogleMapController {
   }
 
   /// Main function for updating the bounds and start the animation
-  Future<void> animateAndUpdateBounds() async {
+  Future<void> animateAndUpdateBounds(
+      {bool shouldFitPolylineInBound = true}) async {
     if (periodicRerendering.value) {
       setBounds(animateMarkersPolyLinesBounds.value
-          ? _getMarkersAndPolylinesBounds()
+          ? _getMarkersAndPolylinesBounds(shouldFitPolylineInBound)
           : null);
       await animateCameraWithNewBounds();
     }

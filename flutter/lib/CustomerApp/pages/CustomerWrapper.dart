@@ -305,7 +305,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             onTap: () {
               getServiceRoute(
                   orderType: OrderType.Laundry,
-                  serviceRoute: kLaundryOrderRequest,
+                  serviceRoute: kLaundriesListRoute,
                   singleOrderRoute: (String v) {
                     Get.toNamed<void>(getLaundyOrderRoute(v));
                   });

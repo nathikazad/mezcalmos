@@ -22,10 +22,11 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { deliveryCancelOrderMessage, deliveryNewOrderMessage } from "./bgNotificationMessages";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
+import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
+import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 
 export = functions.https.onCall(async (data, context) => {
   if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
@@ -109,19 +110,32 @@ export = functions.https.onCall(async (data, context) => {
   rootNodes.inProcessOrders(data.orderType, orderId).update(order);
   deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order);
 
+  if (order.orderType == OrderType.Restaurant) {
+    let rOrder: RestaurantOrder = <RestaurantOrder>{ ...order }
+    restaurantNodes.inProcessOrders(rOrder.restaurant.id!, orderId).update(order);
+  } else if (order.orderType == OrderType.Laundry) {
+    let lOrder: LaundryOrder = <LaundryOrder>{ ...order }
+    laundryNodes.inProcessOrders(lOrder.laundry.id!, orderId).update(order);
+  }
 
   let chat: ChatObject = buildChatForOrder(chatId, data.orderType, orderId);
   chat.addParticipant({
     ...driverInfo,
     particpantType: ParticipantType.DeliveryDriver
   });
+  await chatController.setChat(chatId, chat.chatData);
 
   deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
     let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    addDeliveryAdminsToChat(chat, deliveryAdmins)
+    chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, chatId, ParticipantType.DeliveryAdmin)
   })
 
-  await chatController.setChat(chatId, chat.chatData);
+  laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
+    let laundryOperators: Record<string, boolean> = snapshot.val();
+    chatController.addParticipantsToChat(Object.keys(laundryOperators), chat, chatId, ParticipantType.LaundryOperator)
+  })
+
+  
 
   let notification: Notification = {
     foreground: <NewDeliveryOrderNotification>{

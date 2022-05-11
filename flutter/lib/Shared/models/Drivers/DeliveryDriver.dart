@@ -130,7 +130,7 @@ class DeliveryDriverUserInfo extends UserInfo {
         id: data["id"],
         name: data["name"],
         image: data["image"],
-        location: location,
+        location: location ?? null,
         language: language);
   }
 

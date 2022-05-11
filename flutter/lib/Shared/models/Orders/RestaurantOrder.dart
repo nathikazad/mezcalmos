@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -38,23 +40,24 @@ class RestaurantOrder extends DeliverableOrder {
   String? notes;
   RestaurantOrderStatus status;
   ServiceInfo get restaurant => serviceProvider! as ServiceInfo;
-  RestaurantOrder(
-      {required String orderId,
-      required this.status,
-      required this.quantity,
-      required String serviceProviderId,
-      required PaymentType paymentType,
-      required DateTime orderTime,
-      required num cost,
-      required ServiceInfo restaurant,
-      required UserInfo customer,
-      required Location to,
-      DeliveryDriverUserInfo? dropoffDriver,
-      String? dropOffDriverChatId,
-      required this.itemsCost,
-      required this.shippingCost,
-      this.notes})
-      : super(
+  RestaurantOrder({
+    required String orderId,
+    required this.status,
+    required this.quantity,
+    required String serviceProviderId,
+    required PaymentType paymentType,
+    required DateTime orderTime,
+    required num cost,
+    required ServiceInfo restaurant,
+    required UserInfo customer,
+    required Location to,
+    DeliveryDriverUserInfo? dropoffDriver,
+    String? dropOffDriverChatId,
+    required this.itemsCost,
+    required this.shippingCost,
+    this.notes,
+    RouteInformation? routeInformation,
+  }) : super(
           orderId: orderId,
           orderType: OrderType.Restaurant,
           serviceProviderId: serviceProviderId,
@@ -66,6 +69,7 @@ class RestaurantOrder extends DeliverableOrder {
           to: to,
           dropoffDriver: dropoffDriver,
           dropOffDriverChatId: dropOffDriverChatId,
+          routeInformation: routeInformation,
         );
 
   //ignore_for_file:avoid_annotating_with_dynamic
@@ -89,6 +93,18 @@ class RestaurantOrder extends DeliverableOrder {
             : null,
         dropOffDriverChatId: data['secondaryChats']
             ?['deliveryAdminDropOffDriver']);
+
+    if (data["routeInformation"] != null) {
+      mezDbgPrint("routeInformation not nulllll !!!!!!!!!!");
+      restaurantOrder.routeInformation = RouteInformation(
+        polyline: data["routeInformation"]["polyline"],
+        distance: RideDistance.fromJson(data["routeInformation"]["distance"]),
+        duration: RideDuration.fromJson(
+          data["routeInformation"]["duration"],
+        ),
+      );
+    }
+
     data["items"].forEach((dynamic itemId, dynamic itemData) {
       final RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
           costPerOne: itemData["costPerOne"],

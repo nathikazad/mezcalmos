@@ -14,15 +14,14 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 
 class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
+
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
-
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
 
-  Rxn<Customer> get customerRxn => _customer;
-
   bool _checkedAppVersion = false;
+  Rxn<Customer> customer = Rxn();
 
   StreamSubscription<dynamic>? _customerNodeListener;
 
@@ -31,34 +30,31 @@ class CustomerAuthController extends GetxController {
     super.onInit();
 
     if (_authController.fireAuthUser?.uid != null) {
+      //
+      _customer.value = customer.value;
       mezDbgPrint(
           "User from CustomerAuthController >> ${_authController.fireAuthUser?.uid}");
       mezDbgPrint(
           "CustomerAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
-
       await _customerNodeListener?.cancel();
       _customerNodeListener = _databaseHelper.firebaseDatabase
           .reference()
           .child(customerNode(_authController.fireAuthUser!.uid))
           .onValue
-          .listen(
-        (Event event) async {
-          _customer.value = Customer.fromSnapshotData(event.snapshot.value);
+          .listen((Event event) async {
+        _customer.value = Customer.fromSnapshotData(event.snapshot.value);
 
-          if (_checkedAppVersion == false) {
-            final String VERSION = GetStorage().read(getxAppVersion);
-            print("[+] Customer currently using App v$VERSION");
-            await _databaseHelper.firebaseDatabase
-                .reference()
-                .child(
-                  customerAppVersionNode(_authController.fireAuthUser!.uid),
-                )
-                .set(VERSION);
+        if (_checkedAppVersion == false) {
+          final String VERSION = GetStorage().read(getxAppVersion);
+          print("[+] Customer currently using App v$VERSION");
+          await _databaseHelper.firebaseDatabase
+              .reference()
+              .child(customerAppVersionNode(_authController.fireAuthUser!.uid))
+              .set(VERSION);
 
-            _checkedAppVersion = true;
-          }
-        },
-      );
+          _checkedAppVersion = true;
+        }
+      });
 
       final String? deviceNotificationToken =
           await _notificationsController.getToken();
@@ -71,9 +67,6 @@ class CustomerAuthController extends GetxController {
             .set(<String, String>{
           'deviceNotificationToken': deviceNotificationToken
         });
-      print(
-        "/////////////////////////////////////////////${_customer.value?.toJson()}////////////////////////////////////////////////////",
-      );
     } else {
       mezDbgPrint("User is not signed it to init customer auth controller");
     }

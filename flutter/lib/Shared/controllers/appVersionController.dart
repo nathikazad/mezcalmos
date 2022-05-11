@@ -82,11 +82,10 @@ class AppVersionController {
 
   AppVersionController._internal() {
     // intanciating our NewVersion.
+    final String pkgName = getPackageName();
     _newVersion = NewVersion(
-      iOSId: getPackageName(platform: MezPlatform.IOS),
-      androidId: getPackageName(
-        platform: MezPlatform.ANDROID,
-      ), // packageInfo.packageName // 'com.mezcalmos.customer'
+      iOSId: pkgName,
+      androidId: pkgName, // packageInfo.packageName // 'com.mezcalmos.customer'
     );
   }
 
@@ -99,6 +98,8 @@ class AppVersionController {
     OnNewUpdateAvailable? onNewUpdateAvailable,
   }) {
     if (_instance == null) {
+      mezDbgPrint("[xsaadx] : OnNewUpdateAvailable => $onNewUpdateAvailable");
+
       assert(onNewUpdateAvailable != null);
       _instance = AppVersionController._internal()
         ..onNewUpdateAvailable = onNewUpdateAvailable!;
@@ -132,16 +133,13 @@ class AppVersionController {
     UpdateType _updateType = UpdateType.Null;
     // Get Version Status
     final VersionStatus? status = await _newVersion.getVersionStatus();
-    mezDbgPrint("_checkForNewUpdates->status: $status");
-
+    mezDbgPrint("releaseNotes: ${status?.releaseNotes}");
+    mezDbgPrint('appStoreLink: ${status?.appStoreLink}');
+    mezDbgPrint('localVersion: ${status?.localVersion}');
+    mezDbgPrint('storeVersion: ${status?.storeVersion}');
+    mezDbgPrint('canUpdate ${status?.canUpdate.toString()}');
+    mezDbgPrint('packageName ${status?.canUpdate.toString()}');
     if (status != null && status.canUpdate) {
-      mezDbgPrint("releaseNotes: ${status.releaseNotes}");
-      mezDbgPrint('appStoreLink: ${status.appStoreLink}');
-      mezDbgPrint('localVersion: ${status.localVersion}');
-      mezDbgPrint('storeVersion: ${status.storeVersion}');
-      mezDbgPrint('canUpdate ${status.canUpdate.toString()}');
-      mezDbgPrint('packageName ${status.canUpdate.toString()}');
-
       // localVersion
       final VersionSplit _localVersion = VersionSplit.split(
         stringToSplit: status.localVersion,
@@ -168,7 +166,7 @@ class AppVersionController {
     await openOsStore(openIosStoreFunction: () async {
       await StoreRedirect.redirect(
         iOSAppId: getAppStoreId(),
-        androidAppId: getPackageName(platform: getPlatformType()),
+        androidAppId: getPackageName(),
       );
     });
   }

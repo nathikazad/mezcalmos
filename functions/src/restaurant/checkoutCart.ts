@@ -21,8 +21,6 @@ import { getRestaurant } from "./restaurantController";
 import { getUserInfo } from "../shared/controllers/rootController";
 import * as chatController from "../shared/controllers/chatController";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-
-import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
@@ -95,12 +93,16 @@ export = functions.https.onCall(async (data, context) => {
         particpantType: ParticipantType.Restaurant
       });
 
-    let deliveryAdmins: Record<string, DeliveryAdmin> = (await deliveryAdminNodes.deliveryAdmins().once('value')).val()
-    await addDeliveryAdminsToChat(chat, deliveryAdmins)
-    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
+
     await chatController.setChat(orderId, chat.chatData);
 
-    setTimeout(() => customerNodes.cart(customerId).remove(), 100);
+    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
+      let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
+      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryAdmin)
+      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
+    })
+    
+    setTimeout(() => customerNodes.cart(customerId).remove(), 1000);
     return {
       status: ServerResponseStatus.Success,
       orderId: orderId

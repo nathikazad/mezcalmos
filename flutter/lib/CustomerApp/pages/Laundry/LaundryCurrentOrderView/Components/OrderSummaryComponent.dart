@@ -34,7 +34,10 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.weight != null) ? '${order.cost - 50} \$' : '-',
+                  order.costsByType?.weighedCost.toString() ?? '-',
+                  // (order.costsByType.weighedCost != null)
+                  //     ? ' \$ ${order.costsByType.weighedCost}'
+                  //     : "_",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -62,7 +65,7 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.weight != null) ? '${order.cost} \$' : '-',
+                  '${order.cost} \$',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],

@@ -13,7 +13,8 @@ enum ParticipantType {
   Laundry,
   DeliveryAdmin,
   Restaurant,
-  DeliveryDriver
+  DeliveryDriver,
+  LaundryOperator
 }
 
 extension ParseParticipantTypeToString on ParticipantType {

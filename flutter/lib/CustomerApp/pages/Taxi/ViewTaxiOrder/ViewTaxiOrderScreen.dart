@@ -6,12 +6,14 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/controllers/ViewT
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiOrderBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
@@ -38,15 +40,23 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
     initializeLateControllers();
     // Order handling
-    String orderId = Get.parameters['orderId']!;
-    viewController.init(
-      orderId,
-      orderCancelledCallback: (TaxiOrder order) {
+
+    if (Get.parameters['orderId'] == null) {
+      mezDbgPrint("Order id null from the parameters ######");
+      Get.back<void>();
+    }
+    viewController.init(Get.parameters['orderId']!,
+        orderCancelledCallback: (TaxiOrder order) {
+      Get.back<void>();
+      oneButtonDialog(
+          body: _i18n()['orderCancelSuccess'], imagUrl: order.customer.image);
+    }).then((initSuccess) {
+      if (!initSuccess) {
         Get.back();
-        oneButtonDialog(
-            body: _i18n()['orderCancelSuccess'], imagUrl: order.customer.image);
-      },
-    );
+        MezSnackbar("Error", "Order does not exist");
+      }
+    });
+    super.initState();
   }
 
   @override

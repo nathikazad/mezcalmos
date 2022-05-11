@@ -11,6 +11,9 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderCustomer.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderSummary.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/SetLaundryCostsComponent.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/SetOrderEstTime.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -19,6 +22,9 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
+import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ['pages']['Orders']["LaundryOrder"]["LaundryOrderScreen"];
@@ -56,36 +62,61 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
     DeliveryDriverUserInfoAndUpdateStatus(),
   );
 
+  LaundryOrderPhase? _phaseSnapshot;
+  final MGoogleMapController mapController = MGoogleMapController(
+    enableMezSmartPointer: false,
+  );
+
   @override
   void initState() {
     super.initState();
-    mezDbgPrint("Laaaaaaauuuuuuuuuundryyyy screeennnnnnnnnn");
     orderId = Get.parameters['orderId']!;
     controller.clearNewOrderNotifications();
     order.value = controller.getOrder(orderId);
-    if (order.value == null) {
-      Get.back<void>();
-    } else {
-      _orderListener = controller.getCurrentOrderStream(orderId).listen(
-        (LaundryOrder? newOrder) {
-          if (newOrder != null) {
-            order.value = controller.getOrder(orderId);
+    initMap();
 
-            if (order.value?.dropoffDriver != null) {
-              driver = order.value!.dropoffDriver;
-            }
-          } else {
-            //    Get.back();
-          }
-        },
-      );
-    }
+    _orderListener = controller
+        .getOrderStream(orderId)
+        .listen((LaundryOrder? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent;
+        updateMapByPhase(newOrderEvent.getCurrentPhase());
+        order.value = controller.getOrder(orderId);
+
+        if (order.value?.dropoffDriver != null) {
+          driver = order.value!.dropoffDriver;
+        }
+      }
+    });
+
+    // if order value is null and
+    waitForOrderIfNotLoaded().then((value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<void>.delayed(Duration.zero, () {
+          Get.back<void>();
+          MezSnackbar("Error", "Order does not exist");
+        });
+      }
+    });
 
     /// Get Right driver
     _deliveryDriverUserInfoAndUpdateStatusNotifier.value =
         DeliveryDriverUserInfoAndUpdateStatus(
       deliveryDriverUserInfo: getRightDriver(),
     );
+  }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
+      });
+      return completer.future;
+    }
   }
 
   @override
@@ -113,9 +144,11 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     order: order.value!,
                   ),
                   const SizedBox(height: 10),
-
+                  if (order.value!.getCurrentPhase() !=
+                      LaundryOrderPhase.Neither)
+                    ..._mapWidget,
                   LaundryProviderCard(
-                    laundryID: order.value?.laundry?.id ?? null,
+                   
                     order: order.value!,
                   ),
 
@@ -210,9 +243,25 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                         children: buildOrderButtons(order),
                       ),
                     ),
-                  LaundryOrderCustomer(order: order.value!),
-                  const SizedBox(height: 10),
-                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SetLaundryOrderCostComponent(
+                    order: order.value!,
+                  ),
+                  SetOrderEstTimeComponent(
+                    order: order.value!,
+                  ),
+                  LaundryProviderCard(order: order.value!),
+                  LaundryOrderCustomer(
+                    order: order.value!,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   LaundryOrderSummary(
                     order: order.value!,
                   ),
@@ -298,13 +347,116 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
   }
 
   DeliveryDriverType getRightDeliveryDriverType() {
-    switch (order.value!.getCurrentPhase()) {
-      case (LaundryOrderPhase.Dropoff):
-        return DeliveryDriverType.DropOff;
-      case (LaundryOrderPhase.Pickup):
-        return DeliveryDriverType.Pickup;
+    if (order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return DeliveryDriverType.Pickup;
+    } else {
+      return DeliveryDriverType.DropOff;
+    }
+  }
+
+  List<Widget> get _mapWidget => <Widget>[
+        Container(
+          height: 350,
+          child: MGoogleMap(mGoogleMapController: mapController),
+        ),
+        SizedBox(
+          height: 10,
+        )
+      ];
+
+  void initMap() {
+    mapController.periodicRerendering.value = true;
+    mapController.recenterButtonEnabled.value = false;
+    mapController.setAnimateMarkersPolyLinesBounds(true);
+    mapController.setLocation(
+      LocModel.Location(
+        "",
+        LocModel.Location.buildLocationData(
+          order.value!.to.latitude,
+          order.value!.to.longitude,
+        ),
+      ),
+    );
+
+    // restaurant ad customer's location are fixed (fit in bound at start)
+    mapController.addOrUpdateUserMarker(
+      latLng: order.value!.laundry!.location.toLatLng(),
+      markerId: order.value!.laundry!.id,
+      customImgHttpUrl: order.value!.laundry!.image,
+      fitWithinBounds: true,
+    );
+    // customer's
+    mapController.addOrUpdatePurpleDestinationMarker(
+      latLng: order.value!.to.toLatLng(),
+      fitWithinBounds: true,
+    );
+    if (order.value!.routeInformation != null)
+      mapController.decodeAndAddPolyline(
+          encodedPolylineString: order.value!.routeInformation!.polyline);
+
+    mapController.animateAndUpdateBounds(
+        shouldFitPolylineInBound: order.value!.routeInformation != null);
+  }
+
+  void updateMapByPhase(LaundryOrderPhase phase) {
+    switch (phase) {
+      case LaundryOrderPhase.Pickup:
+        if (_phaseSnapshot != phase) {
+          _phaseSnapshot = phase;
+          // we ignore the marker within bounds
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value!.laundry!.location.toLatLng(),
+            markerId: order.value!.laundry!.id,
+            customImgHttpUrl: order.value!.laundry!.image,
+            fitWithinBounds: true,
+          );
+          mapController.addOrUpdatePurpleDestinationMarker(
+            latLng: order.value!.to.toLatLng(),
+            fitWithinBounds: false,
+          );
+        }
+        // only if pickUpDriver not null
+        if (order.value!.pickupDriver != null) {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value!.pickupDriver!.location!,
+            markerId: order.value!.pickupDriver!.id,
+            customImgHttpUrl: order.value!.pickupDriver!.image,
+            fitWithinBounds: true,
+          );
+        }
+
+        mapController.animateAndUpdateBounds(shouldFitPolylineInBound: false);
+        break;
+
+      case LaundryOrderPhase.Dropoff:
+        if (_phaseSnapshot != phase) {
+          _phaseSnapshot = phase;
+          // we ignore the restaurant's marker within bounds
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value!.laundry!.location.toLatLng(),
+            markerId: order.value!.laundry!.id,
+            customImgHttpUrl: order.value!.laundry!.image,
+            fitWithinBounds: false,
+          );
+          // we fit the destination into bounds
+          mapController.addOrUpdatePurpleDestinationMarker(
+            latLng: order.value!.to.toLatLng(),
+            fitWithinBounds: true,
+          );
+        }
+
+        // we keep updating the delivery's
+        if (order.value!.dropoffDriver != null) {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value!.dropoffDriver!.location!,
+            markerId: order.value!.dropoffDriver!.id,
+            customImgHttpUrl: order.value!.dropoffDriver!.image,
+            fitWithinBounds: true,
+          );
+        }
+        mapController.animateAndUpdateBounds();
+        break;
       default:
-        return DeliveryDriverType.DropOff;
     }
   }
 }

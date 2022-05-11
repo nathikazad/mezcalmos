@@ -1,37 +1,35 @@
 {
-    "settings":
-    {
+    "settings": {
 
-        "envs":
-        {
+        "envs": {
             "stage": {
 
                 "db": "test",
-                "lmode" : "stage"
+                "lmode": "stage"
             },
 
-            "dev":{
+            "dev": {
 
                 "db": "production",
-                "lmode" : "dev"
+                "lmode": "dev"
             },
 
-            "prod":{
+            "prod": {
 
                 "db": "production",
-                "lmode" : "prod"
+                "lmode": "prod"
             }
         },
-        
-        "launcher.xml":"../android/app/src/main/res/values/launcher.xml",
-        "launcherPackageProperties":"../android/launcherPackage.properties",
-        "appGoogleServices":"../android/app/google-services.json",
-        "appAppleServices":"../ios/Runner/GoogleService-Info.plist",
-        "pubspec.yaml" : "../pubspec.yaml",
-        "local.properties" : "../android/local.properties",
 
-        "sharedPermissions":[
-                
+        "launcher.xml": "../android/app/src/main/res/values/launcher.xml",
+        "launcherPackageProperties": "../android/launcherPackage.properties",
+        "appGoogleServices": "../android/app/google-services.json",
+        "appAppleServices": "../ios/Runner/GoogleService-Info.plist",
+        "pubspec.yaml": "../pubspec.yaml",
+        "local.properties": "../android/local.properties",
+
+        "sharedPermissions": [
+
             "<uses-permission android:name='android.permission.INTERNET'/>",
             "<uses-permission android:name='android.permission.ACCESS_FINE_LOCATION'/>",
             "<uses-permission android:name='android.permission.ACCESS_COARSE_LOCATION'/>",
@@ -41,49 +39,45 @@
     },
 
     "apps": {
-        "TaxiApp":
-        {
+        "TaxiApp": {
             "folderName": "TaxiApp",
-            "packages": 
-            {
+            "packages": {
                 "stage": {
 
-                    "appName" : "MeztaxiStaging",
+                    "appName": "MeztaxiStaging",
                     "packageName": "com.mezstaging.taxi",
                     "googe-service-file": "services/stage/android/taxi.json",
                     "apple-service-file": "services/stage/ios/taxi.plist"
                 },
 
-                "prod":{
+                "prod": {
 
-                    "appName" : "Meztaxi",
+                    "appName": "Meztaxi",
                     "packageName": "com.mezcalmos.taxi",
                     "googe-service-file": "services/prod/android/taxi.json",
                     "apple-service-file": "services/prod/ios/taxi.plist"
                 },
 
-                "dev" : {
+                "dev": {
 
-                    "appName" : "MeztaxiDev",
+                    "appName": "MeztaxiDev",
                     "packageName": "com.mezcalmos.taxi",
                     "googe-service-file": "services/prod/android/taxi.json",
                     "apple-service-file": "services/prod/ios/taxi.plist"
                 }
             },
-            "appPermissions":[
+            "appPermissions": [
                 "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>"
             ]
         },
 
-        "CustomerApp":
-        {
+        "CustomerApp": {
             "folderName": "CustomerApp",
-            "packages": 
-            {
+            "packages": {
 
                 "stage": {
 
-                    "appName" : "MezcustomerStaging",
+                    "appName": "MezcustomerStaging",
                     "packageName": "com.mezstaging.customer",
                     "googe-service-file": "services/stage/android/customer.json",
                     "apple-service-file": "services/stage/ios/customer.plist"
@@ -91,22 +85,22 @@
                 },
 
                 "prod": {
-                    "appName" : "Mezcalmos",
+                    "appName": "Mezcalmos",
                     "packageName": "com.mezcalmos.customer",
                     "googe-service-file": "services/prod/android/customer.json",
                     "apple-service-file": "services/prod/ios/customer.plist"
                 },
 
-                "dev" : {
+                "dev": {
 
-                    "appName" : "MezcustomerDev",
+                    "appName": "MezcustomerDev",
                     "packageName": "com.mezcalmos.customer",
                     "googe-service-file": "services/prod/android/customer.json",
                     "apple-service-file": "services/prod/ios/customer.plist"
                 }
             }
         },
-        "DeliveryApp":{
+        "DeliveryApp": {
             "folderName": "DeliveryApp",
             "packages": {
                 "stage": {
@@ -122,7 +116,7 @@
                     "apple-service-file": "services/prod/ios/delivery.plist"
                 }
             },
-            "appPermissions":[
+            "appPermissions": [
                 "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>"
             ]
         },
@@ -170,6 +164,18 @@
                     "googe-service-file": "services/prod/android/deliveryadmin.json",
                     "apple-service-file": "services/prod/ios/deliveryadmin.plist"
                 }
+            }
+        },
+        "LaundryApp": {
+            "folderName": "LaundryApp",
+            "packages": {
+                "stage": {
+                    "appName": "MezLaundry Stage",
+                    "packageName": "com.mezstaging.laundry",
+                    "googe-service-file": "services/stage/android/laundry.json",
+                    "apple-service-file": "services/stage/ios/laundry.plist"
+                }
+
             }
         }
 

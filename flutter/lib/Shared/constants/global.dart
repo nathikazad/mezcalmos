@@ -2,6 +2,9 @@
 // PLEASE DO NOT TOUCH ANYTHING IN CONNECTIVITY STRINGS , UNLESS YOU INFORM OTHERS.
 // import 'package:flutter/material.dart';
 
+// ignore_for_file: constant_identifier_names
+
+import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 
@@ -71,6 +74,8 @@ const String aDefaultDbUserImgAsset =
 const String aDefaultAvatar = "assets/images/shared/noUserImage.jpg";
 const String aNoImgAsset = "assets/images/shared/noImg.png";
 const String aNoInternetAsset = "assets/images/shared/offline.png";
+const String aUsaFlag = "assets/images/shared/usa.png";
+const String aMexicoFlag = "assets/images/shared/mexico.png";
 const String enLang = "assets/i18n/en.json";
 const String esLang = "assets/i18n/es.json";
 const String aLocationPermissionAsset =
@@ -88,7 +93,8 @@ enum AppType {
   TaxiApp,
   TaxiAdminApp,
   DeliveryAdminApp,
-  DeliveryApp
+  DeliveryApp,
+  LaundryApp
 }
 
 extension ParseOrderTypeToString on AppType {
@@ -119,3 +125,5 @@ extension StringToParseOrderType on String {
     return AppType.values.firstWhere((AppType e) => e.toShortString() == this);
   }
 }
+
+const Color keyAppColor = Color(0xFFAC59FC);

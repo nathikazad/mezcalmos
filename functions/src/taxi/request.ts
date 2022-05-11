@@ -14,7 +14,6 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import * as chatController from "../shared/controllers/chatController";
-import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
 
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)
@@ -61,15 +60,14 @@ export = functions.https.onCall(async (data, context) => {
       OrderType.Taxi,
     );
 
-    chat.addParticipant({
-      ...order.customer,
-      particpantType: ParticipantType.Customer
-    })
-
-    let deliveryAdmins: Record<string, DeliveryAdmin> = (await deliveryAdminNodes.deliveryAdmins().once('value')).val()
-    await addDeliveryAdminsToChat(chat, deliveryAdmins)
-    notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
     await chatController.setChat(orderId, chat.chatData);
+
+    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
+      let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
+      chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryAdmin)
+      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
+    })
+    
 
     return {
       status: ServerResponseStatus.Success,

@@ -7,10 +7,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/SaveLocationDailog.dart';
+import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -68,7 +68,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
       final String? x = Get.parameters["id"];
       savedLocation = Get.find<CustomerAuthController>()
-          .customerRxn()!
+          .customer()!
           .savedLocations
           .firstWhere((SavedLocation saved) => saved.id == x);
       GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {

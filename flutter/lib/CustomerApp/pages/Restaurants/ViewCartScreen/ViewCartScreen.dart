@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 
 // ignore: constant_identifier_names
 enum DropDownResult { Null, String }
@@ -150,13 +151,17 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   /// Call this right after customer presses Checkout
   /// Uses : Make sure that the order has been successfully written to database + already consumed by the listener.
-  Future<void> avoidCheckoutRaceCondition(String orderId) async {
-    if (Get.find<OrderController>().getOrder(orderId) == null) {
-      await Get.find<OrderController>()
-          .getCurrentOrderStream(orderId)
-          .firstWhere((Order? order) => order != null);
-    }
-  }
+  // Future<void> avoidCheckoutRaceCondition(String orderId) async {
+  //   if (Get.find<OrderController>().getOrder(orderId) == null) {
+  //     mezDbgPrint(
+  //         "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ]  RACING CONDITION HAPPENING ... ");
+  //     await Get.find<OrderController>()
+  //         ._getInProcessOrderStream(orderId)
+  //         .firstWhere((order) => order != null);
+  //   } else
+  //     mezDbgPrint(
+  //         "[+] s@@d ==> [ CHECKOUT RESTAURANT ORDER ] NO RACING CONDITION HAPPEND ! ");
+  // }
 
 //itemviewscreen
   Future<void> checkoutActionButton() async {
@@ -168,12 +173,27 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         _restaurantController.cart.value.toLocation = orderToLocation;
         _restaurantController.cart.value.notes = _textEditingController.text;
 
+        // get route info
+        final MapHelper.Route? _route = await MapHelper.getDurationAndDistance(
+          _restaurantController.cart.value.restaurant!.info.location,
+          orderToLocation!,
+        );
+
+        if (_route != null) {
+          _restaurantController.cart.value.routeInformation =
+              MapHelper.RouteInformation(
+            polyline: _route.encodedPolyLine,
+            distance: _route.distance,
+            duration: _route.duration,
+          );
+        }
+
         final ServerResponse _serverResponse =
             await _restaurantController.checkout();
 
         if (_serverResponse.success) {
-          await avoidCheckoutRaceCondition(_serverResponse.data["orderId"]);
-
+          // await avoidCheckoutRaceCondition(response.data["orderId"]);
+          _restaurantController.clearCart();
           popEverythingAndNavigateTo(
               getRestaurantOrderRoute(_serverResponse.data["orderId"]));
           //  _restaurantController.clearCart();

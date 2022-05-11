@@ -1,12 +1,23 @@
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class LaundryRequest {
+  String laundryId;
   String? notes;
+
+  /// to means Customer's location.
   Location? to;
+
+  /// from means laundry's location (choosen by the customer)
+  Location? from;
+  RouteInformation? routeInformation;
   PaymentType paymentType;
   LaundryRequest({
+    this.routeInformation,
+    required this.laundryId,
     this.notes,
+    this.from,
     this.to,
     this.paymentType = PaymentType.Cash,
   });
@@ -19,11 +30,18 @@ class LaundryRequest {
     to = loc;
   }
 
+  bool isFromToSet() {
+    return from != null && to != null;
+  }
+
   Map<String, dynamic> asCloudFunctionParam() {
-    return <String, dynamic>{
+    return {
+      "laundryId": laundryId,
       "to": to?.toFirebaseFormattedJson(),
+      "from": from?.toFirebaseFormattedJson(),
       "notes": notes,
       "paymentType": paymentType.toFirebaseFormatString(),
+      "routeInformation": routeInformation?.toJson()
     };
   }
 }
