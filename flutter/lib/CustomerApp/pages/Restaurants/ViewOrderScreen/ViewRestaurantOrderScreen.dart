@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
@@ -19,8 +18,6 @@ import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 final NumberFormat currency = new NumberFormat("#0", "en_US");
@@ -108,10 +105,14 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     waitForOrderIfNotLoaded().then((void value) {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
+
         Future<Null>.delayed(Duration.zero, () {
           Get.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
+      } else {
+        initMap();
+        updateMapIfDeliveryPhase(order.value!.status);
       }
     });
     super.initState();

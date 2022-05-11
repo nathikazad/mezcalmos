@@ -11,19 +11,19 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderCustomer.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/LaundryOrderSummary.dart';
-import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/SetLaundryCostsComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/LaundryOrder/Components/SetOrderEstTime.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
-import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -97,6 +97,9 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
           Get.back<void>();
           MezSnackbar("Error", "Order does not exist");
         });
+      } else {
+        initMap();
+        updateMapByPhase(order.value!.getCurrentPhase());
       }
     });
 
@@ -148,7 +151,6 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                       LaundryOrderPhase.Neither)
                     ..._mapWidget,
                   LaundryProviderCard(
-                   
                     order: order.value!,
                   ),
 

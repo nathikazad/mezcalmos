@@ -20,13 +20,13 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -104,6 +104,9 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           MezSnackbar("Error", "Order does not exist");
         }
       });
+    } else {
+      initMap();
+      updateMapIfDeliveryPhase(order.value!.status);
     }
   }
 

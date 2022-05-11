@@ -27,8 +27,7 @@ class AddCategorySlide extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              (selectedTab != SelectedTab.Secondary &&
-                      addCategoryController.secondaryLang.value == null)
+              (selectedTab == SelectedTab.Primary)
                   ? "${_i18n()["categoryName"]}"
                   : "${_i18n()["categoryNameIn"]} ${addCategoryController.secondaryLang.value!.toLanguageName() ?? ""} ",
               style: textTheme.headline4,
@@ -40,65 +39,84 @@ class AddCategorySlide extends StatelessWidget {
                 children: <Widget>[
                   const SizedBox(height: 6),
                   Text(
-                    (selectedTab == SelectedTab.Secondary)
-                        ? addCategoryController
-                            .primaryCategoryNameController.text
-                        : addCategoryController
-                            .secondaryCategoryNameController.text,
+                    _getRightController().text,
                     style: textTheme.bodyText2,
                   ),
                 ],
               ),
             const SizedBox(height: 8),
-            _customTextInput(
-              controller: selectedTab == SelectedTab.Primary
-                  ? addCategoryController.primaryCategoryNameController
-                  : addCategoryController.secondaryCategoryNameController,
-              hint: '${_i18n()["categoryNameHint"]}',
-              showNext: selectedTab == SelectedTab.Secondary,
-            ),
+            _categoryNameComponent(),
             const SizedBox(height: 16),
-            if (selectedTab != SelectedTab.Secondary)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${_i18n()["categoryPrice"]}",
-                    style: textTheme.headline4,
-                  ),
-                  const SizedBox(height: 8),
-                  _customTextInput(
-                    controller: addCategoryController.categoryPricingController,
-                    hint: '${_i18n()["categoryPriceHint"]}',
-                  ),
-                ],
-              ),
+            if (selectedTab != SelectedTab.Secondary) _categoryPriceComponent(),
           ],
         ),
       ),
     );
   }
 
-  Widget _customTextInput({
-    required TextEditingController controller,
-    required String hint,
-    bool showNext = false,
-  }) {
-    return SizedBox(
-      height: 54,
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          isDense: true,
-          filled: true,
-          fillColor: Colors.white,
-          hintText: hint,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
+  TextFormField _categoryNameComponent() {
+    return TextFormField(
+      controller: _getRightController(),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (String? v) {
+        if (v != null && v.isNotEmpty) {
+          return null;
+        } else {
+          return "Please add a category name";
+        }
+      },
+      decoration: InputDecoration(
+        isDense: true,
+        filled: true,
+        fillColor: Colors.white,
+        hintText: '${_i18n()["categoryNameHint"]}',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
         ),
-        textInputAction: showNext ? TextInputAction.next : TextInputAction.done,
       ),
     );
+  }
+
+  Widget _categoryPriceComponent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "${_i18n()["categoryPrice"]}",
+          style: Get.textTheme.headline4,
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: addCategoryController.categoryPricingController,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (String? v) {
+            if (v != null && v.isNotEmpty) {
+              return null;
+            } else {
+              return "Please add a price ";
+            }
+          },
+          decoration: InputDecoration(
+            isDense: true,
+            filled: true,
+            fillColor: Colors.white,
+            hintText: '${_i18n()["categoryPriceHint"]}',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  TextEditingController _getRightController() {
+    switch (selectedTab) {
+      case SelectedTab.Primary:
+        return addCategoryController.primaryCategoryNameController;
+
+      case SelectedTab.Secondary:
+        return addCategoryController.secondaryCategoryNameController;
+    }
   }
 }

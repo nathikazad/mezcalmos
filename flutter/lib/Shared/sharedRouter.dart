@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissi
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
@@ -32,7 +33,7 @@ const String kPickToLocation = '/pick_to_location';
 const String kNotificationsRoute = '/notifications';
 const String kAppNeedsUpdate = '/needs_update';
 // const String kInAppReview = '/in-app_review';
-const String kPickLocation = "/pick_location";
+const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 
 String getMessagesRoute(
     {required String chatId,
@@ -106,6 +107,9 @@ class SharedRouter {
     GetPage(
       name: kNotificationsRoute,
       page: () => ViewNotifications(),
-    )
+    ),
+    GetPage(
+        name: kPickLocationWithoutAuth,
+        page: () => PickLocationView(PickLocationMode.NonLoggedInPick)),
   ];
 }

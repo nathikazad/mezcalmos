@@ -20,7 +20,7 @@ class LaundryOpEditLocationCard extends StatelessWidget {
           onTap: () async {
             // TODO @m66are change the pick location view to shared page and work with it here
 
-            await Get.toNamed(kPickLocation)!.then((value) {
+            await Get.toNamed(kPickLocationWithoutAuth)!.then((value) {
               if (value != null) {
                 editInfoController.setNewLocation(value);
               }
