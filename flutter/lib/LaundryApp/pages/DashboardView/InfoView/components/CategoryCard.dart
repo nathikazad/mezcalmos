@@ -31,11 +31,17 @@ class CategoryCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text(
-              laundryCostLineItem.name[userLanguage] ?? "",
-              style: textTheme.bodyText1,
+            Flexible(
+              flex: 4,
+              fit: FlexFit.tight,
+              child: Text(
+                laundryCostLineItem.name[userLanguage] ?? "",
+                style: textTheme.bodyText1,
+              ),
             ),
-            Spacer(),
+            SizedBox(
+              width: 15,
+            ),
             RichText(
               text: TextSpan(
                 children: <TextSpan>[
@@ -55,6 +61,7 @@ class CategoryCard extends StatelessWidget {
                 ],
               ),
             ),
+            Spacer(),
             SizedBox(
               width: 5,
             ),

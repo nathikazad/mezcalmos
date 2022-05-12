@@ -56,20 +56,20 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    return Scrollbar(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          // padding: const EdgeInsets.all(10),
-          children: <Widget>[
-            Text(
-              "${_i18n()["currentOrders"]}",
-              style: textTheme.bodyText1,
-            ),
-            const SizedBox(height: 5),
-            Obx(
-              () => ListView.builder(
+    return Obx(
+      () => Scrollbar(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // padding: const EdgeInsets.all(10),
+            children: <Widget>[
+              Text(
+                "${_i18n()["currentOrders"]}",
+                style: textTheme.bodyText1,
+              ),
+              const SizedBox(height: 5),
+              ListView.builder(
                 shrinkWrap: true,
                 itemCount: inProcessOrders.length,
                 physics: const NeverScrollableScrollPhysics(),
@@ -79,15 +79,13 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
                   );
                 },
               ),
-            ),
-            Divider(),
-            Text(
-              "${_i18n()["pastOrders"]}",
-              style: textTheme.bodyText1,
-            ),
-            const SizedBox(height: 5),
-            Obx(
-              () => ListView.builder(
+              Divider(),
+              Text(
+                "${_i18n()["pastOrders"]}",
+                style: textTheme.bodyText1,
+              ),
+              const SizedBox(height: 5),
+              ListView.builder(
                 shrinkWrap: true,
                 reverse: true,
                 itemCount: pastOrders.length,
@@ -98,8 +96,8 @@ class _LaundryOpOrdersListViewState extends State<LaundryOpOrdersListView> {
                   );
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
