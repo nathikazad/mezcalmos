@@ -49,8 +49,9 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         orderCancelledCallback: (TaxiOrder order) {
       Get.back<void>();
       oneButtonDialog(
-          body: _i18n()['orderCancelSuccess'], imagUrl: order.customer.image);
-    }).then((initSuccess) {
+        body: _i18n()['orderCancelSuccess'],
+      );
+    }).then((bool initSuccess) {
       if (!initSuccess) {
         Get.back();
         MezSnackbar("Error", "Order does not exist");
