@@ -119,6 +119,16 @@ class OrderController extends GetxController {
         .isNotEmpty;
   }
 
+  bool hasNewAdminMessageNotification(String orderId) {
+    return _fbNotificationsController
+        .notifications()
+        .where(
+          (Notification notification) =>
+              notification.notificationType == NotificationType.NewAdminMessage,
+        )
+        .isNotEmpty;
+  }
+
   Order? getOrder(String orderId) {
     try {
       return currentOrders.firstWhere((Order order) {

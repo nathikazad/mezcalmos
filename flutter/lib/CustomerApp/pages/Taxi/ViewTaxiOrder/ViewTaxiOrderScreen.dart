@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/components/CounterOfferWidgets.dart';
@@ -34,6 +36,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   @override
   void initState() {
     super.initState();
+
     dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
     initializeLateControllers();
@@ -52,6 +55,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   @override
   void dispose() {
     viewController.dispose();
+
     super.dispose();
   }
 
@@ -124,15 +128,63 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          if (viewController.order.value!.status ==
+              TaxiOrdersStatus.LookingForTaxi)
+            Flexible(
+              flex: 2,
+              child: Padding(
+                padding: EdgeInsets.only(right: 5),
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    // border: Border.all(color: Colors.black),
+                  ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 19,
+                          width: 19,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1.5,
+                            color: Color.fromRGBO(126, 126, 126, 1),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          viewController.order.value!.status
+                              .toFirebaseFormatString(),
+                          style: TextStyle(
+                            fontFamily: "Montserrat",
+                            color: Color.fromRGBO(126, 126, 126, 1),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           if (viewController.counterOffers.isNotEmpty &&
               viewController.order.value!.status ==
                   TaxiOrdersStatus.LookingForTaxi)
             Flexible(
+              flex: 1,
               child: counterOfferWidgets.offersButton(),
             ),
           if (viewController.counterOffers.isNotEmpty)
             const SizedBox(width: 10),
           Flexible(
+            flex: 1,
             child: viewWidgets.cancelButton(viewController.order.value!.status),
           ),
         ],
@@ -140,3 +192,78 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     );
   }
 }
+
+// List<Widget> _getRowContentByStatus(TaxiOrder order) {
+//   List<Widget> lst = <Widget>[];
+//   switch (order.status) {
+//     case TaxiOrdersStatus.OnTheWay:
+//       lst.addAll(
+//         [
+//           Container(
+//             height: 40,
+//             width: 40,
+//             decoration: BoxDecoration(
+//               color: Colors.grey,
+//               image: DecorationImage(
+//                 image: Image.network(order.driver!.image).image,
+//                 fit: BoxFit.contain,
+//               ),
+//             ),
+//           ),
+//           Column(
+//             children: [
+//               Text("${order.driver!.name} - ${order.driver!.taxiNumber}"),
+//               Text("${order.driver!.name} is on the way to pick you up."),
+//             ],
+//           ),
+//           VerticalDivider(),
+//           Stack(
+//             children: [
+//               Icon(
+//                 Icons.textsms_sharp,
+//                 size: 30,
+//               ),
+//             ],
+//           ),
+//           VerticalDivider(),
+//         ],
+//       );
+//       break;
+//     case TaxiOrdersStatus.LookingForTaxi:
+//       lst.addAll(
+//         [
+//           Container(
+//             height: 40,
+//             width: 40,
+//             decoration: BoxDecoration(
+//               color: Colors.grey,
+//               image: DecorationImage(
+//                 image: Image.network(order.driver!.image).image,
+//                 fit: BoxFit.contain,
+//               ),
+//             ),
+//           ),
+//           Column(
+//             children: [
+//               Text("${order.driver!.name} - ${order.driver!.taxiNumber}"),
+//               Text("${order.driver!.name} is on the way to pick you up."),
+//             ],
+//           ),
+//           VerticalDivider(),
+//           Stack(
+//             children: [
+//               Icon(
+//                 Icons.textsms_sharp,
+//                 size: 30,
+//               ),
+//             ],
+//           ),
+//           VerticalDivider(),
+//         ],
+//       );
+//       break;
+//     default:
+//   }
+
+//   return lst;
+// }

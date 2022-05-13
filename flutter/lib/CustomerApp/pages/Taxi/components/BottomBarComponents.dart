@@ -76,12 +76,16 @@ Widget rightRouteInfos(TaxiRequest taxiRequest) {
   );
 }
 
-Widget taxiAvatarAndName({
+Widget avatarWithTitleAndDesc({
   required BuildContext pContext,
   required TaxiOrder? order,
   String? description,
-  String? name,
+  String? title,
   String? asset,
+  String? imgUrl,
+  bool isCanelIcon = false,
+  List<Color>? avatarGradient,
+  Widget? avatarChild,
 }) {
   return Flexible(
     flex: 3,
@@ -94,20 +98,47 @@ Widget taxiAvatarAndName({
         children: <Widget>[
           CircleAvatar(
             radius: 14.sp,
+
             child: ClipOval(
               clipBehavior: Clip.antiAlias,
-              child: mLoadImage(
-                url: order?.serviceProvider?.image,
-                assetInCaseFailed: asset ?? aDefaultAvatar,
-                fit: BoxFit.cover,
-                height: getSizeRelativeToScreen(
-                    100, pContext.height, pContext.width),
-                width: getSizeRelativeToScreen(
-                  100,
-                  pContext.height,
-                  pContext.width,
-                ),
-              ),
+              child: isCanelIcon
+                  ? Container(
+                      width: 35,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: avatarGradient == null
+                            ? null
+                            : Color.fromRGBO(255, 235, 236, 1),
+                        gradient: avatarGradient != null
+                            ? LinearGradient(
+                                colors: avatarGradient,
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              )
+                            : null,
+                      ),
+                      child: Center(
+                        child: avatarChild ??
+                            Icon(
+                              Icons.close_rounded,
+                              color: Color.fromRGBO(252, 89, 99, 1),
+                              // size: 13,
+                            ),
+                      ),
+                    )
+                  : mLoadImage(
+                      url: imgUrl ?? order?.serviceProvider?.image,
+                      assetInCaseFailed: asset ?? aDefaultAvatar,
+                      fit: BoxFit.cover,
+                      height: getSizeRelativeToScreen(
+                          100, pContext.height, pContext.width),
+                      width: getSizeRelativeToScreen(
+                        100,
+                        pContext.height,
+                        pContext.width,
+                      ),
+                    ),
             ),
             backgroundColor:
                 Colors.grey.shade100, //Color.fromARGB(255, 222, 222, 222),
@@ -121,12 +152,12 @@ Widget taxiAvatarAndName({
                   : CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  //  width: name == null ? 100.sp : null,
                   child: Text(
-                    name ?? order?.serviceProvider?.name ?? "Taxi",
+                    title ?? order?.status.toFirebaseFormatString() ?? "-",
                     style: TextStyle(
-                      fontSize: 13.sp,
-                      fontFamily: 'psb',
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Montserrat',
                     ),
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
@@ -140,9 +171,11 @@ Widget taxiAvatarAndName({
                         softWrap: false,
                         maxLines: 1,
                         style: TextStyle(
-                            fontSize: 10.sp,
-                            fontFamily: 'psr',
-                            color: Colors.grey),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Montserrat',
+                          color: Color.fromRGBO(54, 54, 54, 1),
+                        ),
                       )
                     : const SizedBox(),
               ],
@@ -164,23 +197,19 @@ Widget messageBtn({required Rxn<TaxiOrder> order, EdgeInsets? margin}) {
             recipientType: ParticipantType.Taxi));
       },
       child: Container(
-        margin: margin ?? EdgeInsets.only(left: 6),
-        height: getSizeRelativeToScreen(16, Get.height, Get.width),
-        width: getSizeRelativeToScreen(16, Get.height, Get.width),
-        decoration: BoxDecoration(
-          color: Color.fromARGB(255, 232, 239, 254),
-          borderRadius: BorderRadius.circular(4),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Color.fromARGB(255, 216, 225, 249),
-                spreadRadius: 0,
-                blurRadius: 4,
-                offset: Offset(0, 2))
-          ],
-        ),
+        height: 30,
+        width: 30,
         child: Center(
           child: Stack(
             children: <Widget>[
+              Center(
+                child: Icon(
+                  Icons.textsms_sharp,
+                  // color: Color.fromARGB(255, 103, 121, 254),
+                  color: Colors.black,
+                  size: 30,
+                ),
+              ),
               orderController.hasNewMessageNotification(order.value!.orderId)
                   ? Positioned(
                       top: 0,
@@ -189,16 +218,13 @@ Widget messageBtn({required Rxn<TaxiOrder> order, EdgeInsets? margin}) {
                         height: 10,
                         width: 10,
                         decoration: BoxDecoration(
-                            color: Colors.red, shape: BoxShape.circle),
-                      ))
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white),
+                        ),
+                      ),
+                    )
                   : SizedBox(),
-              Center(
-                child: Icon(
-                  Icons.mail,
-                  color: Color.fromARGB(255, 103, 121, 254),
-                  size: 16,
-                ),
-              )
             ],
           ),
         ),
@@ -229,17 +255,16 @@ Widget cancelBtn(TaxiOrder order) {
         }
       },
       child: Container(
-        height: getSizeRelativeToScreen(16, Get.height, Get.width),
-        width: getSizeRelativeToScreen(16, Get.height, Get.width),
+        height: 33,
+        width: 33,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 247, 177, 179),
+          color: Color.fromRGBO(255, 235, 236, 1),
           borderRadius: BorderRadius.circular(4),
         ),
         child: Center(
           child: Icon(
-            MezcalmosIcons.times_circle,
-            color: Color.fromARGB(255, 255, 0, 8),
-            size: 16,
+            Icons.close,
+            color: Color.fromRGBO(252, 89, 99, 1),
           ),
         ),
       ),

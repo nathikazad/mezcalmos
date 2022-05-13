@@ -10,20 +10,22 @@ class RidePriceControllHint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        const SizedBox(height: 10),
-        Center(
-          child: Text(
-            hintText,
-            // style: Theme.of(context).textTheme.subtitle2,
-            textAlign: TextAlign.center,
-            softWrap: true,
-            maxLines: 10,
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          hintText,
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 15,
+            color: Color.fromRGBO(103, 121, 254, 1),
+            fontWeight: FontWeight.w600,
           ),
+          textAlign: TextAlign.left,
+          softWrap: true,
+          maxLines: 10,
         ),
-        const SizedBox(height: 10)
-      ],
+      ),
     );
   }
 }

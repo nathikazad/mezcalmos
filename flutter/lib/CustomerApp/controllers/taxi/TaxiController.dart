@@ -33,9 +33,7 @@ class TaxiController extends GetxController {
         .child(onlineTaxiDrivers())
         .once();
 
-    _onlineTaxiDrivers.value.keys.forEach((String taxiId) {
-      // _temp.add(value)
-
+    _onlineTaxiDrivers.value.keys.forEach((taxiId) {
       final OnlineTaxiDriver _driver = OnlineTaxiDriver.fromData(
           taxiId: taxiId, data: _onlineTaxiDrivers.value[taxiId]);
       if (_driver.isDriverAvailable()) {

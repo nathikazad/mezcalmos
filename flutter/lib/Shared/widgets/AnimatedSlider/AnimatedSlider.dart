@@ -37,21 +37,24 @@ class _AnimatedSliderState extends State<AnimatedSlider> {
   Widget build(BuildContext context) {
     return _getRootWidget(
         child: AnimatedContainer(
+            clipBehavior: Clip.none,
             duration: Duration(seconds: 1),
             height: widget.animatedSliderController.sliderHeight,
             curve: widget
                 .animatedSliderController.curveAnimation, // Curves.easeInExpo,
             width: widget.animatedSliderController.sliderWidth, // Get.width,
             decoration: BoxDecoration(
-                color: widget
-                    .animatedSliderController.backgroundColor, //Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black38, blurRadius: 10, spreadRadius: 5)
-                ],
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20))),
+              color: widget
+                  .animatedSliderController.backgroundColor, //Colors.white,
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black38, blurRadius: 10, spreadRadius: 5)
+              ],
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
             child: widget.child));
   }
 

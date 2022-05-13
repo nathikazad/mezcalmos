@@ -20,7 +20,7 @@ class RecreateOrderButton extends StatelessWidget {
       height: getSizeRelativeToScreen(16, Get.height, Get.width),
       width: getSizeRelativeToScreen(16, Get.height, Get.width),
       decoration: BoxDecoration(
-        color: Colors.deepPurple.shade400,
+        color: Color.fromRGBO(103, 121, 254, 0.29),
         borderRadius: BorderRadius.circular(4),
       ),
       child: GestureDetector(
@@ -29,8 +29,8 @@ class RecreateOrderButton extends StatelessWidget {
         },
         child: Center(
           child: Icon(
-            Icons.replay_circle_filled_sharp,
-            color: Colors.white,
+            Icons.refresh_outlined,
+            color: Color.fromRGBO(103, 121, 254, 1),
             size: 20,
           ),
         ),

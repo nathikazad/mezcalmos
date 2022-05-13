@@ -71,7 +71,7 @@ class _MezToolTipState extends State<MezToolTip> {
   /// the main Black Overlay that sits on top of the ParentView.
   Container blackTopOverlay() {
     return Container(
-      color: Colors.black26,
+      color: Colors.transparent,
       width: Get.width,
       height: Get.height,
       child: Stack(
@@ -102,11 +102,19 @@ class _MezToolTipState extends State<MezToolTip> {
         padding: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.grey,
-            width: 1,
-          ),
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(2.47, 2.47),
+              blurRadius: 8.23,
+              spreadRadius: 0,
+              color: Color.fromRGBO(175, 175, 175, 0.5),
+            ),
+          ],
+          // border: Border.all(
+          //   color: Colors.grey,
+          //   width: 1,
+          // ),
         ),
         child: widget.hintWidgetsList[this.currentHintIndex.value].hintWidget);
   }
@@ -149,8 +157,8 @@ class _MezToolTipState extends State<MezToolTip> {
             child: Center(
               child: Icon(
                 Icons.close,
-                size: 15,
-                color: Colors.purple.shade400,
+                size: 14,
+                color: Color.fromARGB(255, 120, 120, 120),
               ),
             ),
           ),

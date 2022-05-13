@@ -54,7 +54,7 @@ class ViewTaxiOrderScreenWidgets {
           child: Container(
             height: 50,
             decoration: BoxDecoration(
-              color: Colors.red.shade400,
+              color: Color.fromRGBO(249, 216, 214, 1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
@@ -62,7 +62,7 @@ class ViewTaxiOrderScreenWidgets {
                 _i18n()['cancel'],
                 style: TextStyle(
                   fontFamily: "psr",
-                  color: Colors.white,
+                  color: Color.fromRGBO(226, 17, 50, 0.93),
                   fontWeight: FontWeight.w300,
                   fontSize: 18,
                 ),

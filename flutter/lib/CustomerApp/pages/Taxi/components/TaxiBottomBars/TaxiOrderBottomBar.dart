@@ -6,11 +6,12 @@ import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBarComponents.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/RecreateOrderBtn.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
+import 'package:sizer/sizer.dart';
+
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -43,10 +44,18 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                   : 0),
           height: 70,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(
-                  width: 1, color: Theme.of(context).scaffoldBackgroundColor),
-              color: Colors.white),
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(2.47, 2.47),
+                blurRadius: 8.23,
+                color: Color.fromRGBO(175, 175, 175, 0.25),
+              )
+            ],
+            // border: Border.all(
+            //     width: 1, color: Theme.of(context).scaffoldBackgroundColor),
+            color: Colors.white,
+          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: buildBottomByStatus(context),
@@ -190,14 +199,20 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.mark_email_read, size: 14.sp),
-          const SizedBox(width: 10),
           Obx(
-            () => Text(
-              widget.order.value!.numberOfTaxiReadNotification().toString(),
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+            () => Center(
+              child: Text(
+                widget.order.value!.numberOfTaxiReadNotification().toString(),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Montserrat',
+                ),
+              ),
             ),
-          )
+          ),
+          const SizedBox(width: 10),
+          Icon(Icons.taxi_alert_rounded, size: 26),
         ],
       ),
     );
@@ -212,66 +227,119 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             incrementDecrementPrice(),
             VerticalDivider(),
             getHowManyDriverReadTheOrder(),
-            VerticalDivider(),
-            rightRouteInfos(widget.order.value!.toTaxiRequest())
+            if (orderController
+                .hasNewAdminMessageNotification(widget.order.value!.orderId))
+              VerticalDivider(),
+            if (orderController
+                .hasNewAdminMessageNotification(widget.order.value!.orderId))
+              messageBtn(order: widget.order)
           ],
         );
         break;
 
       case TaxiOrdersStatus.DroppedOff:
         _widgies.assignAll(<Widget>[
-          taxiAvatarAndName(
-              description: _i18n()?['rideFinished'],
-              pContext: pContext,
-              order: widget.order.value!),
-          VerticalDivider(),
-          rideCost(
-              widget.order.value!.toTaxiRequest().estimatedPrice.toString()),
-          VerticalDivider(),
-          messageBtn(
-              order: widget.order, margin: EdgeInsets.symmetric(horizontal: 6))
+          avatarWithTitleAndDesc(
+            // description: _i18n()?['rideFinished'],
+            description: "Reached your destination.",
+            pContext: pContext,
+            order: widget.order.value!,
+            title: 'Dropped off',
+            asset: widget.order.value?.driver?.image,
+          ),
+          SizedBox(height: 35, child: VerticalDivider()),
+          messageBtn(order: widget.order)
         ]);
         break;
-      case TaxiOrdersStatus.Expired:
+      case TaxiOrdersStatus.OnTheWay:
+        final String _driverName = widget.order.value?.driver?.name ?? 'Saad';
+        _widgies.assignAll(<Widget>[
+          avatarWithTitleAndDesc(
+            // description: _i18n()?['rideFinished'],
+            description: "$_driverName is on the way to pick you up.",
+            pContext: pContext,
+            order: widget.order.value!,
+            title:
+                '$_driverName ${widget.order.value?.driver?.taxiNumber ?? "12-123"}',
+            asset: widget.order.value?.driver?.image,
+          ),
+          SizedBox(height: 35, child: VerticalDivider()),
+          messageBtn(order: widget.order),
+          SizedBox(height: 35, child: VerticalDivider()),
+          cancelBtn(widget.order.value!)
+        ]);
+
+        break;
+      case TaxiOrdersStatus.InTransit:
+        _widgies.assignAll(<Widget>[
+          avatarWithTitleAndDesc(
+            // description: _i18n()?['rideFinished'],
+            description: "On the way to your destination.",
+            pContext: pContext,
+            order: widget.order.value!,
+            title: 'In transit',
+            imgUrl: widget.order.value?.driver?.image,
+          ),
+          SizedBox(height: 35, child: VerticalDivider()),
+          messageBtn(order: widget.order),
+          SizedBox(height: 35, child: VerticalDivider()),
+          cancelBtn(widget.order.value!)
+        ]);
+
+        break;
+      case TaxiOrdersStatus.CancelledByTaxi:
         _widgies.assignAll(
           <Widget>[
-            taxiAvatarAndName(
+            avatarWithTitleAndDesc(
               pContext: pContext,
               asset: taxi_driver_marker_asset,
-              name:
-                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n()?['ride']}.",
-              description: _i18n()?['rideExpired'],
+              isCanelIcon: true,
+              title: 'Cancelled by taxi',
+              // "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n()?['ride']}.",
+              // description: _i18n()?['rideCancelledByTaxi'],
+              description: "The driver has camcelled the ride.",
               order: widget.order.value!,
             ),
             RecreateOrderButton(
                 taxiRequest: widget.order.value!.toTaxiRequest())
           ],
         );
+
         // widget.bottomPadding = 10.0;
         break;
-
-      case TaxiOrdersStatus.CancelledByTaxi:
-        _widgies.assignAll([
-          taxiAvatarAndName(
-              order: widget.order.value!,
+      case TaxiOrdersStatus.Expired:
+        _widgies.assignAll(
+          <Widget>[
+            avatarWithTitleAndDesc(
               pContext: pContext,
-              description: _i18n()?['rideCancelledByTaxi']),
-          messageBtn(
-              order: widget.order, margin: EdgeInsets.symmetric(horizontal: 6)),
-          RecreateOrderButton(taxiRequest: widget.order.value!.toTaxiRequest()),
-        ]);
+              isCanelIcon: true,
+              avatarGradient: null,
+              title: 'Expired',
+              description: _i18n()?['rideExpired'],
+              order: widget.order.value!,
+            ),
+            InkWell(
+              onTap: () async =>
+                  showConfirmationDialog(context, onYesClick: () {}),
+              child: Icon(Icons.abc_outlined),
+            )
+            // RecreateOrderButton(
+            //     taxiRequest: widget.order.value!.toTaxiRequest())
+          ],
+        );
         // widget.bottomPadding = 10.0;
         break;
 
       case TaxiOrdersStatus.CancelledByCustomer:
         _widgies.assignAll(
           <Widget>[
-            taxiAvatarAndName(
+            avatarWithTitleAndDesc(
               order: widget.order.value!,
               pContext: pContext,
               asset: taxi_driver_marker_asset,
-              name:
-                  "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n()?['ride']}.",
+              isCanelIcon: true,
+              title: 'Canceled',
+              // "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n()?['ride']}.",
               description: _i18n()?['rideCancelledByCustomer'],
             ),
             RecreateOrderButton(
@@ -282,54 +350,75 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
         // widget.bottomPadding = 10.0;
         break;
       case TaxiOrdersStatus.ForwardingToLocalCompany:
-        _widgies.assignAll(<Widget>[
-          CircleAvatar(
-            radius: 17,
-            child: Icon(
-              Icons.local_taxi,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(width: 5),
-          Flexible(
-            fit: FlexFit.tight,
-            flex: 7,
-            child: Text(
-              '${_i18n()["forwarding"]}',
-              style: Theme.of(pContext)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(fontSize: 11.sp),
-            ),
-          ),
-          Spacer(),
-          buildMsgAndCancelBtn(widget.order)
-        ]);
+        _widgies.assignAll(
+          <Widget>[
+            avatarWithTitleAndDesc(
+                isCanelIcon: true,
+                order: widget.order.value!,
+                pContext: pContext,
+                avatarGradient: [
+                  Color.fromRGBO(172, 89, 252, 1),
+                  Color.fromRGBO(103, 121, 254, 1),
+                ],
+                avatarChild: Icon(
+                  Icons.local_taxi_rounded,
+                  color: Colors.white,
+                ),
+                title: 'Forwarding',
+                // "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n()?['ride']}.",
+                description: "Calling local company for a driver."
+                //  _i18n()?['forwarding'],
+                ),
+            SizedBox(height: 35, child: VerticalDivider()),
+            messageBtn(order: widget.order),
+            SizedBox(height: 35, child: VerticalDivider()),
+            cancelBtn(widget.order.value!)
+          ],
+        );
         // widget.bottomPadding = 10.0;
         break;
       case TaxiOrdersStatus.ForwardingSuccessful:
         _widgies.assignAll(
           <Widget>[
-            Icon(
-              Icons.check_circle,
-              color: Colors.green,
-              size: 30.sp,
-            ),
-            const SizedBox(width: 10),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    " ${_i18n()["taxiNumber"]} : ${widget.order.value!.driver!.taxiNumber}",
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Text(_i18n()["forwardSuccess"],
-                      style: Theme.of(pContext).textTheme.subtitle1)
-                ],
+            avatarWithTitleAndDesc(
+              order: widget.order.value!,
+              pContext: pContext,
+              isCanelIcon: true,
+              avatarGradient: [
+                Color.fromRGBO(172, 89, 252, 1),
+                Color.fromRGBO(103, 121, 254, 1),
+              ],
+              avatarChild: Icon(
+                Icons.local_taxi_rounded,
+                color: Colors.white,
               ),
+              title: 'Forwarded',
+              // "${Get.find<AuthController>().fireAuthUser!.displayName}'s ${_i18n()?['ride']}.",
+              description: "Taxi 21-123 has been sent to you.",
+              //  "${_i18n()?['forwardSuccess']}",
             ),
+            SizedBox(height: 35, child: VerticalDivider()),
+            messageBtn(order: widget.order),
+            // Icon(
+            //   Icons.check_circle,
+            //   color: Colors.green,
+            //   size: 30.sp,
+            // ),
+            // const SizedBox(width: 10),
+            // Flexible(
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: <Widget>[
+            //       Text(
+            //         " ${_i18n()["taxiNumber"]} : ${widget.order.value!.driver!.taxiNumber}",
+            //         style: Theme.of(context).textTheme.bodyText1,
+            //       ),
+            //       Text(_i18n()["forwardSuccess"],
+            //           style: Theme.of(pContext).textTheme.subtitle1)
+            //     ],
+            //   ),
+            // ),
           ],
         );
         // widget.bottomPadding = 10.0;
@@ -360,9 +449,10 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
         );
         // widget.bottomPadding = 10.0;
         break;
+
       default:
         _widgies.assignAll([
-          taxiAvatarAndName(
+          avatarWithTitleAndDesc(
             order: widget.order.value!,
             pContext: pContext,
           ),
@@ -376,4 +466,284 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
     }
     return _widgies;
   }
+}
+
+void showConfirmationDialog(
+  BuildContext context, {
+  required void Function() onYesClick,
+  void Function()? onNoClick,
+}) async {
+  return await showDialog(
+      context: context,
+      builder: (ctx) {
+        return Center(
+          child: Container(
+            height: 35.h,
+            width: 80.w,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Flex(
+              direction: Axis.vertical,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Spacer(),
+                Flexible(
+                  flex: 2,
+                  child: Container(
+                    height: 66,
+                    width: 66,
+                    child: Icon(
+                      Icons.close,
+                      color: Color.fromRGBO(252, 89, 99, 1),
+                      size: 33,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(252, 89, 99, 0.12),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 18),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    "Cancel Order",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 11),
+                Flexible(
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      Text(
+                        'Are you sure you’d like to cancel ?',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        'This action cannot be undone.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 18),
+                Flexible(
+                  flex: 2,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: 44,
+                      width: 65.w,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(252, 89, 99, 1),
+                        borderRadius: BorderRadius.circular(9),
+                      ),
+                      child: Center(
+                        child: GestureDetector(
+                          onTap: onYesClick,
+                          child: Text(
+                            'Yes, cancel order',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.34,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 12),
+                Flexible(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      onNoClick?.call();
+                      Get.back<void>(closeOverlays: true);
+                    },
+                    child: Text(
+                      'No',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color.fromRGBO(120, 120, 120, 1),
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16.99,
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer()
+              ],
+            ),
+          ),
+        );
+      });
+}
+
+void showStatusInfoDialog(
+  BuildContext context, {
+  void Function()? onViewOrderClick,
+}) async {
+  return await showDialog(
+      context: context,
+      builder: (ctx) {
+        return Center(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            height: onViewOrderClick == null ? 30.h : 35.h,
+            width: 85.w,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Flex(
+              direction: Axis.vertical,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Flexible(
+                  flex: 3,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        height: 66,
+                        width: 66,
+                        child: Icon(
+                          Icons.local_taxi,
+                          color: Colors.white,
+                          size: 33,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(103, 121, 254, 1),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: -5,
+                        right: -10,
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          child: Center(
+                            child: Icon(
+                              Icons.close,
+                              color: Color.fromRGBO(252, 89, 99, 1),
+                              size: 18,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 235, 236, 1),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 18),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    "Cancelled",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 11),
+                Flexible(
+                  flex: 2,
+                  child: Text(
+                    'Unfortunatly the driver has cancelled the order.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 18),
+                Flexible(
+                  flex: 2,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(225, 228, 255, 1),
+                        borderRadius: BorderRadius.circular(9),
+                      ),
+                      child: Center(
+                        child: GestureDetector(
+                          onTap: () => Get.back<void>(closeOverlays: true),
+                          child: Text(
+                            'Ok',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color.fromRGBO(103, 121, 254, 1),
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.34,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                if (onViewOrderClick != null)
+                  Flexible(
+                    flex: 2,
+                    child: Column(
+                      children: [
+                        SizedBox(height: 12),
+                        GestureDetector(
+                          onTap: onViewOrderClick,
+                          child: Text(
+                            'View Order',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color.fromRGBO(120, 120, 120, 1),
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.99,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+      });
 }
