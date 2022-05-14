@@ -207,7 +207,10 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
             const SizedBox(width: 10),
           Flexible(
             flex: 1,
-            child: viewWidgets.cancelButton(viewController.order.value!.status),
+            child: viewWidgets.cancelButton(
+              viewController.order.value!.status,
+              context,
+            ),
           ),
         ],
       ),

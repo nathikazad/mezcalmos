@@ -1,15 +1,13 @@
+import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
@@ -68,11 +66,10 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
 Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
   final TaxiOrdersStatus newOrdersStatus =
       value['status'].toString().toTaxiOrderStatus();
-  mezDbgPrint(
-      'notif nuuuuuuuuuuuuuuuuuuuuuuuuuuuul :' + newOrdersStatus.toString());
   final Map<String, dynamic> dynamicFields =
       getTaxiOrderStatusFields(newOrdersStatus)!;
   mezDbgPrint(dynamicFields);
+  value['icon'] = dynamicFields['icon'];
   return Notification(
     id: key,
     linkUrl: getTaxiOrderRoute(value['orderId']),
@@ -241,6 +238,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
         "body": "${_i18n()["taxiCancelledBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+        "icon": Material.Icons.close_rounded,
       };
     case TaxiOrdersStatus.Expired:
       return <String, dynamic>{
@@ -248,6 +246,7 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
         "body": "${_i18n()["taxiExpiredBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+        "icon": Material.Icons.restore,
       };
 
     case TaxiOrdersStatus.ForwardingToLocalCompany:

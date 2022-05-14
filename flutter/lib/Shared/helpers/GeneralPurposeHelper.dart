@@ -3,6 +3,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:sizer/sizer.dart';
+import 'package:get/get.dart';
 
 /// This calls will contains all the Formatting Stuff
 class MezFormatter {
@@ -138,6 +140,313 @@ Future<TimeOfDay?> getTimePicker(
         return Theme(
           data: theme,
           child: Transform.scale(scale: .9, child: child!),
+        );
+      });
+}
+
+Future<void> showConfirmationDialog(
+  BuildContext context, {
+  required Future<dynamic> Function() onYesClick,
+  void Function()? onNoClick,
+}) async {
+  final RxBool _clickedYes = false.obs;
+  return showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return Material(
+          color: Colors.transparent,
+          child: Center(
+            child: Container(
+              height: 35.h,
+              width: 80.w,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Spacer(),
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      height: 66,
+                      width: 66,
+                      child: Icon(
+                        Icons.close,
+                        color: Color.fromRGBO(252, 89, 99, 1),
+                        size: 33,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(252, 89, 99, 0.12),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 18),
+                  Flexible(
+                    flex: 1,
+                    child: Text(
+                      "Cancel Order",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 11),
+                  Flexible(
+                    flex: 2,
+                    child: Column(
+                      children: [
+                        Text(
+                          'Are you sure you’d like to cancel ?',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          'This action cannot be undone.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 18),
+                  Flexible(
+                    flex: 2,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: 44,
+                        width: 65.w,
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(252, 89, 99, 1),
+                          borderRadius: BorderRadius.circular(9),
+                        ),
+                        child: Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              _clickedYes.value = true;
+                              onYesClick().then((_) {
+                                Get.back<void>(closeOverlays: true);
+                                _clickedYes.value = false;
+                              });
+                            },
+                            child: Obx(
+                              () => _clickedYes.value
+                                  ? Center(
+                                      child: Container(
+                                        height: 30,
+                                        width: 30,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 1,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  : Text(
+                                      'Yes, cancel order',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16.34,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  Flexible(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        onNoClick?.call();
+                        Get.back<void>(closeOverlays: true);
+                      },
+                      child: Text(
+                        'No',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color.fromRGBO(120, 120, 120, 1),
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16.99,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Spacer()
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+void showStatusInfoDialog(
+  BuildContext context, {
+  void Function()? onViewOrderClick,
+  required String status,
+  required String description,
+  IconData? icon,
+}) async {
+  return await showDialog(
+      context: context,
+      builder: (ctx) {
+        return Material(
+          color: Colors.transparent,
+          child: Center(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              height: onViewOrderClick == null ? 30.h : 35.h,
+              width: 85.w,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    flex: 3,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(
+                          height: 66,
+                          width: 66,
+                          child: Icon(
+                            Icons.local_taxi,
+                            color: Colors.white,
+                            size: 33,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(103, 121, 254, 1),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        if (icon != null)
+                          Positioned(
+                            bottom: -5,
+                            right: -10,
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              child: Center(
+                                child: Icon(
+                                  icon,
+                                  color: Color.fromRGBO(252, 89, 99, 1),
+                                  size: 18,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(255, 235, 236, 1),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 18),
+                  Flexible(
+                    flex: 1,
+                    child: Text(
+                      status,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 11),
+                  Flexible(
+                    flex: 2,
+                    child: Text(
+                      description,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 18),
+                  Flexible(
+                    flex: 2,
+                    child: GestureDetector(
+                      onTap: () => Get.back<void>(closeOverlays: true),
+                      child: Container(
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(225, 228, 255, 1),
+                          borderRadius: BorderRadius.circular(9),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Ok',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color.fromRGBO(103, 121, 254, 1),
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.34,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (onViewOrderClick != null)
+                    Flexible(
+                      flex: 2,
+                      child: Column(
+                        children: [
+                          SizedBox(height: 12),
+                          GestureDetector(
+                            onTap: onViewOrderClick,
+                            child: Text(
+                              'View Order',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color.fromRGBO(120, 120, 120, 1),
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16.99,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
         );
       });
 }

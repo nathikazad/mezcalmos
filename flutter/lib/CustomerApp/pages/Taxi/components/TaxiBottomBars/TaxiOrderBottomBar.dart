@@ -322,7 +322,6 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           ],
         );
 
-        // widget.bottomPadding = 10.0;
         break;
       case TaxiOrdersStatus.Expired:
         _widgies.assignAll(
@@ -335,13 +334,9 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
               description: _i18n()?['rideExpired'],
               order: widget.order.value!,
             ),
-            // InkWell(
-            //   onTap: () async =>
-            //       showConfirmationDialog(context, onYesClick: () {}),
-            //   child: Icon(Icons.abc_outlined),
-            // )
             RecreateOrderButton(
-                taxiRequest: widget.order.value!.toTaxiRequest())
+              taxiRequest: widget.order.value!.toTaxiRequest(),
+            )
           ],
         );
         // widget.bottomPadding = 10.0;

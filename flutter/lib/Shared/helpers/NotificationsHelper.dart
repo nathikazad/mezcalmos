@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
@@ -45,34 +46,47 @@ Future<void> _displayNotification(notifs.Notification notification) async {
 Future<void> decideWhichButtonDialogToUse(
     notifs.Notification notification) async {
   if (Get.currentRoute == notification.linkUrl)
-    await oneButtonDialog(
-      title: notification.title,
-      body: notification.body,
-      buttonStyle: MezDialogButtonStyle(
-        buttonText: "Ok",
-        buttonColor: Color(0xffffffff),
-        buttonShadowColor: Color(0xfffdfdfd),
-      ),
+    showStatusInfoDialog(
+      Get.context!,
+      status: notification.title,
+      description: notification.body,
+      icon: notification.variableParams['icon'],
     );
+  // await oneButtonDialog(
+  //   title: notification.title,
+  //   body: notification.body,
+  //   buttonStyle: MezDialogButtonStyle(
+  //     buttonText: "Ok",
+  //     buttonColor: Color(0xffffffff),
+  //     buttonShadowColor: Color(0xfffdfdfd),
+  //   ),
+  // );
   else
-    await twoButtonDialog(
-      title: notification.title,
-      body: notification.body,
-      leftButton: MezDialogButtonStyle(
-        buttonText: "Ok",
-        buttonColor: Color(0xffffffff),
-        buttonShadowColor: Color(0xfffdfdfd),
-      ),
-      rightButton: MezDialogButtonStyle(
-        buttonText: notification.linkText ?? _i18n()['view'],
-        buttonColor: Color(0xffffffff),
-        buttonShadowColor: Color(0xfffdfdfd),
-      ),
-      rightButtonCallback: () {
-        return Get.toNamed(notification.linkUrl);
-      },
-      leftButtonCallback: () {},
+    showStatusInfoDialog(
+      Get.context!,
+      status: notification.title,
+      description: notification.body,
+      icon: notification.variableParams['icon'],
+      onViewOrderClick: () => Get.toNamed(notification.linkUrl),
     );
+  // await twoButtonDialog(
+  //   title: notification.title,
+  //   body: notification.body,
+  //   leftButton: MezDialogButtonStyle(
+  //     buttonText: "Ok",
+  //     buttonColor: Color(0xffffffff),
+  //     buttonShadowColor: Color(0xfffdfdfd),
+  //   ),
+  //   rightButton: MezDialogButtonStyle(
+  //     buttonText: notification.linkText ?? _i18n()['view'],
+  //     buttonColor: Color(0xffffffff),
+  //     buttonShadowColor: Color(0xfffdfdfd),
+  //   ),
+  //   rightButtonCallback: () {
+  //     return Get.toNamed(notification.linkUrl);
+  //   },
+  //   leftButtonCallback: () {},
+  // );
 }
 
 void notificationSnackBar(
