@@ -1,7 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/NearByOnlineTaxiDriversWidget.dart';
+import 'package:mezcalmos/CustomerApp/components/OrderTimeTopBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/components/CounterOfferWidgets.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/components/ViewTaxiOrderScreenWidgets.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/controllers/ViewTaxiOrderController.dart';
@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:intl/intl.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
@@ -93,7 +94,29 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
           mGoogleMap(),
           viewWidgets.absorbOrIgnoreUserTapWidget(),
           TopBar(order: viewController.order.value!),
+          if (viewController.order.value?.scheduledTime != null)
+            Positioned(
+              top: 78,
+              left: 10,
+              right: 10,
+              child: OrderTimeTopBar(
+                barText: DateFormat('EEEE dd / MM / y').format(
+                      viewController.order.value!.scheduledTime!,
+                    ) +
+                    ' at ' +
+                    DateFormat('hh:mm a').format(
+                      viewController.order.value!.scheduledTime!,
+                    ),
+              ),
+            ),
           Obx(() => bottomButtons()),
+          Positioned(
+            bottom: 140,
+            right: 15,
+            child: NearByOnlineTaxiDrivers(
+              centerLocation: Rxn(viewController.order.value?.from),
+            ),
+          ),
           TaxiOrderBottomBar(order: viewController.order),
           viewWidgets.getToolTip(),
           counterOfferWidgets.counterOffersBottomSheet(context),
@@ -158,8 +181,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                           width: 20,
                         ),
                         Text(
-                          viewController.order.value!.status
-                              .toFirebaseFormatString(),
+                          'Looking for taxi',
                           style: TextStyle(
                             fontFamily: "Montserrat",
                             color: Color.fromRGBO(126, 126, 126, 1),
@@ -192,78 +214,3 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
     );
   }
 }
-
-// List<Widget> _getRowContentByStatus(TaxiOrder order) {
-//   List<Widget> lst = <Widget>[];
-//   switch (order.status) {
-//     case TaxiOrdersStatus.OnTheWay:
-//       lst.addAll(
-//         [
-//           Container(
-//             height: 40,
-//             width: 40,
-//             decoration: BoxDecoration(
-//               color: Colors.grey,
-//               image: DecorationImage(
-//                 image: Image.network(order.driver!.image).image,
-//                 fit: BoxFit.contain,
-//               ),
-//             ),
-//           ),
-//           Column(
-//             children: [
-//               Text("${order.driver!.name} - ${order.driver!.taxiNumber}"),
-//               Text("${order.driver!.name} is on the way to pick you up."),
-//             ],
-//           ),
-//           VerticalDivider(),
-//           Stack(
-//             children: [
-//               Icon(
-//                 Icons.textsms_sharp,
-//                 size: 30,
-//               ),
-//             ],
-//           ),
-//           VerticalDivider(),
-//         ],
-//       );
-//       break;
-//     case TaxiOrdersStatus.LookingForTaxi:
-//       lst.addAll(
-//         [
-//           Container(
-//             height: 40,
-//             width: 40,
-//             decoration: BoxDecoration(
-//               color: Colors.grey,
-//               image: DecorationImage(
-//                 image: Image.network(order.driver!.image).image,
-//                 fit: BoxFit.contain,
-//               ),
-//             ),
-//           ),
-//           Column(
-//             children: [
-//               Text("${order.driver!.name} - ${order.driver!.taxiNumber}"),
-//               Text("${order.driver!.name} is on the way to pick you up."),
-//             ],
-//           ),
-//           VerticalDivider(),
-//           Stack(
-//             children: [
-//               Icon(
-//                 Icons.textsms_sharp,
-//                 size: 30,
-//               ),
-//             ],
-//           ),
-//           VerticalDivider(),
-//         ],
-//       );
-//       break;
-//     default:
-//   }
-
-//   return lst;
-// }

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
@@ -17,7 +16,9 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Taxi']['RequestTaxiScreen'];
@@ -44,21 +45,12 @@ class RequestTaxiController {
 
   /// pickedFromTo
   RxBool pickedFromTo = false.obs;
-
-  /// Timer
-  Timer? timer;
-
   RxList<OnlineTaxiDriver> onlineDrivers = <OnlineTaxiDriver>[].obs;
 
-  void _startPollingOnlineDrivers() {
-    _startFetchingOnlineDrivers();
-    // then keep it periodic each 10s
-    timer?.cancel();
-    timer = null;
-    timer = Timer.periodic(Duration(seconds: 10), (Timer timer) {
-      _startFetchingOnlineDrivers();
-    });
-  }
+  Rx<DateTime> scheduleTime = DateTime.now().add(Duration(minutes: 15)).obs;
+
+  final AnimatedSliderController sliderController =
+      AnimatedSliderController(maxSliderHeight: 52.h);
 
   /// this is called at initState time , loads up the map and set the current location as the user's current loc.
   void initMapAndStartFetchingOnlineDrivers() {
@@ -80,13 +72,11 @@ class RequestTaxiController {
           " GeoLoc.Location().getLocation ==> ${taxiRequest.value.from}");
       updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
       locationPickerController.setLocation(taxiRequest.value.from!);
-      _startPollingOnlineDrivers();
     });
   }
 
   /// this is called at initState time , when there a TaxiOrder that the user want to re-create.
   void initiateTaxiOrderReCreation(TaxiRequest orderToReCreate) {
-    _startPollingOnlineDrivers();
     taxiRequest.value = orderToReCreate;
 
     locationPickerController.setOnMapTap(onTap: () {
@@ -124,41 +114,6 @@ class RequestTaxiController {
         .then((_) => locationPickerController.showConfirmButton());
     pickedFromTo.value = true;
     locationPickerController.lockInAutoZoomAnimation();
-  }
-
-  /// Calls `TaxiController.fecthOnlineTaxiDrivers` and check if within 5KM then returns the driver.
-  void _startFetchingOnlineDrivers() {
-    controller.fetchOnlineTaxiDrivers().then((List<OnlineTaxiDriver> drivers) {
-      // Weo loop throught each driver and we call the mgoogleMap refresh from withing the controller
-      List<OnlineTaxiDriver> _tmpLst = <OnlineTaxiDriver>[];
-
-      drivers.forEach((OnlineTaxiDriver driver) {
-        final LatLng driverLocation =
-            LatLng(driver.position['lat'], driver.position['lng']);
-
-        final bool isWithinRange = MapHelper.calculateDistance(
-                Location.buildLocationData(
-                    driverLocation.latitude, driverLocation.longitude),
-                Location.buildLocationData(
-                    locationPickerController.location.value!.latitude,
-                    locationPickerController.location.value!.longitude)) <=
-            5;
-
-        if (isWithinRange) {
-          _tmpLst.add(driver);
-          // locationPickerController.addOrUpdateTaxiDriverMarker(
-          //     driver.taxiId, driverLocation,
-          //     markerTitle: driver.name);
-        }
-        // we remove if there is already
-        // else {
-        //   locationPickerController.removeMarkerById(driver.taxiId);
-        // }
-      });
-
-      onlineDrivers.clear();
-      onlineDrivers.addAll(_tmpLst);
-    });
   }
 
   /******************************  EVENT HANDLERS ************************************/
@@ -313,8 +268,9 @@ class RequestTaxiController {
     return roundedKm <= 1 ? 35 : roundedKm * 15;
   }
 
-  void dispose() {
-    timer?.cancel();
-    timer = null;
+  void dispose() {}
+
+  void scheduleClick() {
+    sliderController.slideUp();
   }
 }

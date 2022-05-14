@@ -123,7 +123,9 @@ class TaxiOrder extends Order {
         rideStartTime: data['rideStartTime'],
         status: data['status'].toString().toTaxiOrderStatus(),
         acceptRideTime: data['acceptRideTime'],
-        scheduledTime: data['scheduledTime'],
+        scheduledTime: data['scheduledTime'] == null
+            ? null
+            : DateTime.parse(data['scheduledTime']),
         cost: data['cost'] ?? 35,
         // from: Location("", LocationData.fromMap({"lat":})),
         from: Location.fromFirebaseData(data['from']),

@@ -101,7 +101,7 @@ class _MezToolTipState extends State<MezToolTip> {
     return Container(
         padding: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color.fromRGBO(225, 228, 255, 1),
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
@@ -124,44 +124,45 @@ class _MezToolTipState extends State<MezToolTip> {
   /// [x1, y1, x2, y2] are comming from [MezToolTipHint] Object.
   AnimatedPositioned toolTipTriangle() {
     return AnimatedPositioned(
-        duration: Duration(milliseconds: 500),
-        left: widget.hintWidgetsList[currentHintIndex.value].left,
-        top: widget.hintWidgetsList[currentHintIndex.value].top,
-        right: widget.hintWidgetsList[currentHintIndex.value].right,
-        bottom: widget.hintWidgetsList[currentHintIndex.value].bottom,
-        child: CustomPaint(
-            painter: ToolTipTrianglePainter(backGroundColor: Colors.white)));
+      duration: Duration(milliseconds: 500),
+      left: widget.hintWidgetsList[currentHintIndex.value].left,
+      top: widget.hintWidgetsList[currentHintIndex.value].top,
+      right: widget.hintWidgetsList[currentHintIndex.value].right,
+      bottom: widget.hintWidgetsList[currentHintIndex.value].bottom,
+      child: CustomPaint(
+        painter: ToolTipTrianglePainter(
+          backGroundColor: Color.fromRGBO(225, 228, 255, 1),
+        ),
+      ),
+    );
   }
 
   /// this is the Close Button on the toolTip with it's onTap event.
   Positioned toolTipCloseButton() {
     return Positioned(
-        top: 5,
-        right: 5,
-        child: InkWell(
-          onTap: () {
-            if (currentHintIndex.value == widget.hintWidgetsList.length - 1 &&
-                widget.applyCacheIncrementing) {
-              Get.find<TaxiController>().increaseNumOfTimesToolTipShownToUser();
-            }
-            // this is user in case we want some advanced stuff later on , on each hint close.
-            widget.hintWidgetsList[currentHintIndex.value].onHintClose?.call();
+      top: 5,
+      right: 5,
+      child: InkWell(
+        onTap: () {
+          if (currentHintIndex.value == widget.hintWidgetsList.length - 1 &&
+              widget.applyCacheIncrementing) {
+            Get.find<TaxiController>().increaseNumOfTimesToolTipShownToUser();
+          }
+          // this is user in case we want some advanced stuff later on , on each hint close.
+          widget.hintWidgetsList[currentHintIndex.value].onHintClose?.call();
 
-            currentHintIndex.value += 1;
-          },
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.grey.shade50, shape: BoxShape.circle),
-            height: 20,
-            width: 20,
-            child: Center(
-              child: Icon(
-                Icons.close,
-                size: 14,
-                color: Color.fromARGB(255, 120, 120, 120),
-              ),
-            ),
+          currentHintIndex.value += 1;
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              color: Color.fromRGBO(225, 228, 255, 1), shape: BoxShape.circle),
+          height: 20,
+          width: 20,
+          child: Center(
+            child: Icon(Icons.close, size: 14, color: Colors.black),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

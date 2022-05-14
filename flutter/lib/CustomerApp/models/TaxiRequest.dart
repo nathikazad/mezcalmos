@@ -43,7 +43,7 @@ class TaxiRequest {
     to = loc;
   }
 
-  void setScheduledTime(DateTime scheduledTime) {
+  void setScheduledTime(DateTime? scheduledTime) {
     this.scheduledTime = scheduledTime;
   }
 

@@ -17,6 +17,9 @@ class RideReadByTaxisHint extends StatelessWidget {
             textAlign: TextAlign.center,
             softWrap: true,
             maxLines: 10,
+            style: TextStyle(
+              color: Color.fromRGBO(103, 121, 254, 1),
+            ),
           ),
         ),
         const SizedBox(height: 10),

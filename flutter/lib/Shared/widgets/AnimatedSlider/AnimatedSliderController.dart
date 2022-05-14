@@ -54,4 +54,8 @@ class AnimatedSliderController {
     if (this.sliderHeight != _minSliderHeight)
       this.sliderHeight = _minSliderHeight;
   }
+
+  void refreshSliderState() {
+    _sliderHeight.refresh();
+  }
 }

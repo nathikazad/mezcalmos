@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Taxi"]
@@ -89,7 +90,7 @@ class ViewTaxiOrderScreenWidgets {
       ),
       MezToolTipHint(
         hintWidget: RideReadByTaxisHint(),
-        left: 199,
+        left: 60.w,
         bottom: 150.5,
         bodyLeft: 20,
         bodyRight: 20,
