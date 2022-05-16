@@ -6,14 +6,32 @@ import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
+enum RestaurantsView { Rows, Grid }
+
+extension ParseRestaurantsViewToString on RestaurantsView {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToRestaurantsView on String {
+  RestaurantsView toRestaurantsView() {
+    return RestaurantsView.values
+        .firstWhere((RestaurantsView e) => e.toFirebaseFormatString() == this);
+  }
+}
+
 class Restaurant extends Service {
   static String kNoCategoryNode = "noCategory";
   LanguageMap? description;
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
+  RestaurantsView restaurantsView;
   Restaurant(
       {required ServiceInfo userInfo,
       required this.description,
+      this.restaurantsView = RestaurantsView.Rows,
       Schedule? schedule,
       required ServiceState restaurantState})
       : super(info: userInfo, schedule: schedule, state: restaurantState);
@@ -31,6 +49,13 @@ class Restaurant extends Service {
           convertToLanguageMap(restaurantData["details"]["description"]);
     }
 
+    RestaurantsView restaurantsView = RestaurantsView.Rows;
+    if (restaurantData["details"]["restaurantsView"] != null) {
+      restaurantsView = restaurantData["details"]["restaurantsView"]
+          .toString()
+          .toRestaurantsView();
+    }
+
     final Schedule? schedule = restaurantData["details"]["schedule"] != null
         ? Schedule.fromData(restaurantData["details"]["schedule"])
         : null;
@@ -38,7 +63,8 @@ class Restaurant extends Service {
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
         description: description ?? null,
         schedule: schedule,
-        restaurantState: restaurantState);
+        restaurantState: restaurantState,
+        restaurantsView: restaurantsView);
     restaurantData["menu2"].forEach((categoryId, categoryData) {
       restaurant._categories.add(Category.fromData(categoryId, categoryData));
     });
