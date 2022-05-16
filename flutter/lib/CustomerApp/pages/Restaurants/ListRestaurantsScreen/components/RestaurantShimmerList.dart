@@ -13,7 +13,8 @@ class RestaurantShimmerList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      shrinkWrap: true,
+      // padding: const EdgeInsets.symmetric(vertical: 8),
       itemCount: 20,
       itemBuilder: (_, int index) {
         return const _RestaurantShimmerCard();

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,8 +10,8 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -34,7 +35,7 @@ class _WrapperState extends State<Wrapper> {
     // this will execute first and much faster since it's a microtask.
     Future<void>.microtask(() {
       handleAuthStateChange(authController.fireAuthUser);
-      authController.authStateStream.listen((user) {
+      authController.authStateStream.listen((fireAuth.User? user) {
         handleAuthStateChange(user);
       });
     }).then((_) {
@@ -104,7 +105,6 @@ class _WrapperState extends State<Wrapper> {
   }
 
   Future<void> handleAuthStateChange(fireAuth.User? user) async {
-
     // We should Priotorize the AppNeedsUpdate route to force users to update
     if (Get.currentRoute != kAppNeedsUpdate) {
       if (user == null) {
@@ -120,7 +120,7 @@ class _WrapperState extends State<Wrapper> {
         await waitTillUserInfoLoaded();
         redirectIfUserInfosNotSet();
       }
-    } 
+    }
   }
 
   Future<void> waitTillUserInfoLoaded() {
@@ -131,7 +131,7 @@ class _WrapperState extends State<Wrapper> {
       Get.find<AuthController>()
           .userInfoStream
           .first
-          .then((value) => completer.complete());
+          .then((MainUserInfo? value) => completer.complete());
       return completer.future;
     }
   }

@@ -125,5 +125,8 @@ extension StringToParseOrderType on String {
     return AppType.values.firstWhere((AppType e) => e.toShortString() == this);
   }
 }
+// -----------STYLES CONSTANT ------------------- //
 
 const Color keyAppColor = Color(0xFFAC59FC);
+const Color customerAppColor = Color(0xFF6779FE);
+const Color lightCustomerAppColor = Color(0xFFE1E4FF);

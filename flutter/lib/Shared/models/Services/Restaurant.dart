@@ -57,10 +57,21 @@ class Restaurant extends Service {
     return categories;
   }
 
+  Category? get getNoCategory {
+    if (getItemsWithoutCategory != null &&
+        getItemsWithoutCategory!.isNotEmpty) {
+      final Category noCategory = Category(id: 'noCategory');
+      noCategory.items = getItemsWithoutCategory!;
+      return noCategory;
+    } else {
+      return null;
+    }
+  }
+
   List<Item>? get getItemsWithoutCategory {
     final List<Item>? items = _categories
         .firstWhereOrNull((Category category) => category.id == kNoCategoryNode)
-        ?._items;
+        ?.items;
     items?.sort((Item a, Item b) => a.position.compareTo(b.position));
     return items;
   }
@@ -68,7 +79,7 @@ class Restaurant extends Service {
   Item? findItemById(String id) {
     Item? returnVal;
     _categories.forEach((Category category) {
-      category._items.forEach((Item item) {
+      category.items.forEach((Item item) {
         if (item.id == id) returnVal = item;
       });
     });
@@ -103,11 +114,11 @@ class Category {
   String id;
   LanguageMap? dialog;
   int position = 0;
-  List<Item> _items = <Item>[];
+  List<Item> items = <Item>[];
 
-  List<Item> get items {
+  List<Item> get getItems {
     sortItems();
-    return _items;
+    return items;
   }
 
   Category({
@@ -127,14 +138,14 @@ class Category {
     if (categoryData["dialog"] != null)
       category.dialog = convertToLanguageMap(categoryData["dialog"]);
     categoryData["items"].forEach((itemId, itemData) {
-      category._items.add(Item.itemFromData(itemId, itemData));
+      category.items.add(Item.itemFromData(itemId, itemData));
     });
     category.sortItems();
     return category;
   }
 
   void sortItems() {
-    _items.sort((Item a, Item b) => a.position.compareTo(b.position));
+    items.sort((Item a, Item b) => a.position.compareTo(b.position));
   }
 
   Map<String, dynamic> toJson() {
@@ -142,7 +153,7 @@ class Category {
       "name": name?.toFirebaseFormat(),
       "dialog": dialog?.toFirebaseFormat(),
       "position": position,
-      "items": jsonEncode(_items),
+      "items": jsonEncode(items),
     };
   }
 }

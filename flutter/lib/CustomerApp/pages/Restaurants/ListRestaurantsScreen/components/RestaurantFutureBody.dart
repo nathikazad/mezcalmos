@@ -56,24 +56,21 @@ class _RestaurantBodyDone extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return restaurants.length > 0
-        ? Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: List.generate(
-                  restaurants.length,
-                  (int index) => RestaurantCard(
-                    restaurant: restaurants[index],
-                    onClick: () {
-                      Get.toNamed<void>(
-                        getRestaurantRoute(restaurants[index].info.id),
-                        arguments: restaurants[index],
-                      );
-                    },
-                  ),
-                ).toList(),
-              ),
+    return restaurants.isNotEmpty
+        ? SingleChildScrollView(
+            child: Column(
+              children: List.generate(
+                restaurants.length,
+                (int index) => RestaurantCard(
+                  restaurant: restaurants[index],
+                  onClick: () {
+                    Get.toNamed<void>(
+                      getRestaurantRoute(restaurants[index].info.id),
+                      arguments: restaurants[index],
+                    );
+                  },
+                ),
+              ).toList(),
             ),
           )
         : Center(

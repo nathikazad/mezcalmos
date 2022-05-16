@@ -20,6 +20,11 @@ dependencies:
   ionicons: ^0.1.2
   font_awesome_flutter: ^9.1.0
   google_fonts: ^2.1.0
+  scroll_to_index:
+  rect_getter:
+
+ 
+
 
   # Device Access
   http: ^0.13.3

@@ -28,17 +28,18 @@ class RestaurantCard extends StatelessWidget {
         Get.find<LanguageController>().userLanguageKey;
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
-      margin: EdgeInsets.all(8),
+      // margin: EdgeInsets.all(8),
       child: InkWell(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(10),
         onTap: onClick,
         child: Container(
           width: double.infinity,
-          height: 145,
+          height: 130,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              mezRestuarntCardImage(),
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -64,8 +65,8 @@ class RestaurantCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Icon(
-                              Icons.restaurant_menu,
-                              color: Colors.deepPurple,
+                              Icons.restaurant,
+                              color: Colors.grey.shade800,
                               size: 15,
                             ),
                             const SizedBox(width: 5),
@@ -85,7 +86,6 @@ class RestaurantCard extends StatelessWidget {
                   ),
                 ),
               ),
-              mezRestuarntCardImage(),
             ],
           ),
         ),
@@ -100,8 +100,8 @@ class RestaurantCard extends StatelessWidget {
       height: double.infinity,
       child: ClipRRect(
         borderRadius: BorderRadius.only(
-          topRight: Radius.circular(15),
-          bottomRight: Radius.circular(15),
+          topLeft: Radius.circular(15),
+          bottomLeft: Radius.circular(15),
         ),
         child: Stack(
           children: <Widget>[
@@ -126,9 +126,7 @@ class RestaurantCard extends StatelessWidget {
             Container(
               height: double.infinity,
               width: 150.w,
-              color: restaurant.isOpen()
-                  ? null
-                  : Colors.black.withOpacity(0.5),
+              color: restaurant.isOpen() ? null : Colors.black.withOpacity(0.5),
               child: restaurant.isOpen()
                   ? null
                   : Center(

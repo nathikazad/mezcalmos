@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantLocationCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/workinHoursCart.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -16,8 +15,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class RestaurantInfoTab extends StatelessWidget {
   final Restaurant restaurant;
 
-  const RestaurantInfoTab({Key? key, required this.restaurant})
-      : super(key: key);
+  const RestaurantInfoTab({
+    Key? key,
+    required this.restaurant,
+  }) : super(key: key);
 
   /// LanguageType
   static final LanguageType userLanguage =
@@ -27,33 +28,56 @@ class RestaurantInfoTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Text(
-                '${_i18n()["description"]} :',
-                style: Theme.of(context).textTheme.bodyText1,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        if (restaurant.description![userLanguage] != null &&
+            restaurant.description![userLanguage]!.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                child: Text(
+                  '${_i18n()["description"]} :',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 15),
-              child: Text(restaurant.description?[userLanguage] ?? ""),
-            ),
-            (restaurant.schedule != null)
-                ? getWorkingHoursWidget(restaurant.schedule, context)
-                : Container(),
-            SizedBox(
-              height: 15,
-            ),
-            RestaurantLocationCard(restaurant: restaurant),
-          ],
+              Container(
+                margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 15),
+                child: Text(restaurant.description?[userLanguage] ?? ""),
+              ),
+            ],
+          ),
+        (restaurant.schedule != null)
+            ? getWorkingHoursWidget(restaurant.schedule, context)
+            : Container(),
+        SizedBox(
+          height: 15,
+        ),
+        //   RestaurantLocationCard(restaurant: restaurant),
+      ],
+    );
+  }
+
+  List<Widget> getRestaurantInfoWidgets() {
+    return [
+      Container(
+        child: Text(
+          '${_i18n()["description"]} :',
+          style: Get.textTheme.bodyText1,
         ),
       ),
-    );
+      Container(
+        margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 15),
+        child: Text(restaurant.description?[userLanguage] ?? ""),
+      ),
+      (restaurant.schedule != null)
+          ? getWorkingHoursWidget(restaurant.schedule, Get.context!)
+          : Container(),
+      SizedBox(
+        height: 15,
+      ),
+    ];
   }
 
   Widget getWorkingHoursWidget(Schedule? schedule, BuildContext context) {
