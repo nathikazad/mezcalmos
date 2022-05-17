@@ -46,12 +46,10 @@ Future<void> _displayNotification(notifs.Notification notification) async {
 Future<void> decideWhichButtonDialogToUse(
     notifs.Notification notification) async {
   if (Get.currentRoute == notification.linkUrl)
-    showStatusInfoDialog(
-      Get.context!,
-      status: notification.title,
-      description: notification.body,
-      icon: notification.variableParams['icon'],
-    );
+    showStatusInfoDialog(Get.context!,
+        status: notification.title,
+        description: notification.body,
+        bottomRightIcon: notification.icon);
   // await oneButtonDialog(
   //   title: notification.title,
   //   body: notification.body,
@@ -66,7 +64,7 @@ Future<void> decideWhichButtonDialogToUse(
       Get.context!,
       status: notification.title,
       description: notification.body,
-      icon: notification.variableParams['icon'],
+      bottomRightIcon: notification.icon,
       onViewOrderClick: () => Get.toNamed(notification.linkUrl),
     );
   // await twoButtonDialog(

@@ -307,7 +307,7 @@ void showStatusInfoDialog(
   void Function()? onViewOrderClick,
   required String status,
   required String description,
-  IconData? icon,
+  IconData? bottomRightIcon,
 }) async {
   return await showDialog(
       context: context,
@@ -346,7 +346,7 @@ void showStatusInfoDialog(
                             shape: BoxShape.circle,
                           ),
                         ),
-                        if (icon != null)
+                        if (bottomRightIcon != null)
                           Positioned(
                             bottom: -5,
                             right: -10,
@@ -355,7 +355,7 @@ void showStatusInfoDialog(
                               width: 30,
                               child: Center(
                                 child: Icon(
-                                  icon,
+                                  bottomRightIcon,
                                   color: Color.fromRGBO(252, 89, 99, 1),
                                   size: 18,
                                 ),
