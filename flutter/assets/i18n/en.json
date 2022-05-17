@@ -223,6 +223,8 @@
                         },
                         "OrderSummaryCard": {
                             "totalCost": "Total Cost",
+                            "orderSummary": "Summary",
+                            "orderCost": "Order Cost",
                             "deliveryCost": "Delivery Cost",
                             "total": "Total",
                             "deliveryLocation": "Delivery Location"

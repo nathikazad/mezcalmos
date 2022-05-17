@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -122,17 +123,16 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                       children: <Widget>[
                         InkWell(
                           child: Container(
-                            width: 30,
-                            height: 30,
+                            width: 25,
+                            height: 25,
                             decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(3)),
-                              color: const Color.fromRGBO(237, 237, 237, 1),
+                              shape: BoxShape.circle,
+                              color: lightCustomerAppColor,
                             ),
                             child: const Icon(
                               Icons.edit_outlined,
                               size: 14,
-                              color: Color.fromRGBO(38, 50, 56, 1),
+                              color: customerAppColor,
                             ),
                           ),
                           onTap: widget.onEdit,
@@ -140,19 +140,17 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                         const SizedBox(width: 10),
                         InkWell(
                           child: Container(
-                            width: 30,
-                            height: 30,
+                            width: 25,
+                            height: 25,
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(64)),
-                              color: const Color.fromRGBO(172, 89, 252, 0.8),
+                              color: lightCustomerAppColor,
                             ),
                             child: RotationTransition(
                               turns: _iconTurns,
-                              child: const Icon(
-                                Icons.expand_more,
-                                color: Colors.white,
-                              ),
+                              child: const Icon(Icons.expand_more,
+                                  color: customerAppColor),
                             ),
                           ),
                           onTap: _handleTap,

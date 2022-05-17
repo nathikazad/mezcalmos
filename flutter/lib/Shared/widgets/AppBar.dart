@@ -5,12 +5,14 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:sizer/sizer.dart';
 
 enum AppBarLeftButtonType { Back, Menu, Lang }
 
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {Color bgColor = Colors.white,
     Function? onClick,
+    String? title,
     PreferredSizeWidget? tabBar,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btnIcon;
@@ -61,7 +63,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       break;
   }
   return AppBar(
-    toolbarHeight: 80,
+    toolbarHeight: 65,
     elevation: 0,
     bottom: tabBar,
     automaticallyImplyLeading: false,
@@ -111,9 +113,19 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
               else
                 btnIcon,
               Spacer(),
-              MezcalmosSharedWidgets.fillTitle(actionIcons.length),
+              (title != null)
+                  ? Text(
+                      title,
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w600,
+                        fontSize: 17.sp,
+                        color: Colors.black,
+                      ),
+                    )
+                  : MezcalmosSharedWidgets.fillTitle(actionIcons.length),
               Spacer(),
-              for (var i = 0; i < actionIcons.length; i++) ...<Widget>[
+              for (int i = 0; i < actionIcons.length; i++) ...<Widget>[
                 actionIcons[i]
               ],
             ],

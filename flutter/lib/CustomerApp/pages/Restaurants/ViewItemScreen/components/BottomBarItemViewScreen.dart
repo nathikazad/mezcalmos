@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -61,6 +62,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
 
   Widget addItemToCartButton(TextTheme txt) {
     return Container(
+      height: 60,
       padding: EdgeInsets.only(bottom: 16, right: 5, left: 5, top: 5),
       color: Colors.white,
       child: Row(
@@ -68,6 +70,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
         children: <Widget>[
           const SizedBox(width: 5),
           IncrementalComponent(
+            btnColors: customerAppColor,
             incrementCallback: () {
               widget.cartItem.value!.quantity++;
               widget.cartItem.refresh();
@@ -94,6 +97,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
             fit: FlexFit.tight,
             child: TextButton(
               style: TextButton.styleFrom(
+                shape: RoundedRectangleBorder(),
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                 textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
                       fontWeight: FontWeight.bold,

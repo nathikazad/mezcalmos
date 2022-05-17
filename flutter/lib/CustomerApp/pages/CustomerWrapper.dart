@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
@@ -21,7 +21,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -76,7 +75,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     Get.put(RestaurantController(), permanent: true);
     Get.put(RestaurantsInfoController(), permanent: true);
     Get.put(LaundryController(), permanent: true);
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 
     if (Get.find<AuthController>().fireAuthUser != null) {
       _doIfFireAuthUserIsNotNull();
@@ -97,12 +96,12 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   }
 
   void appReturnFromBackground() {
-    DateTime? lastBgNotAppOpen = Get.find<BackgroundNotificationsController>()
-        .lastTimeBackgroundNotificationOpenedApp;
+    final DateTime? lastBgNotAppOpen =
+        Get.find<BackgroundNotificationsController>()
+            .lastTimeBackgroundNotificationOpenedApp;
     if (lastBgNotAppOpen != null &&
         DateTime.now().difference(lastBgNotAppOpen) >
-            Duration(seconds: 1)) 
-      if (appClosedTime != null &&
+            Duration(seconds: 1)) if (appClosedTime != null &&
         _orderController != null &&
         DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
         Get.currentRoute != kLocationPermissionPage) {
@@ -118,9 +117,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: CustomerAppBar(
-          autoBack: false,
-        ),
+        appBar: CustomerAppBar(),
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             return SingleChildScrollView(

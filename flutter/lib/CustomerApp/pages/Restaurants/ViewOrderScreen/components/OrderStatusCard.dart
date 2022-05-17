@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -73,44 +74,36 @@ class OrderStatusCard extends StatelessWidget {
   }
 
   Widget _orderMessageButton(BuildContext context) {
-    return Material(
-      color: Theme.of(context).primaryColorLight,
-      shape: CircleBorder(),
-      child: InkWell(
-        onTap: () {
-          Get.toNamed<void>(
-            getMessagesRoute(
-              chatId: order.orderId,
-              orderId: order.orderId,
-              recipientType: ParticipantType.Restaurant,
-            ),
-          );
-        },
-        customBorder: const CircleBorder(),
-        child: Stack(
-          children: <Widget>[
-            _messageIcon(context),
-            Obx(
-              () => Get.find<OrderController>()
-                      .orderHaveNewMessageNotifications(order.orderId)
-                  ? _newMessageRedDot(context)
-                  : Container(),
-            )
-          ],
-        ),
+    return Stack(
+      children: <Widget>[
+        _messageIcon(context),
+        Obx(
+          () => Get.find<OrderController>()
+                  .orderHaveNewMessageNotifications(order.orderId)
+              ? _newMessageRedDot(context)
+              : Container(),
+        )
+      ],
+    );
+  }
+
+  Widget _messageIcon(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        Get.toNamed<void>(
+          getMessagesRoute(
+            chatId: order.orderId,
+            orderId: order.orderId,
+            recipientType: ParticipantType.Restaurant,
+          ),
+        );
+      },
+      icon: Icon(
+        Icons.textsms,
+        color: customerAppColor,
       ),
     );
   }
-}
-
-Widget _messageIcon(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.all(12),
-    child: Icon(
-      Icons.textsms,
-      color: Colors.white,
-    ),
-  );
 }
 
 Widget _newMessageRedDot(BuildContext context) {

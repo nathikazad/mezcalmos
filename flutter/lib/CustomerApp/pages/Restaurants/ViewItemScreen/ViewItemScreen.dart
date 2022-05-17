@@ -1,11 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/BottomBarItemViewScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ITemSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ItemOptionCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -13,11 +12,11 @@ import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
-import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:sizer/sizer.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
+
 // ignore_for_file: constant_identifier_names
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
 
@@ -107,56 +106,57 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        appBar: CustomerAppBar(
-          title: currentRestaurant != null
-              ? "${cartItem.value!.item.name[userLanguage]}"
-              : "",
-          autoBack: true,
+        bottomNavigationBar: BottomBarItemViewScreen(
+          currentRestaurantId: currentRestaurant?.info.id,
+          isAvailable: (currentRestaurant?.isOpen() ?? false),
+          cartItem: cartItem,
+          mode: widget.viewItemScreenMode,
         ),
         body: (cartItem.value == null)
             ? Container(
                 alignment: Alignment.center,
                 child: CircularProgressIndicator(),
               )
-            : itemViewScreenBody(context),
+            : itemViewScreenBody(context, cartItem.value!.item),
       ),
     );
   }
 
-  Container itemViewScreenBody(BuildContext context) {
-    return Container(
-        child: Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
+  Widget itemViewScreenBody(BuildContext context, Item item) {
+    return CustomScrollView(
+      slivers: [
+        ItemSliverAppBar(item: item),
+        SliverToBoxAdapter(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (cartItem.value?.item.image != null && showImage.value)
-                  CircleAvatar(
-                    radius: 120,
-                    backgroundImage:
-                        CachedNetworkImageProvider(cartItem.value!.item.image!),
-                    onBackgroundImageError:
-                        (Object obj, StackTrace? stackTrace) {
-                      showImage.value = false;
-                    },
-                  ),
                 SizedBox(
                   height: 20,
                 ),
                 if (cartItem.value?.item.description != null)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Text(
-                        "${cartItem.value!.item.description![userLanguage]!.inCaps}",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .copyWith(fontSize: 12.sp)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Item description",
+                            style: Get.textTheme.bodyText1),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                            "${cartItem.value!.item.description![userLanguage]!.inCaps}",
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(fontSize: 12.sp)),
+                      ],
+                    ),
                   ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 if (cartItem.value!.item.options.isNotEmpty)
                   Column(
@@ -178,15 +178,9 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               ],
             ),
           ),
-        ),
-        BottomBarItemViewScreen(
-          currentRestaurantId: currentRestaurant?.info.id,
-          isAvailable: (currentRestaurant?.isOpen() ?? false),
-          cartItem: cartItem,
-          mode: widget.viewItemScreenMode,
-        ),
+        )
       ],
-    ));
+    );
   }
 
   Container _itemNotesComponent() {
@@ -195,21 +189,22 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Container(child: Text("${_i18n()["itemNotes"]}")),
           Container(
-              margin: EdgeInsets.all(5),
-              child: Text("${_i18n()["itemNotes"]}")),
-          TextFormField(
-            minLines: 3,
-            maxLines: 10,
-            onChanged: (String v) {
-              cartItem.value!.notes = v;
-            },
-            style: Get.textTheme.bodyText1,
-            decoration: InputDecoration(
-              alignLabelWithHint: false,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              filled: true,
-              fillColor: Colors.white,
+            margin: const EdgeInsets.all(8),
+            child: TextFormField(
+              minLines: 3,
+              maxLines: 10,
+              onChanged: (String v) {
+                cartItem.value!.notes = v;
+              },
+              style: Get.textTheme.bodyText1,
+              decoration: InputDecoration(
+                alignLabelWithHint: false,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                filled: true,
+                fillColor: Colors.white,
+              ),
             ),
           ),
         ],

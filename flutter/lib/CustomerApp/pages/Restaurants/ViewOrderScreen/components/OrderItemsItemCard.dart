@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -27,6 +26,7 @@ class OrderItemsItemCard extends StatefulWidget {
 
 class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
   bool imageLoded = true;
+  bool isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +40,30 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(
             childrenPadding: const EdgeInsets.all(8),
+            collapsedIconColor: customerAppColor,
+            onExpansionChanged: (bool v) {
+              setState(() {
+                isExpanded = v;
+              });
+            },
+            iconColor: customerAppColor,
+            trailing: Container(
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                  color: lightCustomerAppColor, shape: BoxShape.circle),
+              child: (isExpanded)
+                  ? Icon(Icons.expand_less)
+                  : Icon(Icons.expand_more),
+            ),
+
             //  tilePadding: EdgeInsets.all(5),
             title: Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    radius: 20,
+                    radius: 25,
                     backgroundImage: (imageLoded)
                         ? CachedNetworkImageProvider(widget.item.image ?? '',
                             errorListener: () {
@@ -61,30 +78,30 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   ),
                   if (widget.item.name[userLanguage] != null)
                     Flexible(
-                      flex: 2,
+                      flex: 4,
                       fit: FlexFit.tight,
-                      child: Text(
-                        widget.item.name[userLanguage]!,
-                        style: txt.bodyText1,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.item.name[userLanguage]!,
+                            style: txt.bodyText1,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Container(
+                            // margin: EdgeInsets.all(5),
+
+                            child: Text(
+                                '\$' + widget.item.totalCost.toInt().toString(),
+                                style: txt.bodyText1),
+                          ),
+                        ],
                       ),
                     ),
-                  Spacer(),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .primaryColorLight
-                            .withOpacity(0.2),
-                        shape: BoxShape.circle),
-                    padding: EdgeInsets.all(12),
-                    child: Text(
-                      widget.item.quantity.toStringAsFixed(0),
-                      style: txt.headline2!
-                          .copyWith(color: Theme.of(context).primaryColorLight),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -116,12 +133,6 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                     ],
                   ),
                 ),
-              Container(
-                margin: EdgeInsets.all(5),
-                alignment: Alignment.bottomRight,
-                child: Text('\$' + widget.item.totalCost.toInt().toString(),
-                    style: txt.bodyText1!.copyWith(fontSize: 17.sp)),
-              ),
             ],
           ),
         ),

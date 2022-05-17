@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 
 class ButtonComponent extends StatelessWidget {
   final Widget? widget;
   final Color bgColor;
   final GestureTapCallback? function;
+  final bool canClick;
 
   const ButtonComponent({
     this.widget,
+    this.canClick = false,
     this.function,
     this.bgColor = const Color(0xffac59fc),
   });
@@ -20,16 +23,22 @@ class ButtonComponent extends StatelessWidget {
         width: Get.width,
         height: 60,
         decoration: BoxDecoration(
-          // borderRadius: BorderRadius.all(Radius.circular(4)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: const Color(0x332362f1),
-                offset: Offset(0, 6),
-                blurRadius: 10,
-                spreadRadius: 0)
-          ],
-          color: bgColor,
-        ),
+            // borderRadius: BorderRadius.all(Radius.circular(4)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: const Color(0x332362f1),
+                  offset: Offset(0, 6),
+                  blurRadius: 10,
+                  spreadRadius: 0)
+            ],
+            color: (!canClick) ? bgColor : null,
+            gradient: (canClick)
+                ? LinearGradient(
+                    colors: [Colors.purple, customerAppColor],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  )
+                : null),
         child: widget,
       ),
       onTap: () {

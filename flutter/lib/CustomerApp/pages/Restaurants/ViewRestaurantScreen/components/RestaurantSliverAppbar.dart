@@ -1,13 +1,16 @@
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/Menu/MenuComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/MyCartAppBarIcon.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart'
     show TwoLettersGenerator;
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
@@ -40,19 +43,17 @@ class RestaurantSliverAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       bottom:
           (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
-      // titleSpacing: 16,
-      // titleTextStyle: Get.textTheme.headline3?.copyWith(color: Colors.white),
-      // title: Text(restaurant.info.name),
-      leading: IconButton(
-        onPressed: (showInfo) ? onInfoTap : Get.back,
-        icon: Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
-      ),
+    
+      leading: _BackButtonAppBar(),
       actions: <Widget>[
-        MyCartAppBarIcon(iconColor: Colors.white),
-        MenuComponent(padding: 2),
+        Obx(
+          () => (Get.find<ForegroundNotificationsController>()
+                  .notifications
+                  .isNotEmpty)
+              ? _notificationAppBarIcon()
+              : Container(),
+        ),
+        _ordersAppBarIcon(),
       ],
       pinned: true,
       //  floating: true,
@@ -92,65 +93,69 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     ))
             ],
           ),
-          background: CachedNetworkImage(
-            imageUrl: restaurant.info.image,
-            fit: BoxFit.cover,
-            imageBuilder: (BuildContext context, ImageProvider<Object> image) =>
-                Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: image,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              foregroundDecoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: <Color>[
-                    Colors.black.withOpacity(0.8),
-                    const Color(0x00000000).withOpacity(0.1),
-                    Colors.black.withOpacity(0.7),
-                  ],
-                ),
-              ),
-            ),
-            placeholder: (_, __) {
-              return Shimmer.fromColors(
-                child: Container(
-                  color: Colors.grey,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
-                highlightColor: Colors.grey[400]!,
-                enabled: true,
-                //   period: Duration(milliseconds: 100),
-                baseColor: Colors.grey[300]!,
-                direction: ShimmerDirection.ltr,
-              );
-            },
-            errorWidget: (_, __, ___) {
-              return Container(
-                height: 63,
-                width: 63,
-                decoration: BoxDecoration(
-                  color: Colors.grey[400],
-                  shape: BoxShape.circle,
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  restaurant.info.name.generateTwoFirstLetters(),
-                  style: const TextStyle(
-                    color: Color.fromRGBO(172, 89, 252, 0.8),
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              );
-            },
-          ),
+          background: _backgroundImageComponent(),
         );
       }),
+    );
+  }
+
+  Widget _backgroundImageComponent() {
+    return CachedNetworkImage(
+      imageUrl: restaurant.info.image,
+      fit: BoxFit.cover,
+      imageBuilder: (BuildContext context, ImageProvider<Object> image) =>
+          Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: image,
+            fit: BoxFit.cover,
+          ),
+        ),
+        foregroundDecoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: <Color>[
+              Colors.black.withOpacity(0.8),
+              const Color(0x00000000).withOpacity(0.1),
+              Colors.black.withOpacity(0.7),
+            ],
+          ),
+        ),
+      ),
+      placeholder: (_, __) {
+        return Shimmer.fromColors(
+          child: Container(
+            color: Colors.grey,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+          highlightColor: Colors.grey[400]!,
+          enabled: true,
+          //   period: Duration(milliseconds: 100),
+          baseColor: Colors.grey[300]!,
+          direction: ShimmerDirection.ltr,
+        );
+      },
+      errorWidget: (_, __, ___) {
+        return Container(
+          height: 63,
+          width: 63,
+          decoration: BoxDecoration(
+            color: Colors.grey[400],
+            shape: BoxShape.circle,
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            restaurant.info.name.generateTwoFirstLetters(),
+            style: const TextStyle(
+              color: Color.fromRGBO(172, 89, 252, 0.8),
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -173,6 +178,85 @@ class RestaurantSliverAppBar extends StatelessWidget {
             return Tab(text: e.name?[userLanguage] ?? "");
           }).toList(),
           onTap: onTap,
+        ),
+      ),
+    );
+  }
+
+  Widget _BackButtonAppBar() {
+    return Transform.scale(
+      scale: 0.6,
+      child: InkWell(
+        onTap: () {
+          Get.back();
+        },
+        child: Ink(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.9),
+                  spreadRadius: 0,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.white),
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            color: customerAppColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _ordersAppBarIcon() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 8),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          Get.toNamed(kOrdersRoute);
+        },
+        child: Ink(
+          padding: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: Icon(
+            Icons.schedule,
+            color: customerAppColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _notificationAppBarIcon() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 3),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          Get.toNamed(kNotificationsRoute);
+        },
+        child: Badge(
+          badgeColor: Colors.red,
+          showBadge: true,
+          position: BadgePosition.topEnd(top: 10, end: 0),
+          child: Ink(
+            padding: const EdgeInsets.all(3),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+            ),
+            child: Icon(
+              Icons.notifications,
+              color: customerAppColor,
+            ),
+          ),
         ),
       ),
     );

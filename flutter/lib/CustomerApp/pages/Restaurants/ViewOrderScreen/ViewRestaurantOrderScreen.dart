@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderFooterCard.dart';
@@ -157,49 +157,98 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       body: Obx(
         () {
           if (order.value != null) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    OrderStatusCard(
-                      order: order.value!,
-                      ordersStates: order.value!.status,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
+            return LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraint) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(minHeight: constraint.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Column(
+                        children: <Widget>[
+                          OrderStatusCard(
+                            order: order.value!,
+                            ordersStates: order.value!.status,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          if (order.value!.inDeliveryPhase()) ..._mapWidget,
+                          OrderItemsCard(
+                            items: order.value!.items,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          OrderSummaryCard(order: order.value!),
+                          order.value?.notes == null ||
+                                  order.value!.notes!.length <= 0
+                              ? Container()
+                              : notesWidget(order),
+                          //===============================>button cancel===========================
 
-                    if (order.value!.inDeliveryPhase()) ..._mapWidget,
-
-                    OrderItemsCard(
-                      items: order.value!.items,
+                          Expanded(
+                            child: Container(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          Container(
+                              alignment: Alignment.center,
+                              child: OrderFooterCard(order: order.value!)),
+                          SizedBox(
+                            height: 15,
+                          ),
+                        ],
+                      ),
                     ),
-
-                    SizedBox(
-                      height: 10,
-                    ),
-                    OrderSummaryCard(order: order.value!),
-                    //===============================>notes========================>
-                    order.value?.notes == null ||
-                            order.value!.notes!.length <= 0
-                        ? Container()
-                        : notesWidget(order),
-                    //===============================>button cancel===========================
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                        alignment: Alignment.center,
-                        child: OrderFooterCard(order: order.value!)),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             );
+
+            // return SingleChildScrollView(
+            //   child: Padding(
+            //     padding: const EdgeInsets.symmetric(horizontal: 10),
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.end,
+            //       children: [
+            //         SizedBox(
+            //           height: 10,
+            //         ),
+            //         OrderStatusCard(
+            //           order: order.value!,
+            //           ordersStates: order.value!.status,
+            //         ),
+            //         SizedBox(
+            //           height: 10,
+            //         ),
+
+            //         if (order.value!.inDeliveryPhase()) ..._mapWidget,
+
+            //         OrderItemsCard(
+            //           items: order.value!.items,
+            //         ),
+
+            //         SizedBox(
+            //           height: 10,
+            //         ),
+            //         OrderSummaryCard(order: order.value!),
+            //         //===============================>notes========================>
+            //         order.value?.notes == null ||
+            //                 order.value!.notes!.length <= 0
+            //             ? Container()
+            //             : notesWidget(order),
+            //         //===============================>button cancel===========================
+            //         SizedBox(
+            //           height: 10,
+            //         ),
+            //         Container(
+            //             alignment: Alignment.center,
+            //             child: OrderFooterCard(order: order.value!)),
+            //       ],
+            //     ),
+            //   ),
+            // );
           } else {
             return Center(child: CircularProgressIndicator());
           }

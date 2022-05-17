@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -37,13 +38,16 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(12),
+      // margin: EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             widget.option.name[userLanguage].toString(),
-            style: Get.theme.textTheme.bodyText2,
+            style: Get.theme.textTheme.bodyText1,
+          ),
+          SizedBox(
+            height: 5,
           ),
           Column(
             children: List.generate(
@@ -61,43 +65,123 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   Widget optionChoiceCard({
     required Choice choice,
   }) {
-    return Card(
-      child: Container(
-        margin: const EdgeInsets.all(8),
-        child: Row(
-          children: [
-            Flexible(
-              flex: 5,
-              fit: FlexFit.tight,
-              child: Text(
-                choice.name[userLanguage].toString(),
-                style: Get.theme.textTheme.bodyText1,
-                maxLines: 2,
-              ),
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: Row(
+        children: [
+          Flexible(
+            flex: 3,
+            fit: FlexFit.tight,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: Text(
+                    choice.name[userLanguage].toString(),
+                    style: Get.theme.textTheme.bodyText2?.copyWith(
+                      fontWeight: (widget
+                                  .cartItem.value!.chosenChoices[optionId]
+                                  ?.contains(choice) ??
+                              false)
+                          ? FontWeight.w700
+                          : null,
+                    ),
+                    maxLines: 2,
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
+                  style: Get.theme.textTheme.bodyText2!.copyWith(
+                    color: Get.theme.primaryColorLight,
+                    fontWeight: (widget.cartItem.value!.chosenChoices[optionId]
+                                ?.contains(choice) ??
+                            false)
+                        ? FontWeight.w700
+                        : null,
+                  ),
+                ),
+              ],
             ),
-            // SizedBox(
-            //   width: 10,
-            // ),
-            Text(
-              (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
-              style: Get.theme.textTheme.headline3!
-                  .copyWith(color: Get.theme.primaryColorLight),
-            ),
-            Spacer(),
-            Obx(() => Transform.scale(
-                  scale: 2.0,
-                  child: Checkbox(
-                      activeColor: Get.theme.primaryColorLight,
-                      shape: CircleBorder(),
-                      value: widget.cartItem.value!.chosenChoices[optionId]
-                          ?.contains(choice),
-                      onChanged: (bool? v) {
-                        handleChoiceCheckBox(choice);
-                      }),
-                ))
-          ],
-        ),
+          ),
+          // SizedBox(
+          //   width: 10,
+          // ),
+
+          Spacer(),
+          if (widget.option.optionType == OptionType.ChooseMany)
+            _selectCircle(
+                value: widget.cartItem.value!.chosenChoices[optionId]
+                        ?.contains(choice) ??
+                    false,
+                onTap: (bool? v) {
+                  handleChoiceCheckBox(choice);
+                }),
+          if (widget.option.optionType == OptionType.ChooseOne)
+            _radioCircle(
+                value: widget.cartItem.value!.chosenChoices[optionId]
+                        ?.contains(choice) ??
+                    false,
+                onTap: (bool? v) {
+                  handleChoiceCheckBox(choice);
+                }),
+        ],
       ),
+    );
+  }
+
+  Widget _selectCircle(
+      {bool value = false, required void Function(bool?) onTap}) {
+    return InkWell(
+      customBorder: CircleBorder(),
+      onTap: () {
+        onTap.call(null);
+      },
+      child: Container(
+          alignment: Alignment.center,
+          // padding: const EdgeInsets.all(5),
+          child: (value)
+              ? Icon(
+                  Icons.check,
+                  size: 22,
+                  color: Colors.white,
+                )
+              : Icon(
+                  Icons.add,
+                  color: customerAppColor,
+                  size: 22,
+                ),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: value ? customerAppColor : lightCustomerAppColor,
+          )),
+    );
+  }
+
+  Widget _radioCircle(
+      {bool value = false, required void Function(bool?) onTap}) {
+    return InkWell(
+      customBorder: CircleBorder(),
+      onTap: () {
+        onTap.call(null);
+      },
+      child: Ink(
+          child: (value)
+              ? Icon(
+                  Icons.radio_button_checked,
+                  size: 25,
+                  color: customerAppColor,
+                )
+              : Icon(
+                  Icons.circle_outlined,
+                  color: customerAppColor,
+                  size: 25,
+                ),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+          )),
     );
   }
 

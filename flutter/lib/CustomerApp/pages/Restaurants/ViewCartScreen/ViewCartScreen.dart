@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
@@ -11,12 +10,11 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ViewCartBody.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 
 // ignore: constant_identifier_names
 enum DropDownResult { Null, String }
@@ -103,11 +101,22 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       }),
       bottomNavigationBar: ButtonComponent(
         bgColor: getTheRightButtonColor(),
+        canClick: canClick(),
         widget:
             Center(child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
         function: !_clickedOrderNow ? checkoutActionButton : () {},
       ),
     );
+  }
+
+  bool canClick() {
+    // it returns the pruple or the grey color for the order now button
+    if (orderToLocation == null ||
+        !(_restaurantController.associatedRestaurant?.isOpen() ?? true)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   Color getTheRightButtonColor() {

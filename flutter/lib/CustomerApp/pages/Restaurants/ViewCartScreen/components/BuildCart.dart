@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
@@ -26,20 +27,9 @@ class CartBuilder extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Container(
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.shopping_cart_outlined,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 5),
-                      Container(
-                        child: Text(
-                          "${_i18n()["inCart"]}",
-                          style: txt.headline2,
-                        ),
-                      )
-                    ],
+                  child: Text(
+                    "${_i18n()["inCart"]}",
+                    style: txt.headline2,
                   ),
                 ),
               ),
@@ -78,14 +68,9 @@ class CartBuilder extends StatelessWidget {
                             Get.back<void>();
                           }
                         },
-                        child: Row(
-                          children: <Widget>[
-                            Container(child: Text("${_i18n()["clear"]}")),
-                            const Icon(
-                              Icons.delete_outline,
-                              size: 15,
-                            ),
-                          ],
+                        child: const Icon(
+                          Ionicons.trash_outline,
+                          size: 22,
                         ),
                       ),
                     )

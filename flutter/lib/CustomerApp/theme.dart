@@ -18,7 +18,7 @@ class CustomerAppTheme {
 
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
-      scaffoldBackgroundColor: Color(0XFFEDEDED),
+      scaffoldBackgroundColor: Color(0XFFFAFAFA),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.white,
         titleTextStyle: TextStyle(

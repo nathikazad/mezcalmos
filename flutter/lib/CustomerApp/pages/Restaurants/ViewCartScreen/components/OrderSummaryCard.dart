@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:sizer/sizer.dart';
@@ -41,7 +42,7 @@ class OrderSummaryCard extends StatelessWidget {
           children: <Widget>[
             //=======================Order summary================
             Container(
-              alignment: Alignment.center,
+              alignment: Alignment.centerLeft,
               width: Get.width,
               child: Text("${_i18n()["orderSummary"]}", style: txt.headline3),
             ),
@@ -120,7 +121,7 @@ class OrderSummaryCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            Divider(),
             //=======================Delivery location :===========
             Container(
               alignment: Alignment.centerLeft,
@@ -134,7 +135,10 @@ class OrderSummaryCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            DropDownLocationList(onValueChangeCallback: setLocationCallBack),
+            DropDownLocationList(
+              onValueChangeCallback: setLocationCallBack,
+              bgColor: lightCustomerAppColor,
+            ),
           ],
         ),
       ),

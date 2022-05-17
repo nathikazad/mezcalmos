@@ -141,11 +141,14 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                       });
                 },
                 style: TextButton.styleFrom(
-                  backgroundColor: Colors.red.shade600,
+                  backgroundColor: Color(0xFFF9D8D6),
                 ),
                 child: Container(
                   alignment: Alignment.center,
-                  child: Text('${_i18n()["cancelOrder"]}'),
+                  child: Text(
+                    '${_i18n()["cancelOrder"]}',
+                    style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+                  ),
                 ),
               ),
             )

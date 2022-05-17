@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
-import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
@@ -117,33 +117,49 @@ class _PickLocationViewState extends State<PickLocationView> {
   Widget build(BuildContext context) {
     responsiveSize(context);
     return Scaffold(
-      bottomNavigationBar: showScreenLoading == false
-          ? ButtonComponent(
-              function: () async {
+      bottomNavigationBar: ButtonComponent(
+        canClick: !showScreenLoading,
+        function: (!showScreenLoading)
+            ? null
+            : () async {
                 await onPickButtonClick(context);
               },
-              widget: Center(
-                child: Text(
-                  _i18n()["pickLocation"],
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(color: Colors.white, fontSize: 12.sp),
-                ),
-              ),
-            )
-          : ButtonComponent(
-              bgColor: Colors.grey.shade400,
-              function: () {},
-              widget: Center(
-                child: Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 1,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
+        widget: Center(
+          child: Text(
+            _i18n()["pickLocation"],
+            style: Theme.of(context)
+                .textTheme
+                .headline2!
+                .copyWith(color: Colors.white, fontSize: 12.sp),
+          ),
+        ),
+      ),
+      // ? ButtonComponent(
+      //     function: () async {
+      //       await onPickButtonClick(context);
+      //     },
+      //     widget: Center(
+      //       child: Text(
+      //         _i18n()["pickLocation"],
+      //         style: Theme.of(context)
+      //             .textTheme
+      //             .headline2!
+      //             .copyWith(color: Colors.white, fontSize: 12.sp),
+      //       ),
+      //     ),
+      //   )
+      // : ButtonComponent(
+      //     bgColor: Colors.grey.shade400,
+      //     function: () {},
+      //     widget: Center(
+      //       child: Center(
+      //         child: CircularProgressIndicator(
+      //           strokeWidth: 1,
+      //           color: Colors.black,
+      //         ),
+      //       ),
+      //     ),
+      //   ),
       resizeToAvoidBottomInset: false,
       appBar: CustomerAppBar(
         autoBack: true,
@@ -192,7 +208,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     String? _result;
     final LatLng _pickedLoc = await locationPickerController.getMapCenter();
 
-    locationPickerController.moveToNewLatLng(
+    await locationPickerController.moveToNewLatLng(
         _pickedLoc.latitude, _pickedLoc.longitude);
 
     setState(() {

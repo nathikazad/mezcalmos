@@ -229,6 +229,9 @@
                             "totalCost": "Costo Total",
                             "deliveryCost": "Costo de envío",
                             "total": "Total",
+                            "orderSummary": "Resumen",
+                            "orderCost": "Costo de la orden",
+
                             "deliveryLocation": "Lugar De Entrega"
                         }
                     },

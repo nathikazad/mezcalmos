@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderItemsItemCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-
-import 'OrderItemsItemCard.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -30,16 +29,10 @@ class OrderItemsCard extends StatelessWidget {
             style: txt.bodyText1,
           ),
         ),
-        ListView.builder(
-          padding: EdgeInsets.zero,
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: items.length,
-          itemBuilder: (_, int index) {
-            return OrderItemsItemCard(item: items[index]);
-          },
-        ),
-        
+        Column(
+          children: List.generate(items.length,
+              (int index) => OrderItemsItemCard(item: items[index])),
+        )
       ],
     );
   }

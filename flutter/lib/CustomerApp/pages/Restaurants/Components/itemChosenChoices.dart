@@ -19,8 +19,10 @@ class ItemChosenChoiceComponent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Divider(),
         Text(
-          optionName + "  (${choices.length.toString()})",
+          optionName,
+          style: Get.textTheme.bodyText1,
         ),
         SizedBox(
           height: 5,
@@ -35,19 +37,18 @@ class ItemChosenChoiceComponent extends StatelessWidget {
                       children: [
                         Text(
                           choices[index].name[userLanguage] ?? "null",
-                          style: Get.theme.textTheme.bodyText1,
+                          style: Get.theme.textTheme.bodyText2,
                         ),
                         if (choices[index].cost > 0)
                           Text(
-                            "\$ ${choices[index].cost}",
-                            style: Get.theme.textTheme.bodyText1!
+                            "\$${choices[index].cost}",
+                            style: Get.theme.textTheme.bodyText2!
                                 .copyWith(color: Get.theme.primaryColorLight),
                           ),
                       ],
                     ),
                   )),
         ),
-        Divider(),
       ],
     );
   }

@@ -25,56 +25,55 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
       // width: Get.width * 0.7,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           if (widget.imageUrl != null)
-          //===================== item image avatar=============
-          Flexible(
-            child: Container(
-              child: CachedNetworkImage(
+            //===================== item image avatar=============
+            Flexible(
+              child: Container(
+                child: CachedNetworkImage(
                   imageUrl: widget.imageUrl!,
-                imageBuilder: (_, ImageProvider imageProvider) {
-                  return Container(
-                    width: 60,
+                  imageBuilder: (_, ImageProvider imageProvider) {
+                    return Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: imageProvider,
+                        ),
+                      ),
+                    );
+                  },
+                  errorWidget: (_, __, ___) => Container(
                     height: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: imageProvider,
+                    width: 60,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey.shade300,
+                      ),
+                      child: Icon(
+                        Icons.image,
+                        color: Colors.grey,
+                        size: 18,
                       ),
                     ),
-                  );
-                },
-                errorWidget: (_, __, ___) => Container(
-                  height: 60,
-                  width: 60,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey.shade300,
-                    ),
-                    child: Icon(
-                      Icons.image,
-                      color: Colors.grey,
-                      size: 18,
-                    ),
                   ),
-                ),
-                placeholder: (_, __) => Container(
-                  width: 60,
-                  height: 60,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                  placeholder: (_, __) => Container(
+                    width: 60,
+                    height: 60,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          if (widget.imageUrl != null)
-          const SizedBox(width: 10),
+          if (widget.imageUrl != null) const SizedBox(width: 10),
           Flexible(
             flex: 4,
             fit: FlexFit.loose,
@@ -83,13 +82,6 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: txt.headline3,
-            ),
-          ),
-          const SizedBox(width: 10),
-          Text(
-            "\$${widget.itemsPrice} ",
-            style: txt.headline3!.copyWith(
-              color: Color.fromRGBO(172, 89, 252, 1),
             ),
           ),
         ],

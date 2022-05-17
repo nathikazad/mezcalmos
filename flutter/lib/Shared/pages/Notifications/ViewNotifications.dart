@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/pages/Notifications/components/ClearNotificationButton.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/components/NotificationCard.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
 import 'package:sizer/sizer.dart';
 
@@ -39,10 +40,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_i18n()['title']),
-        automaticallyImplyLeading: true,
-      ),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: Get.back, title: _i18n()['title']),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),

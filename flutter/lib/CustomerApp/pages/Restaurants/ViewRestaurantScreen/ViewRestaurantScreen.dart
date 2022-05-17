@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantSliverAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/restaurantInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:rect_getter/rect_getter.dart';
@@ -33,8 +36,9 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   @override
   void initState() {
     restaurant = Get.arguments as Restaurant;
-    itemKeys.assign(999, "jjjjjj");
-    itemKeys[999] = RectGetter.createGlobalKey();
+    mezDbgPrint(restaurant.info.id);
+    itemKeys.assign(999999, "info");
+    itemKeys[999999] = RectGetter.createGlobalKey();
 
     tabController =
         TabController(length: restaurant.getCategories.length, vsync: this);
@@ -97,6 +101,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      floatingActionButton: FloatingCartComponent(),
       body: RectGetter(
         key: listViewKey,
         child: NotificationListener<ScrollNotification>(
@@ -119,7 +124,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
           onInfoTap: () {
             setState(() {
               showInfo = !showInfo;
-              pauseRectGetterIndex = true;
+              pauseRectGetterIndex = !pauseRectGetterIndex;
             });
           },
           onTap: (int index) => animateAndScrollTo(index),
@@ -127,11 +132,12 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
         ),
         (showInfo)
             ? SliverPadding(
-                padding: const EdgeInsets.all(16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                 sliver: SliverList(
                     delegate: SliverChildListDelegate([
                   RectGetter(
-                      key: itemKeys[999],
+                      key: itemKeys[999999],
                       child: RestaurantInfoTab(
                         restaurant: restaurant,
                       )),
@@ -143,16 +149,15 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget _buildCategoriesList() {
     return SliverPadding(
-      padding: const EdgeInsets.all(16),
-      sliver: SliverList(
-        delegate: SliverChildListDelegate(
-          List.generate(_getList().length, (int index) {
-            itemKeys[index] = RectGetter.createGlobalKey();
-            return _scrollableCategoryItems(index);
-          }),
-        ),
-      ),
-    );
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        sliver: SliverList(
+          delegate: SliverChildListDelegate(
+            List.generate(_getList().length, (int index) {
+              itemKeys[index] = RectGetter.createGlobalKey();
+              return _scrollableCategoryItems(index);
+            }),
+          ),
+        ));
   }
 
   List<Category> _getList() {
@@ -164,7 +169,9 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
     return data;
   }
 
-  Widget _scrollableCategoryItems(int index) {
+  Widget _scrollableCategoryItems(
+    int index,
+  ) {
     final Category category = _getList()[index];
     return RectGetter(
       key: itemKeys[index],
@@ -193,27 +200,45 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
           height: 5,
         ),
         _buildResturantItems(category.items, restaurant.info.id),
+        SizedBox(
+          height: 10,
+        )
       ],
     );
   }
-}
 
-Widget _buildResturantItems(List<Item> items, String restaurantId) {
-  return Column(
-    children: items.fold<List<Widget>>(<Widget>[],
-        (List<Widget> children, Item item) {
-      children.add(RestaurantsListOfItemsComponent(
-          item: item,
-          function: () {
-            Get.toNamed(
-              getItemRoute(restaurantId, item.id),
-              arguments: {"mode": ViewItemScreenMode.AddItemMode},
-            );
-          }));
-      children.add(SizedBox(
-        height: 8,
-      ));
-      return children;
-    }),
-  );
+  Widget _buildResturantItems(List<Item> items, String restaurantId) {
+    if (restaurant.restaurantsView == RestaurantsView.Rows) {
+      return Column(
+        children: items.fold<List<Widget>>(<Widget>[],
+            (List<Widget> children, Item item) {
+          children.add(RestaurantsListOfItemsComponent(
+              item: item,
+              function: () {
+                Get.toNamed(
+                  getItemRoute(restaurantId, item.id),
+                  arguments: {"mode": ViewItemScreenMode.AddItemMode},
+                );
+              }));
+          children.add(SizedBox(
+            height: 8,
+          ));
+          return children;
+        }),
+      );
+    } else {
+      return GridView.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 5,
+        crossAxisSpacing: 5,
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        physics: NeverScrollableScrollPhysics(),
+        children: List.generate(items.length, (int index) {
+          return RestaurantgridItemCard(
+              item: items[index], restaurant: restaurant);
+        }),
+      );
+    }
+  }
 }
