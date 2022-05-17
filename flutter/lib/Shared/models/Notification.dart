@@ -56,6 +56,7 @@ class Notification {
   String imgUrl;
   String linkUrl;
   String? linkText;
+  IconData? icon;
   NotificationType notificationType;
   NotificationAction notificationAction;
   String? get chatId => variableParams['chatId'];
@@ -64,6 +65,7 @@ class Notification {
   Notification(
       {required this.id,
       this.variableParams,
+      this.icon,
       required this.timestamp,
       this.icon,
       required this.title,
