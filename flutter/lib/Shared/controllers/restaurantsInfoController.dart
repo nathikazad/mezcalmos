@@ -25,7 +25,7 @@ class RestaurantsInfoController extends GetxController {
         .reference()
         .child(serviceProviderInfos(orderType: OrderType.Restaurant))
         .once();
-    List<Restaurant> restaurants = <Restaurant>[];
+    final List<Restaurant> restaurants = <Restaurant>[];
     if (snapshot.value == null) return restaurants;
     // ignore: avoid_annotating_with_dynamic
     snapshot.value.forEach((dynamic restaurantId, dynamic restaurantData) {
@@ -33,29 +33,23 @@ class RestaurantsInfoController extends GetxController {
         try {
           restaurants.add(Restaurant.fromRestaurantData(
               restaurantId: restaurantId, restaurantData: restaurantData));
-        } catch (e) {
+        } catch (e, stc) {
           mezDbgPrint("Restaurant add error");
+          mezDbgPrint("Restaurant add error $stc");
         }
       }
     });
     restaurants.where((Restaurant a) => a.state.isAuthorized);
 
-    if (showOnlyOpen.value) {
-      restaurants.sort((Restaurant a, Restaurant b) {
-        if (a.isOpen() && !b.isOpen()) {
-          return 1;
-        } else if (!a.isOpen() && b.isOpen()) {
-          return -1;
-        } else
-          return 0;
-      });
-    }
-    if (querry.length > 2) {
-      restaurants = restaurants
-          .where((Restaurant element) =>
-              element.info.name.toLowerCase().contains(querry.toLowerCase()))
-          .toList();
-    }
+    // restaurants.sort((Restaurant a, Restaurant b) {
+    //   if (a.isOpen() && !b.isOpen()) {
+    //     return 1;
+    //   } else if (!a.isOpen() && b.isOpen()) {
+    //     return -1;
+    //   } else
+    //     return 0;
+    // });
+
     return restaurants.reversed.toList();
   }
 
