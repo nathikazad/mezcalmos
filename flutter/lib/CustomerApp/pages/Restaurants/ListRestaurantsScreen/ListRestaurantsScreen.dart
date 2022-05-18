@@ -41,111 +41,61 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
       body: SingleChildScrollView(
           padding: const EdgeInsets.all(8),
           child: Column(
-            children: [
-              TextFormField(
-                textAlignVertical: TextAlignVertical.center,
-                style: Get.textTheme.bodyText1,
-                onChanged: (String value) {
-                  viewController.searchRestaurant(value);
-
-                  mezDbgPrint(viewController.searchQuerry);
-                },
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Search restaurants"),
-              ),
-              Obx(
-                () => SwitchListTile(
-                  value: viewController.showOnlyOpen.value,
-                  onChanged: (bool v) {
-                    viewController.switchOnlyOpen();
-                  },
-                  activeColor: customerAppColor,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                  title: Text("Show only open restaurents"),
-                ),
-              ),
-              Obx(() {
-                if (viewController.isLoading.value) {
-                  return Column(
-                    children: List.generate(
-                        10, (int index) => RestaurantShimmerCard()),
-                  );
-                } else {
-                  return Column(
-                    children: List.generate(
-                        viewController.getSortedList().length,
-                        (int index) => RestaurantCard(
-                              restaurant: viewController.getSortedList()[index],
-                              onClick: () {
-                                Get.toNamed<void>(
-                                  getRestaurantRoute(viewController
-                                      .getSortedList()[index]
-                                      .info
-                                      .id),
-                                  arguments:
-                                      viewController.getSortedList()[index],
-                                );
-                              },
-                            )),
-                  );
-                }
-              })
-            ],
+            children: [_searchInput(), _sortingSwitcher(), _restaurantList()],
           )),
-      // body: FutureBuilder<List<Restaurant>>(
-      //     future: _restaurantsInfoController.getRestaurants(),
-      //     builder: (
-      //       BuildContext context,
-      //       AsyncSnapshot<List<Restaurant>> snapshot,
-      //     ) {
-      //       mezDbgPrint("Updating :::::");
+    );
+  }
 
-      //       return SingleChildScrollView(
-      //         padding: const EdgeInsets.all(8),
-      //         child: Column(
-      //           children: [
-      //             TextFormField(
-      //               textAlignVertical: TextAlignVertical.center,
-      //               style: Get.textTheme.bodyText1,
-      //               onChanged: (String value) {
-      //                 if (value.length > 2) {
-      //                   _restaurantsInfoController.querry = value;
-      //                   setState(() {
-      //                     _restaurantsInfoController.getRestaurants();
-      //                   });
-      //                 } else {
-      //                   _restaurantsInfoController.querry = '';
+  Widget _restaurantList() {
+    return Obx(() {
+      if (viewController.isLoading.value) {
+        return Column(
+          children: List.generate(10, (int index) => RestaurantShimmerCard()),
+        );
+      } else {
+        return Column(
+          children: List.generate(
+              viewController.getSortedList().length,
+              (int index) => RestaurantCard(
+                    restaurant: viewController.getSortedList()[index],
+                    onClick: () {
+                      Get.toNamed<void>(
+                        getRestaurantRoute(
+                            viewController.getSortedList()[index].info.id),
+                        arguments: viewController.getSortedList()[index],
+                      );
+                    },
+                  )),
+        );
+      }
+    });
+  }
 
-      //                   setState(() {
-      //                     _restaurantsInfoController.getRestaurants();
-      //                   });
-      //                 }
-      //               },
-      //               decoration: InputDecoration(
-      //                   prefixIcon: Icon(Icons.search),
-      //                   hintText: "Search restaurants"),
-      //             ),
-      //             SwitchListTile(
-      //               value: _restaurantsInfoController.showOnlyOpen.isTrue,
-      //               onChanged: (bool v) {
-      //                 _restaurantsInfoController.showOnlyOpen.value =
-      //                     !_restaurantsInfoController.showOnlyOpen.value;
-      //                 setState(() {
-      //                   _restaurantsInfoController.getRestaurants();
-      //                 });
-      //               },
-      //               activeColor: customerAppColor,
-      //               contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-      //               title: Text("Show only open restaurents"),
-      //             ),
-      //             RestaurantFutureBody(
-      //               snapshot: snapshot,
-      //             ),
-      //           ],
-      //         ),
-      //       );
-      //     }),
+  Widget _sortingSwitcher() {
+    return Obx(
+      () => SwitchListTile(
+        value: viewController.showOnlyOpen.value,
+        onChanged: (bool v) {
+          viewController.switchOnlyOpen();
+        },
+        activeColor: customerAppColor,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+        title: Text("Show only open restaurents"),
+      ),
+    );
+  }
+
+  Widget _searchInput() {
+    return TextFormField(
+      textAlignVertical: TextAlignVertical.center,
+      style: Get.textTheme.bodyText1,
+      onChanged: (String value) {
+        viewController.searchRestaurant(value);
+
+        mezDbgPrint(viewController.searchQuerry);
+      },
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.search), hintText: "Search restaurants"),
     );
   }
 }
