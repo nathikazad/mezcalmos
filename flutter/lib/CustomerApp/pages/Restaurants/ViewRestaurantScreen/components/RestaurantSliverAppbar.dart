@@ -43,7 +43,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       bottom:
           (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
-    
+
       leading: _BackButtonAppBar(),
       actions: <Widget>[
         Obx(
@@ -188,7 +188,11 @@ class RestaurantSliverAppBar extends StatelessWidget {
       scale: 0.6,
       child: InkWell(
         onTap: () {
-          Get.back();
+          if (showInfo) {
+            onInfoTap();
+          } else {
+            Get.back();
+          }
         },
         child: Ink(
           decoration: BoxDecoration(
@@ -220,13 +224,14 @@ class RestaurantSliverAppBar extends StatelessWidget {
           Get.toNamed(kOrdersRoute);
         },
         child: Ink(
-          padding: const EdgeInsets.all(3),
+          padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.white,
           ),
           child: Icon(
-            Icons.schedule,
+            Icons.watch_later,
+            size: 20,
             color: customerAppColor,
           ),
         ),
@@ -247,7 +252,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           showBadge: true,
           position: BadgePosition.topEnd(top: 10, end: 0),
           child: Ink(
-            padding: const EdgeInsets.all(3),
+            padding: const EdgeInsets.all(7),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
@@ -255,6 +260,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
             child: Icon(
               Icons.notifications,
               color: customerAppColor,
+              size: 20,
             ),
           ),
         ),

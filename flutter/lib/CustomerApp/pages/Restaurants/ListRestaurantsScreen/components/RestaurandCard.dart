@@ -58,27 +58,42 @@ class RestaurantCard extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      if (restaurant.description != null) const Spacer(),
+                      if (restaurant.description != null &&
+                          restaurant.description!.length > 1)
+                        const Spacer(),
+                      Divider(
+                        height: 5,
+                        thickness: 0.5,
+                      ),
                       Container(
-                        alignment: Alignment.bottomLeft,
+                        //  alignment: Alignment.bottomLeft,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Icon(
-                              Icons.restaurant,
-                              color: Colors.grey.shade800,
-                              size: 15,
-                            ),
-                            const SizedBox(width: 5),
                             Flexible(
-                              child: Text(
-                                restaurant
-                                        .getNumberOfitems()
-                                        .toStringAsFixed(0) +
-                                    ' ${_i18n()["items"]}',
-                                style: txt.bodyText2,
+                              child:
+                                  Text(_getDollarsSign(), style: txt.bodyText1),
+                            ),
+                            Flexible(
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.delivery_dining,
+                                    color: Colors.grey.shade800,
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Flexible(
+                                    child: Text('\$ 50', style: txt.bodyText2),
+                                  ),
+                                ],
                               ),
-                            )
+                            ),
+                            Icon(
+                              Icons.payments_sharp,
+                              color: Colors.grey.shade800,
+                            ),
                           ],
                         ),
                       )
@@ -140,5 +155,20 @@ class RestaurantCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getDollarsSign() {
+    if (restaurant.getAverageCost() <= 80) {
+      return "\$";
+    }
+    if (restaurant.getAverageCost() > 80 &&
+        restaurant.getAverageCost() <= 140) {
+      return "\$\$";
+    }
+    if (restaurant.getAverageCost() > 140) {
+      return "\$\$\$";
+    } else {
+      return "";
+    }
   }
 }

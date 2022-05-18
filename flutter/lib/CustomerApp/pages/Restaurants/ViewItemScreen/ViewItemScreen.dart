@@ -106,12 +106,14 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        bottomNavigationBar: BottomBarItemViewScreen(
-          currentRestaurantId: currentRestaurant?.info.id,
-          isAvailable: (currentRestaurant?.isOpen() ?? false),
-          cartItem: cartItem,
-          mode: widget.viewItemScreenMode,
-        ),
+        bottomNavigationBar: (cartItem.value != null)
+            ? BottomBarItemViewScreen(
+                currentRestaurantId: currentRestaurant?.info.id,
+                isAvailable: (currentRestaurant?.isOpen() ?? false),
+                cartItem: cartItem,
+                mode: widget.viewItemScreenMode,
+              )
+            : null,
         body: (cartItem.value == null)
             ? Container(
                 alignment: Alignment.center,

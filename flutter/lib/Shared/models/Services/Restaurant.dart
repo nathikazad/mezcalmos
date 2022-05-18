@@ -112,6 +112,21 @@ class Restaurant extends Service {
     return returnVal;
   }
 
+  double getAverageCost() {
+    double allItemsCost = 0;
+
+    getItemsWithoutCategory?.forEach((Item element) {
+      allItemsCost += element.cost;
+    });
+    getCategories.forEach((Category element) {
+      element.items.forEach((Item element) {
+        allItemsCost += element.cost;
+      });
+    });
+    final double averageCost = allItemsCost / getNumberOfitems();
+    return averageCost;
+  }
+
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       "description": description?.toFirebaseFormat(),
@@ -127,7 +142,7 @@ class Restaurant extends Service {
     _categories.forEach((Category element) {
       numberOfItems = numberOfItems + element.items.length;
     });
-    return numberOfItems;
+    return numberOfItems + (getItemsWithoutCategory?.length ?? 0);
   }
 
   bool isOpen() {

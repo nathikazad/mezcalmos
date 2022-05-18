@@ -87,13 +87,14 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           Get.toNamed(kOrdersRoute);
         },
         child: Ink(
-          padding: const EdgeInsets.all(3),
+          padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: lightCustomerAppColor,
           ),
           child: Icon(
-            Icons.schedule,
+            Icons.watch_later,
+            size: 20,
             color: customerAppColor,
           ),
         ),
@@ -114,13 +115,14 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           showBadge: true,
           position: BadgePosition.topEnd(top: 10, end: 0),
           child: Ink(
-            padding: const EdgeInsets.all(3),
+            padding: const EdgeInsets.all(7),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: lightCustomerAppColor,
             ),
             child: Icon(
               Icons.notifications,
+              size: 20,
               color: customerAppColor,
             ),
           ),

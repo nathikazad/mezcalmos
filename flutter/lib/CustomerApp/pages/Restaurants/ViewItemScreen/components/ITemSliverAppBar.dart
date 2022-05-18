@@ -131,13 +131,14 @@ class ItemSliverAppBar extends StatelessWidget {
           Get.toNamed(kOrdersRoute);
         },
         child: Ink(
-          padding: const EdgeInsets.all(3),
+          padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.white,
           ),
           child: Icon(
-            Icons.schedule,
+            Icons.watch_later,
+            size: 20,
             color: customerAppColor,
           ),
         ),
@@ -158,13 +159,14 @@ class ItemSliverAppBar extends StatelessWidget {
           showBadge: true,
           position: BadgePosition.topEnd(top: 10, end: 0),
           child: Ink(
-            padding: const EdgeInsets.all(3),
+            padding: const EdgeInsets.all(7),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
             ),
             child: Icon(
               Icons.notifications,
+              size: 20,
               color: customerAppColor,
             ),
           ),
