@@ -10,6 +10,9 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class RestaurantsInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+
+  RxBool showOnlyOpen = RxBool(true);
+  String querry = "";
   @override
   void onInit() {
     super.onInit();
@@ -22,7 +25,7 @@ class RestaurantsInfoController extends GetxController {
         .reference()
         .child(serviceProviderInfos(orderType: OrderType.Restaurant))
         .once();
-    final List<Restaurant> restaurants = <Restaurant>[];
+    List<Restaurant> restaurants = <Restaurant>[];
     if (snapshot.value == null) return restaurants;
     // ignore: avoid_annotating_with_dynamic
     snapshot.value.forEach((dynamic restaurantId, dynamic restaurantData) {
@@ -36,14 +39,23 @@ class RestaurantsInfoController extends GetxController {
       }
     });
     restaurants.where((Restaurant a) => a.state.isAuthorized);
-    restaurants.sort((Restaurant a, Restaurant b) {
-      if (a.isOpen() && !b.isOpen()) {
-        return 1;
-      } else if (!a.isOpen() && b.isOpen()) {
-        return -1;
-      } else
-        return 0;
-    });
+
+    if (showOnlyOpen.value) {
+      restaurants.sort((Restaurant a, Restaurant b) {
+        if (a.isOpen() && !b.isOpen()) {
+          return 1;
+        } else if (!a.isOpen() && b.isOpen()) {
+          return -1;
+        } else
+          return 0;
+      });
+    }
+    if (querry.length > 2) {
+      restaurants = restaurants
+          .where((Restaurant element) =>
+              element.info.name.toLowerCase().contains(querry.toLowerCase()))
+          .toList();
+    }
     return restaurants.reversed.toList();
   }
 

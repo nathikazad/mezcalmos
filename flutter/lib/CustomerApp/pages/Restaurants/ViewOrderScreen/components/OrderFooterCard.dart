@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -31,114 +31,36 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
+      height: 70,
       child: (widget.order.inProcess())
           ? Container(
               margin: EdgeInsets.all(8),
               child: TextButton(
                 onPressed: () {
-                  showDialog<void>(
-                      context: context,
-                      builder: (_) {
-                        return Obx(
-                          () => AlertDialog(
-                            contentPadding: EdgeInsets.all(20),
+                  showConfirmationDialog(context, onYesClick: () async {
+                    final ServerResponse resp =
+                        await restaurantController.cancelOrder(
+                      widget.order.orderId,
+                    );
 
-                            title: Text(
-                              !_clickedCancel.value
-                                  ? '${_i18n()["cancelOrder"]}'
-                                  : '${_i18n()["orderCanceled"]}',
-                              textAlign: TextAlign.center,
-                            ),
-
-                            content: !_clickedCancel.value
-                                ? Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        '${_i18n()["cancelOrderConfirm"]}',
-                                      ),
-                                      const SizedBox(height: 10),
-                                      TextButton(
-                                        onPressed: () async {
-                                          _clickedCancel.value = true;
-                                          // to get back to the main view.
-                                          final ServerResponse resp =
-                                              await restaurantController
-                                                  .cancelOrder(
-                                            Get.parameters['orderId']!,
-                                          );
-                                          mezDbgPrint(resp.data.toString());
-                                          if (resp.success) {
-                                            Get.until(
-                                              (Route<dynamic> route) =>
-                                                  route.settings.name ==
-                                                  kHomeRoute,
-                                            );
-                                            MezSnackbar(
-                                              _i18n()["titleSuccess"],
-                                              _i18n()["orderCancelSuccess"],
-                                              position: SnackPosition.TOP,
-                                            );
-                                          } else {
-                                            _clickedCancel.value = false;
-                                            MezSnackbar(
-                                              _i18n()["titleFailed"],
-                                              _i18n()["orderCancelFailed"],
-                                              position: SnackPosition.TOP,
-                                            );
-                                          }
-                                        },
-                                        style: TextButton.styleFrom(
-                                          backgroundColor: Colors.redAccent,
-                                          padding: EdgeInsets.all(12),
-                                        ),
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          child: Text(_i18n()["yes"]),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.back<void>();
-                                        },
-                                        style: TextButton.styleFrom(
-                                          backgroundColor: Colors.black,
-                                          padding: EdgeInsets.all(12),
-                                        ),
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          child: Text(_i18n()["no"]),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                : Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Center(
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 1.2,
-                                          color: Colors.purpleAccent.shade700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                            // actions: [
-                            //   TextButton(
-                            //       onPressed: () {},
-                            //       child: Text('Cancel order')),
-                            //   TextButton(
-                            //       onPressed: () {}, child: Text('Cancel')),
-                            // ],
-                          ),
-                        );
-                      });
+                    if (resp.success) {
+                      Get.until(
+                        (Route<dynamic> route) =>
+                            route.settings.name == kHomeRoute,
+                      );
+                      MezSnackbar(
+                        _i18n()["titleSuccess"],
+                        _i18n()["orderCancelSuccess"],
+                        position: SnackPosition.TOP,
+                      );
+                    } else {
+                      MezSnackbar(
+                        _i18n()["titleFailed"],
+                        _i18n()["orderCancelFailed"],
+                        position: SnackPosition.TOP,
+                      );
+                    }
+                  });
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Color(0xFFF9D8D6),

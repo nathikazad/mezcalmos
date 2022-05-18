@@ -140,14 +140,14 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Item description",
+                        Text("${_i18n()["itemDescription"]}",
                             style: Get.textTheme.bodyText1),
                         SizedBox(
                           height: 10,
                         ),
                         Text(
                             "${cartItem.value!.item.description![userLanguage]!.inCaps}",
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.left,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2!

@@ -34,7 +34,6 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: autoBack ?? false,
       leading: _BackButtonAppBar(),
       actions: [
-        _notificationAppBarIcon(),
         Obx(
           () => (Get.find<ForegroundNotificationsController>()
                   .notifications
@@ -81,7 +80,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _ordersAppBarIcon() {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 8),
+      padding: const EdgeInsets.only(left: 3, right: 12),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {

@@ -186,15 +186,13 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               ? Container()
                               : notesWidget(order),
                           //===============================>button cancel===========================
-
-                          Expanded(
+                          //  Expanded(child: Container()),
+                          Spacer(),
+                          Flexible(
                             child: Container(
-                              color: Colors.transparent,
-                            ),
+                                alignment: Alignment.center,
+                                child: OrderFooterCard(order: order.value!)),
                           ),
-                          Container(
-                              alignment: Alignment.center,
-                              child: OrderFooterCard(order: order.value!)),
                           SizedBox(
                             height: 15,
                           ),

@@ -1,15 +1,12 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
@@ -188,15 +185,13 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
       return <String, dynamic>{
         "title": "${_i18n()["onTheWayRestaurantTitle"]}",
         "body": "${_i18n()["onTheWayRestaurantBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/onTheWay.png",
       };
     case RestaurantOrderStatus.Delivered:
       return <String, dynamic>{
         "title": "${_i18n()["deliveredTitle"]}",
         "body": "${_i18n()["deliveredBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/delivered.png",
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{

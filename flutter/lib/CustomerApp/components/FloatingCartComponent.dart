@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 
@@ -14,7 +15,9 @@ class FloatingCartComponent extends StatelessWidget {
       () => _authController.isUserSignedIn &&
               Get.find<RestaurantController>().cart.value.cartItems.length > 0
           ? FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(kCartRoute);
+              },
               child: Badge(
                 badgeContent: Text(
                   Get.find<RestaurantController>()

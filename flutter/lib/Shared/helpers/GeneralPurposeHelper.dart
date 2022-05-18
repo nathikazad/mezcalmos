@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -228,7 +229,12 @@ Future<void> showConfirmationDialog(
                   Flexible(
                     flex: 2,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        _clickedYes.value = true;
+                        onYesClick.call().whenComplete(() {
+                          _clickedYes.value = false;
+                        });
+                      },
                       child: Container(
                         height: 44,
                         width: 65.w,
@@ -237,37 +243,28 @@ Future<void> showConfirmationDialog(
                           borderRadius: BorderRadius.circular(9),
                         ),
                         child: Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              _clickedYes.value = true;
-                              onYesClick().then((_) {
-                                Get.back<void>(closeOverlays: true);
-                                _clickedYes.value = false;
-                              });
-                            },
-                            child: Obx(
-                              () => _clickedYes.value
-                                  ? Center(
-                                      child: Container(
-                                        height: 30,
-                                        width: 30,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 1,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    )
-                                  : Text(
-                                      'Yes, cancel order',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
+                          child: Obx(
+                            () => _clickedYes.value
+                                ? Center(
+                                    child: Container(
+                                      height: 30,
+                                      width: 30,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 1,
                                         color: Colors.white,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16.34,
                                       ),
                                     ),
-                            ),
+                                  )
+                                : Text(
+                                    'Yes, cancel order',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16.34,
+                                    ),
+                                  ),
                           ),
                         ),
                       ),
@@ -302,22 +299,28 @@ Future<void> showConfirmationDialog(
       });
 }
 
-void showStatusInfoDialog(
+Future<void> showStatusInfoDialog(
   BuildContext context, {
-  void Function()? onViewOrderClick,
+  void Function()? secondaryCallBack,
+  void Function()? primaryCallBack,
   required String status,
   required String description,
+  String? primaryClickTitle = "Ok",
+  String? secondaryClickTitle = "View Order",
+  IconData? primaryIcon,
+  Color? btnRightIconColor,
+  String? primaryImageUrl,
   IconData? bottomRightIcon,
 }) async {
   return await showDialog(
       context: context,
-      builder: (ctx) {
+      builder: (BuildContext ctx) {
         return Material(
           color: Colors.transparent,
           child: Center(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              height: onViewOrderClick == null ? 30.h : 35.h,
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              //  height: onViewOrderClick == null ? 30.h : 35.h,
               width: 85.w,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -325,6 +328,7 @@ void showStatusInfoDialog(
               ),
               child: Flex(
                 direction: Axis.vertical,
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -336,11 +340,8 @@ void showStatusInfoDialog(
                         Container(
                           height: 66,
                           width: 66,
-                          child: Icon(
-                            Icons.local_taxi,
-                            color: Colors.white,
-                            size: 33,
-                          ),
+                          child:
+                              getRightNotifIcon(primaryImageUrl, primaryIcon),
                           decoration: BoxDecoration(
                             color: Color.fromRGBO(103, 121, 254, 1),
                             shape: BoxShape.circle,
@@ -356,12 +357,13 @@ void showStatusInfoDialog(
                               child: Center(
                                 child: Icon(
                                   bottomRightIcon,
-                                  color: Color.fromRGBO(252, 89, 99, 1),
+                                  color: btnRightIconColor ??
+                                      Color.fromRGBO(252, 89, 99, 1),
                                   size: 18,
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                color: Color.fromRGBO(255, 235, 236, 1),
+                                color: Colors.white,
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -369,9 +371,9 @@ void showStatusInfoDialog(
                       ],
                     ),
                   ),
-                  SizedBox(height: 18),
+                  SizedBox(height: 10),
                   Flexible(
-                    flex: 1,
+                    flex: 2,
                     child: Text(
                       status,
                       textAlign: TextAlign.center,
@@ -382,7 +384,7 @@ void showStatusInfoDialog(
                       ),
                     ),
                   ),
-                  SizedBox(height: 11),
+                  SizedBox(height: 10),
                   Flexible(
                     flex: 2,
                     child: Text(
@@ -399,7 +401,9 @@ void showStatusInfoDialog(
                   Flexible(
                     flex: 2,
                     child: GestureDetector(
-                      onTap: () => Get.back<void>(closeOverlays: true),
+                      onTap: (primaryCallBack == null)
+                          ? () => Get.back<void>(closeOverlays: true)
+                          : primaryCallBack,
                       child: Container(
                         height: 44,
                         decoration: BoxDecoration(
@@ -408,7 +412,7 @@ void showStatusInfoDialog(
                         ),
                         child: Center(
                           child: Text(
-                            'Ok',
+                            primaryClickTitle ?? "Ok",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Color.fromRGBO(103, 121, 254, 1),
@@ -421,16 +425,17 @@ void showStatusInfoDialog(
                       ),
                     ),
                   ),
-                  if (onViewOrderClick != null)
+                  if (secondaryCallBack != null)
                     Flexible(
                       flex: 2,
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(height: 12),
                           GestureDetector(
-                            onTap: onViewOrderClick,
+                            onTap: secondaryCallBack,
                             child: Text(
-                              'View Order',
+                              secondaryClickTitle ?? "View order",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color.fromRGBO(120, 120, 120, 1),
@@ -440,6 +445,7 @@ void showStatusInfoDialog(
                               ),
                             ),
                           ),
+                          SizedBox(height: 12),
                         ],
                       ),
                     ),
@@ -449,4 +455,27 @@ void showStatusInfoDialog(
           ),
         );
       });
+}
+
+Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
+  if (imageUrl != null) {
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      width: double.infinity,
+      height: double.infinity,
+      fit: BoxFit.cover,
+    );
+  } else if (icon != null) {
+    return Icon(
+      icon,
+      color: Colors.white,
+      size: 33,
+    );
+  } else {
+    return Icon(
+      Icons.local_taxi_rounded,
+      color: Colors.white,
+      size: 33,
+    );
+  }
 }

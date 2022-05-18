@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/co
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/components/RestaurantShimmerList.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class RestaurantFutureBody extends StatelessWidget {
@@ -14,6 +15,7 @@ class RestaurantFutureBody extends StatelessWidget {
   }) : super(key: key);
 
   final AsyncSnapshot<List<Restaurant>> snapshot;
+
   final dynamic i18n;
 
   @override
@@ -30,7 +32,7 @@ class RestaurantFutureBody extends StatelessWidget {
       case ConnectionState.waiting:
         return const RestaurantShimmerList();
       case ConnectionState.done:
-        return _RestaurantBodyDone(
+        return RestaurantBodyDone(
           key: UniqueKey(),
           restaurants: snapshot.data!,
         );
@@ -44,33 +46,43 @@ class RestaurantFutureBody extends StatelessWidget {
   }
 }
 
-class _RestaurantBodyDone extends StatelessWidget {
-  const _RestaurantBodyDone({
+class RestaurantBodyDone extends StatefulWidget {
+  RestaurantBodyDone({
     Key? key,
     required this.restaurants,
-    this.i18n,
   }) : super(key: key);
 
-  final List<Restaurant> restaurants;
-  final dynamic i18n;
+  List<Restaurant> restaurants;
 
   @override
+  State<RestaurantBodyDone> createState() => RestaurantBodyDoneState();
+}
+
+class RestaurantBodyDoneState extends State<RestaurantBodyDone> {
+  dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+          ["pages"]["Restaurants"]["ListRestaurantsScreen"]
+      ["ListRestaurantScreen"]["emptRestaurantList"];
+  @override
   Widget build(BuildContext context) {
-    return restaurants.isNotEmpty
+    return widget.restaurants.isNotEmpty
         ? SingleChildScrollView(
             child: Column(
-              children: List.generate(
-                restaurants.length,
-                (int index) => RestaurantCard(
-                  restaurant: restaurants[index],
-                  onClick: () {
-                    Get.toNamed<void>(
-                      getRestaurantRoute(restaurants[index].info.id),
-                      arguments: restaurants[index],
-                    );
-                  },
+              children: [
+                Column(
+                  children: List.generate(
+                    widget.restaurants.length,
+                    (int index) => RestaurantCard(
+                      restaurant: widget.restaurants[index],
+                      onClick: () {
+                        Get.toNamed<void>(
+                          getRestaurantRoute(widget.restaurants[index].info.id),
+                          arguments: widget.restaurants[index],
+                        );
+                      },
+                    ),
+                  ).toList(),
                 ),
-              ).toList(),
+              ],
             ),
           )
         : Center(
@@ -79,18 +91,14 @@ class _RestaurantBodyDone extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Expanded(
-                  child: Container(
-                    height: 300,
-                    width: 380,
-                    child: Image.asset(aComingSoon),
-                  ),
+                Container(
+                  height: 300,
+                  width: 380,
+                  child: Image.asset(aComingSoon),
                 ),
-                Expanded(
-                  child: Text(
-                    i18n['emptRestaurantList'],
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(),
-                  ),
+                Text(
+                  "${_i18n()}",
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(),
                 )
               ],
             ),

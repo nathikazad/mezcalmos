@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
-import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
     ["NotificationsHelper"];
@@ -46,7 +45,7 @@ Future<void> _displayNotification(notifs.Notification notification) async {
 Future<void> decideWhichButtonDialogToUse(
     notifs.Notification notification) async {
   if (Get.currentRoute == notification.linkUrl)
-    showStatusInfoDialog(Get.context!,
+    await showStatusInfoDialog(Get.context!,
         status: notification.title,
         description: notification.body,
         bottomRightIcon: notification.icon);
@@ -60,12 +59,12 @@ Future<void> decideWhichButtonDialogToUse(
   //   ),
   // );
   else
-    showStatusInfoDialog(
+    await showStatusInfoDialog(
       Get.context!,
       status: notification.title,
       description: notification.body,
       bottomRightIcon: notification.icon,
-      onViewOrderClick: () => Get.toNamed(notification.linkUrl),
+      secondaryCallBack: () => Get.toNamed(notification.linkUrl),
     );
 }
 

@@ -126,31 +126,31 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+        padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
-          Ionicons.bag_remove,
-          size: 50,
+          Ionicons.close_circle,
+          size: 40,
           color: Colors.red,
         ),
       );
 
     case RestaurantOrderStatus.CancelledByCustomer:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+        padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
-          Ionicons.bag_remove,
-          size: 50,
+          Ionicons.close_circle,
+          size: 40,
           color: Colors.red,
         ),
       );
 
     case RestaurantOrderStatus.OrderReceieved:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+        padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
-          Icons.hourglass_bottom_rounded,
-          size: 50,
-          color: Colors.grey,
+          Icons.flatware_rounded,
+          size: 40,
+          color: customerAppColor,
         ),
       );
     case RestaurantOrderStatus.PreparingOrder:
@@ -173,22 +173,19 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
       );
     case RestaurantOrderStatus.ReadyForPickup:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+        padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
-          Ionicons.bag,
-          size: 50,
-          color: Colors.grey,
+          Icons.check_circle,
+          size: 40,
+          color: lightCustomerAppColor,
         ),
       );
 
     case RestaurantOrderStatus.Delivered:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Icon(
-          Ionicons.bag_check,
-          size: 50,
-          color: Colors.green,
-        ),
+        padding: const EdgeInsets.only(right: 10.0),
+        child:
+            Icon(Ionicons.checkmark_circle, size: 40, color: customerAppColor),
       );
   }
 }

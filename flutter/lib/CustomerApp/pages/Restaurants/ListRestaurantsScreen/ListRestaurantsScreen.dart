@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/co
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -20,7 +21,8 @@ class ListRestaurantsScreen extends StatefulWidget {
 
 class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
   /// List<Restaurant>
-  List<Restaurant> restaurants = <Restaurant>[];
+  List<Restaurant> searchedRestaurants = <Restaurant>[];
+  String? searchQuerry;
 
   /// RestaurantsInfoController
   RestaurantsInfoController _restaurantsInfoController =
@@ -36,35 +38,58 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
       ),
       floatingActionButton: FloatingCartComponent(),
       body: FutureBuilder<List<Restaurant>>(
-        future: _restaurantsInfoController.getRestaurants(),
-        builder: (
-          BuildContext context,
-          AsyncSnapshot<List<Restaurant>> snapshot,
-        ) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                TextFormField(
-                  textAlignVertical: TextAlignVertical.center,
-                  style: Get.textTheme.bodyText1,
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search),
-                      hintText: "Search restaurants"),
-                ),
-                SwitchListTile(
-                  value: true,
-                  onChanged: (bool v) {},
-                  activeColor: customerAppColor,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                  title: Text("Show only open restaurents"),
-                ),
-                RestaurantFutureBody(snapshot: snapshot),
-              ],
-            ),
-          );
-        },
-      ),
+          future: _restaurantsInfoController.getRestaurants(),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<List<Restaurant>> snapshot,
+          ) {
+            mezDbgPrint("Updating :::::");
+
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                children: [
+                  TextFormField(
+                    textAlignVertical: TextAlignVertical.center,
+                    style: Get.textTheme.bodyText1,
+                    onChanged: (String value) {
+                      if (value.length > 2) {
+                        _restaurantsInfoController.querry = value;
+                        setState(() {
+                          _restaurantsInfoController.getRestaurants();
+                        });
+                      } else {
+                        _restaurantsInfoController.querry = '';
+
+                        setState(() {
+                          _restaurantsInfoController.getRestaurants();
+                        });
+                      }
+                    },
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search),
+                        hintText: "Search restaurants"),
+                  ),
+                  SwitchListTile(
+                    value: _restaurantsInfoController.showOnlyOpen.isTrue,
+                    onChanged: (bool v) {
+                      _restaurantsInfoController.showOnlyOpen.value =
+                          !_restaurantsInfoController.showOnlyOpen.value;
+                      setState(() {
+                        _restaurantsInfoController.getRestaurants();
+                      });
+                    },
+                    activeColor: customerAppColor,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    title: Text("Show only open restaurents"),
+                  ),
+                  RestaurantFutureBody(
+                    snapshot: snapshot,
+                  ),
+                ],
+              ),
+            );
+          }),
     );
   }
 }

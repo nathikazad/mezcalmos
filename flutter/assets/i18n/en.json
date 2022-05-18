@@ -114,7 +114,7 @@
                     },
                     "ListRestaurantScreen": {
                         "restaurants": "Restaurants",
-                        "emptRestaurantList": "There are no registered restaurants yet."
+                        "emptRestaurantList": "Sorry no restaurant found."
                     }
                 },
                 "ViewCartScreen": {
@@ -182,7 +182,8 @@
                     },
                     "ViewItemScreen": {
                         "notes": "Notes",
-                        "itemNotes": "Item notes :"
+                        "itemNotes": "Item notes :",
+                        "itemDescription": "Item Description"
                     }
                 },
                 "ViewOrderScreen": {
