@@ -9,7 +9,7 @@ class ListRestaurantsController {
   RestaurantList _restaurants = List<Restaurant>.empty();
 
   RxBool isLoading = RxBool(false);
-  RxBool showOnlyOpen = RxBool(false);
+  RxBool showOnlyOpen = RxBool(true);
   RxString searchQuery = RxString("");
   RestaurantsInfoController _restaurantsInfoController =
       Get.find<RestaurantsInfoController>();
@@ -33,7 +33,7 @@ class ListRestaurantsController {
     RestaurantList newList = new RestaurantList.from(_restaurants);
     newList = newList
         .searchByName(searchQuery.value)
-        .searchByOpenStatus(showOnlyOpen.value);
+        .showOnlyOpen(showOnlyOpen.value);
     newList.sortByOpen();
     filteredRestaurants.value = newList;
   }
@@ -51,9 +51,13 @@ extension RestaurantFilters on RestaurantList {
       return this;
   }
 
-  RestaurantList searchByOpenStatus(bool value) {
-    return where((Restaurant restaurant) => restaurant.isOpen() == value)
-        .toList();
+  RestaurantList showOnlyOpen(bool value) {
+    if (value == true) {
+      return where((Restaurant restaurant) => restaurant.isOpen() == true)
+          .toList();
+    } else {
+      return this;
+    }
   }
 
   void sortByOpen() {

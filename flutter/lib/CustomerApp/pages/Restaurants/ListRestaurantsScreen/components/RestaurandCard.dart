@@ -63,7 +63,7 @@ class RestaurantCard extends StatelessWidget {
                         const Spacer(),
                       Divider(
                         height: 5,
-                        thickness: 0.5,
+                        thickness: 0.2,
                       ),
                       Container(
                         //  alignment: Alignment.bottomLeft,

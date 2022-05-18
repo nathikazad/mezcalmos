@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -28,54 +27,57 @@ class _RestaurantsListOfItemsComponentState
     final TextTheme txt = Theme.of(context).textTheme;
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
-    return InkWell(
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        // margin: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: (isImageExist)
-                  ? CachedNetworkImageProvider(widget.item.image ?? "")
-                  : AssetImage(aNoImage) as ImageProvider,
-              onBackgroundImageError: (Object e, StackTrace? s) {
-                setState(() {
-                  isImageExist = false;
-                });
-              },
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 5,
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
-                  style: txt.headline3!.copyWith(
-                    fontSize: 13.sp,
+    return Card(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+          // margin: const EdgeInsets.all(5),
+
+          child: Row(
+            children: [
+              if (isImageExist)
+                CircleAvatar(
+                  radius: 30,
+                  backgroundImage:
+                      CachedNetworkImageProvider(widget.item.image ?? ""),
+                  onBackgroundImageError: (Object e, StackTrace? s) {
+                    setState(() {
+                      isImageExist = false;
+                    });
+                  },
+                ),
+              if (isImageExist)
+                SizedBox(
+                  width: 15,
+                ),
+              Flexible(
+                fit: FlexFit.tight,
+                flex: 5,
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
+                    style: txt.headline3!.copyWith(
+                      fontSize: 13.sp,
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text("\$${widget.item.cost}", style: txt.headline3),
-            )
-          ],
+              SizedBox(
+                width: 10,
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text("\$${widget.item.cost}", style: txt.headline3),
+              )
+            ],
+          ),
         ),
+        onTap: () {
+          widget.function!();
+        },
       ),
-      onTap: () {
-        widget.function!();
-      },
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -39,17 +38,17 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: (isImageExist)
-                    ? CachedNetworkImageProvider(widget.item.image ?? "")
-                    : AssetImage(aNoImage) as ImageProvider,
-                onBackgroundImageError: (Object e, StackTrace? s) {
-                  setState(() {
-                    isImageExist = false;
-                  });
-                },
-              ),
+              if (isImageExist)
+                CircleAvatar(
+                  radius: 30,
+                  backgroundImage:
+                      CachedNetworkImageProvider(widget.item.image ?? ""),
+                  onBackgroundImageError: (Object e, StackTrace? s) {
+                    setState(() {
+                      isImageExist = false;
+                    });
+                  },
+                ),
               SizedBox(
                 height: 10,
               ),

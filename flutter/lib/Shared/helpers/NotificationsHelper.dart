@@ -100,9 +100,9 @@ void notificationSnackBar(
             )
           : Image.asset(imgUrl),
     ),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.black,
     borderWidth: 1,
-    borderColor: const Color(0xECECEC),
+    borderColor: Colors.black,
     borderRadius: 0,
     messageText: Text(msg),
     titleText: Row(
@@ -112,10 +112,13 @@ void notificationSnackBar(
         Flexible(
           child: Text(
             title,
-            style: TextStyle(fontFamily: 'psb'),
+            style: TextStyle(fontFamily: 'psb', color: Colors.white),
           ),
         ),
-        Text(time),
+        Text(
+          time,
+          style: TextStyle(color: Colors.white),
+        ),
       ],
     ),
     padding: EdgeInsets.all(25),
