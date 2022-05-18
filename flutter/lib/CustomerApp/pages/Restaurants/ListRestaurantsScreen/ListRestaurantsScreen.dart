@@ -55,14 +55,14 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
       } else {
         return Column(
           children: List.generate(
-              viewController.getSortedList().length,
+              viewController.getData().length,
               (int index) => RestaurantCard(
-                    restaurant: viewController.getSortedList()[index],
+                    restaurant: viewController.getData()[index],
                     onClick: () {
                       Get.toNamed<void>(
                         getRestaurantRoute(
-                            viewController.getSortedList()[index].info.id),
-                        arguments: viewController.getSortedList()[index],
+                            viewController.getData()[index].info.id),
+                        arguments: viewController.getData()[index],
                       );
                     },
                   )),

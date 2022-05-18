@@ -2,7 +2,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
+enum UserInteraction { isSearching, isSorting, isSearchingAndSorting, Nothing }
+
 class ListRestaurantsController {
+  Rx<UserInteraction> userInteractin = Rx(UserInteraction.Nothing);
   RxList<Restaurant> restaurants = RxList.empty();
   RxList<Restaurant> sortedRestaurants = RxList.empty();
   RxList<Restaurant> searchedRestaurants = RxList.empty();
@@ -36,6 +39,11 @@ class ListRestaurantsController {
       sortedRestaurants.clear();
 
       showOnlyOpen.value = false;
+      if (isSearching.isTrue) {
+        userInteractin.value = UserInteraction.isSearching;
+      } else {
+        userInteractin.value = UserInteraction.Nothing;
+      }
     }
   }
 
@@ -45,6 +53,7 @@ class ListRestaurantsController {
       searchedRestaurants.clear();
       searchQuerry.value = value;
       if (showOnlyOpen.isTrue) {
+        userInteractin.value = UserInteraction.isSearchingAndSorting;
         isSortingAndSearching.value = true;
         sortedRestaurants.forEach((Restaurant element) {
           if (element.info.name.toLowerCase().contains(value.toLowerCase())) {
@@ -52,6 +61,7 @@ class ListRestaurantsController {
           }
         });
       } else {
+        userInteractin.value = UserInteraction.isSearching;
         restaurants.forEach((Restaurant element) {
           if (element.info.name.toLowerCase().contains(value.toLowerCase())) {
             searchedRestaurants.add(element);
@@ -62,6 +72,11 @@ class ListRestaurantsController {
       isSearching.value = false;
       isSortingAndSearching.value = false;
       searchedRestaurants.clear();
+      if (showOnlyOpen.isTrue) {
+        userInteractin.value = UserInteraction.isSorting;
+      } else {
+        userInteractin.value = UserInteraction.Nothing;
+      }
       // getRightList().forEach((Restaurant element) {
       //   searchedRestaurants.add(element);
       // });
@@ -72,7 +87,9 @@ class ListRestaurantsController {
     showOnlyOpen.value = true;
     sortedRestaurants.clear();
     if (isSearching.isTrue) {
-      isSortingAndSearching.value = true;
+      userInteractin.value = UserInteraction.isSearchingAndSorting;
+    } else {
+      userInteractin.value = UserInteraction.isSorting;
     }
 
     getRightList().forEach((Restaurant element) {
@@ -113,17 +130,18 @@ class ListRestaurantsController {
     return sortedAndSearchedList;
   }
 
-  RxList<Restaurant> getSortedList() {
-    if (showOnlyOpen.isTrue && isSearching.isFalse) {
-      return sortedRestaurants;
-    } else if (showOnlyOpen.isFalse && isSearching.isTrue) {
-      return searchedRestaurants;
-    } else if (isSortingAndSearching.isTrue) {
-      return getSearchedAndSorted();
-    } else if (isSortingAndSearching.isTrue) {
-      return getSearchedAndSorted();
-    } else {
-      return getRightList();
+  RxList<Restaurant> getData() {
+    switch (userInteractin.value) {
+      case UserInteraction.Nothing:
+        return restaurants;
+      case UserInteraction.isSearching:
+        return searchedRestaurants;
+      case UserInteraction.isSorting:
+        return sortedRestaurants;
+      case UserInteraction.isSearchingAndSorting:
+        return getSearchedAndSorted();
+      default:
+        return restaurants;
     }
   }
 }
