@@ -55,14 +55,14 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
       } else {
         return Column(
           children: List.generate(
-              viewController.getSortedList().length,
+              viewController.filteredRestaurants.length,
               (int index) => RestaurantCard(
-                    restaurant: viewController.getSortedList()[index],
+                    restaurant: viewController.filteredRestaurants[index],
                     onClick: () {
                       Get.toNamed<void>(
                         getRestaurantRoute(
-                            viewController.getSortedList()[index].info.id),
-                        arguments: viewController.getSortedList()[index],
+                            viewController.filteredRestaurants[index].info.id),
+                        arguments: viewController.filteredRestaurants[index],
                       );
                     },
                   )),
@@ -76,7 +76,8 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
       () => SwitchListTile(
         value: viewController.showOnlyOpen.value,
         onChanged: (bool v) {
-          viewController.switchOnlyOpen();
+          viewController.changeAlwaysOpenSwitch(v);
+          viewController.filterRestaurants();
         },
         activeColor: customerAppColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 5),
@@ -90,9 +91,9 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
       textAlignVertical: TextAlignVertical.center,
       style: Get.textTheme.bodyText1,
       onChanged: (String value) {
-        viewController.searchRestaurant(value);
-
-        mezDbgPrint(viewController.searchQuerry);
+        viewController.searchQuery.value = value;
+        viewController.filterRestaurants();
+        mezDbgPrint(viewController.searchQuery);
       },
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.search), hintText: "Search restaurants"),
