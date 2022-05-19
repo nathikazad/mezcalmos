@@ -112,14 +112,14 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
 Map<String, dynamic>? getLaundryOrderStatusFields(
     LaundryOrderStatus laundryOrderStatus) {
   switch (laundryOrderStatus) {
-    case LaundryOrderStatus.OtwPickup:
+    case LaundryOrderStatus.OtwPickupFromCustomer:
       return <String, dynamic>{
         "title": "${_i18n()["laundryOtwPickupTitle"]}",
         "body": "${_i18n()["laundryOtwPickupBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
       };
-    case LaundryOrderStatus.PickedUp:
+    case LaundryOrderStatus.PickedUpFromCustomer:
       return <String, dynamic>{
         "title": "${_i18n()["laundryPickedTitle"]}",
         "body": "${_i18n()["laundryPickedBody"]}",
@@ -139,7 +139,8 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
         "imgUrl":
             "assets/images/shared/notifications/readyOrderNotificationIcon.png",
       };
-    case LaundryOrderStatus.OtwDelivery:
+    case LaundryOrderStatus.OtwPickupFromLaundry:
+    case LaundryOrderStatus.PickedUpFromLaundry:
       return <String, dynamic>{
         "title": "${_i18n()["laundryOtwDeliveryTitle"]}",
         "body": "${_i18n()["laundryOtwDeliveryBody"]}",

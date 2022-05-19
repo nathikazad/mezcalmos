@@ -10,15 +10,17 @@ import 'package:mezcalmos/Shared/models/User.dart';
 
 enum LaundryOrderStatus {
   OrderReceieved,
-  OtwPickup,
-  PickedUp,
+  OtwPickupFromCustomer,
+  PickedUpFromCustomer,
   AtLaundry,
   ReadyForDelivery,
-  OtwDelivery,
+  OtwPickupFromLaundry,
+  PickedUpFromLaundry,
   Delivered,
   CancelledByAdmin,
   CancelledByCustomer
 }
+
 enum LaundryOrderPhase {
   Pickup,
   Dropoff,
@@ -149,20 +151,14 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   @override
   bool inProcess() {
     return status == LaundryOrderStatus.OrderReceieved ||
-        status == LaundryOrderStatus.OtwPickup ||
-        status == LaundryOrderStatus.PickedUp ||
+        status == LaundryOrderStatus.OtwPickupFromCustomer ||
+        status == LaundryOrderStatus.PickedUpFromCustomer ||
         status == LaundryOrderStatus.AtLaundry ||
         status == LaundryOrderStatus.ReadyForDelivery ||
-        status == LaundryOrderStatus.OtwDelivery;
+        status == LaundryOrderStatus.OtwPickupFromLaundry ||
+        status == LaundryOrderStatus.PickedUpFromLaundry;
   }
 
-  bool inDeliverPhase() {
-    return status == LaundryOrderStatus.OtwPickup ||
-        status == LaundryOrderStatus.OrderReceieved ||
-        status == LaundryOrderStatus.PickedUp ||
-        status == LaundryOrderStatus.ReadyForDelivery ||
-        status == LaundryOrderStatus.OtwDelivery;
-  }
 
   bool isAtLaundry() {
     return status == LaundryOrderStatus.AtLaundry;
@@ -178,11 +174,12 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   LaundryOrderPhase getCurrentPhase() {
     switch (status) {
       case LaundryOrderStatus.OrderReceieved:
-      case LaundryOrderStatus.PickedUp:
-      case LaundryOrderStatus.OtwPickup:
+      case LaundryOrderStatus.OtwPickupFromCustomer:
+      case LaundryOrderStatus.PickedUpFromCustomer:
         return LaundryOrderPhase.Pickup;
       case LaundryOrderStatus.ReadyForDelivery:
-      case LaundryOrderStatus.OtwDelivery:
+      case LaundryOrderStatus.OtwPickupFromLaundry:
+      case LaundryOrderStatus.PickedUpFromLaundry:
       case LaundryOrderStatus.Delivered:
         return LaundryOrderPhase.Dropoff;
       case LaundryOrderStatus.AtLaundry:

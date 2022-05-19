@@ -52,7 +52,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                   });
                 });
                 break;
-              case LaundryOrderStatus.OtwPickup:
+              case LaundryOrderStatus.OtwPickupFromCustomer:
                 setState(() {
                   clicked = true;
                 });
@@ -64,7 +64,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                   });
                 });
                 break;
-              case LaundryOrderStatus.PickedUp:
+              case LaundryOrderStatus.PickedUpFromCustomer:
                 setState(() {
                   clicked = true;
                 });
@@ -90,7 +90,8 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                   });
                 });
                 break;
-              case LaundryOrderStatus.OtwDelivery:
+              case LaundryOrderStatus.OtwPickupFromLaundry:
+              case LaundryOrderStatus.PickedUpFromLaundry:
                 setState(() {
                   clicked = true;
                 });
@@ -118,14 +119,15 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
     switch (widget.order.status) {
       case LaundryOrderStatus.OrderReceieved:
         return '${_i18n()["pickupOrder"]}';
-      case LaundryOrderStatus.OtwPickup:
+      case LaundryOrderStatus.OtwPickupFromCustomer:
         return '${_i18n()["confirmPickup"]}';
-      case LaundryOrderStatus.PickedUp:
+      case LaundryOrderStatus.PickedUpFromCustomer:
         return '${_i18n()["atLaundry"]}';
 
       case LaundryOrderStatus.ReadyForDelivery:
         return '${_i18n()["deliverOrder"]}';
-      case LaundryOrderStatus.OtwDelivery:
+      case LaundryOrderStatus.OtwPickupFromLaundry:
+      case LaundryOrderStatus.PickedUpFromLaundry:
         return '${_i18n()["confirmDelivery"]}';
 
       default:

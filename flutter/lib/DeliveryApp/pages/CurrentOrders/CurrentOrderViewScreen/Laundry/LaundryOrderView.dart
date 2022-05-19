@@ -207,7 +207,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
           fitWithinBounds: true,
         );
         break;
-      case LaundryOrderStatus.OtwDelivery:
+      case LaundryOrderStatus.OtwPickupFromCustomer:
         if (_orderStatusSnapshot != laundryOrder.status) {
           _addOrUpdateLaundryAndCustomerMarkers(
             laundryOrder,
@@ -236,7 +236,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
   /// When the phase is PickUp.
   void _onPickUpPhase(LaundryOrder laundryOrder) {
     switch (laundryOrder.status) {
-      case LaundryOrderStatus.OtwPickup:
+      case LaundryOrderStatus.OtwPickupFromCustomer:
         // Driver marker
         if (_orderStatusSnapshot != laundryOrder.status) {
           // Landry Marker
@@ -258,7 +258,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
         mapController.animateAndUpdateBounds();
         break;
-      case LaundryOrderStatus.PickedUp:
+      case LaundryOrderStatus.PickedUpFromCustomer:
         // user going from customer's to laundry
         if (_orderStatusSnapshot != laundryOrder.status) {
           _addOrUpdateLaundryAndCustomerMarkers(
