@@ -65,9 +65,11 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       this.estimatedDeliveryTime,
       this.routeInformation,
       DeliveryDriverUserInfo? dropoffDriver,
-      String? dropOffDriverChatId,
+      String? laundryDropOffDriverChatId,
+      String? customerDropOffDriverChatId,
       DeliveryDriverUserInfo? pickupDriver,
-      String? pickupDriverChatId,
+      String? laundryPickupDriverChatId,
+      String? customerPickupDriverChatId,
       this.weight,
       this.notes})
       : super(
@@ -79,9 +81,11 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             customer: customer,
             to: to,
             dropoffDriver: dropoffDriver,
-            dropOffDriverChatId: dropOffDriverChatId,
+            serviceProviderDropOffDriverChatId: laundryDropOffDriverChatId,
+            customerDropOffDriverChatId: customerDropOffDriverChatId,
             pickupDriver: pickupDriver,
-            pickupDriverChatId: pickupDriverChatId);
+            serviceProviderPickupDriverChatId: laundryPickupDriverChatId,
+            customerPickupDriverChatId: customerPickupDriverChatId);
 
   factory LaundryOrder.fromData(id, data) {
     final LaundryOrder laundryOrder = LaundryOrder(
@@ -107,13 +111,18 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         dropoffDriver: (data["dropoffDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
             : null,
-        dropOffDriverChatId: data['secondaryChats']
-            ?['deliveryAdminDropOffDriver'],
+      laundryDropOffDriverChatId: data['secondaryChats']
+          ?['serviceProviderDropOffDriver'],
+      customerDropOffDriverChatId: data['secondaryChats']
+          ?['customerDropOffDriver'],
         pickupDriver: (data["pickupDriver"] != null)
             ? DeliveryDriverUserInfo.fromData(data["pickupDriver"])
             : null,
-        pickupDriverChatId: data['secondaryChats']
-            ?['deliveryAdminPickupDriver']);
+      laundryPickupDriverChatId: data['secondaryChats']
+          ?['serviceProviderPickupDriver'],
+      customerPickupDriverChatId: data['secondaryChats']
+          ?['customerPickupDriverDriver'],
+    );
 
     if (data["routeInformation"] != null) {
       laundryOrder.routeInformation = RouteInformation(

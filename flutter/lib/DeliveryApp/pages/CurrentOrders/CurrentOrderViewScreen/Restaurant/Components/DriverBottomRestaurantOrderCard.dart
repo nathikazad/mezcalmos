@@ -95,7 +95,7 @@ class DriverBottomRestaurantOrderCard extends StatelessWidget {
                 onPressed: () {
                   Get.toNamed(getMessagesRoute(
                       orderId: order.orderId,
-                      chatId: order.dropOffDriverChatId!,
+                      chatId: order.serviceProviderDropOffDriverChatId!,
                       // recipientId: order.serviceProviderId,
                       recipientType: ParticipantType.DeliveryAdmin));
                 },

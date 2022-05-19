@@ -55,6 +55,7 @@ class RestaurantOrder extends DeliverableOrder {
     String? dropOffDriverChatId,
     required this.itemsCost,
     required this.shippingCost,
+    String? customerDropOffDriverChatId,
     this.notes,
     RouteInformation? routeInformation,
   }) : super(
@@ -68,7 +69,8 @@ class RestaurantOrder extends DeliverableOrder {
           serviceProvider: restaurant,
           to: to,
           dropoffDriver: dropoffDriver,
-          dropOffDriverChatId: dropOffDriverChatId,
+          serviceProviderDropOffDriverChatId: dropOffDriverChatId,
+          customerDropOffDriverChatId: customerDropOffDriverChatId,
           routeInformation: routeInformation,
         );
 
@@ -92,7 +94,10 @@ class RestaurantOrder extends DeliverableOrder {
             ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
             : null,
         dropOffDriverChatId: data['secondaryChats']
-            ?['deliveryAdminDropOffDriver']);
+          ?['deliveryAdminDropOffDriver'],
+      customerDropOffDriverChatId: data['secondaryChats']
+          ?['customerDropOffDriver'],
+    );
 
     if (data["routeInformation"] != null) {
       mezDbgPrint("routeInformation not nulllll !!!!!!!!!!");

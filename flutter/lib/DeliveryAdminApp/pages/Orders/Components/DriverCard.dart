@@ -241,7 +241,8 @@ class DriverCard extends StatelessWidget {
     return Obx(
       () => Get.find<RestaurantOrderController>()
               .orderHaveNewMessageNotifications(
-                  (order as DeliverableOrder).dropOffDriverChatId!)
+                  (order as DeliverableOrder)
+                  .serviceProviderDropOffDriverChatId!)
           ? _newMessageRedDot(context)
           : Container(),
     );
@@ -252,7 +253,8 @@ class DriverCard extends StatelessWidget {
       return Obx(
         () => Get.find<LaundryOrderController>()
                 .orderHaveNewMessageNotifications(
-                    (order as TwoWayDeliverableOrder).pickupDriverChatId!)
+                    (order as TwoWayDeliverableOrder)
+                        .serviceProviderPickupDriverChatId!)
             ? _newMessageRedDot(context)
             : Container(),
       );
@@ -261,7 +263,8 @@ class DriverCard extends StatelessWidget {
       return Obx(
         () => Get.find<LaundryOrderController>()
                 .orderHaveNewMessageNotifications(
-                    (order as TwoWayDeliverableOrder).dropOffDriverChatId!)
+                    (order as TwoWayDeliverableOrder)
+                        .serviceProviderDropOffDriverChatId!)
             ? _newMessageRedDot(context)
             : Container(),
       );
@@ -317,7 +320,7 @@ class DriverCard extends StatelessWidget {
   void restaurantDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
-        chatId: (order as DeliverableOrder).dropOffDriverChatId!,
+        chatId: (order as DeliverableOrder).serviceProviderDropOffDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }
 
@@ -325,7 +328,7 @@ class DriverCard extends StatelessWidget {
   void _laundryDropOffDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
-        chatId: (order as DeliverableOrder).dropOffDriverChatId!,
+        chatId: (order as DeliverableOrder).serviceProviderDropOffDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }
 
@@ -333,7 +336,8 @@ class DriverCard extends StatelessWidget {
   void _laundryPickupDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
-        chatId: (order as TwoWayDeliverableOrder).pickupDriverChatId!,
+        chatId: (order as TwoWayDeliverableOrder)
+            .serviceProviderPickupDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }
 }

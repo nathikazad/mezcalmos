@@ -39,8 +39,10 @@ export enum PaymentType {
 }
 
 export enum SecondaryChat {
-  DeliveryAdminDropOffDriverChat = "deliveryAdminDropOffDriver",
-  DeliveryAdminPickupDriverChat = "deliveryAdminPickupDriver",
+  ServiceProviderDropOffDriverChat = "serviceProviderDropOffDriver",
+  ServiceProviderPickupDriverChat = "serviceProviderPickupDriver",
+  CustomerDropOffDriverChat = "customerDropOffDriver",
+  CustomerPickupDriverChat = "customerPickupDriver"
 }
 
 export interface DeliverableOrder extends Order {

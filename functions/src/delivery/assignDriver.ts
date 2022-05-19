@@ -83,7 +83,8 @@ export = functions.https.onCall(async (data, context) => {
     if (returnVal != null) return returnVal;
   }
 
-  let chatId: string = await pushChat();
+  let serviceProviderDriverChatId: string = await pushChat();
+  let customerDriverChatId: string = await pushChat();
   order.secondaryChats = order.secondaryChats ?? {};
   switch (deliveryDriverType) {
     case DeliveryDriverType.DropOff:
@@ -93,7 +94,8 @@ export = functions.https.onCall(async (data, context) => {
           errorMessage: "dropoffDriver is already set"
         }
       order.dropoffDriver = driverInfo;
-      order.secondaryChats.deliveryAdminDropOffDriver = chatId
+      order.secondaryChats.serviceProviderDropOffDriver = serviceProviderDriverChatId
+      order.secondaryChats.customerDropOffDriver = customerDriverChatId
       break;
     case DeliveryDriverType.Pickup:
       if (order.pickupDriver != null)
@@ -102,7 +104,8 @@ export = functions.https.onCall(async (data, context) => {
           errorMessage: "pickupDriver is already set"
         }
       order.pickupDriver = driverInfo;
-      order.secondaryChats.deliveryAdminPickupDriver = chatId
+      order.secondaryChats.serviceProviderPickupDriver = serviceProviderDriverChatId
+      order.secondaryChats.customerPickupDriver = customerDriverChatId
       break;
   }
 
@@ -118,24 +121,42 @@ export = functions.https.onCall(async (data, context) => {
     laundryNodes.inProcessOrders(lOrder.laundry.id!, orderId).update(order);
   }
 
-  let chat: ChatObject = buildChatForOrder(chatId, data.orderType, orderId);
-  chat.addParticipant({
+  let serviceProviderchat: ChatObject = buildChatForOrder(serviceProviderDriverChatId, data.orderType, orderId);
+  serviceProviderchat.addParticipant({
     ...driverInfo,
     particpantType: ParticipantType.DeliveryDriver
   });
-  await chatController.setChat(chatId, chat.chatData);
+  await chatController.setChat(serviceProviderDriverChatId, serviceProviderchat.chatData);
 
   deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
     let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, chatId, ParticipantType.DeliveryAdmin)
+    chatController.addParticipantsToChat(Object.keys(deliveryAdmins), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.DeliveryAdmin)
   })
 
-  laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
-    let laundryOperators: Record<string, boolean> = snapshot.val();
-    chatController.addParticipantsToChat(Object.keys(laundryOperators), chat, chatId, ParticipantType.LaundryOperator)
-  })
+  switch (order.orderType) {
+    case OrderType.Laundry:
+      laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
+        let laundryOperators: Record<string, boolean> = snapshot.val();
+        chatController.addParticipantsToChat(Object.keys(laundryOperators), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.LaundryOperator)
+      })
+      break;
 
-  
+    default:
+      break;
+  }
+
+
+  let customerChat: ChatObject = buildChatForOrder(customerDriverChatId, data.orderType, orderId);
+  customerChat.addParticipant({
+    ...driverInfo,
+    particpantType: ParticipantType.DeliveryDriver
+  });
+  customerChat.addParticipant({
+    ...order.customer,
+    particpantType: ParticipantType.Customer
+  });
+  await chatController.setChat(customerDriverChatId, customerChat.chatData);
+
 
   let notification: Notification = {
     foreground: <NewDeliveryOrderNotification>{
@@ -183,9 +204,10 @@ function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDe
       addCancelledOrderToPast(order.dropoffDriver.id, order, orderId);
       pushNotification(order.dropoffDriver.id, notification, ParticipantType.DeliveryDriver);
       delete order.dropoffDriver;
-      deleteChat(order.secondaryChats.deliveryAdminDropOffDriver!);
-      order.secondaryChats.deliveryAdminDropOffDriver = null;
-
+      deleteChat(order.secondaryChats.serviceProviderDropOffDriver!);
+      order.secondaryChats.serviceProviderDropOffDriver = null;
+      deleteChat(order.secondaryChats.customerDropOffDriver!);
+      order.secondaryChats.customerDropOffDriver = null;
       return null;
     case DeliveryDriverType.Pickup:
       if (order.pickupDriver == null)
@@ -197,8 +219,10 @@ function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDe
       addCancelledOrderToPast(order.pickupDriver.id, order, orderId);
       pushNotification(order.pickupDriver.id, notification, ParticipantType.DeliveryDriver);
       delete order.pickupDriver;
-      deleteChat(order.secondaryChats.deliveryAdminPickupDriver!);
-      order.secondaryChats.deliveryAdminPickupDriver = null;
+      deleteChat(order.secondaryChats.serviceProviderPickupDriver!);
+      order.secondaryChats.serviceProviderPickupDriver = null;
+      deleteChat(order.secondaryChats.customerPickupDriver!);
+      order.secondaryChats.customerPickupDriver = null;
       return null;
   }
 }
