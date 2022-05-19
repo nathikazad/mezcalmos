@@ -17,11 +17,12 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 
 let statusArrayInSeq: Array<LaundryOrderStatus> =
   [LaundryOrderStatus.OrderReceieved,
-  LaundryOrderStatus.OtwPickup,
-  LaundryOrderStatus.PickedUp,
+    LaundryOrderStatus.OtwPickupFromCustomer,
+    LaundryOrderStatus.PickedUpFromCustomer,
   LaundryOrderStatus.AtLaundry,
   LaundryOrderStatus.ReadyForDelivery,
-  LaundryOrderStatus.OtwDelivery,
+    LaundryOrderStatus.OtwPickupFromLaundry,
+    LaundryOrderStatus.PickedUpFromLaundry,
   LaundryOrderStatus.Delivered
   ]
 

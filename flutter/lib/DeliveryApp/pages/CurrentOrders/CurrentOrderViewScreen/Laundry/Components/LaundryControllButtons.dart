@@ -45,7 +45,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                   clicked = true;
                 });
                 await laundryOrderController
-                    .otwPickupOrder(widget.order.orderId)
+                    .otwPickupFromCustomer(widget.order.orderId)
                     .whenComplete(() {
                   setState(() {
                     clicked = false;
@@ -57,7 +57,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                   clicked = true;
                 });
                 await laundryOrderController
-                    .pickedUpOrder(widget.order.orderId)
+                    .pickedUpFromCustomer(widget.order.orderId)
                     .whenComplete(() {
                   setState(() {
                     clicked = false;
@@ -83,7 +83,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                   clicked = true;
                 });
                 await laundryOrderController
-                    .otwDeliveryOrder(widget.order.orderId)
+                    .otwPickupFromLaundry(widget.order.orderId)
                     .whenComplete(() {
                   setState(() {
                     clicked = false;

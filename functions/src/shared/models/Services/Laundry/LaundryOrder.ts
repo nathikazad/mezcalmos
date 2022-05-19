@@ -22,11 +22,12 @@ export interface CostsByType {
 
 export enum LaundryOrderStatus {
   OrderReceieved = "orderReceieved",
-  OtwPickup = "otwPickup",
-  PickedUp = "pickedUp",
+  OtwPickupFromCustomer = "otwPickupFromCustomer",
+  PickedUpFromCustomer = "pickedUpFromCustomer",
   AtLaundry = "atLaundry",
   ReadyForDelivery = "readyForDelivery",
-  OtwDelivery = "otwDelivery",
+  OtwPickupFromLaundry = "otwPickupFromLaundry",
+  PickedUpFromLaundry = "pickedUpFromLaundry",
   Delivered = "delivered",
   CancelledByAdmin = "cancelledByAdmin",
   CancelledByCustomer = "cancelledByCustomer"

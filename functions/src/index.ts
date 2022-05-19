@@ -62,10 +62,11 @@ export const delivery = {
   assignDriver: require("./delivery/assignDriver"),
   restaurantStartDelivery: restaurantDelivery.startDelivery,
   restaurantFinishDelivery: restaurantDelivery.finishDelivery,
-  laundryStartPickup: laundryDelivery.startPickup,
-  laundryFinishPickup: laundryDelivery.finishPickup,
+  laundryStartPickupFromCustomer: laundryDelivery.startPickupFromCustomer,
+  laundryPickedUpFromCustomer: laundryDelivery.pickedUpFromCustomer,
   laundryAtFacility: laundryDelivery.atFacility,
-  laundryStartDropoff: laundryDelivery.startDropoff,
+  laundryStartPickupFromLaundry: laundryDelivery.startPickupFromLaundry,
+  laundryPickedUpFromLaundry: laundryDelivery.pickedUpFromLaundry,
   laundryFinishDropoff: laundryDelivery.finishDropoff
 }
 

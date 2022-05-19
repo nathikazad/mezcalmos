@@ -32,12 +32,12 @@ class LaundryOrderController extends GetxController {
   //   });
   // }
 
-  Future<ServerResponse> otwPickupOrder(String orderId) async {
-    return _callLaundryCloudFunction("laundryStartPickup", orderId);
+  Future<ServerResponse> otwPickupFromCustomer(String orderId) async {
+    return _callLaundryCloudFunction("laundryStartPickupFromCustomer", orderId);
   }
 
-  Future<ServerResponse> pickedUpOrder(String orderId) async {
-    return _callLaundryCloudFunction("laundryFinishPickup", orderId);
+  Future<ServerResponse> pickedUpFromCustomer(String orderId) async {
+    return _callLaundryCloudFunction("laundryPickedUpFromCustomer", orderId);
   }
 
   Future<ServerResponse> atLaundryOrder(String orderId) async {
@@ -45,9 +45,14 @@ class LaundryOrderController extends GetxController {
         optionalParams: <String, dynamic>{});
   }
 
-  Future<ServerResponse> otwDeliveryOrder(String orderId) async {
-    return _callLaundryCloudFunction("laundryStartDropoff", orderId);
+  Future<ServerResponse> otwPickupFromLaundry(String orderId) async {
+    return _callLaundryCloudFunction("laundryStartPickupFromLaundry", orderId);
   }
+
+  Future<ServerResponse> pickedUpFromLaundry(String orderId) async {
+    return _callLaundryCloudFunction("laundryPickedUpFromLaundry", orderId);
+  }
+
 
   Future<ServerResponse> deliveredOrder(String orderId) async {
     return _callLaundryCloudFunction("laundryFinishDropoff", orderId);
