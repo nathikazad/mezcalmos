@@ -21,7 +21,7 @@ class Laundry extends Service {
   factory Laundry.fromLaundryData(
       // ignore: avoid_annotating_with_dynamic
       {required String laundryId,
-      required dynamic laundryData}) {
+      required laundryData}) {
     final ServiceState laundryState =
         ServiceState.fromServiceStateData(laundryData["state"]);
 
@@ -51,6 +51,23 @@ class Laundry extends Service {
         primaryLanguage: primaryLanguage,
         secondaryLanguage: secondaryLanguage);
     return laundry;
+  }
+  double get getAverageCost {
+    double allCosts = 0;
+
+    laundryCosts.lineItems.forEach((LaundryCostLineItem element) {
+      allCosts += element.cost;
+    });
+    final double averageCost = allCosts / laundryCosts.lineItems.length;
+
+    return averageCost;
+  }
+
+  num get getCheapestCategory {
+    final LaundryCostLineItem cheapestCostCategory = laundryCosts.lineItems
+        .reduce((LaundryCostLineItem a, LaundryCostLineItem b) =>
+            a.cost < b.cost ? a : b);
+    return cheapestCostCategory.cost;
   }
 
   Map<String, dynamic> toJson() {

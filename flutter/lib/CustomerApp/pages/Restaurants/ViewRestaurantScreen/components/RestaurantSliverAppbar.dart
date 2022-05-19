@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart'
@@ -46,14 +47,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
 
       leading: _BackButtonAppBar(),
       actions: <Widget>[
-        Obx(
-          () => (Get.find<ForegroundNotificationsController>()
-                  .notifications
-                  .isNotEmpty)
-              ? _notificationAppBarIcon()
-              : Container(),
-        ),
-        _ordersAppBarIcon(),
+        getAppbarIconsButton(),
       ],
       pinned: true,
       //  floating: true,
@@ -240,31 +234,50 @@ class RestaurantSliverAppBar extends StatelessWidget {
   }
 
   Widget _notificationAppBarIcon() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 3),
-      child: InkWell(
-        customBorder: CircleBorder(),
-        onTap: () {
-          Get.toNamed(kNotificationsRoute);
-        },
-        child: Badge(
-          badgeColor: Colors.red,
-          showBadge: true,
-          position: BadgePosition.topEnd(top: 10, end: 0),
-          child: Ink(
-            padding: const EdgeInsets.all(7),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-            ),
-            child: Icon(
-              Icons.notifications,
-              color: customerAppColor,
-              size: 20,
+    return Obx(() {
+      if (Get.find<ForegroundNotificationsController>().notifications.length >
+          0) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 3, right: 3),
+          child: InkWell(
+            customBorder: CircleBorder(),
+            onTap: () {
+              Get.toNamed(kNotificationsRoute);
+            },
+            child: Badge(
+              badgeColor: Colors.red,
+              showBadge: true,
+              position: BadgePosition.topEnd(top: 10, end: 0),
+              child: Ink(
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: Icon(
+                  Icons.notifications,
+                  color: customerAppColor,
+                  size: 20,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        );
+      } else {
+        return Container();
+      }
+    });
+  }
+
+  Widget getAppbarIconsButton() {
+    return Obx(() {
+      return Row(
+        children: [
+          if (Get.find<AuthController>().isUserSignedIn)
+            _notificationAppBarIcon(),
+          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+        ],
+      );
+    });
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
@@ -33,16 +34,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
       automaticallyImplyLeading: autoBack ?? false,
       leading: _BackButtonAppBar(),
-      actions: [
-        Obx(
-          () => (Get.find<ForegroundNotificationsController>()
-                  .notifications
-                  .isNotEmpty)
-              ? _notificationAppBarIcon()
-              : Container(),
-        ),
-        _ordersAppBarIcon(),
-      ],
+      actions: [getAppbarIconsButton()],
     );
   }
 
@@ -103,31 +95,50 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _notificationAppBarIcon() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 3),
-      child: InkWell(
-        customBorder: CircleBorder(),
-        onTap: () {
-          Get.toNamed(kNotificationsRoute);
-        },
-        child: Badge(
-          badgeColor: Colors.red,
-          showBadge: true,
-          position: BadgePosition.topEnd(top: 10, end: 0),
-          child: Ink(
-            padding: const EdgeInsets.all(7),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: lightCustomerAppColor,
-            ),
-            child: Icon(
-              Icons.notifications,
-              size: 20,
-              color: customerAppColor,
+    return Obx(() {
+      if (Get.find<ForegroundNotificationsController>().notifications.length >
+          0) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 3, right: 3),
+          child: InkWell(
+            customBorder: CircleBorder(),
+            onTap: () {
+              Get.toNamed(kNotificationsRoute);
+            },
+            child: Badge(
+              badgeColor: Colors.red,
+              showBadge: true,
+              position: BadgePosition.topEnd(top: 10, end: 0),
+              child: Ink(
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: Icon(
+                  Icons.notifications,
+                  color: customerAppColor,
+                  size: 20,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        );
+      } else {
+        return Container();
+      }
+    });
+  }
+
+  Widget getAppbarIconsButton() {
+    return Obx(() {
+      return Row(
+        children: [
+          if (Get.find<AuthController>().isUserSignedIn)
+            _notificationAppBarIcon(),
+          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+        ],
+      );
+    });
   }
 }
