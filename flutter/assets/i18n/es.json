@@ -420,7 +420,7 @@
                             "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido."
                         },
                         "OrderSummaryComponent": {
-                            "orderSummary": "Resumen de la orden",
+                            "orderSummary": "Resumen",
                             "orderCost": "Costo de la orden",
                             "deliveryCost": "Costo de envío",
                             "totalCost": "Costo Total",
@@ -1274,7 +1274,7 @@
                         "notes": "Notas"
                     },
                     "LaundryOpOrderSummaryCard": {
-                        "orderSummary": "Resumen de la orden",
+                        "orderSummary": "Resumen",
                         "orderCost": "Costo de la orden",
                         "deliveryCost": "Costo de envío",
                         "totalCost": "Costo Total",

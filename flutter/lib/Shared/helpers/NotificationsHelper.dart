@@ -85,6 +85,7 @@ void notificationSnackBar(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
+        color: Colors.white,
         border: Border.all(
           color: Colors.grey.shade100,
           width: 1,
@@ -104,7 +105,10 @@ void notificationSnackBar(
     borderWidth: 1,
     borderColor: Colors.black,
     borderRadius: 0,
-    messageText: Text(msg),
+    messageText: Text(
+      msg,
+      style: TextStyle(color: Colors.white),
+    ),
     titleText: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,

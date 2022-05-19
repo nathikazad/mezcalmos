@@ -457,6 +457,34 @@ Future<void> showStatusInfoDialog(
       });
 }
 
+Widget multipleSelectOptionComponent(
+    {required bool value, required void Function(bool?) onTap}) {
+  return InkWell(
+    customBorder: CircleBorder(),
+    onTap: () {
+      onTap.call(null);
+    },
+    child: Container(
+        alignment: Alignment.center,
+        // padding: const EdgeInsets.all(5),
+        child: (value)
+            ? Icon(
+                Icons.check,
+                size: 22,
+                color: Colors.white,
+              )
+            : Icon(
+                Icons.add,
+                color: customerAppColor,
+                size: 22,
+              ),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: value ? customerAppColor : lightCustomerAppColor,
+        )),
+  );
+}
+
 Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
   if (imageUrl != null) {
     return CachedNetworkImage(

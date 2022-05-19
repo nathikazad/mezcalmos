@@ -31,7 +31,7 @@ class LaundryOrderNoteComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
-              const Divider(height: 15),
+              SizedBox(height: 15),
               Text(order.notes ?? '')
             ],
           ),

@@ -76,12 +76,12 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: widget.bgColor,
-        border: Border.all(
-          width: 1.5,
-          color: (dropDownListValue != pickLocationPlaceholder)
-              ? Theme.of(context).primaryColorLight
-              : Colors.red,
-        ),
+        // border: Border.all(
+        //   // width: 1.5,
+        //   // color: (dropDownListValue != pickLocationPlaceholder)
+        //   //     ? Theme.of(context).primaryColorLight
+        //   //     : Colors.red,
+        // ),
       ),
       child: DropdownButtonHideUnderline(
         child: Obx(() {
@@ -89,15 +89,22 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               selectedItemBuilder: (BuildContext context) {
                 return dropDownSelectedItemBuilder(textTheme);
               },
-              iconDisabledColor: Color.fromRGBO(172, 89, 252, 1),
-              iconEnabledColor: Color.fromRGBO(172, 89, 252, 1),
+              iconDisabledColor: Colors.grey.shade800,
+              iconEnabledColor: Colors.grey.shade800,
               value: dropDownListValue,
               dropdownColor: widget.bgColor,
               isDense: true,
               isExpanded: true,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  ?.copyWith(fontWeight: FontWeight.w800),
               hint: Center(
                 child: Text(_i18n()["pickLocation"],
-                    style: Theme.of(context).textTheme.bodyText2),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        ?.copyWith(fontWeight: FontWeight.w800)),
               ),
               icon: Icon(Icons.expand_more),
               items: listOfSavedLoacations

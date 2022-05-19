@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderNoteComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
@@ -118,14 +119,13 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                     children: <Widget>[
                       const SizedBox(height: 20),
                       LaundryOrderStatusCard(order: order.value!),
+                      LaundryOrderDriverCard(order: order.value!),
                       const SizedBox(height: 20),
-                      if (order.value!.getCurrentPhase() !=
-                          LaundryOrderPhase.Neither)
-                        ..._mapWidget,
+                      if (order.value!.laundry != null) _laundryCard(),
+                      if (order.value!.inDeliveryPhase()) ..._mapWidget,
                       SizedBox(
                         height: 20,
                       ),
-                      if (order.value!.laundry != null) _laundryCard(),
                       SizedBox(
                         height: 20,
                       ),
@@ -301,27 +301,47 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   Card _laundryCard() {
     return Card(
       child: Container(
-        margin: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        padding: EdgeInsets.all(12),
+        child: Row(
           children: [
-            Text("${_i18n()["laundry"]} :", style: Get.textTheme.bodyText1),
-            Divider(),
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage:
-                      CachedNetworkImageProvider(order.value!.laundry!.image),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  order.value!.laundry!.name,
-                  style: Get.textTheme.bodyText1,
-                ),
-              ],
+            CircleAvatar(
+              radius: 20,
+              backgroundImage:
+                  CachedNetworkImageProvider(order.value!.laundry!.image),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    order.value!.laundry!.name,
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.place,
+                        color: customerAppColor,
+                        size: 20,
+                      ),
+                      Flexible(
+                        child: Text(
+                          order.value!.laundry!.location.address,
+                          style: Get.textTheme.bodyText2,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

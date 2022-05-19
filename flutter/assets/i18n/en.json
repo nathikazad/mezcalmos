@@ -417,7 +417,7 @@
                             "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
                         },
                         "OrderSummaryComponent": {
-                            "orderSummary": "Order Summary",
+                            "orderSummary": "Summary",
                             "orderCost": "Order Cost",
                             "deliveryCost": "Delivery Cost",
                             "totalCost": "Total Cost",
@@ -1267,7 +1267,7 @@
                         "notes": "Notes"
                     },
                     "LaundryOpOrderSummaryCard": {
-                        "orderSummary": "Order Summary",
+                        "orderSummary": "Summary",
                         "orderCost": "Order Cost",
                         "deliveryCost": "Delivery Cost",
                         "totalCost": "Total Cost",

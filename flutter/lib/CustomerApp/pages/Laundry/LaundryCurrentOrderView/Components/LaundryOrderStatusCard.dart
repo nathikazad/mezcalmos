@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -112,36 +113,36 @@ Widget getOrderWidget(LaundryOrderStatus status) {
   switch (status) {
     case LaundryOrderStatus.CancelledByAdmin:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+        padding: const EdgeInsets.only(right: 7.0),
         child: Icon(
           Icons.cancel,
-          size: 50,
+          size: 40,
           color: Colors.red,
         ),
       );
 
     case LaundryOrderStatus.CancelledByCustomer:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+        padding: const EdgeInsets.only(right: 7.0),
         child: Icon(
           Icons.cancel,
-          size: 50,
+          size: 40,
           color: Colors.red,
         ),
       );
 
     case LaundryOrderStatus.OrderReceieved:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+        padding: const EdgeInsets.only(right: 7.0),
         child: Icon(
-          Icons.hourglass_bottom_rounded,
-          size: 50,
-          color: Colors.grey,
+          Icons.local_laundry_service,
+          size: 40,
+          color: customerAppColor,
         ),
       );
     case LaundryOrderStatus.OtwPickup:
       return Container(
-        height: 50,
+        height: 40,
         width: 60,
         child: RiveAnimation.asset(
           "assets/animation/motorbikeWithSmokeAnimation.riv",
@@ -153,32 +154,32 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         padding: const EdgeInsets.only(right: 5),
         child: Icon(
           Icons.check_circle,
-          size: 50,
+          size: 40,
           color: Colors.grey,
         ),
       );
     case LaundryOrderStatus.AtLaundry:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+        padding: const EdgeInsets.only(right: 7.0),
         child: Icon(
           Icons.local_laundry_service_rounded,
-          size: 50,
+          size: 40,
           color: Color(0xFFAC59FC),
         ),
       );
 
     case LaundryOrderStatus.ReadyForDelivery:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+        padding: const EdgeInsets.only(right: 7.0),
         child: Icon(
           Icons.dry_cleaning_rounded,
-          size: 50,
+          size: 40,
           color: Color(0xFFAC59FC),
         ),
       );
     case LaundryOrderStatus.OtwDelivery:
       return Container(
-        height: 50,
+        height: 40,
         width: 60,
         child: RiveAnimation.asset(
           "assets/animation/motorbikeWithSmokeAnimation.riv",
@@ -187,10 +188,10 @@ Widget getOrderWidget(LaundryOrderStatus status) {
       );
     case LaundryOrderStatus.Delivered:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+        padding: const EdgeInsets.only(right: 7.0),
         child: Icon(
           Icons.check_circle,
-          size: 50,
+          size: 40,
           color: Colors.green,
         ),
       );

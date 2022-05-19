@@ -56,8 +56,8 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                     },
                   );
                 },
-                style:
-                    TextButton.styleFrom(backgroundColor: Colors.red.shade600),
+                style: TextButton.styleFrom(
+                    backgroundColor: Color(0xFFF9D8D6), primary: Colors.red),
                 child: Container(
                   alignment: Alignment.center,
                   child: Text('${_i18n()["cancelOrder"]}'),

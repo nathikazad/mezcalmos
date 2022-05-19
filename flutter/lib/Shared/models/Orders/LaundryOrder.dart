@@ -19,6 +19,7 @@ enum LaundryOrderStatus {
   CancelledByAdmin,
   CancelledByCustomer
 }
+
 enum LaundryOrderPhase {
   Pickup,
   Dropoff,
@@ -156,11 +157,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.OtwDelivery;
   }
 
-  bool inDeliverPhase() {
+  bool inDeliveryPhase() {
     return status == LaundryOrderStatus.OtwPickup ||
-        status == LaundryOrderStatus.OrderReceieved ||
         status == LaundryOrderStatus.PickedUp ||
-        status == LaundryOrderStatus.ReadyForDelivery ||
+        // status == LaundryOrderStatus.ReadyForDelivery ||
         status == LaundryOrderStatus.OtwDelivery;
   }
 
@@ -177,8 +177,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
   LaundryOrderPhase getCurrentPhase() {
     switch (status) {
-      case LaundryOrderStatus.OrderReceieved:
       case LaundryOrderStatus.PickedUp:
+      case LaundryOrderStatus.OrderReceieved:
       case LaundryOrderStatus.OtwPickup:
         return LaundryOrderPhase.Pickup;
       case LaundryOrderStatus.ReadyForDelivery:

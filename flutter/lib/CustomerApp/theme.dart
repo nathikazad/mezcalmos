@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:sizer/sizer.dart';
 
 class CustomerAppTheme {
@@ -97,17 +98,17 @@ class CustomerAppTheme {
         ),
       ),
       chipTheme: ChipThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        backgroundColor: Colors.grey.shade300,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        backgroundColor: lightCustomerAppColor,
         showCheckmark: false,
         disabledColor: Colors.grey,
         selectedColor: Colors.white,
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(5),
         labelStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
           fontSize: 12.sp,
-          color: Colors.black,
+          color: customerAppColor,
         ),
         brightness: Brightness.light,
         secondarySelectedColor: Color(0xFF6779FE),

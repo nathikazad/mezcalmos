@@ -15,7 +15,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
       borderRadius: BorderRadius.circular(10),
       onTap: () {
-        Get.toNamed(kLaundryOrderRequest, arguments: laundry);
+        Get.toNamed(getSingleLaundryRoute(laundry.info.id));
       },
       child: Container(
         child: Column(
@@ -66,23 +66,6 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             "Starting from : \$${laundry.getCheapestCategory}",
                             style: Get.textTheme.bodyText2),
                       ),
-                      // Flexible(
-                      //   child: Row(
-                      //     children: [
-                      //       Icon(
-                      //         Icons.delivery_dining,
-                      //         color: Colors.grey.shade800,
-                      //       ),
-                      //       SizedBox(
-                      //         width: 3,
-                      //       ),
-                      //       Flexible(
-                      //         child:
-                      //             Text('\$ 50', style: Get.textTheme.bodyText2),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                       Flexible(
                         child: Text(
                             "Minimum : \$${laundry.laundryCosts.minimumCost}",
