@@ -176,10 +176,35 @@ class ItemSliverAppBar extends StatelessWidget {
     });
   }
 
+  Widget _noUserButton() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 12),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          Get.toNamed(kSignInRouteOptional);
+        },
+        child: Ink(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: lightCustomerAppColor,
+          ),
+          child: Icon(
+            Icons.person,
+            size: 20,
+            color: customerAppColor,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget getAppbarIconsButton() {
     return Obx(() {
       return Row(
         children: [
+          if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
           if (Get.find<AuthController>().isUserSignedIn)
             _notificationAppBarIcon(),
           if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
