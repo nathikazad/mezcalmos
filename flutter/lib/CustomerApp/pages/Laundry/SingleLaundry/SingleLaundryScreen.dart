@@ -6,7 +6,6 @@ import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:sizer/sizer.dart';
 
 class SingleLaundryScreen extends StatefulWidget {
@@ -55,21 +54,6 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   height: 15,
                 ),
                 Text(
-                  "Description",
-                  style: Get.textTheme.bodyText1,
-                ),
-                Text(
-                  "NO desc",
-                  style: Get.textTheme.bodyText2,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                _servicesComponent(),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
                   "Open hours",
                   style: Get.textTheme.bodyText1,
                 ),
@@ -88,76 +72,28 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             ),
           );
         } else {
-          return MezLogoAnimation();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       }),
-      bottomNavigationBar: Container(
-        height: 70,
-        decoration: BoxDecoration(
-            gradient:
-                LinearGradient(colors: [Colors.purple, customerAppColor])),
-        child: TextButton(
-          style: TextButton.styleFrom(
-              shape: RoundedRectangleBorder(),
-              backgroundColor: Colors.transparent),
-          child: Text("Send my laundry"),
-          onPressed: () {
-            Get.toNamed(kLaundryOrderRequest, arguments: laundry.value);
-          },
-        ),
-      ),
+      bottomNavigationBar: _sendMyLaundryButton(),
     );
   }
 
-  Widget _servicesComponent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Services",
-          style: Get.textTheme.bodyText1,
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: List.generate(
-                5,
-                (int index) => _serviceComponent(
-                      icon: Icons.local_laundry_service,
-                      title: "Service",
-                    )),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _serviceComponent({required IconData icon, required String title}) {
+  Widget _sendMyLaundryButton() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-                color: lightCustomerAppColor, shape: BoxShape.circle),
-            child: Icon(
-              icon,
-              size: 30,
-              color: customerAppColor,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            title,
-            style: Get.textTheme.bodyText2?.copyWith(color: customerAppColor),
-          )
-        ],
+      height: 70,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [Colors.purple, customerAppColor])),
+      child: TextButton(
+        style: TextButton.styleFrom(
+            shape: RoundedRectangleBorder(),
+            backgroundColor: Colors.transparent),
+        child: Text("Send my laundry"),
+        onPressed: () {
+          Get.toNamed(kLaundryOrderRequest, arguments: laundry.value);
+        },
       ),
     );
   }

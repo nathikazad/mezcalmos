@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:rive/rive.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
@@ -37,16 +37,29 @@ class LaundryOrderStatusCard extends StatelessWidget {
                 Flexible(
                   flex: 8,
                   fit: FlexFit.tight,
-                  child: Text(
-                    getOrderStatus(order.status),
-                    style: txt.headline3,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        getOrderStatus(order.status),
+                        style: txt.headline3,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (getEstimatedText() != null)
+                        Text(
+                          getEstimatedText()!,
+                          style: txt.headline3,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                    ],
                   ),
                 ),
-                const Spacer(),
-                messageButton(context),
+                // const Spacer(),
+                // messageButton(context),
               ],
             ),
           ),
@@ -61,6 +74,44 @@ class LaundryOrderStatusCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String? getEstimatedText() {
+    switch (order.status) {
+      case LaundryOrderStatus.OtwPickupFromCustomer:
+        if (order.estimatedPickupFromCustomerTime != null) {
+          return getEstimatedTime(order.estimatedPickupFromCustomerTime!);
+        }
+
+        break;
+      case LaundryOrderStatus.PickedUpFromCustomer:
+        if (order.estimatedDropoffAtServiceProviderTime != null) {
+          return getEstimatedTime(order.estimatedDropoffAtServiceProviderTime!);
+        }
+        break;
+      case LaundryOrderStatus.AtLaundry:
+        if (order.estimatedLaundryReadyTime != null) {
+          return getEstimatedTime(order.estimatedLaundryReadyTime!);
+        }
+
+        break;
+      case LaundryOrderStatus.OtwPickupFromLaundry:
+        if (order.estimatedPickupFromServiceProviderTime != null) {
+          return getEstimatedTime(
+              order.estimatedPickupFromServiceProviderTime!);
+        }
+
+        break;
+      case LaundryOrderStatus.PickedUpFromLaundry:
+        if (order.estimatedDropoffAtCustomerTime != null) {
+          return getEstimatedTime(order.estimatedDropoffAtCustomerTime!);
+        }
+
+        break;
+      default:
+        return null;
+    }
+    return null;
   }
 
   Widget messageButton(BuildContext context) {
@@ -111,29 +162,22 @@ class LaundryOrderStatusCard extends StatelessWidget {
 
 Widget getOrderWidget(LaundryOrderStatus status) {
   switch (status) {
-    case LaundryOrderStatus.CancelledByAdmin:
-      return Padding(
-        padding: const EdgeInsets.only(right: 7.0),
-        child: Icon(
-          Icons.cancel,
-          size: 40,
-          color: Colors.red,
-        ),
-      );
-
     case LaundryOrderStatus.CancelledByCustomer:
-      return Padding(
-        padding: const EdgeInsets.only(right: 7.0),
+    case LaundryOrderStatus.CancelledByAdmin:
+      return Container(
+        padding: const EdgeInsets.all(5),
+        decoration:
+            BoxDecoration(color: Color(0xFFF9D8D6), shape: BoxShape.circle),
         child: Icon(
-          Icons.cancel,
-          size: 40,
+          Icons.close,
+          size: 25,
           color: Colors.red,
         ),
       );
 
     case LaundryOrderStatus.OrderReceieved:
-      return Padding(
-        padding: const EdgeInsets.only(right: 7.0),
+    case LaundryOrderStatus.AtLaundry:
+      return Container(
         child: Icon(
           Icons.local_laundry_service,
           size: 40,
@@ -141,59 +185,35 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         ),
       );
     case LaundryOrderStatus.OtwPickupFromCustomer:
+    case LaundryOrderStatus.OtwPickupFromLaundry:
+    case LaundryOrderStatus.PickedUpFromLaundry:
       return Container(
-        height: 40,
-        width: 60,
-        child: RiveAnimation.asset(
-          "assets/animation/motorbikeWithSmokeAnimation.riv",
-          fit: BoxFit.cover,
+        child: Icon(
+          Icons.delivery_dining,
+          size: 40,
+          color: customerAppColor,
         ),
       );
     case LaundryOrderStatus.PickedUpFromCustomer:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5),
+    case LaundryOrderStatus.Delivered:
+      return Container(
+        padding: const EdgeInsets.all(5),
+        decoration:
+            BoxDecoration(color: lightCustomerAppColor, shape: BoxShape.circle),
         child: Icon(
-          Icons.check_circle,
-          size: 40,
-          color: Colors.grey,
-        ),
-      );
-    case LaundryOrderStatus.AtLaundry:
-      return Padding(
-        padding: const EdgeInsets.only(right: 7.0),
-        child: Icon(
-          Icons.local_laundry_service_rounded,
-          size: 40,
-          color: Color(0xFFAC59FC),
+          Icons.check,
+          size: 25,
+          color: customerAppColor,
         ),
       );
 
     case LaundryOrderStatus.ReadyForDelivery:
-      return Padding(
-        padding: const EdgeInsets.only(right: 7.0),
+      return Container(
+        // padding: const EdgeInsets.only(right: 7.0),
         child: Icon(
           Icons.dry_cleaning_rounded,
           size: 40,
-          color: Color(0xFFAC59FC),
-        ),
-      );
-    case LaundryOrderStatus.OtwPickupFromLaundry:
-    case LaundryOrderStatus.PickedUpFromLaundry:
-      return Container(
-        height: 40,
-        width: 60,
-        child: RiveAnimation.asset(
-          "assets/animation/motorbikeWithSmokeAnimation.riv",
-          fit: BoxFit.cover,
-        ),
-      );
-    case LaundryOrderStatus.Delivered:
-      return Padding(
-        padding: const EdgeInsets.only(right: 7.0),
-        child: Icon(
-          Icons.check_circle,
-          size: 40,
-          color: Colors.green,
+          color: customerAppColor,
         ),
       );
   }

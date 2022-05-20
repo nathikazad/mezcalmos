@@ -528,6 +528,9 @@
             },
             "NotificationsHelper": {
                 "view": "Ver"
+            },
+            "DateTimeHelper": {
+                "today": "Hoy dia"
             }
         },
         "pages": {

@@ -525,6 +525,9 @@
             },
             "NotificationsHelper": {
                 "view": "View"
+            },
+            "DateTimeHelper": {
+                "today": "Today"
             }
         },
         "pages": {
