@@ -38,6 +38,10 @@ class OpenHours {
     };
   }
 
+  String toString() {
+    return "$isOpen ${from.join(':')} ${to.join(':')} ";
+  }
+
   void setOpenHours({
     required bool isOpen,
   }) {
@@ -115,6 +119,32 @@ class Schedule {
       json[weekday.toFirebaseFormatString()] =
           openHours[weekday]?.toFirebaseFormattedJson();
     });
+    return json;
+  }
+
+  Map<String, OpenHours> concatenatedVersion() {
+    final Map<String, OpenHours> json = <String, OpenHours>{};
+    final List<Weekday> weekdays = Weekday.values;
+    String? previousDayOpenHours;
+    String? currentStringKey;
+    for (int i = 0; i < weekdays.length; i++) {
+      final Weekday weekday = weekdays[i];
+      if (openHours[weekday] == null) continue;
+      if (previousDayOpenHours != openHours[weekday].toString()) {
+        currentStringKey = weekday.toFirebaseFormatString();
+        if (openHours[weekday]!.isOpen) {
+          json[currentStringKey] = openHours[weekday]!;
+          previousDayOpenHours = openHours[weekday].toString();
+        } else {
+          previousDayOpenHours = null;
+        }
+      } else {
+        json.remove(currentStringKey);
+        currentStringKey =
+            "${currentStringKey!.split('-')[0]}-${weekday.toFirebaseFormatString()}";
+        json[currentStringKey] = openHours[weekday]!;
+      }
+    }
     return json;
   }
 
