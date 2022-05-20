@@ -171,7 +171,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                             option: cartItem.value!.item.options[index])),
                   ),
                 SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
                 _itemNotesComponent(),
                 SizedBox(
@@ -187,11 +187,14 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   Container _itemNotesComponent() {
     return Container(
-      margin: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(child: Text("${_i18n()["itemNotes"]}")),
+          Container(
+              child: Text(
+            "${_i18n()["itemNotes"]}",
+            style: Get.textTheme.bodyText1,
+          )),
           Container(
             margin: const EdgeInsets.all(8),
             child: TextFormField(
@@ -200,7 +203,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               onChanged: (String v) {
                 cartItem.value!.notes = v;
               },
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyText2,
               decoration: InputDecoration(
                 alignLabelWithHint: false,
                 floatingLabelBehavior: FloatingLabelBehavior.never,

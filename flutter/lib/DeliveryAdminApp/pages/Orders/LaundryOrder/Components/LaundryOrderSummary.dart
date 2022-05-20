@@ -41,8 +41,8 @@ class LaundryOrderSummary extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Text(
-                      (order.weight != null)
-                          ? order.weight.toString() + ' kg'
+                      (order.costsByType?.totalWeigh != null)
+                          ? "${order.costsByType?.totalWeigh} kg"
                           : '-',
                       style: Theme.of(context).textTheme.bodyText1,
                     ),

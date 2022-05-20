@@ -54,9 +54,6 @@ class RestaurantSliverAppBar extends StatelessWidget {
 
       flexibleSpace: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-        final double top = constraints.constrainHeight();
-        final double collapsedHight =
-            MediaQuery.of(context).viewPadding.top + kToolbarHeight + 60;
         // WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
         //   onCollapsed(collapsedHight != top);
         // });
@@ -68,11 +65,19 @@ class RestaurantSliverAppBar extends StatelessWidget {
           // centerTitle: true,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                restaurant.info.name,
-                style: Get.textTheme.headline3
-                    ?.copyWith(color: Colors.white, fontSize: 14.sp),
+              Flexible(
+                flex: 1,
+                fit: FlexFit.loose,
+                child: Text(
+                  (showInfo) ? "Informations" : restaurant.info.name,
+                  style: Get.textTheme.headline3
+                      ?.copyWith(color: Colors.white, fontSize: 14.sp),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                ),
               ),
               SizedBox(
                 width: 5,

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
 
@@ -11,16 +11,17 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewRestaurantScreen"]["components"]
     ["restaurantInfoTab"];
 
-class RestaurantLocationCard extends StatefulWidget {
-  const RestaurantLocationCard({Key? key, required this.restaurant})
+class ServiceLocationCard extends StatefulWidget {
+  const ServiceLocationCard({Key? key, required this.location})
       : super(key: key);
-  final Restaurant restaurant;
+
+  final Location location;
 
   @override
-  State<RestaurantLocationCard> createState() => _RestaurantLocationCardState();
+  State<ServiceLocationCard> createState() => _ServiceLocationCardState();
 }
 
-class _RestaurantLocationCardState extends State<RestaurantLocationCard> {
+class _ServiceLocationCardState extends State<ServiceLocationCard> {
   MGoogleMapController mapController = MGoogleMapController();
 
   LatLng? restaurantLatLng;
@@ -35,7 +36,7 @@ class _RestaurantLocationCardState extends State<RestaurantLocationCard> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.restaurant.info.location != null) {
+    if (widget.location != null) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,7 +51,7 @@ class _RestaurantLocationCardState extends State<RestaurantLocationCard> {
           ),
           Container(
             child: Text(
-              widget.restaurant.info.location.address,
+              widget.location.address,
               style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
@@ -84,7 +85,7 @@ class _RestaurantLocationCardState extends State<RestaurantLocationCard> {
     mapController.recenterButtonEnabled.value = false;
     mapController.minMaxZoomPrefs = MinMaxZoomPreference(15.1, 15.2);
     // centering the map on the location marker
-    mapController.setLocation(widget.restaurant.info.location);
+    mapController.setLocation(widget.location);
 
     mapController.addOrUpdatePurpleDestinationMarker(
         latLng: getRestaurantLatLng()!);
@@ -94,10 +95,8 @@ class _RestaurantLocationCardState extends State<RestaurantLocationCard> {
   }
 
   LatLng? getRestaurantLatLng() {
-    if (widget.restaurant.info.location.latitude != null &&
-        widget.restaurant.info.location.longitude != null) {
-      return LatLng(widget.restaurant.info.location.latitude!,
-          widget.restaurant.info.location.longitude!);
+    if (widget.location.latitude != null && widget.location.longitude != null) {
+      return LatLng(widget.location.latitude!, widget.location.longitude!);
     }
     return null;
   }

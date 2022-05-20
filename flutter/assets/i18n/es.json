@@ -170,7 +170,7 @@
                             "leftBtn": "Revisar",
                             "rightBtn": "Sobrescribir",
                             "subtitle": "Ya tiene algunos artículos en su carrito de otro restaurante, ¿quiere revisarlos primero o sobrescribirlos?",
-                            "addToCart": "AÑADIR AL CARRITO",
+                            "addToCart": "Añadir artículo",
                             "modifyItem": "Modificar artículo"
                         },
                         "ChoosenManyCheckBox": {
@@ -454,7 +454,7 @@
                         "deliveryCost": "Costo de envío",
                         "noLocation": "No hay ubicación seleccionada",
                         "pickLocation": "Elegir del mapa",
-                        "orderNow": "ORDENAR AHORA",
+                        "orderNow": "Ordenar ahora",
                         "signInToMakeOrder": "Iniciar sesión para hacer el pedido",
                         "notes": "Notas",
                         "error": "Error",

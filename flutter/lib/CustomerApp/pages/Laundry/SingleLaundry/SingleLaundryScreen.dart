@@ -6,6 +6,8 @@ import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:sizer/sizer.dart';
 
 class SingleLaundryScreen extends StatefulWidget {
@@ -57,13 +59,14 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   "Open hours",
                   style: Get.textTheme.bodyText1,
                 ),
+                const SizedBox(
+                  height: 5,
+                ),
+                MezServiceOpenHours(schedule: laundry.value!.schedule!),
                 SizedBox(
                   height: 10,
                 ),
-                Text(
-                  "Location",
-                  style: Get.textTheme.bodyText1,
-                ),
+                ServiceLocationCard(location: laundry.value!.info.location),
                 Text(
                   laundry.value!.info.location.address,
                   style: Get.textTheme.bodyText2,

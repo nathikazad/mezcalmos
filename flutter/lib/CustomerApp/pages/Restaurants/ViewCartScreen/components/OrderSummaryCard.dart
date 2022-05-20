@@ -4,7 +4,6 @@ import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -44,7 +43,7 @@ class OrderSummaryCard extends StatelessWidget {
             Container(
               alignment: Alignment.centerLeft,
               width: Get.width,
-              child: Text("${_i18n()["orderSummary"]}", style: txt.headline3),
+              child: Text("${_i18n()["orderSummary"]}", style: txt.bodyText1),
             ),
             const Divider(height: 20),
             //==================Order cost :==================
@@ -97,25 +96,14 @@ class OrderSummaryCard extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      child: Text(
-                        "${_i18n()["totalCost"]} :",
-                        style: txt.headline3!.copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14.75.sp,
-                        ),
-                      ),
+                      child: Text("${_i18n()["totalCost"]} :",
+                          style: txt.bodyText1),
                     ),
                   ),
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text(
-                        "\$$totalCost",
-                        style: txt.headline3!.copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14.75.sp,
-                        ),
-                      ),
+                      child: Text("\$$totalCost", style: txt.bodyText1),
                     ),
                   ),
                 ],
@@ -127,10 +115,7 @@ class OrderSummaryCard extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 "${_i18n()["deliveryLocation"]} :",
-                style: txt.headline3!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14.75.sp,
-                ),
+                style: txt.bodyText1,
                 textAlign: TextAlign.left,
               ),
             ),

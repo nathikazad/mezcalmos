@@ -10,19 +10,15 @@ Widget notesWidget(Rxn<RestaurantOrder> order) {
   return Column(
     children: <Widget>[
       Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.all(10),
         alignment: Alignment.centerLeft,
         child: Text(
           _i18n()['notes'],
-          style: const TextStyle(
-              color: Color(0xff000f1c),
-              fontFamily: "psb",
-              fontStyle: FontStyle.normal,
-              fontSize: 14.0),
+          style: Get.textTheme.bodyText1,
           textAlign: TextAlign.left,
         ),
       ),
-      const SizedBox(height: 15),
+      const SizedBox(height: 5),
       Container(
         alignment: Alignment.center,
         margin: const EdgeInsets.symmetric(horizontal: 10),

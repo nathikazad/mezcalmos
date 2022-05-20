@@ -184,26 +184,29 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   }
 
   Widget _buildCategory(Category category, int index) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          category.name?[userLanguage] ?? "",
-          style: Get.theme.textTheme.bodyText1,
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        if (category.dialog?[userLanguage] != null)
-          Text(category.dialog![userLanguage]!),
-        SizedBox(
-          height: 5,
-        ),
-        _buildResturantItems(category.items, restaurant.info.id),
-        SizedBox(
-          height: 10,
-        )
-      ],
+    return Container(
+     // margin: const EdgeInsets.symmetric(vertical: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            category.name?[userLanguage] ?? "",
+            style: Get.theme.textTheme.bodyText1,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          if (category.dialog?[userLanguage] != null)
+            Text(category.dialog![userLanguage]!),
+          SizedBox(
+            height: 5,
+          ),
+          _buildResturantItems(category.items, restaurant.info.id),
+          SizedBox(
+            height: 10,
+          )
+        ],
+      ),
     );
   }
 

@@ -81,7 +81,10 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
         },
         activeColor: customerAppColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-        title: Text("Show only open restaurents"),
+        title: Text(
+          "Show only open restaurents",
+          style: Get.textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w700),
+        ),
       ),
     );
   }
@@ -96,7 +99,14 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
         mezDbgPrint(viewController.searchQuery);
       },
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.search), hintText: "Search restaurants"),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Colors.grey.shade300,
+          ),
+          hintStyle: TextStyle(
+            color: Colors.grey.shade300,
+          ),
+          hintText: "Search"),
     );
   }
 }

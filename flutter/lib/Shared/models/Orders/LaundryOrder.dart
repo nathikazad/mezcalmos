@@ -30,6 +30,7 @@ enum LaundryOrderPhase {
 extension ParseOrderStatusToString on LaundryOrderStatus {
   String toFirebaseFormatString() {
     final String str = toString().split('.').last;
+
     return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 }
@@ -42,8 +43,6 @@ extension ParseStringToOrderStatus on String {
 }
 
 class LaundryOrder extends TwoWayDeliverableOrder {
-  // TODO @montasarre remove weight as it comes from costsByType
-  num? weight;
   String? notes;
   ServiceInfo? laundry;
   LaundryOrderStatus status;
@@ -269,6 +268,14 @@ class LaundryOrderCosts {
     final num totalCost =
         lineItems.fold<num>(0, (sum, lineItem) => sum + lineItem.weighedCost);
     return (totalCost > minimumCost) ? totalCost : minimumCost;
+  }
+
+  num get totalWeigh {
+    num totalWeigh = 0;
+    lineItems.forEach((element) {
+      totalWeigh += element.weight;
+    });
+    return totalWeigh;
   }
 
   LaundryOrderCosts();

@@ -487,11 +487,9 @@ Widget multipleSelectOptionComponent(
 
 Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
   if (imageUrl != null) {
-    return CachedNetworkImage(
-      imageUrl: imageUrl,
-      width: double.infinity,
-      height: double.infinity,
-      fit: BoxFit.cover,
+    return CircleAvatar(
+      radius: 35,
+      backgroundImage: CachedNetworkImageProvider(imageUrl),
     );
   } else if (icon != null) {
     return Icon(

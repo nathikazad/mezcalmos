@@ -91,14 +91,13 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
       setState(() {
         _controller.text = widget.text!;
       });
-      ;
     }
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       if (widget.text != null && widget.text!.length >= 1) {
         setState(() {
           _showClearBtn = true;
@@ -111,7 +110,6 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
       children: <Widget>[
         Center(
           child: Container(
-            // padding: EdgeInsets.only(left: 0, top: 10),
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
               border: widget.useBorders
@@ -169,7 +167,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                     }
                   },
                   onTapCallback: (String placeId, String name) async {
-                    Location? _loc =
+                    final Location? _loc =
                         await MapHelper.getLocationFromPlaceId(placeId);
                     if (_loc != null) {
                       widget.notifyParent(_loc);

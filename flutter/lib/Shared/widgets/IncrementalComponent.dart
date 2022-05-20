@@ -22,7 +22,7 @@ class IncrementalComponent extends StatefulWidget {
       this.onMinValueBtnColor,
       this.alignment = MainAxisAlignment.start,
       this.center = false,
-      this.btnColors = const Color(0xffac59fc),
+      this.btnColors = customerAppColor,
       this.onChangedToZero,
       this.maxVal = 100,
       this.minVal = 0})
@@ -80,7 +80,9 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
               child: Icon(
                 Icons.add,
                 size: 16.sp,
-                color: customerAppColor,
+                color: (widget.btnColors == customerAppColor)
+                    ? Colors.white
+                    : customerAppColor,
               )),
           onTap: () {
             if (widget.value < widget.maxVal) {

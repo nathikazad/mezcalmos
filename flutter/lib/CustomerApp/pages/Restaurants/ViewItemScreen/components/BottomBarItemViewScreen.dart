@@ -73,7 +73,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
         children: <Widget>[
           const SizedBox(width: 5),
           IncrementalComponent(
-            btnColors: lightCustomerAppColor,
+            btnColors: customerAppColor,
             incrementCallback: () {
               widget.cartItem.value!.quantity++;
               widget.cartItem.refresh();
@@ -101,8 +101,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
             child: TextButton(
               style: TextButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)
-                ),
+                    borderRadius: BorderRadius.circular(5)),
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                 textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
                       fontWeight: FontWeight.bold,
@@ -132,7 +131,9 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                           primaryImageUrl: restaurantCartController
                               .associatedRestaurant?.info.image,
                           btnRightIconColor: customerAppColor,
-                          status: _i18n()["title"],
+                          status: restaurantCartController
+                                  .associatedRestaurant?.info.name ??
+                              "",
                           primaryClickTitle: _i18n()["rightBtn"],
                           secondaryClickTitle: _i18n()["leftBtn"],
                           description: _i18n()["subtitle"],

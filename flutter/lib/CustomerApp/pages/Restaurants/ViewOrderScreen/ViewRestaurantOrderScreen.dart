@@ -152,7 +152,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: '${_i18n()["orderStatus"]}',
+        title: order.value?.restaurant.name,
       ),
       body: Obx(
         () {
@@ -193,9 +193,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                 alignment: Alignment.center,
                                 child: OrderFooterCard(order: order.value!)),
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
                         ],
                       ),
                     ),
@@ -203,50 +200,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                 );
               },
             );
-
-            // return SingleChildScrollView(
-            //   child: Padding(
-            //     padding: const EdgeInsets.symmetric(horizontal: 10),
-            //     child: Column(
-            //       mainAxisAlignment: MainAxisAlignment.end,
-            //       children: [
-            //         SizedBox(
-            //           height: 10,
-            //         ),
-            //         OrderStatusCard(
-            //           order: order.value!,
-            //           ordersStates: order.value!.status,
-            //         ),
-            //         SizedBox(
-            //           height: 10,
-            //         ),
-
-            //         if (order.value!.inDeliveryPhase()) ..._mapWidget,
-
-            //         OrderItemsCard(
-            //           items: order.value!.items,
-            //         ),
-
-            //         SizedBox(
-            //           height: 10,
-            //         ),
-            //         OrderSummaryCard(order: order.value!),
-            //         //===============================>notes========================>
-            //         order.value?.notes == null ||
-            //                 order.value!.notes!.length <= 0
-            //             ? Container()
-            //             : notesWidget(order),
-            //         //===============================>button cancel===========================
-            //         SizedBox(
-            //           height: 10,
-            //         ),
-            //         Container(
-            //             alignment: Alignment.center,
-            //             child: OrderFooterCard(order: order.value!)),
-            //       ],
-            //     ),
-            //   ),
-            // );
           } else {
             return Center(child: CircularProgressIndicator());
           }
@@ -274,8 +227,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       LocModel.Location(
         "",
         LocModel.Location.buildLocationData(
-          order.value!.to.latitude,
-          order.value!.to.longitude,
+          order.value?.to.latitude,
+          order.value?.to.longitude,
         ),
       ),
     );

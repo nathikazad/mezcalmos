@@ -53,7 +53,10 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   laundry.info.name,
                   style: Get.textTheme.bodyText1,
                 ),
-                SizedBox(
+                // SizedBox(
+                //   height: 10,
+                // ),
+                Divider(
                   height: 10,
                 ),
                 Container(
@@ -62,15 +65,32 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Flexible(
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.delivery_dining,
+                              color: Colors.grey.shade800,
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Flexible(
+                              child:
+                                  Text('\$50', style: Get.textTheme.bodyText2),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Flexible(
                         child: Text(
                             "Starting from : \$${laundry.getCheapestCategory}",
                             style: Get.textTheme.bodyText2),
                       ),
-                      Flexible(
-                        child: Text(
-                            "Minimum : \$${laundry.laundryCosts.minimumCost}",
-                            style: Get.textTheme.bodyText2),
-                      ),
+                      // Flexible(
+                      //   child: Text(
+                      //       "Minimum : \$${laundry.laundryCosts.minimumCost}",
+                      //       style: Get.textTheme.bodyText2),
+                      // ),
                     ],
                   ),
                 ),

@@ -25,13 +25,12 @@ class OrderFooterCard extends StatefulWidget {
 class _OrderFooterCardState extends State<OrderFooterCard> {
   OrderController controller = Get.find<OrderController>();
   RestaurantController restaurantController = Get.find<RestaurantController>();
-  RxBool _clickedCancel = false.obs;
 
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
-      height: 70,
+      height: 60,
       child: (widget.order.inProcess())
           ? Container(
               margin: EdgeInsets.all(8),
@@ -74,59 +73,14 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                 ),
               ),
             )
-          : (widget.order.status == RestaurantOrderStatus.Delivered)
-              ? Card(
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.check_circle,
-                          color: Colors.green,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          '${_i18n()["orderDelivered"]}',
-                          style: txt.headline3,
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              : (widget.order.status ==
-                          RestaurantOrderStatus.CancelledByCustomer ||
-                      widget.order.status ==
-                          RestaurantOrderStatus.CancelledByAdmin)
-                  ? Card(
-                      child: Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.all(16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.cancel,
-                              color: Colors.red,
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              '${_i18n()["orderCancelled"]}',
-                              style: txt.headline3,
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  : TextButton(
-                      onPressed: null,
-                      style: TextButton.styleFrom(backgroundColor: Colors.grey),
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text('${_i18n()["cancelOrder"]}'),
-                      ),
-                    ),
+          : TextButton(
+              onPressed: null,
+              style: TextButton.styleFrom(backgroundColor: Colors.grey),
+              child: Container(
+                alignment: Alignment.center,
+                child: Text('${_i18n()["cancelOrder"]}'),
+              ),
+            ),
     );
   }
 }

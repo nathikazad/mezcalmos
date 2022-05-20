@@ -168,7 +168,7 @@
                             "leftBtn": "Checkout",
                             "rightBtn": "Overwrite",
                             "subtitle": "You already have some items in your cart from another restaurant, do you want to check them out first or overwrite them?",
-                            "addToCart": "ADD TO CART",
+                            "addToCart": "Add item",
                             "modifyItem": "Modify item"
                         },
                         "ChoosenManyCheckBox": {
@@ -451,7 +451,7 @@
                         "deliveryCost": "Delivery Cost",
                         "noLocation": "No location selected",
                         "pickLocation": "Pick from map",
-                        "orderNow": "ORDER NOW",
+                        "orderNow": "Order now",
                         "signInToMakeOrder": "Sign in to make order",
                         "notes": "Notes",
                         "error": "Error",

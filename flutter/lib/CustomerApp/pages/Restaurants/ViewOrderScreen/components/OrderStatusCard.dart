@@ -43,7 +43,7 @@ class OrderStatusCard extends StatelessWidget {
             ),
           ),
         ),
-        _orderHelperText(context)
+        //  _orderHelperText(context)
       ],
     );
   }

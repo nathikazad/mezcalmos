@@ -134,32 +134,6 @@ class _PickLocationViewState extends State<PickLocationView> {
           ),
         ),
       ),
-      // ? ButtonComponent(
-      //     function: () async {
-      //       await onPickButtonClick(context);
-      //     },
-      //     widget: Center(
-      //       child: Text(
-      //         _i18n()["pickLocation"],
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .headline2!
-      //             .copyWith(color: Colors.white, fontSize: 12.sp),
-      //       ),
-      //     ),
-      //   )
-      // : ButtonComponent(
-      //     bgColor: Colors.grey.shade400,
-      //     function: () {},
-      //     widget: Center(
-      //       child: Center(
-      //         child: CircularProgressIndicator(
-      //           strokeWidth: 1,
-      //           color: Colors.black,
-      //         ),
-      //       ),
-      //     ),
-      //   ),
       resizeToAvoidBottomInset: false,
       appBar: CustomerAppBar(
         autoBack: true,
@@ -277,7 +251,7 @@ class _PickLocationViewState extends State<PickLocationView> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 8),
             child: LocationSearchComponent(
-                hintPadding: EdgeInsets.only(left: 10),
+                hintPadding: EdgeInsets.all(12),
                 suffixPadding: EdgeInsets.only(right: 10),
                 useBorders: false,
                 showSearchIcon: true,

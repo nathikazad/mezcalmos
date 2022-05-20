@@ -140,8 +140,8 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.weight != null)
-                      ? order.weight.toString() + '/kg'
+                  (order.costsByType?.weighedCost != null)
+                      ? "${order.costsByType?.weighedCost} /kg"
                       : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -163,7 +163,7 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
               ],
             ),
-            if (order.weight == null) const Divider(height: 25),
+            if (order.costsByType == null) const Divider(height: 25),
             Row(
               children: <Widget>[
                 const Icon(
