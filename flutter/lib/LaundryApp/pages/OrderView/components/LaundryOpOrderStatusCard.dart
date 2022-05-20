@@ -130,7 +130,7 @@ Widget _getOrderWidget(LaundryOrderStatus status) {
           color: Colors.grey,
         ),
       );
-    case LaundryOrderStatus.OtwPickup:
+    case LaundryOrderStatus.OtwPickupFromCustomer:
       return Container(
         height: 50,
         width: 60,
@@ -139,7 +139,7 @@ Widget _getOrderWidget(LaundryOrderStatus status) {
           fit: BoxFit.cover,
         ),
       );
-    case LaundryOrderStatus.PickedUp:
+    case LaundryOrderStatus.PickedUpFromCustomer:
       return Padding(
         padding: const EdgeInsets.only(right: 5),
         child: Icon(
@@ -167,7 +167,8 @@ Widget _getOrderWidget(LaundryOrderStatus status) {
           color: Color(0xFFAC59FC),
         ),
       );
-    case LaundryOrderStatus.OtwDelivery:
+    case LaundryOrderStatus.OtwPickupFromLaundry:
+    case LaundryOrderStatus.PickedUpFromLaundry:
       return Container(
         height: 50,
         width: 60,
@@ -196,15 +197,16 @@ String _getOrderStatus(LaundryOrderStatus status) {
 
     case LaundryOrderStatus.OrderReceieved:
       return _i18n()['orderReceived'];
-    case LaundryOrderStatus.OtwPickup:
+    case LaundryOrderStatus.OtwPickupFromCustomer:
       return _i18n()['otwPickUp'];
-    case LaundryOrderStatus.PickedUp:
+    case LaundryOrderStatus.PickedUpFromCustomer:
       return _i18n()['pickedUp'];
     case LaundryOrderStatus.AtLaundry:
       return _i18n()['atLaundry'];
     case LaundryOrderStatus.ReadyForDelivery:
       return _i18n()['readyForDelivery'];
-    case LaundryOrderStatus.OtwDelivery:
+    case LaundryOrderStatus.OtwPickupFromLaundry:
+    case LaundryOrderStatus.PickedUpFromLaundry:
       return _i18n()['otwDelivery'];
     case LaundryOrderStatus.Delivered:
       return _i18n()['delivered'];

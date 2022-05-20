@@ -66,15 +66,15 @@ class LaundryOrderHeader extends StatelessWidget {
                 onPressed: () {
                   mezDbgPrint(
                     (order.getCurrentPhase() == LaundryOrderPhase.Pickup)
-                        ? order.pickupDriverChatId!
-                        : order.dropOffDriverChatId!,
+                        ? order.serviceProviderPickupDriverChatId!
+                        : order.serviceProviderDropOffDriverChatId!,
                   );
                   Get.toNamed(getMessagesRoute(
                       orderId: order.orderId,
                       chatId:
                           (order.getCurrentPhase() == LaundryOrderPhase.Pickup)
-                              ? order.pickupDriverChatId!
-                              : order.dropOffDriverChatId!,
+                              ? order.serviceProviderPickupDriverChatId!
+                              : order.serviceProviderDropOffDriverChatId!,
                       recipientType: ParticipantType.DeliveryAdmin));
                 },
                 icon: Icon(

@@ -151,15 +151,16 @@ class _DriverBottomLaundryOrderCardState
     switch (widget.order.status) {
       case LaundryOrderStatus.OrderReceieved:
         return "${_i18n()["orderStatus"]["readyForPickup"]}";
-      case LaundryOrderStatus.OtwPickup:
+      case LaundryOrderStatus.OtwPickupFromCustomer:
         return "${_i18n()["orderStatus"]["pickupOtw"]}";
-      case LaundryOrderStatus.PickedUp:
+      case LaundryOrderStatus.PickedUpFromCustomer:
         return "${_i18n()["orderStatus"]["pickedUp"]}";
       case LaundryOrderStatus.AtLaundry:
         return "${_i18n()["orderStatus"]["atLaundry"]}";
       case LaundryOrderStatus.ReadyForDelivery:
         return "${_i18n()["orderStatus"]["readyForDelivery"]}";
-      case LaundryOrderStatus.OtwDelivery:
+      case LaundryOrderStatus.OtwPickupFromLaundry:
+      case LaundryOrderStatus.PickedUpFromLaundry:
         return "${_i18n()["orderStatus"]["deliveryOtw"]}";
       case LaundryOrderStatus.Delivered:
         return "${_i18n()["orderStatus"]["delivered"]}";

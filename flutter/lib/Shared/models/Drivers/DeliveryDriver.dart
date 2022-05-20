@@ -143,9 +143,20 @@ class DeliveryDriverUserInfo extends UserInfo {
 }
 
 // ignore: constant_identifier_names
+// this is to distinguish between pick up and drop off driver
 enum DeliveryDriverType { Pickup, DropOff }
+// this is to distinguish between which action the driver is doing
+// for example dropoff driver is picking up order from restaurant
+enum DeliveryAction { Pickup, DropOff }
 
 extension ParseDeliveryDriverTypeToString on DeliveryDriverType {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1).toLowerCase();
+  }
+}
+
+extension ParseDeliveryActionToString on DeliveryAction {
   String toFirebaseFormatString() {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1).toLowerCase();

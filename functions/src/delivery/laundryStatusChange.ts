@@ -16,23 +16,24 @@ import { ParticipantType } from "../shared/models/Generic/Chat";
 import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 let statusArrayInSeq: Array<LaundryOrderStatus> =
   [LaundryOrderStatus.OrderReceieved,
-  LaundryOrderStatus.OtwPickup,
-  LaundryOrderStatus.PickedUp,
+    LaundryOrderStatus.OtwPickupFromCustomer,
+    LaundryOrderStatus.PickedUpFromCustomer,
   LaundryOrderStatus.AtLaundry,
   LaundryOrderStatus.ReadyForDelivery,
-  LaundryOrderStatus.OtwDelivery,
+    LaundryOrderStatus.OtwPickupFromLaundry,
+    LaundryOrderStatus.PickedUpFromLaundry,
   LaundryOrderStatus.Delivered
   ]
 
-export const startPickup =
+export const startPickupFromCustomer =
   functions.https.onCall(async (data, context) => {
-    let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwPickup, context.auth)
+    let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwPickupFromCustomer, context.auth)
     return response;
   });
 
 
-export const finishPickup = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.PickedUp, context.auth)
+export const pickedUpFromCustomer = functions.https.onCall(async (data, context) => {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.PickedUpFromCustomer, context.auth)
   return response
 });
 
@@ -41,8 +42,13 @@ export const atFacility = functions.https.onCall(async (data, context) => {
   return response
 });
 
-export const startDropoff = functions.https.onCall(async (data, context) => {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwDelivery, context.auth)
+export const startPickupFromLaundry = functions.https.onCall(async (data, context) => {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwPickupFromLaundry, context.auth)
+  return response
+});
+
+export const pickedUpFromLaundry = functions.https.onCall(async (data, context) => {
+  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.PickedUpFromLaundry, context.auth)
   return response
 });
 
@@ -91,7 +97,7 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
   }
 
 
-  if (newStatus == LaundryOrderStatus.OtwPickup || newStatus == LaundryOrderStatus.PickedUp
+  if (newStatus == LaundryOrderStatus.OtwPickupFromCustomer || newStatus == LaundryOrderStatus.PickedUpFromCustomer
     || newStatus == LaundryOrderStatus.AtLaundry) {
     if (order.pickupDriver?.id != deliveryDriverId) {
       return {
@@ -101,7 +107,8 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     }
   }
 
-  if (newStatus == LaundryOrderStatus.OtwDelivery || newStatus == LaundryOrderStatus.Delivered) {
+  if (newStatus == LaundryOrderStatus.OtwPickupFromLaundry || newStatus == LaundryOrderStatus.PickedUpFromLaundry
+    || newStatus == LaundryOrderStatus.Delivered) {
     if (order.dropoffDriver?.id != deliveryDriverId) {
       return {
         status: ServerResponseStatus.Error,

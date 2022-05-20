@@ -164,13 +164,13 @@ class OrderController extends GetxController {
     });
   }
 
-  Future<ServerResponse> setEstimatedDeliveryTime(
+  Future<ServerResponse> setEstimatedLaundryReadyTime(
       String orderId, DateTime estimatedTime) async {
     mezDbgPrint("inside clod set delivery time $estimatedTime");
-    return _callLaundryCloudFunction("setEstimatedTime", orderId,
+    return _callLaundryCloudFunction("setEstimatedLaundryReadyTime", orderId,
         optionalParams: {
           "fromLaundryOperator": true,
-          "estimatedDeliveryTime": estimatedTime.toUtc().toString()
+          "estimatedLaundryReadyTime": estimatedTime.toUtc().toString()
         });
   }
 

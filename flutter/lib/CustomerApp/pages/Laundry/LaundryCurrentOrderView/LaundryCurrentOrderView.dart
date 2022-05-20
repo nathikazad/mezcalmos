@@ -133,7 +133,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                       SizedBox(
                         height: 10,
                       ),
-                      if (order.value!.estimatedDeliveryTime != null)
+                      if (order.value!.estimatedLaundryReadyTime != null)
                         _orderEstimatedDeliveryTime(),
                       LaundryOrderNoteComponent(order: order.value!),
                       const SizedBox(height: 10),
@@ -286,7 +286,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                     width: 10,
                   ),
                   Text(
-                    "${DateFormat("dd MMMM yyyy hh:mm a").format(order.value!.estimatedDeliveryTime!.toLocal())}",
+                    "${DateFormat("dd MMMM yyyy hh:mm a").format(order.value!.estimatedLaundryReadyTime!.toLocal())}",
                     style: Get.textTheme.bodyText1,
                   )
                 ],

@@ -84,9 +84,9 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
 
   String _getCorrectChatId() {
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
-      return order.pickupDriverChatId!;
+      return order.serviceProviderPickupDriverChatId!;
     } else {
-      return order.dropOffDriverChatId!;
+      return order.serviceProviderDropOffDriverChatId!;
     }
   }
 
@@ -109,14 +109,14 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
   void _laundryDropOffDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
-        chatId: order.dropOffDriverChatId!,
+        chatId: order.serviceProviderDropOffDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }
 
   void _laundryPickupDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
-        chatId: order.pickupDriverChatId!,
+        chatId: order.serviceProviderPickupDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }
 
