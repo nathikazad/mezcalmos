@@ -1,17 +1,21 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
-import 'package:mezcalmos/CustomerApp/components/LocationPicker.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/Components/LaundryStepsComponent.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
 
 class LaundryOrderRequestView extends StatefulWidget {
@@ -40,63 +44,121 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['pages']['Laundry']['LaundryRequestView']['LaundryOrderRequestView'];
 
-  /// Location
-  Location? defaultLoc;
+  late Laundry selectedLaundry;
+
+  /// Customer's Location
+  Location? customerLoc;
 
   /// RxBool clicked
   RxBool clicked = false.obs;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    selectedLaundry = Get.arguments;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomerAppBar(autoBack: true),
-      bottomNavigationBar: bottomButton(context),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(height: 10),
-              Container(
-                margin: const EdgeInsets.all(8),
-                child: Text(
-                  '${_i18n()['howItWorks']}',
-                  style: Theme.of(context).textTheme.headline3,
+        appBar: CustomerAppBar(autoBack: true),
+        //  bottomNavigationBar: bottomButton(context),
+        body: Column(children: <Widget>[
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      child: Text(
+                        '${_i18n()['howItWorks']}',
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    LaundryStepsComponent(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      child: Text(
+                        '${_i18n()["deliveryLocation"]} :',
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ),
+                    Obx(
+                      () => Card(
+                        child: authController.user != null
+                            ? DropDownLocationList(
+                                passedInLocation: customerLoc,
+                                onValueChangeCallback: ({Location? location}) {
+                                  setState(() {
+                                    customerLoc = location;
+                                  });
+                                },
+                              )
+                            : pickFromMapComponent(context),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    if (selectedLaundry != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            child: Text(
+                              "Laundry : ",
+                              style: Get.textTheme.headline3,
+                            ),
+                          ),
+                          Card(
+                            child: Container(
+                              margin: EdgeInsets.all(5),
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        selectedLaundry.info.image),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    selectedLaundry.info.name,
+                                    style: Get.textTheme.bodyText1,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    _orderNoteComponent(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    orderSummaryCard(context)
+                  ],
                 ),
               ),
-              LaundryStepsComponent(),
-              const SizedBox(height: 20),
-              Container(
-                margin: const EdgeInsets.all(8),
-                child: Text(
-                  '${_i18n()["deliveryLocation"]} :',
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-              ),
-              Obx(
-                () => Card(
-                  child: authController.user != null
-                      ? DropDownLocationList(
-                          passedInLocation: defaultLoc,
-                          onValueChangeCallback: ({Location? location}) {
-                            setState(() {
-                              defaultLoc = location;
-                            });
-                          },
-                        )
-                      : pickFromMapComponent(context),
-                ),
-              ),
-              const SizedBox(height: 10),
-              _orderNoteComponent(),
-              const SizedBox(height: 20),
-              orderSummaryCard(context),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+          bottomButton(context)
+        ]));
   }
 
   Widget _orderNoteComponent() {
@@ -190,7 +252,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                 const SizedBox(height: 5),
                 Flexible(
                   child: Text(
-                    defaultLoc?.address ?? _i18n()['noLocation'],
+                    customerLoc?.address ?? _i18n()['noLocation'],
                     maxLines: 1,
                   ),
                 ),
@@ -210,7 +272,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             await Get.toNamed(kPickLocationNotAuth) as Location?;
         if (currentLoc != null) {
           setState(() {
-            defaultLoc = currentLoc;
+            customerLoc = currentLoc;
           });
         }
       },
@@ -220,7 +282,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: (defaultLoc == null)
+            color: (customerLoc == null)
                 ? Colors.red
                 : Theme.of(context).primaryColorLight,
           ),
@@ -234,7 +296,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             const SizedBox(width: 5),
             Flexible(
               child: Text(
-                defaultLoc?.address ?? _i18n()['pickLocation'],
+                customerLoc?.address ?? _i18n()['pickLocation'],
                 maxLines: 1,
               ),
             ),
@@ -279,11 +341,11 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
-        backgroundColor: (defaultLoc != null)
+        backgroundColor: (customerLoc != null)
             ? Theme.of(context).primaryColorLight
             : Colors.grey,
       ),
-      onPressed: (defaultLoc == null)
+      onPressed: (customerLoc == null)
           ? null
           : () {
               _createLaundryOrder();
@@ -303,23 +365,48 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
 
   void _createLaundryOrder() {
     clicked.value = true;
+    final LaundryRequest _req = LaundryRequest(
+      laundryId: selectedLaundry.info.id,
+      from: selectedLaundry.info.location,
+      to: customerLoc,
+      notes: _orderNote.text,
+      paymentType: PaymentType.Cash,
+    );
+
+    // get route info
+    MapHelper.getDurationAndDistance(_req.from!, _req.to!)
+        .then((MapHelper.Route? route) {
+      if (route != null) {
+        _req.routeInformation = MapHelper.RouteInformation(
+          polyline: route.encodedPolyLine,
+          distance: route.distance,
+          duration: route.duration,
+        );
+      }
+    });
+
+    // Since routeInformation is nullable, we have to handle it in other apps.
     laundryController
-        .requestLaundryService(LaundryRequest(
-            to: defaultLoc,
-            notes: _orderNote.text,
-            paymentType: PaymentType.Cash))
+        .requestLaundryService(_req)
         .then(
-      (ServerResponse response) {
-        if (response.data['orderId'] != null) {
-          sharedRoute.popEverythingAndNavigateTo(
-            getLaundyOrderRoute(
-              response.data['orderId'],
-            ),
-          );
-        } else {
-          Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
-        }
-      },
-    ).whenComplete(() => clicked.value = false);
+          (ServerResponse response) {
+            if (response.data['orderId'] != null) {
+              sharedRoute.popEverythingAndNavigateTo(
+                getLaundyOrderRoute(
+                  response.data['orderId'],
+                ),
+              );
+            } else {
+              Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
+            }
+          },
+        )
+        .whenComplete(() => clicked.value = false)
+        .onError((Object? error, StackTrace stackTrace) {
+          mezDbgPrint(
+              "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
+          mezDbgPrint(
+              "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
+        });
   }
 }

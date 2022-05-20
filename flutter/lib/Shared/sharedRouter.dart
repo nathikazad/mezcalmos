@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissi
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
@@ -25,12 +26,14 @@ const String kNoInternetConnectionPage = '/offline';
 const String kOtpRoute = '/sign_in_otp';
 const String kOtpConfirmRoute = '/sign_in_otp_confirm';
 const String kMessagesRoute = '/messages/:chatId';
+const String kMultiLanguagesRoute = '/multiLanguage/:id';
 const String kUnauthorizedRoute = '/unauthorized';
 const String kUserProfile = '/user_profile';
 const String kPickToLocation = '/pick_to_location';
 const String kNotificationsRoute = '/notifications';
 const String kAppNeedsUpdate = '/needs_update';
 // const String kInAppReview = '/in-app_review';
+const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 
 String getMessagesRoute(
     {required String chatId,
@@ -49,25 +52,14 @@ String getMessagesRoute(
   return mainUrl;
 }
 
-void popEverythingAndNavigateTo(
-  route, {
-  args,
-}) {
+void popEverythingAndNavigateTo(route, {args}) {
   popUntilAndNavigateTo(kHomeRoute, route, args: args);
 }
 
-void popUntilAndNavigateTo(
-  untilRoute,
-  toRoute, {
-  args,
-}) {
-  Get.offNamedUntil<void>(
-    toRoute,
-    (Route<dynamic> route) {
-      return (route.settings.name == untilRoute);
-    },
-    arguments: args,
-  );
+void popUntilAndNavigateTo(untilRoute, toRoute, {args}) {
+  Get.offNamedUntil(toRoute, (Route<dynamic> route) {
+    return (route.settings.name == untilRoute);
+  }, arguments: args);
 }
 
 // GetX based Router (For navigating)
@@ -115,6 +107,9 @@ class SharedRouter {
     GetPage(
       name: kNotificationsRoute,
       page: () => ViewNotifications(),
-    )
+    ),
+    GetPage(
+        name: kPickLocationWithoutAuth,
+        page: () => PickLocationView(PickLocationMode.NonLoggedInPick)),
   ];
 }

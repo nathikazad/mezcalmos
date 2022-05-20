@@ -19,8 +19,8 @@ export async function finishOrder(
 
 
   if (order.laundry) {
-    laundryNodes.pastOrders(order.laundry.id).set(order);
-    laundryNodes.inProcessOrders(order.laundry.id).remove();
+    laundryNodes.pastOrders(order.laundry.id, orderId).set(order);
+    laundryNodes.inProcessOrders(order.laundry.id, orderId).remove();
   }
 
   if (order.dropoffDriver) {

@@ -15,16 +15,18 @@ import { getInProcessOrder, getUserInfo } from "../shared/controllers/rootContro
 import { getDeliveryDriver } from "../shared/controllers/deliveryController";
 import { CancelDeliveryOrderNotification, DeliveryDriver, DeliveryDriverType, NewDeliveryOrderNotification } from "../shared/models/Drivers/DeliveryDriver";
 import { pushChat, deleteChat } from "../shared/controllers/chatController";
-import { Chat, ChatType, ParticipantType } from "../shared/models/Generic/Chat";
+import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
+import * as chatController from "../shared/controllers/chatController";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { deliveryCancelOrderMessage, deliveryNewOrderMessage } from "./bgNotificationMessages";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-import { addDeliveryAdminsToChat } from "../shared/helper/deliveryAdmin";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
+import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
+import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 
 export = functions.https.onCall(async (data, context) => {
   if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
@@ -108,24 +110,32 @@ export = functions.https.onCall(async (data, context) => {
   rootNodes.inProcessOrders(data.orderType, orderId).update(order);
   deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order);
 
-
-  let chat: Chat = {
-    chatType: ChatType.Order,
-    orderType: data.orderType,
-    orderId: orderId,
-    chatId: chatId,
-    participants: {
-      [deliveryDriverId]: {
-        ...driverInfo,
-        particpantType: ParticipantType.DeliveryDriver
-      },
-    }
+  if (order.orderType == OrderType.Restaurant) {
+    let rOrder: RestaurantOrder = <RestaurantOrder>{ ...order }
+    restaurantNodes.inProcessOrders(rOrder.restaurant.id!, orderId).update(order);
+  } else if (order.orderType == OrderType.Laundry) {
+    let lOrder: LaundryOrder = <LaundryOrder>{ ...order }
+    laundryNodes.inProcessOrders(lOrder.laundry.id!, orderId).update(order);
   }
+
+  let chat: ChatObject = buildChatForOrder(chatId, data.orderType, orderId);
+  chat.addParticipant({
+    ...driverInfo,
+    particpantType: ParticipantType.DeliveryDriver
+  });
+  await chatController.setChat(chatId, chat.chatData);
 
   deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
     let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    addDeliveryAdminsToChat(deliveryAdmins, chat, chatId)
+    chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, chatId, ParticipantType.DeliveryAdmin)
   })
+
+  laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
+    let laundryOperators: Record<string, boolean> = snapshot.val();
+    chatController.addParticipantsToChat(Object.keys(laundryOperators), chat, chatId, ParticipantType.LaundryOperator)
+  })
+
+  
 
   let notification: Notification = {
     foreground: <NewDeliveryOrderNotification>{

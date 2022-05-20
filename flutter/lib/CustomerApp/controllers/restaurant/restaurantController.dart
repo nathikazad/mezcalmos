@@ -40,11 +40,9 @@ class RestaurantController extends GetxController {
         final dynamic cartData = event.snapshot.value;
         // check if cart has data
         if (cartData != null) {
-
           // check if cart data is for restaurant
           if (cartData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
-
             // check if already associated restaurant with cart is the same as current restaurant,
             // if not clear the old associated restaurant
             if (associatedRestaurant != null) {

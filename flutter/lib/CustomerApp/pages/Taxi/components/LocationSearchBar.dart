@@ -465,7 +465,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   }
 
   List<LocationDropDownItem> getSavedLocationsWithCallbacks() {
-    return _authController!.customerRxn.value?.savedLocations
+    return _authController!.customer.value?.savedLocations
             .map<LocationDropDownItem>((SavedLocation e) {
           return LocationDropDownItem(
               icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),

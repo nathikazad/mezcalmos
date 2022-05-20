@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ViewTaxiOrderController {
   final AnimatedSliderController animatedSliderController;
@@ -30,11 +31,7 @@ class ViewTaxiOrderController {
 
   /// Rxn<TaxiOrder> order
   final Rxn<TaxiOrder> order = Rxn<TaxiOrder>();
-
-  /// orderListener
-  StreamSubscription<Order?>? orderListener;
-
-  /// toMarkerId
+  StreamSubscription<Order?>? _orderListener;
   final String toMarkerId = "to";
 
   /// bottomPadding
@@ -53,69 +50,56 @@ class ViewTaxiOrderController {
   /// offersBtnClicked
   RxBool offersBtnClicked = false.obs;
 
-  void init(String orderId, {Function? orderCancelledCallback}) {
+  Future<bool> init(String orderId, {Function? orderCancelledCallback}) {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as TaxiOrder?;
-    if (order.value != null) {
-      // set initial location
-      initializeMap().then((_) => mezDbgPrint("Initialized Map!"));
-      // if (order.value!.isOpenOrder()) {
-      //   // TODO @x544D HANDLE ORDER FROM OPEN ORDER NODE
-      // }
-      mezDbgPrint(
-          "----->>>>>>>>>>>>>Stating init state ------------->>>>>>>>><");
-      if (order.value!.inProcess()) {
-        inProcessOrderStatusHandler(order.value!.status);
-        mezDbgPrint(
-            "----->>>>>>>>>>>>>order in process ------------->>>>>>>>><");
+    _orderListener =
+        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent as TaxiOrder?;
+      }
+    });
 
-        /// Only start if the status is `TaxiOrdersStatus.LookingForTaxi`
-        if (order.value!.status == TaxiOrdersStatus.LookingForTaxi) {
-          startCountOffersValidityCheckPeriodically();
-        }
-        orderListener = controller
-            .getCurrentOrderStream(orderId)
-            .listen((Order? currentOrder) async {
-          mezDbgPrint(
-              "----->>>>>>>>>>>>>INSIDE ORDER STREAM ------------->>>>>>>>><");
-          if (currentOrder != null) {
-            order.value = currentOrder as TaxiOrder;
-            inProcessOrderStatusHandler(order.value!.status);
-            // setState(() {});
-          } else {
-            mezDbgPrint("----->>>>>>>>>>>>>ORDER NULL ------------->>>>>>>>><");
-            await orderListener?.cancel();
-            orderListener = null;
-            // this is in case customer created the order and got expired :
-            _cancelPeriodicCounterOffersTimer();
+    return waitForInitialization().then<bool>((bool orderLoaded) {
+      if (orderLoaded) {
+        processOrder(orderCancelledCallback);
+        initializeMap().then((_) => mezDbgPrint("Initialized Map!"));
+      }
+      return orderLoaded;
+    });
+  }
 
-            TaxiOrder? _order = controller.getOrder(orderId) as TaxiOrder?;
-            // this else clause gets executed when the order becomes /pastOrders.
-            if (_order == null) {
-              mezDbgPrint(
-                  "----->>>>>>>>>>>>>ORDER STIIIIIIIIIL NULL ------------->>>>>>>>><");
-              if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
-                orderCancelledCallback?.call(_order);
-              }
-              _order = (await controller.getPastOrderStream(orderId).first)
-                  as TaxiOrder?;
-              mezDbgPrint("----->>>>>>>>>>>>> $_order ------------->>>>>>>>><");
-            }
+  void processOrder(Function? orderCancelledCallback) {
+    if (order.value!.inProcess()) {
+      inProcessOrderStatusHandler(order.value!.status);
 
-            order.value = _order;
-            // one time execution :
-            mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
-            pastOrderStatusHandler(order.value!.status);
-          }
-          order.refresh();
-        });
+      /// Only start if the status is `TaxiOrdersStatus.LookingForTaxi`
+      if (order.value!.status == TaxiOrdersStatus.LookingForTaxi) {
+        startCountOffersValidityCheckPeriodically();
       } else {
-        // it's in past orders!
-        pastOrderStatusHandler(order.value!.status);
+        _cancelPeriodicCounterOffersTimer();
       }
     } else {
-      mezDbgPrint("Error :Unfound Order !");
+      if (order.value!.status == TaxiOrdersStatus.CancelledByCustomer) {
+        orderCancelledCallback?.call(order.value);
+      }
+      mGoogleMapController.setAnimateMarkersPolyLinesBounds(true);
+      pastOrderStatusHandler(order.value!.status);
     }
+  }
+
+  Future<bool> waitForInitialization() async {
+    if (order.value != null) return Future<bool>.value(true);
+    final Completer<bool> c = new Completer<bool>();
+    Timer(Duration(seconds: 5), () {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        c.complete(false);
+      } else
+        c.complete(true);
+    });
+
+    return c.future;
   }
 
   Future<void> initializeMap() async {
@@ -240,8 +224,8 @@ class ViewTaxiOrderController {
   }
 
   void dispose() {
-    orderListener?.cancel();
-    orderListener = null;
+    _orderListener?.cancel();
+    _orderListener = null;
     _cancelPeriodicCounterOffersTimer();
   }
 }

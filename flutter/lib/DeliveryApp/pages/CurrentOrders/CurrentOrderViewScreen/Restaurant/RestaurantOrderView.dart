@@ -3,12 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
+// import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/DriverBottomRestaurantOrderCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantControllButtons.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -16,6 +17,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class RestaurantOrderView extends StatefulWidget {
   const RestaurantOrderView({Key? key}) : super(key: key);
@@ -36,69 +38,81 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   void initState() {
     final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
+    order.value = controller.getOrder(orderId) as RestaurantOrder;
 
-    if (controller.getOrder(orderId) == null) {
-      mezDbgPrint("ORDER NULL");
+    if (order.value!.routeInformation != null) {
+      mapController.decodeAndAddPolyline(
+          encodedPolylineString: order.value!.routeInformation!.polyline);
+    }
 
-      Get.back();
-    } else {
-      order.value = controller.getOrder(orderId) as RestaurantOrder;
-      mezDbgPrint(
-          "lat lng DeliveryDriver => ${deliveryAuthAuthController.currentLocation.toString()}");
-
-      if (order.value!.routeInformation != null) {
-        mapController.decodeAndAddPolyline(
-            encodedPolylineString: order.value!.routeInformation!.polyline);
+    _orderListener =
+        controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent as RestaurantOrder;
+        handleRestaurantOrder(newOrderEvent);
+        order.refresh();
       }
+    });
 
-      // doing this once to avoid doing it constaintly in [handleRestaurantOrder::switch::default]
-      Future.wait(<Future<void>>[
-        // DESTINATION MARKER
-        mapController.addOrUpdatePurpleDestinationMarker(
-          latLng: LatLng(
-            order.value!.to.latitude,
-            order.value!.to.longitude,
-          ),
+    // doing this once to avoid doing it constaintly in [handleRestaurantOrder::switch::default]
+    Future.wait(<Future<void>>[
+      // DESTINATION MARKER
+      mapController.addOrUpdatePurpleDestinationMarker(
+        latLng: LatLng(
+          order.value!.to.latitude,
+          order.value!.to.longitude,
         ),
-        // USER MARKER
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            deliveryAuthAuthController.currentLocation.latitude!,
-            deliveryAuthAuthController.currentLocation.longitude!,
-          ),
+      ),
+      // USER MARKER
+      mapController.addOrUpdateUserMarker(
+        latLng: LatLng(
+          deliveryAuthAuthController.currentLocation.latitude!,
+          deliveryAuthAuthController.currentLocation.longitude!,
         ),
-        // Restaurant Marker
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            order.value!.restaurant.location.latitude,
-            order.value!.restaurant.location.longitude,
-          ),
-          markerId: order.value!.restaurantId,
-          customImgHttpUrl: order.value!.restaurant.image,
-        )
-      ]).then((_) {
-        mapController.setLocation(
-          Location.fromLocationData(
-            deliveryAuthAuthController.currentLocation,
-          ),
-        );
-        mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
-        mapController.animateMarkersPolyLinesBounds.value = true;
-        mapController.periodicRerendering.value = true;
-        handleRestaurantOrder(order.value as RestaurantOrder);
-      });
+      ),
+      // Restaurant Marker
+      mapController.addOrUpdateUserMarker(
+        latLng: LatLng(
+          order.value!.restaurant.location.latitude,
+          order.value!.restaurant.location.longitude,
+        ),
+        markerId: order.value!.restaurantId,
+        customImgHttpUrl: order.value!.restaurant.image,
+      )
+    ]).then((_) {
+      mapController.setLocation(
+        Location.fromLocationData(
+          deliveryAuthAuthController.currentLocation,
+        ),
+      );
+      mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+      mapController.animateMarkersPolyLinesBounds.value = true;
+      mapController.periodicRerendering.value = true;
+      handleRestaurantOrder(order.value as RestaurantOrder);
+    });
 
-      _orderListener =
-          controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
-        final DeliverableOrder? _order = controller.getOrder(orderId);
-        if (_order == null) {
-          Get.back<void>();
-        } else {
-          handleRestaurantOrder(_order as RestaurantOrder);
-          order.value = _order;
-          order.refresh();
-        }
+    waitForOrderIfNotLoaded().then((void value) {
+      if (order.value == null) {
+        // ignore: inference_failure_on_function_invocation
+        Future<Null>.delayed(Duration.zero, () {
+          Get.back<Null>();
+          MezSnackbar("Error", "Order does not exist");
+        });
+      } else {
+        initilializeMap(mapController, order, order.value!.restaurant);
+      }
+    });
+  }
+
+  Future<void> waitForOrderIfNotLoaded() {
+    if (order.value != null) {
+      return Future<void>.value(null);
+    } else {
+      final Completer<void> completer = Completer<void>();
+      Timer(Duration(seconds: 5), () {
+        completer.complete();
       });
+      return completer.future;
     }
     super.initState();
   }
@@ -118,7 +132,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
         if (order.value != null) {
           return Scaffold(
               appBar:
-                  deliveryAppBar(AppBarLeftButtonType.Back, function: Get.back),
+                  mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
               bottomNavigationBar:
                   RestaurantControllButtons(order: order.value!),
               body: Column(children: <Widget>[

@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 enum AppBarLeftButtonType { Back, Menu, Lang }
 
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
-    {bgColor = Colors.white,
+    {Color bgColor = Colors.white,
     Function? onClick,
     PreferredSizeWidget? tabBar,
     List<Widget> actionIcons = const <Widget>[]}) {

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -63,11 +64,13 @@ class LaundryOrderHeader extends StatelessWidget {
           children: [
             IconButton(
                 onPressed: () {
+                  mezDbgPrint(
+                    (order.getCurrentPhase() == LaundryOrderPhase.Pickup)
+                        ? order.pickupDriverChatId!
+                        : order.dropOffDriverChatId!,
+                  );
                   Get.toNamed(getMessagesRoute(
-                      orderId:
-                          (order.getCurrentPhase() == LaundryOrderPhase.Pickup)
-                              ? order.pickupDriverChatId!
-                              : order.dropOffDriverChatId!,
+                      orderId: order.orderId,
                       chatId:
                           (order.getCurrentPhase() == LaundryOrderPhase.Pickup)
                               ? order.pickupDriverChatId!

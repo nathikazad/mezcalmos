@@ -1,5 +1,6 @@
 import { OrderType, PaymentType } from '../../Generic/Order';
 import { Language, Location } from '../../Generic/Generic';
+import { RouteInformation } from '../../Generic/RouteInformation';
 
 export interface Option {
   optionNames: Record<Language, string>;
@@ -34,5 +35,6 @@ export interface Cart {
   to: Location;
   orderType: OrderType.Restaurant;
   items: Record<string, Item>;
+  routeInformation?:RouteInformation;
 }
 

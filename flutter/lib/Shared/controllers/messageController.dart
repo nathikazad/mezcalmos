@@ -19,6 +19,7 @@ class MessageController extends GetxController {
   Rxn<Chat> chat = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
+  SettingsController _settingsController = Get.find<SettingsController>();
   StreamSubscription? chatListener;
   late AppType appType;
 
@@ -31,6 +32,7 @@ class MessageController extends GetxController {
 
   void loadChat(
       {required String chatId, material.VoidCallback? onValueCallBack}) {
+    mezDbgPrint("Load chat id ------------->>>> $chatId");
     chatListener?.cancel();
     chatListener = _databaseHelper.firebaseDatabase
         .reference()
@@ -38,8 +40,10 @@ class MessageController extends GetxController {
         .onValue
         .listen((Event event) {
       if (event.snapshot.value != null) {
+        mezDbgPrint(
+            "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
         // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
-        chat.value = Chat.fromJson(event.snapshot.key, event.snapshot.value);
+        chat.value = Chat.fromJson(chatId, event.snapshot.value);
         if (onValueCallBack != null) onValueCallBack();
         // mezDbgPrint(
         //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
@@ -60,6 +64,9 @@ class MessageController extends GetxController {
     messageNode.set(<String, dynamic>{
       "message": message,
       "userId": _authController.user!.id,
+      "participantType": _settingsController.appType
+          .toParticipantTypefromAppType()
+          .toFirebaseFormattedString(),
       "timestamp": DateTime.now().toUtc().toString(),
       "chatId": chatId,
       "orderId": orderId
@@ -74,35 +81,27 @@ class MessageController extends GetxController {
                 userId: _authController.user!.id,
                 chatId: chatId,
                 messageId: messageNode.key,
+                participantType:
+                    _settingsController.appType.toParticipantTypefromAppType(),
                 orderId: orderId)
             .toFirebaseFormatJson());
   }
 
   Participant? sender() {
-    return chat.value?.participants[_authController.user!.id];
+    return chat.value?.getParticipant(
+        _settingsController.appType.toParticipantTypefromAppType(),
+        _authController.user!.id);
   }
 
   Participant? recipient(
       {required ParticipantType recipientType, String? recipientId}) {
     if (chat.value == null) return null;
-    if (recipientId != null) {
-      for (String key in chat.value!.participants.keys.toList()) {
-        final Participant participant = chat.value!.participants[key]!;
-        if (participant.id == recipientId) return participant;
-      }
-    }
-    for (String key in chat.value!.participants.keys.toList()) {
-      final Participant participant = chat.value!.participants[key]!;
-      if (participant.participantType == recipientType) {
-        mezDbgPrint(
-            "the user name is ${participant.name} and the type is ${participant.participantType.toString()}");
-        return participant;
-      }
-    }
-
-    for (String key in chat.value!.participants.keys.toList()) {
-      final Participant participant = chat.value!.participants[key]!;
-      if (participant.id != _authController.user!.id) return participant;
+    if (recipientId != null)
+      return chat.value!.getParticipant(recipientType, recipientId);
+    final Map<String, Participant>? participants =
+        chat.value!.getParticipants(recipientType);
+    if (participants != null && participants.keys.length > 0) {
+      return participants[participants.keys.toList()[0]];
     }
     return null;
   }

@@ -15,11 +15,11 @@ extension PlateformString on MezPlatform {
 }
 
 /// FOR IOS - PROD - to get the save
-String? getAppStoreId() {
+String getAppStoreId() {
   if (Platform.isIOS && getAppLaunchMode() == AppLaunchMode.prod) {
-    return GetStorage().read<String?>(getxAppStoreId);
+    return GetStorage().read(getxAppStoreId);
   }
-  return null;
+  return getPackageName();
 }
 
 MezPlatform getPlatformType() {
@@ -29,7 +29,7 @@ MezPlatform getPlatformType() {
     return MezPlatform.IOS;
 }
 
-String? getPackageName({MezPlatform? platform}) {
+String getPackageName() {
   return GetStorage().read<String>(getxPackageName).toString();
 }
 
@@ -52,15 +52,13 @@ Future<void> openOsStore({required Function openIosStoreFunction}) async {
 // } catch (android.content.ActivityNotFoundException anfe) {
 //     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
 
-  String uri =
-      "market://details?id=${getPackageName(platform: MezPlatform.ANDROID)}";
+  String uri = "market://details?id=${getPackageName()}";
 
   if (Platform.isAndroid) {
     try {
       await launch(uri);
     } on PlatformException catch (_) {
-      uri =
-          "https://play.google.com/store/apps/details?id=${getPackageName(platform: MezPlatform.ANDROID)}";
+      uri = "https://play.google.com/store/apps/details?id=${getPackageName()}";
       unawaited(launch(uri));
     }
     await launch(uri);

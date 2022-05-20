@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -29,18 +31,12 @@ class OrderController extends GetxController {
     _pastOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(taxiPastOrdersNode(_authController.fireAuthUser!.uid))
-        .onValue
-        .listen((event) {
-      mezDbgPrint("[][][][][ got new past Order ]]");
-      List<TaxiOrder> orders = [];
-      if (event.snapshot.value != null) {
-        event.snapshot.value.keys.forEach((orderId) {
-          // for (var orderId in event.snapshot.value.keys) {
-          dynamic orderData = event.snapshot.value[orderId];
-          orders.add(TaxiOrder.fromData(orderId, orderData));
-        });
-      }
-      pastOrders.value = orders;
+        .orderByChild('orderTime')
+        .limitToLast(5)
+        .onChildAdded
+        .listen((Event event) {
+      pastOrders
+          .add(TaxiOrder.fromData(event.snapshot.key, event.snapshot.value));
     });
 
     mezDbgPrint(
@@ -93,7 +89,14 @@ class OrderController extends GetxController {
     }
   }
 
-  Stream<TaxiOrder?> getCurrentOrderStream(String orderId) {
+  Stream<TaxiOrder?> getOrderStream(String orderId) {
+    return StreamGroup.merge(<Stream<TaxiOrder?>>[
+      _getInProcessOrderStream(orderId),
+      _getPastOrderStream(orderId)
+    ]);
+  }
+
+  Stream<TaxiOrder?> _getInProcessOrderStream(String orderId) {
     return currentOrders.stream.map<TaxiOrder?>((_) {
       try {
         return currentOrders.firstWhere(
@@ -101,12 +104,12 @@ class OrderController extends GetxController {
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
       }
     });
   }
 
-  Stream<TaxiOrder?> getPastOrderStream(String orderId) {
+  Stream<TaxiOrder?> _getPastOrderStream(String orderId) {
     return pastOrders.stream.map<TaxiOrder?>((_) {
       try {
         return pastOrders.firstWhere(
@@ -114,7 +117,7 @@ class OrderController extends GetxController {
         );
       } on StateError catch (_) {
         // do nothing
-        return null;
+        // return null;
       }
     });
   }

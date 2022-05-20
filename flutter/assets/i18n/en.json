@@ -426,7 +426,9 @@
                         }
                     },
                     "LaundryCurrentOrderView": {
-                        "orderStatus": "Order Status"
+                        "orderStatus": "Order Status",
+                        "laundry": "Laundry",
+                        "estimatedDeliveryTime": "Estimated delivery time"
                     }
                 },
                 "LaundryRequestView": {
@@ -571,11 +573,11 @@
                 "UserProfileScreen": {
                     "mustSetUserNameError": "Please enter your first name.",
                     "mustSetUserImgError": "Please upload an image.",
-                    "nameMustBeLettersOnly" : "Your first name must only have letters.",
+                    "nameMustBeLettersOnly": "Your first name must only have letters.",
                     "nameMustBeFourLettersOrMore": "Your name must have at least 4 letters."
                 },
                 "UserProfileWidgets": {
-                    "namePlaceHolder" : "Enter your first name",
+                    "namePlaceHolder": "Enter your first name",
                     "uploadPic": "Upload Image",
                     "title": " User Information",
                     "cancel": "Cancel",
@@ -636,6 +638,28 @@
             }
         },
         "widgets": {
+            "MezWorkingHours": {
+                "save": "Save",
+                "cancel": "Cancel",
+                "workingHours": "Working Hours",
+                "weekDays": {
+                    "monday": "Monday",
+                    "tuesday": "Tuesday",
+                    "wednesday": "Wednesday",
+                    "thursday": "Thursday",
+                    "friday": "Friday",
+                    "saturday": "Saturday",
+                    "sunday": "Sunday"
+                },
+                "workingHoursCard": {
+                    "open": "Open",
+                    "closed": "Closed",
+                    "from": "From :",
+                    "to": "To :"
+                }
+
+
+            },
             "LocationSearchComponent": {
                 "address": "Enter Address"
             },
@@ -645,11 +669,11 @@
             "MezDialogs": {
                 "yes": "Yes",
                 "no": "No",
-                "mezUpdaterDialog" :{
-                    "updateAvailable" : "Update Available!",
-                    "updatePlease" : "It is always recommended to install new updates in order to get all the new features!",
-                    "doNotUpdate" : "No Thanks",
-                    "update" : "UPDATE"
+                "mezUpdaterDialog": {
+                    "updateAvailable": "Update Available!",
+                    "updatePlease": "It is always recommended to install new updates in order to get all the new features!",
+                    "doNotUpdate": "No Thanks",
+                    "update": "UPDATE"
                 }
             },
             "MezSideMenu": {
@@ -1146,5 +1170,125 @@
             "driverNotifBody": "You got a new order"
 
         }
+    },
+    "LaundryApp": {
+
+        "pages": {
+            "CategoryView": {
+                "components": {
+                    "AddCategorySlide": {
+                        "categoryName": "Category name",
+                        "categoryNameIn": "Category name in ",
+                        "categoryNameHint": "Enter a category name",
+                        "categoryPrice": "Category pricing per kilogramme",
+                        "categoryPriceHint": "Enter category pricing per kilogramme..."
+
+                    }
+                },
+                "addCategory": "Add category",
+                "editCategory": "Edit category"
+
+            },
+            "DashboardView": {
+                "orders": "Orders",
+                "info": "Info",
+                "InfoView": {
+                    "LaundryOpInfoView": {
+                        "components": {},
+                        "location": "Location",
+                        "categories": "Categories",
+                        "addCategory": "Add category",
+                        "editMyInfo": "Edit my informations"
+
+                    }
+                },
+                "OrdersListView": {
+                    "LaundryOpOrdersListView": {
+                        "components": {
+                            "LaundryOpOrderCard": {
+                                "date": "Date : ",
+                                "totalCost": "Total Cost : "
+                            }
+                        },
+                        "currentOrders": "Current orders",
+                        "pastOrders": "Past orders"
+                    }
+                }
+            },
+            "EditInfoView": {
+                "components": {
+                    "LanguageSelectorComponent": {
+                        "none": "None"
+                    }
+                },
+                "EditInfoView": {
+                    "laundryName": "Laundry name",
+                    "defaultLanguage": "Default language",
+                    "secondaryLanguage": "Secondary language",
+                    "location": "Location",
+                    "saveInfo": "Save info"
+                }
+            },
+            "OrderView": {
+                "Components": {
+                    "LaundryOpOrderStatusCard": {
+                        "status": {
+                            "canceled": "Order Cancelled",
+                            "orderReceived": "Order Received",
+                            "otwPickUp": "Pick-up on the way",
+                            "pickedUp": "Order Picked-up",
+                            "atLaundry": "At laundry",
+                            "readyForDelivery": "Ready for Delivery",
+                            "otwDelivery": "Delivery on the way",
+                            "delivered": "Order Delivered"
+                        }
+
+                    },
+                    "LaundryOpSetCategoryComponent": {
+                        "itemsWeights": "Items weights",
+                        "newItemsWeight": "New items weight",
+                        "itemsCategory": "Items Category",
+                        "itemsWeight": "Items Weight",
+                        "itemsWeightErrorText": "Please enter a valid weight",
+                        "saveItemsWeight": "Save items weight",
+                        "cancel": "Cancel",
+                        "setNewItemsWeight": "Set new items weight",
+                        "error": "Error",
+                        "categoryExistError": "This category already exists",
+                        "categoryError": "Please select a category first",
+                        "itemsWeightError": "Please enter a valid items weight"
+
+
+                    },
+                    "LaundryOpOrderNote": {
+                        "notes": "Notes"
+                    },
+                    "LaundryOpOrderSummaryCard": {
+                        "orderSummary": "Order Summary",
+                        "orderCost": "Order Cost",
+                        "deliveryCost": "Delivery Cost",
+                        "totalCost": "Total Cost",
+                        "deliveryLocation": "Delivery Location",
+                        "laundryPricing": "Laundry Pricing",
+                        "fixedRate": "Cost Per Kilo",
+                        "orderWeight": "Order Weight",
+                        "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
+                    }
+
+                },
+                "LaundryOpOrderView": {
+                    "customer": "Customer",
+                    "orderDate": "Order Date"
+                }
+            }
+        },
+        "notificationHandler": {
+            "newOrderTitle": "New Order",
+            "newOrderBody": "You got a new order",
+            "canceledOrderTitle": "Order canceled",
+            "canceledOrderBody": "Your order has been canceled"
+
+        }
+
     }
 }

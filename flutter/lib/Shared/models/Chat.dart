@@ -1,4 +1,7 @@
+// ignore_for_file: constant_identifier_names, avoid_annotating_with_dynamic
+
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -10,7 +13,8 @@ enum ParticipantType {
   Laundry,
   DeliveryAdmin,
   Restaurant,
-  DeliveryDriver
+  DeliveryDriver,
+  LaundryOperator
 }
 
 extension ParseParticipantTypeToString on ParticipantType {
@@ -20,26 +24,31 @@ extension ParseParticipantTypeToString on ParticipantType {
   }
 }
 
+extension AppTypeToParticipantType on AppType {
+  ParticipantType toParticipantTypefromAppType() {
+    switch (this) {
+      case AppType.CustomerApp:
+        return ParticipantType.Customer;
+      case AppType.TaxiApp:
+        return ParticipantType.Taxi;
+      case AppType.DeliveryApp:
+        return ParticipantType.DeliveryDriver;
+      case AppType.DeliveryAdminApp:
+        return ParticipantType.DeliveryAdmin;
+      case AppType.LaundryApp:
+        return ParticipantType.LaundryOperator;
+      default:
+        throw Exception(
+            "App type $this cannot be converted to participantType");
+    }
+  }
+}
+
 extension ParseStringToParticipantType on String {
   ParticipantType toParticipantType() {
-    mezDbgPrint(ParticipantType.values);
-    mezDbgPrint(this);
     return ParticipantType.values.firstWhere(
-        (ParticipantType e) => e.toFirebaseFormattedString() == this);
-  }
-
-  ParticipantType toSenderType() {
-    final String str = toString().split('.').last;
-    switch (str) {
-      case "DeliveryDriver":
-        return ParticipantType.DeliveryDriver;
-      case "DeliveryAdmin":
-        return ParticipantType.DeliveryAdmin;
-      case "Customer":
-        return ParticipantType.Customer;
-      default:
-        return ParticipantType.Customer;
-    }
+        (ParticipantType participantType) =>
+            participantType.toFirebaseFormattedString() == this);
   }
 }
 
@@ -56,75 +65,93 @@ class Participant {
 }
 
 class Message {
-  late String message;
-  DateTime? timeStamp;
-  String? formatedTime;
-  late String userId;
-  Message(message, timestamp, userId) {
-    this.message = message;
-    timeStamp = timestamp;
-    formatedTime = timestamp == null
-        ? null
-        : DateFormat('HH:mm').format(timestamp).toString();
-    this.userId = userId;
-  }
+  String message;
+  DateTime timestamp;
+  String get formatedTime => DateFormat('HH:mm').format(timestamp).toString();
+  String userId;
+  ParticipantType participantType;
+  Message({
+    required this.message,
+    required this.timestamp,
+    required this.userId,
+    required this.participantType,
+  });
 }
 
 class Chat {
-  late String chatId;
-  late String chatType;
+  String chatId;
+  String chatType;
   OrderType? orderType;
   String? orderId;
-  late Map<String, Participant> participants;
-  List<Message> messages = <Message>[];
+  Map<ParticipantType?, Map<String, Participant>> _participants =
+      <ParticipantType?, Map<String, Participant>>{};
+  List<Message> _messages = <Message>[];
 
-  Chat(this.chatType, this.orderType, this.participants, this.messages,
-      this.orderId);
-
-  Chat.fromJson(key, _value) {
-    final Map<String, dynamic> value = new Map<String, dynamic>.from(_value);
-
-    final Map<String, Participant> _participants = {};
-    final List<Message> _messages = [];
-    value['participants']?.forEach((key, p) {
-      mezDbgPrint("ChatId $key |  ${p}\n\n");
-      _participants[key] = Participant(
-          image: p['image'],
-          name: p['name'],
-          participantType: p['particpantType'].toString().toParticipantType(),
-          id: key);
-    });
-
-    value['messages']?.forEach((key, m) {
-      try {
-        _messages.add(
-            Message(m['message'], DateTime.parse(m['timestamp']), m['userId']));
-      } catch (e) {
-        _messages.add(Message(m['message'], null, m['userId']));
-      }
-    });
-
-    _messages.sort((Message after, Message before) {
-      if (before.timeStamp == null || after.timeStamp == null)
-        return 0;
-      else
-        return before.timeStamp!.compareTo(after.timeStamp!);
-    });
-
-    chatType = value['chatType'];
-    chatId = key;
-    orderId = value['orderId'];
-    orderType = value['orderType']?.toString().toOrderType();
-    participants = _participants;
-    messages = _messages;
+  List<Message> get messages {
+    _messages.sort((Message after, Message before) =>
+        before.timestamp.compareTo(after.timestamp));
+    return _messages;
   }
 
-  // Added for Debugging Perposes - Don't delete for now
+  Participant? getParticipant(
+          ParticipantType participantType, String participantId) =>
+      _participants[participantType]?[participantId];
+
+  Map<String, Participant>? getParticipants(ParticipantType participantType) =>
+      _participants[participantType];
+
+  Chat({
+    required this.chatId,
+    required this.chatType,
+    this.orderType,
+    this.orderId,
+  });
+
+  factory Chat.fromJson(String chatId, dynamic chatData) {
+    final Chat chat = Chat(
+        chatId: chatId,
+        chatType: chatData['chatType'],
+        orderType: chatData['orderType']?.toString().toOrderType() ?? null,
+        orderId: chatData['orderId'] ?? null);
+    chatData['participants']
+        ?.forEach((dynamic participantTypeAsString, dynamic map) {
+      final ParticipantType participantType =
+          participantTypeAsString.toString().toParticipantType();
+      chatData['participants'][participantTypeAsString]
+          .forEach((dynamic participantId, dynamic participantData) {
+        if (chat._participants[participantType] == null)
+          chat._participants[participantType] = <String, Participant>{};
+        chat._participants[participantType]![participantId] = Participant(
+            image: participantData['image'],
+            name: participantData['name'],
+            participantType: participantType,
+            id: participantId);
+      });
+    });
+
+    // ignore: avoid_annotating_with_dynamic
+    chatData['messages']?.forEach((dynamic messageId, dynamic messageData) {
+      try {
+        chat._messages.add(Message(
+          message: messageData['message'],
+          timestamp: DateTime.parse(messageData['timestamp']),
+          userId: messageData['userId'],
+          participantType:
+              messageData['participantType'].toString().toParticipantType(),
+        ));
+      } catch (e) {
+        // _messages.add(Message(m['message'], null, m['userId']));
+        mezDbgPrint("Message add error chatId:$chatId messageId:$messageId ");
+      }
+    });
+    return chat;
+  }
+
   Map<String, dynamic> toJson() => {
         "chatType": chatType,
         "orderType": orderType,
-        "participants": participants,
-        "messages": messages,
+        "participants": _participants,
+        "messages": _messages,
       };
 }
 
@@ -133,12 +160,14 @@ class MessageNotificationForQueue extends NotificationForQueue {
   String userId;
   String chatId;
   String messageId;
+  ParticipantType participantType;
   String? orderId;
   MessageNotificationForQueue(
       {required this.message,
       required this.userId,
       required this.chatId,
       required this.messageId,
+      required this.participantType,
       this.orderId})
       : super(
             notificationType: NotificationType.NewMessage,
@@ -148,6 +177,7 @@ class MessageNotificationForQueue extends NotificationForQueue {
         ...super.toFirebaseFormatJson(),
         "chatId": chatId,
         "messageId": messageId,
+        "participantType": participantType.toFirebaseFormattedString(),
         "userId": userId,
         "message": message,
         "orderId": orderId

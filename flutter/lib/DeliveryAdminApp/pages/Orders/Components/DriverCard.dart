@@ -157,7 +157,6 @@ class DriverCard extends StatelessWidget {
         };
       }
     }
-    return null;
   }
 
   // ------ LOCAL COMPONENTS ---------//

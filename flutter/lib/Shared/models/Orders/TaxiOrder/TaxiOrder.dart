@@ -194,10 +194,6 @@ class TaxiOrder extends Order {
         "distanceToClient": distanceToClient
       };
 
-  bool isPastOrder() {
-    return isCanceled() || status == TaxiOrdersStatus.DroppedOff;
-  }
-
   @override
   bool isCanceled() {
     // all of them are in /past node
@@ -205,6 +201,10 @@ class TaxiOrder extends Order {
         status == TaxiOrdersStatus.CancelledByTaxi ||
         status == TaxiOrdersStatus.ForwardingUnsuccessful ||
         status == TaxiOrdersStatus.Expired;
+  }
+
+  bool isPastOrder() {
+    return isCanceled() || status == TaxiOrdersStatus.DroppedOff;
   }
 
   @override

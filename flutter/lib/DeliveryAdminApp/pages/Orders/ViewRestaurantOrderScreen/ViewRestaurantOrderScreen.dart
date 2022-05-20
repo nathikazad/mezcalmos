@@ -14,14 +14,17 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScree
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderShippingLocation.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderTotalCostCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/PastOrderInfo.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -63,6 +66,11 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
   /// _orderListener
   StreamSubscription<RestaurantOrder?>? _orderListener;
 
+  final MGoogleMapController mapController = MGoogleMapController(
+    enableMezSmartPointer: false,
+  );
+  RestaurantOrderStatus? _statusSnapshot;
+
   @override
   void dispose() {
     _orderListener?.cancel();
@@ -77,23 +85,28 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    order.value = controller.getOrder(orderId);
-    if (order.value == null) {
-      Get.back();
-    } else {
-      _orderListener = controller
-          .getCurrentOrderStream(orderId)
-          .listen((RestaurantOrder? newOrder) {
-        if (newOrder != null) {
-          order.value = controller.getOrder(orderId);
 
-          if (order.value?.dropoffDriver != null) {
-            driver = order.value!.dropoffDriver;
-          }
-        } else {
+    order.value = controller.getOrder(orderId);
+    _orderListener = controller
+        .getOrderStream(orderId)
+        .listen((RestaurantOrder? newOrderEvent) {
+      if (newOrderEvent != null) {
+        order.value = newOrderEvent;
+      }
+    });
+
+    // if order value is null and
+    if (order.value == null) {
+      Timer(Duration(seconds: 5), () {
+        if (order.value == null) {
+          // ignore: inference_failure_on_function_invocation
           Get.back();
+          MezSnackbar("Error", "Order does not exist");
         }
       });
+    } else {
+      initMap();
+      updateMapIfDeliveryPhase(order.value!.status);
     }
   }
 
@@ -155,7 +168,8 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                         },
                       ),
 
-                    //getCustomerInfoCart(),
+                    if (order.value!.inDeliveryPhase()) ..._mapWidget,
+
                     OrderInfoCard(order: order),
                     //==========================>total cost=====================================
                     orderTotalCostCard(order),
@@ -171,5 +185,105 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         },
       ),
     );
+  }
+
+  List<Widget> get _mapWidget => <Widget>[
+        Container(
+          height: 350,
+          child: MGoogleMap(mGoogleMapController: mapController),
+        ),
+        SizedBox(
+          height: 10,
+        )
+      ];
+
+  void initMap() {
+    mapController.periodicRerendering.value = true;
+    mapController.recenterButtonEnabled.value = false;
+    mapController.setAnimateMarkersPolyLinesBounds(true);
+    mapController.setLocation(
+      LocModel.Location(
+        "",
+        LocModel.Location.buildLocationData(
+          order.value!.to.latitude,
+          order.value!.to.longitude,
+        ),
+      ),
+    );
+
+    // restaurant ad customer's location are fixed (fit in bound at start)
+    mapController.addOrUpdateUserMarker(
+      latLng: order.value!.restaurant.location.toLatLng(),
+      markerId: order.value!.restaurantId,
+      customImgHttpUrl: order.value!.restaurant.image,
+      fitWithinBounds: true,
+    );
+    // customer's
+    mapController.addOrUpdatePurpleDestinationMarker(
+      latLng: order.value!.to.toLatLng(),
+      fitWithinBounds: true,
+    );
+    if (order.value!.routeInformation != null)
+      mapController.decodeAndAddPolyline(
+          encodedPolylineString: order.value!.routeInformation!.polyline);
+
+    mapController.animateAndUpdateBounds(
+        shouldFitPolylineInBound: order.value!.routeInformation != null);
+  }
+
+  void updateMapIfDeliveryPhase(RestaurantOrderStatus status) {
+    switch (status) {
+      case RestaurantOrderStatus.ReadyForPickup:
+        if (_statusSnapshot != status) {
+          _statusSnapshot = status;
+          // we ignore the marker within bounds
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value!.restaurant.location.toLatLng(),
+            markerId: order.value!.restaurantId,
+            customImgHttpUrl: order.value!.restaurant.image,
+            fitWithinBounds: true,
+          );
+          mapController.addOrUpdatePurpleDestinationMarker(
+            latLng: order.value!.to.toLatLng(),
+            fitWithinBounds: false,
+          );
+        }
+        mapController.addOrUpdateUserMarker(
+          latLng: order.value!.dropoffDriver!.location!,
+          markerId: order.value!.dropoffDriver!.id,
+          customImgHttpUrl: order.value!.dropoffDriver!.image,
+          fitWithinBounds: true,
+        );
+        mapController.animateAndUpdateBounds(shouldFitPolylineInBound: false);
+        break;
+
+      case RestaurantOrderStatus.OnTheWay:
+        if (_statusSnapshot != status) {
+          _statusSnapshot = status;
+          // we ignore the restaurant's marker within bounds
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value!.restaurant.location.toLatLng(),
+            markerId: order.value!.restaurantId,
+            customImgHttpUrl: order.value!.restaurant.image,
+            fitWithinBounds: false,
+          );
+          // we fit the destination into bounds
+          mapController.addOrUpdatePurpleDestinationMarker(
+            latLng: order.value!.to.toLatLng(),
+            fitWithinBounds: true,
+          );
+        }
+
+        // we keep updating the delivery's
+        mapController.addOrUpdateUserMarker(
+          latLng: order.value!.dropoffDriver!.location!,
+          markerId: order.value!.dropoffDriver!.id,
+          customImgHttpUrl: order.value!.dropoffDriver!.image,
+          fitWithinBounds: true,
+        );
+        mapController.animateAndUpdateBounds();
+        break;
+      default:
+    }
   }
 }

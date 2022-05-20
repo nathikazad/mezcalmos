@@ -1,6 +1,7 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/LaundriesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/LaundryCurrentOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen.dart';
@@ -33,6 +34,7 @@ const String kPickLocationRoute = '/pickLocationFromMap/addLocation';
 const String kPickLocationEditRoute = '/pickLocationFromMap/editLocation';
 const String kPickLocationNotAuth = '/pickLocationFromMap/addLocationNoAuth';
 const String kSavedLocations = '/savedLocations';
+const String kLaundriesListRoute = '/laundriesList';
 
 String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
@@ -167,6 +169,8 @@ class XRouter {
           page: () => SavedLocationView(),
         ),
         // Laundry routes
+        GetPage(name: kLaundriesListRoute, page: () => LaundriesListView()),
+
         GetPage(
           name: kLaundryOrderRequest,
           page: () => LaundryOrderRequestView(),
