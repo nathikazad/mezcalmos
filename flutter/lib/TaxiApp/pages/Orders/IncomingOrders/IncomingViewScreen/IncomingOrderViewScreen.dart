@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/OrderTimeTopBar.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -9,6 +10,7 @@ import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/iOrderViewWidgets.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/controller/iOrderViewController.dart';
+import 'package:intl/intl.dart';
 
 class IncomingOrderViewScreen extends StatefulWidget {
   @override
@@ -80,7 +82,23 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                     iOrderViewWidgets.counterOfferBottomSheet(),
                     IncomingPositionedFromToTopBar(
                       order: iOrderViewController.order.value!,
-                    )
+                    ),
+                    Positioned(
+                      top: 65,
+                      left: 10,
+                      right: 10,
+                      child: OrderTimeTopBar(
+                        barText: DateFormat('EEEE dd / MM / y').format(
+                              iOrderViewController.order.value!.scheduledTime ??
+                                  iOrderViewController.order.value!.orderTime,
+                            ) +
+                            ' at ' +
+                            DateFormat('hh:mm a').format(
+                              iOrderViewController.order.value!.scheduledTime ??
+                                  iOrderViewController.order.value!.orderTime,
+                            ),
+                      ),
+                    ),
                   ],
                 )
               : MezLogoAnimation(

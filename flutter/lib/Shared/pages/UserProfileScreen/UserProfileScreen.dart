@@ -9,12 +9,10 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileScreen/Hints/NoUserImageSetHint.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileScreen/Hints/NoUserNameSetHint.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart';
-import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
-// import 'package:permission_handler/permission_handler.dart';
+
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileScreen"]["UserProfileScreen"];
@@ -41,20 +39,26 @@ class UserProfile extends StatefulWidget {
   }
 }
 
-class _UserProfileState extends State<UserProfile> {
+class _UserProfileState extends State<UserProfile>
+    with TickerProviderStateMixin {
   AuthController _authController = Get.find<AuthController>();
   RxBool isUploadingImg = false.obs;
   RxBool clickedSave = false.obs;
+  late AnimationController animationController;
 
   @override
   void initState() {
     widget.userProfileController.initSetup();
+    animationController =
+        AnimationController(duration: new Duration(seconds: 2), vsync: this);
+    animationController.repeat();
     super.initState();
   }
 
   @override
   void dispose() {
     widget.userProfileController.disposeController();
+    animationController.dispose();
     super.dispose();
   }
 
@@ -67,15 +71,15 @@ class _UserProfileState extends State<UserProfile> {
       },
       child: Obx(
         () => Scaffold(
+          backgroundColor: Color.fromARGB(255, 248, 248, 248),
           appBar: widget.userProfileWidgets
               .getRightAppBar(isImageBeingUploaded: isUploadingImg.value),
           body: Stack(
-            fit: StackFit.expand,
             children: [
               Flex(
                 direction: Axis.vertical,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: widget.userProfileWidgets.bodyContent(
                   onBrowsImageClick: onBrowsImageClick,
                   onSaveClick: onSaveChangesClick,
@@ -84,9 +88,55 @@ class _UserProfileState extends State<UserProfile> {
                   clickedSave: clickedSave.value,
                 ),
               ),
-              // getToolTips(),
+              if (isUploadingImg.value)
+                Container(
+                  color: Colors.black.withOpacity(.2),
+                  height: Get.height,
+                  width: Get.width,
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.all(22),
+                      width: 90.w,
+                      height: 170,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Uploading picture",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            height: 60,
+                            width: 60,
+                            child: CircularProgressIndicator(
+                              valueColor: animationController.drive(
+                                ColorTween(
+                                  begin: Color.fromRGBO(172, 89, 252, 1),
+                                  end: Color.fromRGBO(103, 121, 254, 1),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
+          // getToolTips(),
         ),
       ),
     );

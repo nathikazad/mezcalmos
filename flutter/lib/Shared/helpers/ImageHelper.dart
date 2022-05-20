@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
@@ -72,60 +73,121 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          contentPadding: EdgeInsets.all(40),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              TextButton(
-                  onPressed: () {
+          contentPadding: EdgeInsets.all(0),
+          content: Container(
+            width: 90.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
                     _result = imPicker.ImageSource.camera;
                     Get.back();
                   },
-                  style: TextButton.styleFrom(
-                      backgroundColor: Colors.purple.shade400,
-                      padding: EdgeInsets.all(12)),
                   child: Container(
-                      alignment: Alignment.center,
+                    padding: EdgeInsets.only(left: 22, top: 17, bottom: 10),
+                    child: Center(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.camera_enhance,
-                            color: Colors.white,
+                          Icon(Icons.camera_alt_outlined),
+                          SizedBox(width: 11),
+                          Center(
+                            child: Text(
+                              "Take Picture",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                              ),
+                            ),
                           ),
-                          Text(_i18n()['camera'])
                         ],
-                      ))),
-              SizedBox(
-                height: 10,
-              ),
-              TextButton(
-                  onPressed: () {
-                    _result = imPicker.ImageSource.gallery;
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(),
+                InkWell(
+                  onTap: () {
+                    _result = imPicker.ImageSource.camera;
                     Get.back();
                   },
-                  style: TextButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
-                      padding: EdgeInsets.all(12)),
                   child: Container(
-                      alignment: Alignment.center,
+                    padding: EdgeInsets.only(left: 22, top: 10, bottom: 17),
+                    child: Center(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.photo_library_outlined,
-                            color: Colors.white,
+                          Icon(Icons.photo_library_outlined),
+                          SizedBox(width: 11),
+                          Center(
+                            child: Text(
+                              "Upload from gallery",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                              ),
+                            ),
                           ),
-                          Text(_i18n()['gallery'])
                         ],
-                      ))),
-            ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                // TextButton(
+                //     onPressed: () {
+                //      _result = imPicker.ImageSource.gallery;
+                //       Get.back();
+                //     },
+                //     style: TextButton.styleFrom(
+                //         backgroundColor: Colors.purple.shade400,
+                //         padding: EdgeInsets.all(12)),
+                //     child: Container(
+                //         alignment: Alignment.center,
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //           crossAxisAlignment: CrossAxisAlignment.center,
+                //           children: [
+                //             Icon(
+                //               Icons.camera_enhance,
+                //               color: Colors.white,
+                //             ),
+                //             Text(_i18n()['camera'])
+                //           ],
+                //         ))),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // TextButton(
+                //     onPressed: () {
+
+                //     },
+                //     style: TextButton.styleFrom(
+                //         backgroundColor: Colors.deepPurple,
+                //         padding: EdgeInsets.all(12)),
+                //     child: Container(
+                //         alignment: Alignment.center,
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //           crossAxisAlignment: CrossAxisAlignment.center,
+                //           children: [
+                //             Icon(
+                //               Icons.photo_library_outlined,
+                //               color: Colors.white,
+                //             ),
+                //             Text(_i18n()['gallery'])
+                //           ],
+                //         ))),
+              ],
+            ),
           ),
         );
       });

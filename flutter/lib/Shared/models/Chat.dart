@@ -86,8 +86,8 @@ class Chat {
 
     final Map<String, Participant> _participants = {};
     final List<Message> _messages = [];
-
     value['participants']?.forEach((key, p) {
+      mezDbgPrint("ChatId $key |  ${p}\n\n");
       _participants[key] = Participant(
           image: p['image'],
           name: p['name'],

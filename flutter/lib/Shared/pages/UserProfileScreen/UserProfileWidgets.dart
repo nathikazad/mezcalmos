@@ -6,8 +6,7 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
-import 'package:sizer/sizer.dart';
+
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart' show CapExtension;
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -19,45 +18,33 @@ class UserProfileWidgetsClass {
   UserProfileWidgetsClass({required this.userProfileController});
 
   /// this holds the Main body parts.
-  List<Widget> bodyContent(
-      {required Function() onBrowsImageClick,
-      required Function() onEditButtonClick,
-      required Function() onSaveClick,
-      required bool isImageBeingUploaded,
-      required bool clickedSave}) {
+  List<Widget> bodyContent({
+    required void Function() onBrowsImageClick,
+    required void Function() onEditButtonClick,
+    required void Function() onSaveClick,
+    required bool isImageBeingUploaded,
+    required bool clickedSave,
+  }) {
     return [
       userInfoTitle(),
+      pictureContainerWidget(
+          onBrowsImageClick: onBrowsImageClick,
+          isImageBeingUploaded: isImageBeingUploaded),
       SizedBox(
-        height: 10,
+        height: 20,
       ),
-      Flexible(
-        flex: 4,
-        fit: FlexFit.tight,
-        child: pictureContainerWidget(
-            onBrowsImageClick: onBrowsImageClick,
-            isImageBeingUploaded: isImageBeingUploaded),
-      ),
+      showUserNameOrTextField(isImageBeingUploaded: isImageBeingUploaded),
       SizedBox(
-        height: 10,
+        height: 51,
       ),
-      Flexible(
-          flex: 3,
-          fit: FlexFit.tight,
-          child: showUserNameOrTextField(
-              isImageBeingUploaded: isImageBeingUploaded)),
-      SizedBox(
-        height: 10,
+
+      // margin: EdgeInsets.all(16),
+      showEditOrSaveAndCancelButton(
+        onSaveClick: onSaveClick,
+        onStartEdit: onEditButtonClick,
+        clickedSave: clickedSave,
+        isImageBeingUploaded: isImageBeingUploaded,
       ),
-      Flexible(
-        flex: 2,
-        child: Container(
-            margin: EdgeInsets.all(16),
-            child: showEditOrSaveAndCancelButton(
-                onSaveClick: onSaveClick,
-                onStartEdit: onEditButtonClick,
-                clickedSave: clickedSave,
-                isImageBeingUploaded: isImageBeingUploaded)),
-      )
     ];
   }
 
@@ -65,26 +52,57 @@ class UserProfileWidgetsClass {
   Widget pictureContainerWidget(
       {required Function() onBrowsImageClick,
       required bool isImageBeingUploaded}) {
-    return Center(
+    return Padding(
+      padding: const EdgeInsets.only(top: 17.0),
       child: GestureDetector(
         onTap: userProfileController.stateMode.value == UserProfileMode.Edit &&
                 !isImageBeingUploaded
             ? onBrowsImageClick
             : () {},
-        child: Container(
-          height: 200,
-          width: 200,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: showDefaultOrUserImg(
-                          memoryImg: userProfileController.userImgBytes.value)
-                      .image)),
-          child: userProfileController.stateMode.value == UserProfileMode.Edit
-              ? browsImageButton(isImageBeingUploaded: isImageBeingUploaded)
-              : SizedBox(),
+        child: Stack(
+          children: [
+            Container(
+              height: 137,
+              width: 137,
+              decoration: BoxDecoration(
+                color: Get.find<AuthController>().isUserImgSet()
+                    ? Color.fromRGBO(255, 255, 255, 1)
+                    : Color.fromRGBO(217, 217, 217, 1),
+                shape: BoxShape.circle,
+                image: Get.find<AuthController>().isUserImgSet() ||
+                        userProfileController.userImgBytes.value != null
+                    ? DecorationImage(
+                        fit: BoxFit.cover,
+                        image: showDefaultOrUserImg(
+                          memoryImg: userProfileController.userImgBytes.value,
+                        ).image,
+                      )
+                    : null,
+              ),
+              child: userProfileController.stateMode.value ==
+                          UserProfileMode.Edit &&
+                      !Get.find<AuthController>().isUserImgSet()
+                  ? browsImageButton(isImageBeingUploaded: isImageBeingUploaded)
+                  : SizedBox(),
+            ),
+            Positioned(
+              bottom: 1,
+              right: 16,
+              child: Container(
+                height: 30,
+                width: 30,
+                decoration: BoxDecoration(
+                  color: Colors.black, //.withOpacity(.5),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                  size: 19,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -93,53 +111,35 @@ class UserProfileWidgetsClass {
   /// this is the brows button inside  [pictureContainerWidget] When on [UserProfileMode.Edit] mode it shows up.
   Center browsImageButton({required bool isImageBeingUploaded}) {
     return Center(
-      child: Container(
-        height: 200,
-        width: 200,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.black.withOpacity(.66),
+      child: Center(
+        child: Text(
+          // _i18n()['uploadPic'],
+
+          "Add profile picture",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-        padding: EdgeInsets.all(5),
-        child: !isImageBeingUploaded
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.photo_library_outlined,
-                    color: Colors.white,
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    _i18n()['uploadPic'],
-                    style: TextStyle(color: Colors.white, fontSize: 11.sp),
-                  )
-                ],
-              )
-            : Container(
-                height: 40,
-                width: 40,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 1.0,
-                    color: Colors.purple,
-                  ),
-                ),
-              ),
       ),
     );
   }
 
   /// this is the top title of the userProfileScreen
-  Flexible userInfoTitle() {
-    return Flexible(
-      flex: 2,
-      child: Center(
-          child: Text(
+  Padding userInfoTitle() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 17.0),
+      child: Text(
         _i18n()['title'],
-        style: TextStyle(fontSize: 20.sp),
-      )),
+        style: TextStyle(
+          fontSize: 24,
+          fontFamily: 'Montserrat',
+          fontWeight: FontWeight.w700,
+        ),
+      ),
     );
   }
 
@@ -226,64 +226,134 @@ class UserProfileWidgetsClass {
   /// this basically either shows the UserName or shows the textField depending on [UserProfileMode].
   Widget showUserNameOrTextField({required bool isImageBeingUploaded}) {
     if (userProfileController.stateMode.value == UserProfileMode.Show) {
-      return Text(
-        Get.find<AuthController>().user!.name ?? "No Name",
-        style: TextStyle(fontSize: 30),
+      return Column(
+        children: [
+          Text(
+            Get.find<AuthController>().user?.name ?? "-",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+          SizedBox(height: 11),
+          Text(
+            "Member since 12/04/2022",
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Nunito',
+              color: Color.fromRGBO(33, 33, 33, 0.5),
+            ),
+          ),
+        ],
       );
     } else {
       return Column(
         children: [
+          Text(
+            Get.find<AuthController>().user?.name ?? "-",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+          SizedBox(height: 11),
+          Text(
+            "Member since 12/04/2022",
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Nunito',
+              color: Color.fromRGBO(33, 33, 33, 0.5),
+            ),
+          ),
+          SizedBox(height: 46),
+          Padding(
+            padding: const EdgeInsets.only(left: 24),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Name",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Montserrat',
+                  color: Color.fromRGBO(120, 120, 120, 1),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 9),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 55),
+            margin: EdgeInsets.symmetric(horizontal: 22),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(237, 237, 237, 0.6),
+              borderRadius: BorderRadius.circular(4),
+            ),
             child: TextField(
               decoration: InputDecoration(
-                suffixIcon: Icon(
-                  Icons.perm_identity_rounded,
-                  color: Colors.purple.shade400,
-                ),
-                border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(),
-                enabledBorder: OutlineInputBorder(),
+                contentPadding: EdgeInsets.all(14),
+                fillColor: Colors.white,
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
                 hintText: _i18n()['namePlaceHolder'],
               ),
               enabled: !isImageBeingUploaded,
-              style: TextStyle(color: Colors.purple.shade400, fontSize: 15),
+              style: TextStyle(
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontSize: 18,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+              ),
               controller: userProfileController.textEditingController,
               onChanged: (String value) {
                 userProfileController.userName.value = value.inCaps;
               },
             ),
           ),
-          if (userProfileController.errorReport.value != null)
-            Container(
-              // height: 20,
-              margin: EdgeInsets.only(top: 10, left: 50, right: 50),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.error_outline_rounded,
-                    color: Colors.red,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        userProfileController.errorReport.value!,
-                        overflow: TextOverflow.visible,
-                        style: TextStyle(color: Colors.red),
-                        softWrap: true,
-                        maxLines: 4,
+          SizedBox(height: 7),
+          Container(
+            height: 22,
+            margin: EdgeInsets.only(left: 24, right: 24),
+            child: userProfileController.errorReport.value != null
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.error_outline_rounded,
+                        color: Color.fromRGBO(226, 17, 50, 1),
+                        size: 19,
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            )
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            userProfileController.errorReport.value!,
+                            overflow: TextOverflow.visible,
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                              color: Color.fromRGBO(226, 17, 50, 1),
+                            ),
+                            softWrap: true,
+                            maxLines: 4,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : SizedBox(),
+          ),
+          // SizedBox(height: 12),
         ],
       );
     }
@@ -298,16 +368,16 @@ class UserProfileWidgetsClass {
     required bool clickedSave,
     required bool isImageBeingUploaded,
   }) {
-    if (isImageBeingUploaded) {
-      return ThreeDotsLoading(
-        dotsColor: Colors.purple.shade400,
-      );
-    } else {
+    if (!isImageBeingUploaded) {
+      //   return ThreeDotsLoading(
+      //     dotsColor: Colors.purple.shade400,
+      //   );
+      // } else {
       if (userProfileController.stateMode.value == UserProfileMode.Show) {
         return editButton(onStartEdit: onStartEdit);
       } else {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // save button---
             saveButton(onSaveClick, clickedSave),
@@ -319,29 +389,35 @@ class UserProfileWidgetsClass {
           ],
         );
       }
-    }
+    } else
+      return SizedBox();
   }
 
-  Expanded cancelButton() {
-    return Expanded(
-        flex: 2,
+  Container cancelButton() {
+    return Container(
+        margin: EdgeInsets.only(top: 12),
         child: InkWell(
           onTap: () {
             userProfileController.reset();
             userProfileController.setUserProfileMode(UserProfileMode.Show);
           },
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: EdgeInsets.symmetric(horizontal: 22),
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.purple.shade400),
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15)),
-            height: 50,
+                // border: Border.all(color: Colors.purple.shade400),
+                color: Color.fromRGBO(249, 216, 214, 1),
+                borderRadius: BorderRadius.circular(8)),
+            height: 45,
             // width: Get.width - 100,
             child: Center(
                 child: Text(
               _i18n()['cancel'],
-              style: TextStyle(fontSize: 12.sp, color: Colors.purple.shade400),
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+                fontFamily: 'Montserrat',
+              ),
             )),
           ),
         ));
@@ -351,54 +427,71 @@ class UserProfileWidgetsClass {
     return InkWell(
       onTap: onStartEdit,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10),
+        margin: EdgeInsets.symmetric(horizontal: 22),
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.purple.shade500),
-            color: Colors.purple.shade400,
-            borderRadius: BorderRadius.circular(8.sp)),
-        height: 50,
+          gradient: LinearGradient(
+            colors: [
+              Color.fromRGBO(172, 89, 252, 1),
+              Color.fromRGBO(103, 121, 254, 1)
+            ],
+          ),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        height: 45,
         // width: Get.width - 100,
         child: Center(
-            child: Text(
-          _i18n()['editInfo'],
-          style: TextStyle(color: Colors.white, fontSize: 15.sp),
-        )),
+          child: Text(
+            _i18n()['editInfo'],
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+        ),
       ),
     );
   }
 
-  Expanded saveButton(Function onSaveChangesClick, bool clickedSave) {
-    return Expanded(
-      flex: 2,
-      child: InkWell(
-        onTap: !clickedSave
-            ? () async {
-                await onSaveChangesClick();
-              }
-            : () {
-                MezSnackbar("Oops", _i18n()['noChangesToApply'],
-                    position: SnackPosition.TOP);
-              },
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.blueGrey.shade100),
-              color:
-                  !clickedSave ? Colors.purple.shade400 : Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(15)),
-          height: 50,
-          // width: Get.width - 100,
-          child: Center(
-            child: !clickedSave
-                ? Text(
-                    _i18n()['saveBtn'],
-                    style: TextStyle(fontSize: 12.sp, color: Colors.white),
-                  )
-                : CircularProgressIndicator(
-                    strokeWidth: 1,
-                    color: Colors.black,
-                  ),
+  InkWell saveButton(Function onSaveChangesClick, bool clickedSave) {
+    return InkWell(
+      onTap: !clickedSave
+          ? () async {
+              await onSaveChangesClick();
+            }
+          : () {
+              MezSnackbar("Oops", _i18n()['noChangesToApply'],
+                  position: SnackPosition.TOP);
+            },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 22),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromRGBO(172, 89, 252, 1),
+              Color.fromRGBO(103, 121, 254, 1)
+            ],
           ),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        height: 45,
+        // width: Get.width - 100,
+        child: Center(
+          child: !clickedSave
+              ? Text(
+                  _i18n()['saveBtn'],
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                    fontFamily: 'Montserrat',
+                  ),
+                )
+              : CircularProgressIndicator(
+                  strokeWidth: 1,
+                  color: Colors.black,
+                ),
         ),
       ),
     );

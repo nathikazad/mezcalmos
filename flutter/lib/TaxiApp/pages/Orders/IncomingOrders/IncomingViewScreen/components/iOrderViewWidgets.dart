@@ -18,7 +18,7 @@ class IOrderViewWidgets {
   /// this holds the two Accept / Offer buttons.
   Positioned acceptAndOfferButtons() {
     return Positioned(
-      bottom: 10, // GetStorage().read(getxGmapBottomPaddingKey),
+      bottom: 26, // GetStorage().read(getxGmapBottomPaddingKey),
       left: 10,
       right: 10,
       child: Container(
@@ -28,7 +28,6 @@ class IOrderViewWidgets {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              flex: 2,
               child: acceptOrderButton(
                 child: !iOrderViewController.clickedAcceptButton.value
                     ? Center(
@@ -36,22 +35,24 @@ class IOrderViewWidgets {
                           _i18n()["acceptOrders"],
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w700,
+                            color: Color.fromRGBO(60, 157, 64, 1),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       )
-                    : const SizedBox(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
+                    : Center(
+                        child: Container(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                          height: 20,
+                          width: 20,
                         ),
-                        height: 20,
-                        width: 20,
                       ),
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 4),
             Expanded(flex: 1, child: offerBtn()),
           ],
         ),
@@ -62,65 +63,99 @@ class IOrderViewWidgets {
   /// this holds the BottomSheet when the TaxiDriver clicks offer Price.
   AnimatedSlider counterOfferBottomSheet() {
     return AnimatedSlider(
-        isPositionedCoordinates:
-            AnimatedSliderCoordinates(left: 0, right: 0, bottom: 0),
-        animatedSliderController: iOrderViewController.animatedSliderController,
-        child: SingleChildScrollView(
-            padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
-            physics: ClampingScrollPhysics(),
-            child: iOrderViewController.counterOffer.value != null
-                ? CounterOfferSentBottomSheet(
-                    counterOffer: iOrderViewController.counterOffer.value!,
-                    controller: iOrderViewController.controller,
-                    order: iOrderViewController.order.value!,
-                    duration: iOrderViewController.counterOffer.value!
-                        .validityTimeDifference()
-                        .abs(),
-                    onCounterEnd: () async =>
-                        iOrderViewController.removeCounterOfferAndResetState(),
-                  )
-                : CounterOfferPriceSetter(
-                    counterOffer: iOrderViewController.counterOffer,
-                    controller: iOrderViewController.controller,
-                    order: iOrderViewController.order.value!,
-                    onCountOfferSent: (num priceOffered) =>
-                        iOrderViewController.onCountOfferSent(priceOffered),
-                  )));
+      isPositionedCoordinates:
+          AnimatedSliderCoordinates(left: 0, right: 0, bottom: 0),
+      animatedSliderController: iOrderViewController.animatedSliderController,
+      child: SingleChildScrollView(
+        padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
+        physics: ClampingScrollPhysics(),
+        child: iOrderViewController.counterOffer.value != null
+            ? CounterOfferSentBottomSheet(
+                onCancelClick: () async =>
+                    iOrderViewController.removeCounterOfferAndResetState(),
+                counterOffer: iOrderViewController.counterOffer.value!,
+                controller: iOrderViewController.controller,
+                order: iOrderViewController.order.value!,
+                duration:
+                    iOrderViewController.order.value!.scheduledTime != null
+                        ? 600
+                        : iOrderViewController.counterOffer.value!
+                            .validityTimeDifference()
+                            .abs(),
+                onCounterEnd: () async =>
+                    iOrderViewController.removeCounterOfferAndResetState(),
+              )
+            : CounterOfferPriceSetter(
+                onCloseClick: () {
+                  iOrderViewController.animatedSliderController.slideDown();
+                },
+                counterOffer: iOrderViewController.counterOffer,
+                controller: iOrderViewController.controller,
+                order: iOrderViewController.order.value!,
+                onCountOfferSent: (num priceOffered) =>
+                    iOrderViewController.onCountOfferSent(priceOffered),
+              ),
+      ),
+    );
   }
 
   Widget acceptOrderButton({required Widget child}) {
-    return TextButton(
-      style: ButtonStyle(
-        // fixedSize: MaterialStateProperty.all(Size(Get.width / 1.05,
-        //     getSizeRelativeToScreen(20, Get.height, Get.width))),
-        backgroundColor:
-            MaterialStateProperty.all(Color.fromARGB(255, 79, 168, 35)),
-      ),
-      onPressed: !iOrderViewController.clickedAcceptButton.value
+    return InkWell(
+      onTap: !iOrderViewController.clickedAcceptButton.value
           ? iOrderViewController.onTaxiRideAccept
           : () => null,
-      child: child,
+      child: Container(
+        height: 45,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(175, 175, 175, 0.25),
+              offset: Offset(2.47, 2.47),
+              blurRadius: 8.23,
+            )
+          ],
+          borderRadius: BorderRadius.circular(8),
+          // fixedSize: MaterialStateProperty.all(Size(Get.width / 1.05,
+          //     getSizeRelativeToScreen(20, Get.height, Get.width))),
+          color: Color.fromRGBO(206, 225, 205, 1),
+        ),
+        child: child,
+      ),
     );
   }
 
   Widget offerBtn() {
-    return TextButton(
-      style: ButtonStyle(
-        backgroundColor:
-            MaterialStateProperty.all(Color.fromARGB(255, 172, 89, 252)),
-      ),
-      onPressed: () {
+    return InkWell(
+      onTap: () {
         iOrderViewController.submittedCounterOffer.value = true;
         iOrderViewController.animatedSliderController.slideUp();
       },
-      child: Center(
-        child: Text(
-          _i18n()['offerPrice'],
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w700,
+      child: Container(
+        height: 45,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(175, 175, 175, 0.25),
+              offset: Offset(2.47, 2.47),
+              blurRadius: 8.23,
+            )
+          ],
+          borderRadius: BorderRadius.circular(8),
+          // fixedSize: MaterialStateProperty.all(Size(Get.width / 1.05,
+          //     getSizeRelativeToScreen(20, Get.height, Get.width))),
+          color: Color.fromRGBO(233, 219, 245, 1),
+        ),
+        child: Center(
+          child: Text(
+            // _i18n()['offerPrice'],
+            'Counter offer',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color.fromRGBO(172, 89, 252, 1),
+              fontSize: 18,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
       ),

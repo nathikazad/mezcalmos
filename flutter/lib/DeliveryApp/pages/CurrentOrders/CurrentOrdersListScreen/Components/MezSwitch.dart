@@ -58,10 +58,9 @@ class _MezSwitchState extends State<MezSwitch> {
               height: 80,
               // height: widget.buttonSize.height,
               decoration: ShapeDecoration(
-                color: Colors.white,
+                color: Color.fromRGBO(175, 175, 175, 0.08),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50),
-                  //   borderRadius: BorderRadius.circular(Get.width * 0.1),
                 ),
               ),
               child: Row(
@@ -70,10 +69,10 @@ class _MezSwitchState extends State<MezSwitch> {
                   return Text(
                     widget.values[index],
                     style: TextStyle(
-                      fontFamily: 'psb',
-                      //  fontSize: Get.width * 0.040,
-                      // fontWeight: FontWeight.bold,
                       color: index == 0 ? Colors.green : Colors.red,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15,
                     ),
                   );
                 }),
@@ -98,10 +97,12 @@ class _MezSwitchState extends State<MezSwitch> {
               ),
               child: Text(
                 widget.initialPosition ? widget.values[0] : widget.values[1],
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: Colors.white),
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      color: Colors.white,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15,
+                    ),
               ),
               alignment: Alignment.center,
             ),

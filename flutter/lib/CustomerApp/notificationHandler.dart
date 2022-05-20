@@ -72,6 +72,7 @@ Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
   value['icon'] = dynamicFields['icon'];
   return Notification(
     id: key,
+    icon: dynamicFields['icon'],
     linkUrl: getTaxiOrderRoute(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],

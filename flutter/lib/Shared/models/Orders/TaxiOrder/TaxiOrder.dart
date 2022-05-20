@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 
 enum TaxiOrdersStatus {
   LookingForTaxiScheduled,
+  OrderReceieved,
   Scheduled,
   LookingForTaxi,
   InTransit,

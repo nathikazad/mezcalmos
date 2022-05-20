@@ -119,9 +119,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           left: 16, top: 8, bottom: 8, right: 16),
                       decoration: BoxDecoration(
                           color: !isMe
-                              ? Color.fromRGBO(172, 89, 252, 1)
+                              ? Color.fromRGBO(225, 228, 255, 1)
                               //? Theme.of(parentContext).primaryColorLight
-                              : Colors.white,
+                              : Color.fromRGBO(103, 121, 254, 1),
                           borderRadius: !isMe
                               ? BorderRadius.only(
                                   topLeft: Radius.zero,
@@ -137,10 +137,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         message,
                         softWrap: true,
                         style: TextStyle(
-                            fontFamily: "Nunito",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14.sp,
-                            color: (isMe) ? Colors.black : Colors.white),
+                          fontFamily: "Nunito",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
+                          color: isMe ? Colors.white : Colors.black,
+                        ),
                       )),
                   time != null
                       ? Padding(
@@ -148,10 +149,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           child: Text(
                             time,
                             style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "Nunito",
-                                fontSize: 10.sp,
-                                color: Colors.black.withOpacity(0.8)),
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Nunito",
+                              fontSize: 12,
+                              color: Color.fromRGBO(120, 120, 120, 1),
+                            ),
                           ),
                         )
                       : SizedBox(),
@@ -196,68 +198,92 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
     return Scaffold(
-        appBar: AppBar(
-          title: Obx(
-            () {
-              return (controller
-                          .recipient(recipientType: recipientType)
-                          ?.participantType ==
-                      ParticipantType.DeliveryAdmin)
-                  ? Text("Administrador")
-                  : Text(
-                      controller
-                              .recipient(
-                                  recipientType: recipientType,
-                                  recipientId: recipientId)
-                              ?.name ??
-                          "User",
-                    );
-            },
+      backgroundColor: Color.fromARGB(255, 253, 249, 249),
+      appBar: AppBar(
+        leading: Center(
+          child: GestureDetector(
+            onTap: Get.back,
+            child: Container(
+              height: 30,
+              width: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                gradient: LinearGradient(colors: [
+                  Color.fromARGB(255, 97, 127, 255),
+                  Color.fromARGB(255, 198, 90, 252),
+                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+              ),
+              child: Icon(
+                Icons.arrow_back_ios_rounded,
+                color: Colors.white,
+                size: 15,
+              ),
+            ),
           ),
-          actions: <Widget>[
-            if (orderLink != null)
-              InkWell(
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 20),
-                      child: Text(
-                        "View\nOrder",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black),
-                      ),
+        ),
+        title: Obx(
+          () {
+            return (controller
+                        .recipient(recipientType: recipientType)
+                        ?.participantType ==
+                    ParticipantType.DeliveryAdmin)
+                ? Text("Administrador")
+                : Text(
+                    controller
+                            .recipient(
+                                recipientType: recipientType,
+                                recipientId: recipientId)
+                            ?.name ??
+                        "User",
+                  );
+          },
+        ),
+        actions: <Widget>[
+          if (orderLink != null)
+            InkWell(
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Text(
+                      "View\nOrder",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
-                  onTap: () => Get.toNamed<void>(orderLink!))
-          ],
-        ),
-        body: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.1),
-                  child: Center(
-                    child: Text(formattedDate),
-                  )),
-              Expanded(
-                child: Obx(
-                  () => ListView(
-                    shrinkWrap: true,
-                    controller: _listViewScrollController,
-                    children: List<Widget>.from(chatLines.reversed),
-                  ),
+                ),
+                onTap: () => Get.toNamed<void>(orderLink!))
+        ],
+      ),
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.1),
+              child: Center(
+                child: Text(formattedDate),
+              ),
+            ),
+            Expanded(
+              child: Obx(
+                () => ListView(
+                  shrinkWrap: true,
+                  controller: _listViewScrollController,
+                  children: List<Widget>.from(chatLines.reversed),
                 ),
               ),
-              SendMessageBox(
-                  typedMsg: _typedMsg,
-                  textEditingController: _textEditingController,
-                  controller: controller,
-                  chatId: chatId,
-                  orderId: orderId)
-            ],
-          ),
-        ));
+            ),
+            SendMessageBox(
+                typedMsg: _typedMsg,
+                textEditingController: _textEditingController,
+                controller: controller,
+                chatId: chatId,
+                orderId: orderId)
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -274,68 +300,77 @@ class SendMessageBox extends StatelessWidget {
         super(key: key);
 
   final RxString _typedMsg;
-  
+
   final TextEditingController _textEditingController;
   final MessageController controller;
   final String chatId;
   final String? orderId;
   @override
   Widget build(BuildContext context) {
-    return TextField(
-        onChanged: (String value) => _typedMsg.value = value,
-        controller: _textEditingController,
-        style:
-            Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 14.5.sp),
-        cursorColor: Colors.purple,
-        scrollPadding: EdgeInsets.all(10),
-        decoration: InputDecoration(
-            isDense: true,
-            contentPadding: EdgeInsets.all(30),
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(borderSide: BorderSide.none),
-            hintText: _i18n()['writeMsgPlaceholder'],
-            hintStyle: Theme.of(context)
-                .textTheme
-                .subtitle1
-                ?.copyWith(fontSize: 14.5.sp),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.all(16),
-              child: GestureDetector(
-                onTap: () {
-                  final bool msgReady2Send =
-                      _textEditingController.text.replaceAll(' ', '').length >
-                          0;
-                  if (msgReady2Send) {
-                    controller.sendMessage(
-                        message: _typedMsg.value,
-                        chatId: chatId,
-                        orderId: orderId);
-                    _textEditingController.clear();
-                    _typedMsg.value = "";
-                  } else {
-                    _textEditingController.clear();
-                    _typedMsg.value = "";
-                  }
-                },
-                child: Obx(
-                  () => Container(
-                    child: Icon(
-                      Icons.send,
-                      size: 18,
-                      color: Colors.white,
-                    ),
-                    width: 45,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _typedMsg.value.length > 0
-                          ? Color.fromRGBO(172, 89, 252, 1)
-                          : Theme.of(context).primaryColorLight,
-                    ),
+    return Container(
+      height: 70,
+      color: Colors.white,
+      child: Center(
+        child: Row(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 21, vertical: 17),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(240, 241, 255, 1),
+                borderRadius: BorderRadius.circular(75),
+              ),
+              child: SizedBox(
+                width: 80.w,
+                height: 70,
+                child: TextField(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(14),
+                      hintStyle: TextStyle(
+                        color: Color.fromRGBO(120, 120, 120, 1),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Nunito',
+                      ),
+                      fillColor: Colors.white,
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      hintText: 'Message...' //_i18n()['namePlaceHolder'],
+                      ),
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    fontSize: 18,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                  ),
+                  controller: _textEditingController,
+                  onChanged: (String value) {
+                    _typedMsg.value = value;
+                  },
+                ),
+              ),
+            ),
+            Container(
+              height: 35,
+              width: 35,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color.fromRGBO(
+                    240, 241, 255, 1), //Color.fromRGBO(240, 241, 255, 1),
+              ),
+              child: Transform.rotate(
+                angle: 12,
+                child: Center(
+                  child: Icon(
+                    Icons.send,
+                    color: Color.fromRGBO(103, 121, 254, 1),
                   ),
                 ),
               ),
-            )));
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
