@@ -1,3 +1,4 @@
+import { DeliveryDriverType } from "../Drivers/DeliveryDriver";
 import { Location } from "./Generic";
 import { UserInfo } from "./User";
 
@@ -10,6 +11,12 @@ export interface Order {
   customer: UserInfo,
   orderTime: string;
   secondaryChats: Record<SecondaryChat, string | null>;
+  estimatedDeliveryTimes: Record<DeliveryDriverType, Record<DeliveryAction, string>>
+}
+
+export enum DeliveryAction {
+  Pickup = "pickup",
+  DropOff = "dropoff",
 }
 
 export enum OrderType {

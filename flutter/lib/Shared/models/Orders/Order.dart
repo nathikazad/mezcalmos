@@ -104,6 +104,8 @@ abstract class DeliverableOrder extends Order {
   DeliveryDriverUserInfo? dropoffDriver;
   String? serviceProviderDropOffDriverChatId;
   String? customerDropOffDriverChatId;
+  DateTime? estimatedPickupFromServiceProviderTime;
+  DateTime? estimatedDropoffAtCustomerTime;
   DeliverableOrder(
       {required String orderId,
       String? serviceProviderId,
@@ -117,6 +119,8 @@ abstract class DeliverableOrder extends Order {
       this.dropoffDriver,
       required this.serviceProviderDropOffDriverChatId,
       required this.customerDropOffDriverChatId,
+      this.estimatedPickupFromServiceProviderTime,
+      this.estimatedDropoffAtCustomerTime,
       RouteInformation? routeInformation})
       : super(
             orderId: orderId,
@@ -135,6 +139,8 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
   DeliveryDriverUserInfo? pickupDriver;
   String? serviceProviderPickupDriverChatId;
   String? customerPickupDriverChatId;
+  DateTime? estimatedPickupFromCustomerTime;
+  DateTime? estimatedDropoffAtServiceProviderTime;
   TwoWayDeliverableOrder(
       {required String orderId,
       String? serviceProviderId,
@@ -151,7 +157,11 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required String? customerDropOffDriverChatId,
       this.pickupDriver,
       required this.serviceProviderPickupDriverChatId,
-      required this.customerPickupDriverChatId})
+      required this.customerPickupDriverChatId,
+      DateTime? estimatedPickupFromServiceProviderTime,
+      DateTime? estimatedDropoffAtCustomerTime,
+      this.estimatedPickupFromCustomerTime,
+      this.estimatedDropoffAtServiceProviderTime})
       : super(
             orderId: orderId,
             orderType: orderType,
@@ -166,5 +176,8 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
             dropoffDriver: dropoffDriver,
             serviceProviderDropOffDriverChatId:
                 serviceProviderDropOffDriverChatId,
-            customerDropOffDriverChatId: customerDropOffDriverChatId);
+            customerDropOffDriverChatId: customerDropOffDriverChatId,
+            estimatedPickupFromServiceProviderTime:
+                estimatedPickupFromServiceProviderTime,
+            estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime);
 }

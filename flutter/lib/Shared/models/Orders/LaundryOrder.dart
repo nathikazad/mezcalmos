@@ -42,13 +42,14 @@ extension ParseStringToOrderStatus on String {
 }
 
 class LaundryOrder extends TwoWayDeliverableOrder {
+  // TODO @montasarre remove weight as it comes from costsByType
   num? weight;
   String? notes;
   ServiceInfo? laundry;
   LaundryOrderStatus status;
   num shippingCost;
   LaundryOrderCosts? costsByType;
-  DateTime? estimatedDeliveryTime;
+  DateTime? estimatedLaundryReadyTime;
   RouteInformation? routeInformation;
 
   LaundryOrder(
@@ -62,7 +63,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.laundry,
       required this.shippingCost,
       this.costsByType,
-      this.estimatedDeliveryTime,
+      this.estimatedLaundryReadyTime,
       this.routeInformation,
       DeliveryDriverUserInfo? dropoffDriver,
       String? laundryDropOffDriverChatId,
@@ -70,7 +71,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       DeliveryDriverUserInfo? pickupDriver,
       String? laundryPickupDriverChatId,
       String? customerPickupDriverChatId,
-      this.weight,
+      DateTime? estimatedPickupFromCustomerTime,
+      DateTime? estimatedDropoffAtServiceProviderTime,
+      DateTime? estimatedPickupFromServiceProviderTime,
+      DateTime? estimatedDropoffAtCustomerTime,
       this.notes})
       : super(
             orderTime: orderTime,
@@ -85,39 +89,64 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             customerDropOffDriverChatId: customerDropOffDriverChatId,
             pickupDriver: pickupDriver,
             serviceProviderPickupDriverChatId: laundryPickupDriverChatId,
-            customerPickupDriverChatId: customerPickupDriverChatId);
+            customerPickupDriverChatId: customerPickupDriverChatId,
+            estimatedPickupFromServiceProviderTime:
+                estimatedPickupFromServiceProviderTime,
+            estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime,
+            estimatedPickupFromCustomerTime: estimatedPickupFromCustomerTime,
+            estimatedDropoffAtServiceProviderTime:
+                estimatedDropoffAtServiceProviderTime);
 
   factory LaundryOrder.fromData(id, data) {
     final LaundryOrder laundryOrder = LaundryOrder(
-        orderId: id,
-        customer: UserInfo.fromData(data["customer"]),
-        status: data['status'].toString().toLaundryOrderStatus(),
-        cost: data['cost'],
-        to: Location.fromFirebaseData(data['to']),
-        orderTime: DateTime.parse(data["orderTime"]),
-        paymentType: data["paymentType"].toString().toPaymentType(),
-        weight: data["weight"],
-        shippingCost: data['shippingCost'] ?? 50,
-        notes: data["notes"],
-        costsByType: (data["costsByType"] != null)
-            ? LaundryOrderCosts.fromData(data["costsByType"])
-            : null,
-        estimatedDeliveryTime: (data["estimatedDeliveryTime"] != null)
-            ? DateTime.parse(data["estimatedDeliveryTime"])
-            : null,
-        laundry: (data["laundry"] != null)
-            ? ServiceInfo.fromData(data["laundry"])
-            : null,
-        dropoffDriver: (data["dropoffDriver"] != null)
-            ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
-            : null,
+      orderId: id,
+      customer: UserInfo.fromData(data["customer"]),
+      status: data['status'].toString().toLaundryOrderStatus(),
+      cost: data['cost'],
+      to: Location.fromFirebaseData(data['to']),
+      orderTime: DateTime.parse(data["orderTime"]),
+      paymentType: data["paymentType"].toString().toPaymentType(),
+      shippingCost: data['shippingCost'] ?? 50,
+      notes: data["notes"],
+      costsByType: (data["costsByType"] != null)
+          ? LaundryOrderCosts.fromData(data["costsByType"])
+          : null,
+      estimatedLaundryReadyTime: (data["estimatedLaundryReadyTime"] != null)
+          ? DateTime.parse(data["estimatedLaundryReadyTime"])
+          : null,
+      estimatedPickupFromServiceProviderTime: (data["estimatedDeliveryTimes"]
+                  ?["dropoff"]?["pickup"] !=
+              null)
+          ? DateTime.parse(data["estimatedDeliveryTimes"]["dropoff"]["pickup"])
+          : null,
+      estimatedDropoffAtCustomerTime: (data["estimatedDeliveryTimes"]
+                  ?["dropoff"]?["dropoff"] !=
+              null)
+          ? DateTime.parse(data["estimatedDeliveryTimes"]["dropoff"]["dropoff"])
+          : null,
+      estimatedPickupFromCustomerTime: (data["estimatedDeliveryTimes"]
+                  ?["pickup"]?["pickup"] !=
+              null)
+          ? DateTime.parse(data["estimatedDeliveryTimes"]["pickup"]["pickup"])
+          : null,
+      estimatedDropoffAtServiceProviderTime: (data["estimatedDeliveryTimes"]
+                  ?["pickup"]?["dropoff"] !=
+              null)
+          ? DateTime.parse(data["estimatedDeliveryTimes"]["dropoff"]["pickup"])
+          : null,
+      laundry: (data["laundry"] != null)
+          ? ServiceInfo.fromData(data["laundry"])
+          : null,
+      dropoffDriver: (data["dropoffDriver"] != null)
+          ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
+          : null,
       laundryDropOffDriverChatId: data['secondaryChats']
           ?['serviceProviderDropOffDriver'],
       customerDropOffDriverChatId: data['secondaryChats']
           ?['customerDropOffDriver'],
-        pickupDriver: (data["pickupDriver"] != null)
-            ? DeliveryDriverUserInfo.fromData(data["pickupDriver"])
-            : null,
+      pickupDriver: (data["pickupDriver"] != null)
+          ? DeliveryDriverUserInfo.fromData(data["pickupDriver"])
+          : null,
       laundryPickupDriverChatId: data['secondaryChats']
           ?['serviceProviderPickupDriver'],
       customerPickupDriverChatId: data['secondaryChats']
@@ -145,7 +174,6 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         "to": to,
         "orderTime": orderTime,
         "paymentType": paymentType,
-        "weight": weight,
         "notes": notes,
         "costsByType": costsByType?.toFirebasFormat() ?? null
       };
@@ -173,10 +201,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     return status == LaundryOrderStatus.AtLaundry;
   }
 
+  // TODO @montasarre remove getPrice as it comes from costsByType
   num? getPrice() {
-    if (weight != null) {
-      return weight! * 20;
-    }
     return null;
   }
 

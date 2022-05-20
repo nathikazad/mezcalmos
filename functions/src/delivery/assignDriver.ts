@@ -25,8 +25,7 @@ import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
-import * as laundryNodes from "../shared/databaseNodes/services/laundry";
+import { addServiceProviderOperatorsToChat, updateServiceProviderOrder } from "../shared/controllers/orderController";
 
 export = functions.https.onCall(async (data, context) => {
   if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
@@ -48,6 +47,10 @@ export = functions.https.onCall(async (data, context) => {
   let deliveryDriverId: string = data.deliveryDriverId;
   let orderId: string = data.orderId;
   let deliveryDriver: DeliveryDriver = (await getDeliveryDriver(deliveryDriverId));
+  let deliveryDriverType: DeliveryDriverType = data.deliveryDriverType;
+  let driverInfo: UserInfo = await getUserInfo(deliveryDriverId);
+  let order: TwoWayDeliverableOrder = await getInProcessOrder(data.orderType, orderId);
+
 
   if (!deliveryDriver || !deliveryDriver.state ||
     deliveryDriver.state.authorizationStatus != AuthorizationStatus.Authorized) {
@@ -65,19 +68,6 @@ export = functions.https.onCall(async (data, context) => {
     }
   }
 
-
-  let deliveryDriverType: DeliveryDriverType = data.deliveryDriverType;
-  let driverInfo: UserInfo = await getUserInfo(deliveryDriverId);
-  let order: TwoWayDeliverableOrder = await getInProcessOrder(data.orderType, orderId);
-
-  if (order.serviceProviderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order does not have a service provider, call assign laundry first`,
-      errorCode: "laundryDontExist"
-    }
-  }
-
   if (data.changeDriver) {
     let returnVal = removeOldDriver(deliveryDriverType, order, orderId);
     if (returnVal != null) return returnVal;
@@ -86,6 +76,7 @@ export = functions.https.onCall(async (data, context) => {
   let serviceProviderDriverChatId: string = await pushChat();
   let customerDriverChatId: string = await pushChat();
   order.secondaryChats = order.secondaryChats ?? {};
+
   switch (deliveryDriverType) {
     case DeliveryDriverType.DropOff:
       if (order.dropoffDriver != null)
@@ -113,50 +104,13 @@ export = functions.https.onCall(async (data, context) => {
   rootNodes.inProcessOrders(data.orderType, orderId).update(order);
   deliveryDriverNodes.inProcessOrders(deliveryDriverId, orderId).update(order);
 
-  if (order.orderType == OrderType.Restaurant) {
-    let rOrder: RestaurantOrder = <RestaurantOrder>{ ...order }
-    restaurantNodes.inProcessOrders(rOrder.restaurant.id!, orderId).update(order);
-  } else if (order.orderType == OrderType.Laundry) {
-    let lOrder: LaundryOrder = <LaundryOrder>{ ...order }
-    laundryNodes.inProcessOrders(lOrder.laundry.id!, orderId).update(order);
-  }
 
-  let serviceProviderchat: ChatObject = buildChatForOrder(serviceProviderDriverChatId, data.orderType, orderId);
-  serviceProviderchat.addParticipant({
-    ...driverInfo,
-    particpantType: ParticipantType.DeliveryDriver
-  });
-  await chatController.setChat(serviceProviderDriverChatId, serviceProviderchat.chatData);
+  updateServiceProviderOrder(orderId, order);
 
-  deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
-    let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    chatController.addParticipantsToChat(Object.keys(deliveryAdmins), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.DeliveryAdmin)
-  })
+  let serviceProviderchat: ChatObject = await createServiceProviderChat(serviceProviderDriverChatId, data, orderId, driverInfo);
+  addServiceProviderOperatorsToChat(orderId, order, serviceProviderchat, serviceProviderDriverChatId);
 
-  switch (order.orderType) {
-    case OrderType.Laundry:
-      laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
-        let laundryOperators: Record<string, boolean> = snapshot.val();
-        chatController.addParticipantsToChat(Object.keys(laundryOperators), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.LaundryOperator)
-      })
-      break;
-
-    default:
-      break;
-  }
-
-
-  let customerChat: ChatObject = buildChatForOrder(customerDriverChatId, data.orderType, orderId);
-  customerChat.addParticipant({
-    ...driverInfo,
-    particpantType: ParticipantType.DeliveryDriver
-  });
-  customerChat.addParticipant({
-    ...order.customer,
-    particpantType: ParticipantType.Customer
-  });
-  await chatController.setChat(customerDriverChatId, customerChat.chatData);
-
+  await createCustomerChat(customerDriverChatId, data, orderId, driverInfo, order);
 
   let notification: Notification = {
     foreground: <NewDeliveryOrderNotification>{
@@ -178,6 +132,34 @@ export = functions.https.onCall(async (data, context) => {
     status: ServerResponseStatus.Success,
   }
 })
+
+async function createServiceProviderChat(serviceProviderDriverChatId: string, data: any, orderId: string, driverInfo: UserInfo) {
+  let serviceProviderchat: ChatObject = buildChatForOrder(serviceProviderDriverChatId, data.orderType, orderId);
+  serviceProviderchat.addParticipant({
+    ...driverInfo,
+    particpantType: ParticipantType.DeliveryDriver
+  });
+  await chatController.setChat(serviceProviderDriverChatId, serviceProviderchat.chatData);
+
+  deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
+    let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
+    chatController.addParticipantsToChat(Object.keys(deliveryAdmins), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.DeliveryAdmin);
+  });
+  return serviceProviderchat;
+}
+
+async function createCustomerChat(customerDriverChatId: string, data: any, orderId: string, driverInfo: UserInfo, order: TwoWayDeliverableOrder) {
+  let customerChat: ChatObject = buildChatForOrder(customerDriverChatId, data.orderType, orderId);
+  customerChat.addParticipant({
+    ...driverInfo,
+    particpantType: ParticipantType.DeliveryDriver
+  });
+  customerChat.addParticipant({
+    ...order.customer,
+    particpantType: ParticipantType.Customer
+  });
+  await chatController.setChat(customerDriverChatId, customerChat.chatData);
+}
 
 function removeOldDriver(deliveryDriverType: DeliveryDriverType, order: TwoWayDeliverableOrder, orderId: string) {
   let notification: Notification = {

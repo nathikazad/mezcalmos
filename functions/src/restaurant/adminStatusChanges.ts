@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
-import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { orderInProcess, RestaurantOrderStatusChangeNotification, RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
@@ -133,4 +133,90 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
 
 
   return { status: ServerResponseStatus.Success }
+}
+
+export const setEstimatedFoodReadyTime = functions.https.onCall(async (data, context) => {
+
+  if (data.estimatedFoodReadyTime == null) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: `Expected estimatedFoodReadyTime`,
+      errorCode: "orderIdNotGiven"
+    }
+  }
+
+  let validationPass = await passChecksForRestaurant(data, context.auth);
+  if (!validationPass.ok) {
+    return validationPass.error;
+  }
+
+  let order: RestaurantOrder = validationPass.order;
+
+
+  let orderId = data.orderId;
+  order.estimatedFoodReadyTime = data.estimatedFoodReadyTime;
+
+  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+  await restaurantNodes.inProcessOrders(order.restaurant.id, orderId).update(order);
+  rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
+  if (order.dropoffDriver)
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+
+  return { status: ServerResponseStatus.Success }
+});
+
+async function passChecksForRestaurant(data: any, auth?: AuthData): Promise<ValidationPass> {
+  let response = await isSignedIn(auth)
+  if (response != undefined) {
+    return {
+      ok: false,
+      error: response
+    }
+  }
+  if (data.orderId == null) {
+    return {
+      ok: false,
+      error: {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Expected order id`,
+        errorCode: "orderIdNotGiven"
+      }
+    }
+  }
+
+  let orderId: string = data.orderId;
+  let order: RestaurantOrder = (await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).once('value')).val();
+  if (order == null) {
+    return {
+      ok: false,
+      error: {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Order does not exist`,
+        errorCode: "orderDontExist"
+      }
+    }
+  }
+
+  // if (data.fromRestaurantOperator) {
+  //   response = await checkRestaurantOperator(order.restaurant.id, auth!.uid)
+  //   if (response != undefined) {
+  //     return {
+  //       ok: false,
+  //       error: response
+  //     };
+  //   }
+  // } else {
+  response = await checkDeliveryAdmin(auth!.uid)
+  if (response != undefined) {
+    return {
+      ok: false,
+      error: response
+    };
+    // }
+  }
+
+  return {
+    ok: true,
+    order: order
+  }
 }

@@ -40,6 +40,7 @@ class RestaurantOrder extends DeliverableOrder {
   String? notes;
   RestaurantOrderStatus status;
   ServiceInfo get restaurant => serviceProvider! as ServiceInfo;
+  DateTime? estimatedFoodReadyTime;
   RestaurantOrder({
     required String orderId,
     required this.status,
@@ -51,11 +52,14 @@ class RestaurantOrder extends DeliverableOrder {
     required ServiceInfo restaurant,
     required UserInfo customer,
     required Location to,
+    this.estimatedFoodReadyTime,
     DeliveryDriverUserInfo? dropoffDriver,
     String? dropOffDriverChatId,
     required this.itemsCost,
     required this.shippingCost,
     String? customerDropOffDriverChatId,
+    DateTime? estimatedPickupFromServiceProviderTime,
+    DateTime? estimatedDropoffAtCustomerTime,
     this.notes,
     RouteInformation? routeInformation,
   }) : super(
@@ -72,28 +76,44 @@ class RestaurantOrder extends DeliverableOrder {
           serviceProviderDropOffDriverChatId: dropOffDriverChatId,
           customerDropOffDriverChatId: customerDropOffDriverChatId,
           routeInformation: routeInformation,
+          estimatedPickupFromServiceProviderTime:
+              estimatedPickupFromServiceProviderTime,
+          estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime,
         );
 
   //ignore_for_file:avoid_annotating_with_dynamic
   factory RestaurantOrder.fromData(dynamic id, dynamic data) {
     final RestaurantOrder restaurantOrder = RestaurantOrder(
-        orderId: id,
-        status: data["status"].toString().toRestaurantOrderStatus(),
-        quantity: data["quantity"],
-        serviceProviderId: data["serviceProviderId"],
-        paymentType: data["paymentType"].toString().toPaymentType(),
-        orderTime: DateTime.parse(data["orderTime"]),
-        cost: data["cost"],
-        notes: data["notes"],
-        to: Location.fromFirebaseData(data['to']),
-        restaurant: ServiceInfo.fromData(data["restaurant"]),
-        customer: UserInfo.fromData(data["customer"]),
-        itemsCost: data['itemsCost'],
-        shippingCost: data['shippingCost'],
-        dropoffDriver: (data["dropoffDriver"] != null)
-            ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
-            : null,
-        dropOffDriverChatId: data['secondaryChats']
+      orderId: id,
+      status: data["status"].toString().toRestaurantOrderStatus(),
+      quantity: data["quantity"],
+      serviceProviderId: data["serviceProviderId"],
+      paymentType: data["paymentType"].toString().toPaymentType(),
+      orderTime: DateTime.parse(data["orderTime"]),
+      estimatedFoodReadyTime: (data["estimatedFoodReadyTime"] != null)
+          ? DateTime.parse(data["estimatedFoodReadyTime"])
+          : null,
+      estimatedPickupFromServiceProviderTime: (data["estimatedDeliveryTimes"]
+                  ?["dropoff"]?["pickup"] !=
+              null)
+          ? DateTime.parse(data["estimatedDeliveryTimes"]["dropoff"]["pickup"])
+          : null,
+      estimatedDropoffAtCustomerTime: (data["estimatedDeliveryTimes"]
+                  ?["dropoff"]?["dropoff"] !=
+              null)
+          ? DateTime.parse(data["estimatedDeliveryTimes"]["dropoff"]["dropoff"])
+          : null,
+      cost: data["cost"],
+      notes: data["notes"],
+      to: Location.fromFirebaseData(data['to']),
+      restaurant: ServiceInfo.fromData(data["restaurant"]),
+      customer: UserInfo.fromData(data["customer"]),
+      itemsCost: data['itemsCost'],
+      shippingCost: data['shippingCost'],
+      dropoffDriver: (data["dropoffDriver"] != null)
+          ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
+          : null,
+      dropOffDriverChatId: data['secondaryChats']
           ?['deliveryAdminDropOffDriver'],
       customerDropOffDriverChatId: data['secondaryChats']
           ?['customerDropOffDriver'],
