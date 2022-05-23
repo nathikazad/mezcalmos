@@ -108,11 +108,13 @@ class Chat {
   });
 
   factory Chat.fromJson(String chatId, dynamic chatData) {
+    mezDbgPrint("Chat.fromJson > Participants > ${chatData['participants']}}");
     final Chat chat = Chat(
         chatId: chatId,
         chatType: chatData['chatType'],
         orderType: chatData['orderType']?.toString().toOrderType() ?? null,
         orderId: chatData['orderId'] ?? null);
+
     chatData['participants']
         ?.forEach((dynamic participantTypeAsString, dynamic map) {
       final ParticipantType participantType =
@@ -132,6 +134,7 @@ class Chat {
     // ignore: avoid_annotating_with_dynamic
     chatData['messages']?.forEach((dynamic messageId, dynamic messageData) {
       try {
+        mezDbgPrint("[messageData] => $messageData");
         chat._messages.add(Message(
           message: messageData['message'],
           timestamp: DateTime.parse(messageData['timestamp']),
@@ -141,7 +144,8 @@ class Chat {
         ));
       } catch (e) {
         // _messages.add(Message(m['message'], null, m['userId']));
-        mezDbgPrint("Message add error chatId:$chatId messageId:$messageId ");
+        mezDbgPrint(
+            "Message add error $e ==> chatId:$chatId messageId:$messageId ");
       }
     });
     return chat;

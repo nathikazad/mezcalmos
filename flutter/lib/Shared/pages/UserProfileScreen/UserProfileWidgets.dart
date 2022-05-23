@@ -85,23 +85,24 @@ class UserProfileWidgetsClass {
                   ? browsImageButton(isImageBeingUploaded: isImageBeingUploaded)
                   : SizedBox(),
             ),
-            Positioned(
-              bottom: 1,
-              right: 16,
-              child: Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  color: Colors.black, //.withOpacity(.5),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.camera_alt,
-                  color: Colors.white,
-                  size: 19,
+            if (userProfileController.stateMode.value == UserProfileMode.Edit)
+              Positioned(
+                bottom: 1,
+                right: 16,
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    color: Colors.black, //.withOpacity(.5),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                    size: 19,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
@@ -488,9 +489,13 @@ class UserProfileWidgetsClass {
                     fontFamily: 'Montserrat',
                   ),
                 )
-              : CircularProgressIndicator(
-                  strokeWidth: 1,
-                  color: Colors.black,
+              : Container(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1.5,
+                    color: Colors.white,
+                  ),
                 ),
         ),
       ),

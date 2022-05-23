@@ -5,7 +5,7 @@
 
 // chat: {deliveryAdminDropOffDriver: 'dsfdsf', deliveryAdminPickupDriver: 'dsfs'}
 import 'dart:async';
-
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
@@ -351,20 +351,39 @@ class SendMessageBox extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              height: 35,
-              width: 35,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color.fromRGBO(
-                    240, 241, 255, 1), //Color.fromRGBO(240, 241, 255, 1),
-              ),
-              child: Transform.rotate(
-                angle: 12,
-                child: Center(
-                  child: Icon(
-                    Icons.send,
-                    color: Color.fromRGBO(103, 121, 254, 1),
+            InkWell(
+              onTap: () {
+                final bool msgReady2Send =
+                    _textEditingController.text.replaceAll(' ', '').length > 0;
+                if (msgReady2Send) {
+                  controller.sendMessage(
+                    message: _typedMsg.value,
+                    chatId: chatId,
+                    orderId: orderId,
+                  );
+                  _textEditingController.clear();
+                  _typedMsg.value = "";
+                } else {
+                  _textEditingController.clear();
+                  _typedMsg.value = "";
+                }
+              },
+              child: Container(
+                height: 35,
+                width: 35,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromRGBO(
+                      240, 241, 255, 1), //Color.fromRGBO(240, 241, 255, 1),
+                ),
+                child: Transform.rotate(
+                  angle: -math.pi / 5.0,
+                  child: Center(
+                    child: Icon(
+                      Icons.send,
+                      size: 20,
+                      color: Color.fromRGBO(103, 121, 254, 1),
+                    ),
                   ),
                 ),
               ),

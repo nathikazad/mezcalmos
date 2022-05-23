@@ -27,12 +27,6 @@ class MezLoadingCounter extends StatefulWidget {
 class _MezLoadingCounterState extends State<MezLoadingCounter> {
   int _lastCount = 0;
 
-  // PS : Keep this here i will need it in Future.
-  double dp(double val, int places) {
-    final num mod = pow(10.0, places);
-    return ((val * mod).round().toDouble() / mod);
-  }
-
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
@@ -82,7 +76,7 @@ class _MezLoadingCounterState extends State<MezLoadingCounter> {
                         color: Color.fromARGB(255, 236, 236, 236)),
                     child: widget.childInsideCounter ??
                         Center(
-                          child: Text(_currentCount.toInt().toString()),
+                          child: getCounterText(_currentCount),
                         ),
                   ),
                 )
@@ -90,5 +84,27 @@ class _MezLoadingCounterState extends State<MezLoadingCounter> {
             ),
           );
         });
+  }
+
+  Widget getCounterText(int counterCount) {
+    final TextStyle _style = TextStyle(
+      fontFamily: 'Nunito',
+      fontWeight: FontWeight.w700,
+      fontSize: 20,
+    );
+    if (counterCount <= 60) {
+      return Text(counterCount.toInt().toString(), style: _style);
+    } else {
+      // get minutes instead
+      final int _inMins = (counterCount / 60).ceil();
+      return FittedBox(
+        child: Column(
+          children: [
+            Text(_inMins.toString(), style: _style),
+            Text("min", style: _style),
+          ],
+        ),
+      );
+    }
   }
 }

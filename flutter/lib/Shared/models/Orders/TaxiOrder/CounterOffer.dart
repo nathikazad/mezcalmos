@@ -40,6 +40,8 @@ class CounterOffer {
         driverInfo: taxiUserInfo);
   }
 
+  bool get isValid => counterOfferStatus == CounterOfferStatus.Submitted;
+
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "driverInfo": this.driverInfo.toFirebaseFormatJson(),
@@ -54,6 +56,8 @@ class CounterOffer {
   ///
   /// basically if the return == 0 , it means that this Offer is expired.
   int validityTimeDifference() {
+    mezDbgPrint(
+        "offerTime => ${offerValidTime.toUtc()}  | now => ${DateTime.now()}");
     var r = DateTime.now().toUtc().difference(offerValidTime.toUtc()).inSeconds;
     mezDbgPrint("validityTimeDifference ===> $r");
     return r;
@@ -61,11 +65,11 @@ class CounterOffer {
 }
 
 // enum CounterOfferStatus { Submitted, Accepted, Rejected, Expired, Cancelled }
-enum CounterOfferStatus { Submitted, Accepted, Rejected }
+enum CounterOfferStatus { Submitted, Accepted, Rejected, Expired, Cancelled }
 
 extension ParseCounterOfferStatusToString on CounterOfferStatus {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }

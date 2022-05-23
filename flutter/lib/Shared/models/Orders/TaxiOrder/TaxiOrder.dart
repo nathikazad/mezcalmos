@@ -67,27 +67,26 @@ class TaxiOrder extends Order {
   List<CounterOffer> getValidCounterOfferts() {
     return _counterOffers
         .where((CounterOffer offer) =>
-            offer.validityTimeDifference() < 0 &&
-            offer.counterOfferStatus == CounterOfferStatus.Submitted)
+            offer.validityTimeDifference() < 0 && offer.isValid)
         .toList();
   }
 
-  TaxiOrder(
-      {required String orderId,
-      required num cost,
-      required this.from,
-      required Location to,
-      required DateTime orderTime,
-      required PaymentType paymentType,
-      required RouteInformation routeInformation,
-      TaxiUserInfo? driver,
-      required this.acceptRideTime,
-      required this.rideFinishTime,
-      required this.rideStartTime,
-      this.scheduledTime,
-      required this.status,
-      required UserInfo customer})
-      : super(
+  TaxiOrder({
+    required String orderId,
+    required num cost,
+    required this.from,
+    required Location to,
+    required DateTime orderTime,
+    required PaymentType paymentType,
+    required RouteInformation routeInformation,
+    TaxiUserInfo? driver,
+    required this.acceptRideTime,
+    required this.rideFinishTime,
+    required this.rideStartTime,
+    this.scheduledTime,
+    required this.status,
+    required UserInfo customer,
+  }) : super(
             orderTime: orderTime,
             orderId: orderId,
             paymentType: paymentType,
@@ -162,13 +161,14 @@ class TaxiOrder extends Order {
 
     data["counterOffers"]?.forEach((driverId, counterOfferData) {
       try {
-        mezDbgPrint("CounterOffer ===> $counterOfferData");
-
         final CounterOffer _tmpCountOffer = CounterOffer.fromData(
             counterOfferData,
             taxiUserInfo: UserInfo.fromData(counterOfferData["driverInfo"]));
 
-        if (_tmpCountOffer.validityTimeDifference() < 0) {
+        if (_tmpCountOffer.validityTimeDifference() < 0 &&
+            _tmpCountOffer.isValid) {
+          mezDbgPrint("Valid CounterOffer ===> $counterOfferData");
+
           taxiOrder._counterOffers.add(_tmpCountOffer);
         }
       } on NoSuchMethodError catch (_) {

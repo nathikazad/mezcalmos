@@ -4,13 +4,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
@@ -26,11 +24,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
 class SignIn extends GetWidget<AuthController> {
   final SignInMode mode;
   SignIn({required this.mode});
-  RxBool clickedLogin = false.obs;
+  final RxBool clickedLogin = false.obs;
 
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     final AppLaunchMode lmode = getAppLaunchMode();
 
     return WillPopScope(

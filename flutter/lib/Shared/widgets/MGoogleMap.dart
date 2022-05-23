@@ -26,7 +26,7 @@ class MGoogleMap extends StatefulWidget {
   const MGoogleMap(
       {Key? key,
       this.notifyParentOfNewLocation,
-      this.recenterBtnBottomPadding = 15,
+      this.recenterBtnBottomPadding = 100,
       this.debugString,
 
       // this.mGoogleMapController,
