@@ -25,7 +25,7 @@ class ItemSliverAppBar extends StatelessWidget {
       elevation: 0.4,
       expandedHeight: (item.image != null) ? 220 : 0,
       automaticallyImplyLeading: false,
-      titleSpacing: 16,
+      titleSpacing: 12,
       leading: _BackButtonAppBar(),
       actions: <Widget>[
         getAppbarIconsButton(),
@@ -33,14 +33,14 @@ class ItemSliverAppBar extends StatelessWidget {
       pinned: true,
       floating: false,
       flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.all(12),
-        // collapseMode: CollapseMode.parallax,
+        titlePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         centerTitle: true,
         title: Text(
-          item.name[userLanguage]!,
+          " ${item.name[userLanguage]!} ",
+          textAlign: TextAlign.center,
           style: Theme.of(context)
               .textTheme
-              .headline2!
+              .headline3!
               .copyWith(color: Colors.white),
         ),
         background: (item.image != null)
@@ -154,7 +154,7 @@ class ItemSliverAppBar extends StatelessWidget {
             child: Badge(
               badgeColor: Colors.red,
               showBadge: true,
-              position: BadgePosition.topEnd(top: 10, end: 0),
+              position: BadgePosition.topEnd(top: 5, end: 5),
               child: Ink(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(

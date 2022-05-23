@@ -44,20 +44,13 @@ class RestaurantSliverAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       bottom:
           (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
-
       leading: _BackButtonAppBar(),
       actions: <Widget>[
         getAppbarIconsButton(),
       ],
       pinned: true,
-      //  floating: true,
-
       flexibleSpace: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-        // WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
-        //   onCollapsed(collapsedHight != top);
-        // });
-
         return FlexibleSpaceBar(
           titlePadding: EdgeInsets.only(
               bottom:
@@ -169,9 +162,10 @@ class RestaurantSliverAppBar extends StatelessWidget {
         child: TabBar(
           isScrollable: true,
           controller: tabController,
-          indicatorPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-          indicatorColor: Get.theme.primaryColorLight,
-          indicatorWeight: 3,
+
+          // indicatorPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+          // indicatorColor: Get.theme.primaryColorLight,
+          indicatorWeight: 0.1,
           labelColor: Colors.black,
           tabs: restaurant.getCategories.map((Category e) {
             return Tab(text: e.name?[userLanguage] ?? "");
@@ -252,7 +246,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
             child: Badge(
               badgeColor: Colors.red,
               showBadge: true,
-              position: BadgePosition.topEnd(top: 10, end: 0),
+              position: BadgePosition.topEnd(top: 5, end: 5),
               child: Ink(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(

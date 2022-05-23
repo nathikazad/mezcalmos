@@ -174,7 +174,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Badge(
               badgeColor: Colors.red,
               showBadge: true,
-              position: BadgePosition.topEnd(top: 10, end: 0),
+              position: BadgePosition.topEnd(top: 8, end: 0),
               child: Ink(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(

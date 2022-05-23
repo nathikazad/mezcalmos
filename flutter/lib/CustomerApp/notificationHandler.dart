@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -49,6 +50,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   mezDbgPrint(dynamicFields);
   return Notification(
     id: key,
+    icon: Material.Icons.local_laundry_service,
     linkUrl: getLaundyOrderRoute(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
@@ -92,6 +94,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
       getRestaurantOrderStatusFields(newOrdersStatus)!;
   return Notification(
     id: key,
+    icon: Material.Icons.flatware,
     linkUrl: getRestaurantOrderRoute(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],

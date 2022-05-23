@@ -347,27 +347,27 @@ Future<void> showStatusInfoDialog(
                             shape: BoxShape.circle,
                           ),
                         ),
-                        if (bottomRightIcon != null)
-                          Positioned(
-                            bottom: -5,
-                            right: -10,
-                            child: Container(
-                              height: 30,
-                              width: 30,
-                              child: Center(
-                                child: Icon(
-                                  bottomRightIcon,
-                                  color: btnRightIconColor ??
-                                      Color.fromRGBO(252, 89, 99, 1),
-                                  size: 18,
-                                ),
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
+                        Positioned(
+                          bottom: -5,
+                          right: -10,
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            child: Center(
+                              child: Icon(
+                                bottomRightIcon ?? Icons.close,
+                                color: btnRightIconColor ?? Colors.red,
+                                size: 18,
                               ),
                             ),
-                          )
+                            decoration: BoxDecoration(
+                              color: bottomRightIcon == null
+                                  ? Color(0xFFFFEBEC)
+                                  : Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),

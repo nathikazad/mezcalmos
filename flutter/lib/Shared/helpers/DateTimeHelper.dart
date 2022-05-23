@@ -11,13 +11,15 @@ dynamic _18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
 // wit will alse do the needed format on the string
 //
 
-String getEstimatedTime(DateTime dateTime) {
-  final DateTime cDate = DateTime.now();
-  if (cDate.difference(dateTime).inDays >= 1) {
-    return DateFormat("EEEE , hh:mm a").format(dateTime);
-  } else if (cDate.difference(dateTime).inHours >= 1) {
-    return DateFormat("${_18n()["today"]} , hh:mm a").format(dateTime);
-  } else {
-    return "${cDate.difference(dateTime).inMinutes} min";
+extension parseDateTime on DateTime {
+  String getEstimatedTime() {
+    final DateTime cDate = DateTime.now();
+    if (cDate.difference(this).inDays >= 1) {
+      return DateFormat("EEEE , hh:mm a").format(this);
+    } else if (cDate.difference(this).inHours >= 1) {
+      return DateFormat("${_18n()["today"]} , hh:mm a").format(this);
+    } else {
+      return "${cDate.difference(this).inMinutes} min";
+    }
   }
 }

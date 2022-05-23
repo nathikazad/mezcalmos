@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Comp
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderNoteComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryPricingComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderLaundryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderSummaryComponent.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -121,7 +121,8 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                       LaundryOrderStatusCard(order: order.value!),
                       LaundryOrderDriverCard(order: order.value!),
                       const SizedBox(height: 20),
-                      if (order.value!.laundry != null) _laundryCard(),
+                      if (order.value!.laundry != null)
+                        OrderLaundryCard(order: order.value!),
                       if (order.value!.inDeliveryPhase()) ..._mapWidget,
                       SizedBox(
                         height: 20,
@@ -294,57 +295,6 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Card _laundryCard() {
-    return Card(
-      child: Container(
-        padding: EdgeInsets.all(12),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundImage:
-                  CachedNetworkImageProvider(order.value!.laundry!.image),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    order.value!.laundry!.name,
-                    style: Get.textTheme.bodyText1,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.place,
-                        color: customerAppColor,
-                        size: 20,
-                      ),
-                      Flexible(
-                        child: Text(
-                          order.value!.laundry!.location.address,
-                          style: Get.textTheme.bodyText2,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

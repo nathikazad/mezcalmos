@@ -53,7 +53,6 @@ class LaundryOrderController extends GetxController {
     return _callLaundryCloudFunction("laundryPickedUpFromLaundry", orderId);
   }
 
-
   Future<ServerResponse> deliveredOrder(String orderId) async {
     return _callLaundryCloudFunction("laundryFinishDropoff", orderId);
   }
@@ -61,6 +60,7 @@ class LaundryOrderController extends GetxController {
   Future<ServerResponse> _callLaundryCloudFunction(
       String functionName, String orderId,
       {Map<String, dynamic>? optionalParams}) async {
+    mezDbgPrint("func name -------------------> $functionName");
     final HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('delivery-$functionName');
     mezDbgPrint("Drop order");

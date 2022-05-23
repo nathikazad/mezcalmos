@@ -37,6 +37,7 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
           //  padding: const EdgeInsets.all(5),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               if (isImageExist)
                 CircleAvatar(
@@ -52,13 +53,17 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
               SizedBox(
                 height: 10,
               ),
-              Text(widget.item.name[userLanguage] ?? ""),
+              Text(
+                widget.item.name[userLanguage] ?? "",
+                textAlign: TextAlign.center,
+              ),
               SizedBox(
                 height: 15,
               ),
               Text(
                 "\$${widget.item.cost}",
                 style: Get.textTheme.bodyText1,
+                textAlign: TextAlign.center,
               )
             ],
           ),

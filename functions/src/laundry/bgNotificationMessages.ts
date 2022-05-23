@@ -14,7 +14,7 @@ export const LaundryOrderStatusChangeMessages:
       body: "La lavandería ha recibido su pedido y en breve se enviará un conductor de entrega."
     }
   },
-  [LaundryOrderStatus.OtwPickup]: {
+  [LaundryOrderStatus.OtwPickupFromCustomer]: {
     [Language.EN]: {
       title: "A driver is on the way",
       body: "A driver is on the way to pick up your laundry."
@@ -24,7 +24,7 @@ export const LaundryOrderStatusChangeMessages:
       body: "Un conductor está en camino para recoger tu ropa."
     }
   },
-  [LaundryOrderStatus.PickedUp]: {
+  [LaundryOrderStatus.PickedUpFromCustomer]: {
     [Language.EN]: {
       title: "Your laundry has been picked up",
       body: "Your laundry is on the way to the facility."
@@ -54,7 +54,16 @@ export const LaundryOrderStatusChangeMessages:
       body: "Su ropa ha sido lavada y será entregada en breve.."
     }
   },
-  [LaundryOrderStatus.OtwDelivery]: {
+  [LaundryOrderStatus.OtwPickupFromLaundry]: {
+    [Language.EN]: {
+      title: "Driver on the way",
+      body: "Driver on the way to pickup your laundry."
+    },
+    [Language.ES]: {
+      title: "Conductor en camino ",
+      body: "Conductor en el camino para recoger su lavandería"
+    }
+  },  [LaundryOrderStatus.PickedUpFromLaundry]: {
     [Language.EN]: {
       title: "Your fresh laundry is on the way",
       body: "Driver has picked up your laundry and is on the way to you."
