@@ -75,7 +75,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                     clicked = false;
                   });
                 });
-                Get.back(closeOverlays: true);
+                Get.back();
 
                 break;
               case LaundryOrderStatus.ReadyForDelivery:
@@ -91,6 +91,18 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                 });
                 break;
               case LaundryOrderStatus.OtwPickupFromLaundry:
+                setState(() {
+                  clicked = true;
+                });
+                await laundryOrderController
+                    .pickedUpFromLaundry(widget.order.orderId)
+                    .whenComplete(() {
+                  setState(() {
+                    clicked = false;
+                  });
+                });
+                // Get.back(closeOverlays: true);
+                break;
               case LaundryOrderStatus.PickedUpFromLaundry:
                 setState(() {
                   clicked = true;
@@ -127,6 +139,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
       case LaundryOrderStatus.ReadyForDelivery:
         return '${_i18n()["deliverOrder"]}';
       case LaundryOrderStatus.OtwPickupFromLaundry:
+        return "Picked up from laundry";
       case LaundryOrderStatus.PickedUpFromLaundry:
         return '${_i18n()["confirmDelivery"]}';
 
