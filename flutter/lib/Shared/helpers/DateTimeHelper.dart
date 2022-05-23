@@ -22,4 +22,8 @@ extension parseDateTime on DateTime {
       return "${cDate.difference(this).inMinutes} min";
     }
   }
+
+  String toDayAmPm() {
+    return DateFormat("EEE, hh:mm a").format(this);
+  }
 }
