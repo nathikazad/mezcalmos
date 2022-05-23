@@ -80,30 +80,45 @@ class CounterOfferWidgets {
       child: viewController.clickedAccept.value
           ? MezLogoAnimation(centered: true)
           : Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 50, right: 50),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Text>[
-                      Text(
-                        _i18n()['offers'],
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(fontSize: 14.sp),
+                Container(
+                  width: Get.width,
+                  child: Center(
+                    child: Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromRGBO(172, 89, 252, 1),
+                            Color.fromRGBO(85, 130, 255, 1),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
                       ),
-                      Text(
-                        viewController.counterOffers.length.toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(fontSize: 14.sp),
-                      )
-                    ],
+                      child: Icon(
+                        Icons.local_taxi,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 7, left: 50, right: 50),
+                  child: Center(
+                    child: Text(
+                      _i18n()['offers'],
+                      // _i18n()["rideOffer"],
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 23,
+                      ),
+                    ),
                   ),
                 ),
                 ...getCounterOffersListItems(context),
@@ -119,7 +134,7 @@ class CounterOfferWidgets {
       _widgets.addAll(
         <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: 50, right: 50, top: 5),
+            padding: EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 5),
             child: Divider(),
           ),
           buildContainer(offer, context)
@@ -169,18 +184,20 @@ class CounterOfferWidgets {
                 children: <Text>[
                   Text(
                     offer.driverInfo.name,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(fontWeight: FontWeight.bold, fontSize: 12.sp),
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
                   ),
                   Text(
                     "\$${offer.price}",
                     textAlign: TextAlign.left,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(fontWeight: FontWeight.bold, fontSize: 11.sp),
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15,
+                    ),
                   ),
                 ]),
             Padding(
@@ -188,11 +205,11 @@ class CounterOfferWidgets {
               child: Row(
                 children: <Widget>[
                   Container(
-                    height: 35,
-                    width: 35,
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 172, 89, 252),
-                      shape: BoxShape.circle,
+                      color: Color.fromRGBO(83, 172, 94, 0.24),
+                      borderRadius: BorderRadius.circular(3),
+                      // shape: BoxShape.circle,
                     ),
                     child: Center(
                       child: InkWell(
@@ -203,9 +220,10 @@ class CounterOfferWidgets {
                           final ServerResponse _response = await viewController
                               .taxiController
                               .acceptCounterOffer(
-                                  viewController.order.value!.orderId,
-                                  viewController.order.value!.customer.id,
-                                  offer.driverInfo.id);
+                            viewController.order.value!.orderId,
+                            viewController.order.value!.customer.id,
+                            offer.driverInfo.id,
+                          );
                           if (_response.success) {
                             viewController.clickedAccept.value = false;
                             viewController.animatedSliderController.slideDown();
@@ -215,11 +233,21 @@ class CounterOfferWidgets {
                             MezSnackbar("Oops", _i18n()['failedToAcceptOffer']);
                           }
                         },
-                        child: Icon(
-                          Icons.check,
-                          size: 18,
-                          color: Colors.white,
-                        ),
+                        child: context.width <= 320
+                            ? Icon(
+                                Icons.check,
+                                size: 18,
+                                color: Color.fromRGBO(33, 145, 37, 1),
+                              )
+                            : Text(
+                                "Accept",
+                                style: TextStyle(
+                                  color: Color.fromRGBO(33, 145, 37, 1),
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                ),
+                              ),
                       ),
                     ),
                   ),
@@ -228,8 +256,9 @@ class CounterOfferWidgets {
                     height: 35,
                     width: 35,
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 252, 89, 99),
-                        shape: BoxShape.circle),
+                      color: Color.fromRGBO(255, 235, 236, 1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
                     child: Center(
                       child: InkWell(
                         onTap: () {
@@ -249,7 +278,7 @@ class CounterOfferWidgets {
                         child: Icon(
                           Icons.close,
                           size: 18,
-                          color: Colors.white,
+                          color: Colors.red,
                         ),
                       ),
                     ),

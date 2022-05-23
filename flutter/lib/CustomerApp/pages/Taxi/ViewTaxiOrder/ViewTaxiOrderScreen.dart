@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -180,13 +181,19 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 19,
-                          width: 19,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1.5,
-                            color: Color.fromRGBO(126, 126, 126, 1),
-                          ),
+                        GradientProgressIndicator(
+                          radius: 11,
+                          duration: 3,
+                          strokeWidth: 1,
+                          gradientStops: const [
+                            0.2,
+                            0.8,
+                          ],
+                          gradientColors: const [
+                            Colors.white,
+                            Colors.grey,
+                          ],
+                          child: SizedBox(),
                         ),
                         SizedBox(
                           width: 20,
