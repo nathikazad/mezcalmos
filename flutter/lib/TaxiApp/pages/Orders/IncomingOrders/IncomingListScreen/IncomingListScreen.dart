@@ -83,8 +83,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen>
     List<Widget> _ret = [];
     List<TaxiOrder> _ls = _controller
         .orders()
-        .where((element) =>
-            element.status == TaxiOrdersStatus.LookingForTaxiScheduled)
+        .where((element) => element.status == TaxiOrdersStatus.Scheduled)
         .toList();
 
     if (_ls.isNotEmpty) {

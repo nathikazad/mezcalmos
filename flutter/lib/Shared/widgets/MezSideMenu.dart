@@ -225,7 +225,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                   Obx(
                     () => SideMenuItem(
                       icon: Icon(
-                        Icons.restore,
+                        Icons.privacy_tip,
                         color: Color.fromRGBO(196, 196, 196, 1),
                         size: 25,
                       ),

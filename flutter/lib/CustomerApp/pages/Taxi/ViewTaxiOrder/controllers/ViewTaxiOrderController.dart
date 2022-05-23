@@ -57,6 +57,7 @@ class ViewTaxiOrderController {
         controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
       if (newOrderEvent != null) {
         order.value = newOrderEvent as TaxiOrder?;
+        _handleCounterOffers(order.value!);
       }
     });
 
@@ -67,6 +68,16 @@ class ViewTaxiOrderController {
       }
       return orderLoaded;
     });
+  }
+
+  void _handleCounterOffers(TaxiOrder order) {
+    if (order.getValidCounterOfferts().length > 0) {
+      offersBtnClicked.value = true;
+      animatedSliderController.slideUp();
+    } else {
+      offersBtnClicked.value = false;
+      animatedSliderController.slideDown();
+    }
   }
 
   void processOrder(Function? orderCancelledCallback) {

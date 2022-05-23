@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/OrderTimeTopBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/controllers/RequestTaxiController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceControllHint.dart';
@@ -9,6 +8,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/CustomFlatButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/widgets/OrderTimeBar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -109,60 +109,60 @@ class RequestTaxiScreenWidgets {
             SizedBox(
               height: 15,
             ),
-            FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    "From: ",
-                    style: TextStyle(
-                      height: 1.22,
-                      fontFamily: 'Montserrat',
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black.withOpacity(0.5),
-                    ),
+            Row(
+              children: <Widget>[
+                Text(
+                  "From: ",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black.withOpacity(0.5),
                   ),
-                  Text(
+                ),
+                Expanded(
+                  child: Text(
                     requestTaxiController.taxiRequest.value.from!.address,
                     maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      height: 1.22,
                       fontFamily: 'Montserrat',
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      "To: ",
-                      style: TextStyle(
-                        height: 1.22,
-                        fontFamily: 'Montserrat',
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black.withOpacity(0.5),
-                      ),
+            Row(
+              children: <Widget>[
+                Text(
+                  "To: ",
+                  style: TextStyle(
+                    // height: 1.22,
+                    fontFamily: 'Montserrat',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    requestTaxiController.taxiRequest.value.to!.address,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      // height: 1.22,
+                      fontFamily: 'Montserrat',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
                     ),
-                    Text(
-                      requestTaxiController.taxiRequest.value.to!.address,
-                      style: TextStyle(
-                        height: 1.22,
-                        fontFamily: 'Montserrat',
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                )),
+                  ),
+                ),
+              ],
+            ),
             SizedBox(
               height: 29,
             ),

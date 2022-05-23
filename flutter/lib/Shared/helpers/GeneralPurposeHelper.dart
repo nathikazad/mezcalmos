@@ -305,6 +305,7 @@ Future<void> showConfirmationDialog(
 void showStatusInfoDialog(
   BuildContext context, {
   void Function()? onViewOrderClick,
+  void Function()? onOkClick,
   required String status,
   required String description,
   IconData? bottomRightIcon,
@@ -399,7 +400,10 @@ void showStatusInfoDialog(
                   Flexible(
                     flex: 2,
                     child: GestureDetector(
-                      onTap: () => Get.back<void>(closeOverlays: true),
+                      onTap: () {
+                        Get.back<void>(closeOverlays: true);
+                        onOkClick?.call();
+                      },
                       child: Container(
                         height: 44,
                         decoration: BoxDecoration(

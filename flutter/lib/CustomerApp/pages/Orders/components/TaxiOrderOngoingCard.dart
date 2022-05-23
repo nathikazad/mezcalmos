@@ -133,11 +133,14 @@ class TaxiOngoingOrderCard extends StatelessWidget {
 
 String getTaxiOrderStatus(TaxiOrdersStatus status) {
   switch (status) {
+    case TaxiOrdersStatus.Scheduled:
+      return "Scheduled";
     case TaxiOrdersStatus.CancelledByTaxi:
       return '${_i18n()["orderStatus"]["canceledByTaxi"]}';
     case TaxiOrdersStatus.CancelledByCustomer:
       return '${_i18n()["orderStatus"]["canceledByCustomer"]}';
     case TaxiOrdersStatus.LookingForTaxi:
+    case TaxiOrdersStatus.LookingForTaxiScheduled:
       return '${_i18n()["orderStatus"]["lookingForTaxi"]}';
     case TaxiOrdersStatus.OnTheWay:
       return '${_i18n()["orderStatus"]["onTheWay"]}';
@@ -161,9 +164,9 @@ String getTaxiOrderStatus(TaxiOrdersStatus status) {
 
 Widget getTaxiOrderWidget(TaxiOrdersStatus status, conttext) {
   switch (status) {
-    case TaxiOrdersStatus.CancelledByCustomer:
+    case TaxiOrdersStatus.Scheduled:
       return Icon(
-        Icons.block,
+        Icons.schedule,
         size: 50,
         color: Colors.red,
       );
@@ -173,6 +176,13 @@ Widget getTaxiOrderWidget(TaxiOrdersStatus status, conttext) {
         size: 50,
         color: Colors.red,
       );
+    case TaxiOrdersStatus.CancelledByCustomer:
+      return Icon(
+        Icons.block,
+        size: 50,
+        color: Colors.red,
+      );
+    case TaxiOrdersStatus.LookingForTaxiScheduled:
     case TaxiOrdersStatus.LookingForTaxi:
       return Container(
         height: 50,

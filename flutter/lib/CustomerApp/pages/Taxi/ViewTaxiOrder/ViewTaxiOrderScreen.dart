@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/NearByOnlineTaxiDriversWidget.dart';
-import 'package:mezcalmos/CustomerApp/components/OrderTimeTopBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/components/CounterOfferWidgets.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/components/ViewTaxiOrderScreenWidgets.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/controllers/ViewTaxiOrderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TaxiBottomBars/TaxiOrderBottomBar.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/components/TopBar.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
@@ -18,6 +17,8 @@ import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/OrderFromToBar.dart';
+import 'package:mezcalmos/Shared/widgets/OrderTimeBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
@@ -45,20 +46,13 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         ["pages"]['Taxi']['ViewTaxiOrder']['ViewTaxiOrderScreen'];
     initializeLateControllers();
     // Order handling
-
     if (Get.parameters['orderId'] == null) {
       mezDbgPrint("Order id null from the parameters ######");
       Get.back<void>();
     }
-    viewController.init(Get.parameters['orderId']!,
-        orderCancelledCallback: (TaxiOrder order) {
-      Get.back<void>();
-      oneButtonDialog(
-        body: _i18n()['orderCancelSuccess'],
-      );
-    }).then((bool initSuccess) {
+    viewController.init(Get.parameters['orderId']!).then((bool initSuccess) {
       if (!initSuccess) {
-        Get.back();
+        Get.back<void>();
         MezSnackbar("Error", "Order does not exist");
       }
     });
@@ -73,6 +67,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   }
 
   void initializeLateControllers() {
+    mezDbgPrint("Initializing ............!");
     // We do not realy need to make AnimatedSliderController late here , but it's good for Future refrences.
     // To show that You can set it up before using it.
     animatedSliderController = AnimatedSliderController();
@@ -105,10 +100,13 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         children: <Widget>[
           mGoogleMap(),
           viewWidgets.absorbOrIgnoreUserTapWidget(),
-          TopBar(order: viewController.order.value!),
+          ...OrderPositionedFromToTopBar.build(
+            context: context,
+            order: viewController.order.value!,
+          ),
           if (viewController.order.value?.scheduledTime != null)
             Positioned(
-              top: 78,
+              top: 90,
               left: 10,
               right: 10,
               child: OrderTimeTopBar(
@@ -164,7 +162,9 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           if (viewController.order.value!.status ==
-              TaxiOrdersStatus.LookingForTaxi)
+                  TaxiOrdersStatus.LookingForTaxi ||
+              viewController.order.value!.status ==
+                  TaxiOrdersStatus.LookingForTaxiScheduled)
             Flexible(
               flex: 2,
               child: Padding(
@@ -214,15 +214,17 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                 ),
               ),
             ),
-          if (viewController.counterOffers.isNotEmpty &&
-              viewController.order.value!.status ==
-                  TaxiOrdersStatus.LookingForTaxi)
-            Flexible(
-              flex: 1,
-              child: counterOfferWidgets.offersButton(),
-            ),
-          if (viewController.counterOffers.isNotEmpty)
-            const SizedBox(width: 10),
+          // if (viewController.counterOffers.isNotEmpty &&
+          //     (viewController.order.value!.status ==
+          //             TaxiOrdersStatus.LookingForTaxi ||
+          //         viewController.order.value!.status ==
+          //             TaxiOrdersStatus.LookingForTaxiScheduled))
+          //   Flexible(
+          //     flex: 1,
+          //     child: counterOfferWidgets.offersButton(),
+          //   ),
+          // if (viewController.counterOffers.isNotEmpty)
+          //   const SizedBox(width: 10),
           Flexible(
             flex: 1,
             child: viewWidgets.cancelButton(

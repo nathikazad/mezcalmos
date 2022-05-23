@@ -234,7 +234,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             SizedBox(height: 35, child: VerticalDivider()),
             messageBtn(order: widget.order),
             SizedBox(height: 35, child: VerticalDivider()),
-            cancelBtn(widget.order.value!)
+            cancelBtn(widget.order.value!, context)
           ],
         );
         break;
@@ -283,7 +283,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           SizedBox(height: 35, child: VerticalDivider()),
           messageBtn(order: widget.order),
           SizedBox(height: 35, child: VerticalDivider()),
-          cancelBtn(widget.order.value!)
+          cancelBtn(widget.order.value!, context)
         ]);
 
         break;
@@ -300,7 +300,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
           SizedBox(height: 35, child: VerticalDivider()),
           messageBtn(order: widget.order),
           SizedBox(height: 35, child: VerticalDivider()),
-          cancelBtn(widget.order.value!)
+          cancelBtn(widget.order.value!, context)
         ]);
 
         break;
@@ -384,7 +384,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             SizedBox(height: 35, child: VerticalDivider()),
             messageBtn(order: widget.order),
             SizedBox(height: 35, child: VerticalDivider()),
-            cancelBtn(widget.order.value!)
+            cancelBtn(widget.order.value!, context)
           ],
         );
         // widget.bottomPadding = 10.0;

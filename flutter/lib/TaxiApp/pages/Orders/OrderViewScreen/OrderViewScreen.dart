@@ -2,28 +2,25 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as LocationLibrary;
-import 'package:mezcalmos/CustomerApp/components/OrderTimeTopBar.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/OrderFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedBottomBar.dart';
-import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedFromToBar.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
@@ -60,40 +57,25 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
       Get.back<void>();
       mezcalmosDialogOrderNoMoreAvailable(context);
     } else {
-      if (_orderSnapshot.inProcess()) {
-        // populate the LatLngPoints from the encoded PolyLine String + SetState!
-        mGoogleMapController.decodeAndAddPolyline(
-            encodedPolylineString: _orderSnapshot.routeInformation!.polyline);
-        mGoogleMapController.setLocation(_orderSnapshot.from);
-        updateOrder(orderStreamEvent: _orderSnapshot);
-        // set InitialPosition
-        if (order?.driver?.location != null)
-          mGoogleMapController.moveToNewLatLng(
-              order!.driver!.location!.latitude,
-              order!.driver!.location!.longitude);
-        mGoogleMapController.lockInAutoZoomAnimation();
-        // Listener
-        _orderListener =
-            controller.getOrderStream(orderId).listen((TaxiOrder? order) {
-          if (order != null) {
-            updateOrder(orderStreamEvent: order);
-            // } else {
-            //   cancelOrderSubscription();
-            //   controller.getPastOrderStream(orderId).listen((TaxiOrder? order) {
-            //     if (order != null) {
-            //       updateOrder(orderStreamEvent: order);
-            //     }
-            //   });
-            // this will get the order inCase it moved to /past
-            if (order.status == TaxiOrdersStatus.CancelledByCustomer) {
-              Get.back<void>();
-              oneButtonDialog(
-                  body: _i18n()['cancelledMessage'],
-                  imagUrl: aOrderUnavailable);
-            }
-          }
-        });
-      }
+      // if (_orderSnapshot.inProcess()) {
+      // populate the LatLngPoints from the encoded PolyLine String + SetState!
+      mGoogleMapController.decodeAndAddPolyline(
+          encodedPolylineString: _orderSnapshot.routeInformation!.polyline);
+      mGoogleMapController.setLocation(_orderSnapshot.from);
+      updateOrder(orderStreamEvent: _orderSnapshot);
+      // set InitialPosition
+      if (order?.driver?.location != null)
+        mGoogleMapController.moveToNewLatLng(order!.driver!.location!.latitude,
+            order!.driver!.location!.longitude);
+      mGoogleMapController.lockInAutoZoomAnimation();
+      // Listener
+      _orderListener =
+          controller.getOrderStream(orderId).listen((TaxiOrder? order) {
+        if (order != null) {
+          updateOrder(orderStreamEvent: order);
+        }
+      });
+      // }
     }
     super.initState();
   }
@@ -108,9 +90,9 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     // make sure can't be poped, unless we do.
     mezDbgPrint("***************************************");
 
-    mezDbgPrint(order!.status);
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async =>
+          order != null && order!.status != TaxiOrdersStatus.Scheduled,
       child: Scaffold(
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
@@ -125,80 +107,14 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                     mGoogleMapController: mGoogleMapController,
                     debugString: "CurrentOrderScreen",
                   ),
-                  // CurrentPositionedBottomBar(order!),
-                  // CurrentPositionedFromToTopBar(order!),
-                  // isSmallDevice(context)
-                  SmallIncomingPositionedFromToTopBar(order: order!),
-                  // ? SmallIncomingPositionedFromToTopBar(order: order!)
-                  // : IncomingPositionedFromToTopBar(
-                  //     order: order!,
-                  //   ),
-                  // if (isSmallDevice(context))
-                  Positioned(
-                    right: 20,
-                    top: 25,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      fit: StackFit.passthrough,
-                      children: [
-                        VerticalDivider(
-                          color: Color.fromARGB(255, 236, 236, 236),
-                          thickness: 1,
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(getSizeRelativeToScreen(
-                              2.5, Get.height, Get.width)),
-                          height: getSizeRelativeToScreen(
-                              17, Get.height, Get.width),
-                          width: getSizeRelativeToScreen(
-                              17, Get.height, Get.width),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: Color.fromARGB(255, 216, 225, 249),
-                                  spreadRadius: 0,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 7)),
-                            ],
-                            gradient: LinearGradient(
-                                colors: [
-                                  Color.fromARGB(255, 97, 127, 255),
-                                  Color.fromARGB(255, 198, 90, 252),
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight),
-                          ),
-                          child: Center(
-                            child: Image.asset(
-                                'assets/images/shared/logoWhite.png'),
-                          ),
-                        ),
-                      ],
-                    ),
+                  ...OrderPositionedFromToTopBar.buildWithOrderTimeBar(
+                    context: context,
+                    order: order!,
                   ),
-
-                  Positioned(
-                    top: 90, //isSmallDevice(context) ? 90 : 65,
-                    left: 10,
-                    right: 10,
-                    child: OrderTimeTopBar(
-                      barText: DateFormat('EEEE dd / MM / y').format(
-                            order!.scheduledTime ?? order!.orderTime,
-                          ) +
-                          ' at ' +
-                          DateFormat('hh:mm a').format(
-                            order!.scheduledTime ?? order!.orderTime,
-                          ),
-                    ),
-                  ),
-
                   getScheduleTimeInfoBar(order!),
-
                   CurrentTaxiOrderPositionedBottomBar(
                     order: order!,
                   ),
-
                   Positioned(
                     bottom: 12, // GetStorage().read(getxGmapBottomPaddingKey),
                     left: 10,
@@ -235,7 +151,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               ? [
                   Expanded(
                     child: button(
-                      inActiveClick: inActiveClick,
+                      inActiveClick: _clickedBottomButton.value,
                       bgColor: Color.fromRGBO(233, 219, 245, 1),
                       color: Color.fromRGBO(172, 89, 252, 1),
                       text: 'Start Ride',
@@ -254,7 +170,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               : [
                   Expanded(
                     child: button(
-                        inActiveClick: inActiveClick,
+                        inActiveClick: _clickedBottomButton.value,
                         bgColor: Color.fromRGBO(237, 237, 237, 1),
                         color: Color.fromRGBO(120, 120, 120, 1),
                         text: 'Start Ride',
@@ -270,7 +186,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
             child: button(
                 bgColor: Color.fromRGBO(233, 219, 245, 1),
                 color: Color.fromRGBO(172, 89, 252, 1),
-                inActiveClick: inActiveClick,
+                inActiveClick: _clickedBottomButton.value,
                 text: 'Start Ride',
                 onTap: () {
                   _clickedBottomButton.value = true;
@@ -288,14 +204,18 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
             child: button(
               bgColor: Color.fromRGBO(233, 219, 245, 1),
               color: Color.fromRGBO(172, 89, 252, 1),
-              inActiveClick: inActiveClick,
+              inActiveClick: _clickedBottomButton.value,
               text: 'Pick up',
-              onTap: () {
-                _clickedBottomButton.value = true;
-                controller.startRide();
-                setState(() {});
-                _clickedBottomButton.value = false;
-              },
+              onTap: () async => checkDistanceAndExecute(
+                order: order!,
+                bodyText: _i18n()["tooFarFromstartRide"],
+                callback: () async {
+                  _clickedBottomButton.value = true;
+                  await controller.startRide();
+                  setState(() {});
+                  _clickedBottomButton.value = false;
+                },
+              ),
             ),
           ),
           SizedBox(width: 4),
@@ -309,14 +229,22 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               bgColor: Color.fromRGBO(233, 219, 245, 1),
               color: Color.fromRGBO(172, 89, 252, 1),
               text: 'Finish ride',
-              inActiveClick: inActiveClick,
-              onTap: () {
-                _clickedBottomButton.value = true;
-
-                controller.finishRide();
-                setState(() {});
-                _clickedBottomButton.value = false;
-              },
+              inActiveClick: _clickedBottomButton.value,
+              onTap: () async => checkDistanceAndExecute(
+                order: order!,
+                icon: Icon(
+                  Icons.highlight_off,
+                  size: 65,
+                  color: Color(0xffdb2846),
+                ),
+                bodyText: _i18n()["tooFarFromfinishRide"],
+                callback: () async {
+                  _clickedBottomButton.value = true;
+                  await controller.finishRide();
+                  setState(() {});
+                  _clickedBottomButton.value = false;
+                },
+              ),
             ),
           ),
           SizedBox(width: 4),
@@ -426,16 +354,23 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           break;
         default:
       }
-      setState(() {
-        order = orderStreamEvent;
-        if (order?.driver?.location != null)
-          mGoogleMapController.setLocation(Location(
-              "CurrentLocation",
-              LocationLibrary.LocationData.fromMap(<String, double>{
-                "latitude": order!.driver!.location!.latitude,
-                "longitude": order!.driver!.location!.longitude
-              })));
-      });
+      setState(
+        () {
+          order = orderStreamEvent;
+          if (order?.driver?.location != null)
+            mGoogleMapController.setLocation(
+              Location(
+                "CurrentLocation",
+                LocationLibrary.LocationData.fromMap(
+                  <String, double>{
+                    "latitude": order!.driver!.location!.latitude,
+                    "longitude": order!.driver!.location!.longitude
+                  },
+                ),
+              ),
+            );
+        },
+      );
     } else {
       // in case there is no status Changes
       // we simply keep updating the taxi's Marker's location , only if inProcess!
@@ -448,7 +383,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   }
 
   PreferredSizeWidget getRightAppBar(TaxiOrdersStatus status) {
-    if (order!.isPastOrder()) {
+    if (order!.isPastOrder() || order!.status == TaxiOrdersStatus.Scheduled) {
       return mezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: () => Get.offNamedUntil<void>(
               kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute)));
@@ -485,8 +420,6 @@ Widget button({
             )
           ],
           borderRadius: BorderRadius.circular(8),
-          // fixedSize: MaterialStateProperty.all(Size(Get.width / 1.05,
-          //     getSizeRelativeToScreen(20, Get.height, Get.width))),
           color: inActiveClick
               ? Colors.grey.shade400
               : bgColor, // Color.fromRGBO(206, 225, 205, 1),
@@ -621,4 +554,32 @@ Widget getTaxiRideStatusBar(String text, Icon icon) {
       ),
     ),
   );
+}
+
+Future<void> checkDistanceAndExecute({
+  required TaxiOrder order,
+  required dynamic Function() callback,
+  Icon? icon,
+  required String bodyText,
+}) async {
+  mezDbgPrint("checkDistanceAndExecute => called !");
+  // if (order.status == TaxiOrdersStatus.InTransit) {
+  if ((MapHelper.calculateDistance(
+          Get.find<TaxiAuthController>().currentLocation, order.to.position) >
+      0.5)) {
+    mezDbgPrint("Distance us far away showing => yesNoDialog");
+    final YesNoDialogButton clickedYes = await yesNoDialog(
+      text: 'Oops!',
+      icon: Container(
+        child: icon,
+      ),
+      body: bodyText,
+    );
+    if (clickedYes == YesNoDialogButton.Yes) {
+      await callback();
+    }
+  } else {
+    mezDbgPrint("Distance  is GOOOD  => yesNoDialog");
+    await callback();
+  }
 }

@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
@@ -233,17 +234,12 @@ Widget messageBtn({required Rxn<TaxiOrder> order, EdgeInsets? margin}) {
   );
 }
 
-Widget cancelBtn(TaxiOrder order) {
+Widget cancelBtn(TaxiOrder order, BuildContext context) {
   return Container(
     margin: EdgeInsets.only(right: 6),
     child: GestureDetector(
-      onTap: () async {
-        final YesNoDialogButton res = await yesNoDialog(
-            text: _i18n()?['confirmation_header'] ?? "Por favor confirmar",
-            body:
-                _i18n()?['confirmation_text'] ?? "¿Cancelar el viaje actual?");
-
-        if (res == YesNoDialogButton.Yes) {
+      onTap: () {
+        showConfirmationDialog(context, onYesClick: () async {
           final ServerResponse resp =
               await Get.find<TaxiController>().cancelTaxi(order.orderId);
 
@@ -251,8 +247,23 @@ Widget cancelBtn(TaxiOrder order) {
             MezSnackbar("Oops", _i18n()['serverCommunicationError'],
                 position: SnackPosition.TOP);
           }
-          // no need for else here , because we are handling UI changes already upon CanceledbyCustomer.
-        }
+        });
+
+        // final YesNoDialogButton res = await yesNoDialog(
+        //     text: _i18n()?['confirmation_header'] ?? "Por favor confirmar",
+        //     body:
+        //         _i18n()?['confirmation_text'] ?? "¿Cancelar el viaje actual?");
+
+        // if (res == YesNoDialogButton.Yes) {
+        //   final ServerResponse resp =
+        //       await Get.find<TaxiController>().cancelTaxi(order.orderId);
+
+        //   if (!resp.success) {
+        //     MezSnackbar("Oops", _i18n()['serverCommunicationError'],
+        //         position: SnackPosition.TOP);
+        //   }
+        //   // no need for else here , because we are handling UI changes already upon CanceledbyCustomer.
+        // }
       },
       child: Container(
         height: 33,
@@ -272,7 +283,7 @@ Widget cancelBtn(TaxiOrder order) {
   );
 }
 
-Widget buildMsgAndCancelBtn(Rxn<TaxiOrder> order) {
+Widget buildMsgAndCancelBtn(Rxn<TaxiOrder> order, BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: <Widget>[
@@ -280,7 +291,7 @@ Widget buildMsgAndCancelBtn(Rxn<TaxiOrder> order) {
       SizedBox(
         width: 5,
       ),
-      cancelBtn(order.value!)
+      cancelBtn(order.value!, context)
     ],
   );
 }

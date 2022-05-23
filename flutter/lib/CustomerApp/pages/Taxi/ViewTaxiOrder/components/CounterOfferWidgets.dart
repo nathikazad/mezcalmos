@@ -20,47 +20,47 @@ class CounterOfferWidgets {
   dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
       ["pages"]['Taxi']['ViewTaxiOrder']['components']['CounterOfferWidgets'];
 
-  Widget offersButton() {
-    return Container(
-      child: InkWell(
-        onTap: () {
-          viewController.offersBtnClicked.value = true;
-          viewController.animatedSliderController.slideUp();
-        },
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-              color: Colors.purple.shade400,
-              borderRadius: BorderRadius.circular(10)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                _i18n()['offers'],
-                style: TextStyle(
-                    fontFamily: "psr",
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(width: 10),
-              Container(
-                height: 20,
-                width: 20,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                child: Text(
-                  viewController.counterOffers.length.toString(),
-                  textAlign: TextAlign.center,
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget offersButton() {
+  //   return Container(
+  //     child: InkWell(
+  //       onTap: () {
+  //         viewController.offersBtnClicked.value = true;
+  //         viewController.animatedSliderController.slideUp();
+  //       },
+  //       child: Container(
+  //         height: 50,
+  //         decoration: BoxDecoration(
+  //             color: Colors.purple.shade400,
+  //             borderRadius: BorderRadius.circular(10)),
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: <Widget>[
+  //             Text(
+  //               _i18n()['offers'],
+  //               style: TextStyle(
+  //                   fontFamily: "psr",
+  //                   color: Colors.white,
+  //                   fontWeight: FontWeight.w300,
+  //                   fontSize: 18),
+  //               textAlign: TextAlign.center,
+  //             ),
+  //             SizedBox(width: 10),
+  //             Container(
+  //               height: 20,
+  //               width: 20,
+  //               decoration:
+  //                   BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+  //               child: Text(
+  //                 viewController.counterOffers.length.toString(),
+  //                 textAlign: TextAlign.center,
+  //               ),
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget counterOffersBottomSheet(BuildContext context) {
     return AnimatedSlider(
