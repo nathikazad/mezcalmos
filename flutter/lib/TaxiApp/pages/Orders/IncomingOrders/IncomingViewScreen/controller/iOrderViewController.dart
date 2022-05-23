@@ -42,6 +42,7 @@ class IOrderViewController {
     } else {
       controller.markOrderAsRead(orderId, order.value!.customer.id);
 
+      // Nathik
       if (order.value!.inProcess()) {
         // we check valid counterOffer
         startListeningOnCounterOffer(orderId, order.value!.customer.id);
@@ -93,24 +94,27 @@ class IOrderViewController {
         .listen((_counterOffer) async {
       // we start listening here and we make sure to duspose the StreamSub when it's disposed.
 
-      this.counterOffer.value = _counterOffer;
-      if (this.counterOffer.value != null) {
-        this.animatedSliderController.slideUp();
+      counterOffer.value = _counterOffer;
+      if (counterOffer.value != null) {
+        animatedSliderController.slideUp();
       }
       if (_counterOffer?.counterOfferStatus == CounterOfferStatus.Accepted) {
-        await removeCounterOfferAndResetState(expired: false);
+        await updateCounterOfferStatus(
+          newStatus: CounterOfferStatus.Accepted,
+        );
         await waitForOrderToBeUpdatedAfterAccept(orderId);
         // canceling Subscription Just to Avoid possible Racing Conditions
         await cancelStreamsSubscriptions();
         // Go to CurrentOrder View !
-        Future.delayed(Duration.zero, () {
+        Future<void>.delayed(Duration.zero, () {
           Get.offNamedUntil(
               getTaxiOrderRoute(orderId), ModalRoute.withName(kHomeRoute));
         });
-      } else if (_counterOffer?.counterOfferStatus ==
-          CounterOfferStatus.Rejected) {
-        await removeCounterOfferAndResetState();
       }
+      //  else if (_counterOffer?.counterOfferStatus ==
+      //     CounterOfferStatus.Rejected) {
+      //   await updateCounterOfferStatus(newStatus: CounterOfferStatus.Rejected);
+      // }
     });
   }
 
@@ -139,12 +143,13 @@ class IOrderViewController {
   /// This removes the counterOffer from the database + reseting state by setting `submittedCounterOffer = false`.
   ///
   /// Also calls `_minimizeBottomSheet()` Minimize the BottomSheet
-  Future removeCounterOfferAndResetState({bool expired = true}) async {
+  Future<void> updateCounterOfferStatus(
+      {CounterOfferStatus newStatus = CounterOfferStatus.Expired}) async {
     await controller.removeFromNegotiationMode(
-        order.value!.orderId, order.value!.customer.id,
-        expired: expired);
-    submittedCounterOffer.value = false;
-    this.animatedSliderController.slideDown();
+      order.value!.orderId,
+      order.value!.customer.id,
+      newStatus: newStatus,
+    );
   }
 
   /// this gets invoked when the Taxi Driver presses [Send offer] button.
@@ -154,11 +159,12 @@ class IOrderViewController {
             order.value!.orderId,
             order.value!.customer.id,
             CounterOffer.buildWithExpiration(
-                price: price,
-                taxiUserInfo: UserInfo(
-                    id: authController.user!.id,
-                    name: authController.user!.name!,
-                    image: authController.user!.image!)))
+              price: price,
+              taxiUserInfo: UserInfo(
+                  id: authController.user!.id,
+                  name: authController.user!.name!,
+                  image: authController.user!.image!),
+            ))
         .then((value) {
       submittedCounterOffer.value = true;
       animatedSliderController.slideUp();

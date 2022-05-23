@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/CounterOfferBottomSheet/CounterOfferPriceSetter.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/CounterOfferBottomSheet/CounterOfferSentBottomSheet.dart';
@@ -18,7 +19,7 @@ class IOrderViewWidgets {
   /// this holds the two Accept / Offer buttons.
   Positioned acceptAndOfferButtons() {
     return Positioned(
-      bottom: 26, // GetStorage().read(getxGmapBottomPaddingKey),
+      bottom: 12, // GetStorage().read(getxGmapBottomPaddingKey),
       left: 10,
       right: 10,
       child: Container(
@@ -69,10 +70,16 @@ class IOrderViewWidgets {
       child: SingleChildScrollView(
         padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
         physics: ClampingScrollPhysics(),
-        child: iOrderViewController.counterOffer.value != null
+        child: iOrderViewController.counterOffer.value != null &&
+                iOrderViewController.submittedCounterOffer.value
             ? CounterOfferSentBottomSheet(
                 onCancelClick: () async =>
-                    iOrderViewController.removeCounterOfferAndResetState(),
+                    iOrderViewController.updateCounterOfferStatus(
+                  newStatus: CounterOfferStatus.Cancelled,
+                ),
+                onMakeNewOffer: () {
+                  iOrderViewController.submittedCounterOffer.value = false;
+                },
                 counterOffer: iOrderViewController.counterOffer.value!,
                 controller: iOrderViewController.controller,
                 order: iOrderViewController.order.value!,
@@ -83,7 +90,9 @@ class IOrderViewWidgets {
                             .validityTimeDifference()
                             .abs(),
                 onCounterEnd: () async =>
-                    iOrderViewController.removeCounterOfferAndResetState(),
+                    iOrderViewController.updateCounterOfferStatus(
+                  newStatus: CounterOfferStatus.Expired,
+                ),
               )
             : CounterOfferPriceSetter(
                 onCloseClick: () {
@@ -115,8 +124,6 @@ class IOrderViewWidgets {
             )
           ],
           borderRadius: BorderRadius.circular(8),
-          // fixedSize: MaterialStateProperty.all(Size(Get.width / 1.05,
-          //     getSizeRelativeToScreen(20, Get.height, Get.width))),
           color: Color.fromRGBO(206, 225, 205, 1),
         ),
         child: child,

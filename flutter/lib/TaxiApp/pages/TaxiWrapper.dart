@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
@@ -49,9 +48,9 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   @override
   void initState() {
     mezDbgPrint("TaxiWrapper::init state");
-    Future.microtask(() {
+    Future<void>.microtask(() {
       mezDbgPrint("TaxiWrapper::microtask handleState first time");
-      TaxiState? taxiState = _taxiAuthController.taxiState;
+      final TaxiState? taxiState = _taxiAuthController.taxiState;
       mezDbgPrint("taxiState = $taxiState");
       if (taxiState != null) {
         mezDbgPrint("inside if  = $taxiState");
@@ -118,8 +117,6 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   ///   go to order with listener
   Future<void> handleInNegotationMode(
       InCounterOfferNegotiation negotiation) async {
-    mezDbgPrint("@SAAD@2 => handleInNegotationMode");
-
     // Because when calling getOrder , the IncomingOrdersController's Orders listener hasn't even been started,
     // thus we check directly and quickly the db first, if it does exists then we wait for the IncomingOrdersController
     // to get the order.
@@ -128,21 +125,21 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
             negotiation.orderId, negotiation.customerId);
     if (_driverCounterOffer == null) {
       incomingOrdersController.removeFromNegotiationMode(
-          negotiation.orderId, negotiation.customerId,
-          expired: true);
+        negotiation.orderId,
+        negotiation.customerId,
+        newStatus: CounterOfferStatus.Expired,
+      );
       Get.toNamed(kIncomingOrdersListRoute);
     } else {
-      mezDbgPrint("@SAAD@2 => in else = in else");
       // check if counter offer is expired
       if (_driverCounterOffer.validityTimeDifference() > 0) {
-        mezDbgPrint("@SAAD@2 => in else = in else = in if");
-
         incomingOrdersController.removeFromNegotiationMode(
-            negotiation.orderId, negotiation.customerId,
-            expired: true);
+          negotiation.orderId,
+          negotiation.customerId,
+          newStatus: CounterOfferStatus.Expired,
+        );
         Get.toNamed(kIncomingOrdersListRoute);
       } else {
-        mezDbgPrint("@SAAD@2 => in else = in else = in else");
         Get.toNamed(getIncomingOrderRoute(negotiation.orderId));
       }
     }
@@ -150,7 +147,6 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("TaxiWrapper:: build");
     return Scaffold(
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),

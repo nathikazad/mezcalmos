@@ -10,13 +10,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
     ["IPositionedFromToBar"];
 
 class IncomingPositionedFromToTopBar extends StatelessWidget {
-  TaxiOrder order;
-  IncomingPositionedFromToTopBar({required this.order});
+  final TaxiOrder order;
+  const IncomingPositionedFromToTopBar({required this.order});
 
   @override
   Widget build(BuildContext context) {
-    final bool isSmallDevice = context.width <= 320;
-
     return Positioned(
       top: 5,
       child: Container(
@@ -187,7 +185,7 @@ class SmallIncomingPositionedFromToTopBar extends StatelessWidget {
               ],
             ),
             child: Flex(
-              clipBehavior: Clip.hardEdge,
+              // clipBehavior: Clip.hardEdge,
               direction: Axis.vertical,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,35 +197,42 @@ class SmallIncomingPositionedFromToTopBar extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Obx(
-                          () => Container(
-                            // width: 50,
-                            child: Text(
-                              _i18n()["from"] + ':',
-                              textAlign: TextAlign.left,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
+                        Flexible(
+                          child: Obx(
+                            () => Container(
+                              // width: 50,
+                              child: Text(
+                                _i18n()["from"] + ':',
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                softWrap: false,
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
                           ),
                         ),
                         SizedBox(width: 5),
-                        GestureDetector(
-                          onTap: () =>
-                              MezSnackbar(_i18n()["from"], order.from.address),
-                          child: Text(
-                            order.from.address,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                        Flexible(
+                          child: GestureDetector(
+                            onTap: () => MezSnackbar(
+                                _i18n()["from"], order.from.address),
+                            child: Text(
+                              order.from.address,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
                                 fontSize: 13,
                                 fontFamily: 'Nunito',
-                                fontWeight: FontWeight.w400),
-                            maxLines: 1,
-                            softWrap: false,
-                            overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              maxLines: 1,
+                              softWrap: false,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       ],
@@ -342,35 +347,39 @@ class SmallIncomingPositionedFromToTopBar extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Obx(
-                          () => Container(
-                            // width: 50,
-                            child: Text(
-                              _i18n()["to"] + ':',
-                              textAlign: TextAlign.left,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
+                        Flexible(
+                          child: Obx(
+                            () => Container(
+                              // width: 50,
+                              child: Text(
+                                _i18n()["to"] + ':',
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
                           ),
                         ),
                         SizedBox(width: 5),
-                        GestureDetector(
-                          onTap: () =>
-                              MezSnackbar(_i18n()["to"], order.to.address),
-                          child: Text(
-                            order.to.address,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontFamily: 'Nunito',
-                                fontWeight: FontWeight.w400),
-                            maxLines: 1,
-                            softWrap: false,
-                            overflow: TextOverflow.ellipsis,
+                        Flexible(
+                          child: GestureDetector(
+                            onTap: () =>
+                                MezSnackbar(_i18n()["to"], order.to.address),
+                            child: Text(
+                              order.to.address,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.w400),
+                              maxLines: 1,
+                              softWrap: false,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       ],

@@ -44,6 +44,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   OrderController controller = Get.find<OrderController>();
   StreamSubscription<TaxiOrder?>? _orderListener;
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
+  RxBool _clickedBottomButton = false.obs;
 
   @override
   void initState() {
@@ -72,20 +73,19 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               order!.driver!.location!.longitude);
         mGoogleMapController.lockInAutoZoomAnimation();
         // Listener
-        _orderListener = controller
-            .getCurrentOrderStream(orderId)
-            .listen((TaxiOrder? order) {
+        _orderListener =
+            controller.getOrderStream(orderId).listen((TaxiOrder? order) {
           if (order != null) {
             updateOrder(orderStreamEvent: order);
-          } else {
-            cancelOrderSubscription();
-            controller.getPastOrderStream(orderId).listen((TaxiOrder? order) {
-              if (order != null) {
-                updateOrder(orderStreamEvent: order);
-              }
-            });
+            // } else {
+            //   cancelOrderSubscription();
+            //   controller.getPastOrderStream(orderId).listen((TaxiOrder? order) {
+            //     if (order != null) {
+            //       updateOrder(orderStreamEvent: order);
+            //     }
+            //   });
             // this will get the order inCase it moved to /past
-            if (order?.status == TaxiOrdersStatus.CancelledByCustomer) {
+            if (order.status == TaxiOrdersStatus.CancelledByCustomer) {
               Get.back<void>();
               oneButtonDialog(
                   body: _i18n()['cancelledMessage'],
@@ -121,64 +121,65 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                 alignment: Alignment.topCenter,
                 children: <Widget>[
                   MGoogleMap(
-                    recenterBtnBottomPadding: 80,
+                    recenterBtnBottomPadding: 130,
                     mGoogleMapController: mGoogleMapController,
                     debugString: "CurrentOrderScreen",
                   ),
                   // CurrentPositionedBottomBar(order!),
                   // CurrentPositionedFromToTopBar(order!),
-                  isSmallDevice(context)
-                      ? SmallIncomingPositionedFromToTopBar(order: order!)
-                      : IncomingPositionedFromToTopBar(
-                          order: order!,
+                  // isSmallDevice(context)
+                  SmallIncomingPositionedFromToTopBar(order: order!),
+                  // ? SmallIncomingPositionedFromToTopBar(order: order!)
+                  // : IncomingPositionedFromToTopBar(
+                  //     order: order!,
+                  //   ),
+                  // if (isSmallDevice(context))
+                  Positioned(
+                    right: 20,
+                    top: 25,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      fit: StackFit.passthrough,
+                      children: [
+                        VerticalDivider(
+                          color: Color.fromARGB(255, 236, 236, 236),
+                          thickness: 1,
                         ),
-                  if (isSmallDevice(context))
-                    Positioned(
-                      right: 20,
-                      top: 25,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        fit: StackFit.passthrough,
-                        children: [
-                          VerticalDivider(
-                            color: Color.fromARGB(255, 236, 236, 236),
-                            thickness: 1,
+                        Container(
+                          padding: EdgeInsets.all(getSizeRelativeToScreen(
+                              2.5, Get.height, Get.width)),
+                          height: getSizeRelativeToScreen(
+                              17, Get.height, Get.width),
+                          width: getSizeRelativeToScreen(
+                              17, Get.height, Get.width),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: Color.fromARGB(255, 216, 225, 249),
+                                  spreadRadius: 0,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 7)),
+                            ],
+                            gradient: LinearGradient(
+                                colors: [
+                                  Color.fromARGB(255, 97, 127, 255),
+                                  Color.fromARGB(255, 198, 90, 252),
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight),
                           ),
-                          Container(
-                            padding: EdgeInsets.all(getSizeRelativeToScreen(
-                                2.5, Get.height, Get.width)),
-                            height: getSizeRelativeToScreen(
-                                17, Get.height, Get.width),
-                            width: getSizeRelativeToScreen(
-                                17, Get.height, Get.width),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Color.fromARGB(255, 216, 225, 249),
-                                    spreadRadius: 0,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 7)),
-                              ],
-                              gradient: LinearGradient(
-                                  colors: [
-                                    Color.fromARGB(255, 97, 127, 255),
-                                    Color.fromARGB(255, 198, 90, 252),
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight),
-                            ),
-                            child: Center(
-                              child: Image.asset(
-                                  'assets/images/shared/logoWhite.png'),
-                            ),
+                          child: Center(
+                            child: Image.asset(
+                                'assets/images/shared/logoWhite.png'),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+                  ),
 
                   Positioned(
-                    top: isSmallDevice(context) ? 90 : 65,
+                    top: 90, //isSmallDevice(context) ? 90 : 65,
                     left: 10,
                     right: 10,
                     child: OrderTimeTopBar(
@@ -191,28 +192,26 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                           ),
                     ),
                   ),
-                  if (order!.scheduledTime != null &&
-                      order!.scheduledTime!
-                              .difference(DateTime.now())
-                              .inMinutes >
-                          30 &&
-                      order!.status == TaxiOrdersStatus.Scheduled)
-                    getScheduleTimeInfoBar(),
+
+                  getScheduleTimeInfoBar(order!),
 
                   CurrentTaxiOrderPositionedBottomBar(
                     order: order!,
                   ),
 
                   Positioned(
-                    bottom: 26, // GetStorage().read(getxGmapBottomPaddingKey),
+                    bottom: 12, // GetStorage().read(getxGmapBottomPaddingKey),
                     left: 10,
                     right: 10,
                     child: Container(
                       width: Get.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: getRideBtn(),
+                      child: Obx(
+                        () => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children:
+                              getRideBottomBtns(_clickedBottomButton.value),
+                        ),
                       ),
                     ),
                   ),
@@ -225,7 +224,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     ); // no need for obx here.
   }
 
-  List<Widget> getRideBtn() {
+  List<Widget> getRideBottomBtns(bool inActiveClick) {
     switch (order!.status) {
       case TaxiOrdersStatus.LookingForTaxi:
       case TaxiOrdersStatus.LookingForTaxiScheduled:
@@ -236,73 +235,52 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               ? [
                   Expanded(
                     child: button(
+                      inActiveClick: inActiveClick,
                       bgColor: Color.fromRGBO(233, 219, 245, 1),
                       color: Color.fromRGBO(172, 89, 252, 1),
                       text: 'Start Ride',
                       onTap: () async {
+                        _clickedBottomButton.value = true;
+
                         await controller.startScheduledRide();
                         setState(() {});
+                        _clickedBottomButton.value = false;
                       },
                     ),
                   ),
                   SizedBox(width: 4),
-                  Expanded(
-                    child: button(
-                      bgColor: Color.fromRGBO(249, 216, 214, 1),
-                      color: Color.fromRGBO(226, 17, 50, 1),
-                      text: 'Cancel Ride',
-                      onTap: () => showConfirmationDialog(
-                        context,
-                        onYesClick: () async => controller.cancelTaxi(null),
-                      ),
-                    ),
-                  ),
+                  _cancelButton,
                 ]
               : [
                   Expanded(
                     child: button(
+                        inActiveClick: inActiveClick,
                         bgColor: Color.fromRGBO(237, 237, 237, 1),
                         color: Color.fromRGBO(120, 120, 120, 1),
                         text: 'Start Ride',
                         onTap: () => null),
                   ),
                   SizedBox(width: 4),
-                  Expanded(
-                    child: button(
-                      bgColor: Color.fromRGBO(249, 216, 214, 1),
-                      color: Color.fromRGBO(226, 17, 50, 1),
-                      text: 'Cancel Ride',
-                      onTap: () => showConfirmationDialog(
-                        context,
-                        onYesClick: () async => controller.cancelTaxi(null),
-                      ),
-                    ),
-                  ),
+                  _cancelButton
                 ];
         }
+        // if nto scheduled
         return [
           Expanded(
             child: button(
                 bgColor: Color.fromRGBO(233, 219, 245, 1),
                 color: Color.fromRGBO(172, 89, 252, 1),
+                inActiveClick: inActiveClick,
                 text: 'Start Ride',
                 onTap: () {
+                  _clickedBottomButton.value = true;
                   controller.startRide();
                   setState(() {});
+                  _clickedBottomButton.value = false;
                 }),
           ),
           SizedBox(width: 4),
-          Expanded(
-            child: button(
-              bgColor: Color.fromRGBO(249, 216, 214, 1),
-              color: Color.fromRGBO(226, 17, 50, 1),
-              text: 'Cancel Ride',
-              onTap: () => showConfirmationDialog(
-                context,
-                onYesClick: () async => controller.cancelTaxi(null),
-              ),
-            ),
-          ),
+          _cancelButton
         ];
       case TaxiOrdersStatus.OnTheWay:
         return [
@@ -310,25 +288,18 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
             child: button(
               bgColor: Color.fromRGBO(233, 219, 245, 1),
               color: Color.fromRGBO(172, 89, 252, 1),
+              inActiveClick: inActiveClick,
               text: 'Pick up',
               onTap: () {
+                _clickedBottomButton.value = true;
                 controller.startRide();
                 setState(() {});
+                _clickedBottomButton.value = false;
               },
             ),
           ),
           SizedBox(width: 4),
-          Expanded(
-            child: button(
-              bgColor: Color.fromRGBO(249, 216, 214, 1),
-              color: Color.fromRGBO(226, 17, 50, 1),
-              text: 'Cancel Ride',
-              onTap: () => showConfirmationDialog(
-                context,
-                onYesClick: () async => controller.cancelTaxi(null),
-              ),
-            ),
-          ),
+          _cancelButton
         ];
 
       case TaxiOrdersStatus.InTransit:
@@ -338,24 +309,18 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               bgColor: Color.fromRGBO(233, 219, 245, 1),
               color: Color.fromRGBO(172, 89, 252, 1),
               text: 'Finish ride',
+              inActiveClick: inActiveClick,
               onTap: () {
+                _clickedBottomButton.value = true;
+
                 controller.finishRide();
                 setState(() {});
+                _clickedBottomButton.value = false;
               },
             ),
           ),
           SizedBox(width: 4),
-          Expanded(
-            child: button(
-              bgColor: Color.fromRGBO(249, 216, 214, 1),
-              color: Color.fromRGBO(226, 17, 50, 1),
-              text: 'Cancel Ride',
-              onTap: () => showConfirmationDialog(
-                context,
-                onYesClick: () async => controller.cancelTaxi(null),
-              ),
-            ),
-          ),
+          _cancelButton
         ];
 
       case TaxiOrdersStatus.DroppedOff:
@@ -392,6 +357,21 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         return [SizedBox()];
     }
   }
+
+  Expanded get _cancelButton => Expanded(
+        child: button(
+          bgColor: Color.fromRGBO(249, 216, 214, 1),
+          color: Color.fromRGBO(226, 17, 50, 1),
+          text: 'Cancel Ride',
+          inActiveClick: _clickedBottomButton.value,
+          onTap: () {
+            showConfirmationDialog(context, onYesClick: () async {
+              _clickedBottomButton.value = true;
+              await controller.cancelTaxi(null);
+            }).whenComplete(() => _clickedBottomButton.value = false);
+          },
+        ),
+      );
 
   // Handling Event ------------------------------------------------------------------------------------
 
@@ -485,16 +465,15 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   }
 }
 
-Widget button(
-    {required Color color,
-    required Color bgColor,
-    required String text,
-    required Function() onTap}) {
+Widget button({
+  required Color color,
+  required Color bgColor,
+  required String text,
+  required void Function() onTap,
+  required bool inActiveClick,
+}) {
   return InkWell(
-      onTap: onTap,
-      // !iOrderViewController.clickedAcceptButton.value
-      //     ? iOrderViewController.onTaxiRideAccept
-      //     : () => null,
+      onTap: inActiveClick ? null : onTap,
       child: Container(
         height: 45,
         decoration: BoxDecoration(
@@ -508,7 +487,9 @@ Widget button(
           borderRadius: BorderRadius.circular(8),
           // fixedSize: MaterialStateProperty.all(Size(Get.width / 1.05,
           //     getSizeRelativeToScreen(20, Get.height, Get.width))),
-          color: bgColor, // Color.fromRGBO(206, 225, 205, 1),
+          color: inActiveClick
+              ? Colors.grey.shade400
+              : bgColor, // Color.fromRGBO(206, 225, 205, 1),
         ),
         child: Center(
           child: Text(
@@ -516,7 +497,7 @@ Widget button(
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: color,
+              color: inActiveClick ? Colors.grey.shade700 : color,
               fontSize: 18,
               fontWeight: FontWeight.w600,
             ),
@@ -525,72 +506,77 @@ Widget button(
       ));
 }
 
-Widget getScheduleTimeInfoBar() {
-  return Positioned(
-    bottom: 135,
-    left: 10,
-    right: 10,
-    child: Container(
-      height: 34,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(9),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(175, 175, 175, .25),
-            offset: Offset(2.47, 2.47),
-            blurRadius: 8.23,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 5,
-          ),
-          Icon(
-            Icons.info_outline,
-            size: 13,
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Text(
-            'You can start your ride 30 min before the ride',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w600,
-              fontSize: 13,
-              fontStyle: FontStyle.italic,
-              color: Colors.black,
+Widget getScheduleTimeInfoBar(TaxiOrder order) {
+  if (order.scheduledTime != null &&
+      order.scheduledTime!.difference(DateTime.now()).inMinutes > 30 &&
+      order.status == TaxiOrdersStatus.Scheduled)
+    return Positioned(
+      bottom: 135,
+      left: 10,
+      right: 10,
+      child: Container(
+        height: 34,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(9),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(175, 175, 175, .25),
+              offset: Offset(2.47, 2.47),
+              blurRadius: 8.23,
             ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Container(
-            width: 1,
-            color: Colors.grey.withOpacity(.3),
-            height: 20,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Text(
-            '03:20',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w600,
-              fontSize: 13,
-              color: Colors.black,
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 5,
             ),
-          ),
-        ],
+            Icon(
+              Icons.info_outline,
+              size: 13,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              'You can start your ride 30 min before the ride',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+                fontStyle: FontStyle.italic,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Container(
+              width: 1,
+              color: Colors.grey.withOpacity(.3),
+              height: 20,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              '03:20',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  else
+    return SizedBox();
 }
 
 Widget getTaxiRideStatusBar(String text, Icon icon) {

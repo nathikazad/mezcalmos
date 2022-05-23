@@ -2,25 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezLoadingCounter.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 
 class CounterOfferSentBottomSheet extends StatelessWidget {
-  CounterOffer counterOffer;
+  final CounterOffer counterOffer;
   final Function() onCancelClick;
   final IncomingOrdersController controller;
   final TaxiOrder order;
   final Function() onCounterEnd;
+  final Function() onMakeNewOffer;
   final int duration;
   dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
           ['Orders']['IncomingOrders']['IncomingViewScreen']['components']
       ['CounterOfferBottomSheet']['CounterOfferSentBottomSheet'];
 
-  CounterOfferSentBottomSheet(
+  const CounterOfferSentBottomSheet(
       {required this.counterOffer,
+      required this.onMakeNewOffer,
       required this.onCancelClick,
       required this.controller,
       required this.order,
@@ -34,23 +35,6 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Padding(
-        //     padding: EdgeInsets.only(left: 50, right: 50),
-        //     child: Center(
-        //       child: Text(
-        //         'Ride Offer',
-        //         // _i18n()['offer'],
-        //         style: Theme.of(context).textTheme.bodyText1!.copyWith(
-        //               fontSize: 15.sp,
-        //               fontWeight: FontWeight.w600,
-        //               fontFamily: 'Montserrat',
-        //             ),
-        //       ),
-        //     )),
-        // Padding(
-        //   padding: EdgeInsets.only(left: 50, right: 50, top: 5),
-        //   child: Divider(),
-        // ),
         Container(
           width: Get.width,
           child: Center(
@@ -93,47 +77,8 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
           padding: EdgeInsets.only(left: 50, right: 50, top: 10, bottom: 5),
           child: Divider(),
         ),
-
         getBottomSheetBodyByCounterOfferStatus(counterOffer),
-        Padding(
-          padding: EdgeInsets.only(left: 50, right: 50, top: 5, bottom: 15),
-          child: Divider(),
-        ),
-        button(
-          bgColor: Color.fromRGBO(249, 216, 214, 1),
-          color: Color.fromRGBO(226, 17, 50, 1),
-          text: 'Cancel Offer',
-          onTap: () async => await onCancelClick(),
-        ), // Padding(
-        //     padding: const EdgeInsets.only(left: 10.0, right: 10, top: 10),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children: [
-        //         Text(_i18n()['offerPrice']),
-        //         Text("\$${counterOffer.price}"),
-        //       ],
-        //     )),
-        // Padding(
-        //     padding: const EdgeInsets.only(left: 10.0, right: 10, top: 10),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children: [
-        //         Text(_i18n()['offerStatus']),
-        //         Text(
-        //             "${counterOffer.counterOfferStatus.toFirebaseFormatString()}"),
-        //       ],
-        //     )),
-        // Padding(
-        //   padding: EdgeInsets.only(left: 50, right: 50, top: 5),
-        //   child: Divider(),
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.only(left: 10.0, right: 10, top: 20),
-        //   child: Text(
-        //     _i18n()['offerTip'],
-        //     style: TextStyle(fontFamily: 'psr', fontSize: 10.sp),
-        //   ),
-        // )
+        ...getButtonByStatus(counterOffer.counterOfferStatus)
       ],
     );
   }
@@ -165,7 +110,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
             ),
           ],
         ),
-        riderOfferStatusOrCounter(offer),
+        Flexible(flex: 2, child: riderOfferStatusOrCounter(offer)),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,44 +139,28 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
 
   Widget riderOfferStatusOrCounter(CounterOffer counterOffer) {
     switch (counterOffer.counterOfferStatus) {
+      case CounterOfferStatus.Expired:
+        return counterOfferStatus(
+          Icons.restore,
+          'Your offer has expired.',
+        );
+      case CounterOfferStatus.Cancelled:
+        return counterOfferStatus(
+          Icons.close,
+          'You have Canceled your offer.',
+        );
       case CounterOfferStatus.Rejected:
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              height: 55,
-              width: 55,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(252, 89, 99, 0.12),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.close,
-                size: 21,
-                color: Colors.red,
-              ),
-            ),
-            Container(
-              width: Get.width - 200,
-              child: Text(
-                'Customer has declined your offer, You can make another offer.',
-                style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-          ],
+        return counterOfferStatus(
+          Icons.close,
+          'Customer has rejected your offer.',
         );
       case CounterOfferStatus.Accepted:
-        return Icon(
+        return counterOfferStatus(
           Icons.check_circle_rounded,
-          size: 21,
-          color: Colors.green,
+          'Customer has Accepted your offer, redirecting you ...',
+          isError: false,
         );
-      default:
+      case CounterOfferStatus.Submitted:
         return MezLoadingCounter(
           onCounterChange: (_) {},
           reversed: true,
@@ -241,18 +170,88 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
         );
     }
   }
+
+  Column counterOfferStatus(IconData icon, String text, {bool isError = true}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          height: 55,
+          width: 55,
+          decoration: BoxDecoration(
+            color: isError
+                ? Color.fromRGBO(252, 89, 99, 0.12)
+                : Color.fromARGB(30, 89, 252, 92),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            icon,
+            size: 30,
+            color: isError ? Colors.red : Colors.green,
+          ),
+        ),
+        Container(
+          width: Get.width - 200,
+          alignment: Alignment.center,
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: isError ? Colors.red : Colors.green,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<Widget> getButtonByStatus(CounterOfferStatus counterOfferStatus) {
+    switch (counterOfferStatus) {
+      case CounterOfferStatus.Cancelled:
+      case CounterOfferStatus.Expired:
+      case CounterOfferStatus.Rejected:
+        return [
+          Padding(
+            padding: EdgeInsets.only(left: 50, right: 50, top: 5, bottom: 15),
+            child: Divider(),
+          ),
+          button(
+            bgColor: Color.fromRGBO(233, 219, 245, 1),
+            color: Color.fromRGBO(172, 89, 252, 1),
+            text: 'Recreate Offer',
+            onTap: onMakeNewOffer,
+          )
+        ];
+      case CounterOfferStatus.Accepted:
+        return [];
+      default:
+        return [
+          Padding(
+            padding: EdgeInsets.only(left: 50, right: 50, top: 5, bottom: 15),
+            child: Divider(),
+          ),
+          button(
+            bgColor: Color.fromRGBO(249, 216, 214, 1),
+            color: Color.fromRGBO(226, 17, 50, 1),
+            text: 'Cancel Offer',
+            onTap: () async => await onCancelClick(),
+          )
+        ];
+    }
+  }
 }
 
 Widget button(
     {required Color color,
     required Color bgColor,
     required String text,
-    required Function() onTap}) {
+    required void Function() onTap}) {
   return InkWell(
       onTap: onTap,
-      // !iOrderViewController.clickedAcceptButton.value
-      //     ? iOrderViewController.onTaxiRideAccept
-      //     : () => null,
       child: Container(
         height: 45,
         decoration: BoxDecoration(
@@ -264,8 +263,6 @@ Widget button(
             )
           ],
           borderRadius: BorderRadius.circular(8),
-          // fixedSize: MaterialStateProperty.all(Size(Get.width / 1.05,
-          //     getSizeRelativeToScreen(20, Get.height, Get.width))),
           color: bgColor, // Color.fromRGBO(206, 225, 205, 1),
         ),
         child: Center(

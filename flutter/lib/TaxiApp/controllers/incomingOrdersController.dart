@@ -235,21 +235,18 @@ class IncomingOrdersController extends GetxController {
   /// either after customer responds or a timer runs out
   /// if expired is set then the status in db is set to expired as well
   Future<void> removeFromNegotiationMode(String orderId, String customerId,
-      {bool expired = false}) async {
+      {CounterOfferStatus newStatus = CounterOfferStatus.Expired}) async {
     await _databaseHelper.firebaseDatabase
         .reference()
         .child(inNegotationNode(_authController.fireAuthUser!.uid))
         .remove();
 
-    if (expired) {
-      await _databaseHelper.firebaseDatabase
-          .reference()
-          .child(customersCounterOfferNode(
-              orderId, customerId, _authController.fireAuthUser!.uid))
-          .remove();
-    }
-    // if it's expired why would we keep it ? Any reasons @Nathikos ?
-    // .set(CounterOfferStatus.Expired.toFirebaseFormatString());
+    await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(customersCounterOfferNode(
+            orderId, customerId, _authController.fireAuthUser!.uid))
+        .child('status')
+        .set(newStatus.toFirebaseFormatString());
   }
 
   Future<ServerResponse> acceptTaxi(String orderId) async {

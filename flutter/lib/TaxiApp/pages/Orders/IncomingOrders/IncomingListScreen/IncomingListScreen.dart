@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
+import 'package:mezcalmos/LaundryApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -10,6 +11,7 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/Components/IncomingOrderCard.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
     ["Orders"]["IncomingOrders"]["IncomingListScreen"]["IncomingListScreen"];
@@ -19,9 +21,23 @@ class IncomingOrdersScreen extends StatefulWidget {
   _IncomingOrdersScreenState createState() => _IncomingOrdersScreenState();
 }
 
-class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
+class _IncomingOrdersScreenState extends State<IncomingOrdersScreen>
+    with TickerProviderStateMixin {
   IncomingOrdersController _controller = Get.find<IncomingOrdersController>();
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    // controller = AnimationController(
+    //   vsync: this,
+    //   duration: const Duration(seconds: 2),
+    // )..addListener(() {
+    //     setState(() {});
+    //   });
+    // controller.repeat();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -42,18 +58,20 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 21),
           child: Obx(
-            () => Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                // SizedBox(height: 14),
-                // Scheduled orders first
-                SizedBox(height: 14),
-                ...getScheduledOrders(),
-                // incoming orders
-                SizedBox(height: 14),
-                ...getIncomingOrders(),
-              ],
+            () => SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  // Scheduled orders first
+                  SizedBox(height: 14),
+                  ...getScheduledOrders(),
+                  // incoming orders
+                  SizedBox(height: 14),
+                  ...getIncomingOrders(),
+                ],
+              ),
             ),
           ),
         ),
@@ -138,99 +156,37 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             _onOffSwitcher()
           ],
         ),
-        if (_taxiAuthController.taxiState?.isLooking != true) ...[
-          SizedBox(height: 14),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(4),
-              border: Border.all(
-                width: .5,
-                color: Color.fromRGBO(236, 236, 236, 1),
-              ),
-            ),
-            height: 50,
-            child: FittedBox(
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 7,
-                    ),
-                    Container(
-                      height: 22,
-                      width: 22,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(172, 89, 252, 1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Icon(
-                        Icons.notifications,
-                        color: Colors.white,
-                        size: 14,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    Text(
-                      "Notify me about scheduled orders",
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 22,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Switch(
-                        value: notifyOnNewScheduledOrders.value,
-                        onChanged: (_) {
-                          notifyOnNewScheduledOrders.value = _;
-                        },
-                        activeColor: Color.fromRGBO(224, 197, 251, 1),
-                        thumbColor: MaterialStateProperty.all(
-                          notifyOnNewScheduledOrders.value
-                              ? Color.fromRGBO(172, 89, 252, 1)
-                              : Color.fromRGBO(196, 196, 196, 1),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
         SizedBox(height: 10),
       ],
     );
     if (_taxiAuthController.taxiState?.isLooking != true) {
       // add the notify me on new LookingForTaxiScheduled orders
-      mezDbgPrint("if!!!!!");
-
       _ret.addAll(
         [
           if (_lftScheduled.isNotEmpty)
             Container(
               height: 190,
               child: _statusError(
-                Icons.sentiment_dissatisfied_outlined,
-                'Turn on to see incoming orders',
+                iconData: Icons.sentiment_dissatisfied_outlined,
+                errorText: 'Turn on to see incoming orders',
               ),
             )
           else
-            Expanded(
+            Padding(
+              padding: EdgeInsets.only(top: 15.h),
               child: _statusError(
-                Icons.sentiment_dissatisfied_outlined,
-                'Turn on to see incoming orders',
+                childData: Padding(
+                  padding: const EdgeInsets.only(bottom: 17.0),
+                  child: Image.asset(
+                    turnOn_asset,
+                    fit: BoxFit.contain,
+                    width: 40.w,
+                    height: 25.h,
+                  ),
+                ),
+                errorText: 'Turn on to see incoming orders',
               ),
-            )
+            ),
         ],
       );
     } else if (_taxiAuthController.taxiState?.isLooking == true &&
@@ -243,42 +199,52 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
             Container(
               height: 190,
               child: _statusError(
-                Icons.sentiment_dissatisfied_outlined,
-                'No incoming orders found.',
+                iconData: Icons.sentiment_dissatisfied_outlined,
+                errorText: 'No incoming orders found.',
                 secondLine: 'Try again later',
               ),
             )
           else
-            Container(
-              height: Get.height / 2, // This might cause problems
+            Padding(
+              padding: EdgeInsets.only(top: 15.h),
               child: _statusError(
-                Icons.sentiment_dissatisfied_outlined,
-                'No incoming orders found.',
+                childData: Padding(
+                  padding: const EdgeInsets.only(bottom: 17.0),
+                  child: Image.asset(
+                    noOrdersFound_asset,
+                    fit: BoxFit.contain,
+                    width: 40.w,
+                    height: 25.h,
+                  ),
+                ),
+                errorText: 'No incoming orders found',
                 secondLine: 'Try again later',
               ),
-            )
+            ),
         ],
       );
     } else {
       mezDbgPrint("else!!!!!");
-      _ret.addAll([
-        SizedBox(height: 10),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Now",
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
+      _ret.addAll(
+        [
+          SizedBox(height: 10),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Now",
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 9),
-        ..._lftOrders.map(
-          (TaxiOrder order) => IncomingOrderCard(order: order),
-        )
-      ]);
+          SizedBox(height: 9),
+          ..._lftOrders.map(
+            (TaxiOrder order) => IncomingOrderCard(order: order),
+          )
+        ],
+      );
     }
 
     // now lfts orders
@@ -305,29 +271,36 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
     return _ret;
   }
 
-  Widget _statusError(IconData iconData, String error, {String? secondLine}) {
+  Widget _statusError({
+    IconData? iconData,
+    Widget? childData,
+    required String errorText,
+    String? secondLine,
+  }) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          height: 44,
-          width: 44,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color.fromRGBO(237, 237, 237, 1),
-          ),
-          child: Center(
-            child: Icon(
-              iconData,
-              color: Colors.black,
-              // size: 13,
-            ),
-          ),
-        ),
+        childData == null
+            ? Container(
+                height: 44,
+                width: 44,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromRGBO(237, 237, 237, 1),
+                ),
+                child: Center(
+                  child: Icon(
+                    iconData,
+                    color: Colors.black,
+                    // size: 13,
+                  ),
+                ),
+              )
+            : childData,
         SizedBox(height: 7),
         Text(
-          error,
+          errorText,
           style: TextStyle(
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.w700,

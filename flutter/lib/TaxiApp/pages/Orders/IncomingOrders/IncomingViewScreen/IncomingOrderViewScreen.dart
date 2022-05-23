@@ -54,10 +54,13 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
   Widget build(BuildContext context) {
     return Obx(
       () => WillPopScope(
-        onWillPop: () async => iOrderViewController.counterOffer.value == null,
+        onWillPop: () async =>
+            iOrderViewController.counterOffer.value == null ||
+            !iOrderViewController.submittedCounterOffer.value,
         child: Scaffold(
           appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-              onClick: iOrderViewController.counterOffer.value == null
+              onClick: iOrderViewController.counterOffer.value == null ||
+                      iOrderViewController.counterOffer.value?.isValid == false
                   ? () {
                       iOrderViewController.cancelStreamsSubscriptions();
                       Get.back<void>();

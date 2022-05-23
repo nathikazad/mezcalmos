@@ -27,7 +27,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
     return Positioned(
       left: 10,
       right: 10,
-      bottom: (GetStorage().read(getxGmapBottomPaddingKey) + 65) as double,
+      bottom: (GetStorage().read(getxGmapBottomPaddingKey) + 55) as double,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
         width: Get.width,
@@ -233,7 +233,7 @@ class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
     return Positioned(
       left: 10,
       right: 10,
-      bottom: (GetStorage().read(getxGmapBottomPaddingKey) + 65) as double,
+      bottom: (GetStorage().read(getxGmapBottomPaddingKey) + 55) as double,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
         width: Get.width,
@@ -242,10 +242,11 @@ class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           boxShadow: <BoxShadow>[
             BoxShadow(
-                color: Color.fromARGB(255, 216, 225, 249),
-                spreadRadius: 0,
-                blurRadius: 7,
-                offset: Offset(0, 7)),
+              color: Color.fromARGB(255, 216, 225, 249),
+              spreadRadius: 0,
+              blurRadius: 7,
+              offset: Offset(0, 7),
+            ),
           ],
         ),
         child: Row(
@@ -262,7 +263,7 @@ class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
               height: 35,
             ),
             Expanded(
-              flex: 3, //Get.width > 320 ? 4 : 0,
+              flex: 3,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -376,7 +377,7 @@ class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
                             size: 30,
                           ),
                         ),
-                        !Get.find<OrderController>().hasNewMessageNotification()
+                        Get.find<OrderController>().hasNewMessageNotification()
                             ? Positioned(
                                 top: 0,
                                 right: 0,
@@ -414,15 +415,17 @@ class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
         CircleAvatar(
           // radius: 30.0,
           child: ClipOval(
-              clipBehavior: Clip.antiAlias,
-              child: mLoadImage(
-                  url: order.customer.image,
-                  assetInCaseFailed: aDefaultAvatar,
-                  fit: BoxFit.cover,
-                  height: getSizeRelativeToScreen(
-                      100, context.height, context.width),
-                  width: getSizeRelativeToScreen(
-                      100, context.height, context.width))),
+            clipBehavior: Clip.antiAlias,
+            child: mLoadImage(
+              url: order.customer.image,
+              assetInCaseFailed: aDefaultAvatar,
+              fit: BoxFit.cover,
+              height:
+                  getSizeRelativeToScreen(100, context.height, context.width),
+              width:
+                  getSizeRelativeToScreen(100, context.height, context.width),
+            ),
+          ),
           backgroundColor:
               Colors.grey.shade100, //Color.fromARGB(255, 222, 222, 222),
           // radius: 1,
