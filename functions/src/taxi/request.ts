@@ -60,7 +60,15 @@ export = functions.https.onCall(async (data, context) => {
       OrderType.Taxi,
     );
 
+    
+    chat.addParticipant(
+    {
+      ...userInfo,
+      particpantType: ParticipantType.Customer
+    });
+
     await chatController.setChat(orderId, chat.chatData);
+
 
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
