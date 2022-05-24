@@ -282,7 +282,9 @@ Notification newMessageNotification(String key, value) {
   mezDbgPrint(value['linkUrl']);
   return Notification(
       id: key,
-      linkUrl: value['linkUrl'],
+      linkUrl: value['orderId'],
+
+      // linkUrl: value['linkUrl'],
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],

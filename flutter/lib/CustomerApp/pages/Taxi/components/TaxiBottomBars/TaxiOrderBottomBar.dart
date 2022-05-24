@@ -30,14 +30,16 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
   Widget build(BuildContext context) {
     return Obx(
       () => Positioned(
-        bottom: 65,
+        bottom: 20,
         right: 15,
         left: 15,
         child: Container(
           padding: const EdgeInsets.all(8),
           margin: EdgeInsets.only(
               bottom: (widget.order.value!.status ==
-                      TaxiOrdersStatus.LookingForTaxi)
+                          TaxiOrdersStatus.LookingForTaxi ||
+                      widget.order.value!.status ==
+                          TaxiOrdersStatus.LookingForTaxiScheduled)
                   ? 45
                   : 0),
           height: 60,

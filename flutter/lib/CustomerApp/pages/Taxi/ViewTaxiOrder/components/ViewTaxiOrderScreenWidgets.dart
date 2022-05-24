@@ -83,18 +83,18 @@ class ViewTaxiOrderScreenWidgets {
         hintWidget:
             RidePriceControllHint(hintText: _i18n()['taxiRidePriceTooltip']),
         left: 80.1,
-        bottom: 150.5,
+        bottom: 130.5,
         bodyLeft: 20,
         bodyRight: 20,
-        bodyBottom: 150.5,
+        bodyBottom: 130.5,
       ),
       MezToolTipHint(
         hintWidget: RideReadByTaxisHint(),
         left: 60.w,
-        bottom: 150.5,
+        bottom: 130.5,
         bodyLeft: 20,
         bodyRight: 20,
-        bodyBottom: 150.5,
+        bodyBottom: 130.5,
       )
     ];
   }

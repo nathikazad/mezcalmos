@@ -62,7 +62,7 @@ class OrderPositionedFromToTopBar {
             ) +
             ' at ' +
             DateFormat('hh:mm a').format(
-              order.scheduledTime ?? order.orderTime,
+              order.scheduledTime?.toLocal() ?? order.orderTime.toLocal(),
             ),
       ),
     );

@@ -217,8 +217,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                 _controller.clear();
               });
             },
-            child: Icon(MezcalmosIcons.times_circle,
-                size: 20, color: Colors.black)),
+            child: Icon(Icons.cancel, size: 20, color: Colors.grey)),
       );
     } else {
       if (widget.showSearchIcon) {
