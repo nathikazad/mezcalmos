@@ -152,6 +152,9 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen>
                 fontSize: 24,
               ),
             ),
+            SizedBox(
+              width: 10,
+            ),
             _onOffSwitcher()
           ],
         ),

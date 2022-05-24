@@ -146,6 +146,10 @@ Future<TimeOfDay?> getTimePicker(
 
 Future<void> showConfirmationDialog(
   BuildContext context, {
+  String? title,
+  String? bodyText,
+  String? primaryBtnText,
+  String? secondaryBtnText,
   required Future<dynamic> Function() onYesClick,
   void Function()? onNoClick,
 }) async {
@@ -189,7 +193,7 @@ Future<void> showConfirmationDialog(
                   Flexible(
                     flex: 1,
                     child: Text(
-                      "Cancel Order",
+                      title ?? "Cancel Order",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -204,7 +208,7 @@ Future<void> showConfirmationDialog(
                     child: Column(
                       children: [
                         Text(
-                          'Are you sure you’d like to cancel ?',
+                          bodyText ?? 'Are you sure you’d like to cancel ?',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Nunito',
@@ -258,7 +262,7 @@ Future<void> showConfirmationDialog(
                                       ),
                                     )
                                   : Text(
-                                      'Yes, cancel order',
+                                      primaryBtnText ?? 'Yes, cancel order',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.white,
@@ -282,7 +286,7 @@ Future<void> showConfirmationDialog(
                         Get.back<void>(closeOverlays: true);
                       },
                       child: Text(
-                        'No',
+                        secondaryBtnText ?? 'No',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Color.fromRGBO(120, 120, 120, 1),

@@ -151,14 +151,14 @@ class IncomingOrdersController extends GetxController {
   void detachListeners() {
     _incomingOrdersListener?.cancel();
     _updateOrderDistanceToClient?.dispose();
-    // _appLifeCycleController.cleanAllCallbacks();
   }
 
   /// submit counter offer for a particular order
   Future<void> submitCounterOffer(
-      String orderId, String customerId, CounterOffer counterOffer) async {
-    mezDbgPrint("Submiiiiiiit counter offer !");
-
+    String orderId,
+    String customerId,
+    CounterOffer counterOffer,
+  ) async {
     // in customer's node
     await _databaseHelper.firebaseDatabase
         .reference()
@@ -171,15 +171,19 @@ class IncomingOrdersController extends GetxController {
         .child(inNegotationNode(_authController.fireAuthUser!.uid))
         .set({"orderId": orderId, "customerId": customerId});
 
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child('notificationQueue/${_authController.fireAuthUser!.uid}')
-        .set(CounterOfferNotificationForQueue(
-                driver: _authController.user!.constructUserInfo(),
-                orderId: orderId,
-                customerId: customerId,
-                price: counterOffer.price)
-            .toFirebaseFormatJson());
+    unawaited(
+      _databaseHelper.firebaseDatabase
+          .reference()
+          .child('notificationQueue/${_authController.fireAuthUser!.uid}')
+          .set(
+            CounterOfferNotificationForQueue(
+                    driver: _authController.user!.constructUserInfo(),
+                    orderId: orderId,
+                    customerId: customerId,
+                    price: counterOffer.price)
+                .toFirebaseFormatJson(),
+          ),
+    );
   }
 
   // Commented The event above cuz it won't work in case TaxiDriver got redirected to incommingOrderViewScreeen.

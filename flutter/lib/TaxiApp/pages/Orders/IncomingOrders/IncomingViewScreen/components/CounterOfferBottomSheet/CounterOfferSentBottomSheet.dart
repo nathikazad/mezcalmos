@@ -113,7 +113,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
         Flexible(flex: 2, child: riderOfferStatusOrCounter(offer)),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
               'Offer status',

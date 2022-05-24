@@ -53,6 +53,9 @@ class ViewTaxiOrderController {
   Future<bool> init(String orderId, {Function? orderCancelledCallback}) {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as TaxiOrder?;
+    if (order.value != null) {
+      _handleCounterOffers(order.value!);
+    }
     _orderListener =
         controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
       if (newOrderEvent != null) {
@@ -71,7 +74,8 @@ class ViewTaxiOrderController {
   }
 
   void _handleCounterOffers(TaxiOrder order) {
-    if (order.getValidCounterOfferts().length > 0) {
+    counterOffers.value = order.getValidCounterOfferts();
+    if (counterOffers.length > 0) {
       offersBtnClicked.value = true;
       animatedSliderController.slideUp();
     } else {

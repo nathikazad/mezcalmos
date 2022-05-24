@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -43,44 +44,44 @@ class IOrderViewController {
       controller.markOrderAsRead(orderId, order.value!.customer.id);
 
       // Nathik
-      if (order.value!.inProcess()) {
-        // we check valid counterOffer
-        startListeningOnCounterOffer(orderId, order.value!.customer.id);
+      // if (order.value!.inProcess()) {
+      // we check valid counterOffer
+      startListeningOnCounterOffer(orderId, order.value!.customer.id);
 
-        // populate the LatLngPoints from the encoded PolyLine String + SetState!
-        mGoogleMapController.decodeAndAddPolyline(
-            encodedPolylineString: order.value!.routeInformation!.polyline);
+      // populate the LatLngPoints from the encoded PolyLine String + SetState!
+      mGoogleMapController.decodeAndAddPolyline(
+          encodedPolylineString: order.value!.routeInformation!.polyline);
 
-        // add the corresponding markers
-        mGoogleMapController.addOrUpdateUserMarker(
-            markerId: order.value!.customer.id,
-            latLng: order.value!.from.toLatLng(),
-            customImgHttpUrl: order.value!.customer.image);
+      // add the corresponding markers
+      mGoogleMapController.addOrUpdateUserMarker(
+          markerId: order.value!.customer.id,
+          latLng: order.value!.from.toLatLng(),
+          customImgHttpUrl: order.value!.customer.image);
 
-        mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng());
+      mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+          latLng: order.value!.to.toLatLng());
 
-        // set initial position
-        mGoogleMapController.setLocation(order.value!.from);
-        mGoogleMapController.lockInAutoZoomAnimation();
-        // start Listening for the vailability of the iOrderViewController.order
-        _orderListener =
-            controller.getIncomingOrderStream(orderId).listen((order) {
-          if (order != null) {
-            // keep updating our Order only when neeeded
-            if (order.cost != this.order.value?.cost ||
-                order.distanceToClient != this.order.value?.distanceToClient) {
-              this.order.value = order;
-            }
-          } else {
-            // if the Order is no more available , Show a pop up while poping back back !
-            if (clickedAcceptButton.value == false) {
-              cancelStreamsSubscriptions();
-              onOrderNoMoreAvailable();
-            }
+      // set initial position
+      mGoogleMapController.setLocation(order.value!.from);
+      mGoogleMapController.lockInAutoZoomAnimation();
+      // start Listening for the vailability of the iOrderViewController.order
+      _orderListener =
+          controller.getIncomingOrderStream(orderId).listen((order) {
+        if (order != null) {
+          // keep updating our Order only when neeeded
+          if (order.cost != this.order.value?.cost ||
+              order.distanceToClient != this.order.value?.distanceToClient) {
+            this.order.value = order;
           }
-        });
-      }
+        } else {
+          // if the Order is no more available , Show a pop up while poping back back !
+          if (clickedAcceptButton.value == false) {
+            cancelStreamsSubscriptions();
+            onOrderNoMoreAvailable();
+          }
+        }
+      });
+      // }
     }
   }
 
@@ -93,15 +94,13 @@ class IOrderViewController {
         .distinct()
         .listen((_counterOffer) async {
       // we start listening here and we make sure to duspose the StreamSub when it's disposed.
-
       counterOffer.value = _counterOffer;
       if (counterOffer.value != null) {
+        submittedCounterOffer.value = true;
         animatedSliderController.slideUp();
       }
       if (_counterOffer?.counterOfferStatus == CounterOfferStatus.Accepted) {
-        await updateCounterOfferStatus(
-          newStatus: CounterOfferStatus.Accepted,
-        );
+        await updateCounterOfferStatus(newStatus: CounterOfferStatus.Accepted);
         await waitForOrderToBeUpdatedAfterAccept(orderId);
         // canceling Subscription Just to Avoid possible Racing Conditions
         await cancelStreamsSubscriptions();
@@ -111,31 +110,27 @@ class IOrderViewController {
               getTaxiOrderRoute(orderId), ModalRoute.withName(kHomeRoute));
         });
       }
-      //  else if (_counterOffer?.counterOfferStatus ==
-      //     CounterOfferStatus.Rejected) {
-      //   await updateCounterOfferStatus(newStatus: CounterOfferStatus.Rejected);
-      // }
     });
   }
 
   Future<void> onTaxiRideAccept() async {
-    String _orderId = order.value!.orderId;
+    final String _orderId = order.value!.orderId;
     clickedAcceptButton.value = true;
 
-    ServerResponse serverResponse = await controller.acceptTaxi(_orderId);
+    final ServerResponse serverResponse = await controller.acceptTaxi(_orderId);
 
     if (serverResponse.success) {
       await waitForOrderToBeUpdatedAfterAccept(_orderId);
       // canceling Subscription Just to Avoid possible Racing Conditions
-      cancelStreamsSubscriptions();
+      await cancelStreamsSubscriptions();
       // Go to CurrentOrder View !
-      Get.offNamedUntil(
-          getTaxiOrderRoute(_orderId), ModalRoute.withName(kHomeRoute));
+      unawaited(Get.offNamedUntil<void>(
+          getTaxiOrderRoute(_orderId), ModalRoute.withName(kHomeRoute)));
       // Notice the User !
     } else {
       // in case Taxi User failed accepting the iOrderViewController.order.
       clickedAcceptButton.value = false;
-      Get.back();
+      Get.back<void>();
       MezSnackbar("Oops..", serverResponse.errorMessage!);
     }
   }
@@ -153,22 +148,27 @@ class IOrderViewController {
   }
 
   /// this gets invoked when the Taxi Driver presses [Send offer] button.
-  void onCountOfferSent(num price) {
-    controller
-        .submitCounterOffer(
-            order.value!.orderId,
-            order.value!.customer.id,
-            CounterOffer.buildWithExpiration(
-              price: price,
-              taxiUserInfo: UserInfo(
-                  id: authController.user!.id,
-                  name: authController.user!.name!,
-                  image: authController.user!.image!),
-            ))
-        .then((value) {
-      submittedCounterOffer.value = true;
-      animatedSliderController.slideUp();
-    });
+  void onCountOfferSent(num price) async {
+    await controller.submitCounterOffer(
+      order.value!.orderId,
+      order.value!.customer.id,
+      CounterOffer.buildWithExpiration(
+        validTimeInSeconds: order.value!.scheduledTime != null
+            ? nScheduledCounterOfferValidExpireTimeInSeconds
+            : nDefaultCounterOfferValidExpireTimeInSeconds,
+        price: price,
+        taxiUserInfo: UserInfo(
+          id: authController.user!.id,
+          name: authController.user!.name!,
+          image: authController.user!.image!,
+        ),
+      ),
+    );
+    // .then((value) {
+    submittedCounterOffer.value = true;
+    animatedSliderController.slideUp();
+    submittedCounterOffer.refresh();
+    // });
   }
 
   /// Call this right after accept order

@@ -130,7 +130,7 @@ class OrderPositionedFromToTopBar {
                                   i18n()["from"], order.from.address),
                               child: Text(
                                 order.from.address,
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontFamily: 'Nunito',

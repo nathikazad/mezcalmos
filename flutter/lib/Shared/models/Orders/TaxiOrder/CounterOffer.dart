@@ -44,11 +44,11 @@ class CounterOffer {
 
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "driverInfo": this.driverInfo.toFirebaseFormatJson(),
-      "price": this.price,
-      "offerValidTime": this.offerValidTime.toIso8601String(),
-      "offerValidTimeEpoch": this.offerValidTime.millisecondsSinceEpoch,
-      "status": this.counterOfferStatus.toFirebaseFormatString()
+      "driverInfo": driverInfo.toFirebaseFormatJson(),
+      "price": price,
+      "offerValidTime": offerValidTime.toIso8601String(),
+      "offerValidTimeEpoch": offerValidTime.millisecondsSinceEpoch,
+      "status": counterOfferStatus.toFirebaseFormatString()
     };
   }
 

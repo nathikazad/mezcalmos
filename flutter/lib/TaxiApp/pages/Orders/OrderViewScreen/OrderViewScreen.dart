@@ -206,16 +206,30 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               color: Color.fromRGBO(172, 89, 252, 1),
               inActiveClick: _clickedBottomButton.value,
               text: 'Pick up',
-              onTap: () async => checkDistanceAndExecute(
-                order: order!,
-                bodyText: _i18n()["tooFarFromstartRide"],
-                callback: () async {
+              onTap: () async {
+                if ((MapHelper.calculateDistance(
+                      Get.find<TaxiAuthController>().currentLocation,
+                      order!.to.position,
+                    ) >
+                    0.5)) {
+                  await showConfirmationDialog(
+                    context,
+                    title: 'Oops!',
+                    primaryBtnText: "Yes, start ride",
+                    bodyText: _i18n()["tooFarFromstartRide"],
+                    onYesClick: () async {
+                      await controller.startRide();
+                      setState(() {});
+                      _clickedBottomButton.value = false;
+                    },
+                  );
+                } else {
                   _clickedBottomButton.value = true;
                   await controller.startRide();
                   setState(() {});
                   _clickedBottomButton.value = false;
-                },
-              ),
+                }
+              },
             ),
           ),
           SizedBox(width: 4),
@@ -230,21 +244,48 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               color: Color.fromRGBO(172, 89, 252, 1),
               text: 'Finish ride',
               inActiveClick: _clickedBottomButton.value,
-              onTap: () async => checkDistanceAndExecute(
-                order: order!,
-                icon: Icon(
-                  Icons.highlight_off,
-                  size: 65,
-                  color: Color(0xffdb2846),
-                ),
-                bodyText: _i18n()["tooFarFromfinishRide"],
-                callback: () async {
-                  _clickedBottomButton.value = true;
-                  await controller.finishRide();
-                  setState(() {});
-                  _clickedBottomButton.value = false;
-                },
-              ),
+              onTap: () async {
+                await showConfirmationDialog(
+                  context,
+                  title: 'Oops!',
+                  primaryBtnText: "Yes, finish ride",
+                  bodyText: _i18n()["tooFarFromfinishRide"],
+                  onYesClick: () async {
+                    await controller.finishRide();
+                    setState(() {});
+                    _clickedBottomButton.value = false;
+                  },
+                );
+                // if ((MapHelper.calculateDistance(
+                //       Get.find<TaxiAuthController>().currentLocation,
+                //       order!.to.position,
+                //     ) >
+                //     0.5)) {
+                //   final YesNoDialogButton clickedYes = await yesNoDialog(
+                //     text: 'Oops!',
+                //     icon: Container(
+                //       child: Icon(
+                //         Icons.highlight_off,
+                //         size: 65,
+                //         color: Color(0xffdb2846),
+                //       ),
+                //     ),
+                //     body: _i18n()["tooFarFromfinishRide"],
+                //   );
+                //   if (clickedYes == YesNoDialogButton.Yes) {
+                //     _clickedBottomButton.value = true;
+                //     await controller.finishRide();
+                //     setState(() {});
+                //     _clickedBottomButton.value = false;
+                //   }
+                // } else {
+                //   mezDbgPrint("Distance  is GOOOD  => yesNoDialog");
+                //   _clickedBottomButton.value = true;
+                //   await controller.finishRide();
+                //   setState(() {});
+                //   _clickedBottomButton.value = false;
+                // }
+              },
             ),
           ),
           SizedBox(width: 4),
@@ -563,11 +604,9 @@ Future<void> checkDistanceAndExecute({
   required String bodyText,
 }) async {
   mezDbgPrint("checkDistanceAndExecute => called !");
-  // if (order.status == TaxiOrdersStatus.InTransit) {
   if ((MapHelper.calculateDistance(
           Get.find<TaxiAuthController>().currentLocation, order.to.position) >
       0.5)) {
-    mezDbgPrint("Distance us far away showing => yesNoDialog");
     final YesNoDialogButton clickedYes = await yesNoDialog(
       text: 'Oops!',
       icon: Container(

@@ -30,7 +30,7 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
   Widget build(BuildContext context) {
     return Obx(
       () => Positioned(
-        bottom: 25,
+        bottom: 65,
         right: 15,
         left: 15,
         child: Container(

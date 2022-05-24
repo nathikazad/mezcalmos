@@ -65,10 +65,14 @@ class TaxiOrder extends Order {
   List<CounterOffer> _counterOffers = [];
 
   List<CounterOffer> getValidCounterOfferts() {
-    return _counterOffers
-        .where((CounterOffer offer) =>
-            offer.validityTimeDifference() < 0 && offer.isValid)
-        .toList();
+    var s = _counterOffers.where((CounterOffer offer) {
+      mezDbgPrint(
+          "getValidCounterOfferts ==> validityTimeDifference:${offer.validityTimeDifference()} - valid:${offer.isValid}");
+      return offer.validityTimeDifference() < 0 && offer.isValid;
+    }).toList();
+
+    mezDbgPrint("Ls ==> ${s.length}");
+    return s;
   }
 
   TaxiOrder({

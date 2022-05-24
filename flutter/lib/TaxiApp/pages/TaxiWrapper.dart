@@ -117,6 +117,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
   ///   go to order with listener
   Future<void> handleInNegotationMode(
       InCounterOfferNegotiation negotiation) async {
+    mezDbgPrint("handleInNegotationMode!");
     // Because when calling getOrder , the IncomingOrdersController's Orders listener hasn't even been started,
     // thus we check directly and quickly the db first, if it does exists then we wait for the IncomingOrdersController
     // to get the order.
@@ -124,6 +125,7 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         await incomingOrdersController.getDriverCountOfferInCustomersNode(
             negotiation.orderId, negotiation.customerId);
     if (_driverCounterOffer == null) {
+      mezDbgPrint("handleInNegotationMode - if !");
       incomingOrdersController.removeFromNegotiationMode(
         negotiation.orderId,
         negotiation.customerId,
@@ -131,8 +133,12 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
       );
       Get.toNamed(kIncomingOrdersListRoute);
     } else {
+      mezDbgPrint("handleInNegotationMode - else !");
+
       // check if counter offer is expired
       if (_driverCounterOffer.validityTimeDifference() > 0) {
+        mezDbgPrint("handleInNegotationMode - else - if!");
+
         incomingOrdersController.removeFromNegotiationMode(
           negotiation.orderId,
           negotiation.customerId,
@@ -140,6 +146,8 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
         );
         Get.toNamed(kIncomingOrdersListRoute);
       } else {
+        mezDbgPrint("handleInNegotationMode - else - else !");
+        Get.toNamed(kIncomingOrdersListRoute);
         Get.toNamed(getIncomingOrderRoute(negotiation.orderId));
       }
     }

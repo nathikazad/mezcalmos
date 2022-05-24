@@ -119,7 +119,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                     ),
               ),
             ),
-          Obx(() => bottomButtons()),
           Positioned(
             bottom: 140,
             right: 15,
@@ -129,6 +128,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
           ),
           TaxiOrderBottomBar(order: viewController.order),
           viewWidgets.getToolTip(),
+          Obx(() => bottomButtons()),
           counterOfferWidgets.counterOffersBottomSheet(context),
         ]);
   }
@@ -154,7 +154,7 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   /// there are counter offers
   Positioned bottomButtons() {
     return Positioned(
-      bottom: 15,
+      bottom: 10,
       left: 15,
       right: 15,
       child: Row(
@@ -214,17 +214,6 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                 ),
               ),
             ),
-          // if (viewController.counterOffers.isNotEmpty &&
-          //     (viewController.order.value!.status ==
-          //             TaxiOrdersStatus.LookingForTaxi ||
-          //         viewController.order.value!.status ==
-          //             TaxiOrdersStatus.LookingForTaxiScheduled))
-          //   Flexible(
-          //     flex: 1,
-          //     child: counterOfferWidgets.offersButton(),
-          //   ),
-          // if (viewController.counterOffers.isNotEmpty)
-          //   const SizedBox(width: 10),
           Flexible(
             flex: 1,
             child: viewWidgets.cancelButton(

@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
 import 'package:mezcalmos/Shared/widgets/MezLoadingCounter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:sizer/sizer.dart';
 
 class CounterOfferWidgets {
   final ViewTaxiOrderController viewController;
@@ -19,48 +18,6 @@ class CounterOfferWidgets {
 
   dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
       ["pages"]['Taxi']['ViewTaxiOrder']['components']['CounterOfferWidgets'];
-
-  // Widget offersButton() {
-  //   return Container(
-  //     child: InkWell(
-  //       onTap: () {
-  //         viewController.offersBtnClicked.value = true;
-  //         viewController.animatedSliderController.slideUp();
-  //       },
-  //       child: Container(
-  //         height: 50,
-  //         decoration: BoxDecoration(
-  //             color: Colors.purple.shade400,
-  //             borderRadius: BorderRadius.circular(10)),
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: <Widget>[
-  //             Text(
-  //               _i18n()['offers'],
-  //               style: TextStyle(
-  //                   fontFamily: "psr",
-  //                   color: Colors.white,
-  //                   fontWeight: FontWeight.w300,
-  //                   fontSize: 18),
-  //               textAlign: TextAlign.center,
-  //             ),
-  //             SizedBox(width: 10),
-  //             Container(
-  //               height: 20,
-  //               width: 20,
-  //               decoration:
-  //                   BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-  //               child: Text(
-  //                 viewController.counterOffers.length.toString(),
-  //                 textAlign: TextAlign.center,
-  //               ),
-  //             )
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget counterOffersBottomSheet(BuildContext context) {
     return AnimatedSlider(
@@ -131,6 +88,7 @@ class CounterOfferWidgets {
     final List<Widget> _widgets = <Widget>[];
 
     viewController.counterOffers().forEach((CounterOffer offer) {
+      mezDbgPrint("Offer => ${offer.isValid} | ${offer.counterOfferStatus}");
       _widgets.addAll(
         <Widget>[
           Padding(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/CounterOfferBottomSheet/CounterOfferPriceSetter.dart';
@@ -38,6 +40,7 @@ class IOrderViewWidgets {
                           style: TextStyle(
                             color: Color.fromRGBO(60, 157, 64, 1),
                             fontSize: 18,
+                            fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -70,40 +73,44 @@ class IOrderViewWidgets {
       child: SingleChildScrollView(
         padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
         physics: ClampingScrollPhysics(),
-        child: iOrderViewController.counterOffer.value != null &&
-                iOrderViewController.submittedCounterOffer.value
-            ? CounterOfferSentBottomSheet(
-                onCancelClick: () async =>
-                    iOrderViewController.updateCounterOfferStatus(
-                  newStatus: CounterOfferStatus.Cancelled,
+        child: Obx(
+          () => iOrderViewController.counterOffer.value != null &&
+                  iOrderViewController.submittedCounterOffer.value
+              ? CounterOfferSentBottomSheet(
+                  onCancelClick: () async =>
+                      iOrderViewController.updateCounterOfferStatus(
+                    newStatus: CounterOfferStatus.Cancelled,
+                  ),
+                  onMakeNewOffer: () {
+                    iOrderViewController.submittedCounterOffer.value = false;
+                  },
+                  counterOffer: iOrderViewController.counterOffer.value!,
+                  controller: iOrderViewController.controller,
+                  order: iOrderViewController.order.value!,
+                  duration:
+                      iOrderViewController.order.value!.scheduledTime != null
+                          ? nScheduledCounterOfferValidExpireTimeInSeconds
+                          : iOrderViewController.counterOffer.value!
+                              .validityTimeDifference()
+                              .abs(),
+                  onCounterEnd: () async =>
+                      iOrderViewController.updateCounterOfferStatus(
+                    newStatus: CounterOfferStatus.Expired,
+                  ),
+                )
+              : CounterOfferPriceSetter(
+                  onCloseClick: () {
+                    iOrderViewController.animatedSliderController.slideDown();
+                  },
+                  counterOffer: iOrderViewController.counterOffer,
+                  controller: iOrderViewController.controller,
+                  order: iOrderViewController.order.value!,
+                  onCountOfferSent: (num priceOffered) {
+                    mezDbgPrint("Taxi - sent offer with price $priceOffered !");
+                    iOrderViewController.onCountOfferSent(priceOffered);
+                  },
                 ),
-                onMakeNewOffer: () {
-                  iOrderViewController.submittedCounterOffer.value = false;
-                },
-                counterOffer: iOrderViewController.counterOffer.value!,
-                controller: iOrderViewController.controller,
-                order: iOrderViewController.order.value!,
-                duration:
-                    iOrderViewController.order.value!.scheduledTime != null
-                        ? 600
-                        : iOrderViewController.counterOffer.value!
-                            .validityTimeDifference()
-                            .abs(),
-                onCounterEnd: () async =>
-                    iOrderViewController.updateCounterOfferStatus(
-                  newStatus: CounterOfferStatus.Expired,
-                ),
-              )
-            : CounterOfferPriceSetter(
-                onCloseClick: () {
-                  iOrderViewController.animatedSliderController.slideDown();
-                },
-                counterOffer: iOrderViewController.counterOffer,
-                controller: iOrderViewController.controller,
-                order: iOrderViewController.order.value!,
-                onCountOfferSent: (num priceOffered) =>
-                    iOrderViewController.onCountOfferSent(priceOffered),
-              ),
+        ),
       ),
     );
   }

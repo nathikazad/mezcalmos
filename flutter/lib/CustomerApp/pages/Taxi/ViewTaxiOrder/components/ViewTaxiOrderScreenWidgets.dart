@@ -6,8 +6,8 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RidePriceContr
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/Hints/RideReadByTaxisHint.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
-import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezToolTip.dart';
 import 'package:sizer/sizer.dart';
 
@@ -38,26 +38,19 @@ class ViewTaxiOrderScreenWidgets {
   }
 
   Widget cancelButton(TaxiOrdersStatus status, BuildContext context) {
-    if (status != TaxiOrdersStatus.LookingForTaxi) {
+    mezDbgPrint("Status ===> $status");
+    if (status != TaxiOrdersStatus.LookingForTaxi &&
+        status != TaxiOrdersStatus.LookingForTaxiScheduled) {
       return SizedBox();
     } else {
       return Container(
         child: InkWell(
           onTap: () async {
-            showConfirmationDialog(
+            await showConfirmationDialog(
               context,
               onYesClick: () => viewController.taxiController
                   .cancelTaxi(viewController.order.value!.orderId),
             );
-
-            // final YesNoDialogButton res = await yesNoDialog(
-            //   text: _i18n()['title'],
-            //   body: _i18n()['question'],
-            // );
-            // if (res == YesNoDialogButton.Yes) {
-            //   await viewController.taxiController
-            //       .cancelTaxi(viewController.order.value!.orderId);
-            // }
           },
           child: Container(
             height: 50,
