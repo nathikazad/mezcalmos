@@ -50,18 +50,20 @@ function expectedPreviousStatus(status: TaxiOrderStatus): TaxiOrderStatus {
 }
 
 async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthData): Promise<ServerResponse> {
-
   let response = isSignedIn(auth)
   if (response != undefined)
     return response;
+  // user signed in
   let taxiId: string = auth!.uid;
   let orderId = (await currentOrderIdNode(taxiId).once('value')).val();
+  // orderId => OrderId
   if (orderId == null) {
     return {
       status: ServerResponseStatus.Error,
       errorMessage: "Driver has not accepted any ride"
     }
   }
+
 
   let transactionResponse = await rootNodes.inProcessOrders(OrderType.Taxi, orderId).transaction(function (order) {
     if (order != null) {
@@ -75,6 +77,7 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
     return order
   })
 
+  
 
   if (!transactionResponse.committed) {
     return {
@@ -83,10 +86,11 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
     }
   }
 
+ 
   try {
-    let order: TaxiOrder = transactionResponse.snapshot.val()
+    let order: TaxiOrder = transactionResponse.snapshot.val()  
 
-    if (newStatus == TaxiOrderStatus.CancelledByTaxi) {
+    if (newStatus == TaxiOrderStatus.CancelledByTaxi) { 
       if (!orderInProcess(order.status))
         return {
           status: ServerResponseStatus.Error,
@@ -102,14 +106,16 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, auth?: AuthDa
     }
 
 
-    order.status = newStatus;
-    order.startRideTime = (new Date()).toISOString();
+    order.status = newStatus;  
+    order.startRideTime = (new Date()).toISOString(); 
 
-    if (newStatus == TaxiOrderStatus.InTransit) {
+
+    if (newStatus == TaxiOrderStatus.InTransit || newStatus == TaxiOrderStatus.OnTheWay ) {
       rootNodes.inProcessOrders(OrderType.Taxi, orderId).update(order);
       customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
       taxiNodes.inProcessOrders(taxiId, orderId).update(order);
     } else {
+      //TaxiOrderStatus.OnTheWay -> executes this
       rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
       rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
       await customerNodes.pastOrders(order.customer.id!, orderId).set(order);
