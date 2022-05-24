@@ -88,7 +88,7 @@ class _LaundryOrderWeightSelectorState
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1!
-                                    .copyWith(color: keyAppColor),
+                                    .copyWith(color: primaryBlueColor),
                               )
                           ]),
                     );

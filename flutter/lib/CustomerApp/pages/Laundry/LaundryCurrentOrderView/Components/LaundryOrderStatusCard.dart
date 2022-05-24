@@ -135,7 +135,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         child: Icon(
           Icons.local_laundry_service,
           size: 40,
-          color: customerAppColor,
+          color: primaryBlueColor,
         ),
       );
     case LaundryOrderStatus.OtwPickupFromCustomer:
@@ -145,19 +145,19 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         child: Icon(
           Icons.delivery_dining,
           size: 40,
-          color: customerAppColor,
+          color: primaryBlueColor,
         ),
       );
     case LaundryOrderStatus.PickedUpFromCustomer:
     case LaundryOrderStatus.Delivered:
       return Container(
         padding: const EdgeInsets.all(5),
-        decoration:
-            BoxDecoration(color: lightCustomerAppColor, shape: BoxShape.circle),
+        decoration: BoxDecoration(
+            color: SecondaryLightBlueColor, shape: BoxShape.circle),
         child: Icon(
           Icons.check,
           size: 25,
-          color: customerAppColor,
+          color: primaryBlueColor,
         ),
       );
 
@@ -167,7 +167,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         child: Icon(
           Icons.dry_cleaning_rounded,
           size: 40,
-          color: customerAppColor,
+          color: primaryBlueColor,
         ),
       );
   }

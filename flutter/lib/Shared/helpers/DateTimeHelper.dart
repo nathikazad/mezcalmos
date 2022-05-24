@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 //
 dynamic _18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
@@ -14,12 +15,13 @@ dynamic _18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
 extension parseDateTime on DateTime {
   String getEstimatedTime() {
     final DateTime cDate = DateTime.now();
-    if (cDate.difference(this).inDays >= 1) {
-      return DateFormat("EEEE , hh:mm a").format(this);
-    } else if (cDate.difference(this).inHours >= 1) {
-      return DateFormat("${_18n()["today"]} , hh:mm a").format(this);
+    mezDbgPrint(cDate.difference(toLocal()).inHours);
+    if (cDate.difference(toLocal()).inDays < 0) {
+      return DateFormat("EEEE , hh:mm a").format(toLocal());
+    } else if (cDate.difference(toLocal()).inHours < 0) {
+      return "${_18n()["today"]} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${cDate.difference(this).inMinutes} min";
+      return "${cDate.difference(toLocal()).inMinutes} min";
     }
   }
 

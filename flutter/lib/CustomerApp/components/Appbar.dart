@@ -124,12 +124,12 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: lightCustomerAppColor,
+            color: SecondaryLightBlueColor,
           ),
           child: Icon(
             Icons.watch_later,
             size: 20,
-            color: customerAppColor,
+            color: primaryBlueColor,
           ),
         ),
       ),
@@ -148,12 +148,12 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: lightCustomerAppColor,
+            color: SecondaryLightBlueColor,
           ),
           child: Icon(
             Icons.person,
             size: 20,
-            color: customerAppColor,
+            color: primaryBlueColor,
           ),
         ),
       ),
@@ -183,7 +183,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 child: Icon(
                   Icons.notifications,
-                  color: customerAppColor,
+                  color: primaryBlueColor,
                   size: 20,
                 ),
               ),

@@ -92,7 +92,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       children: [
                         Icon(
                           Icons.place,
-                          color: customerAppColor,
+                          color: primaryBlueColor,
                         ),
                         SizedBox(
                           width: 5,
@@ -121,7 +121,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                         Text(
                           "+ 5\$ per article",
                           style: Get.textTheme.bodyText2?.copyWith(
-                              color: customerAppColor,
+                              color: primaryBlueColor,
                               fontWeight: FontWeight.w700),
                         ),
                         Spacer(),
@@ -142,7 +142,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                         Text(
                           "+ 12\$ per article",
                           style: Get.textTheme.bodyText2
-                              ?.copyWith(color: customerAppColor),
+                              ?.copyWith(color: primaryBlueColor),
                         ),
                         Spacer(),
                         multipleSelectOptionComponent(
@@ -180,7 +180,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       () => Card(
                         child: authController.user != null
                             ? DropDownLocationList(
-                                bgColor: lightCustomerAppColor,
+                                bgColor: SecondaryLightBlueColor,
                                 passedInLocation: customerLoc,
                                 onValueChangeCallback: ({Location? location}) {
                                   setState(() {
@@ -279,7 +279,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         width: double.infinity,
         decoration: BoxDecoration(
             gradient:
-                LinearGradient(colors: [Colors.purple, customerAppColor])),
+                LinearGradient(colors: [Colors.purple, primaryBlueColor])),
         //  padding: const EdgeInsets.all(5),
         child: (authController.user != null)
             ? makeOrderButton(context)

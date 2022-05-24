@@ -278,6 +278,18 @@ class LaundryOrderCosts {
     return totalWeigh;
   }
 
+  num? get totalPrice {
+    num totalPrice = 0;
+    lineItems.forEach((element) {
+      totalPrice += element.weighedCost;
+    });
+    if (totalPrice > 0) {
+      return totalPrice;
+    } else {
+      return null;
+    }
+  }
+
   LaundryOrderCosts();
 
   factory LaundryOrderCosts.fromData(laundryCostsData) {

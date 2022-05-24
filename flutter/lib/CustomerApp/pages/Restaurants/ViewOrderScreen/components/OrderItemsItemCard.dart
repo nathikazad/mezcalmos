@@ -40,18 +40,18 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(
             childrenPadding: const EdgeInsets.all(8),
-            collapsedIconColor: customerAppColor,
+            collapsedIconColor: primaryBlueColor,
             onExpansionChanged: (bool v) {
               setState(() {
                 isExpanded = v;
               });
             },
-            iconColor: customerAppColor,
+            iconColor: primaryBlueColor,
             trailing: Container(
               width: 25,
               height: 25,
               decoration: BoxDecoration(
-                  color: lightCustomerAppColor, shape: BoxShape.circle),
+                  color: SecondaryLightBlueColor, shape: BoxShape.circle),
               child: (isExpanded)
                   ? Icon(Icons.expand_less)
                   : Icon(Icons.expand_more),

@@ -88,7 +88,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
     return Container(
       height: 70,
       decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [Colors.purple, customerAppColor])),
+          gradient: LinearGradient(colors: [Colors.purple, primaryBlueColor])),
       child: TextButton(
         style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(),
@@ -130,7 +130,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                           padding: const EdgeInsets.all(3),
                           labelStyle: Get.textTheme.bodyText2?.copyWith(
                               fontWeight: FontWeight.w700,
-                              color: customerAppColor),
+                              color: primaryBlueColor),
                           label: Text(
                               "Minmum cost \$${laundry.value!.laundryCosts.minimumCost} ")),
                     ),

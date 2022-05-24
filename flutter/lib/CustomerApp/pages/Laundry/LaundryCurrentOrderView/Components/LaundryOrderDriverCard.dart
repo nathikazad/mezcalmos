@@ -32,7 +32,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        color: customerAppColor, shape: BoxShape.circle),
+                        color: primaryBlueColor, shape: BoxShape.circle),
                     child: Icon(
                       Icons.delivery_dining,
                       size: 32,
@@ -65,7 +65,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                 onPressed: () {},
                 icon: Icon(
                   Icons.textsms_rounded,
-                  color: customerAppColor,
+                  color: primaryBlueColor,
                 ))
           ],
         ),

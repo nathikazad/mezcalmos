@@ -149,6 +149,10 @@ Future<void> showConfirmationDialog(
   BuildContext context, {
   required Future<dynamic> Function() onYesClick,
   void Function()? onNoClick,
+  String? title,
+  String? helperText,
+  String? primaryButtonText,
+  String? secondaryButtonText,
 }) async {
   final RxBool _clickedYes = false.obs;
   return showDialog(
@@ -158,139 +162,121 @@ Future<void> showConfirmationDialog(
           color: Colors.transparent,
           child: Center(
             child: Container(
-              height: 35.h,
-              width: 80.w,
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Flex(
-                direction: Axis.vertical,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Spacer(),
-                  Flexible(
-                    flex: 2,
-                    child: Container(
-                      height: 66,
-                      width: 66,
-                      child: Icon(
-                        Icons.close,
-                        color: Color.fromRGBO(252, 89, 99, 1),
-                        size: 33,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(252, 89, 99, 0.12),
-                        shape: BoxShape.circle,
-                      ),
+                  Container(
+                    height: 66,
+                    width: 66,
+                    child: Icon(
+                      Icons.close,
+                      color: Color.fromRGBO(252, 89, 99, 1),
+                      size: 33,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(252, 89, 99, 0.12),
+                      shape: BoxShape.circle,
                     ),
                   ),
                   SizedBox(height: 18),
-                  Flexible(
-                    flex: 1,
-                    child: Text(
-                      "Cancel Order",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 24,
-                      ),
+                  Text(
+                    title ?? "Cancel Order",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 24,
                     ),
                   ),
                   SizedBox(height: 11),
-                  Flexible(
-                    flex: 2,
-                    child: Column(
-                      children: [
-                        Text(
-                          'Are you sure you’d like to cancel ?',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15,
-                          ),
+                  Column(
+                    children: [
+                      Text(
+                        helperText ?? 'Are you sure you’d like to cancel ?',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
                         ),
-                        Text(
-                          'This action cannot be undone.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15,
-                          ),
+                      ),
+                      Text(
+                        'This action cannot be undone.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 18),
-                  Flexible(
-                    flex: 2,
-                    child: GestureDetector(
-                      onTap: () {
-                        _clickedYes.value = true;
-                        onYesClick.call().whenComplete(() {
-                          _clickedYes.value = false;
-                        });
-                      },
-                      child: Container(
-                        height: 44,
-                        width: 65.w,
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(252, 89, 99, 1),
-                          borderRadius: BorderRadius.circular(9),
-                        ),
-                        child: Center(
-                          child: Obx(
-                            () => _clickedYes.value
-                                ? Center(
-                                    child: Container(
-                                      height: 30,
-                                      width: 30,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 1,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  )
-                                : Text(
-                                    'Yes, cancel order',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
+                  GestureDetector(
+                    onTap: () {
+                      _clickedYes.value = true;
+                      onYesClick.call().whenComplete(() {
+                        _clickedYes.value = false;
+                      });
+                    },
+                    child: Container(
+                      height: 44,
+                      width: 65.w,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(252, 89, 99, 1),
+                        borderRadius: BorderRadius.circular(9),
+                      ),
+                      child: Center(
+                        child: Obx(
+                          () => _clickedYes.value
+                              ? Center(
+                                  child: Container(
+                                    height: 30,
+                                    width: 30,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 1,
                                       color: Colors.white,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16.34,
                                     ),
                                   ),
-                          ),
+                                )
+                              : Text(
+                                  primaryButtonText ?? 'Yes, cancel order',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16.34,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
                   ),
                   SizedBox(height: 12),
-                  Flexible(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        onNoClick?.call();
-                        Get.back<void>(closeOverlays: true);
-                      },
-                      child: Text(
-                        'No',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color.fromRGBO(120, 120, 120, 1),
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16.99,
-                        ),
+                  GestureDetector(
+                    onTap: () {
+                      onNoClick?.call();
+                      Get.back<void>(closeOverlays: true);
+                    },
+                    child: Text(
+                      secondaryButtonText ?? 'No',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color.fromRGBO(120, 120, 120, 1),
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16.99,
                       ),
                     ),
                   ),
-                  Spacer()
                 ],
               ),
             ),
@@ -475,12 +461,12 @@ Widget multipleSelectOptionComponent(
               )
             : Icon(
                 Icons.add,
-                color: customerAppColor,
+                color: primaryBlueColor,
                 size: 22,
               ),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: value ? customerAppColor : lightCustomerAppColor,
+          color: value ? primaryBlueColor : SecondaryLightBlueColor,
         )),
   );
 }

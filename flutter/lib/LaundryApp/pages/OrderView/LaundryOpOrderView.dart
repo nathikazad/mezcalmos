@@ -1,16 +1,15 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpCustomer.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpDriverCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderNote.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderStatusCard.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderSummaryCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCategoryComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/OrderEstimatedTimeComponent.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -80,29 +79,29 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               // order status
               LaundryOpOrderStatusCard(order: order.value!),
               const SizedBox(
-                height: 10,
+                height: 5,
               ),
               _setReadyForDeliveryButton(),
               const SizedBox(
                 height: 10,
               ),
+              OrderEstimatedTimeComponent(order: order.value!),
+              LaundryOpOrderDriverCard(order: order.value!),
+
+              const SizedBox(
+                height: 10,
+              ),
+              LaundryOpCustomer(order: order.value!),
+
               LaundyOpSetCategoryComponent(
                 order: order.value!,
               ),
               const SizedBox(
                 height: 10,
               ),
-              OrderEstimatedTimeComponent(order: order.value!),
-              // order Customer
-              _orderCustomerCard(),
-              LaundryOpOrderDriverCard(order: order.value!),
+              _totalCostcomponent(context),
 
-              // order notes
               LaundryOpOrderNote(order: order.value!),
-              // order summary
-              LaundryOpOrderSummaryCard(order: order.value!),
-              // order Date
-              _orderDateComponent()
             ],
           ),
         ),
@@ -110,8 +109,33 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
     );
   }
 
+  Widget _totalCostcomponent(BuildContext context) {
+    return Card(
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "${_i18n()["total"]} :",
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            Text(
+              (order.value!.costsByType?.totalPrice != null)
+                  ? '\$${order.value!.costsByType?.totalPrice}'
+                  : '-',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _setReadyForDeliveryButton() {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 3),
       child: TextButton(
           onPressed: (order.value!.status == LaundryOrderStatus.AtLaundry)
               ? () {
@@ -121,85 +145,13 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
           style: TextButton.styleFrom(
               backgroundColor:
                   (order.value!.status == LaundryOrderStatus.AtLaundry)
-                      ? Colors.blueAccent
+                      ? primaryBlueColor
                       : Colors.grey),
           child: Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(8),
             child: Text("Order ready for delivery"),
           )),
-    );
-  }
-
-  Widget _orderDateComponent() {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("${_i18n()["orderDate"]}"),
-          SizedBox(
-            height: 5,
-          ),
-          Card(
-            child: Container(
-              margin: const EdgeInsets.all(5),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.watch_later,
-                    size: 40,
-                    color: Get.theme.primaryColorLight,
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    "${DateFormat("dd MMMM yyyy hh:mm a").format(order.value!.orderTime)}",
-                    style: Get.theme.textTheme.bodyText1,
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _orderCustomerCard() {
-    return Container(
-      margin: const EdgeInsets.all(5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("${_i18n()["customer"]}"),
-          SizedBox(
-            height: 5,
-          ),
-          Card(
-            child: Container(
-              margin: const EdgeInsets.all(5),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundImage:
-                        CachedNetworkImageProvider(order.value!.customer.image),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    order.value!.customer.name,
-                    style: Get.theme.textTheme.bodyText1,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -34,7 +34,7 @@ class ButtonComponent extends StatelessWidget {
             color: (!canClick) ? bgColor : null,
             gradient: (canClick)
                 ? LinearGradient(
-                    colors: [Colors.purple, customerAppColor],
+                    colors: [Colors.purple, primaryBlueColor],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                   )

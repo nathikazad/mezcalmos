@@ -122,7 +122,7 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
         child: Icon(
           Icons.flatware_rounded,
           size: 40,
-          color: customerAppColor,
+          color: primaryBlueColor,
         ),
       );
     case RestaurantOrderStatus.PreparingOrder:
@@ -149,7 +149,7 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
         child: Icon(
           Icons.check_circle,
           size: 40,
-          color: lightCustomerAppColor,
+          color: SecondaryLightBlueColor,
         ),
       );
 
@@ -157,7 +157,7 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
       return Padding(
         padding: const EdgeInsets.only(right: 10.0),
         child:
-            Icon(Ionicons.checkmark_circle, size: 40, color: customerAppColor),
+            Icon(Ionicons.checkmark_circle, size: 40, color: primaryBlueColor),
       );
   }
 }

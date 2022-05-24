@@ -127,12 +127,12 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                             height: 25,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: lightCustomerAppColor,
+                              color: SecondaryLightBlueColor,
                             ),
                             child: const Icon(
                               Icons.edit_outlined,
                               size: 14,
-                              color: customerAppColor,
+                              color: primaryBlueColor,
                             ),
                           ),
                           onTap: widget.onEdit,
@@ -145,12 +145,12 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(64)),
-                              color: lightCustomerAppColor,
+                              color: SecondaryLightBlueColor,
                             ),
                             child: RotationTransition(
                               turns: _iconTurns,
                               child: const Icon(Icons.expand_more,
-                                  color: customerAppColor),
+                                  color: primaryBlueColor),
                             ),
                           ),
                           onTap: _handleTap,

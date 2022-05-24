@@ -150,12 +150,12 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                 )
               : Icon(
                   Icons.add,
-                  color: customerAppColor,
+                  color: primaryBlueColor,
                   size: 22,
                 ),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: value ? customerAppColor : lightCustomerAppColor,
+            color: value ? primaryBlueColor : SecondaryLightBlueColor,
           )),
     );
   }
@@ -172,11 +172,11 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               ? Icon(
                   Icons.radio_button_checked,
                   size: 25,
-                  color: customerAppColor,
+                  color: primaryBlueColor,
                 )
               : Icon(
                   Icons.circle_outlined,
-                  color: customerAppColor,
+                  color: primaryBlueColor,
                   size: 25,
                 ),
           decoration: BoxDecoration(

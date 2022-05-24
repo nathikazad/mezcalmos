@@ -401,6 +401,12 @@
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden entregado",
                             "canceled": "Orden cancelada",
+                            "otwToCustomer": "De camino al cliente",
+                            "otwToLaundry": "De camino a la lavandería",
+                            "pickedUpFromCustomer": "Recogido del cliente",
+                            "pickedUpFromLaundry": "Recogido de la ropa",
+
+
                             "cancelByAdmin": " Orden cancelado por el administrador.",
                             "cancelByUser": " Usted canceló el pedido",
                             "received": " El pedido recibido y se procederá tan pronto como sea posible.",
@@ -1291,7 +1297,8 @@
                 },
                 "LaundryOpOrderView": {
                     "customer": "Cliente",
-                    "orderDate": "Fecha de orden"
+                    "orderDate": "Fecha de orden",
+                    "total": "Total"
                 }
             }
         },
