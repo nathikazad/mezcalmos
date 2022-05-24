@@ -178,7 +178,8 @@ class RequestTaxiScreenWidgets {
                 if (_dtime != null)
                   requestTaxiController.scheduleTime.value =
                       requestTaxiController.scheduleTime.value
-                          .copyWithDate(_dtime);
+                          .copyWithDate(_dtime)
+                          .toLocal();
                 ;
               },
               child: Container(
@@ -237,7 +238,8 @@ class RequestTaxiScreenWidgets {
                 if (_t != null)
                   requestTaxiController.scheduleTime.value =
                       requestTaxiController.scheduleTime.value
-                          .copyWithTimeOfDay(_t);
+                          .copyWithTimeOfDay(_t)
+                          .toLocal();
               },
               child: Container(
                 height: 40,

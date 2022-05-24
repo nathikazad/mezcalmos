@@ -22,6 +22,8 @@ import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
+import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
     ["Orders"]["CurrentOrderScreen"]["CurrentOrderScreen"];
@@ -42,6 +44,8 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   StreamSubscription<TaxiOrder?>? _orderListener;
   TaxiAuthController taxiAuthController = Get.find<TaxiAuthController>();
   RxBool _clickedBottomButton = false.obs;
+  Timer? _scheduledTimeDiffrence;
+  RxString _scheduledTimeDiffrenceString = "".obs;
 
   @override
   void initState() {
@@ -57,6 +61,9 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
       Get.back<void>();
       mezcalmosDialogOrderNoMoreAvailable(context);
     } else {
+      // firstTimeExecution
+      _startScheduleTimeDiffrenceChecker(_orderSnapshot);
+
       // if (_orderSnapshot.inProcess()) {
       // populate the LatLngPoints from the encoded PolyLine String + SetState!
       mGoogleMapController.decodeAndAddPolyline(
@@ -72,12 +79,39 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
       _orderListener =
           controller.getOrderStream(orderId).listen((TaxiOrder? order) {
         if (order != null) {
+          // _startScheduleTimeDiffrenceChecker(order);
           updateOrder(orderStreamEvent: order);
         }
       });
       // }
     }
     super.initState();
+  }
+
+  void _startScheduleTimeDiffrenceChecker(TaxiOrder? order) {
+    void _timeDiffCheck(DateTime scheduleTime) {
+      final Duration? _d = scheduleTime.toLocal().difference(DateTime.now());
+      if (_d != null) {
+        _scheduledTimeDiffrenceString.value = _d.ParseToHoursMinutes();
+      }
+    }
+
+    if (order != null && order.status == TaxiOrdersStatus.Scheduled) {
+      // first time check
+      _timeDiffCheck(order.scheduledTime!);
+      _scheduledTimeDiffrence =
+          Timer.periodic(Duration(minutes: 1), (Timer _t) {
+        // safe check as usual
+        if (_scheduledTimeDiffrence == null ||
+            _scheduledTimeDiffrence?.isActive == false) {
+          mezDbgPrint("Inside TaxiOrdersStatus.Scheduled - timer - null!!");
+
+          _t.cancel();
+          return;
+        }
+        _timeDiffCheck(order.scheduledTime!);
+      });
+    }
   }
 
   @override
@@ -103,7 +137,8 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                 alignment: Alignment.topCenter,
                 children: <Widget>[
                   MGoogleMap(
-                    recenterBtnBottomPadding: 130,
+                    recenterBtnBottomPadding:
+                        order!.status == TaxiOrdersStatus.Scheduled ? 170 : 130,
                     mGoogleMapController: mGoogleMapController,
                     debugString: "CurrentOrderScreen",
                   ),
@@ -111,7 +146,10 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                     context: context,
                     order: order!,
                   ),
-                  getScheduleTimeInfoBar(order!),
+                  Obx(
+                    () => getScheduleTimeInfoBar(
+                        order!, _scheduledTimeDiffrenceString.value),
+                  ),
                   CurrentTaxiOrderPositionedBottomBar(
                     order: order!,
                   ),
@@ -256,35 +294,6 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                     _clickedBottomButton.value = false;
                   },
                 );
-                // if ((MapHelper.calculateDistance(
-                //       Get.find<TaxiAuthController>().currentLocation,
-                //       order!.to.position,
-                //     ) >
-                //     0.5)) {
-                //   final YesNoDialogButton clickedYes = await yesNoDialog(
-                //     text: 'Oops!',
-                //     icon: Container(
-                //       child: Icon(
-                //         Icons.highlight_off,
-                //         size: 65,
-                //         color: Color(0xffdb2846),
-                //       ),
-                //     ),
-                //     body: _i18n()["tooFarFromfinishRide"],
-                //   );
-                //   if (clickedYes == YesNoDialogButton.Yes) {
-                //     _clickedBottomButton.value = true;
-                //     await controller.finishRide();
-                //     setState(() {});
-                //     _clickedBottomButton.value = false;
-                //   }
-                // } else {
-                //   mezDbgPrint("Distance  is GOOOD  => yesNoDialog");
-                //   _clickedBottomButton.value = true;
-                //   await controller.finishRide();
-                //   setState(() {});
-                //   _clickedBottomButton.value = false;
-                // }
               },
             ),
           ),
@@ -358,6 +367,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   void updateOrder({required TaxiOrder orderStreamEvent}) {
     if (orderStreamEvent.status != order?.status) {
       switch (orderStreamEvent.status) {
+        case TaxiOrdersStatus.Scheduled:
         case TaxiOrdersStatus.OnTheWay:
           // Add the customer's Marker
           mGoogleMapController.addOrUpdateUserMarker(
@@ -365,10 +375,10 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               latLng: orderStreamEvent.from.toLatLng(),
               customImgHttpUrl: orderStreamEvent.customer.image);
           // add the Taxi's
-          if (orderStreamEvent.driver?.location != null)
-            mGoogleMapController.addOrUpdateTaxiDriverMarker(
-                orderStreamEvent.driver!.id,
-                orderStreamEvent.driver!.location!);
+          // if (orderStreamEvent.driver?.location != null)
+          //   mGoogleMapController.addOrUpdateTaxiDriverMarker(
+          //       orderStreamEvent.driver!.id,
+          //       orderStreamEvent.driver!.location!);
 
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
               latLng: orderStreamEvent.to.toLatLng());
@@ -480,12 +490,12 @@ Widget button({
       ));
 }
 
-Widget getScheduleTimeInfoBar(TaxiOrder order) {
+Widget getScheduleTimeInfoBar(TaxiOrder order, String t) {
   if (order.scheduledTime != null &&
       order.scheduledTime!.difference(DateTime.now()).inMinutes > 30 &&
       order.status == TaxiOrdersStatus.Scheduled)
     return Positioned(
-      bottom: 135,
+      bottom: 128,
       left: 10,
       right: 10,
       child: Container(
@@ -537,7 +547,7 @@ Widget getScheduleTimeInfoBar(TaxiOrder order) {
               width: 10,
             ),
             Text(
-              '03:20',
+              t,
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w600,

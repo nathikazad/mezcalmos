@@ -211,21 +211,24 @@ Widget messageBtn({required Rxn<TaxiOrder> order, EdgeInsets? margin}) {
                   size: 30,
                 ),
               ),
-              orderController.hasNewMessageNotification(order.value!.orderId)
-                  ? Positioned(
-                      top: 0,
-                      right: 0,
-                      child: Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white),
+              Obx(
+                () => orderController
+                        .hasNewMessageNotification(order.value!.orderId)
+                    ? Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          height: 10,
+                          width: 10,
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white),
+                          ),
                         ),
-                      ),
-                    )
-                  : SizedBox(),
+                      )
+                    : SizedBox(),
+              ),
             ],
           ),
         ),
@@ -248,22 +251,6 @@ Widget cancelBtn(TaxiOrder order, BuildContext context) {
                 position: SnackPosition.TOP);
           }
         });
-
-        // final YesNoDialogButton res = await yesNoDialog(
-        //     text: _i18n()?['confirmation_header'] ?? "Por favor confirmar",
-        //     body:
-        //         _i18n()?['confirmation_text'] ?? "¿Cancelar el viaje actual?");
-
-        // if (res == YesNoDialogButton.Yes) {
-        //   final ServerResponse resp =
-        //       await Get.find<TaxiController>().cancelTaxi(order.orderId);
-
-        //   if (!resp.success) {
-        //     MezSnackbar("Oops", _i18n()['serverCommunicationError'],
-        //         position: SnackPosition.TOP);
-        //   }
-        //   // no need for else here , because we are handling UI changes already upon CanceledbyCustomer.
-        // }
       },
       child: Container(
         height: 33,

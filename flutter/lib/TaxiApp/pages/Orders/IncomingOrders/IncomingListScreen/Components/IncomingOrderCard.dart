@@ -13,7 +13,14 @@ class IncomingOrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed<void>(getIncomingOrderRoute(order.orderId)),
+      onTap: () => Future.delayed(
+        Duration.zero,
+        () => Get.toNamed<void>(
+          order.status != TaxiOrdersStatus.Scheduled
+              ? getIncomingOrderRoute(order.orderId)
+              : getTaxiOrderRoute(order.orderId),
+        ),
+      ),
       child: Container(
         margin: EdgeInsets.only(bottom: 15),
         padding: EdgeInsets.all(12),

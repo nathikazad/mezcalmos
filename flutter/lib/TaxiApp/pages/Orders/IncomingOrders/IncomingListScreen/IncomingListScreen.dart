@@ -1,14 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
 import 'package:mezcalmos/LaundryApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/Components/IncomingOrderCard.dart';
 import 'package:sizer/sizer.dart';
@@ -26,22 +30,34 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen>
   IncomingOrdersController _controller = Get.find<IncomingOrdersController>();
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
   late AnimationController controller;
+  // StreamSubscription? scheduledOrdersListener;
+  // RxList<TaxiOrder> _scheduledOrders = <TaxiOrder>[].obs;
 
   @override
   void initState() {
-    // controller = AnimationController(
-    //   vsync: this,
-    //   duration: const Duration(seconds: 2),
-    // )..addListener(() {
-    //     setState(() {});
+    // scheduledOrdersListener = Get.find<FirebaseDb>()
+    //     .firebaseDatabase
+    //     .reference()
+    //     .child('taxis/inProcessOrders')
+    //     .onValue
+    //     .listen((event) {
+    //   mezDbgPrint("inProcessOrders => ${event.snapshot.value}");
+    //   event.snapshot.value.froEach((dynamic key, dynamic value) {
+    //     TaxiOrder tOrder = TaxiOrder.fromData(key, value);
+    //     if (tOrder.status == TaxiOrdersStatus.Scheduled) {
+    //       _scheduledOrders.add(tOrder);
+    //     }
     //   });
-    // controller.repeat();
+    // });
     super.initState();
   }
 
   @override
   void dispose() {
+    // scheduledOrdersListener?.cancel();
+    // scheduledOrdersListener = null;
     _controller.dispose();
+
     super.dispose();
   }
 
@@ -81,12 +97,14 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen>
 
   List<Widget> getScheduledOrders() {
     List<Widget> _ret = [];
-    List<TaxiOrder> _ls = _controller
-        .orders()
-        .where((element) => element.status == TaxiOrdersStatus.Scheduled)
+    List<TaxiOrder> _scheduledOrders = Get.find<OrderController>()
+        .currentOrders
+        .where((o) => o.status == TaxiOrdersStatus.Scheduled)
         .toList();
 
-    if (_ls.isNotEmpty) {
+    mezDbgPrint("_ls Scheduled ======> ${_scheduledOrders.length}");
+
+    if (_scheduledOrders.isNotEmpty) {
       // header
       _ret.addAll(
         [
@@ -107,7 +125,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen>
       );
 
       // body
-      _ret.addAll(_ls.map(
+      _ret.addAll(_scheduledOrders.map(
         (TaxiOrder order) => IncomingOrderCard(order: order),
       ));
     }
