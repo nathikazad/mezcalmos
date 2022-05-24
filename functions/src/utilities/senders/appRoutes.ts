@@ -33,3 +33,8 @@ export function chatUrl(
     str += `&recipientType=${orderType}`;
   return str
 }
+
+export function taxiIncomingOrderUrl(
+  orderId: string): string {
+  return `/incomingOrders/${orderId}`
+}
