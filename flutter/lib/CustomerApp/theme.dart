@@ -99,7 +99,7 @@ class CustomerAppTheme {
       ),
       chipTheme: ChipThemeData(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        backgroundColor: lightCustomerAppColor,
+        backgroundColor: secondaryBlueColor,
         showCheckmark: false,
         disabledColor: Colors.grey,
         selectedColor: Colors.white,
@@ -108,7 +108,7 @@ class CustomerAppTheme {
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
           fontSize: 12.sp,
-          color: customerAppColor,
+          color: primaryBlueColor,
         ),
         brightness: Brightness.light,
         secondarySelectedColor: Color(0xFF6779FE),

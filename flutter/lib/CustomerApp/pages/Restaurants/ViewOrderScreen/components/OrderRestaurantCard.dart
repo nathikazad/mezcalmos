@@ -43,7 +43,7 @@ class OrderRestaurantCard extends StatelessWidget {
                         Icon(
                           Icons.place,
                           size: 18,
-                          color: customerAppColor,
+                          color: primaryBlueColor,
                         ),
                         SizedBox(
                           width: 5,
@@ -111,7 +111,7 @@ class OrderRestaurantCard extends StatelessWidget {
       },
       icon: Icon(
         Icons.textsms,
-        color: customerAppColor,
+        color: primaryBlueColor,
       ),
     );
   }

@@ -62,7 +62,7 @@ class CartItemsBuilder extends StatelessWidget {
                         children: [
                           IncrementalComponent(
                               minVal: 1,
-                              btnColors: lightCustomerAppColor,
+                              btnColors: secondaryBlueColor,
                               alignment: MainAxisAlignment.start,
                               onMinValueBtnColor: Colors.grey.shade400,
                               incrementCallback: () {

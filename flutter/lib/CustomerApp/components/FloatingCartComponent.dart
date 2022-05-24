@@ -27,17 +27,17 @@ class FloatingCartComponent extends StatelessWidget {
                       .length
                       .toStringAsFixed(0),
                   style: Get.textTheme.bodyText1
-                      ?.copyWith(color: customerAppColor),
+                      ?.copyWith(color: primaryBlueColor),
                 ),
                 position: BadgePosition.topEnd(top: -8, end: 0),
-                badgeColor: lightCustomerAppColor,
+                badgeColor: secondaryBlueColor,
                 child: Container(
                   height: 60,
                   width: 60,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle, // circular shape
                     gradient: LinearGradient(
-                      colors: [customerAppColor, Color(0xFFAC59FC)],
+                      colors: [primaryBlueColor, Color(0xFFAC59FC)],
                     ),
                   ),
                   child: Icon(

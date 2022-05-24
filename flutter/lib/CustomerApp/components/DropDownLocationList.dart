@@ -164,7 +164,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           Icon(
             Icons.location_on_outlined,
             size: 18,
-            color: customerAppColor,
+            color: primaryBlueColor,
           ),
           const SizedBox(width: 15),
           Flexible(

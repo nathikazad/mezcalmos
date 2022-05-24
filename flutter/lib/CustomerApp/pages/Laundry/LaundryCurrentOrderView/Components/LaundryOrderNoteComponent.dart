@@ -20,15 +20,16 @@ class LaundryOrderNoteComponent extends StatelessWidget {
     if (order.notes!.isNotEmpty) {
       return Card(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                alignment: Alignment.center,
+                //  alignment: Alignment.center,
+                width: double.infinity,
                 child: Text(
                   _i18n()["notes"],
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
               SizedBox(height: 15),

@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now().toLocal();
@@ -117,7 +118,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           left: 16, top: 8, bottom: 8, right: 16),
                       decoration: BoxDecoration(
                           color: !isMe
-                              ? Color.fromRGBO(172, 89, 252, 1)
+                              ? primaryBlueColor
                               //? Theme.of(parentContext).primaryColorLight
                               : Colors.white,
                           borderRadius: !isMe
@@ -171,7 +172,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback((Duration timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       scrollDown(mezChatScrollDuration: timeStamp);
     });
     void _fillCallBack() {
@@ -197,8 +198,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
     controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
     return Scaffold(
-        appBar: AppBar(
-          title: Obx(
+        appBar: mezcalmosAppBar(
+          AppBarLeftButtonType.Back,
+          onClick: Get.back,
+          titleWidget: Obx(
             () {
               return (controller
                           .recipient(recipientType: recipientType)
@@ -215,7 +218,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                     );
             },
           ),
-          actions: <Widget>[
+          actionIcons: <Widget>[
             if (orderLink != null)
               InkWell(
                   child: Center(
@@ -282,26 +285,45 @@ class SendMessageBox extends StatelessWidget {
   final String? orderId;
   @override
   Widget build(BuildContext context) {
-    return TextField(
-        onChanged: (String value) => _typedMsg.value = value,
-        controller: _textEditingController,
-        style:
-            Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 14.5.sp),
-        cursorColor: Colors.purple,
-        scrollPadding: EdgeInsets.all(10),
-        decoration: InputDecoration(
-            isDense: true,
-            contentPadding: EdgeInsets.all(30),
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(borderSide: BorderSide.none),
-            hintText: _i18n()['writeMsgPlaceholder'],
-            hintStyle: Theme.of(context)
-                .textTheme
-                .subtitle1
-                ?.copyWith(fontSize: 14.5.sp),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.all(16),
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: Row(
+        children: [
+          Flexible(
+            child: TextField(
+                onChanged: (String value) => _typedMsg.value = value,
+                controller: _textEditingController,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    ?.copyWith(fontSize: 14.5.sp),
+                cursorColor: primaryBlueColor,
+                scrollPadding: EdgeInsets.all(10),
+                decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: EdgeInsets.all(8),
+                  filled: true,
+                  fillColor: secondaryBlueColor,
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(16)),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(16)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(16)),
+                  hintText: _i18n()['writeMsgPlaceholder'],
+                  hintStyle: Theme.of(context)
+                      .textTheme
+                      .subtitle1
+                      ?.copyWith(fontSize: 14.5.sp),
+                )),
+          ),
+          Transform.rotate(
+            angle: 6,
+            child: Padding(
+              padding: const EdgeInsets.all(5),
               child: GestureDetector(
                 onTap: () {
                   final bool msgReady2Send =
@@ -324,19 +346,25 @@ class SendMessageBox extends StatelessWidget {
                     child: Icon(
                       Icons.send,
                       size: 18,
-                      color: Colors.white,
+                      color: _typedMsg.value.length > 0
+                          ? primaryBlueColor
+                          : Colors.white,
                     ),
                     width: 45,
                     height: 45,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: _typedMsg.value.length > 0
-                          ? Color.fromRGBO(172, 89, 252, 1)
-                          : Theme.of(context).primaryColorLight,
+                          ? secondaryBlueColor
+                          : Colors.grey,
                     ),
                   ),
                 ),
               ),
-            )));
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

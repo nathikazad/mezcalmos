@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -92,7 +91,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       children: [
                         Icon(
                           Icons.place,
-                          color: customerAppColor,
+                          color: primaryBlueColor,
                         ),
                         SizedBox(
                           width: 5,
@@ -100,69 +99,67 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                         Text(selectedLaundry.info.location.address)
                       ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Additional services",
-                      style: Get.textTheme.headline3,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Service name ",
-                          style: Get.textTheme.bodyText2
-                              ?.copyWith(fontWeight: FontWeight.w700),
-                        ),
-                        Text(
-                          "+ 5\$ per article",
-                          style: Get.textTheme.bodyText2?.copyWith(
-                              color: customerAppColor,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        Spacer(),
-                        multipleSelectOptionComponent(
-                            onTap: (bool? p0) {}, value: true)
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Service name ",
-                          style: Get.textTheme.bodyText2,
-                        ),
-                        Text(
-                          "+ 12\$ per article",
-                          style: Get.textTheme.bodyText2
-                              ?.copyWith(color: customerAppColor),
-                        ),
-                        Spacer(),
-                        multipleSelectOptionComponent(
-                            onTap: (bool? p0) {}, value: false)
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Service name ",
-                          style: Get.textTheme.bodyText2,
-                        ),
-                        multipleSelectOptionComponent(
-                            onTap: (bool? p0) {}, value: false)
-                      ],
-                    ),
+
+                    // Text(
+                    //   "Additional services",
+                    //   style: Get.textTheme.headline3,
+                    // ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       "Service name ",
+                    //       style: Get.textTheme.bodyText2
+                    //           ?.copyWith(fontWeight: FontWeight.w700),
+                    //     ),
+                    //     Text(
+                    //       "+ 5\$ per article",
+                    //       style: Get.textTheme.bodyText2?.copyWith(
+                    //           color: customerAppColor,
+                    //           fontWeight: FontWeight.w700),
+                    //     ),
+                    //     Spacer(),
+                    //     multipleSelectOptionComponent(
+                    //         onTap: (bool? p0) {}, value: true)
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: [
+                    //     Text(
+                    //       "Service name ",
+                    //       style: Get.textTheme.bodyText2,
+                    //     ),
+                    //     Text(
+                    //       "+ 12\$ per article",
+                    //       style: Get.textTheme.bodyText2
+                    //           ?.copyWith(color: customerAppColor),
+                    //     ),
+                    //     Spacer(),
+                    //     multipleSelectOptionComponent(
+                    //         onTap: (bool? p0) {}, value: false)
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       "Service name ",
+                    //       style: Get.textTheme.bodyText2,
+                    //     ),
+                    //     multipleSelectOptionComponent(
+                    //         onTap: (bool? p0) {}, value: false)
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 20,
                     ),
@@ -180,7 +177,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       () => Card(
                         child: authController.user != null
                             ? DropDownLocationList(
-                                bgColor: lightCustomerAppColor,
+                                bgColor: secondaryBlueColor,
                                 passedInLocation: customerLoc,
                                 onValueChangeCallback: ({Location? location}) {
                                   setState(() {
@@ -279,7 +276,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         width: double.infinity,
         decoration: BoxDecoration(
             gradient:
-                LinearGradient(colors: [Colors.purple, customerAppColor])),
+                LinearGradient(colors: [Colors.purple, primaryBlueColor])),
         //  padding: const EdgeInsets.all(5),
         child: (authController.user != null)
             ? makeOrderButton(context)

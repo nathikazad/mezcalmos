@@ -10,16 +10,16 @@ dynamic _18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
 // between the current time and the passed date time
 // wit will alse do the needed format on the string
 //
-
 extension parseDateTime on DateTime {
   String getEstimatedTime() {
     final DateTime cDate = DateTime.now();
-    if (cDate.difference(this).inDays >= 1) {
-      return DateFormat("EEEE , hh:mm a").format(this);
-    } else if (cDate.difference(this).inHours >= 1) {
-      return DateFormat("${_18n()["today"]} , hh:mm a").format(this);
+    // mezDbgPrint(cDate.difference(toLocal()).inHours);
+    if (cDate.difference(toLocal()).inDays < 0) {
+      return " at ${DateFormat("EEEE , hh:mm a").format(toLocal())}";
+    } else if (cDate.difference(toLocal()).inHours < 0) {
+      return " ${_18n()["at"]} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${cDate.difference(this).inMinutes} min";
+      return " ${_18n()["in"]} ${cDate.difference(toLocal()).inMinutes} min";
     }
   }
 }

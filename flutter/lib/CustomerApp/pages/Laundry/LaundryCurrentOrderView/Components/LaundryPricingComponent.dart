@@ -39,7 +39,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Icon(
-                    Icons.help_outline_rounded,
+                    Icons.info_outline_rounded,
                     color: Colors.grey.shade800,
                   ),
                   const SizedBox(width: 10),

@@ -31,6 +31,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
       height: 60,
+        margin: const EdgeInsets.only(bottom: 8),
       child: (widget.order.inProcess())
           ? Container(
               margin: EdgeInsets.all(8),

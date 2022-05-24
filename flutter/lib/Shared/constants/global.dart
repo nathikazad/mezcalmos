@@ -128,5 +128,5 @@ extension StringToParseOrderType on String {
 // -----------STYLES CONSTANT ------------------- //
 
 const Color keyAppColor = Color(0xFFAC59FC);
-const Color customerAppColor = Color(0xFF6779FE);
-const Color lightCustomerAppColor = Color(0xFFE1E4FF);
+const Color primaryBlueColor = Color(0xFF6779FE);
+const Color secondaryBlueColor = Color(0xFFE1E4FF);
