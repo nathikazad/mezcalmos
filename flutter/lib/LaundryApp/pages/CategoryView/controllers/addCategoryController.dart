@@ -132,18 +132,22 @@ class AddCategoryController {
     });
   }
 
-  void deleteCategory() {
-    categories.removeWhere((LaundryCostLineItem element) =>
-        element.name[primaryLang] == copyOfCategory.value!.name[primaryLang]);
+  Future<void> deleteCategory({required String categoryId}) async {
+    final List<LaundryCostLineItem> categories = [];
+    final LaundryCosts laundryCosts =
+        laundryInfoController.laundry.value!.laundryCosts;
 
-    laundryCosts.value!.lineItems = categories;
-    mezDbgPrint("After add ------------------------>");
-    laundryCosts.value!.lineItems.forEach((LaundryCostLineItem element) {});
-
-    laundryInfoController.setCosts(laundryCosts.value!).then((value) {
-      mezDbgPrint("Done");
-      Get.back();
+    laundryInfoController.laundry.value!.laundryCosts.lineItems
+        .forEach((LaundryCostLineItem element) {
+      categories.add(element.copyWith());
     });
+
+    categories.removeWhere((LaundryCostLineItem element) =>
+        element.name[primaryLang] == categoryId);
+
+    laundryCosts.lineItems = categories;
+
+    await laundryInfoController.setCosts(laundryCosts);
   }
 
   void handleFooterButtonClick() {

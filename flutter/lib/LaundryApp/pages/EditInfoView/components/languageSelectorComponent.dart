@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 
@@ -42,35 +41,32 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
           return Obx(
             () => InputDecorator(
               decoration: InputDecoration(
-                  errorStyle:
-                      TextStyle(color: Colors.redAccent, fontSize: 16.0),
-                  filled: true,
-                  fillColor: Colors.white,
-                  isDense: true,
-                  label: Text("${_i18n()["none"]}"),
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  suffixIcon: (widget.showDeleteIcon &&
-                          widget.languageValue.value != null)
-                      ? IconButton(
-                          onPressed: () {
-                            widget.languageValue.value = null;
-                          },
-                          icon: Icon(Icons.close))
-                      : null,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
+                errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
+                filled: true,
+                fillColor: Colors.grey.shade200,
+                isDense: true,
+                contentPadding: EdgeInsets.all(5),
+                label: Text("${_i18n()["none"]}"),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                suffixIcon: (widget.showDeleteIcon &&
+                        widget.languageValue.value != null)
+                    ? IconButton(
+                        onPressed: () {
+                          widget.languageValue.value = null;
+                        },
+                        icon: Icon(Icons.close))
+                    : null,
+              ),
               isEmpty: widget.languageValue.value == null,
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<LanguageType>(
                   value: widget.languageValue.value,
                   isDense: true,
+                  dropdownColor: Colors.grey.shade200,
                   onChanged: (LanguageType? newValue) {
                     if (newValue != null) {
-                      //mezDbgPrint(newValue);
-
                       final bool result =
                           widget.onChangeShouldUpdateLang(newValue);
-                      // mezDbgPrint("$result");
 
                       if (result) {
                         widget.languageValue.value = newValue;
@@ -84,17 +80,9 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
                   ].map((LanguageType value) {
                     return DropdownMenuItem<LanguageType>(
                       value: value,
-                      child: Row(children: [
-                        CircleAvatar(
-                          radius: 10,
-                          backgroundImage: AssetImage(getRightFlag(value)),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        if (value.toLanguageName() != null)
-                          Text(value.toLanguageName()!)
-                      ]),
+                      child: (value.toLanguageName() != null)
+                          ? Text(value.toLanguageName()!)
+                          : Container(),
                     );
                   }).toList(),
                 ),
@@ -104,18 +92,5 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
         },
       ),
     );
-  }
-}
-
-String getRightFlag(LanguageType value) {
-  switch (value) {
-    case LanguageType.EN:
-      return aUsaFlag;
-
-    case LanguageType.ES:
-      return aMexicoFlag;
-
-    default:
-      return "";
   }
 }

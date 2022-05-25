@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/LaundryApp/pages/InfoView/components/CategoryCard.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
@@ -40,6 +39,13 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    laundryListener?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Obx(
       () => SingleChildScrollView(
@@ -50,7 +56,6 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
             children: [
               _laundryInfoComponent(context),
               Divider(),
-              _laundryCategoriesComponent(context),
               Divider(),
               _laundryLocationComponent(context),
               Divider(),
@@ -95,50 +100,6 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
         ),
       ],
     );
-  }
-
-  Widget _laundryCategoriesComponent(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            '${_i18n()["categories"]}',
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-          Card(
-            color: Colors.white,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap: () {
-                Get.toNamed(kCategoryView);
-              },
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  Icon(
-                    Icons.add,
-                    color: Theme.of(context).primaryColorLight,
-                  ),
-                  Text(
-                    '${_i18n()["addCategory"]}',
-                  ),
-                ]),
-              ),
-            ),
-          )
-        ],
-      ),
-      if (laundry.value!.laundryCosts.lineItems.isNotEmpty)
-        Column(
-            children: List.generate(
-                laundry.value!.laundryCosts.lineItems.length, (int index) {
-          return CategoryCard(
-              laundryCostLineItem:
-                  laundry.value!.laundryCosts.lineItems[index]);
-        })),
-    ]);
   }
 
   Widget _laundryInfoComponent(BuildContext context) {

@@ -6,6 +6,7 @@ import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/LaundryOpEdit
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/LaundryOpImageEditComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/languageSelectorComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -48,6 +49,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8.0),
@@ -67,8 +69,11 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
             ),
             TextFormField(
               controller: editInfoController.laundryNameController,
-              decoration:
-                  InputDecoration(filled: true, fillColor: Colors.white),
+              decoration: InputDecoration(
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  filled: true,
+                  fillColor: Colors.grey.shade200),
             ),
             SizedBox(
               height: 15,
@@ -126,9 +131,12 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
   Widget _editInfoSaveButton() {
     return Container(
       height: 50,
+      decoration: BoxDecoration(gradient: bluePurpleGradient),
       child: Obx(
         () => TextButton(
-            style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
+            style: TextButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder()),
             onPressed: (editInfoController.btnClicked.value)
                 ? null
                 : () {

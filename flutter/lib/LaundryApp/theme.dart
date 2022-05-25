@@ -22,6 +22,8 @@ class LaundryAppTheme {
       scaffoldBackgroundColor: Color(0XFFFAFAFA),
 
       timePickerTheme: TimePickerThemeData(
+        
+        dialHandColor: primaryBlueColor,
         backgroundColor: Colors.white,
         hourMinuteColor: MaterialStateColor.resolveWith(
             (Set<MaterialState> states) =>
