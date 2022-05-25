@@ -130,7 +130,7 @@ class LaundryOpOrderCard extends StatelessWidget {
           width: 50,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: keyAppColor,
+            color: purpleColor,
             shape: BoxShape.circle,
           ),
           child: Text(

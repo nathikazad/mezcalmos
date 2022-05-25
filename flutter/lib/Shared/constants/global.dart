@@ -128,6 +128,15 @@ extension StringToParseOrderType on String {
 }
 // -----------STYLES CONSTANT ------------------- //
 
-const Color keyAppColor = Color(0xFFAC59FC);
+const Color purpleColor = Color(0xFFAC59FC);
 const Color primaryBlueColor = Color(0xFF6779FE);
 const Color SecondaryLightBlueColor = Color(0xFFE1E4FF);
+const Color offRedColor = Color(0xFFF9D8D6);
+const LinearGradient bluePurpleGradient = LinearGradient(
+  colors: [
+    primaryBlueColor,
+    purpleColor,
+  ],
+  begin: Alignment.centerLeft,
+  end: Alignment.centerRight,
+);

@@ -82,7 +82,7 @@ class _SetOrderEstTimeComponentState extends State<SetOrderEstTimeComponent> {
                           Icon(
                             Icons.event,
                             size: 40,
-                            color: keyAppColor,
+                            color: purpleColor,
                           ),
                           SizedBox(
                             width: 15,

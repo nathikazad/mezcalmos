@@ -1,16 +1,19 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/LaundryApp/pages/CategoryView/CategoryView.dart';
-import 'package:mezcalmos/LaundryApp/pages/DashboardView/DashboardView.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/EditInfoView.dart';
+import 'package:mezcalmos/LaundryApp/pages/InfoView/LaundryOpInfoView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/LaundryOpOrderView.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrdersListView/LaundryOpOrdersListView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // const String kCurrentOrdersListRoute = '/currentOrders';
-const String kDashboardView = '/dahboard';
+const String kOrdersListView = '/orders';
+const String kInfoView = '/info';
+
 const String kEditInfoView = '/editInfo';
 
-const String kCategoryScreen = '/categoryScreen/';
+const String kCategoryView = '/categoryScreen/';
 const String kEditCategoryScreen = '/categoryScreen/:categoryId';
 const String kOrderView = '/dashboard/orderView/:orderId';
 
@@ -25,11 +28,12 @@ String getLaundryOpOrderRoute(String orderId) {
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
-        GetPage(name: kDashboardView, page: () => DashboardView()),
         GetPage(name: kEditInfoView, page: () => LaundryOpEditInfoView()),
+        GetPage(name: kOrdersListView, page: () => LaundryOpOrdersListView()),
+        GetPage(name: kEditInfoView, page: () => LaundryOpInfoView()),
         GetPage(name: kHomeRoute, page: () => LaundryWrapper()),
         GetPage(
-          name: kCategoryScreen,
+          name: kCategoryView,
           page: () => LaundryOpCategoryScreen(),
         ),
         GetPage(

@@ -89,9 +89,43 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                           ],
                         ),
                       ])
-                    : Text(
-                        "Still no driver assigned to this order",
-                        style: Get.textTheme.bodyText1,
+                    : Row(
+                        children: [
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.grey,
+                              ),
+                              Positioned(
+                                right: -30,
+                                bottom: 3,
+                                child: Container(
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      color: primaryBlueColor,
+                                      shape: BoxShape.circle),
+                                  child: Icon(
+                                    Icons.delivery_dining,
+                                    size: 32,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            width: 40,
+                          ),
+                          Flexible(
+                            child: Text(
+                              "no driver assigned to this order",
+                              style: Get.textTheme.bodyText1,
+                            ),
+                          ),
+                        ],
                       )),
           ),
         ],

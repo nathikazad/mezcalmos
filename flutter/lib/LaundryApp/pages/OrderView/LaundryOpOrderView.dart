@@ -81,7 +81,8 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               const SizedBox(
                 height: 5,
               ),
-              _setReadyForDeliveryButton(),
+              if (_setReadyForDeliveryButton() != null)
+                _setReadyForDeliveryButton()!,
               const SizedBox(
                 height: 10,
               ),
@@ -133,25 +134,28 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
     );
   }
 
-  Widget _setReadyForDeliveryButton() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 3),
-      child: TextButton(
-          onPressed: (order.value!.status == LaundryOrderStatus.AtLaundry)
-              ? () {
-                  controller.setAsReadyForDelivery(order.value!.orderId);
-                }
-              : null,
-          style: TextButton.styleFrom(
-              backgroundColor:
-                  (order.value!.status == LaundryOrderStatus.AtLaundry)
-                      ? primaryBlueColor
-                      : Colors.grey),
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(8),
-            child: Text("Order ready for delivery"),
-          )),
-    );
+  Widget? _setReadyForDeliveryButton() {
+    if (order.value!.status == LaundryOrderStatus.AtLaundry) {
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 3),
+        child: TextButton(
+            onPressed: (order.value!.status == LaundryOrderStatus.AtLaundry)
+                ? () {
+                    controller.setAsReadyForDelivery(order.value!.orderId);
+                  }
+                : null,
+            style: TextButton.styleFrom(
+                backgroundColor:
+                    (order.value!.status == LaundryOrderStatus.AtLaundry)
+                        ? primaryBlueColor
+                        : Colors.grey),
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(8),
+              child: Text("Order ready for delivery"),
+            )),
+      );
+    }
+    return null;
   }
 }

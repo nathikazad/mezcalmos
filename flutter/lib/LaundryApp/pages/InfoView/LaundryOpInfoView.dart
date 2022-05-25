@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/pages/DashboardView/InfoView/components/CategoryCard.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/LaundryApp/pages/InfoView/components/CategoryCard.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/MezWorkingHours.dart';
-
-import '../../../controllers/laundryInfoController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['DashboardView']['InfoView']['LaundryOpInfoView'];
@@ -112,7 +111,7 @@ class _LaundryOpInfoViewState extends State<LaundryOpInfoView> {
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: () {
-                Get.toNamed(kCategoryScreen);
+                Get.toNamed(kCategoryView);
               },
               child: Container(
                 padding: const EdgeInsets.all(8),
