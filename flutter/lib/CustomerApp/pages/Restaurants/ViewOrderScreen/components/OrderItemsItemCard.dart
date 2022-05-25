@@ -35,23 +35,23 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
         Get.find<LanguageController>().userLanguageKey;
     return Card(
       child: Container(
-        // padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(vertical: 3),
         child: Theme(
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(
             childrenPadding: const EdgeInsets.all(8),
-            collapsedIconColor: customerAppColor,
+            collapsedIconColor: primaryBlueColor,
             onExpansionChanged: (bool v) {
               setState(() {
                 isExpanded = v;
               });
             },
-            iconColor: customerAppColor,
+            iconColor: primaryBlueColor,
             trailing: Container(
               width: 25,
               height: 25,
               decoration: BoxDecoration(
-                  color: lightCustomerAppColor, shape: BoxShape.circle),
+                  color: secondaryBlueColor, shape: BoxShape.circle),
               child: (isExpanded)
                   ? Icon(Icons.expand_less)
                   : Icon(Icons.expand_more),
@@ -62,16 +62,23 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundImage: (imageLoded)
-                        ? CachedNetworkImageProvider(widget.item.image ?? '',
-                            errorListener: () {
-                            setState(() {
-                              imageLoded = false;
-                            });
-                          })
-                        : AssetImage(aNoImage) as ImageProvider<Object>?,
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    height: 45,
+                    width: 45,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: (imageLoded)
+                              ? CachedNetworkImageProvider(
+                                  widget.item.image ?? '', errorListener: () {
+                                  setState(() {
+                                    imageLoded = false;
+                                  });
+                                })
+                              : AssetImage(aNoImage) as ImageProvider<Object>,
+                        )),
                   ),
                   SizedBox(
                     width: 10,
@@ -83,11 +90,29 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            widget.item.name[userLanguage]!,
-                            style: txt.bodyText1,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  widget.item.name[userLanguage]!,
+                                  style: txt.bodyText1,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Flexible(
+                                child: Text(
+                                  "x${widget.item.quantity}",
+                                  style: txt.bodyText1
+                                      ?.copyWith(fontWeight: FontWeight.w700),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 3,

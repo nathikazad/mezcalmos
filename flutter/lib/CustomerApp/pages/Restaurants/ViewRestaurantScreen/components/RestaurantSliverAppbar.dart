@@ -215,7 +215,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
               color: Colors.white),
           child: Icon(
             Icons.arrow_back_ios_new,
-            color: customerAppColor,
+            color: primaryBlueColor,
           ),
         ),
       ),
@@ -239,7 +239,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           child: Icon(
             Icons.watch_later,
             size: 20,
-            color: customerAppColor,
+            color: primaryBlueColor,
           ),
         ),
       ),
@@ -269,7 +269,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                 ),
                 child: Icon(
                   Icons.notifications,
-                  color: customerAppColor,
+                  color: primaryBlueColor,
                   size: 20,
                 ),
               ),
@@ -294,12 +294,12 @@ class RestaurantSliverAppBar extends StatelessWidget {
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: lightCustomerAppColor,
+            color: secondaryBlueColor,
           ),
           child: Icon(
             Icons.person,
             size: 20,
-            color: customerAppColor,
+            color: primaryBlueColor,
           ),
         ),
       ),

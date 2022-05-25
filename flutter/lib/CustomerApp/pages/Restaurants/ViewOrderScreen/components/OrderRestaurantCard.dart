@@ -15,6 +15,7 @@ class OrderRestaurantCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
+        padding: const EdgeInsets.all(8),
         child: Row(
           children: [
             CircleAvatar(
@@ -43,7 +44,7 @@ class OrderRestaurantCard extends StatelessWidget {
                         Icon(
                           Icons.place,
                           size: 18,
-                          color: customerAppColor,
+                          color: primaryBlueColor,
                         ),
                         SizedBox(
                           width: 5,
@@ -111,7 +112,7 @@ class OrderRestaurantCard extends StatelessWidget {
       },
       icon: Icon(
         Icons.textsms,
-        color: customerAppColor,
+        color: primaryBlueColor,
       ),
     );
   }

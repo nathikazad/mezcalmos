@@ -433,6 +433,12 @@
                         "laundry": "Laundry",
                         "estimatedDeliveryTime": "Estimated delivery time"
                     }
+
+                },
+                "LaundriesListView": {
+                    "laundries": "Laundries",
+
+                    "title": "Find your closest laundries or dry cleaners "
                 },
                 "LaundryRequestView": {
                     "Components": {
@@ -451,7 +457,7 @@
                         "deliveryCost": "Delivery Cost",
                         "noLocation": "No location selected",
                         "pickLocation": "Pick from map",
-                        "orderNow": "Order now",
+                        "orderNow": "Order Now",
                         "signInToMakeOrder": "Sign in to make order",
                         "notes": "Notes",
                         "error": "Error",
@@ -527,7 +533,9 @@
                 "view": "View"
             },
             "DateTimeHelper": {
-                "today": "Today"
+                "today": "Today",
+                "in": "in : ",
+                "at": "at : "
             }
         },
         "pages": {
@@ -568,6 +576,7 @@
                 "components": {
                     "ClearNotificationButton": {
                         "latest": "Latest",
+                        "today": "Today",
                         "alertClearNotificationTitle": "Clear All Notifications"
                     }
                 },
@@ -877,6 +886,8 @@
                 "laundryListView": {
                     "laundriesListView": {
                         "title": "Pick a laundry",
+
+
                         "components": {
                             "laundrySelectCard": {
                                 "available": "Available",

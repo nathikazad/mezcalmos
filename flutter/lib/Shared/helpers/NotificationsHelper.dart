@@ -66,6 +66,9 @@ Future<void> decideWhichButtonDialogToUse(
       status: notification.title,
       primaryIcon: notification.icon,
       description: notification.body,
+      primaryCallBack: () {
+        Get.back(closeOverlays: true);
+      },
       // bottomRightIcon: notification.icon,
       secondaryCallBack: () => Get.toNamed(notification.linkUrl),
     );

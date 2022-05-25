@@ -79,7 +79,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
           viewController.changeAlwaysOpenSwitch(v);
           viewController.filterRestaurants();
         },
-        activeColor: customerAppColor,
+        activeColor: primaryBlueColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 5),
         title: Text(
           "Show only open restaurents",

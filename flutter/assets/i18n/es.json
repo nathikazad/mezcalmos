@@ -436,6 +436,12 @@
                         "laundry": "Lavandería",
                         "estimatedDeliveryTime": "Tiempo de entrega estimado"
                     }
+
+
+                },
+                "LaundriesListView": {
+                    "laundries": "Lavado",
+                    "title": "Encuentra tus lavanderías más cercanas o tintorerías "
                 },
                 "LaundryRequestView": {
                     "Components": {
@@ -530,7 +536,9 @@
                 "view": "Ver"
             },
             "DateTimeHelper": {
-                "today": "Hoy dia"
+                "today": "Hoy dia",
+                "in": "en : ",
+                "at": "a : "
             }
         },
         "pages": {
@@ -571,6 +579,7 @@
                 "components": {
                     "ClearNotificationButton": {
                         "latest": "Último",
+                        "today": "Today",
                         "alertClearNotificationTitle": "Eliminar todas las notificaciones"
                     }
                 },

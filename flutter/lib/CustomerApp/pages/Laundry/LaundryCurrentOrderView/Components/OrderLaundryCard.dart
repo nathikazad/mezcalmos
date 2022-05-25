@@ -15,6 +15,7 @@ class OrderLaundryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
+        padding: const EdgeInsets.all(8),
         child: Row(
           children: [
             CircleAvatar(
@@ -43,7 +44,7 @@ class OrderLaundryCard extends StatelessWidget {
                         Icon(
                           Icons.place,
                           size: 18,
-                          color: customerAppColor,
+                          color: primaryBlueColor,
                         ),
                         SizedBox(
                           width: 5,
@@ -83,7 +84,7 @@ class OrderLaundryCard extends StatelessWidget {
             //  margin: EdgeInsets.all(12),
             child: Icon(
               Icons.textsms,
-              color: customerAppColor,
+              color: primaryBlueColor,
             ),
           ),
           Obx(

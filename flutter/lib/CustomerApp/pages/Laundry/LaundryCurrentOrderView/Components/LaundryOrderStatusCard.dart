@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
@@ -28,82 +29,60 @@ class LaundryOrderStatusCard extends StatelessWidget {
             width: double.infinity,
             margin: const EdgeInsets.all(12),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 getOrderWidget(order.status),
-                Flexible(
-                  flex: 8,
-                  fit: FlexFit.tight,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        getOrderStatus(order.status),
-                        style: txt.headline3,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (getEstimatedText() != null)
-                        Text(
-                          getEstimatedText()!,
-                          style: txt.headline3,
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                    ],
-                  ),
+                Spacer(),
+                _orderStatusText(context),
+                Spacer(
+                  flex: 2,
                 ),
-                // const Spacer(),
-                // messageButton(context),
               ],
             ),
           ),
         ),
-        if (getEstimatedText() != null)
-          Container(
-            margin: EdgeInsets.all(5),
-            alignment: Alignment.center,
-            child: Text(
-              getEstimatedText()!,
-              textAlign: TextAlign.center,
-            ),
-          ),
       ],
+    );
+  }
+
+  Widget _orderStatusText(BuildContext context) {
+    return Flexible(
+      flex: 6,
+      fit: FlexFit.loose,
+      child: Container(
+        alignment: Alignment.center,
+        child: Text(
+          getOrderStatus(order.status),
+          style:
+              Theme.of(context).textTheme.headline3?.copyWith(fontSize: 14.sp),
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
     );
   }
 
   String? getEstimatedText() {
     switch (order.status) {
-      case LaundryOrderStatus.OtwPickupFromCustomer:
-        if (order.estimatedPickupFromCustomerTime != null) {
-          return order.estimatedPickupFromCustomerTime!.getEstimatedTime();
-        }
-
-        break;
+      case LaundryOrderStatus.OrderReceieved:
       case LaundryOrderStatus.PickedUpFromCustomer:
+      case LaundryOrderStatus.OtwPickupFromCustomer:
         if (order.estimatedDropoffAtServiceProviderTime != null) {
-          return order.estimatedDropoffAtServiceProviderTime!
-              .getEstimatedTime();
+          return "Will be picked up ${order.estimatedDropoffAtServiceProviderTime!.getEstimatedTime()}";
         }
         break;
       case LaundryOrderStatus.AtLaundry:
         if (order.estimatedLaundryReadyTime != null) {
-          return order.estimatedLaundryReadyTime!.getEstimatedTime();
+          return "Will be ready ${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
         }
 
         break;
-      case LaundryOrderStatus.OtwPickupFromLaundry:
-        if (order.estimatedPickupFromServiceProviderTime != null) {
-          return order.estimatedPickupFromServiceProviderTime!
-              .getEstimatedTime();
-        }
 
-        break;
       case LaundryOrderStatus.PickedUpFromLaundry:
+      case LaundryOrderStatus.OtwPickupFromLaundry:
         if (order.estimatedDropoffAtCustomerTime != null) {
-          return order.estimatedDropoffAtCustomerTime!.getEstimatedTime();
+          return "Will be dropprd off ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
         }
 
         break;
@@ -135,7 +114,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         child: Icon(
           Icons.local_laundry_service,
           size: 40,
-          color: customerAppColor,
+          color: primaryBlueColor,
         ),
       );
     case LaundryOrderStatus.OtwPickupFromCustomer:
@@ -145,7 +124,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         child: Icon(
           Icons.delivery_dining,
           size: 40,
-          color: customerAppColor,
+          color: primaryBlueColor,
         ),
       );
     case LaundryOrderStatus.PickedUpFromCustomer:
@@ -153,11 +132,11 @@ Widget getOrderWidget(LaundryOrderStatus status) {
       return Container(
         padding: const EdgeInsets.all(5),
         decoration:
-            BoxDecoration(color: lightCustomerAppColor, shape: BoxShape.circle),
+            BoxDecoration(color: secondaryBlueColor, shape: BoxShape.circle),
         child: Icon(
           Icons.check,
           size: 25,
-          color: customerAppColor,
+          color: primaryBlueColor,
         ),
       );
 
@@ -167,7 +146,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
         child: Icon(
           Icons.dry_cleaning_rounded,
           size: 40,
-          color: customerAppColor,
+          color: primaryBlueColor,
         ),
       );
   }

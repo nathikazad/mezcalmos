@@ -13,6 +13,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {Color bgColor = Colors.white,
     Function? onClick,
     String? title,
+    Widget? titleWidget,
     PreferredSizeWidget? tabBar,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btnIcon;
@@ -123,7 +124,9 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                         color: Colors.black,
                       ),
                     )
-                  : MezcalmosSharedWidgets.fillTitle(actionIcons.length),
+                  : (titleWidget != null)
+                      ? titleWidget
+                      : MezcalmosSharedWidgets.fillTitle(actionIcons.length),
               Spacer(),
               for (int i = 0; i < actionIcons.length; i++) ...<Widget>[
                 actionIcons[i]

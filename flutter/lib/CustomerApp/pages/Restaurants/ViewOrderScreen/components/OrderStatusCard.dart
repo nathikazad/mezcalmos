@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:rive/rive.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -29,12 +30,16 @@ class OrderStatusCard extends StatelessWidget {
         Card(
           child: Container(
             width: double.infinity,
-            margin: const EdgeInsets.all(12),
+            margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 orderStatusImage(ordersStates),
+                Spacer(),
                 _orderStatusText(context),
+                Spacer(
+                  flex: 2,
+                ),
               ],
             ),
           ),
@@ -54,14 +59,18 @@ class OrderStatusCard extends StatelessWidget {
 
   Widget _orderStatusText(BuildContext context) {
     return Flexible(
-      flex: 8,
-      fit: FlexFit.tight,
-      child: Text(
-        getOrderStatus(ordersStates),
-        style: Theme.of(context).textTheme.headline3,
-        textAlign: TextAlign.center,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
+      flex: 6,
+      fit: FlexFit.loose,
+      child: Container(
+        alignment: Alignment.center,
+        child: Text(
+          getOrderStatus(ordersStates),
+          style:
+              Theme.of(context).textTheme.headline3?.copyWith(fontSize: 14.sp),
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
   }
@@ -97,8 +106,8 @@ class OrderStatusCard extends StatelessWidget {
 Widget orderStatusImage(RestaurantOrderStatus status) {
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return Padding(
-        padding: const EdgeInsets.only(right: 10.0),
+      return Container(
+        //   padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
           Ionicons.close_circle,
           size: 40,
@@ -107,8 +116,8 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
       );
 
     case RestaurantOrderStatus.CancelledByCustomer:
-      return Padding(
-        padding: const EdgeInsets.only(right: 10.0),
+      return Container(
+        // padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
           Ionicons.close_circle,
           size: 40,
@@ -117,12 +126,12 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
       );
 
     case RestaurantOrderStatus.OrderReceieved:
-      return Padding(
-        padding: const EdgeInsets.only(right: 10.0),
+      return Container(
+        // padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
           Icons.flatware_rounded,
           size: 40,
-          color: customerAppColor,
+          color: primaryBlueColor,
         ),
       );
     case RestaurantOrderStatus.PreparingOrder:
@@ -144,12 +153,12 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
         ),
       );
     case RestaurantOrderStatus.ReadyForPickup:
-      return Padding(
-        padding: const EdgeInsets.only(right: 10.0),
+      return Container(
+        // padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
           Icons.check_circle,
           size: 40,
-          color: lightCustomerAppColor,
+          color: secondaryBlueColor,
         ),
       );
 
@@ -157,7 +166,7 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
       return Padding(
         padding: const EdgeInsets.only(right: 10.0),
         child:
-            Icon(Ionicons.checkmark_circle, size: 40, color: customerAppColor),
+            Icon(Ionicons.checkmark_circle, size: 40, color: primaryBlueColor),
       );
   }
 }

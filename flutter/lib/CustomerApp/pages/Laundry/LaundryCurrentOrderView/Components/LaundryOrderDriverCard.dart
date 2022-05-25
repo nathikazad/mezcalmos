@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -12,7 +13,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_getRightDriver() != null) {
+    if (_getRightDriver() != null && order.inProcess()) {
       return Card(
           child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
@@ -32,7 +33,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        color: customerAppColor, shape: BoxShape.circle),
+                        color: primaryBlueColor, shape: BoxShape.circle),
                     child: Icon(
                       Icons.delivery_dining,
                       size: 32,
@@ -57,7 +58,8 @@ class LaundryOrderDriverCard extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  Text("Pick up time ?"),
+                  if (_getTime() != null) Text(_getTime()!)
+                  //  if (_getTime() != null) Text("${_getTime()}"),
                 ],
               ),
             ),
@@ -65,7 +67,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                 onPressed: () {},
                 icon: Icon(
                   Icons.textsms_rounded,
-                  color: customerAppColor,
+                  color: primaryBlueColor,
                 ))
           ],
         ),
@@ -75,10 +77,19 @@ class LaundryOrderDriverCard extends StatelessWidget {
     }
   }
 
-  DeliveryDriverUserInfo? _getRightDriver() {
-    if (!order.inDeliveryPhase()) {
+  String? _getTime() {
+    if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
+        order.estimatedPickupFromCustomerTime != null) {
+      return "Pick-up time : ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedPickupFromCustomerTime!)}";
+    } else if (order.estimatedDropoffAtCustomerTime != null) {
+      return "Dropoff time : ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedDropoffAtCustomerTime!)}";
+    } else {
       return null;
-    } else if (order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+    }
+  }
+
+  DeliveryDriverUserInfo? _getRightDriver() {
+    if (order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
       return order.pickupDriver;
     } else if (order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
       return order.dropoffDriver;

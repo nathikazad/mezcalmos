@@ -53,14 +53,15 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                 ),
                 _laundryInfoHeader(),
                 SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
                 Text(
-                  "Open hours",
+                  "Description",
                   style: Get.textTheme.bodyText1,
                 ),
+                Text("laundry.value!.info.description"),
                 const SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 MezServiceOpenHours(schedule: laundry.value!.schedule!),
                 SizedBox(
@@ -88,7 +89,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
     return Container(
       height: 70,
       decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [Colors.purple, customerAppColor])),
+          gradient: LinearGradient(colors: [Colors.purple, primaryBlueColor])),
       child: TextButton(
         style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(),
@@ -112,6 +113,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
     return Container(
       padding: const EdgeInsets.all(5),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
@@ -130,7 +132,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                           padding: const EdgeInsets.all(3),
                           labelStyle: Get.textTheme.bodyText2?.copyWith(
                               fontWeight: FontWeight.w700,
-                              color: customerAppColor),
+                              color: primaryBlueColor),
                           label: Text(
                               "Minmum cost \$${laundry.value!.laundryCosts.minimumCost} ")),
                     ),
@@ -142,7 +144,9 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           Flexible(
               child: Column(
             children: [
-              Text("Starting from"),
+              Text(
+                "Starting from",
+              ),
               Text(
                 "\$${laundry.value!.getCheapestCategory}/KG",
                 style: Get.textTheme.bodyText1

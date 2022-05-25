@@ -62,7 +62,7 @@ class CartItemsBuilder extends StatelessWidget {
                         children: [
                           IncrementalComponent(
                               minVal: 1,
-                              btnColors: lightCustomerAppColor,
+                              btnColors: secondaryBlueColor,
                               alignment: MainAxisAlignment.start,
                               onMinValueBtnColor: Colors.grey.shade400,
                               incrementCallback: () {
@@ -71,6 +71,8 @@ class CartItemsBuilder extends StatelessWidget {
                                 //print("${cartItem.item.id}");
                                 _restaurantController.incrementItem(
                                     cartItem.idInCart!, 1);
+                                mezDbgPrint(
+                                    "quant ttttttoooooo${_restaurantController.cart.value.cartItems.first.quantity}");
                                 _restaurantController.refresh();
                               },
                               onChangedToZero: () async {
@@ -110,7 +112,7 @@ class CartItemsBuilder extends StatelessWidget {
                                 _restaurantController.refresh();
                               }),
                           Text(
-                            "\$${cartItem.item.cost}",
+                            "\$${cartItem.totalCost()}",
                             style: Get.textTheme.headline3,
                           ),
                         ],

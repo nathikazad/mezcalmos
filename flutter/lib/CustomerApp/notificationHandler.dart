@@ -67,8 +67,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
 Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
   final TaxiOrdersStatus newOrdersStatus =
       value['status'].toString().toTaxiOrderStatus();
-  mezDbgPrint(
-      'notif nuuuuuuuuuuuuuuuuuuuuuuuuuuuul :' + newOrdersStatus.toString());
+
   final Map<String, dynamic> dynamicFields =
       getTaxiOrderStatusFields(newOrdersStatus)!;
   mezDbgPrint(dynamicFields);

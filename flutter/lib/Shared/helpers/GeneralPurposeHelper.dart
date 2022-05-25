@@ -475,12 +475,12 @@ Widget multipleSelectOptionComponent(
               )
             : Icon(
                 Icons.add,
-                color: customerAppColor,
+                color: primaryBlueColor,
                 size: 22,
               ),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: value ? customerAppColor : lightCustomerAppColor,
+          color: value ? primaryBlueColor : secondaryBlueColor,
         )),
   );
 }

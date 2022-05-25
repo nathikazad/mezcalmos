@@ -224,6 +224,7 @@ class CartItem {
 
   num totalCost() {
     // return 0;
+
     return quantity * costPerOne();
   }
 }
