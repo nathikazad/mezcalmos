@@ -168,63 +168,6 @@ class _OrderEstimatedTimeComponentState
                         ),
                       );
                     });
-
-                // await showDatePicker(
-                //     context: context,
-                //     initialDate: selectedDate ?? DateTime.now(),
-                //     firstDate: widget.order.orderTime,
-                //     lastDate: DateTime(2050),
-                //     builder: (BuildContext context, Widget? child) {
-                //       return Theme(
-                //         data: Theme.of(context).copyWith(
-                //           colorScheme: ColorScheme.light(
-                //             primary:
-                //                 primaryBlueColor, // header background color
-                //             onPrimary: Colors.white, // header text color
-                //             onSurface: Colors.black, // body text color
-                //           ),
-                //           textButtonTheme: TextButtonThemeData(
-                //             style: TextButton.styleFrom(
-                //               primary: primaryBlueColor, // button text color
-                //             ),
-                //           ),
-                //         ),
-                //         child: child!,
-                //       );
-                //     }).then((DateTime? date) {
-                //   if (date != null) {
-                //     showTimePicker(
-                //             context: context,
-                //             builder: (BuildContext context, Widget? child) {
-                //               return Theme(
-                //                 data: Theme.of(context).copyWith(
-                //                   colorScheme: ColorScheme.light(
-                //                     primary: primaryBlueColor,
-                //                     onPrimary:
-                //                         Colors.white, // header text color
-                //                     onSurface: Colors.black, // body text color
-                //                   ),
-                //                   textButtonTheme: TextButtonThemeData(
-                //                     style: TextButton.styleFrom(
-                //                       primary:
-                //                           primaryBlueColor, // button text color
-                //                     ),
-                //                   ),
-                //                 ),
-                //                 child: child!,
-                //               );
-                //             },
-                //             initialTime: TimeOfDay(
-                //                 hour: widget.order.orderTime.hour,
-                //                 minute: widget.order.orderTime.minute))
-                //         .then((TimeOfDay? time) {
-                //       if (time != null) {
-                //         _setOrderEstTime(DateTime(date.year, date.month,
-                //             date.day, time.hour, time.minute));
-                //       }
-                //     });
-                //   }
-                // });
               }
             : null,
         customBorder: CircleBorder(),
