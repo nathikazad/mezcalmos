@@ -119,19 +119,23 @@ class _PickLocationViewState extends State<PickLocationView> {
     return Scaffold(
       bottomNavigationBar: ButtonComponent(
         canClick: !showScreenLoading,
-        function: (!showScreenLoading)
+        function: (showScreenLoading)
             ? null
             : () async {
                 await onPickButtonClick(context);
               },
         widget: Center(
-          child: Text(
-            _i18n()["pickLocation"],
-            style: Theme.of(context)
-                .textTheme
-                .headline2!
-                .copyWith(color: Colors.white, fontSize: 12.sp),
-          ),
+          child: (showScreenLoading)
+              ? CircularProgressIndicator(
+                  color: Colors.white,
+                )
+              : Text(
+                  _i18n()["pickLocation"],
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline2!
+                      .copyWith(color: Colors.white, fontSize: 12.sp),
+                ),
         ),
       ),
       resizeToAvoidBottomInset: false,

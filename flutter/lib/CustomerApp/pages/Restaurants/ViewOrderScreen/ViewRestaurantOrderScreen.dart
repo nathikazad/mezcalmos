@@ -161,6 +161,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
             return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraint) {
                 return SingleChildScrollView(
+                  padding: const EdgeInsets.all(8),
                   child: ConstrainedBox(
                     constraints:
                         BoxConstraints(minHeight: constraint.maxHeight),
@@ -172,12 +173,12 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             ordersStates: order.value!.status,
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 15,
                           ),
                           OrderRestaurantCard(order: order.value!),
 
                           SizedBox(
-                            height: 10,
+                            height: 15,
                           ),
                           if (order.value!.inDeliveryPhase()) ..._mapWidget,
                           OrderItemsCard(

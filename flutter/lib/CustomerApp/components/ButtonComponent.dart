@@ -31,7 +31,7 @@ class ButtonComponent extends StatelessWidget {
                   blurRadius: 10,
                   spreadRadius: 0)
             ],
-            color: (!canClick) ? bgColor : null,
+            color: (canClick) ? null : Colors.grey,
             gradient: (canClick)
                 ? LinearGradient(
                     colors: [Colors.purple, primaryBlueColor],

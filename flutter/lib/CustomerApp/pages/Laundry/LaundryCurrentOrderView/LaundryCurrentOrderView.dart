@@ -122,7 +122,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: <Widget>[
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 8),
                             LaundryOrderStatusCard(order: order.value!),
                             LaundryOrderDriverCard(order: order.value!),
                             if (order.value!.inDeliveryPhase())
