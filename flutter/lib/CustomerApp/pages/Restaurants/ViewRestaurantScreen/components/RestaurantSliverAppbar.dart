@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart'
     show TwoLettersGenerator;
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -171,11 +170,16 @@ class RestaurantSliverAppBar extends StatelessWidget {
           tabs: List.generate(restaurant.getCategories.length, (int index) {
             return Tab(
               child: FilterChip(
+                showCheckmark: false,
+                labelStyle: Get.textTheme.bodyText2?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: tabController.index != index
+                        ? customerAppColor
+                        : Colors.black),
                 label: Text(
                     restaurant.getCategories[index].name?[userLanguage] ?? ""),
                 onSelected: (bool v) {
                   onTap(index);
-                  mezDbgPrint("ontaaaap");
                 },
                 selected: tabController.index == index,
               ),
