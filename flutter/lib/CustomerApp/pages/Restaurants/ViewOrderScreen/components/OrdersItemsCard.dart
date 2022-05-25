@@ -23,11 +23,14 @@ class OrderItemsCard extends StatelessWidget {
       children: <Widget>[
         Container(
           alignment: Alignment.centerLeft,
-          margin: EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.only(left: 5),
           child: Text(
             '${_i18n()["orderItems"]}',
             style: txt.bodyText1,
           ),
+        ),
+        SizedBox(
+          height: 10,
         ),
         Column(
           children: List.generate(items.length,

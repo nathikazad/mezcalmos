@@ -117,7 +117,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       LaundryOrderStatusCard(order: order.value!),
                       LaundryOrderDriverCard(order: order.value!),
                       const SizedBox(height: 20),

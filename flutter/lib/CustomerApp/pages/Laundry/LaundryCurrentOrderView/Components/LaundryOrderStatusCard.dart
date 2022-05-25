@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
@@ -31,32 +32,11 @@ class LaundryOrderStatusCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 getOrderWidget(order.status),
-                Flexible(
-                  flex: 8,
-                  fit: FlexFit.tight,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        getOrderStatus(order.status),
-                        style: txt.headline3,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (getEstimatedText() != null)
-                        Text(
-                          getEstimatedText()!,
-                          style: txt.headline3,
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                    ],
-                  ),
+                Spacer(),
+                _orderStatusText(context),
+                Spacer(
+                  flex: 2,
                 ),
-                // const Spacer(),
-                // messageButton(context),
               ],
             ),
           ),
@@ -71,6 +51,24 @@ class LaundryOrderStatusCard extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+
+  Widget _orderStatusText(BuildContext context) {
+    return Flexible(
+      flex: 6,
+      fit: FlexFit.loose,
+      child: Container(
+        alignment: Alignment.center,
+        child: Text(
+          getOrderStatus(order.status),
+          style:
+              Theme.of(context).textTheme.headline3?.copyWith(fontSize: 14.sp),
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
     );
   }
 

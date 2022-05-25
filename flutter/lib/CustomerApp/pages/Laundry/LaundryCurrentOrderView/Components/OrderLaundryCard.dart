@@ -15,6 +15,7 @@ class OrderLaundryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
+        padding: const EdgeInsets.all(8),
         child: Row(
           children: [
             CircleAvatar(
