@@ -14,11 +14,14 @@ class RideReadByTaxisHint extends StatelessWidget {
         Center(
           child: Text(
             _i18n()['taxiRideCheckedTooltip'],
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.left,
             softWrap: true,
             maxLines: 10,
             style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 15,
               color: Color.fromRGBO(103, 121, 254, 1),
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

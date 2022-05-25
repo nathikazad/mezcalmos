@@ -25,39 +25,14 @@ class IncomingOrdersScreen extends StatefulWidget {
   _IncomingOrdersScreenState createState() => _IncomingOrdersScreenState();
 }
 
-class _IncomingOrdersScreenState extends State<IncomingOrdersScreen>
-    with TickerProviderStateMixin {
+class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
   IncomingOrdersController _controller = Get.find<IncomingOrdersController>();
   TaxiAuthController _taxiAuthController = Get.find<TaxiAuthController>();
   late AnimationController controller;
-  // StreamSubscription? scheduledOrdersListener;
-  // RxList<TaxiOrder> _scheduledOrders = <TaxiOrder>[].obs;
-
-  @override
-  void initState() {
-    // scheduledOrdersListener = Get.find<FirebaseDb>()
-    //     .firebaseDatabase
-    //     .reference()
-    //     .child('taxis/inProcessOrders')
-    //     .onValue
-    //     .listen((event) {
-    //   mezDbgPrint("inProcessOrders => ${event.snapshot.value}");
-    //   event.snapshot.value.froEach((dynamic key, dynamic value) {
-    //     TaxiOrder tOrder = TaxiOrder.fromData(key, value);
-    //     if (tOrder.status == TaxiOrdersStatus.Scheduled) {
-    //       _scheduledOrders.add(tOrder);
-    //     }
-    //   });
-    // });
-    super.initState();
-  }
 
   @override
   void dispose() {
-    // scheduledOrdersListener?.cancel();
-    // scheduledOrdersListener = null;
     _controller.dispose();
-
     super.dispose();
   }
 
@@ -147,7 +122,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen>
         )
         .toList();
 
-    // looking for taxi Scheduled order
+    // lookingForTaxiScheduled order
     final List<TaxiOrder> _lftScheduled = _controller
         .orders()
         .where(
@@ -155,6 +130,12 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen>
               element.status == TaxiOrdersStatus.LookingForTaxiScheduled ||
               element.scheduledTime != null,
         )
+        .toList();
+
+// Scheduled orders.
+    final List<TaxiOrder> _scheduledOrders = Get.find<OrderController>()
+        .currentOrders
+        .where((o) => o.status == TaxiOrdersStatus.Scheduled)
         .toList();
 
     _ret.addAll(
@@ -183,7 +164,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen>
       // add the notify me on new LookingForTaxiScheduled orders
       _ret.addAll(
         [
-          if (_lftScheduled.isNotEmpty)
+          if (_lftScheduled.isNotEmpty || _scheduledOrders.isNotEmpty)
             Container(
               height: 190,
               child: _statusError(
@@ -215,7 +196,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen>
 
       _ret.addAll(
         [
-          if (_lftScheduled.isNotEmpty)
+          if (_lftScheduled.isNotEmpty || _scheduledOrders.isNotEmpty)
             Container(
               height: 190,
               child: _statusError(

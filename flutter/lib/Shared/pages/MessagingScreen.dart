@@ -310,79 +310,91 @@ class SendMessageBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 70,
+      padding: EdgeInsets.symmetric(horizontal: 10),
       color: Colors.white,
       child: Center(
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 21, vertical: 17),
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(240, 241, 255, 1),
                 borderRadius: BorderRadius.circular(75),
               ),
               child: SizedBox(
                 width: 80.w,
-                height: 70,
-                child: TextField(
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(14),
-                      hintStyle: TextStyle(
-                        color: Color.fromRGBO(120, 120, 120, 1),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Nunito',
-                      ),
-                      fillColor: Colors.white,
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      hintText: 'Message...' //_i18n()['namePlaceHolder'],
-                      ),
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0),
-                    fontSize: 18,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w600,
+                height: 40,
+                child: Center(
+                  child: TextField(
+                    maxLines: 1,
+                    clipBehavior: Clip.none,
+                    textAlign: TextAlign.start,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(14),
+                        alignLabelWithHint: true,
+                        hintStyle: TextStyle(
+                          color: Color.fromRGBO(120, 120, 120, 1),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Nunito',
+                        ),
+                        fillColor: Colors.white,
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        hintText: 'Message...' //_i18n()['namePlaceHolder'],
+                        ),
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      fontSize: 18,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600,
+                    ),
+                    controller: _textEditingController,
+                    onChanged: (String value) {
+                      _typedMsg.value = value;
+                    },
                   ),
-                  controller: _textEditingController,
-                  onChanged: (String value) {
-                    _typedMsg.value = value;
-                  },
                 ),
               ),
             ),
-            InkWell(
-              onTap: () {
-                final bool msgReady2Send =
-                    _textEditingController.text.replaceAll(' ', '').length > 0;
-                if (msgReady2Send) {
-                  controller.sendMessage(
-                    message: _typedMsg.value,
-                    chatId: chatId,
-                    orderId: orderId,
-                  );
-                  _textEditingController.clear();
-                  _typedMsg.value = "";
-                } else {
-                  _textEditingController.clear();
-                  _typedMsg.value = "";
-                }
-              },
-              child: Container(
-                height: 35,
-                width: 35,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.fromRGBO(
-                      240, 241, 255, 1), //Color.fromRGBO(240, 241, 255, 1),
-                ),
-                child: Transform.rotate(
-                  angle: -math.pi / 5.0,
-                  child: Center(
-                    child: Icon(
-                      Icons.send,
-                      size: 20,
-                      color: Color.fromRGBO(103, 121, 254, 1),
+            SizedBox(width: 10),
+            Flexible(
+              child: InkWell(
+                onTap: () {
+                  final bool msgReady2Send =
+                      _textEditingController.text.replaceAll(' ', '').length >
+                          0;
+                  if (msgReady2Send) {
+                    controller.sendMessage(
+                      message: _typedMsg.value,
+                      chatId: chatId,
+                      orderId: orderId,
+                    );
+                    _textEditingController.clear();
+                    _typedMsg.value = "";
+                  } else {
+                    _textEditingController.clear();
+                    _typedMsg.value = "";
+                  }
+                },
+                child: Container(
+                  height: 35,
+                  width: 35,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color.fromRGBO(
+                        240, 241, 255, 1), //Color.fromRGBO(240, 241, 255, 1),
+                  ),
+                  child: Transform.rotate(
+                    angle: -math.pi / 5.0,
+                    child: Center(
+                      child: Icon(
+                        Icons.send,
+                        size: 20,
+                        color: Color.fromRGBO(103, 121, 254, 1),
+                      ),
                     ),
                   ),
                 ),

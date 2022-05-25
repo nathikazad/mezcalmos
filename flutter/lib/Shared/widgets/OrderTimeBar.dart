@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 
 class OrderTimeTopBar extends StatelessWidget {
   String barText;
-  OrderTimeTopBar({Key? key, required this.barText}) : super(key: key);
+  final bool withArrowIcon;
+  OrderTimeTopBar({Key? key, required this.barText, this.withArrowIcon = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 40,
+      padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         boxShadow: <BoxShadow>[
           BoxShadow(
@@ -24,7 +27,6 @@ class OrderTimeTopBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(width: 10),
           Icon(
             Icons.watch_later,
             color: Colors.black,
@@ -40,6 +42,14 @@ class OrderTimeTopBar extends StatelessWidget {
               fontSize: 14,
             ),
           ),
+          if (withArrowIcon) ...[
+            Spacer(),
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.black,
+              size: 18,
+            )
+          ]
         ],
       ),
     );

@@ -66,6 +66,9 @@ class IOrderViewWidgets {
 
   /// this holds the BottomSheet when the TaxiDriver clicks offer Price.
   AnimatedSlider counterOfferBottomSheet() {
+    mezDbgPrint(
+        "submittedCounterOffer => ${iOrderViewController.submittedCounterOffer.value}");
+    mezDbgPrint("CounterOffer => ${iOrderViewController.counterOffer.value}");
     return AnimatedSlider(
       isPositionedCoordinates:
           AnimatedSliderCoordinates(left: 0, right: 0, bottom: 0),
@@ -77,6 +80,9 @@ class IOrderViewWidgets {
           () => iOrderViewController.counterOffer.value != null &&
                   iOrderViewController.submittedCounterOffer.value
               ? CounterOfferSentBottomSheet(
+                  onCloseClick: () {
+                    iOrderViewController.animatedSliderController.slideDown();
+                  },
                   onCancelClick: () async =>
                       iOrderViewController.updateCounterOfferStatus(
                     newStatus: CounterOfferStatus.Cancelled,
@@ -87,12 +93,9 @@ class IOrderViewWidgets {
                   counterOffer: iOrderViewController.counterOffer.value!,
                   controller: iOrderViewController.controller,
                   order: iOrderViewController.order.value!,
-                  duration:
-                      iOrderViewController.order.value!.scheduledTime != null
-                          ? nScheduledCounterOfferValidExpireTimeInSeconds
-                          : iOrderViewController.counterOffer.value!
-                              .validityTimeDifference()
-                              .abs(),
+                  duration: iOrderViewController.counterOffer.value!
+                      .validityTimeDifference()
+                      .abs(),
                   onCounterEnd: () async =>
                       iOrderViewController.updateCounterOfferStatus(
                     newStatus: CounterOfferStatus.Expired,
@@ -105,9 +108,13 @@ class IOrderViewWidgets {
                   counterOffer: iOrderViewController.counterOffer,
                   controller: iOrderViewController.controller,
                   order: iOrderViewController.order.value!,
-                  onCountOfferSent: (num priceOffered) {
+                  onCountOfferSent: (num priceOffered) async {
                     mezDbgPrint("Taxi - sent offer with price $priceOffered !");
-                    iOrderViewController.onCountOfferSent(priceOffered);
+                    mezDbgPrint(
+                        "submittedCounterOffer => ${iOrderViewController.submittedCounterOffer.value}");
+                    mezDbgPrint(
+                        "CounterOffer => ${iOrderViewController.counterOffer.value}");
+                    await iOrderViewController.onCountOfferSent(priceOffered);
                   },
                 ),
         ),
@@ -183,10 +190,13 @@ class IOrderViewWidgets {
   /// 2. An Empty `SizedBox` when it's the opposit.
   Widget absorbOrIgnoreUserTapWidget() {
     // if there is a counter offer we give a user a way to reduce it by simply clicking on the background.
+    mezDbgPrint("absorbOrIgnoreUserTapWidget CALLED !");
+
     if (iOrderViewController.submittedCounterOffer.value &&
         iOrderViewController.counterOffer.value == null) {
       return InkWell(
         onTap: () {
+          mezDbgPrint("absorbOrIgnoreUserTapWidget DONE !");
           iOrderViewController.submittedCounterOffer.value = false;
           iOrderViewController.animatedSliderController.slideDown();
         },

@@ -211,24 +211,21 @@ Widget messageBtn({required Rxn<TaxiOrder> order, EdgeInsets? margin}) {
                   size: 30,
                 ),
               ),
-              Obx(
-                () => orderController
-                        .hasNewMessageNotification(order.value!.orderId)
-                    ? Positioned(
-                        top: 0,
-                        right: 0,
-                        child: Container(
-                          height: 10,
-                          width: 10,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white),
-                          ),
+              orderController.hasNewMessageNotification(order.value!.orderId)
+                  ? Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Container(
+                        height: 10,
+                        width: 10,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white),
                         ),
-                      )
-                    : SizedBox(),
-              ),
+                      ),
+                    )
+                  : SizedBox(),
             ],
           ),
         ),

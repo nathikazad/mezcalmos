@@ -225,10 +225,10 @@ class IncomingOrdersController extends GetxController {
             ? CounterOffer.fromData(snap.value,
                 taxiUserInfo: UserInfo.fromData(snap.value['driverInfo']))
             : null;
-        if (_cOffer != null && _cOffer.validityTimeDifference() < 0) {
-          return _cOffer;
-        }
-        return null;
+        // if (_cOffer != null && _cOffer.validityTimeDifference() < 0) {
+        return _cOffer;
+        // }
+        // return null;
       } on StateError catch (_) {
         return null;
       }

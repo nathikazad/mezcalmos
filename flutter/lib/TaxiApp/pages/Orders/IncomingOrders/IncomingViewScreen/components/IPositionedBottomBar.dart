@@ -226,7 +226,7 @@ class IncomingPositionedBottomBar extends StatelessWidget {
 class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
   final TaxiOrder order;
 
-  CurrentTaxiOrderPositionedBottomBar({required this.order});
+  const CurrentTaxiOrderPositionedBottomBar({required this.order});
 
   @override
   Widget build(BuildContext context) {

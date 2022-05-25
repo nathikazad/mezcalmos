@@ -217,7 +217,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                 _controller.clear();
               });
             },
-            child: Icon(Icons.cancel, size: 20, color: Colors.grey)),
+            child: Icon(Icons.cancel, size: 20, color: Colors.grey.shade700)),
       );
     } else {
       if (widget.showSearchIcon) {

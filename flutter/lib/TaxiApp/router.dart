@@ -3,6 +3,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/OrderViewScreen/OrderViewScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/IncomingListScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/IncomingOrderViewScreen.dart';
+import 'package:mezcalmos/TaxiApp/pages/Orders/PastOrders/PastOrdersScreen.dart';
 import 'package:mezcalmos/TaxiApp/pages/TaxiWrapper.dart';
 
 // Routes Keys.
@@ -23,6 +24,7 @@ String getTaxiOrderRoute(String orderId) {
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
+        GetPage(name: kPastOrdersListRoute, page: () => PastOrderList()),
         GetPage(name: kTaxiOrderRoute, page: () => CurrentOrderScreen()),
         GetPage(
           name: kIncomingOrdersListRoute,

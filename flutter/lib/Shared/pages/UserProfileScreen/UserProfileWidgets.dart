@@ -387,6 +387,10 @@ class UserProfileWidgetsClass {
                 userProfileController.stateMode.value == UserProfileMode.Edit &&
                 !clickedSave)
               cancelButton(),
+
+            SizedBox(
+              height: 10,
+            ),
           ],
         );
       }

@@ -95,7 +95,7 @@ class IOrderViewController {
         .listen((_counterOffer) async {
       // we start listening here and we make sure to duspose the StreamSub when it's disposed.
       counterOffer.value = _counterOffer;
-      if (counterOffer.value != null) {
+      if (counterOffer.value != null && counterOffer.value!.isValid) {
         submittedCounterOffer.value = true;
         animatedSliderController.slideUp();
       }
@@ -117,6 +117,15 @@ class IOrderViewController {
     final String _orderId = order.value!.orderId;
     clickedAcceptButton.value = true;
 
+    // first check if there is already an on-going CounterOffer - cancel it.
+    // maybe later on tell the driver first.
+    if (counterOffer.value != null && counterOffer.value!.isValid) {
+      await controller.removeFromNegotiationMode(
+        order.value!.orderId,
+        order.value!.customer.id,
+        newStatus: CounterOfferStatus.Cancelled,
+      );
+    }
     final ServerResponse serverResponse = await controller.acceptTaxi(_orderId);
 
     if (serverResponse.success) {
@@ -148,7 +157,7 @@ class IOrderViewController {
   }
 
   /// this gets invoked when the Taxi Driver presses [Send offer] button.
-  void onCountOfferSent(num price) async {
+  Future<void> onCountOfferSent(num price) async {
     await controller.submitCounterOffer(
       order.value!.orderId,
       order.value!.customer.id,
@@ -167,7 +176,6 @@ class IOrderViewController {
     // .then((value) {
     submittedCounterOffer.value = true;
     animatedSliderController.slideUp();
-    submittedCounterOffer.refresh();
     // });
   }
 

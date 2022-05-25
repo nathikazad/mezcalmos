@@ -149,9 +149,8 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                   child: viewWidgets.getScheduleTimeBottomSheet(context,
                       onConfirmTap: () {
                     viewController.sliderController.slideDown();
-
                     viewController.taxiRequest.value
-                        .setScheduledTime(viewController.scheduleTime.value);
+                        .setScheduledTime(viewController.scheduleTime());
 
                     setState(() {});
                   }, onCancelTap: () {

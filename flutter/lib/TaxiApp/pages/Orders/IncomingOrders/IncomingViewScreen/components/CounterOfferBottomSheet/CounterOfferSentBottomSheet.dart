@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezLoadingCounter.dart';
@@ -13,6 +14,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
   final IncomingOrdersController controller;
   final TaxiOrder order;
   final Function() onCounterEnd;
+  final Function() onCloseClick;
   final Function() onMakeNewOffer;
   final int duration;
   dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
@@ -21,6 +23,7 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
 
   const CounterOfferSentBottomSheet(
       {required this.counterOffer,
+      required this.onCloseClick,
       required this.onMakeNewOffer,
       required this.onCancelClick,
       required this.controller,
@@ -35,29 +38,55 @@ class CounterOfferSentBottomSheet extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          width: Get.width,
-          child: Center(
-            child: Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: [
-                    Color.fromRGBO(172, 89, 252, 1),
-                    Color.fromRGBO(85, 130, 255, 1),
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+        Stack(
+          children: [
+            if (!counterOffer.isValid || order.scheduledTime != null)
+              Positioned(
+                left: 31,
+                top: 5,
+                child: InkWell(
+                  onTap: onCloseClick,
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.close,
+                      size: 20,
+                    ),
+                  ),
                 ),
               ),
-              child: Icon(
-                Icons.local_taxi,
-                color: Colors.white,
+            Center(
+              child: Container(
+                width: Get.width,
+                child: Center(
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromRGBO(172, 89, 252, 1),
+                          Color.fromRGBO(85, 130, 255, 1),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.local_taxi,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
         Padding(
           padding: EdgeInsets.only(top: 7, left: 50, right: 50),

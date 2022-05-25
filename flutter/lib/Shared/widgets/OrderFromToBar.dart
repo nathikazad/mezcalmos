@@ -78,6 +78,7 @@ class OrderPositionedFromToTopBar {
         child: Column(
           children: [
             Container(
+              clipBehavior: Clip.hardEdge,
               width: Get.width / 1.05,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -91,68 +92,56 @@ class OrderPositionedFromToTopBar {
                   ),
                 ],
               ),
-              child: Flex(
-                // clipBehavior: Clip.hardEdge,
-                direction: Axis.vertical,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Flexible(
-                            child: Obx(
-                              () => Container(
-                                // width: 50,
-                                child: Text(
-                                  i18n()["from"] + ':',
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          Flexible(
-                            child: GestureDetector(
-                              onTap: () => MezSnackbar(
-                                  i18n()["from"], order.from.address),
-                              child: Text(
-                                order.from.address,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                maxLines: 1,
-                                softWrap: false,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                        ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Obx(
+                      () => Text(
+                        i18n()["from"] + ':',
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(width: 5),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () =>
+                            MezSnackbar(i18n()["from"], order.from.address),
+                        child: Text(
+                          order.from.address
+                              .replaceAll(' ', '\u00a0')
+                              .toUpperCase(),
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w400,
+                          ),
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(
               height: 5,
             ),
             Container(
+              clipBehavior: Clip.hardEdge,
               width: Get.width / 1.05,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -166,59 +155,51 @@ class OrderPositionedFromToTopBar {
                   ),
                 ],
               ),
-              child: Flex(
-                clipBehavior: Clip.hardEdge,
-                direction: Axis.vertical,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Flexible(
-                            child: Obx(
-                              () => Container(
-                                // width: 50,
-                                child: Text(
-                                  i18n()["to"] + ':',
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Obx(
+                      () => Container(
+                        // width: 50,
+                        child: Text(
+                          i18n()["to"] + ':',
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
                           ),
-                          SizedBox(width: 5),
-                          Flexible(
-                            child: GestureDetector(
-                              onTap: () =>
-                                  MezSnackbar(i18n()["to"], order.to.address),
-                              child: Text(
-                                order.to.address,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontFamily: 'Nunito',
-                                    fontWeight: FontWeight.w400),
-                                maxLines: 1,
-                                softWrap: false,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(width: 5),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () =>
+                            MezSnackbar(i18n()["to"], order.to.address),
+                        child: Text(
+                          order.to.address
+                              .replaceAll(' ', '\u00a0')
+                              .toUpperCase(),
+                          textAlign: TextAlign.left,
+                          textWidthBasis: TextWidthBasis.longestLine,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w400,
+                          ),
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

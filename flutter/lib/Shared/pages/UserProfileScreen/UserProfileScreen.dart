@@ -71,106 +71,81 @@ class _UserProfileState extends State<UserProfile>
       },
       child: Obx(
         () => Scaffold(
+          resizeToAvoidBottomInset: true,
+
           backgroundColor: Color.fromARGB(255, 248, 248, 248),
           appBar: widget.userProfileWidgets
               .getRightAppBar(isImageBeingUploaded: isUploadingImg.value),
-          body: Stack(
-            children: [
-              Flex(
-                direction: Axis.vertical,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: widget.userProfileWidgets.bodyContent(
-                  onBrowsImageClick: onBrowsImageClick,
-                  onSaveClick: onSaveChangesClick,
-                  onEditButtonClick: onStartEdit,
-                  isImageBeingUploaded: isUploadingImg.value,
-                  clickedSave: clickedSave.value,
+          body: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
+            child: Stack(
+              children: [
+                Flex(
+                  direction: Axis.vertical,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: widget.userProfileWidgets.bodyContent(
+                    onBrowsImageClick: onBrowsImageClick,
+                    onSaveClick: onSaveChangesClick,
+                    onEditButtonClick: onStartEdit,
+                    isImageBeingUploaded: isUploadingImg.value,
+                    clickedSave: clickedSave.value,
+                  ),
                 ),
-              ),
-              if (isUploadingImg.value)
-                Container(
-                  color: Colors.black.withOpacity(.2),
-                  height: Get.height,
-                  width: Get.width,
-                  child: Center(
-                    child: Container(
-                      padding: EdgeInsets.all(22),
-                      width: 90.w,
-                      height: 170,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Uploading picture",
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
+                if (isUploadingImg.value)
+                  Container(
+                    color: Colors.black.withOpacity(.2),
+                    height: Get.height,
+                    width: Get.width,
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.all(22),
+                        width: 90.w,
+                        height: 170,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Uploading picture",
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            height: 60,
-                            width: 60,
-                            child: CircularProgressIndicator(
-                              valueColor: animationController.drive(
-                                ColorTween(
-                                  begin: Color.fromRGBO(172, 89, 252, 1),
-                                  end: Color.fromRGBO(103, 121, 254, 1),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Container(
+                              height: 60,
+                              width: 60,
+                              child: CircularProgressIndicator(
+                                valueColor: animationController.drive(
+                                  ColorTween(
+                                    begin: Color.fromRGBO(172, 89, 252, 1),
+                                    end: Color.fromRGBO(103, 121, 254, 1),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
           // getToolTips(),
         ),
       ),
     );
   }
-
-  // -------------------------------------------------------- Hints Setup ---------------------------------------------------------------
-  // Widget getToolTips() {
-  //   final List<MezToolTipHint> _hints = <MezToolTipHint>[];
-  //   if (!Get.find<AuthController>().isDisplayNameSet()) {
-  //     _hints.add(MezToolTipHint(
-  //       hintWidget: NoUserNameSetHint(
-  //         hintText: _i18n()['mustSetUserNameHint'],
-  //       ),
-  //       left: Get.width / 2,
-  //       bodyLeft: Get.width / 4,
-  //       bottom: 280,
-  //       bodyBottom: 280,
-  //       // bodyBottom: 200
-  //     ));
-  //   }
-  //   if (!Get.find<AuthController>().isUserImgSet()) {
-  //     _hints.add(MezToolTipHint(
-  //       hintWidget: NoUserImageSetHint(
-  //         hintText: _i18n()['mustSetUserImgHint'],
-  //       ),
-  //       left: Get.width / 2,
-  //       bodyLeft: Get.width / 4,
-  //       bottom: 460,
-  //       bodyBottom: 460,
-  //     ));
-  //   }
-
-  //   return MezToolTip(hintWidgetsList: _hints, applyCacheIncrementing: false);
-  // }
 
   // -------------------------------------------------------- Helper functions ---------------------------------------------------------------
 

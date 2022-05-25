@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ListOrdersScreen/components/RestaurantOrdersListComponent.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -59,7 +58,9 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
         child: Scaffold(
           appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
               onClick: iOrderViewController.counterOffer.value == null ||
-                      iOrderViewController.counterOffer.value?.isValid == false
+                      iOrderViewController.counterOffer.value?.isValid !=
+                          true ||
+                      iOrderViewController.order.value?.scheduledTime != null
                   ? () {
                       iOrderViewController.cancelStreamsSubscriptions();
                       Get.back<void>();
@@ -79,32 +80,16 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                     IncomingPositionedBottomBar(
                       order: iOrderViewController.order.value!,
                     ),
-                    if (iOrderViewController.counterOffer.value == null)
+                    if (iOrderViewController.counterOffer.value == null ||
+                        iOrderViewController.counterOffer.value?.isValid !=
+                            true ||
+                        iOrderViewController.order.value?.scheduledTime != null)
                       iOrderViewWidgets.acceptAndOfferButtons(),
                     iOrderViewWidgets.counterOfferBottomSheet(),
                     ...OrderPositionedFromToTopBar.buildWithOrderTimeBar(
                       context: context,
                       order: iOrderViewController.order.value!,
                     ),
-                    // IncomingPositionedFromToTopBar(
-                    //   order: iOrderViewController.order.value!,
-                    // ),
-                    // Positioned(
-                    //   top: 65,
-                    //   left: 10,
-                    //   right: 10,
-                    //   child: OrderTimeTopBar(
-                    //     barText: DateFormat('EEEE dd / MM / y').format(
-                    //           iOrderViewController.order.value!.scheduledTime ??
-                    //               iOrderViewController.order.value!.orderTime,
-                    //         ) +
-                    //         ' at ' +
-                    //         DateFormat('hh:mm a').format(
-                    //           iOrderViewController.order.value!.scheduledTime ??
-                    //               iOrderViewController.order.value!.orderTime,
-                    //         ),
-                    //   ),
-                    // ),
                   ],
                 )
               : MezLogoAnimation(

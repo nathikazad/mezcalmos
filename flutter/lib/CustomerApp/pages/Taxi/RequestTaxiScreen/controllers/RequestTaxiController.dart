@@ -47,7 +47,18 @@ class RequestTaxiController {
   RxBool pickedFromTo = false.obs;
   RxList<OnlineTaxiDriver> onlineDrivers = <OnlineTaxiDriver>[].obs;
 
-  Rx<DateTime> scheduleTime = DateTime.now().add(Duration(minutes: 15)).obs;
+  Rx<DateTime> _scheduleTime = DateTime.now().add(Duration(minutes: 15)).obs;
+  void setScheduleTime(DateTime dt) {
+    _scheduleTime.value = dt;
+    _scheduleTime.refresh();
+  }
+
+  DateTime scheduleTime() {
+    if (DateTime.now().difference(_scheduleTime.value).inMinutes > -15)
+      _scheduleTime.value = DateTime.now().add(Duration(minutes: 15));
+
+    return _scheduleTime.value;
+  }
 
   final AnimatedSliderController sliderController =
       AnimatedSliderController(maxSliderHeight: 52.h);
@@ -196,7 +207,20 @@ class RequestTaxiController {
   Future<bool> requestTaxi() async {
     // we show grayed Confirm button so the user won't press it twice.
     locationPickerController.showLoadingIconOnConfirm();
-
+    if (taxiRequest.value.scheduledTime != null) {
+      if (DateTime.now()
+              .difference(taxiRequest.value.scheduledTime!)
+              .inMinutes >
+          -15) {
+        MezSnackbar(
+          "Oops :(",
+          "Shedule time should be 15 minutes or more ahead schedule time!",
+          position: SnackPosition.TOP,
+        );
+        locationPickerController.showConfirmButton();
+        return Future<bool>.value(false);
+      }
+    }
     // build order and call controller function
     final ServerResponse response =
         await controller.requestTaxi(taxiRequest.value);

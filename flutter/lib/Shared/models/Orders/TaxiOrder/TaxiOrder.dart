@@ -28,6 +28,19 @@ extension ParseOrderStatusToString on TaxiOrdersStatus {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
+
+  String getPastOrdersFormattedStatus() {
+    switch (this) {
+      case TaxiOrdersStatus.CancelledByCustomer:
+        return "Cancelled by customer";
+      case TaxiOrdersStatus.CancelledByTaxi:
+        return "Cancelled by you";
+      case TaxiOrdersStatus.DroppedOff:
+        return "Dropped off";
+      default:
+        return "unknown";
+    }
+  }
 }
 
 extension ParseStringToOrderStatus on String {
@@ -129,7 +142,7 @@ class TaxiOrder extends Order {
         acceptRideTime: data['acceptRideTime'],
         scheduledTime: data['scheduledTime'] == null
             ? null
-            : DateTime.parse(data['scheduledTime']),
+            : DateTime.parse(data['scheduledTime']).toLocal(),
         cost: data['cost'] ?? 35,
         // from: Location("", LocationData.fromMap({"lat":})),
         from: Location.fromFirebaseData(data['from']),

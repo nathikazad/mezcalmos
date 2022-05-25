@@ -316,7 +316,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           getTaxiRideStatusBar(
             'Customer has cancelled the ride',
             Icon(
-              Icons.check_circle,
+              Icons.cancel,
               color: Colors.red,
             ),
           )
@@ -326,7 +326,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           getTaxiRideStatusBar(
             'You have cancelled this ride',
             Icon(
-              Icons.check_circle,
+              Icons.cancel,
               color: Colors.red,
             ),
           )
@@ -436,6 +436,8 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   PreferredSizeWidget getRightAppBar(TaxiOrdersStatus status) {
     if (order!.isPastOrder() || order!.status == TaxiOrdersStatus.Scheduled) {
       return mezcalmosAppBar(AppBarLeftButtonType.Back,
+          //   onClick: Get.back,
+          // );
           onClick: () => Get.offNamedUntil<void>(
               kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute)));
     } else {

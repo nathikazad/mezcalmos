@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 
 class AnimatedSliderCoordinates {
@@ -36,26 +37,32 @@ class _AnimatedSliderState extends State<AnimatedSlider> {
   @override
   Widget build(BuildContext context) {
     return _getRootWidget(
-        child: AnimatedContainer(
-            clipBehavior: Clip.none,
-            duration: Duration(seconds: 1),
-            height: widget.animatedSliderController.sliderHeight,
-            curve: widget
-                .animatedSliderController.curveAnimation, // Curves.easeInExpo,
-            width: widget.animatedSliderController.sliderWidth, // Get.width,
-            decoration: BoxDecoration(
-              color: widget
-                  .animatedSliderController.backgroundColor, //Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black38, blurRadius: 10, spreadRadius: 5)
-              ],
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            child: widget.child));
+      child: AnimatedContainer(
+        onEnd: () {},
+        clipBehavior: Clip.none,
+        duration: Duration(
+            milliseconds:
+                widget.animatedSliderController.sliderHeight != 0 ? 700 : 100),
+        height: widget.animatedSliderController.sliderHeight,
+        curve: widget
+            .animatedSliderController.curveAnimation, // Curves.easeInExpo,
+        width: widget.animatedSliderController.sliderWidth, // Get.width,
+        decoration: BoxDecoration(
+          color:
+              widget.animatedSliderController.backgroundColor, //Colors.white,
+          boxShadow: [
+            BoxShadow(color: Colors.black38, blurRadius: 10, spreadRadius: 5)
+          ],
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: widget.animatedSliderController.sliderHeight != 0
+            ? widget.child
+            : SizedBox(),
+      ),
+    );
   }
 
   /// This checks if the slider Wrapped Inside a Positioned inside a stack or not.

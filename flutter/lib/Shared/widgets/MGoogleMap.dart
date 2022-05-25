@@ -134,7 +134,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                 onTap: (_) {
                   widget.mGoogleMapController.onMapTap?.call();
                 },
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.only(top: 80, bottom: 50),
                 mapToolbarEnabled: false,
                 minMaxZoomPreference:
                     widget.mGoogleMapController.getMapMinMaxZommPrefs(),
