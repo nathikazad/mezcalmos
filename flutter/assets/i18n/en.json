@@ -1196,7 +1196,12 @@
                     }
                 },
                 "addCategory": "Add category",
-                "editCategory": "Edit category"
+                "editCategory": "Edit category",
+                "categoryName": "Category name",
+                "categoryNameIn": "Category name in ",
+                "categoryNameHint": "Enter a category name",
+                "categoryPrice": "Category pricing per kilogramme",
+                "categoryPriceHint": "Enter category pricing per kilogramme..."
 
             },
             "DashboardView": {
