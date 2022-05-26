@@ -174,7 +174,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                 labelStyle: Get.textTheme.bodyText2?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: tabController.index != index
-                        ? customerAppColor
+                        ? primaryBlueColor
                         : Colors.black),
                 label: Text(
                     restaurant.getCategories[index].name?[userLanguage] ?? ""),
