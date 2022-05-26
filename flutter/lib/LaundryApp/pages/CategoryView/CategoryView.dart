@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/pages/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
@@ -75,31 +74,13 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
     );
   }
 
-  AppBar _addCategoryAppBar() {
-    return mezcalmosAppBar(
-      AppBarLeftButtonType.Back,
+  PreferredSizeWidget _addCategoryAppBar() {
+    return LaundryAppAppBar(
+      leftBtnType: AppBarLeftButtonType.Back,
       onClick: Get.back,
       title: (_addCategoryController.editMode.value)
           ? _addCategoryController.copyOfCategory.value!.name[userLanguage]!
           : "${_i18n()["addCategory"]}",
-      actionIcons: [
-        if (_addCategoryController.editMode.value)
-          IconButton(
-              onPressed: () {
-                if (categoryName != null) {
-                  showConfirmationDialog(context,
-                      title: "Delete category",
-                      helperText:
-                          "are you sure you want to delete this category",
-                      primaryButtonText: "Yes, delete", onYesClick: () async {
-                    await _addCategoryController
-                        .deleteCategory(categoryId: categoryName!)
-                        .then((value) => Get.back());
-                  }).whenComplete(() => Get.back());
-                }
-              },
-              icon: Icon(Ionicons.trash))
-      ],
     );
   }
 

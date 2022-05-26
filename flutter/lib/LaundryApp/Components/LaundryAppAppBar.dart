@@ -12,11 +12,14 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final bool? autoBack;
   final AppBarLeftButtonType leftBtnType;
-
+  bool showOrders;
+  Function? onClick;
   LaundryAppAppBar(
       {Key? key,
       this.title,
+      this.showOrders = true,
       this.autoBack = false,
+      this.onClick,
       this.leftBtnType = AppBarLeftButtonType.Back})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
@@ -24,7 +27,8 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size preferredSize;
   @override
   Widget build(BuildContext context) {
-    return mezcalmosAppBar(leftBtnType, actionIcons: [getAppbarIconsButton()]);
+    return mezcalmosAppBar(leftBtnType,
+        onClick: onClick, actionIcons: [getAppbarIconsButton()]);
   }
 
   Widget _ordersAppBarIcon() {
@@ -119,7 +123,8 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
           if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
           if (Get.find<AuthController>().isUserSignedIn)
             _notificationAppBarIcon(),
-          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+          if (Get.find<AuthController>().isUserSignedIn && showOrders)
+            _ordersAppBarIcon(),
         ],
       );
     });

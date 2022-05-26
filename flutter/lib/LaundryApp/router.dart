@@ -3,7 +3,6 @@ import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
 import 'package:mezcalmos/LaundryApp/pages/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/LaundryApp/pages/CurrentOrdersList/LaundryOpOrdersListView.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/EditInfoView.dart';
-import 'package:mezcalmos/LaundryApp/pages/InfoView/LaundryOpInfoView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/LaundryOpOrderView.dart';
 import 'package:mezcalmos/LaundryApp/pages/PastOrdresList/LaundryOpPastOrdersList.dart';
@@ -13,8 +12,6 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 const String kCurrentOrdersListView = '/orders';
 const String kPastOrdersListView = '/pastorders';
 const String kAdminView = '/admin';
-
-const String kInfoView = '/info';
 
 const String kEditInfoView = '/editInfo';
 
@@ -40,7 +37,6 @@ class XRouter {
             page: () => LaundryOpCurrentOrdersListView()),
         GetPage(
             name: kPastOrdersListView, page: () => LaundryOpPastOrdersList()),
-        GetPage(name: kInfoView, page: () => LaundryOpInfoView()),
         GetPage(name: kHomeRoute, page: () => LaundryWrapper()),
         GetPage(
           name: kCategoryView,

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/CurrentOrdersList/components/LaundryOpOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -53,7 +54,11 @@ class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
+      appBar: LaundryAppAppBar(
+        showOrders: false,
+        leftBtnType: AppBarLeftButtonType.Back,
+        onClick: Get.back,
+      ),
       body: Obx(
         () => Scrollbar(
           child: SingleChildScrollView(

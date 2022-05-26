@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/Components/CategoryGridCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/Components/LaundryOpNormalDeliveryTime.dart';
@@ -44,11 +45,10 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back,
-          actionIcons: [
-            // todo add orders and notifs buttons
-          ]),
+      appBar: LaundryAppAppBar(
+        leftBtnType: AppBarLeftButtonType.Back,
+        onClick: Get.back,
+      ),
       body: Obx(
         () => SingleChildScrollView(
           padding: const EdgeInsets.all(8),

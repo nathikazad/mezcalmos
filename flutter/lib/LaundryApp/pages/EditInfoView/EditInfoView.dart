@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/EditInfoWidgets.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/LaundryOpEditLocationCard.dart';
@@ -50,7 +51,10 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
+      appBar: LaundryAppAppBar(
+        leftBtnType: AppBarLeftButtonType.Back,
+        onClick: Get.back,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12.0),
         child: Column(

@@ -59,6 +59,7 @@ class _LaundryOpCurrentOrdersListViewState
     return Scaffold(
       appBar: LaundryAppAppBar(
         leftBtnType: AppBarLeftButtonType.Menu,
+        // onClick: Get.back,
       ),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: LaundryAppDrawer(),
