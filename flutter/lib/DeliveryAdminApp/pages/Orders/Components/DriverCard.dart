@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -239,12 +240,18 @@ class DriverCard extends StatelessWidget {
 
   Widget _restaurantMessagesDot(BuildContext context) {
     return Obx(
-      () => Get.find<RestaurantOrderController>()
-              .orderHaveNewMessageNotifications(
-                  (order as DeliverableOrder)
-                  .serviceProviderDropOffDriverChatId!)
-          ? _newMessageRedDot(context)
-          : Container(),
+      () {
+        if ((order as RestaurantOrder).serviceProviderDropOffDriverChatId !=
+            null) {
+          return Get.find<RestaurantOrderController>()
+                  .orderHaveNewMessageNotifications((order as RestaurantOrder)
+                      .serviceProviderDropOffDriverChatId!)
+              ? _newMessageRedDot(context)
+              : Container();
+        } else {
+          return Container();
+        }
+      },
     );
   }
 
