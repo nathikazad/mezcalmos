@@ -137,58 +137,17 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                           primaryClickTitle: _i18n()["rightBtn"],
                           secondaryClickTitle: _i18n()["leftBtn"],
                           description: _i18n()["subtitle"],
-                          primaryCallBack: () async {
-                            await restaurantCartController
-                                .addItem(widget.cartItem.value!);
-                            await Get.offNamed<void>(kCartRoute);
-                          },
                           secondaryCallBack: () async {
+                            Get.back<void>();
+                            await Get.toNamed<void>(kCartRoute);
+                          },
+                          primaryCallBack: () async {
                             Get.back<void>();
                             await restaurantCartController
                                 .addItem(widget.cartItem.value!);
                             await Get.offNamed<void>(kCartRoute);
                           },
                         );
-
-                        // final YesNoDialogButton clickedYes = await yesNoDialog(
-                        //     text: _i18n()["title"],
-                        //     titleUp: true,
-                        //     icon: Container(
-                        //       child: Icon(
-                        //         Icons.warning_amber,
-                        //         color: Colors.yellow,
-                        //         size: 70,
-                        //       ),
-                        //     ),
-                        //     buttonLeftStyle: Container(
-                        //       alignment: Alignment.center,
-                        //       decoration: BoxDecoration(
-                        //           borderRadius: BorderRadius.circular(8),
-                        //           color: Colors.grey[300]),
-                        //       height: 30,
-                        //       child: Text(_i18n()["leftBtn"]),
-                        //     ),
-                        //     buttonRightStyle: Container(
-                        //       alignment: Alignment.center,
-                        //       decoration: BoxDecoration(
-                        //           borderRadius: BorderRadius.circular(8),
-                        //           color: Colors.blue[800]),
-                        //       height: 30,
-                        //       child: Text(
-                        //         _i18n()["rightBtn"],
-                        //         style: TextStyle(color: Colors.white),
-                        //       ),
-                        //     ),
-                        //     body: _i18n()["subtitle"]);
-                        // if (clickedYes == YesNoDialogButton.Yes) {
-                        //   Get.back<void>();
-                        //   await Get.toNamed<void>(kCartRoute);
-                        // } else {
-                        //   Get.back<void>();
-                        //   await restaurantCartController
-                        //       .addItem(widget.cartItem.value!);
-                        //   await Get.offNamed<void>(kCartRoute);
-                        // }
                       }
                     } else {
                       await restaurantCartController

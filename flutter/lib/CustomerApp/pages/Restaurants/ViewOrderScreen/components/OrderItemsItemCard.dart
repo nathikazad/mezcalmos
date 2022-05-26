@@ -85,7 +85,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   ),
                   if (widget.item.name[userLanguage] != null)
                     Flexible(
-                      flex: 4,
+                      flex: 6,
                       fit: FlexFit.tight,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,6 +93,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                           Row(
                             children: [
                               Flexible(
+                                flex: 3,
                                 child: Text(
                                   widget.item.name[userLanguage]!,
                                   style: txt.bodyText1,

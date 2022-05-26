@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ListRestaurantsScreen"]["components"]
@@ -34,7 +33,7 @@ class RestaurantCard extends StatelessWidget {
         onTap: onClick,
         child: Container(
           width: double.infinity,
-          height: 130,
+          height: 150,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,8 +110,8 @@ class RestaurantCard extends StatelessWidget {
   Container mezRestuarntCardImage() {
     ///responsible for the image of restaurant
     return Container(
-      width: 35.w,
       height: double.infinity,
+      width: 150,
       child: ClipRRect(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(15),
@@ -122,10 +121,10 @@ class RestaurantCard extends StatelessWidget {
           children: <Widget>[
             Container(
               height: double.infinity,
-              width: 150.w,
+              width: 150,
               child: CachedNetworkImage(
                 imageUrl: restaurant.info.image,
-                fit: BoxFit.cover,
+                fit: BoxFit.fitHeight,
                 placeholder: (_, __) {
                   return Shimmer.fromColors(
                     child: Container(
@@ -139,8 +138,6 @@ class RestaurantCard extends StatelessWidget {
               ),
             ),
             Container(
-              height: double.infinity,
-              width: 150.w,
               color: restaurant.isOpen() ? null : Colors.black.withOpacity(0.5),
               child: restaurant.isOpen()
                   ? null
