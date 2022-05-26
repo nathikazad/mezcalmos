@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
+import 'package:mezcalmos/LaundryApp/Components/LaundyOpDrawer.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
-import 'package:mezcalmos/LaundryApp/pages/Components/LaundyOpDrawer.dart';
 import 'package:mezcalmos/LaundryApp/pages/CurrentOrdersList/components/LaundryOpOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -56,7 +57,9 @@ class _LaundryOpCurrentOrdersListViewState
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
+      appBar: LaundryAppAppBar(
+        leftBtnType: AppBarLeftButtonType.Menu,
+      ),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: LaundryAppDrawer(),
       body: Obx(

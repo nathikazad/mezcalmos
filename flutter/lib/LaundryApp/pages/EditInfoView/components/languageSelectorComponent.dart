@@ -14,11 +14,13 @@ class LanguageSelectorComponent extends StatefulWidget {
   const LanguageSelectorComponent({
     Key? key,
     required this.languageValue,
+    this.oppositeLanguageValue,
     required this.onChangeShouldUpdateLang,
     this.showDeleteIcon = false,
   }) : super(key: key);
 
   final Rxn<LanguageType> languageValue;
+  final Rxn<LanguageType>? oppositeLanguageValue;
   final OnChangeShouldUpdateLang onChangeShouldUpdateLang;
   final bool showDeleteIcon;
 
@@ -44,8 +46,13 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
                 errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
                 filled: true,
                 fillColor: Colors.grey.shade200,
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide.none),
+                focusedBorder: InputBorder.none,
+
                 isDense: true,
-                contentPadding: EdgeInsets.all(5),
+                // contentPadding: EdgeInsets.all(5),
                 label: Text("${_i18n()["none"]}"),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 suffixIcon: (widget.showDeleteIcon &&
@@ -62,7 +69,7 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
                 child: DropdownButton<LanguageType>(
                   value: widget.languageValue.value,
                   isDense: true,
-                  dropdownColor: Colors.grey.shade200,
+                  dropdownColor: Colors.white,
                   onChanged: (LanguageType? newValue) {
                     if (newValue != null) {
                       final bool result =
@@ -80,8 +87,20 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
                   ].map((LanguageType value) {
                     return DropdownMenuItem<LanguageType>(
                       value: value,
+                      enabled: (widget.oppositeLanguageValue != null &&
+                          widget.oppositeLanguageValue!.value != value),
                       child: (value.toLanguageName() != null)
-                          ? Text(value.toLanguageName()!)
+                          ? Text(
+                              value.toLanguageName()!,
+                              style: Get.textTheme.bodyText2?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: (widget.oppositeLanguageValue !=
+                                              null &&
+                                          widget.oppositeLanguageValue!.value ==
+                                              value)
+                                      ? Colors.grey
+                                      : Colors.black),
+                            )
                           : Container(),
                     );
                   }).toList(),

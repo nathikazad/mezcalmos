@@ -52,35 +52,40 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
       backgroundColor: Colors.white,
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // image
             LaundryOpImageEditComponent(editInfoController: editInfoController),
-            // Laundry name fiels
             SizedBox(
-              height: 10,
+              height: 15,
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                editInfoController.laundry.value?.info.name ?? "",
+                style: Get.textTheme.headline3,
+              ),
+            )
+            // Laundry name fiels
+            ,
+            SizedBox(
+              height: 25,
             ),
 
             Text("${_i18n()["laundryName"]}"),
             SizedBox(
               height: 5,
             ),
-            TextFormField(
-              controller: editInfoController.laundryNameController,
-              decoration: InputDecoration(
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.grey.shade200),
-            ),
+            _laundryNameTextField(),
             SizedBox(
               height: 15,
             ),
             Text("${_i18n()["defaultLanguage"]}"),
             LanguageSelectorComponent(
                 languageValue: editInfoController.primaryLang,
+                oppositeLanguageValue: editInfoController.secondaryLang,
                 onChangeShouldUpdateLang:
                     editInfoController.validatePrimaryLanguUpdate),
 
@@ -96,6 +101,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
             ),
             LanguageSelectorComponent(
               languageValue: editInfoController.secondaryLang,
+              oppositeLanguageValue: editInfoController.primaryLang,
               onChangeShouldUpdateLang:
                   editInfoController.validateSecondaryLanguUpdate,
               showDeleteIcon: true,
@@ -124,6 +130,21 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
         ),
       ),
       bottomNavigationBar: _editInfoSaveButton(),
+    );
+  }
+
+  TextFormField _laundryNameTextField() {
+    return TextFormField(
+      controller: editInfoController.laundryNameController,
+      style: Get.textTheme.bodyText1,
+      decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide.none),
+          focusedBorder: InputBorder.none,
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Colors.grey.shade200),
     );
   }
   // SAVE BUTTON ON THE FOOTER OF SCREEN
