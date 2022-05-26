@@ -2,9 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class LaundryOrderDriverCard extends StatelessWidget {
   const LaundryOrderDriverCard({Key? key, required this.order})
@@ -63,18 +66,59 @@ class LaundryOrderDriverCard extends StatelessWidget {
                 ],
               ),
             ),
-            IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.textsms_rounded,
-                  color: primaryBlueColor,
-                ))
+            if (_getRightChatId() != null)
+              IconButton(
+                  onPressed: () {
+                    Get.toNamed(getMessagesRoute(
+                        chatId: _getRightChatId()!,
+                        orderId: order.orderId,
+                        recipientType: ParticipantType.DeliveryDriver));
+                  },
+                  icon: Stack(
+                    children: [
+                      Icon(
+                        Icons.textsms_rounded,
+                        color: primaryBlueColor,
+                      ),
+                      Obx(
+                        () => Get.find<OrderController>()
+                                .hasNewMessageNotification(_getRightChatId()!)
+                            ? _newMessageRedDot(context)
+                            : Container(),
+                      )
+                    ],
+                  ))
           ],
         ),
       ));
     } else {
       return Container();
     }
+  }
+
+  String? _getRightChatId() {
+    if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
+        order.customerPickupDriverChatId != null) {
+      return order.customerPickupDriverChatId;
+    } else if (order.customerDropOffDriverChatId != null) {
+      return order.customerDropOffDriverChatId;
+    }
+    return null;
+  }
+
+  Widget _newMessageRedDot(BuildContext context) {
+    return Positioned(
+      left: 0,
+      top: 0,
+      child: Container(
+        width: 13,
+        height: 13,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: const Color(0xfff6efff), width: 2),
+            color: const Color(0xffff0000)),
+      ),
+    );
   }
 
   String? _getTime() {

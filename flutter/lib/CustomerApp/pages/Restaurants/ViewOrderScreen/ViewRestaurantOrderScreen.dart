@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrdersItemsCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -175,12 +176,15 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           SizedBox(
                             height: 15,
                           ),
+                          RestaurantOrderDriverCard(
+                            order: order.value!,
+                          ),
+                          if (order.value!.inDeliveryPhase()) ..._mapWidget,
                           OrderRestaurantCard(order: order.value!),
 
                           SizedBox(
                             height: 15,
                           ),
-                          if (order.value!.inDeliveryPhase()) ..._mapWidget,
                           OrderItemsCard(
                             items: order.value!.items,
                           ),

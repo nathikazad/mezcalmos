@@ -30,58 +30,51 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
-      height: 60,
+        height: 60,
         margin: const EdgeInsets.only(bottom: 8),
-      child: (widget.order.inProcess())
-          ? Container(
-              margin: EdgeInsets.all(8),
-              child: TextButton(
-                onPressed: () {
-                  showConfirmationDialog(context, onYesClick: () async {
-                    final ServerResponse resp =
-                        await restaurantController.cancelOrder(
-                      widget.order.orderId,
-                    );
+        child: (widget.order.inProcess())
+            ? Container(
+                margin: EdgeInsets.all(8),
+                child: TextButton(
+                  onPressed: () {
+                    showConfirmationDialog(context, onYesClick: () async {
+                      final ServerResponse resp =
+                          await restaurantController.cancelOrder(
+                        widget.order.orderId,
+                      );
 
-                    if (resp.success) {
-                      Get.until(
-                        (Route<dynamic> route) =>
-                            route.settings.name == kHomeRoute,
-                      );
-                      MezSnackbar(
-                        _i18n()["titleSuccess"],
-                        _i18n()["orderCancelSuccess"],
-                        position: SnackPosition.TOP,
-                      );
-                    } else {
-                      MezSnackbar(
-                        _i18n()["titleFailed"],
-                        _i18n()["orderCancelFailed"],
-                        position: SnackPosition.TOP,
-                      );
-                    }
-                  });
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: Color(0xFFF9D8D6),
-                ),
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    '${_i18n()["cancelOrder"]}',
-                    style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+                      if (resp.success) {
+                        Get.until(
+                          (Route<dynamic> route) =>
+                              route.settings.name == kHomeRoute,
+                        );
+                        MezSnackbar(
+                          _i18n()["titleSuccess"],
+                          _i18n()["orderCancelSuccess"],
+                          position: SnackPosition.TOP,
+                        );
+                      } else {
+                        MezSnackbar(
+                          _i18n()["titleFailed"],
+                          _i18n()["orderCancelFailed"],
+                          position: SnackPosition.TOP,
+                        );
+                      }
+                    });
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color(0xFFF9D8D6),
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '${_i18n()["cancelOrder"]}',
+                      style:
+                          Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+                    ),
                   ),
                 ),
-              ),
-            )
-          : TextButton(
-              onPressed: null,
-              style: TextButton.styleFrom(backgroundColor: Colors.grey),
-              child: Container(
-                alignment: Alignment.center,
-                child: Text('${_i18n()["cancelOrder"]}'),
-              ),
-            ),
-    );
+              )
+            : null);
   }
 }
