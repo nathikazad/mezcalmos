@@ -47,7 +47,7 @@ class SetLaundryOrderCostComponent extends StatelessWidget {
     return TextButton(
         onPressed: handleClick(context: context),
         style: TextButton.styleFrom(
-            backgroundColor: !order.isAtLaundry() ? Colors.grey : keyAppColor),
+            backgroundColor: !order.isAtLaundry() ? Colors.grey : purpleColor),
         child: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.all(8),
@@ -86,7 +86,7 @@ class SetLaundryOrderCostComponent extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
-                              .copyWith(color: keyAppColor),
+                              .copyWith(color: purpleColor),
                         ),
                       ),
                       Container(

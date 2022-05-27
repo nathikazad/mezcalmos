@@ -188,7 +188,7 @@ class ItemSliverAppBar extends StatelessWidget {
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: secondaryBlueColor,
+            color: SecondaryLightBlueColor,
           ),
           child: Icon(
             Icons.person,

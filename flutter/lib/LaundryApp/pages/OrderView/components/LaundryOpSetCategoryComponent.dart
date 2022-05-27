@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/SetWeightBottomSheet.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -25,121 +24,34 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        setItemsWeightButton(context),
-        SizedBox(
-          height: 15,
-        ),
-        Column(
-          children: List.generate(
-              order.costsByType?.lineItems.length ?? 0,
-              (int index) => _itemsWeightCard(
-                  laundryOrderCostLineItem: order.costsByType!.lineItems[index],
-                  context: context)),
-        ),
-      ],
+      children: [_PricingTable(context)],
     );
   }
 
 // Set new items button
   Widget setItemsWeightButton(BuildContext context) {
-    return TextButton(
-        onPressed: handleClick(context: context),
-        style: TextButton.styleFrom(
-            backgroundColor: !order.isAtLaundry() ? Colors.grey : keyAppColor),
-        child: Container(
-          alignment: Alignment.center,
+    return InkWell(
+        onTap: handleClick(context: context),
+        child: Ink(
           padding: const EdgeInsets.all(8),
-          child: Text("${_i18n()["setNewItemsWeight"]}"),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.add_circle_outline,
+                color: primaryBlueColor,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "${_i18n()["setNewItemsWeight"]}",
+                style:
+                    Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+              ),
+            ],
+          ),
         ));
-  }
-
-// cards to show item weight after being added
-  Widget _itemsWeightCard(
-      {required LaundryOrderCostLineItem laundryOrderCostLineItem,
-      required BuildContext context}) {
-    return Obx(
-      () => Card(
-        child: Container(
-            margin: EdgeInsets.all((5)),
-            alignment: Alignment.center,
-            child: (itemId.value == laundryOrderCostLineItem.hashCode)
-                ? Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: CircularProgressIndicator(),
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        child: Text(
-                          laundryOrderCostLineItem.name[userLanguage] ?? "",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        child: Text(
-                          "\$${laundryOrderCostLineItem.cost}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: keyAppColor),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        child: Text("${laundryOrderCostLineItem.weight} KG",
-                            style: Theme.of(context).textTheme.subtitle1),
-                      ),
-                      Spacer(),
-                      IconButton(
-                        onPressed: (order.isAtLaundry())
-                            ? () {
-                                showModalBottomSheet(
-                                    isDismissible: false,
-                                    useRootNavigator: false,
-                                    isScrollControlled: true,
-                                    backgroundColor: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10),
-                                    )),
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return SetOrderWeightBottomSheet(
-                                        editMode: true,
-                                        oldItem: laundryOrderCostLineItem,
-                                        order: order,
-                                      );
-                                    });
-                              }
-                            : null,
-                        icon: Icon(Icons.edit),
-                        iconSize: 20,
-                        splashRadius: 25,
-                        padding: EdgeInsets.all(5),
-                        color: Colors.black,
-                      ),
-                      IconButton(
-                        onPressed: (order.isAtLaundry())
-                            ? () {
-                                deleteItem(laundryOrderCostLineItem);
-                              }
-                            : null,
-                        icon: Icon(Ionicons.trash),
-                        iconSize: 20,
-                        splashRadius: 25,
-                        color: Colors.red,
-                        splashColor: Colors.red.withOpacity(0.3),
-                      ),
-                    ],
-                  )),
-      ),
-    );
   }
 
 //----------------------------------// ------>>>> FUNCTIONS <<<<----------//--------------------------------//
@@ -171,6 +83,8 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
           builder: (BuildContext context) {
             return SetOrderWeightBottomSheet(
               order: order,
+              editMode: editMode,
+              oldItem: laundryOrderCostLineItem,
             );
           });
     };
@@ -197,5 +111,72 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
         );
       }
     }
+  }
+
+  Widget _PricingTable(BuildContext context) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          DataTable(
+              dividerThickness: 0,
+              showBottomBorder: false,
+              columnSpacing: 20,
+              columns: _PricingTableColumns(),
+              rows: _PricingTableRows()),
+          setItemsWeightButton(context),
+        ],
+      ),
+    );
+  }
+
+  List<DataColumn> _PricingTableColumns() {
+    return [
+      DataColumn(label: Text('Item')),
+      DataColumn(label: Text('Per kilo')),
+      DataColumn(label: Text('Weight')),
+      DataColumn(label: Text('Cost'))
+    ];
+  }
+
+  List<DataRow> _PricingTableRows() {
+    return List.generate(
+        order.costsByType?.lineItems.length ?? 0,
+        (int index) => DataRow(cells: [
+              DataCell(Container(
+                width: 100,
+                child: Text(
+                  order.costsByType!.lineItems[index].name[userLanguage] ?? "",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              )),
+              DataCell(Text("\$${order.costsByType!.lineItems[index].cost}")),
+              DataCell(Row(
+                children: [
+                  Text("${order.costsByType!.lineItems[index].weight} "),
+                  InkWell(
+                    customBorder: CircleBorder(),
+                    onTap: assignNewCategory(
+                        context: Get.context!,
+                        editMode: true,
+                        laundryOrderCostLineItem:
+                            order.costsByType!.lineItems[index]),
+                    child: Ink(
+                        padding: const EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey.shade400),
+                        child: Icon(
+                          Icons.mode_edit_outline_outlined,
+                          size: 18,
+                          color: Colors.black,
+                        )),
+                  )
+                ],
+              )),
+              DataCell(
+                  Text("\$${order.costsByType!.lineItems[index].weighedCost}")),
+            ]));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 //
 dynamic _18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
@@ -21,5 +22,9 @@ extension parseDateTime on DateTime {
     } else {
       return " ${_18n()["in"]} ${cDate.difference(toLocal()).inMinutes} min";
     }
+  }
+
+  String toDayAmPm() {
+    return DateFormat("EEE, hh:mm a").format(this);
   }
 }

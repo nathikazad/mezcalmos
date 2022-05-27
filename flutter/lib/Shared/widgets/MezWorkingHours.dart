@@ -76,17 +76,21 @@ Widget _workingHourCard(
           Flexible(
             flex: 3,
             child: Container(
-              //  padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(8),
                 color: openHours.isOpen
                     ? Color.fromRGBO(101, 225, 137, 0.6)
                     : Color.fromRGBO(252, 89, 99, 0.6),
               ),
               child: Center(
-                  child: Text(openHours.isOpen
-                      ? "${_i18n()["workingHoursCard"]["open"]}"
-                      : "${_i18n()["workingHoursCard"]["closed"]}")),
+                  child: Text(
+                openHours.isOpen
+                    ? "${_i18n()["workingHoursCard"]["open"]}"
+                    : "${_i18n()["workingHoursCard"]["closed"]}",
+                style: Get.textTheme.bodyText2?.copyWith(
+                    color: openHours.isOpen ? Colors.green : Colors.red),
+              )),
             ),
           ),
           Flexible(

@@ -127,7 +127,7 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                             height: 25,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: secondaryBlueColor,
+                              color: SecondaryLightBlueColor,
                             ),
                             child: const Icon(
                               Icons.edit_outlined,
@@ -145,7 +145,7 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(64)),
-                              color: secondaryBlueColor,
+                              color: SecondaryLightBlueColor,
                             ),
                             child: RotationTransition(
                               turns: _iconTurns,

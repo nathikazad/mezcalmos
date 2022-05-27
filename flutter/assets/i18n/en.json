@@ -397,6 +397,10 @@
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered",
                             "canceled": "Order Cancelled",
+                            "otwToCustomer": "On the way to customer",
+                            "otwToLaundry": "On the way to laundry",
+                            "pickedUpFromCustomer": "Picked up from customer",
+                            "pickedUpFromLaundry": "Picked up from laundry",
 
                             "cancelByAdmin": " Order Canceled by the admin",
                             "cancelByUser": " You canceled the order",
@@ -1219,7 +1223,12 @@
                     }
                 },
                 "addCategory": "Add category",
-                "editCategory": "Edit category"
+                "editCategory": "Edit category",
+                "categoryName": "Category name",
+                "categoryNameIn": "Category name in ",
+                "categoryNameHint": "Enter a category name",
+                "categoryPrice": "Category pricing per kilogramme",
+                "categoryPriceHint": "Enter category pricing per kilogramme..."
 
             },
             "DashboardView": {
@@ -1311,7 +1320,8 @@
                 },
                 "LaundryOpOrderView": {
                     "customer": "Customer",
-                    "orderDate": "Order Date"
+                    "orderDate": "Order Date",
+                    "total": "Total"
                 }
             }
         },

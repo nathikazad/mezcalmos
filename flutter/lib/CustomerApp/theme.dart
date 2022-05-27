@@ -99,7 +99,7 @@ class CustomerAppTheme {
       ),
       chipTheme: ChipThemeData(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        backgroundColor: secondaryBlueColor,
+        backgroundColor: SecondaryLightBlueColor,
         showCheckmark: false,
         disabledColor: Colors.grey,
         selectedColor: Colors.white,

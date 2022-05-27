@@ -1,24 +1,25 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
-class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
+class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final bool? autoBack;
   final AppBarLeftButtonType leftBtnType;
-
-  CustomerAppBar(
+  bool showOrders;
+  Function? onClick;
+  LaundryAppAppBar(
       {Key? key,
       this.title,
+      this.showOrders = true,
       this.autoBack = false,
+      this.onClick,
       this.leftBtnType = AppBarLeftButtonType.Back})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
@@ -26,99 +27,17 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size preferredSize;
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: (title != null)
-          ? Text(
-              title!,
-              style: Theme.of(context).textTheme.headline2,
-            )
-          : Container(
-              alignment: Alignment.center,
-              width: 180,
-              child: FittedBox(
-                child: MezcalmosSharedWidgets.fillTitle(1),
-              ),
-            ),
-      automaticallyImplyLeading: autoBack ?? false,
-      leading: (leftBtnType == AppBarLeftButtonType.Menu)
-          ? _MenuButtonAppBar()
-          : _BackButtonAppBar(),
-      actions: [getAppbarIconsButton()],
-    );
-  }
-
-  Widget _BackButtonAppBar() {
-    return Transform.scale(
-      scale: 0.6,
-      child: InkWell(
-        onTap: () {
-          Get.back();
-        },
-        child: Ink(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromARGB(255, 216, 225, 249),
-                spreadRadius: 0,
-                blurRadius: 7,
-                offset: Offset(0, 7), // changes position of shadow
-              ),
-            ],
-            gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 97, 127, 255),
-              Color.fromARGB(255, 198, 90, 252),
-            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-          ),
-          child: Icon(
-            Icons.arrow_back_ios_new,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _MenuButtonAppBar() {
-    return Transform.scale(
-      scale: 0.6,
-      child: InkWell(
-        onTap: () {
-          //  Get.back();
-          Get.find<SideMenuDrawerController>().openMenu();
-        },
-        child: Ink(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromARGB(255, 216, 225, 249),
-                spreadRadius: 0,
-                blurRadius: 7,
-                offset: Offset(0, 7), // changes position of shadow
-              ),
-            ],
-            gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 97, 127, 255),
-              Color.fromARGB(255, 198, 90, 252),
-            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-          ),
-          child: Icon(
-            Icons.menu,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
+    return mezcalmosAppBar(leftBtnType,
+        onClick: onClick, actionIcons: [getAppbarIconsButton()]);
   }
 
   Widget _ordersAppBarIcon() {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 12),
+      padding: const EdgeInsets.only(left: 5, right: 1),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          Get.toNamed(kOrdersRoute);
+          Get.toNamed(kPastOrdersListView);
         },
         child: Ink(
           padding: const EdgeInsets.all(7),
@@ -138,7 +57,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _noUserButton() {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 12),
+      padding: const EdgeInsets.only(left: 3, right: 3),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
@@ -179,7 +98,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: secondaryBlueColor,
+                  color: SecondaryLightBlueColor,
                 ),
                 child: Icon(
                   Icons.notifications,
@@ -199,11 +118,13 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget getAppbarIconsButton() {
     return Obx(() {
       return Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
           if (Get.find<AuthController>().isUserSignedIn)
             _notificationAppBarIcon(),
-          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+          if (Get.find<AuthController>().isUserSignedIn && showOrders)
+            _ordersAppBarIcon(),
         ],
       );
     });

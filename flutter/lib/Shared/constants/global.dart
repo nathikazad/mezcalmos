@@ -69,6 +69,7 @@ const String aLogoPath = "assets/images/shared/logo.png";
 const String aNoImage = "assets/images/shared/noImage.png";
 const String a404 = "assets/images/shared/404.png";
 const String aUpdate = "assets/images/shared/update.png";
+const String aMoney = "assets/images/shared/money.png";
 const String aDefaultDbUserImgAsset =
     "assets/images/shared/defaultUserLogo.png";
 const String aDefaultAvatar = "assets/images/shared/noUserImage.jpg";
@@ -127,6 +128,15 @@ extension StringToParseOrderType on String {
 }
 // -----------STYLES CONSTANT ------------------- //
 
-const Color keyAppColor = Color(0xFFAC59FC);
+const Color purpleColor = Color(0xFFAC59FC);
 const Color primaryBlueColor = Color(0xFF6779FE);
-const Color secondaryBlueColor = Color(0xFFE1E4FF);
+const Color SecondaryLightBlueColor = Color(0xFFE1E4FF);
+const Color offRedColor = Color(0xFFF9D8D6);
+const LinearGradient bluePurpleGradient = LinearGradient(
+  colors: [
+    primaryBlueColor,
+    purpleColor,
+  ],
+  begin: Alignment.centerLeft,
+  end: Alignment.centerRight,
+);

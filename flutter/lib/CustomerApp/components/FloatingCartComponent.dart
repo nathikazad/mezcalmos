@@ -30,7 +30,7 @@ class FloatingCartComponent extends StatelessWidget {
                       ?.copyWith(color: primaryBlueColor),
                 ),
                 position: BadgePosition.topEnd(top: -8, end: 0),
-                badgeColor: secondaryBlueColor,
+                badgeColor: SecondaryLightBlueColor,
                 child: Container(
                   height: 60,
                   width: 60,

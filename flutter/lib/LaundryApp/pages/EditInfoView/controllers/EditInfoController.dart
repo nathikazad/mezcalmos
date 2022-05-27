@@ -119,10 +119,7 @@ class EditInfoController {
 
   bool validateSecondaryLanguUpdate(LanguageType value) {
     if (primaryLang.value != null) {
-      mezDbgPrint("value : $value  ====================> $primaryLang ");
       if (value != primaryLang.value) {
-        //  secondaryLang.value = value;
-        //  mezDbgPrint("set Secondary while primary  ====================> ${primaryLang} ");
         return true;
       } else {
         Get.snackbar(
@@ -153,7 +150,7 @@ class EditInfoController {
 
   //
 
-  void editImage(context) async {
+  Future<void> editImage(context) async {
     final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
     mezDbgPrint("------------>  $_from");
     if (_from != null) {
@@ -179,7 +176,7 @@ class EditInfoController {
     }
   }
 
-  void dispose() async {
+  Future<void> dispose() async {
     laundry.value = laundryInfoController.laundry.value;
 
     mezDbgPrint("Controlllller Dispose =======>");
@@ -189,12 +186,5 @@ class EditInfoController {
     newImageUrl.value = laundry.value?.info.image ?? '';
     primaryLang.value = laundry.value!.primaryLanguage;
     secondaryLang.value = laundry.value!.secondaryLanguage;
-
-    // //  laundry.close();
-    // //newSchedule.close();
-    // mezDbgPrint("schedulllllllllllllllllllle $newSchedule");
   }
 }
-
-
-// enum LanguagePriority { PrimaryLanguage, SecondaryLanguage }

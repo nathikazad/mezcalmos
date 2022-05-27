@@ -158,7 +158,7 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
         child: Icon(
           Icons.check_circle,
           size: 40,
-          color: secondaryBlueColor,
+          color: SecondaryLightBlueColor,
         ),
       );
 

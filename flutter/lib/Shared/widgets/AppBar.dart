@@ -1,9 +1,14 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
 
@@ -14,6 +19,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     Function? onClick,
     String? title,
     Widget? titleWidget,
+    bool showNotifications = false,
     PreferredSizeWidget? tabBar,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btnIcon;
@@ -128,6 +134,9 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                       ? titleWidget
                       : MezcalmosSharedWidgets.fillTitle(actionIcons.length),
               Spacer(),
+              if (showNotifications &&
+                  Get.find<AuthController>().isUserSignedIn)
+                _notificationAppBarIcon(),
               for (int i = 0; i < actionIcons.length; i++) ...<Widget>[
                 actionIcons[i]
               ],
@@ -139,4 +148,40 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       ],
     ),
   );
+}
+
+Widget _notificationAppBarIcon() {
+  return Obx(() {
+    if (Get.find<ForegroundNotificationsController>().notifications.length >
+        0) {
+      return Padding(
+        padding: const EdgeInsets.only(left: 3, right: 3),
+        child: InkWell(
+          customBorder: CircleBorder(),
+          onTap: () {
+            Get.toNamed(kNotificationsRoute);
+          },
+          child: Badge(
+            badgeColor: Colors.red,
+            showBadge: true,
+            position: BadgePosition.topEnd(top: 8, end: 0),
+            child: Ink(
+              padding: const EdgeInsets.all(7),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+              child: Icon(
+                Icons.notifications,
+                color: primaryBlueColor,
+                size: 20,
+              ),
+            ),
+          ),
+        ),
+      );
+    } else {
+      return Container();
+    }
+  });
 }

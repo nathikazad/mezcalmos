@@ -131,8 +131,8 @@ Widget getOrderWidget(LaundryOrderStatus status) {
     case LaundryOrderStatus.Delivered:
       return Container(
         padding: const EdgeInsets.all(5),
-        decoration:
-            BoxDecoration(color: secondaryBlueColor, shape: BoxShape.circle),
+        decoration: BoxDecoration(
+            color: SecondaryLightBlueColor, shape: BoxShape.circle),
         child: Icon(
           Icons.check,
           size: 25,
