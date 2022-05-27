@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:collection/collection.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum AuthorizationStatus { InReview, Authorized, Unauthorized }
 
@@ -22,6 +23,12 @@ extension ParseStringToAuthorizationStatus on String {
 enum LanguageType { EN, ES }
 
 extension ParseLanugaugeTypeToString on LanguageType {
+  String toLanguageCode() {
+    final String str = toString().split('.').last;
+    mezDbgPrint("${str.toLowerCase()}_${str.toUpperCase()}");
+    return "${str.toLowerCase()}_${str.toUpperCase()}";
+  }
+
   String toFirebaseFormatString() {
     final String str = toString().split('.').last;
 
@@ -62,8 +69,8 @@ typedef LanguageMap = Map<LanguageType, String>;
 
 LanguageMap convertToLanguageMap(Map data) {
   // mezDbgPrint("@sa@d@: Trying to convert $data convertToLanguageMap !");
-  LanguageMap map = {};
-  data.forEach((dynamic language, dynamic string) {
+  final LanguageMap map = {};
+  data.forEach((language, string) {
     if (language == LanguageType.EN.toFirebaseFormatString() ||
         language == LanguageType.ES.toFirebaseFormatString()) {
       map[language.toString().toLanguageType()] = string;

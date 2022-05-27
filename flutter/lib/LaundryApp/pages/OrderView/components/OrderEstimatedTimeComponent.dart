@@ -88,7 +88,7 @@ class _OrderEstimatedTimeComponentState
 
   Widget _editSetButton(BuildContext context) {
     return InkWell(
-        onTap: (!widget.order.isAtLaundry())
+        onTap: (widget.order.isAtLaundry())
             ? () async {
                 final Rxn<DateTime> selectedDate =
                     Rxn(widget.order.estimatedLaundryReadyTime);

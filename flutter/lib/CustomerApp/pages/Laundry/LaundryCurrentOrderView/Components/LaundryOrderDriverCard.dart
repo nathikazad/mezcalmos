@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 class LaundryOrderDriverCard extends StatelessWidget {
   const LaundryOrderDriverCard({Key? key, required this.order})
@@ -26,12 +27,12 @@ class LaundryOrderDriverCard extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 CircleAvatar(
-                    radius: 30,
+                    radius: 25,
                     backgroundImage:
                         CachedNetworkImageProvider(_getRightDriver()!.image)),
                 Positioned(
                   right: -30,
-                  bottom: 8,
+                  bottom: 5,
                   child: Container(
                     alignment: Alignment.centerRight,
                     padding: const EdgeInsets.all(8),
@@ -39,7 +40,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                         color: primaryBlueColor, shape: BoxShape.circle),
                     child: Icon(
                       Icons.delivery_dining,
-                      size: 32,
+                      size: 30,
                       color: Colors.white,
                     ),
                   ),
@@ -67,27 +68,15 @@ class LaundryOrderDriverCard extends StatelessWidget {
               ),
             ),
             if (_getRightChatId() != null)
-              IconButton(
-                  onPressed: () {
+              MessageButton(
+                  showRedDot: Get.find<OrderController>()
+                      .hasNewMessageNotification(_getRightChatId()!),
+                  onTap: () {
                     Get.toNamed(getMessagesRoute(
                         chatId: _getRightChatId()!,
                         orderId: order.orderId,
                         recipientType: ParticipantType.DeliveryDriver));
-                  },
-                  icon: Stack(
-                    children: [
-                      Icon(
-                        Icons.textsms_rounded,
-                        color: primaryBlueColor,
-                      ),
-                      Obx(
-                        () => Get.find<OrderController>()
-                                .hasNewMessageNotification(_getRightChatId()!)
-                            ? _newMessageRedDot(context)
-                            : Container(),
-                      )
-                    ],
-                  ))
+                  })
           ],
         ),
       ));
@@ -106,21 +95,6 @@ class LaundryOrderDriverCard extends StatelessWidget {
     return null;
   }
 
-  Widget _newMessageRedDot(BuildContext context) {
-    return Positioned(
-      left: 0,
-      top: 0,
-      child: Container(
-        width: 13,
-        height: 13,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xfff6efff), width: 2),
-            color: const Color(0xffff0000)),
-      ),
-    );
-  }
-
   String? _getTime() {
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
         order.estimatedPickupFromCustomerTime != null) {
@@ -135,10 +109,8 @@ class LaundryOrderDriverCard extends StatelessWidget {
   DeliveryDriverUserInfo? _getRightDriver() {
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
       return order.pickupDriver;
-    } else if (order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
-      return order.dropoffDriver;
     } else {
-      return null;
+      return order.dropoffDriver;
     }
   }
 }

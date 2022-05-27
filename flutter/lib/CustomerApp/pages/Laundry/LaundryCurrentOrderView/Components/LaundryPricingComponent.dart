@@ -97,10 +97,10 @@ class LaundryPricingCompnent extends StatelessWidget {
 
   List<DataColumn> _PricingTableColumns() {
     return [
-      DataColumn(label: Text('Item')),
-      DataColumn(label: Text('Per kilo')),
-      DataColumn(label: Text('Weight')),
-      DataColumn(label: Text('Cost'))
+      DataColumn(label: Text('${_i18n()["item"]}')),
+      DataColumn(label: Text('${_i18n()["perKilo"]}')),
+      DataColumn(label: Text('${_i18n()["weight"]}')),
+      DataColumn(label: Text('${_i18n()["cost"]}'))
     ];
   }
 

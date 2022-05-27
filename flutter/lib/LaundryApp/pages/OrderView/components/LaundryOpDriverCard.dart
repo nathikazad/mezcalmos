@@ -62,6 +62,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                           width: 40,
                         ),
                         Flexible(
+                          flex: 5,
                           fit: FlexFit.tight,
                           child: Text(
                             _getDriver()!.name,

@@ -420,7 +420,10 @@
                             "orderHelperAtLaundry": "La lavandería está procesando su pedido.",
                             "orderHelperReady": "Su pedido está listo para la entrega.",
                             "orderHelperOtwDelivery": "Nuestro conductor está en camino de entregar su pedido.",
-                            "orderHelperDelivered": "El pedido ha sido entregado con éxito"
+                            "orderHelperDelivered": "El pedido ha sido entregado con éxito",
+                            "willBePickedUp": "Será recogido",
+                            "willBeReady": "Estará listo",
+                            "willBeDropped": "Será entregado"
                         },
                         "LaundryPricingComponent": {
                             "laundryPricing": "Precios de lavandería",
@@ -428,7 +431,11 @@
                             "orderWeight": "Peso de pedido",
                             "minimumCost": "Costo Minimo",
                             "totalCost": "Costo Total",
-                            "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido."
+                            "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido.",
+                            "item": "Articulo",
+                            "perKilo": "Para kilo",
+                            "weight": "Peso",
+                            "cost": "Costo"
                         },
                         "OrderSummaryComponent": {
                             "orderSummary": "Resumen",

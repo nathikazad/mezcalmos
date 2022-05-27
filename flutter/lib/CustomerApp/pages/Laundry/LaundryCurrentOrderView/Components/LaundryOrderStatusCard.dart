@@ -28,15 +28,20 @@ class LaundryOrderStatusCard extends StatelessWidget {
           child: Container(
             width: double.infinity,
             margin: const EdgeInsets.all(12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
               children: [
-                getOrderWidget(order.status),
-                Spacer(),
-                _orderStatusText(context),
-                Spacer(
-                  flex: 2,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    getOrderWidget(order.status),
+                    Spacer(),
+                    _orderStatusText(context),
+                    Spacer(
+                      flex: 2,
+                    ),
+                  ],
                 ),
+                if (_getEstimatedText() != null) _orderEtaTimeWidget()
               ],
             ),
           ),
@@ -45,10 +50,27 @@ class LaundryOrderStatusCard extends StatelessWidget {
     );
   }
 
+  Widget _orderEtaTimeWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Divider(
+          height: 7,
+          thickness: 0.2,
+        ),
+        Container(
+            child: Text(
+          _getEstimatedText()!,
+          textAlign: TextAlign.center,
+        )),
+      ],
+    );
+  }
+
   Widget _orderStatusText(BuildContext context) {
     return Flexible(
-      flex: 6,
-      fit: FlexFit.loose,
+      flex: 8,
+      fit: FlexFit.tight,
       child: Container(
         alignment: Alignment.center,
         child: Text(
@@ -63,18 +85,18 @@ class LaundryOrderStatusCard extends StatelessWidget {
     );
   }
 
-  String? getEstimatedText() {
+  String? _getEstimatedText() {
     switch (order.status) {
       case LaundryOrderStatus.OrderReceieved:
       case LaundryOrderStatus.PickedUpFromCustomer:
       case LaundryOrderStatus.OtwPickupFromCustomer:
         if (order.estimatedDropoffAtServiceProviderTime != null) {
-          return "Will be picked up ${order.estimatedDropoffAtServiceProviderTime!.getEstimatedTime()}";
+          return "${_i18n()["willBePickedUp"]} ${order.estimatedDropoffAtServiceProviderTime!.getEstimatedTime()}";
         }
         break;
       case LaundryOrderStatus.AtLaundry:
         if (order.estimatedLaundryReadyTime != null) {
-          return "Will be ready ${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
+          return "${_i18n()["willBeReady"]} ${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
         }
 
         break;
@@ -82,7 +104,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
       case LaundryOrderStatus.PickedUpFromLaundry:
       case LaundryOrderStatus.OtwPickupFromLaundry:
         if (order.estimatedDropoffAtCustomerTime != null) {
-          return "Will be dropprd off ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
+          return "${_i18n()["willBeDropped"]} ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
         }
 
         break;
