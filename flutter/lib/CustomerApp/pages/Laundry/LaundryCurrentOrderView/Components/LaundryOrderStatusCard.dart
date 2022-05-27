@@ -29,7 +29,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
             width: double.infinity,
             margin: const EdgeInsets.all(12),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 getOrderWidget(order.status),
                 Spacer(),
@@ -41,15 +41,6 @@ class LaundryOrderStatusCard extends StatelessWidget {
             ),
           ),
         ),
-        if (getEstimatedText() != null)
-          Container(
-            margin: EdgeInsets.all(5),
-            alignment: Alignment.center,
-            child: Text(
-              getEstimatedText()!,
-              textAlign: TextAlign.center,
-            ),
-          ),
       ],
     );
   }
@@ -74,34 +65,24 @@ class LaundryOrderStatusCard extends StatelessWidget {
 
   String? getEstimatedText() {
     switch (order.status) {
-      case LaundryOrderStatus.OtwPickupFromCustomer:
-        if (order.estimatedPickupFromCustomerTime != null) {
-          return order.estimatedPickupFromCustomerTime!.getEstimatedTime();
-        }
-
-        break;
+      case LaundryOrderStatus.OrderReceieved:
       case LaundryOrderStatus.PickedUpFromCustomer:
+      case LaundryOrderStatus.OtwPickupFromCustomer:
         if (order.estimatedDropoffAtServiceProviderTime != null) {
-          return order.estimatedDropoffAtServiceProviderTime!
-              .getEstimatedTime();
+          return "Will be picked up ${order.estimatedDropoffAtServiceProviderTime!.getEstimatedTime()}";
         }
         break;
       case LaundryOrderStatus.AtLaundry:
         if (order.estimatedLaundryReadyTime != null) {
-          return order.estimatedLaundryReadyTime!.getEstimatedTime();
+          return "Will be ready ${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
         }
 
         break;
-      case LaundryOrderStatus.OtwPickupFromLaundry:
-        if (order.estimatedPickupFromServiceProviderTime != null) {
-          return order.estimatedPickupFromServiceProviderTime!
-              .getEstimatedTime();
-        }
 
-        break;
       case LaundryOrderStatus.PickedUpFromLaundry:
+      case LaundryOrderStatus.OtwPickupFromLaundry:
         if (order.estimatedDropoffAtCustomerTime != null) {
-          return order.estimatedDropoffAtCustomerTime!.getEstimatedTime();
+          return "Will be dropprd off ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
         }
 
         break;

@@ -167,10 +167,24 @@ class RestaurantSliverAppBar extends StatelessWidget {
           // indicatorColor: Get.theme.primaryColorLight,
           indicatorWeight: 0.1,
           labelColor: Colors.black,
-          tabs: restaurant.getCategories.map((Category e) {
-            return Tab(text: e.name?[userLanguage] ?? "");
-          }).toList(),
-          onTap: onTap,
+          tabs: List.generate(restaurant.getCategories.length, (int index) {
+            return Tab(
+              child: FilterChip(
+                showCheckmark: false,
+                labelStyle: Get.textTheme.bodyText2?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: tabController.index != index
+                        ? primaryBlueColor
+                        : Colors.black),
+                label: Text(
+                    restaurant.getCategories[index].name?[userLanguage] ?? ""),
+                onSelected: (bool v) {
+                  onTap(index);
+                },
+                selected: tabController.index == index,
+              ),
+            );
+          }),
         ),
       ),
     );

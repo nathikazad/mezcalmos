@@ -20,7 +20,6 @@ import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
-import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -107,47 +106,70 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: '${_i18n()["laundry"]}',
+        title: '${order.value?.laundry?.name ?? ""}',
       ),
       body: Obx(
-        () => order.value != null
-            ? SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const SizedBox(height: 10),
-                      LaundryOrderStatusCard(order: order.value!),
-                      LaundryOrderDriverCard(order: order.value!),
-                      const SizedBox(height: 20),
-                      if (order.value!.laundry != null)
-                        OrderLaundryCard(order: order.value!),
-                      if (order.value!.inDeliveryPhase()) ..._mapWidget,
-                      SizedBox(
-                        height: 20,
+        () {
+          if (order.value != null) {
+            return LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraint) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(minHeight: constraint.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: <Widget>[
+                            const SizedBox(height: 8),
+                            LaundryOrderStatusCard(order: order.value!),
+                            LaundryOrderDriverCard(order: order.value!),
+                            if (order.value!.inDeliveryPhase())
+                              Column(
+                                children: [
+                                  const SizedBox(height: 20),
+                                  Column(
+                                    children: _mapWidget,
+                                  )
+                                ],
+                              ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            if (order.value!.laundry != null)
+                              OrderLaundryCard(order: order.value!),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            LaundryPricingCompnent(order: order.value!),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            LaundryOrderNoteComponent(order: order.value!),
+                            const SizedBox(height: 10),
+                            OrderSummaryComponent(
+                              order: order.value!,
+                            ),
+                            Spacer(),
+                            Flexible(
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  child: LaundryOrderFooterCard(
+                                      order: order.value!)),
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      LaundryPricingCompnent(order: order.value!),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      if (order.value!.estimatedLaundryReadyTime != null)
-                        _orderEstimatedDeliveryTime(),
-                      LaundryOrderNoteComponent(order: order.value!),
-                      const SizedBox(height: 10),
-                      OrderSummaryComponent(
-                        order: order.value!,
-                      ),
-                      const SizedBox(height: 10),
-                      LaundryOrderFooterCard(order: order.value!)
-                    ],
+                    ),
                   ),
-                ),
-              )
-            : Center(child: MezLogoAnimation()),
+                );
+              },
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }

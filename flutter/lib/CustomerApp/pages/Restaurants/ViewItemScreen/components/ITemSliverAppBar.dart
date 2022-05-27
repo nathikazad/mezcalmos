@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:sizer/sizer.dart';
 
 class ItemSliverAppBar extends StatelessWidget {
   const ItemSliverAppBar({Key? key, required this.item}) : super(key: key);
@@ -25,7 +26,8 @@ class ItemSliverAppBar extends StatelessWidget {
       elevation: 0.4,
       expandedHeight: (item.image != null) ? 220 : 0,
       automaticallyImplyLeading: false,
-      titleSpacing: 12,
+      // titleSpacing: 12,
+
       leading: _BackButtonAppBar(),
       actions: <Widget>[
         getAppbarIconsButton(),
@@ -35,13 +37,18 @@ class ItemSliverAppBar extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         centerTitle: true,
-        title: Text(
-          " ${item.name[userLanguage]!} ",
-          textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .headline3!
-              .copyWith(color: Colors.white),
+        title: Container(
+          width: 200,
+          child: Text(
+            " ${item.name[userLanguage]!} ",
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context)
+                .textTheme
+                .headline3!
+                .copyWith(fontSize: 13.sp, color: Colors.white),
+          ),
         ),
         background: (item.image != null)
             ? CachedNetworkImage(

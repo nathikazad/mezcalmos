@@ -2,7 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
+        ["LaundriesListView"]["components"]["CustomerLaundrySelectCard"];
 
 class CustomerLaundrySelectCard extends StatelessWidget {
   const CustomerLaundrySelectCard({Key? key, required this.laundry})
@@ -32,7 +37,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
 
   Widget _laundryInfoHeader() {
     return Container(
-      margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
+      margin: const EdgeInsets.only(top: 8, right: 3, left: 3, bottom: 8),
       child: Row(
         //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,44 +58,56 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   laundry.info.name,
                   style: Get.textTheme.bodyText1,
                 ),
-                // SizedBox(
-                //   height: 10,
-                // ),
                 Divider(
                   height: 10,
                 ),
                 Container(
-                  //  alignment: Alignment.bottomLeft,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.delivery_dining,
+                            size: 17,
+                            color: Colors.grey.shade800,
+                          ),
+                          SizedBox(
+                            width: 3,
+                          ),
+                          Text('\$50', style: Get.textTheme.bodyText2),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
                       Flexible(
                         child: Row(
                           children: [
                             Icon(
-                              Icons.delivery_dining,
+                              Icons.watch_later,
+                              size: 17,
                               color: Colors.grey.shade800,
                             ),
                             SizedBox(
                               width: 3,
                             ),
                             Flexible(
-                              child:
-                                  Text('\$50', style: Get.textTheme.bodyText2),
-                            ),
+                                child: Text('2 ${_i18n()["days"]}',
+                                    style: Get.textTheme.bodyText2)),
                           ],
                         ),
                       ),
+                      SizedBox(
+                        width: 8,
+                      ),
                       Flexible(
+                        flex: 3,
+                        fit: FlexFit.loose,
                         child: Text(
-                            "Starting from : \$${laundry.getCheapestCategory}",
+                            "${_i18n()["startingFrom"]} \$${laundry.getCheapestCategory}",
                             style: Get.textTheme.bodyText2),
                       ),
-                      // Flexible(
-                      //   child: Text(
-                      //       "Minimum : \$${laundry.laundryCosts.minimumCost}",
-                      //       style: Get.textTheme.bodyText2),
-                      // ),
                     ],
                   ),
                 ),

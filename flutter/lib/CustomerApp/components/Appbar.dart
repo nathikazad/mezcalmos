@@ -179,7 +179,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white,
+                  color: SecondaryLightBlueColor,
                 ),
                 child: Icon(
                   Icons.notifications,

@@ -67,8 +67,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
 Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
   final TaxiOrdersStatus newOrdersStatus =
       value['status'].toString().toTaxiOrderStatus();
-  mezDbgPrint(
-      'notif nuuuuuuuuuuuuuuuuuuuuuuuuuuuul :' + newOrdersStatus.toString());
+
   final Map<String, dynamic> dynamicFields =
       getTaxiOrderStatusFields(newOrdersStatus)!;
   mezDbgPrint(dynamicFields);
@@ -153,8 +152,8 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
     case LaundryOrderStatus.CancelledByAdmin:
     case LaundryOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
-        "title": "${_i18n()["cancelledTitle"]}",
-        "body": "${_i18n()["cancelledBody"]}",
+        "title": "${_i18n()["LaundryCancelledTitle"]}",
+        "body": "${_i18n()["LaundryCancelledBody"]}",
         "imgUrl": "assets/images/shared/notifications/laundry/canceled.png",
       };
     default:
@@ -276,7 +275,7 @@ Notification newMessageNotification(String key, value) {
   mezDbgPrint(value['linkUrl']);
   return Notification(
       id: key,
-      linkUrl: value['linkUrl'],
+      linkUrl: value['linkUrl'] ?? value["orderId"],
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],

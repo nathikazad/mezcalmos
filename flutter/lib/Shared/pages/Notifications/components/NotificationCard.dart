@@ -15,8 +15,6 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DateFormat f = new DateFormat('hh:mm a');
-
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
       child: InkWell(
@@ -73,4 +71,5 @@ class NotificationCard extends StatelessWidget {
       ),
     );
   }
+
 }

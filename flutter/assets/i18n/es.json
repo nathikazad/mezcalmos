@@ -115,6 +115,9 @@
                     },
                     "ListRestaurantScreen": {
                         "restaurants": "Restaurantes",
+
+                        "search": "Búsqueda",
+                        "showOnlyOpen": "Mostrar solo restaurantes abiertos",
                         "emptRestaurantList": "Lo siento, no se encontró ningún restaurante"
                     }
                 },
@@ -122,6 +125,8 @@
                     "components": {
                         "BuildCart": {
                             "inCart": "En El Carrito",
+                            "yesClear": "sí, claro",
+                            "no": "No",
                             "clearCart": "Vaciar carrito",
                             "clearCartConfirm": "Está seguro de que desea vaciar el carrito?",
                             "clear": "Vaciar"
@@ -441,16 +446,36 @@
                         "orderStatus": "Estado de la orden",
                         "laundry": "Lavandería",
                         "estimatedDeliveryTime": "Tiempo de entrega estimado"
+
+
+                    }
+
+
+                },
+                "SingleLaundryScreen": {
+                    "startingFrom": "Empezando desde :",
+                    "minimumCost": "Costo mínimo",
+                    "description": "Descripción",
+                    "openHours": "horarios de apertura",
+                    "sendMyLaundry": "Envía mi ropa"
+
+                },
+                "LaundriesListView": {
+                    "laundries": "lavanderías",
+                    "title": "Encuentra tus lavanderías más cercanas o tintorerías ",
+                    "components": {
+                        "laundrySelectCard": {
+                            "available": "Available",
+                            "unavailable": "Unavailable"
+                        },
+                        "CustomerLaundrySelectCard": {
+                            "days": "dias",
+                            "startingFrom": "Empezando desde :"
+                        }
                     }
                 },
                 "LaundryRequestView": {
-                    "Components": {
-                        "LaundryStepsComponent": {
-                            "firstStep": "El primer paso es crear un pedido una vez que crea un pedido, uno de nuestros conductores llegará a su ubicación para recoger sus cosas",
-                            "secondStep": "Segundo paso Nuestro proveedor de servicios de lavandería recibirá su pedido y comenzará a hacer su trabajo y le informaremos sobre los cambios en los precios según el peso del pedido",
-                            "thirdStep": "Paso final Una vez que su pedido esté listo, uno de nuestros conductores recogerá el pedido de la lavandería y lo conseguirá a su ubicación lo antes posible."
-                        }
-                    },
+
                     "LaundryOrderRequestView": {
                         "howItWorks": "Cómo funciona",
                         "deliveryLocation": "Lugar De Entrega",
@@ -471,6 +496,7 @@
                     "pickLocation": "Elegir ubicación",
                     "pickLabele": "Busque la ubicación o mueva el mapa y elija la ubicación"
                 }
+
             }
         },
         "notificationHandler": {
@@ -513,8 +539,11 @@
             "laundryOtwDeliveryBody": "Tu orden está en camino",
             "laundryDeliveredTitle": "Entregada",
             "LaundryDeliveredBody": "Su pedido ha sido entregado",
+            "LaundryCancelledTitle": "Orden cancelada",
+            "LaundryCancelledBody": "Su pedido ha sido cancelado",
             "counterOfferTitle": "Nueva Contraoferta",
             "counterOfferBody": "New oferta de "
+
         }
     },
     "Shared": {
@@ -532,11 +561,20 @@
                 "photoAccessOffTitle": "App can't access Photos.",
                 "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
             },
+            "GeneralPurposeHelper": {
+                "yesCancel": "Sí Cancelar pedido",
+                "no": "No",
+                "cancelOrder": "Cancelar orden",
+                "cancelConfirmationText": "¿Estás seguro de que quieres cancelar el pedido?",
+                "subtitle": "Esta acción no se puede deshacer."
+            },
             "NotificationsHelper": {
                 "view": "Ver"
             },
             "DateTimeHelper": {
-                "today": "Hoy dia"
+                "today": "Hoy dia",
+                "in": "en : ",
+                "at": "a : "
             }
         },
         "pages": {
@@ -577,11 +615,18 @@
                 "components": {
                     "ClearNotificationButton": {
                         "latest": "Último",
+                        "today": "Today",
                         "alertClearNotificationTitle": "Eliminar todas las notificaciones"
                     }
                 },
                 "ViewNotifications": {
-                    "title": "Notificaciones"
+
+                    "title": "Notifications",
+                    "latest": "Más reciente",
+                    "today": "Hoy dia",
+                    "alertClearNotificationTitle": "Borrar todas las notificaciones",
+                    "clear": "Clara",
+                    "no": "No"
                 }
             },
             "UserProfileScreen": {

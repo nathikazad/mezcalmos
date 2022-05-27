@@ -18,6 +18,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {Color bgColor = Colors.white,
     Function? onClick,
     String? title,
+    Widget? titleWidget,
     bool showNotifications = false,
     PreferredSizeWidget? tabBar,
     List<Widget> actionIcons = const <Widget>[]}) {
@@ -129,10 +130,9 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
                         color: Colors.black,
                       ),
                     )
-                  : Container(
-                      width: 180,
-                      child:
-                          MezcalmosSharedWidgets.fillTitle(actionIcons.length)),
+                  : (titleWidget != null)
+                      ? titleWidget
+                      : MezcalmosSharedWidgets.fillTitle(actionIcons.length),
               Spacer(),
               if (showNotifications &&
                   Get.find<AuthController>().isUserSignedIn)

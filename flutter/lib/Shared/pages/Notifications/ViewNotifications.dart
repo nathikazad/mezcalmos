@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
-import 'package:mezcalmos/Shared/pages/Notifications/components/ClearNotificationButton.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/components/NotificationCard.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/DateTitleComponent.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["Notifications"]["ViewNotifications"];
@@ -47,7 +45,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             children: [
-              ClearNotificationButton(),
+              _notifsHeader(),
               Obx(() => _buildNotification(
                   controller.notifications.reversed.toList()))
             ],
@@ -58,13 +56,14 @@ class _ViewNotificationsState extends State<ViewNotifications> {
   }
 
   Widget _buildNotification(List<notifs.Notification> notifications) {
-    DateTime dd = DateTime.now();
-    final List<Widget> myWidgets = [];
+    final DateTime dd = DateTime.now();
+    final List<Widget> todayNotifsWidgets = [];
+    final List<Widget> notifsWidgets = [];
     return Column(
       children: notifications.fold<List<Widget>>(<Widget>[],
           (List<Widget> children, notifs.Notification notification) {
         if (dd.isSameDate(notification.timestamp)) {
-          myWidgets.addAll([
+          todayNotifsWidgets.addAll([
             NotificationCard(
               notification: notification,
             ),
@@ -73,16 +72,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
             )
           ]);
         } else {
-          dd = notification.timestamp;
-          myWidgets.add(DateTitleComponent(
-            date: "${ff.format(dd.toLocal())}",
-            dateIcon: FaIcon(
-              FontAwesomeIcons.calendarAlt,
-              size: 13.sp,
-            ),
-          ));
-          if (dd.isSameDate(notification.timestamp)) {
-            myWidgets.addAll([
+          {
+            notifsWidgets.addAll([
               NotificationCard(
                 notification: notification,
               ),
@@ -93,10 +84,58 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           }
         }
 
-        children = myWidgets;
+        children = todayNotifsWidgets + [Divider()] + notifsWidgets;
         return children;
       }),
     );
+  }
+
+  Widget _notifsHeader() {
+    return Obx(() => (controller.notifications.length <= 0)
+        ? Container()
+        : Container(
+            // padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  _isTodayNotifsExist() ? _i18n()["today"] : "",
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+              ),
+              IconButton(
+                  iconSize: 20,
+                  onPressed: () async {
+                    await showConfirmationDialog(context,
+                        title: _i18n()["alertClearNotificationTitle"],
+                        helperText: "",
+                        primaryButtonText: "${_i18n()["clear"]}",
+                        secondaryButtonText: "${_i18n()["no"]}",
+                        onYesClick: () async {
+                      controller.clearAllNotification();
+                      Get.back();
+                    });
+                  },
+                  icon: Icon(
+                    Ionicons.trash_outline,
+                  )),
+            ],
+          )));
+  }
+
+  bool _isTodayNotifsExist() {
+    final DateTime dd = DateTime.now();
+    final List<notifs.Notification> todaynotifs = controller.notifications
+        .where((notifs.Notification notif) => dd.isSameDate(notif.timestamp))
+        .toList();
+    if (todaynotifs.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 

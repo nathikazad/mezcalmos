@@ -32,27 +32,34 @@ class LaundryPricingCompnent extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            (order.costsByType?.lineItems.isNotEmpty ?? false)
-                ? _PricingTable()
-                : Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Icon(
-                        Icons.help_outline_rounded,
-                        color: Colors.grey.shade800,
-                      ),
-                      const SizedBox(width: 10),
-                      Flexible(
-                        child: Text(
-                          _i18n()['laundryPricingNote'],
+            if (order.costsByType?.lineItems.isNotEmpty ?? false)
+              _PricingTable(),
+            if (order.costsByType?.lineItems.isEmpty ?? true)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Icon(
+                    Icons.info_outline_rounded,
+                    color: Colors.grey.shade800,
+                  ),
+                  const SizedBox(width: 10),
+                  Flexible(
+                      child: Text(_i18n()['laundryPricingNote'],
                           style: TextStyle(
                             color: Colors.grey.shade800,
-                          ),
-                          maxLines: 3,
-                        ),
+                          ))),
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: Text(
+                      _i18n()['laundryPricingNote'],
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                       ),
-                    ],
+                      maxLines: 3,
+                    ),
                   ),
+                ],
+              ),
           ],
         ),
       ),

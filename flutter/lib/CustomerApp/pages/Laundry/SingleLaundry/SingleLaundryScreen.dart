@@ -5,10 +5,14 @@ import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Laundry"]["SingleLaundryScreen"];
 
 class SingleLaundryScreen extends StatefulWidget {
   const SingleLaundryScreen({Key? key}) : super(key: key);
@@ -53,14 +57,15 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                 ),
                 _laundryInfoHeader(),
                 SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
                 Text(
-                  "Open hours",
+                  "${_i18n()["description"]}",
                   style: Get.textTheme.bodyText1,
                 ),
+                Text("laundry.value!.info.description"),
                 const SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 MezServiceOpenHours(schedule: laundry.value!.schedule!),
                 SizedBox(
@@ -93,7 +98,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
         style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(),
             backgroundColor: Colors.transparent),
-        child: Text("Send my laundry"),
+        child: Text("${_i18n()["sendMyLaundry"]}"),
         onPressed: () {
           Get.toNamed(kLaundryOrderRequest, arguments: laundry.value);
         },
@@ -112,6 +117,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
     return Container(
       padding: const EdgeInsets.all(5),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
@@ -132,7 +138,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                               fontWeight: FontWeight.w700,
                               color: primaryBlueColor),
                           label: Text(
-                              "Minmum cost \$${laundry.value!.laundryCosts.minimumCost} ")),
+                              "${_i18n()["minimumCost"]} \$${laundry.value!.laundryCosts.minimumCost} ")),
                     ),
                   )
                 ]),
@@ -142,7 +148,9 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           Flexible(
               child: Column(
             children: [
-              Text("Starting from"),
+              Text(
+                "${_i18n()["startingFrom"]}",
+              ),
               Text(
                 "\$${laundry.value!.getCheapestCategory}/KG",
                 style: Get.textTheme.bodyText1
