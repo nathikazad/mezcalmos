@@ -303,7 +303,7 @@ class SendMessageBox extends StatelessWidget {
                   isDense: true,
                   contentPadding: EdgeInsets.all(8),
                   filled: true,
-                  fillColor: secondaryBlueColor,
+                  fillColor: SecondaryLightBlueColor,
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(16)),
@@ -355,7 +355,7 @@ class SendMessageBox extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: _typedMsg.value.length > 0
-                          ? secondaryBlueColor
+                          ? SecondaryLightBlueColor
                           : Colors.grey,
                     ),
                   ),

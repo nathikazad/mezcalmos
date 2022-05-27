@@ -19,7 +19,7 @@ class ButtonComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        //  padding: const EdgeInsets.symmetric(horizontal: 15),
         width: Get.width,
         height: 60,
         decoration: BoxDecoration(
@@ -31,7 +31,7 @@ class ButtonComponent extends StatelessWidget {
                   blurRadius: 10,
                   spreadRadius: 0)
             ],
-            color: (canClick) ? null : Colors.grey,
+            color: (canClick) ? null : bgColor,
             gradient: (canClick)
                 ? LinearGradient(
                     colors: [Colors.purple, primaryBlueColor],

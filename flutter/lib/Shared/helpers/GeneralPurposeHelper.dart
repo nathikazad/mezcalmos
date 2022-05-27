@@ -4,8 +4,12 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
+    ["GeneralPurposeHelper"];
 
 /// This calls will contains all the Formatting Stuff
 class MezFormatter {
@@ -158,127 +162,124 @@ Future<void> showConfirmationDialog(
   return showDialog(
       context: context,
       builder: (BuildContext ctx) {
-        return Material(
-          color: Colors.transparent,
-          child: Center(
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 66,
-                    width: 66,
-                    child: Icon(
-                      Icons.close,
-                      color: Color.fromRGBO(252, 89, 99, 1),
-                      size: 33,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(252, 89, 99, 0.12),
-                      shape: BoxShape.circle,
-                    ),
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(16),
+          content: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 66,
+                  width: 66,
+                  child: Icon(
+                    Icons.close,
+                    color: Color.fromRGBO(252, 89, 99, 1),
+                    size: 33,
                   ),
-                  SizedBox(height: 18),
-                  Text(
-                    title ?? "Cancel Order",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 24,
-                    ),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(252, 89, 99, 0.12),
+                    shape: BoxShape.circle,
                   ),
-                  SizedBox(height: 11),
-                  Column(
-                    children: [
-                      Text(
-                        helperText ?? 'Are you sure you’d like to cancel ?',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      Text(
-                        'This action cannot be undone.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
+                ),
+                SizedBox(height: 18),
+                Text(
+                  title ?? "${_i18n()["cancelOrder"]}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
                   ),
-                  SizedBox(height: 18),
-                  GestureDetector(
-                    onTap: () {
-                      _clickedYes.value = true;
-                      onYesClick.call().whenComplete(() {
-                        _clickedYes.value = false;
-                      });
-                    },
-                    child: Container(
-                      height: 44,
-                      width: 65.w,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(252, 89, 99, 1),
-                        borderRadius: BorderRadius.circular(9),
-                      ),
-                      child: Center(
-                        child: Obx(
-                          () => _clickedYes.value
-                              ? Center(
-                                  child: Container(
-                                    height: 30,
-                                    width: 30,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 1,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                )
-                              : Text(
-                                  primaryButtonText ?? 'Yes, cancel order',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16.34,
-                                  ),
-                                ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  GestureDetector(
-                    onTap: () {
-                      onNoClick?.call();
-                      Get.back<void>(closeOverlays: true);
-                    },
-                    child: Text(
-                      secondaryButtonText ?? 'No',
+                ),
+                SizedBox(height: 11),
+                Column(
+                  children: [
+                    Text(
+                      helperText ?? '${_i18n()["cancelConfirmationText"]}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color.fromRGBO(120, 120, 120, 1),
-                        fontFamily: 'Montserrat',
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                      ),
+                    ),
+                    Text(
+                      '${_i18n()["subtitle"]}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
                         fontWeight: FontWeight.w700,
-                        fontSize: 16.99,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 18),
+                GestureDetector(
+                  onTap: () {
+                    _clickedYes.value = true;
+                    onYesClick.call().whenComplete(() {
+                      _clickedYes.value = false;
+                    });
+                  },
+                  child: Container(
+                    height: 44,
+                    width: 65.w,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(252, 89, 99, 1),
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    child: Center(
+                      child: Obx(
+                        () => _clickedYes.value
+                            ? Center(
+                                child: Container(
+                                  height: 30,
+                                  width: 30,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 1,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                primaryButtonText ?? '${_i18n()["yesCancel"]}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16.34,
+                                ),
+                              ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                SizedBox(height: 12),
+                GestureDetector(
+                  onTap: () {
+                    onNoClick?.call();
+                    Get.back<void>(closeOverlays: true);
+                  },
+                  child: Text(
+                    secondaryButtonText ?? '${_i18n()["no"]}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color.fromRGBO(120, 120, 120, 1),
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16.99,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         );

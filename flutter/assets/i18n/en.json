@@ -114,6 +114,8 @@
                     },
                     "ListRestaurantScreen": {
                         "restaurants": "Restaurants",
+                        "search": "Search",
+                        "showOnlyOpen": "Show only open restaurents",
                         "emptRestaurantList": "Sorry no restaurant found."
                     }
                 },
@@ -121,6 +123,8 @@
                     "components": {
                         "BuildCart": {
                             "inCart": "In Cart",
+                            "yesClear": "Yes clear",
+                            "no": "No",
                             "clearCart": "Clear Cart",
                             "clearCartConfirm": "Are you sure you want to clear the cart ?",
                             "clear": "Clear"
@@ -536,6 +540,13 @@
                 "photoAccessOffTitle": "App can't access Photos.",
                 "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
             },
+            "GeneralPurposeHelper": {
+                "yesCancel": "Yes cancel order",
+                "no": "No",
+                "cancelOrder": "Cancel Order",
+                "cancelConfirmationText": "Are you sure you want to cancel the order",
+                "subtitle": "This action cannot be undone."
+            },
             "NotificationsHelper": {
                 "view": "View"
             },
@@ -588,7 +599,12 @@
                     }
                 },
                 "ViewNotifications": {
-                    "title": "Notifications"
+                    "title": "Notifications",
+                    "latest": "Latest",
+                    "today": "Today",
+                    "alertClearNotificationTitle": "Clear All Notifications",
+                    "clear": "Clear",
+                    "no": "No"
                 }
             },
             "UserProfileScreen": {

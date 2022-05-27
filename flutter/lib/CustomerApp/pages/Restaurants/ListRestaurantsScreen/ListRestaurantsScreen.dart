@@ -82,7 +82,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
         activeColor: primaryBlueColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 5),
         title: Text(
-          "Show only open restaurents",
+          "${_i18n()["showOnlyOpen"]}",
           style: Get.textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w700),
         ),
       ),
@@ -106,7 +106,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
           hintStyle: TextStyle(
             color: Colors.grey.shade300,
           ),
-          hintText: "Search"),
+          hintText: "${_i18n()["search"]}"),
     );
   }
 }

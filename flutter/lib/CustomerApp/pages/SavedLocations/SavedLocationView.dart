@@ -86,6 +86,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
         autoBack: true,
       ),
       bottomNavigationBar: ButtonComponent(
+        canClick: true,
         widget: Center(
           child: Text(
             "${_i18n()["addNewLoc"]}",

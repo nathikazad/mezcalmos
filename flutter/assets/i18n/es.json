@@ -115,6 +115,9 @@
                     },
                     "ListRestaurantScreen": {
                         "restaurants": "Restaurantes",
+
+                        "search": "Búsqueda",
+                        "showOnlyOpen": "Mostrar solo restaurantes abiertos",
                         "emptRestaurantList": "Lo siento, no se encontró ningún restaurante"
                     }
                 },
@@ -122,6 +125,8 @@
                     "components": {
                         "BuildCart": {
                             "inCart": "En El Carrito",
+                            "yesClear": "sí, claro",
+                            "no": "No",
                             "clearCart": "Vaciar carrito",
                             "clearCartConfirm": "Está seguro de que desea vaciar el carrito?",
                             "clear": "Vaciar"
@@ -556,6 +561,13 @@
                 "photoAccessOffTitle": "App can't access Photos.",
                 "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
             },
+            "GeneralPurposeHelper": {
+                "yesCancel": "Sí Cancelar pedido",
+                "no": "No",
+                "cancelOrder": "Cancelar orden",
+                "cancelConfirmationText": "¿Estás seguro de que quieres cancelar el pedido?",
+                "subtitle": "Esta acción no se puede deshacer."
+            },
             "NotificationsHelper": {
                 "view": "Ver"
             },
@@ -608,7 +620,13 @@
                     }
                 },
                 "ViewNotifications": {
-                    "title": "Notificaciones"
+
+                    "title": "Notifications",
+                    "latest": "Más reciente",
+                    "today": "Hoy dia",
+                    "alertClearNotificationTitle": "Borrar todas las notificaciones",
+                    "clear": "Clara",
+                    "no": "No"
                 }
             },
             "UserProfileScreen": {

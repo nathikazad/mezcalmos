@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
-import 'package:mezcalmos/Shared/pages/Notifications/components/ClearNotificationButton.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/components/NotificationCard.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
@@ -46,7 +45,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             children: [
-              ClearNotificationButton(),
+              _notifsHeader(),
               Obx(() => _buildNotification(
                   controller.notifications.reversed.toList()))
             ],
@@ -110,25 +109,15 @@ class _ViewNotificationsState extends State<ViewNotifications> {
               IconButton(
                   iconSize: 20,
                   onPressed: () async {
-                    await showConfirmationDialog(context, onYesClick: () async {
+                    await showConfirmationDialog(context,
+                        title: _i18n()["alertClearNotificationTitle"],
+                        helperText: "",
+                        primaryButtonText: "${_i18n()["clear"]}",
+                        secondaryButtonText: "${_i18n()["no"]}",
+                        onYesClick: () async {
                       controller.clearAllNotification();
                       Get.back();
                     });
-                    // final YesNoDialogButton yesNoRes = await cancelAlertDialog(
-                    //     title: _i18n()["alertClearNotificationTitle"],
-                    //     body: _i18n()["alertClearNotificationTitle"],
-                    //     icon: Container(
-                    //       child: Icon(
-                    //         Icons.highlight_off,
-                    //         size: 65,
-                    //         color: Color(0xffdb2846),
-                    //       ),
-                    //     ));
-
-                    // if (yesNoRes == YesNoDialogButton.Yes) {
-                    //   controller.clearAllNotification();
-                    //   Get.back();
-                    // }
                   },
                   icon: Icon(
                     Ionicons.trash_outline,
