@@ -2,7 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
+        ["LaundriesListView"]["components"]["CustomerLaundrySelectCard"];
 
 class CustomerLaundrySelectCard extends StatelessWidget {
   const CustomerLaundrySelectCard({Key? key, required this.laundry})
@@ -32,7 +37,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
 
   Widget _laundryInfoHeader() {
     return Container(
-      margin: const EdgeInsets.only(top: 8, right: 8, left: 8, bottom: 8),
+      margin: const EdgeInsets.only(top: 8, right: 3, left: 3, bottom: 8),
       child: Row(
         //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -74,7 +79,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 8,
                       ),
                       Flexible(
                         child: Row(
@@ -88,19 +93,19 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                               width: 3,
                             ),
                             Flexible(
-                                child: Text('2 days',
+                                child: Text('2 ${_i18n()["days"]}',
                                     style: Get.textTheme.bodyText2)),
                           ],
                         ),
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 8,
                       ),
                       Flexible(
-                        flex: 2,
+                        flex: 3,
                         fit: FlexFit.loose,
                         child: Text(
-                            "Starting from : \$${laundry.getCheapestCategory}",
+                            "${_i18n()["startingFrom"]} \$${laundry.getCheapestCategory}",
                             style: Get.textTheme.bodyText2),
                       ),
                     ],

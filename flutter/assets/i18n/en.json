@@ -440,14 +440,15 @@
 
                     "title": "Find your closest laundries or dry cleaners "
                 },
+                "SingleLaundryScreen": {
+                    "startingFrom": "Starting from :",
+                    "minimumCost": "Minimum Cost",
+                    "description": "Description",
+                    "openHours": "openHours",
+                    "sendMyLaundry": "Send my laundry"
+
+                },
                 "LaundryRequestView": {
-                    "Components": {
-                        "LaundryStepsComponent": {
-                            "firstStep": "First step is creating an order once you create an order one of our drivers will be reaching your location to pickup your things",
-                            "secondStep": "Second step our laundry service provider will recieve your order and start doing his work and we will inform you about price changes depending on the order weight",
-                            "thirdStep": "Final step once your order is ready one of our drivers will pickup the order from the laundry and get it to your location as soon as possible"
-                        }
-                    },
                     "LaundryOrderRequestView": {
                         "howItWorks": "How it works",
                         "deliveryLocation": "Delivery Location",
@@ -510,6 +511,8 @@
             "laundryOtwDeliveryBody": "You order is on the way",
             "laundryDeliveredTitle": "Delivered",
             "LaundryDeliveredBody": "Your order has been delivered",
+            "LaundryCancelledTitle": "Order Cancelled",
+            "LaundryCancelledBody": "Your order has been cancelled",
             "counterOfferTitle": "New Counter Offer",
             "counterOfferBody": "New offer from "
         }
@@ -883,15 +886,28 @@
 
                     }
                 },
+                "SingleLaundryScreen": {
+                    "startingFrom": "Starting from :",
+                    "minimumCost": "Minimum Cost",
+                    "description": "Description",
+                    "openHours": "openHours",
+                    "sendMyLaundry": "Send my laundry"
+
+                },
                 "laundryListView": {
                     "laundriesListView": {
                         "title": "Pick a laundry",
+                        "laundries": "Laundries",
 
 
                         "components": {
                             "laundrySelectCard": {
                                 "available": "Available",
                                 "unavailable": "Unavailable"
+                            },
+                            "CustomerLaundrySelectCard": {
+                                "days": "days",
+                                "startingFrom": "Starting from :"
                             }
                         }
 

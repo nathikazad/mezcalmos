@@ -23,7 +23,7 @@ class _LaundriesListViewState extends State<LaundriesListView> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: 'Laundries',
+        title: '${_i18n()["laundries"]}',
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(5),

@@ -42,6 +42,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   LaundryController laundryController = Get.find<LaundryController>();
 
   /// LanguageController
+  /// CustomerApp.pages.Laundry.LaundryRequestView.LaundryOrderRequestView
+  /// CustomerApp.pages.Laundry.LaundriesListView.LaundryRequestView.LaundryOrderRequestView
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['pages']['Laundry']['LaundryRequestView']['LaundryOrderRequestView'];
 
