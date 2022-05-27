@@ -152,7 +152,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
             child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(8),
-              child: Text("Order ready for delivery"),
+              child: Text("${_i18n()["orderReady"]}"),
             )),
       );
     }

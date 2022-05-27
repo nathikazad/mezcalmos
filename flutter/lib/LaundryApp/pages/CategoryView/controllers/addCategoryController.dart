@@ -71,7 +71,7 @@ class AddCategoryController {
     editMode.value = true;
     copyOfCategory.value = categories.value.firstWhereOrNull(
         (LaundryCostLineItem element) =>
-            element.name[userLanguage] == categoryId);
+            element.name[primaryLang] == categoryId);
 
     if (copyOfCategory.value!.name[primaryLang.value] != null) {
       primaryCategoryNameController.text =

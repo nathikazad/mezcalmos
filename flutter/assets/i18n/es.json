@@ -1253,6 +1253,19 @@
                     "saveInfo": "Guardar información"
                 }
             },
+            "AdminView": {
+                "components": {
+                    "CategoryGridCard": {
+                        "deleteTitle": "Eliminar la categoría",
+                        "deleteHelperText": "¿Estás seguro de que quieres eliminar esta categoría?",
+                        "yesDelete": "Si, eliminar"
+                    },
+                    "LaundryOpNormalDeliveryTime": {
+                        "normalDeliverytime": "Tiempo de entrega normal",
+                        "days": "dias"
+                    }
+                }
+            },
             "OrderView": {
                 "Components": {
                     "LaundryOpOrderStatusCard": {
@@ -1268,6 +1281,22 @@
                         }
 
                     },
+                    "OrderEstimatedTimeComponent": {
+                        "estFinishTime": "Tiempo de finalización estimado",
+                        "noEstTime": "No se ha agregado tiempo estimado",
+                        "set": "Colocar",
+                        "estLaundryFinish": "Tiempo de lavado estimado",
+                        "confirm": "Confirmar",
+                        "cancel": "Cancelar"
+
+                    },
+                    "LaundryOpOrderDriverCard": {
+                        "driver": "Conductor",
+                        "noDriver": "No se ha asignado ningún controlador"
+
+                    },
+
+
                     "LaundryOpSetCategoryComponent": {
                         "itemsWeights": "Artículos pesos",
                         "newItemsWeight": "Nuevos artículos de peso",
@@ -1280,7 +1309,13 @@
                         "error": "Error",
                         "categoryExistError": "Esta categoría ya existe",
                         "categoryError": "Por favor seleccione una categoría primero",
-                        "itemsWeightError": "Por favor ingrese un peso válido de peso"
+                        "itemsWeightError": "Por favor ingrese un peso válido de peso",
+                        "deleteLast": "Cada orden de lavandería debe tener al menos un elemento de Oder peso de peso",
+
+                        "item": "Articulo",
+                        "perKilo": "Para kilo",
+                        "weight": "Peso",
+                        "cost": "Costo"
 
 
                     },
@@ -1303,7 +1338,8 @@
                 "LaundryOpOrderView": {
                     "customer": "Cliente",
                     "orderDate": "Fecha de orden",
-                    "total": "Total"
+                    "total": "Total",
+                    "orderReady": "Pedido listo para la entrega"
                 }
             }
         },

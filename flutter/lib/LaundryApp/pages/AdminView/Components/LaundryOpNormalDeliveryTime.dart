@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
+    ["AdminView"]["components"]["LaundryOpNormalDeliveryTime"];
+
+//
 class LaundryOpNormalDeliveryTime extends StatelessWidget {
   const LaundryOpNormalDeliveryTime({
     Key? key,
@@ -13,7 +19,7 @@ class LaundryOpNormalDeliveryTime extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Normal delivery time",
+          "${_i18n()["normalDeliverytime"]}",
           style: Get.textTheme.bodyText1,
         ),
         SizedBox(
@@ -39,7 +45,7 @@ class LaundryOpNormalDeliveryTime extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "2 days",
+                  "2 ${_i18n()["days"]}",
                   style: Get.textTheme.bodyText1,
                 ),
                 InkWell(

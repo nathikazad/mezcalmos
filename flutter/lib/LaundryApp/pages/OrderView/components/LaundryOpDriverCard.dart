@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
+    ["OrderView"]["Components"]["LaundryOpOrderDriverCard"];
 
 class LaundryOpOrderDriverCard extends StatelessWidget {
   const LaundryOpOrderDriverCard({Key? key, required this.order})
@@ -19,7 +23,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Driver : "),
+          Text("${_i18n()["driver"]} : "),
           SizedBox(
             height: 5,
           ),
@@ -121,7 +125,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                           ),
                           Flexible(
                             child: Text(
-                              "no driver assigned to this order",
+                              "${_i18n()["noDriver"]}",
                               style: Get.textTheme.bodyText1,
                             ),
                           ),

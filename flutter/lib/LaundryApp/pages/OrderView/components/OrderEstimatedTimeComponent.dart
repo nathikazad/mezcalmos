@@ -3,8 +3,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
+    ["OrderView"]["Components"]["OrderEstimatedTimeComponent"];
 
 class OrderEstimatedTimeComponent extends StatefulWidget {
   const OrderEstimatedTimeComponent({Key? key, required this.order})
@@ -49,16 +53,16 @@ class _OrderEstimatedTimeComponentState
                       ),
                     ),
                     SizedBox(
-                      width: 15,
+                      width: 8,
                     ),
                     Flexible(
-                      flex: 7,
+                      flex: 8,
                       fit: FlexFit.tight,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Estimated finish time",
+                            "${_i18n()["estFinishTime"]}",
                             style: Get.theme.textTheme.bodyText1,
                           ),
                           SizedBox(
@@ -67,7 +71,7 @@ class _OrderEstimatedTimeComponentState
                           Text(
                             (widget.order.estimatedLaundryReadyTime != null)
                                 ? "${DateFormat("dd MMMM yyyy, hh:mm a ").format(widget.order.estimatedLaundryReadyTime!.toLocal())}"
-                                : "No estimated timed is added",
+                                : "${_i18n()["noEstTime"]}",
                             style: Get.theme.textTheme.bodyText2,
                           ),
                         ],
@@ -109,7 +113,7 @@ class _OrderEstimatedTimeComponentState
                               height: 15,
                             ),
                             Text(
-                              "Estimated laundry ready time",
+                              "${_i18n()["estLaundryFinish"]}",
                               style: Get.textTheme.bodyText1,
                             ),
                             SizedBox(
@@ -149,7 +153,7 @@ class _OrderEstimatedTimeComponentState
                                             ),
                                           )
                                         : Text(
-                                            "Confirm",
+                                            "${_i18n()["confirm"]}",
                                             style: Get.textTheme.bodyText1
                                                 ?.copyWith(color: Colors.white),
                                           ),
@@ -183,7 +187,7 @@ class _OrderEstimatedTimeComponentState
                   Icons.edit_outlined,
                   size: 18,
                 )
-              : Text("Set"),
+              : Text("${_i18n()["set"]}"),
         ));
   }
 
@@ -202,7 +206,7 @@ class _OrderEstimatedTimeComponentState
           padding: const EdgeInsets.all(5),
           alignment: Alignment.center,
           child: Text(
-            "cancel",
+            "${_i18n()["cancel"]}",
             style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
           ),
         ),

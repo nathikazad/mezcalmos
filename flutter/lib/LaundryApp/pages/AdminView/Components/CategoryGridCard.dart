@@ -7,6 +7,9 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
+    ["AdminView"]["components"]["CategoryGridCard"];
+
 class CategoryGridCard extends StatelessWidget {
   const CategoryGridCard({Key? key, required this.item}) : super(key: key);
   final LaundryCostLineItem item;
@@ -26,7 +29,7 @@ class CategoryGridCard extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                item.name[userLanguage] ?? "",
+                item.name[primaryLang] ?? "",
                 style: Get.textTheme.bodyText1,
                 textAlign: TextAlign.center,
               ),
@@ -66,10 +69,10 @@ class CategoryGridCard extends StatelessWidget {
                   customBorder: CircleBorder(),
                   onTap: () {
                     showConfirmationDialog(context,
-                        title: "Delete category",
-                        helperText:
-                            "are you sure you want to delete this category",
-                        primaryButtonText: "Yes, delete", onYesClick: () async {
+                        title: "${_i18n()["deleteTitle"]}",
+                        helperText: "${_i18n()["deleteHelperText"]}",
+                        primaryButtonText: "${_i18n()["yesDelete"]}",
+                        onYesClick: () async {
                       await deleteCategory(item: item)
                           .then((value) => Get.back());
                     });

@@ -1244,6 +1244,19 @@
                     "saveInfo": "Save info"
                 }
             },
+            "AdminView": {
+                "components": {
+                    "CategoryGridCard": {
+                        "deleteTitle": "Delete Category",
+                        "deleteHelperText": "are you sure you want to delete this category",
+                        "yesDelete": "Yes, delete"
+                    },
+                    "LaundryOpNormalDeliveryTime": {
+                        "normalDeliverytime": "Normal delivery time",
+                        "days": "days"
+                    }
+                }
+            },
             "OrderView": {
                 "Components": {
                     "LaundryOpOrderStatusCard": {
@@ -1259,7 +1272,21 @@
                         }
 
                     },
+                    "OrderEstimatedTimeComponent": {
+                        "estFinishTime": "Estimated finish time",
+                        "noEstTime": "No estimated time has been added",
+                        "set": "Set",
+                        "estLaundryFinish": "Estimated laundry ready time",
+                        "confirm": "Confirm",
+                        "cancel": "Cancel"
+
+                    },
+                    "LaundryOpOrderDriverCard": {
+                        "driver": "Driver",
+                        "noDriver": "No driver has been assigned"
+                    },
                     "LaundryOpSetCategoryComponent": {
+
                         "itemsWeights": "Items weights",
                         "newItemsWeight": "New items weight",
                         "itemsCategory": "Items Category",
@@ -1271,7 +1298,12 @@
                         "error": "Error",
                         "categoryExistError": "This category already exists",
                         "categoryError": "Please select a category first",
-                        "itemsWeightError": "Please enter a valid items weight"
+                        "itemsWeightError": "Please enter a valid items weight",
+                        "deleteLast": "Every laundry order must have at least one oder items weight",
+                        "item": "Item",
+                        "perKilo": "Per kilo",
+                        "weight": "Weight",
+                        "cost": "Cost"
 
 
                     },
@@ -1294,7 +1326,8 @@
                 "LaundryOpOrderView": {
                     "customer": "Customer",
                     "orderDate": "Order Date",
-                    "total": "Total"
+                    "total": "Total",
+                    "orderReady": "Order reday for delivery"
                 }
             }
         },
