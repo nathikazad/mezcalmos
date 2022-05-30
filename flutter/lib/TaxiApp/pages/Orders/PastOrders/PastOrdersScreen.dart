@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingListScreen/Components/IncomingOrderCard.dart';
+import 'package:mezcalmos/TaxiApp/taxiOrderCardBuilder.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
@@ -96,7 +98,13 @@ class PastOrderList extends StatelessWidget {
               height: 5,
             ),
             itemBuilder: (BuildContext context, TaxiOrder element) {
-              return IncomingOrderCard(order: element, isPast: true);
+              return Text("TO DO TAXI ORDER CARD");
+              // OrderInfosCard(
+              //   orderCardSubWidgets: buildTaxiOrderCardWidgets(element),
+              //   order: element,
+              // );
+
+              //IncomingOrderCard(order: element, isPast: true);
               // switch (element.orderType) {
               //   case OrderType.Taxi:
               //     return TaxiPastOrderCard(order: element as TaxiOrder);

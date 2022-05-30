@@ -10,6 +10,8 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
+import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/TaxiApp/controllers/incomingOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
@@ -138,27 +140,12 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         .where((o) => o.status == TaxiOrdersStatus.Scheduled)
         .toList();
 
-    _ret.addAll(
-      [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Incoming Orders",
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w700,
-                fontSize: 24,
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            _onOffSwitcher()
-          ],
-        ),
-        SizedBox(height: 10),
-      ],
+    _ret.add(
+      IncomingOrdersOnOff(
+        initialSwitcherValue: _taxiAuthController.taxiState?.isLooking ?? false,
+        onTurnedOff: _taxiAuthController.turnOff,
+        onTurnedOn: _taxiAuthController.turnOn,
+      ),
     );
     if (_taxiAuthController.taxiState?.isLooking != true) {
       // add the notify me on new LookingForTaxiScheduled orders
@@ -278,76 +265,11 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
     required String errorText,
     String? secondLine,
   }) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        childData == null
-            ? Container(
-                height: 44,
-                width: 44,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.fromRGBO(237, 237, 237, 1),
-                ),
-                child: Center(
-                  child: Icon(
-                    iconData,
-                    color: Colors.black,
-                    // size: 13,
-                  ),
-                ),
-              )
-            : childData,
-        SizedBox(height: 7),
-        Text(
-          errorText,
-          style: TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w700,
-            fontSize: 15,
-          ),
-        ),
-        if (secondLine != null)
-          Text(
-            secondLine,
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w600,
-              fontSize: 13,
-              color: Color.fromRGBO(120, 120, 120, 1),
-            ),
-          )
-      ],
-    );
-  }
-
-  Widget _onOffSwitcher() {
-    return Flexible(
-      child: Obx(
-        () => Container(
-          height: 50, // 50, //46.47,
-          width: 60 * 2,
-          child: MezSwitch(
-            buttonSize: Size(63, 50),
-            initialPosition: _taxiAuthController.taxiState?.isLooking ?? false,
-            values: <String>['ON', 'OFF'],
-            onToggleCallback: (int v) {
-              // turn ut ON
-              if (v == 0) {
-                _taxiAuthController.turnOn();
-              } else {
-                _taxiAuthController.turnOff();
-              }
-            },
-            buttonColor: _taxiAuthController.taxiState?.isLooking == true
-                ? Colors.green
-                : Colors.red,
-            backgroundColor: Colors.transparent,
-            textColor: const Color(0xFFFFFFFF),
-          ),
-        ),
-      ),
+    return IncomingOrdersStatus(
+      iconData: iconData,
+      childData: childData,
+      errorText: errorText,
+      secondLine: secondLine,
     );
   }
 }
