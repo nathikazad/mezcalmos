@@ -18,7 +18,7 @@ class LaundryInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   late String laundryId;
   Rxn<LanguageType> laundryPrimaryLanguage = Rxn();
-  Rxn<LanguageType> laundrySecondaryLanguage = Rxn();
+
   Rxn<Laundry> laundry = Rxn();
   StreamSubscription? _laundryInfoListener;
   Future<void> init(String laundryId) async {
@@ -37,6 +37,7 @@ class LaundryInfoController extends GetxController {
       if (event.snapshot.value != null) {
         laundry.value = Laundry.fromLaundryData(
             laundryId: laundryId, laundryData: event.snapshot.value);
+        laundryPrimaryLanguage.value = laundry.value?.primaryLanguage;
       }
     }, onError: (error) {
       mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
@@ -104,6 +105,14 @@ class LaundryInfoController extends GetxController {
         .child(serviceProviderCosts(
             orderType: OrderType.Laundry, providerId: laundryId))
         .set(laundryCosts.toFirebasFormat());
+  }
+
+  Future<void> setAverageNumberOfDays(num averageNumberOfDays) {
+    return _databaseHelper.firebaseDatabase
+        .reference()
+        .child(serviceProviderAverageNumberOfDays(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(averageNumberOfDays);
   }
 
   Future<void> setPrimaryLanguage(LanguageType lang) {

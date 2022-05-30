@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
@@ -32,9 +32,10 @@ class AddCategoryController {
 
   final Rxn<LanguageType> primaryLang = Rxn();
   final Rxn<LanguageType> secondaryLang = Rxn();
-  Rx<List<LanguageType>> languages = Rx([]);
+
   RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
   RxBool editMode = RxBool(false);
+  String? editableCategoryId;
 
   // INIT STATE ///
   void init({String? categoryId}) {
@@ -51,27 +52,22 @@ class AddCategoryController {
   void initLanguages() {
     primaryLang.value = laundry.value!.primaryLanguage;
     secondaryLang.value = laundry.value!.secondaryLanguage;
-    if (primaryLang.value != null) {
-      languages.value.add(primaryLang.value!);
-    }
-    if (secondaryLang.value != null) {
-      languages.value.add(secondaryLang.value!);
-    }
   }
 
   void assignCategories() {
     laundryCosts.value = laundry.value!.laundryCosts;
     laundry.value!.laundryCosts.lineItems
         .forEach((LaundryCostLineItem element) {
-      categories.value.add(element.copyWith());
+      categories.value.add(element);
     });
   }
 
   void initEditMode(String categoryId) {
     editMode.value = true;
-    copyOfCategory.value = categories.value.firstWhereOrNull(
-        (LaundryCostLineItem element) =>
-            element.name[primaryLang] == categoryId);
+    editableCategoryId = categoryId;
+
+    copyOfCategory.value = categories.firstWhereOrNull(
+        (LaundryCostLineItem element) => element.id == categoryId);
 
     if (copyOfCategory.value!.name[primaryLang.value] != null) {
       primaryCategoryNameController.text =
@@ -87,67 +83,37 @@ class AddCategoryController {
   }
 
   void addCategory() {
-    if (laundry.value!.secondaryLanguage != null) {
-      categories.value.add(LaundryCostLineItem(name: {
-        laundry.value!.primaryLanguage: primaryCategoryNameController.text,
-        laundry.value!.secondaryLanguage!: secondaryCategoryNameController.text,
-      }, cost: num.parse(categoryPricingController.text)));
-    } else {
-      categories.value.add(LaundryCostLineItem(name: {
-        laundry.value!.primaryLanguage: primaryCategoryNameController.text,
-      }, cost: num.parse(categoryPricingController.text)));
-    }
+    final LaundryCostLineItem newCategory = LaundryCostLineItem(
+        id: getRandomString(12),
+        name: {
+          primaryLang.value!: primaryCategoryNameController.text,
+          if (secondaryLang.value != null)
+            secondaryLang.value!: secondaryCategoryNameController.text,
+        },
+        cost: num.parse(categoryPricingController.text));
+    categories.add(newCategory);
 
     laundryCosts.value!.lineItems = categories;
-    mezDbgPrint("After add ------------------------>");
-    laundryCosts.value!.lineItems.forEach((LaundryCostLineItem element) {});
 
     laundryInfoController.setCosts(laundryCosts.value!).then((value) {
-      mezDbgPrint("Done");
       Get.back();
     });
   }
 
   void editCategory() {
-    categories.removeWhere((LaundryCostLineItem element) =>
-        element.name[primaryLang] == copyOfCategory.value!.name[primaryLang]);
-    if (laundry.value!.secondaryLanguage != null) {
-      categories.value.add(LaundryCostLineItem(name: {
-        laundry.value!.primaryLanguage: primaryCategoryNameController.text,
-        laundry.value!.secondaryLanguage!: secondaryCategoryNameController.text,
-      }, cost: num.parse(categoryPricingController.text)));
-    } else {
-      categories.value.add(LaundryCostLineItem(name: {
-        laundry.value!.primaryLanguage: primaryCategoryNameController.text,
-      }, cost: num.parse(categoryPricingController.text)));
-    }
+    final int index = categories
+        .indexWhere((LaundryCostLineItem p0) => p0.id == editableCategoryId);
 
+    categories.value[index].name = {
+      primaryLang.value!: primaryCategoryNameController.text,
+      if (secondaryLang.value != null)
+        secondaryLang.value!: secondaryCategoryNameController.text,
+    };
+    categories.value[index].cost = num.parse(categoryPricingController.text);
     laundryCosts.value!.lineItems = categories;
-    mezDbgPrint("After add ------------------------>");
-    laundryCosts.value!.lineItems.forEach((LaundryCostLineItem element) {});
-
     laundryInfoController.setCosts(laundryCosts.value!).then((value) {
-      mezDbgPrint("Done");
       Get.back();
     });
-  }
-
-  Future<void> deleteCategory({required String categoryId}) async {
-    final List<LaundryCostLineItem> categories = [];
-    final LaundryCosts laundryCosts =
-        laundryInfoController.laundry.value!.laundryCosts;
-
-    laundryInfoController.laundry.value!.laundryCosts.lineItems
-        .forEach((LaundryCostLineItem element) {
-      categories.add(element.copyWith());
-    });
-
-    categories.removeWhere((LaundryCostLineItem element) =>
-        element.name[primaryLang] == categoryId);
-
-    laundryCosts.lineItems = categories;
-
-    await laundryInfoController.setCosts(laundryCosts);
   }
 
   void handleFooterButtonClick() {
@@ -158,6 +124,13 @@ class AddCategoryController {
     }
   }
 
-// get selected tab priority based on list order of hte languages
-
+  String getRightName() {
+    final String availableName =
+        copyOfCategory.value!.name[copyOfCategory.value!.name.keys.first]!;
+    if (copyOfCategory.value!.name[primaryLang] != null) {
+      return copyOfCategory.value!.name[primaryLang]!;
+    } else {
+      return availableName;
+    }
+  }
 }

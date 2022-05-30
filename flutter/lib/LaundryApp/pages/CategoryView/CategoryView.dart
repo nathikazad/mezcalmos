@@ -21,7 +21,7 @@ class LaundryOpCategoryScreen extends StatefulWidget {
 class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
   /// AddCategoryController
   ///
-  AddCategoryController _addCategoryController = AddCategoryController();
+  AddCategoryController _viewController = AddCategoryController();
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
   String? categoryName;
@@ -31,7 +31,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
   void initState() {
     categoryName = Get.parameters["categoryId"];
 
-    _addCategoryController.init(categoryId: categoryName);
+    _viewController.init(categoryId: categoryName);
 
     super.initState();
   }
@@ -56,7 +56,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
       child: InkWell(
           onTap: () {
             if (_formKey.currentState?.validate() ?? false) {
-              _addCategoryController.handleFooterButtonClick();
+              _viewController.handleFooterButtonClick();
             }
           },
           child: Ink(
@@ -64,7 +64,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
             padding: const EdgeInsets.all(8),
             child: Center(
               child: Text(
-                (_addCategoryController.editMode.value)
+                (_viewController.editMode.value)
                     ? "${_i18n()["editCategory"]}"
                     : "${_i18n()["addCategory"]}",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
@@ -78,8 +78,8 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
     return LaundryAppAppBar(
       leftBtnType: AppBarLeftButtonType.Back,
       onClick: Get.back,
-      title: (_addCategoryController.editMode.value)
-          ? _addCategoryController.copyOfCategory.value!.name[userLanguage]!
+      title: (_viewController.editMode.value)
+          ? _viewController.getRightName()
           : "${_i18n()["addCategory"]}",
     );
   }
@@ -99,9 +99,8 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
               ),
               const SizedBox(height: 8),
               _categoryNameComponent(
-                  controller:
-                      _addCategoryController.primaryCategoryNameController),
-              if (_addCategoryController.secondaryLang.value != null)
+                  controller: _viewController.primaryCategoryNameController),
+              if (_viewController.secondaryLang.value != null)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -109,13 +108,13 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
                       height: 10,
                     ),
                     Text(
-                      "${_i18n()["categoryNameIn"]} ${_addCategoryController.secondaryLang.value!.toLanguageName() ?? ""} ",
+                      "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
                       style: Get.textTheme.headline4,
                     ),
                     const SizedBox(height: 8),
                     _categoryNameComponent(
-                        controller: _addCategoryController
-                            .secondaryCategoryNameController),
+                        controller:
+                            _viewController.secondaryCategoryNameController),
                   ],
                 ),
               const SizedBox(height: 16),
@@ -136,7 +135,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
         if (v != null && v.isNotEmpty) {
           return null;
         } else {
-          return "Please add a category name";
+          return "${_i18n()["categoryNameError"]}";
         }
       },
       decoration: InputDecoration(
@@ -161,13 +160,13 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
         ),
         const SizedBox(height: 8),
         TextFormField(
-          controller: _addCategoryController.categoryPricingController,
+          controller: _viewController.categoryPricingController,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (String? v) {
             if (v != null && v.isNotEmpty && int.tryParse(v) != null) {
               return null;
             } else {
-              return "Please add a correct price ";
+              return "${_i18n()["categoryPriceError"]}";
             }
           },
           decoration: InputDecoration(

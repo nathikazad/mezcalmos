@@ -1247,13 +1247,16 @@
 
                     }
                 },
+
                 "addCategory": "Add category",
                 "editCategory": "Edit category",
                 "categoryName": "Category name",
                 "categoryNameIn": "Category name in ",
                 "categoryNameHint": "Enter a category name",
                 "categoryPrice": "Category pricing per kilogramme",
-                "categoryPriceHint": "Enter category pricing per kilogramme..."
+                "categoryPriceHint": "Enter category pricing per kilogramme...",
+                "categoryNameError": "Please add a category name",
+                "catgeoryPriceError": "Please add a correct category price"
 
             },
             "DashboardView": {
@@ -1283,6 +1286,13 @@
                 }
             },
             "EditInfoView": {
+                "controllers": {
+                    "EditInfoController": {
+                        "error": "Error",
+                        "selectPrimaryFirst": "Select Primary language first"
+
+                    }
+                },
                 "components": {
                     "LanguageSelectorComponent": {
                         "none": "None"
@@ -1299,7 +1309,9 @@
             "AdminView": {
                 "components": {
                     "CategoryGridCard": {
+                        "nameTooltip": "Name missing in your selected primary language",
                         "deleteTitle": "Delete Category",
+
                         "deleteHelperText": "are you sure you want to delete this category",
                         "yesDelete": "Yes, delete"
                     },

@@ -172,7 +172,7 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
   }
 
 // handling when the weight and category is well formated and go throught the process of editing or adding new items weight
-  void handlingNewOrderWeight() async {
+  Future<void> handlingNewOrderWeight() async {
     late LanguageType primaryLangauge;
     await laundryInfoController
         .getLaundry(widget.order.laundry!.id)
@@ -180,6 +180,7 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
       primaryLangauge = value.primaryLanguage;
     });
     final LaundryOrderCostLineItem newCostLineItem = LaundryOrderCostLineItem(
+        id: newCategory.value!.id,
         weight: num.parse(itemsWeightController.text),
         name: newCategory.value!.name,
         cost: newCategory.value!.cost);
@@ -201,7 +202,8 @@ class _OrderCategoryBottomModalState extends State<OrderCategoryBottomModal> {
   }
 
 // final function that will trigger the order controller with setting the final order cost items
-  void settingNewOrderWeight(LaundryOrderCostLineItem newCostLineItem) async {
+  Future<void> settingNewOrderWeight(
+      LaundryOrderCostLineItem newCostLineItem) async {
     late LanguageType primaryLangauge;
     await laundryInfoController
         .getLaundry(widget.order.laundry!.id)

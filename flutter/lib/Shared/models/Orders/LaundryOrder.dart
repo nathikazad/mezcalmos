@@ -232,25 +232,35 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
 class LaundryOrderCostLineItem extends LaundryCostLineItem {
   num weight;
+
   num get weighedCost => weight * cost;
   LaundryOrderCostLineItem({
     required this.weight,
+    required String id,
     required Map<LanguageType, String> name,
     required num cost,
-  }) : super(cost: cost, name: name);
+  }) : super(cost: cost, name: name, id: id);
 
   factory LaundryOrderCostLineItem.fromData(laundryCostLineItemData) {
-    final LaundryOrderCostLineItem newLo = LaundryOrderCostLineItem(
-        weight: laundryCostLineItemData["weight"],
-        name: LaundryCostLineItem.fromData(laundryCostLineItemData).name,
-        cost: LaundryCostLineItem.fromData(laundryCostLineItemData).cost);
+    final LaundryOrderCostLineItem li =
+        LaundryCostLineItem.fromData(laundryCostLineItemData)
+            as LaundryOrderCostLineItem;
+    li.weight = laundryCostLineItemData["weight"];
+    li.cost = laundryCostLineItemData["cost"];
+    li.name = laundryCostLineItemData["name"];
+    li.id = laundryCostLineItemData["id"];
 
-    // final LaundryOrderCostLineItem li =
-    //     LaundryCostLineItem.fromData(laundryCostLineItemData)
-    //         as LaundryOrderCostLineItem;
-    // li.weight = laundryCostLineItemData["weight"];
-    return newLo;
+    return li;
   }
+  // factory LaundryOrderCostLineItem.fromData(laundryCostLineItemData) {
+  //   final LaundryOrderCostLineItem newLo = LaundryOrderCostLineItem(
+  //       weight: laundryCostLineItemData["weight"],
+  //       id: laundryCostLineItemData["id"],
+  //       name: laundryCostLineItemData["name"],
+  //       cost: laundryCostLineItemData["cost"]);
+
+  //   return newLo;
+  // }
   @override
   Map<String, dynamic> toFirebaseFormat() {
     return {

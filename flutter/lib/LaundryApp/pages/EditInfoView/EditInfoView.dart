@@ -39,8 +39,6 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,9 +157,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
             onPressed: (editInfoController.btnClicked.value)
                 ? null
                 : () {
-                    editInfoController
-                        .updateLaundryInfo()
-                        .then((value) => Get.back());
+                    editInfoController.updateLaundryInfo();
                   },
             child: (editInfoController.btnClicked.value)
                 ? Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/SetWeightBottomSheet.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -16,10 +17,10 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
   final LaundryOrder order;
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
+  LaundryInfoController laundryInfoController =
+      Get.find<LaundryInfoController>();
 
   OrderController orderController = Get.find<OrderController>();
-  // identifier for orderitemswrightCard to place the loading animatin on specefic items weight card when deleting
-  RxnInt itemId = RxnInt();
 
   @override
   Widget build(BuildContext context) {
@@ -95,12 +96,9 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
     final LaundryOrderCosts? oldCosts = order.costsByType;
     if (oldCosts != null) {
       if (oldCosts.lineItems.length > 1) {
-        itemId.value = item.hashCode;
         oldCosts.lineItems.removeWhere(
             (LaundryOrderCostLineItem element) => element.name == item.name);
-        orderController
-            .setOrderWeight(order.orderId, oldCosts)
-            .whenComplete(() => itemId.value = null);
+        orderController.setOrderWeight(order.orderId, oldCosts);
       } else {
         Get.snackbar(
           "${_i18n()["error"]}",
@@ -146,7 +144,9 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
               DataCell(Container(
                 width: 100,
                 child: Text(
-                  order.costsByType!.lineItems[index].name[userLanguage] ?? "",
+                  order.costsByType!.lineItems[index].name[laundryInfoController
+                          .laundry.value?.primaryLanguage] ??
+                      "",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

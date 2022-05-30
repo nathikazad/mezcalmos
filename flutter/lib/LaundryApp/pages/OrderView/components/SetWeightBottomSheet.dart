@@ -271,6 +271,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
     final LanguageType primaryLangauge =
         laundryInfoController.laundry.value!.primaryLanguage;
     final LaundryOrderCostLineItem newCostLineItem = LaundryOrderCostLineItem(
+        id: newCategory.value!.id,
         weight: num.parse(itemsWeightController.text),
         name: newCategory.value!.name,
         cost: newCategory.value!.cost);

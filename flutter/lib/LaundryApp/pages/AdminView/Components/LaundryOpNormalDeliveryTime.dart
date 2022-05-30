@@ -9,9 +9,15 @@ dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
 
 //
 class LaundryOpNormalDeliveryTime extends StatelessWidget {
-  const LaundryOpNormalDeliveryTime({
-    Key? key,
-  }) : super(key: key);
+  const LaundryOpNormalDeliveryTime(
+      {Key? key,
+      required this.data,
+      required this.onTapPlus,
+      required this.onTapMinus})
+      : super(key: key);
+  final num data;
+  final void Function()? onTapPlus;
+  final void Function()? onTapMinus;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +39,7 @@ class LaundryOpNormalDeliveryTime extends StatelessWidget {
               children: [
                 InkWell(
                   customBorder: CircleBorder(),
-                  onTap: () {},
+                  onTap: onTapMinus,
                   child: Ink(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -45,12 +51,12 @@ class LaundryOpNormalDeliveryTime extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "2 ${_i18n()["days"]}",
+                  "$data ${_i18n()["days"]}",
                   style: Get.textTheme.bodyText1,
                 ),
                 InkWell(
                   customBorder: CircleBorder(),
-                  onTap: () {},
+                  onTap: onTapPlus,
                   child: Ink(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(

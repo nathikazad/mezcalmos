@@ -10,87 +10,121 @@ import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["AdminView"]["components"]["CategoryGridCard"];
 
-class CategoryGridCard extends StatelessWidget {
+class CategoryGridCard extends StatefulWidget {
   const CategoryGridCard({Key? key, required this.item}) : super(key: key);
   final LaundryCostLineItem item;
-  static final LanguageType userLanguage =
+
+  @override
+  State<CategoryGridCard> createState() => _CategoryGridCardState();
+}
+
+class _CategoryGridCardState extends State<CategoryGridCard> {
+  final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  static LaundryInfoController laundryInfoController =
+  LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
-  static final LanguageType primaryLang =
-      laundryInfoController.laundry.value!.primaryLanguage;
+  late LanguageType primaryLang;
+  RxBool nameMissing = RxBool(false);
+  late LanguageType? secondaryLang;
+  @override
+  void initState() {
+    primaryLang = laundryInfoController.laundry.value!.primaryLanguage;
+    secondaryLang = laundryInfoController.laundry.value!.secondaryLanguage;
+    _getRightName();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-              child: Text(
-                item.name[primaryLang] ?? "",
-                style: Get.textTheme.bodyText1,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text("\$${item.cost}/Kg"),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  customBorder: CircleBorder(),
-                  onTap: () {
-                    if (item.name[primaryLang] != null) {
-                      Get.toNamed(
-                          getCategoryEditRoute(item.name[primaryLang]!));
-                    }
-                  },
-                  child: Ink(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade200, shape: BoxShape.circle),
+    return Obx(
+      () => Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: BorderSide(
+                width: 1,
+                color: nameMissing.value
+                    ? Colors.redAccent
+                    : Colors.grey.shade100)),
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (nameMissing.isTrue)
+                Container(
+                  alignment: Alignment.topRight,
+                  child: Tooltip(
+                    message: "${_i18n()["nameTooltip"]}",
+                    triggerMode: TooltipTriggerMode.tap,
                     child: Icon(
-                      Icons.edit_outlined,
-                      size: 20,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                InkWell(
-                  customBorder: CircleBorder(),
-                  onTap: () {
-                    showConfirmationDialog(context,
-                        title: "${_i18n()["deleteTitle"]}",
-                        helperText: "${_i18n()["deleteHelperText"]}",
-                        primaryButtonText: "${_i18n()["yesDelete"]}",
-                        onYesClick: () async {
-                      await deleteCategory(item: item)
-                          .then((value) => Get.back());
-                    });
-                  },
-                  child: Ink(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Colors.red.shade100, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.delete_outline,
-                      size: 20,
+                      Icons.help,
+                      size: 18,
                       color: Colors.red,
                     ),
                   ),
                 ),
-              ],
-            )
-          ],
+              Flexible(
+                child: Text(
+                  _getRightName(),
+                  style: Get.textTheme.bodyText1,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text("\$${widget.item.cost}/Kg"),
+              SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    customBorder: CircleBorder(),
+                    onTap: () {
+                      Get.toNamed(getCategoryEditRoute(widget.item.id));
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.edit_outlined,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    customBorder: CircleBorder(),
+                    onTap: () {
+                      showConfirmationDialog(context,
+                          title: "${_i18n()["deleteTitle"]}",
+                          helperText: "${_i18n()["deleteHelperText"]}",
+                          primaryButtonText: "${_i18n()["yesDelete"]}",
+                          onYesClick: () async {
+                        await deleteCategory(item: widget.item)
+                            .then((value) => Get.back());
+                      });
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          color: Colors.red.shade100, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.delete_outline,
+                        size: 20,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -112,5 +146,16 @@ class CategoryGridCard extends StatelessWidget {
     laundryCosts.lineItems = categories;
 
     await laundryInfoController.setCosts(laundryCosts);
+  }
+
+  String _getRightName() {
+    final String availableName = widget.item.name[widget.item.name.keys.first]!;
+    if (widget.item.name[primaryLang] != null) {
+      nameMissing.value = false;
+      return widget.item.name[primaryLang]!;
+    } else {
+      nameMissing.value = true;
+      return availableName;
+    }
   }
 }

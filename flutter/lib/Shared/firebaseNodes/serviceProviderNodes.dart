@@ -36,6 +36,12 @@ String serviceProviderSchedule(
       '/schedule';
 }
 
+String serviceProviderAverageNumberOfDays(
+    {required OrderType orderType, required String providerId}) {
+  return serviceProviderDetails(orderType: orderType, providerId: providerId) +
+      '/averageNumberOfDays';
+}
+
 String serviceProviderCosts(
     {required OrderType orderType, required String providerId}) {
   return serviceProviderDetails(orderType: orderType, providerId: providerId) +

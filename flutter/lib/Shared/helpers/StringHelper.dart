@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 
 extension CapExtension on String {
@@ -26,4 +28,12 @@ extension TwoLettersGenerator on String {
     }
     return imageString.toUpperCase();
   }
+}
+
+String getRandomString(int length) {
+  const String _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final Random _rnd = Random();
+  return String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 }

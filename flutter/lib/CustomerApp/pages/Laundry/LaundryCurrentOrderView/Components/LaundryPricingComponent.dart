@@ -44,12 +44,6 @@ class LaundryPricingCompnent extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   Flexible(
-                      child: Text(_i18n()['laundryPricingNote'],
-                          style: TextStyle(
-                            color: Colors.grey.shade800,
-                          ))),
-                  const SizedBox(width: 10),
-                  Flexible(
                     child: Text(
                       _i18n()['laundryPricingNote'],
                       style: TextStyle(

@@ -23,15 +23,22 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
   Rxn<Laundry> laundry = Rxn();
+  Rxn<num> avgDays = Rxn();
+  RxBool btnClicked = RxBool(false);
 
   StreamSubscription? laundryListener;
 
   @override
   void initState() {
     laundry = laundryInfoController.laundry;
+    avgDays.value = laundry.value!.averageNumberOfDays;
     laundryListener =
         laundryInfoController.laundry.stream.listen((Laundry? event) {
-      laundry.value = event;
+      if (event != null) {
+        laundry.value = event;
+      } else {
+        Get.back();
+      }
     });
     super.initState();
   }
@@ -49,6 +56,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
         leftBtnType: AppBarLeftButtonType.Back,
         onClick: Get.back,
       ),
+      bottomNavigationBar: _footerSaveButton(),
       body: Obx(
         () => SingleChildScrollView(
           padding: const EdgeInsets.all(8),
@@ -82,7 +90,19 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                   SizedBox(
                     height: 25,
                   ),
-                  LaundryOpNormalDeliveryTime()
+                  Obx(
+                    () => LaundryOpNormalDeliveryTime(
+                      data: avgDays.value!,
+                      onTapPlus: () {
+                        avgDays.value = avgDays.value! + 1;
+                      },
+                      onTapMinus: () {
+                        if (avgDays.value! > 1) {
+                          avgDays.value = avgDays.value! - 1;
+                        }
+                      },
+                    ),
+                  )
                 ],
               )
             ],
@@ -90,6 +110,41 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
         ),
       ),
     );
+  }
+
+  Widget _footerSaveButton() {
+    return Obx(() {
+      if (avgDays.value! != laundry.value!.averageNumberOfDays) {
+        return InkWell(
+          onTap: () {
+            if (avgDays.value != null) {
+              btnClicked.value = true;
+              laundryInfoController
+                  .setAverageNumberOfDays(avgDays.value!)
+                  .whenComplete(() => btnClicked.value = false);
+            }
+          },
+          child: Ink(
+              height: 55,
+              decoration: BoxDecoration(gradient: bluePurpleGradient),
+              child: Center(
+                child: btnClicked.isTrue
+                    ? CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : Text(
+                        "Save",
+                        style: Get.textTheme.bodyText1
+                            ?.copyWith(color: Colors.white),
+                      ),
+              )),
+        );
+      } else {
+        return Container(
+          height: 1,
+        );
+      }
+    });
   }
 
   Widget _categoriesGridList() {
