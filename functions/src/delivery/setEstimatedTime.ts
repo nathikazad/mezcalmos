@@ -30,6 +30,7 @@ export = functions.https.onCall(async (data, context) => {
   }
 
   let order: TwoWayDeliverableOrder = validationPass.order;
+  order.estimatedDeliveryTimes[deliveryDriverType] = order.estimatedDeliveryTimes[deliveryDriverType] || {};
   order.estimatedDeliveryTimes[deliveryDriverType][deliveryAction] = data.estimatedTime;
 
   updateServiceProviderOrder(orderId, order);
@@ -57,16 +58,6 @@ async function passChecksForDriver(data: any, auth?: AuthData): Promise<Validati
       error: response
     }
   }
-  if (data.orderId == null) {
-    return {
-      ok: false,
-      error: {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Expected order id`,
-        errorCode: "orderIdNotGiven"
-      }
-    }
-  }
 
   let orderId: string = data.orderId;
   let order: TwoWayDeliverableOrder = (await rootDbNodes.inProcessOrders(data.orderType, orderId).once('value')).val();
@@ -92,7 +83,7 @@ async function passChecksForDriver(data: any, auth?: AuthData): Promise<Validati
             errorCode: "driverNotAuthorized"
           }
         }
-    case DeliveryDriverType.Pickup:
+    case DeliveryDriverType.DropOff:
       if (order.dropoffDriver != null && order.dropoffDriver.id != auth!.uid)
         return {
           ok: false,
