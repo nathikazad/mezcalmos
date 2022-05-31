@@ -91,12 +91,13 @@ class _LaundryOrderFromToComponentState
           ),
           Divider(),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
-                flex: 1,
+                // flex: 1,
                 child: Container(
+                  // color: Colors.red,
                   height: 85,
                   child: Stack(
                     fit: StackFit.passthrough,
@@ -131,94 +132,106 @@ class _LaundryOrderFromToComponentState
                   ),
                 ),
               ),
-              SizedBox(
-                width: 20,
-              ),
+              // SizedBox(
+              //   width: 20,
+              // ),
               Flexible(
-                flex: 3,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      // direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.access_time_filled,
-                          color: Color.fromRGBO(73, 73, 73, 1),
-                          size: 18,
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          // 'Today, 10:53 AM',
-                          DateFormat('EEEE, hh:mm a')
-                              .format(widget.order.orderTime),
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
+                flex: 6,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        // direction: Axis.horizontal,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(width: 10),
+                          Icon(
+                            Icons.access_time_filled,
+                            color: Color.fromRGBO(73, 73, 73, 1),
+                            size: 18,
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      // direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.delivery_dining,
-                          color: Color.fromRGBO(73, 73, 73, 1),
-                          size: 18,
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          // DateFormat('EEEE, hh:mm a')
-                          //     .format(widget.order.orderTime),
-                          '1h 45min',
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
+                          SizedBox(width: 3),
+                          Text(
+                            // 'Today, 10:53 AM',
+                            DateFormat('EEEE, hh:mm a')
+                                .format(widget.order.orderTime),
+                            overflow: TextOverflow.visible,
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 16.33),
-                        Icon(
-                          Icons.route_outlined,
-                          color: Color.fromRGBO(73, 73, 73, 1),
-                          size: 18,
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          // widget.order.routeInformation?.distance
-                          //         .distanceStringInKm ??
-                          //     '',
-                          '1.5km',
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        // direction: Axis.horizontal,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(width: 10),
+                          Icon(
+                            Icons.delivery_dining,
+                            color: Color.fromRGBO(73, 73, 73, 1),
+                            size: 18,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          SizedBox(width: 3),
+                          Flexible(
+                            flex: 4,
+                            child: Text(
+                              widget.order.routeInformation?.duration
+                                      .longTextVersion ??
+                                  '- - - -',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 16.33),
+                          Icon(
+                            Icons.route_outlined,
+                            color: Color.fromRGBO(73, 73, 73, 1),
+                            size: 18,
+                          ),
+                          SizedBox(width: 3),
+                          Text(
+                            widget.order.routeInformation?.distance
+                                    .distanceStringInKm ??
+                                '- - - -',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Spacer(),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Icon(
-                  Icons.article_rounded,
-                  color: Color.fromRGBO(103, 121, 254, 1),
-                  size: 30,
+              Flexible(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Icon(
+                    Icons.article_rounded,
+                    color: Color.fromRGBO(103, 121, 254, 1),
+                    size: 30,
+                  ),
                 ),
               ),
             ],
@@ -267,24 +280,7 @@ class _LaundryOrderFromToComponentState
                               size: 24,
                             ),
                             Spacer(),
-                            Text('02:30 PM'),
-                            SizedBox(width: 7),
-
-                            // if (widget.order.)
-                            Container(
-                              height: 18,
-                              width: 18,
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(237, 237, 237, 1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.edit,
-                                  size: 16,
-                                ),
-                              ),
-                            ),
+                            ..._dateTimeSetter(LaundryOrderPhase.Pickup)
                           ],
                         ),
                         Row(
@@ -323,21 +319,7 @@ class _LaundryOrderFromToComponentState
                               size: 24,
                             ),
                             Spacer(),
-                            Text('02:45 PM'),
-                            SizedBox(width: 7),
-                            Container(
-                              height: 18,
-                              width: 18,
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(237, 237, 237, 1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                  child: Icon(
-                                Icons.edit,
-                                size: 16,
-                              )),
-                            ),
+                            ..._dateTimeSetter(LaundryOrderPhase.Dropoff)
                           ],
                         ),
                       ],
@@ -368,6 +350,8 @@ class _LaundryOrderFromToComponentState
       case LaundryOrderStatus.ReadyForDelivery:
         return "${_i18n()["orderStatus"]["readyForDelivery"]}";
       case LaundryOrderStatus.OtwPickupFromLaundry:
+        return "Laundry done, picking up ..";
+      case LaundryOrderStatus.PickedUpFromLaundry:
         return "${_i18n()["orderStatus"]["deliveryOtw"]}";
       case LaundryOrderStatus.Delivered:
         return "${_i18n()["orderStatus"]["delivered"]}";
@@ -378,5 +362,70 @@ class _LaundryOrderFromToComponentState
       default:
         return '';
     }
+  }
+
+  List<Widget> _dateTimeSetter(LaundryOrderPhase subPhase) {
+    List<Widget> _getRightContainer(DateTime? dt) {
+      if (dt != null) {
+        return [
+          Text(DateFormat('hh:mm a').format(dt)),
+          SizedBox(width: 7),
+          InkWell(
+            onTap: () {},
+            child: Container(
+              height: 18,
+              width: 18,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(237, 237, 237, 1),
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.edit,
+                  size: 16,
+                ),
+              ),
+            ),
+          )
+        ];
+      } else {
+        return [
+          Container(
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(226, 18, 51, 1),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Center(
+              child: Text(
+                'Set ${subPhase == LaundryOrderPhase.Dropoff ? "dropoff" : "pickup"} time',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          )
+        ];
+      }
+    }
+
+    if (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return _getRightContainer(
+        subPhase == LaundryOrderPhase.Pickup
+            ? widget.order.estimatedPickupFromCustomerTime
+            : widget.order.estimatedDropoffAtServiceProviderTime,
+      );
+    } else if (widget.order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
+      // Get.find<OrderController>()
+      return _getRightContainer(
+        subPhase == LaundryOrderPhase.Pickup
+            ? widget.order.estimatedPickupFromServiceProviderTime
+            : widget.order.estimatedDropoffAtCustomerTime,
+      );
+    } else
+      return [];
   }
 }
