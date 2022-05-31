@@ -242,25 +242,26 @@ class LaundryOrderCostLineItem extends LaundryCostLineItem {
   }) : super(cost: cost, name: name, id: id);
 
   factory LaundryOrderCostLineItem.fromData(laundryCostLineItemData) {
-    final LaundryOrderCostLineItem li =
-        LaundryCostLineItem.fromData(laundryCostLineItemData)
-            as LaundryOrderCostLineItem;
-    li.weight = laundryCostLineItemData["weight"];
-    li.cost = laundryCostLineItemData["cost"];
-    li.name = laundryCostLineItemData["name"];
-    li.id = laundryCostLineItemData["id"];
+    final LaundryOrderCostLineItem newLo = LaundryOrderCostLineItem(
+        weight: laundryCostLineItemData["weight"],
+        id: LaundryCostLineItem.fromData(laundryCostLineItemData).id,
+        name: LaundryCostLineItem.fromData(laundryCostLineItemData).name,
+        cost: LaundryCostLineItem.fromData(laundryCostLineItemData).cost);
 
-    return li;
+    // final LaundryOrderCostLineItem li =
+    //     LaundryCostLineItem.fromData(laundryCostLineItemData)
+    //         as LaundryOrderCostLineItem;
+    // li.weight = laundryCostLineItemData["weight"];
+    return newLo;
+    // final LaundryOrderCostLineItem li =
+    //     LaundryCostLineItem.fromData(laundryCostLineItemData)
+    //         as LaundryOrderCostLineItem;
+    // li.weight = laundryCostLineItemData["weight"];
+    // li.cost = LaundryCostLineItem.fromData(laundryCostLineItemData).cost;
+    // li.name = LaundryCostLineItem.fromData(laundryCostLineItemData).name;
+    // li.id = LaundryCostLineItem.fromData(laundryCostLineItemData).id;
   }
-  // factory LaundryOrderCostLineItem.fromData(laundryCostLineItemData) {
-  //   final LaundryOrderCostLineItem newLo = LaundryOrderCostLineItem(
-  //       weight: laundryCostLineItemData["weight"],
-  //       id: laundryCostLineItemData["id"],
-  //       name: laundryCostLineItemData["name"],
-  //       cost: laundryCostLineItemData["cost"]);
 
-  //   return newLo;
-  // }
   @override
   Map<String, dynamic> toFirebaseFormat() {
     return {

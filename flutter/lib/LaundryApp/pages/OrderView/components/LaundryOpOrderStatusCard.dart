@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LaundryOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpOrderStatusCard']['status'];
@@ -30,17 +31,14 @@ class LaundryOpOrderStatusCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 order.getOrderWidget(),
-                Spacer(
-                  flex: 2,
-                ),
                 Flexible(
                   flex: 5,
-                  fit: FlexFit.loose,
+                  fit: FlexFit.tight,
                   child: Column(
                     children: [
                       Text(
                         order.orderStatusTitle(),
-                        style: txt.headline3,
+                        style: txt.bodyText1?.copyWith(fontSize: 14.sp),
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -52,8 +50,6 @@ class LaundryOpOrderStatusCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Spacer(),
-                // messageButton(context),
               ],
             ),
           ),

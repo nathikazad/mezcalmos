@@ -60,8 +60,10 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
   Function()? handleClick({required BuildContext context}) {
     if (order.isAtLaundry()) {
       return assignNewCategory(context: context);
-    } else {}
-    return null;
+    } else {
+      return null;
+    }
+    
   }
 
 // assign new items waight function
@@ -161,7 +163,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
                         context: Get.context!,
                         editMode: true,
                         laundryOrderCostLineItem:
-                            order.costsByType!.lineItems[index]),
+                            order.costsByType?.lineItems[index]),
                     child: Ink(
                         padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
