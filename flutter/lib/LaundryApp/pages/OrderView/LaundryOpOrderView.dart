@@ -135,7 +135,9 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   }
 
   Widget? _setReadyForDeliveryButton() {
-    if (order.value!.status == LaundryOrderStatus.AtLaundry) {
+    if (order.value!.isAtLaundry() &&
+        order.value!.costsByType != null &&
+        order.value!.costsByType!.lineItems.isNotEmpty) {
       return Container(
         margin: const EdgeInsets.symmetric(horizontal: 3),
         child: TextButton(

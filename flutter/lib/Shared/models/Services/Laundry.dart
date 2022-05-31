@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -144,4 +145,16 @@ class LaundryCostLineItem {
 
   @override
   int get hashCode => id.hashCode ^ name.hashCode ^ cost.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    final bool Function(dynamic e1, dynamic e2) mapEquals =
+        const DeepCollectionEquality().equals;
+
+    return other is LaundryCostLineItem &&
+        other.id == id &&
+        mapEquals(other.name, name) &&
+        other.cost == cost;
+  }
 }

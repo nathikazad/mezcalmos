@@ -1395,7 +1395,7 @@
                     "customer": "Customer",
                     "orderDate": "Order Date",
                     "total": "Total",
-                    "orderReady": "Order reday for delivery"
+                    "orderReady": "Order ready for delivery"
                 }
             }
         },

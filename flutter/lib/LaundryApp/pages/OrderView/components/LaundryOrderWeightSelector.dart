@@ -62,6 +62,7 @@ class _LaundryOrderWeightSelectorState
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0))),
               isEmpty: widget.newCategory.value == null,
+              
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<LaundryCostLineItem>(
                   value: widget.newCategory.value,
