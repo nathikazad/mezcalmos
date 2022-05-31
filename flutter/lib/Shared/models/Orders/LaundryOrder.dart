@@ -97,6 +97,15 @@ class LaundryOrder extends TwoWayDeliverableOrder {
                 estimatedDropoffAtServiceProviderTime);
 
   factory LaundryOrder.fromData(id, data) {
+    final dynamic _estimatedPickupFromServiceProviderTime =
+        data["estimatedDeliveryTimes"]?["dropoff"]?["pickup"];
+    final dynamic _estimatedDropoffAtCustomerTime =
+        data["estimatedDeliveryTimes"]?["dropoff"]?["dropoff"];
+    final dynamic _estimatedPickupFromCustomerTime =
+        data["estimatedDeliveryTimes"]?["pickup"]?["pickup"];
+    final dynamic _estimatedDropoffAtServiceProviderTime =
+        data["estimatedDeliveryTimes"]?["pickup"]?["dropoff"];
+
     final LaundryOrder laundryOrder = LaundryOrder(
       orderId: id,
       customer: UserInfo.fromData(data["customer"]),
@@ -113,26 +122,26 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       estimatedLaundryReadyTime: (data["estimatedLaundryReadyTime"] != null)
           ? DateTime.parse(data["estimatedLaundryReadyTime"])
           : null,
-      estimatedPickupFromServiceProviderTime: (data["estimatedDeliveryTimes"]
-                  ?["dropoff"]?["pickup"] !=
-              null)
-          ? DateTime.parse(data["estimatedDeliveryTimes"]["dropoff"]["pickup"])
-          : null,
-      estimatedDropoffAtCustomerTime: (data["estimatedDeliveryTimes"]
-                  ?["dropoff"]?["dropoff"] !=
-              null)
-          ? DateTime.parse(data["estimatedDeliveryTimes"]["dropoff"]["dropoff"])
-          : null,
-      estimatedPickupFromCustomerTime: (data["estimatedDeliveryTimes"]
-                  ?["pickup"]?["pickup"] !=
-              null)
-          ? DateTime.parse(data["estimatedDeliveryTimes"]["pickup"]["pickup"])
-          : null,
-      estimatedDropoffAtServiceProviderTime: (data["estimatedDeliveryTimes"]
-                  ?["pickup"]?["dropoff"] !=
-              null)
-          ? DateTime.parse(data["estimatedDeliveryTimes"]["dropoff"]["pickup"])
-          : null,
+      estimatedPickupFromServiceProviderTime:
+          (_estimatedPickupFromServiceProviderTime != null &&
+                  _estimatedPickupFromServiceProviderTime != "")
+              ? DateTime.parse(_estimatedPickupFromServiceProviderTime)
+              : null,
+      estimatedDropoffAtCustomerTime:
+          (_estimatedDropoffAtCustomerTime != null &&
+                  _estimatedDropoffAtCustomerTime != null)
+              ? DateTime.parse(_estimatedDropoffAtCustomerTime)
+              : null,
+      estimatedPickupFromCustomerTime:
+          (_estimatedPickupFromCustomerTime != null &&
+                  _estimatedPickupFromCustomerTime != "")
+              ? DateTime.parse(_estimatedPickupFromCustomerTime)
+              : null,
+      estimatedDropoffAtServiceProviderTime:
+          (_estimatedDropoffAtServiceProviderTime != null &&
+                  _estimatedDropoffAtServiceProviderTime != "")
+              ? DateTime.parse(_estimatedDropoffAtServiceProviderTime)
+              : null,
       laundry: (data["laundry"] != null)
           ? ServiceInfo.fromData(data["laundry"])
           : null,

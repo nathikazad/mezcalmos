@@ -38,93 +38,102 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
       );
     } else {
       return InkWell(
-        onTap: () async {
-          switch (widget.order.status) {
-            case LaundryOrderStatus.OrderReceieved:
-              setState(() {
-                clicked = true;
-              });
-              await laundryOrderController
-                  .otwPickupFromCustomer(widget.order.orderId)
-                  .whenComplete(() {
-                setState(() {
-                  clicked = false;
-                });
-              });
-              break;
-            case LaundryOrderStatus.OtwPickupFromCustomer:
-              setState(() {
-                clicked = true;
-              });
-              await laundryOrderController
-                  .pickedUpFromCustomer(widget.order.orderId)
-                  .whenComplete(() {
-                setState(() {
-                  clicked = false;
-                });
-              });
-              break;
-            case LaundryOrderStatus.PickedUpFromCustomer:
-              setState(() {
-                clicked = true;
-              });
-              await laundryOrderController
-                  .atLaundryOrder(widget.order.orderId)
-                  .whenComplete(() {
-                setState(() {
-                  clicked = false;
-                });
-              });
-              Get.back(closeOverlays: true);
+        onTap: shouldDisableBottomButton()
+            ? null
+            : () async {
+                switch (widget.order.status) {
+                  case LaundryOrderStatus.OrderReceieved:
+                    setState(() {
+                      clicked = true;
+                    });
+                    await laundryOrderController
+                        .otwPickupFromCustomer(widget.order.orderId)
+                        .whenComplete(() {
+                      setState(() {
+                        clicked = false;
+                      });
+                    });
+                    break;
+                  case LaundryOrderStatus.OtwPickupFromCustomer:
+                    setState(() {
+                      clicked = true;
+                    });
+                    await laundryOrderController
+                        .pickedUpFromCustomer(widget.order.orderId)
+                        .whenComplete(() {
+                      setState(() {
+                        clicked = false;
+                      });
+                    });
+                    break;
+                  case LaundryOrderStatus.PickedUpFromCustomer:
+                    setState(() {
+                      clicked = true;
+                    });
+                    await laundryOrderController
+                        .atLaundryOrder(widget.order.orderId)
+                        .whenComplete(() {
+                      setState(() {
+                        clicked = false;
+                      });
+                    });
+                    Get.back(closeOverlays: true);
 
-              break;
-            case LaundryOrderStatus.ReadyForDelivery:
-              setState(() {
-                clicked = true;
-              });
-              await laundryOrderController
-                  .otwPickupFromLaundry(widget.order.orderId)
-                  .whenComplete(() {
-                setState(() {
-                  clicked = false;
-                });
-              });
-              break;
-            case LaundryOrderStatus.OtwPickupFromLaundry:
-            case LaundryOrderStatus.PickedUpFromLaundry:
-              setState(() {
-                clicked = true;
-              });
-              await laundryOrderController
-                  .deliveredOrder(widget.order.orderId)
-                  .whenComplete(() {
-                setState(() {
-                  clicked = false;
-                });
-              });
-              // Get.back(closeOverlays: true);
-              break;
-            default:
-              break;
-          }
-        },
+                    break;
+                  case LaundryOrderStatus.ReadyForDelivery:
+                    setState(() {
+                      clicked = true;
+                    });
+                    await laundryOrderController
+                        .otwPickupFromLaundry(widget.order.orderId)
+                        .whenComplete(() {
+                      setState(() {
+                        clicked = false;
+                      });
+                    });
+                    break;
+                  case LaundryOrderStatus.OtwPickupFromLaundry:
+                  case LaundryOrderStatus.PickedUpFromLaundry:
+                    setState(() {
+                      clicked = true;
+                    });
+                    await laundryOrderController
+                        .deliveredOrder(widget.order.orderId)
+                        .whenComplete(() {
+                      setState(() {
+                        clicked = false;
+                      });
+                    });
+                    // Get.back(closeOverlays: true);
+                    break;
+                  default:
+                    break;
+                }
+              },
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(255, 97, 127, 255),
-                Color.fromARGB(255, 198, 90, 252),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            color: shouldDisableBottomButton()
+                ? Color.fromRGBO(229, 229, 229, 1)
+                : null,
+            gradient: shouldDisableBottomButton()
+                ? null
+                : LinearGradient(
+                    colors: [
+                      Color.fromARGB(255, 97, 127, 255),
+                      Color.fromARGB(255, 198, 90, 252),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
           ),
           alignment: Alignment.center,
           padding: EdgeInsets.all(8),
           child: Text(
             _getActionButtonText(),
             style: TextStyle(
-              color: Colors.white,
+              color: shouldDisableBottomButton()
+                  ? Color.fromRGBO(120, 120, 120, 1)
+                  : Colors.white,
               fontFamily: 'Montserrat',
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -154,5 +163,23 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
       default:
         return '';
     }
+  }
+
+  bool shouldDisableBottomButton() {
+    if (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      if (widget.order.status == LaundryOrderStatus.OrderReceieved &&
+          widget.order.estimatedPickupFromCustomerTime == null)
+        return true;
+      else if (widget.order.status == LaundryOrderStatus.PickedUpFromCustomer &&
+          widget.order.estimatedDropoffAtServiceProviderTime == null)
+        return true;
+    } else if (widget.order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
+      if (widget.order.status == LaundryOrderStatus.ReadyForDelivery &&
+          widget.order.estimatedPickupFromServiceProviderTime == null)
+        return true;
+      else if (widget.order.status == LaundryOrderStatus.PickedUpFromLaundry &&
+          widget.order.estimatedDropoffAtCustomerTime == null) return true;
+    }
+    return false;
   }
 }

@@ -30,9 +30,9 @@ export = functions.https.onCall(async (data, context) => {
   }
 
   let order: TwoWayDeliverableOrder = validationPass.order;
-  order.estimatedDeliveryTimes[deliveryDriverType] = order.estimatedDeliveryTimes[deliveryDriverType] || {};
-  order.estimatedDeliveryTimes[deliveryDriverType][deliveryAction] = data.estimatedTime;
-
+  order.estimatedDeliveryTimes[deliveryDriverType] =  order.estimatedDeliveryTimes[deliveryDriverType] || {};
+  order.estimatedDeliveryTimes[deliveryDriverType]![deliveryAction] = data.estimatedTime;
+ 
   updateServiceProviderOrder(orderId, order);
   customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
   rootDbNodes.inProcessOrders(order.orderType, orderId).update(order);
@@ -71,8 +71,7 @@ async function passChecksForDriver(data: any, auth?: AuthData): Promise<Validati
       }
     }
   }
-
-  switch (data.deliveryDriverType as DeliveryDriverType) {
+   switch (data.deliveryDriverType) {
     case DeliveryDriverType.Pickup:
       if (order.pickupDriver != null && order.pickupDriver.id != auth!.uid)
         return {

@@ -11,7 +11,7 @@ export interface Order {
   customer: UserInfo,
   orderTime: string;
   secondaryChats: Record<SecondaryChat, string | null>;
-  estimatedDeliveryTimes: Record<DeliveryDriverType, Record<DeliveryAction, string>>
+  estimatedDeliveryTimes: Partial<Record<DeliveryDriverType , Partial<Record<DeliveryAction, string|null >>>>
 }
 
 export enum DeliveryAction {

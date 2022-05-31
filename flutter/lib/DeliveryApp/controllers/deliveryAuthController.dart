@@ -75,7 +75,7 @@ class DeliveryAuthController extends GetxController {
       }
       _previousStateValue = event.snapshot.value.toString();
       if (event.snapshot.value != null) {
-        mezDbgPrint(event.snapshot.value);
+        // mezDbgPrint(event.snapshot.value);
         _state.value = DeliveryDriverState.fromSnapshot(event.snapshot.value);
       } else {
         _state.value =

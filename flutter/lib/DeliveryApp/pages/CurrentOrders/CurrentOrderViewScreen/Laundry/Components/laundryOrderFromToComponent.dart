@@ -2,9 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -280,7 +287,7 @@ class _LaundryOrderFromToComponentState
                               size: 24,
                             ),
                             Spacer(),
-                            ..._dateTimeSetter(LaundryOrderPhase.Pickup)
+                            ..._dateTimeSetter(DeliveryAction.Pickup)
                           ],
                         ),
                         Row(
@@ -319,7 +326,7 @@ class _LaundryOrderFromToComponentState
                               size: 24,
                             ),
                             Spacer(),
-                            ..._dateTimeSetter(LaundryOrderPhase.Dropoff)
+                            ..._dateTimeSetter(DeliveryAction.DropOff)
                           ],
                         ),
                       ],
@@ -364,14 +371,47 @@ class _LaundryOrderFromToComponentState
     }
   }
 
-  List<Widget> _dateTimeSetter(LaundryOrderPhase subPhase) {
-    List<Widget> _getRightContainer(DateTime? dt) {
+  List<Widget> _dateTimeSetter(DeliveryAction deliveryAction) {
+    Future<DateTime?> _dateTimePicker() async {
+      final DateTime? pickedDate = await getDatePicker(
+        context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(
+          Duration(hours: 12),
+        ),
+      );
+
+      if (pickedDate != null) {
+        final TimeOfDay? pickedTime = await getTimePicker(
+          context,
+          initialTime: TimeOfDay.fromDateTime(
+            DateTime.now(),
+          ),
+        );
+        if (pickedTime != null) {
+          final DateTime _finalDt = pickedDate.copyWithTimeOfDay(pickedTime);
+          if (_finalDt.isAfter(DateTime.now())) {
+            return _finalDt;
+          } else
+            MezSnackbar('Oops', 'You picked a wrong time!');
+        }
+      }
+
+      return null;
+    }
+
+    List<Widget> _getRightContainer(DateTime? dt,
+        {required void Function(DateTime) onNewDateTimeSet}) {
       if (dt != null) {
         return [
           Text(DateFormat('hh:mm a').format(dt)),
           SizedBox(width: 7),
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              final DateTime? _dt = await _dateTimePicker();
+              if (_dt != null) onNewDateTimeSet(_dt);
+            },
             child: Container(
               height: 18,
               width: 18,
@@ -390,20 +430,26 @@ class _LaundryOrderFromToComponentState
         ];
       } else {
         return [
-          Container(
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(226, 18, 51, 1),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Center(
-              child: Text(
-                'Set ${subPhase == LaundryOrderPhase.Dropoff ? "dropoff" : "pickup"} time',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
+          InkWell(
+            onTap: () async {
+              final DateTime? _dt = await _dateTimePicker();
+              if (_dt != null) onNewDateTimeSet(_dt);
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(226, 18, 51, 1),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Center(
+                child: Text(
+                  'Set ${deliveryAction == DeliveryAction.DropOff ? "dropoff" : "pickup"} time',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
                 ),
               ),
             ),
@@ -414,16 +460,55 @@ class _LaundryOrderFromToComponentState
 
     if (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
       return _getRightContainer(
-        subPhase == LaundryOrderPhase.Pickup
+        deliveryAction == DeliveryAction.Pickup
             ? widget.order.estimatedPickupFromCustomerTime
             : widget.order.estimatedDropoffAtServiceProviderTime,
+        onNewDateTimeSet: (DateTime newDt) async {
+          final ServerResponse _resp =
+              await Get.find<OrderController>().setEstimatedTime(
+            widget.order.orderId,
+            newDt,
+            DeliveryDriverType.Pickup,
+            deliveryAction,
+            OrderType.Laundry,
+          );
+
+          if (_resp.success) {
+            if (deliveryAction == DeliveryAction.Pickup)
+              widget.order.estimatedPickupFromCustomerTime = newDt;
+            else
+              widget.order.estimatedDropoffAtServiceProviderTime = newDt;
+
+            setState(() {});
+          }
+        },
       );
     } else if (widget.order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
-      // Get.find<OrderController>()
       return _getRightContainer(
-        subPhase == LaundryOrderPhase.Pickup
+        deliveryAction == DeliveryAction.Pickup
             ? widget.order.estimatedPickupFromServiceProviderTime
             : widget.order.estimatedDropoffAtCustomerTime,
+        onNewDateTimeSet: (DateTime newDt) async {
+          final ServerResponse _resp =
+              await Get.find<OrderController>().setEstimatedTime(
+            widget.order.orderId,
+            newDt,
+            DeliveryDriverType.Pickup,
+            deliveryAction,
+            OrderType.Laundry,
+          );
+
+          mezDbgPrint("resp ===> ${_resp.data}");
+
+          if (_resp.success) {
+            if (deliveryAction == DeliveryAction.Pickup)
+              widget.order.estimatedPickupFromServiceProviderTime = newDt;
+            else
+              widget.order.estimatedDropoffAtCustomerTime = newDt;
+
+            setState(() {});
+          }
+        },
       );
     } else
       return [];
