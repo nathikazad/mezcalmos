@@ -158,11 +158,13 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
                   Text("${order.costsByType!.lineItems[index].weight} "),
                   InkWell(
                     customBorder: CircleBorder(),
-                    onTap: assignNewCategory(
-                        context: Get.context!,
-                        editMode: true,
-                        laundryOrderCostLineItem:
-                            order.costsByType?.lineItems[index]),
+                    onTap: (order.isAtLaundry())
+                        ? assignNewCategory(
+                            context: Get.context!,
+                            editMode: true,
+                            laundryOrderCostLineItem:
+                                order.costsByType?.lineItems[index])
+                        : null,
                     child: Ink(
                         padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
