@@ -12,8 +12,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSmartPointer.dart';
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
-import 'package:mezcalmos/Shared/widgets/MezSmartPointer.dart';
-import 'package:sizer/sizer.dart';
 
 class MGoogleMap extends StatefulWidget {
   final MapHelper.LocationChangesNotifier? notifyParentOfNewLocation;
@@ -23,8 +21,11 @@ class MGoogleMap extends StatefulWidget {
   final String? debugString;
   final MGoogleMapController mGoogleMapController;
   final double recenterBtnBottomPadding;
+  final EdgeInsets padding;
+
   const MGoogleMap(
       {Key? key,
+      this.padding = const EdgeInsets.only(top: 80, bottom: 50),
       this.notifyParentOfNewLocation,
       this.recenterBtnBottomPadding = 100,
       this.debugString,
@@ -134,7 +135,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                 onTap: (_) {
                   widget.mGoogleMapController.onMapTap?.call();
                 },
-                padding: EdgeInsets.only(top: 80, bottom: 50),
+                padding: widget.padding,
                 mapToolbarEnabled: false,
                 minMaxZoomPreference:
                     widget.mGoogleMapController.getMapMinMaxZommPrefs(),

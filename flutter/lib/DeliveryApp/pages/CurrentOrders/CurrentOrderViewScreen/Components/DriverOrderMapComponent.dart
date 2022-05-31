@@ -25,12 +25,8 @@ class _DriverOrderMapComponentState extends State<DriverOrderMapComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 35.h,
-      // we do not need OBX here, since we're passing the Whole RxObject.
-      child: MGoogleMap(
-        mGoogleMapController: widget.mapController,
-      ),
+    return MGoogleMap(
+      mGoogleMapController: widget.mapController,
     );
   }
 }

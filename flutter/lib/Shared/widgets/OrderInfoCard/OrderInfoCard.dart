@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/constants/assets.dart';
+import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 class OrderInfosCard extends StatelessWidget {
   final OrderCardSubWidgets orderCardSubWidgets;

@@ -6,15 +6,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 // import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverBottomLaundryOrderCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverLaundryOrderButtons.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/laundryOrderFromToComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -86,16 +86,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
       mapController.periodicRerendering.value = true;
       handleLaundryOrder(order.value as LaundryOrder);
     });
-    // _orderListener =
-    //     controller.getCurrentOrderStream(orderId).listen((Order? newOrder) {
-    //   final DeliverableOrder? _order = controller.getOrder(orderId);
-    //   if (_order == null) {
-    //     Get.back<void>();
-    //   } else {
-    //     handleLaundryOrder(_order as LaundryOrder);
-    //     order.value = _order;
-    //     order.refresh();
-    //   }
+
     waitForOrderIfNotLoaded().then((void value) {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
@@ -128,6 +119,9 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     super.dispose();
   }
 
+  double _recenterBtnBottomPadding = 180;
+  EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 180);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,14 +133,37 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
       ),
       body: Obx(
         () => order.value != null
-            ? Column(
-                children: <Widget>[
-                  DriverOrderMapComponent(
-                      mapController: mapController, order: order.value!),
-                  Expanded(
-                    child: Container(
-                      child: DriverBottomLaundryOrderCard(
-                          order: order.value as LaundryOrder),
+            ? Stack(
+                children: [
+                  MGoogleMap(
+                    recenterBtnBottomPadding: _recenterBtnBottomPadding,
+                    mGoogleMapController: mapController,
+                    padding: _mapPadding,
+                  ),
+                  Positioned(
+                    bottom: 2,
+                    left: 5,
+                    right: 5,
+                    child: Card(
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: LaundryOrderFromToComponent(
+                          onSlide: (bool isExpanded) {
+                            setState(() {
+                              if (isExpanded) {
+                                _recenterBtnBottomPadding = 275;
+                                _mapPadding =
+                                    EdgeInsets.only(top: 10, bottom: 275);
+                              } else {
+                                _recenterBtnBottomPadding = 180;
+                                _mapPadding =
+                                    EdgeInsets.only(top: 10, bottom: 180);
+                              }
+                            });
+                          },
+                          order: order.value!,
+                        ),
+                      ),
                     ),
                   )
                 ],
