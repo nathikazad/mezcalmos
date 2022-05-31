@@ -279,7 +279,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                 children: [
                   Icon(
                     Icons.timelapse,
-                    color: keyAppColor,
+                    color: primaryBlueColor,
                     size: 35,
                   ),
                   SizedBox(

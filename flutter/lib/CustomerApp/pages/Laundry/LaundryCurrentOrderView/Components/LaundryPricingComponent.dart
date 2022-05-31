@@ -94,7 +94,7 @@ Widget _costItemCard(LaundryOrderCostLineItem item) {
             ),
             Text(
               "Total : \$${item.weighedCost}",
-              style: Get.textTheme.bodyText1!.copyWith(color: keyAppColor),
+              style: Get.textTheme.bodyText1!.copyWith(color: primaryBlueColor),
             ),
           ],
         ),

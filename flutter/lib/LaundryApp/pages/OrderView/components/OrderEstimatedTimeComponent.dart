@@ -82,7 +82,7 @@ class _OrderEstimatedTimeComponentState
                           Icon(
                             Icons.event,
                             size: 40,
-                            color: keyAppColor,
+                            color: primaryBlueColor,
                           ),
                           SizedBox(
                             width: 15,

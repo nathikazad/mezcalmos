@@ -3,11 +3,13 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/RestaurantOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/CurrentOrdersListScreen.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/OrderDetailsScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 const String kCurrentOrdersListRoute = '/orders';
 const String kLaundryOrderView = '/laundryOrders/:orderId';
 const String kRestaurantOrderView = '/restaurantOrders/:orderId';
+const String kOrderDetailsView = "/orderDetails/:orderId";
 
 String getLaundryOrderRoute(String orderId) {
   return kLaundryOrderView.replaceFirst(":orderId", orderId);
@@ -15,6 +17,10 @@ String getLaundryOrderRoute(String orderId) {
 
 String getRestaurantOrderRoute(String orderId) {
   return kRestaurantOrderView.replaceFirst(":orderId", orderId);
+}
+
+String getOrderDetailsRoute(String orderId) {
+  return kOrderDetailsView.replaceFirst(":orderId", orderId);
 }
 
 // GetX based Router (For navigating)
@@ -26,6 +32,7 @@ class XRouter {
         GetPage(name: kHomeRoute, page: () => DeliveryWrapper()),
         GetPage(name: kLaundryOrderView, page: () => LaundryOrderView()),
         GetPage(name: kRestaurantOrderView, page: () => RestaurantOrderView()),
+        GetPage(name: kOrderDetailsView, page: () => OrderDetailsScreen()),
       ] +
       SharedRouter.sharedRoutes;
 }

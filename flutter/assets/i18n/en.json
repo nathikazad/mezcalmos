@@ -1070,6 +1070,10 @@
     },
     "DeliveryApp": {
         "pages": {
+            "OrderDetailsScreen": {
+
+
+            },
             "CurrentOrders": {
                 "CurrentOrdersListScreen": {
                     "currentOrders": "Current orders",

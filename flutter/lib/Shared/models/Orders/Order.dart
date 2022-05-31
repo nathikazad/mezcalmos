@@ -79,8 +79,8 @@ extension ParseOrderTypeToString on OrderType {
 
 extension ParseStringToOrderType on String {
   OrderType toOrderType() {
-    return OrderType.values
-        .firstWhere((e) => e.toFirebaseFormatString().toLowerCase() == this);
+    return OrderType.values.firstWhere(
+        (OrderType e) => e.toFirebaseFormatString().toLowerCase() == this);
   }
 }
 
@@ -88,15 +88,20 @@ enum PaymentType { Cash, Card }
 
 extension ParsePaymentTypeToString on PaymentType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+
+  String toNormalString() {
+    final String str = toString().split('.').last;
+    return str;
   }
 }
 
 extension ParseStringToPaymentType on String {
   PaymentType toPaymentType() {
-    return PaymentType.values.firstWhere(
-        (e) => e.toFirebaseFormatString().toLowerCase() == toLowerCase());
+    return PaymentType.values.firstWhere((PaymentType e) =>
+        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 

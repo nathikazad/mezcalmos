@@ -78,7 +78,7 @@ class CategoryCard extends StatelessWidget {
                 },
                 icon: Icon(
                   Icons.edit,
-                  color: keyAppColor,
+                  color: primaryBlueColor,
                 ))
           ],
         ),

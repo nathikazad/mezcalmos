@@ -124,7 +124,7 @@ class EditInfoWidgets {
                   },
                   icon: Icon(
                     Icons.edit,
-                    color: keyAppColor,
+                    color: primaryBlueColor,
                   ))
             ],
           ),
@@ -163,7 +163,7 @@ class EditInfoWidgets {
                       child: CheckboxListTile(
                           value: editInfoController.schedulePreview.value!
                               .openHours[weekday]!.isOpen,
-                          activeColor: keyAppColor,
+                          activeColor: primaryBlueColor,
                           title: Text('${_i18n()["workingHoursCard"]["open"]}'),
                           onChanged: (bool? value) {
                             editInfoController.schedulePreview.value!
@@ -174,7 +174,7 @@ class EditInfoWidgets {
                       child: CheckboxListTile(
                     value: !editInfoController
                         .schedulePreview.value!.openHours[weekday]!.isOpen,
-                    activeColor: keyAppColor,
+                    activeColor: primaryBlueColor,
                     onChanged: (bool? value) {
                       editInfoController.schedulePreview.value!
                           .openHours[weekday]!.isOpen = false;

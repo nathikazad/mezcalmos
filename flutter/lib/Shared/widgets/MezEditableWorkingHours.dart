@@ -135,7 +135,7 @@ Widget _workingHourCard(
               },
               icon: Icon(
                 Icons.edit,
-                color: keyAppColor,
+                color: primaryBlueColor,
               ))
         ],
       ),
@@ -223,7 +223,7 @@ Widget _workingHourCard(
 //                 },
 //                 icon: Icon(
 //                   Icons.edit,
-//                   color: keyAppColor,
+//                   color: primaryBlueColor,
 //                 ))
 //           ],
 //         ),
@@ -270,7 +270,7 @@ class MezEditDayScheduleSheet extends StatelessWidget {
                   Flexible(
                       child: CheckboxListTile(
                           value: schedule.value!.openHours[weekday]!.isOpen,
-                          activeColor: keyAppColor,
+                          activeColor: primaryBlueColor,
                           title: Text("Open"),
                           onChanged: (bool? value) {
                             schedule.value!.openHours[weekday]!.isOpen = true;
@@ -279,7 +279,7 @@ class MezEditDayScheduleSheet extends StatelessWidget {
                   Flexible(
                       child: CheckboxListTile(
                     value: !schedule.value!.openHours[weekday]!.isOpen,
-                    activeColor: keyAppColor,
+                    activeColor: primaryBlueColor,
                     onChanged: (bool? value) {
                       schedule.value!.openHours[weekday]!.isOpen = false;
                       schedule.refresh();

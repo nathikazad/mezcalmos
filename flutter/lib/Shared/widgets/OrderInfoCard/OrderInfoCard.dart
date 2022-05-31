@@ -15,7 +15,7 @@ class OrderInfosCard extends StatelessWidget {
       onTap: orderCardSubWidgets.onCardTap,
       child: Container(
         margin: EdgeInsets.only(bottom: 15),
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(4),
@@ -80,10 +80,10 @@ class OrderInfosCard extends StatelessWidget {
                 ),
 
                 Flexible(
-                  flex: 1,
+                  flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       orderCardSubWidgets.cardTime,
                       orderCardSubWidgets.rightImage,

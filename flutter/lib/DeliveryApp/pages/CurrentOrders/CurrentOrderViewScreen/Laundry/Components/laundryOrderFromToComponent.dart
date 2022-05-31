@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:intl/intl.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -359,15 +359,15 @@ class _LaundryOrderFromToComponentState
     switch (widget.order.status) {
       case LaundryOrderStatus.OrderReceieved:
         return "${_i18n()["orderStatus"]["readyForPickup"]}";
-      case LaundryOrderStatus.OtwPickup:
+      case LaundryOrderStatus.OtwPickupFromCustomer:
         return "${_i18n()["orderStatus"]["pickupOtw"]}";
-      case LaundryOrderStatus.PickedUp:
+      case LaundryOrderStatus.PickedUpFromCustomer:
         return "${_i18n()["orderStatus"]["pickedUp"]}";
       case LaundryOrderStatus.AtLaundry:
         return "${_i18n()["orderStatus"]["atLaundry"]}";
       case LaundryOrderStatus.ReadyForDelivery:
         return "${_i18n()["orderStatus"]["readyForDelivery"]}";
-      case LaundryOrderStatus.OtwDelivery:
+      case LaundryOrderStatus.OtwPickupFromLaundry:
         return "${_i18n()["orderStatus"]["deliveryOtw"]}";
       case LaundryOrderStatus.Delivered:
         return "${_i18n()["orderStatus"]["delivered"]}";

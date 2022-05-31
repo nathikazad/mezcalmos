@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:sizer/sizer.dart';
 
 class DeliveryAppTheme {
@@ -8,9 +9,9 @@ class DeliveryAppTheme {
       //---------------------------------------------------- COLORS ------------------------------------------------------------------------//
       primaryColor: Colors.white,
 
-      primaryColorLight: Color(0xFFAC59FC),
+      primaryColorLight: primaryBlueColor,
 
-      indicatorColor: Color(0xFFAC59FC),
+      indicatorColor: primaryBlueColor,
       brightness: Brightness.light,
 
       dividerColor: Colors.grey.withOpacity(0.8),
@@ -18,7 +19,34 @@ class DeliveryAppTheme {
 
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
-      scaffoldBackgroundColor: Color(0XFFEDEDED),
+      scaffoldBackgroundColor: Color(0XFFFAFAFA),
+
+      timePickerTheme: TimePickerThemeData(
+        dialHandColor: primaryBlueColor,
+        backgroundColor: Colors.white,
+        hourMinuteColor: MaterialStateColor.resolveWith(
+            (Set<MaterialState> states) =>
+                states.contains(MaterialState.selected)
+                    ? primaryBlueColor
+                    : Colors.grey.shade300),
+        //  dayPeriodColor: primaryBlueColor,
+
+        dayPeriodColor: MaterialStateColor.resolveWith(
+            (Set<MaterialState> states) =>
+                states.contains(MaterialState.selected)
+                    ? primaryBlueColor
+                    : Colors.grey.shade300),
+        dayPeriodTextColor: MaterialStateColor.resolveWith(
+            (Set<MaterialState> states) =>
+                states.contains(MaterialState.selected)
+                    ? Colors.white
+                    : Colors.grey.shade800),
+        hourMinuteTextColor: MaterialStateColor.resolveWith(
+            (Set<MaterialState> states) =>
+                states.contains(MaterialState.selected)
+                    ? Colors.white
+                    : Colors.black),
+      ),
       appBarTheme: AppBarTheme(
           backgroundColor: Colors.white,
           titleTextStyle: TextStyle(
@@ -32,9 +60,9 @@ class DeliveryAppTheme {
           iconTheme: IconThemeData(color: Colors.black),
           actionsIconTheme: IconThemeData(color: Colors.black)),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Color(0xFFAC59FC), elevation: 1.0),
+          backgroundColor: Colors.white, elevation: 1.0),
       bottomAppBarTheme:
-          BottomAppBarTheme(color: Color(0xFFAC59FC), elevation: 1.0),
+          BottomAppBarTheme(color: primaryBlueColor, elevation: 1.0),
 
       buttonTheme:
           ButtonThemeData(shape: CircleBorder(), padding: EdgeInsets.all(8)),
@@ -56,7 +84,7 @@ class DeliveryAppTheme {
           style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         primary: Colors.white,
-        backgroundColor: Color(0xFFAC59FC),
+        backgroundColor: primaryBlueColor,
         padding: EdgeInsets.all(5),
         textStyle: TextStyle(
           fontFamily: "Montserrat",
@@ -85,7 +113,7 @@ class DeliveryAppTheme {
             fontSize: 12.sp,
             color: Colors.black),
         brightness: Brightness.light,
-        secondarySelectedColor: Color(0xFFAC59FC),
+        secondarySelectedColor: primaryBlueColor,
         secondaryLabelStyle: TextStyle(
             fontFamily: "Montserrat",
             fontWeight: FontWeight.w600,
@@ -110,6 +138,12 @@ class DeliveryAppTheme {
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
           fontSize: 16.sp,
+          color: Colors.black,
+        ),
+        headline4: TextStyle(
+          fontFamily: "Nunito",
+          fontWeight: FontWeight.w600,
+          fontSize: 14.sp,
           color: Colors.black,
         ),
         bodyText1: TextStyle(

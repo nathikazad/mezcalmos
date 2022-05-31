@@ -49,7 +49,7 @@ class LaundryOpEditLocationCard extends StatelessWidget {
                 Spacer(),
                 Icon(
                   Icons.arrow_forward_ios_rounded,
-                  color: keyAppColor,
+                  color: primaryBlueColor,
                 )
               ],
             ),

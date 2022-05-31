@@ -59,7 +59,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.place,
-                      color: keyAppColor,
+                      color: primaryBlueColor,
                     ),
                     Flexible(
                       child: Text(laundry.info.location.address,
@@ -118,7 +118,8 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                     style: Get.textTheme.bodyText1),
                 Text(
                   "\$${item.cost.round()} /KG",
-                  style: Get.textTheme.bodyText1!.copyWith(color: keyAppColor),
+                  style: Get.textTheme.bodyText1!
+                      .copyWith(color: primaryBlueColor),
                 )
               ],
             ),
