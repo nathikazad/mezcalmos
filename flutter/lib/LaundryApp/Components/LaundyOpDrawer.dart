@@ -13,6 +13,9 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
+    ["components"]["LaundryAppDrawer"];
+
 class LaundryAppDrawer extends StatelessWidget {
   const LaundryAppDrawer({Key? key}) : super(key: key);
   // controllers //
@@ -39,43 +42,52 @@ class LaundryAppDrawer extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 40,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 40,
+                    ),
+                    // Laundry IMAGE AND NAME
+
+                    if (laundryInfoController.laundry.value != null)
+                      _laundryImageAndName(),
+
+                    // Navigation links
+                    if (laundryOpAuthController.operator.value != null &&
+                        laundryOpAuthController
+                                .operator.value?.state.laundryId !=
+                            null)
+                      _operatorNavLinks(),
+                    _languageSwitcher(),
+                    _navigationLink(
+                        onClick: () {
+                          _drawerController.closeMenu();
+                          launch(GetStorage().read(getxPrivacyPolicyLink));
+                        },
+                        icon: Icons.privacy_tip,
+                        titleWidget: Text(
+                          "${_i18n()["privacyPolicies"]}",
+                          style: Get.textTheme.bodyText1,
+                        )),
+                    _navigationLink(
+                        onClick: () async {
+                          _drawerController.closeMenu();
+                          await authController.signOut();
+                        },
+                        icon: Icons.logout,
+                        titleWidget: Text(
+                          "${_i18n()["logout"]}",
+                          style: Get.textTheme.bodyText1,
+                        )),
+                  ],
+                ),
+              ),
             ),
-            // Laundry IMAGE AND NAME
-
-            if (laundryInfoController.laundry.value != null)
-              _laundryImageAndName(),
-
-            // Navigation links
-            if (laundryOpAuthController.operator.value != null &&
-                laundryOpAuthController.operator.value?.state.laundryId != null)
-              _operatorNavLinks(),
-            _languageSwitcher(),
-            _navigationLink(
-                onClick: () {
-                  _drawerController.closeMenu();
-                  launch(GetStorage().read(getxPrivacyPolicyLink));
-                },
-                icon: Icons.privacy_tip,
-                titleWidget: Text(
-                  "Privacy policies",
-                  style: Get.textTheme.bodyText1,
-                )),
-            _navigationLink(
-                onClick: () async {
-                  _drawerController.closeMenu();
-                  await authController.signOut();
-                },
-                icon: Icons.logout,
-                titleWidget: Text(
-                  "Logout",
-                  style: Get.textTheme.bodyText1,
-                )),
-            Spacer(),
             Container(
                 alignment: Alignment.center,
                 child: Text(
@@ -101,7 +113,7 @@ class LaundryAppDrawer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Language",
+              "${_i18n()["language"]}",
               style: Get.textTheme.bodyText1,
             ),
             SizedBox(
@@ -141,7 +153,7 @@ class LaundryAppDrawer extends StatelessWidget {
             },
             icon: Icons.person,
             titleWidget: Text(
-              "Profile",
+              "${_i18n()["profile"]}",
               style: Get.textTheme.bodyText1,
             )),
         _navigationLink(
@@ -151,7 +163,7 @@ class LaundryAppDrawer extends StatelessWidget {
               Get.toNamed(kAdminView);
             },
             titleWidget: Text(
-              "Admin",
+              "${_i18n()["admin"]}",
               style: Get.textTheme.bodyText1,
             )),
         _navigationLink(
@@ -160,7 +172,7 @@ class LaundryAppDrawer extends StatelessWidget {
             },
             icon: Icons.notifications,
             titleWidget: Text(
-              "Notifications",
+              "${_i18n()["notifications"]}",
               style: Get.textTheme.bodyText1,
             )),
         _navigationLink(
@@ -170,7 +182,7 @@ class LaundryAppDrawer extends StatelessWidget {
             },
             icon: Icons.history,
             titleWidget: Text(
-              "Past orders",
+              "${_i18n()["pastOrders"]}",
               style: Get.textTheme.bodyText1,
             )),
       ],

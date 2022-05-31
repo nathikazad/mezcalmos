@@ -1243,7 +1243,18 @@
         }
     },
     "LaundryApp": {
-
+        "components": {
+            "LaundryAppDrawer": {
+                "profile": "Perfil",
+                "admin": "Administración",
+                "notifications": "Notificaciones",
+                "pastOrders": "Órdenes pasadas",
+                "language": "Idioma",
+                "to": "A :",
+                "privacyPolicies": "Políticas de privacidad",
+                "logout": "Cerrar sesión"
+            }
+        },
         "pages": {
             "CategoryView": {
                 "components": {
