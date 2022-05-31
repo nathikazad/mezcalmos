@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum NotificationType {
   NewMessage,
@@ -13,7 +11,7 @@ enum NotificationType {
 
 extension ParseNotificationTypeToString on NotificationType {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -21,7 +19,7 @@ extension ParseNotificationTypeToString on NotificationType {
 extension ParseStringToNotificationType on String {
   NotificationType toNotificationType() {
     return NotificationType.values
-        .firstWhere((e) => e.toFirebaseFormatString() == this);
+        .firstWhere((NotificationType e) => e.toFirebaseFormatString() == this);
   }
 }
 
@@ -33,7 +31,7 @@ enum NotificationAction {
 
 extension ParseNotificationActionToString on NotificationAction {
   String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
@@ -41,7 +39,7 @@ extension ParseNotificationActionToString on NotificationAction {
 extension ParseStringNotificationAction on String {
   NotificationAction toNotificationAction() {
     return NotificationAction.values.firstWhere(
-      (e) => e.toFirebaseFormatString() == this,
+      (NotificationAction e) => e.toFirebaseFormatString() == this,
       orElse: () => NotificationAction.ShowSnackBarAlways,
     );
   }
@@ -52,12 +50,12 @@ class Notification {
   dynamic variableParams;
   bool isEmpty = false;
   DateTime timestamp;
+  IconData? icon;
   String title;
   String body;
   String imgUrl;
   String linkUrl;
   String? linkText;
-  IconData? icon;
   NotificationType notificationType;
   NotificationAction notificationAction;
   String? get chatId => variableParams['chatId'];
@@ -77,7 +75,7 @@ class Notification {
       this.linkText});
 
   String get formattedTime =>
-      DateFormat('HH:mm').format(this.timestamp.toLocal()).toString();
+      DateFormat('HH:mm').format(timestamp.toLocal()).toString();
   Map<String, dynamic> toJson() => {
         "id": id,
         "variableParams": variableParams,

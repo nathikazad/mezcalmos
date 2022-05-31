@@ -70,13 +70,8 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.centerLeft,
-              child: Text("${_i18n()['notes']}",
-                  style: const TextStyle(
-                      color: const Color(0xff000f1c),
-                      fontFamily: "psb",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 14.0),
-                  textAlign: TextAlign.left),
+              child:
+                  Text("${_i18n()['notes']}", style: Get.textTheme.bodyText1),
             ),
             SizedBox(
               height: 15,

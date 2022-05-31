@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:rive/rive.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -30,134 +30,108 @@ class OrderStatusCard extends StatelessWidget {
         Card(
           child: Container(
             width: double.infinity,
-            margin: const EdgeInsets.all(12),
+            margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 orderStatusImage(ordersStates),
+                Spacer(),
                 _orderStatusText(context),
-                const Spacer(),
-                _orderMessageButton(context),
+                Spacer(
+                  flex: 2,
+                ),
               ],
             ),
           ),
         ),
-        _orderHelperText(context)
+        if (getEstimatedText() != null)
+          Container(
+            margin: EdgeInsets.all(5),
+            alignment: Alignment.center,
+            child: Text(
+              getEstimatedText()!,
+              textAlign: TextAlign.center,
+            ),
+          ),
       ],
     );
   }
 
   Widget _orderStatusText(BuildContext context) {
     return Flexible(
-      flex: 8,
-      fit: FlexFit.tight,
-      child: Text(
-        getOrderStatus(ordersStates),
-        style: Theme.of(context).textTheme.headline3,
-        textAlign: TextAlign.center,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
-    );
-  }
-
-  Widget _orderHelperText(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(5),
-      alignment: Alignment.center,
-      child: Text(
-        getOrderHelperText(ordersStates),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-
-  Widget _orderMessageButton(BuildContext context) {
-    return Material(
-      color: Theme.of(context).primaryColorLight,
-      shape: CircleBorder(),
-      child: InkWell(
-        onTap: () {
-          Get.toNamed<void>(
-            getMessagesRoute(
-              chatId: order.orderId,
-              orderId: order.orderId,
-              recipientType: ParticipantType.Restaurant,
-            ),
-          );
-        },
-        customBorder: const CircleBorder(),
-        child: Stack(
-          children: <Widget>[
-            _messageIcon(context),
-            Obx(
-              () => Get.find<OrderController>()
-                      .orderHaveNewMessageNotifications(order.orderId)
-                  ? _newMessageRedDot(context)
-                  : Container(),
-            )
-          ],
+      flex: 6,
+      fit: FlexFit.loose,
+      child: Container(
+        alignment: Alignment.center,
+        child: Text(
+          getOrderStatus(ordersStates),
+          style:
+              Theme.of(context).textTheme.headline3?.copyWith(fontSize: 14.sp),
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );
   }
-}
 
-Widget _messageIcon(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.all(12),
-    child: Icon(
-      Icons.textsms,
-      color: Colors.white,
-    ),
-  );
-}
+  String? getEstimatedText() {
+    switch (order.status) {
+      case RestaurantOrderStatus.PreparingOrder:
+        if (order.estimatedFoodReadyTime != null) {
+          return order.estimatedFoodReadyTime!.getEstimatedTime();
+        }
 
-Widget _newMessageRedDot(BuildContext context) {
-  return Positioned(
-    left: 0,
-    top: 0,
-    child: Container(
-      width: 13,
-      height: 13,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xfff6efff), width: 2),
-        color: const Color(0xffff0000),
-      ),
-    ),
-  );
+        break;
+      case RestaurantOrderStatus.ReadyForPickup:
+        if (order.estimatedPickupFromServiceProviderTime != null) {
+          return order.estimatedPickupFromServiceProviderTime!
+              .getEstimatedTime();
+        }
+        break;
+      case RestaurantOrderStatus.OnTheWay:
+        if (order.estimatedDropoffAtCustomerTime != null) {
+          return order.estimatedDropoffAtCustomerTime!.getEstimatedTime();
+        }
+
+        break;
+
+      default:
+        return null;
+    }
+    return null;
+  }
 }
 
 Widget orderStatusImage(RestaurantOrderStatus status) {
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+      return Container(
+        //   padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
-          Ionicons.bag_remove,
-          size: 50,
+          Ionicons.close_circle,
+          size: 40,
           color: Colors.red,
         ),
       );
 
     case RestaurantOrderStatus.CancelledByCustomer:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+      return Container(
+        // padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
-          Ionicons.bag_remove,
-          size: 50,
+          Ionicons.close_circle,
+          size: 40,
           color: Colors.red,
         ),
       );
 
     case RestaurantOrderStatus.OrderReceieved:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+      return Container(
+        // padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
-          Icons.hourglass_bottom_rounded,
-          size: 50,
-          color: Colors.grey,
+          Icons.flatware_rounded,
+          size: 40,
+          color: primaryBlueColor,
         ),
       );
     case RestaurantOrderStatus.PreparingOrder:
@@ -179,23 +153,20 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
         ),
       );
     case RestaurantOrderStatus.ReadyForPickup:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
+      return Container(
+        // padding: const EdgeInsets.only(right: 10.0),
         child: Icon(
-          Ionicons.bag,
-          size: 50,
-          color: Colors.grey,
+          Icons.check_circle,
+          size: 40,
+          color: SecondaryLightBlueColor,
         ),
       );
 
     case RestaurantOrderStatus.Delivered:
       return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Icon(
-          Ionicons.bag_check,
-          size: 50,
-          color: Colors.green,
-        ),
+        padding: const EdgeInsets.only(right: 10.0),
+        child:
+            Icon(Ionicons.checkmark_circle, size: 40, color: primaryBlueColor),
       );
   }
 }
@@ -216,28 +187,6 @@ String getOrderStatus(RestaurantOrderStatus status) {
       return '${_i18n()["readyForPickUp"]}';
     case RestaurantOrderStatus.Delivered:
       return '${_i18n()["delivered"]}';
-
-    default:
-      return 'Unknown status';
-  }
-}
-
-String getOrderHelperText(RestaurantOrderStatus status) {
-  switch (status) {
-    case RestaurantOrderStatus.CancelledByAdmin:
-      return '${_i18n()["helperText-canceledByAdmin"]}';
-    case RestaurantOrderStatus.CancelledByCustomer:
-      return '${_i18n()["helperText-canceledByCustomer"]}';
-    case RestaurantOrderStatus.OrderReceieved:
-      return '${_i18n()["helperText-received"]}';
-    case RestaurantOrderStatus.PreparingOrder:
-      return '${_i18n()["helperText-preparing"]}';
-    case RestaurantOrderStatus.OnTheWay:
-      return '${_i18n()["helperText-onTheWay"]}';
-    case RestaurantOrderStatus.ReadyForPickup:
-      return '${_i18n()["helperText-readyForPickUp"]}';
-    case RestaurantOrderStatus.Delivered:
-      return '${_i18n()["helperText-delivered"]}';
 
     default:
       return 'Unknown status';

@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
 class RestaurantsListOfItemsComponent extends StatefulWidget {
@@ -22,113 +21,63 @@ class RestaurantsListOfItemsComponent extends StatefulWidget {
 
 class _RestaurantsListOfItemsComponentState
     extends State<RestaurantsListOfItemsComponent> {
+  bool isImageExist = true;
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
-    return InkWell(
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        // margin: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
-        child: Row(
-          children: [
-            if (widget.item.image != null)
-              CachedNetworkImage(
-                imageUrl: widget.item.image!,
-                fit: BoxFit.cover,
-                imageBuilder: (BuildContext context,
-                        ImageProvider<Object> imageProvider) =>
-                    Container(
-                  height: 63,
-                  width: 63,
-                  child: ClipOval(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+    return Card(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+          // margin: const EdgeInsets.all(5),
+
+          child: Row(
+            children: [
+              if (isImageExist)
+                CircleAvatar(
+                  radius: 30,
+                  backgroundImage:
+                      CachedNetworkImageProvider(widget.item.image ?? ""),
+                  onBackgroundImageError: (Object e, StackTrace? s) {
+                    setState(() {
+                      isImageExist = false;
+                    });
+                  },
+                ),
+              if (isImageExist)
+                SizedBox(
+                  width: 15,
+                ),
+              Flexible(
+                fit: FlexFit.tight,
+                flex: 5,
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
+                    style: txt.headline3!.copyWith(
+                      fontSize: 13.sp,
                     ),
                   ),
                 ),
-                placeholder: (BuildContext context, String url) => Container(
-                    child: Shimmer.fromColors(
-                  child: Container(
-                    height: 63,
-                    width: 63,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  highlightColor: Colors.grey[400]!,
-                  enabled: true,
-                  //  period: Duration(milliseconds: 100),
-                  baseColor: Colors.grey[300]!,
-                  direction: ShimmerDirection.ltr,
-                )),
-                errorWidget: (BuildContext context, String url, error) =>
-                    Container(
-                        height: 63,
-                        width: 63,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey.shade300),
-                            child: Icon(
-                              Icons.image,
-                              color: Colors.grey,
-                              size: 20,
-                            ))),
               ),
-            SizedBox(
-              width: 15,
-            ),
-            const SizedBox(width: 15),
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  const SizedBox(height: 8),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "${widget.item.name[userLanguage]!.capitalizeFirstofEach}",
-                      style: txt.headline3!.copyWith(
-                        fontSize: 13.sp,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 7),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text("\$${widget.item.cost}", style: txt.headline3),
-                  )
-                ],
+              SizedBox(
+                width: 10,
               ),
-            ),
-            Container(
-              height: 45,
-              width: 45,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(172, 89, 252, 0.8),
-                borderRadius: BorderRadius.circular(45),
-              ),
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-            )
-          ],
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text("\$${widget.item.cost}", style: txt.headline3),
+              )
+            ],
+          ),
         ),
+        onTap: () {
+          widget.function!();
+        },
       ),
-      onTap: () {
-        widget.function!();
-      },
     );
   }
 }

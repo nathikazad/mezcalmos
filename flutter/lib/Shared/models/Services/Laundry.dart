@@ -1,5 +1,3 @@
-import 'package:collection/collection.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -7,12 +5,14 @@ import 'package:mezcalmos/Shared/models/User.dart';
 
 class Laundry extends Service {
   LaundryCosts laundryCosts;
+  num averageNumberOfDays = 2;
   LanguageType primaryLanguage;
   LanguageType? secondaryLanguage;
   Laundry(
       {required ServiceInfo userInfo,
       required Schedule schedule,
       required ServiceState laundryState,
+      this.averageNumberOfDays = 2,
       required this.laundryCosts,
       required this.primaryLanguage,
       this.secondaryLanguage})
@@ -21,7 +21,7 @@ class Laundry extends Service {
   factory Laundry.fromLaundryData(
       // ignore: avoid_annotating_with_dynamic
       {required String laundryId,
-      required dynamic laundryData}) {
+      required laundryData}) {
     final ServiceState laundryState =
         ServiceState.fromServiceStateData(laundryData["state"]);
 
@@ -30,7 +30,8 @@ class Laundry extends Service {
 
     final LaundryCosts laundryCosts =
         LaundryCosts.fromData(laundryData["details"]["costs"]);
-
+    final num averageNumberOfDays =
+        laundryData["details"]["averageNumberOfDays"];
     final LanguageType primaryLanguage = laundryData["details"]?["language"]
                 ?["primary"]
             .toString()
@@ -47,16 +48,34 @@ class Laundry extends Service {
         userInfo: ServiceInfo.fromData(laundryData["info"]),
         schedule: schedule,
         laundryState: laundryState,
+        averageNumberOfDays: averageNumberOfDays,
         laundryCosts: laundryCosts,
         primaryLanguage: primaryLanguage,
         secondaryLanguage: secondaryLanguage);
     return laundry;
   }
+  double get getAverageCost {
+    double allCosts = 0;
+
+    laundryCosts.lineItems.forEach((LaundryCostLineItem element) {
+      allCosts += element.cost;
+    });
+    final double averageCost = allCosts / laundryCosts.lineItems.length;
+
+    return averageCost;
+  }
+
+  num get getCheapestCategory {
+    final LaundryCostLineItem cheapestCostCategory = laundryCosts.lineItems
+        .reduce((LaundryCostLineItem a, LaundryCostLineItem b) =>
+            a.cost < b.cost ? a : b);
+    return cheapestCostCategory.cost;
+  }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       "info": info.toJson(),
-      "laundryState": state.toJson(),
+      "state": state.toJson(),
     };
   }
 }
@@ -67,12 +86,10 @@ class LaundryCosts {
   LaundryCosts();
 
   factory LaundryCosts.fromData(laundryCostsData) {
-    // ignore: prefer_final_locals
-    LaundryCosts laundryCosts = LaundryCosts();
+    final LaundryCosts laundryCosts = LaundryCosts();
     laundryCosts.minimumCost = laundryCostsData['minimumCost'];
-    // ignore: avoid_annotating_with_dynamic
+
     for (var item in laundryCostsData["byType"]) {
-      mezDbgPrint(item);
       laundryCosts.lineItems.add(LaundryCostLineItem.fromData(item));
     }
     return laundryCosts;
@@ -87,28 +104,28 @@ class LaundryCosts {
     };
   }
 
-  //  factory LaundryCosts.clone(LaundryCosts laundryCosts) {
-  //   final Map<Weekday, OpenHours> _cloneSchedule = {};
-  //   laundryCosts.lineItems.forEach((LaundryCostLineItem element) { })
-
-  //   return newSchedule;
-  // }
+  @override
+  int get hashCode => lineItems.hashCode ^ minimumCost.hashCode;
 }
 
 class LaundryCostLineItem {
+  String id;
   Map<LanguageType, String> name;
   num cost;
 
-  LaundryCostLineItem({required this.name, required this.cost});
+  LaundryCostLineItem(
+      {required this.name, required this.cost, required this.id});
 
   factory LaundryCostLineItem.fromData(laundryCostLineItemData) {
     return LaundryCostLineItem(
+        id: laundryCostLineItemData["id"] ?? "",
         name: convertToLanguageMap(laundryCostLineItemData['name']),
         cost: laundryCostLineItemData['cost']);
   }
 
   Map<String, dynamic> toFirebaseFormat() {
     return {
+      'id': id,
       'name': name.toFirebaseFormat(),
       'cost': cost,
     };
@@ -119,22 +136,12 @@ class LaundryCostLineItem {
     num? cost,
   }) {
     return LaundryCostLineItem(
+      id: id,
       name: name ?? this.name,
       cost: cost ?? this.cost,
     );
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    final bool Function(dynamic e1, dynamic e2) mapEquals =
-        const DeepCollectionEquality().equals;
-
-    return other is LaundryCostLineItem &&
-        mapEquals(other.name, name) &&
-        other.cost == cost;
-  }
-
-  @override
-  int get hashCode => name.hashCode ^ cost.hashCode;
+  int get hashCode => id.hashCode ^ name.hashCode ^ cost.hashCode;
 }

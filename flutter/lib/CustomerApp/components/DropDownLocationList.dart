@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -13,11 +14,13 @@ class DropDownLocationList extends StatefulWidget {
   DropDownLocationList({
     this.onValueChangeCallback,
     this.passedInLocation,
+    this.bgColor = Colors.transparent,
     Key? key,
   }) : super(key: key);
 
   final OnDropDownNewValue? onValueChangeCallback;
   Location? passedInLocation;
+  final Color bgColor;
 
   @override
   _DropDownLocationListState createState() => _DropDownLocationListState();
@@ -58,10 +61,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   }
 
   void getSavedLocation() {
-    
     customerAuthController.customer.value?.savedLocations.forEach(
       (SavedLocation element) {
-     
         listOfSavedLoacations.add(element);
       },
     );
@@ -74,12 +75,13 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          width: 1.5,
-          color: (dropDownListValue != pickLocationPlaceholder)
-              ? Theme.of(context).primaryColorLight
-              : Colors.red,
-        ),
+        color: widget.bgColor,
+        // border: Border.all(
+        //   // width: 1.5,
+        //   // color: (dropDownListValue != pickLocationPlaceholder)
+        //   //     ? Theme.of(context).primaryColorLight
+        //   //     : Colors.red,
+        // ),
       ),
       child: DropdownButtonHideUnderline(
         child: Obx(() {
@@ -87,14 +89,22 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               selectedItemBuilder: (BuildContext context) {
                 return dropDownSelectedItemBuilder(textTheme);
               },
-              iconDisabledColor: Color.fromRGBO(172, 89, 252, 1),
-              iconEnabledColor: Color.fromRGBO(172, 89, 252, 1),
+              iconDisabledColor: Colors.grey.shade800,
+              iconEnabledColor: Colors.grey.shade800,
               value: dropDownListValue,
+              dropdownColor: widget.bgColor,
               isDense: true,
               isExpanded: true,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  ?.copyWith(fontWeight: FontWeight.w800),
               hint: Center(
                 child: Text(_i18n()["pickLocation"],
-                    style: Theme.of(context).textTheme.bodyText2),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        ?.copyWith(fontWeight: FontWeight.w800)),
               ),
               icon: Icon(Icons.expand_more),
               items: listOfSavedLoacations
@@ -154,7 +164,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           Icon(
             Icons.location_on_outlined,
             size: 18,
-            color: Color.fromRGBO(172, 89, 252, 1),
+            color: primaryBlueColor,
           ),
           const SizedBox(width: 15),
           Flexible(

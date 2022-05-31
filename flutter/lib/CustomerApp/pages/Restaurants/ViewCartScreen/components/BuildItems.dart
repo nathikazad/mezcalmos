@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenChoices.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ItemInformationCart.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -52,11 +53,75 @@ class CartItemsBuilder extends StatelessWidget {
               )),
               children: [
                 Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.all(8),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: buildChoices(cartItem.chosenChoices),
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IncrementalComponent(
+                              minVal: 1,
+                              btnColors: SecondaryLightBlueColor,
+                              alignment: MainAxisAlignment.start,
+                              onMinValueBtnColor: Colors.grey.shade400,
+                              incrementCallback: () {
+                                // counter.value =
+                                //     counter.value + cartItem.costPerOne();
+                                //print("${cartItem.item.id}");
+                                _restaurantController.incrementItem(
+                                    cartItem.idInCart!, 1);
+                                mezDbgPrint(
+                                    "quant ttttttoooooo${_restaurantController.cart.value.cartItems.first.quantity}");
+                                _restaurantController.refresh();
+                              },
+                              onChangedToZero: () async {
+                                final YesNoDialogButton yesNoResult =
+                                    await cancelAlertDialog(
+                                        title: _i18n()["deleteItem"],
+                                        body: _i18n()["deleteItemConfirm"],
+                                        icon: Container(
+                                          child: Icon(
+                                            Icons.highlight_off,
+                                            size: 65,
+                                            color: Color(0xffdb2846),
+                                          ),
+                                        ));
+                                mezDbgPrint(
+                                    " the returend value from the dailog $yesNoResult");
+                                if (yesNoResult == YesNoDialogButton.Yes) {
+                                  _restaurantController
+                                      .deleteItem(cartItem.idInCart!);
+                                  if (_restaurantController.cart.value
+                                          .quantity() ==
+                                      0) {
+                                    _restaurantController.clearCart();
+                                    Get.until((Route route) =>
+                                        route.settings.name == kHomeRoute);
+                                  }
+                                  // controller.refresh();
+
+                                }
+                              },
+                              value: cartItem.quantity,
+                              decrementCallback: () {
+                                // counter.value =
+                                //     counter.value + cartItem.costPerOne();
+                                _restaurantController.incrementItem(
+                                    cartItem.idInCart!, -1);
+                                _restaurantController.refresh();
+                              }),
+                          Text(
+                            "\$${cartItem.totalCost()}",
+                            style: Get.textTheme.headline3,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: buildChoices(cartItem.chosenChoices),
+                      ),
+                    ],
                   ),
                 ),
                 if (cartItem.notes != null)
@@ -64,70 +129,6 @@ class CartItemsBuilder extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 10, right: 10),
-                  width: Get.width,
-                  height: 0.5,
-                  decoration: BoxDecoration(
-                    color: const Color(0xffececec),
-                  ),
-                ),
-                Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      children: [
-                        Spacer(),
-                        IncrementalComponent(
-                            minVal: 1,
-                            onMinValueBtnColor:
-                                Theme.of(context).primaryColorLight,
-                            incrementCallback: () {
-                              // counter.value =
-                              //     counter.value + cartItem.costPerOne();
-                              //print("${cartItem.item.id}");
-                              _restaurantController.incrementItem(
-                                  cartItem.idInCart!, 1);
-                              _restaurantController.refresh();
-                            },
-                            onChangedToZero: () async {
-                              final YesNoDialogButton yesNoResult =
-                                  await cancelAlertDialog(
-                                      title: _i18n()["deleteItem"],
-                                      body: _i18n()["deleteItemConfirm"],
-                                      icon: Container(
-                                        child: Icon(
-                                          Icons.highlight_off,
-                                          size: 65,
-                                          color: Color(0xffdb2846),
-                                        ),
-                                      ));
-                              mezDbgPrint(
-                                  " the returend value from the dailog $yesNoResult");
-                              if (yesNoResult == YesNoDialogButton.Yes) {
-                                _restaurantController
-                                    .deleteItem(cartItem.idInCart!);
-                                if (_restaurantController.cart.value
-                                        .quantity() ==
-                                    0) {
-                                  _restaurantController.clearCart();
-                                  Get.until((Route route) =>
-                                      route.settings.name == kHomeRoute);
-                                }
-                                // controller.refresh();
-
-                              }
-                            },
-                            value: cartItem.quantity,
-                            decrementCallback: () {
-                              // counter.value =
-                              //     counter.value + cartItem.costPerOne();
-                              _restaurantController.incrementItem(
-                                  cartItem.idInCart!, -1);
-                              _restaurantController.refresh();
-                            }),
-                      ],
-                    )),
               ],
               onEdit: () {
                 mezDbgPrint(

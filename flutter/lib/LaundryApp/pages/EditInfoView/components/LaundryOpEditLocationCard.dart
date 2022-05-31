@@ -15,6 +15,7 @@ class LaundryOpEditLocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Card(
+        color: Colors.grey.shade200,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () async {
@@ -27,7 +28,7 @@ class LaundryOpEditLocationCard extends StatelessWidget {
             });
           },
           child: Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(12),
             width: double.infinity,
             child: Row(
               children: [

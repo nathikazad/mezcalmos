@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/components/CustomerLaundrySelectCard.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Laundry"]["LaundriesListView"];
 
 class LaundriesListView extends StatefulWidget {
   const LaundriesListView({Key? key}) : super(key: key);
@@ -19,12 +23,25 @@ class _LaundriesListViewState extends State<LaundriesListView> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: 'Laundries',
+        title: '${_i18n()["laundries"]}',
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(5),
         child: Column(
           children: [
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              margin: const EdgeInsets.all(5),
+              child: Text(
+                "${_i18n()["title"]}",
+                style: Get.textTheme.headline3,
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
             FutureBuilder<List<Laundry>>(
                 future: laundryController.getLaundries(),
                 builder: (BuildContext context,

@@ -46,8 +46,8 @@ class LaundryOrderCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Text('\$40/KG'),
-                        if (order.weight != null)
-                          Text("\$${order.weight! * 40}"),
+                        // if (order.costsByType?.totalWeigh != null)
+                        //   Text("\$${order.weight! * 40}"),
                         Row(
                           children: <Widget>[
                             Icon(

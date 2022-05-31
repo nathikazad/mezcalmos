@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/Components/LaundryStepsComponent.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
+import 'package:sizer/sizer.dart';
 
 class LaundryOrderRequestView extends StatefulWidget {
   const LaundryOrderRequestView({Key? key}) : super(key: key);
@@ -41,6 +42,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   LaundryController laundryController = Get.find<LaundryController>();
 
   /// LanguageController
+  /// CustomerApp.pages.Laundry.LaundryRequestView.LaundryOrderRequestView
+  /// CustomerApp.pages.Laundry.LaundriesListView.LaundryRequestView.LaundryOrderRequestView
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['pages']['Laundry']['LaundryRequestView']['LaundryOrderRequestView'];
 
@@ -68,35 +71,115 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    CachedNetworkImage(
+                        width: double.infinity,
+                        height: 20.h,
+                        imageUrl: selectedLaundry.info.image),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
-                    Container(
-                      margin: const EdgeInsets.all(8),
-                      child: Text(
-                        '${_i18n()['howItWorks']}',
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
+                    Text(
+                      selectedLaundry.info.name,
+                      style: Get.textTheme.headline3,
                     ),
-                    LaundryStepsComponent(),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.place,
+                          color: primaryBlueColor,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(selectedLaundry.info.location.address)
+                      ],
+                    ),
+
+                    // Text(
+                    //   "Additional services",
+                    //   style: Get.textTheme.headline3,
+                    // ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       "Service name ",
+                    //       style: Get.textTheme.bodyText2
+                    //           ?.copyWith(fontWeight: FontWeight.w700),
+                    //     ),
+                    //     Text(
+                    //       "+ 5\$ per article",
+                    //       style: Get.textTheme.bodyText2?.copyWith(
+                    //           color: customerAppColor,
+                    //           fontWeight: FontWeight.w700),
+                    //     ),
+                    //     Spacer(),
+                    //     multipleSelectOptionComponent(
+                    //         onTap: (bool? p0) {}, value: true)
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: [
+                    //     Text(
+                    //       "Service name ",
+                    //       style: Get.textTheme.bodyText2,
+                    //     ),
+                    //     Text(
+                    //       "+ 12\$ per article",
+                    //       style: Get.textTheme.bodyText2
+                    //           ?.copyWith(color: customerAppColor),
+                    //     ),
+                    //     Spacer(),
+                    //     multipleSelectOptionComponent(
+                    //         onTap: (bool? p0) {}, value: false)
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       "Service name ",
+                    //       style: Get.textTheme.bodyText2,
+                    //     ),
+                    //     multipleSelectOptionComponent(
+                    //         onTap: (bool? p0) {}, value: false)
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 20,
                     ),
                     Container(
-                      margin: const EdgeInsets.all(8),
+                      //  margin: const EdgeInsets.all(8),
                       child: Text(
                         '${_i18n()["deliveryLocation"]} :',
-                        style: Theme.of(context).textTheme.headline3,
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     Obx(
                       () => Card(
                         child: authController.user != null
                             ? DropDownLocationList(
+                                bgColor: SecondaryLightBlueColor,
                                 passedInLocation: customerLoc,
                                 onValueChangeCallback: ({Location? location}) {
                                   setState(() {
@@ -110,48 +193,10 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                     SizedBox(
                       height: 10,
                     ),
-                    if (selectedLaundry != null)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            child: Text(
-                              "Laundry : ",
-                              style: Get.textTheme.headline3,
-                            ),
-                          ),
-                          Card(
-                            child: Container(
-                              margin: EdgeInsets.all(5),
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundImage: CachedNetworkImageProvider(
-                                        selectedLaundry.info.image),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    selectedLaundry.info.name,
-                                    style: Get.textTheme.bodyText1,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
                     _orderNoteComponent(),
                     SizedBox(
                       height: 20,
                     ),
-                    orderSummaryCard(context)
                   ],
                 ),
               ),
@@ -171,95 +216,16 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
           const SizedBox(height: 10),
           TextField(
             controller: _orderNote,
+            maxLines: 5,
+            minLines: 3,
             decoration: InputDecoration(
+              hintText: "Write your notes here",
+              hintStyle: Get.textTheme.subtitle1,
               filled: true,
               fillColor: Theme.of(context).primaryColor,
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Card orderSummaryCard(BuildContext context) {
-    return Card(
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: <Widget>[
-            Text(
-              "${_i18n()["orderSummary"]}",
-              style: Theme.of(context).textTheme.headline3,
-            ),
-            const Divider(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "${_i18n()["orderCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  "\$20/KG",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "${_i18n()["minimumCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  "\$50",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "${_i18n()["deliveryCost"]} :",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  "\$50",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            const Divider(height: 25),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "${_i18n()["deliveryLocation"]} :",
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ),
-            const SizedBox(height: 15),
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.place_rounded,
-                  color: Theme.of(context).primaryColorLight,
-                ),
-                const SizedBox(height: 5),
-                Flexible(
-                  child: Text(
-                    customerLoc?.address ?? _i18n()['noLocation'],
-                    maxLines: 1,
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
       ),
     );
   }
@@ -310,6 +276,9 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     return Obx(
       () => Container(
         width: double.infinity,
+        decoration: BoxDecoration(
+            gradient:
+                LinearGradient(colors: [Colors.purple, primaryBlueColor])),
         //  padding: const EdgeInsets.all(5),
         child: (authController.user != null)
             ? makeOrderButton(context)
@@ -341,9 +310,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
-        backgroundColor: (customerLoc != null)
-            ? Theme.of(context).primaryColorLight
-            : Colors.grey,
+        backgroundColor:
+            (customerLoc != null) ? Colors.transparent : Colors.grey,
       ),
       onPressed: (customerLoc == null)
           ? null

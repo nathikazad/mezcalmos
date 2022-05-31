@@ -1,20 +1,39 @@
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/Menu/MenuComponent.dart';
-import 'package:mezcalmos/CustomerApp/components/MyCartAppBarIcon.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart'
     show TwoLettersGenerator;
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:sizer/sizer.dart';
 
 class RestaurantSliverAppBar extends StatelessWidget {
-  const RestaurantSliverAppBar({
-    Key? key,
-    required this.restaurant,
-  }) : super(key: key);
+  RestaurantSliverAppBar(
+      {Key? key,
+      required this.restaurant,
+      required this.scrollController,
+      required this.tabController,
+      required this.onTap,
+      required this.onInfoTap,
+      required this.showInfo})
+      : super(key: key);
 
   final Restaurant restaurant;
+  final AutoScrollController scrollController;
+  final TabController tabController;
+
+  final void Function(int index) onTap;
+  final void Function() onInfoTap;
+  bool showInfo = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,91 +42,280 @@ class RestaurantSliverAppBar extends StatelessWidget {
       elevation: 0.4,
       expandedHeight: 220,
       automaticallyImplyLeading: false,
-      titleSpacing: 16,
-      leading: IconButton(
-        onPressed: () {
-          Get.back();
-        },
-        icon: Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
-      ),
+      bottom:
+          (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
+      leading: _BackButtonAppBar(),
       actions: <Widget>[
-        MyCartAppBarIcon(iconColor: Colors.white),
-        MenuComponent(padding: 2),
+        getAppbarIconsButton(),
       ],
       pinned: true,
-      floating: false,
-      flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.all(12),
-        // collapseMode: CollapseMode.parallax,
-        centerTitle: true,
-        title: Text(
-          restaurant.info.name,
-          style: Theme.of(context)
-              .textTheme
-              .headline2!
-              .copyWith(color: Colors.white),
-        ),
-        background: CachedNetworkImage(
-          imageUrl: restaurant.info.image,
-          fit: BoxFit.cover,
-          imageBuilder: (BuildContext context, ImageProvider<Object> image) =>
-              Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: image,
-                fit: BoxFit.cover,
-              ),
-            ),
-            foregroundDecoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: <Color>[
-                  Colors.black.withOpacity(0.7),
-                  const Color(0x00000000).withOpacity(0.1),
-                  Colors.black.withOpacity(0.7),
-                ],
-              ),
-            ),
-          ),
-          placeholder: (_, __) {
-            return Shimmer.fromColors(
-              child: Container(
-                color: Colors.grey,
-                width: double.infinity,
-                height: double.infinity,
-              ),
-              highlightColor: Colors.grey[400]!,
-              enabled: true,
-              //   period: Duration(milliseconds: 100),
-              baseColor: Colors.grey[300]!,
-              direction: ShimmerDirection.ltr,
-            );
-          },
-          errorWidget: (_, __, ___) {
-            return Container(
-              height: 63,
-              width: 63,
-              decoration: BoxDecoration(
-                color: Colors.grey[400],
-                shape: BoxShape.circle,
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                restaurant.info.name.generateTwoFirstLetters(),
-                style: const TextStyle(
-                  color: Color.fromRGBO(172, 89, 252, 0.8),
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+      flexibleSpace: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+        return FlexibleSpaceBar(
+          titlePadding: EdgeInsets.only(
+              bottom:
+                  (restaurant.getCategories.length > 1 && !showInfo) ? 60 : 12),
+          // centerTitle: true,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                flex: 1,
+                fit: FlexFit.loose,
+                child: Text(
+                  (showInfo) ? "Informations" : restaurant.info.name,
+                  style: Get.textTheme.headline3
+                      ?.copyWith(color: Colors.white, fontSize: 14.sp),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
                 ),
               ),
+              SizedBox(
+                width: 5,
+              ),
+              if (!showInfo)
+                InkWell(
+                    onTap: onInfoTap,
+                    child: Icon(
+                      Icons.info_outline_rounded,
+                      size: 14.sp,
+                      color: Colors.white,
+                    ))
+            ],
+          ),
+          background: _backgroundImageComponent(),
+        );
+      }),
+    );
+  }
+
+  Widget _backgroundImageComponent() {
+    return CachedNetworkImage(
+      imageUrl: restaurant.info.image,
+      fit: BoxFit.cover,
+      imageBuilder: (BuildContext context, ImageProvider<Object> image) =>
+          Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: image,
+            fit: BoxFit.cover,
+          ),
+        ),
+        foregroundDecoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: <Color>[
+              Colors.black.withOpacity(0.8),
+              const Color(0x00000000).withOpacity(0.1),
+              Colors.black.withOpacity(0.7),
+            ],
+          ),
+        ),
+      ),
+      placeholder: (_, __) {
+        return Shimmer.fromColors(
+          child: Container(
+            color: Colors.grey,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+          highlightColor: Colors.grey[400]!,
+          enabled: true,
+          //   period: Duration(milliseconds: 100),
+          baseColor: Colors.grey[300]!,
+          direction: ShimmerDirection.ltr,
+        );
+      },
+      errorWidget: (_, __, ___) {
+        return Container(
+          height: 63,
+          width: 63,
+          decoration: BoxDecoration(
+            color: Colors.grey[400],
+            shape: BoxShape.circle,
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            restaurant.info.name.generateTwoFirstLetters(),
+            style: const TextStyle(
+              color: Color.fromRGBO(172, 89, 252, 0.8),
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  PreferredSizeWidget? get bottom {
+    final LanguageType userLanguage =
+        Get.find<LanguageController>().userLanguageKey;
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(48),
+      child: Container(
+        width: double.infinity,
+        color: Colors.white,
+        child: TabBar(
+          isScrollable: true,
+          controller: tabController,
+
+          // indicatorPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+          // indicatorColor: Get.theme.primaryColorLight,
+          indicatorWeight: 0.1,
+          labelColor: Colors.black,
+          tabs: List.generate(restaurant.getCategories.length, (int index) {
+            return Tab(
+              child: FilterChip(
+                showCheckmark: false,
+                labelStyle: Get.textTheme.bodyText2?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: tabController.index != index
+                        ? primaryBlueColor
+                        : Colors.black),
+                label: Text(
+                    restaurant.getCategories[index].name?[userLanguage] ?? ""),
+                onSelected: (bool v) {
+                  onTap(index);
+                },
+                selected: tabController.index == index,
+              ),
             );
-          },
+          }),
         ),
       ),
     );
+  }
+
+  Widget _BackButtonAppBar() {
+    return Transform.scale(
+      scale: 0.6,
+      child: InkWell(
+        onTap: () {
+          if (showInfo) {
+            onInfoTap();
+          } else {
+            Get.back();
+          }
+        },
+        child: Ink(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.9),
+                  spreadRadius: 0,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              color: Colors.white),
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            color: primaryBlueColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _ordersAppBarIcon() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 8),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          Get.toNamed(kOrdersRoute);
+        },
+        child: Ink(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: Icon(
+            Icons.watch_later,
+            size: 20,
+            color: primaryBlueColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _notificationAppBarIcon() {
+    return Obx(() {
+      if (Get.find<ForegroundNotificationsController>().notifications.length >
+          0) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 3, right: 3),
+          child: InkWell(
+            customBorder: CircleBorder(),
+            onTap: () {
+              Get.toNamed(kNotificationsRoute);
+            },
+            child: Badge(
+              badgeColor: Colors.red,
+              showBadge: true,
+              position: BadgePosition.topEnd(top: 5, end: 5),
+              child: Ink(
+                padding: const EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: Icon(
+                  Icons.notifications,
+                  color: primaryBlueColor,
+                  size: 20,
+                ),
+              ),
+            ),
+          ),
+        );
+      } else {
+        return Container();
+      }
+    });
+  }
+
+  Widget _noUserButton() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 12),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          Get.toNamed(kSignInRouteOptional);
+        },
+        child: Ink(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: SecondaryLightBlueColor,
+          ),
+          child: Icon(
+            Icons.person,
+            size: 20,
+            color: primaryBlueColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget getAppbarIconsButton() {
+    return Obx(() {
+      return Row(
+        children: [
+          if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
+          if (Get.find<AuthController>().isUserSignedIn)
+            _notificationAppBarIcon(),
+          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+        ],
+      );
+    });
   }
 }

@@ -50,6 +50,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   mezDbgPrint(dynamicFields);
   return Notification(
     id: key,
+    icon: Material.Icons.local_laundry_service,
     linkUrl: getLaundyOrderRoute(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
@@ -93,6 +94,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
       getRestaurantOrderStatusFields(newOrdersStatus)!;
   return Notification(
     id: key,
+    icon: Material.Icons.flatware,
     linkUrl: getRestaurantOrderRoute(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
@@ -114,51 +116,46 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       return <String, dynamic>{
         "title": "${_i18n()["laundryOtwPickupTitle"]}",
         "body": "${_i18n()["laundryOtwPickupBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/laundry/onTheWay.png",
       };
     case LaundryOrderStatus.PickedUpFromCustomer:
       return <String, dynamic>{
         "title": "${_i18n()["laundryPickedTitle"]}",
         "body": "${_i18n()["laundryPickedBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/laundry/delivered.png",
       };
     case LaundryOrderStatus.AtLaundry:
       return <String, dynamic>{
         "title": "${_i18n()["laundryAtLaundryTitle"]}",
         "body": "${_i18n()["laundryAtLaundryBody"]}",
-        "imgUrl": "assets/images/shared/notifications/atLaundry.png",
+        "imgUrl": "assets/images/shared/notifications/laundry/atLaundry.png",
       };
     case LaundryOrderStatus.ReadyForDelivery:
       return <String, dynamic>{
         "title": "${_i18n()["laundryReadyForDeliveryTitle"]}",
         "body": "${_i18n()["laundryReadyForDeliveryBody"]}",
         "imgUrl":
-            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
+            "assets/images/shared/notifications/laundry/readyForDelivery.png",
       };
     case LaundryOrderStatus.OtwPickupFromLaundry:
     case LaundryOrderStatus.PickedUpFromLaundry:
       return <String, dynamic>{
         "title": "${_i18n()["laundryOtwDeliveryTitle"]}",
         "body": "${_i18n()["laundryOtwDeliveryBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/laundry/onTheWay.png",
       };
     case LaundryOrderStatus.Delivered:
       return <String, dynamic>{
         "title": "${_i18n()["laundryDeliveredTitle"]}",
         "body": "${_i18n()["laundryDeliveredTitle"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/laundry/delivered.png",
       };
     case LaundryOrderStatus.CancelledByAdmin:
     case LaundryOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
-        "title": "${_i18n()["cancelledTitle"]}",
-        "body": "${_i18n()["cancelledBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+        "title": "${_i18n()["LaundryCancelledTitle"]}",
+        "body": "${_i18n()["LaundryCancelledBody"]}",
+        "imgUrl": "assets/images/shared/notifications/laundry/canceled.png",
       };
     default:
     // do nothing
@@ -187,15 +184,13 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
       return <String, dynamic>{
         "title": "${_i18n()["onTheWayRestaurantTitle"]}",
         "body": "${_i18n()["onTheWayRestaurantBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/onTheWay.png",
       };
     case RestaurantOrderStatus.Delivered:
       return <String, dynamic>{
         "title": "${_i18n()["deliveredTitle"]}",
         "body": "${_i18n()["deliveredBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/delivered.png",
       };
     case RestaurantOrderStatus.CancelledByAdmin:
       return <String, dynamic>{
@@ -279,13 +274,10 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
-  mezDbgPrint("MESSAGE NOTIFICATION ^^^^^^^^^^^^^");
   mezDbgPrint(value['linkUrl']);
   return Notification(
       id: key,
-      linkUrl: value['orderId'],
-
-      // linkUrl: value['linkUrl'],
+      linkUrl: value['linkUrl'] ?? value["orderId"],
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
@@ -86,6 +86,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
         autoBack: true,
       ),
       bottomNavigationBar: ButtonComponent(
+        canClick: true,
         widget: Center(
           child: Text(
             "${_i18n()["addNewLoc"]}",

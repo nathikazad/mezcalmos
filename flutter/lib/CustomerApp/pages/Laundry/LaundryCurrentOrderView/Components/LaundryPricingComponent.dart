@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -14,51 +13,45 @@ class LaundryPricingCompnent extends StatelessWidget {
   dynamic _i18n() =>
       Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
           ['LaundryCurrentOrderView']['Components']['LaundryPricingComponent'];
+  static LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(8),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               _i18n()['laundryPricing'],
-              style: Theme.of(context).textTheme.headline3,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
-            Divider(
-              height: 15,
+            SizedBox(
+              height: 10,
             ),
-            ListView.separated(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: order.costsByType?.lineItems.length ?? 0,
-              itemBuilder: (BuildContext context, int index) {
-                return _costItemCard(order.costsByType!.lineItems[index]);
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider();
-              },
-            ),
+            if (order.costsByType?.lineItems.isNotEmpty ?? false)
+              _PricingTable(),
             if (order.costsByType?.lineItems.isEmpty ?? true)
-              Column(
-                children: [
-                  Row(
-                    children: <Widget>[
-                      const Icon(
-                        Icons.help_outline_rounded,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Icon(
+                    Icons.info_outline_rounded,
+                    color: Colors.grey.shade800,
+                  ),
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: Text(
+                      _i18n()['laundryPricingNote'],
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                       ),
-                      const SizedBox(height: 10),
-                      Flexible(
-                        child: Text(
-                          _i18n()['laundryPricingNote'],
-                          maxLines: 3,
-                        ),
-                      ),
-                    ],
-                  )
+                      maxLines: 3,
+                    ),
+                  ),
                 ],
               ),
           ],
@@ -66,39 +59,61 @@ class LaundryPricingCompnent extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _costItemCard(LaundryOrderCostLineItem item) {
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
-  return Container(
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              item.name[userLanguage]!,
-              style: Get.textTheme.bodyText1,
-            ),
-            Text(" \$${item.cost} /KG"),
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Weight : ${item.weight} KG",
-              style: Get.textTheme.bodyText2,
-            ),
-            Text(
-              "Total : \$${item.weighedCost}",
-              style: Get.textTheme.bodyText1!.copyWith(color: primaryBlueColor),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
+  Widget _PricingTable() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: DataTable(
+          dividerThickness: 0,
+          // dataTextStyle: TextStyle(),
+
+          showBottomBorder: false,
+          columnSpacing: 20,
+          columns: _PricingTableColumns(),
+          rows: _PricingTableRows() +
+              [
+                DataRow(cells: [
+                  DataCell(
+                    Text("Total", style: Get.textTheme.bodyText1),
+                  ),
+                  DataCell(Container()),
+                  DataCell(Container()),
+                  DataCell(
+                    Text(
+                      "\$${order.cost - 50}",
+                      style: Get.textTheme.bodyText1,
+                    ),
+                  ),
+                ])
+              ]),
+    );
+  }
+
+  List<DataColumn> _PricingTableColumns() {
+    return [
+      DataColumn(label: Text('${_i18n()["item"]}')),
+      DataColumn(label: Text('${_i18n()["perKilo"]}')),
+      DataColumn(label: Text('${_i18n()["weight"]}')),
+      DataColumn(label: Text('${_i18n()["cost"]}'))
+    ];
+  }
+
+  List<DataRow> _PricingTableRows() {
+    return List.generate(
+        order.costsByType!.lineItems.length,
+        (int index) => DataRow(cells: [
+              DataCell(Container(
+                width: 100,
+                child: Text(
+                  order.costsByType!.lineItems[index].name[userLanguage] ?? "",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              )),
+              DataCell(Text("\$${order.costsByType!.lineItems[index].cost}")),
+              DataCell(Text("${order.costsByType!.lineItems[index].weight}")),
+              DataCell(
+                  Text("\$${order.costsByType!.lineItems[index].weighedCost}")),
+            ]));
+  }
 }

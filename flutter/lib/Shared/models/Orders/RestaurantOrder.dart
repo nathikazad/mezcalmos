@@ -114,7 +114,7 @@ class RestaurantOrder extends DeliverableOrder {
           ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
           : null,
       dropOffDriverChatId: data['secondaryChats']
-          ?['deliveryAdminDropOffDriver'],
+          ?['serviceProviderDropOffDriver'],
       customerDropOffDriverChatId: data['secondaryChats']
           ?['customerDropOffDriver'],
     );

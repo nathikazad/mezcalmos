@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -11,6 +12,11 @@ import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
+    ["EditInfoView"]["controllers"]["EditInfoController"];
+
+//
 class EditInfoController {
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
@@ -34,21 +40,11 @@ class EditInfoController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
 
   void init() {
-    // laundryInfoController.laundry.stream.
     laundry.value = laundryInfoController.laundry.value;
-    //laundry = laundry
-    if (laundry.value != null) {
-      mezDbgPrint("Controlllller init =======>");
 
+    if (laundry.value != null) {
       laundryNameController.text = laundry.value?.info.name ?? '';
       settingSchedules();
-
-      // laundryCosts.value = laundry.value!.laundryCosts;
-      // laundry.value!.laundryCosts.lineItems
-      //     .forEach((LaundryCostLineItem element) {
-      //   categories.value!.add(element.copyWith());
-      // });
-
       newLocation.value = laundry.value!.info.location;
       newImageUrl.value = laundry.value?.info.image ?? '';
       primaryLang.value = laundry.value!.primaryLanguage;
@@ -57,14 +53,12 @@ class EditInfoController {
   }
 
   void settingSchedules() {
-    mezDbgPrint("AFFFFFFECTIN clone -------------------------------->");
     newSchedule.value = Schedule.clone(laundry.value!.schedule!);
     schedulePreview.value = Schedule.clone(newSchedule.value!);
     oldSchedule.value = Schedule.clone(laundry.value!.schedule!);
   }
 
-  Future updateLaundryInfo() async {
-    mezDbgPrint("${newLocation.value!.address}");
+  Future<void> updateLaundryInfo() async {
     btnClicked.value = true;
     if (laundryNameController.text != '' &&
         laundryNameController.text != laundry.value?.info.name) {
@@ -100,74 +94,45 @@ class EditInfoController {
   }
 
   void setNewLocation(Location? newLoc) {
-    mezDbgPrint("The new loc ==========> $newLoc");
     if (newLoc != null) {
       newLocation.value = newLoc;
     }
   }
 
   bool validatePrimaryLanguUpdate(LanguageType value) {
-    if (secondaryLang.value == null) {
-      return true;
-    } else if (value != secondaryLang.value) {
+    if (value != secondaryLang.value) {
       return true;
     } else {
-      Get.snackbar("Error", "Select different language then primary language");
       return false;
     }
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {
     if (primaryLang.value != null) {
-      mezDbgPrint("value : $value  ====================> $primaryLang ");
       if (value != primaryLang.value) {
-        //  secondaryLang.value = value;
-        //  mezDbgPrint("set Secondary while primary  ====================> ${primaryLang} ");
         return true;
       } else {
-        Get.snackbar(
-            "Error", "Select different language then primary language");
         return false;
       }
     } else {
-      Get.snackbar("Error", "Select primary first");
+      Get.snackbar("${_i18n()["error"]}", "${_i18n()["selectPrimaryFirst"]}");
       return false;
-    }
-  }
-
-  String? toLanguageName(LanguageType? languageType) {
-    if (languageType != null) {
-      switch (languageType) {
-        case LanguageType.EN:
-          return "English";
-        case LanguageType.ES:
-          return "Spanish";
-
-        default:
-          return null;
-      }
-    } else {
-      return null;
     }
   }
 
   //
 
-  void editImage(context) async {
+  Future<void> editImage(context) async {
     final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
-    mezDbgPrint("------------>  $_from");
+
     if (_from != null) {
       imageLoading.value = true;
-      //  widget.userProfileController.reset();
+
       final imPicker.XFile? _res =
           await imagePicker(picker: _imagePicker, source: _from);
 
       try {
-        mezDbgPrint("TRYYYYYING UPLOAD IMAGE");
-
         if (_res != null) {
-          mezDbgPrint(_res);
-          mezDbgPrint(_res.readAsBytes());
           newImageFile.value = File(_res.path);
         }
         imageLoading.value = false;
@@ -179,22 +144,14 @@ class EditInfoController {
     }
   }
 
-  void dispose() async {
+  Future<void> dispose() async {
     laundry.value = laundryInfoController.laundry.value;
 
-    mezDbgPrint("Controlllller Dispose =======>");
     laundryNameController.text = laundry.value?.info.name ?? '';
 
     newLocation.value = laundry.value!.info.location;
     newImageUrl.value = laundry.value?.info.image ?? '';
     primaryLang.value = laundry.value!.primaryLanguage;
     secondaryLang.value = laundry.value!.secondaryLanguage;
-
-    // //  laundry.close();
-    // //newSchedule.close();
-    // mezDbgPrint("schedulllllllllllllllllllle $newSchedule");
   }
 }
-
-
-// enum LanguagePriority { PrimaryLanguage, SecondaryLanguage }

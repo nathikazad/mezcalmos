@@ -70,6 +70,7 @@ const String aLogoPath = "assets/images/shared/logo.png";
 const String aNoImage = "assets/images/shared/noImage.png";
 const String a404 = "assets/images/shared/404.png";
 const String aUpdate = "assets/images/shared/update.png";
+const String aMoney = "assets/images/shared/money.png";
 const String aDefaultDbUserImgAsset =
     "assets/images/shared/defaultUserLogo.png";
 const String aDefaultAvatar = "assets/images/shared/noUserImage.jpg";
@@ -126,7 +127,6 @@ extension StringToParseOrderType on String {
     return AppType.values.firstWhere((AppType e) => e.toShortString() == this);
   }
 }
-
 // -----------STYLES CONSTANT ------------------- //
 
 const Color purpleColor = Color(0xFFAC59FC);

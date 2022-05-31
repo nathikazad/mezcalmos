@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/LaundryOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:rive/rive.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpOrderStatusCard']['status'];
@@ -27,24 +26,30 @@ class LaundryOpOrderStatusCard extends StatelessWidget {
         Card(
           child: Container(
             width: double.infinity,
-            margin: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _getOrderWidget(order.status),
+                order.getOrderWidget(),
                 Flexible(
-                  flex: 8,
+                  flex: 5,
                   fit: FlexFit.tight,
-                  child: Text(
-                    _getOrderStatus(order.status),
-                    style: txt.headline3,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                  child: Column(
+                    children: [
+                      Text(
+                        order.orderStatusTitle(),
+                        style: txt.bodyText1?.copyWith(fontSize: 14.sp),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (_getEstimatedText() != null)
+                        Text(
+                          _getEstimatedText()!,
+                        )
+                    ],
                   ),
                 ),
-                Spacer(),
-                messageButton(context),
               ],
             ),
           ),
@@ -53,164 +58,42 @@ class LaundryOpOrderStatusCard extends StatelessWidget {
     );
   }
 
-  Widget messageButton(BuildContext context) {
-    return Material(
-      color: Theme.of(context).primaryColorLight,
-      shape: CircleBorder(),
-      child: InkWell(
-        onTap: () {
-          Get.toNamed(getMessagesRoute(
-              orderId: order.orderId,
-              chatId: order.orderId,
-              recipientType: ParticipantType.Customer));
-        },
-        customBorder: CircleBorder(),
-        child: Stack(
-          children: [
-            Container(
-              margin: EdgeInsets.all(12),
-              child: Icon(
-                Icons.textsms,
-                color: Colors.white,
-              ),
-            ),
-            Obx(
-              () => Get.find<OrderController>()
-                      .hasNewMessageNotification(order.orderId)
-                  ? Positioned(
-                      left: 27,
-                      top: 10,
-                      child: Container(
-                        width: 13,
-                        height: 13,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: const Color(0xfff6efff), width: 2),
-                            color: const Color(0xffff0000)),
-                      ),
-                    )
-                  : Container(),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
+  String? _getEstimatedText() {
+    switch (order.status) {
+      case LaundryOrderStatus.OtwPickupFromCustomer:
+        if (order.estimatedPickupFromCustomerTime != null) {
+          return order.estimatedPickupFromCustomerTime!.getEstimatedTime();
+        }
 
-Widget _getOrderWidget(LaundryOrderStatus status) {
-  switch (status) {
-    case LaundryOrderStatus.CancelledByAdmin:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Icon(
-          Icons.cancel,
-          size: 50,
-          color: Colors.red,
-        ),
-      );
+        break;
+      case LaundryOrderStatus.PickedUpFromCustomer:
+        if (order.estimatedDropoffAtServiceProviderTime != null) {
+          return order.estimatedDropoffAtServiceProviderTime!
+              .getEstimatedTime();
+        }
+        break;
+      case LaundryOrderStatus.AtLaundry:
+        if (order.estimatedLaundryReadyTime != null) {
+          return order.estimatedLaundryReadyTime!.getEstimatedTime();
+        }
 
-    case LaundryOrderStatus.CancelledByCustomer:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Icon(
-          Icons.cancel,
-          size: 50,
-          color: Colors.red,
-        ),
-      );
+        break;
+      case LaundryOrderStatus.OtwPickupFromLaundry:
+        if (order.estimatedPickupFromServiceProviderTime != null) {
+          return order.estimatedPickupFromServiceProviderTime!
+              .getEstimatedTime();
+        }
 
-    case LaundryOrderStatus.OrderReceieved:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Icon(
-          Icons.hourglass_bottom_rounded,
-          size: 50,
-          color: Colors.grey,
-        ),
-      );
-    case LaundryOrderStatus.OtwPickupFromCustomer:
-      return Container(
-        height: 50,
-        width: 60,
-        child: RiveAnimation.asset(
-          "assets/animation/motorbikeWithSmokeAnimation.riv",
-          fit: BoxFit.cover,
-        ),
-      );
-    case LaundryOrderStatus.PickedUpFromCustomer:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5),
-        child: Icon(
-          Icons.check_circle,
-          size: 50,
-          color: Colors.grey,
-        ),
-      );
-    case LaundryOrderStatus.AtLaundry:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Icon(
-          Icons.local_laundry_service_rounded,
-          size: 50,
-          color: Color(0xFFAC59FC),
-        ),
-      );
+        break;
+      case LaundryOrderStatus.PickedUpFromLaundry:
+        if (order.estimatedDropoffAtCustomerTime != null) {
+          return order.estimatedDropoffAtCustomerTime!.getEstimatedTime();
+        }
 
-    case LaundryOrderStatus.ReadyForDelivery:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Icon(
-          Icons.dry_cleaning_rounded,
-          size: 50,
-          color: Color(0xFFAC59FC),
-        ),
-      );
-    case LaundryOrderStatus.OtwPickupFromLaundry:
-    case LaundryOrderStatus.PickedUpFromLaundry:
-      return Container(
-        height: 50,
-        width: 60,
-        child: RiveAnimation.asset(
-          "assets/animation/motorbikeWithSmokeAnimation.riv",
-          fit: BoxFit.cover,
-        ),
-      );
-    case LaundryOrderStatus.Delivered:
-      return Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: Icon(
-          Icons.check_circle,
-          size: 50,
-          color: Colors.green,
-        ),
-      );
-  }
-}
-
-String _getOrderStatus(LaundryOrderStatus status) {
-  switch (status) {
-    case LaundryOrderStatus.CancelledByAdmin:
-    case LaundryOrderStatus.CancelledByCustomer:
-      return _i18n()['canceled'];
-
-    case LaundryOrderStatus.OrderReceieved:
-      return _i18n()['orderReceived'];
-    case LaundryOrderStatus.OtwPickupFromCustomer:
-      return _i18n()['otwPickUp'];
-    case LaundryOrderStatus.PickedUpFromCustomer:
-      return _i18n()['pickedUp'];
-    case LaundryOrderStatus.AtLaundry:
-      return _i18n()['atLaundry'];
-    case LaundryOrderStatus.ReadyForDelivery:
-      return _i18n()['readyForDelivery'];
-    case LaundryOrderStatus.OtwPickupFromLaundry:
-    case LaundryOrderStatus.PickedUpFromLaundry:
-      return _i18n()['otwDelivery'];
-    case LaundryOrderStatus.Delivered:
-      return _i18n()['delivered'];
-    default:
-      return 'Unknown Status';
+        break;
+      default:
+        return null;
+    }
+    return null;
   }
 }

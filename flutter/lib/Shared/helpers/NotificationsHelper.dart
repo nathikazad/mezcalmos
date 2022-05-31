@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
-import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
     ["NotificationsHelper"];
@@ -46,45 +45,24 @@ Future<void> _displayNotification(notifs.Notification notification) async {
 Future<void> decideWhichButtonDialogToUse(
     notifs.Notification notification) async {
   if (Get.currentRoute == notification.linkUrl)
-    showStatusInfoDialog(Get.context!,
-        status: notification.title,
-        description: notification.body,
-        bottomRightIcon: notification.icon);
-  // await oneButtonDialog(
-  //   title: notification.title,
-  //   body: notification.body,
-  //   buttonStyle: MezDialogButtonStyle(
-  //     buttonText: "Ok",
-  //     buttonColor: Color(0xffffffff),
-  //     buttonShadowColor: Color(0xfffdfdfd),
-  //   ),
-  // );
-  else
-    showStatusInfoDialog(
+    await showStatusInfoDialog(
       Get.context!,
       status: notification.title,
       description: notification.body,
       bottomRightIcon: notification.icon,
-      onViewOrderClick: () => Get.toNamed(notification.linkUrl),
     );
-  // await twoButtonDialog(
-  //   title: notification.title,
-  //   body: notification.body,
-  //   leftButton: MezDialogButtonStyle(
-  //     buttonText: "Ok",
-  //     buttonColor: Color(0xffffffff),
-  //     buttonShadowColor: Color(0xfffdfdfd),
-  //   ),
-  //   rightButton: MezDialogButtonStyle(
-  //     buttonText: notification.linkText ?? _i18n()['view'],
-  //     buttonColor: Color(0xffffffff),
-  //     buttonShadowColor: Color(0xfffdfdfd),
-  //   ),
-  //   rightButtonCallback: () {
-  //     return Get.toNamed(notification.linkUrl);
-  //   },
-  //   leftButtonCallback: () {},
-  // );
+  else
+    await showStatusInfoDialog(
+      Get.context!,
+      status: notification.title,
+      primaryIcon: notification.icon,
+      description: notification.body,
+      primaryCallBack: () {
+        Get.back(closeOverlays: true);
+      },
+      // bottomRightIcon: notification.icon,
+      secondaryCallBack: () => Get.toNamed(notification.linkUrl),
+    );
 }
 
 void notificationSnackBar(
@@ -104,6 +82,7 @@ void notificationSnackBar(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
+        color: Colors.white,
         border: Border.all(
           color: Colors.grey.shade100,
           width: 1,
@@ -119,11 +98,14 @@ void notificationSnackBar(
             )
           : Image.asset(imgUrl),
     ),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.black,
     borderWidth: 1,
-    borderColor: const Color(0xECECEC),
+    borderColor: Colors.black,
     borderRadius: 0,
-    messageText: Text(msg),
+    messageText: Text(
+      msg,
+      style: TextStyle(color: Colors.white),
+    ),
     titleText: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,10 +113,13 @@ void notificationSnackBar(
         Flexible(
           child: Text(
             title,
-            style: TextStyle(fontFamily: 'psb'),
+            style: TextStyle(fontFamily: 'psb', color: Colors.white),
           ),
         ),
-        Text(time),
+        Text(
+          time,
+          style: TextStyle(color: Colors.white),
+        ),
       ],
     ),
     padding: EdgeInsets.all(25),

@@ -18,18 +18,18 @@ class OrderSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
-    return Column(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '${_i18n()["totalCost"]}',
-            style: txt.bodyText1,
+    return Card(
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              '${_i18n()["orderSummary"]}',
+              style: txt.bodyText1,
+            ),
           ),
-        ),
-        Card(
-          child: Container(
+          Container(
             padding: EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,19 +38,32 @@ class OrderSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      '${_i18n()["deliveryCost"]}',
-                      style: txt.bodyText1,
+                      '${_i18n()["orderCost"]}',
+                      style: txt.bodyText2,
                     ),
-                    Text('\$' + order.shippingCost.toString(),
-                        style: txt.bodyText1!),
+                    Text('\$' + (order.cost - 40).toString(),
+                        style: txt.bodyText2),
                   ],
                 ),
-                const Divider(thickness: 0.2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      '${_i18n()["total"]}',
+                      '${_i18n()["deliveryCost"]}',
+                      style: txt.bodyText2,
+                    ),
+                    Text('\$' + order.shippingCost.toString(),
+                        style: txt.bodyText2),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      '${_i18n()["totalCost"]}',
                       style: txt.bodyText1,
                     ),
                     Text(
@@ -62,20 +75,22 @@ class OrderSummaryCard extends StatelessWidget {
               ],
             ),
           ),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.all(8),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '${_i18n()["deliveryLocation"]}',
-            style: txt.bodyText1,
+          Divider(),
+          Container(
+            margin: EdgeInsets.all(3),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              '${_i18n()["deliveryLocation"]}',
+              style: txt.bodyText1,
+            ),
           ),
-        ),
-        Card(
-          child: Container(
+          Container(
+            margin: const EdgeInsets.all(8),
             width: double.infinity,
-            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(12)),
+            padding: EdgeInsets.all(8),
             child: Row(
               children: <Widget>[
                 Icon(
@@ -93,9 +108,9 @@ class OrderSummaryCard extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

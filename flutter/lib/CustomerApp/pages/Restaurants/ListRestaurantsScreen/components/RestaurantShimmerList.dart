@@ -6,24 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
-class RestaurantShimmerList extends StatelessWidget {
-  const RestaurantShimmerList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      itemCount: 20,
-      itemBuilder: (_, int index) {
-        return const _RestaurantShimmerCard();
-      },
-    );
-  }
-}
-
-class _RestaurantShimmerCard extends StatelessWidget {
-  const _RestaurantShimmerCard({Key? key}) : super(key: key);
+class RestaurantShimmerCard extends StatelessWidget {
+  const RestaurantShimmerCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

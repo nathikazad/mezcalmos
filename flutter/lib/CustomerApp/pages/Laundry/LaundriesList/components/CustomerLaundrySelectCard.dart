@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
+        ["LaundriesListView"]["components"]["CustomerLaundrySelectCard"];
 
 class CustomerLaundrySelectCard extends StatelessWidget {
   const CustomerLaundrySelectCard({Key? key, required this.laundry})
@@ -18,14 +20,15 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
       borderRadius: BorderRadius.circular(10),
       onTap: () {
-        Get.toNamed(kLaundryOrderRequest, arguments: laundry);
+        Get.toNamed(getSingleLaundryRoute(laundry.info.id));
       },
       child: Container(
         child: Column(
           children: [
             _laundryInfoHeader(),
+
             // Divider(),
-            _costsExpandableComponent()
+            //   _costsExpandableComponent()
           ],
         ),
       ),
@@ -34,7 +37,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
 
   Widget _laundryInfoHeader() {
     return Container(
-      margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
+      margin: const EdgeInsets.only(top: 8, right: 3, left: 3, bottom: 8),
       child: Row(
         //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -55,20 +58,61 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   laundry.info.name,
                   style: Get.textTheme.bodyText1,
                 ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.place,
-                      color: primaryBlueColor,
-                    ),
-                    Flexible(
-                      child: Text(laundry.info.location.address,
-                          softWrap: true,
-                          overflow: TextOverflow.ellipsis,
-                          style: Get.textTheme.subtitle1,
-                          maxLines: 1),
-                    ),
-                  ],
+                Divider(
+                  height: 10,
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.delivery_dining,
+                            size: 17,
+                            color: Colors.grey.shade800,
+                          ),
+                          SizedBox(
+                            width: 3,
+                          ),
+                          Text('\$50', style: Get.textTheme.bodyText2),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Flexible(
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.watch_later,
+                              size: 17,
+                              color: Colors.grey.shade800,
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Flexible(
+                                child: Text('2 ${_i18n()["days"]}',
+                                    style: Get.textTheme.bodyText2)),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Flexible(
+                        flex: 3,
+                        fit: FlexFit.loose,
+                        child: Text(
+                            "${_i18n()["startingFrom"]} \$${laundry.getCheapestCategory}",
+                            style: Get.textTheme.bodyText2),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
               ],
             ),
@@ -78,55 +122,17 @@ class CustomerLaundrySelectCard extends StatelessWidget {
     );
   }
 
-  Widget _costsExpandableComponent() {
-    return Theme(
-        data: Get.theme.copyWith(dividerColor: Colors.transparent),
-        child: ListTileTheme(
-          dense: true,
-          contentPadding: EdgeInsets.zero,
-          child: ExpansionTile(
-            tilePadding: const EdgeInsets.symmetric(horizontal: 8),
-            childrenPadding: const EdgeInsets.only(bottom: 8),
-            title: Text('Costs'),
-            children: List.generate(
-                laundry.laundryCosts.lineItems.length,
-                (int index) => _laundryCostItemCard(
-                    item: laundry.laundryCosts.lineItems[index])),
-          ),
-        ));
-  }
-
-  Widget _laundryCostItemCard({
-    required LaundryCostLineItem item,
-  }) {
-    final LanguageType userLanguage =
-        Get.find<LanguageController>().userLanguageKey;
-    return Theme(
-      data: Get.theme,
-      child: Container(
-        // margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            border:
-                Border(top: BorderSide(width: 1, color: Colors.grey.shade200))),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(item.name[userLanguage] ?? "",
-                    style: Get.textTheme.bodyText1),
-                Text(
-                  "\$${item.cost.round()} /KG",
-                  style: Get.textTheme.bodyText1!
-                      .copyWith(color: primaryBlueColor),
-                )
-              ],
-            ),
-            // Divider(),
-          ],
-        ),
-      ),
-    );
+  String _getDollarsSign() {
+    if (laundry.getAverageCost <= 80) {
+      return "\$";
+    }
+    if (laundry.getAverageCost > 80 && laundry.getAverageCost <= 140) {
+      return "\$\$";
+    }
+    if (laundry.getAverageCost > 140) {
+      return "\$\$\$";
+    } else {
+      return "";
+    }
   }
 }

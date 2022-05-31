@@ -36,7 +36,9 @@ class LaundryOpOrderSummaryCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.weight != null) ? '${order.cost - 50} \$' : '-',
+                  (order.costsByType?.weighedCost != null)
+                      ? '${order.cost - 50} \$'
+                      : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -68,7 +70,9 @@ class LaundryOpOrderSummaryCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.weight != null) ? '${order.cost} \$' : '-',
+                  (order.costsByType?.weighedCost != null)
+                      ? '${order.cost} \$'
+                      : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -144,8 +148,8 @@ class LaundryOpOrderSummaryCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  (order.weight != null)
-                      ? order.weight.toString() + '/kg'
+                  (order.costsByType?.weighedCost != null)
+                      ? "${order.costsByType?.weighedCost} /kg"
                       : '-',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -169,7 +173,7 @@ class LaundryOpOrderSummaryCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (order.weight == null)
+            if (order.costsByType?.weighedCost == null)
               Column(
                 children: [
                   Divider(

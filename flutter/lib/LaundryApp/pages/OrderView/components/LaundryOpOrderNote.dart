@@ -19,19 +19,19 @@ class LaundryOpOrderNote extends StatelessWidget {
     if (order.notes!.isNotEmpty) {
       return Card(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                alignment: Alignment.center,
+                width: double.infinity,
                 child: Text(
                   _i18n()["notes"],
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
-              Divider(
-                height: 15,
+              SizedBox(
+                height: 8,
               ),
               Text(order.notes ?? '')
             ],

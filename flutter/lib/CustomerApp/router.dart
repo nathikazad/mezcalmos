@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/LaundriesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/LaundryCurrentOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/SingleLaundry/SingleLaundryScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/ListRestaurantsScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
@@ -35,9 +36,14 @@ const String kPickLocationEditRoute = '/pickLocationFromMap/editLocation';
 const String kPickLocationNotAuth = '/pickLocationFromMap/addLocationNoAuth';
 const String kSavedLocations = '/savedLocations';
 const String kLaundriesListRoute = '/laundriesList';
+const String kSingleLaundryRoute = '/laundriesList/:laundryId';
 
 String getRestaurantRoute(String restaurantId) {
   return kRestaurantRoute.replaceFirst(":restaurantId", restaurantId);
+}
+
+String getSingleLaundryRoute(String laundryId) {
+  return kSingleLaundryRoute.replaceFirst(":laundryId", laundryId);
 }
 
 String getItemRoute(String restaurantId, String itemId) {
@@ -66,24 +72,18 @@ String getRestaurantMessagesRoute(
     {required String orderId, String? orderLink}) {
   return getMessagesRoute(
       chatId: orderId,
-    recipientType: ParticipantType.Restaurant,
+      recipientType: ParticipantType.Restaurant,
       orderLink: orderLink,
-      orderId: orderId
-  );
+      orderId: orderId);
 }
 
-String getTaxiMessagesRoute(
-    {required String orderId, String? orderLink}
-) {
+String getTaxiMessagesRoute({required String orderId, String? orderLink}) {
   return getMessagesRoute(
       chatId: orderId,
-    recipientType: ParticipantType.Taxi,
+      recipientType: ParticipantType.Taxi,
       orderLink: orderLink,
-      orderId: orderId
-  );
+      orderId: orderId);
 }
-
-
 
 // GetX based Router (For navigating)
 class XRouter {
@@ -174,6 +174,12 @@ class XRouter {
         GetPage(
           name: kLaundryOrderRequest,
           page: () => LaundryOrderRequestView(),
+          transitionDuration: Duration(milliseconds: 500),
+          transition: Transition.rightToLeft,
+        ),
+        GetPage(
+          name: kSingleLaundryRoute,
+          page: () => SingleLaundryScreen(),
           transitionDuration: Duration(milliseconds: 500),
           transition: Transition.rightToLeft,
         ),

@@ -5,11 +5,12 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
-import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
@@ -52,15 +53,19 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
     return Container(
       height: 60,
       width: Get.width,
-      color: Colors.red,
+      color: Color(0xFFF9D8D6),
       child: Center(
-        child: Text("${_i18n()["notAvailable"]}"),
+        child: Text(
+          "${_i18n()["notAvailable"]}",
+          style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+        ),
       ),
     );
   }
 
   Widget addItemToCartButton(TextTheme txt) {
     return Container(
+      height: 60,
       padding: EdgeInsets.only(bottom: 16, right: 5, left: 5, top: 5),
       color: Colors.white,
       child: Row(
@@ -68,6 +73,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
         children: <Widget>[
           const SizedBox(width: 5),
           IncrementalComponent(
+            btnColors: primaryBlueColor,
             incrementCallback: () {
               widget.cartItem.value!.quantity++;
               widget.cartItem.refresh();
@@ -94,6 +100,8 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
             fit: FlexFit.tight,
             child: TextButton(
               style: TextButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                 textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
                       fontWeight: FontWeight.bold,
@@ -117,45 +125,29 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                         mezDbgPrint(
                             "not true ${restaurantCartController.associatedRestaurant?.info.id} and the other is ${widget.currentRestaurantId}");
 
-                        final YesNoDialogButton clickedYes = await yesNoDialog(
-                            text: _i18n()["title"],
-                            titleUp: true,
-                            icon: Container(
-                              child: Icon(
-                                Icons.warning_amber,
-                                color: Colors.yellow,
-                                size: 70,
-                              ),
-                            ),
-                            buttonLeftStyle: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: Colors.grey[300]),
-                              height: 30,
-                              child: Text(_i18n()["leftBtn"]),
-                            ),
-                            buttonRightStyle: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: Colors.blue[800]),
-                              height: 30,
-                              child: Text(
-                                _i18n()["rightBtn"],
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            body: _i18n()["subtitle"]);
-                        if (clickedYes == YesNoDialogButton.Yes) {
-                          Get.back<void>();
-                          await Get.toNamed<void>(kCartRoute);
-                        } else {
-                          Get.back<void>();
-                          await restaurantCartController
-                              .addItem(widget.cartItem.value!);
-                          await Get.offNamed<void>(kCartRoute);
-                        }
+                        await showStatusInfoDialog(
+                          context,
+                          bottomRightIcon: Icons.flatware,
+                          primaryImageUrl: restaurantCartController
+                              .associatedRestaurant?.info.image,
+                          btnRightIconColor: primaryBlueColor,
+                          status: restaurantCartController
+                                  .associatedRestaurant?.info.name ??
+                              "",
+                          primaryClickTitle: _i18n()["rightBtn"],
+                          secondaryClickTitle: _i18n()["leftBtn"],
+                          description: _i18n()["subtitle"],
+                          secondaryCallBack: () async {
+                            Get.back<void>();
+                            await Get.toNamed<void>(kCartRoute);
+                          },
+                          primaryCallBack: () async {
+                            Get.back<void>();
+                            await restaurantCartController
+                                .addItem(widget.cartItem.value!);
+                            await Get.offNamed<void>(kCartRoute);
+                          },
+                        );
                       }
                     } else {
                       await restaurantCartController

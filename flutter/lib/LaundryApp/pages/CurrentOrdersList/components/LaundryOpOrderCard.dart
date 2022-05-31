@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:rive/rive.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
         ['DashboardView']['OrdersListView']['LaundryOpOrdersListView']
@@ -37,7 +37,7 @@ class LaundryOpOrderCard extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  _orderImageComponent(),
+                  //  _orderImageComponent(),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Column(
@@ -58,27 +58,38 @@ class LaundryOpOrderCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  getOrderWidget()
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(laundryOrder.orderTime.toDayAmPm()),
+                      CircleAvatar(
+                        radius: 25,
+                        backgroundImage: CachedNetworkImageProvider(
+                            laundryOrder.customer.image),
+                      ),
+                    ],
+                  )
+                  // getOrderWidget()
                 ],
               ),
               const Divider(),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    Image.asset(
+                      aMoney,
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.contain,
+                    ),
                     Text(
-                      "${_i18n()["totalCost"]} \$ ${laundryOrder.cost}",
-                      style: textTheme.bodyText2,
+                      " \$${laundryOrder.costsByType?.weighedCost ?? "-"}",
+                      style: Get.textTheme.bodyText1,
                     ),
-                    const SizedBox(width: 24),
-                    Flexible(
-                      child: Text(
-                        "${_i18n()["date"]}  ${DateFormat("dd/MMM/yyyy h:ma").format(laundryOrder.orderTime)}",
-                        style: textTheme.bodyText2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
+                    Spacer(),
+                    getOrderWidget()
                   ],
                 ),
               )
@@ -138,88 +149,41 @@ class LaundryOpOrderCard extends StatelessWidget {
   Widget getOrderWidget() {
     switch (laundryOrder.status) {
       case LaundryOrderStatus.CancelledByAdmin:
-        return Padding(
-          padding: const EdgeInsets.only(right: 5.0),
-          child: Icon(
-            Icons.cancel,
-            size: 50,
-            color: Colors.red,
-          ),
-        );
-
       case LaundryOrderStatus.CancelledByCustomer:
-        return Padding(
-          padding: const EdgeInsets.only(right: 5.0),
-          child: Icon(
-            Icons.cancel,
-            size: 50,
-            color: Colors.red,
+        return Container(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+              color: Colors.red.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(12)),
+          child: Text(
+            "Cancelled",
+            style: Get.textTheme.bodyText1
+                ?.copyWith(color: Colors.red, fontSize: 10.sp),
           ),
         );
 
-      case LaundryOrderStatus.OrderReceieved:
-        return Padding(
-          padding: const EdgeInsets.only(right: 5.0),
-          child: Icon(
-            Icons.hourglass_bottom_rounded,
-            size: 50,
-            color: Colors.grey,
-          ),
-        );
-      case LaundryOrderStatus.OtwPickupFromCustomer:
-        return Container(
-          height: 50,
-          width: 60,
-          child: RiveAnimation.asset(
-            "assets/animation/motorbikeWithSmokeAnimation.riv",
-            fit: BoxFit.cover,
-          ),
-        );
-      case LaundryOrderStatus.PickedUpFromCustomer:
-        return Padding(
-          padding: const EdgeInsets.only(right: 5),
-          child: Icon(
-            Icons.check_circle,
-            size: 50,
-            color: Colors.grey,
-          ),
-        );
-      case LaundryOrderStatus.AtLaundry:
-        return Padding(
-          padding: const EdgeInsets.only(right: 5.0),
-          child: Icon(
-            Icons.local_laundry_service_rounded,
-            size: 50,
-            color: Color(0xFFAC59FC),
-          ),
-        );
-
-      case LaundryOrderStatus.ReadyForDelivery:
-        return Padding(
-          padding: const EdgeInsets.only(right: 5.0),
-          child: Icon(
-            Icons.dry_cleaning_rounded,
-            size: 50,
-            color: Color(0xFFAC59FC),
-          ),
-        );
-      case LaundryOrderStatus.OtwPickupFromLaundry:
-      case LaundryOrderStatus.PickedUpFromLaundry:
-        return Container(
-          height: 50,
-          width: 60,
-          child: RiveAnimation.asset(
-            "assets/animation/motorbikeWithSmokeAnimation.riv",
-            fit: BoxFit.cover,
-          ),
-        );
       case LaundryOrderStatus.Delivered:
-        return Padding(
-          padding: const EdgeInsets.only(right: 5.0),
-          child: Icon(
-            Icons.check_circle,
-            size: 50,
-            color: Colors.green,
+        return Container(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+              color: Colors.green.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(12)),
+          child: Text(
+            "Delivered",
+            style: Get.textTheme.bodyText1
+                ?.copyWith(color: Colors.green, fontSize: 10.sp),
+          ),
+        );
+      default:
+        return Container(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+              color: Colors.amber.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(12)),
+          child: Text(
+            "Waiting",
+            style: Get.textTheme.bodyText1
+                ?.copyWith(color: Colors.amber, fontSize: 10.sp),
           ),
         );
     }

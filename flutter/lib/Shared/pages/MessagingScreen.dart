@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now().toLocal();
@@ -179,10 +180,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     void _fillCallBack() {
       chatLines.assignAll(controller.chat.value!.messages.map(
         (Message message) {
-          // mezDbgPrint(
-          //     " \t\t ${controller.value!.participants[e.userId]?.image}");
           return singleChatComponent(
-            // parentContext: context,
             message: message.message,
             time:
                 intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),

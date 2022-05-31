@@ -114,13 +114,17 @@
                     },
                     "ListRestaurantScreen": {
                         "restaurants": "Restaurants",
-                        "emptRestaurantList": "There are no registered restaurants yet."
+                        "search": "Search",
+                        "showOnlyOpen": "Show only open restaurents",
+                        "emptRestaurantList": "Sorry no restaurant found."
                     }
                 },
                 "ViewCartScreen": {
                     "components": {
                         "BuildCart": {
                             "inCart": "In Cart",
+                            "yesClear": "Yes clear",
+                            "no": "No",
                             "clearCart": "Clear Cart",
                             "clearCartConfirm": "Are you sure you want to clear the cart ?",
                             "clear": "Clear"
@@ -168,7 +172,7 @@
                             "leftBtn": "Checkout",
                             "rightBtn": "Overwrite",
                             "subtitle": "You already have some items in your cart from another restaurant, do you want to check them out first or overwrite them?",
-                            "addToCart": "ADD TO CART",
+                            "addToCart": "Add item",
                             "modifyItem": "Modify item"
                         },
                         "ChoosenManyCheckBox": {
@@ -182,7 +186,8 @@
                     },
                     "ViewItemScreen": {
                         "notes": "Notes",
-                        "itemNotes": "Item notes :"
+                        "itemNotes": "Item notes :",
+                        "itemDescription": "Item Description"
                     }
                 },
                 "ViewOrderScreen": {
@@ -223,6 +228,8 @@
                         },
                         "OrderSummaryCard": {
                             "totalCost": "Total Cost",
+                            "orderSummary": "Summary",
+                            "orderCost": "Order Cost",
                             "deliveryCost": "Delivery Cost",
                             "total": "Total",
                             "deliveryLocation": "Delivery Location"
@@ -394,6 +401,10 @@
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered",
                             "canceled": "Order Cancelled",
+                            "otwToCustomer": "On the way to customer",
+                            "otwToLaundry": "On the way to laundry",
+                            "pickedUpFromCustomer": "Picked up from customer",
+                            "pickedUpFromLaundry": "Picked up from laundry",
 
                             "cancelByAdmin": " Order Canceled by the admin",
                             "cancelByUser": " You canceled the order",
@@ -403,7 +414,12 @@
                             "orderHelperAtLaundry": " the laundry is processing your order",
                             "orderHelperReady": "your order is ready for delivery",
                             "orderHelperOtwDelivery": "Our driver is on the way to deliver back your order",
-                            "orderHelperDelivered": "Order has been successfully delivered"
+                            "orderHelperDelivered": "Order has been successfully delivered",
+                            "willBePickedUp": "Will be picked up",
+                            "willBeReady": "Will be ready",
+                            "willBeDropped": "Will be delivered"
+
+
                         },
                         "LaundryPricingComponent": {
                             "laundryPricing": "Laundry Pricing",
@@ -411,10 +427,14 @@
                             "orderWeight": "Order Weight",
                             "minimumCost": "Minimum Cost",
                             "totalCost": "Total Cost",
-                            "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
+                            "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order.",
+                            "item": "Item",
+                            "perKilo": "Per kilo",
+                            "weight": "Weight",
+                            "cost": "Cost"
                         },
                         "OrderSummaryComponent": {
-                            "orderSummary": "Order Summary",
+                            "orderSummary": "Summary",
                             "orderCost": "Order Cost",
                             "deliveryCost": "Delivery Cost",
                             "totalCost": "Total Cost",
@@ -430,15 +450,22 @@
                         "laundry": "Laundry",
                         "estimatedDeliveryTime": "Estimated delivery time"
                     }
+
+                },
+                "LaundriesListView": {
+                    "laundries": "Laundries",
+
+                    "title": "Find your closest laundries or dry cleaners "
+                },
+                "SingleLaundryScreen": {
+                    "startingFrom": "Starting from :",
+                    "minimumCost": "Minimum Cost",
+                    "description": "Description",
+                    "openHours": "openHours",
+                    "sendMyLaundry": "Send my laundry"
+
                 },
                 "LaundryRequestView": {
-                    "Components": {
-                        "LaundryStepsComponent": {
-                            "firstStep": "First step is creating an order once you create an order one of our drivers will be reaching your location to pickup your things",
-                            "secondStep": "Second step our laundry service provider will recieve your order and start doing his work and we will inform you about price changes depending on the order weight",
-                            "thirdStep": "Final step once your order is ready one of our drivers will pickup the order from the laundry and get it to your location as soon as possible"
-                        }
-                    },
                     "LaundryOrderRequestView": {
                         "howItWorks": "How it works",
                         "deliveryLocation": "Delivery Location",
@@ -448,7 +475,7 @@
                         "deliveryCost": "Delivery Cost",
                         "noLocation": "No location selected",
                         "pickLocation": "Pick from map",
-                        "orderNow": "ORDER NOW",
+                        "orderNow": "Order Now",
                         "signInToMakeOrder": "Sign in to make order",
                         "notes": "Notes",
                         "error": "Error",
@@ -501,6 +528,8 @@
             "laundryOtwDeliveryBody": "You order is on the way",
             "laundryDeliveredTitle": "Delivered",
             "LaundryDeliveredBody": "Your order has been delivered",
+            "LaundryCancelledTitle": "Order Cancelled",
+            "LaundryCancelledBody": "Your order has been cancelled",
             "counterOfferTitle": "New Counter Offer",
             "counterOfferBody": "New offer from "
         }
@@ -520,8 +549,20 @@
                 "photoAccessOffTitle": "App can't access Photos.",
                 "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
             },
+            "GeneralPurposeHelper": {
+                "yesCancel": "Yes cancel order",
+                "no": "No",
+                "cancelOrder": "Cancel Order",
+                "cancelConfirmationText": "Are you sure you want to cancel the order",
+                "subtitle": "This action cannot be undone."
+            },
             "NotificationsHelper": {
                 "view": "View"
+            },
+            "DateTimeHelper": {
+                "today": "Today",
+                "in": "in : ",
+                "at": "at : "
             }
         },
         "pages": {
@@ -562,11 +603,17 @@
                 "components": {
                     "ClearNotificationButton": {
                         "latest": "Latest",
+                        "today": "Today",
                         "alertClearNotificationTitle": "Clear All Notifications"
                     }
                 },
                 "ViewNotifications": {
-                    "title": "Notifications"
+                    "title": "Notifications",
+                    "latest": "Latest",
+                    "today": "Today",
+                    "alertClearNotificationTitle": "Clear All Notifications",
+                    "clear": "Clear",
+                    "no": "No"
                 }
             },
             "UserProfileScreen": {
@@ -868,13 +915,28 @@
 
                     }
                 },
+                "SingleLaundryScreen": {
+                    "startingFrom": "Starting from :",
+                    "minimumCost": "Minimum Cost",
+                    "description": "Description",
+                    "openHours": "openHours",
+                    "sendMyLaundry": "Send my laundry"
+
+                },
                 "laundryListView": {
                     "laundriesListView": {
                         "title": "Pick a laundry",
+                        "laundries": "Laundries",
+
+
                         "components": {
                             "laundrySelectCard": {
                                 "available": "Available",
                                 "unavailable": "Unavailable"
+                            },
+                            "CustomerLaundrySelectCard": {
+                                "days": "days",
+                                "startingFrom": "Starting from :"
                             }
                         }
 
@@ -1189,8 +1251,16 @@
 
                     }
                 },
+
                 "addCategory": "Add category",
-                "editCategory": "Edit category"
+                "editCategory": "Edit category",
+                "categoryName": "Category name",
+                "categoryNameIn": "Category name in ",
+                "categoryNameHint": "Enter a category name",
+                "categoryPrice": "Category pricing per kilogramme",
+                "categoryPriceHint": "Enter category pricing per kilogramme...",
+                "categoryNameError": "Please add a category name",
+                "catgeoryPriceError": "Please add a correct category price"
 
             },
             "DashboardView": {
@@ -1220,6 +1290,13 @@
                 }
             },
             "EditInfoView": {
+                "controllers": {
+                    "EditInfoController": {
+                        "error": "Error",
+                        "selectPrimaryFirst": "Select Primary language first"
+
+                    }
+                },
                 "components": {
                     "LanguageSelectorComponent": {
                         "none": "None"
@@ -1231,6 +1308,21 @@
                     "secondaryLanguage": "Secondary language",
                     "location": "Location",
                     "saveInfo": "Save info"
+                }
+            },
+            "AdminView": {
+                "components": {
+                    "CategoryGridCard": {
+                        "nameTooltip": "Name missing in your selected primary language",
+                        "deleteTitle": "Delete Category",
+
+                        "deleteHelperText": "are you sure you want to delete this category",
+                        "yesDelete": "Yes, delete"
+                    },
+                    "LaundryOpNormalDeliveryTime": {
+                        "normalDeliverytime": "Normal delivery time",
+                        "days": "days"
+                    }
                 }
             },
             "OrderView": {
@@ -1248,7 +1340,21 @@
                         }
 
                     },
+                    "OrderEstimatedTimeComponent": {
+                        "estFinishTime": "Estimated finish time",
+                        "noEstTime": "No estimated time has been added",
+                        "set": "Set",
+                        "estLaundryFinish": "Estimated laundry ready time",
+                        "confirm": "Confirm",
+                        "cancel": "Cancel"
+
+                    },
+                    "LaundryOpOrderDriverCard": {
+                        "driver": "Driver",
+                        "noDriver": "No driver has been assigned"
+                    },
                     "LaundryOpSetCategoryComponent": {
+
                         "itemsWeights": "Items weights",
                         "newItemsWeight": "New items weight",
                         "itemsCategory": "Items Category",
@@ -1260,7 +1366,12 @@
                         "error": "Error",
                         "categoryExistError": "This category already exists",
                         "categoryError": "Please select a category first",
-                        "itemsWeightError": "Please enter a valid items weight"
+                        "itemsWeightError": "Please enter a valid items weight",
+                        "deleteLast": "Every laundry order must have at least one oder items weight",
+                        "item": "Item",
+                        "perKilo": "Per kilo",
+                        "weight": "Weight",
+                        "cost": "Cost"
 
 
                     },
@@ -1268,7 +1379,7 @@
                         "notes": "Notes"
                     },
                     "LaundryOpOrderSummaryCard": {
-                        "orderSummary": "Order Summary",
+                        "orderSummary": "Summary",
                         "orderCost": "Order Cost",
                         "deliveryCost": "Delivery Cost",
                         "totalCost": "Total Cost",
@@ -1282,7 +1393,9 @@
                 },
                 "LaundryOpOrderView": {
                     "customer": "Customer",
-                    "orderDate": "Order Date"
+                    "orderDate": "Order Date",
+                    "total": "Total",
+                    "orderReady": "Order reday for delivery"
                 }
             }
         },

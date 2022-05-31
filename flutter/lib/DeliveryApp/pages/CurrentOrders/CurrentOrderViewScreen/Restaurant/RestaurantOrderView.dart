@@ -11,7 +11,6 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantControllButtons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -102,6 +101,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
         initilializeMap(mapController, order, order.value!.restaurant);
       }
     });
+    super.initState();
   }
 
   Future<void> waitForOrderIfNotLoaded() {
@@ -114,7 +114,6 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       });
       return completer.future;
     }
-    super.initState();
   }
 
   @override

@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ListRestaurantsScreen"]["components"]
@@ -28,17 +27,18 @@ class RestaurantCard extends StatelessWidget {
         Get.find<LanguageController>().userLanguageKey;
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
-      margin: EdgeInsets.all(8),
+      // margin: EdgeInsets.all(8),
       child: InkWell(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(10),
         onTap: onClick,
         child: Container(
           width: double.infinity,
-          height: 145,
+          height: 150,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              mezRestuarntCardImage(),
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -57,27 +57,42 @@ class RestaurantCard extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      if (restaurant.description != null) const Spacer(),
+                      if (restaurant.description != null &&
+                          restaurant.description!.length > 1)
+                        const Spacer(),
+                      Divider(
+                        height: 5,
+                        thickness: 0.2,
+                      ),
                       Container(
-                        alignment: Alignment.bottomLeft,
+                        //  alignment: Alignment.bottomLeft,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Icon(
-                              Icons.restaurant_menu,
-                              color: Colors.deepPurple,
-                              size: 15,
-                            ),
-                            const SizedBox(width: 5),
                             Flexible(
-                              child: Text(
-                                restaurant
-                                        .getNumberOfitems()
-                                        .toStringAsFixed(0) +
-                                    ' ${_i18n()["items"]}',
-                                style: txt.bodyText2,
+                              child:
+                                  Text(_getDollarsSign(), style: txt.bodyText1),
+                            ),
+                            Flexible(
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.delivery_dining,
+                                    color: Colors.grey.shade800,
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Flexible(
+                                    child: Text('\$ 50', style: txt.bodyText2),
+                                  ),
+                                ],
                               ),
-                            )
+                            ),
+                            Icon(
+                              Icons.payments_sharp,
+                              color: Colors.grey.shade800,
+                            ),
                           ],
                         ),
                       )
@@ -85,7 +100,6 @@ class RestaurantCard extends StatelessWidget {
                   ),
                 ),
               ),
-              mezRestuarntCardImage(),
             ],
           ),
         ),
@@ -96,21 +110,21 @@ class RestaurantCard extends StatelessWidget {
   Container mezRestuarntCardImage() {
     ///responsible for the image of restaurant
     return Container(
-      width: 35.w,
       height: double.infinity,
+      width: 150,
       child: ClipRRect(
         borderRadius: BorderRadius.only(
-          topRight: Radius.circular(15),
-          bottomRight: Radius.circular(15),
+          topLeft: Radius.circular(15),
+          bottomLeft: Radius.circular(15),
         ),
         child: Stack(
           children: <Widget>[
             Container(
               height: double.infinity,
-              width: 150.w,
+              width: 150,
               child: CachedNetworkImage(
                 imageUrl: restaurant.info.image,
-                fit: BoxFit.cover,
+                fit: BoxFit.fitHeight,
                 placeholder: (_, __) {
                   return Shimmer.fromColors(
                     child: Container(
@@ -124,11 +138,7 @@ class RestaurantCard extends StatelessWidget {
               ),
             ),
             Container(
-              height: double.infinity,
-              width: 150.w,
-              color: restaurant.isOpen()
-                  ? null
-                  : Colors.black.withOpacity(0.5),
+              color: restaurant.isOpen() ? null : Colors.black.withOpacity(0.5),
               child: restaurant.isOpen()
                   ? null
                   : Center(
@@ -142,5 +152,20 @@ class RestaurantCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getDollarsSign() {
+    if (restaurant.getAverageCost() <= 80) {
+      return "\$";
+    }
+    if (restaurant.getAverageCost() > 80 &&
+        restaurant.getAverageCost() <= 140) {
+      return "\$\$";
+    }
+    if (restaurant.getAverageCost() > 140) {
+      return "\$\$\$";
+    } else {
+      return "";
+    }
   }
 }

@@ -2,10 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
+    ["OrderView"]["Components"]["LaundryOpOrderDriverCard"];
 
 class LaundryOpOrderDriverCard extends StatelessWidget {
   const LaundryOpOrderDriverCard({Key? key, required this.order})
@@ -18,7 +23,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Driver : "),
+          Text("${_i18n()["driver"]} : "),
           SizedBox(
             height: 5,
           ),
@@ -28,16 +33,41 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 child: (_isDriverExist())
                     ? Row(children: [
-                        CircleAvatar(
-                          backgroundImage:
-                              CachedNetworkImageProvider(_getDriver()!.image),
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            CircleAvatar(
+                                radius: 25,
+                                backgroundImage: CachedNetworkImageProvider(
+                                    _getDriver()!.image)),
+                            Positioned(
+                              right: -30,
+                              bottom: 3,
+                              child: Container(
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    color: primaryBlueColor,
+                                    shape: BoxShape.circle),
+                                child: Icon(
+                                  Icons.delivery_dining,
+                                  size: 32,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                         SizedBox(
-                          width: 15,
+                          width: 40,
                         ),
-                        Text(
-                          _getDriver()!.name,
-                          style: Get.textTheme.bodyText1,
+                        Flexible(
+                          flex: 5,
+                          fit: FlexFit.tight,
+                          child: Text(
+                            _getDriver()!.name,
+                            style: Get.textTheme.bodyText1,
+                          ),
                         ),
                         Spacer(),
                         Stack(
@@ -64,9 +94,43 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                           ],
                         ),
                       ])
-                    : Text(
-                        "Still no driver assigned to this order",
-                        style: Get.textTheme.bodyText1,
+                    : Row(
+                        children: [
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.grey,
+                              ),
+                              Positioned(
+                                right: -30,
+                                bottom: 3,
+                                child: Container(
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      color: primaryBlueColor,
+                                      shape: BoxShape.circle),
+                                  child: Icon(
+                                    Icons.delivery_dining,
+                                    size: 32,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            width: 40,
+                          ),
+                          Flexible(
+                            child: Text(
+                              "${_i18n()["noDriver"]}",
+                              style: Get.textTheme.bodyText1,
+                            ),
+                          ),
+                        ],
                       )),
           ),
         ],

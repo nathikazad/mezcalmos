@@ -253,8 +253,8 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                   await showConfirmationDialog(
                     context,
                     title: 'Oops!',
-                    primaryBtnText: "Yes, start ride",
-                    bodyText: _i18n()["tooFarFromstartRide"],
+                    primaryButtonText: "Yes, start ride",
+                    helperText: _i18n()["tooFarFromstartRide"],
                     onYesClick: () async {
                       await controller.startRide();
                       setState(() {});
@@ -286,8 +286,8 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                 await showConfirmationDialog(
                   context,
                   title: 'Oops!',
-                  primaryBtnText: "Yes, finish ride",
-                  bodyText: _i18n()["tooFarFromfinishRide"],
+                  primaryButtonText: "Yes, finish ride",
+                  helperText: _i18n()["tooFarFromfinishRide"],
                   onYesClick: () async {
                     await controller.finishRide();
                     setState(() {});

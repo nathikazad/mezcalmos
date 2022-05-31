@@ -6,14 +6,32 @@ import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
+enum RestaurantsView { Rows, Grid }
+
+extension ParseRestaurantsViewToString on RestaurantsView {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToRestaurantsView on String {
+  RestaurantsView toRestaurantsView() {
+    return RestaurantsView.values
+        .firstWhere((RestaurantsView e) => e.toFirebaseFormatString() == this);
+  }
+}
+
 class Restaurant extends Service {
   static String kNoCategoryNode = "noCategory";
   LanguageMap? description;
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
+  RestaurantsView restaurantsView;
   Restaurant(
       {required ServiceInfo userInfo,
       required this.description,
+      this.restaurantsView = RestaurantsView.Rows,
       Schedule? schedule,
       required ServiceState restaurantState})
       : super(info: userInfo, schedule: schedule, state: restaurantState);
@@ -31,6 +49,13 @@ class Restaurant extends Service {
           convertToLanguageMap(restaurantData["details"]["description"]);
     }
 
+    RestaurantsView restaurantsView = RestaurantsView.Rows;
+    if (restaurantData["details"]["restaurantsView"] != null) {
+      restaurantsView = restaurantData["details"]["restaurantsView"]
+          .toString()
+          .toRestaurantsView();
+    }
+
     final Schedule? schedule = restaurantData["details"]["schedule"] != null
         ? Schedule.fromData(restaurantData["details"]["schedule"])
         : null;
@@ -38,7 +63,8 @@ class Restaurant extends Service {
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
         description: description ?? null,
         schedule: schedule,
-        restaurantState: restaurantState);
+        restaurantState: restaurantState,
+        restaurantsView: restaurantsView);
     restaurantData["menu2"].forEach((categoryId, categoryData) {
       restaurant._categories.add(Category.fromData(categoryId, categoryData));
     });
@@ -57,10 +83,21 @@ class Restaurant extends Service {
     return categories;
   }
 
+  Category? get getNoCategory {
+    if (getItemsWithoutCategory != null &&
+        getItemsWithoutCategory!.isNotEmpty) {
+      final Category noCategory = Category(id: 'noCategory');
+      noCategory.items = getItemsWithoutCategory!;
+      return noCategory;
+    } else {
+      return null;
+    }
+  }
+
   List<Item>? get getItemsWithoutCategory {
     final List<Item>? items = _categories
         .firstWhereOrNull((Category category) => category.id == kNoCategoryNode)
-        ?._items;
+        ?.items;
     items?.sort((Item a, Item b) => a.position.compareTo(b.position));
     return items;
   }
@@ -68,11 +105,26 @@ class Restaurant extends Service {
   Item? findItemById(String id) {
     Item? returnVal;
     _categories.forEach((Category category) {
-      category._items.forEach((Item item) {
+      category.items.forEach((Item item) {
         if (item.id == id) returnVal = item;
       });
     });
     return returnVal;
+  }
+
+  double getAverageCost() {
+    double allItemsCost = 0;
+
+    getItemsWithoutCategory?.forEach((Item element) {
+      allItemsCost += element.cost;
+    });
+    getCategories.forEach((Category element) {
+      element.items.forEach((Item element) {
+        allItemsCost += element.cost;
+      });
+    });
+    final double averageCost = allItemsCost / getNumberOfitems();
+    return averageCost;
   }
 
   Map<String, dynamic> toJson() {
@@ -90,7 +142,7 @@ class Restaurant extends Service {
     _categories.forEach((Category element) {
       numberOfItems = numberOfItems + element.items.length;
     });
-    return numberOfItems;
+    return numberOfItems + (getItemsWithoutCategory?.length ?? 0);
   }
 
   bool isOpen() {
@@ -103,11 +155,11 @@ class Category {
   String id;
   LanguageMap? dialog;
   int position = 0;
-  List<Item> _items = <Item>[];
+  List<Item> items = <Item>[];
 
-  List<Item> get items {
+  List<Item> get getItems {
     sortItems();
-    return _items;
+    return items;
   }
 
   Category({
@@ -127,14 +179,14 @@ class Category {
     if (categoryData["dialog"] != null)
       category.dialog = convertToLanguageMap(categoryData["dialog"]);
     categoryData["items"].forEach((itemId, itemData) {
-      category._items.add(Item.itemFromData(itemId, itemData));
+      category.items.add(Item.itemFromData(itemId, itemData));
     });
     category.sortItems();
     return category;
   }
 
   void sortItems() {
-    _items.sort((Item a, Item b) => a.position.compareTo(b.position));
+    items.sort((Item a, Item b) => a.position.compareTo(b.position));
   }
 
   Map<String, dynamic> toJson() {
@@ -142,7 +194,7 @@ class Category {
       "name": name?.toFirebaseFormat(),
       "dialog": dialog?.toFirebaseFormat(),
       "position": position,
-      "items": jsonEncode(_items),
+      "items": jsonEncode(items),
     };
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:sizer/sizer.dart';
 
 class CustomerAppTheme {
@@ -8,9 +9,9 @@ class CustomerAppTheme {
       //---------------------------------------------------- COLORS ------------------------------------------------------------------------//
       primaryColor: Colors.white,
 
-      primaryColorLight: Color(0xFFAC59FC),
+      primaryColorLight: Color(0xFF6779FE),
 
-      indicatorColor: Color(0xFFAC59FC),
+      indicatorColor: Color(0xFF6779FE),
       brightness: Brightness.light,
 
       dividerColor: Colors.grey.withOpacity(0.8),
@@ -18,7 +19,7 @@ class CustomerAppTheme {
 
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
-      scaffoldBackgroundColor: Color(0XFFEDEDED),
+      scaffoldBackgroundColor: Color(0XFFFAFAFA),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.white,
         titleTextStyle: TextStyle(
@@ -33,12 +34,27 @@ class CustomerAppTheme {
         iconTheme: IconThemeData(color: Colors.black),
         actionsIconTheme: IconThemeData(color: Colors.black),
       ),
+      inputDecorationTheme: InputDecorationTheme(
+          fillColor: Colors.white,
+          filled: true,
+          isDense: true,
+          focusColor: Color(0xFF6779FE),
+          prefixIconColor: Color(0xFF6779FE),
+          alignLabelWithHint: true,
+          hintStyle: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontFamily: "Nunito",
+            fontSize: 10.sp,
+            color: Colors.black.withOpacity(0.8),
+          ),
+          border: InputBorder.none,
+          floatingLabelBehavior: FloatingLabelBehavior.never),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: Color(0xFFAC59FC),
+        backgroundColor: Color(0xFF6779FE),
         elevation: 1.0,
       ),
       bottomAppBarTheme:
-          BottomAppBarTheme(color: Color(0xFFAC59FC), elevation: 1.0),
+          BottomAppBarTheme(color: Color(0xFF6779FE), elevation: 1.0),
 
       buttonTheme:
           ButtonThemeData(shape: CircleBorder(), padding: EdgeInsets.all(8)),
@@ -64,7 +80,7 @@ class CustomerAppTheme {
           style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         primary: Colors.white,
-        backgroundColor: Color(0xFFAC59FC),
+        backgroundColor: Color(0xFF6779FE),
         padding: EdgeInsets.all(12),
         textStyle: TextStyle(
           fontFamily: "Montserrat",
@@ -82,20 +98,20 @@ class CustomerAppTheme {
         ),
       ),
       chipTheme: ChipThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        backgroundColor: Colors.grey.shade300,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        backgroundColor: SecondaryLightBlueColor,
         showCheckmark: false,
         disabledColor: Colors.grey,
         selectedColor: Colors.white,
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(5),
         labelStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
           fontSize: 12.sp,
-          color: Colors.black,
+          color: primaryBlueColor,
         ),
         brightness: Brightness.light,
-        secondarySelectedColor: Color(0xFFAC59FC),
+        secondarySelectedColor: Color(0xFF6779FE),
         secondaryLabelStyle: TextStyle(
             fontFamily: "Montserrat",
             fontWeight: FontWeight.w600,
@@ -142,6 +158,8 @@ class CustomerAppTheme {
           color: Colors.black.withOpacity(0.8),
         ),
       ),
+      textSelectionTheme:
+          TextSelectionThemeData(cursorColor: Color(0xFF6779FE)),
     );
   }
 }

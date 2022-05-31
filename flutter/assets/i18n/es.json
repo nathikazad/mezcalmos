@@ -115,13 +115,18 @@
                     },
                     "ListRestaurantScreen": {
                         "restaurants": "Restaurantes",
-                        "emptRestaurantList": "Aún no hay restaurantes registrados."
+
+                        "search": "Búsqueda",
+                        "showOnlyOpen": "Mostrar solo restaurantes abiertos",
+                        "emptRestaurantList": "Lo siento, no se encontró ningún restaurante"
                     }
                 },
                 "ViewCartScreen": {
                     "components": {
                         "BuildCart": {
                             "inCart": "En El Carrito",
+                            "yesClear": "sí, claro",
+                            "no": "No",
                             "clearCart": "Vaciar carrito",
                             "clearCartConfirm": "Está seguro de que desea vaciar el carrito?",
                             "clear": "Vaciar"
@@ -170,7 +175,7 @@
                             "leftBtn": "Revisar",
                             "rightBtn": "Sobrescribir",
                             "subtitle": "Ya tiene algunos artículos en su carrito de otro restaurante, ¿quiere revisarlos primero o sobrescribirlos?",
-                            "addToCart": "AÑADIR AL CARRITO",
+                            "addToCart": "Añadir artículo",
                             "modifyItem": "Modificar artículo"
                         },
                         "ChoosenManyCheckBox": {
@@ -184,7 +189,8 @@
                     },
                     "ViewItemScreen": {
                         "notes": "Notas",
-                        "itemNotes": "Notas de artículos :"
+                        "itemNotes": "Notas de artículos :",
+                        "itemDescription": "Descripción del Artículo"
 
                     }
                 },
@@ -229,6 +235,9 @@
                             "totalCost": "Costo Total",
                             "deliveryCost": "Costo de envío",
                             "total": "Total",
+                            "orderSummary": "Resumen",
+                            "orderCost": "Costo de la orden",
+
                             "deliveryLocation": "Lugar De Entrega"
                         }
                     },
@@ -397,6 +406,12 @@
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden entregado",
                             "canceled": "Orden cancelada",
+                            "otwToCustomer": "De camino al cliente",
+                            "otwToLaundry": "De camino a la lavandería",
+                            "pickedUpFromCustomer": "Recogido del cliente",
+                            "pickedUpFromLaundry": "Recogido de la ropa",
+
+
                             "cancelByAdmin": " Orden cancelado por el administrador.",
                             "cancelByUser": " Usted canceló el pedido",
                             "received": " El pedido recibido y se procederá tan pronto como sea posible.",
@@ -405,7 +420,10 @@
                             "orderHelperAtLaundry": "La lavandería está procesando su pedido.",
                             "orderHelperReady": "Su pedido está listo para la entrega.",
                             "orderHelperOtwDelivery": "Nuestro conductor está en camino de entregar su pedido.",
-                            "orderHelperDelivered": "El pedido ha sido entregado con éxito"
+                            "orderHelperDelivered": "El pedido ha sido entregado con éxito",
+                            "willBePickedUp": "Será recogido",
+                            "willBeReady": "Estará listo",
+                            "willBeDropped": "Será entregado"
                         },
                         "LaundryPricingComponent": {
                             "laundryPricing": "Precios de lavandería",
@@ -413,10 +431,14 @@
                             "orderWeight": "Peso de pedido",
                             "minimumCost": "Costo Minimo",
                             "totalCost": "Costo Total",
-                            "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido."
+                            "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido.",
+                            "item": "Articulo",
+                            "perKilo": "Para kilo",
+                            "weight": "Peso",
+                            "cost": "Costo"
                         },
                         "OrderSummaryComponent": {
-                            "orderSummary": "Resumen de la orden",
+                            "orderSummary": "Resumen",
                             "orderCost": "Costo de la orden",
                             "deliveryCost": "Costo de envío",
                             "totalCost": "Costo Total",
@@ -431,16 +453,36 @@
                         "orderStatus": "Estado de la orden",
                         "laundry": "Lavandería",
                         "estimatedDeliveryTime": "Tiempo de entrega estimado"
+
+
+                    }
+
+
+                },
+                "SingleLaundryScreen": {
+                    "startingFrom": "Empezando desde :",
+                    "minimumCost": "Costo mínimo",
+                    "description": "Descripción",
+                    "openHours": "horarios de apertura",
+                    "sendMyLaundry": "Envía mi ropa"
+
+                },
+                "LaundriesListView": {
+                    "laundries": "lavanderías",
+                    "title": "Encuentra tus lavanderías más cercanas o tintorerías ",
+                    "components": {
+                        "laundrySelectCard": {
+                            "available": "Available",
+                            "unavailable": "Unavailable"
+                        },
+                        "CustomerLaundrySelectCard": {
+                            "days": "dias",
+                            "startingFrom": "Empezando desde :"
+                        }
                     }
                 },
                 "LaundryRequestView": {
-                    "Components": {
-                        "LaundryStepsComponent": {
-                            "firstStep": "El primer paso es crear un pedido una vez que crea un pedido, uno de nuestros conductores llegará a su ubicación para recoger sus cosas",
-                            "secondStep": "Segundo paso Nuestro proveedor de servicios de lavandería recibirá su pedido y comenzará a hacer su trabajo y le informaremos sobre los cambios en los precios según el peso del pedido",
-                            "thirdStep": "Paso final Una vez que su pedido esté listo, uno de nuestros conductores recogerá el pedido de la lavandería y lo conseguirá a su ubicación lo antes posible."
-                        }
-                    },
+
                     "LaundryOrderRequestView": {
                         "howItWorks": "Cómo funciona",
                         "deliveryLocation": "Lugar De Entrega",
@@ -450,7 +492,7 @@
                         "deliveryCost": "Costo de envío",
                         "noLocation": "No hay ubicación seleccionada",
                         "pickLocation": "Elegir del mapa",
-                        "orderNow": "ORDENAR AHORA",
+                        "orderNow": "Ordenar ahora",
                         "signInToMakeOrder": "Iniciar sesión para hacer el pedido",
                         "notes": "Notas",
                         "error": "Error",
@@ -461,6 +503,7 @@
                     "pickLocation": "Elegir ubicación",
                     "pickLabele": "Busque la ubicación o mueva el mapa y elija la ubicación"
                 }
+
             }
         },
         "notificationHandler": {
@@ -503,8 +546,11 @@
             "laundryOtwDeliveryBody": "Tu orden está en camino",
             "laundryDeliveredTitle": "Entregada",
             "LaundryDeliveredBody": "Su pedido ha sido entregado",
+            "LaundryCancelledTitle": "Orden cancelada",
+            "LaundryCancelledBody": "Su pedido ha sido cancelado",
             "counterOfferTitle": "Nueva Contraoferta",
             "counterOfferBody": "New oferta de "
+
         }
     },
     "Shared": {
@@ -522,8 +568,20 @@
                 "photoAccessOffTitle": "App can't access Photos.",
                 "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
             },
+            "GeneralPurposeHelper": {
+                "yesCancel": "Sí Cancelar pedido",
+                "no": "No",
+                "cancelOrder": "Cancelar orden",
+                "cancelConfirmationText": "¿Estás seguro de que quieres cancelar el pedido?",
+                "subtitle": "Esta acción no se puede deshacer."
+            },
             "NotificationsHelper": {
                 "view": "Ver"
+            },
+            "DateTimeHelper": {
+                "today": "Hoy dia",
+                "in": "en : ",
+                "at": "a : "
             }
         },
         "pages": {
@@ -564,11 +622,18 @@
                 "components": {
                     "ClearNotificationButton": {
                         "latest": "Último",
+                        "today": "Today",
                         "alertClearNotificationTitle": "Eliminar todas las notificaciones"
                     }
                 },
                 "ViewNotifications": {
-                    "title": "Notificaciones"
+
+                    "title": "Notifications",
+                    "latest": "Más reciente",
+                    "today": "Hoy dia",
+                    "alertClearNotificationTitle": "Borrar todas las notificaciones",
+                    "clear": "Clara",
+                    "no": "No"
                 }
             },
             "UserProfileScreen": {
@@ -1192,7 +1257,14 @@
                     }
                 },
                 "addCategory": "Añadir categoría",
-                "editCategory": "Editar categoria"
+                "editCategory": "Editar categoria",
+                "categoryName": "Nombre de la categoría",
+                "categoryNameIn": "Nombre de categoría en",
+                "categoryNameHint": "Ingrese un nombre de categoría",
+                "categoryPrice": "Categoría Precios por kilogramo",
+                "categoryPriceHint": "Entrar en la categoría Precios por kilogramo ...",
+                "categoryNameError": "Agregue un nombre de categoría",
+                "catgeoryPriceError": "Agregue un precio de categoría correcto"
 
             },
             "DashboardView": {
@@ -1222,6 +1294,13 @@
                 }
             },
             "EditInfoView": {
+                "controllers": {
+                    "EditInfoController": {
+                        "error": "Error",
+                        "selectPrimaryFirst": "Seleccione primero el idioma primario"
+
+                    }
+                },
                 "components": {
                     "LanguageSelectorComponent": {
                         "none": "None"
@@ -1233,6 +1312,20 @@
                     "secondaryLanguage": "Lenguaje secundario",
                     "location": "Localización",
                     "saveInfo": "Guardar información"
+                }
+            },
+            "AdminView": {
+                "components": {
+                    "CategoryGridCard": {
+                        "nameTooltip": "Nombre que falta en su idioma primario seleccionado",
+                        "deleteTitle": "Eliminar la categoría",
+                        "deleteHelperText": "¿Estás seguro de que quieres eliminar esta categoría?",
+                        "yesDelete": "Si, eliminar"
+                    },
+                    "LaundryOpNormalDeliveryTime": {
+                        "normalDeliverytime": "Tiempo de entrega normal",
+                        "days": "dias"
+                    }
                 }
             },
             "OrderView": {
@@ -1250,6 +1343,22 @@
                         }
 
                     },
+                    "OrderEstimatedTimeComponent": {
+                        "estFinishTime": "Tiempo de finalización estimado",
+                        "noEstTime": "No se ha agregado tiempo estimado",
+                        "set": "Colocar",
+                        "estLaundryFinish": "Tiempo de lavado estimado",
+                        "confirm": "Confirmar",
+                        "cancel": "Cancelar"
+
+                    },
+                    "LaundryOpOrderDriverCard": {
+                        "driver": "Conductor",
+                        "noDriver": "No se ha asignado ningún controlador"
+
+                    },
+
+
                     "LaundryOpSetCategoryComponent": {
                         "itemsWeights": "Artículos pesos",
                         "newItemsWeight": "Nuevos artículos de peso",
@@ -1262,7 +1371,13 @@
                         "error": "Error",
                         "categoryExistError": "Esta categoría ya existe",
                         "categoryError": "Por favor seleccione una categoría primero",
-                        "itemsWeightError": "Por favor ingrese un peso válido de peso"
+                        "itemsWeightError": "Por favor ingrese un peso válido de peso",
+                        "deleteLast": "Cada orden de lavandería debe tener al menos un elemento de Oder peso de peso",
+
+                        "item": "Articulo",
+                        "perKilo": "Para kilo",
+                        "weight": "Peso",
+                        "cost": "Costo"
 
 
                     },
@@ -1270,7 +1385,7 @@
                         "notes": "Notas"
                     },
                     "LaundryOpOrderSummaryCard": {
-                        "orderSummary": "Resumen de la orden",
+                        "orderSummary": "Resumen",
                         "orderCost": "Costo de la orden",
                         "deliveryCost": "Costo de envío",
                         "totalCost": "Costo Total",
@@ -1284,7 +1399,9 @@
                 },
                 "LaundryOpOrderView": {
                     "customer": "Cliente",
-                    "orderDate": "Fecha de orden"
+                    "orderDate": "Fecha de orden",
+                    "total": "Total",
+                    "orderReady": "Pedido listo para la entrega"
                 }
             }
         },

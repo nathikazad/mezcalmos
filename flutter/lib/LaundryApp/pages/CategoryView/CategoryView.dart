@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/LaundryApp/pages/CategoryView/components/AddCategorySlide.dart';
+import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/pages/CategoryView/controllers/addCategoryController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['CategoryView'];
@@ -17,31 +18,26 @@ class LaundryOpCategoryScreen extends StatefulWidget {
       _LaundryOpCategoryScreenState();
 }
 
-class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen>
-    with TickerProviderStateMixin {
+class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
   /// AddCategoryController
-  AddCategoryController _addCategoryController = AddCategoryController();
+  ///
+  AddCategoryController _viewController = AddCategoryController();
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
   String? categoryName;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     categoryName = Get.parameters["categoryId"];
 
-    _addCategoryController.init(categoryId: categoryName);
-    _addCategoryController.tabController = TabController(
-      vsync: this,
-      length: _addCategoryController.languages.value.length,
-    );
+    _viewController.init(categoryId: categoryName);
 
     super.initState();
   }
 
   @override
   void dispose() {
-    _addCategoryController.tabController?.dispose();
-
     super.dispose();
   }
 
@@ -57,80 +53,133 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen>
   Widget _addCategoryFooterButton() {
     return Container(
       height: 60,
-      child: TextButton(
-          onPressed: () {
-            _addCategoryController.handleFooterButtonClick();
+      child: InkWell(
+          onTap: () {
+            if (_formKey.currentState?.validate() ?? false) {
+              _viewController.handleFooterButtonClick();
+            }
           },
-          style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
-          child: Container(
-            alignment: Alignment.center,
+          child: Ink(
+            decoration: BoxDecoration(gradient: bluePurpleGradient),
             padding: const EdgeInsets.all(8),
-            child: Text((_addCategoryController.editMode.value)
-                ? "${_i18n()["editCategory"]}"
-                : "${_i18n()["addCategory"]}"),
+            child: Center(
+              child: Text(
+                (_viewController.editMode.value)
+                    ? "${_i18n()["editCategory"]}"
+                    : "${_i18n()["addCategory"]}",
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+              ),
+            ),
           )),
     );
   }
 
-  AppBar _addCategoryAppBar() {
-    return AppBar(
-      title: Text((_addCategoryController.editMode.value)
-          ? _addCategoryController.copyOfCategory.value!.name[userLanguage]!
-          : "${_i18n()["addCategory"]}"),
-      actions: [
-        if (_addCategoryController.editMode.value)
-          IconButton(
-              onPressed: () {
-                _addCategoryController.deleteCategory();
-              },
-              icon: Icon(Ionicons.trash))
-      ],
-      bottom: (_addCategoryController.languages.value.length > 1)
-          ? TabBar(
-              controller: _addCategoryController.tabController,
-              tabs: _getTabs())
-          : null,
+  PreferredSizeWidget _addCategoryAppBar() {
+    return LaundryAppAppBar(
+      leftBtnType: AppBarLeftButtonType.Back,
+      onClick: Get.back,
+      title: (_viewController.editMode.value)
+          ? _viewController.getRightName()
+          : "${_i18n()["addCategory"]}",
     );
   }
 
   Widget _getRightBody() {
-    if (_addCategoryController.languages.value.length > 1) {
-      return TabBarView(
-        controller: _addCategoryController.tabController,
-        children: _tabPages(),
-      );
-    } else {
-      return AddCategorySlide(
-          addCategoryController: _addCategoryController,
-          selectedTab: SelectedTab.Primary);
-    }
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "${_i18n()["categoryName"]}",
+                style: Get.textTheme.headline4,
+              ),
+              const SizedBox(height: 8),
+              _categoryNameComponent(
+                  controller: _viewController.primaryCategoryNameController),
+              if (_viewController.secondaryLang.value != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
+                      style: Get.textTheme.headline4,
+                    ),
+                    const SizedBox(height: 8),
+                    _categoryNameComponent(
+                        controller:
+                            _viewController.secondaryCategoryNameController),
+                  ],
+                ),
+              const SizedBox(height: 16),
+              _categoryPriceComponent(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
-  List<Tab> _getTabs() {
-    return List.generate(
-        _addCategoryController.languages.value.length,
-        (int index) => Tab(
-              text: _addCategoryController.languages.value[index]
-                  .toLanguageName(),
-            ));
+  TextFormField _categoryNameComponent(
+      {required TextEditingController controller, bool isSecodary = false}) {
+    return TextFormField(
+      controller: controller,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (String? v) {
+        if (v != null && v.isNotEmpty) {
+          return null;
+        } else {
+          return "${_i18n()["categoryNameError"]}";
+        }
+      },
+      decoration: InputDecoration(
+        isDense: true,
+        filled: true,
+        fillColor: Colors.white,
+        hintText: '${_i18n()["categoryNameHint"]}',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+    );
   }
 
-  List<Widget> _tabPages() {
-    return List.generate(
-        _addCategoryController.languages.value.length,
-        (int index) => AddCategorySlide(
-            addCategoryController: _addCategoryController,
-            selectedTab: _getSelectedTabs(index)));
-  }
-
-  SelectedTab _getSelectedTabs(int index) {
-    switch (index) {
-      case 0:
-        return SelectedTab.Primary;
-      case 1:
-        return SelectedTab.Secondary;
-      default:
-        return SelectedTab.Primary;
-    }
+  Widget _categoryPriceComponent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "${_i18n()["categoryPrice"]}",
+          style: Get.textTheme.headline4,
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: _viewController.categoryPricingController,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (String? v) {
+            if (v != null && v.isNotEmpty && int.tryParse(v) != null) {
+              return null;
+            } else {
+              return "${_i18n()["categoryPriceError"]}";
+            }
+          },
+          decoration: InputDecoration(
+            isDense: true,
+            filled: true,
+            fillColor: Colors.white,
+            hintText: '${_i18n()["categoryPriceHint"]}',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -3,13 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderFooterCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderRestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/OrdersItemsCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/components/notesWidget.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -152,53 +154,62 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     return Scaffold(
       appBar: CustomerAppBar(
         autoBack: true,
-        title: '${_i18n()["orderStatus"]}',
+        title: order.value?.restaurant.name,
       ),
       body: Obx(
         () {
           if (order.value != null) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    OrderStatusCard(
-                      order: order.value!,
-                      ordersStates: order.value!.status,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
+            return LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraint) {
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.all(8),
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(minHeight: constraint.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Column(
+                        children: <Widget>[
+                          OrderStatusCard(
+                            order: order.value!,
+                            ordersStates: order.value!.status,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          RestaurantOrderDriverCard(
+                            order: order.value!,
+                          ),
+                          if (order.value!.inDeliveryPhase()) ..._mapWidget,
+                          OrderRestaurantCard(order: order.value!),
 
-                    if (order.value!.inDeliveryPhase()) ..._mapWidget,
-
-                    OrderItemsCard(
-                      items: order.value!.items,
+                          SizedBox(
+                            height: 15,
+                          ),
+                          OrderItemsCard(
+                            items: order.value!.items,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          OrderSummaryCard(order: order.value!),
+                          order.value?.notes == null ||
+                                  order.value!.notes!.length <= 0
+                              ? Container()
+                              : notesWidget(order),
+                          //===============================>button cancel===========================
+                          //  Expanded(child: Container()),
+                          Spacer(),
+                          Flexible(
+                            child: Container(
+                                alignment: Alignment.center,
+                                child: OrderFooterCard(order: order.value!)),
+                          ),
+                        ],
+                      ),
                     ),
-
-                    SizedBox(
-                      height: 10,
-                    ),
-                    OrderSummaryCard(order: order.value!),
-                    //===============================>notes========================>
-                    order.value?.notes == null ||
-                            order.value!.notes!.length <= 0
-                        ? Container()
-                        : notesWidget(order),
-                    //===============================>button cancel===========================
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                        alignment: Alignment.center,
-                        child: OrderFooterCard(order: order.value!)),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             );
           } else {
             return Center(child: CircularProgressIndicator());
@@ -227,8 +238,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       LocModel.Location(
         "",
         LocModel.Location.buildLocationData(
-          order.value!.to.latitude,
-          order.value!.to.longitude,
+          order.value?.to.latitude,
+          order.value?.to.longitude,
         ),
       ),
     );

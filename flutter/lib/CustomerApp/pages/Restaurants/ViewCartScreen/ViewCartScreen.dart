@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
+import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/CartIsEmptyScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ViewCartBody.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 
 // ignore: constant_identifier_names
 enum DropDownResult { Null, String }
@@ -103,6 +102,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       }),
       bottomNavigationBar: ButtonComponent(
         bgColor: getTheRightButtonColor(),
+        canClick: canClick(),
         widget:
             Center(child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
         function: !_clickedOrderNow ? checkoutActionButton : () {},
@@ -110,11 +110,23 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     );
   }
 
-  Color getTheRightButtonColor() {
+  bool canClick() {
     // it returns the pruple or the grey color for the order now button
     if (orderToLocation == null ||
         !(_restaurantController.associatedRestaurant?.isOpen() ?? true)) {
-      return Color(0xdddddddd);
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  Color getTheRightButtonColor() {
+    // it returns the pruple or the grey color for the order now button
+    if (orderToLocation == null ||
+        !(_restaurantController.associatedRestaurant?.isOpen() ?? false)) {
+      return Colors.grey.shade300;
+    } else if (_restaurantController.associatedRestaurant?.isOpen() ?? true) {
+      return offRedColor;
     } else {
       return Color(0xffac59fc);
     }
@@ -122,12 +134,16 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   Widget getTheRightWidgetForOrderNowButton(bool clicked) {
     if (!(_restaurantController.associatedRestaurant?.isOpen() ?? false)) {
-      return Text(
-        "${_i18n()["notAvailable"]}",
-        style: Theme.of(context)
-            .textTheme
-            .headline2!
-            .copyWith(color: Colors.black),
+      return Container(
+        alignment: Alignment.center,
+        color: offRedColor,
+        child: Text(
+          "${_i18n()["notAvailable"]}",
+          style: Theme.of(context)
+              .textTheme
+              .headline3!
+              .copyWith(color: Colors.red),
+        ),
       );
     }
     if (clicked) {
@@ -142,7 +158,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     } else {
       return Text(
         "${_i18n()['orderNow']}",
-        style: Theme.of(context).textTheme.headline2!.copyWith(
+        style: Theme.of(context).textTheme.headline3!.copyWith(
               color: Colors.white,
             ),
       );

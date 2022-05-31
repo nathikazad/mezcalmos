@@ -30,6 +30,7 @@ enum LaundryOrderPhase {
 extension ParseOrderStatusToString on LaundryOrderStatus {
   String toFirebaseFormatString() {
     final String str = toString().split('.').last;
+
     return str[0].toLowerCase() + str.substring(1).toLowerCase();
   }
 }
@@ -42,8 +43,6 @@ extension ParseStringToOrderStatus on String {
 }
 
 class LaundryOrder extends TwoWayDeliverableOrder {
-  // TODO @montasarre remove weight as it comes from costsByType
-  num? weight;
   String? notes;
   ServiceInfo? laundry;
   LaundryOrderStatus status;
@@ -196,6 +195,12 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.PickedUpFromLaundry;
   }
 
+  bool inDeliveryPhase() {
+    return status == LaundryOrderStatus.OtwPickupFromCustomer ||
+        status == LaundryOrderStatus.OtwPickupFromLaundry ||
+        status == LaundryOrderStatus.PickedUpFromCustomer ||
+        status == LaundryOrderStatus.PickedUpFromLaundry;
+  }
 
   bool isAtLaundry() {
     return status == LaundryOrderStatus.AtLaundry;
@@ -227,16 +232,19 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
 class LaundryOrderCostLineItem extends LaundryCostLineItem {
   num weight;
+
   num get weighedCost => weight * cost;
   LaundryOrderCostLineItem({
     required this.weight,
+    required String id,
     required Map<LanguageType, String> name,
     required num cost,
-  }) : super(cost: cost, name: name);
+  }) : super(cost: cost, name: name, id: id);
 
   factory LaundryOrderCostLineItem.fromData(laundryCostLineItemData) {
     final LaundryOrderCostLineItem newLo = LaundryOrderCostLineItem(
         weight: laundryCostLineItemData["weight"],
+        id: LaundryCostLineItem.fromData(laundryCostLineItemData).id,
         name: LaundryCostLineItem.fromData(laundryCostLineItemData).name,
         cost: LaundryCostLineItem.fromData(laundryCostLineItemData).cost);
 
@@ -245,7 +253,15 @@ class LaundryOrderCostLineItem extends LaundryCostLineItem {
     //         as LaundryOrderCostLineItem;
     // li.weight = laundryCostLineItemData["weight"];
     return newLo;
+    // final LaundryOrderCostLineItem li =
+    //     LaundryCostLineItem.fromData(laundryCostLineItemData)
+    //         as LaundryOrderCostLineItem;
+    // li.weight = laundryCostLineItemData["weight"];
+    // li.cost = LaundryCostLineItem.fromData(laundryCostLineItemData).cost;
+    // li.name = LaundryCostLineItem.fromData(laundryCostLineItemData).name;
+    // li.id = LaundryCostLineItem.fromData(laundryCostLineItemData).id;
   }
+
   @override
   Map<String, dynamic> toFirebaseFormat() {
     return {
@@ -263,6 +279,26 @@ class LaundryOrderCosts {
     final num totalCost =
         lineItems.fold<num>(0, (sum, lineItem) => sum + lineItem.weighedCost);
     return (totalCost > minimumCost) ? totalCost : minimumCost;
+  }
+
+  num get totalWeigh {
+    num totalWeigh = 0;
+    lineItems.forEach((element) {
+      totalWeigh += element.weight;
+    });
+    return totalWeigh;
+  }
+
+  num? get totalPrice {
+    num totalPrice = 0;
+    lineItems.forEach((element) {
+      totalPrice += element.weighedCost;
+    });
+    if (totalPrice > 0) {
+      return totalPrice;
+    } else {
+      return null;
+    }
   }
 
   LaundryOrderCosts();

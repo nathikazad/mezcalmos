@@ -10,6 +10,9 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class RestaurantsInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+
+  RxBool showOnlyOpen = RxBool(true);
+  String querry = "";
   @override
   void onInit() {
     super.onInit();
@@ -30,20 +33,14 @@ class RestaurantsInfoController extends GetxController {
         try {
           restaurants.add(Restaurant.fromRestaurantData(
               restaurantId: restaurantId, restaurantData: restaurantData));
-        } catch (e) {
+        } catch (e, stc) {
           mezDbgPrint("Restaurant add error");
+          mezDbgPrint("Restaurant add error $stc");
         }
       }
     });
     restaurants.where((Restaurant a) => a.state.isAuthorized);
-    restaurants.sort((Restaurant a, Restaurant b) {
-      if (a.isOpen() && !b.isOpen()) {
-        return 1;
-      } else if (!a.isOpen() && b.isOpen()) {
-        return -1;
-      } else
-        return 0;
-    });
+
     return restaurants.reversed.toList();
   }
 
