@@ -32,7 +32,7 @@ class _SetOrderEstTimeComponentState extends State<SetOrderEstTimeComponent> {
           ),
           Card(
             color: (widget.order.isAtLaundry() ||
-                    widget.order.estimatedDeliveryTime != null)
+                    widget.order.estimatedLaundryReadyTime != null)
                 ? Colors.white
                 : Colors.grey.shade500,
             child: (isClicked)
@@ -46,7 +46,7 @@ class _SetOrderEstTimeComponentState extends State<SetOrderEstTimeComponent> {
                     onTap: (widget.order.isAtLaundry())
                         ? () async {
                             final DateTime? selectedDate =
-                                widget.order.estimatedDeliveryTime;
+                                widget.order.estimatedLaundryReadyTime;
 
                             await showDatePicker(
                               context: context,
@@ -88,8 +88,8 @@ class _SetOrderEstTimeComponentState extends State<SetOrderEstTimeComponent> {
                             width: 15,
                           ),
                           Text(
-                            (widget.order.estimatedDeliveryTime != null)
-                                ? "${DateFormat("dd MMMM yyyy, hh:mm a ").format(widget.order.estimatedDeliveryTime!.toLocal())}"
+                            (widget.order.estimatedLaundryReadyTime != null)
+                                ? "${DateFormat("dd MMMM yyyy, hh:mm a ").format(widget.order.estimatedLaundryReadyTime!.toLocal())}"
                                 : "Set Delivery esitmated time",
                             style: Get.theme.textTheme.bodyText1,
                           )
@@ -108,7 +108,7 @@ class _SetOrderEstTimeComponentState extends State<SetOrderEstTimeComponent> {
       isClicked = true;
     });
     orderController
-        .setEstimatedDeliveryTime(widget.order.orderId, value)
+        .setEstimatedLaundryReadyTime(widget.order.orderId, value)
         .whenComplete(() {
       setState(() {
         isClicked = false;

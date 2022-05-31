@@ -102,7 +102,10 @@ extension ParseStringToPaymentType on String {
 
 abstract class DeliverableOrder extends Order {
   DeliveryDriverUserInfo? dropoffDriver;
-  String? dropOffDriverChatId;
+  String? serviceProviderDropOffDriverChatId;
+  String? customerDropOffDriverChatId;
+  DateTime? estimatedPickupFromServiceProviderTime;
+  DateTime? estimatedDropoffAtCustomerTime;
   DeliverableOrder(
       {required String orderId,
       String? serviceProviderId,
@@ -114,7 +117,10 @@ abstract class DeliverableOrder extends Order {
       required Location to,
       required OrderType orderType,
       this.dropoffDriver,
-      required this.dropOffDriverChatId,
+      required this.serviceProviderDropOffDriverChatId,
+      required this.customerDropOffDriverChatId,
+      this.estimatedPickupFromServiceProviderTime,
+      this.estimatedDropoffAtCustomerTime,
       RouteInformation? routeInformation})
       : super(
             orderId: orderId,
@@ -131,7 +137,10 @@ abstract class DeliverableOrder extends Order {
 
 abstract class TwoWayDeliverableOrder extends DeliverableOrder {
   DeliveryDriverUserInfo? pickupDriver;
-  String? pickupDriverChatId;
+  String? serviceProviderPickupDriverChatId;
+  String? customerPickupDriverChatId;
+  DateTime? estimatedPickupFromCustomerTime;
+  DateTime? estimatedDropoffAtServiceProviderTime;
   TwoWayDeliverableOrder(
       {required String orderId,
       String? serviceProviderId,
@@ -144,9 +153,15 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required OrderType orderType,
       RouteInformation? routeInformation,
       DeliveryDriverUserInfo? dropoffDriver,
-      required String? dropOffDriverChatId,
+      required String? serviceProviderDropOffDriverChatId,
+      required String? customerDropOffDriverChatId,
       this.pickupDriver,
-      required this.pickupDriverChatId})
+      required this.serviceProviderPickupDriverChatId,
+      required this.customerPickupDriverChatId,
+      DateTime? estimatedPickupFromServiceProviderTime,
+      DateTime? estimatedDropoffAtCustomerTime,
+      this.estimatedPickupFromCustomerTime,
+      this.estimatedDropoffAtServiceProviderTime})
       : super(
             orderId: orderId,
             orderType: orderType,
@@ -159,5 +174,10 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
             to: to,
             routeInformation: routeInformation,
             dropoffDriver: dropoffDriver,
-            dropOffDriverChatId: dropOffDriverChatId);
+            serviceProviderDropOffDriverChatId:
+                serviceProviderDropOffDriverChatId,
+            customerDropOffDriverChatId: customerDropOffDriverChatId,
+            estimatedPickupFromServiceProviderTime:
+                estimatedPickupFromServiceProviderTime,
+            estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime);
 }

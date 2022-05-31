@@ -86,10 +86,10 @@ Color getOrderColor(LaundryOrderStatus status) {
     case LaundryOrderStatus.OrderReceieved:
       return Colors.white;
 
-    case LaundryOrderStatus.OtwPickup:
+    case LaundryOrderStatus.OtwPickupFromCustomer:
       return Colors.blueAccent.withOpacity(0.1);
 
-    case LaundryOrderStatus.PickedUp:
+    case LaundryOrderStatus.PickedUpFromCustomer:
       return Colors.grey.withOpacity(0.1);
 
     case LaundryOrderStatus.AtLaundry:
@@ -98,7 +98,8 @@ Color getOrderColor(LaundryOrderStatus status) {
     case LaundryOrderStatus.ReadyForDelivery:
       return Colors.grey.withOpacity(0.1);
 
-    case LaundryOrderStatus.OtwDelivery:
+    case LaundryOrderStatus.OtwPickupFromLaundry:
+    case LaundryOrderStatus.PickedUpFromLaundry:
       return Colors.purple.withOpacity(0.1);
 
     case LaundryOrderStatus.Delivered:
@@ -137,7 +138,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
           color: Colors.grey,
         ),
       );
-    case LaundryOrderStatus.OtwPickup:
+    case LaundryOrderStatus.OtwPickupFromCustomer:
       return Container(
         height: 50,
         width: 60,
@@ -146,7 +147,7 @@ Widget getOrderWidget(LaundryOrderStatus status) {
           fit: BoxFit.cover,
         ),
       );
-    case LaundryOrderStatus.PickedUp:
+    case LaundryOrderStatus.PickedUpFromCustomer:
       return Padding(
         padding: const EdgeInsets.only(right: 5),
         child: Icon(
@@ -174,7 +175,8 @@ Widget getOrderWidget(LaundryOrderStatus status) {
           color: Color(0xFFAC59FC),
         ),
       );
-    case LaundryOrderStatus.OtwDelivery:
+    case LaundryOrderStatus.OtwPickupFromLaundry:
+    case LaundryOrderStatus.PickedUpFromLaundry:
       return Container(
         height: 50,
         width: 60,
@@ -205,15 +207,16 @@ String getOrderStatus(LaundryOrderStatus status) {
 
     case LaundryOrderStatus.OrderReceieved:
       return 'Order Received';
-    case LaundryOrderStatus.OtwPickup:
+    case LaundryOrderStatus.OtwPickupFromCustomer:
       return 'Pick-up On the way';
-    case LaundryOrderStatus.PickedUp:
+    case LaundryOrderStatus.PickedUpFromCustomer:
       return 'Order picked-up';
     case LaundryOrderStatus.AtLaundry:
       return 'Order at laundry';
     case LaundryOrderStatus.ReadyForDelivery:
       return 'Ready For Delivery';
-    case LaundryOrderStatus.OtwDelivery:
+    case LaundryOrderStatus.OtwPickupFromLaundry:
+    case LaundryOrderStatus.PickedUpFromLaundry:
       return 'Delivery on the way';
     case LaundryOrderStatus.Delivered:
       return 'Order Delivered';

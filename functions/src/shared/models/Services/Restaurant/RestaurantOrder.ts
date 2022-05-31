@@ -13,6 +13,7 @@ export interface RestaurantOrder extends DeliverableOrder {
   restaurant: UserInfo;
   itemsCost: number;
   shippingCost: number;
+  estimatedFoodReadyTime: string;
 }
 
 export enum RestaurantOrderStatus {

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:async/async.dart' show StreamGroup;
+import 'package:cloud_functions/cloud_functions.dart';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
@@ -8,10 +9,12 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
 class OrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -170,6 +173,29 @@ class OrderController extends GetxController {
         .forEach((Notification notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
     });
+  }
+
+  Future<ServerResponse> setEstimatedTime(
+      String orderId,
+      DateTime estimatedTime,
+      DeliveryDriverType deliveryDriverType,
+      DeliveryAction deliveryAction,
+      OrderType orderType) async {
+    final HttpsCallable dropOrderFunction =
+        FirebaseFunctions.instance.httpsCallable('delivery-setEstimatedTime');
+    try {
+      final HttpsCallableResult response = await dropOrderFunction.call({
+        "orderId": orderId,
+        "estimatedTime": estimatedTime.toUtc().toString(),
+        "deliveryDriverType": deliveryDriverType.toFirebaseFormatString(),
+        "orderType": orderType.toFirebaseFormatString(),
+        "deliveryAction": deliveryAction.toFirebaseFormatString()
+      });
+      return ServerResponse.fromJson(response.data);
+    } catch (e) {
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
   }
 
   @override
