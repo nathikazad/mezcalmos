@@ -20,15 +20,11 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 
 List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
-    onPress: () {
+    onClick: () {
       Get.find<SideMenuDrawerController>().closeMenu();
       Get.toNamed<void>(kSavedLocations);
     },
-    icon: Icon(
-      Icons.near_me_outlined,
-      color: Color.fromARGB(255, 103, 121, 254),
-      size: 25,
-    ),
+    icon: Icons.near_me_outlined,
     title: "Saved Location",
   )
 ];

@@ -7,6 +7,7 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScree
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNotLookingComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverOrderCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
+import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -34,6 +35,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
 
   @override
   void initState() {
+    Get.find<SideMenuDrawerController>().showPastOrders = true;
+    Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
     orderController.currentOrders.stream.listen((List<DeliverableOrder> value) {
       currentOrders.value = value;
     });
@@ -57,9 +60,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         onWillPop: () async => false,
         child: Scaffold(
             key: Get.find<SideMenuDrawerController>().getNewKey(),
-            drawer: MezSideMenu(
-              
-            ),
+            drawer: MezSideMenu(),
             appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
             body: SingleChildScrollView(
               child: Padding(
@@ -94,7 +95,6 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           ))
     ]);
   }
-
 
   Widget _currentOrdersList(BuildContext context) {
     if (orderController.currentOrders.isNotEmpty) {

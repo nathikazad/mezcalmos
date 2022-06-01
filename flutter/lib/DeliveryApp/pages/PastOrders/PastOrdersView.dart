@@ -41,6 +41,7 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
   @override
   void dispose() {
     orderController.dispose();
+
     super.dispose();
   }
 
@@ -50,9 +51,10 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: Get.back, title: "Past orders"),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [],
+          children: [_pastOrdersList(context)],
         ),
       ),
     );
@@ -63,13 +65,14 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(5),
-            child: Text(
-              _i18n()["pastOrders"],
-              style: Theme.of(context).textTheme.bodyText1,
+          if (currentOrders.isNotEmpty)
+            Container(
+              padding: const EdgeInsets.all(5),
+              child: Text(
+                _i18n()["pastOrders"],
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             ),
-          ),
           Column(
             children: List.generate(
                 orderController.pastOrders.length,
