@@ -6,7 +6,14 @@ abstract class Service {
   ServiceInfo info;
   Schedule? schedule;
   ServiceState state;
-  Service({required this.info, this.schedule, required this.state});
+  LanguageType primaryLanguage;
+  LanguageType? secondaryLanguage;
+  Service(
+      {required this.info,
+      this.schedule,
+      required this.state,
+      required this.primaryLanguage,
+      this.secondaryLanguage});
 }
 
 class ServiceState {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:sizer/sizer.dart';
 
-class LaundryAppTheme {
+class RestaurantAppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       //---------------------------------------------------- COLORS ------------------------------------------------------------------------//

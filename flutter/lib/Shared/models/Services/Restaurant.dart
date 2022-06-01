@@ -33,8 +33,16 @@ class Restaurant extends Service {
       required this.description,
       this.restaurantsView = RestaurantsView.Rows,
       Schedule? schedule,
-      required ServiceState restaurantState})
-      : super(info: userInfo, schedule: schedule, state: restaurantState);
+      required ServiceState restaurantState,
+      required LanguageType primaryLanguage,
+      LanguageType? secondaryLanguage})
+      : super(
+          info: userInfo,
+          schedule: schedule,
+          state: restaurantState,
+          primaryLanguage: primaryLanguage,
+          secondaryLanguage: secondaryLanguage,
+        );
 
   factory Restaurant.fromRestaurantData(
       {required String restaurantId, required restaurantData}) {
@@ -59,12 +67,26 @@ class Restaurant extends Service {
     final Schedule? schedule = restaurantData["details"]["schedule"] != null
         ? Schedule.fromData(restaurantData["details"]["schedule"])
         : null;
+    
+    final LanguageType primaryLanguage = restaurantData["details"]?["language"]
+                ?["primary"]
+            .toString()
+            .toLanguageType() ??
+        LanguageType.ES;
+
+    final LanguageType? secondaryLanguage = restaurantData["details"]
+                ?["language"]?["secondary"]
+            .toString()
+            .toNullableLanguageType() ??
+        null;
     final Restaurant restaurant = Restaurant(
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
         description: description ?? null,
         schedule: schedule,
         restaurantState: restaurantState,
-        restaurantsView: restaurantsView);
+        restaurantsView: restaurantsView,
+        primaryLanguage: primaryLanguage,
+        secondaryLanguage: secondaryLanguage);
     restaurantData["menu2"].forEach((categoryId, categoryData) {
       restaurant._categories.add(Category.fromData(categoryId, categoryData));
     });

@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
@@ -18,32 +18,32 @@ class OrderController extends GetxController {
   ForegroundNotificationsController _foregroundNotificationsController =
       Get.find<ForegroundNotificationsController>();
 
-  RxList<LaundryOrder> currentOrders = <LaundryOrder>[].obs;
-  RxList<LaundryOrder> pastOrders = <LaundryOrder>[].obs;
+  RxList<RestaurantOrder> currentOrders = <RestaurantOrder>[].obs;
+  RxList<RestaurantOrder> pastOrders = <RestaurantOrder>[].obs;
   StreamSubscription<Event>? _currentOrdersListener;
   StreamSubscription<Event>? _pastOrdersListener;
 
-  Future<void> init(String laundryId) async {
+  Future<void> init(String restaurantId) async {
     mezDbgPrint(
-        "--------------------> Start listening on past orders  ${serviceProviderPastOrders(orderType: OrderType.Laundry, providerId: laundryId)}");
+        "--------------------> Start listening on past orders  ${serviceProviderPastOrders(orderType: OrderType.Restaurant, providerId: restaurantId)}");
     await _pastOrdersListener?.cancel();
     _pastOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderPastOrders(
-            orderType: OrderType.Laundry, providerId: laundryId))
+            orderType: OrderType.Restaurant, providerId: restaurantId))
         .onValue
         .listen((Event event) {
       mezDbgPrint(
           "PAST ORDERS ======> the event value ------------> ${event.snapshot.value}");
 
-      final List<LaundryOrder> orders = [];
+      final List<RestaurantOrder> orders = [];
       if (event.snapshot.value != null) {
         mezDbgPrint("the event value ------------> ${event.snapshot.value}");
         event.snapshot.value.keys.forEach((orderId) {
           mezDbgPrint("-------------------->>>>>>>>>>Hndling Order : $orderId");
           final dynamic orderData = event.snapshot.value[orderId];
           mezDbgPrint("Order Data ======================> $orderData");
-          orders.add(LaundryOrder.fromData(orderId, orderData));
+          orders.add(RestaurantOrder.fromData(orderId, orderData));
         });
       }
       pastOrders.value = orders;
@@ -52,32 +52,32 @@ class OrderController extends GetxController {
     });
 
     mezDbgPrint(
-        "Starting listening on inProcess : ${serviceProviderInProcessOrders(orderType: OrderType.Laundry, providerId: laundryId)}");
+        "Starting listening on inProcess : ${serviceProviderInProcessOrders(orderType: OrderType.Restaurant, providerId: restaurantId)}");
     await _currentOrdersListener?.cancel();
     _currentOrdersListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderInProcessOrders(
-            orderType: OrderType.Laundry, providerId: laundryId))
+            orderType: OrderType.Restaurant, providerId: restaurantId))
         .onValue
         .listen((Event event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
       mezDbgPrint(
           "CURRENT ORDERS ======> the event value ------------> ${event.snapshot.value}");
 
-      final List<LaundryOrder> orders = [];
+      final List<RestaurantOrder> orders = [];
       if (event.snapshot.value != null) {
         // mezDbgPrint("orderController: new incoming order data");
         event.snapshot.value.keys?.forEach((orderId) {
           // mezDbgPrint("Hndling Order : $orderId");
           final dynamic orderData = event.snapshot.value[orderId];
-          orders.add(LaundryOrder.fromData(orderId, orderData));
+          orders.add(RestaurantOrder.fromData(orderId, orderData));
         });
       }
       currentOrders.value = orders;
     });
   }
 
-  LaundryOrder? getOrder(String orderId) {
+  RestaurantOrder? getOrder(String orderId) {
     try {
       return currentOrders.firstWhere((DeliverableOrder order) {
         return order.orderId == orderId;
@@ -93,18 +93,18 @@ class OrderController extends GetxController {
     }
   }
 
-  Stream<LaundryOrder?> getOrderStream(String orderId) {
-    return StreamGroup.merge(<Stream<LaundryOrder?>>[
+  Stream<RestaurantOrder?> getOrderStream(String orderId) {
+    return StreamGroup.merge(<Stream<RestaurantOrder?>>[
       _getCurrentOrderStream(orderId),
       _getPastOrderStream(orderId)
     ]);
   }
 
-  Stream<LaundryOrder?> _getCurrentOrderStream(String orderId) {
-    return currentOrders.stream.map<LaundryOrder?>((_) {
+  Stream<RestaurantOrder?> _getCurrentOrderStream(String orderId) {
+    return currentOrders.stream.map<RestaurantOrder?>((_) {
       try {
         return currentOrders.firstWhere(
-          (LaundryOrder currentOrder) => currentOrder.orderId == orderId,
+          (RestaurantOrder currentOrder) => currentOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
@@ -114,11 +114,11 @@ class OrderController extends GetxController {
     });
   }
 
-  Stream<LaundryOrder?> _getPastOrderStream(String orderId) {
-    return pastOrders.stream.map<LaundryOrder?>((_) {
+  Stream<RestaurantOrder?> _getPastOrderStream(String orderId) {
+    return pastOrders.stream.map<RestaurantOrder?>((_) {
       try {
         return pastOrders.firstWhere(
-          (LaundryOrder pastOrder) => pastOrder.orderId == orderId,
+          (RestaurantOrder pastOrder) => pastOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
@@ -150,36 +150,34 @@ class OrderController extends GetxController {
     });
   }
 
-  Future<ServerResponse> setAsReadyForDelivery(String orderId) async {
+  Future<ServerResponse> setAsReadyForOrderPickup(String orderId) async {
     mezDbgPrint("Seeting order ready for delivery");
-    return _callLaundryCloudFunction("readyForDeliveryOrder", orderId,
-        optionalParams: <String, dynamic>{"fromLaundryOperator": true});
+    return _callRestaurantCloudFunction("readyForOrderPickup", orderId,
+        optionalParams: <String, dynamic>{"fromRestaurantOperator": true});
   }
 
-  Future<ServerResponse> setOrderWeight(
-      String orderId, LaundryOrderCosts laundryOrderCosts) async {
-    return _callLaundryCloudFunction("setWeight", orderId, optionalParams: {
-      "fromLaundryOperator": true,
-      "costsByType": laundryOrderCosts.toFirebasFormat()
-    });
+  Future<ServerResponse> startPreparingOrder(String orderId) async {
+    mezDbgPrint("Seeting order ready for delivery");
+    return _callRestaurantCloudFunction("prepareOrder", orderId,
+        optionalParams: <String, dynamic>{"fromRestaurantOperator": true});
   }
 
-  Future<ServerResponse> setEstimatedLaundryReadyTime(
+  Future<ServerResponse> setEstimatedFoodReadyTime(
       String orderId, DateTime estimatedTime) async {
     mezDbgPrint("inside clod set delivery time $estimatedTime");
-    return _callLaundryCloudFunction("setEstimatedLaundryReadyTime", orderId,
+    return _callRestaurantCloudFunction("setEstimatedFoodReadyTime", orderId,
         optionalParams: {
-          "fromLaundryOperator": true,
-          "estimatedLaundryReadyTime": estimatedTime.toUtc().toString()
+          "fromRestaurantOperator": true,
+          "estimatedFoodReadyTime": estimatedTime.toUtc().toString()
         });
   }
 
-  Future<ServerResponse> _callLaundryCloudFunction(
+  Future<ServerResponse> _callRestaurantCloudFunction(
       String functionName, String orderId,
       {Map<String, dynamic>? optionalParams}) async {
     mezDbgPrint("calling cloud func");
     final HttpsCallable cloudFunction =
-        FirebaseFunctions.instance.httpsCallable('laundry-$functionName');
+        FirebaseFunctions.instance.httpsCallable('restaurant-$functionName');
     try {
       final HttpsCallableResult response = await cloudFunction
           .call({"orderId": orderId, ...optionalParams ?? {}});

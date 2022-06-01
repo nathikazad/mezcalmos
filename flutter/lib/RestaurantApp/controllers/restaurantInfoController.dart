@@ -12,32 +12,32 @@ import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
-class LaundryInfoController extends GetxController {
+class RestaurantInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
-  late String laundryId;
-  Rxn<LanguageType> laundryPrimaryLanguage = Rxn();
+  late String restaurantId;
+  Rxn<LanguageType> restaurantPrimaryLanguage = Rxn();
 
-  Rxn<Laundry> laundry = Rxn();
-  StreamSubscription? _laundryInfoListener;
-  Future<void> init(String laundryId) async {
-    this.laundryId = laundryId;
+  Rxn<Restaurant> restaurant = Rxn();
+  StreamSubscription? _restaurantInfoListener;
+  Future<void> init(String restaurantId) async {
+    this.restaurantId = restaurantId;
     mezDbgPrint(
-        "--------------------> Start listening service providers info  ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: laundryId)}");
-    await _laundryInfoListener?.cancel();
-    _laundryInfoListener = _databaseHelper.firebaseDatabase
+        "--------------------> Start listening service providers info  ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurantId)}");
+    await _restaurantInfoListener?.cancel();
+    _restaurantInfoListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderInfos(
-            orderType: OrderType.Laundry, providerId: laundryId))
+            orderType: OrderType.Restaurant, providerId: restaurantId))
         .onValue
         .listen((Event event) {
       mezDbgPrint(
           "eveeeeeeennnnnnnnnnnnnnnnnnnnnnnnnnnnt ====> ${event.snapshot.value} ");
       if (event.snapshot.value != null) {
-        laundry.value = Laundry.fromLaundryData(
-            laundryId: laundryId, laundryData: event.snapshot.value);
-        laundryPrimaryLanguage.value = laundry.value?.primaryLanguage;
+        restaurant.value = Restaurant.fromRestaurantData(
+            restaurantId: restaurantId, restaurantData: event.snapshot.value);
+        restaurantPrimaryLanguage.value = restaurant.value?.primaryLanguage;
       }
     }, onError: (error) {
       mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
@@ -49,7 +49,7 @@ class LaundryInfoController extends GetxController {
     String _uploadedImgUrl;
     final List<String> splitted = imageFile.path.split('.');
     final String imgPath =
-        "laundries/${laundry.value?.info.id}/avatar/${laundry.value?.info.id}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+        "laundries/${restaurant.value?.info.id}/avatar/${restaurant.value?.info.id}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
     try {
       await firebase_storage.FirebaseStorage.instance
           .ref(imgPath)
@@ -65,27 +65,27 @@ class LaundryInfoController extends GetxController {
     return _uploadedImgUrl;
   }
 
-  Future<void> setLaundryName(String newName) async {
+  Future<void> setRestaurantName(String newName) async {
     mezDbgPrint(
-        "------->>> ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: laundry.value!.info.id)}/name");
+        "------->>> ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurant.value!.info.id)}/name");
     await _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderInfos(
-                orderType: OrderType.Laundry,
-                providerId: laundry.value!.info.id) +
+                orderType: OrderType.Restaurant,
+                providerId: restaurant.value!.info.id) +
             '/info')
         .child('name')
         .set(newName);
   }
 
-  Future<void> setLaundryImage(String newImage) async {
+  Future<void> setRestaurantImage(String newImage) async {
     mezDbgPrint(
-        "------->>> ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: laundry.value!.info.id)}/name");
+        "------->>> ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurant.value!.info.id)}/name");
     await _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderInfos(
-                orderType: OrderType.Laundry,
-                providerId: laundry.value!.info.id) +
+                orderType: OrderType.Restaurant,
+                providerId: restaurant.value!.info.id) +
             '/info')
         .child('image')
         .set(newImage);
@@ -95,31 +95,15 @@ class LaundryInfoController extends GetxController {
     return _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderSchedule(
-            orderType: OrderType.Laundry, providerId: laundryId))
+            orderType: OrderType.Restaurant, providerId: restaurantId))
         .set(schedule.toFirebaseFormattedJson());
-  }
-
-  Future<void> setCosts(LaundryCosts laundryCosts) {
-    return _databaseHelper.firebaseDatabase
-        .reference()
-        .child(serviceProviderCosts(
-            orderType: OrderType.Laundry, providerId: laundryId))
-        .set(laundryCosts.toFirebasFormat());
-  }
-
-  Future<void> setAverageNumberOfDays(num averageNumberOfDays) {
-    return _databaseHelper.firebaseDatabase
-        .reference()
-        .child(serviceProviderAverageNumberOfDays(
-            orderType: OrderType.Laundry, providerId: laundryId))
-        .set(averageNumberOfDays);
   }
 
   Future<void> setPrimaryLanguage(LanguageType lang) {
     return _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderPrimaryLanguage(
-            orderType: OrderType.Laundry, providerId: laundryId))
+            orderType: OrderType.Restaurant, providerId: restaurantId))
         .set(lang.toFirebaseFormatString());
   }
 
@@ -127,7 +111,7 @@ class LaundryInfoController extends GetxController {
     return _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderSecondaryLanguage(
-            orderType: OrderType.Laundry, providerId: laundryId))
+            orderType: OrderType.Restaurant, providerId: restaurantId))
         .set(lang?.toFirebaseFormatString() ?? null);
   }
 
@@ -135,17 +119,17 @@ class LaundryInfoController extends GetxController {
     return _databaseHelper.firebaseDatabase
         .reference()
         .child(serviceProviderLocation(
-            orderType: OrderType.Laundry, providerId: laundryId))
+            orderType: OrderType.Restaurant, providerId: restaurantId))
         .set(loc.toFirebaseFormattedJson());
   }
 
   @override
   void onClose() {
     mezDbgPrint(
-        "[+] LaundryAuthController::dispose ---------> Was invoked ! $hashCode");
+        "[+] RestaurantAuthController::dispose ---------> Was invoked ! $hashCode");
 
-    _laundryInfoListener?.cancel();
-    _laundryInfoListener = null;
+    _restaurantInfoListener?.cancel();
+    _restaurantInfoListener = null;
     super.onClose();
   }
 }

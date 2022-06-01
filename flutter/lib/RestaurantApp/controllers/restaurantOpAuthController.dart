@@ -4,32 +4,32 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Operators/LaundryOperator.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
+import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
 
-class LaundryOpAuthController extends GetxController {
-  Rxn<LaundryOperator> operator = Rxn();
+class RestaurantOpAuthController extends GetxController {
+  Rxn<RestaurantOperator> operator = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
-  LaundryInfoController _laundryInfoController =
-      Get.find<LaundryInfoController>();
+  RestaurantInfoController _restaurantInfoController =
+      Get.find<RestaurantInfoController>();
   OrderController _orderController = Get.find<OrderController>();
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
-  String? laundryId;
+  String? restaurantId;
 
-  LaundryOperatorState? get laundryOperatorState => operator.value?.state;
-  Stream<LaundryOperator?> get operatorInfoStream => operator.stream;
+  RestaurantOperatorState? get restaurantOperatorState => operator.value?.state;
+  Stream<RestaurantOperator?> get operatorInfoStream => operator.stream;
 
-  StreamSubscription<Event>? _LaundryOperatorNodeListener;
+  StreamSubscription<Event>? _restaurantOperatorNodeListener;
 
   bool _checkedAppVersion = false;
   String? _previousStateValue = "init";
@@ -37,34 +37,34 @@ class LaundryOpAuthController extends GetxController {
   @override
   void onInit() {
     // ------------------------------------------------------------------------
-    mezDbgPrint("LaundryAuthController: init $hashCode");
+    mezDbgPrint("RestaurantAuthController: init $hashCode");
     mezDbgPrint(
-        "LaundryAuthController: calling handle state change first time");
-    setupLaundryOperator(Get.find<AuthController>().fireAuthUser!);
+        "RestaurantAuthController: calling handle state change first time");
+    setupRestaurantOperator(Get.find<AuthController>().fireAuthUser!);
     super.onInit();
   }
 
-  Future<void> setupLaundryOperator(User user) async {
-    mezDbgPrint("LaundryAuthController: handle state change user value");
+  Future<void> setupRestaurantOperator(User user) async {
+    mezDbgPrint("RestaurantAuthController: handle state change user value");
     mezDbgPrint(user);
     // mezDbgPrint(_authController.fireAuthUser);
 
     mezDbgPrint(
-        "LaundryAuthController: laundryNode =======>>>>>> init ${operatorStateNode(operatorType: OperatorType.Laundry, uid: user.uid)}");
-    await _LaundryOperatorNodeListener?.cancel();
-    _LaundryOperatorNodeListener = null;
+        "RestaurantAuthController: restaurantNode =======>>>>>> init ${operatorStateNode(operatorType: OperatorType.Restaurant, uid: user.uid)}");
+    await _restaurantOperatorNodeListener?.cancel();
+    _restaurantOperatorNodeListener = null;
 
     await _databaseHelper.firebaseDatabase
         .reference()
-        .child(
-            operatorAuthNode(operatorType: OperatorType.Laundry, uid: user.uid))
+        .child(operatorAuthNode(
+            operatorType: OperatorType.Restaurant, uid: user.uid))
         .once()
         .then((DataSnapshot value) => mezDbgPrint(value.value));
     // mezDbgPrint("Listening");
-    _LaundryOperatorNodeListener = _databaseHelper.firebaseDatabase
+    _restaurantOperatorNodeListener = _databaseHelper.firebaseDatabase
         .reference()
-        .child(
-            operatorAuthNode(operatorType: OperatorType.Laundry, uid: user.uid))
+        .child(operatorAuthNode(
+            operatorType: OperatorType.Restaurant, uid: user.uid))
         .onValue
         .listen((Event event) async {
       if (event.snapshot.value.toString() == _previousStateValue) {
@@ -74,15 +74,15 @@ class LaundryOpAuthController extends GetxController {
 
       if (event.snapshot.value != null) {
         operator.value =
-            LaundryOperator.fromData(user.uid, event.snapshot.value);
+            RestaurantOperator.fromData(user.uid, event.snapshot.value);
 
         saveAppVersionIfNecessary();
         unawaited(saveNotificationToken());
-        if (laundryId != operator.value!.state.laundryId) {
+        if (restaurantId != operator.value!.state.restaurantId) {
           // init controllers with new id
-          laundryId = operator.value!.state.laundryId;
-          await _orderController.init(laundryId!);
-          await _laundryInfoController.init(laundryId!);
+          restaurantId = operator.value!.state.restaurantId;
+          await _orderController.init(restaurantId!);
+          await _restaurantInfoController.init(restaurantId!);
         }
       }
     });
@@ -95,7 +95,7 @@ class LaundryOpAuthController extends GetxController {
       unawaited(_databaseHelper.firebaseDatabase
           .reference()
           .child(operatorNotificationInfoNode(
-              operatorType: OperatorType.Laundry,
+              operatorType: OperatorType.Restaurant,
               uid: _authController.fireAuthUser!.uid))
           .set(<String, String>{
         'deviceNotificationToken': deviceNotificationToken
@@ -109,7 +109,7 @@ class LaundryOpAuthController extends GetxController {
       _databaseHelper.firebaseDatabase
           .reference()
           .child(operatorAppVersionNode(
-              operatorType: OperatorType.Laundry,
+              operatorType: OperatorType.Restaurant,
               uid: _authController.fireAuthUser!.uid))
           .set(version);
       _checkedAppVersion = true;
@@ -119,10 +119,10 @@ class LaundryOpAuthController extends GetxController {
   @override
   void onClose() {
     mezDbgPrint(
-        "[+] LaundryAuthController::dispose ---------> Was invoked ! $hashCode");
+        "[+] RestaurantAuthController::dispose ---------> Was invoked ! $hashCode");
 
-    _LaundryOperatorNodeListener?.cancel();
-    _LaundryOperatorNodeListener = null;
+    _restaurantOperatorNodeListener?.cancel();
+    _restaurantOperatorNodeListener = null;
     super.onClose();
   }
 }

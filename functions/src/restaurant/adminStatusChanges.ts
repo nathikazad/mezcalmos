@@ -165,6 +165,18 @@ export const setEstimatedFoodReadyTime = functions.https.onCall(async (data, con
   return { status: ServerResponseStatus.Success }
 });
 
+async function checkRestaurantOperator(laundryId: string, operatorId: string): Promise<ServerResponse | undefined> {
+  let operator = (await restaurantNodes.restaurantOperators(laundryId, operatorId).once('value')).val();
+  let isOperator = operator != null && operator == true
+  if (!isOperator) {
+    return {
+      status: ServerResponseStatus.Error,
+      errorMessage: "Only authorized laundry operators can run this operation"
+    }
+  }
+  return undefined;
+}
+
 async function passChecksForRestaurant(data: any, auth?: AuthData): Promise<ValidationPass> {
   let response = await isSignedIn(auth)
   if (response != undefined) {
@@ -197,22 +209,22 @@ async function passChecksForRestaurant(data: any, auth?: AuthData): Promise<Vali
     }
   }
 
-  // if (data.fromRestaurantOperator) {
-  //   response = await checkRestaurantOperator(order.restaurant.id, auth!.uid)
-  //   if (response != undefined) {
-  //     return {
-  //       ok: false,
-  //       error: response
-  //     };
-  //   }
-  // } else {
+  if (data.fromRestaurantOperator) {
+    response = await checkRestaurantOperator(order.restaurant.id, auth!.uid)
+    if (response != undefined) {
+      return {
+        ok: false,
+        error: response
+      };
+    }
+  } else {
   response = await checkDeliveryAdmin(auth!.uid)
   if (response != undefined) {
     return {
       ok: false,
       error: response
     };
-    // }
+  }
   }
 
   return {

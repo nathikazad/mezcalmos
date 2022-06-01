@@ -7,17 +7,21 @@ import 'package:mezcalmos/Shared/models/User.dart';
 class Laundry extends Service {
   LaundryCosts laundryCosts;
   num averageNumberOfDays = 2;
-  LanguageType primaryLanguage;
-  LanguageType? secondaryLanguage;
   Laundry(
       {required ServiceInfo userInfo,
       required Schedule schedule,
       required ServiceState laundryState,
       this.averageNumberOfDays = 2,
       required this.laundryCosts,
-      required this.primaryLanguage,
-      this.secondaryLanguage})
-      : super(info: userInfo, schedule: schedule, state: laundryState);
+      required LanguageType primaryLanguage,
+      LanguageType? secondaryLanguage})
+      : super(
+          info: userInfo,
+          schedule: schedule,
+          state: laundryState,
+          primaryLanguage: primaryLanguage,
+          secondaryLanguage: secondaryLanguage,
+        );
 
   factory Laundry.fromLaundryData(
       // ignore: avoid_annotating_with_dynamic

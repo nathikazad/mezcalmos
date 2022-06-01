@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["LaundryApp"]["notificationHandler"];
 
-Notification laundryNotificationHandler(String key, value) {
+Notification restaurantNotificationHandler(String key, value) {
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
