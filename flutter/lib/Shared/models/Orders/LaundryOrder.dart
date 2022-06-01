@@ -129,7 +129,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
               : null,
       estimatedDropoffAtCustomerTime:
           (_estimatedDropoffAtCustomerTime != null &&
-                  _estimatedDropoffAtCustomerTime != null)
+                  _estimatedDropoffAtCustomerTime != "")
               ? DateTime.parse(_estimatedDropoffAtCustomerTime)
               : null,
       estimatedPickupFromCustomerTime:

@@ -1,5 +1,4 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
@@ -120,7 +119,6 @@ class DeliveryDriverUserInfo extends UserInfo {
         );
 
   factory DeliveryDriverUserInfo.fromData(data) {
-    mezDbgPrint(data);
     final LatLng? location = data["location"] != null
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])
@@ -145,6 +143,7 @@ class DeliveryDriverUserInfo extends UserInfo {
 // ignore: constant_identifier_names
 // this is to distinguish between pick up and drop off driver
 enum DeliveryDriverType { Pickup, DropOff }
+
 // this is to distinguish between which action the driver is doing
 // for example dropoff driver is picking up order from restaurant
 enum DeliveryAction { Pickup, DropOff }
