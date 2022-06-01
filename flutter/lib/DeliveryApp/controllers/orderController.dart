@@ -184,13 +184,16 @@ class OrderController extends GetxController {
     final HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('delivery-setEstimatedTime');
     try {
-      final HttpsCallableResult response = await dropOrderFunction.call({
+      final Map<String, dynamic> _map = {
         "orderId": orderId,
         "estimatedTime": estimatedTime.toUtc().toString(),
         "deliveryDriverType": deliveryDriverType.toFirebaseFormatString(),
         "orderType": orderType.toFirebaseFormatString(),
         "deliveryAction": deliveryAction.toFirebaseFormatString()
-      });
+      };
+      mezDbgPrint("Map ===> $_map");
+
+      final HttpsCallableResult response = await dropOrderFunction.call(_map);
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,

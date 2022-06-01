@@ -2,9 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -91,12 +98,13 @@ class _LaundryOrderFromToComponentState
           ),
           Divider(),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
-                flex: 1,
+                // flex: 1,
                 child: Container(
+                  // color: Colors.red,
                   height: 85,
                   child: Stack(
                     fit: StackFit.passthrough,
@@ -131,94 +139,106 @@ class _LaundryOrderFromToComponentState
                   ),
                 ),
               ),
-              SizedBox(
-                width: 20,
-              ),
+              // SizedBox(
+              //   width: 20,
+              // ),
               Flexible(
-                flex: 3,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      // direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.access_time_filled,
-                          color: Color.fromRGBO(73, 73, 73, 1),
-                          size: 18,
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          // 'Today, 10:53 AM',
-                          DateFormat('EEEE, hh:mm a')
-                              .format(widget.order.orderTime),
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
+                flex: 6,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        // direction: Axis.horizontal,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(width: 10),
+                          Icon(
+                            Icons.access_time_filled,
+                            color: Color.fromRGBO(73, 73, 73, 1),
+                            size: 18,
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      // direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.delivery_dining,
-                          color: Color.fromRGBO(73, 73, 73, 1),
-                          size: 18,
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          // DateFormat('EEEE, hh:mm a')
-                          //     .format(widget.order.orderTime),
-                          '1h 45min',
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
+                          SizedBox(width: 3),
+                          Text(
+                            // 'Today, 10:53 AM',
+                            DateFormat('EEEE, hh:mm a')
+                                .format(widget.order.orderTime),
+                            overflow: TextOverflow.visible,
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 16.33),
-                        Icon(
-                          Icons.route_outlined,
-                          color: Color.fromRGBO(73, 73, 73, 1),
-                          size: 18,
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          // widget.order.routeInformation?.distance
-                          //         .distanceStringInKm ??
-                          //     '',
-                          '1.5km',
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        // direction: Axis.horizontal,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(width: 10),
+                          Icon(
+                            Icons.delivery_dining,
+                            color: Color.fromRGBO(73, 73, 73, 1),
+                            size: 18,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          SizedBox(width: 3),
+                          Flexible(
+                            flex: 4,
+                            child: Text(
+                              widget.order.routeInformation?.duration
+                                      .longTextVersion ??
+                                  '- - - -',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 16.33),
+                          Icon(
+                            Icons.route_outlined,
+                            color: Color.fromRGBO(73, 73, 73, 1),
+                            size: 18,
+                          ),
+                          SizedBox(width: 3),
+                          Text(
+                            widget.order.routeInformation?.distance
+                                    .distanceStringInKm ??
+                                '- - - -',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Spacer(),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Icon(
-                  Icons.article_rounded,
-                  color: Color.fromRGBO(103, 121, 254, 1),
-                  size: 30,
+              Flexible(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Icon(
+                    Icons.article_rounded,
+                    color: Color.fromRGBO(103, 121, 254, 1),
+                    size: 30,
+                  ),
                 ),
               ),
             ],
@@ -267,24 +287,7 @@ class _LaundryOrderFromToComponentState
                               size: 24,
                             ),
                             Spacer(),
-                            Text('02:30 PM'),
-                            SizedBox(width: 7),
-
-                            // if (widget.order.)
-                            Container(
-                              height: 18,
-                              width: 18,
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(237, 237, 237, 1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.edit,
-                                  size: 16,
-                                ),
-                              ),
-                            ),
+                            ..._dateTimeSetter(DeliveryAction.Pickup)
                           ],
                         ),
                         Row(
@@ -323,21 +326,7 @@ class _LaundryOrderFromToComponentState
                               size: 24,
                             ),
                             Spacer(),
-                            Text('02:45 PM'),
-                            SizedBox(width: 7),
-                            Container(
-                              height: 18,
-                              width: 18,
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(237, 237, 237, 1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                  child: Icon(
-                                Icons.edit,
-                                size: 16,
-                              )),
-                            ),
+                            ..._dateTimeSetter(DeliveryAction.DropOff)
                           ],
                         ),
                       ],
@@ -368,6 +357,8 @@ class _LaundryOrderFromToComponentState
       case LaundryOrderStatus.ReadyForDelivery:
         return "${_i18n()["orderStatus"]["readyForDelivery"]}";
       case LaundryOrderStatus.OtwPickupFromLaundry:
+        return "Laundry done, picking up ..";
+      case LaundryOrderStatus.PickedUpFromLaundry:
         return "${_i18n()["orderStatus"]["deliveryOtw"]}";
       case LaundryOrderStatus.Delivered:
         return "${_i18n()["orderStatus"]["delivered"]}";
@@ -378,5 +369,148 @@ class _LaundryOrderFromToComponentState
       default:
         return '';
     }
+  }
+
+  List<Widget> _dateTimeSetter(DeliveryAction deliveryAction) {
+    Future<DateTime?> _dateTimePicker() async {
+      final DateTime? pickedDate = await getDatePicker(
+        context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(
+          Duration(hours: 12),
+        ),
+      );
+
+      if (pickedDate != null) {
+        final TimeOfDay? pickedTime = await getTimePicker(
+          context,
+          initialTime: TimeOfDay.fromDateTime(
+            DateTime.now(),
+          ),
+        );
+        if (pickedTime != null) {
+          final DateTime _finalDt = pickedDate.copyWithTimeOfDay(pickedTime);
+          if (_finalDt.isAfter(DateTime.now())) {
+            return _finalDt;
+          } else
+            MezSnackbar('Oops', 'You picked a wrong time!');
+        }
+      }
+
+      return null;
+    }
+
+    List<Widget> _getRightContainer(DateTime? dt,
+        {required void Function(DateTime) onNewDateTimeSet}) {
+      if (dt != null) {
+        return [
+          Text(DateFormat('hh:mm a').format(dt)),
+          SizedBox(width: 7),
+          InkWell(
+            onTap: () async {
+              final DateTime? _dt = await _dateTimePicker();
+              if (_dt != null) onNewDateTimeSet(_dt);
+            },
+            child: Container(
+              height: 18,
+              width: 18,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(237, 237, 237, 1),
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.edit,
+                  size: 16,
+                ),
+              ),
+            ),
+          )
+        ];
+      } else {
+        return [
+          InkWell(
+            onTap: () async {
+              final DateTime? _dt = await _dateTimePicker();
+              if (_dt != null) onNewDateTimeSet(_dt);
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(226, 18, 51, 1),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Center(
+                child: Text(
+                  'Set ${deliveryAction == DeliveryAction.DropOff ? "dropoff" : "pickup"} time',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+            ),
+          )
+        ];
+      }
+    }
+
+    if (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return _getRightContainer(
+        deliveryAction == DeliveryAction.Pickup
+            ? widget.order.estimatedPickupFromCustomerTime
+            : widget.order.estimatedDropoffAtServiceProviderTime,
+        onNewDateTimeSet: (DateTime newDt) async {
+          final ServerResponse _resp =
+              await Get.find<OrderController>().setEstimatedTime(
+            widget.order.orderId,
+            newDt,
+            DeliveryDriverType.Pickup,
+            deliveryAction,
+            OrderType.Laundry,
+          );
+
+          if (_resp.success) {
+            if (deliveryAction == DeliveryAction.Pickup)
+              widget.order.estimatedPickupFromCustomerTime = newDt;
+            else
+              widget.order.estimatedDropoffAtServiceProviderTime = newDt;
+
+            setState(() {});
+          }
+        },
+      );
+    } else if (widget.order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
+      return _getRightContainer(
+        deliveryAction == DeliveryAction.Pickup
+            ? widget.order.estimatedPickupFromServiceProviderTime
+            : widget.order.estimatedDropoffAtCustomerTime,
+        onNewDateTimeSet: (DateTime newDt) async {
+          final ServerResponse _resp =
+              await Get.find<OrderController>().setEstimatedTime(
+            widget.order.orderId,
+            newDt,
+            DeliveryDriverType.Pickup,
+            deliveryAction,
+            OrderType.Laundry,
+          );
+
+          mezDbgPrint("resp ===> ${_resp.data}");
+
+          if (_resp.success) {
+            if (deliveryAction == DeliveryAction.Pickup)
+              widget.order.estimatedPickupFromServiceProviderTime = newDt;
+            else
+              widget.order.estimatedDropoffAtCustomerTime = newDt;
+
+            setState(() {});
+          }
+        },
+      );
+    } else
+      return [];
   }
 }

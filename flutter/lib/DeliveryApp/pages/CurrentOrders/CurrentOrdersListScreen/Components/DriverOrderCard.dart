@@ -32,12 +32,12 @@ class DriverOrderCard extends StatelessWidget {
     return OrderInfosCard(
         orderCardSubWidgets: OrderCardSubWidgets(
             onCardTap: () {
-              Get.toNamed(getOrderDetailsRoute(order.orderId));
-              // if (order.orderType == OrderType.Restaurant) {
-              //   Get.toNamed(getRestaurantOrderRoute(order.orderId));
-              // } else if (order.orderType == OrderType.Laundry) {
-              //   Get.toNamed(getLaundryOrderRoute(order.orderId));
-              // }
+              // Get.toNamed(getOrderDetailsRoute(order.orderId));
+              if (order.orderType == OrderType.Restaurant) {
+                Get.toNamed(getRestaurantOrderRoute(order.orderId));
+              } else if (order.orderType == OrderType.Laundry) {
+                Get.toNamed(getLaundryOrderRoute(order.orderId));
+              }
             },
             cardTitle: _getOrderTitle(),
             primaryBodyContent: Text(order.to.address),

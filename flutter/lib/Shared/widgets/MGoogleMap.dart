@@ -123,8 +123,6 @@ class MGoogleMapState extends State<MGoogleMap> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("Inside MGoogleMap build $hashCode ${widget.debugString}");
-
     return Obx(
       () => Stack(
         children: <Widget>[
