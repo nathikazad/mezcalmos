@@ -91,7 +91,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
 
   Widget _sendMyLaundryButton() {
     return Container(
-      height: 70,
+      height: 60,
       decoration: BoxDecoration(
           gradient: LinearGradient(colors: [Colors.purple, primaryBlueColor])),
       child: TextButton(

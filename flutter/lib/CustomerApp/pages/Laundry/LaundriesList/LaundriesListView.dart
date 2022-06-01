@@ -53,13 +53,17 @@ class _LaundriesListViewState extends State<LaundriesListView> {
                         child: CircularProgressIndicator(),
                       );
                     case ConnectionState.done:
-                      return Column(
-                        children: List.generate(
-                            snapshot.data?.length ?? 0,
-                            (int index) => CustomerLaundrySelectCard(
-                                  laundry: snapshot.data![index],
-                                )),
-                      );
+                      if (snapshot.data != null) {
+                        return Column(
+                          children: List.generate(
+                              snapshot.data!.length,
+                              (int index) => CustomerLaundrySelectCard(
+                                    laundry: snapshot.data![index],
+                                  )),
+                        );
+                      } else {
+                        return Text("Error");
+                      }
 
                     default:
                       return Container();

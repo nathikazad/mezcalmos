@@ -82,6 +82,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         width: 8,
                       ),
                       Flexible(
+                        flex: 2,
                         child: Row(
                           children: [
                             Icon(
@@ -93,7 +94,8 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                               width: 3,
                             ),
                             Flexible(
-                                child: Text('2 ${_i18n()["days"]}',
+                                child: Text(
+                                    '${laundry.averageNumberOfDays} ${_i18n()["days"]}',
                                     style: Get.textTheme.bodyText2)),
                           ],
                         ),
@@ -103,7 +105,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                       ),
                       Flexible(
                         flex: 3,
-                        fit: FlexFit.loose,
+                        fit: FlexFit.tight,
                         child: Text(
                             "${_i18n()["startingFrom"]} \$${laundry.getCheapestCategory}",
                             style: Get.textTheme.bodyText2),

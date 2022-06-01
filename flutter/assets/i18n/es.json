@@ -468,6 +468,7 @@
 
                 },
                 "LaundriesListView": {
+
                     "laundries": "lavanderías",
                     "title": "Encuentra tus lavanderías más cercanas o tintorerías ",
                     "components": {

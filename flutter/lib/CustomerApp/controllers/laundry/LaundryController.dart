@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,7 @@ class LaundryController extends GetxController {
         .once()
         .then<List<Laundry>>((DataSnapshot snapshot) {
       final List<Laundry> laundries = [];
-      snapshot.value.forEach((key, value) {
+      snapshot.value?.forEach((key, value) {
         try {
           laundries
               .add(Laundry.fromLaundryData(laundryId: key, laundryData: value));

@@ -276,6 +276,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     return Obx(
       () => Container(
         width: double.infinity,
+
         decoration: BoxDecoration(
             gradient:
                 LinearGradient(colors: [Colors.purple, primaryBlueColor])),

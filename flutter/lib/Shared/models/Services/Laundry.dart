@@ -32,7 +32,9 @@ class Laundry extends Service {
     final LaundryCosts laundryCosts =
         LaundryCosts.fromData(laundryData["details"]["costs"]);
     final num averageNumberOfDays =
-        laundryData["details"]["averageNumberOfDays"];
+        (laundryData["details"]["averageNumberOfDays"] != null)
+            ? laundryData["details"]["averageNumberOfDays"]
+            : 2;
     final LanguageType primaryLanguage = laundryData["details"]?["language"]
                 ?["primary"]
             .toString()

@@ -453,6 +453,17 @@
 
                 },
                 "LaundriesListView": {
+                    "components": {
+                        "laundrySelectCard": {
+                            "available": "Available",
+                            "unavailable": "Unavailable"
+                        },
+                        "CustomerLaundrySelectCard": {
+                            "days": "days",
+                            "startingFrom": "Starting from :"
+                        }
+                    },
+
                     "laundries": "Laundries",
 
                     "title": "Find your closest laundries or dry cleaners "
