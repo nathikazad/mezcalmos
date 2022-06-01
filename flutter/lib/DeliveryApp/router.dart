@@ -4,13 +4,14 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/CurrentOrdersListScreen.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/OrderDetailsScreen.dart';
+import 'package:mezcalmos/DeliveryApp/pages/PastOrders/PastOrdersView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 const String kCurrentOrdersListRoute = '/orders';
 const String kLaundryOrderView = '/laundryOrders/:orderId';
 const String kRestaurantOrderView = '/restaurantOrders/:orderId';
 const String kOrderDetailsView = "/orderDetails/:orderId";
-
+const String kPastOrdersView = "/pastOrders";
 String getLaundryOrderRoute(String orderId) {
   return kLaundryOrderView.replaceFirst(":orderId", orderId);
 }
@@ -33,6 +34,7 @@ class XRouter {
         GetPage(name: kLaundryOrderView, page: () => LaundryOrderView()),
         GetPage(name: kRestaurantOrderView, page: () => RestaurantOrderView()),
         GetPage(name: kOrderDetailsView, page: () => OrderDetailsScreen()),
+        GetPage(name: kPastOrdersView, page: () => DriverPastOrdersView()),
       ] +
       SharedRouter.sharedRoutes;
 }

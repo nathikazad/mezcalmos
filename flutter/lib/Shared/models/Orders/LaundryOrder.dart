@@ -243,23 +243,18 @@ class LaundryOrderCostLineItem extends LaundryCostLineItem {
 
   factory LaundryOrderCostLineItem.fromData(laundryCostLineItemData) {
     final LaundryOrderCostLineItem newLo = LaundryOrderCostLineItem(
-        weight: laundryCostLineItemData["weight"],
-        id: LaundryCostLineItem.fromData(laundryCostLineItemData).id,
-        name: LaundryCostLineItem.fromData(laundryCostLineItemData).name,
-        cost: LaundryCostLineItem.fromData(laundryCostLineItemData).cost);
+      weight: laundryCostLineItemData["weight"],
+      id: LaundryCostLineItem.fromData(laundryCostLineItemData).id,
+      name: LaundryCostLineItem.fromData(laundryCostLineItemData).name,
+      cost: LaundryCostLineItem.fromData(laundryCostLineItemData).cost,
+    );
 
     // final LaundryOrderCostLineItem li =
     //     LaundryCostLineItem.fromData(laundryCostLineItemData)
     //         as LaundryOrderCostLineItem;
+
     // li.weight = laundryCostLineItemData["weight"];
     return newLo;
-    // final LaundryOrderCostLineItem li =
-    //     LaundryCostLineItem.fromData(laundryCostLineItemData)
-    //         as LaundryOrderCostLineItem;
-    // li.weight = laundryCostLineItemData["weight"];
-    // li.cost = LaundryCostLineItem.fromData(laundryCostLineItemData).cost;
-    // li.name = LaundryCostLineItem.fromData(laundryCostLineItemData).name;
-    // li.id = LaundryCostLineItem.fromData(laundryCostLineItemData).id;
   }
 
   @override

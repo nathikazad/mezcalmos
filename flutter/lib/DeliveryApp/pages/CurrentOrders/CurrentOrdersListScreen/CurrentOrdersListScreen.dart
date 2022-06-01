@@ -57,7 +57,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         onWillPop: () async => false,
         child: Scaffold(
             key: Get.find<SideMenuDrawerController>().getNewKey(),
-            drawer: MezSideMenu(),
+            drawer: MezSideMenu(
+              
+            ),
             appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
             body: SingleChildScrollView(
               child: Padding(
@@ -72,8 +74,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                           : DriverNotLookingComponent(),
                     ),
                   ),
-                  Divider(),
-                  Obx(() => _pastOrdersList(context)),
+                  // Divider(),
+                  // Obx(() => _pastOrdersList(context)),
                 ]),
               ),
             )));
@@ -93,32 +95,6 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
     ]);
   }
 
-  Widget _pastOrdersList(BuildContext context) {
-    if (orderController.pastOrders.isNotEmpty) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(5),
-            child: Text(
-              _i18n()["pastOrders"],
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ),
-          Column(
-            children: List.generate(
-                orderController.pastOrders.length,
-                (int index) => DriverOrderCard(
-                      order: orderController.pastOrders[index],
-                      isPastOrder: true,
-                    )).reversed.toList(),
-          )
-        ],
-      );
-    } else {
-      return Container();
-    }
-  }
 
   Widget _currentOrdersList(BuildContext context) {
     if (orderController.currentOrders.isNotEmpty) {
