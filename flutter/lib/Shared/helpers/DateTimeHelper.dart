@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
     ["DateTimeHelper"];
@@ -22,18 +20,24 @@ extension DurationParser on Duration {
 
 extension parseDateTime on DateTime {
   String getEstimatedTime() {
-    final String langCode =
-        Get.find<LanguageController>().userLanguageKey.toLanguageCode();
-    initializeDateFormatting(langCode, null);
-
     final DateTime cDate = DateTime.now();
-    // mezDbgPrint(cDate.difference(toLocal()).inHours);
+
     if (cDate.difference(toLocal()).inDays < 0) {
       return "${_i18n()["in"]} ${DateFormat().add_EEEE().add_d().add_MMM().add_jm().format(toLocal())}";
     } else if (cDate.difference(toLocal()).inHours < 0) {
       return "${_i18n()["at"]} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
       return "${_i18n()["in"]} ${cDate.difference(toLocal()).inMinutes} min";
+    }
+  }
+
+  String getOrderTime() {
+    final DateTime cDate = DateTime.now();
+
+    if (cDate.difference(toLocal()).inDays < 7) {
+      return "${DateFormat("EEEE, hh:mm a").format(this)}";
+    } else {
+      return "${DateFormat("dd MMMM, hh:mm a").format(this)}";
     }
   }
 

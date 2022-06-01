@@ -15,10 +15,10 @@ class OrderInfosCard extends StatelessWidget {
       onTap: orderCardSubWidgets.onCardTap,
       child: Container(
         margin: EdgeInsets.only(bottom: 15),
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
               color: Color.fromRGBO(0, 0, 0, 0.25),
@@ -35,7 +35,6 @@ class OrderInfosCard extends StatelessWidget {
             ...[
               orderCardSubWidgets.primaryHeaderContent,
               orderCardSubWidgets.secondaryHeaderContent,
-              SizedBox(height: 14),
             ],
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

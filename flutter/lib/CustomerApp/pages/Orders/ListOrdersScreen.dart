@@ -4,19 +4,11 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/components/LaundryOngoingOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/components/LaundryPastOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/components/RestaurantOngoingOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/components/RestaurantPastOrderCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/components/TaxiOrderOngoingCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/components/TaxiPastOrderCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Orders/components/CustomerOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 final DateFormat f = new DateFormat('MM.dd.yyyy');
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
@@ -151,18 +143,7 @@ class PastOrderList extends StatelessWidget {
             height: 5,
           ),
           itemBuilder: (BuildContext context, Order element) {
-            switch (element.orderType) {
-              case OrderType.Taxi:
-                return TaxiPastOrderCard(order: element as TaxiOrder);
-              case OrderType.Restaurant:
-                return RestaurantPastOrderCard(
-                  order: element as RestaurantOrder,
-                );
-              case OrderType.Laundry:
-                return LaundryPastOrderCard(order: element as LaundryOrder);
-              default:
-                return const SizedBox.shrink();
-            }
+            return CustomerOrderCard(order: element);
           },
         ),
       ],
@@ -215,31 +196,15 @@ class OngoingOrderList extends StatelessWidget {
               ),
             ),
             ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: NeverScrollableScrollPhysics(),
-              reverse: true,
-              itemCount: controller.currentOrders().length,
-              itemBuilder: (BuildContext context, int index) {
-                switch (controller.currentOrders()[index].orderType) {
-                  case OrderType.Taxi:
-                    return TaxiOngoingOrderCard(
-                      order: controller.currentOrders()[index],
-                    );
-                  case OrderType.Restaurant:
-                    return RestaurantOngoingOrderCard(
-                      order: controller.currentOrders()[index],
-                    );
-                  case OrderType.Laundry:
-                    return LaundryOngoigOrderCard(
-                      order: controller.currentOrders()[index] as LaundryOrder,
-                    );
-
-                  default:
-                    return const SizedBox.shrink();
-                }
-              },
-            ),
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: NeverScrollableScrollPhysics(),
+                reverse: true,
+                itemCount: controller.currentOrders().length,
+                itemBuilder: (BuildContext context, int index) {
+                  return CustomerOrderCard(
+                      order: controller.currentOrders[index]);
+                }),
             const SizedBox(height: 10)
           ],
         ),
