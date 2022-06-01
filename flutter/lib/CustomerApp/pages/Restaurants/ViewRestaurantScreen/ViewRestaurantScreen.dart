@@ -114,7 +114,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget buildSliverScrollView() {
     return CustomScrollView(
-      physics: const ClampingScrollPhysics(),
+      //physics: const ClampingScrollPhysics(),
       controller: scrollController,
       slivers: [
         RestaurantSliverAppBar(
@@ -185,7 +185,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget _buildCategory(Category category, int index) {
     return Container(
-     // margin: const EdgeInsets.symmetric(vertical: 12),
+      // margin: const EdgeInsets.symmetric(vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
