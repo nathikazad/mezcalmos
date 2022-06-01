@@ -96,7 +96,8 @@ enum AppType {
   TaxiAdminApp,
   DeliveryAdminApp,
   DeliveryApp,
-  LaundryApp
+  LaundryApp,
+  RestaurantApp
 }
 
 extension ParseOrderTypeToString on AppType {

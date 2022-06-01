@@ -14,7 +14,8 @@ enum ParticipantType {
   DeliveryAdmin,
   Restaurant,
   DeliveryDriver,
-  LaundryOperator
+  LaundryOperator,
+  RestaurantOperator
 }
 
 extension ParseParticipantTypeToString on ParticipantType {
@@ -37,6 +38,8 @@ extension AppTypeToParticipantType on AppType {
         return ParticipantType.DeliveryAdmin;
       case AppType.LaundryApp:
         return ParticipantType.LaundryOperator;
+      case AppType.RestaurantApp:
+        return ParticipantType.RestaurantOperator;
       default:
         throw Exception(
             "App type $this cannot be converted to participantType");

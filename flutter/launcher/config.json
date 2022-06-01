@@ -177,6 +177,29 @@
                 }
 
             }
+        },
+        "RestaurantApp": {
+            "folderName": "RestaurantApp",
+            "packages": {
+                "stage": {
+                    "appName": "Meztao Stage",
+                    "packageName": "com.mezstaging.restaurant",
+                    "googe-service-file": "services/stage/android/restaurant.json",
+                    "apple-service-file": "services/stage/ios/restaurant.plist"
+                },
+                "prod": {
+                    "appName": "Meztao",
+                    "packageName": "com.mezcalmos.restaurant",
+                    "googe-service-file": "services/prod/android/restaurant.json",
+                    "apple-service-file": "services/prod/ios/restaurant.plist"
+                },
+                "dev": {
+                    "appName": "Meztao Dev",
+                    "packageName": "com.mezcalmos.customer",
+                    "googe-service-file": "services/prod/android/restaurant.json",
+                    "apple-service-file": "services/prod/ios/restaurant.plist"
+                }
+            }
         }
 
     }
