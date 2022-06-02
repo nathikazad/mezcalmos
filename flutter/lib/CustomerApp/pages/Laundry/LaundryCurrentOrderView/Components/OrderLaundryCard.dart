@@ -16,7 +16,7 @@ class OrderLaundryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(12),
         child: Row(
           children: [
             CircleAvatar(
@@ -41,25 +41,16 @@ class OrderLaundryCard extends StatelessWidget {
                       height: 5,
                     ),
                     Row(
-                      children: [
+                      children: <Widget>[
                         Icon(
                           Icons.place,
                           size: 18,
-                          color: primaryBlueColor,
+                          color: Theme.of(context).primaryColorLight,
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Flexible(
-                          child: Text(
-                            order.laundry?.location.address ?? "",
-                            style: Get.textTheme.bodyText2,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                        ),
+                        const SizedBox(height: 5),
+                        Flexible(child: Text(order.to.address, maxLines: 1)),
                       ],
-                    ),
+                    )
                   ],
                 )),
             Spacer(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class OrderSummaryComponent extends StatelessWidget {
@@ -38,9 +39,6 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
                 Text(
                   order.costsByType?.weighedCost.toString() ?? '-',
-                  // (order.costsByType.weighedCost != null)
-                  //     ? ' \$ ${order.costsByType.weighedCost}'
-                  //     : "_",
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ],
@@ -54,7 +52,7 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
                 Text(
-                  "50 \$",
+                  50.toPriceString(),
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ],
@@ -69,7 +67,7 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
                 Text(
                   (order.costsByType?.weighedCost != null)
-                      ? '\$${order.costsByType!.weighedCost}'
+                      ? order.costsByType!.weighedCost.toPriceString()
                       : "-",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -87,12 +85,13 @@ class OrderSummaryComponent extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: <Widget>[
                   Icon(
-                    Icons.place_rounded,
+                    Icons.place,
+                    size: 18,
                     color: Theme.of(context).primaryColorLight,
                   ),
                   const SizedBox(height: 5),

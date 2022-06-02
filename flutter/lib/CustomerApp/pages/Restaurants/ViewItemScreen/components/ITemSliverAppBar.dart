@@ -161,7 +161,7 @@ class ItemSliverAppBar extends StatelessWidget {
             child: Badge(
               badgeColor: Colors.red,
               showBadge: true,
-              position: BadgePosition.topEnd(top: 5, end: 5),
+              position: BadgePosition.topEnd(top: 0, end: 0),
               child: Ink(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(

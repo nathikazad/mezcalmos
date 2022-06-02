@@ -460,7 +460,7 @@
 
                 },
                 "SingleLaundryScreen": {
-                    "startingFrom": "Empezando desde :",
+                    "startingFrom": "Empezando :",
                     "minimumCost": "Costo mínimo",
                     "description": "Descripción",
                     "openHours": "horarios de apertura",
@@ -478,7 +478,7 @@
                         },
                         "CustomerLaundrySelectCard": {
                             "days": "dias",
-                            "startingFrom": "Empezando desde :"
+                            "startingFrom": "Empezando desde "
                         }
                     }
                 },
@@ -496,6 +496,7 @@
                         "orderNow": "Ordenar ahora",
                         "signInToMakeOrder": "Iniciar sesión para hacer el pedido",
                         "notes": "Notas",
+                        "noteHint": "Write your notes here",
                         "error": "Error",
                         "errorText": "No puedo hacer un pedido por favor intente de nuevo"
                     }

@@ -64,11 +64,13 @@ class LaundryPricingCompnent extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: DataTable(
-          dividerThickness: 0,
+          dividerThickness: 0.2,
           // dataTextStyle: TextStyle(),
-
+          horizontalMargin: 6,
+          columnSpacing: 45.0,
+          headingRowHeight: 30.0,
+          // dataRowHeight: 100.0,
           showBottomBorder: false,
-          columnSpacing: 20,
           columns: _PricingTableColumns(),
           rows: _PricingTableRows() +
               [
@@ -91,10 +93,35 @@ class LaundryPricingCompnent extends StatelessWidget {
 
   List<DataColumn> _PricingTableColumns() {
     return [
-      DataColumn(label: Text('${_i18n()["item"]}')),
-      DataColumn(label: Text('${_i18n()["perKilo"]}')),
-      DataColumn(label: Text('${_i18n()["weight"]}')),
-      DataColumn(label: Text('${_i18n()["cost"]}'))
+      DataColumn(
+          label: Text(
+        '${_i18n()["item"]}',
+        textAlign: TextAlign.start,
+      )),
+      DataColumn(
+          label: Center(
+        child: Text(
+          '${_i18n()["perKilo"]}',
+          textAlign: TextAlign.center,
+        ),
+      )),
+      DataColumn(
+          label: Text(
+        '${_i18n()["weight"]}',
+        textAlign: TextAlign.start,
+      )),
+      DataColumn(
+          label: Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              '${_i18n()["cost"]}',
+              // textAlign: TextAlign.right,
+            ),
+          ],
+        ),
+      ))
     ];
   }
 
@@ -103,17 +130,24 @@ class LaundryPricingCompnent extends StatelessWidget {
         order.costsByType!.lineItems.length,
         (int index) => DataRow(cells: [
               DataCell(Container(
-                width: 100,
+                alignment: Alignment.centerLeft,
+                // width: 80,
                 child: Text(
                   order.costsByType!.lineItems[index].name[userLanguage] ?? "",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               )),
-              DataCell(Text("\$${order.costsByType!.lineItems[index].cost}")),
-              DataCell(Text("${order.costsByType!.lineItems[index].weight}")),
-              DataCell(
-                  Text("\$${order.costsByType!.lineItems[index].weighedCost}")),
+              DataCell(Center(
+                  child:
+                      Text("\$${order.costsByType!.lineItems[index].cost}"))),
+              DataCell(Center(
+                  child:
+                      Text("${order.costsByType!.lineItems[index].weight}"))),
+              DataCell(Container(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                      "\$${order.costsByType!.lineItems[index].weighedCost}"))),
             ]));
   }
 }

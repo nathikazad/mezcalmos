@@ -460,7 +460,7 @@
                         },
                         "CustomerLaundrySelectCard": {
                             "days": "days",
-                            "startingFrom": "Starting from :"
+                            "startingFrom": "Starting :"
                         }
                     },
 
@@ -469,7 +469,7 @@
                     "title": "Find your closest laundries or dry cleaners "
                 },
                 "SingleLaundryScreen": {
-                    "startingFrom": "Starting from :",
+                    "startingFrom": "Starting from ",
                     "minimumCost": "Minimum Cost",
                     "description": "Description",
                     "openHours": "openHours",
@@ -490,7 +490,8 @@
                         "signInToMakeOrder": "Sign in to make order",
                         "notes": "Notes",
                         "error": "Error",
-                        "errorText": "Can't make an order please try again"
+                        "errorText": "Can't make an order please try again",
+                        "noteHint": "Write your notes here"
                     }
                 },
                 "LaundryPickLocView": {

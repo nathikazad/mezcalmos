@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -20,24 +19,22 @@ class LaundryOrderDriverCard extends StatelessWidget {
     if (_getRightDriver() != null && order.inProcess()) {
       return Card(
           child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
         child: Row(
           children: [
             Stack(
               clipBehavior: Clip.none,
+              alignment: Alignment.center,
               children: [
                 CircleAvatar(
                     radius: 25,
                     backgroundImage:
                         CachedNetworkImageProvider(_getRightDriver()!.image)),
                 Positioned(
-                  right: -30,
-                  bottom: 5,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        color: primaryBlueColor, shape: BoxShape.circle),
+                  right: -35,
+                  bottom: 3,
+                  child: CircleAvatar(
+                    radius: 25,
                     child: Icon(
                       Icons.delivery_dining,
                       size: 30,

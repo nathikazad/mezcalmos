@@ -36,7 +36,7 @@ class _LaundriesListViewState extends State<LaundriesListView> {
               margin: const EdgeInsets.all(5),
               child: Text(
                 "${_i18n()["title"]}",
-                style: Get.textTheme.headline3,
+                style: Get.textTheme.headline2,
               ),
             ),
             SizedBox(

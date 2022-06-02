@@ -48,21 +48,25 @@ class NotificationCard extends StatelessWidget {
                 ),
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                       "${DateFormat("hh:mm a").format(notification.timestamp)}"),
-                  (notification.imgUrl.isURL)
-                      ? CircleAvatar(
-                          radius: 25,
-                          backgroundColor: Colors.transparent,
-                          backgroundImage:
-                              CachedNetworkImageProvider(notification.imgUrl),
-                        )
-                      : CircleAvatar(
-                          radius: 25,
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: AssetImage(notification.imgUrl),
-                        ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: (notification.imgUrl.isURL)
+                        ? CircleAvatar(
+                            radius: 25,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage:
+                                CachedNetworkImageProvider(notification.imgUrl),
+                          )
+                        : CircleAvatar(
+                            radius: 25,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: AssetImage(notification.imgUrl),
+                          ),
+                  )
                 ],
               ),
             ],
@@ -71,5 +75,4 @@ class NotificationCard extends StatelessWidget {
       ),
     );
   }
-
 }

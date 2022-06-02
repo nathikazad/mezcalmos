@@ -65,7 +65,9 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomerAppBar(autoBack: true),
+        appBar: CustomerAppBar(
+          title: selectedLaundry.info.name,
+        ),
         //  bottomNavigationBar: bottomButton(context),
         body: Column(children: <Widget>[
           Expanded(
@@ -96,72 +98,11 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                           color: primaryBlueColor,
                         ),
                         SizedBox(
-                          width: 5,
+                          width: 2,
                         ),
                         Text(selectedLaundry.info.location.address)
                       ],
                     ),
-
-                    // Text(
-                    //   "Additional services",
-                    //   style: Get.textTheme.headline3,
-                    // ),
-                    // SizedBox(
-                    //   height: 15,
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Text(
-                    //       "Service name ",
-                    //       style: Get.textTheme.bodyText2
-                    //           ?.copyWith(fontWeight: FontWeight.w700),
-                    //     ),
-                    //     Text(
-                    //       "+ 5\$ per article",
-                    //       style: Get.textTheme.bodyText2?.copyWith(
-                    //           color: customerAppColor,
-                    //           fontWeight: FontWeight.w700),
-                    //     ),
-                    //     Spacer(),
-                    //     multipleSelectOptionComponent(
-                    //         onTap: (bool? p0) {}, value: true)
-                    //   ],
-                    // ),
-                    // SizedBox(
-                    //   height: 15,
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.start,
-                    //   children: [
-                    //     Text(
-                    //       "Service name ",
-                    //       style: Get.textTheme.bodyText2,
-                    //     ),
-                    //     Text(
-                    //       "+ 12\$ per article",
-                    //       style: Get.textTheme.bodyText2
-                    //           ?.copyWith(color: customerAppColor),
-                    //     ),
-                    //     Spacer(),
-                    //     multipleSelectOptionComponent(
-                    //         onTap: (bool? p0) {}, value: false)
-                    //   ],
-                    // ),
-                    // SizedBox(
-                    //   height: 15,
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Text(
-                    //       "Service name ",
-                    //       style: Get.textTheme.bodyText2,
-                    //     ),
-                    //     multipleSelectOptionComponent(
-                    //         onTap: (bool? p0) {}, value: false)
-                    //   ],
-                    // ),
                     SizedBox(
                       height: 20,
                     ),
@@ -208,7 +149,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
 
   Widget _orderNoteComponent() {
     return Container(
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -219,8 +160,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             maxLines: 5,
             minLines: 3,
             decoration: InputDecoration(
-              hintText: "Write your notes here",
-              hintStyle: Get.textTheme.subtitle1,
+              hintText: "${_i18n()["noteHint"]}",
+              hintStyle: Get.textTheme.bodyText2,
               filled: true,
               fillColor: Theme.of(context).primaryColor,
             ),
