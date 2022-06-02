@@ -2,6 +2,8 @@ import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 abstract class Order {
@@ -28,6 +30,23 @@ abstract class Order {
     required this.to,
     this.routeInformation,
   });
+  bool isIncoming() {
+    switch (orderType) {
+      case OrderType.Restaurant:
+        return (this as RestaurantOrder).status ==
+            RestaurantOrderStatus.OrderReceieved;
+      case OrderType.Laundry:
+        return (this as LaundryOrder).status ==
+            LaundryOrderStatus.OrderReceieved;
+      case OrderType.Taxi:
+        return (this as TaxiOrder).status ==
+            TaxiOrdersStatus.OrderReceieved;
+
+        break;
+      default:
+        return false;
+    }
+  }
 
   bool inProcess();
 

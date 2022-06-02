@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNoOrdersComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNotLookingComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverOrderCard.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"];
@@ -26,6 +23,7 @@ class CurrentOrdersListScreen extends StatefulWidget {
 }
 
 class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
+  RxList<Order> incomingOrders = RxList.empty();
   RxList<Order> currentOrders = RxList.empty();
   RxList<Order> pastOrders = RxList.empty();
   OrderController orderController = Get.find<OrderController>();
@@ -38,7 +36,12 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
     Get.find<SideMenuDrawerController>().showPastOrders = true;
     Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
     orderController.currentOrders.stream.listen((List<DeliverableOrder> value) {
-      currentOrders.value = value;
+      incomingOrders.value = value
+          .where((DeliverableOrder element) => element.isIncoming() == true)
+          .toList();
+      currentOrders.value = value
+          .where((DeliverableOrder element) => element.isIncoming() == false)
+          .toList();
     });
 
     orderController.pastOrders.stream.listen((List<DeliverableOrder> value) {
@@ -66,7 +69,17 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(children: [
-                  viewHeader(),
+                  IncomingOrdersOnOff(
+                    onTurnedOn: () {
+                      _deliveryAuthController.turnOn();
+                    },
+                    onTurnedOff: () {
+                      _deliveryAuthController.turnOff();
+                    },
+                    initialSwitcherValue:
+                        _deliveryAuthController.deliveryDriverState?.isOnline ??
+                            false,
+                  ),
                   Obx(
                     () => Container(
                       child: (_deliveryAuthController
@@ -75,29 +88,42 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                           : DriverNotLookingComponent(),
                     ),
                   ),
-                  // Divider(),
-                  // Obx(() => _pastOrdersList(context)),
+                  Obx(() => _incomingOrdersList(context)),
                 ]),
               ),
             )));
   }
 
-  Widget deliveryAppBar() {
-    return mezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: [
-      InkWell(
-          customBorder: CircleBorder(),
-          onTap: () {
-            Get.toNamed(kNotificationsRoute);
-          },
-          child: Icon(
-            Ionicons.notifications,
-            color: Get.theme.primaryColorLight,
-          ))
-    ]);
+  Widget _incomingOrdersList(BuildContext context) {
+    if (incomingOrders.isNotEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Divider(),
+          Container(
+            padding: const EdgeInsets.all(5),
+            child: Text(
+              "Incoming Orders",
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ),
+          Column(
+            children: List.generate(
+                incomingOrders.length,
+                (int index) => DriverOrderCard(
+                      order: incomingOrders[index],
+                      showLeftIcon: false,
+                    )).reversed.toList(),
+          ),
+        ],
+      );
+    } else {
+      return Container();
+    }
   }
 
   Widget _currentOrdersList(BuildContext context) {
-    if (orderController.currentOrders.isNotEmpty) {
+    if (currentOrders.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -110,9 +136,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           ),
           Column(
             children: List.generate(
-                orderController.currentOrders.length,
+                currentOrders.length,
                 (int index) => DriverOrderCard(
-                      order: orderController.currentOrders[index],
+                      order: currentOrders[index],
                       showLeftIcon: false,
                     )).reversed.toList(),
           ),
@@ -121,58 +147,5 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
     } else {
       return DriverNoOrdersComponent();
     }
-  }
-
-  Widget viewHeader() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Flexible(
-            flex: 2,
-            child: Obx(
-              () => Text(
-                _i18n()["title"],
-                style: Theme.of(context).textTheme.headline2,
-              ),
-            ),
-          ),
-          onOffSwitcher()
-        ],
-      ),
-    );
-  }
-
-  /// this is a Container wrapping the [MezSwitch]!
-  Widget onOffSwitcher() {
-    return Flexible(
-        child: Obx(() => Container(
-              height: 40.sp,
-              width: 115.sp,
-              child: MezSwitch(
-                buttonSize: Size(50.sp, 40.sp),
-                initialPosition:
-                    _deliveryAuthController.deliveryDriverState?.isOnline ??
-                        false,
-                values: [' ON ', ' OFF '],
-                onToggleCallback: (int v) {
-                  // turn ut ON
-                  if (v == 0) {
-                    _deliveryAuthController.turnOn();
-                  } else {
-                    _deliveryAuthController.turnOff();
-                  }
-                },
-                backgroundColor: Colors.white,
-                buttonColor:
-                    _deliveryAuthController.deliveryDriverState?.isOnline ==
-                            true
-                        ? Colors.green
-                        : Colors.red,
-                textColor: const Color(0xFFFFFFFF),
-              ),
-            )));
   }
 }

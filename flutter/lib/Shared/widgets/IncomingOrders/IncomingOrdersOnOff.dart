@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
 
 class IncomingOrdersOnOff extends StatelessWidget {
@@ -39,32 +38,30 @@ class IncomingOrdersOnOff extends StatelessWidget {
 
   Widget _onOffSwitcher() {
     return Flexible(
-      child: Obx(
-        () => Container(
-          height: 50, // 50, //46.47,
-          width: 60 * 2,
-          child: MezSwitch(
-            buttonSize: Size(63, 50),
-            initialPosition:
-                initialSwitcherValue, //_taxiAuthController.taxiState?.isLooking ?? false,
-            values: <String>['ON', 'OFF'],
-            onToggleCallback: (int v) {
-              // turn ut ON
-              if (v == 0) {
-                onTurnedOn();
-                // _taxiAuthController.turnOn();
-              } else {
-                // _taxiAuthController.turnOff();
-                onTurnedOff();
-              }
-            },
-            buttonColor:
-                initialSwitcherValue //_taxiAuthController.taxiState?.isLooking == true
-                    ? Colors.green
-                    : Colors.red,
-            backgroundColor: Colors.transparent,
-            textColor: const Color(0xFFFFFFFF),
-          ),
+      child: Container(
+        height: 50, // 50, //46.47,
+        width: 60 * 2,
+        child: MezSwitch(
+          buttonSize: Size(63, 50),
+          initialPosition:
+              initialSwitcherValue, //_taxiAuthController.taxiState?.isLooking ?? false,
+          values: <String>['ON', 'OFF'],
+          onToggleCallback: (int v) {
+            // turn ut ON
+            if (v == 0) {
+              onTurnedOn();
+              // _taxiAuthController.turnOn();
+            } else {
+              // _taxiAuthController.turnOff();
+              onTurnedOff();
+            }
+          },
+          buttonColor:
+              initialSwitcherValue //_taxiAuthController.taxiState?.isLooking == true
+                  ? Colors.green
+                  : Colors.red,
+          backgroundColor: Colors.transparent,
+          textColor: const Color(0xFFFFFFFF),
         ),
       ),
     );

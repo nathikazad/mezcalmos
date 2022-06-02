@@ -7,23 +7,26 @@ import 'package:sizer/sizer.dart';
 class DriverNotLookingComponent extends StatelessWidget {
   ///  Shows an image from assets and text telling the drive he is offline
 
-  DriverNotLookingComponent({Key? key}) : super(key: key);
+  const DriverNotLookingComponent({Key? key}) : super(key: key);
   dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
-          ["pages"]
-  ["CurrentOrders"]["CurrentOrdersListScreen"]["Components"]["DriverNotLookingComponent"];
+          ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"]["Components"]
+      ["DriverNotLookingComponent"];
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        SizedBox(
+          height: 15,
+        ),
         Container(
           height: 20.h,
           decoration: BoxDecoration(
               image: DecorationImage(image: AssetImage(turnOn_asset))),
         ),
         SizedBox(
-          height: 15.sp,
+          height: 15,
         ),
         Column(
           children: [
