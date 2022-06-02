@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -106,21 +105,15 @@ class OrderStatusCard extends StatelessWidget {
 Widget orderStatusImage(RestaurantOrderStatus status) {
   switch (status) {
     case RestaurantOrderStatus.CancelledByAdmin:
-      return Container(
-        //   padding: const EdgeInsets.only(right: 10.0),
-        child: Icon(
-          Ionicons.close_circle,
-          size: 40,
-          color: Colors.red,
-        ),
-      );
 
     case RestaurantOrderStatus.CancelledByCustomer:
       return Container(
-        // padding: const EdgeInsets.only(right: 10.0),
+        padding: const EdgeInsets.all(5),
+        decoration:
+            BoxDecoration(color: Color(0xFFF9D8D6), shape: BoxShape.circle),
         child: Icon(
-          Ionicons.close_circle,
-          size: 40,
+          Icons.close,
+          size: 25,
           color: Colors.red,
         ),
       );
@@ -163,10 +156,15 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
       );
 
     case RestaurantOrderStatus.Delivered:
-      return Padding(
-        padding: const EdgeInsets.only(right: 10.0),
-        child:
-            Icon(Ionicons.checkmark_circle, size: 40, color: primaryBlueColor),
+      return Container(
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+            color: SecondaryLightBlueColor, shape: BoxShape.circle),
+        child: Icon(
+          Icons.check,
+          size: 25,
+          color: primaryBlueColor,
+        ),
       );
   }
 }

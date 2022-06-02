@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
@@ -88,22 +89,25 @@ class OrderSummaryCard extends StatelessWidget {
             margin: const EdgeInsets.all(8),
             width: double.infinity,
             decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: Colors.grey.shade100,
                 borderRadius: BorderRadius.circular(12)),
             padding: EdgeInsets.all(8),
             child: Row(
               children: <Widget>[
                 Icon(
                   Icons.place,
-                  color: Theme.of(context).primaryColorLight,
+                  size: 18,
+                  color: primaryBlueColor,
                 ),
-                SizedBox(width: 5.w),
+                SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Text(
-                    order.to.address,
-                    style: txt.bodyText2,
-                    maxLines: 1,
+                    order.restaurant.location.address,
+                    style: Get.textTheme.bodyText2,
                     overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
                 ),
               ],

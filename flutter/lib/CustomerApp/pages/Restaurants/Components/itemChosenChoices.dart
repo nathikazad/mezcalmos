@@ -31,7 +31,7 @@ class ItemChosenChoiceComponent extends StatelessWidget {
           children: List.generate(
               choices.length,
               (int index) => Container(
-                    margin: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.symmetric(vertical: 8),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

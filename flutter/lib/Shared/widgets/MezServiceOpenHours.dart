@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
+    ["MezServiceOpenHours"];
 
 class MezServiceOpenHours extends StatelessWidget {
   const MezServiceOpenHours({Key? key, required this.schedule})
@@ -14,7 +18,7 @@ class MezServiceOpenHours extends StatelessWidget {
       children: [
         Container(
           child: Text(
-            "Open hours",
+            "${_i18n()["openHours"]}",
             style: Get.textTheme.bodyText1,
           ),
         ),

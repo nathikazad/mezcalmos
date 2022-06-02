@@ -106,7 +106,7 @@
                     "components": {
                         "RestaurandCard": {
                             "items": "Items",
-                            "closed": "Closed"
+                            "closed": "CLOSED"
                         },
                         "searchField": {
                             "search": "Search"
@@ -169,7 +169,7 @@
                         "BottomBarItemViewScreen": {
                             "notAvailable": "This restaurant is closed",
                             "title": "Warning",
-                            "leftBtn": "Checkout",
+                            "leftBtn": "Checkout first",
                             "rightBtn": "Overwrite",
                             "subtitle": "You already have some items in your cart from another restaurant, do you want to check them out first or overwrite them?",
                             "addToCart": "Add item",
@@ -696,6 +696,9 @@
             }
         },
         "widgets": {
+            "MezServiceOpenHours": {
+                "openHours": "Open hours"
+            },
             "MezWorkingHours": {
                 "save": "Save",
                 "cancel": "Cancel",

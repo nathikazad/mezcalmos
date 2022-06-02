@@ -174,7 +174,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             ordersStates: order.value!.status,
                           ),
                           SizedBox(
-                            height: 15,
+                            height: 20,
                           ),
                           RestaurantOrderDriverCard(
                             order: order.value!,
@@ -183,7 +183,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           OrderRestaurantCard(order: order.value!),
 
                           SizedBox(
-                            height: 15,
+                            height: 20,
                           ),
                           OrderItemsCard(
                             items: order.value!.items,

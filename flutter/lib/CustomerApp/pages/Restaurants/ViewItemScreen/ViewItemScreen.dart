@@ -138,25 +138,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                   height: 20,
                 ),
                 if (cartItem.value?.item.description != null)
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("${_i18n()["itemDescription"]}",
-                            style: Get.textTheme.bodyText1),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                            "${cartItem.value!.item.description![userLanguage]!.inCaps}",
-                            textAlign: TextAlign.left,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(fontSize: 12.sp)),
-                      ],
-                    ),
-                  ),
+                  _itemDescription(context),
                 SizedBox(
                   height: 10,
                 ),
@@ -185,6 +167,26 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     );
   }
 
+  Container _itemDescription(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("${_i18n()["itemDescription"]}", style: Get.textTheme.bodyText1),
+          SizedBox(
+            height: 10,
+          ),
+          Text("${cartItem.value!.item.description![userLanguage]!.inCaps}",
+              textAlign: TextAlign.left,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(fontSize: 12.sp)),
+        ],
+      ),
+    );
+  }
+
   Container _itemNotesComponent() {
     return Container(
       child: Column(
@@ -195,8 +197,11 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
             "${_i18n()["itemNotes"]}",
             style: Get.textTheme.bodyText1,
           )),
+          SizedBox(
+            height: 5,
+          ),
           Container(
-            margin: const EdgeInsets.all(8),
+            margin: const EdgeInsets.symmetric(vertical: 8),
             child: TextFormField(
               minLines: 3,
               maxLines: 10,

@@ -132,8 +132,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
         ),
         (showInfo)
             ? SliverPadding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                padding: const EdgeInsets.all(12),
                 sliver: SliverList(
                     delegate: SliverChildListDelegate([
                   RectGetter(
@@ -149,7 +148,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget _buildCategoriesList() {
     return SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        padding: const EdgeInsets.all(12),
         sliver: SliverList(
           delegate: SliverChildListDelegate(
             List.generate(_getList().length, (int index) {

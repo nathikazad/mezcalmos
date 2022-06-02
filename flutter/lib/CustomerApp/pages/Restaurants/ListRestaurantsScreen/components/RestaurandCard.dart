@@ -84,14 +84,16 @@ class RestaurantCard extends StatelessWidget {
                                     width: 3,
                                   ),
                                   Flexible(
-                                    child: Text('\$ 50', style: txt.bodyText2),
+                                    child: Text('\$50', style: txt.bodyText2),
                                   ),
                                 ],
                               ),
                             ),
-                            Icon(
-                              Icons.payments_sharp,
-                              color: Colors.grey.shade800,
+                            Flexible(
+                              child: Icon(
+                                Icons.payments_sharp,
+                                color: Colors.grey.shade800,
+                              ),
                             ),
                           ],
                         ),

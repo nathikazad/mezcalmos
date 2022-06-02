@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -61,7 +60,7 @@ class CartBuilder extends StatelessWidget {
                           });
                         },
                         child: const Icon(
-                          Ionicons.trash_outline,
+                          Icons.delete_outline,
                           size: 22,
                         ),
                       ),

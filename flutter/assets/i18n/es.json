@@ -107,7 +107,7 @@
                     "components": {
                         "RestaurandCard": {
                             "items": "elementos",
-                            "closed": "Cerrado"
+                            "closed": "CERRADA"
                         },
                         "searchField": {
                             "search": "Busca"
@@ -172,7 +172,7 @@
                         "BottomBarItemViewScreen": {
                             "notAvailable": "Su restaurante está cerrado",
                             "title": "Advertencia",
-                            "leftBtn": "Revisar",
+                            "leftBtn": "Primero de pago",
                             "rightBtn": "Sobrescribir",
                             "subtitle": "Ya tiene algunos artículos en su carrito de otro restaurante, ¿quiere revisarlos primero o sobrescribirlos?",
                             "addToCart": "Añadir artículo",
@@ -217,7 +217,7 @@
                             "canceledByAdmin": "Cancelada",
                             "canceledByCustomer": "Cancelada",
                             "received": "Recibida",
-                            "preparing": "Preparando el pedido",
+                            "preparing": "Preparando",
                             "onTheWay": "En camino",
                             "readyForPickUp": "Lista para recoger",
                             "delivered": "Entregado",
@@ -712,6 +712,9 @@
             }
         },
         "widgets": {
+            "MezServiceOpenHours": {
+                "openHours": "Horarios de apertura"
+            },
             "MezWorkingHours": {
                 "save": "Guardar",
                 "cancel": "Cancelar",

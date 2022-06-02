@@ -25,20 +25,17 @@ class RestaurantOrderDriverCard extends StatelessWidget {
             child: Row(
               children: [
                 Stack(
+                  alignment: Alignment.center,
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                        radius: 30,
+                        radius: 25,
                         backgroundImage: CachedNetworkImageProvider(
                             order.dropoffDriver!.image)),
                     Positioned(
-                      right: -30,
-                      bottom: 8,
-                      child: Container(
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            color: primaryBlueColor, shape: BoxShape.circle),
+                      right: -35,
+                      child: CircleAvatar(
+                        radius: 25,
                         child: Icon(
                           Icons.delivery_dining,
                           size: 32,

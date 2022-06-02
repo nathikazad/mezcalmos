@@ -5,7 +5,6 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 
@@ -68,7 +67,9 @@ class _ViewCartBodyState extends State<ViewCartBody> {
               height: 20,
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+              ),
               alignment: Alignment.centerLeft,
               child:
                   Text("${_i18n()['notes']}", style: Get.textTheme.bodyText1),
@@ -76,10 +77,22 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             SizedBox(
               height: 15,
             ),
-            TextFieldComponent(
-              textController: widget.notesTextController,
-              hint: _i18n()["notes"],
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+              ),
+              child: TextFormField(
+                  style: Get.textTheme.bodyText2
+                      ?.copyWith(fontWeight: FontWeight.w700),
+                  controller: widget.notesTextController,
+                  maxLines: 7,
+                  minLines: 4,
+                  decoration: InputDecoration(hintText: "${_i18n()["notes"]}")),
             ),
+            // TextFieldComponent(
+            //   textController: widget.notesTextController,
+            //   hint: _i18n()["notes"],
+            // ),
             SizedBox(
               height: 25,
             ),

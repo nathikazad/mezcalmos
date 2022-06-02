@@ -41,7 +41,7 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
             children: [
               if (isImageExist)
                 CircleAvatar(
-                  radius: 30,
+                  radius: 45,
                   backgroundImage:
                       CachedNetworkImageProvider(widget.item.image ?? ""),
                   onBackgroundImageError: (Object e, StackTrace? s) {
@@ -58,13 +58,16 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
                 textAlign: TextAlign.center,
               ),
               SizedBox(
-                height: 15,
+                height: 3,
               ),
               Text(
                 "\$${widget.item.cost}",
                 style: Get.textTheme.bodyText1,
                 textAlign: TextAlign.center,
-              )
+              ),
+              SizedBox(
+                height: 5,
+              ),
             ],
           ),
         ),

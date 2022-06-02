@@ -48,7 +48,9 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
                         : widget.onMinValueBtnColor ?? Colors.grey),
                 child: Icon(
                   Icons.remove,
-                  color: primaryBlueColor,
+                  color: (widget.value > widget.minVal)
+                      ? primaryBlueColor
+                      : Colors.white,
                   size: 16.sp,
                 )),
             onTap: () {

@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomerOrderCard extends StatelessWidget {
   const CustomerOrderCard({Key? key, required this.order}) : super(key: key);
@@ -209,11 +210,12 @@ class CustomerOrderCard extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())
-                  ? Colors.red.withOpacity(0.4)
+                  ? Colors.red.withOpacity(0.2)
                   : SecondaryLightBlueColor),
           child: Text(
             (order as RestaurantOrder).getOrderStatus(),
             style: Get.textTheme.bodyText1?.copyWith(
+                fontSize: 10.sp,
                 color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
           ),
         );
@@ -224,11 +226,12 @@ class CustomerOrderCard extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())
-                  ? Colors.red.withOpacity(0.4)
+                  ? Colors.red.withOpacity(0.2)
                   : SecondaryLightBlueColor),
           child: Text(
             (order as LaundryOrder).orderStatusTitleForCustomer(),
             style: Get.textTheme.bodyText1?.copyWith(
+                fontSize: 10.sp,
                 color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
           ),
         );
@@ -238,11 +241,12 @@ class CustomerOrderCard extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())
-                  ? Colors.red.withOpacity(0.4)
+                  ? Colors.red.withOpacity(0.2)
                   : SecondaryLightBlueColor),
           child: Text(
             (order as TaxiOrder).getTaxiOrderStatus(),
             style: Get.textTheme.bodyText1?.copyWith(
+                fontSize: 10.sp,
                 color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
           ),
         );

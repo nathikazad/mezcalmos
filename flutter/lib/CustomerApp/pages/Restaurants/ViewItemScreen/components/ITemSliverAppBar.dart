@@ -38,7 +38,7 @@ class ItemSliverAppBar extends StatelessWidget {
         titlePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         centerTitle: true,
         title: Container(
-          width: 200,
+          width: 70.w,
           child: Text(
             " ${item.name[userLanguage]!} ",
             textAlign: TextAlign.center,

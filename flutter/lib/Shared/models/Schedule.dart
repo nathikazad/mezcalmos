@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 enum Weekday { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
@@ -141,7 +142,7 @@ class Schedule {
       } else {
         json.remove(currentStringKey);
         currentStringKey =
-            "${currentStringKey!.split('-')[0]}-${weekday.toFirebaseFormatString()}";
+            "${currentStringKey!.split('-')[0].inCaps}-${weekday.toFirebaseFormatString().inCaps}";
         json[currentStringKey] = openHours[weekday]!;
       }
     }

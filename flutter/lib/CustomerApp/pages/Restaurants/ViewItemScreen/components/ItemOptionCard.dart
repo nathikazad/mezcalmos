@@ -38,16 +38,18 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // margin: EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 10,
+          ),
           Text(
             widget.option.name[userLanguage].toString(),
             style: Get.theme.textTheme.bodyText1,
           ),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
           Column(
             children: List.generate(
@@ -55,7 +57,10 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                 (int index) => optionChoiceCard(
                       choice: widget.option.choices[index],
                     )),
-          )
+          ),
+          SizedBox(
+            height: 10,
+          ),
         ],
       ),
     );
@@ -66,7 +71,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
     required Choice choice,
   }) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
           Flexible(

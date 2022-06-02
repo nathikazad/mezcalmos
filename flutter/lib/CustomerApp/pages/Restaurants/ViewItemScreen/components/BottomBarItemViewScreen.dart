@@ -74,6 +74,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
           const SizedBox(width: 5),
           IncrementalComponent(
             btnColors: primaryBlueColor,
+            onMinValueBtnColor: Colors.grey.shade300,
             incrementCallback: () {
               widget.cartItem.value!.quantity++;
               widget.cartItem.refresh();
@@ -127,7 +128,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
 
                         await showStatusInfoDialog(
                           context,
-                          bottomRightIcon: Icons.flatware,
+                          bottomRightIcon: Icons.shopping_cart,
                           primaryImageUrl: restaurantCartController
                               .associatedRestaurant?.info.image,
                           btnRightIconColor: primaryBlueColor,

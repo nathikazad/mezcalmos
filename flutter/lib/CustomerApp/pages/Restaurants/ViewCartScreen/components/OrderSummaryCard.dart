@@ -27,7 +27,7 @@ class OrderSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      // padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
         decoration: BoxDecoration(
@@ -61,7 +61,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text("\$$orderCost", style: txt.bodyText1),
+                      child: Text("\$$orderCost", style: txt.bodyText2),
                     ),
                   )
                 ],
@@ -82,7 +82,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text("\$$deliveryCost", style: txt.bodyText1),
+                      child: Text("\$$deliveryCost", style: txt.bodyText2),
                     ),
                   )
                 ],

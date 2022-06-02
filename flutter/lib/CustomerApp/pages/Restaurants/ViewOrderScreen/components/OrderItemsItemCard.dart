@@ -35,7 +35,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
         Get.find<LanguageController>().userLanguageKey;
     return Card(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 3),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         child: Theme(
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(

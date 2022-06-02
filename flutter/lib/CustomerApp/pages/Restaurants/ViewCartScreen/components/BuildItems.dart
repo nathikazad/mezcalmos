@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -71,8 +72,6 @@ class CartItemsBuilder extends StatelessWidget {
                                 //print("${cartItem.item.id}");
                                 _restaurantController.incrementItem(
                                     cartItem.idInCart!, 1);
-                                mezDbgPrint(
-                                    "quant ttttttoooooo${_restaurantController.cart.value.cartItems.first.quantity}");
                                 _restaurantController.refresh();
                               },
                               onChangedToZero: () async {
@@ -112,7 +111,7 @@ class CartItemsBuilder extends StatelessWidget {
                                 _restaurantController.refresh();
                               }),
                           Text(
-                            "\$${cartItem.totalCost()}",
+                            cartItem.totalCost().toPriceString(),
                             style: Get.textTheme.headline3,
                           ),
                         ],

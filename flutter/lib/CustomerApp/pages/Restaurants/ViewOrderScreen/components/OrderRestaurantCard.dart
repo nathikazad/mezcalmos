@@ -15,7 +15,7 @@ class OrderRestaurantCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
         child: Row(
           children: [
             CircleAvatar(

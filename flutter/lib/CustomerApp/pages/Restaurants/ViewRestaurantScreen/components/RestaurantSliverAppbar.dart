@@ -159,12 +159,15 @@ class RestaurantSliverAppBar extends StatelessWidget {
       child: Container(
         width: double.infinity,
         color: Colors.white,
+        margin: const EdgeInsets.only(top: 5),
         child: TabBar(
           isScrollable: true,
           controller: tabController,
           labelColor: primaryBlueColor,
           labelStyle: Get.textTheme.bodyText1,
-          unselectedLabelColor: Colors.grey.shade800,
+          unselectedLabelStyle:
+              Get.textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w700),
+          unselectedLabelColor: Colors.grey.shade700,
           indicatorPadding: const EdgeInsets.all(5),
           indicatorSize: TabBarIndicatorSize.tab,
           indicatorColor: Get.theme.primaryColorLight,

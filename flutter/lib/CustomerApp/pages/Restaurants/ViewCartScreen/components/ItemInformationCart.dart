@@ -25,7 +25,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
       // width: Get.width * 0.7,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -37,10 +37,11 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                   imageUrl: widget.imageUrl!,
                   imageBuilder: (_, ImageProvider imageProvider) {
                     return Container(
-                      width: 60,
-                      height: 60,
+                      width: 70,
+                      height: 50,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(6),
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: imageProvider,
@@ -49,11 +50,12 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                     );
                   },
                   errorWidget: (_, __, ___) => Container(
-                    height: 60,
-                    width: 60,
+                    width: 70,
+                    height: 50,
                     child: Container(
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(6),
                         color: Colors.grey.shade300,
                       ),
                       child: Icon(
@@ -64,8 +66,8 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                     ),
                   ),
                   placeholder: (_, __) => Container(
-                    width: 60,
-                    height: 60,
+                    width: 70,
+                    height: 50,
                     child: Center(
                       child: CircularProgressIndicator(),
                     ),
