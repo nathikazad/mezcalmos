@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 
 final DateFormat f = new DateFormat('hh:mma');
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -55,10 +56,10 @@ class RestaurantInfoTab extends StatelessWidget {
         SizedBox(
           height: 15,
         ),
-        // if (restaurant.info.location != null)
-        //   ServiceLocationCard(
-        //     location: restaurant.info.location,
-        //   ),
+        if (restaurant.info.location != null)
+          ServiceLocationCard(
+            location: restaurant.info.location,
+          ),
       ],
     );
   }

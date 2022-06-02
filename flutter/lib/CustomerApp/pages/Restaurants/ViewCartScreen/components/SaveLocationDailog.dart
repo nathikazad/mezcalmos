@@ -84,7 +84,7 @@ Future<String?> savedLocationDailog({
                   comingFromCart)
                 TextButton(
                   onPressed: () {
-                    Get.back(result: txtController.text);
+                    Get.back();
                   },
                   style: TextButton.styleFrom(
                       backgroundColor: Colors.black,
