@@ -14,7 +14,7 @@ class Cart {
   Restaurant? restaurant;
   String? notes;
   PaymentType paymentType = PaymentType.Cash;
-  final num shippingCost = 40;
+  final num shippingCost = 0;
   RouteInformation? routeInformation;
 
   Cart({this.restaurant});

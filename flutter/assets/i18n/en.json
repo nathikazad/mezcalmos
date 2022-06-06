@@ -231,6 +231,7 @@
                             "orderSummary": "Summary",
                             "orderCost": "Order Cost",
                             "deliveryCost": "Delivery Cost",
+                            "free": "Free",
                             "total": "Total",
                             "deliveryLocation": "Delivery Location"
                         }
@@ -442,6 +443,7 @@
                             "laundryPricing": "Laundry Pricing",
                             "fixedRate": "Cost Per Kilo",
                             "orderWeight": "Order Weight",
+                            "free": "Free",
                             "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
                         }
                     },
@@ -697,6 +699,9 @@
             }
         },
         "widgets": {
+            "FreeShippingComponent": {
+                "free": "Free"
+            },
             "MezServiceOpenHours": {
                 "openHours": "Open hours"
             },
@@ -1001,7 +1006,8 @@
                             "orderWeight": "Order Weight",
                             "orderCost": "Order Cost",
                             "totalCost": "Total Cost",
-                            "deliveryCost": "Shipping Cost"
+                            "deliveryCost": "Shipping Cost",
+                            "free": "Free"
                         }
                     },
                     "LaundryOrderScreen": {
@@ -1071,7 +1077,8 @@
                         "OrderTotalCostCard": {
                             "totalCost": "Total Cost",
                             "deliveryCost": "Delivery Cost",
-                            "total": "Total"
+                            "total": "Total",
+                            "free": "Free"
                         },
                         "PastOrderInfo": {
                             "canceledByAdmin": "Order Cancelled",

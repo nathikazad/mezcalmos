@@ -1,5 +1,3 @@
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
@@ -111,7 +109,7 @@ class RestaurantOrder extends DeliverableOrder {
       restaurant: ServiceInfo.fromData(data["restaurant"]),
       customer: UserInfo.fromData(data["customer"]),
       itemsCost: data['itemsCost'],
-      shippingCost: data['shippingCost'],
+      shippingCost: data['shippingCost'] ?? 0,
       dropoffDriver: (data["dropoffDriver"] != null)
           ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
           : null,
@@ -214,8 +212,6 @@ class RestaurantOrder extends DeliverableOrder {
 
     return text;
   }
-
- 
 }
 
 class RestaurantOrderItem {

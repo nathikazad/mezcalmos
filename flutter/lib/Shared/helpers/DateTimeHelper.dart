@@ -27,7 +27,7 @@ extension parseDateTime on DateTime {
     } else if (cDate.difference(toLocal()).inHours < 0) {
       return "${_i18n()["at"]} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${_i18n()["in"]} ${cDate.difference(toLocal()).inMinutes} min";
+      return "${_i18n()["in"]} ${cDate.difference(toLocal()).inMinutes.abs()} min";
     }
   }
 

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
@@ -53,8 +55,10 @@ class OrderSummaryCard extends StatelessWidget {
                       '${_i18n()["deliveryCost"]}',
                       style: txt.bodyText2,
                     ),
-                    Text('\$' + order.shippingCost.toString(),
-                        style: txt.bodyText2),
+                    Flexible(
+                        child: ShippingCostComponent(
+                      shippingCost: order.shippingCost,
+                    ))
                   ],
                 ),
                 SizedBox(
@@ -68,7 +72,7 @@ class OrderSummaryCard extends StatelessWidget {
                       style: txt.bodyText1,
                     ),
                     Text(
-                      '\$' + (order.cost).toStringAsFixed(0),
+                      (order.itemsCost).toPriceString(),
                       style: txt.bodyText1!.copyWith(fontSize: 14.sp),
                     ),
                   ],

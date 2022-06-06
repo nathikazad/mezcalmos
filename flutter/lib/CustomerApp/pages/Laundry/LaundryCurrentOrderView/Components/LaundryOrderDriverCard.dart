@@ -34,7 +34,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                   right: -35,
                   bottom: 3,
                   child: CircleAvatar(
-                    radius: 25,
+                    radius: 23,
                     child: Icon(
                       Icons.delivery_dining,
                       size: 30,
@@ -95,9 +95,9 @@ class LaundryOrderDriverCard extends StatelessWidget {
   String? _getTime() {
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
         order.estimatedPickupFromCustomerTime != null) {
-      return "Pick-up time : ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedPickupFromCustomerTime!)}";
+      return "Pick-up time : ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedPickupFromCustomerTime!.toLocal())}";
     } else if (order.estimatedDropoffAtCustomerTime != null) {
-      return "Dropoff time : ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedDropoffAtCustomerTime!)}";
+      return "Dropoff time : ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
     } else {
       return null;
     }

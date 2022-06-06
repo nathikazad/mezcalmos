@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
@@ -57,11 +58,9 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             Obx(() => OrderSummaryCard(
                   setLocationCallBack: widget.setLocationCallBack,
                   deliveryCost:
-                      controller.cart.value.shippingCost.toStringAsFixed(0),
-                  orderCost:
-                      controller.cart.value.itemsCost().toStringAsFixed(0),
-                  totalCost:
-                      controller.cart.value.totalCost().toStringAsFixed(0),
+                      controller.cart.value.shippingCost,
+                  orderCost: controller.cart.value.itemsCost().toPriceString(),
+                  totalCost: controller.cart.value.totalCost().toPriceString(),
                 )),
             SizedBox(
               height: 20,

@@ -280,6 +280,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       from: selectedLaundry.info.location,
       to: customerLoc,
       notes: _orderNote.text,
+      
       paymentType: PaymentType.Cash,
     );
 

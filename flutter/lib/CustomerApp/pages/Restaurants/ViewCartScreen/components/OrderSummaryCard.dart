@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -12,15 +13,15 @@ dynamic _i18n() =>
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
     Key? key,
-    this.orderCost,
-    this.deliveryCost,
-    this.setLocationCallBack,
-    this.totalCost,
+    required this.orderCost,
+    required this.deliveryCost,
+    required this.setLocationCallBack,
+    required this.totalCost,
   }) : super(key: key);
 
-  final String? orderCost;
-  final String? deliveryCost;
-  final String? totalCost;
+  final String orderCost;
+  final num deliveryCost;
+  final String totalCost;
   final void Function({Location? location})? setLocationCallBack;
 
   @override
@@ -61,7 +62,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text("\$$orderCost", style: txt.bodyText2),
+                      child: Text(orderCost),
                     ),
                   )
                 ],
@@ -79,12 +80,10 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyText2),
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      child: Text("\$$deliveryCost", style: txt.bodyText2),
-                    ),
-                  )
+                  Flexible(
+                      child: ShippingCostComponent(
+                    shippingCost: deliveryCost,
+                  ))
                 ],
               ),
             ),
@@ -103,7 +102,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text("\$$totalCost", style: txt.bodyText1),
+                      child: Text(totalCost, style: txt.bodyText1),
                     ),
                   ),
                 ],

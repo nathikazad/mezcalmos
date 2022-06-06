@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 class OrderSummaryComponent extends StatelessWidget {
   final LaundryOrder order;
@@ -51,10 +52,9 @@ class OrderSummaryComponent extends StatelessWidget {
                   "${_i18n()["deliveryCost"]} :",
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
-                Text(
-                  50.toPriceString(),
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
+                Flexible(
+                    child:
+                        ShippingCostComponent(shippingCost: order.shippingCost))
               ],
             ),
             const SizedBox(height: 10),

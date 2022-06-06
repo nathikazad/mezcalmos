@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class LaundryOrderSummary extends StatelessWidget {
@@ -72,9 +74,25 @@ class LaundryOrderSummary extends StatelessWidget {
                       "${_i18n()["deliveryCost"]} : ",
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    Text(
-                      order.shippingCost.toString(),
-                      style: Theme.of(context).textTheme.bodyText1,
+                    Row(
+                      children: [
+                        Text(
+                          order.shippingCost.toPriceString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1
+                              ?.copyWith(
+                                  decoration: TextDecoration.lineThrough),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "${_i18n()["free"]}",
+                          style: Get.textTheme.bodyText1
+                              ?.copyWith(color: primaryBlueColor),
+                        )
+                      ],
                     ),
                   ],
                 ),
@@ -87,8 +105,8 @@ class LaundryOrderSummary extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Text(
-                      (order.cost != 0)
-                          ? '\$' + (order.cost + 5).toString()
+                      (order.costsByType?.totalPrice != null)
+                          ? order.costsByType!.totalPrice!.toPriceString()
                           : '-',
                       style: Theme.of(context).textTheme.bodyText1,
                     ),

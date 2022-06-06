@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
 
 class CustomerOrderCard extends StatelessWidget {
@@ -74,7 +75,17 @@ class CustomerOrderCard extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-              Text(50.toPriceString())
+              (order as RestaurantOrder).shippingCost == 0
+                  ? Flexible(
+                      flex: 4,
+                      fit: FlexFit.tight,
+                      child: ShippingCostComponent(
+                        shippingCost: (order as RestaurantOrder).shippingCost,
+                        alignment: MainAxisAlignment.start,
+                      ),
+                    )
+                  : Text(
+                      (order as RestaurantOrder).shippingCost.toPriceString())
             ],
           ),
         );
@@ -99,7 +110,14 @@ class CustomerOrderCard extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-              Text(50.toPriceString())
+              (order as LaundryOrder).shippingCost == 0
+                  ? Flexible(
+                      child: ShippingCostComponent(
+                        shippingCost: (order as LaundryOrder).shippingCost,
+                        alignment: MainAxisAlignment.start,
+                      ),
+                    )
+                  : Text((order as LaundryOrder).shippingCost.toPriceString())
             ],
           ),
         );

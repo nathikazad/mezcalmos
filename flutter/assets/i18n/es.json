@@ -234,6 +234,7 @@
                         "OrderSummaryCard": {
                             "totalCost": "Costo Total",
                             "deliveryCost": "Costo de envío",
+                            "free": "Libre",
                             "total": "Total",
                             "orderSummary": "Resumen",
                             "orderCost": "Costo de la orden",
@@ -446,6 +447,7 @@
                             "laundryPricing": "Precios de lavandería",
                             "fixedRate": "Costo por kilo",
                             "orderWeight": "Peso de pedido",
+                            "free": "Libre",
                             "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido."
                         }
                     },
@@ -713,6 +715,9 @@
             }
         },
         "widgets": {
+            "FreeShippingComponent": {
+                "free": "Libre"
+            },
             "MezServiceOpenHours": {
                 "openHours": "Horarios de apertura"
             },
@@ -1003,7 +1008,8 @@
                             "orderWeight": "Peso de pedido",
                             "orderCost": "Costo de la orden",
                             "deliveryCost": "Costo de envío",
-                            "totalCost": "Costo Total"
+                            "totalCost": "Costo Total",
+                            "free": "Libre"
                         }
                     },
                     "LaundryOrderScreen": {
@@ -1072,7 +1078,8 @@
                         "OrderTotalCostCard": {
                             "totalCost": "Costo Total",
                             "deliveryCost": "Costo de envío",
-                            "total": "Total"
+                            "total": "Total",
+                            "free": "Libre"
                         },
                         "PastOrderInfo": {
                             "canceledByAdmin": "Cancelada",

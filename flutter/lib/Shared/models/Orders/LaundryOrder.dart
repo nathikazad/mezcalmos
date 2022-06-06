@@ -114,7 +114,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       to: Location.fromFirebaseData(data['to']),
       orderTime: DateTime.parse(data["orderTime"]),
       paymentType: data["paymentType"].toString().toPaymentType(),
-      shippingCost: data['shippingCost'] ?? 50,
+      shippingCost: data['shippingCost'] ?? 0,
       notes: data["notes"],
       costsByType: (data["costsByType"] != null)
           ? LaundryOrderCosts.fromData(data["costsByType"])
@@ -213,11 +213,6 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
   bool isAtLaundry() {
     return status == LaundryOrderStatus.AtLaundry;
-  }
-
-  // TODO @montasarre remove getPrice as it comes from costsByType
-  num? getPrice() {
-    return null;
   }
 
   LaundryOrderPhase getCurrentPhase() {
