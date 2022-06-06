@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
-import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -16,18 +16,18 @@ import 'package:url_launcher/url_launcher.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
 
-class LaundryAppDrawer extends StatelessWidget {
-  const LaundryAppDrawer({Key? key}) : super(key: key);
+class ROpDrawer extends StatelessWidget {
+  const ROpDrawer({Key? key}) : super(key: key);
   // controllers //
   static final LanguageController languageController =
       Get.find<LanguageController>();
   static final SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
   static AuthController authController = Get.find<AuthController>();
-  static LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
-  static LaundryOpAuthController laundryOpAuthController =
-      Get.find<LaundryOpAuthController>();
+  static RestaurantInfoController restaurantInfoController =
+      Get.find<RestaurantInfoController>();
+  static RestaurantOpAuthController restaurantOpAuthController =
+      Get.find<RestaurantOpAuthController>();
 
   // helpers //
   static final AppLaunchMode lmd = getAppLaunchMode();
@@ -54,13 +54,13 @@ class LaundryAppDrawer extends StatelessWidget {
                     ),
                     // Laundry IMAGE AND NAME
 
-                    if (laundryInfoController.laundry.value != null)
+                    if (restaurantInfoController.restaurant.value != null)
                       _laundryImageAndName(),
 
                     // Navigation links
-                    if (laundryOpAuthController.operator.value != null &&
-                        laundryOpAuthController
-                                .operator.value?.state.laundryId !=
+                    if (restaurantOpAuthController.operator.value != null &&
+                        restaurantOpAuthController
+                                .operator.value?.state.restaurantId !=
                             null)
                       _operatorNavLinks(),
                     _languageSwitcher(),
@@ -157,13 +157,13 @@ class LaundryAppDrawer extends StatelessWidget {
               style: Get.textTheme.bodyText1,
             )),
         _navigationLink(
-            icon: Icons.settings,
+            icon: Icons.flatware_rounded,
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed(kAdminView);
+              Get.toNamed(kMenuView);
             },
             titleWidget: Text(
-              "${_i18n()["admin"]}",
+              "${_i18n()["menu"] ?? "Menu"}",
               style: Get.textTheme.bodyText1,
             )),
         _navigationLink(
@@ -200,18 +200,19 @@ class LaundryAppDrawer extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 45,
-                backgroundImage: (laundryInfoController
-                            .laundry.value!.info.image !=
+                backgroundImage: (restaurantInfoController
+                            .restaurant.value!.info.image !=
                         null)
                     ? CachedNetworkImageProvider(
-                        laundryInfoController.laundry.value?.info.image ?? "")
+                        restaurantInfoController.restaurant.value?.info.image ??
+                            "")
                     : AssetImage(aNoImage) as ImageProvider,
               ),
               SizedBox(
                 height: 15,
               ),
               Text(
-                laundryInfoController.laundry.value!.info.name,
+                restaurantInfoController.restaurant.value!.info.name,
                 style: Get.textTheme.headline3,
               ),
               SizedBox(

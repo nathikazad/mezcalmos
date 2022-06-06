@@ -1,17 +1,17 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
-import 'package:mezcalmos/LaundryApp/pages/CategoryView/CategoryView.dart';
-import 'package:mezcalmos/LaundryApp/pages/CurrentOrdersList/LaundryOpOrdersListView.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/EditInfoView.dart';
-import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/LaundryOpOrderView.dart';
-import 'package:mezcalmos/LaundryApp/pages/PastOrdresList/LaundryOpPastOrdersList.dart';
+import 'package:mezcalmos/RestaurantApp/pages/CategoryView/CategoryView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/ROpCurrentOrders.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/EditInfoView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrderView/LaundryOpOrderView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/PastOrdresList/LaundryOpPastOrdersList.dart';
+import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // const String kCurrentOrdersListRoute = '/currentOrders';
 const String kCurrentOrdersListView = '/orders';
 const String kPastOrdersListView = '/pastorders';
-const String kAdminView = '/admin';
+const String kMenuView = '/menu';
 
 const String kEditInfoView = '/editInfo';
 
@@ -31,13 +31,13 @@ String getLaundryOpOrderRoute(String orderId) {
 class XRouter {
   static dynamic mainRoutes = [
         GetPage(name: kEditInfoView, page: () => LaundryOpEditInfoView()),
-        GetPage(name: kAdminView, page: () => LaundryOpAdminView()),
+        GetPage(name: kMenuView, page: () => ROpMenuView()),
         GetPage(
             name: kCurrentOrdersListView,
             page: () => LaundryOpCurrentOrdersListView()),
         GetPage(
             name: kPastOrdersListView, page: () => LaundryOpPastOrdersList()),
-        GetPage(name: kHomeRoute, page: () => LaundryWrapper()),
+        GetPage(name: kHomeRoute, page: () => RestaurantWrapper()),
         GetPage(
           name: kCategoryView,
           page: () => LaundryOpCategoryScreen(),
