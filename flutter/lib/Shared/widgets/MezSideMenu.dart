@@ -93,8 +93,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             Get.toNamed<void>(kNotificationsRoute);
           },
         ),
-        if (_drawerController.showPastOrders &&
-            _drawerController.pastOrdersRoute != null)
+        if (_drawerController.pastOrdersRoute != null)
           SideMenuItem(
             icon: Icons.restore,
 

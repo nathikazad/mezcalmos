@@ -39,10 +39,10 @@ abstract class Order {
         return (this as LaundryOrder).status ==
             LaundryOrderStatus.OrderReceieved;
       case OrderType.Taxi:
-        return (this as TaxiOrder).status ==
-            TaxiOrdersStatus.OrderReceieved;
+        return (this as TaxiOrder).status == TaxiOrdersStatus.LookingForTaxi ||
+            (this as TaxiOrder).status ==
+                TaxiOrdersStatus.LookingForTaxiScheduled;
 
-        break;
       default:
         return false;
     }

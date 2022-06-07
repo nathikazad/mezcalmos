@@ -195,7 +195,8 @@ class OrderController extends GetxController {
 
       final HttpsCallableResult response = await dropOrderFunction.call(_map);
       return ServerResponse.fromJson(response.data);
-    } catch (e) {
+    } catch (e, s) {
+      mezDbgPrint("Error ===> $e | $s");
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");
     }

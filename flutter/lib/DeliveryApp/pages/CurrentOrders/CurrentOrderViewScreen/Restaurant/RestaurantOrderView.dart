@@ -3,18 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/DriverBottomRestaurantOrderCard.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantOrderFromToComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantControllButtons.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -120,37 +120,66 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   void dispose() {
     _orderListener?.cancel();
     _orderListener = null;
-
     super.dispose();
   }
 
+  double _recenterBtnBottomPadding = 180;
+  EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 180);
+
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        if (order.value != null) {
-          return Scaffold(
-              appBar:
-                  mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
-              bottomNavigationBar:
-                  RestaurantControllButtons(order: order.value!),
-              body: Column(children: <Widget>[
-                DriverOrderMapComponent(
-                  order: order.value!,
-                  mapController: mapController,
-                ),
-                Expanded(
-                  child: DriverBottomRestaurantOrderCard(
-                    order: order.value as RestaurantOrder,
+    return Scaffold(
+      appBar: mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: Get.back,
+        showNotifications: true,
+      ),
+      bottomNavigationBar: Obx(
+        () => RestaurantControllButtons(
+          order: order.value!,
+        ),
+      ),
+      body: Obx(
+        () => order.value != null
+            ? Stack(
+                children: [
+                  MGoogleMap(
+                    recenterBtnBottomPadding: _recenterBtnBottomPadding,
+                    mGoogleMapController: mapController,
+                    padding: _mapPadding,
                   ),
-                ),
-              ]));
-        } else {
-          return MezLogoAnimation(
-            centered: true,
-          );
-        }
-      },
+                  Positioned(
+                    bottom: 2,
+                    left: 5,
+                    right: 5,
+                    child: Card(
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: RestaurantOrderFromToComponent(
+                          order: order.value!,
+                          onCardStateChange: (OrderInfoCardState state) {
+                            setState(() {
+                              if (state == OrderInfoCardState.Maximized) {
+                                _recenterBtnBottomPadding = 275;
+                                _mapPadding =
+                                    EdgeInsets.only(top: 10, bottom: 275);
+                              } else {
+                                _recenterBtnBottomPadding = 180;
+                                _mapPadding =
+                                    EdgeInsets.only(top: 10, bottom: 180);
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            : MezLogoAnimation(
+                centered: true,
+              ),
+      ),
     );
   }
 

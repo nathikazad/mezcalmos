@@ -30,7 +30,27 @@ export = functions.https.onCall(async (data, context) => {
   }
 
   let order: TwoWayDeliverableOrder = validationPass.order;
-  order.estimatedDeliveryTimes[deliveryDriverType] =  order.estimatedDeliveryTimes[deliveryDriverType] || {};
+  console.log("[Before] estimatedDeliveryTimes ==>",order.estimatedDeliveryTimes);
+  if(!order.estimatedDeliveryTimes )
+  {
+    order.estimatedDeliveryTimes = {
+      pickup: {
+        pickup: null,
+        dropoff: null
+      }, 
+      dropoff: {
+        pickup: null,
+        dropoff: null
+      }
+    };
+  }
+  console.log("[After] estimatedDeliveryTimes ==>",order.estimatedDeliveryTimes);
+  if (!order.estimatedDeliveryTimes[deliveryDriverType]) {
+    order.estimatedDeliveryTimes[deliveryDriverType] = {
+      pickup : null,
+      dropoff: null,
+    }
+  }
   order.estimatedDeliveryTimes[deliveryDriverType]![deliveryAction] = data.estimatedTime;
  
   updateServiceProviderOrder(orderId, order);

@@ -92,6 +92,7 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                       });
                     });
                     break;
+
                   case LaundryOrderStatus.OtwPickupFromLaundry:
                   case LaundryOrderStatus.PickedUpFromLaundry:
                     setState(() {
@@ -167,18 +168,11 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
 
   bool shouldDisableBottomButton() {
     if (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
-      if (widget.order.status == LaundryOrderStatus.OrderReceieved &&
-          widget.order.estimatedPickupFromCustomerTime == null)
-        return true;
-      else if (widget.order.status == LaundryOrderStatus.PickedUpFromCustomer &&
-          widget.order.estimatedDropoffAtServiceProviderTime == null)
-        return true;
+      return widget.order.estimatedPickupFromCustomerTime == null ||
+          widget.order.estimatedDropoffAtServiceProviderTime == null;
     } else if (widget.order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
-      if (widget.order.status == LaundryOrderStatus.ReadyForDelivery &&
-          widget.order.estimatedPickupFromServiceProviderTime == null)
-        return true;
-      else if (widget.order.status == LaundryOrderStatus.PickedUpFromLaundry &&
-          widget.order.estimatedDropoffAtCustomerTime == null) return true;
+      return widget.order.estimatedPickupFromServiceProviderTime == null ||
+          widget.order.estimatedDropoffAtCustomerTime == null;
     }
     return false;
   }

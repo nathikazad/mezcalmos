@@ -8,8 +8,10 @@ import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverLaundryOrderButtons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/laundryOrderFromToComponent.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -74,8 +76,13 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
         ),
         customImgHttpUrl: order.value!.laundry!.image,
         markerId: order.value!.laundry!.id,
-      )
+      ),
     ]).then((_) {
+      // add polylines
+      if (order.value?.routeInformation?.polyline != null)
+        mapController.decodeAndAddPolyline(
+          encodedPolylineString: order.value!.routeInformation!.polyline,
+        );
       mapController.setLocation(
         Location.fromLocationData(
           deliveryAuthAuthController.currentLocation,
@@ -121,11 +128,16 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
   double _recenterBtnBottomPadding = 180;
   EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 180);
+  OrderInfoCardState initialCardStat = OrderInfoCardState.Minimized;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
+      appBar: mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: Get.back,
+        showNotifications: true,
+      ),
       bottomNavigationBar: Obx(
         () => DriverLaundryBottomButtons(
           order: order.value!,
@@ -148,9 +160,10 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         child: LaundryOrderFromToComponent(
-                          onSlide: (bool isExpanded) {
+                          onCardStateChange: (OrderInfoCardState state) {
+                            mezDbgPrint("New State ==> $state");
                             setState(() {
-                              if (isExpanded) {
+                              if (state == OrderInfoCardState.Maximized) {
                                 _recenterBtnBottomPadding = 275;
                                 _mapPadding =
                                     EdgeInsets.only(top: 10, bottom: 275);
