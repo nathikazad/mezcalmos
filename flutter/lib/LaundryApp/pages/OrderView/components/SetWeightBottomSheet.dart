@@ -83,23 +83,28 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                     (widget.editMode && widget.oldItem != null)
                         ? widget.oldItem!.name[userLanguage]!
                         : "${_i18n()["newItemsWeight"]}",
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.headline3,
                   )),
-              Divider(),
+              SizedBox(
+                height: 30,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("${_i18n()["itemsCategory"]}"),
+                  Text(
+                    "${_i18n()["itemsCategory"]}",
+                    style: Get.textTheme.bodyText1,
+                  ),
                   Spacer(),
                   if (widget.editMode)
                     InkWell(
                       onTap: () async {
                         bool isDeleted = false;
                         await showConfirmationDialog(context,
-                            primaryButtonText: "Yes delete item",
-                            helperText:
-                                "Are you sure you want to delete this item",
-                            title: "Delete item", onYesClick: () async {
+                            primaryButtonText: "${_i18n()["deleteTitle"]}",
+                            helperText: "${_i18n()["deleteBody"]}",
+                            title: "${_i18n()["deleteItem"]}",
+                            onYesClick: () async {
                           await deleteItem(widget.oldItem!).whenComplete(() {
                             Get.back();
                             isDeleted = true;
@@ -119,7 +124,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                               color: Colors.red,
                             ),
                             Text(
-                              "Delete",
+                              "${_i18n()["deleteItem"]}",
                               style: Get.textTheme.bodyText2?.copyWith(
                                   color: Colors.red,
                                   fontWeight: FontWeight.w700),
@@ -130,6 +135,9 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                     )
                 ],
               ),
+              SizedBox(
+                height: 10,
+              ),
               //    Category selector
               LaundryOrderWeightSelector(
                 newCategory: newCategory,
@@ -138,7 +146,10 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
               SizedBox(
                 height: 15,
               ),
-              Text("${_i18n()["itemsWeight"]}"),
+              Text("${_i18n()["itemsWeight"]}", style: Get.textTheme.bodyText1),
+              SizedBox(
+                height: 10,
+              ),
               TextFormField(
                 controller: itemsWeightController,
                 style: Theme.of(context).textTheme.bodyText1,
@@ -155,10 +166,16 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                   }
                 },
                 decoration: InputDecoration(
-                    suffixText: "KG",
+                    suffixIcon: Container(
+                        padding: const EdgeInsets.all(8),
+                        alignment: Alignment.centerRight,
+                        child: Text("KG")),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     alignLabelWithHint: false,
-                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8)),
+                    fillColor: Colors.grey.shade200,
                     filled: true),
               ),
               SizedBox(
@@ -173,12 +190,12 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                             saveItemsWeight();
                           },
                     child: Ink(
+                      height: 50,
                       width: double.infinity,
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
-                              colors: [primaryBlueColor, Colors.purple])),
+                          gradient: bluePurpleGradient),
                       child: Center(
                         child: (isClicked.value)
                             ? SizedBox(
@@ -200,15 +217,22 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
               SizedBox(
                 height: 10,
               ),
-              TextButton(
-                  onPressed: () {
+              InkWell(
+                  onTap: () {
                     Get.back();
                   },
-                  style: TextButton.styleFrom(backgroundColor: Colors.red),
-                  child: Container(
-                    alignment: Alignment.center,
+                  child: Ink(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.all(5),
-                    child: Text("${_i18n()["cancel"]}"),
+                    child: Center(
+                        child: Text(
+                      "${_i18n()["cancel"]}",
+                      style: Get.textTheme.bodyText1
+                          ?.copyWith(color: Colors.white),
+                    )),
                   )),
             ],
           ),

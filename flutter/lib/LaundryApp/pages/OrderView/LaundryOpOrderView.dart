@@ -9,6 +9,7 @@ import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderNo
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderStatusCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCategoryComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/OrderEstimatedTimeComponent.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -70,7 +71,10 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: Get.back,
+          showNotifications: true,
+          ordersRoute: kPastOrdersListView),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8),
         child: Obx(
@@ -86,14 +90,20 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               const SizedBox(
                 height: 10,
               ),
+
               OrderEstimatedTimeComponent(order: order.value!),
+              const SizedBox(
+                height: 15,
+              ),
               LaundryOpOrderDriverCard(order: order.value!),
 
               const SizedBox(
-                height: 10,
+                height: 15,
               ),
               LaundryOpCustomer(order: order.value!),
-
+              const SizedBox(
+                height: 15,
+              ),
               LaundyOpSetCategoryComponent(
                 order: order.value!,
               ),
@@ -153,7 +163,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                         : Colors.grey),
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
               child: Text("${_i18n()["orderReady"]}"),
             )),
       );

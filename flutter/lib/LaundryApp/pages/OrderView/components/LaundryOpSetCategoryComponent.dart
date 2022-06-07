@@ -24,8 +24,30 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [_PricingTable(context)],
+    return Card(
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              padding: const EdgeInsets.all(5),
+              child: Text(
+                "${_i18n()["itemsWeight"]}",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            _PricingTable(),
+            setItemsWeightButton(context),
+          ],
+        ),
+      ),
     );
   }
 
@@ -75,7 +97,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
           isDismissible: false,
           useRootNavigator: false,
           isScrollControlled: true,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10),
@@ -112,20 +134,17 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
     }
   }
 
-  Widget _PricingTable(BuildContext context) {
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          DataTable(
-              dividerThickness: 0,
-              showBottomBorder: false,
-              columnSpacing: 20,
-              columns: _PricingTableColumns(),
-              rows: _PricingTableRows()),
-          setItemsWeightButton(context),
-        ],
-      ),
+  Widget _PricingTable() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: DataTable(
+          dividerThickness: 0.2,
+          horizontalMargin: 6,
+          columnSpacing: 40.0,
+          headingRowHeight: 30.0,
+          showBottomBorder: false,
+          columns: _PricingTableColumns(),
+          rows: _PricingTableRows()),
     );
   }
 
@@ -152,8 +171,11 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               )),
-              DataCell(Text("\$${order.costsByType!.lineItems[index].cost}")),
+              DataCell(Center(
+                  child:
+                      Text("\$${order.costsByType!.lineItems[index].cost}"))),
               DataCell(Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("${order.costsByType!.lineItems[index].weight} "),
                   InkWell(
@@ -166,10 +188,10 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
                                 order.costsByType?.lineItems[index])
                         : null,
                     child: Ink(
-                        padding: const EdgeInsets.all(3),
+                        padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.grey.shade400),
+                            color: Colors.grey.shade200),
                         child: Icon(
                           Icons.mode_edit_outline_outlined,
                           size: 18,

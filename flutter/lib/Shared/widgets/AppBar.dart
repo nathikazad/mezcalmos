@@ -20,9 +20,36 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     String? title,
     Widget? titleWidget,
     bool showNotifications = false,
+    String? ordersRoute,
     PreferredSizeWidget? tabBar,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget btnIcon;
+
+  Widget _ordersAppBarIcon() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 12),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          if (ordersRoute != null) {
+            Get.toNamed(ordersRoute);
+          }
+        },
+        child: Ink(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: SecondaryLightBlueColor,
+          ),
+          child: Icon(
+            Icons.watch_later,
+            size: 20,
+            color: primaryBlueColor,
+          ),
+        ),
+      ),
+    );
+  }
 
   switch (leftBtnType) {
     case AppBarLeftButtonType.Back:
@@ -137,6 +164,9 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
               if (showNotifications &&
                   Get.find<AuthController>().isUserSignedIn)
                 _notificationAppBarIcon(),
+              if (ordersRoute != null &&
+                  Get.find<AuthController>().isUserSignedIn)
+                _ordersAppBarIcon(),
               for (int i = 0; i < actionIcons.length; i++) ...<Widget>[
                 actionIcons[i]
               ],
@@ -164,12 +194,12 @@ Widget _notificationAppBarIcon() {
           child: Badge(
             badgeColor: Colors.red,
             showBadge: true,
-            position: BadgePosition.topEnd(top: 8, end: 0),
+            position: BadgePosition.topEnd(top: 0, end: 0),
             child: Ink(
               padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white,
+                color: SecondaryLightBlueColor,
               ),
               child: Icon(
                 Icons.notifications,

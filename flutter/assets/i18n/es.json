@@ -1338,6 +1338,10 @@
                 }
             },
             "AdminView": {
+                "LaundryOpAdminView": {
+                    "save": "Ahorrar",
+                    "categories": "Categorías"
+                },
                 "components": {
                     "CategoryGridCard": {
                         "nameTooltip": "Nombre que falta en su idioma primario seleccionado",
@@ -1383,6 +1387,9 @@
 
 
                     "LaundryOpSetCategoryComponent": {
+                        "deleteTitle": "SÍ Eliminar el artículo",
+                        "deleteBody": "¿Estás seguro de que quieres eliminar este artículo?",
+                        "deleteItem": "Eliminar elemento",
                         "itemsWeights": "Artículos pesos",
                         "newItemsWeight": "Nuevos artículos de peso",
                         "itemsCategory": "Categoría de artículos",
@@ -1421,7 +1428,7 @@
 
                 },
                 "LaundryOpOrderView": {
-                    "customer": "Cliente",
+                    "customer": "Información del cliente :",
                     "orderDate": "Fecha de orden",
                     "total": "Total",
                     "orderReady": "Pedido listo para la entrega"

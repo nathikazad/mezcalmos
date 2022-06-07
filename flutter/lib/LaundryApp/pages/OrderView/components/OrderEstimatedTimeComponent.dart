@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -26,64 +27,63 @@ class _OrderEstimatedTimeComponentState
   RxBool isClicked = RxBool(false);
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Card(
-        color: (widget.order.isAtLaundry() ||
-                widget.order.estimatedLaundryReadyTime != null)
-            ? Colors.white
-            : Colors.grey.shade300,
-        child: (isClicked.value)
-            ? Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                margin: EdgeInsets.all(5),
-                child: CircularProgressIndicator())
-            : Container(
-                margin: const EdgeInsets.all(8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: primaryBlueColor, shape: BoxShape.circle),
-                      child: Icon(
-                        Icons.watch_later,
-                        color: Colors.white,
+    if (widget.order.isAtLaundry() ||
+        widget.order.estimatedLaundryReadyTime != null) {
+      return Obx(
+        () => Card(
+          child: (isClicked.value)
+              ? Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(5),
+                  child: CircularProgressIndicator())
+              : Container(
+                  margin: const EdgeInsets.all(8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 20,
+                        child: Icon(
+                          Icons.watch_later,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Flexible(
-                      flex: 8,
-                      fit: FlexFit.tight,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${_i18n()["estFinishTime"]}",
-                            style: Get.theme.textTheme.bodyText1,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            (widget.order.estimatedLaundryReadyTime != null)
-                                ? "${DateFormat("dd MMMM yyyy, hh:mm a ").format(widget.order.estimatedLaundryReadyTime!.toLocal())}"
-                                : "${_i18n()["noEstTime"]}",
-                            style: Get.theme.textTheme.bodyText2,
-                          ),
-                        ],
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                    Spacer(),
-                    _editSetButton(context)
-                  ],
+                      Flexible(
+                        flex: 8,
+                        fit: FlexFit.tight,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${_i18n()["estFinishTime"]}",
+                              style: Get.theme.textTheme.bodyText1,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            if (widget.order.estimatedLaundryReadyTime != null)
+                              Text(
+                                "${DateFormat("dd MMMM yyyy, hh:mm a ").format(widget.order.estimatedLaundryReadyTime!.toLocal())}",
+                                style: Get.theme.textTheme.bodyText2,
+                              ),
+                          ],
+                        ),
+                      ),
+                      Spacer(),
+                      _editSetButton(context)
+                    ],
+                  ),
                 ),
-              ),
-      ),
-    );
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   Widget _editSetButton(BuildContext context) {
@@ -127,40 +127,7 @@ class _OrderEstimatedTimeComponentState
                             SizedBox(
                               height: 20,
                             ),
-                            InkWell(
-                              borderRadius: BorderRadius.circular(8),
-                              onTap: () {
-                                if (selectedDate.value != null) {
-                                  _setOrderEstTime(selectedDate.value!);
-                                }
-                              },
-                              child: Ink(
-                                height: 50,
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    gradient: bluePurpleGradient,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Obx(
-                                  () => Container(
-                                    padding: const EdgeInsets.all(5),
-                                    alignment: Alignment.center,
-                                    child: (isClicked.value)
-                                        ? Transform.scale(
-                                            scale: 0.3,
-                                            child: CircularProgressIndicator(
-                                              color: Colors.white,
-                                            ),
-                                          )
-                                        : Text(
-                                            "${_i18n()["confirm"]}",
-                                            style: Get.textTheme.bodyText1
-                                                ?.copyWith(color: Colors.white),
-                                          ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            _confirmButton(selectedDate),
                             SizedBox(
                               height: 15,
                             ),
@@ -187,8 +154,49 @@ class _OrderEstimatedTimeComponentState
                   Icons.edit_outlined,
                   size: 18,
                 )
-              : Text("${_i18n()["set"]}"),
+              : Text(
+                  "${_i18n()["set"]}",
+                  style: Get.textTheme.bodyText1
+                      ?.copyWith(color: primaryBlueColor),
+                ),
         ));
+  }
+
+  Widget _confirmButton(Rxn<DateTime> selectedDate) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(8),
+      onTap: () {
+        if (selectedDate.value != null) {
+          _setOrderEstTime(selectedDate.value!);
+        }
+      },
+      child: Ink(
+        height: 50,
+        width: double.infinity,
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            gradient: bluePurpleGradient,
+            borderRadius: BorderRadius.circular(8)),
+        child: Obx(
+          () => Container(
+            padding: const EdgeInsets.all(5),
+            alignment: Alignment.center,
+            child: (isClicked.value)
+                ? Transform.scale(
+                    scale: 0.3,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  )
+                : Text(
+                    "${_i18n()["confirm"]}",
+                    style:
+                        Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+                  ),
+          ),
+        ),
+      ),
+    );
   }
 
   InkWell _cancelButton() {
@@ -198,6 +206,7 @@ class _OrderEstimatedTimeComponentState
         Get.back(closeOverlays: true);
       },
       child: Ink(
+        height: 50,
         width: double.infinity,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
@@ -262,7 +271,7 @@ class _OrderEstimatedTimeComponentState
           children: [
             Icon(Icons.watch_later_rounded),
             SizedBox(
-              width: 5,
+              width: 7,
             ),
             Obx(
               () => Text(
@@ -314,9 +323,9 @@ class _OrderEstimatedTimeComponentState
             color: Colors.grey.shade200),
         child: Row(
           children: [
-            Icon(Icons.calendar_month_rounded),
+            Icon(Ionicons.calendar_clear),
             SizedBox(
-              width: 5,
+              width: 7,
             ),
             Obx(
               () => Text(

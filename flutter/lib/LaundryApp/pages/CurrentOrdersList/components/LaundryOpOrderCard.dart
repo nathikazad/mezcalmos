@@ -72,7 +72,9 @@ class LaundryOpOrderCard extends StatelessWidget {
                   // getOrderWidget()
                 ],
               ),
-              const Divider(),
+              Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: const Divider()),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
@@ -106,8 +108,8 @@ class LaundryOpOrderCard extends StatelessWidget {
       fit: BoxFit.fill,
       imageBuilder: (BuildContext context, ImageProvider<Object> image) {
         return Container(
-          height: 60,
-          width: 60,
+          height: 50,
+          width: 50,
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(image: image, fit: BoxFit.cover)),

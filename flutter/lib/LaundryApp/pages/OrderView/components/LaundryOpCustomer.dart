@@ -22,9 +22,12 @@ class LaundryOpCustomer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${_i18n()["customer"]}"),
+          Text(
+            "${_i18n()["customer"]}",
+            style: Get.textTheme.bodyText1,
+          ),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
           Card(
             child: Container(
@@ -33,7 +36,7 @@ class LaundryOpCustomer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 25,
+                    radius: 23,
                     backgroundImage:
                         CachedNetworkImageProvider(order.customer.image),
                   ),

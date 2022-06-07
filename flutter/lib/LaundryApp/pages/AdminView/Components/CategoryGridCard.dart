@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["AdminView"]["components"]["CategoryGridCard"];
@@ -66,7 +67,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
               Flexible(
                 child: Text(
                   _getRightName(),
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.headline3?.copyWith(fontSize: 12.sp),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -88,10 +89,10 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                     child: Ink(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                          color: Colors.grey.shade200, shape: BoxShape.circle),
+                          color: Colors.grey.shade100, shape: BoxShape.circle),
                       child: Icon(
                         Icons.edit_outlined,
-                        size: 20,
+                        size: 22,
                       ),
                     ),
                   ),
@@ -116,7 +117,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                           color: Colors.red.shade100, shape: BoxShape.circle),
                       child: Icon(
                         Icons.delete_outline,
-                        size: 20,
+                        size: 22,
                         color: Colors.red,
                       ),
                     ),

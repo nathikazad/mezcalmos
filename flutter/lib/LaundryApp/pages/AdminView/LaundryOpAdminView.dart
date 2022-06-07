@@ -9,8 +9,14 @@ import 'package:mezcalmos/LaundryApp/pages/AdminView/Components/CategoryGridCard
 import 'package:mezcalmos/LaundryApp/pages/AdminView/Components/LaundryOpNormalDeliveryTime.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
+    ["AdminView"]["LaundryOpAdminView"];
+//
 
 class LaundryOpAdminView extends StatefulWidget {
   const LaundryOpAdminView({Key? key}) : super(key: key);
@@ -59,7 +65,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
       bottomNavigationBar: _footerSaveButton(),
       body: Obx(
         () => SingleChildScrollView(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -85,6 +91,15 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                   ),
                   SizedBox(
                     height: 25,
+                  ),
+                  Container(
+                    child: Text(
+                      "${_i18n()["categories"]}",
+                      style: Get.textTheme.bodyText1,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   _categoriesGridList(),
                   SizedBox(
@@ -133,7 +148,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                         color: Colors.white,
                       )
                     : Text(
-                        "Save",
+                        "${_i18n()["save"]}",
                         style: Get.textTheme.bodyText1
                             ?.copyWith(color: Colors.white),
                       ),
@@ -152,6 +167,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
       crossAxisCount: 3,
       mainAxisSpacing: 5,
       crossAxisSpacing: 5,
+      padding: EdgeInsets.zero,
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       children: List<Widget>.generate(

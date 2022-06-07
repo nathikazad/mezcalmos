@@ -64,38 +64,38 @@ class _LaundryOpCurrentOrdersListViewState
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: LaundryAppDrawer(),
       body: Obx(
-        () => Scrollbar(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
+        () => SingleChildScrollView(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 15),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
                   "${_i18n()["currentOrders"]}",
                   style: textTheme.bodyText1,
                 ),
-                const SizedBox(height: 5),
-                (inProcessOrders.isNotEmpty)
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: inProcessOrders.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (_, int index) {
-                          return LaundryOpOrderCard(
-                            laundryOrder: inProcessOrders[index],
-                          );
-                        },
-                      )
-                    : Container(
-                        margin: const EdgeInsets.all(16),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "No current orders at the moment",
-                          style: Get.textTheme.bodyText2,
-                        ),
+              ),
+              const SizedBox(height: 15),
+              (inProcessOrders.isNotEmpty)
+                  ? Column(
+                      children: List.generate(
+                          inProcessOrders.length,
+                          (int index) => LaundryOpOrderCard(
+                              laundryOrder: inProcessOrders[index])),
+                    )
+                  : 
+                  // TODO @m66are add component when no orders is there 
+                  Container(
+                      margin: const EdgeInsets.all(16),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "No current orders at the moment",
+                        style: Get.textTheme.bodyText2,
                       ),
-              ],
-            ),
+                    ),
+            ],
           ),
         ),
       ),

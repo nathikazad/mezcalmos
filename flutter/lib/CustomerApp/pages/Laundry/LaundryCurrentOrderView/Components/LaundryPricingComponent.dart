@@ -65,11 +65,9 @@ class LaundryPricingCompnent extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: DataTable(
           dividerThickness: 0.2,
-          // dataTextStyle: TextStyle(),
           horizontalMargin: 6,
           columnSpacing: 45.0,
           headingRowHeight: 30.0,
-          // dataRowHeight: 100.0,
           showBottomBorder: false,
           columns: _PricingTableColumns(),
           rows: _PricingTableRows() +
@@ -117,7 +115,6 @@ class LaundryPricingCompnent extends StatelessWidget {
           children: [
             Text(
               '${_i18n()["cost"]}',
-              // textAlign: TextAlign.right,
             ),
           ],
         ),

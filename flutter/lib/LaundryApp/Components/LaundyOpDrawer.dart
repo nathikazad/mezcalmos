@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
@@ -40,6 +41,7 @@ class LaundryAppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
+        width: 70.w,
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
           children: [
@@ -232,16 +234,19 @@ class LaundryAppDrawer extends StatelessWidget {
     return InkWell(
       onTap: onClick,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         child: Row(
           children: [
+            SizedBox(
+              width: 5,
+            ),
             Icon(
               icon,
               color: Colors.grey.shade400,
-              size: 35,
+              size: 25,
             ),
             SizedBox(
-              width: 25,
+              width: 15,
             ),
             titleWidget
           ],
