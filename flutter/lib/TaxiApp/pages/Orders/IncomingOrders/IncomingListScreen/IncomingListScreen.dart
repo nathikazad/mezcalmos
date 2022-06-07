@@ -1,12 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
 import 'package:mezcalmos/LaundryApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -141,7 +137,8 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         .toList();
 
     _ret.add(
-      IncomingOrdersOnOff(
+      TitleWithOnOffSwitcher(
+        title: "Incoming Orders",
         initialSwitcherValue: _taxiAuthController.taxiState?.isLooking ?? false,
         onTurnedOff: _taxiAuthController.turnOff,
         onTurnedOn: _taxiAuthController.turnOn,

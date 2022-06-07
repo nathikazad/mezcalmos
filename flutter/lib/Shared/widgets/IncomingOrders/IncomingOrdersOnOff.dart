@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
+import 'package:mezcalmos/Shared/widgets/MezSwitch.dart';
 
-class IncomingOrdersOnOff extends StatelessWidget {
+class TitleWithOnOffSwitcher extends StatelessWidget {
   final bool initialSwitcherValue;
+  String title;
   final Function onTurnedOn;
   final Function onTurnedOff;
-  const IncomingOrdersOnOff({
+  TitleWithOnOffSwitcher({
+    required this.title,
     this.initialSwitcherValue = false,
     required this.onTurnedOn,
     required this.onTurnedOff,
@@ -20,7 +22,7 @@ class IncomingOrdersOnOff extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Incoming Orders",
+            title,
             style: TextStyle(
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w700,
@@ -50,9 +52,7 @@ class IncomingOrdersOnOff extends StatelessWidget {
             // turn ut ON
             if (v == 0) {
               onTurnedOn();
-              // _taxiAuthController.turnOn();
             } else {
-              // _taxiAuthController.turnOff();
               onTurnedOff();
             }
           },

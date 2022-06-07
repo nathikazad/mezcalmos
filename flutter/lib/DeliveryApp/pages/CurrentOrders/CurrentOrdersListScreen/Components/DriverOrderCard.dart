@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -34,6 +35,7 @@ class DriverOrderCard extends StatelessWidget {
             onCardTap: () {
               // Get.toNamed(getOrderDetailsRoute(order.orderId));
               if (order.orderType == OrderType.Restaurant) {
+                mezDbgPrint("Pushing to restaurant!!!");
                 Get.toNamed(getRestaurantOrderRoute(order.orderId));
               } else if (order.orderType == OrderType.Laundry) {
                 Get.toNamed(getLaundryOrderRoute(order.orderId));

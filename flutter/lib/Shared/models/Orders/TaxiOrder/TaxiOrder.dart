@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -9,7 +11,6 @@ import 'package:mezcalmos/Shared/models/User.dart';
 
 enum TaxiOrdersStatus {
   LookingForTaxiScheduled,
-  OrderReceieved,
   Scheduled,
   LookingForTaxi,
   InTransit,

@@ -6,50 +6,47 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
-        ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
-    ["DriverBottomLaundryOrderCard"];
+dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
+        ['pages']['CurrentOrders']['CurrentOrderViewScreen']['Components']
+    ['DriverBottomRestaurantOrderCard'];
 
-class LaundryOrderFromToComponent extends StatefulWidget {
+class RestaurantOrderFromToComponent extends StatefulWidget {
   /// shows order from info (service provider name image and adress) and destination info  (customer name image and adress)
-  /// inside the delivery driver order(laundry order) screen bottom card
-  final OnOrderInfoCardStateChange? onCardStateChange;
-  final LaundryOrder order;
-
-  const LaundryOrderFromToComponent({
+  const RestaurantOrderFromToComponent({
     Key? key,
     required this.order,
     this.onCardStateChange,
   }) : super(key: key);
+  final OnOrderInfoCardStateChange? onCardStateChange;
+  final RestaurantOrder order;
 
   @override
-  State<LaundryOrderFromToComponent> createState() =>
-      _LaundryOrderFromToComponentState();
+  State<RestaurantOrderFromToComponent> createState() =>
+      _RestaurantOrderFromToComponentState();
 }
 
-class _LaundryOrderFromToComponentState
-    extends State<LaundryOrderFromToComponent> {
+class _RestaurantOrderFromToComponentState
+    extends State<RestaurantOrderFromToComponent> {
+  ServiceInfo? restaurant;
   final Rx<OrderInfoCardState> orderInfoCardState =
       OrderInfoCardState.Minimized.obs;
-
-  ServiceInfo? laundry;
-
   @override
   void initState() {
     super.initState();
   }
 
-  void getLaundry() {
-    if (widget.order.laundry != null) {
-      laundry = widget.order.laundry;
+  void getRestaurant() {
+    if (widget.order.restaurant != null) {
+      restaurant = widget.order.restaurant;
     }
   }
 
@@ -62,17 +59,29 @@ class _LaundryOrderFromToComponentState
         customerImage: widget.order.customer.image,
         customerName: widget.order.customer.name,
         customerTimeWidgets: _dateTimeSetter(DeliveryAction.Pickup),
-        onCustomerMsgClick: () => Get.toNamed<void>(
-          getMessagesRoute(
-            chatId: widget.order.orderId,
-            orderId: widget.order.orderId,
-          ),
-        ),
+        onCustomerMsgClick: () {
+          Get.toNamed(
+            getMessagesRoute(
+              chatId: widget.order.orderId,
+              orderId: widget.order.orderId,
+              recipientId: widget.order.customer.id,
+            ),
+          );
+        },
         // landry
-        serviceProviderImage: widget.order.laundry!.image,
-        serviceProviderName: widget.order.laundry!.name,
+        serviceProviderImage: widget.order.restaurant.image,
+        serviceProviderName: widget.order.restaurant.name,
         serviceProviderTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff),
-        onServiceMsgClick: () {},
+        onServiceMsgClick: () {
+          Get.toNamed(
+            getMessagesRoute(
+              chatId: widget.order.orderId,
+              orderId: widget.order.orderId,
+              recipientId: widget.order.restaurant.id,
+              recipientType: ParticipantType.Restaurant,
+            ),
+          );
+        },
         // order
         formattedOrderStatus: _getOrderStatus(),
         order: widget.order,
@@ -86,28 +95,22 @@ class _LaundryOrderFromToComponentState
     );
   }
 
+// get order status readable title
   String _getOrderStatus() {
     switch (widget.order.status) {
-      case LaundryOrderStatus.OrderReceieved:
-        return "${_i18n()["orderStatus"]["readyForPickup"]}";
-      case LaundryOrderStatus.OtwPickupFromCustomer:
-        return "${_i18n()["orderStatus"]["pickupOtw"]}";
-      case LaundryOrderStatus.PickedUpFromCustomer:
-        return "${_i18n()["orderStatus"]["pickedUp"]}";
-      case LaundryOrderStatus.AtLaundry:
-        return "${_i18n()["orderStatus"]["atLaundry"]}";
-      case LaundryOrderStatus.ReadyForDelivery:
-        return "${_i18n()["orderStatus"]["readyForDelivery"]}";
-      case LaundryOrderStatus.OtwPickupFromLaundry:
-        return "Laundry done, picking up ..";
-      case LaundryOrderStatus.PickedUpFromLaundry:
-        return "${_i18n()["orderStatus"]["deliveryOtw"]}";
-      case LaundryOrderStatus.Delivered:
-        return "${_i18n()["orderStatus"]["delivered"]}";
-      case LaundryOrderStatus.CancelledByAdmin:
+      case RestaurantOrderStatus.CancelledByAdmin:
+      case RestaurantOrderStatus.CancelledByCustomer:
         return '${_i18n()["orderStatus"]["canceled"]}';
-      case LaundryOrderStatus.CancelledByCustomer:
-        return '${_i18n()["orderStatus"]["canceled"]}';
+      case RestaurantOrderStatus.OrderReceieved:
+        return '${_i18n()["orderStatus"]["waiting"]}';
+      case RestaurantOrderStatus.PreparingOrder:
+        return '${_i18n()["orderStatus"]["preparing"]}';
+      case RestaurantOrderStatus.ReadyForPickup:
+        return '${_i18n()["orderStatus"]["readyForPickup"]}';
+      case RestaurantOrderStatus.OnTheWay:
+        return '${_i18n()["orderStatus"]["deliveryOtw"]}';
+      case RestaurantOrderStatus.Delivered:
+        return '${_i18n()["orderStatus"]["delivered"]} ';
       default:
         return '';
     }
@@ -200,52 +203,21 @@ class _LaundryOrderFromToComponentState
       }
     }
 
-    if (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
-      return _getRightContainer(
-        deliveryAction == DeliveryAction.Pickup
-            ? widget.order.estimatedPickupFromCustomerTime?.toLocal()
-            : widget.order.estimatedDropoffAtServiceProviderTime?.toLocal(),
-        onNewDateTimeSet: (DateTime newDt) async {
-          final ServerResponse _resp =
-              await Get.find<OrderController>().setEstimatedTime(
-            widget.order.orderId,
-            newDt,
-            DeliveryDriverType.Pickup,
-            deliveryAction,
-            OrderType.Laundry,
-          );
-
-          if (_resp.success) {
-            if (deliveryAction == DeliveryAction.Pickup)
-              widget.order.estimatedPickupFromCustomerTime = newDt;
-            else
-              widget.order.estimatedDropoffAtServiceProviderTime = newDt;
-
-            setState(() {});
-          }
-        },
-      );
-    } else if (widget.order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
-      mezDbgPrint(" PHASE ==> LaundryOrderPhase.Dropoff");
-      mezDbgPrint(" ACTION ==> $deliveryAction");
+    if (widget.order.inProcess()) {
       return _getRightContainer(
         deliveryAction == DeliveryAction.Pickup
             ? widget.order.estimatedPickupFromServiceProviderTime?.toLocal()
             : widget.order.estimatedDropoffAtCustomerTime?.toLocal(),
         onNewDateTimeSet: (DateTime newDt) async {
-          mezDbgPrint("newTime ==> $newDt");
-
           final ServerResponse _resp =
               await Get.find<OrderController>().setEstimatedTime(
             widget.order.orderId,
-            newDt,
+            newDt.toUtc(),
             DeliveryDriverType.DropOff,
             deliveryAction,
-            OrderType.Laundry,
+            OrderType.Restaurant,
           );
-
-          mezDbgPrint("resp::success ===> ${_resp.data}");
-
+          mezDbgPrint("Responsoooooo ===> $_resp");
           if (_resp.success) {
             if (deliveryAction == DeliveryAction.Pickup)
               widget.order.estimatedPickupFromServiceProviderTime = newDt;
@@ -256,7 +228,8 @@ class _LaundryOrderFromToComponentState
           }
         },
       );
-    } else
-      return [];
+    }
+
+    return [];
   }
 }

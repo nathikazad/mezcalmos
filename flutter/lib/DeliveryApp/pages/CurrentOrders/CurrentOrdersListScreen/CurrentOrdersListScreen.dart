@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNoOrdersComponent.dart';
@@ -8,10 +9,11 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScree
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
+import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"];
@@ -23,30 +25,13 @@ class CurrentOrdersListScreen extends StatefulWidget {
 }
 
 class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
-  RxList<Order> incomingOrders = RxList.empty();
-  RxList<Order> currentOrders = RxList.empty();
-  RxList<Order> pastOrders = RxList.empty();
   OrderController orderController = Get.find<OrderController>();
-
   DeliveryAuthController _deliveryAuthController =
       Get.find<DeliveryAuthController>();
 
   @override
   void initState() {
-    Get.find<SideMenuDrawerController>().showPastOrders = true;
     Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
-    orderController.currentOrders.stream.listen((List<DeliverableOrder> value) {
-      incomingOrders.value = value
-          .where((DeliverableOrder element) => element.isIncoming() == true)
-          .toList();
-      currentOrders.value = value
-          .where((DeliverableOrder element) => element.isIncoming() == false)
-          .toList();
-    });
-
-    orderController.pastOrders.stream.listen((List<DeliverableOrder> value) {
-      pastOrders.value = value;
-    });
     orderController.clearNewOrderNotificationsOfPastOrders();
     super.initState();
   }
@@ -64,42 +49,88 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         child: Scaffold(
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: MezSideMenu(),
-            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
+            appBar: mezcalmosAppBar(
+              AppBarLeftButtonType.Menu,
+              showNotifications: true,
+            ),
             body: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(children: [
-                  IncomingOrdersOnOff(
-                    onTurnedOn: () {
-                      _deliveryAuthController.turnOn();
-                    },
-                    onTurnedOff: () {
-                      _deliveryAuthController.turnOff();
-                    },
-                    initialSwitcherValue:
-                        _deliveryAuthController.deliveryDriverState?.isOnline ??
+                padding: const EdgeInsets.all(15),
+                child: Obx(
+                  () => Column(
+                    children: [
+                      TitleWithOnOffSwitcher(
+                        title: "Online",
+                        onTurnedOn: () {
+                          _deliveryAuthController.turnOn();
+                        },
+                        onTurnedOff: () {
+                          _deliveryAuthController.turnOff();
+                        },
+                        initialSwitcherValue: _deliveryAuthController
+                                .deliveryDriverState?.isOnline ??
                             false,
+                      ),
+                      if (_deliveryAuthController
+                                  .deliveryDriverState?.isOnline !=
+                              true &&
+                          orderController.currentOrders.isEmpty)
+                        Container(
+                          height: 60.h,
+                          child: IncomingOrdersStatus(
+                            childData: Padding(
+                              padding: const EdgeInsets.only(bottom: 17.0),
+                              child: Image.asset(
+                                turnOn_asset,
+                                fit: BoxFit.contain,
+                                width: 40.w,
+                                height: 25.h,
+                              ),
+                            ),
+                            errorText: 'You are offline!',
+                          ),
+                        )
+                      else
+                        _incomingOrdersList()
+                    ],
                   ),
-                  Obx(
-                    () => Container(
-                      child: (_deliveryAuthController
-                              .deliveryDriverState!.isOnline)
-                          ? _currentOrdersList(context)
-                          : DriverNotLookingComponent(),
-                    ),
-                  ),
-                  Obx(() => _incomingOrdersList(context)),
-                ]),
+                ),
               ),
+              // SingleChildScrollView(
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Column(children: [
+              //       IncomingOrdersOnOff(
+              //         onTurnedOn: () {
+              //           _deliveryAuthController.turnOn();
+              //         },
+              //         onTurnedOff: () {
+              //           _deliveryAuthController.turnOff();
+              //         },
+              //         initialSwitcherValue:
+              //             _deliveryAuthController.deliveryDriverState?.isOnline ??
+              //                 false,
+              //       ),
+              //       Obx(
+              //         () => Container(
+              //           child: (_deliveryAuthController
+              //                   .deliveryDriverState!.isOnline)
+              //               ? _currentOrdersList()
+              //               : DriverNotLookingComponent(),
+              //         ),
+              //       ),
+              //       Obx(() => _incomingOrdersList()),
+              //     ]),
+              //   ),
+              // ))
             )));
   }
 
-  Widget _incomingOrdersList(BuildContext context) {
-    if (incomingOrders.isNotEmpty) {
+  Widget _incomingOrdersList() {
+    if (orderController.currentOrders.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(),
           Container(
             padding: const EdgeInsets.all(5),
             child: Text(
@@ -107,45 +138,53 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
+          Divider(),
           Column(
             children: List.generate(
-                incomingOrders.length,
+                orderController.currentOrders.length,
                 (int index) => DriverOrderCard(
-                      order: incomingOrders[index],
+                      order: orderController.currentOrders[index],
                       showLeftIcon: false,
                     )).reversed.toList(),
           ),
         ],
       );
     } else {
-      return Container();
+      return Container(
+        height: 60.h,
+        child: IncomingOrdersStatus(
+          childData: Padding(
+            padding: const EdgeInsets.only(bottom: 17.0),
+            child: Image.asset(
+              noOrdersFound_asset,
+              fit: BoxFit.contain,
+              width: 40.w,
+              height: 25.h,
+            ),
+          ),
+          errorText: 'No Orders found!',
+        ),
+      );
     }
   }
 
-  Widget _currentOrdersList(BuildContext context) {
-    if (currentOrders.isNotEmpty) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(5),
-            child: Text(
-              _i18n()["currentOrders"],
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ),
-          Column(
-            children: List.generate(
-                currentOrders.length,
-                (int index) => DriverOrderCard(
-                      order: currentOrders[index],
-                      showLeftIcon: false,
-                    )).reversed.toList(),
-          ),
-        ],
-      );
-    } else {
-      return DriverNoOrdersComponent();
-    }
+  List<Widget> _currentOrdersList() {
+    return [
+      Container(
+        padding: const EdgeInsets.all(5),
+        child: Text(
+          _i18n()["currentOrders"],
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+      ),
+      Column(
+        children: List.generate(
+            orderController.currentOrders.length,
+            (int index) => DriverOrderCard(
+                  order: orderController.currentOrders[index],
+                  showLeftIcon: false,
+                )).reversed.toList(),
+      ),
+    ];
   }
 }

@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 class SideMenuDrawerController extends GetxController {
   GlobalKey<ScaffoldState>? _scaffoldKey;
   List<SideMenuItem>? sideMenuItems;
-  bool showPastOrders = false;
   String? pastOrdersRoute;
 
   GlobalKey<ScaffoldState>? getNewKey() {

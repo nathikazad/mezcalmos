@@ -15,8 +15,6 @@ import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSlider.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
-enum FieldType { Date, Time, Neither }
-
 class RequestTaxiScreen extends StatefulWidget {
   const RequestTaxiScreen({Key? key}) : super(key: key);
 
@@ -31,7 +29,6 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   /// RequestTaxiScreenWidgets
   late final RequestTaxiScreenWidgets viewWidgets;
   bool lockOnTaxiRequest = false;
-  Rx<FieldType> type = FieldType.Neither.obs;
 
   @override
   void initState() {

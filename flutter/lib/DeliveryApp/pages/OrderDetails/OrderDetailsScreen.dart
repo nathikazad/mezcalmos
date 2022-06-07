@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -28,8 +29,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   void initState() {
     final String orderId = Get.parameters['orderId']!;
+    mezDbgPrint("Get.parameters ===> $orderId");
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
+    mezDbgPrint("order.value.id ===> ${order.value?.orderId}");
     _orderListener =
         controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
       if (newOrderEvent != null) {
