@@ -37,7 +37,8 @@ export interface ConstructLaundryOrderParameters {
   routeInformation?: RouteInformation,
   notes?: string,
   paymentType: PaymentType,
-  to: Location
+  to: Location,
+  shippingCost : number
 }
 
 export function constructLaundryOrder(
@@ -53,7 +54,7 @@ export function constructLaundryOrder(
     cost: 0,
     paymentType: params.paymentType,
     to: params.to,
-    shippingCost: 0,
+    shippingCost: params.shippingCost || 0,
     costPerKilo: 20,
     routeInformation  : params.routeInformation
   }

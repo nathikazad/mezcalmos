@@ -96,7 +96,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             estimatedDropoffAtServiceProviderTime:
                 estimatedDropoffAtServiceProviderTime);
 
-  factory LaundryOrder.fromData(id, data) {
+  factory LaundryOrder.fromData(
+    id,
+    data,
+  ) {
     final dynamic _estimatedPickupFromServiceProviderTime =
         data["estimatedDeliveryTimes"]?["dropoff"]?["pickup"];
     final dynamic _estimatedDropoffAtCustomerTime =
@@ -114,7 +117,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       to: Location.fromFirebaseData(data['to']),
       orderTime: DateTime.parse(data["orderTime"]),
       paymentType: data["paymentType"].toString().toPaymentType(),
-      shippingCost: data['shippingCost'] ?? 0,
+      shippingCost: data["shippingCost"] ?? 50,
       notes: data["notes"],
       costsByType: (data["costsByType"] != null)
           ? LaundryOrderCosts.fromData(data["costsByType"])
@@ -158,7 +161,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       laundryPickupDriverChatId: data['secondaryChats']
           ?['serviceProviderPickupDriver'],
       customerPickupDriverChatId: data['secondaryChats']
-          ?['customerPickupDriverDriver'],
+          ?['customerPickupDriver'],
     );
 
     if (data["routeInformation"] != null) {

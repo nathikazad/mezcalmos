@@ -82,7 +82,8 @@ class RestaurantOrder extends DeliverableOrder {
         );
 
   //ignore_for_file:avoid_annotating_with_dynamic
-  factory RestaurantOrder.fromData(dynamic id, dynamic data) {
+  factory RestaurantOrder.fromData(
+      dynamic id, dynamic data,) {
     final RestaurantOrder restaurantOrder = RestaurantOrder(
       orderId: id,
       status: data["status"].toString().toRestaurantOrderStatus(),
@@ -109,7 +110,7 @@ class RestaurantOrder extends DeliverableOrder {
       restaurant: ServiceInfo.fromData(data["restaurant"]),
       customer: UserInfo.fromData(data["customer"]),
       itemsCost: data['itemsCost'],
-      shippingCost: data['shippingCost'] ?? 0,
+      shippingCost: data["shippingCost"] ?? 0,
       dropoffDriver: (data["dropoffDriver"] != null)
           ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
           : null,

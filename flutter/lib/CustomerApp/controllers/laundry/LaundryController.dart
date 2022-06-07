@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -62,6 +63,7 @@ class LaundryController extends GetxController {
   Future<ServerResponse> requestLaundryService(
     LaundryRequest laundryRequest,
   ) async {
+    laundryRequest.shippingCost = await getShippingPrice() ?? 0;
     if (laundryRequest.isFromToSet()) {
       final HttpsCallable requestTaxiFunction =
           FirebaseFunctions.instance.httpsCallable("laundry-requestLaundry");
@@ -89,6 +91,14 @@ class LaundryController extends GetxController {
         errorCode: "Both customer's and laundry's Location are required.",
       );
     }
+  }
+
+  Future<int?> getShippingPrice() async {
+    final DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
+        .reference()
+        .child(baseShippingPriceNode())
+        .once();
+    return snapshot.value;
   }
 
   @override

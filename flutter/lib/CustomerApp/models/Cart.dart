@@ -14,12 +14,12 @@ class Cart {
   Restaurant? restaurant;
   String? notes;
   PaymentType paymentType = PaymentType.Cash;
-  final num shippingCost = 0;
+  num? shippingCost;
   RouteInformation? routeInformation;
 
   Cart({this.restaurant});
 
-  Cart.fromCartData(dynamic cartData, this.restaurant) {
+  Cart.fromCartData(dynamic cartData, this.restaurant, num? shippingPrice) {
     if (restaurant != null) {
       cartData["items"]?.forEach((itemIdInCart, itemData) {
         final Item? item = restaurant!.findItemById(itemData["id"]);
@@ -35,6 +35,7 @@ class Cart {
           ? Location.fromFirebaseData(cartData["to"])
           : null;
       notes = cartData["notes"];
+      shippingCost = shippingPrice ?? 50;
       routeInformation = cartData['routeInformation'] == null
           ? null
           : RouteInformation(
@@ -83,7 +84,11 @@ class Cart {
   }
 
   num totalCost() {
-    return itemsCost() + shippingCost;
+    if (shippingCost != null) {
+      return itemsCost() + shippingCost!;
+    } else {
+      return itemsCost();
+    }
   }
 
   void addItem(CartItem cartItem) {

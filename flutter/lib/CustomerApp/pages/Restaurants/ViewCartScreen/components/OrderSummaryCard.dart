@@ -73,6 +73,7 @@ class OrderSummaryCard extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 10),
               width: Get.width,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Expanded(
                     child: Container(
@@ -82,6 +83,7 @@ class OrderSummaryCard extends StatelessWidget {
                   ),
                   Flexible(
                       child: ShippingCostComponent(
+                    alignment: MainAxisAlignment.end,
                     shippingCost: deliveryCost,
                   ))
                 ],

@@ -57,8 +57,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             ),
             Obx(() => OrderSummaryCard(
                   setLocationCallBack: widget.setLocationCallBack,
-                  deliveryCost:
-                      controller.cart.value.shippingCost,
+                  deliveryCost: controller.cart.value.shippingCost ?? 50,
                   orderCost: controller.cart.value.itemsCost().toPriceString(),
                   totalCost: controller.cart.value.totalCost().toPriceString(),
                 )),

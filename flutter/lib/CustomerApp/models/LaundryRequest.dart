@@ -11,6 +11,7 @@ class LaundryRequest {
 
   /// from means laundry's location (choosen by the customer)
   Location? from;
+  num? shippingCost;
   RouteInformation? routeInformation;
   PaymentType paymentType;
   LaundryRequest({
@@ -18,6 +19,7 @@ class LaundryRequest {
     required this.laundryId,
     this.notes,
     this.from,
+    this.shippingCost,
     this.to,
     this.paymentType = PaymentType.Cash,
   });
@@ -40,6 +42,7 @@ class LaundryRequest {
       "to": to?.toFirebaseFormattedJson(),
       "from": from?.toFirebaseFormattedJson(),
       "notes": notes,
+      "shippingCost": shippingCost,
       "paymentType": paymentType.toFirebaseFormatString(),
       "routeInformation": routeInformation?.toJson()
     };
