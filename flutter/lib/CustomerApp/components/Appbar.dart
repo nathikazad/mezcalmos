@@ -36,7 +36,9 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
               alignment: Alignment.center,
               width: 180,
               child: FittedBox(
-                child: MezcalmosSharedWidgets.fillTitle(1),
+                child: MezcalmosSharedWidgets.fillTitle(
+                    actionLength: 2,
+                    showLogo: (Get.width > 320) ? true : false),
               ),
             ),
       automaticallyImplyLeading: autoBack ?? false,

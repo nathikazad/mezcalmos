@@ -1,13 +1,11 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
@@ -23,8 +21,19 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     String? ordersRoute,
     PreferredSizeWidget? tabBar,
     List<Widget> actionIcons = const <Widget>[]}) {
-  Widget btnIcon;
+  // GET RIGHT LEADING
+  Widget _getRightLeading() {
+    switch (leftBtnType) {
+      case AppBarLeftButtonType.Back:
+        return _BackButtonAppBar();
+      case AppBarLeftButtonType.Menu:
+        return _MenuButtonAppBar();
+      case AppBarLeftButtonType.Lang:
+        return _LangSwitcherBtn();
+    }
+  }
 
+  // INIT ORDERS ICON
   Widget _ordersAppBarIcon() {
     return Padding(
       padding: const EdgeInsets.only(left: 3, right: 12),
@@ -51,131 +60,122 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     );
   }
 
-  switch (leftBtnType) {
-    case AppBarLeftButtonType.Back:
-      btnIcon = Center(
-        child: Icon(
-          MezcalmosIcons.chevron_left,
-          color: Colors.white,
-          size: getSizeRelativeToScreen(35, Get.width, Get.height),
-        ),
-      );
-      break;
-    case AppBarLeftButtonType.Menu:
-      if (onClick == null) {
-        onClick = Get.find<SideMenuDrawerController>().openMenu;
-      }
-      btnIcon = Icon(
-        MezcalmosIcons.stream,
-        color: Colors.white,
-        size: 16,
-      );
-
-      break;
-    case AppBarLeftButtonType.Lang:
-      btnIcon = Obx(
-        () => Align(
-          alignment: Alignment.centerLeft,
-          child: GestureDetector(
-            onTap: () =>
-                onClick?.call() ??
-                Get.find<LanguageController>().changeUserLanguage(),
-            child: Container(
-              height: 24,
-              width: 24,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.contain,
-                  image: AssetImage(Get.find<LanguageController>().oppositFlag),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-      break;
-  }
   return AppBar(
     toolbarHeight: 65,
     elevation: 0,
     bottom: tabBar,
+    titleSpacing: 0,
+    leadingWidth: 8,
     automaticallyImplyLeading: false,
-    title: Column(
-      children: [
-        Container(
-          // width: Get.width,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              if (leftBtnType != AppBarLeftButtonType.Lang)
-                Container(
-                  height: 30,
-                  width: 30,
-                  child: GestureDetector(
-                    onTap: () {
-                      onClick?.call();
-                    },
-                    child: Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 216, 225, 249),
-                            spreadRadius: 0,
-                            blurRadius: 7,
-                            offset: Offset(0, 7), // changes position of shadow
-                          ),
-                        ],
-                        gradient: LinearGradient(
-                            colors: onClick != null
-                                ? [
-                                    Color.fromARGB(255, 97, 127, 255),
-                                    Color.fromARGB(255, 198, 90, 252),
-                                  ]
-                                : [Colors.grey.shade300, Colors.grey.shade300],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                      ),
-                      child: btnIcon,
-                    ),
-                  ),
-                )
-              else
-                btnIcon,
-              Spacer(),
-              (title != null)
-                  ? Text(
-                      title,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 17.sp,
-                        color: Colors.black,
-                      ),
-                    )
-                  : (titleWidget != null)
-                      ? titleWidget
-                      : MezcalmosSharedWidgets.fillTitle(actionIcons.length),
-              Spacer(),
-              if (showNotifications &&
-                  Get.find<AuthController>().isUserSignedIn)
-                _notificationAppBarIcon(),
-              if (ordersRoute != null &&
-                  Get.find<AuthController>().isUserSignedIn)
-                _ordersAppBarIcon(),
-              for (int i = 0; i < actionIcons.length; i++) ...<Widget>[
-                actionIcons[i]
-              ],
-            ],
+    leading: _getRightLeading(),
+    actions: [
+      if (showNotifications && Get.find<AuthController>().isUserSignedIn)
+        _notificationAppBarIcon(),
+      if (ordersRoute != null && Get.find<AuthController>().isUserSignedIn)
+        _ordersAppBarIcon(),
+      for (int i = 0; i < actionIcons.length; i++) ...<Widget>[actionIcons[i]],
+    ],
+    title: (title != null)
+        ? Text(
+            title,
+            style: TextStyle(
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.w600,
+              fontSize: 17.sp,
+              color: Colors.black,
+            ),
+          )
+        : (titleWidget != null)
+            ? titleWidget
+            : MezcalmosSharedWidgets.fillTitle(
+                actionLength: actionIcons.length,
+                showLogo: (Get.width > 320) ? true : false),
+  );
+}
+
+Widget _BackButtonAppBar() {
+  return Transform.scale(
+    scale: 0.6,
+    child: InkWell(
+      onTap: () {
+        Get.back();
+      },
+      child: Ink(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromARGB(255, 216, 225, 249),
+              spreadRadius: 0,
+              blurRadius: 7,
+              offset: Offset(0, 7), // changes position of shadow
+            ),
+          ],
+          gradient: LinearGradient(colors: [
+            Color.fromARGB(255, 97, 127, 255),
+            Color.fromARGB(255, 198, 90, 252),
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        ),
+        child: Icon(
+          Icons.arrow_back_ios_new,
+          color: Colors.white,
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _LangSwitcherBtn() {
+  return Obx(
+    () => Align(
+      alignment: Alignment.centerLeft,
+      child: GestureDetector(
+        onTap: () => Get.find<LanguageController>().changeUserLanguage(),
+        child: Container(
+          height: 24,
+          width: 24,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.contain,
+              image: AssetImage(Get.find<LanguageController>().oppositFlag),
+            ),
           ),
         ),
-        // if (_appUpdate.appVersionInfos.value != null)
-        //   ...getReminderIfNewUpdate(),
-      ],
+      ),
+    ),
+  );
+}
+
+Widget _MenuButtonAppBar() {
+  return Transform.scale(
+    scale: 0.6,
+    child: InkWell(
+      onTap: () {
+        //  Get.back();
+        Get.find<SideMenuDrawerController>().openMenu();
+      },
+      child: Ink(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromARGB(255, 216, 225, 249),
+              spreadRadius: 0,
+              blurRadius: 7,
+              offset: Offset(0, 7), // changes position of shadow
+            ),
+          ],
+          gradient: LinearGradient(colors: [
+            Color.fromARGB(255, 97, 127, 255),
+            Color.fromARGB(255, 198, 90, 252),
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        ),
+        child: Icon(
+          Icons.menu,
+          color: Colors.white,
+        ),
+      ),
     ),
   );
 }

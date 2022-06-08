@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
@@ -43,16 +41,17 @@ class MezcalmosSharedWidgets {
         ),
       );
 
-  static Widget fillTitle(int actionLength) {
+  static Widget fillTitle({required int actionLength, bool showLogo = true}) {
     return Container(
-      width: Get.width * 0.55,
+      //  width: Get.width * 0.55,
       //  width: ,
       child: FittedBox(
         // fit: BoxFit.scaleDown,
         alignment: Alignment.centerLeft,
         child: Row(
           children: <Widget>[
-            logo(size: getSizeRelativeToScreen(80, Get.width, Get.height)),
+            if (showLogo)
+              logo(size: getSizeRelativeToScreen(80, Get.width, Get.height)),
             Padding(
               padding: EdgeInsets.only(left: 10),
               child: mezcalmosTitle(),
