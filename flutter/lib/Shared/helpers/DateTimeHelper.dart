@@ -35,7 +35,7 @@ extension parseDateTime on DateTime {
     final DateTime cDate = DateTime.now();
 
     if (cDate.difference(toLocal()).inDays < 7) {
-      return "${DateFormat("EEEE, hh:mm a").format(this)}";
+      return "${DateFormat("EE, hh:mm a").format(this)}";
     } else {
       return "${DateFormat("dd MMMM, hh:mm a").format(this)}";
     }

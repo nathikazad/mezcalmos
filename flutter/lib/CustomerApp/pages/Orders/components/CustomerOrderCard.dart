@@ -44,9 +44,9 @@ class CustomerOrderCard extends StatelessWidget {
         // mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Positioned(
-            left: -40,
+            left: -28,
             child: CircleAvatar(
-              radius: 25,
+              radius: 23,
               backgroundImage: CachedNetworkImageProvider(
                   _getServiceProvider()?.image ?? ""),
             ),
@@ -171,16 +171,17 @@ class CustomerOrderCard extends StatelessWidget {
 
   Widget _getOrderWidget() {
     return CircleAvatar(
-      radius: 22,
+      radius: 24,
       backgroundColor: Colors.white,
       child: CircleAvatar(
-        radius: 20,
+        radius: 23,
         child: Container(
           padding: const EdgeInsets.all(8),
           decoration:
               BoxDecoration(shape: BoxShape.circle, color: primaryBlueColor),
           child: Icon(
             _getOrderIcon(),
+            size: 30,
             color: Colors.white,
           ),
         ),
@@ -224,7 +225,7 @@ class CustomerOrderCard extends StatelessWidget {
     switch (order.orderType) {
       case OrderType.Restaurant:
         return Container(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())
@@ -240,7 +241,7 @@ class CustomerOrderCard extends StatelessWidget {
 
       case OrderType.Laundry:
         return Container(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())
@@ -255,7 +256,7 @@ class CustomerOrderCard extends StatelessWidget {
         );
       case OrderType.Taxi:
         return Container(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())

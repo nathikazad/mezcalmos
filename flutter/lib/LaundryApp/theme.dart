@@ -22,7 +22,6 @@ class LaundryAppTheme {
       scaffoldBackgroundColor: Color(0XFFFAFAFA),
 
       timePickerTheme: TimePickerThemeData(
-        
         dialHandColor: primaryBlueColor,
         backgroundColor: Colors.white,
         hourMinuteColor: MaterialStateColor.resolveWith(
@@ -150,7 +149,7 @@ class LaundryAppTheme {
         bodyText1: TextStyle(
             fontFamily: "Montserrat",
             fontWeight: FontWeight.w600,
-            fontSize: 12.sp,
+            fontSize: 13.sp,
             color: Colors.black),
         bodyText2: TextStyle(
             fontFamily: "Nunito",

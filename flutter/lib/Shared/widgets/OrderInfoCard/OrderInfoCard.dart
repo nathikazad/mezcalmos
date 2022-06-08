@@ -38,7 +38,7 @@ class OrderInfosCard extends StatelessWidget {
             ],
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 // left column
 
