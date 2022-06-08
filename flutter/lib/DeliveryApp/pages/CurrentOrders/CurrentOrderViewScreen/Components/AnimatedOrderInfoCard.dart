@@ -176,8 +176,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         SizedBox(width: 9),
         MessageButton(
           onTap: onServiceMsgClick,
-          showRedDot: Get.find<OrderController>()
-              .hasNewMessageNotification(order.orderId),
+          showRedDot: (_serviceDriverChatId() != null)
+              ? Get.find<OrderController>()
+                  .hasNewMessageNotification(_serviceDriverChatId()!)
+              : false,
         ),
 
         if (serviceProviderTimeWidgets.isNotEmpty) ...[
@@ -222,9 +224,9 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         SizedBox(width: 9),
         MessageButton(
           onTap: onCustomerMsgClick,
-          showRedDot: (_customerChatId() != null)
+          showRedDot: (_customerDriverChatId() != null)
               ? Get.find<OrderController>()
-                  .hasNewMessageNotification(_customerChatId()!)
+                  .hasNewMessageNotification(_customerDriverChatId()!)
               : false,
         ),
         Spacer(),
@@ -235,13 +237,26 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     );
   }
 
-  String? _customerChatId() {
+  String? _customerDriverChatId() {
     switch (order.orderType) {
       case OrderType.Laundry:
-        return (order as LaundryOrder).getRightChatId();
+        return (order as LaundryOrder).getCustomerDriverChatId();
 
       case OrderType.Restaurant:
         return (order as RestaurantOrder).customerDropOffDriverChatId;
+
+      default:
+    }
+    return null;
+  }
+
+  String? _serviceDriverChatId() {
+    switch (order.orderType) {
+      case OrderType.Laundry:
+        return (order as LaundryOrder).getServiceDriverChatId();
+
+      case OrderType.Restaurant:
+        return (order as RestaurantOrder).serviceProviderDropOffDriverChatId;
 
       default:
     }

@@ -64,10 +64,10 @@ class _LaundryOrderFromToComponentState
         customerName: widget.order.customer.name,
         customerTimeWidgets: _dateTimeSetter(DeliveryAction.Pickup),
         onCustomerMsgClick: () {
-          if (_getRightChatId() != null) {
+          if (widget.order.getCustomerDriverChatId() != null) {
             Get.toNamed<void>(
               getMessagesRoute(
-                  chatId: _getRightChatId()!,
+                  chatId: widget.order.getCustomerDriverChatId()!,
                   orderId: widget.order.orderId,
                   recipientType: ParticipantType.Customer),
             );
@@ -78,10 +78,12 @@ class _LaundryOrderFromToComponentState
         serviceProviderName: widget.order.laundry!.name,
         serviceProviderTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff),
         onServiceMsgClick: () {
-          Get.toNamed(getMessagesRoute(
-              chatId: widget.order.orderId,
-              orderId: widget.order.orderId,
-              recipientType: ParticipantType.DeliveryAdmin));
+          if (widget.order.getServiceDriverChatId() != null) {
+            Get.toNamed(getMessagesRoute(
+                chatId: widget.order.getServiceDriverChatId()!,
+                orderId: widget.order.orderId,
+                recipientType: ParticipantType.DeliveryAdmin));
+          }
         },
         // order
         formattedOrderStatus: _getOrderStatus(),
@@ -94,16 +96,6 @@ class _LaundryOrderFromToComponentState
         },
       ),
     );
-  }
-
-  String? _getRightChatId() {
-    if (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
-        widget.order.customerPickupDriverChatId != null) {
-      return widget.order.customerPickupDriverChatId;
-    } else if (widget.order.customerDropOffDriverChatId != null) {
-      return widget.order.customerDropOffDriverChatId;
-    }
-    return null;
   }
 
   String _getOrderStatus() {

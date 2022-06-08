@@ -196,12 +196,22 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.CancelledByAdmin;
   }
 
-  String? getRightChatId() {
+  String? getCustomerDriverChatId() {
     if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
         customerPickupDriverChatId != null) {
       return customerPickupDriverChatId;
     } else if (customerDropOffDriverChatId != null) {
       return customerDropOffDriverChatId;
+    }
+    return null;
+  }
+
+  String? getServiceDriverChatId() {
+    if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
+        serviceProviderPickupDriverChatId != null) {
+      return serviceProviderPickupDriverChatId;
+    } else if (serviceProviderDropOffDriverChatId != null) {
+      return serviceProviderDropOffDriverChatId;
     }
     return null;
   }
