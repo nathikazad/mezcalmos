@@ -1,4 +1,6 @@
 import 'package:collection/collection.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -132,6 +134,17 @@ class LaundryCostLineItem {
       'name': name.toFirebaseFormat(),
       'cost': cost,
     };
+  }
+
+  String getRightNameForUser() {
+    final LanguageType userLanguage =
+        Get.find<LanguageController>().userLanguageKey;
+    final String availableName = name[name.keys.first]!;
+    if (name[userLanguage] != null) {
+      return name[userLanguage]!;
+    } else {
+      return availableName;
+    }
   }
 
   LaundryCostLineItem copyWith({

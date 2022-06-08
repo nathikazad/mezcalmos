@@ -39,7 +39,7 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
                 Text(
-                  order.costsByType?.weighedCost.toString() ?? '-',
+                  order.costsByType?.weighedCost.toPriceString() ?? '-',
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ],
@@ -77,7 +77,7 @@ class OrderSummaryComponent extends StatelessWidget {
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                "${_i18n()["deliveryLocation"]} :",
+                "${_i18n()["deliveryLocation"]}",
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),

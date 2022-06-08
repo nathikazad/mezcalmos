@@ -22,14 +22,14 @@ class OrderLaundryCard extends StatelessWidget {
             CircleAvatar(
               backgroundImage:
                   CachedNetworkImageProvider(order.laundry?.image ?? ""),
-              radius: 25,
+              radius: 23,
             ),
             SizedBox(
-              width: 5,
+              width: 7,
             ),
             Flexible(
                 fit: FlexFit.tight,
-                flex: 7,
+                flex: 8,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -47,7 +47,9 @@ class OrderLaundryCard extends StatelessWidget {
                           size: 18,
                           color: Theme.of(context).primaryColorLight,
                         ),
-                        const SizedBox(height: 5),
+                        SizedBox(
+                          width: 3,
+                        ),
                         Flexible(child: Text(order.to.address, maxLines: 1)),
                       ],
                     )

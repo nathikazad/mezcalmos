@@ -9,7 +9,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -59,16 +58,6 @@ class CartItemsBuilder extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // _incrementItemComponent(cartItem),
-                          Text(
-                            cartItem.totalCost().toPriceString(),
-                            style: Get.textTheme.headline3,
-                          ),
-                        ],
-                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: buildChoices(cartItem.chosenChoices),
@@ -98,6 +87,7 @@ class CartItemsBuilder extends StatelessWidget {
   Widget _incrementItemComponent(CartItem cartItem) {
     return IncrementalComponent(
         minVal: 1,
+        size: 14,
         btnColors: SecondaryLightBlueColor,
         alignment: MainAxisAlignment.start,
         onMinValueBtnColor: Colors.grey.shade400,

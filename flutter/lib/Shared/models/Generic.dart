@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:collection/collection.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum AuthorizationStatus { InReview, Authorized, Unauthorized }
 
@@ -24,9 +23,11 @@ enum LanguageType { EN, ES }
 
 extension ParseLanugaugeTypeToString on LanguageType {
   String toLanguageCode() {
-    final String str = toString().split('.').last;
-    mezDbgPrint("${str.toLowerCase()}_${str.toUpperCase()}");
-    return "${str.toLowerCase()}_${str.toUpperCase()}";
+    String str = toString().split('.').last;
+    if (str[1] == 's') {
+      str = "es_MX";
+    }
+    return "${str.toLowerCase()}";
   }
 
   String toFirebaseFormatString() {

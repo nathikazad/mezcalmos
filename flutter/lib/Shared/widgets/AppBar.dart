@@ -125,7 +125,8 @@ Widget _BackButtonAppBar() {
 
 Widget _LangSwitcherBtn() {
   return Obx(
-    () => Align(
+    () => Container(
+      padding: const EdgeInsets.all(5),
       alignment: Alignment.centerLeft,
       child: GestureDetector(
         onTap: () => Get.find<LanguageController>().changeUserLanguage(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
@@ -79,9 +80,12 @@ class LaundryPricingCompnent extends StatelessWidget {
                   DataCell(Container()),
                   DataCell(Container()),
                   DataCell(
-                    Text(
-                      "\$${order.cost - 50}",
-                      style: Get.textTheme.bodyText1,
+                    Container(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        order.costsByType?.weighedCost.toPriceString() ?? "",
+                        style: Get.textTheme.bodyText1,
+                      ),
                     ),
                   ),
                 ])
@@ -130,7 +134,7 @@ class LaundryPricingCompnent extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 // width: 80,
                 child: Text(
-                  order.costsByType!.lineItems[index].name[userLanguage] ?? "",
+                  order.costsByType!.lineItems[index].getRightNameForUser(),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

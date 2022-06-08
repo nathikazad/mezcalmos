@@ -26,7 +26,7 @@ class MessageButton extends StatelessWidget {
             position: BadgePosition(top: -2, end: -3),
             child: Icon(
               icon,
-              size: 25,
+              size: 30,
               color: primaryBlueColor,
             ),
           )),

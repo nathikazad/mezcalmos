@@ -17,66 +17,68 @@ class LaundryOrderDriverCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (_getRightDriver() != null && order.inProcess()) {
-      return Card(
-          child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-        child: Row(
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.center,
-              children: [
-                CircleAvatar(
-                    radius: 25,
-                    backgroundImage:
-                        CachedNetworkImageProvider(_getRightDriver()!.image)),
-                Positioned(
-                  right: -35,
-                  bottom: 3,
-                  child: CircleAvatar(
-                    radius: 23,
-                    child: Icon(
-                      Icons.delivery_dining,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              width: 40,
-            ),
-            Flexible(
-              fit: FlexFit.tight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      return Padding(
+        padding: const EdgeInsets.only(top: 15),
+        child: Card(
+            child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+          child: Row(
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.center,
                 children: [
-                  Text(
-                    _getRightDriver()!.name,
-                    style: Get.textTheme.bodyText1,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  if (_getTime() != null) Text(_getTime()!)
-                  //  if (_getTime() != null) Text("${_getTime()}"),
+                  CircleAvatar(
+                      radius: 23,
+                      backgroundImage:
+                          CachedNetworkImageProvider(_getRightDriver()!.image)),
+                  Positioned(
+                    right: -35,
+                    child: CircleAvatar(
+                      radius: 23,
+                      child: Icon(
+                        Icons.delivery_dining,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
                 ],
               ),
-            ),
-            if (_getRightChatId() != null)
-              MessageButton(
-                  showRedDot: Get.find<OrderController>()
-                      .hasNewMessageNotification(_getRightChatId()!),
-                  onTap: () {
-                    Get.toNamed(getMessagesRoute(
-                        chatId: _getRightChatId()!,
-                        orderId: order.orderId,
-                        recipientType: ParticipantType.DeliveryDriver));
-                  })
-          ],
-        ),
-      ));
+              SizedBox(
+                width: 40,
+              ),
+              Flexible(
+                fit: FlexFit.tight,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _getRightDriver()!.name,
+                      style: Get.textTheme.bodyText1,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    if (_getTime() != null) Text(_getTime()!)
+                    //  if (_getTime() != null) Text("${_getTime()}"),
+                  ],
+                ),
+              ),
+              if (_getRightChatId() != null)
+                MessageButton(
+                    showRedDot: Get.find<OrderController>()
+                        .hasNewMessageNotification(_getRightChatId()!),
+                    onTap: () {
+                      Get.toNamed(getMessagesRoute(
+                          chatId: _getRightChatId()!,
+                          orderId: order.orderId,
+                          recipientType: ParticipantType.DeliveryDriver));
+                    })
+            ],
+          ),
+        )),
+      );
     } else {
       return Container();
     }
@@ -95,9 +97,9 @@ class LaundryOrderDriverCard extends StatelessWidget {
   String? _getTime() {
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
         order.estimatedPickupFromCustomerTime != null) {
-      return "Pick-up time : ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedPickupFromCustomerTime!.toLocal())}";
+      return "Pick-up time ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedPickupFromCustomerTime!.toLocal())}";
     } else if (order.estimatedDropoffAtCustomerTime != null) {
-      return "Dropoff time : ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
+      return "Dropoff time ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
     } else {
       return null;
     }

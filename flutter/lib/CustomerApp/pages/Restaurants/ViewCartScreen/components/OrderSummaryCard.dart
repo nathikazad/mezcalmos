@@ -46,7 +46,7 @@ class OrderSummaryCard extends StatelessWidget {
               width: Get.width,
               child: Text("${_i18n()["orderSummary"]}", style: txt.bodyText1),
             ),
-            const Divider(height: 20),
+            const SizedBox(height: 20),
             //==================Order cost :==================
             Container(
               padding: const EdgeInsets.only(bottom: 10),
@@ -110,7 +110,9 @@ class OrderSummaryCard extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(),
+            SizedBox(
+              height: 15,
+            ),
             //=======================Delivery location :===========
             Container(
               alignment: Alignment.centerLeft,

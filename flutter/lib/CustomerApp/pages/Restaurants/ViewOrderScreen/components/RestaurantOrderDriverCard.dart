@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 class RestaurantOrderDriverCard extends StatelessWidget {
   const RestaurantOrderDriverCard({Key? key, required this.order})
@@ -21,7 +21,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
         children: [
           Card(
               child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
             child: Row(
               children: [
                 Stack(
@@ -66,29 +66,17 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                   ),
                 ),
                 if (order.customerDropOffDriverChatId != null)
-                  IconButton(
-                      onPressed: () {
+                  MessageButton(
+                      showRedDot: Get.find<OrderController>()
+                          .hasNewMessageNotification(
+                              order.customerDropOffDriverChatId!),
+                      onTap: () {
                         Get.toNamed(getMessagesRoute(
                           recipientType: ParticipantType.DeliveryDriver,
                           orderId: order.orderId,
                           chatId: order.customerDropOffDriverChatId!,
                         ));
-                      },
-                      icon: Stack(
-                        children: [
-                          Icon(
-                            Icons.textsms_rounded,
-                            color: primaryBlueColor,
-                          ),
-                          Obx(
-                            () => Get.find<OrderController>()
-                                    .hasNewMessageNotification(
-                                        order.customerDropOffDriverChatId!)
-                                ? _newMessageRedDot(context)
-                                : Container(),
-                          )
-                        ],
-                      ))
+                      })
               ],
             ),
           )),

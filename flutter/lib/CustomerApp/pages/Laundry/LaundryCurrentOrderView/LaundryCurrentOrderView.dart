@@ -238,7 +238,8 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           );
         }
         // only if pickUpDriver not null
-        if (order.value!.pickupDriver != null) {
+        if (order.value!.pickupDriver != null &&
+            order.value!.inDeliveryPhase()) {
           mapController.addOrUpdateUserMarker(
             latLng: order.value!.pickupDriver!.location!,
             markerId: order.value!.pickupDriver!.id,

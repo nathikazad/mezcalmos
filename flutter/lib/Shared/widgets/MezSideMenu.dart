@@ -149,7 +149,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             onClick: () => launch(GetStorage().read(getxPrivacyPolicyLink)),
           ),
         ),
-        controller.fireAuthUser != null ? _buildSideMenuItem() : Container(),
+        //   controller.fireAuthUser != null ? _buildSideMenuItem() : Container(),
         Obx(
           () => SideMenuItem(
             icon: Icons.logout,
@@ -166,7 +166,7 @@ class MezSideMenu extends GetWidget<AuthController> {
 
   Container _drawerHeader() {
     return Container(
-      padding: EdgeInsets.only(left: 21),
+      padding: EdgeInsets.only(left: 21, top: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -266,7 +266,7 @@ class SideMenuItem extends StatelessWidget {
     return InkWell(
       onTap: onClick,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         child: Row(
           children: [
             SizedBox(

@@ -19,13 +19,15 @@ class ItemChosenChoiceComponent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Divider(),
+        Divider(
+          height: 25,
+        ),
         Text(
           optionName,
           style: Get.textTheme.bodyText1,
         ),
         SizedBox(
-          height: 5,
+          height: 15,
         ),
         Column(
           children: List.generate(

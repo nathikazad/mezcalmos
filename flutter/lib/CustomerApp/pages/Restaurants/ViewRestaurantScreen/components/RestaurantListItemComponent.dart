@@ -31,7 +31,9 @@ class _RestaurantsListOfItemsComponentState
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+          padding: (isImageExist)
+              ? const EdgeInsets.symmetric(horizontal: 5, vertical: 12)
+              : const EdgeInsets.all(16),
           // margin: const EdgeInsets.all(5),
 
           child: Row(

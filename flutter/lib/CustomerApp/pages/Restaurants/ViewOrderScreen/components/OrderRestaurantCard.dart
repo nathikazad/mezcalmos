@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 class OrderRestaurantCard extends StatelessWidget {
   const OrderRestaurantCard({Key? key, required this.order}) : super(key: key);
@@ -15,7 +16,7 @@ class OrderRestaurantCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         child: Row(
           children: [
             CircleAvatar(
@@ -62,57 +63,20 @@ class OrderRestaurantCard extends StatelessWidget {
                   ],
                 )),
             Spacer(),
-            _messageIcon(context)
+            MessageButton(
+                showRedDot: Get.find<OrderController>()
+                    .orderHaveNewMessageNotifications(order.orderId),
+                onTap: () {
+                  Get.toNamed<void>(
+                    getMessagesRoute(
+                      chatId: order.orderId,
+                      orderId: order.orderId,
+                      recipientType: ParticipantType.Restaurant,
+                    ),
+                  );
+                })
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _orderMessageButton(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        _messageIcon(context),
-        Obx(
-          () => Get.find<OrderController>()
-                  .orderHaveNewMessageNotifications(order.orderId)
-              ? _newMessageRedDot(context)
-              : Container(),
-        )
-      ],
-    );
-  }
-
-  Widget _newMessageRedDot(BuildContext context) {
-    return Positioned(
-      left: 0,
-      top: 0,
-      child: Container(
-        width: 13,
-        height: 13,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: const Color(0xfff6efff), width: 2),
-          color: const Color(0xffff0000),
-        ),
-      ),
-    );
-  }
-
-  Widget _messageIcon(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        Get.toNamed<void>(
-          getMessagesRoute(
-            chatId: order.orderId,
-            orderId: order.orderId,
-            recipientType: ParticipantType.Restaurant,
-          ),
-        );
-      },
-      icon: Icon(
-        Icons.textsms,
-        color: primaryBlueColor,
       ),
     );
   }

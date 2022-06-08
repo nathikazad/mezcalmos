@@ -116,47 +116,51 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     widget.child,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        InkWell(
-                          child: Container(
-                            width: 25,
-                            height: 25,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: SecondaryLightBlueColor,
+                    Container(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          InkWell(
+                            child: Container(
+                              width: 25,
+                              height: 25,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: SecondaryLightBlueColor,
+                              ),
+                              child: const Icon(
+                                Icons.edit_outlined,
+                                size: 14,
+                                color: primaryBlueColor,
+                              ),
                             ),
-                            child: const Icon(
-                              Icons.edit_outlined,
-                              size: 14,
-                              color: primaryBlueColor,
-                            ),
+                            onTap: widget.onEdit,
                           ),
-                          onTap: widget.onEdit,
-                        ),
-                        const SizedBox(width: 10),
-                        InkWell(
-                          child: Container(
-                            width: 25,
-                            height: 25,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(64)),
-                              color: SecondaryLightBlueColor,
+                          const SizedBox(width: 10),
+                          InkWell(
+                            child: Container(
+                              width: 25,
+                              height: 25,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(64)),
+                                color: SecondaryLightBlueColor,
+                              ),
+                              child: RotationTransition(
+                                turns: _iconTurns,
+                                child: const Icon(Icons.expand_more,
+                                    color: primaryBlueColor),
+                              ),
                             ),
-                            child: RotationTransition(
-                              turns: _iconTurns,
-                              child: const Icon(Icons.expand_more,
-                                  color: primaryBlueColor),
-                            ),
+                            onTap: _handleTap,
                           ),
-                          onTap: _handleTap,
-                        ),
-                        const SizedBox(width: 10),
-                      ],
+                          const SizedBox(width: 10),
+                        ],
+                      ),
                     ),
                   ],
                 ),

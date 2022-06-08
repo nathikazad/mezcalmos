@@ -159,7 +159,10 @@ class RestaurantSliverAppBar extends StatelessWidget {
       child: Container(
         width: double.infinity,
         color: Colors.white,
-        margin: const EdgeInsets.only(top: 5),
+        margin: const EdgeInsets.only(
+          top: 8,
+        ),
+        padding: const EdgeInsets.all(4),
         child: TabBar(
           isScrollable: true,
           controller: tabController,

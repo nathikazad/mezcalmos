@@ -30,57 +30,58 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget.imageUrl != null)
             //===================== item image avatar=============
-            Flexible(
-              child: Container(
-                child: CachedNetworkImage(
-                  imageUrl: widget.imageUrl!,
-                  imageBuilder: (_, ImageProvider imageProvider) {
-                    return Container(
-                      width: 70,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(6),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: imageProvider,
-                        ),
+            Container(
+              child: CachedNetworkImage(
+                width: 65,
+                height: 65,
+                imageUrl: widget.imageUrl!,
+                imageBuilder: (_, ImageProvider imageProvider) {
+                  return Container(
+                    width: 65,
+                    height: 65,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(6),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: imageProvider,
                       ),
-                    );
-                  },
-                  errorWidget: (_, __, ___) => Container(
-                    width: 70,
-                    height: 50,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(6),
-                        color: Colors.grey.shade300,
-                      ),
-                      child: Icon(
-                        Icons.image,
-                        color: Colors.grey,
-                        size: 18,
-                      ),
+                    ),
+                  );
+                },
+                errorWidget: (_, __, ___) => Container(
+                  width: 70,
+                  height: 65,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(6),
+                      color: Colors.grey.shade300,
+                    ),
+                    child: Icon(
+                      Icons.image,
+                      color: Colors.grey,
+                      size: 18,
                     ),
                   ),
-                  placeholder: (_, __) => Container(
-                    width: 70,
-                    height: 50,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                ),
+                placeholder: (_, __) => Container(
+                  width: 80,
+                  height: 60,
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
                 ),
               ),
             ),
           if (widget.imageUrl != null) const SizedBox(width: 10),
           Flexible(
-            flex: 4,
-            fit: FlexFit.loose,
+            flex: 5,
+            fit: FlexFit.tight,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -89,6 +90,9 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: txt.headline3,
+                ),
+                SizedBox(
+                  height: 3,
                 ),
                 widget.incrementWidget
               ],
