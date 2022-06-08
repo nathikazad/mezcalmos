@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -62,12 +63,16 @@ class _LaundryOrderFromToComponentState
         customerImage: widget.order.customer.image,
         customerName: widget.order.customer.name,
         customerTimeWidgets: _dateTimeSetter(DeliveryAction.Pickup),
-        onCustomerMsgClick: () => Get.toNamed<void>(
-          getMessagesRoute(
-            chatId: widget.order.orderId,
-            orderId: widget.order.orderId,
-          ),
-        ),
+        onCustomerMsgClick: () {
+          if (_getRightChatId() != null) {
+            Get.toNamed<void>(
+              getMessagesRoute(
+                  chatId: _getRightChatId()!,
+                  orderId: widget.order.orderId,
+                  recipientType: ParticipantType.Customer),
+            );
+          }
+        },
         // landry
         serviceProviderImage: widget.order.laundry!.image,
         serviceProviderName: widget.order.laundry!.name,
@@ -84,6 +89,16 @@ class _LaundryOrderFromToComponentState
         },
       ),
     );
+  }
+
+  String? _getRightChatId() {
+    if (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
+        widget.order.customerPickupDriverChatId != null) {
+      return widget.order.customerPickupDriverChatId;
+    } else if (widget.order.customerDropOffDriverChatId != null) {
+      return widget.order.customerDropOffDriverChatId;
+    }
+    return null;
   }
 
   String _getOrderStatus() {
