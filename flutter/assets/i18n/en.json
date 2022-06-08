@@ -462,13 +462,13 @@
                         },
                         "CustomerLaundrySelectCard": {
                             "days": "days",
-                            "startingFrom": "Starting :"
+                            "startingFrom": "Starting"
                         }
                     },
 
                     "laundries": "Laundries",
 
-                    "title": "Find your closest laundries or dry cleaners "
+                    "title": "Find your closest laundries\nor dry cleaners "
                 },
                 "SingleLaundryScreen": {
                     "startingFrom": "Starting from ",
@@ -480,6 +480,7 @@
                 },
                 "LaundryRequestView": {
                     "LaundryOrderRequestView": {
+
                         "howItWorks": "How it works",
                         "deliveryLocation": "Delivery Location",
                         "orderSummary": "Order Summary",
@@ -703,7 +704,16 @@
                 "free": "Free"
             },
             "MezServiceOpenHours": {
-                "openHours": "Open hours"
+                "openHours": "Open hours",
+                "weekDays": {
+                    "monday": "Monday",
+                    "tuesday": "Tuesday",
+                    "wednesday": "Wednesday",
+                    "thursday": "Thursday",
+                    "friday": "Friday",
+                    "saturday": "Saturday",
+                    "sunday": "Sunday"
+                }
             },
             "MezWorkingHours": {
                 "save": "Save",

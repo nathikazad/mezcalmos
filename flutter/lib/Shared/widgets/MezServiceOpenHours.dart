@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -43,12 +44,13 @@ class MezServiceOpenHours extends StatelessWidget {
                   width: 5,
                 ),
                 Text(
-                  "${v.key}",
+                  getDayName(v.key).capitalizeDays,
                   style: Get.textTheme.bodyText2
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 Spacer(),
-                Text("${v.value.from.join(":")} - ${v.value.to.join(":")}",
+                Text(
+                    "${v.value.from.join(":").capitalizeFirst} - ${v.value.to.join(":").capitalizeFirst}",
                     style: Get.textTheme.bodyText2)
               ],
             ),
@@ -56,5 +58,16 @@ class MezServiceOpenHours extends StatelessWidget {
         }).toList())),
       ],
     );
+  }
+
+  String getDayName(String key) {
+    return key
+        .toLowerCase()
+        .split("-")
+        .map((String element) {
+          return "${_i18n()["weekDays"]["$element"]}";
+        })
+        .toList()
+        .join("-");
   }
 }

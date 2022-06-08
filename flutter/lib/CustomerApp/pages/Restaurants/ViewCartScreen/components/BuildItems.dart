@@ -45,6 +45,7 @@ class CartItemsBuilder extends StatelessWidget {
             child: MyExpansionPanelComponent(
               child: Flexible(
                   child: ItemInformationCart(
+                incrementWidget: _incrementItemComponent(cartItem),
                 imageUrl: cartItem.item.image,
                 itemName: cartItem.item.name[userLanguage]![0].toUpperCase() +
                     cartItem.item.name[userLanguage]!.substring(1),
@@ -61,55 +62,7 @@ class CartItemsBuilder extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IncrementalComponent(
-                              minVal: 1,
-                              btnColors: SecondaryLightBlueColor,
-                              alignment: MainAxisAlignment.start,
-                              onMinValueBtnColor: Colors.grey.shade400,
-                              incrementCallback: () {
-                                // counter.value =
-                                //     counter.value + cartItem.costPerOne();
-                                //print("${cartItem.item.id}");
-                                _restaurantController.incrementItem(
-                                    cartItem.idInCart!, 1);
-                                _restaurantController.refresh();
-                              },
-                              onChangedToZero: () async {
-                                final YesNoDialogButton yesNoResult =
-                                    await cancelAlertDialog(
-                                        title: _i18n()["deleteItem"],
-                                        body: _i18n()["deleteItemConfirm"],
-                                        icon: Container(
-                                          child: Icon(
-                                            Icons.highlight_off,
-                                            size: 65,
-                                            color: Color(0xffdb2846),
-                                          ),
-                                        ));
-                                mezDbgPrint(
-                                    " the returend value from the dailog $yesNoResult");
-                                if (yesNoResult == YesNoDialogButton.Yes) {
-                                  _restaurantController
-                                      .deleteItem(cartItem.idInCart!);
-                                  if (_restaurantController.cart.value
-                                          .quantity() ==
-                                      0) {
-                                    _restaurantController.clearCart();
-                                    Get.until((Route route) =>
-                                        route.settings.name == kHomeRoute);
-                                  }
-                                  // controller.refresh();
-
-                                }
-                              },
-                              value: cartItem.quantity,
-                              decrementCallback: () {
-                                // counter.value =
-                                //     counter.value + cartItem.costPerOne();
-                                _restaurantController.incrementItem(
-                                    cartItem.idInCart!, -1);
-                                _restaurantController.refresh();
-                              }),
+                          // _incrementItemComponent(cartItem),
                           Text(
                             cartItem.totalCost().toPriceString(),
                             style: Get.textTheme.headline3,
@@ -140,6 +93,43 @@ class CartItemsBuilder extends StatelessWidget {
         }),
       ),
     );
+  }
+
+  Widget _incrementItemComponent(CartItem cartItem) {
+    return IncrementalComponent(
+        minVal: 1,
+        btnColors: SecondaryLightBlueColor,
+        alignment: MainAxisAlignment.start,
+        onMinValueBtnColor: Colors.grey.shade400,
+        incrementCallback: () {
+          _restaurantController.incrementItem(cartItem.idInCart!, 1);
+          _restaurantController.refresh();
+        },
+        onChangedToZero: () async {
+          final YesNoDialogButton yesNoResult = await cancelAlertDialog(
+              title: _i18n()["deleteItem"],
+              body: _i18n()["deleteItemConfirm"],
+              icon: Container(
+                child: Icon(
+                  Icons.highlight_off,
+                  size: 65,
+                  color: Color(0xffdb2846),
+                ),
+              ));
+          mezDbgPrint(" the returend value from the dailog $yesNoResult");
+          if (yesNoResult == YesNoDialogButton.Yes) {
+            _restaurantController.deleteItem(cartItem.idInCart!);
+            if (_restaurantController.cart.value.quantity() == 0) {
+              _restaurantController.clearCart();
+              Get.until((Route route) => route.settings.name == kHomeRoute);
+            }
+          }
+        },
+        value: cartItem.quantity,
+        decrementCallback: () {
+          _restaurantController.incrementItem(cartItem.idInCart!, -1);
+          _restaurantController.refresh();
+        });
   }
 
   Container _itemNotesComponent(CartItem cartItem, BuildContext context) {

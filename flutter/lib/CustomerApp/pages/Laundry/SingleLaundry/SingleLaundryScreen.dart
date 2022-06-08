@@ -61,18 +61,9 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                 SizedBox(
                   height: 15,
                 ),
-                // TODO @nathikazad is there a laundry description on the model ?
-                // Text(
-                //   "${_i18n()["description"]}",
-                //   style: Get.textTheme.bodyText1,
-                // ),
-                // Text("laundry.value!.info.description"),
-                // const SizedBox(
-                //   height: 10,
-                // ),
                 MezServiceOpenHours(schedule: laundry.value!.schedule!),
                 SizedBox(
-                  height: 15,
+                  height: 25,
                 ),
                 ServiceLocationCard(location: laundry.value!.info.location),
               ],
@@ -127,10 +118,12 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   laundry.value!.info.name,
                   style: Get.textTheme.bodyText1,
                 ),
+                SizedBox(
+                  height: 5,
+                ),
                 Row(children: [
                   Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(3),
+                    child: Container(
                       child: Chip(
                           padding: const EdgeInsets.all(3),
                           labelStyle: Get.textTheme.bodyText2?.copyWith(

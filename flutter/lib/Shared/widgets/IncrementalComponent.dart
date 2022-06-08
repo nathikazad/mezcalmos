@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:sizer/sizer.dart';
 
 class IncrementalComponent extends StatefulWidget {
   final VoidCallback incrementCallback;
@@ -10,6 +9,7 @@ class IncrementalComponent extends StatefulWidget {
   final bool center;
   final Color? onMinValueBtnColor;
   int value;
+  double size;
   final int maxVal;
   final int minVal;
   final Function? onChangedToZero;
@@ -24,6 +24,7 @@ class IncrementalComponent extends StatefulWidget {
       this.center = false,
       this.btnColors = primaryBlueColor,
       this.onChangedToZero,
+      this.size = 16,
       this.maxVal = 100,
       this.minVal = 0})
       : super(key: key);
@@ -51,7 +52,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
                   color: (widget.value > widget.minVal)
                       ? primaryBlueColor
                       : Colors.white,
-                  size: 16.sp,
+                  size: widget.size,
                 )),
             onTap: () {
               if (widget.value > widget.minVal) {
@@ -64,7 +65,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
           width: 5,
         ),
         Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(),
           child: Text("${widget.value}",
               style: Theme.of(context).textTheme.headline3),
@@ -81,7 +82,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
               ),
               child: Icon(
                 Icons.add,
-                size: 16.sp,
+                size: widget.size,
                 color: (widget.btnColors == primaryBlueColor)
                     ? Colors.white
                     : primaryBlueColor,

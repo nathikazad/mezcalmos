@@ -462,7 +462,7 @@
 
                 },
                 "SingleLaundryScreen": {
-                    "startingFrom": "Empezando :",
+                    "startingFrom": "Empezando ",
                     "minimumCost": "Costo mínimo",
                     "description": "Descripción",
                     "openHours": "horarios de apertura",
@@ -472,7 +472,7 @@
                 "LaundriesListView": {
 
                     "laundries": "lavanderías",
-                    "title": "Encuentra tus lavanderías más cercanas o tintorerías ",
+                    "title": "Encuentra tus lavanderías \nmás cercanas o tintorerías ",
                     "components": {
                         "laundrySelectCard": {
                             "available": "Available",
@@ -480,7 +480,7 @@
                         },
                         "CustomerLaundrySelectCard": {
                             "days": "dias",
-                            "startingFrom": "Empezando desde "
+                            "startingFrom": "Empezando"
                         }
                     }
                 },
@@ -498,7 +498,7 @@
                         "orderNow": "Ordenar ahora",
                         "signInToMakeOrder": "Iniciar sesión para hacer el pedido",
                         "notes": "Notas",
-                        "noteHint": "Write your notes here",
+                        "noteHint": "Escribe tus notas aquí",
                         "error": "Error",
                         "errorText": "No puedo hacer un pedido por favor intente de nuevo"
                     }
@@ -719,7 +719,17 @@
                 "free": "Libre"
             },
             "MezServiceOpenHours": {
-                "openHours": "Horarios de apertura"
+                "openHours": "Horarios de apertura",
+                "weekDays": {
+                    "monday": "Lunes",
+                    "tuesday": "martes",
+                    "wednesday": "miércoles",
+                    "thursday": "jueves",
+                    "friday": "Viernes",
+                    "saturday": "sábado",
+                    "sunday": "Domingo"
+                }
+
             },
             "MezWorkingHours": {
                 "save": "Guardar",

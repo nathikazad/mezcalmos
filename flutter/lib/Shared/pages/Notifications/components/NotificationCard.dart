@@ -23,7 +23,7 @@ class NotificationCard extends StatelessWidget {
           Get.offNamed(notification.linkUrl);
         },
         child: Ink(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           width: double.infinity,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,

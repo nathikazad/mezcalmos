@@ -61,11 +61,9 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   }
 
   return AppBar(
-    toolbarHeight: 65,
+    // toolbarHeight: 65,
     elevation: 0,
     bottom: tabBar,
-    titleSpacing: 0,
-    leadingWidth: 8,
     automaticallyImplyLeading: false,
     leading: _getRightLeading(),
     actions: [

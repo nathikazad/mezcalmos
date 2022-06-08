@@ -25,26 +25,21 @@ class CustomerLaundrySelectCard extends StatelessWidget {
             Get.toNamed(getSingleLaundryRoute(laundry.info.id));
           },
           child: Container(
-            child: Column(
-              children: [
-                _laundryInfoHeader(),
-
-                // Divider(),
-                //   _costsExpandableComponent()
-              ],
-            ),
+            child: _laundryInfoHeader(),
           ),
         ));
   }
 
   Widget _laundryInfoHeader() {
     return Container(
-      margin: const EdgeInsets.only(top: 8, right: 3, left: 3, bottom: 8),
+      padding: const EdgeInsets.only(top: 10, right: 5, left: 5, bottom: 10),
+      alignment: Alignment.center,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: 25,
+            radius: 23,
             backgroundImage: CachedNetworkImageProvider(laundry.info.image),
           ),
           SizedBox(
@@ -52,23 +47,27 @@ class CustomerLaundrySelectCard extends StatelessWidget {
           ),
           Flexible(
             flex: 5,
-            fit: FlexFit.tight,
+            fit: FlexFit.loose,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 5,
+                ),
                 Text(
                   laundry.info.name,
                   style: Get.textTheme.bodyText1,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 7,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Flexible(
                       flex: 2,
+                      fit: FlexFit.tight,
                       child: Row(
                         children: [
                           Icon(
@@ -84,11 +83,9 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: 8,
-                    ),
                     Flexible(
                       flex: 2,
+                      fit: FlexFit.tight,
                       child: Row(
                         children: [
                           Icon(
@@ -106,20 +103,17 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: 8,
+                    Spacer(
+                      flex: 1,
                     ),
                     Flexible(
-                      flex: 3,
+                      flex: 4,
                       fit: FlexFit.tight,
                       child: Text(
                           "${_i18n()["startingFrom"]} \$${laundry.getCheapestCategory}/kg",
                           style: Get.textTheme.bodyText2),
                     ),
                   ],
-                ),
-                SizedBox(
-                  height: 10,
                 ),
               ],
             ),

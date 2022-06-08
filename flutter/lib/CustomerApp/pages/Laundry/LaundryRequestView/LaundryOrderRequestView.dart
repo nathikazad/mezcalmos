@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
+import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
@@ -82,7 +82,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                         height: 20.h,
                         imageUrl: selectedLaundry.info.image),
                     SizedBox(
-                      height: 20,
+                      height: 25,
                     ),
                     Text(
                       selectedLaundry.info.name,
@@ -104,7 +104,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 25,
                     ),
                     Container(
                       //  margin: const EdgeInsets.all(8),
@@ -132,7 +132,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 25,
                     ),
                     _orderNoteComponent(),
                     SizedBox(
@@ -277,7 +277,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     mezDbgPrint("GotRoute !!!!!!!");
 
     clicked.value = true;
-    LaundryRequest _laundryRequest =
+    final LaundryRequest _laundryRequest =
         LaundryRequest(laundryId: selectedLaundry.info.id);
     // get route info first
     MapHelper.getDurationAndDistance(

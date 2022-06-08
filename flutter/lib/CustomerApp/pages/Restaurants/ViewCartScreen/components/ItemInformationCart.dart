@@ -7,11 +7,13 @@ class ItemInformationCart extends StatefulWidget {
     this.imageUrl,
     required this.itemName,
     required this.restaurantName,
+    required this.incrementWidget,
     required this.itemsPrice,
   }) : super(key: key);
 
   final String itemName;
   final String restaurantName;
+  final Widget incrementWidget;
   final String itemsPrice;
   final String? imageUrl;
 
@@ -79,11 +81,17 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
           Flexible(
             flex: 4,
             fit: FlexFit.loose,
-            child: Text(
-              "${widget.itemName}",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: txt.headline3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${widget.itemName}",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: txt.headline3,
+                ),
+                widget.incrementWidget
+              ],
             ),
           ),
         ],
