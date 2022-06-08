@@ -45,9 +45,7 @@ class _RestaurantOrderFromToComponentState
   }
 
   void getRestaurant() {
-    if (widget.order.restaurant != null) {
-      restaurant = widget.order.restaurant;
-    }
+    restaurant = widget.order.restaurant;
   }
 
   @override
@@ -60,27 +58,28 @@ class _RestaurantOrderFromToComponentState
         customerName: widget.order.customer.name,
         customerTimeWidgets: _dateTimeSetter(DeliveryAction.Pickup),
         onCustomerMsgClick: () {
-          Get.toNamed(
-            getMessagesRoute(
-              chatId: widget.order.orderId,
-              orderId: widget.order.orderId,
-              recipientId: widget.order.customer.id,
-            ),
-          );
+          if (widget.order.customerDropOffDriverChatId != null) {
+            Get.toNamed(
+              getMessagesRoute(
+                  chatId: widget.order.customerDropOffDriverChatId!,
+                  orderId: widget.order.orderId,
+                  recipientType: ParticipantType.Customer),
+            );
+          }
         },
         // landry
         serviceProviderImage: widget.order.restaurant.image,
         serviceProviderName: widget.order.restaurant.name,
         serviceProviderTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff),
         onServiceMsgClick: () {
-          Get.toNamed(
-            getMessagesRoute(
-              chatId: widget.order.orderId,
-              orderId: widget.order.orderId,
-              recipientId: widget.order.restaurant.id,
-              recipientType: ParticipantType.Restaurant,
-            ),
-          );
+          if (widget.order.customerDropOffDriverChatId != null) {
+            Get.toNamed(
+              getMessagesRoute(
+                  chatId: widget.order.serviceProviderDropOffDriverChatId!,
+                  orderId: widget.order.orderId,
+                  recipientType: ParticipantType.DeliveryAdmin),
+            );
+          }
         },
         // order
         formattedOrderStatus: _getOrderStatus(),
