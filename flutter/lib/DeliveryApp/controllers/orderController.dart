@@ -1,7 +1,7 @@
 import 'dart:async';
+
 import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -140,12 +140,12 @@ class OrderController extends GetxController {
     });
   }
 
-  bool hasNewMessageNotification(String orderId) {
+  bool hasNewMessageNotification(String chatId) {
     return _foregroundNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.chatId == chatId)
         .isNotEmpty;
   }
 

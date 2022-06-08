@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:sizer/sizer.dart';
 
 extension OrderCardInfoExtension on OrderInfoCardState {
@@ -17,6 +19,7 @@ extension OrderCardInfoExtension on OrderInfoCardState {
 
 // ignore: constant_identifier_names
 enum OrderInfoCardState { Maximized, Minimized }
+
 typedef void OnOrderInfoCardStateChange(OrderInfoCardState state);
 
 class AnimatedOrderInfoCard extends StatelessWidget {
@@ -171,37 +174,12 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           ),
         ),
         SizedBox(width: 9),
-        InkWell(
+        MessageButton(
           onTap: onServiceMsgClick,
-          // onTap: () => Get.toNamed(getMessagesRoute(chatId: order.orderId)),
-          child: Stack(
-            children: <Widget>[
-              Center(
-                child: Icon(
-                  Icons.sms_sharp,
-                  color: Color.fromRGBO(103, 121, 254, 1),
-                  size: 24,
-                ),
-              ),
-              Get.find<OrderController>()
-                      .hasNewMessageNotification(order.orderId)
-                  ? Positioned(
-                      top: -1,
-                      right: -1,
-                      child: Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white),
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
-            ],
-          ),
+          showRedDot: Get.find<OrderController>()
+              .hasNewMessageNotification(order.orderId),
         ),
+
         if (serviceProviderTimeWidgets.isNotEmpty) ...[
           Spacer(),
           Row(
@@ -242,36 +220,12 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           ),
         ),
         SizedBox(width: 9),
-        InkWell(
+        MessageButton(
           onTap: onCustomerMsgClick,
-          // onTap: () => Get.toNamed(getMessagesRoute(chatId: order.orderId)),
-          child: Stack(
-            children: <Widget>[
-              Center(
-                child: Icon(
-                  Icons.sms_sharp,
-                  color: Color.fromRGBO(103, 121, 254, 1),
-                  size: 24,
-                ),
-              ),
-              Get.find<OrderController>()
-                      .hasNewMessageNotification(order.orderId)
-                  ? Positioned(
-                      top: -1,
-                      right: -1,
-                      child: Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white),
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
-            ],
-          ),
+          showRedDot: (_customerChatId() != null)
+              ? Get.find<OrderController>()
+                  .hasNewMessageNotification(_customerChatId()!)
+              : false,
         ),
         Spacer(),
         Row(
@@ -279,6 +233,19 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String? _customerChatId() {
+    switch (order.orderType) {
+      case OrderType.Laundry:
+        return (order as LaundryOrder).getRightChatId();
+
+      case OrderType.Restaurant:
+        return (order as RestaurantOrder).customerDropOffDriverChatId;
+
+      default:
+    }
+    return null;
   }
 
   Row orderCardMainBody() {

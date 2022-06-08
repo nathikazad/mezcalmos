@@ -77,7 +77,12 @@ class _LaundryOrderFromToComponentState
         serviceProviderImage: widget.order.laundry!.image,
         serviceProviderName: widget.order.laundry!.name,
         serviceProviderTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff),
-        onServiceMsgClick: () {},
+        onServiceMsgClick: () {
+          Get.toNamed(getMessagesRoute(
+              chatId: widget.order.orderId,
+              orderId: widget.order.orderId,
+              recipientType: ParticipantType.DeliveryAdmin));
+        },
         // order
         formattedOrderStatus: _getOrderStatus(),
         order: widget.order,

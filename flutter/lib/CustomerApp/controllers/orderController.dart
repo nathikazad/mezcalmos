@@ -123,12 +123,12 @@ class OrderController extends GetxController {
     }
   }
 
-  bool hasNewMessageNotification(String orderId) {
+  bool hasNewMessageNotification(String chatId) {
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId == orderId)
+            notification.chatId == chatId)
         .isNotEmpty;
   }
 
@@ -201,12 +201,12 @@ class OrderController extends GetxController {
     return snapshot.value;
   }
 
-  bool orderHaveNewMessageNotifications(String orderId) {
+  bool orderHaveNewMessageNotifications(String chatId) {
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId == orderId)
+            notification.chatId == chatId)
         .isNotEmpty;
   }
 

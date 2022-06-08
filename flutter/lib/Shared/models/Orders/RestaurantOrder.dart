@@ -169,6 +169,15 @@ class RestaurantOrder extends DeliverableOrder {
     return status == RestaurantOrderStatus.CancelledByCustomer ||
         status == RestaurantOrderStatus.CancelledByAdmin;
   }
+  //   String getRightChatId() {
+  //   if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
+  //       customerPickupDriverChatId != null) {
+  //     return customerPickupDriverChatId;
+  //   } else if (customerDropOffDriverChatId != null) {
+  //     return customerDropOffDriverChatId;
+  //   }
+  //   return null;
+  // }
 
   @override
   bool inProcess() {
