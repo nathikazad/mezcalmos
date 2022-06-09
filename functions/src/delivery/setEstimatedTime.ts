@@ -30,8 +30,7 @@ export = functions.https.onCall(async (data, context) => {
   }
 
   let order: TwoWayDeliverableOrder = validationPass.order;
-  console.log("[Before] estimatedDeliveryTimes ==>",order.estimatedDeliveryTimes);
-  if(!order.estimatedDeliveryTimes )
+  if(!order.estimatedDeliveryTimes ) 
   {
     order.estimatedDeliveryTimes = {
       pickup: {

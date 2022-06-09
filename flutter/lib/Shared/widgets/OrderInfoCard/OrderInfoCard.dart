@@ -14,7 +14,7 @@ class OrderInfosCard extends StatelessWidget {
     return GestureDetector(
       onTap: orderCardSubWidgets.onCardTap,
       child: Container(
-        margin: EdgeInsets.only(bottom: 15),
+        // margin: EdgeInsets.only(bottom: 15),
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -92,36 +92,39 @@ class OrderInfosCard extends StatelessWidget {
               ],
             ),
             Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    height: 15,
-                    width: 20,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(money_asset),
+            Container(
+              height: 30,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      height: 15,
+                      width: 20,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(money_asset),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(width: 5),
-                Text(
-                  "\$${order.cost.toString()}",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15,
+                  SizedBox(width: 5),
+                  Text(
+                    "\$${order.cost.toString()}",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15,
+                    ),
                   ),
-                ),
-                Spacer(),
-                orderCardSubWidgets.cardStatus,
-              ],
+                  Spacer(),
+                  orderCardSubWidgets.cardStatus,
+                ],
+              ),
             ),
           ],
         ),
