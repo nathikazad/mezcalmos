@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
-import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -78,7 +77,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     Get.put(RestaurantController(), permanent: true);
     Get.put(RestaurantsInfoController(), permanent: true);
     Get.put(LaundryController(), permanent: true);
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 
     if (Get.find<AuthController>().fireAuthUser != null) {
       _doIfFireAuthUserIsNotNull();
@@ -125,42 +124,29 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         appBar: CustomerAppBar(
           leftBtnType: AppBarLeftButtonType.Menu,
         ),
-        body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    minWidth: constraints.maxWidth,
-                    minHeight: constraints.maxHeight),
-                child: IntrinsicHeight(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        const SizedBox(height: 10),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              const SizedBox(height: 10),
 
-                        mezWelcomeContainer(
-                          Theme.of(context).textTheme.headline2!,
-                        ),
-                        //============================== description=============================
-                        mezDescription(txt.subtitle1!),
-
-                        //============================Service title===================================
-                        const SizedBox(height: 10),
-                        mezServiceTitle(txt.headline2!),
-
-                        //========================= list of services ===========================
-                        Expanded(child: mezListOfServices()),
-                        // Spacer(),
-                        HomeFooterButtons(),
-                      ],
-                    ),
-                  ),
-                ),
+              mezWelcomeContainer(
+                Theme.of(context).textTheme.headline2!,
               ),
-            );
-          },
+              //============================== description=============================
+              mezDescription(txt.subtitle1!),
+
+              //============================Service title===================================
+              const SizedBox(height: 10),
+              mezServiceTitle(txt.headline2!),
+
+              //========================= list of services ===========================
+              mezListOfServices(),
+              // Spacer(),
+              //  HomeFooterButtons(),
+            ],
+          ),
         ),
       ),
     );
@@ -267,21 +253,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     return Column(
       children: [
         //====================Taxi===================
-        Obx(
-          () => ServicesCard(
-            title: "${_i18n()['taxi']["title"]}",
-            url: "assets/images/customer/taxi/taxiService.png",
-            subtitle: "${_i18n()['taxi']["subtitle"]}",
-            onTap: () {
-              getServiceRoute(
-                  orderType: OrderType.Taxi,
-                  serviceRoute: kTaxiRequestRoute,
-                  singleOrderRoute: (String orderId) {
-                    Get.toNamed<void>(getTaxiOrderRoute(orderId));
-                  });
-            },
-          ),
-        ),
 
         //==================Food====================
         Obx(
@@ -314,6 +285,21 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                     Get.toNamed<void>(getLaundyOrderRoute(v));
                   });
             },
+          ),
+        ),
+        Obx(
+          () => ServicesCard(
+            title: "${_i18n()['taxi']["title"]}",
+            url: "assets/images/customer/taxi/taxiService.png",
+            subtitle: "${_i18n()["comingSoon"]}",
+            // onTap: () {
+            //   getServiceRoute(
+            //       orderType: OrderType.Taxi,
+            //       serviceRoute: kTaxiRequestRoute,
+            //       singleOrderRoute: (String orderId) {
+            //         Get.toNamed<void>(getTaxiOrderRoute(orderId));
+            //       });
+            // },
           ),
         ),
       ],

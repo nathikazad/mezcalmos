@@ -18,6 +18,7 @@ class ServicesCard extends StatelessWidget {
   final String title;
   final String? subtitle;
   final String url;
+  
   final GestureTapCallback? onTap;
 
   @override
@@ -27,7 +28,7 @@ class ServicesCard extends StatelessWidget {
         ["components"]["ServicesCard"];
     return Card(
       margin: EdgeInsets.all(5),
-      color: subtitle != null ? Colors.white : Colors.grey.shade300,
+      color: onTap != null ? Colors.white : Colors.grey.shade300,
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: onTap,
