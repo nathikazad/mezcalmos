@@ -78,26 +78,32 @@ class MezSideMenu extends GetWidget<AuthController> {
         SideMenuItem(
           icon: Icons.person,
 
-          title: "Profile", // _i18n()["userInfo"],
+          title: (controller.isUserSignedIn)
+              ? "${_i18n()["profile"]}"
+              : "${_i18n()["login"]}", // _i18n()["userInfo"],
           onClick: () {
             _drawerController.closeMenu();
-            Get.toNamed<void>(kUserProfile);
+            if (controller.isUserSignedIn) {
+              Get.toNamed<void>(kUserProfile);
+            } else
+              Get.toNamed<void>(kSignInRouteOptional);
           },
         ),
-        SideMenuItem(
-          icon: Icons.notifications,
+        if (controller.isUserSignedIn)
+          SideMenuItem(
+            icon: Icons.notifications,
 
-          title: "Notifications", // _i18n()["userInfo"],
-          onClick: () {
-            _drawerController.closeMenu();
-            Get.toNamed<void>(kNotificationsRoute);
-          },
-        ),
+            title: "${_i18n()["notifications"]}", // _i18n()["userInfo"],
+            onClick: () {
+              _drawerController.closeMenu();
+              Get.toNamed<void>(kNotificationsRoute);
+            },
+          ),
         if (_drawerController.pastOrdersRoute != null)
           SideMenuItem(
             icon: Icons.restore,
 
-            title: "Past orders", // _i18n()["userInfo"],
+            title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
             onClick: () {
               _drawerController.closeMenu();
               Get.toNamed<void>(_drawerController.pastOrdersRoute!);
@@ -108,7 +114,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Language",
+                "${_i18n()["language"]}",
                 style: Get.textTheme.bodyText1,
               ),
               SizedBox(
@@ -149,17 +155,17 @@ class MezSideMenu extends GetWidget<AuthController> {
             onClick: () => launch(GetStorage().read(getxPrivacyPolicyLink)),
           ),
         ),
-        //   controller.fireAuthUser != null ? _buildSideMenuItem() : Container(),
-        Obx(
-          () => SideMenuItem(
-            icon: Icons.logout,
-            title: _i18n()["logout"],
-            onClick: () async {
-              _drawerController.closeMenu();
-              await controller.signOut();
-            },
+        if (controller.isUserSignedIn)
+          Obx(
+            () => SideMenuItem(
+              icon: Icons.logout,
+              title: _i18n()["logout"],
+              onClick: () async {
+                _drawerController.closeMenu();
+                await controller.signOut();
+              },
+            ),
           ),
-        ),
       ],
     );
   }
@@ -177,7 +183,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             width: 136,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Color.fromARGB(255, 214, 214, 214),
+              color: SecondaryLightBlueColor,
               // border: Border.all(color: Colors.black),
             ),
             child: ClipOval(
@@ -185,8 +191,9 @@ class MezSideMenu extends GetWidget<AuthController> {
               child: controller.user?.image == null ||
                       controller.user?.image == ""
                   ? Icon(
-                      Icons.account_circle_outlined,
-                      size: 136,
+                      Icons.person,
+                      size: 70,
+                      color: primaryBlueColor,
                     )
                   : CachedNetworkImage(
                       imageUrl: controller.user!.image!,
@@ -239,7 +246,7 @@ class MezSideMenu extends GetWidget<AuthController> {
   }
 
   Widget _buildSideMenuItem() {
-    if (_drawerController.sideMenuItems != null) {
+    if (_drawerController.sideMenuItems != null && controller.isUserSignedIn) {
       return Column(
         children: _drawerController.sideMenuItems!,
       );

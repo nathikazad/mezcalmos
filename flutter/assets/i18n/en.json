@@ -756,6 +756,12 @@
             },
             "MezSideMenu": {
                 "userInfo": "User Information",
+                "profile": "Profile",
+                "notifications": "Notifications",
+                "pastOrders": "Past orders",
+                "login": "Login",
+                "language": "Language",
+
                 "logout": "Logout",
                 "legal": "Privacy policy"
             }

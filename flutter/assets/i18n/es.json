@@ -773,6 +773,11 @@
             },
             "MezSideMenu": {
                 "userInfo": "Información del usuario",
+                "profile": "Perfil",
+                "notifications": "Notificaciones",
+                "pastOrders": "Órdenes pasadas",
+                "login": "Acceso",
+                "language": "Idioma",
                 "logout": "Cerrar sesión",
                 "legal": "Política de privacidad"
             }

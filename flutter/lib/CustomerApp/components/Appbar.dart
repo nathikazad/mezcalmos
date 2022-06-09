@@ -140,7 +140,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _noUserButton() {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 12),
+      padding: const EdgeInsets.only(left: 3, right: 16),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
