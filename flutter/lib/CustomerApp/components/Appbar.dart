@@ -86,6 +86,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       scale: 0.6,
       child: InkWell(
         onTap: () {
+          
           //  Get.back();
           Get.find<SideMenuDrawerController>().openMenu();
         },

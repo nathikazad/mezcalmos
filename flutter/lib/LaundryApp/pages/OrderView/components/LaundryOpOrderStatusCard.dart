@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
-    ['OrderView']['Components']['LaundryOpOrderStatusCard']['status'];
+    ['OrderView']['Components']['LaundryOpOrderStatusCard'];
 
 class LaundryOpOrderStatusCard extends StatelessWidget {
   const LaundryOpOrderStatusCard({

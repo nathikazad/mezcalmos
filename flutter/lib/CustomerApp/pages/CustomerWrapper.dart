@@ -123,6 +123,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         drawer: MezSideMenu(),
         appBar: CustomerAppBar(
           leftBtnType: AppBarLeftButtonType.Menu,
+          
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(10.0),

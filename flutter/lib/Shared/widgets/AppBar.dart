@@ -87,7 +87,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
             ? titleWidget
             : MezcalmosSharedWidgets.fillTitle(
                 actionLength: actionIcons.length,
-                showLogo: (Get.width > 320) ? true : false),
+                showLogo: (Get.width > 380) ? true : false),
   );
 }
 
@@ -193,7 +193,7 @@ Widget _notificationAppBarIcon() {
           child: Badge(
             badgeColor: Colors.red,
             showBadge: true,
-            position: BadgePosition.topEnd(top: 0, end: 0),
+            position: BadgePosition.topEnd(top: 8, end: 0),
             child: Ink(
               padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(

@@ -238,7 +238,7 @@ class LaundryAppDrawer extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              width: 5,
+              width: 10,
             ),
             Icon(
               icon,
@@ -246,7 +246,7 @@ class LaundryAppDrawer extends StatelessWidget {
               size: 25,
             ),
             SizedBox(
-              width: 15,
+              width: 20,
             ),
             titleWidget
           ],

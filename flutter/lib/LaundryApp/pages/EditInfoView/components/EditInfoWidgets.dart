@@ -4,6 +4,7 @@ import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoCont
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
+import 'package:sizer/sizer.dart';
 
 class EditInfoWidgets {
   final EditInfoController editInfoController;
@@ -123,6 +124,8 @@ class EditInfoWidgets {
                       showModalBottomSheet(
                           context: context,
                           isDismissible: false,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15),
@@ -155,8 +158,8 @@ class EditInfoWidgets {
 // BOTTOM SHEET CONTENT //
   Widget editWorkingDayComponent({required Weekday weekday}) {
     return Obx(
-      () => Container(
-        margin: const EdgeInsets.all(8),
+      () => Padding(
+        padding: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -174,173 +177,210 @@ class EditInfoWidgets {
                 style: Get.theme.textTheme.headline3,
               ),
             ),
-            Divider(),
-            Center(
-              child: Row(
-                children: [
-                  Flexible(
-                      child: CheckboxListTile(
-                          controlAffinity: ListTileControlAffinity.leading,
-                          value: editInfoController.schedulePreview.value!
-                              .openHours[weekday]!.isOpen,
-                          activeColor: primaryBlueColor,
-                          title: Text('${_i18n()["workingHoursCard"]["open"]}'),
-                          onChanged: (bool? value) {
-                            editInfoController.schedulePreview.value!
-                                .openHours[weekday]!.isOpen = true;
-                            editInfoController.schedulePreview.refresh();
-                          })),
-                  Flexible(
-                      child: CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    value: !editInfoController
-                        .schedulePreview.value!.openHours[weekday]!.isOpen,
-                    activeColor: primaryBlueColor,
-                    onChanged: (bool? value) {
-                      editInfoController.schedulePreview.value!
-                          .openHours[weekday]!.isOpen = false;
-                      editInfoController.schedulePreview.refresh();
-                    },
-                    title: Text("${_i18n()["workingHoursCard"]["closed"]}"),
-                  )),
-                ],
-              ),
+            SizedBox(
+              height: 20,
+            ),
+
+            Row(
+              children: [
+                Flexible(
+                    child: CheckboxListTile(
+                        checkboxShape: CircleBorder(),
+                        controlAffinity: ListTileControlAffinity.trailing,
+                        value: editInfoController
+                            .schedulePreview.value!.openHours[weekday]!.isOpen,
+                        activeColor: primaryBlueColor,
+                        title: Text('${_i18n()["workingHoursCard"]["open"]}',
+                            style: Get.textTheme.bodyText1),
+                        onChanged: (bool? value) {
+                          editInfoController.schedulePreview.value!
+                              .openHours[weekday]!.isOpen = true;
+                          editInfoController.schedulePreview.refresh();
+                        })),
+                Flexible(
+                    child: CheckboxListTile(
+                  checkboxShape: CircleBorder(),
+                  controlAffinity: ListTileControlAffinity.trailing,
+                  value: !editInfoController
+                      .schedulePreview.value!.openHours[weekday]!.isOpen,
+                  activeColor: primaryBlueColor,
+                  onChanged: (bool? value) {
+                    editInfoController.schedulePreview.value!
+                        .openHours[weekday]!.isOpen = false;
+                    editInfoController.schedulePreview.refresh();
+                  },
+                  title: Text("${_i18n()["workingHoursCard"]["closed"]}",
+                      style: Get.textTheme.bodyText1),
+                )),
+              ],
             ),
             if (editInfoController
                 .schedulePreview.value!.openHours[weekday]!.isOpen)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text("${_i18n()["workingHoursCard"]["from"]}"),
-                  Card(
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      onTap: () {
-                        showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay(
-                              hour: editInfoController.schedulePreview.value!
-                                  .openHours[weekday]!.from[0],
-                              minute: editInfoController.schedulePreview.value!
-                                  .openHours[weekday]!.from[1]),
-                          builder: (BuildContext context, Widget? child) {
-                            return child ?? Container();
-                          },
-                        ).then((TimeOfDay? value) {
-                          if (value != null) {
-                            // mezDbgPrint(value);
-                            editInfoController.schedulePreview.value!
-                                .openHours[weekday]!.from = [
-                              value.hour.toInt(),
-                              value.minute.toInt()
-                            ];
-                            editInfoController.schedulePreview.refresh();
-                          }
-                        });
-                      },
-                      child: Container(
-                          padding: EdgeInsets.all(12),
-                          width: double.infinity,
-                          child: Text(
-                            "${editInfoController.schedulePreview.value!.openHours[weekday]!.from[0]} : ${editInfoController.schedulePreview.value!.openHours[weekday]!.from[1]}",
-                            style: Theme.of(context).textTheme.bodyText1,
-                          )),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("${_i18n()["workingHoursCard"]["from"]}",
+                        style: Get.textTheme.bodyText1),
+                    SizedBox(
+                      height: 15,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("${_i18n()["workingHoursCard"]["to"]}"),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Card(
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(10),
-                      onTap: () {
-                        showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay(
-                              hour: editInfoController.schedulePreview.value!
-                                  .openHours[weekday]!.to[0],
-                              minute: editInfoController.schedulePreview.value!
-                                  .openHours[weekday]!.to[1]),
-                          builder: (BuildContext context, Widget? child) {
-                            return Theme(
-                                data: Theme.of(context).copyWith(
-                                    textButtonTheme: TextButtonThemeData(
-                                        style: TextButton.styleFrom(
-                                            textStyle: TextStyle(
-                                                color: primaryBlueColor),
-                                            backgroundColor:
-                                                Colors.transparent))),
-                                child: child!);
-                          },
-                        ).then((TimeOfDay? value) {
-                          if (value != null) {
-                            editInfoController.schedulePreview.value!
-                                .openHours[weekday]!.to = [
-                              value.hour.toInt(),
-                              value.minute.toInt()
-                            ];
-                            editInfoController.schedulePreview.refresh();
-                          }
-                        });
-                      },
-                      child: Container(
-                          padding: EdgeInsets.all(12),
-                          width: double.infinity,
-                          child: Text(
-                            "${editInfoController.schedulePreview.value!.openHours[weekday]!.to[0]} : ${editInfoController.schedulePreview.value!.openHours[weekday]!.to[1]}",
-                            style: Theme.of(context).textTheme.bodyText1,
-                          )),
+                    Card(
+                      color: Colors.grey.shade200,
+                      margin: EdgeInsets.zero,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay(
+                                hour: editInfoController.schedulePreview.value!
+                                    .openHours[weekday]!.from[0],
+                                minute: editInfoController.schedulePreview
+                                    .value!.openHours[weekday]!.from[1]),
+                            builder: (BuildContext context, Widget? child) {
+                              return child ?? Container();
+                            },
+                          ).then((TimeOfDay? value) {
+                            if (value != null) {
+                              // mezDbgPrint(value);
+                              editInfoController.schedulePreview.value!
+                                  .openHours[weekday]!.from = [
+                                value.hour.toInt(),
+                                value.minute.toInt()
+                              ];
+                              editInfoController.schedulePreview.refresh();
+                            }
+                          });
+                        },
+                        child: Container(
+                            padding: EdgeInsets.all(12),
+                            width: double.infinity,
+                            child: Text(
+                              "${editInfoController.schedulePreview.value!.openHours[weekday]!.from[0]} : ${editInfoController.schedulePreview.value!.openHours[weekday]!.from[1]}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(fontSize: 11.sp),
+                            )),
+                      ),
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Text("${_i18n()["workingHoursCard"]["to"]}",
+                        style: Get.textTheme.bodyText1),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Card(
+                      color: Colors.grey.shade200,
+                      margin: EdgeInsets.zero,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay(
+                                hour: editInfoController.schedulePreview.value!
+                                    .openHours[weekday]!.to[0],
+                                minute: editInfoController.schedulePreview
+                                    .value!.openHours[weekday]!.to[1]),
+                            builder: (BuildContext context, Widget? child) {
+                              return Theme(
+                                  data: Theme.of(context).copyWith(
+                                      textButtonTheme: TextButtonThemeData(
+                                          style: TextButton.styleFrom(
+                                              textStyle: TextStyle(
+                                                  color: primaryBlueColor),
+                                              backgroundColor:
+                                                  Colors.transparent))),
+                                  child: child!);
+                            },
+                          ).then((TimeOfDay? value) {
+                            if (value != null) {
+                              editInfoController.schedulePreview.value!
+                                  .openHours[weekday]!.to = [
+                                value.hour.toInt(),
+                                value.minute.toInt()
+                              ];
+                              editInfoController.schedulePreview.refresh();
+                            }
+                          });
+                        },
+                        child: Container(
+                            padding: EdgeInsets.all(12),
+                            width: double.infinity,
+                            child: Text(
+                              "${editInfoController.schedulePreview.value!.openHours[weekday]!.to[0]} : ${editInfoController.schedulePreview.value!.openHours[weekday]!.to[1]}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(fontSize: 11.sp),
+                            )),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
-            InkWell(
-                onTap: () {
-                  Future.delayed(Duration.zero, Get.back).then((value) {
-                    editInfoController.newSchedule.value = Schedule.clone(
-                        editInfoController.schedulePreview.value!);
-                    editInfoController.newSchedule.refresh();
-                  });
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                        gradient: bluePurpleGradient,
-                        borderRadius: BorderRadius.circular(10)),
-                    padding: const EdgeInsets.all(16),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "${_i18n()["save"]}",
-                      style: Get.textTheme.bodyText1
-                          ?.copyWith(color: Colors.white),
-                    ))),
-            TextButton(
-                style: TextButton.styleFrom(
-                    backgroundColor: offRedColor,
-                    textStyle:
-                        Get.textTheme.bodyText1?.copyWith(color: Colors.red)),
-                onPressed: () {
-                  Future.delayed(Duration.zero, Get.back).then((value) {
-                    editInfoController.schedulePreview.value =
-                        Schedule.clone(editInfoController.newSchedule.value!);
-                    editInfoController.schedulePreview.refresh();
-                    //   editInfoController.theNewSchedule.refresh();
-                  });
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(5),
-                  alignment: Alignment.center,
-                  child: Text("${_i18n()["cancel"]}",
-                      style:
-                          Get.textTheme.bodyText1?.copyWith(color: Colors.red)),
-                ))
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  InkWell(
+                      onTap: () {
+                        Future.delayed(Duration.zero, Get.back).then((value) {
+                          editInfoController.newSchedule.value = Schedule.clone(
+                              editInfoController.schedulePreview.value!);
+                          editInfoController.newSchedule.refresh();
+                        });
+                      },
+                      child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                              gradient: bluePurpleGradient,
+                              borderRadius: BorderRadius.circular(10)),
+                          padding: const EdgeInsets.all(16),
+                          alignment: Alignment.center,
+                          child: Text(
+                            "${_i18n()["save"]}",
+                            style: Get.textTheme.bodyText1
+                                ?.copyWith(color: Colors.white),
+                          ))),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  TextButton(
+                      style: TextButton.styleFrom(
+                          fixedSize: Size(double.infinity, 50),
+                          backgroundColor: offRedColor,
+                          textStyle: Get.textTheme.bodyText1
+                              ?.copyWith(color: Colors.red)),
+                      onPressed: () {
+                        Future.delayed(Duration.zero, Get.back).then((value) {
+                          editInfoController.schedulePreview.value =
+                              Schedule.clone(
+                                  editInfoController.newSchedule.value!);
+                          editInfoController.schedulePreview.refresh();
+                          //   editInfoController.theNewSchedule.refresh();
+                        });
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        alignment: Alignment.center,
+                        child: Text("${_i18n()["cancel"]}",
+                            style: Get.textTheme.bodyText1
+                                ?.copyWith(color: Colors.red)),
+                      )),
+                ],
+              ),
+            )
             // TimePickerDialog(initialTime: TimeOfDay.now()),
           ],
         ),

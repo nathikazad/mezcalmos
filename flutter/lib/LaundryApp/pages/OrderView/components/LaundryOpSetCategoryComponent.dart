@@ -27,6 +27,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
     return Card(
       child: Container(
         padding: const EdgeInsets.all(8),
+        width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -140,7 +141,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
       child: DataTable(
           dividerThickness: 0.2,
           horizontalMargin: 6,
-          columnSpacing: 40.0,
+          columnSpacing: 60.0,
           headingRowHeight: 30.0,
           showBottomBorder: false,
           columns: _PricingTableColumns(),
@@ -150,10 +151,34 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
 
   List<DataColumn> _PricingTableColumns() {
     return [
-      DataColumn(label: Text('${_i18n()["item"]}')),
-      DataColumn(label: Text('${_i18n()["perKilo"]}')),
-      DataColumn(label: Text('${_i18n()["weight"]}')),
-      DataColumn(label: Text('${_i18n()["cost"]}'))
+      DataColumn(
+          label: Text(
+        '${_i18n()["item"]}',
+        textAlign: TextAlign.start,
+      )),
+      DataColumn(
+          label: Center(
+        child: Text(
+          '${_i18n()["perKilo"]}',
+          textAlign: TextAlign.center,
+        ),
+      )),
+      DataColumn(
+          label: Text(
+        '${_i18n()["weight"]}',
+        textAlign: TextAlign.start,
+      )),
+      DataColumn(
+          label: Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              '${_i18n()["cost"]}',
+            ),
+          ],
+        ),
+      ))
     ];
   }
 
@@ -164,9 +189,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
               DataCell(Container(
                 width: 100,
                 child: Text(
-                  order.costsByType!.lineItems[index].name[laundryInfoController
-                          .laundry.value?.primaryLanguage] ??
-                      "",
+                  order.costsByType!.lineItems[index].getRightNameForUser(),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -200,8 +223,13 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
                   )
                 ],
               )),
-              DataCell(
-                  Text("\$${order.costsByType!.lineItems[index].weighedCost}")),
+              DataCell(Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text("\$${order.costsByType!.lineItems[index].weighedCost}"),
+                ],
+              )),
             ]));
   }
 }

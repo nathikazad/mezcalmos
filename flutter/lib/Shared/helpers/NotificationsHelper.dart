@@ -49,7 +49,7 @@ Future<void> decideWhichButtonDialogToUse(
       Get.context!,
       status: notification.title,
       description: notification.body,
-      bottomRightIcon: notification.icon,
+      primaryIcon: notification.icon,
     );
   else
     await showStatusInfoDialog(
@@ -60,7 +60,6 @@ Future<void> decideWhichButtonDialogToUse(
       primaryCallBack: () {
         Get.back(closeOverlays: true);
       },
-      // bottomRightIcon: notification.icon,
       secondaryCallBack: () => Get.toNamed(notification.linkUrl),
     );
 }

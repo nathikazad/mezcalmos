@@ -56,34 +56,41 @@ class RestaurantSliverAppBar extends StatelessWidget {
               bottom:
                   (restaurant.getCategories.length > 1 && !showInfo) ? 60 : 12),
           // centerTitle: true,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                flex: 1,
-                fit: FlexFit.loose,
-                child: Text(
-                  (showInfo) ? "Informations" : restaurant.info.name,
-                  style: Get.textTheme.headline3
-                      ?.copyWith(color: Colors.white, fontSize: 14.sp),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
+          title: Container(
+            padding: const EdgeInsets.only(bottom: 5, left: 5, right: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  flex: 1,
+                  // fit: FlexFit.tight,
+                  child: Container(
+                    // alignment: Alignment.center,
+                    // padding: const EdgeInsets.only(left: 8, right: 3),
+                    child: Text(
+                      (showInfo) ? "Informations" : restaurant.info.name,
+                      style: Get.textTheme.headline3
+                          ?.copyWith(color: Colors.white, fontSize: 14.sp),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              if (!showInfo)
-                InkWell(
-                    onTap: onInfoTap,
-                    child: Icon(
-                      Icons.info_outline_rounded,
-                      size: 14.sp,
-                      color: Colors.white,
-                    ))
-            ],
+                SizedBox(
+                  width: 5,
+                ),
+                if (!showInfo)
+                  InkWell(
+                      onTap: onInfoTap,
+                      child: Icon(
+                        Icons.info_outline_rounded,
+                        size: 14.sp,
+                        color: Colors.white,
+                      ))
+              ],
+            ),
           ),
           background: _backgroundImageComponent(),
         );

@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
@@ -274,10 +276,16 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
-  mezDbgPrint(value['linkUrl']);
+  mezDbgPrint(value);
+  mezDbgPrint(
+      "part type ====================> ${value["sender"]["particpantType"]}");
   return Notification(
       id: key,
-      linkUrl: value['linkUrl'] ?? value["orderId"],
+      linkUrl: getMessagesRoute(
+        chatId: value['chatId'],
+        recipientType:
+            value["sender"]["particpantType"].toString().toParticipantType(),
+      ),
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],

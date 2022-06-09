@@ -25,7 +25,7 @@ class MessageButton extends StatelessWidget {
           child: Badge(
             badgeColor: Colors.red,
             showBadge: showRedDot,
-            position: BadgePosition(top: -21, end: -3),
+            position: BadgePosition(top: 0, end: 0),
             child: Icon(
               icon,
               size: 30,

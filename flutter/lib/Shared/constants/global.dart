@@ -29,7 +29,7 @@ const String tEmailTestPassword = "password";
 
 // ----------------- Costants Numbers ----------------- //
 
-const double nDefaultMezcalmosTextSize = 30.5;
+const double nDefaultMezcalmosTextSize = 27;
 const int nSplashScreenTimer = 1;
 const int nQualityCompressionOfUserImage = 10;
 const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;

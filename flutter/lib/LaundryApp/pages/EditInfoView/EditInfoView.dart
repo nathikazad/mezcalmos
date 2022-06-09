@@ -55,7 +55,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
             // image
             LaundryOpImageEditComponent(editInfoController: editInfoController),
             SizedBox(
-              height: 15,
+              height: 25,
             ),
             Container(
               alignment: Alignment.center,
@@ -72,13 +72,16 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
 
             Text("${_i18n()["laundryName"]}"),
             SizedBox(
-              height: 5,
+              height: 10,
             ),
             _laundryNameTextField(),
             SizedBox(
-              height: 15,
+              height: 25,
             ),
             Text("${_i18n()["defaultLanguage"]}"),
+            SizedBox(
+              height: 10,
+            ),
             LanguageSelectorComponent(
                 languageValue: editInfoController.primaryLang,
                 oppositeLanguageValue: editInfoController.secondaryLang,
@@ -86,14 +89,11 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
                     editInfoController.validatePrimaryLanguUpdate),
 
             SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              height: 15,
+              height: 25,
             ),
             Text("${_i18n()["secondaryLanguage"]}"),
             SizedBox(
-              height: 5,
+              height: 10,
             ),
             LanguageSelectorComponent(
               languageValue: editInfoController.secondaryLang,
@@ -103,24 +103,24 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
               showDeleteIcon: true,
             ),
             SizedBox(
-              height: 15,
+              height: 25,
             ),
             Text('${_i18n()["location"]}'),
             SizedBox(
-              height: 5,
+              height: 10,
             ),
             LaundryOpEditLocationCard(
               editInfoController: editInfoController,
             ),
             SizedBox(
-              height: 15,
+              height: 25,
             ),
             Container(
               child: viewWidgets.editWorkingHoursComponent(),
             ),
 
             SizedBox(
-              height: 15,
+              height: 25,
             ),
           ],
         ),
