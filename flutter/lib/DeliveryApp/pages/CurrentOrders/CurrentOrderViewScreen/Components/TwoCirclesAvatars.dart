@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 
 class TwoCirclesAvatar extends StatelessWidget {
   final String topImg;
-  final String bottomImg;
+  // final String bottomImg;
+  final IconData bottomIconData;
   const TwoCirclesAvatar(
-      {required this.topImg, required this.bottomImg, Key? key})
+      {required this.topImg, required this.bottomIconData, Key? key})
       : super(key: key);
 
   @override
@@ -26,19 +28,35 @@ class TwoCirclesAvatar extends StatelessWidget {
           ),
           Positioned(
             bottom: 6,
+            // child: Container(
+            //   decoration: BoxDecoration(
+            //     shape: BoxShape.circle,
+            //     border: Border.all(
+            //       color: Colors.white,
+            //     ),
+            //   ),
             child: Container(
+              height: 40,
+              width: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(
+                color: primaryBlueColor,
+                border: Border.all(color: Colors.white),
+              ),
+              child: Center(
+                child: Icon(
+                  bottomIconData,
                   color: Colors.white,
                 ),
               ),
-              child: CircleAvatar(
-                radius: 20,
-                backgroundImage: CachedNetworkImageProvider(bottomImg),
-              ),
             ),
+
+            // CircleAvatar(
+            //   radius: 20,
+            //   backgroundImage: CachedNetworkImageProvider(bottomImg),
+            // ),
           ),
+          // ),
         ],
       ),
     );

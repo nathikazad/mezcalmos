@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"]["Components"]
@@ -31,129 +32,57 @@ class DriverOrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return OrderInfosCard(
-        orderCardSubWidgets: OrderCardSubWidgets(
-            onCardTap: () {
-              // Get.toNamed(getOrderDetailsRoute(order.orderId));
-              if (order.orderType == OrderType.Restaurant) {
-                mezDbgPrint("Pushing to restaurant!!!");
-                Get.toNamed(getRestaurantOrderRoute(order.orderId));
-              } else if (order.orderType == OrderType.Laundry) {
-                Get.toNamed(getLaundryOrderRoute(order.orderId));
-              }
-            },
-            cardTitle: _getOrderTitle(),
-            primaryBodyContent: Text(order.to.address),
-            cardStatus: _getOrderWidget(),
-            cardTime: Text(DateFormat("EEEE, hh:mm a").format(order.orderTime)),
-            rightImage: _getOrderIcon()),
-        order: order);
-    // return Card(
-    //   child: InkWell(
-    //     borderRadius: BorderRadius.circular(10),
-    //     onTap: () {
-    //       if (order.orderType == OrderType.Restaurant) {
-    //         Get.toNamed(getRestaurantOrderRoute(order.orderId));
-    //       } else if (order.orderType == OrderType.Laundry) {
-    //         Get.toNamed(getLaundryOrderRoute(order.orderId));
-    //       }
-    //     },
-    //     child: Ink(
-    //       width: double.infinity,
-    //       padding: const EdgeInsets.all(8),
-    //       child: Column(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-    //           Row(
-    //             crossAxisAlignment: CrossAxisAlignment.center,
-    //             children: [
-    //               _getOrderIcon(context),
-    //               SizedBox(
-    //                 width: 5,
-    //               ),
-    //               Flexible(
-    //                 flex: 6,
-    //                 fit: FlexFit.tight,
-    //                 child: Column(
-    //                   crossAxisAlignment: CrossAxisAlignment.start,
-    //                   children: [
-    //                     Text(
-    //                       _getOrderTitle(),
-    //                       style: textTheme.bodyText1,
-    //                     ),
-    //                     SizedBox(
-    //                       height: 5,
-    //                     ),
-    //                     Row(
-    //                       children: [
-    //                         Icon(
-    //                           Icons.place,
-    //                           size: 12.sp,
-    //                         ),
-    //                         Flexible(
-    //                             child: Text(
-    //                           order.to.address,
-    //                           maxLines: 1,
-    //                         )),
-    //                       ],
-    //                     ),
-    //                   ],
-    //                 ),
-    //               ),
-    //               Spacer(),
-    //               if (showLeftIcon) _getOrderWidget(),
-    //             ],
-    //           ),
-    //           Divider(
-    //             thickness: 0.3,
-    //             height: 5,
-    //           ),
-    //           Row(
-    //             children: [
-    //               Icon(
-    //                 Icons.schedule_rounded,
-    //                 size: 12.sp,
-    //               ),
-    //               SizedBox(
-    //                 width: 5,
-    //               ),
-    //               Text(DateFormat('dd MMM yy h:m')
-    //                   .format(order.orderTime.toLocal())),
-    //               Spacer(),
-    //               Icon(Icons.arrow_forward_ios, size: 12.sp)
-    //             ],
-    //           )
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
+      orderCardSubWidgets: OrderCardSubWidgets(
+          onCardTap: () {
+            // Get.toNamed(getOrderDetailsRoute(order.orderId));
+            if (order.orderType == OrderType.Restaurant) {
+              Get.toNamed(getRestaurantOrderRoute(order.orderId));
+            } else if (order.orderType == OrderType.Laundry) {
+              Get.toNamed(getLaundryOrderRoute(order.orderId));
+            }
+          },
+          cardTitle: _getOrderTitle(),
+          primaryBodyContent: Text(order.to.address),
+          cardStatus: _getOrderWidget(),
+          cardTime: Text(DateFormat("EE, hh:mm a").format(order.orderTime)),
+          rightImage: _getOrderIcon()),
+      order: order,
+    );
   }
 
   Widget _getOrderIcon() {
     if (order.orderType == OrderType.Restaurant) {
       return Container(
-        padding: const EdgeInsets.all(8),
+        height: 30.sp,
+        width: 30.sp,
+        // padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: primaryBlueColor,
         ),
-        child: Icon(
-          Icons.flatware,
-          size: 35,
-          color: Colors.white,
+        child: Center(
+          child: Icon(
+            Icons.flatware,
+            size: 20.sp,
+            color: Colors.white,
+          ),
         ),
       );
     } else {
       return Container(
-        padding: const EdgeInsets.all(8),
+        // padding: const EdgeInsets.all(5),
+        height: 30.sp,
+        width: 30.sp,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: primaryBlueColor,
         ),
-        child: Icon(
-          Icons.local_laundry_service,
-          size: 35,
-          color: Colors.white,
+        child: Center(
+          child: Icon(
+            Icons.local_laundry_service,
+            size: 20.sp,
+            color: Colors.white,
+          ),
         ),
       );
     }

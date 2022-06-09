@@ -73,18 +73,39 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Divider(),
-                      customerAnimatedRow(),
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Positioned(
+                            top: 30,
+                            left: 30,
+                            child: Container(
+                              color: Colors.yellow,
+                              child: Row(
+                                children: customerTimeWidgets,
+                              ),
+                            ),
+                          ),
+                          customerAnimatedRow(),
+                        ],
+                      ),
                       Row(
                         children: [
                           SizedBox(width: 8),
                           Container(
-                            height: 30,
+                            height: 60,
                             width: 1.5,
                             color: Color.fromRGBO(103, 121, 254, 1),
                           ),
                         ],
                       ),
                       serviceProviderAnimatedRow(),
+                      Container(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: serviceProviderTimeWidgets,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -110,7 +131,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                 color: Color.fromRGBO(103, 121, 254, 1),
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w700,
-                fontSize: 15.sp,
+                fontSize: 13.sp,
               ),
             ),
           ),
@@ -127,7 +148,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   color: Colors.black,
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w700,
-                  fontSize: 17.sp,
+                  fontSize: 13.sp,
                 ),
               ),
               InkWell(
@@ -152,7 +173,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   Row serviceProviderAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Icon(
           Icons.location_on_rounded,
@@ -175,19 +196,13 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         ),
         SizedBox(width: 9),
         MessageButton(
+          withPadding: false,
           onTap: onServiceMsgClick,
           showRedDot: (_serviceDriverChatId() != null)
               ? Get.find<OrderController>()
                   .hasNewMessageNotification(_serviceDriverChatId()!)
               : false,
         ),
-
-        if (serviceProviderTimeWidgets.isNotEmpty) ...[
-          Spacer(),
-          Row(
-            children: serviceProviderTimeWidgets,
-          )
-        ],
 
         // ..._dateTimeSetter(DeliveryAction.DropOff)
       ],
@@ -197,7 +212,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   Row customerAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           height: 18,
@@ -223,16 +238,17 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         ),
         SizedBox(width: 9),
         MessageButton(
+          withPadding: false,
           onTap: onCustomerMsgClick,
           showRedDot: (_customerDriverChatId() != null)
               ? Get.find<OrderController>()
                   .hasNewMessageNotification(_customerDriverChatId()!)
               : false,
         ),
-        Spacer(),
-        Row(
-          children: customerTimeWidgets,
-        ),
+        // Spacer(),
+        // Row(
+        //   children: customerTimeWidgets,
+        // ),
       ],
     );
   }
@@ -271,7 +287,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         Flexible(
           child: TwoCirclesAvatar(
             topImg: serviceProviderImage,
-            bottomImg: customerImage,
+            // bottomImg: customerImage,
+            bottomIconData: order.orderType == OrderType.Laundry
+                ? Icons.local_laundry_service_outlined
+                : Icons.restaurant_rounded,
           ),
         ),
         Flexible(
@@ -339,11 +358,11 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     );
   }
 
-  Row routeInformationWidget() {
-    return Row(
-      // direction: Axis.horizontal,
+  Flex routeInformationWidget() {
+    return Flex(
+      direction: Axis.horizontal,
       mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(width: 10),
@@ -354,7 +373,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         ),
         SizedBox(width: 3),
         Flexible(
-          flex: 4,
           child: Text(
             order.routeInformation?.duration.longTextVersion ?? '- - - -',
             overflow: TextOverflow.ellipsis,
@@ -373,14 +391,17 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           size: 18,
         ),
         SizedBox(width: 3),
-        Text(
-          order.routeInformation?.distance.distanceStringInKm ?? '- - - -',
-          overflow: TextOverflow.ellipsis,
-          maxLines: 2,
-          style: TextStyle(
-            fontFamily: 'Nunito',
-            fontWeight: FontWeight.w600,
-            fontSize: 15,
+        Flexible(
+          // flex: 2,
+          child: Text(
+            order.routeInformation?.distance.distanceStringInKm ?? '- - - -',
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            style: TextStyle(
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+            ),
           ),
         ),
       ],

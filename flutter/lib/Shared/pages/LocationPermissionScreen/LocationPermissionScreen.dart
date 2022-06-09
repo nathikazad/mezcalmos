@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/controller/LocationPermissionController.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/widgets/LocationPermissionsWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['LocationPermissionScreen'];
@@ -154,122 +153,131 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
       child: Scaffold(
         appBar: mezcalmosAppBar(AppBarLeftButtonType.Lang),
         resizeToAvoidBottomInset: false,
-        // key: Get.find<SideMenuDrawerController>().getNewKey(),
-        // drawer: MezSideMenu(),
         backgroundColor: Colors.white,
-        body: Container(
+        body: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
           padding: EdgeInsets.symmetric(horizontal: 20),
-          height: Get.height,
-          width: Get.width,
-          child: Center(
-            child: Flex(
-              direction: Axis.vertical,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: Container(
-                    height: getSizeRelativeToScreen(100, Get.height, Get.width),
-                    width: getSizeRelativeToScreen(100, Get.height, Get.width),
-                    decoration: BoxDecoration(
-                        // color: Colors.grey,
-                        image: DecorationImage(
-                            image: AssetImage(aLocationPermissionAsset))),
+          child: Container(
+            padding: EdgeInsets.only(top: 20),
+            width: Get.width,
+            child: Center(
+              child: Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Center(
+                    child: Container(
+                      height:
+                          getSizeRelativeToScreen(100, Get.height, Get.width),
+                      width:
+                          getSizeRelativeToScreen(100, Get.height, Get.width),
+                      decoration: BoxDecoration(
+                          // color: Colors.grey,
+                          image: DecorationImage(
+                              image: AssetImage(aLocationPermissionAsset))),
+                    ),
                   ),
-                ),
-                Obx(
-                  () => Text(
-                    _i18n()['locationIsOff'],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 26, fontFamily: 'psr'),
+                  Obx(
+                    () => Text(
+                      _i18n()['locationIsOff'],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 26, fontFamily: 'psr'),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: getSizeRelativeToScreen(10, Get.height, Get.width),
-                ),
-                Obx(() => errorText != null
-                    ? Flex(
-                        direction: Axis.horizontal,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.error,
-                            color: Colors.red,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Flexible(
-                            child: Text(
-                              errorText!,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'psr',
-                                color: Colors.red.shade300,
+                  SizedBox(
+                    height: getSizeRelativeToScreen(10, Get.height, Get.width),
+                  ),
+                  Obx(
+                    () => errorText != null
+                        ? Flex(
+                            direction: Axis.horizontal,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.error,
+                                color: Colors.red,
                               ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Flexible(
+                                child: Text(
+                                  errorText!,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'psr',
+                                    color: Colors.red.shade300,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : SizedBox(),
+                  ),
+                  SizedBox(
+                    height: getSizeRelativeToScreen(10, Get.height, Get.width),
+                  ),
+                  Obx(
+                    () => askPermissionsText != null
+                        ? Text(
+                            askPermissionsText!,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'psb',
+                              color: Colors.grey.shade400,
                             ),
+                          )
+                        : Container(
+                            height: 20,
+                            width: Get.width,
+                            child: ThreeDotsLoading(),
                           ),
-                        ],
-                      )
-                    : SizedBox()),
-                SizedBox(
-                  height: getSizeRelativeToScreen(10, Get.height, Get.width),
-                ),
-                Obx(
-                  () => askPermissionsText != null
-                      ? Text(
-                          askPermissionsText!,
+                  ),
+                  SizedBox(
+                    height: getSizeRelativeToScreen(25, Get.height, Get.width),
+                  ),
+                  GestureDetector(
+                    onTap: viewController.onGivePermissionsClick,
+                    child: Container(
+                      height:
+                          getSizeRelativeToScreen(25, Get.height, Get.width),
+                      width:
+                          getSizeRelativeToScreen(100, Get.height, Get.width),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: <Color>[
+                              Color.fromARGB(255, 97, 127, 255),
+                              Color.fromARGB(255, 198, 90, 252),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                offset: Offset(0, 2),
+                                blurRadius: 5,
+                                color: Colors.blue.shade100,
+                                spreadRadius: 1),
+                          ]),
+                      child: Center(
+                          child: Obx(
+                        () => Text(
+                          _i18n()['permissionBtn'],
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'psb',
-                            color: Colors.grey.shade400,
-                          ),
-                        )
-                      : Container(
-                          height: 20,
-                          width: Get.width,
-                          child: ThreeDotsLoading(),
+                              color: Colors.white,
+                              fontFamily: 'psb',
+                              fontSize: 10,
+                              letterSpacing: 1),
                         ),
-                ),
-                SizedBox(
-                  height: getSizeRelativeToScreen(25, Get.height, Get.width),
-                ),
-                GestureDetector(
-                  onTap: viewController.onGivePermissionsClick,
-                  child: Container(
-                    height: getSizeRelativeToScreen(25, Get.height, Get.width),
-                    width: getSizeRelativeToScreen(100, Get.height, Get.width),
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: <Color>[
-                          Color.fromARGB(255, 97, 127, 255),
-                          Color.fromARGB(255, 198, 90, 252),
-                        ]),
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              offset: Offset(0, 2),
-                              blurRadius: 5,
-                              color: Colors.blue.shade100,
-                              spreadRadius: 1),
-                        ]),
-                    child: Center(
-                        child: Obx(
-                      () => Text(
-                        _i18n()['permissionBtn'],
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'psb',
-                            fontSize: 10,
-                            letterSpacing: 1),
-                      ),
-                    )),
-                  ),
-                )
-              ],
+                      )),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
