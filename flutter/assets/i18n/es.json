@@ -1378,6 +1378,13 @@
                             "readyForDelivery": "Listo para la entrega",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden entregado"
+                        },
+                        "estTimes": {
+                            "laundryArriving": "Lavandería que llega",
+                            "laundryFinish": "Acabado de lavandería",
+                            "drvierArriving": "Que llega al conductor",
+                            "willBeDropped": "Se dejará caer"
+
                         }
 
                     },

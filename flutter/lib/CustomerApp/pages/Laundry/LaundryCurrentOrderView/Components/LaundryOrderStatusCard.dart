@@ -21,32 +21,27 @@ class LaundryOrderStatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Card(
-          child: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.all(12),
-            child: Column(
+    return Card(
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.all(12),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    order.getOrderWidget(),
-                    Spacer(),
-                    _orderStatusText(context),
-                    Spacer(
-                      flex: 2,
-                    ),
-                  ],
+                order.getOrderWidget(),
+                Spacer(),
+                _orderStatusText(context),
+                Spacer(
+                  flex: 2,
                 ),
-                if (_getEstimatedText() != null) _orderEtaTimeWidget()
               ],
             ),
-          ),
+            if (_getEstimatedText() != null) _orderEtaTimeWidget()
+          ],
         ),
-      ],
+      ),
     );
   }
 

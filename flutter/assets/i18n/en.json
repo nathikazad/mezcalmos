@@ -419,7 +419,7 @@
                             "orderHelperDelivered": "Order has been successfully delivered",
                             "willBePickedUp": "Will be picked up",
                             "willBeReady": "Will be ready",
-                            "willBeDropped": "Will be delivered"
+                            "willBeDropped": "Will be dropped"
 
 
                         },
@@ -1386,6 +1386,13 @@
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered"
+                        },
+                        "estTimes": {
+                            "laundryArriving": "Laundry arriving",
+                            "laundryFinish": "Laundry finish",
+                            "drvierArriving": "Driver arriving",
+                            "willBeDropped": "Will be dropped"
+
                         }
 
                     },

@@ -20,74 +20,90 @@ class LaundryOpOrderStatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Card(
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+    return Card(
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.all(12),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 order.getOrderWidget(),
-                Flexible(
-                  flex: 5,
-                  fit: FlexFit.tight,
-                  child: Column(
-                    children: [
-                      Text(
-                        order.orderStatusTitle(),
-                        style: txt.bodyText1?.copyWith(fontSize: 14.sp),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (_getEstimatedText() != null)
-                        Text(
-                          _getEstimatedText()!,
-                        )
-                    ],
-                  ),
+                Spacer(),
+                _orderStatusText(context),
+                Spacer(
+                  flex: 2,
                 ),
               ],
             ),
-          ),
+            if (_getEstimatedText() != null) _orderEtaTimeWidget()
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget _orderEtaTimeWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Divider(
+          height: 7,
+          thickness: 0.2,
+        ),
+        Container(
+            child: Text(
+          _getEstimatedText()!,
+          textAlign: TextAlign.center,
+        )),
       ],
+    );
+  }
+
+  Widget _orderStatusText(BuildContext context) {
+    return Flexible(
+      flex: 8,
+      fit: FlexFit.tight,
+      child: Container(
+        alignment: Alignment.center,
+        child: Text(
+          order.orderStatusTitle(),
+          style:
+              Theme.of(context).textTheme.headline3?.copyWith(fontSize: 14.sp),
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
     );
   }
 
   String? _getEstimatedText() {
     switch (order.status) {
+      case LaundryOrderStatus.OrderReceieved:
       case LaundryOrderStatus.OtwPickupFromCustomer:
-        if (order.estimatedPickupFromCustomerTime != null) {
-          return order.estimatedPickupFromCustomerTime!.getEstimatedTime();
-        }
-
-        break;
       case LaundryOrderStatus.PickedUpFromCustomer:
         if (order.estimatedDropoffAtServiceProviderTime != null) {
-          return order.estimatedDropoffAtServiceProviderTime!
-              .getEstimatedTime();
+          return "${_i18n()["estTimes"]["laundryArriving"]} ${order.estimatedDropoffAtServiceProviderTime!.getEstimatedTime()}";
         }
         break;
       case LaundryOrderStatus.AtLaundry:
         if (order.estimatedLaundryReadyTime != null) {
-          return order.estimatedLaundryReadyTime!.getEstimatedTime();
+          return "${_i18n()["estTimes"]["laundryFinish"]} ${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
         }
-
         break;
+
+      case LaundryOrderStatus.ReadyForDelivery:
       case LaundryOrderStatus.OtwPickupFromLaundry:
         if (order.estimatedPickupFromServiceProviderTime != null) {
-          return order.estimatedPickupFromServiceProviderTime!
-              .getEstimatedTime();
+          return "${_i18n()["estTimes"]["driverArriving"]} ${order.estimatedPickupFromServiceProviderTime!.getEstimatedTime()}";
         }
 
         break;
       case LaundryOrderStatus.PickedUpFromLaundry:
         if (order.estimatedDropoffAtCustomerTime != null) {
-          return order.estimatedDropoffAtCustomerTime!.getEstimatedTime();
+          return "${_i18n()["estTimes"]["willBeDropped"]} ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
         }
 
         break;
