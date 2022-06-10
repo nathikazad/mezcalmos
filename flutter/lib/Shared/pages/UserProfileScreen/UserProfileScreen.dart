@@ -73,7 +73,7 @@ class _UserProfileState extends State<UserProfile>
         () => Scaffold(
           resizeToAvoidBottomInset: true,
 
-          backgroundColor: Color.fromARGB(255, 248, 248, 248),
+          backgroundColor: Colors.white,
           appBar: widget.userProfileWidgets
               .getRightAppBar(isImageBeingUploaded: isUploadingImg.value),
           body: SingleChildScrollView(

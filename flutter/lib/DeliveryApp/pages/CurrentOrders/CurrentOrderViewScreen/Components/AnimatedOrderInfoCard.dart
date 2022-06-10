@@ -73,22 +73,43 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Divider(),
-                      Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Positioned(
-                            top: 30,
-                            left: 30,
-                            child: Container(
-                              color: Colors.yellow,
-                              child: Row(
-                                children: customerTimeWidgets,
-                              ),
-                            ),
-                          ),
-                          customerAnimatedRow(),
-                        ],
-                      ),
+                      // Stack(
+                      //   clipBehavior: Clip.none,
+                      //   children: [
+                      //     Positioned(
+                      //       top: 30,
+                      //       left: 30,
+                      //       child: Container(
+                      //         color: Colors.yellow,
+                      //         child: Row(
+                      //           children: customerTimeWidgets,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     customerAnimatedRow(),
+                      //   ],
+                      // ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   crossAxisAlignment: CrossAxisAlignment.end,
+                      //   children: [
+                      //     Container(
+                      //       height: 18,
+                      //       width: 18,
+                      //       decoration: BoxDecoration(
+                      //         color: Colors.transparent,
+                      //         shape: BoxShape.circle,
+                      //         border: Border.all(
+                      //           color: Color.fromRGBO(54, 54, 54, 1),
+                      //           width: 5,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     customerAnimatedRow(),
+                      //   ],
+                      // ),
+                      customerAnimatedRow(),
+
                       Row(
                         children: [
                           SizedBox(width: 8),
@@ -100,12 +121,12 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                         ],
                       ),
                       serviceProviderAnimatedRow(),
-                      Container(
-                        padding: EdgeInsets.only(left: 30),
-                        child: Row(
-                          children: serviceProviderTimeWidgets,
-                        ),
-                      ),
+                      // Container(
+                      //   padding: EdgeInsets.only(left: 30),
+                      //   child: Row(
+                      //     children: serviceProviderTimeWidgets,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -136,35 +157,33 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             ),
           ),
         ),
-        Flexible(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                "\$${order.cost}",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 13.sp,
-                ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              "\$${order.cost}",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w700,
+                fontSize: 13.sp,
               ),
-              InkWell(
-                onTap: () {
-                  mezDbgPrint("log state ==> ${initialCardState.opposit()}");
-                  onCardStateChange?.call(initialCardState.opposit());
-                },
-                child: Icon(
-                  initialCardState == OrderInfoCardState.Minimized
-                      ? Icons.keyboard_arrow_up_rounded
-                      : Icons.keyboard_arrow_down_rounded,
-                  color: Colors.black,
-                ),
+            ),
+            InkWell(
+              onTap: () {
+                mezDbgPrint("log state ==> ${initialCardState.opposit()}");
+                onCardStateChange?.call(initialCardState.opposit());
+              },
+              child: Icon(
+                initialCardState == OrderInfoCardState.Minimized
+                    ? Icons.keyboard_arrow_up_rounded
+                    : Icons.keyboard_arrow_down_rounded,
+                color: Colors.black,
               ),
-            ],
-          ),
+            ),
+          ],
         )
       ],
     );
@@ -173,7 +192,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   Row serviceProviderAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(
           Icons.location_on_rounded,
@@ -181,30 +200,39 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           color: Color.fromRGBO(103, 121, 254, 1),
         ),
         SizedBox(width: 14),
-        Flexible(
-          child: Text(
-            serviceProviderName,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
-              color: Colors.black,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              serviceProviderName,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
+                color: Colors.black,
+              ),
             ),
-          ),
+            Row(
+              children: [
+                Row(
+                  children: serviceProviderTimeWidgets,
+                ),
+                SizedBox(width: 15),
+                MessageButton(
+                  withPadding: false,
+                  onTap: onServiceMsgClick,
+                  showRedDot: (_serviceDriverChatId() != null)
+                      ? Get.find<OrderController>()
+                          .hasNewMessageNotification(_serviceDriverChatId()!)
+                      : false,
+                ),
+              ],
+            ),
+          ],
         ),
-        SizedBox(width: 9),
-        MessageButton(
-          withPadding: false,
-          onTap: onServiceMsgClick,
-          showRedDot: (_serviceDriverChatId() != null)
-              ? Get.find<OrderController>()
-                  .hasNewMessageNotification(_serviceDriverChatId()!)
-              : false,
-        ),
-
-        // ..._dateTimeSetter(DeliveryAction.DropOff)
       ],
     );
   }
@@ -212,7 +240,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   Row customerAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
           height: 18,
@@ -227,28 +255,37 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           ),
         ),
         SizedBox(width: 14),
-        Text(
-          customerName,
-          style: TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w600,
-            fontSize: 15,
-            color: Colors.black,
-          ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              customerName,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
+                color: Colors.black,
+              ),
+            ),
+            Row(
+              children: [
+                Row(
+                  children: customerTimeWidgets,
+                ),
+                SizedBox(width: 9),
+                MessageButton(
+                  withPadding: false,
+                  onTap: onCustomerMsgClick,
+                  showRedDot: (_customerDriverChatId() != null)
+                      ? Get.find<OrderController>()
+                          .hasNewMessageNotification(_customerDriverChatId()!)
+                      : false,
+                ),
+              ],
+            ),
+          ],
         ),
-        SizedBox(width: 9),
-        MessageButton(
-          withPadding: false,
-          onTap: onCustomerMsgClick,
-          showRedDot: (_customerDriverChatId() != null)
-              ? Get.find<OrderController>()
-                  .hasNewMessageNotification(_customerDriverChatId()!)
-              : false,
-        ),
-        // Spacer(),
-        // Row(
-        //   children: customerTimeWidgets,
-        // ),
       ],
     );
   }

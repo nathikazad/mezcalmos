@@ -97,7 +97,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback((Duration timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       if (widget.text != null && widget.text!.length >= 1) {
         setState(() {
           _showClearBtn = true;

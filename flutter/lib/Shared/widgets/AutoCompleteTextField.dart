@@ -199,7 +199,7 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (widget.controller.text.isEmpty && widget.tfInitialText != null) {
         widget.controller.text = widget.tfInitialText!;
       }
