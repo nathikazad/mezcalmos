@@ -85,6 +85,8 @@ class _RestaurantOrderFromToComponentState
         formattedOrderStatus: _getOrderStatus(),
         order: widget.order,
         // card Settings
+        isCustomerRowFirst: true,
+        showMsgIconInOneLine: !widget.order.inProcess(),
         initialCardState: orderInfoCardState.value,
         onCardStateChange: (OrderInfoCardState nwState) {
           orderInfoCardState.value = nwState;

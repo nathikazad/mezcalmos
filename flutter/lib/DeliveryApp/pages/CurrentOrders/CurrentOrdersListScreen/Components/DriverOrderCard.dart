@@ -93,44 +93,63 @@ class DriverOrderCard extends StatelessWidget {
       switch ((order as RestaurantOrder).status) {
         case RestaurantOrderStatus.CancelledByAdmin:
         case RestaurantOrderStatus.CancelledByCustomer:
-          return Chip(
-              padding: const EdgeInsets.all(5),
-              backgroundColor: Colors.red.shade100,
-              label: Text(
+          return Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.red.shade100,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(
                 "Canceled",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
-              ));
+              ),
+            ),
+          );
         case RestaurantOrderStatus.Delivered:
-          return Chip(
-              padding: const EdgeInsets.all(5),
-              backgroundColor: Colors.green.shade100,
-              label: Text(
+          return Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.green.shade100,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(
                 "Deliverd",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
-              ));
+              ),
+            ),
+          );
 
         default:
-          return Chip(
-              padding: const EdgeInsets.all(5),
-              backgroundColor: Colors.amber.shade100,
-              label: Text(
+          return Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.amber.shade100,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(
                 "Waiting",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
-              ));
+              ),
+            ),
+          );
       }
     } else {
       switch ((order as LaundryOrder).status) {
         case LaundryOrderStatus.CancelledByAdmin:
         case LaundryOrderStatus.CancelledByCustomer:
           return Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: Colors.red.shade100,
-                  borderRadius: BorderRadius.circular(12)),
-              child: Text(
-                "Canceled",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
-              ));
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                color: Colors.red.shade100,
+                borderRadius: BorderRadius.circular(12)),
+            child: Text(
+              "Canceled",
+              style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+            ),
+          );
         case LaundryOrderStatus.Delivered:
         case LaundryOrderStatus.AtLaundry:
           // return Icon(
@@ -139,25 +158,27 @@ class DriverOrderCard extends StatelessWidget {
           //   size: 40.sp,
           // );
           return Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: Colors.green.shade100,
-                  borderRadius: BorderRadius.circular(12)),
-              child: Text(
-                "Deliverd",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
-              ));
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                color: Colors.green.shade100,
+                borderRadius: BorderRadius.circular(12)),
+            child: Text(
+              "Delivered",
+              style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+            ),
+          );
 
         default:
           return Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: Colors.amber.shade100,
-                  borderRadius: BorderRadius.circular(12)),
-              child: Text(
-                "Waiting",
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
-              ));
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                color: Colors.amber.shade100,
+                borderRadius: BorderRadius.circular(12)),
+            child: Text(
+              "Waiting",
+              style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+            ),
+          );
       }
     }
   }

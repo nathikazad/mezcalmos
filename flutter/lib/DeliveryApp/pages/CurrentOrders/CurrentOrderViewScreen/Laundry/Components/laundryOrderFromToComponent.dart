@@ -89,6 +89,10 @@ class _LaundryOrderFromToComponentState
         formattedOrderStatus: _getOrderStatus(),
         order: widget.order,
         // card Settings
+        isCustomerRowFirst:
+            widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup,
+        showMsgIconInOneLine:
+            widget.order.getCurrentPhase() == LaundryOrderPhase.Neither,
         initialCardState: orderInfoCardState.value,
         onCardStateChange: (OrderInfoCardState nwState) {
           orderInfoCardState.value = nwState;

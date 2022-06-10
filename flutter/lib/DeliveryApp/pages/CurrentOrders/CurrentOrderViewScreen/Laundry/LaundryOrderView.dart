@@ -10,6 +10,7 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/laundryOrderFromToComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -19,6 +20,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LaundryOrderView extends StatefulWidget {
   const LaundryOrderView({Key? key}) : super(key: key);
@@ -153,6 +155,44 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                     padding: _mapPadding,
                   ),
                   Positioned(
+                    bottom: _recenterBtnBottomPadding,
+                    right: 12,
+                    child: InkWell(
+                      onTap: () async {
+                        final LatLng _destination = LatLng(
+                            order.value!.to.latitude,
+                            order.value!.to.longitude);
+
+                        final String url =
+                            "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
+
+                        try {
+                          await launch(url);
+                        } catch (e) {
+                          await launch(url);
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(.2),
+                                offset: Offset(-1, 0),
+                                spreadRadius: 2.5,
+                                blurRadius: 9)
+                          ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.navigation_rounded,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
                     bottom: 2,
                     left: 5,
                     right: 5,
@@ -164,13 +204,13 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                             mezDbgPrint("New State ==> $state");
                             setState(() {
                               if (state == OrderInfoCardState.Maximized) {
-                                _recenterBtnBottomPadding = 320;
+                                _recenterBtnBottomPadding = 310;
                                 _mapPadding =
-                                    EdgeInsets.only(top: 10, bottom: 320);
+                                    EdgeInsets.only(top: 10, bottom: 310);
                               } else {
-                                _recenterBtnBottomPadding = 180;
+                                _recenterBtnBottomPadding = 170;
                                 _mapPadding =
-                                    EdgeInsets.only(top: 10, bottom: 180);
+                                    EdgeInsets.only(top: 10, bottom: 170);
                               }
                             });
                           },
