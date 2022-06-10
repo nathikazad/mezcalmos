@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart';
-
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -73,7 +72,7 @@ class _UserProfileState extends State<UserProfile>
         () => Scaffold(
           resizeToAvoidBottomInset: true,
 
-          backgroundColor: Color.fromARGB(255, 248, 248, 248),
+          backgroundColor: Colors.white,
           appBar: widget.userProfileWidgets
               .getRightAppBar(isImageBeingUploaded: isUploadingImg.value),
           body: SingleChildScrollView(
@@ -219,7 +218,7 @@ class _UserProfileState extends State<UserProfile>
     final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
     if (_from != null) {
       widget.userProfileController.reset();
-      imPicker.XFile? _res = await imagePicker(
+      final imPicker.XFile? _res = await imagePicker(
           picker: widget.userProfileController.picker, source: _from);
 
       try {

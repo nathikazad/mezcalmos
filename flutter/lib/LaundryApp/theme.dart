@@ -154,7 +154,7 @@ class LaundryAppTheme {
         bodyText2: TextStyle(
             fontFamily: "Nunito",
             fontWeight: FontWeight.w400,
-            fontSize: 11.sp,
+            fontSize: 12.sp,
             color: Colors.black),
         subtitle1: TextStyle(
             fontWeight: FontWeight.w400,

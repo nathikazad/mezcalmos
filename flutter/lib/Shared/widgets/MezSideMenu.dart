@@ -30,41 +30,43 @@ class MezSideMenu extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(height: 50),
-                    _drawerHeader(),
-                    // SizedBox(height: 43),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Divider(
-                        color: Color.fromRGBO(196, 196, 196, 0.29),
+      child: Obx(
+        () => Container(
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 50),
+                      _drawerHeader(),
+                      // SizedBox(height: 43),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Divider(
+                          color: Color.fromRGBO(196, 196, 196, 0.29),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    _buildSideMenuItem(),
-                    _basicSideMenuItems(),
-                  ],
+                      SizedBox(height: 10),
+                      _buildSideMenuItem(),
+                      _basicSideMenuItems(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Container(
-                alignment: Alignment.center,
-                child: Text(
-                  version +
-                      (lmd != AppLaunchMode.prod
-                          ? " ${lmd.toShortString()}"
-                          : ""),
-                ))
-          ],
+              Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    version +
+                        (lmd != AppLaunchMode.prod
+                            ? " ${lmd.toShortString()}"
+                            : ""),
+                  ))
+            ],
+          ),
         ),
       ),
     );
@@ -246,9 +248,9 @@ class MezSideMenu extends GetWidget<AuthController> {
   }
 
   Widget _buildSideMenuItem() {
-    if (_drawerController.sideMenuItems != null && controller.isUserSignedIn) {
+    if (controller.isUserSignedIn) {
       return Column(
-        children: _drawerController.sideMenuItems!,
+        children: _drawerController.sideMenuItems,
       );
     } else
       return Container();
@@ -260,12 +262,14 @@ class SideMenuItem extends StatelessWidget {
       {Key? key,
       required this.onClick,
       required this.icon,
+      this.isI18nPath = false,
       this.title,
       this.titleWidget})
       : super(key: key);
   final IconData icon;
   final Widget? titleWidget;
   final String? title;
+  final bool isI18nPath;
   final Function()? onClick;
 
   @override
@@ -287,12 +291,16 @@ class SideMenuItem extends StatelessWidget {
             SizedBox(
               width: 25,
             ),
-            title != null
-                ? Text(
-                    title!,
-                    style: Get.textTheme.bodyText1,
-                  )
-                : titleWidget ?? Container()
+            Container(
+              child: title != null
+                  ? Text(
+                      (isI18nPath)
+                          ? Get.find<LanguageController>().getLMap(title!)
+                          : title!,
+                      style: Get.textTheme.bodyText1,
+                    )
+                  : titleWidget ?? Container(),
+            )
           ],
         ),
       ),

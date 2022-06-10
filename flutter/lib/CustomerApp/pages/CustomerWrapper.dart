@@ -83,6 +83,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
+    //
+  
 
     /// Check if app was opened through a DeepLink
     Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
@@ -123,7 +125,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         drawer: MezSideMenu(),
         appBar: CustomerAppBar(
           leftBtnType: AppBarLeftButtonType.Menu,
-          
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(10.0),

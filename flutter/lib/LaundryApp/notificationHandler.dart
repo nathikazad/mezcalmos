@@ -18,7 +18,7 @@ Notification laundryNotificationHandler(String key, value) {
           linkUrl: getLaundryOpOrderRoute(value["orderId"]),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
-              'assets/images/laundryApp/washingMachine.png', // needs to be changed
+              'assets/images/shared/notifications/atLaundry.png', // needs to be changed
           title: '${_i18n()['newOrderTitle']}',
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewMessage,
@@ -133,8 +133,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       return <String, dynamic>{
         "title": "${_i18n()["canceledOrderTitle"]}",
         "body": "${_i18n()["canceledOrderBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/cancel.png",
       };
     default:
       // do nothing

@@ -1,5 +1,8 @@
 {
     "CustomerApp": {
+        "main": {
+            "savedLocations": "Ubicaciones guardadas"
+        },
         "components": {
             "Menu": {
                 "UserMenuComponent": {
@@ -357,6 +360,7 @@
                 }
             },
             "CustomerWrapper": {
+                "savedLocations": "Ubicaciones guardadas",
                 "welcomeText": "Bienvenido a MEZCALMOS 👋",
                 "appDescription": "Su lugar único para encontrar todos sus servicios locales que necesita y donde puede disfrutar de servicios rápidos y de alta calidad .",
                 "services": "Servicios",
@@ -597,7 +601,7 @@
                         "OtpConfirmation": "Confirmación del \ncódigo OTP",
                         "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos.",
                         "enterOtpCode": "Ingrese el código OTP enviado a",
-                        "otpDidnReciveTxt": "No has recibido el mensaje de texto?",
+                        "otpDidnReceiveTxt": "No has recibido el mensaje de texto?",
                         "resend": "Reenviar",
                         "resendAfter": "Reenviar después",
                         "seconds": "segundos",
@@ -651,6 +655,8 @@
                 "UserProfileWidgets": {
                     "namePlaceHolder": "Ponga su primer nombre",
                     "uploadPic": "Subir imagen",
+                    "name": "Nombre",
+                    "memberSince": "Miembro desde",
                     "title": " Información del usuario ",
                     "cancel": "Cancelar",
                     "editInfo": "Editar Información",
@@ -716,6 +722,10 @@
             }
         },
         "widgets": {
+            "NoOrdersComponent": {
+                "title": "No hay pedidos en este momento",
+                "subtitle": "Inténtalo de nuevo más tarde"
+            },
             "FreeShippingComponent": {
                 "free": "Libre"
             },

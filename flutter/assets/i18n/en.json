@@ -1,5 +1,8 @@
 {
     "CustomerApp": {
+        "main": {
+            "savedLocations": "Saved Locations"
+        },
         "components": {
             "Menu": {
                 "UserMenuComponent": {
@@ -352,6 +355,7 @@
                 }
             },
             "CustomerWrapper": {
+                "savedLocations": "Saved Locations",
                 "welcomeText": "Welcome to MEZCALMOS 👋",
                 "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and hight quality services.",
                 "services": "Services",
@@ -644,6 +648,8 @@
                     "uploadPic": "Upload Image",
                     "title": " User Information",
                     "cancel": "Cancel",
+                    "name": "Name",
+                    "memberSince": "Member since",
                     "editInfo": "Edit Information",
                     "noChangesToApply": "No Changes to be applied!",
                     "saveBtn": "Save"
@@ -701,6 +707,10 @@
             }
         },
         "widgets": {
+            "NoOrdersComponent": {
+                "title": "No orders at the moment",
+                "subtitle": "Try again later"
+            },
             "FreeShippingComponent": {
                 "free": "Free"
             },

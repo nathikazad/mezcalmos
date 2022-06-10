@@ -3,11 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart' show CapExtension;
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart' show CapExtension;
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileScreen"]["UserProfileWidgets"];
@@ -158,7 +157,8 @@ class UserProfileWidgetsClass {
         onClick: () => Get.back(closeOverlays: true),
         actionIcons: [
           Obx(
-            () => Align(
+            () => Container(
+              padding: const EdgeInsets.all(8),
               alignment: Alignment.centerLeft,
               child: GestureDetector(
                 onTap: () =>
@@ -239,7 +239,7 @@ class UserProfileWidgetsClass {
           ),
           SizedBox(height: 11),
           Text(
-            "Member since 12/04/2022",
+            "${_i18n()["memberSince"]} 12/04/2022",
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -262,7 +262,7 @@ class UserProfileWidgetsClass {
           ),
           SizedBox(height: 11),
           Text(
-            "Member since 12/04/2022",
+            "${_i18n()["memberSince"]} 12/04/2022",
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -276,7 +276,7 @@ class UserProfileWidgetsClass {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Name",
+                "${_i18n()["name"]}",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 18,
@@ -297,7 +297,7 @@ class UserProfileWidgetsClass {
             child: TextField(
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(14),
-                fillColor: Colors.white,
+                fillColor: Colors.grey.shade200,
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,

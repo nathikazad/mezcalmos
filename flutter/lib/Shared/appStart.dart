@@ -262,8 +262,8 @@ class _StartingPointState extends State<StartingPoint> {
       permanent: true,
     );
     Get.put<SettingsController>(
-      SettingsController(
-          widget.appType, widget.sideMenuItems, widget.locationPermissionType),
+      SettingsController(widget.appType, widget.locationPermissionType,
+          sideMenuItems: widget.sideMenuItems ?? []),
       permanent: true,
     );
   }

@@ -21,7 +21,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
   // int get timeBetweenResending => _timeBetweenResending.value;
   void resendOtpTimerActivate(double time) {
     _timeBetweenResending.value = time.toInt();
-    const second = const Duration(seconds: 1);
+    const Duration second = Duration(seconds: 1);
     Timer.periodic(
       second,
       (Timer __t) {
@@ -42,7 +42,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    final txt = Theme.of(context).textTheme;
+    final TextTheme txt = Theme.of(context).textTheme;
 
     return Scaffold(
         resizeToAvoidBottomInset: true,
@@ -53,7 +53,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
             enableDrag: false,
             backgroundColor: Colors.transparent,
             onClosing: () {},
-            builder: (context) {
+            builder: (BuildContext context) {
               return Obx(
                 () => confirmButton(_phonePassed, otpCode, context),
               );
@@ -138,12 +138,12 @@ class OtpConfirmationScreen extends GetView<AuthController> {
               hintCharacter: "#",
               length: 6,
               // backgroundColor: Colors.grey.shade200,
-              onCompleted: (value) {
+              onCompleted: (String value) {
                 canConfirmOtp.value = true;
                 otpCode = value;
                 mezDbgPrint(value);
               },
-              onChanged: (s) {
+              onChanged: (String s) {
                 otpCode = s;
               },
 
@@ -168,19 +168,27 @@ class OtpConfirmationScreen extends GetView<AuthController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "${_i18n()["otpDidnReceiveTxt"]}",
-                  style: txt.bodyText2,
+                Flexible(
+                  flex: 3,
+                  child: Text(
+                    "${_i18n()["otpDidnReceiveTxt"]}",
+                    style: txt.bodyText2,
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
                 ),
                 Obx(
                   () => Flexible(
+                    flex: 2,
+                    fit: FlexFit.tight,
                     child: TextButton(
                         onPressed: _timeBetweenResending.value == 0
                             ? () async {
                                 // resend code !
                                 canConfirmOtp.value = false;
                                 _otpCodeTextController.clear();
-                                ServerResponse response =
+                                final ServerResponse response =
                                     await controller.sendOTPForLogin(
                                         Get.arguments ?? _phonePassed);
                                 mezDbgPrint(response.data);
@@ -226,7 +234,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                   clickedSignInOtp.value = true;
                   mezDbgPrint(
                       "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
-                  ServerResponse? _resp = await controller.signInUsingOTP(
+                  final ServerResponse? _resp = await controller.signInUsingOTP(
                       Get.arguments ?? _phonePassed, otpCode);
                   switch (_resp?.success) {
                     case null:
@@ -234,8 +242,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                       break;
 
                     case false:
-                      MezSnackbar("Oops ..",
-                          _i18n()['wrongOTPCode']);
+                      MezSnackbar("Oops ..", _i18n()['wrongOTPCode']);
                       clickedSignInOtp.value = false;
                       break;
                   }

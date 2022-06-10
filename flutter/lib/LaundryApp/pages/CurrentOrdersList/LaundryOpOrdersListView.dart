@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['DashboardView']['OrdersListView']['LaundryOpOrdersListView'];
@@ -85,16 +86,7 @@ class _LaundryOpCurrentOrdersListViewState
                           (int index) => LaundryOpOrderCard(
                               laundryOrder: inProcessOrders[index])),
                     )
-                  : 
-                  // TODO @m66are add component when no orders is there 
-                  Container(
-                      margin: const EdgeInsets.all(16),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "No current orders at the moment",
-                        style: Get.textTheme.bodyText2,
-                      ),
-                    ),
+                  : NoOrdersComponent(),
             ],
           ),
         ),
