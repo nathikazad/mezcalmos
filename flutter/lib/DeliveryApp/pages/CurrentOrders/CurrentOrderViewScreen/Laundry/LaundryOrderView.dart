@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LaundryOrderView extends StatefulWidget {
   const LaundryOrderView({Key? key}) : super(key: key);
@@ -153,6 +154,37 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                     padding: _mapPadding,
                   ),
                   Positioned(
+                    bottom: _recenterBtnBottomPadding,
+                    right: 20,
+                    child: InkWell(
+                      onTap: () async {
+                        final LatLng _destination = LatLng(
+                            order.value!.to.latitude,
+                            order.value!.to.longitude);
+
+                        final String url =
+                            "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
+
+                        try {
+                          await launch(url);
+                        } catch (e) {
+                          await launch(url);
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.map,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
                     bottom: 2,
                     left: 5,
                     right: 5,
@@ -164,13 +196,13 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                             mezDbgPrint("New State ==> $state");
                             setState(() {
                               if (state == OrderInfoCardState.Maximized) {
-                                _recenterBtnBottomPadding = 320;
+                                _recenterBtnBottomPadding = 310;
                                 _mapPadding =
-                                    EdgeInsets.only(top: 10, bottom: 320);
+                                    EdgeInsets.only(top: 10, bottom: 310);
                               } else {
-                                _recenterBtnBottomPadding = 180;
+                                _recenterBtnBottomPadding = 170;
                                 _mapPadding =
-                                    EdgeInsets.only(top: 10, bottom: 180);
+                                    EdgeInsets.only(top: 10, bottom: 170);
                               }
                             });
                           },

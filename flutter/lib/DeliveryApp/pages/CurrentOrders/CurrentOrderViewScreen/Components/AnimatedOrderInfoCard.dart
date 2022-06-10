@@ -73,54 +73,51 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Divider(),
-                      // Stack(
-                      //   clipBehavior: Clip.none,
-                      //   children: [
-                      //     Positioned(
-                      //       top: 30,
-                      //       left: 30,
-                      //       child: Container(
-                      //         color: Colors.yellow,
-                      //         child: Row(
-                      //           children: customerTimeWidgets,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     customerAnimatedRow(),
-                      //   ],
-                      // ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.start,
-                      //   crossAxisAlignment: CrossAxisAlignment.end,
-                      //   children: [
-                      //     Container(
-                      //       height: 18,
-                      //       width: 18,
-                      //       decoration: BoxDecoration(
-                      //         color: Colors.transparent,
-                      //         shape: BoxShape.circle,
-                      //         border: Border.all(
-                      //           color: Color.fromRGBO(54, 54, 54, 1),
-                      //           width: 5,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     customerAnimatedRow(),
-                      //   ],
-                      // ),
-                      customerAnimatedRow(),
 
-                      Row(
-                        children: [
-                          SizedBox(width: 8),
-                          Container(
-                            height: 60,
-                            width: 1.5,
-                            color: Color.fromRGBO(103, 121, 254, 1),
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.only(top: 6),
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  height: 18,
+                                  width: 18,
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Color.fromRGBO(54, 54, 54, 1),
+                                      width: 5,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 60,
+                                  width: 1.5,
+                                  color: Color.fromRGBO(103, 121, 254, 1),
+                                ),
+                                Icon(
+                                  Icons.location_on_rounded,
+                                  size: 22,
+                                  color: Color.fromRGBO(103, 121, 254, 1),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 10),
+                            Column(
+                              children: [
+                                customerAnimatedRow(),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                serviceProviderAnimatedRow(),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                      serviceProviderAnimatedRow(),
+
                       // Container(
                       //   padding: EdgeInsets.only(left: 30),
                       //   child: Row(
@@ -192,16 +189,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   Row serviceProviderAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Icon(
-          Icons.location_on_rounded,
-          size: 18,
-          color: Color.fromRGBO(103, 121, 254, 1),
-        ),
-        SizedBox(width: 14),
         Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -240,23 +231,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   Row customerAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 18,
-          width: 18,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Color.fromRGBO(54, 54, 54, 1),
-              width: 5,
-            ),
-          ),
-        ),
-        SizedBox(width: 14),
         Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
