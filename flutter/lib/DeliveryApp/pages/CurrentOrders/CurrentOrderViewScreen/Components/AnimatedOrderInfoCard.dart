@@ -25,6 +25,8 @@ typedef void OnOrderInfoCardStateChange(OrderInfoCardState state);
 class AnimatedOrderInfoCard extends StatelessWidget {
   final OrderInfoCardState initialCardState;
   final OnOrderInfoCardStateChange? onCardStateChange;
+  bool showMsgIconInOneLine;
+  bool isCustomerRowFirst;
   // customer part (top row of animated container)
   final String customerName;
   final String customerImage;
@@ -39,8 +41,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   final String formattedOrderStatus;
   final Order order;
 
-  const AnimatedOrderInfoCard({
+  AnimatedOrderInfoCard({
     required this.formattedOrderStatus,
+    this.showMsgIconInOneLine = false,
+    this.isCustomerRowFirst = true,
     this.initialCardState = OrderInfoCardState.Minimized,
     this.onCardStateChange,
     required this.customerName,
@@ -106,13 +110,11 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                             ),
                             SizedBox(width: 10),
                             Column(
-                              children: [
-                                customerAnimatedRow(),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                serviceProviderAnimatedRow(),
-                              ],
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: isCustomerRowFirst
+                                  ? mainAnimatedContainerItems
+                                  : mainAnimatedContainerItems.reversed
+                                      .toList(),
                             )
                           ],
                         ),
@@ -186,7 +188,15 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     );
   }
 
-  Row serviceProviderAnimatedRow() {
+  List<Widget> get mainAnimatedContainerItems => <Widget>[
+        _customerAnimatedRow(),
+        SizedBox(
+          height: showMsgIconInOneLine ? 50 : 20,
+        ),
+        _serviceProviderAnimatedRow(),
+      ];
+
+  Row _serviceProviderAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -195,73 +205,113 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              serviceProviderName,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w600,
-                fontSize: 15,
-                color: Colors.black,
-              ),
-            ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  children: serviceProviderTimeWidgets,
+                Text(
+                  serviceProviderName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 15,
+                    color: Colors.black,
+                  ),
                 ),
-                SizedBox(width: 15),
-                MessageButton(
-                  withPadding: false,
-                  onTap: onServiceMsgClick,
-                  showRedDot: (_serviceDriverChatId() != null)
-                      ? Get.find<OrderController>()
-                          .hasNewMessageNotification(_serviceDriverChatId()!)
-                      : false,
-                ),
+                if (showMsgIconInOneLine) ...[
+                  SizedBox(width: 9),
+                  MessageButton(
+                    withPadding: false,
+                    onTap: onServiceMsgClick,
+                    showRedDot: (_serviceDriverChatId() != null)
+                        ? Get.find<OrderController>()
+                            .hasNewMessageNotification(_serviceDriverChatId()!)
+                        : false,
+                  )
+                ],
               ],
             ),
+            if (!showMsgIconInOneLine)
+              Row(
+                children: [
+                  Row(
+                    children: serviceProviderTimeWidgets,
+                  ),
+                  SizedBox(width: 15),
+                  MessageButton(
+                    withPadding: false,
+                    onTap: onServiceMsgClick,
+                    showRedDot: (_serviceDriverChatId() != null)
+                        ? Get.find<OrderController>()
+                            .hasNewMessageNotification(_serviceDriverChatId()!)
+                        : false,
+                  ),
+                ],
+              ),
           ],
         ),
       ],
     );
   }
 
-  Row customerAnimatedRow() {
+  Row _customerAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              customerName,
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w600,
-                fontSize: 15,
-                color: Colors.black,
-              ),
-            ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  children: customerTimeWidgets,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    customerName,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-                SizedBox(width: 9),
-                MessageButton(
-                  withPadding: false,
-                  onTap: onCustomerMsgClick,
-                  showRedDot: (_customerDriverChatId() != null)
-                      ? Get.find<OrderController>()
-                          .hasNewMessageNotification(_customerDriverChatId()!)
-                      : false,
-                ),
+                if (showMsgIconInOneLine) ...[
+                  SizedBox(width: 9),
+                  MessageButton(
+                    withPadding: false,
+                    onTap: onServiceMsgClick,
+                    showRedDot: (_serviceDriverChatId() != null)
+                        ? Get.find<OrderController>()
+                            .hasNewMessageNotification(_serviceDriverChatId()!)
+                        : false,
+                  ),
+                ]
               ],
             ),
+            if (!showMsgIconInOneLine)
+              Row(
+                children: [
+                  Row(
+                    children: customerTimeWidgets,
+                  ),
+                  SizedBox(width: 9),
+                  MessageButton(
+                    withPadding: false,
+                    onTap: onCustomerMsgClick,
+                    showRedDot: (_customerDriverChatId() != null)
+                        ? Get.find<OrderController>()
+                            .hasNewMessageNotification(_customerDriverChatId()!)
+                        : false,
+                  ),
+                ],
+              ),
           ],
         ),
       ],
@@ -361,7 +411,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         SizedBox(width: 3),
         Text(
           // 'Today, 10:53 AM',
-          DateFormat('EEEE, hh:mm a').format(order.orderTime),
+          DateFormat('EE, hh:mm a').format(order.orderTime),
           overflow: TextOverflow.visible,
           style: TextStyle(
             fontFamily: 'Nunito',

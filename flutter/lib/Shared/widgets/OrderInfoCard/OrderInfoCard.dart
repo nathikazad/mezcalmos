@@ -14,7 +14,7 @@ class OrderInfosCard extends StatelessWidget {
     return GestureDetector(
       onTap: orderCardSubWidgets.onCardTap,
       child: Container(
-        // margin: EdgeInsets.only(bottom: 15),
+        margin: EdgeInsets.only(bottom: 15),
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -93,7 +93,7 @@ class OrderInfosCard extends StatelessWidget {
             ),
             Divider(),
             Container(
-              height: 30,
+              // height: 30,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -122,7 +122,10 @@ class OrderInfosCard extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  orderCardSubWidgets.cardStatus,
+                  Container(
+                    // height: 30,
+                    child: orderCardSubWidgets.cardStatus,
+                  ),
                 ],
               ),
             ),

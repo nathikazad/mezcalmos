@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -64,8 +65,8 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
 
   Widget _startDeliveryButton() {
     return !shouldDisableBottomButton()
-        ? TextButton(
-            onPressed: () async {
+        ? InkWell(
+            onTap: () async {
               setState(() {
                 clicked = true;
               });
@@ -77,12 +78,19 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
                 });
               });
             },
-            style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
             child: Container(
+              decoration: BoxDecoration(gradient: bluePurpleGradient),
               alignment: Alignment.center,
               padding: EdgeInsets.all(8),
               child: Text(
-                  '${_i18n()["RestaurantControllButtons"]["confirmPickup"]}'),
+                '${_i18n()["RestaurantControllButtons"]["confirmPickup"]}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 21,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Montserrat',
+                ),
+              ),
             ),
           )
         : _waitingDisabledButton(
@@ -245,8 +253,8 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
   }
 
   Widget _confirmDeliveryButton() {
-    return TextButton(
-        onPressed: () async {
+    return InkWell(
+        onTap: () async {
           setState(() {
             clicked = true;
           });
@@ -257,12 +265,19 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
                   }));
           // Get.back(closeOverlays: true);
         },
-        style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
         child: Container(
           padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(gradient: bluePurpleGradient),
           alignment: Alignment.center,
           child: Text(
-              '${_i18n()["RestaurantControllButtons"]["confirmDelivery"]}'),
+            '${_i18n()["RestaurantControllButtons"]["confirmDelivery"]}',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 21,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Montserrat',
+            ),
+          ),
         ));
   }
 }

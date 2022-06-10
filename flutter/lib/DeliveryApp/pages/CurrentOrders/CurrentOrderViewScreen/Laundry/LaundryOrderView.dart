@@ -10,6 +10,7 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/laundryOrderFromToComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
+import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -155,7 +156,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                   ),
                   Positioned(
                     bottom: _recenterBtnBottomPadding,
-                    right: 20,
+                    right: 12,
                     child: InkWell(
                       onTap: () async {
                         final LatLng _destination = LatLng(
@@ -174,11 +175,18 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                       child: Container(
                         padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(.2),
+                                offset: Offset(-1, 0),
+                                spreadRadius: 2.5,
+                                blurRadius: 9)
+                          ],
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Icon(
-                          Icons.map,
+                          Icons.navigation_rounded,
                           color: Colors.black,
                         ),
                       ),

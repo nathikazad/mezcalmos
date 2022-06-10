@@ -75,11 +75,12 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
             ),
           Column(
             children: List.generate(
-                orderController.pastOrders.length,
-                (int index) => DriverOrderCard(
-                      order: orderController.pastOrders[index],
-                      isPastOrder: true,
-                    )).reversed.toList(),
+              orderController.pastOrders.length,
+              (int index) => DriverOrderCard(
+                order: orderController.pastOrders[index],
+                isPastOrder: true,
+              ),
+            ).reversed.toList(),
           )
         ],
       );

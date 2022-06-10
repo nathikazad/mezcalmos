@@ -326,6 +326,7 @@ class SendMessageBox extends StatelessWidget {
                 child: Center(
                   child: TextField(
                     maxLines: 1,
+
                     clipBehavior: Clip.none,
                     textAlign: TextAlign.start,
                     decoration: InputDecoration(
@@ -344,11 +345,17 @@ class SendMessageBox extends StatelessWidget {
                         hintText: 'Message...' //_i18n()['namePlaceHolder'],
                         ),
                     style: TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0),
-                      fontSize: 18,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Nunito',
                     ),
+                    //  TextStyle(
+                    //   color: Color.fromARGB(255, 0, 0, 0),
+                    //   fontSize: 18,
+                    //   fontFamily: 'Montserrat',
+                    //   fontWeight: FontWeight.w600,
+                    // ),
                     controller: _textEditingController,
                     onChanged: (String value) {
                       _typedMsg.value = value;

@@ -45,85 +45,59 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-            key: Get.find<SideMenuDrawerController>().getNewKey(),
-            drawer: MezSideMenu(),
-            appBar: mezcalmosAppBar(
-              AppBarLeftButtonType.Menu,
-              showNotifications: true,
-            ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Obx(
-                  () => Column(
-                    children: [
-                      TitleWithOnOffSwitcher(
-                        title: "Online",
-                        onTurnedOn: () {
-                          _deliveryAuthController.turnOn();
-                        },
-                        onTurnedOff: () {
-                          _deliveryAuthController.turnOff();
-                        },
-                        initialSwitcherValue: _deliveryAuthController
-                                .deliveryDriverState?.isOnline ??
+      onWillPop: () async => false,
+      child: Scaffold(
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
+        drawer: MezSideMenu(),
+        appBar: mezcalmosAppBar(
+          AppBarLeftButtonType.Menu,
+          showNotifications: true,
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Obx(
+              () => Column(
+                children: [
+                  TitleWithOnOffSwitcher(
+                    title: "Online",
+                    onTurnedOn: () {
+                      _deliveryAuthController.turnOn();
+                    },
+                    onTurnedOff: () {
+                      _deliveryAuthController.turnOff();
+                    },
+                    initialSwitcherValue:
+                        _deliveryAuthController.deliveryDriverState?.isOnline ??
                             false,
-                      ),
-                      if (_deliveryAuthController
-                                  .deliveryDriverState?.isOnline !=
-                              true &&
-                          orderController.currentOrders.isEmpty)
-                        Container(
-                          height: 60.h,
-                          child: IncomingOrdersStatus(
-                            childData: Padding(
-                              padding: const EdgeInsets.only(bottom: 17.0),
-                              child: Image.asset(
-                                turnOn_asset,
-                                fit: BoxFit.contain,
-                                width: 40.w,
-                                height: 25.h,
-                              ),
-                            ),
-                            errorText: 'You are offline!',
-                          ),
-                        )
-                      else
-                        _incomingOrdersList()
-                    ],
                   ),
-                ),
+                  if (_deliveryAuthController.deliveryDriverState?.isOnline !=
+                          true &&
+                      orderController.currentOrders.isEmpty)
+                    Container(
+                      height: 60.h,
+                      child: IncomingOrdersStatus(
+                        childData: Padding(
+                          padding: const EdgeInsets.only(bottom: 17.0),
+                          child: Image.asset(
+                            turnOn_asset,
+                            fit: BoxFit.contain,
+                            width: 40.w,
+                            height: 25.h,
+                          ),
+                        ),
+                        errorText: 'You are offline!',
+                      ),
+                    )
+                  else
+                    _incomingOrdersList()
+                ],
               ),
-              // SingleChildScrollView(
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: Column(children: [
-              //       IncomingOrdersOnOff(
-              //         onTurnedOn: () {
-              //           _deliveryAuthController.turnOn();
-              //         },
-              //         onTurnedOff: () {
-              //           _deliveryAuthController.turnOff();
-              //         },
-              //         initialSwitcherValue:
-              //             _deliveryAuthController.deliveryDriverState?.isOnline ??
-              //                 false,
-              //       ),
-              //       Obx(
-              //         () => Container(
-              //           child: (_deliveryAuthController
-              //                   .deliveryDriverState!.isOnline)
-              //               ? _currentOrdersList()
-              //               : DriverNotLookingComponent(),
-              //         ),
-              //       ),
-              //       Obx(() => _incomingOrdersList()),
-              //     ]),
-              //   ),
-              // ))
-            )));
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _incomingOrdersList() {
@@ -138,7 +112,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
-          Divider(),
+          SizedBox(height: 5),
           Column(
             children: List.generate(
                 orderController.currentOrders.length,
