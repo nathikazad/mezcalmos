@@ -58,6 +58,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
               viewController.filteredRestaurants.length,
               (int index) => RestaurantCard(
                     restaurant: viewController.filteredRestaurants[index],
+                    shippingPrice: viewController.baseShippingPrice,
                     onClick: () {
                       Get.toNamed<void>(
                         getRestaurantRoute(

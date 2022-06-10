@@ -7,43 +7,28 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["components"]["notesWidget"];
 
 Widget notesWidget(Rxn<RestaurantOrder> order) {
-  return Column(
-    children: <Widget>[
-      Container(
-        padding: const EdgeInsets.all(10),
-        alignment: Alignment.centerLeft,
-        child: Text(
-          _i18n()['notes'],
-          style: Get.textTheme.bodyText1,
-          textAlign: TextAlign.left,
-        ),
-      ),
-      const SizedBox(height: 5),
-      Container(
-        alignment: Alignment.center,
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        width: Get.width,
-        height: 51,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
-          border: Border.all(color: const Color(0xffececec), width: 0.5),
-          color: const Color(0x80ffffff),
-        ),
-        child: Container(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            order.value!.notes!,
-            style: const TextStyle(
-                color: Color(0xff000f1c),
-                fontFamily: "psr",
-                fontStyle: FontStyle.normal,
-                fontSize: 16.0),
+  return Card(
+    margin: const EdgeInsets.only(top: 20),
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            _i18n()['notes'],
+            style: Get.textTheme.bodyText1,
             textAlign: TextAlign.left,
           ),
-        ),
+          const SizedBox(height: 10),
+          Container(
+            child: Text(
+              order.value!.notes!,
+              style: Get.textTheme.subtitle2,
+            ),
+          ),
+        ],
       ),
-      const SizedBox(height: 30),
-    ],
+    ),
   );
 }

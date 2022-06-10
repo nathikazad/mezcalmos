@@ -31,6 +31,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? Text(
               title!,
               style: Theme.of(context).textTheme.headline2,
+              textAlign: TextAlign.center,
             )
           : Container(
               alignment: Alignment.center,
@@ -46,6 +47,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? _MenuButtonAppBar()
           : _BackButtonAppBar(),
       actions: [getAppbarIconsButton()],
+      centerTitle: true,
     );
   }
 
@@ -86,7 +88,6 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       scale: 0.6,
       child: InkWell(
         onTap: () {
-          
           //  Get.back();
           Get.find<SideMenuDrawerController>().openMenu();
         },
@@ -124,7 +125,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           Get.toNamed(kOrdersRoute);
         },
         child: Ink(
-          padding: const EdgeInsets.all(7),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: SecondaryLightBlueColor,
@@ -168,7 +169,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       if (Get.find<ForegroundNotificationsController>().notifications.length >
           0) {
         return Padding(
-          padding: const EdgeInsets.only(left: 3, right: 3),
+          padding: const EdgeInsets.only(left: 3, right: 7),
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
@@ -179,7 +180,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
               showBadge: true,
               position: BadgePosition.topEnd(top: 0, end: 0),
               child: Ink(
-                padding: const EdgeInsets.all(7),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: SecondaryLightBlueColor,

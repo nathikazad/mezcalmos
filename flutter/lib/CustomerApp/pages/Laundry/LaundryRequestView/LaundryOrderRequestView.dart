@@ -89,18 +89,20 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       style: Get.textTheme.headline3,
                     ),
                     SizedBox(
-                      height: 8,
+                      height: 10,
                     ),
                     Row(
                       children: [
                         Icon(
                           Icons.place,
+                          size: 20,
                           color: primaryBlueColor,
                         ),
                         SizedBox(
                           width: 2,
                         ),
-                        Text(selectedLaundry.info.location.address)
+                        Flexible(
+                            child: Text(selectedLaundry.info.location.address))
                       ],
                     ),
                     SizedBox(

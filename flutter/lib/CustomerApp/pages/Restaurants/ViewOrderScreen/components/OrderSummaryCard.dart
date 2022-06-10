@@ -44,7 +44,7 @@ class OrderSummaryCard extends StatelessWidget {
                       '${_i18n()["orderCost"]}',
                       style: txt.bodyText2,
                     ),
-                    Text('\$' + (order.cost - 40).toString(),
+                    Text('\$' + (order.itemsCost).toString(),
                         style: txt.bodyText2),
                   ],
                 ),

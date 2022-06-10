@@ -185,7 +185,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
         "title": "${_i18n()["cancelledTitle"]}",
         "body": "${_i18n()["cancelledBody"]}",
         "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+            "assets/images/shared/notifications/cancel.png",
       };
     default:
       // do nothing

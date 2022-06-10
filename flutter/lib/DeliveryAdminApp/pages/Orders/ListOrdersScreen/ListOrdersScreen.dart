@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/DeliveryAdminApp/components/DeliveryAdminAppbar.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
@@ -167,10 +166,11 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
         length: 3,
         child: Scaffold(
           key: Get.find<SideMenuDrawerController>().getNewKey(),
-          appBar: deliveryAdminAppBar(AppBarLeftButtonType.Menu,
-              withOrder: false,
-              tabbar: deliveryAdminTabbar(context),
-              function: () => Get.find<SideMenuDrawerController>().openMenu()),
+          appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+              tabBar: deliveryAdminTabbar(context), showNotifications: true),
+          //   withOrder: false,
+          //  ,
+          //   function: () => Get.find<SideMenuDrawerController>().openMenu()),
           // appBar: mezcalmosAppBar(
           //     "menu", Get.find<SideMenuDraweController>().openMenu),
           drawer: MezSideMenu(),

@@ -39,13 +39,10 @@ class CartBuilder extends StatelessWidget {
                   children: <Widget>[
                     const Spacer(),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(28),
+                        borderRadius: BorderRadius.circular(3),
                       ),
                       child: InkWell(
                         onTap: () async {

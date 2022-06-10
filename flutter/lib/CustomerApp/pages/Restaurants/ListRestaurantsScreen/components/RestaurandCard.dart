@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:shimmer/shimmer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -12,13 +13,14 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;
-
+  final num shippingPrice;
   final GestureTapCallback? onClick;
 
   const RestaurantCard({
     Key? key,
     @required this.onClick,
     required this.restaurant,
+    required this.shippingPrice,
   }) : super(key: key);
 
   @override
@@ -27,13 +29,12 @@ class RestaurantCard extends StatelessWidget {
         Get.find<LanguageController>().userLanguageKey;
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
-      // margin: EdgeInsets.all(8),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: onClick,
         child: Container(
           width: double.infinity,
-          height: 150,
+          height: 160,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,24 +68,29 @@ class RestaurantCard extends StatelessWidget {
                       Container(
                         //  alignment: Alignment.bottomLeft,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Flexible(
                               child:
                                   Text(_getDollarsSign(), style: txt.bodyText1),
                             ),
                             Flexible(
+                              flex: 3,
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
                                     Icons.delivery_dining,
                                     color: Colors.grey.shade800,
                                   ),
                                   SizedBox(
-                                    width: 3,
+                                    width: 2,
                                   ),
                                   Flexible(
-                                    child: Text('\$50', style: txt.bodyText2),
+                                    child: ShippingCostComponent(
+                                      shippingCost: shippingPrice,
+                                      alignment: MainAxisAlignment.start,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -126,7 +132,7 @@ class RestaurantCard extends StatelessWidget {
               width: 150,
               child: CachedNetworkImage(
                 imageUrl: restaurant.info.image,
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.cover,
                 placeholder: (_, __) {
                   return Shimmer.fromColors(
                     child: Container(

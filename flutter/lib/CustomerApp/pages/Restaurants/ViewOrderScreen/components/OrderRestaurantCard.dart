@@ -29,7 +29,7 @@ class OrderRestaurantCard extends StatelessWidget {
             ),
             Flexible(
                 fit: FlexFit.tight,
-                flex: 7,
+                flex: 8,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -63,18 +63,20 @@ class OrderRestaurantCard extends StatelessWidget {
                   ],
                 )),
             Spacer(),
-            MessageButton(
-                showRedDot: Get.find<OrderController>()
-                    .orderHaveNewMessageNotifications(order.orderId),
-                onTap: () {
-                  Get.toNamed<void>(
-                    getMessagesRoute(
-                      chatId: order.orderId,
-                      orderId: order.orderId,
-                      recipientType: ParticipantType.Restaurant,
-                    ),
-                  );
-                })
+            Obx(
+              () => MessageButton(
+                  showRedDot: Get.find<OrderController>()
+                      .orderHaveNewMessageNotifications(order.orderId),
+                  onTap: () {
+                    Get.toNamed<void>(
+                      getMessagesRoute(
+                        chatId: order.orderId,
+                        orderId: order.orderId,
+                        recipientType: ParticipantType.Restaurant,
+                      ),
+                    );
+                  }),
+            )
           ],
         ),
       ),

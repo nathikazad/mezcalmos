@@ -92,6 +92,7 @@ class CustomerAppTheme {
       iconTheme: IconThemeData(color: Colors.grey[850]),
       cardTheme: CardTheme(
         elevation: 0.5,
+        margin: EdgeInsets.only(bottom: 3),
         color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -146,16 +147,23 @@ class CustomerAppTheme {
           color: Colors.black,
         ),
         bodyText2: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w500,
+          height: 1.5,
+          fontSize: 11.sp,
+          color: Color(0xFF494949),
+        ),
+        subtitle2: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w500,
+          fontSize: 12.sp,
+          color: Color(0xFF494949),
+        ),
+        subtitle1: TextStyle(
           fontFamily: "Nunito",
           fontWeight: FontWeight.w400,
           fontSize: 11.sp,
           color: Colors.black,
-        ),
-        subtitle1: TextStyle(
-          fontWeight: FontWeight.w400,
-          fontFamily: "Nunito",
-          fontSize: 10.sp,
-          color: Colors.black.withOpacity(0.8),
         ),
       ),
       textSelectionTheme:

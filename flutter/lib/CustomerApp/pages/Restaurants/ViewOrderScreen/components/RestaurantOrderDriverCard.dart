@@ -19,6 +19,9 @@ class RestaurantOrderDriverCard extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 25,
+          ),
           Card(
               child: Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),

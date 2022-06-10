@@ -20,20 +20,23 @@ class ItemChosenChoiceComponent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Divider(
-          height: 25,
+          height: 15,
+        ),
+        SizedBox(
+          height: 5,
         ),
         Text(
           optionName,
           style: Get.textTheme.bodyText1,
         ),
         SizedBox(
-          height: 15,
+          height: 10,
         ),
         Column(
           children: List.generate(
               choices.length,
               (int index) => Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    margin: const EdgeInsets.symmetric(vertical: 3),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

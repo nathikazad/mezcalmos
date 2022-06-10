@@ -184,7 +184,7 @@ Widget _notificationAppBarIcon() {
     if (Get.find<ForegroundNotificationsController>().notifications.length >
         0) {
       return Padding(
-        padding: const EdgeInsets.only(left: 3, right: 3),
+        padding: const EdgeInsets.only(left: 3, right: 7),
         child: InkWell(
           customBorder: CircleBorder(),
           onTap: () {
@@ -195,7 +195,7 @@ Widget _notificationAppBarIcon() {
             showBadge: true,
             position: BadgePosition.topEnd(top: 8, end: 0),
             child: Ink(
-              padding: const EdgeInsets.all(7),
+              padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: SecondaryLightBlueColor,

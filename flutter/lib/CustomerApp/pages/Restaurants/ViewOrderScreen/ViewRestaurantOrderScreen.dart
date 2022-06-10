@@ -173,13 +173,15 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             order: order.value!,
                             ordersStates: order.value!.status,
                           ),
-                          SizedBox(
-                            height: 25,
-                          ),
+
                           RestaurantOrderDriverCard(
                             order: order.value!,
                           ),
                           if (order.value!.inDeliveryPhase()) ..._mapWidget,
+
+                          SizedBox(
+                            height: 25,
+                          ),
                           OrderRestaurantCard(order: order.value!),
 
                           SizedBox(
@@ -188,14 +190,16 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           OrderItemsCard(
                             items: order.value!.items,
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          OrderSummaryCard(order: order.value!),
                           order.value?.notes == null ||
                                   order.value!.notes!.length <= 0
                               ? Container()
                               : notesWidget(order),
+                          SizedBox(
+                            height: 25,
+                          ),
+
+                          OrderSummaryCard(order: order.value!),
+
                           //===============================>button cancel===========================
                           //  Expanded(child: Container()),
                           Spacer(),

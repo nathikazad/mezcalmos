@@ -158,7 +158,7 @@
                             "addLocationDialogSkip": "Skip"
                         },
                         "ViewCartBody": {
-                            "notes": "Notes"
+                            "notes": "Write your note here"
                         }
                     },
                     "ViewCartScreen": {
@@ -196,7 +196,7 @@
                 "ViewOrderScreen": {
                     "components": {
                         "notesWidget": {
-                            "notes": "Notes"
+                            "notes": "Order note :"
                         },
                         "OrderFooterCard": {
                             "cancelOrder": "Cancel Order",
@@ -227,7 +227,7 @@
                             "helperText-onTheWay": "Your order is on the way",
                             "helperText-readyForPickUp": "Your order is prepared and ready for pickup by the delivery driver",
                             "helperText-delivered": "Your order has been successfully delivered",
-                            "itemNotes": "Item notes : "
+                            "itemNotes": "Note : "
                         },
                         "OrderSummaryCard": {
                             "totalCost": "Total Cost",
@@ -1406,7 +1406,7 @@
                         "estTimes": {
                             "laundryArriving": "Laundry arriving",
                             "laundryFinish": "Laundry finish",
-                            "drvierArriving": "Driver arriving",
+                            "driverArriving": "Driver arriving",
                             "willBeDropped": "Will be dropped"
 
                         }

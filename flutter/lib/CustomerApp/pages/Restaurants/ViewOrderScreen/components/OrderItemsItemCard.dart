@@ -58,14 +58,15 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
             ),
 
             //  tilePadding: EdgeInsets.all(5),
+            tilePadding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
             title: Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(5),
-                    height: 45,
-                    width: 45,
+                    //  padding: const EdgeInsets.all(5),
+                    height: 55,
+                    width: 55,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         image: DecorationImage(
@@ -141,21 +142,29 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
               ),
               if (widget.item.notes != null)
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  alignment: Alignment.centerLeft,
+                  // margin: const EdgeInsets.symmetric(horizontal: 8),
+                  //   alignment: Alignment.centerLeft,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Divider(
+                        color: Colors.grey.shade400,
+                      ),
                       Container(
-                        child: Text("${_i18n()["itemNotes"]}"),
+                        child: Text(
+                          "${_i18n()["itemNotes"]}",
+                          style: Get.textTheme.bodyText1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
                       ),
                       Container(
                         child: Text(
                           widget.item.notes!,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
-                      Divider(color: Get.theme.dividerColor),
                     ],
                   ),
                 ),

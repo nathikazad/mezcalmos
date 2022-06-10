@@ -161,7 +161,7 @@
                             "addLocationDialogSkip": "Omitir"
                         },
                         "ViewCartBody": {
-                            "notes": "Notas"
+                            "notes": "Escribe tu nota aquí"
                         }
                     },
                     "ViewCartScreen": {
@@ -200,7 +200,7 @@
                 "ViewOrderScreen": {
                     "components": {
                         "notesWidget": {
-                            "notes": "Notas"
+                            "notes": "Nota de pedido:"
                         },
                         "OrderFooterCard": {
                             "cancelOrder": "Cancelar el pedido",
@@ -231,7 +231,7 @@
                             "helperText-onTheWay": "Tu pedido está en camino",
                             "helperText-readyForPickUp": "Su pedido está preparado y listo para ser recogido por el conductor de la entrega.",
                             "helperText-delivered": "Su pedido ha sido entregado con éxito.",
-                            "itemNotes": "Notas de artículos :"
+                            "itemNotes": "Nota :"
 
                         },
                         "OrderSummaryCard": {
@@ -1397,7 +1397,7 @@
                         "estTimes": {
                             "laundryArriving": "Lavandería que llega",
                             "laundryFinish": "Acabado de lavandería",
-                            "drvierArriving": "Que llega al conductor",
+                            "driverArriving": "Que llega al conductor",
                             "willBeDropped": "Se dejará caer"
 
                         }

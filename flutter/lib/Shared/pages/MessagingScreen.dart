@@ -6,6 +6,7 @@
 // chat: {deliveryAdminDropOffDriver: 'dsfdsf', deliveryAdminPickupDriver: 'dsfs'}
 import 'dart:async';
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
@@ -17,7 +18,6 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now().toLocal();
@@ -345,9 +345,9 @@ class SendMessageBox extends StatelessWidget {
                         ),
                     style: TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
-                      fontSize: 18,
+                      fontSize: 12.sp,
                       fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w400,
                     ),
                     controller: _textEditingController,
                     onChanged: (String value) {

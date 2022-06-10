@@ -129,13 +129,20 @@ class CartItemsBuilder extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Divider(),
           Container(
-            child: Text("${_i18n()["itemNotes"]}"),
+            child: Text(
+              "${_i18n()["itemNotes"]}",
+              style: Get.textTheme.bodyText1,
+            ),
+          ),
+          SizedBox(
+            height: 5,
           ),
           Container(
             child: Text(
               cartItem.notes!,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
         ],
