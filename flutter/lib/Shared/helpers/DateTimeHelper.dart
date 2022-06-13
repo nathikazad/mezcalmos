@@ -21,7 +21,6 @@ extension DurationParser on Duration {
 
 extension parseDateTime on DateTime {
   String getEstimatedTime() {
-    // Intl.defaultLocale = "es_ES";
     final DateTime cDate = DateTime.now();
 
     final String userLangCode =
@@ -43,9 +42,9 @@ extension parseDateTime on DateTime {
     final DateTime cDate = DateTime.now();
 
     if (cDate.difference(toLocal()).inDays < 7) {
-      return "${DateFormat("EE, hh:mm a").format(this)}";
+      return "${DateFormat("EE, hh:mm a").format(toLocal())}";
     } else {
-      return "${DateFormat("dd MMMM, hh:mm a").format(this)}";
+      return "${DateFormat("dd MMMM, hh:mm a").format(toLocal())}";
     }
   }
 

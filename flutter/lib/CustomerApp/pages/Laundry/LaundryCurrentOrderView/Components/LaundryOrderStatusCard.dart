@@ -49,10 +49,6 @@ class LaundryOrderStatusCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Divider(
-          height: 7,
-          thickness: 0.2,
-        ),
         Container(
             child: Text(
           _getEstimatedText()!,

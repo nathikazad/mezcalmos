@@ -27,10 +27,11 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      titleSpacing: 20,
       title: (title != null)
           ? Text(
               title!,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             )
           : Container(

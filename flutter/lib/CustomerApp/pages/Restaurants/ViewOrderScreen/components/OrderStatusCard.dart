@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/RestaurantOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:rive/rive.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
-        ["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
+        ["Restaurants"]["ViewOrderScreen"]["components"]["OrderStatusCard"];
 
 class OrderStatusCard extends StatelessWidget {
   const OrderStatusCard({
@@ -23,14 +24,13 @@ class OrderStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Card(
-          child: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-            child: Row(
+    return Card(
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        child: Column(
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 orderStatusImage(ordersStates),
@@ -41,19 +41,19 @@ class OrderStatusCard extends StatelessWidget {
                 ),
               ],
             ),
-          ),
+            if (_getEstimatedText() != null) _orderEtaTimeWidget()
+          ],
         ),
-        if (getEstimatedText() != null)
-          Container(
-            margin: EdgeInsets.all(5),
-            alignment: Alignment.center,
-            child: Text(
-              getEstimatedText()!,
-              textAlign: TextAlign.center,
-            ),
-          ),
-      ],
+      ),
     );
+  }
+
+  Widget _orderEtaTimeWidget() {
+    return Container(
+        child: Text(
+      _getEstimatedText()!,
+      textAlign: TextAlign.center,
+    ));
   }
 
   Widget _orderStatusText(BuildContext context) {
@@ -63,7 +63,7 @@ class OrderStatusCard extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         child: Text(
-          getOrderStatus(ordersStates),
+          order.getOrderStatus(),
           style:
               Theme.of(context).textTheme.headline3?.copyWith(fontSize: 14.sp),
           textAlign: TextAlign.center,
@@ -74,23 +74,22 @@ class OrderStatusCard extends StatelessWidget {
     );
   }
 
-  String? getEstimatedText() {
+  String? _getEstimatedText() {
     switch (order.status) {
       case RestaurantOrderStatus.PreparingOrder:
         if (order.estimatedFoodReadyTime != null) {
-          return order.estimatedFoodReadyTime!.getEstimatedTime();
+          return "${_i18n()["willBePicked"]} ${order.estimatedFoodReadyTime!.getEstimatedTime()}";
         }
 
         break;
       case RestaurantOrderStatus.ReadyForPickup:
         if (order.estimatedPickupFromServiceProviderTime != null) {
-          return order.estimatedPickupFromServiceProviderTime!
-              .getEstimatedTime();
+          return "${_i18n()["willBePicked"]} ${order.estimatedPickupFromServiceProviderTime!.getEstimatedTime()}";
         }
         break;
       case RestaurantOrderStatus.OnTheWay:
         if (order.estimatedDropoffAtCustomerTime != null) {
-          return order.estimatedDropoffAtCustomerTime!.getEstimatedTime();
+          return "${_i18n()["willBeDelivered"]} ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
         }
 
         break;
@@ -169,24 +168,24 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
   }
 }
 
-String getOrderStatus(RestaurantOrderStatus status) {
-  switch (status) {
-    case RestaurantOrderStatus.CancelledByAdmin:
-      return '${_i18n()["canceledByAdmin"]}';
-    case RestaurantOrderStatus.CancelledByCustomer:
-      return '${_i18n()["canceledByCustomer"]}';
-    case RestaurantOrderStatus.OrderReceieved:
-      return '${_i18n()["received"]}';
-    case RestaurantOrderStatus.PreparingOrder:
-      return '${_i18n()["preparing"]}';
-    case RestaurantOrderStatus.OnTheWay:
-      return '${_i18n()["onTheWay"]}';
-    case RestaurantOrderStatus.ReadyForPickup:
-      return '${_i18n()["readyForPickUp"]}';
-    case RestaurantOrderStatus.Delivered:
-      return '${_i18n()["delivered"]}';
+// String getOrderStatus(RestaurantOrderStatus status) {
+//   switch (status) {
+//     case RestaurantOrderStatus.CancelledByAdmin:
+//       return '${_i18n()["canceledByAdmin"]}';
+//     case RestaurantOrderStatus.CancelledByCustomer:
+//       return '${_i18n()["canceledByCustomer"]}';
+//     case RestaurantOrderStatus.OrderReceieved:
+//       return '${_i18n()["received"]}';
+//     case RestaurantOrderStatus.PreparingOrder:
+//       return '${_i18n()["preparing"]}';
+//     case RestaurantOrderStatus.OnTheWay:
+//       return '${_i18n()["onTheWay"]}';
+//     case RestaurantOrderStatus.ReadyForPickup:
+//       return '${_i18n()["readyForPickUp"]}';
+//     case RestaurantOrderStatus.Delivered:
+//       return '${_i18n()["delivered"]}';
 
-    default:
-      return 'Unknown status';
-  }
-}
+//     default:
+//       return 'Unknown status';
+//   }
+// }

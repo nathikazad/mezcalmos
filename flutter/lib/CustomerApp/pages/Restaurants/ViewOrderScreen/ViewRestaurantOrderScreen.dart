@@ -92,7 +92,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     // orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
-    initMap();
+    if (order.value != null) {
+      initMap();
+    }
 
     _orderListener =
         controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
@@ -179,9 +181,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           ),
                           if (order.value!.inDeliveryPhase()) ..._mapWidget,
 
-                          SizedBox(
-                            height: 25,
-                          ),
                           OrderRestaurantCard(order: order.value!),
 
                           SizedBox(
@@ -224,13 +223,16 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   }
 
   List<Widget> get _mapWidget => <Widget>[
+        SizedBox(
+          height: 25,
+        ),
         Container(
           height: 350,
           width: Get.width - 20,
           child: MGoogleMap(mGoogleMapController: mapController),
         ),
         SizedBox(
-          height: 10,
+          height: 25,
         )
       ];
 

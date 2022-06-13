@@ -67,7 +67,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       flex: 2,
-                      fit: FlexFit.tight,
+                      fit: FlexFit.loose,
                       child: Row(
                         children: [
                           Icon(
@@ -85,7 +85,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                     ),
                     Flexible(
                       flex: 2,
-                      fit: FlexFit.tight,
+                      fit: FlexFit.loose,
                       child: Row(
                         children: [
                           Icon(
@@ -103,14 +103,14 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Spacer(
-                      flex: 1,
+                    SizedBox(
+                      width: 5,
                     ),
                     Flexible(
                       flex: 4,
                       fit: FlexFit.tight,
                       child: Text(
-                          "${_i18n()["startingFrom"]} \$${laundry.getCheapestCategory}/kg",
+                          "${_i18n()["startingFrom"]}: \$${laundry.getCheapestCategory}/kg",
                           style: Get.textTheme.bodyText2),
                     ),
                   ],

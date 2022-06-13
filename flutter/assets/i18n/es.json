@@ -199,6 +199,14 @@
                 },
                 "ViewOrderScreen": {
                     "components": {
+                        "OrderStatusCard": {
+                            "willBePicked": "Será recogido",
+                            "willBeDelivered": "Será entregado"
+                        },
+                        "RestaurantOrderDriverCard": {
+                            "dropOffTime": "Hora de entrega"
+
+                        },
                         "notesWidget": {
                             "notes": "Nota de pedido:"
                         },
@@ -387,6 +395,10 @@
                 },
                 "LaundryCurrentOrderView": {
                     "Components": {
+                        "LaundryOrderDriverCard": {
+                            "dropOffTime": "Hora de entrega",
+                            "pickUpTime": "Hora de recogida"
+                        },
                         "LaundryOrderComponent": {
                             "notes": "Notas"
                         },

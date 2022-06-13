@@ -3,11 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+
+//
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
+        ["LaundryCurrentOrderView"]["Components"]["LaundryOrderDriverCard"];
+//
 
 class LaundryOrderDriverCard extends StatelessWidget {
   const LaundryOrderDriverCard({Key? key, required this.order})
@@ -46,7 +54,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                width: 40,
+                width: 45,
               ),
               Flexible(
                 fit: FlexFit.tight,
@@ -95,11 +103,13 @@ class LaundryOrderDriverCard extends StatelessWidget {
   }
 
   String? _getTime() {
+    final String userLangCode =
+        Get.find<LanguageController>().userLanguageKey.toLanguageCode();
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
         order.estimatedPickupFromCustomerTime != null) {
-      return "Pick-up time ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedPickupFromCustomerTime!.toLocal())}";
+      return "${_i18n()["pickUpTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedPickupFromCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(order.estimatedPickupFromCustomerTime!.toLocal())}";
     } else if (order.estimatedDropoffAtCustomerTime != null) {
-      return "Dropoff time ${DateFormat("dd MMMM yyyy, hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
+      return "${_i18n()["dropOffTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedDropoffAtCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
     } else {
       return null;
     }
