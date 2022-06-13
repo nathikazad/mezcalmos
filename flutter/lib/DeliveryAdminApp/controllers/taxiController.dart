@@ -20,18 +20,18 @@ class TaxiOrderController extends GetxController {
   RxList<TaxiOrder> pastOrders = <TaxiOrder>[].obs;
   RxList<TaxiOrder> openOrders = <TaxiOrder>[].obs;
 
-  StreamSubscription<Event>? _inProcessOrdersListener;
-  StreamSubscription<Event>? _pastOrdersListener;
-  StreamSubscription<Event>? _openOrdersListener;
+  StreamSubscription<dynamic>? _inProcessOrdersListener;
+  StreamSubscription<dynamic>? _pastOrdersListener;
+  StreamSubscription<dynamic>? _openOrdersListener;
 
   @override
   void onInit() {
     mezDbgPrint("--------------------> TaxisOrderController Initialized !");
     _openOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(taxiOpenOrdersNode())
         .onValue
-        .listen((Event event) {
+        .listen((dynamic event) {
       final List<TaxiOrder> orders = [];
 
       mezDbgPrint("DATTTAAA ------------------> ${event.snapshot.value}");
@@ -48,10 +48,10 @@ class TaxiOrderController extends GetxController {
     });
 
     _inProcessOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(taxiInProcessOrdersNode())
         .onValue
-        .listen((Event event) {
+        .listen((dynamic event) {
       final List<TaxiOrder> orders = [];
       if (event.snapshot.value != null) {
         mezDbgPrint(
@@ -65,12 +65,12 @@ class TaxiOrderController extends GetxController {
     });
 
     _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(taxiPastOrdersNode())
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAdded
-        .listen((Event event) {
+        .listen((dynamic event) {
       pastOrders
           .add(TaxiOrder.fromData(event.snapshot.key, event.snapshot.value));
     });

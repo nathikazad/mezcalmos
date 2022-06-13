@@ -129,13 +129,14 @@ class DriverStatsController extends GetxController {
 
   Future<dynamic> getDriverFBData(String driverId) async {
     // Already Injected in main function
-    DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child('taxiDrivers/$driverId')
-        .once();
+    DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child('taxiDrivers/$driverId')
+            .once())
+        .snapshot;
     Map<String, dynamic> returnValue = {
-      "appVersionNumber": snapshot.value["versionNumber"],
-      "online": snapshot.value["state"]["isLooking"]
+      "appVersionNumber": (snapshot.value as dynamic)["versionNumber"],
+      "online": (snapshot.value as dynamic)["state"]["isLooking"]
     };
     return returnValue;
     // .map<DataSnapshot>((event) => event.snapshot.value);
@@ -143,17 +144,18 @@ class DriverStatsController extends GetxController {
 
   Future<Map<String, dynamic>> getUserInfo(String driverId) async {
     // Already Injected in main function
-    DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child('users/$driverId/info')
-        .once();
+    DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child('users/$driverId/info')
+            .once())
+        .snapshot;
 
     Map<String, dynamic> returnValue = {
-      "displayName": snapshot.value["displayName"],
-      "taxiNumber": snapshot.value["taxiNumber"],
-      "agency": snapshot.value["agency"],
-      "phoneNumber": snapshot.value["phoneNumber"],
-      "photo": snapshot.value["photo"]
+      "displayName": (snapshot.value as dynamic)["displayName"],
+      "taxiNumber": (snapshot.value as dynamic)["taxiNumber"],
+      "agency": (snapshot.value as dynamic)["agency"],
+      "phoneNumber": (snapshot.value as dynamic)["phoneNumber"],
+      "photo": (snapshot.value as dynamic)["photo"]
     };
 
     return returnValue;

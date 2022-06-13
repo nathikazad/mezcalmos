@@ -26,14 +26,14 @@ class RestaurantOrderController extends GetxController {
     mezDbgPrint(
         "--------------------> RestaurantsOrderController Initialized !");
     _currentOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(rootInProcessOrdersNode(orderType: OrderType.Restaurant))
         .onValue
-        .listen((Event event) {
+        .listen((event) {
       final List<RestaurantOrder> orders = [];
       if (event.snapshot.value != null) {
-        for (var orderId in event.snapshot.value.keys) {
-          final dynamic orderData = event.snapshot.value[orderId];
+        for (var orderId in (event.snapshot.value as dynamic).keys) {
+          final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
           orders.add(RestaurantOrder.fromData(orderId, orderData));
         }
       } else {}
@@ -42,12 +42,12 @@ class RestaurantOrderController extends GetxController {
       mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
     });
     _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(rootPastOrdersNode(orderType: OrderType.Restaurant))
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAdded
-        .listen((Event event) {
+        .listen((event) {
       final dynamic _data = event.snapshot.value;
       // adding this check because old data (past orders are corrupted , most of em don't have restaurant's location)
       // didn't wanna erase the data, which is too much it seems.

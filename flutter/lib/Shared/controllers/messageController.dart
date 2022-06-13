@@ -35,10 +35,10 @@ class MessageController extends GetxController {
     mezDbgPrint("Load chat id ------------->>>> $chatId");
     chatListener?.cancel();
     chatListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(chatNode(chatId))
         .onValue
-        .listen((Event event) {
+        .listen((event) {
       if (event.snapshot.value != null) {
         mezDbgPrint(
             "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
@@ -56,7 +56,7 @@ class MessageController extends GetxController {
       required String chatId,
       String? orderId}) async {
     final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child('${chatNode(chatId)}/messages')
         .push();
 
@@ -74,13 +74,13 @@ class MessageController extends GetxController {
 
     // ignore: unawaited_futures
     _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child('notificationQueue/${messageNode.key}')
         .set(MessageNotificationForQueue(
                 message: message,
                 userId: _authController.user!.id,
                 chatId: chatId,
-                messageId: messageNode.key,
+                messageId: messageNode.key!,
                 participantType:
                     _settingsController.appType.toParticipantTypefromAppType(),
                 orderId: orderId)

@@ -32,10 +32,10 @@ class RestaurantController extends GetxController {
 
       _cartListener?.cancel();
       _cartListener = _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(customerCart(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((Event event) async {
+          .listen((event) async {
         final dynamic cartData = event.snapshot.value;
         // check if cart has data
         if (cartData != null) {
@@ -74,27 +74,29 @@ class RestaurantController extends GetxController {
   }
 
   Future<Restaurant> getAssociatedRestaurant(String restaurantId) async {
-    final DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child('restaurants/info/$restaurantId')
-        .once();
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child('restaurants/info/$restaurantId')
+            .once())
+        .snapshot;
     return Restaurant.fromRestaurantData(
         restaurantId: restaurantId, restaurantData: snapshot.value);
   }
 
   Future<int> getShippingPrice() async {
-    final DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child(baseShippingPriceNode())
-        .once();
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(baseShippingPriceNode())
+            .once())
+        .snapshot;
     mezDbgPrint(
         "Gettting shipping cost ==================================>>>>>> ${snapshot.value}");
-    return snapshot.value;
+    return snapshot.value as int;
   }
 
   Future<void> saveCart() async {
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(customerCart(_authController.fireAuthUser!.uid))
         .set(cart.value.toFirebaseFormattedJson());
   }
@@ -136,7 +138,7 @@ class RestaurantController extends GetxController {
 
   void clearCart() {
     _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(customerCart(_authController.user!.id))
         .remove()
         .then((_) {

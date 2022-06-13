@@ -20,19 +20,19 @@ class OrderController extends GetxController {
 
   RxList<LaundryOrder> currentOrders = <LaundryOrder>[].obs;
   RxList<LaundryOrder> pastOrders = <LaundryOrder>[].obs;
-  StreamSubscription<Event>? _currentOrdersListener;
-  StreamSubscription<Event>? _pastOrdersListener;
+  StreamSubscription<dynamic>? _currentOrdersListener;
+  StreamSubscription<dynamic>? _pastOrdersListener;
 
   Future<void> init(String laundryId) async {
     mezDbgPrint(
         "--------------------> Start listening on past orders  ${serviceProviderPastOrders(orderType: OrderType.Laundry, providerId: laundryId)}");
     await _pastOrdersListener?.cancel();
     _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderPastOrders(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
-        .listen((Event event) {
+        .listen((dynamic event) {
       mezDbgPrint(
           "PAST ORDERS ======> the event value ------------> ${event.snapshot.value}");
 
@@ -55,11 +55,11 @@ class OrderController extends GetxController {
         "Starting listening on inProcess : ${serviceProviderInProcessOrders(orderType: OrderType.Laundry, providerId: laundryId)}");
     await _currentOrdersListener?.cancel();
     _currentOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInProcessOrders(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
-        .listen((Event event) {
+        .listen((dynamic event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
       mezDbgPrint(
           "CURRENT ORDERS ======> the event value ------------> ${event.snapshot.value}");

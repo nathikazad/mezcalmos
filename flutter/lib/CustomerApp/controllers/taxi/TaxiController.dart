@@ -27,15 +27,16 @@ class TaxiController extends GetxController {
 
   Future<List<OnlineTaxiDriver>> fetchOnlineTaxiDrivers() async {
     final List<OnlineTaxiDriver> _temp = <OnlineTaxiDriver>[];
-    final DataSnapshot _onlineTaxiDrivers = await _databaseHelper
-        .firebaseDatabase
-        .reference()
-        .child(onlineTaxiDrivers())
-        .once();
+    final DataSnapshot _onlineTaxiDrivers = (await _databaseHelper
+            .firebaseDatabase
+            .ref()
+            .child(onlineTaxiDrivers())
+            .once())
+        .snapshot;
 
-    _onlineTaxiDrivers.value.keys.forEach((taxiId) {
+    (_onlineTaxiDrivers.value as dynamic).keys.forEach((taxiId) {
       final OnlineTaxiDriver _driver = OnlineTaxiDriver.fromData(
-          taxiId: taxiId, data: _onlineTaxiDrivers.value[taxiId]);
+          taxiId: taxiId, data: (_onlineTaxiDrivers.value as dynamic)[taxiId]);
       if (_driver.isDriverAvailable()) {
         _temp.add(_driver);
       }
@@ -86,14 +87,14 @@ class TaxiController extends GetxController {
     if (cost >= 35) {
       // update order in Customers node
       _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
           .child("/$orderId/cost")
           .set(cost);
 
       // update order in orders node
       _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(rootTaxiOpenOrdersNode())
           .child("$orderId/cost")
           .set(cost);
@@ -117,7 +118,7 @@ class TaxiController extends GetxController {
     String driverId,
   ) async {
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(customersCounterOfferNode(orderId, customerId, driverId))
         .child('status')
         .set(CounterOfferStatus.Accepted.toFirebaseFormatString());
@@ -149,7 +150,7 @@ class TaxiController extends GetxController {
     String driverId,
   ) async {
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(customersCounterOfferNode(orderId, customerId, driverId))
         .child('status')
         .set(CounterOfferStatus.Rejected.toFirebaseFormatString());

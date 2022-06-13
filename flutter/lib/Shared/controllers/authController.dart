@@ -93,17 +93,18 @@ class AuthController extends GetxController {
         GetStorage().write(getxUserId, user.uid);
         _userNodeListener?.cancel();
         _userNodeListener = _databaseHelper.firebaseDatabase
-            .reference()
+            .ref()
             .child(userInfoNode(user.uid))
             .onValue
-            .listen((Event event) {
+            .listen((event) {
           if (event.snapshot.value == null) return;
-          if (event.snapshot.value['language'] == null) {
-            event.snapshot.value['language'] = Get.find<LanguageController>()
-                .userLanguageKey
-                .toFirebaseFormatString();
+          if ((event.snapshot.value as dynamic)['language'] == null) {
+            (event.snapshot.value as dynamic)['language'] =
+                Get.find<LanguageController>()
+                    .userLanguageKey
+                    .toFirebaseFormatString();
             _databaseHelper.firebaseDatabase
-                .reference()
+                .ref()
                 .child(userLanguageNode(user.uid))
                 .set(Get.find<LanguageController>()
                     .userLanguageKey
@@ -161,7 +162,7 @@ class AuthController extends GetxController {
   Future<void> setOriginalUserImage(String? originalImageUrl) async {
     if (originalImageUrl != null) {
       await _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(userInfoNode(fireAuthUser!.uid))
           .child('bigImage')
           .set(originalImageUrl);
@@ -171,14 +172,14 @@ class AuthController extends GetxController {
   Future<void> editUserProfile(String? name, String? compressedImageUrl) async {
     if (name != null) {
       await _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(userInfoNode(fireAuthUser!.uid))
           .child('name')
           .set(name);
     }
     if (compressedImageUrl != null && compressedImageUrl.isURL) {
       await _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(userInfoNode(fireAuthUser!.uid))
           .child('image')
           .set(compressedImageUrl);
@@ -205,7 +206,7 @@ class AuthController extends GetxController {
   void changeLanguage(LanguageType newLanguage) {
     if (_user.value != null) {
       _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(userLanguageNode(_user.value!.id))
           .set(newLanguage.toFirebaseFormatString());
     }

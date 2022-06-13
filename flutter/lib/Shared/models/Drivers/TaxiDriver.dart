@@ -48,14 +48,18 @@ class TaxiDriver {
   TaxiDriver(this.taxiState, this.driverLocation, this.lastLocationUpdateTime);
 
   factory TaxiDriver.fromSnapshot(DataSnapshot snapshot) {
-    final TaxiState taxiState = TaxiState.fromSnapshot(snapshot.value['state']);
-    final dynamic driverLocation = snapshot.value['location'] == null
-        ? null
-        : LatLng(snapshot.value["location"]["position"]["lat"],
-            snapshot.value["location"]["position"]["lng"]);
-    final DateTime? lastLocationUpdateTime = snapshot.value['location'] == null
-        ? null
-        : DateTime.parse(snapshot.value['location']['lastUpdateTime']);
+    final TaxiState taxiState =
+        TaxiState.fromSnapshot((snapshot.value as dynamic)['state']);
+    final dynamic driverLocation =
+        (snapshot.value as dynamic)['location'] == null
+            ? null
+            : LatLng((snapshot.value as dynamic)["location"]["position"]["lat"],
+                (snapshot.value as dynamic)["location"]["position"]["lng"]);
+    final DateTime? lastLocationUpdateTime =
+        (snapshot.value as dynamic)['location'] == null
+            ? null
+            : DateTime.parse(
+                (snapshot.value as dynamic)['location']['lastUpdateTime']);
     return TaxiDriver(taxiState, driverLocation, lastLocationUpdateTime);
   }
 

@@ -192,12 +192,13 @@ class _StartingPointState extends State<StartingPoint> {
     late FirebaseDatabase firebaseDb;
 
     if (_launchMode == AppLaunchMode.prod) {
-      firebaseDb = FirebaseDatabase(app: _app);
+      firebaseDb = FirebaseDatabase.instanceFor(app: _app);
     } else if (_launchMode == AppLaunchMode.dev) {
       mezDbgPrint("DEV MODE");
-      firebaseDb = FirebaseDatabase(app: _app, databaseURL: _host + dbRoot);
-      await FirebaseDatabase.instance.setPersistenceEnabled(true);
-      await FirebaseDatabase.instance.setPersistenceCacheSizeBytes(10000000);
+      firebaseDb =
+          FirebaseDatabase.instanceFor(app: _app, databaseURL: _host + dbRoot);
+      firebaseDb.setPersistenceEnabled(true);
+      firebaseDb.setPersistenceCacheSizeBytes(10000000);
       await FirebaseAuth.instance.useEmulator(_host + authPort);
       FirebaseFunctions.instance
           .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
@@ -299,9 +300,10 @@ class _StartingPointState extends State<StartingPoint> {
   Future<void> setupIosAppStoreId(String appName) async {
     final String? res = (await Get.find<FirebaseDb>()
             .firebaseDatabase
-            .reference()
+            .ref()
             .child(appStoreIdNode(appName))
             .once())
+        .snapshot
         .value
         .toString();
     mezDbgPrint("Got setupIosAppStoreId @ ==> $res");

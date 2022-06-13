@@ -33,17 +33,18 @@ class OrderController extends GetxController {
         "--------------------> Start listening on past orders  ${deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid)}");
 
     _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid))
         .onValue
-        .listen((Event event) {
+        .listen((event) {
       mezDbgPrint("-----------------Paaast evvvvveeeeent $event");
       final List<DeliverableOrder> orders = [];
       if (event.snapshot.value != null) {
-        event.snapshot.value.keys.forEach((orderId) {
+        (event.snapshot.value as dynamic).keys.forEach((orderId) {
           try {
             mezDbgPrint("Hndling Order : $orderId");
-            final dynamic orderData = event.snapshot.value[orderId];
+            final dynamic orderData =
+                (event.snapshot.value as dynamic)[orderId];
             if (orderData["orderType"] ==
                 OrderType.Restaurant.toFirebaseFormatString()) {
               orders.add(RestaurantOrder.fromData(orderId, orderData));
@@ -64,19 +65,19 @@ class OrderController extends GetxController {
         "Starting listening on inProcess : ${deliveryDriversInProcessOrdersNode(_authController.fireAuthUser!.uid)}");
     _currentOrdersListener?.cancel();
     _currentOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(deliveryDriversInProcessOrdersNode(
             _authController.fireAuthUser!.uid))
         .onValue
-        .listen((Event event) {
+        .listen((event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
 
       final List<DeliverableOrder> orders = [];
       if (event.snapshot.value != null) {
         // mezDbgPrint("orderController: new incoming order data");
-        event.snapshot.value.keys?.forEach((orderId) {
+        (event.snapshot.value as dynamic).keys?.forEach((orderId) {
           // mezDbgPrint("Hndling Order : $orderId");
-          final dynamic orderData = event.snapshot.value[orderId];
+          final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
           if (orderData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
             orders.add(RestaurantOrder.fromData(orderId, orderData));

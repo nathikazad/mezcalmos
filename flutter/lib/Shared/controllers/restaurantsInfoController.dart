@@ -22,14 +22,16 @@ class RestaurantsInfoController extends GetxController {
   }
 
   Future<List<Restaurant>> getRestaurants() async {
-    final DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child(serviceProviderInfos(orderType: OrderType.Restaurant))
-        .once();
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(serviceProviderInfos(orderType: OrderType.Restaurant))
+            .once())
+        .snapshot;
     final List<Restaurant> restaurants = <Restaurant>[];
     if (snapshot.value == null) return restaurants;
     // ignore: avoid_annotating_with_dynamic
-    snapshot.value.forEach((dynamic restaurantId, dynamic restaurantData) {
+    (snapshot.value as dynamic)
+        ?.forEach((dynamic restaurantId, dynamic restaurantData) {
       if (restaurantData["state"]["available"] == true) {
         try {
           restaurants.add(Restaurant.fromRestaurantData(
@@ -46,25 +48,26 @@ class RestaurantsInfoController extends GetxController {
   }
 
   Future<int> getShippingPrice() async {
-    final DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child(baseShippingPriceNode())
-        .once();
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(baseShippingPriceNode())
+            .once())
+        .snapshot;
     mezDbgPrint(
         "Gettting shipping cost ==================================>>>>>> ${snapshot.value}");
-    return snapshot.value;
+    return snapshot.value as dynamic;
   }
 
   Future<Restaurant?> getRestaurant(String restaurantId) async {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .once()
-        .then<Restaurant?>((DataSnapshot snapshot) {
-      if (snapshot.value != null) {
+        .then<Restaurant?>((DatabaseEvent event) {
+      if (event.snapshot.value != null) {
         return Restaurant.fromRestaurantData(
-            restaurantId: restaurantId, restaurantData: snapshot.value);
+            restaurantId: restaurantId, restaurantData: event.snapshot.value);
       }
       return null;
     });

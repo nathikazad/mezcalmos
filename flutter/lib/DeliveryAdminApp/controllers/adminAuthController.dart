@@ -28,20 +28,11 @@ class AdminAuthController extends GetxController {
   void onInit() async {
     super.onInit();
 
-    // ------------------------------------------------------------------------
-
-    mezDbgPrint(
-        "Admin from AdminAuthController >> ${_authController.fireAuthUser!.uid}");
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child(adminNode(_authController.fireAuthUser!.uid))
-        .once()
-        .then((snap) => mezDbgPrint(snap.value));
     _adminNodeListener?.cancel();
     mezDbgPrint(userInfoNode(_authController.fireAuthUser!.uid));
     mezDbgPrint((adminNode(_authController.fireAuthUser!.uid)));
     _adminNodeListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(adminNode(_authController.fireAuthUser!.uid))
         .onValue
         .listen((event) async {
@@ -51,7 +42,7 @@ class AdminAuthController extends GetxController {
           String appVersion = GetStorage().read(getxAppVersion);
           print("[+] Customer currently using App v$appVersion");
           _databaseHelper.firebaseDatabase
-              .reference()
+              .ref()
               .child(adminAppVersionNode(_authController.fireAuthUser!.uid))
               .set(appVersion);
 
@@ -63,7 +54,7 @@ class AdminAuthController extends GetxController {
 
         if (deviceNotificationToken != null)
           _databaseHelper.firebaseDatabase
-              .reference()
+              .ref()
               .child(
                   adminNotificationInfoNode(_authController.fireAuthUser!.uid))
               .set(<String, String>{

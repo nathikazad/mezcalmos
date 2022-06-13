@@ -29,7 +29,7 @@ class LaundryOpAuthController extends GetxController {
   LaundryOperatorState? get laundryOperatorState => operator.value?.state;
   Stream<LaundryOperator?> get operatorInfoStream => operator.stream;
 
-  StreamSubscription<Event>? _LaundryOperatorNodeListener;
+  StreamSubscription<dynamic>? _LaundryOperatorNodeListener;
 
   bool _checkedAppVersion = false;
   String? _previousStateValue = "init";
@@ -52,19 +52,12 @@ class LaundryOpAuthController extends GetxController {
     await _LaundryOperatorNodeListener?.cancel();
     _LaundryOperatorNodeListener = null;
 
-    await _databaseHelper.firebaseDatabase
-        .reference()
-        .child(
-            operatorAuthNode(operatorType: OperatorType.Laundry, uid: user.uid))
-        .once()
-        .then((DataSnapshot value) => mezDbgPrint(value.value));
-    // mezDbgPrint("Listening");
     _LaundryOperatorNodeListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(
             operatorAuthNode(operatorType: OperatorType.Laundry, uid: user.uid))
         .onValue
-        .listen((Event event) async {
+        .listen((event) async {
       if (event.snapshot.value.toString() == _previousStateValue) {
         return;
       }
@@ -91,7 +84,7 @@ class LaundryOpAuthController extends GetxController {
         await _notificationsController.getToken();
     if (deviceNotificationToken != null) {
       unawaited(_databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(operatorNotificationInfoNode(
               operatorType: OperatorType.Laundry,
               uid: _authController.fireAuthUser!.uid))
@@ -105,7 +98,7 @@ class LaundryOpAuthController extends GetxController {
     if (_checkedAppVersion == false) {
       final String version = GetStorage().read(getxAppVersion);
       _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(operatorAppVersionNode(
               operatorType: OperatorType.Laundry,
               uid: _authController.fireAuthUser!.uid))

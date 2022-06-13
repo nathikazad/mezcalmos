@@ -16,12 +16,12 @@ class LaundryController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   Future<List<Laundry>> getLaundries() {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(orderType: OrderType.Laundry))
         .once()
-        .then<List<Laundry>>((DataSnapshot snapshot) {
+        .then<List<Laundry>>((DatabaseEvent event) {
       final List<Laundry> laundries = [];
-      snapshot.value?.forEach((key, value) {
+      (event.snapshot.value as dynamic)?.forEach((key, value) {
         try {
           laundries
               .add(Laundry.fromLaundryData(laundryId: key, laundryData: value));
@@ -36,13 +36,13 @@ class LaundryController extends GetxController {
 
   Future<Laundry> getLaundry(String laundryId) async {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(
             orderType: OrderType.Laundry, providerId: laundryId))
         .once()
-        .then<Laundry>((DataSnapshot snapshot) {
+        .then<Laundry>((DatabaseEvent event) {
       return Laundry.fromLaundryData(
-          laundryId: laundryId, laundryData: snapshot.value);
+          laundryId: laundryId, laundryData: event.snapshot.value);
     });
   }
 
@@ -94,11 +94,12 @@ class LaundryController extends GetxController {
   }
 
   Future<int?> getShippingPrice() async {
-    final DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child(baseShippingPriceNode())
-        .once();
-    return snapshot.value;
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(baseShippingPriceNode())
+            .once())
+        .snapshot;
+    return snapshot.value as int;
   }
 
   @override

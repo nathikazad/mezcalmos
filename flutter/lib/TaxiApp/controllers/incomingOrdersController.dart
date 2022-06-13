@@ -40,7 +40,7 @@ class IncomingOrdersController extends GetxController {
     // Added TaxiOrder!
     mezDbgPrint("Gonna start listen on : ${rootTaxiOpenOrdersNode()} !!");
     _incomingOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(rootTaxiOpenOrdersNode())
         .onValue
         .listen((event) async {
@@ -48,7 +48,8 @@ class IncomingOrdersController extends GetxController {
       mezDbgPrint(event.snapshot.value);
       List<TaxiOrder> ordersFromSnapshot = <TaxiOrder>[];
       if (event.snapshot.value != null) {
-        event.snapshot.value?.forEach((dynamic key, dynamic value) async {
+        (event.snapshot.value as dynamic)
+            ?.forEach((dynamic key, dynamic value) async {
           // this is made to avoid 1 key being in the event.snapshot
           // happening becasause.
           if (value.keys.length > 1) {
@@ -103,11 +104,11 @@ class IncomingOrdersController extends GetxController {
     }
     if (tmpOrderCheck != null) {
       await _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(rootOpenOrderReadNode(orderId, _authController.user!.id))
           .set(true);
       await _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(customerInProcessOrderReadNode(
               orderId, customerId, _authController.user!.id))
           .set(true);
@@ -123,11 +124,11 @@ class IncomingOrdersController extends GetxController {
     }
     if (tmpOrderCheck != null) {
       await _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(rootOpenOrderReceivedNode(orderId, _authController.user!.id))
           .set(true);
       await _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(customerInProcessOrderReceivedNode(
               orderId, customerId, _authController.user!.id))
           .set(true);
@@ -161,19 +162,19 @@ class IncomingOrdersController extends GetxController {
   ) async {
     // in customer's node
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(customersCounterOfferNode(
             orderId, customerId, _authController.fireAuthUser!.uid))
         .set(counterOffer.toFirebaseFormattedJson());
 
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(inNegotationNode(_authController.fireAuthUser!.uid))
         .set({"orderId": orderId, "customerId": customerId});
 
     unawaited(
       _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child('notificationQueue/${_authController.fireAuthUser!.uid}')
           .set(
             CounterOfferNotificationForQueue(
@@ -200,21 +201,23 @@ class IncomingOrdersController extends GetxController {
   /// this is mainly useful in some cases when we need to check an [orderId] but the Controller hasn't loaded orders yet.
   Future<CounterOffer?> getDriverCountOfferInCustomersNode(
       String orderId, String customerId) async {
-    DataSnapshot snap = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child(customersCounterOfferNode(
-            orderId, customerId, _authController.fireAuthUser!.uid))
-        .once();
+    DataSnapshot snap = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(customersCounterOfferNode(
+                orderId, customerId, _authController.fireAuthUser!.uid))
+            .once())
+        .snapshot;
     return snap.value != null
         ? CounterOffer.fromData(snap.value,
-            taxiUserInfo: UserInfo.fromData(snap.value['driverInfo']))
+            taxiUserInfo:
+                UserInfo.fromData((snap.value as dynamic)['driverInfo']))
         : null;
   }
 
   Stream<CounterOffer?> listenOnCounterOfferChanges(
       String orderId, String customerId) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(customersCounterOfferNode(
             orderId, customerId, _authController.fireAuthUser!.uid))
         .onValue
@@ -241,12 +244,12 @@ class IncomingOrdersController extends GetxController {
   Future<void> removeFromNegotiationMode(String orderId, String customerId,
       {CounterOfferStatus newStatus = CounterOfferStatus.Expired}) async {
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(inNegotationNode(_authController.fireAuthUser!.uid))
         .remove();
 
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(customersCounterOfferNode(
             orderId, customerId, _authController.fireAuthUser!.uid))
         .child('status')
