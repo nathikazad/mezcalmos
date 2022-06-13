@@ -411,7 +411,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         SizedBox(width: 3),
         Text(
           // 'Today, 10:53 AM',
-          DateFormat('EE, hh:mm a').format(order.orderTime),
+          DateFormat('EE, hh:mm a').format(order.orderTime.toLocal()),
           overflow: TextOverflow.visible,
           style: TextStyle(
             fontFamily: 'Nunito',

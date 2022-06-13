@@ -38,7 +38,7 @@ class BackgroundNotificationsController extends GetxController {
   DateTime? get lastTimeBackgroundNotificationOpenedApp =>
       _lastTimeBackgroundNotificationOpenedApp;
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     super.onInit();
     mezDbgPrint("BackgroundNotificationsController onInit");
     final NotificationSettings settings = await requestPermission();
@@ -58,8 +58,9 @@ class BackgroundNotificationsController extends GetxController {
   void notificationClickHandler(RemoteMessage message) {
     mezDbgPrint("notificationClickHandler");
     mezDbgPrint("CurrentRoute : ${Get.currentRoute}");
-    mezDbgPrint("_____________________________________________");
-    mezDbgPrint(message.data["linkUrl"]);
+    mezDbgPrint(
+        "_____________________________________________ BACKROUNG MESSAGE ____________________________________");
+
     if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
     if (message.data['linkUrl'].toString().contains('/messages/')) {
       Future<void>.delayed(
@@ -97,7 +98,7 @@ class BackgroundNotificationsController extends GetxController {
   }
 
   @override
-  void onClose() async {
+  Future<void> onClose() async {
     mezDbgPrint(
         "[+] DeviceNotificationsController::dispose ---------> Was invoked !");
     await onMessageOpenedAppListener?.cancel();

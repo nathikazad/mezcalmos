@@ -85,7 +85,7 @@ class _RestaurantOrderFromToComponentState
         formattedOrderStatus: _getOrderStatus(),
         order: widget.order,
         // card Settings
-        isCustomerRowFirst: true,
+        isCustomerRowFirst: !isInPickUpPhase(),
         showMsgIconInOneLine: !widget.order.inProcess(),
         initialCardState: orderInfoCardState.value,
         onCardStateChange: (OrderInfoCardState nwState) {
@@ -115,6 +115,12 @@ class _RestaurantOrderFromToComponentState
       default:
         return '';
     }
+  }
+
+  bool isInPickUpPhase() {
+    return widget.order.status == RestaurantOrderStatus.OrderReceieved ||
+        widget.order.status == RestaurantOrderStatus.ReadyForPickup ||
+        widget.order.status == RestaurantOrderStatus.PreparingOrder;
   }
 
   List<Widget> _dateTimeSetter(DeliveryAction deliveryAction) {
