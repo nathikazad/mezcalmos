@@ -27,12 +27,11 @@ class LaundryInfoController extends GetxController {
         "--------------------> Start listening service providers info  ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: laundryId)}");
     await _laundryInfoListener?.cancel();
     _laundryInfoListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
-        .listen((Event event) {
-     
+        .listen((dynamic event) {
       if (event.snapshot.value != null) {
         laundry.value = Laundry.fromLaundryData(
             laundryId: laundryId, laundryData: event.snapshot.value);
@@ -68,7 +67,7 @@ class LaundryInfoController extends GetxController {
     mezDbgPrint(
         "------->>> ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: laundry.value!.info.id)}/name");
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(
                 orderType: OrderType.Laundry,
                 providerId: laundry.value!.info.id) +
@@ -81,7 +80,7 @@ class LaundryInfoController extends GetxController {
     mezDbgPrint(
         "------->>> ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: laundry.value!.info.id)}/name");
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(
                 orderType: OrderType.Laundry,
                 providerId: laundry.value!.info.id) +
@@ -92,7 +91,7 @@ class LaundryInfoController extends GetxController {
 
   Future<void> setSchedule(Schedule schedule) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderSchedule(
             orderType: OrderType.Laundry, providerId: laundryId))
         .set(schedule.toFirebaseFormattedJson());
@@ -100,7 +99,7 @@ class LaundryInfoController extends GetxController {
 
   Future<void> setCosts(LaundryCosts laundryCosts) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderCosts(
             orderType: OrderType.Laundry, providerId: laundryId))
         .set(laundryCosts.toFirebasFormat());
@@ -108,7 +107,7 @@ class LaundryInfoController extends GetxController {
 
   Future<void> setAverageNumberOfDays(num averageNumberOfDays) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderAverageNumberOfDays(
             orderType: OrderType.Laundry, providerId: laundryId))
         .set(averageNumberOfDays);
@@ -116,7 +115,7 @@ class LaundryInfoController extends GetxController {
 
   Future<void> setPrimaryLanguage(LanguageType lang) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderPrimaryLanguage(
             orderType: OrderType.Laundry, providerId: laundryId))
         .set(lang.toFirebaseFormatString());
@@ -124,7 +123,7 @@ class LaundryInfoController extends GetxController {
 
   Future<void> setSecondaryLanguage(LanguageType? lang) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderSecondaryLanguage(
             orderType: OrderType.Laundry, providerId: laundryId))
         .set(lang?.toFirebaseFormatString() ?? null);
@@ -132,7 +131,7 @@ class LaundryInfoController extends GetxController {
 
   Future<void> setLocation(Location loc) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderLocation(
             orderType: OrderType.Laundry, providerId: laundryId))
         .set(loc.toFirebaseFormattedJson());

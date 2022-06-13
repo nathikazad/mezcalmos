@@ -26,16 +26,16 @@ class DeliveryDriverController extends GetxController {
 
     _deliveryDriversListener?.cancel();
     _deliveryDriversListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(deliveryDriversNode())
         .onValue
-        .listen((Event event) {
+        .listen((event) {
       final List<DeliveryDriver> _deliveryDrivers = <DeliveryDriver>[];
       if (event.snapshot.value != null) {
-        for (var deliveryDriverId in event.snapshot.value.keys) {
+        for (var deliveryDriverId in (event.snapshot.value as dynamic).keys) {
           try {
             final dynamic deliveryDriverData =
-                event.snapshot.value[deliveryDriverId];
+                (event.snapshot.value as dynamic)[deliveryDriverId];
             _deliveryDrivers.add(
               DeliveryDriver.fromData(deliveryDriverId, deliveryDriverData),
             );

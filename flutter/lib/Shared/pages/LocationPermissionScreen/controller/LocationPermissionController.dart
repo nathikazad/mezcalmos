@@ -6,8 +6,6 @@ import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:permission_handler/permission_handler.dart'
-    show openAppSettings;
 
 typedef void OnLocationPermissionChange(LocationPermissionsStatus? status);
 typedef String? LangValueRefGetter();
@@ -89,7 +87,7 @@ class LocationPermissionController {
 
     if (locationController.statusSnapshot.value ==
         LocationPermissionsStatus.ForeverDenied) {
-      await openAppSettings();
+      // await openAppSettings();
       return;
     }
 
@@ -112,7 +110,7 @@ class LocationPermissionController {
           _isAndroid11) {
         // check if sdk 11 - background location needs manual accept
         // we redirect to
-        await openAppSettings();
+        // await openAppSettings();
         return;
       }
     }

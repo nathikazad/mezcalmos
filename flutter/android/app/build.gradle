@@ -87,6 +87,11 @@ android {
         //     signingConfig signingConfigs.debug
         // }
     }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        checkReleaseBuilds false
+    }
     
 }
 

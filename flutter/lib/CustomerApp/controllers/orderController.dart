@@ -36,11 +36,11 @@ class OrderController extends GetxController {
       getShippingPrice().then((int value) => shippingCost.value = value);
       _pastOrdersListener?.cancel();
       _pastOrdersListener = _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(customerPastOrders(_authController.fireAuthUser!.uid))
           .onValue
           .listen(
-        (Event event) async {
+        (dynamic event) async {
           final List<Order> orders = <Order>[];
           if (event.snapshot.value != null) {
             for (String orderId in event.snapshot.value.keys) {
@@ -78,10 +78,10 @@ class OrderController extends GetxController {
       _currentOrdersListener?.cancel();
 
       _currentOrdersListener = _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((Event event) async {
+          .listen((dynamic event) async {
         final List<Order> orders = <Order>[];
 
         if (event.snapshot.value != null) {
@@ -194,11 +194,12 @@ class OrderController extends GetxController {
   }
 
   Future<int> getShippingPrice() async {
-    final DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child(baseShippingPriceNode())
-        .once();
-    return snapshot.value;
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(baseShippingPriceNode())
+            .once())
+        .snapshot;
+    return snapshot.value as int;
   }
 
   bool orderHaveNewMessageNotifications(String chatId) {

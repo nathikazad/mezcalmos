@@ -20,17 +20,17 @@ class LaundryOrderController extends GetxController {
   RxList<LaundryOrder> inProcessOrders = <LaundryOrder>[].obs;
   RxList<LaundryOrder> pastOrders = <LaundryOrder>[].obs;
 
-  StreamSubscription<Event>? _inProcessOrdersListener;
-  StreamSubscription<Event>? _pastOrdersListener;
+  StreamSubscription<dynamic>? _inProcessOrdersListener;
+  StreamSubscription<dynamic>? _pastOrdersListener;
 
   @override
   void onInit() {
     mezDbgPrint("--------------------> LaundrysOrderController Initialized !");
     _inProcessOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(rootInProcessOrdersNode(orderType: OrderType.Laundry))
         .onValue
-        .listen((Event event) {
+        .listen((dynamic event) {
       final List<LaundryOrder> orders = [];
       if (event.snapshot.value != null) {
         for (var orderId in event.snapshot.value.keys) {
@@ -42,12 +42,12 @@ class LaundryOrderController extends GetxController {
     });
 
     _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(rootPastOrdersNode(orderType: OrderType.Laundry))
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAdded
-        .listen((Event event) {
+        .listen((dynamic event) {
       pastOrders
           .add(LaundryOrder.fromData(event.snapshot.key, event.snapshot.value));
     });

@@ -36,7 +36,7 @@ class DeliveryAuthController extends GetxController {
   Rx<LocationData> get currentLocationRx => _currentLocation;
 
   StreamSubscription<LocationData>? _locationListener;
-  StreamSubscription<Event>? _deliveryDriverStateNodeListener;
+  StreamSubscription<dynamic>? _deliveryDriverStateNodeListener;
   StreamSubscription<MainUserInfo>? _userInfoStreamListener;
 
   bool _checkedAppVersion = false;
@@ -62,10 +62,10 @@ class DeliveryAuthController extends GetxController {
     await _deliveryDriverStateNodeListener?.cancel();
     _deliveryDriverStateNodeListener = null;
     _deliveryDriverStateNodeListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(deliveryDriverStateNode(user.uid))
         .onValue
-        .listen((Event event) async {
+        .listen((event) async {
       mezDbgPrint(
           "[++++++ = === ==] DeliveryAuthController$hashCode: _DeliveryDriverStateNodeListener event => ${event.snapshot.value}");
       if (event.snapshot.value.toString() == _previousStateValue) {
@@ -103,7 +103,7 @@ class DeliveryAuthController extends GetxController {
     _authController.userInfoStream.listen((MainUserInfo? userInfo) {
       if (userInfo != null)
         _databaseHelper.firebaseDatabase
-            .reference()
+            .ref()
             .child(deliveryDriverInfoNode(user.uid))
             .set(userInfo.toFirebaseFormatJson());
     });
@@ -116,7 +116,7 @@ class DeliveryAuthController extends GetxController {
         await _notificationsController.getToken();
     if (deviceNotificationToken != null)
       await _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(
               '${deliveryDriverAuthNode(_authController.fireAuthUser?.uid ?? '')}/notificationInfo/')
           .set(<String, String>{
@@ -128,7 +128,7 @@ class DeliveryAuthController extends GetxController {
     if (_checkedAppVersion == false) {
       final String VERSION = GetStorage().read(getxAppVersion);
       _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(
               deliveryDriverAppVersionNode(_authController.fireAuthUser!.uid))
           .set(VERSION);
@@ -158,7 +158,7 @@ class DeliveryAuthController extends GetxController {
         try {
           //mezDbgPrint(positionUpdate);
           _databaseHelper.firebaseDatabase
-              .reference()
+              .ref()
               .child(deliveryDriverAuthNode(_authController.fireAuthUser!.uid))
               .child('location')
               .set(positionUpdate);
@@ -167,7 +167,7 @@ class DeliveryAuthController extends GetxController {
           _orderController.currentOrders.forEach((DeliverableOrder order) {
             // updating driver location in deliveryDrivers/inProcessOrders
             _databaseHelper.firebaseDatabase
-                .reference()
+                .ref()
                 .child(deliveryDriverInProcessOrderDriverLocationNode(
                     orderId: order.orderId,
                     deliveryDriverId: _authController.fireAuthUser!.uid,
@@ -176,7 +176,7 @@ class DeliveryAuthController extends GetxController {
 
             // updating driver location in root orders/inProcess/<OrderType>
             _databaseHelper.firebaseDatabase
-                .reference()
+                .ref()
                 .child(rootInProcessOrderDriverLocationNode(
                     orderId: order.orderId,
                     orderType: order.orderType,
@@ -184,7 +184,7 @@ class DeliveryAuthController extends GetxController {
                 .set(positionUpdate);
 
             _databaseHelper.firebaseDatabase
-                .reference()
+                .ref()
                 .child(customerInProcessOrderDriverLocationNode(
                     orderId: order.orderId,
                     customerId: order.customer.id,
@@ -213,7 +213,7 @@ class DeliveryAuthController extends GetxController {
 
   void turnOff() {
     _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(deliveryDriverIsOnlineField(_authController.fireAuthUser!.uid))
         .set(false)
         .catchError((err) {
@@ -224,7 +224,7 @@ class DeliveryAuthController extends GetxController {
 
   void turnOn() {
     _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(deliveryDriverIsOnlineField(_authController.fireAuthUser!.uid))
         .set(true)
         .catchError((err) {

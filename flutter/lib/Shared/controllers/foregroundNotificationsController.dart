@@ -14,8 +14,8 @@ class ForegroundNotificationsController extends GetxController {
 
   RxList<Notification> notifications = RxList<Notification>();
 
-  StreamSubscription<Event>? _notificationNodeAddListener;
-  StreamSubscription<Event>? _notificationNodeRemoveListener;
+  StreamSubscription? _notificationNodeAddListener;
+  StreamSubscription? _notificationNodeRemoveListener;
   StreamController<Notification> _displayNotificationsStreamController =
       StreamController<Notification>.broadcast();
   late String _notificationNode;
@@ -40,10 +40,10 @@ class ForegroundNotificationsController extends GetxController {
     _notificationNode = notificationNode;
     _notificationNodeAddListener?.cancel();
     _notificationNodeAddListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(notificationNode)
         .onChildAdded
-        .listen((Event event) {
+        .listen((dynamic event) {
       // mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
       // mezDbgPrint(event.snapshot.value);
       try {
@@ -81,10 +81,10 @@ class ForegroundNotificationsController extends GetxController {
 
     _notificationNodeRemoveListener?.cancel();
     _notificationNodeRemoveListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(notificationNode)
         .onChildRemoved
-        .listen((Event event) {
+        .listen((dynamic event) {
       final Notification _notifaction =
           notificationHandler(event.snapshot.key!, event.snapshot.value);
       notifications.value = notifications
@@ -95,7 +95,7 @@ class ForegroundNotificationsController extends GetxController {
 
   void removeNotification(String notificationId) {
     _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child("$_notificationNode/$notificationId")
         .remove();
   }
@@ -117,10 +117,7 @@ class ForegroundNotificationsController extends GetxController {
 
   void clearAllNotification() {
     mezDbgPrint("fbNotificationsController: Clearing All Notifications");
-    _databaseHelper.firebaseDatabase
-        .reference()
-        .child("$_notificationNode")
-        .remove();
+    _databaseHelper.firebaseDatabase.ref().child("$_notificationNode").remove();
   }
 
   @override

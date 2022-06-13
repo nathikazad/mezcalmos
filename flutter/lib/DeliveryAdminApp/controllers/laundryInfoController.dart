@@ -18,12 +18,12 @@ class LaundryInfoController extends GetxController {
 
   Future<List<Laundry>> getLaundries() {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(orderType: OrderType.Laundry))
         .once()
-        .then<List<Laundry>>((snapshot) {
+        .then<List<Laundry>>((event) {
       List<Laundry> laundries = [];
-      snapshot.value.forEach((dynamic key, dynamic value) {
+      (event.snapshot.value as dynamic).forEach((dynamic key, dynamic value) {
         try {
           laundries
               .add(Laundry.fromLaundryData(laundryId: key, laundryData: value));
@@ -37,13 +37,13 @@ class LaundryInfoController extends GetxController {
 
   Future<Laundry> getLaundry(String laundryId) async {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(
             orderType: OrderType.Laundry, providerId: laundryId))
         .once()
-        .then<Laundry>((snapshot) {
+        .then<Laundry>((event) {
       return Laundry.fromLaundryData(
-          laundryId: laundryId, laundryData: snapshot.value);
+          laundryId: laundryId, laundryData: event.snapshot.value);
     });
   }
 }

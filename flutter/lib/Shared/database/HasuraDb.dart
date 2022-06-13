@@ -1,6 +1,5 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:graphql/client.dart';
 import 'package:gql/ast.dart';
 import 'package:get/get.dart';
@@ -16,12 +15,12 @@ class HasuraDb {
     initializeHasura();
   }
 
-  initializeHasura() async {
+  Future<void> initializeHasura() async {
     mezDbgPrint("Inside Hasura Helper");
     mezDbgPrint(
         "Firebase auth user is ${_authController.fireAuthUser?.displayName}");
     if (_authController.fireAuthUser != null) {
-      String hasuraAuthToken =
+      final String hasuraAuthToken =
           await _getAuthorizationToken(_authController.fireAuthUser!);
 
       final _httpLink = HttpLink(
@@ -86,15 +85,16 @@ class HasuraDb {
     bool isAdmin = false;
     try {
       (await _databaseHelper.firebaseDatabase
-              .reference()
+              .ref()
               .child("admins/${_authController.fireAuthUser!.uid}")
               .once())
+          .snapshot
           .value;
       // If value is returned, then user is admin, make isAdmin be true;
       isAdmin = true;
     } catch (e) {
       // If error is permission denied, then user is not admin, let isAdmin be false;
-      if ((e as DatabaseError).details != "Permission Denied") {
+      if ((e as dynamic).details != "Permission Denied") {
         throw e;
       }
     }
