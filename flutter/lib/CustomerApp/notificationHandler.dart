@@ -276,9 +276,6 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
-  mezDbgPrint(value);
-  mezDbgPrint(
-      "part type ====================> ${value["sender"]["particpantType"]}");
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(

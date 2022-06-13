@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -184,8 +185,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
       return <String, dynamic>{
         "title": "${_i18n()["cancelledTitle"]}",
         "body": "${_i18n()["cancelledBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancel.png",
+        "imgUrl": "assets/images/shared/notifications/cancel.png",
       };
     default:
       // do nothing
@@ -196,7 +196,11 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
 Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: value['linkUrl'] ?? value["orderId"],
+      linkUrl: getMessagesRoute(
+        chatId: value['chatId'],
+        recipientType:
+            value["sender"]["particpantType"].toString().toParticipantType(),
+      ),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
