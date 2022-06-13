@@ -45,8 +45,6 @@ class LaundryOpAuthController extends GetxController {
   }
 
   Future<void> setupLaundryOperator(User user) async {
-    mezDbgPrint("LaundryAuthController: handle state change user value");
-    mezDbgPrint(user);
     // mezDbgPrint(_authController.fireAuthUser);
 
     mezDbgPrint(

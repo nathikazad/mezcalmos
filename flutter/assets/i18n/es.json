@@ -589,8 +589,8 @@
             },
             "DateTimeHelper": {
                 "today": "Hoy dia",
-                "in": "en : ",
-                "at": "a : "
+                "in": "en: ",
+                "at": "a: "
             }
         },
         "pages": {
@@ -1352,11 +1352,14 @@
                 },
                 "components": {
                     "LanguageSelectorComponent": {
-                        "none": "None"
+                        "none": "None",
+                        "errorText": "Seleccione el idioma"
+
                     }
                 },
                 "EditInfoView": {
                     "laundryName": "Nombre de lavandería",
+                    "nameErrorText": "Proporcione un nombre",
                     "defaultLanguage": "Idioma predeterminado",
                     "secondaryLanguage": "Lenguaje secundario",
                     "location": "Localización",
@@ -1396,7 +1399,7 @@
                         },
                         "estTimes": {
                             "laundryArriving": "Lavandería que llega",
-                            "laundryFinish": "Acabado de lavandería",
+                            "laundryFinish": "Terminendo",
                             "driverArriving": "Que llega al conductor",
                             "willBeDropped": "Se dejará caer"
 

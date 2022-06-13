@@ -29,6 +29,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
       AnimatedSliderController();
   EditInfoController editInfoController = EditInfoController();
   late final EditInfoWidgets viewWidgets;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -49,80 +50,84 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // image
-            LaundryOpImageEditComponent(editInfoController: editInfoController),
-            SizedBox(
-              height: 25,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                editInfoController.laundry.value?.info.name ?? "",
-                style: Get.textTheme.headline3,
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // image
+              LaundryOpImageEditComponent(
+                  editInfoController: editInfoController),
+              SizedBox(
+                height: 25,
               ),
-            )
-            // Laundry name fiels
-            ,
-            SizedBox(
-              height: 25,
-            ),
+              Container(
+                alignment: Alignment.center,
+                child: Text(
+                  editInfoController.laundry.value?.info.name ?? "",
+                  style: Get.textTheme.headline3,
+                ),
+              )
+              // Laundry name fiels
+              ,
+              SizedBox(
+                height: 25,
+              ),
 
-            Text("${_i18n()["laundryName"]}"),
-            SizedBox(
-              height: 10,
-            ),
-            _laundryNameTextField(),
-            SizedBox(
-              height: 25,
-            ),
-            Text("${_i18n()["defaultLanguage"]}"),
-            SizedBox(
-              height: 10,
-            ),
-            LanguageSelectorComponent(
-                languageValue: editInfoController.primaryLang,
-                oppositeLanguageValue: editInfoController.secondaryLang,
+              Text("${_i18n()["laundryName"]}"),
+              SizedBox(
+                height: 10,
+              ),
+              _laundryNameTextField(),
+              SizedBox(
+                height: 25,
+              ),
+              Text("${_i18n()["defaultLanguage"]}"),
+              SizedBox(
+                height: 10,
+              ),
+              LanguageSelectorComponent(
+                  languageValue: editInfoController.primaryLang,
+                  oppositeLanguageValue: editInfoController.secondaryLang,
+                  onChangeShouldUpdateLang:
+                      editInfoController.validatePrimaryLanguUpdate),
+
+              SizedBox(
+                height: 25,
+              ),
+              Text("${_i18n()["secondaryLanguage"]}"),
+              SizedBox(
+                height: 10,
+              ),
+              LanguageSelectorComponent(
+                languageValue: editInfoController.secondaryLang,
+                oppositeLanguageValue: editInfoController.primaryLang,
                 onChangeShouldUpdateLang:
-                    editInfoController.validatePrimaryLanguUpdate),
+                    editInfoController.validateSecondaryLanguUpdate,
+                showDeleteIcon: true,
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Text('${_i18n()["location"]}'),
+              SizedBox(
+                height: 10,
+              ),
+              LaundryOpEditLocationCard(
+                editInfoController: editInfoController,
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Container(
+                child: viewWidgets.editWorkingHoursComponent(),
+              ),
 
-            SizedBox(
-              height: 25,
-            ),
-            Text("${_i18n()["secondaryLanguage"]}"),
-            SizedBox(
-              height: 10,
-            ),
-            LanguageSelectorComponent(
-              languageValue: editInfoController.secondaryLang,
-              oppositeLanguageValue: editInfoController.primaryLang,
-              onChangeShouldUpdateLang:
-                  editInfoController.validateSecondaryLanguUpdate,
-              showDeleteIcon: true,
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Text('${_i18n()["location"]}'),
-            SizedBox(
-              height: 10,
-            ),
-            LaundryOpEditLocationCard(
-              editInfoController: editInfoController,
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Container(
-              child: viewWidgets.editWorkingHoursComponent(),
-            ),
-
-            SizedBox(
-              height: 25,
-            ),
-          ],
+              SizedBox(
+                height: 25,
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: _editInfoSaveButton(),
@@ -133,6 +138,12 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
     return TextFormField(
       controller: editInfoController.laundryNameController,
       style: Get.textTheme.bodyText1,
+      validator: (String? value) {
+        if (value == null || value.isEmpty) {
+          return "${_i18n()["nameErrorText"]}";
+        }
+        return null;
+      },
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
@@ -157,7 +168,9 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
             onPressed: (editInfoController.btnClicked.value)
                 ? null
                 : () {
-                    editInfoController.updateLaundryInfo();
+                    if (formKey.currentState!.validate()) {
+                      editInfoController.updateLaundryInfo();
+                    }
                   },
             child: (editInfoController.btnClicked.value)
                 ? Container(

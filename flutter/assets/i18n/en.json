@@ -581,8 +581,8 @@
             },
             "DateTimeHelper": {
                 "today": "Today",
-                "in": "in : ",
-                "at": "at : "
+                "in": "in: ",
+                "at": "at: "
             }
         },
         "pages": {
@@ -1360,11 +1360,13 @@
                 },
                 "components": {
                     "LanguageSelectorComponent": {
-                        "none": "None"
+                        "none": "None",
+                        "errorText": "Please select language "
                     }
                 },
                 "EditInfoView": {
                     "laundryName": "Laundry name",
+                    "nameErrorText": "please provide a name",
                     "defaultLanguage": "Default language",
                     "secondaryLanguage": "Secondary language",
                     "location": "Location",
@@ -1405,7 +1407,7 @@
                         },
                         "estTimes": {
                             "laundryArriving": "Laundry arriving",
-                            "laundryFinish": "Laundry finish",
+                            "laundryFinish": "Finishing",
                             "driverArriving": "Driver arriving",
                             "willBeDropped": "Will be dropped"
 

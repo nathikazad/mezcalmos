@@ -144,7 +144,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
               ),
 
               SizedBox(
-                height: 15,
+                height: 25,
               ),
               Text("${_i18n()["itemsWeight"]}", style: Get.textTheme.bodyText1),
               SizedBox(
@@ -166,10 +166,9 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                   }
                 },
                 decoration: InputDecoration(
-                    suffixIcon: Container(
-                        padding: const EdgeInsets.all(8),
-                        alignment: Alignment.centerRight,
-                        child: Text("KG")),
+                    isDense: true,
+                    suffix: Container(
+                        padding: const EdgeInsets.all(1), child: Text("KG")),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     alignLabelWithHint: false,
                     border: OutlineInputBorder(
@@ -179,7 +178,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                     filled: true),
               ),
               SizedBox(
-                height: 10,
+                height: 25,
               ),
               Obx(
                 () => InkWell(

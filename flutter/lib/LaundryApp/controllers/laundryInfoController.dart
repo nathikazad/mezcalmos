@@ -32,8 +32,7 @@ class LaundryInfoController extends GetxController {
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
         .listen((Event event) {
-      mezDbgPrint(
-          "eveeeeeeennnnnnnnnnnnnnnnnnnnnnnnnnnnt ====> ${event.snapshot.value} ");
+     
       if (event.snapshot.value != null) {
         laundry.value = Laundry.fromLaundryData(
             laundryId: laundryId, laundryData: event.snapshot.value);
