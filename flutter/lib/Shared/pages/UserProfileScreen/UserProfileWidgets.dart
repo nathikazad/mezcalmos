@@ -155,31 +155,31 @@ class UserProfileWidgetsClass {
       return mezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: () => Get.back(closeOverlays: true),
-        actionIcons: [
-          Obx(
-            () => Container(
-              padding: const EdgeInsets.all(8),
-              alignment: Alignment.centerLeft,
-              child: GestureDetector(
-                onTap: () =>
-                    Get.find<LanguageController>().changeUserLanguage(),
-                child: Container(
-                  height: 24,
-                  width: 24,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.contain,
-                      image: AssetImage(
-                        Get.find<LanguageController>().oppositFlag,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
-        ],
+        // actionIcons: [
+        //   Obx(
+        //     () => Container(
+        //       padding: const EdgeInsets.all(8),
+        //       alignment: Alignment.centerLeft,
+        //       child: GestureDetector(
+        //         onTap: () =>
+        //             Get.find<LanguageController>().changeUserLanguage(),
+        //         child: Container(
+        //           height: 24,
+        //           width: 24,
+        //           decoration: BoxDecoration(
+        //             shape: BoxShape.circle,
+        //             image: DecorationImage(
+        //               fit: BoxFit.contain,
+        //               image: AssetImage(
+        //                 Get.find<LanguageController>().oppositFlag,
+        //               ),
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   )
+        // ],
       );
     } else {
       // none popable buttom

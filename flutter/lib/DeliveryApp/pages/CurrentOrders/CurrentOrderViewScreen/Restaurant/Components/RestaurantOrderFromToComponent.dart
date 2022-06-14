@@ -56,7 +56,7 @@ class _RestaurantOrderFromToComponentState
         // customer
         customerImage: widget.order.customer.image,
         customerName: widget.order.customer.name,
-        customerTimeWidgets: _dateTimeSetter(DeliveryAction.Pickup),
+        customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff),
         onCustomerMsgClick: () {
           if (widget.order.customerDropOffDriverChatId != null) {
             Get.toNamed(
@@ -70,7 +70,7 @@ class _RestaurantOrderFromToComponentState
         // landry
         serviceProviderImage: widget.order.restaurant.image,
         serviceProviderName: widget.order.restaurant.name,
-        serviceProviderTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff),
+        serviceProviderTimeWidgets: _dateTimeSetter(DeliveryAction.Pickup),
         onServiceMsgClick: () {
           if (widget.order.serviceProviderDropOffDriverChatId != null) {
             Get.toNamed(
@@ -85,7 +85,7 @@ class _RestaurantOrderFromToComponentState
         formattedOrderStatus: _getOrderStatus(),
         order: widget.order,
         // card Settings
-        isCustomerRowFirst: !isInPickUpPhase(),
+        isCustomerRowFirst: false,
         showMsgIconInOneLine: !widget.order.inProcess(),
         initialCardState: orderInfoCardState.value,
         onCardStateChange: (OrderInfoCardState nwState) {
@@ -216,6 +216,22 @@ class _RestaurantOrderFromToComponentState
             ? widget.order.estimatedPickupFromServiceProviderTime?.toLocal()
             : widget.order.estimatedDropoffAtCustomerTime?.toLocal(),
         onNewDateTimeSet: (DateTime newDt) async {
+          // DropOff
+          if (deliveryAction == DeliveryAction.DropOff) {
+            if (widget.order.estimatedPickupFromServiceProviderTime != null &&
+                !widget.order.estimatedPickupFromServiceProviderTime!
+                    .isBefore(newDt)) {
+              MezSnackbar(
+                  "Oops", "The Pickup time should be before the dropoff time.");
+            }
+            // PickUp
+          } else {
+            if (widget.order.estimatedDropoffAtCustomerTime != null &&
+                !widget.order.estimatedDropoffAtCustomerTime!.isAfter(newDt)) {
+              MezSnackbar(
+                  "Oops", "The Pickup time should be before the dropoff time.");
+            }
+          }
           final ServerResponse _resp =
               await Get.find<OrderController>().setEstimatedTime(
             widget.order.orderId,

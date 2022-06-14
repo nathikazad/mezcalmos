@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:app_settings/app_settings.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
@@ -88,6 +89,7 @@ class LocationPermissionController {
     if (locationController.statusSnapshot.value ==
         LocationPermissionsStatus.ForeverDenied) {
       // await openAppSettings();
+      await AppSettings.openLocationSettings();
       return;
     }
 
@@ -111,6 +113,7 @@ class LocationPermissionController {
         // check if sdk 11 - background location needs manual accept
         // we redirect to
         // await openAppSettings();
+        await AppSettings.openLocationSettings();
         return;
       }
     }

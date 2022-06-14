@@ -63,7 +63,7 @@ class OrderInfosCard extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w700,
-                                fontSize: 15,
+                                fontSize: 16.4,
                               ),
                             ),
                           ),
@@ -112,13 +112,16 @@ class OrderInfosCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 5),
-                  Text(
-                    "\$${order.cost.toString()}",
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
+                  Center(
+                    child: Text(
+                      "\$${order.cost.toString()}",
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                   Spacer(),

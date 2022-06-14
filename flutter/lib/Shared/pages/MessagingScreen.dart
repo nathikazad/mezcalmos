@@ -201,7 +201,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
       appBar: AppBar(
         leading: Center(
           child: GestureDetector(
-            onTap: Get.back,
+            onTap: () => Get.back<void>(closeOverlays: true),
             child: Container(
               height: 30,
               width: 30,

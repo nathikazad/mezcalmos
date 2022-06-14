@@ -61,21 +61,18 @@ class RestaurantCard extends StatelessWidget {
                       if (restaurant.description != null &&
                           restaurant.description!.length > 1)
                         const Spacer(),
-                      Divider(
-                        height: 5,
-                        thickness: 0.2,
-                      ),
                       Container(
                         //  alignment: Alignment.bottomLeft,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Flexible(
+                              flex: 1,
                               child:
                                   Text(_getDollarsSign(), style: txt.bodyText1),
                             ),
                             Flexible(
-                              flex: 3,
+                              flex: 4,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -96,6 +93,7 @@ class RestaurantCard extends StatelessWidget {
                               ),
                             ),
                             Flexible(
+                              flex: 1,
                               child: Icon(
                                 Icons.payments_sharp,
                                 color: Colors.grey.shade800,
