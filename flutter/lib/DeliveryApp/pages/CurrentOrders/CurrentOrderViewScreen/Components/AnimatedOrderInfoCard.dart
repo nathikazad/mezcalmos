@@ -222,13 +222,16 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                 ),
                 if (showMsgIconInOneLine) ...[
                   SizedBox(width: 9),
-                  MessageButton(
-                    withPadding: false,
-                    onTap: onServiceMsgClick,
-                    showRedDot: (_serviceDriverChatId() != null)
-                        ? Get.find<OrderController>()
-                            .hasNewMessageNotification(_serviceDriverChatId()!)
-                        : false,
+                  Obx(
+                    () => MessageButton(
+                      withPadding: false,
+                      onTap: onServiceMsgClick,
+                      showRedDot: (_serviceDriverChatId() != null)
+                          ? Get.find<OrderController>()
+                              .hasNewMessageNotification(
+                                  _serviceDriverChatId()!)
+                          : false,
+                    ),
                   )
                 ],
               ],
@@ -240,13 +243,16 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     children: serviceProviderTimeWidgets,
                   ),
                   SizedBox(width: 15),
-                  MessageButton(
-                    withPadding: false,
-                    onTap: onServiceMsgClick,
-                    showRedDot: (_serviceDriverChatId() != null)
-                        ? Get.find<OrderController>()
-                            .hasNewMessageNotification(_serviceDriverChatId()!)
-                        : false,
+                  Obx(
+                    () => MessageButton(
+                      withPadding: false,
+                      onTap: onServiceMsgClick,
+                      showRedDot: (_serviceDriverChatId() != null)
+                          ? Get.find<OrderController>()
+                              .hasNewMessageNotification(
+                                  _serviceDriverChatId()!)
+                          : false,
+                    ),
                   ),
                 ],
               ),
@@ -284,13 +290,16 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                 ),
                 if (showMsgIconInOneLine) ...[
                   SizedBox(width: 9),
-                  MessageButton(
-                    withPadding: false,
-                    onTap: onServiceMsgClick,
-                    showRedDot: (_serviceDriverChatId() != null)
-                        ? Get.find<OrderController>()
-                            .hasNewMessageNotification(_serviceDriverChatId()!)
-                        : false,
+                  Obx(
+                    () => MessageButton(
+                      withPadding: false,
+                      onTap: onServiceMsgClick,
+                      showRedDot: (_serviceDriverChatId() != null)
+                          ? Get.find<OrderController>()
+                              .hasNewMessageNotification(
+                                  _serviceDriverChatId()!)
+                          : false,
+                    ),
                   ),
                 ]
               ],
@@ -302,13 +311,16 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     children: customerTimeWidgets,
                   ),
                   SizedBox(width: 9),
-                  MessageButton(
-                    withPadding: false,
-                    onTap: onCustomerMsgClick,
-                    showRedDot: (_customerDriverChatId() != null)
-                        ? Get.find<OrderController>()
-                            .hasNewMessageNotification(_customerDriverChatId()!)
-                        : false,
+                  Obx(
+                    () => MessageButton(
+                      withPadding: false,
+                      onTap: onCustomerMsgClick,
+                      showRedDot: (_customerDriverChatId() != null)
+                          ? Get.find<OrderController>()
+                              .hasNewMessageNotification(
+                                  _customerDriverChatId()!)
+                          : false,
+                    ),
                   ),
                 ],
               ),

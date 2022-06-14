@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -44,7 +43,8 @@ class DriverOrderCard extends StatelessWidget {
           cardTitle: _getOrderTitle(),
           primaryBodyContent: Text(order.to.address),
           cardStatus: _getOrderWidget(),
-          cardTime: Text(DateFormat("EE, hh:mm a").format(order.orderTime)),
+          cardTime:
+              Text(DateFormat("EE, hh:mm a").format(order.orderTime.toLocal())),
           rightImage: _getOrderIcon()),
       order: order,
     );
@@ -150,13 +150,32 @@ class DriverOrderCard extends StatelessWidget {
               style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
             ),
           );
-        case LaundryOrderStatus.Delivered:
         case LaundryOrderStatus.AtLaundry:
-          // return Icon(
-          //   Icons.check_circle,
-          //   color: Colors.green,
-          //   size: 40.sp,
-          // );
+          if (isPastOrder == true) {
+            return Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: Colors.green.shade100,
+                  borderRadius: BorderRadius.circular(12)),
+              child: Text(
+                "Delivered",
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+              ),
+            );
+          } else {
+            return Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: Colors.amber.shade100,
+                  borderRadius: BorderRadius.circular(12)),
+              child: Text(
+                "Waiting",
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+              ),
+            );
+          }
+
+        case LaundryOrderStatus.Delivered:
           return Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(

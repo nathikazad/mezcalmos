@@ -36,13 +36,11 @@ class OrderController extends GetxController {
         .ref()
         .child(deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid))
         .onValue
-        .listen((event) {
-      mezDbgPrint("-----------------Paaast evvvvveeeeent $event");
+        .listen((DatabaseEvent event) {
       final List<DeliverableOrder> orders = [];
       if (event.snapshot.value != null) {
         (event.snapshot.value as dynamic).keys.forEach((orderId) {
           try {
-            mezDbgPrint("Hndling Order : $orderId");
             final dynamic orderData =
                 (event.snapshot.value as dynamic)[orderId];
             if (orderData["orderType"] ==
@@ -51,12 +49,15 @@ class OrderController extends GetxController {
             } else if (orderData["orderType"] ==
                 OrderType.Laundry.toFirebaseFormatString())
               orders.add(LaundryOrder.fromData(orderId, orderData));
-          } catch (e) {
+          } catch (e, stk) {
+            mezDbgPrint(stk);
             // TODO
           }
         });
       }
       pastOrders.value = orders;
+      pastOrders.sort((DeliverableOrder a, DeliverableOrder b) =>
+          b.orderTime.toLocal().compareTo(a.orderTime.toLocal()));
     }, onError: (error) {
       mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
     });
@@ -69,7 +70,7 @@ class OrderController extends GetxController {
         .child(deliveryDriversInProcessOrdersNode(
             _authController.fireAuthUser!.uid))
         .onValue
-        .listen((event) {
+        .listen((DatabaseEvent event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
 
       final List<DeliverableOrder> orders = [];

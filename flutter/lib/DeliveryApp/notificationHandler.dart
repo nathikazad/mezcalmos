@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -21,6 +22,7 @@ Notification deliveryDriverNotificationHandler(String key, value) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
+          icon: mat.Icons.delivery_dining,
           linkUrl: getLinkUrl(value['orderType'].toString().toOrderType(),
               value['orderId']), // needs to be changed, need to add laundry
           body: '${_i18n()['driverNotifBody']}', // needs to be changed
@@ -67,6 +69,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
 
   return Notification(
       id: key,
+      icon: mat.Icons.delivery_dining,
       linkUrl: getLinkUrl(
           value['orderType'].toString().toOrderType(), value["orderId"]),
       body: dynamicFields["body"],
@@ -124,6 +127,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
 
   return Notification(
       id: key,
+      icon: mat.Icons.delivery_dining,
       linkUrl: getLaundryOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],

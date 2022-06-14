@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -18,30 +19,31 @@ class DriverPastOrdersView extends StatefulWidget {
 }
 
 class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
-  RxList<Order> currentOrders = RxList.empty();
-  RxList<Order> pastOrders = RxList.empty();
   OrderController orderController = Get.find<OrderController>();
-
-  DeliveryAuthController _deliveryAuthController =
-      Get.find<DeliveryAuthController>();
-
+  RxList<DeliverableOrder> inProcessOrders = RxList.empty();
+  RxList<DeliverableOrder> pastOrders = RxList.empty();
+  StreamSubscription? _inProcessOrdersListener;
+  StreamSubscription? _pastOrdersListener;
   @override
   void initState() {
-    orderController.currentOrders.stream.listen((List<DeliverableOrder> value) {
-      currentOrders.value = value;
+    inProcessOrders = orderController.currentOrders;
+    pastOrders = orderController.pastOrders;
+    _inProcessOrdersListener = orderController.currentOrders.stream
+        .listen((List<DeliverableOrder> event) {
+      inProcessOrders.value = event;
+    });
+    _pastOrdersListener = orderController.pastOrders.stream
+        .listen((List<DeliverableOrder> event) {
+      pastOrders.value = event;
     });
 
-    orderController.pastOrders.stream.listen((List<DeliverableOrder> value) {
-      pastOrders.value = value;
-    });
-    orderController.clearNewOrderNotificationsOfPastOrders();
     super.initState();
   }
 
   @override
   void dispose() {
-    orderController.dispose();
-
+    _pastOrdersListener?.cancel();
+    _inProcessOrdersListener?.cancel();
     super.dispose();
   }
 
@@ -54,20 +56,20 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
         padding: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [_pastOrdersList(context)],
+          children: [Obx(() => _pastOrdersList(context))],
         ),
       ),
     );
   }
 
   Widget _pastOrdersList(BuildContext context) {
-    if (orderController.pastOrders.isNotEmpty) {
+    if (pastOrders.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (currentOrders.isNotEmpty)
+          if (pastOrders.isNotEmpty)
             Container(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
               child: Text(
                 _i18n()["pastOrders"],
                 style: Theme.of(context).textTheme.bodyText1,
@@ -75,12 +77,12 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
             ),
           Column(
             children: List.generate(
-              orderController.pastOrders.length,
+              pastOrders.length,
               (int index) => DriverOrderCard(
-                order: orderController.pastOrders[index],
+                order: pastOrders[index],
                 isPastOrder: true,
               ),
-            ).reversed.toList(),
+            ),
           )
         ],
       );

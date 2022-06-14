@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNoOrdersComponent.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNotLookingComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverOrderCard.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -156,7 +154,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             orderController.currentOrders.length,
             (int index) => DriverOrderCard(
                   order: orderController.currentOrders[index],
-                  showLeftIcon: false,
+                  isPastOrder: false,
                 )).reversed.toList(),
       ),
     ];
