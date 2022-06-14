@@ -70,7 +70,9 @@ class OrderSummaryCard extends StatelessWidget {
             ),
             //=======================Delivery cost :===============
             Container(
-              padding: EdgeInsets.only(bottom: 10),
+              padding: EdgeInsets.only(
+                bottom: 10,
+              ),
               width: Get.width,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,7 +93,7 @@ class OrderSummaryCard extends StatelessWidget {
             ),
             //=======================Total cost : ==================
             Container(
-              padding: EdgeInsets.only(bottom: 10),
+              padding: EdgeInsets.only(bottom: 10, top: 3),
               width: Get.width,
               child: Row(
                 children: <Widget>[

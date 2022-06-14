@@ -30,7 +30,7 @@ class ItemChosenChoiceComponent extends StatelessWidget {
           style: Get.textTheme.bodyText1,
         ),
         SizedBox(
-          height: 10,
+          height: 5,
         ),
         Column(
           children: List.generate(

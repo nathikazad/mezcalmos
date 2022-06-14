@@ -127,7 +127,7 @@
                 "ViewCartScreen": {
                     "components": {
                         "BuildCart": {
-                            "inCart": "En El Carrito",
+                            "inCart": "Mis ordenes",
                             "yesClear": "sí, claro",
                             "no": "No",
                             "clearCart": "Vaciar carrito",
@@ -135,8 +135,9 @@
                             "clear": "Vaciar"
                         },
                         "BuildItems": {
-                            "deleteItem": "Eliminar este artículo.",
-                            "deleteItemConfirm": "Quieres eliminar este artículo?",
+                            "deleteItem": "Eliminar elemento",
+                            "deleteItemConfirm": "¿Estás seguro de que te gustaría eliminar?",
+                            "deleteBtn": "Yes, delete item",
                             "itemNotes": "Notas de artículos :"
 
                         },
@@ -161,7 +162,8 @@
                             "addLocationDialogSkip": "Omitir"
                         },
                         "ViewCartBody": {
-                            "notes": "Escribe tu nota aquí"
+                            "notesTitle": "Notas",
+                            "notes": "Escribe tus notas aquí"
                         }
                     },
                     "ViewCartScreen": {
@@ -444,7 +446,7 @@
                             "willBeDropped": "Será entregado"
                         },
                         "LaundryPricingComponent": {
-                            "laundryPricing": "Precios de lavandería",
+                            "laundryPricing": "Costo de lavandería",
                             "fixedRate": "Costo por kilo",
                             "orderWeight": "Peso de pedido",
                             "minimumCost": "Costo Minimo",
@@ -590,10 +592,10 @@
                 "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
             },
             "GeneralPurposeHelper": {
-                "yesCancel": "Sí Cancelar pedido",
+                "yesCancel": "Sí, Cancelar pedido",
                 "no": "No",
                 "cancelOrder": "Cancelar orden",
-                "cancelConfirmationText": "¿Estás seguro de que quieres cancelar el pedido?",
+                "cancelConfirmationText": "¿Estás seguro de que te gustaría cancelar?",
                 "subtitle": "Esta acción no se puede deshacer."
             },
             "NotificationsHelper": {

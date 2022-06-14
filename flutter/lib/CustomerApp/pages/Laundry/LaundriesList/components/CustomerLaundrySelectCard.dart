@@ -69,10 +69,11 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                       flex: 2,
                       fit: FlexFit.loose,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.delivery_dining,
-                            size: 17,
+                            size: 20,
                             color: Colors.grey.shade800,
                           ),
                           SizedBox(
@@ -87,10 +88,11 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                       flex: 2,
                       fit: FlexFit.loose,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.watch_later,
-                            size: 17,
+                            size: 18,
                             color: Colors.grey.shade800,
                           ),
                           SizedBox(

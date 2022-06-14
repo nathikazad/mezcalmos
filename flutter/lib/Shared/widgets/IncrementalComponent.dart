@@ -6,6 +6,7 @@ class IncrementalComponent extends StatefulWidget {
   final VoidCallback decrementCallback;
 
   final Color btnColors;
+  final Color minusIconColor;
   final bool center;
   final Color? onMinValueBtnColor;
   int value;
@@ -22,6 +23,7 @@ class IncrementalComponent extends StatefulWidget {
       this.onMinValueBtnColor,
       this.alignment = MainAxisAlignment.start,
       this.center = false,
+      this.minusIconColor = Colors.white,
       this.btnColors = primaryBlueColor,
       this.onChangedToZero,
       this.size = 16,
@@ -51,7 +53,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
                   Icons.remove,
                   color: (widget.value > widget.minVal)
                       ? primaryBlueColor
-                      : Colors.white,
+                      : widget.minusIconColor,
                   size: widget.size,
                 )),
             onTap: () {

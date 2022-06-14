@@ -80,6 +80,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                     CachedNetworkImage(
                         width: double.infinity,
                         height: 20.h,
+                        fit: BoxFit.cover,
                         imageUrl: selectedLaundry.info.image),
                     SizedBox(
                       height: 25,

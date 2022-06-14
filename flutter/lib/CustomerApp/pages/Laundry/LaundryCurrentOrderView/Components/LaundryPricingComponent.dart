@@ -22,7 +22,7 @@ class LaundryPricingCompnent extends StatelessWidget {
     return Card(
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -36,24 +36,26 @@ class LaundryPricingCompnent extends StatelessWidget {
             if (order.costsByType?.lineItems.isNotEmpty ?? false)
               _PricingTable(),
             if (order.costsByType?.lineItems.isEmpty ?? true)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Icon(
-                    Icons.info_outline_rounded,
-                    color: Colors.grey.shade800,
-                  ),
-                  const SizedBox(width: 10),
-                  Flexible(
-                    child: Text(
-                      _i18n()['laundryPricingNote'],
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                      ),
-                      maxLines: 3,
+              Container(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Icon(
+                      Icons.info_outline_rounded,
+                      color: Colors.grey.shade800,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 10),
+                    Flexible(
+                      child: Text(
+                        _i18n()['laundryPricingNote'],
+                        style: TextStyle(
+                          color: Colors.grey.shade800,
+                        ),
+                        maxLines: 3,
+                      ),
+                    ),
+                  ],
+                ),
               ),
           ],
         ),
@@ -65,7 +67,7 @@ class LaundryPricingCompnent extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: DataTable(
-          dividerThickness: 0.2,
+          dividerThickness: 0.01,
           horizontalMargin: 6,
           columnSpacing: 45.0,
           headingRowHeight: 30.0,

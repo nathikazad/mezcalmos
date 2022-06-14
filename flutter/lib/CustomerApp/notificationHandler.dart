@@ -179,8 +179,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
       return <String, dynamic>{
         "title": "${_i18n()["readyForPickUpTitle"]}",
         "body": "${_i18n()["readyForPickUpBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/onTheWay.png",
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{

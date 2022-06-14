@@ -171,6 +171,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                     child: IntrinsicHeight(
                       child: Column(
                         children: <Widget>[
+                          SizedBox(
+                            height: 20,
+                          ),
                           OrderStatusCard(
                             order: order.value!,
                             ordersStates: order.value!.status,
@@ -183,9 +186,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
                           OrderRestaurantCard(order: order.value!),
 
-                          SizedBox(
-                            height: 25,
-                          ),
                           OrderItemsCard(
                             items: order.value!.items,
                           ),
@@ -193,9 +193,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                   order.value!.notes!.length <= 0
                               ? Container()
                               : notesWidget(order),
-                          SizedBox(
-                            height: 25,
-                          ),
+                        
 
                           OrderSummaryCard(order: order.value!),
 
@@ -224,16 +222,13 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   List<Widget> get _mapWidget => <Widget>[
         SizedBox(
-          height: 25,
+          height: 20,
         ),
         Container(
           height: 350,
           width: Get.width - 20,
           child: MGoogleMap(mGoogleMapController: mapController),
         ),
-        SizedBox(
-          height: 25,
-        )
       ];
 
   void initMap() {

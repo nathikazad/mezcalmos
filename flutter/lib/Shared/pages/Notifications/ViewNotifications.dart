@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -84,7 +83,12 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           }
         }
 
-        children = todayNotifsWidgets + [Divider()] + notifsWidgets;
+        children = todayNotifsWidgets +
+            // [
+            //   if (todayNotifsWidgets.isNotEmpty && notifsWidgets.isNotEmpty)
+            //     Divider()
+            // ] +
+            notifsWidgets;
         return children;
       }),
     );
@@ -120,7 +124,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     });
                   },
                   icon: Icon(
-                    Ionicons.trash_outline,
+                    Icons.delete,
                   )),
             ],
           )));

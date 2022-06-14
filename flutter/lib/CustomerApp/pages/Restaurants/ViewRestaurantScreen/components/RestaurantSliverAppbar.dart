@@ -41,6 +41,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
       backgroundColor: Theme.of(context).primaryColorLight,
       elevation: 0.4,
       expandedHeight: 220,
+      centerTitle: true,
       automaticallyImplyLeading: false,
       bottom:
           (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
@@ -57,25 +58,23 @@ class RestaurantSliverAppBar extends StatelessWidget {
                   (restaurant.getCategories.length > 1 && !showInfo) ? 60 : 12),
           // centerTitle: true,
           title: Container(
+            alignment: Alignment.bottomCenter,
             padding: const EdgeInsets.only(bottom: 5, left: 5, right: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Flexible(
-                  flex: 1,
-                  // fit: FlexFit.tight,
-                  child: Container(
-                    // alignment: Alignment.center,
-                    // padding: const EdgeInsets.only(left: 8, right: 3),
-                    child: Text(
-                      (showInfo) ? "Informations" : restaurant.info.name,
-                      style: Get.textTheme.headline3
-                          ?.copyWith(color: Colors.white, fontSize: 14.sp),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                    ),
+                Container(
+                  height: 15,
+                  alignment: Alignment.center,
+                  // padding: const EdgeInsets.only(left: 8, right: 3),
+                  child: Text(
+                    (showInfo) ? "Informations" : restaurant.info.name,
+                    style: Get.textTheme.headline3
+                        ?.copyWith(color: Colors.white, fontSize: 14.sp),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 SizedBox(
@@ -164,6 +163,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(48),
       child: Container(
+        
         width: double.infinity,
         color: Colors.white,
         margin: const EdgeInsets.only(
@@ -171,6 +171,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(4),
         child: TabBar(
+          
           isScrollable: true,
           controller: tabController,
           labelColor: primaryBlueColor,

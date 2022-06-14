@@ -32,8 +32,9 @@ class LaundryOrderNoteComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
-              SizedBox(height: 15),
-              Text(order.notes ?? '')
+              SizedBox(height: 7),
+              Text(order.notes ?? ''),
+              const SizedBox(height: 20),
             ],
           ),
         ),

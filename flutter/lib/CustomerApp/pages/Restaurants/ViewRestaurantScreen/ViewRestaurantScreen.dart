@@ -231,8 +231,8 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
     } else {
       return GridView.count(
         crossAxisCount: 2,
-        mainAxisSpacing: 5,
-        crossAxisSpacing: 5,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         physics: NeverScrollableScrollPhysics(),

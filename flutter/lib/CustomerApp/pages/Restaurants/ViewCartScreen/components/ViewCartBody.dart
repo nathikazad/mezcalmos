@@ -69,8 +69,8 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                 horizontal: 14,
               ),
               alignment: Alignment.centerLeft,
-              child:
-                  Text("${_i18n()['notes']}", style: Get.textTheme.bodyText1),
+              child: Text("${_i18n()['notesTitle']}",
+                  style: Get.textTheme.bodyText1),
             ),
             SizedBox(
               height: 15,

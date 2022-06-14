@@ -28,14 +28,11 @@ class _RestaurantsListOfItemsComponentState
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return Card(
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          padding: (isImageExist)
-              ? const EdgeInsets.symmetric(horizontal: 5, vertical: 12)
-              : const EdgeInsets.all(16),
-          // margin: const EdgeInsets.all(5),
-
+      child: Container(
+        height: 70,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10),
           child: Row(
             children: [
               if (isImageExist)
@@ -75,10 +72,10 @@ class _RestaurantsListOfItemsComponentState
               )
             ],
           ),
+          onTap: () {
+            widget.function!();
+          },
         ),
-        onTap: () {
-          widget.function!();
-        },
       ),
     );
   }

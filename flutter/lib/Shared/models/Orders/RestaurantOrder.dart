@@ -83,7 +83,9 @@ class RestaurantOrder extends DeliverableOrder {
 
   //ignore_for_file:avoid_annotating_with_dynamic
   factory RestaurantOrder.fromData(
-      dynamic id, dynamic data,) {
+    dynamic id,
+    dynamic data,
+  ) {
     final RestaurantOrder restaurantOrder = RestaurantOrder(
       orderId: id,
       status: data["status"].toString().toRestaurantOrderStatus(),
@@ -188,8 +190,7 @@ class RestaurantOrder extends DeliverableOrder {
   }
 
   bool inDeliveryPhase() {
-    return status == RestaurantOrderStatus.ReadyForPickup ||
-        status == RestaurantOrderStatus.OnTheWay;
+    return status == RestaurantOrderStatus.OnTheWay;
   }
 
   String clipBoardText(LanguageType languageType) {

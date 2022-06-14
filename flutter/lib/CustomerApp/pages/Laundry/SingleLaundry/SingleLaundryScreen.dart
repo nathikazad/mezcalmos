@@ -42,40 +42,39 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomerAppBar(
-        title: laundry.value?.info.name,
-      ),
-      body: Obx(() {
+    return Obx(
+      () {
         if (laundry.value != null) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _laundryImage(),
-                SizedBox(
-                  height: 15,
-                ),
-                _laundryInfoHeader(),
-                SizedBox(
-                  height: 15,
-                ),
-                MezServiceOpenHours(schedule: laundry.value!.schedule!),
-                SizedBox(
-                  height: 25,
-                ),
-                ServiceLocationCard(location: laundry.value!.info.location),
-              ],
+          return Scaffold(
+            appBar: CustomerAppBar(
+              title: laundry.value?.info.name,
             ),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _laundryImage(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _laundryInfoHeader(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  MezServiceOpenHours(schedule: laundry.value!.schedule!),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  ServiceLocationCard(location: laundry.value!.info.location),
+                ],
+              ),
+            ),
+            bottomNavigationBar: _sendMyLaundryButton(),
           );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      }),
-      bottomNavigationBar: _sendMyLaundryButton(),
+        } else
+          return Container();
+      },
     );
   }
 
@@ -100,6 +99,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
     return CachedNetworkImage(
         width: double.infinity,
         height: 20.h,
+        fit: BoxFit.cover,
         imageUrl: laundry.value!.info.image);
   }
 
@@ -125,6 +125,8 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   Flexible(
                     child: Container(
                       child: Chip(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(35)),
                           padding: const EdgeInsets.all(3),
                           labelStyle: Get.textTheme.bodyText2?.copyWith(
                               fontWeight: FontWeight.w700,

@@ -47,7 +47,7 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 5,
           ),
           Container(
             child: Text(

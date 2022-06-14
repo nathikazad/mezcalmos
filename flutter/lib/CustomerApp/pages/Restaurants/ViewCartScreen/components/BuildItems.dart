@@ -7,14 +7,10 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenChoices.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ItemInformationCart.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
-import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -44,7 +40,7 @@ class CartItemsBuilder extends StatelessWidget {
             child: MyExpansionPanelComponent(
               child: Flexible(
                   child: ItemInformationCart(
-                incrementWidget: _incrementItemComponent(cartItem),
+                item: cartItem,
                 imageUrl: cartItem.item.image,
                 itemName: cartItem.item.name[userLanguage]![0].toUpperCase() +
                     cartItem.item.name[userLanguage]!.substring(1),
@@ -56,13 +52,8 @@ class CartItemsBuilder extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: buildChoices(cartItem.chosenChoices),
-                      ),
-                    ],
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: buildChoices(cartItem.chosenChoices),
                   ),
                 ),
                 if (cartItem.notes != null)
@@ -82,44 +73,6 @@ class CartItemsBuilder extends StatelessWidget {
         }),
       ),
     );
-  }
-
-  Widget _incrementItemComponent(CartItem cartItem) {
-    return IncrementalComponent(
-        minVal: 1,
-        size: 14,
-        btnColors: SecondaryLightBlueColor,
-        alignment: MainAxisAlignment.start,
-        onMinValueBtnColor: Colors.grey.shade400,
-        incrementCallback: () {
-          _restaurantController.incrementItem(cartItem.idInCart!, 1);
-          _restaurantController.refresh();
-        },
-        onChangedToZero: () async {
-          final YesNoDialogButton yesNoResult = await cancelAlertDialog(
-              title: _i18n()["deleteItem"],
-              body: _i18n()["deleteItemConfirm"],
-              icon: Container(
-                child: Icon(
-                  Icons.highlight_off,
-                  size: 65,
-                  color: Color(0xffdb2846),
-                ),
-              ));
-          mezDbgPrint(" the returend value from the dailog $yesNoResult");
-          if (yesNoResult == YesNoDialogButton.Yes) {
-            _restaurantController.deleteItem(cartItem.idInCart!);
-            if (_restaurantController.cart.value.quantity() == 0) {
-              _restaurantController.clearCart();
-              Get.until((Route route) => route.settings.name == kHomeRoute);
-            }
-          }
-        },
-        value: cartItem.quantity,
-        decrementCallback: () {
-          _restaurantController.incrementItem(cartItem.idInCart!, -1);
-          _restaurantController.refresh();
-        });
   }
 
   Container _itemNotesComponent(CartItem cartItem, BuildContext context) {

@@ -1,27 +1,41 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Restaurants"]["ViewCartScreen"]["components"]["BuildItems"];
 
 class ItemInformationCart extends StatefulWidget {
-  const ItemInformationCart({
-    Key? key,
-    this.imageUrl,
-    required this.itemName,
-    required this.restaurantName,
-    required this.incrementWidget,
-    required this.itemsPrice,
-  }) : super(key: key);
+  const ItemInformationCart(
+      {Key? key,
+      this.imageUrl,
+      required this.itemName,
+      required this.restaurantName,
+      required this.itemsPrice,
+      required this.item})
+      : super(key: key);
 
   final String itemName;
   final String restaurantName;
-  final Widget incrementWidget;
+
   final String itemsPrice;
   final String? imageUrl;
+  final CartItem item;
 
   @override
   _ItemInformationCartState createState() => _ItemInformationCartState();
 }
 
 class _ItemInformationCartState extends State<ItemInformationCart> {
+  final RestaurantController _restaurantController =
+      Get.find<RestaurantController>();
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
@@ -94,12 +108,61 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                 SizedBox(
                   height: 3,
                 ),
-                widget.incrementWidget
+                _incrementItemComponent(widget.item)
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget _incrementItemComponent(CartItem cartItem) {
+    return IncrementalComponent(
+        minVal: 1,
+        size: 14,
+        minusIconColor: primaryBlueColor,
+        btnColors: SecondaryLightBlueColor,
+        onMinValueBtnColor: SecondaryLightBlueColor,
+        alignment: MainAxisAlignment.start,
+        incrementCallback: () {
+          _restaurantController.incrementItem(cartItem.idInCart!, 1);
+          _restaurantController.refresh();
+        },
+        onChangedToZero: () async {
+          await showConfirmationDialog(context,
+              title: _i18n()["deleteItem"],
+              primaryButtonText: _i18n()["deleteBtn"],
+              helperText: _i18n()["deleteItemConfirm"], onYesClick: () async {
+            _restaurantController.deleteItem(cartItem.idInCart!);
+            if (_restaurantController.cart.value.quantity() == 0) {
+              _restaurantController.clearCart();
+              Get.until((Route route) => route.settings.name == kHomeRoute);
+            }
+          });
+          // final YesNoDialogButton yesNoResult = await cancelAlertDialog(
+          //     title: _i18n()["deleteItem"],
+          //     body: _i18n()["deleteItemConfirm"],
+          //     icon: Container(
+          //       child: Icon(
+          //         Icons.highlight_off,
+          //         size: 65,
+          //         color: Color(0xffdb2846),
+          //       ),
+          //     ));
+          // mezDbgPrint(" the returend value from the dailog $yesNoResult");
+          // if (yesNoResult == YesNoDialogButton.Yes) {
+          //   _restaurantController.deleteItem(cartItem.idInCart!);
+          //   if (_restaurantController.cart.value.quantity() == 0) {
+          //     _restaurantController.clearCart();
+          //     Get.until((Route route) => route.settings.name == kHomeRoute);
+          //   }
+          // }
+        },
+        value: cartItem.quantity,
+        decrementCallback: () {
+          _restaurantController.incrementItem(cartItem.idInCart!, -1);
+          _restaurantController.refresh();
+        });
   }
 }

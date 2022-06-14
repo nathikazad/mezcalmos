@@ -14,72 +14,79 @@ class OrderRestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundImage:
-                  CachedNetworkImageProvider(order.restaurant.image),
-              radius: 25,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Flexible(
-                fit: FlexFit.tight,
-                flex: 8,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      order.restaurant.name,
-                      style: Get.textTheme.bodyText1,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
+    return Column(
+      children: [
+        SizedBox(
+          height: 20,
+        ),
+        Card(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage:
+                      CachedNetworkImageProvider(order.restaurant.image),
+                  radius: 25,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Flexible(
+                    fit: FlexFit.tight,
+                    flex: 8,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.place,
-                          size: 18,
-                          color: primaryBlueColor,
+                        Text(
+                          order.restaurant.name,
+                          style: Get.textTheme.bodyText1,
                         ),
                         SizedBox(
-                          width: 5,
+                          height: 5,
                         ),
-                        Flexible(
-                          child: Text(
-                            order.restaurant.location.address,
-                            style: Get.textTheme.bodyText2,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.place,
+                              size: 18,
+                              color: primaryBlueColor,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Flexible(
+                              child: Text(
+                                order.restaurant.location.address,
+                                style: Get.textTheme.bodyText2,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                  ],
-                )),
-            Spacer(),
-            Obx(
-              () => MessageButton(
-                  showRedDot: Get.find<OrderController>()
-                      .orderHaveNewMessageNotifications(order.orderId),
-                  onTap: () {
-                    Get.toNamed<void>(
-                      getMessagesRoute(
-                        chatId: order.orderId,
-                        orderId: order.orderId,
-                        recipientType: ParticipantType.Restaurant,
-                      ),
-                    );
-                  }),
-            )
-          ],
+                    )),
+                Spacer(),
+                Obx(
+                  () => MessageButton(
+                      showRedDot: Get.find<OrderController>()
+                          .orderHaveNewMessageNotifications(order.orderId),
+                      onTap: () {
+                        Get.toNamed<void>(
+                          getMessagesRoute(
+                            chatId: order.orderId,
+                            orderId: order.orderId,
+                            recipientType: ParticipantType.Restaurant,
+                          ),
+                        );
+                      }),
+                )
+              ],
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }

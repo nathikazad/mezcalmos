@@ -125,7 +125,7 @@
                 "ViewCartScreen": {
                     "components": {
                         "BuildCart": {
-                            "inCart": "In Cart",
+                            "inCart": "My orders",
                             "yesClear": "Yes clear",
                             "no": "No",
                             "clearCart": "Clear Cart",
@@ -133,8 +133,9 @@
                             "clear": "Clear"
                         },
                         "BuildItems": {
-                            "deleteItem": "Delete This Item.",
-                            "deleteItemConfirm": "Would you like to delete this item?",
+                            "deleteItem": "Delete  item",
+                            "deleteItemConfirm": "Are you sure you would like to delete?",
+                            "deleteBtn": "Yes, delete item",
                             "itemNotes": "Item notes :"
                         },
                         "ChoosenManyOption": {
@@ -158,7 +159,8 @@
                             "addLocationDialogSkip": "Skip"
                         },
                         "ViewCartBody": {
-                            "notes": "Write your note here"
+                            "notesTitle": "Notes",
+                            "notes": "Write your notes here"
                         }
                     },
                     "ViewCartScreen": {
@@ -440,7 +442,7 @@
 
                         },
                         "LaundryPricingComponent": {
-                            "laundryPricing": "Laundry Pricing",
+                            "laundryPricing": "Laundry cost",
                             "fixedRate": "Cost Per Kilo",
                             "orderWeight": "Order Weight",
                             "minimumCost": "Minimum Cost",
@@ -582,10 +584,10 @@
                 "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
             },
             "GeneralPurposeHelper": {
-                "yesCancel": "Yes cancel order",
+                "yesCancel": "Yes, cancel order",
                 "no": "No",
                 "cancelOrder": "Cancel Order",
-                "cancelConfirmationText": "Are you sure you want to cancel the order",
+                "cancelConfirmationText": "Are you sure you would like to cancel ?",
                 "subtitle": "This action cannot be undone."
             },
             "NotificationsHelper": {
