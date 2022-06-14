@@ -635,7 +635,7 @@ class Config:
                 # min required now is 10.0
                 if patch_line_index != None:
                     print("[+] Fixing Podfile ..")
-                    pod_lines[patch_line_index] = "platform :ios, '13.0'"
+                    pod_lines[patch_line_index] = "platform :ios, '12.0'"
                 open('../ios/Podfile' , 'w+').write('\n'.join(pod_lines))    
                 print("[+] Installing Pods ..")
                 os.system('cd .. && flutter pub get && cd ios && arch -x86_64 pod install && cd ../launcher')

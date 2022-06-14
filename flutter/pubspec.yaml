@@ -72,7 +72,6 @@ dependencies:
   progress_indicators: ^1.0.0
 
   # UI
-  flutter_facebook_auth: ^4.3.4+2
   pin_code_fields: ^7.2.0
   badges: ^2.0.2
   flutter_local_notifications: ^9.6.0
@@ -92,6 +91,8 @@ dependencies:
   # Check if a user has the most recent version of your app installed.
   new_version: ^0.3.0
   store_redirect: ^2.0.1
+  app_settings: ^4.1.8
+  flutter_facebook_auth: ^4.3.4+2
   # in_app_review: ^2.0.4
 
 
