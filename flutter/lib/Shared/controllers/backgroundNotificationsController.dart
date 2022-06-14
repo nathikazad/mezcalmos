@@ -60,7 +60,9 @@ class BackgroundNotificationsController extends GetxController {
     mezDbgPrint("CurrentRoute : ${Get.currentRoute}");
     mezDbgPrint(
         "_____________________________________________ BACKROUNG MESSAGE ____________________________________");
-
+    mezDbgPrint(message.data);
+    mezDbgPrint(
+        "_____________________________________________ BACKROUNG MESSAGE ____________________________________");
     if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
     if (message.data['linkUrl'].toString().contains('/messages/')) {
       Future<void>.delayed(

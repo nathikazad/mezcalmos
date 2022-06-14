@@ -72,7 +72,7 @@ class _RestaurantOrderFromToComponentState
         serviceProviderName: widget.order.restaurant.name,
         serviceProviderTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff),
         onServiceMsgClick: () {
-          if (widget.order.customerDropOffDriverChatId != null) {
+          if (widget.order.serviceProviderDropOffDriverChatId != null) {
             Get.toNamed(
               getMessagesRoute(
                   chatId: widget.order.serviceProviderDropOffDriverChatId!,
