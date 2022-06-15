@@ -5,6 +5,7 @@
 *.jks
 key.properties
 upload_certificate.pem
+.env
  
 # flutter plugins related files
 generated_plugin_registrant.dart
