@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">mezcalmos</string>
     <string name="facebook_app_id" translatable="false" >394067681830405</string>
+    <string name="facebook_client_token">739be8419ead7891a5841f97be86e512</string>
     <string name="fb_login_protocol_scheme" translatable="false" >fb394067681830405</string>
 </resources>
