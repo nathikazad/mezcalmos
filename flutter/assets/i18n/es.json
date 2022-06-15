@@ -1253,7 +1253,7 @@
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Entrega de restaurantes",
                             "orderStatus": {
-                                "waiting": "Esperando preparando la orden",
+                                "waiting": "Esperando el restaurante",
                                 "preparing": "Orden se está preparando",
                                 "readyForPickup": "Listo para recojer",
                                 "deliveryOtw": "Entrega en el camino",

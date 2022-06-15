@@ -120,6 +120,34 @@ class DriverOrderCard extends StatelessWidget {
               ),
             ),
           );
+        case RestaurantOrderStatus.OnTheWay:
+          return Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.amber.shade100,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(
+                "In transit",
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+              ),
+            ),
+          );
+        case RestaurantOrderStatus.ReadyForPickup:
+          return Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.green.shade100,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(
+                "Ready",
+                style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+              ),
+            ),
+          );
 
         default:
           return Container(
@@ -138,6 +166,31 @@ class DriverOrderCard extends StatelessWidget {
       }
     } else {
       switch ((order as LaundryOrder).status) {
+        case LaundryOrderStatus.ReadyForDelivery:
+          return Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                color: Colors.green.shade100,
+                borderRadius: BorderRadius.circular(12)),
+            child: Text(
+              "Ready",
+              style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+            ),
+          );
+        case LaundryOrderStatus.OtwPickupFromCustomer:
+        case LaundryOrderStatus.OtwPickupFromLaundry:
+        case LaundryOrderStatus.PickedUpFromCustomer:
+        case LaundryOrderStatus.PickedUpFromLaundry:
+          return Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                color: Colors.amber.shade100,
+                borderRadius: BorderRadius.circular(12)),
+            child: Text(
+              "In transit",
+              style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+            ),
+          );
         case LaundryOrderStatus.CancelledByAdmin:
         case LaundryOrderStatus.CancelledByCustomer:
           return Container(

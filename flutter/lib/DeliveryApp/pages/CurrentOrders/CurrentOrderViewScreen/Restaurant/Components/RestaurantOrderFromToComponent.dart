@@ -38,7 +38,7 @@ class _RestaurantOrderFromToComponentState
     extends State<RestaurantOrderFromToComponent> {
   ServiceInfo? restaurant;
   final Rx<OrderInfoCardState> orderInfoCardState =
-      OrderInfoCardState.Minimized.obs;
+      OrderInfoCardState.Maximized.obs;
   @override
   void initState() {
     super.initState();
@@ -56,6 +56,7 @@ class _RestaurantOrderFromToComponentState
         // customer
         customerImage: widget.order.customer.image,
         customerName: widget.order.customer.name,
+        enableExpand: _isTimesSetted(),
         customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff),
         onCustomerMsgClick: () {
           if (widget.order.customerDropOffDriverChatId != null) {
@@ -94,6 +95,11 @@ class _RestaurantOrderFromToComponentState
         },
       ),
     );
+  }
+
+  bool _isTimesSetted() {
+    return widget.order.estimatedDropoffAtCustomerTime != null &&
+        widget.order.estimatedPickupFromServiceProviderTime != null;
   }
 
 // get order status readable title

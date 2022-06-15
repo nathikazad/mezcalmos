@@ -143,7 +143,8 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
                 style: Get.textTheme.bodyText1,
               ),
               Text(
-                DateFormat('dd MMM yy h:m').format(widget.order.orderTime),
+                DateFormat('dd MMM yy h:m')
+                    .format(widget.order.orderTime.toLocal()),
                 style: Get.textTheme.subtitle1,
               )
             ],
@@ -242,7 +243,8 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
                 style: Get.textTheme.bodyText1,
               ),
               Text(
-                DateFormat('dd MMM yy h:m').format(widget.order.orderTime),
+                DateFormat('dd MMM yy h:m')
+                    .format(widget.order.orderTime.toLocal()),
                 style: Get.textTheme.subtitle1,
               )
             ],

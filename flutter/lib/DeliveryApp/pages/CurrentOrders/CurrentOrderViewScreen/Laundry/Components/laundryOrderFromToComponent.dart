@@ -39,7 +39,7 @@ class LaundryOrderFromToComponent extends StatefulWidget {
 class _LaundryOrderFromToComponentState
     extends State<LaundryOrderFromToComponent> {
   final Rx<OrderInfoCardState> orderInfoCardState =
-      OrderInfoCardState.Minimized.obs;
+      OrderInfoCardState.Maximized.obs;
 
   ServiceInfo? laundry;
 
@@ -62,7 +62,12 @@ class _LaundryOrderFromToComponentState
         // customer
         customerImage: widget.order.customer.image,
         customerName: widget.order.customer.name,
-        customerTimeWidgets: _dateTimeSetter(DeliveryAction.Pickup),
+        enableExpand: _isTimesSetted(),
+
+        customerTimeWidgets: _dateTimeSetter(
+            (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)
+                ? DeliveryAction.Pickup
+                : DeliveryAction.DropOff),
         onCustomerMsgClick: () {
           if (widget.order.getCustomerDriverChatId() != null) {
             Get.toNamed<void>(
@@ -76,7 +81,10 @@ class _LaundryOrderFromToComponentState
         // landry
         serviceProviderImage: widget.order.laundry!.image,
         serviceProviderName: widget.order.laundry!.name,
-        serviceProviderTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff),
+        serviceProviderTimeWidgets: _dateTimeSetter(
+            (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)
+                ? DeliveryAction.DropOff
+                : DeliveryAction.Pickup),
         onServiceMsgClick: () {
           if (widget.order.getServiceDriverChatId() != null) {
             Get.toNamed(getMessagesRoute(
@@ -100,6 +108,17 @@ class _LaundryOrderFromToComponentState
         },
       ),
     );
+  }
+
+  bool _isTimesSetted() {
+    if (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return widget.order.estimatedPickupFromCustomerTime != null &&
+          widget.order.estimatedDropoffAtServiceProviderTime != null;
+    } else if (widget.order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
+      return widget.order.estimatedDropoffAtCustomerTime != null &&
+          widget.order.estimatedPickupFromServiceProviderTime != null;
+    } else
+      return false;
   }
 
   String _getOrderStatus() {
@@ -236,8 +255,6 @@ class _LaundryOrderFromToComponentState
               widget.order.estimatedPickupFromCustomerTime = newDt;
             else
               widget.order.estimatedDropoffAtServiceProviderTime = newDt;
-
-            setState(() {});
           }
         },
       );

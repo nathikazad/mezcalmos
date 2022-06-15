@@ -1259,7 +1259,7 @@
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Restaurant Delivery",
                             "orderStatus": {
-                                "waiting": "Waiting for preparing the order",
+                                "waiting": "Waiting for restaurant",
                                 "preparing": "Order is being prepared",
                                 "readyForPickup": "Ready for pickup",
                                 "deliveryOtw": "Delivery on the way",

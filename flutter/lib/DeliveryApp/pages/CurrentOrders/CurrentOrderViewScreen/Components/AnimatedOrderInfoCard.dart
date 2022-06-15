@@ -40,6 +40,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
 
   final String formattedOrderStatus;
   final Order order;
+  final bool enableExpand;
 
   AnimatedOrderInfoCard({
     required this.formattedOrderStatus,
@@ -47,6 +48,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     this.isCustomerRowFirst = true,
     this.initialCardState = OrderInfoCardState.Minimized,
     this.onCardStateChange,
+    this.enableExpand = true,
     required this.customerName,
     required this.customerImage,
     this.customerTimeWidgets = const <Widget>[],
@@ -172,8 +174,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                mezDbgPrint("log state ==> ${initialCardState.opposit()}");
-                onCardStateChange?.call(initialCardState.opposit());
+                if (enableExpand) {
+                  mezDbgPrint("log state ==> ${initialCardState.opposit()}");
+                  onCardStateChange?.call(initialCardState.opposit());
+                }
               },
               child: Icon(
                 initialCardState == OrderInfoCardState.Minimized

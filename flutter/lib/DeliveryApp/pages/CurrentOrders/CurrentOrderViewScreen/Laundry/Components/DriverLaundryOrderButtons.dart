@@ -99,7 +99,7 @@ class DriverLaundryBottomButtons extends StatelessWidget {
                   style: Get.textTheme.bodyText1,
                 ),
                 Text(
-                  DateFormat('dd MMM yy h:m').format(order.orderTime),
+                  DateFormat('dd MMM yy h:m').format(order.orderTime.toLocal()),
                   style: Get.textTheme.subtitle1,
                 )
               ],
@@ -135,7 +135,7 @@ class DriverLaundryBottomButtons extends StatelessWidget {
                 style: textTheme.bodyText1,
               ),
               Text(
-                DateFormat('dd MMM yy h:m').format(order.orderTime),
+                DateFormat('dd MMM yy h:m').format(order.orderTime.toLocal()),
                 style: textTheme.subtitle1,
               )
             ],
