@@ -56,6 +56,7 @@ class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
     return Scaffold(
       appBar: LaundryAppAppBar(
         showOrders: false,
+        title: "${_i18n()["pastOrders"]}",
         leftBtnType: AppBarLeftButtonType.Back,
         onClick: Get.back,
       ),
@@ -69,12 +70,13 @@ class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
               children: <Widget>[
                 if (inProcessOrders.isNotEmpty)
                   _buildInProcessOrders(textTheme),
+                SizedBox(height: 25),
                 Text(
                   "${_i18n()["pastOrders"]}",
                   style: textTheme.bodyText1,
                 ),
-                const SizedBox(height: 5),
-                ListView.builder(
+                const SizedBox(height: 10),
+                ListView.separated(
                   shrinkWrap: true,
                   reverse: true,
                   itemCount: pastOrders.length,
@@ -82,6 +84,11 @@ class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
                   itemBuilder: (_, int index) {
                     return LaundryOpOrderCard(
                       laundryOrder: pastOrders[index],
+                    );
+                  },
+                  separatorBuilder: (BuildContext ctx, int index) {
+                    return SizedBox(
+                      height: 8,
                     );
                   },
                 ),
@@ -97,12 +104,13 @@ class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 15),
         Text(
           "${_i18n()["currentOrders"]}",
           style: textTheme.bodyText1,
         ),
-        const SizedBox(height: 5),
-        ListView.builder(
+        const SizedBox(height: 10),
+        ListView.separated(
           shrinkWrap: true,
           itemCount: inProcessOrders.length,
           physics: const NeverScrollableScrollPhysics(),
@@ -111,8 +119,12 @@ class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
               laundryOrder: inProcessOrders[index],
             );
           },
+          separatorBuilder: (BuildContext ctx, int index) {
+            return SizedBox(
+              height: 8,
+            );
+          },
         ),
-        Divider(),
       ],
     );
   }

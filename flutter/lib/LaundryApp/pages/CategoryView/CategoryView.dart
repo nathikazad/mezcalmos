@@ -142,7 +142,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
       },
       decoration: InputDecoration(
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+              const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           filled: true,
           fillColor: Colors.grey.shade200,
           hintText: '${_i18n()["categoryNameHint"]}',
@@ -175,7 +175,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
               filled: true,
               fillColor: Colors.grey.shade200,
               contentPadding:
-                  const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               hintText: '${_i18n()["categoryPriceHint"]}',
               border: OutlineInputBorder(
                   borderSide: BorderSide.none,

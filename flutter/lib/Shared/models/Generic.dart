@@ -19,7 +19,10 @@ extension ParseStringToAuthorizationStatus on String {
   }
 }
 
-enum LanguageType { EN, ES }
+enum LanguageType {
+  EN,
+  ES,
+}
 
 extension ParseLanugaugeTypeToString on LanguageType {
   String toLanguageCode() {

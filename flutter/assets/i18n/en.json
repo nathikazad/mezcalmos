@@ -423,8 +423,8 @@
                             "canceled": "Order Cancelled",
                             "otwToCustomer": "On the way to customer",
                             "otwToLaundry": "On the way to laundry",
-                            "pickedUpFromCustomer": "Picked up from customer",
-                            "pickedUpFromLaundry": "Picked up from laundry",
+                            "pickedUpFromCustomer": "On the way to laundry",
+                            "pickedUpFromLaundry": "Delivery on the way",
 
                             "cancelByAdmin": " Order Canceled by the admin",
                             "cancelByUser": " You canceled the order",
@@ -1356,7 +1356,10 @@
                         "components": {
                             "LaundryOpOrderCard": {
                                 "date": "Date : ",
-                                "totalCost": "Total Cost : "
+                                "totalCost": "Total Cost : ",
+                                "waiting": "Waiting",
+                                "delivered": "Delivered",
+                                "canceled": "Cancelled"
                             }
                         },
                         "currentOrders": "Current orders",
@@ -1397,8 +1400,8 @@
                         "nameTooltip": "Name missing in your selected primary language",
                         "deleteTitle": "Delete Category",
 
-                        "deleteHelperText": "are you sure you want to delete this category",
-                        "yesDelete": "Yes, delete"
+                        "deleteHelperText": "are you sure you would like to delete ?",
+                        "yesDelete": "Yes, delete category"
                     },
                     "LaundryOpNormalDeliveryTime": {
                         "normalDeliverytime": "Normal delivery time",
@@ -1439,12 +1442,14 @@
                     },
                     "LaundryOpOrderDriverCard": {
                         "driver": "Driver",
-                        "noDriver": "No driver has been assigned"
+                        "noDriver": "No driver assigned yet",
+                        "dropOffTime": "Drop-off time",
+                        "pickUpTime": "Pick-up time"
                     },
                     "LaundryOpSetCategoryComponent": {
 
-                        "deleteTitle": "Yes delete item",
-                        "deleteBody": "Are you sure you want to delete this item",
+                        "deleteTitle": "Yes, delete item",
+                        "deleteBody": " are you sure you'd like to delete ?",
                         "deleteItem": "Delete item",
                         "itemsWeights": "Items weights",
                         "newItemsWeight": "New items weight",
@@ -1491,10 +1496,10 @@
             }
         },
         "notificationHandler": {
-            "newOrderTitle": "New Order",
+            "newOrderTitle": "Order received",
             "newOrderBody": "You got a new order",
-            "canceledOrderTitle": "Order canceled",
-            "canceledOrderBody": "Your order has been canceled"
+            "canceledOrderTitle": "Order cancelled",
+            "canceledOrderBody": "Your order has been cancelled"
 
         }
 

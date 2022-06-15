@@ -64,6 +64,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     // toolbarHeight: 65,
     elevation: 0,
     bottom: tabBar,
+
     automaticallyImplyLeading: false,
     leading: _getRightLeading(),
     actions: [
@@ -79,7 +80,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
             style: TextStyle(
               fontFamily: "Poppins",
               fontWeight: FontWeight.w600,
-              fontSize: 17.sp,
+              fontSize: 15.sp,
               color: Colors.black,
             ),
           )

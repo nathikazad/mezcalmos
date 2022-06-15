@@ -82,34 +82,20 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
             children: [
               // order status
               LaundryOpOrderStatusCard(order: order.value!),
-              const SizedBox(
-                height: 5,
-              ),
+
               if (_setReadyForDeliveryButton() != null)
                 _setReadyForDeliveryButton()!,
-              const SizedBox(
-                height: 10,
-              ),
 
               OrderEstimatedTimeComponent(order: order.value!),
-              const SizedBox(
-                height: 15,
-              ),
+
               LaundryOpOrderDriverCard(order: order.value!),
 
-              const SizedBox(
-                height: 15,
-              ),
               LaundryOpCustomer(order: order.value!),
-              const SizedBox(
-                height: 15,
-              ),
-              LaundyOpSetCategoryComponent(
-                order: order.value!,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              if (order.value!.afterAtLaundry())
+                LaundyOpSetCategoryComponent(
+                  order: order.value!,
+                ),
+
               _totalCostcomponent(context),
 
               LaundryOpOrderNote(order: order.value!),
@@ -145,22 +131,21 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   }
 
   Widget? _setReadyForDeliveryButton() {
-    if (order.value!.isAtLaundry() &&
-        order.value!.costsByType != null &&
-        order.value!.costsByType!.lineItems.isNotEmpty) {
+    if (order.value!.isAtLaundry()) {
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 3),
+        margin: const EdgeInsets.only(bottom: 20),
         child: TextButton(
-            onPressed: (order.value!.status == LaundryOrderStatus.AtLaundry)
+            onPressed: (order.value!.costsByType != null &&
+                    order.value!.costsByType!.lineItems.isNotEmpty)
                 ? () {
                     controller.setAsReadyForDelivery(order.value!.orderId);
                   }
                 : null,
             style: TextButton.styleFrom(
-                backgroundColor:
-                    (order.value!.status == LaundryOrderStatus.AtLaundry)
-                        ? primaryBlueColor
-                        : Colors.grey),
+                backgroundColor: (order.value!.costsByType != null &&
+                        order.value!.costsByType!.lineItems.isNotEmpty)
+                    ? primaryBlueColor
+                    : Colors.grey),
             child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),

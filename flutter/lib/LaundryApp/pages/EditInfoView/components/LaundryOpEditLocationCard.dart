@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class LaundryOpEditLocationCard extends StatelessWidget {
@@ -15,6 +14,7 @@ class LaundryOpEditLocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         color: Colors.grey.shade200,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
@@ -28,7 +28,7 @@ class LaundryOpEditLocationCard extends StatelessWidget {
             });
           },
           child: Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 6),
             width: double.infinity,
             child: Row(
               children: [
@@ -46,11 +46,12 @@ class LaundryOpEditLocationCard extends StatelessWidget {
                       editInfoController.newLocation.value?.address ?? '',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
+                      style: Get.textTheme.bodyText1,
                     )),
                 Spacer(),
                 Icon(
                   Icons.arrow_forward_ios_rounded,
-                  color: primaryBlueColor,
+                  color: Colors.black,
                 )
               ],
             ),

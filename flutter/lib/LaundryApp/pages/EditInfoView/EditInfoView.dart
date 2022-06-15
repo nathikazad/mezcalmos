@@ -5,10 +5,10 @@ import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/EditInfoWidgets.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/LaundryOpEditLocationCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/LaundryOpImageEditComponent.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/languageSelectorComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
@@ -65,7 +65,8 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
                 alignment: Alignment.center,
                 child: Text(
                   editInfoController.laundry.value?.info.name ?? "",
-                  style: Get.textTheme.headline3,
+                  style: Get.textTheme.headline3
+                      ?.copyWith(fontWeight: FontWeight.w700),
                 ),
               )
               // Laundry name fiels
@@ -86,11 +87,12 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
               SizedBox(
                 height: 10,
               ),
-              LanguageSelectorComponent(
-                  languageValue: editInfoController.primaryLang,
-                  oppositeLanguageValue: editInfoController.secondaryLang,
-                  onChangeShouldUpdateLang:
-                      editInfoController.validatePrimaryLanguUpdate),
+              _laundryPrimaryLang(),
+              // LanguageSelectorComponent(
+              //     languageValue: editInfoController.primaryLang,
+              //     oppositeLanguageValue: editInfoController.secondaryLang,
+              //     onChangeShouldUpdateLang:
+              //         editInfoController.validatePrimaryLanguUpdate),
 
               SizedBox(
                 height: 25,
@@ -99,13 +101,14 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
               SizedBox(
                 height: 10,
               ),
-              LanguageSelectorComponent(
-                languageValue: editInfoController.secondaryLang,
-                oppositeLanguageValue: editInfoController.primaryLang,
-                onChangeShouldUpdateLang:
-                    editInfoController.validateSecondaryLanguUpdate,
-                showDeleteIcon: true,
-              ),
+              _laundrySecondaryang(),
+              // LanguageSelectorComponent(
+              //   languageValue: editInfoController.secondaryLang,
+              //   oppositeLanguageValue: editInfoController.primaryLang,
+              //   onChangeShouldUpdateLang:
+              //       editInfoController.validateSecondaryLanguUpdate,
+              //   showDeleteIcon: true,
+              // ),
               SizedBox(
                 height: 25,
               ),
@@ -134,7 +137,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
     );
   }
 
-  TextFormField _laundryNameTextField() {
+  Widget _laundryNameTextField() {
     return TextFormField(
       controller: editInfoController.laundryNameController,
       style: Get.textTheme.bodyText1,
@@ -145,6 +148,42 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
         return null;
       },
       decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide.none),
+          focusedBorder: InputBorder.none,
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Colors.grey.shade200),
+    );
+  }
+
+  Widget _laundryPrimaryLang() {
+    return TextFormField(
+      initialValue: editInfoController.primaryLang.value!.toLanguageName(),
+      style: Get.textTheme.bodyText1,
+      enabled: false,
+      decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide.none),
+          focusedBorder: InputBorder.none,
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Colors.grey.shade200),
+    );
+  }
+
+  Widget _laundrySecondaryang() {
+    return TextFormField(
+      initialValue: editInfoController.secondaryLang.value!.toLanguageName(),
+      style: Get.textTheme.bodyText1,
+      enabled: false,
+      decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide.none),

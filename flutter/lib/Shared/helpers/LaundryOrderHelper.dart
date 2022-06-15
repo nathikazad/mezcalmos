@@ -110,6 +110,7 @@ extension LaundryOrderWidgets on LaundryOrder {
         );
       case LaundryOrderStatus.OtwPickupFromLaundry:
       case LaundryOrderStatus.PickedUpFromLaundry:
+      case LaundryOrderStatus.PickedUpFromCustomer:
         return Container(
           child: Icon(
             Icons.delivery_dining,
@@ -117,7 +118,7 @@ extension LaundryOrderWidgets on LaundryOrder {
             color: primaryBlueColor,
           ),
         );
-      case LaundryOrderStatus.PickedUpFromCustomer:
+
       case LaundryOrderStatus.Delivered:
         return Container(
           padding: const EdgeInsets.all(5),

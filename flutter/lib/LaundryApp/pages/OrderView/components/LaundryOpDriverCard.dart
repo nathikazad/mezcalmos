@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["OrderView"]["Components"]["LaundryOpOrderDriverCard"];
@@ -17,22 +20,74 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
   final LaundryOrder order;
   @override
   Widget build(BuildContext context) {
-    return Container(
-     
-      child: Card(
-        child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 8),
-            child: (_isDriverExist())
-                ? Row(children: [
+    return Card(
+      margin: const EdgeInsets.only(bottom: 20),
+      child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+          child: (_isDriverExist())
+              ? Row(children: [
+                  Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.center,
+                    children: [
+                      CircleAvatar(
+                          radius: 23,
+                          backgroundImage:
+                              CachedNetworkImageProvider(_getDriver()!.image)),
+                      Positioned(
+                        right: -30,
+                        child: CircleAvatar(
+                          radius: 23,
+                          child: Icon(
+                            Icons.delivery_dining,
+                            size: 32,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 40,
+                  ),
+                  Flexible(
+                    flex: 5,
+                    fit: FlexFit.tight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _getDriver()!.name,
+                          style: Get.textTheme.bodyText1,
+                        ),
+                        if (_getTime() != null) Text(_getTime()!)
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  Obx(
+                    () => MessageButton(
+                        showRedDot: Get.find<OrderController>()
+                            .hasNewMessageNotification(_getCorrectChatId()),
+                        onTap: () {
+                          Get.toNamed(getMessagesRoute(
+                              orderId: order.orderId,
+                              chatId: _getCorrectChatId(),
+                              recipientType: ParticipantType.DeliveryDriver));
+                        }),
+                  )
+                ])
+              : Row(
+                  children: [
                     Stack(
                       clipBehavior: Clip.none,
                       alignment: Alignment.center,
                       children: [
                         CircleAvatar(
-                            radius: 23,
-                            backgroundImage: CachedNetworkImageProvider(
-                                _getDriver()!.image)),
+                          radius: 23,
+                          backgroundColor: Color(0xFFEDEDED),
+                        ),
                         Positioned(
                           right: -30,
                           child: CircleAvatar(
@@ -50,74 +105,27 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                       width: 40,
                     ),
                     Flexible(
-                      flex: 5,
-                      fit: FlexFit.tight,
                       child: Text(
-                        _getDriver()!.name,
+                        "${_i18n()["noDriver"]}",
                         style: Get.textTheme.bodyText1,
                       ),
                     ),
-                    Spacer(),
-                    Stack(
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              Get.toNamed(getMessagesRoute(
-                                  orderId: order.orderId,
-                                  chatId: _getCorrectChatId(),
-                                  recipientType:
-                                      ParticipantType.DeliveryDriver));
-                            },
-                            icon: Icon(
-                              Icons.textsms_rounded,
-                              color: Theme.of(context).primaryColorLight,
-                            )),
-                        Obx(
-                          () => Get.find<OrderController>()
-                                  .hasNewMessageNotification(
-                                      _getCorrectChatId())
-                              ? _newMessageRedDot(context)
-                              : Container(),
-                        )
-                      ],
-                    ),
-                  ])
-                : Row(
-                    children: [
-                      Stack(
-                        clipBehavior: Clip.none,
-                        alignment: Alignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 23,
-                            backgroundColor: Colors.grey,
-                          ),
-                          Positioned(
-                            right: -30,
-                            child: CircleAvatar(
-                              radius: 23,
-                              child: Icon(
-                                Icons.delivery_dining,
-                                size: 32,
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Flexible(
-                        child: Text(
-                          "${_i18n()["noDriver"]}",
-                          style: Get.textTheme.bodyText1,
-                        ),
-                      ),
-                    ],
-                  )),
-      ),
+                  ],
+                )),
     );
+  }
+
+  String? _getTime() {
+    final String userLangCode =
+        Get.find<LanguageController>().userLanguageKey.toLanguageCode();
+    if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
+        order.estimatedPickupFromCustomerTime != null) {
+      return "${_i18n()["pickUpTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedPickupFromCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(order.estimatedPickupFromCustomerTime!.toLocal())}";
+    } else if (order.estimatedDropoffAtCustomerTime != null) {
+      return "${_i18n()["dropOffTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedDropoffAtCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
+    } else {
+      return null;
+    }
   }
 
   bool _isDriverExist() {
@@ -164,20 +172,5 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
         orderId: order.orderId,
         chatId: order.serviceProviderPickupDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
-  }
-
-  Widget _newMessageRedDot(BuildContext context) {
-    return Positioned(
-      left: 0,
-      top: 0,
-      child: Container(
-        width: 13,
-        height: 13,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xfff6efff), width: 2),
-            color: const Color(0xffff0000)),
-      ),
-    );
   }
 }

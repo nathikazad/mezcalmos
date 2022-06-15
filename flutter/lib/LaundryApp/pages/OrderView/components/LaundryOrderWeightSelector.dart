@@ -55,13 +55,6 @@ class _LaundryOrderWeightSelectorState
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.circular(8)),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                suffixIcon: (widget.newCategory.value != null)
-                    ? IconButton(
-                        onPressed: () {
-                          widget.newCategory.value = null;
-                        },
-                        icon: Icon(Icons.close))
-                    : null,
               ),
               isEmpty: widget.newCategory.value == null,
               child: DropdownButtonHideUnderline(

@@ -18,6 +18,7 @@ class LaundryOpOrderNote extends StatelessWidget {
   Widget build(BuildContext context) {
     if (order.notes!.isNotEmpty) {
       return Card(
+        margin: const EdgeInsets.symmetric(vertical: 20),
         child: Container(
           padding: const EdgeInsets.all(8),
           child: Column(
@@ -31,7 +32,7 @@ class LaundryOpOrderNote extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 8,
+                height: 4,
               ),
               Text(order.notes ?? '')
             ],

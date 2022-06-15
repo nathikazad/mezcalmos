@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:sizer/sizer.dart';
 
@@ -13,6 +14,7 @@ class EditInfoWidgets {
 
   dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
       ["MezWorkingHours"];
+  int selectedValue = 1;
 
   // List of weekdays  cards
   Widget editWorkingHoursComponent() {
@@ -96,8 +98,8 @@ class EditInfoWidgets {
                     borderRadius: BorderRadius.circular(10),
                     color: (editInfoController
                             .newSchedule.value!.openHours[weekday]!.isOpen)
-                        ? Colors.green.shade100
-                        : Colors.red.shade100,
+                        ? Color(0xFFE9F4E9)
+                        : Color(0xFFFCE7EB),
                   ),
                   //  padding: const EdgeInsets.symmetric(horizontal: 8),
 
@@ -111,8 +113,8 @@ class EditInfoWidgets {
                         fontWeight: FontWeight.w800,
                         color: editInfoController
                                 .newSchedule.value!.openHours[weekday]!.isOpen
-                            ? Colors.green
-                            : Colors.red),
+                            ? Color(0xFF219125)
+                            : Color(0xFFE21132)),
                   )),
                 ),
               ),
@@ -143,7 +145,7 @@ class EditInfoWidgets {
                           color: Colors.grey.shade200, shape: BoxShape.circle),
                       child: Icon(
                         Icons.edit_outlined,
-                        color: Colors.black,
+                        color: Color(0xFF5B5A5A),
                         size: 20,
                       ),
                     )),
@@ -171,7 +173,7 @@ class EditInfoWidgets {
 
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Text(
                 "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
                 style: Get.theme.textTheme.headline3,
@@ -180,49 +182,63 @@ class EditInfoWidgets {
             SizedBox(
               height: 20,
             ),
-
-            Row(
-              children: [
-                Flexible(
-                    child: CheckboxListTile(
-                        checkboxShape: CircleBorder(),
-                        controlAffinity: ListTileControlAffinity.trailing,
-                        value: editInfoController
-                            .schedulePreview.value!.openHours[weekday]!.isOpen,
-                        activeColor: primaryBlueColor,
-                        title: Text('${_i18n()["workingHoursCard"]["open"]}',
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Row(
+                      children: [
+                        Text('${_i18n()["workingHoursCard"]["open"]}',
                             style: Get.textTheme.bodyText1),
-                        onChanged: (bool? value) {
-                          editInfoController.schedulePreview.value!
-                              .openHours[weekday]!.isOpen = true;
-                          editInfoController.schedulePreview.refresh();
-                        })),
-                Flexible(
-                    child: CheckboxListTile(
-                  checkboxShape: CircleBorder(),
-                  controlAffinity: ListTileControlAffinity.trailing,
-                  value: !editInfoController
-                      .schedulePreview.value!.openHours[weekday]!.isOpen,
-                  activeColor: primaryBlueColor,
-                  onChanged: (bool? value) {
-                    editInfoController.schedulePreview.value!
-                        .openHours[weekday]!.isOpen = false;
-                    editInfoController.schedulePreview.refresh();
-                  },
-                  title: Text("${_i18n()["workingHoursCard"]["closed"]}",
-                      style: Get.textTheme.bodyText1),
-                )),
-              ],
+                        Spacer(),
+                        radioCircleButton(
+                            value: editInfoController.schedulePreview.value!
+                                    .openHours[weekday]!.isOpen ==
+                                true,
+                            onTap: (bool? v) {
+                              editInfoController.schedulePreview.value!
+                                  .openHours[weekday]!.isOpen = true;
+                              editInfoController.schedulePreview.refresh();
+                            })
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Flexible(
+                    child: Row(
+                      children: [
+                        Text('${_i18n()["workingHoursCard"]["closed"]}',
+                            style: Get.textTheme.bodyText1),
+                        Spacer(),
+                        radioCircleButton(
+                            value: editInfoController.schedulePreview.value!
+                                    .openHours[weekday]!.isOpen ==
+                                false,
+                            onTap: (bool? v) {
+                              editInfoController.schedulePreview.value!
+                                  .openHours[weekday]!.isOpen = false;
+                              editInfoController.schedulePreview.refresh();
+                            })
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             if (editInfoController
                 .schedulePreview.value!.openHours[weekday]!.isOpen)
               Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text("${_i18n()["workingHoursCard"]["from"]}",
                         style: Get.textTheme.bodyText1),
                     SizedBox(
@@ -235,16 +251,28 @@ class EditInfoWidgets {
                         borderRadius: BorderRadius.circular(10),
                         onTap: () {
                           showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay(
-                                hour: editInfoController.schedulePreview.value!
-                                    .openHours[weekday]!.from[0],
-                                minute: editInfoController.schedulePreview
-                                    .value!.openHours[weekday]!.from[1]),
-                            builder: (BuildContext context, Widget? child) {
-                              return child ?? Container();
-                            },
-                          ).then((TimeOfDay? value) {
+                              context: context,
+                              initialTime: TimeOfDay(
+                                  hour: editInfoController.schedulePreview
+                                      .value!.openHours[weekday]!.from[0],
+                                  minute: editInfoController.schedulePreview
+                                      .value!.openHours[weekday]!.from[1]),
+                              builder: (BuildContext context, Widget? child) {
+                                return Theme(
+                                    data: Theme.of(context).copyWith(
+                                      textButtonTheme: TextButtonThemeData(
+                                        style: ButtonStyle(
+                                          foregroundColor:
+                                              MaterialStateColor.resolveWith(
+                                            (Set<MaterialState> states) =>
+                                                Color.fromRGBO(
+                                                    103, 121, 254, 1),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    child: child!);
+                              }).then((TimeOfDay? value) {
                             if (value != null) {
                               // mezDbgPrint(value);
                               editInfoController.schedulePreview.value!
@@ -259,6 +287,8 @@ class EditInfoWidgets {
                         child: Container(
                             padding: EdgeInsets.all(12),
                             width: double.infinity,
+                            alignment: Alignment.centerLeft,
+                            height: 50,
                             child: Text(
                               "${editInfoController.schedulePreview.value!.openHours[weekday]!.from[0]} : ${editInfoController.schedulePreview.value!.openHours[weekday]!.from[1]}",
                               style: Theme.of(context)
@@ -292,12 +322,16 @@ class EditInfoWidgets {
                             builder: (BuildContext context, Widget? child) {
                               return Theme(
                                   data: Theme.of(context).copyWith(
-                                      textButtonTheme: TextButtonThemeData(
-                                          style: TextButton.styleFrom(
-                                              textStyle: TextStyle(
-                                                  color: primaryBlueColor),
-                                              backgroundColor:
-                                                  Colors.transparent))),
+                                    textButtonTheme: TextButtonThemeData(
+                                      style: ButtonStyle(
+                                        foregroundColor:
+                                            MaterialStateColor.resolveWith(
+                                          (Set<MaterialState> states) =>
+                                              Color.fromRGBO(103, 121, 254, 1),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                   child: child!);
                             },
                           ).then((TimeOfDay? value) {
@@ -313,7 +347,9 @@ class EditInfoWidgets {
                         },
                         child: Container(
                             padding: EdgeInsets.all(12),
+                            height: 50,
                             width: double.infinity,
+                            alignment: Alignment.centerLeft,
                             child: Text(
                               "${editInfoController.schedulePreview.value!.openHours[weekday]!.to[0]} : ${editInfoController.schedulePreview.value!.openHours[weekday]!.to[1]}",
                               style: Theme.of(context)
@@ -330,7 +366,7 @@ class EditInfoWidgets {
               height: 5,
             ),
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
               child: Column(
                 children: [
                   InkWell(
@@ -346,7 +382,6 @@ class EditInfoWidgets {
                           decoration: BoxDecoration(
                               gradient: bluePurpleGradient,
                               borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.all(16),
                           alignment: Alignment.center,
                           child: Text(
                             "${_i18n()["save"]}",
@@ -372,7 +407,6 @@ class EditInfoWidgets {
                         });
                       },
                       child: Container(
-                        margin: const EdgeInsets.all(5),
                         alignment: Alignment.center,
                         child: Text("${_i18n()["cancel"]}",
                             style: Get.textTheme.bodyText1

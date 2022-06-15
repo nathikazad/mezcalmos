@@ -428,8 +428,8 @@
                             "canceled": "Orden cancelada",
                             "otwToCustomer": "De camino al cliente",
                             "otwToLaundry": "De camino a la lavandería",
-                            "pickedUpFromCustomer": "Recogido del cliente",
-                            "pickedUpFromLaundry": "Recogido de la ropa",
+                            "pickedUpFromCustomer": "De camino a la lavandería",
+                            "pickedUpFromLaundry": "Entrega en camino",
 
 
                             "cancelByAdmin": " Orden cancelado por el administrador.",
@@ -651,7 +651,7 @@
                 },
                 "ViewNotifications": {
 
-                    "title": "Notifications",
+                    "title": "Notificaciones",
                     "latest": "Más reciente",
                     "today": "Hoy dia",
                     "alertClearNotificationTitle": "Borrar todas las notificaciones",
@@ -1348,7 +1348,10 @@
                         "components": {
                             "LaundryOpOrderCard": {
                                 "date": "Fecha :",
-                                "totalCost": "Coste total :"
+                                "totalCost": "Coste total :",
+                                "waiting": "Esperando",
+                                "delivered": "Entregada",
+                                "canceled": "Cancelada"
                             }
                         },
                         "currentOrders": "Órdenes actuales",
@@ -1389,8 +1392,9 @@
                     "CategoryGridCard": {
                         "nameTooltip": "Nombre que falta en su idioma primario seleccionado",
                         "deleteTitle": "Eliminar la categoría",
-                        "deleteHelperText": "¿Estás seguro de que quieres eliminar esta categoría?",
-                        "yesDelete": "Si, eliminar"
+
+                        "deleteHelperText": "¿Estás seguro de que te gustaría eliminar?",
+                        "yesDelete": "Sí, eliminar la categoría"
                     },
                     "LaundryOpNormalDeliveryTime": {
                         "normalDeliverytime": "Tiempo de entrega normal",
@@ -1431,14 +1435,16 @@
                     },
                     "LaundryOpOrderDriverCard": {
                         "driver": "Conductor",
-                        "noDriver": "No se ha asignado ningún controlador"
+                        "noDriver": "No hay controlador asignado todavía",
+                        "dropOffTime": "Hora de entrega",
+                        "pickUpTime": "Hora de recogida"
 
                     },
 
 
                     "LaundryOpSetCategoryComponent": {
-                        "deleteTitle": "SÍ Eliminar el artículo",
-                        "deleteBody": "¿Estás seguro de que quieres eliminar este artículo?",
+                        "deleteTitle": "SÍ, Eliminar el artículo",
+                        "deleteBody": "¿Estás seguro de que te gustaría eliminar?",
                         "deleteItem": "Eliminar elemento",
                         "itemsWeights": "Artículos pesos",
                         "newItemsWeight": "Nuevos artículos de peso",
@@ -1486,7 +1492,7 @@
             }
         },
         "notificationHandler": {
-            "newOrderTitle": "Nuevo orden",
+            "newOrderTitle": "Orden recibida",
             "newOrderBody": "Tienes un nuevo pedido",
             "canceledOrderTitle": "Orden cancelada",
             "canceledOrderBody": "Su pedido ha sido cancelado"

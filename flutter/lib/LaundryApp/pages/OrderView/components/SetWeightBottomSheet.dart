@@ -223,14 +223,14 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                   child: Ink(
                     height: 50,
                     decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: Color(0xFFF9D8D6),
                         borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.all(5),
                     child: Center(
                         child: Text(
                       "${_i18n()["cancel"]}",
-                      style: Get.textTheme.bodyText1
-                          ?.copyWith(color: Colors.white),
+                      style:
+                          Get.textTheme.bodyText1?.copyWith(color: Colors.red),
                     )),
                   )),
             ],

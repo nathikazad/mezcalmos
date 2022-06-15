@@ -49,6 +49,11 @@ extension parseDateTime on DateTime {
   }
 
   String toDayAmPm() {
-    return DateFormat("EEE, hh:mm a").format(this);
+    final String userLangCode =
+        Get.find<LanguageController>().userLanguageKey.toLanguageCode();
+    final DateFormat formatTime = DateFormat.jm(userLangCode);
+    final DateFormat formatDay = DateFormat.E(userLangCode);
+
+    return "${formatDay.format(toLocal())} ${formatTime.format(toLocal())}";
   }
 }

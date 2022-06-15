@@ -87,8 +87,10 @@ class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
               return null;
             }
           },
-          items: [LanguageType.EN, LanguageType.ES]
-              .map<DropdownMenuItem<LanguageType>>((LanguageType value) {
+          items: [
+            LanguageType.EN,
+            LanguageType.ES,
+          ].map<DropdownMenuItem<LanguageType>>((LanguageType value) {
             return DropdownMenuItem<LanguageType>(
               value: value,
               enabled: (widget.oppositeLanguageValue != null &&

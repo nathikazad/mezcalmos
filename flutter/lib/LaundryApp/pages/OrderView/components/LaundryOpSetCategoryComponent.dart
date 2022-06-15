@@ -25,6 +25,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.only(bottom: 20),
       child: Container(
         padding: const EdgeInsets.all(8),
         width: double.infinity,
@@ -45,7 +46,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
               height: 10,
             ),
             _PricingTable(),
-            setItemsWeightButton(context),
+            if (order.isAtLaundry()) setItemsWeightButton(context),
           ],
         ),
       ),
@@ -57,7 +58,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
     return InkWell(
         onTap: handleClick(context: context),
         child: Ink(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -139,9 +140,9 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: DataTable(
-          dividerThickness: 0.2,
+          dividerThickness: 0.01,
           horizontalMargin: 6,
-          columnSpacing: 60.0,
+          columnSpacing: 45.0,
           headingRowHeight: 30.0,
           showBottomBorder: false,
           columns: _PricingTableColumns(),
@@ -201,26 +202,27 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("${order.costsByType!.lineItems[index].weight} "),
-                  InkWell(
-                    customBorder: CircleBorder(),
-                    onTap: (order.isAtLaundry())
-                        ? assignNewCategory(
-                            context: Get.context!,
-                            editMode: true,
-                            laundryOrderCostLineItem:
-                                order.costsByType?.lineItems[index])
-                        : null,
-                    child: Ink(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey.shade200),
-                        child: Icon(
-                          Icons.mode_edit_outline_outlined,
-                          size: 18,
-                          color: Colors.black,
-                        )),
-                  )
+                  if (order.isAtLaundry())
+                    InkWell(
+                      customBorder: CircleBorder(),
+                      onTap: (order.isAtLaundry())
+                          ? assignNewCategory(
+                              context: Get.context!,
+                              editMode: true,
+                              laundryOrderCostLineItem:
+                                  order.costsByType?.lineItems[index])
+                          : null,
+                      child: Ink(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey.shade200),
+                          child: Icon(
+                            Icons.mode_edit_outline_outlined,
+                            size: 18,
+                            color: Colors.black,
+                          )),
+                    )
                 ],
               )),
               DataCell(Row(

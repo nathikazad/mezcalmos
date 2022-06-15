@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -7,8 +8,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
-import 'package:mezcalmos/Shared/pages/Notifications/components/NotificationCard.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["Notifications"]["ViewNotifications"];
@@ -36,18 +37,20 @@ class _ViewNotificationsState extends State<ViewNotifications> {
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
-    return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back, title: _i18n()['title']),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Column(
-            children: [
-              _notifsHeader(),
-              Obx(() => _buildNotification(
-                  controller.notifications.reversed.toList()))
-            ],
+    return Obx(
+      () => Scaffold(
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+            onClick: Get.back, title: _i18n()['title']),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+              children: [
+                _notifsHeader(),
+                Obx(() => _buildNotification(
+                    controller.notifications.reversed.toList()))
+              ],
+            ),
           ),
         ),
       ),
@@ -63,8 +66,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           (List<Widget> children, notifs.Notification notification) {
         if (dd.isSameDate(notification.timestamp)) {
           todayNotifsWidgets.addAll([
-            NotificationCard(
-              notification: notification,
+            _notifCard(
+              notification,
             ),
             SizedBox(
               height: 5,
@@ -73,8 +76,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         } else {
           {
             notifsWidgets.addAll([
-              NotificationCard(
-                notification: notification,
+              _notifCard(
+                notification,
               ),
               SizedBox(
                 height: 5,
@@ -84,13 +87,76 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         }
 
         children = todayNotifsWidgets +
-            // [
-            //   if (todayNotifsWidgets.isNotEmpty && notifsWidgets.isNotEmpty)
-            //     Divider()
-            // ] +
+            [
+              if (todayNotifsWidgets.isNotEmpty && notifsWidgets.isNotEmpty)
+                Divider()
+            ] +
             notifsWidgets;
         return children;
       }),
+    );
+  }
+
+  Widget _notifCard(notifs.Notification notification) {
+    return Card(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: () {
+          Get.offNamed(notification.linkUrl);
+        },
+        child: Ink(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+          width: double.infinity,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      notification.title,
+                      style:
+                          Get.textTheme.bodyText1!.copyWith(fontSize: 12.8.sp),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      notification.body,
+                      style: Get.textTheme.bodyText2!.copyWith(fontSize: 11.sp),
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                      "${DateFormat("hh:mm a").format(notification.timestamp.toLocal())}"),
+                  Container(
+                    alignment: Alignment.center,
+                    child: (notification.imgUrl.isURL)
+                        ? CircleAvatar(
+                            radius: 25,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage:
+                                CachedNetworkImageProvider(notification.imgUrl),
+                          )
+                        : CircleAvatar(
+                            radius: 25,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: AssetImage(notification.imgUrl),
+                          ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -110,22 +176,35 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
-              IconButton(
-                  iconSize: 20,
-                  onPressed: () async {
-                    await showConfirmationDialog(context,
-                        title: _i18n()["alertClearNotificationTitle"],
-                        helperText: "",
-                        primaryButtonText: "${_i18n()["clear"]}",
-                        secondaryButtonText: "${_i18n()["no"]}",
-                        onYesClick: () async {
-                      controller.clearAllNotification();
-                      Get.back();
-                    });
-                  },
-                  icon: Icon(
-                    Icons.delete,
-                  )),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: InkWell(
+                    customBorder: CircleBorder(),
+                    onTap: () async {
+                      await showConfirmationDialog(context,
+                          title: _i18n()["alertClearNotificationTitle"],
+                          helperText: "",
+                          primaryButtonText: "${_i18n()["clear"]}",
+                          secondaryButtonText: "${_i18n()["no"]}",
+                          onYesClick: () async {
+                        controller.clearAllNotification();
+                        Get.back();
+                      });
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.delete_outline_rounded,
+                          color: Colors.black,
+                        ),
+                      ),
+                    )),
+              ),
             ],
           )));
   }

@@ -80,13 +80,14 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                             laundryInfoController.laundry.value!.info.image)),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 25,
                   ),
                   Container(
                     alignment: Alignment.center,
                     child: Text(
                       laundryInfoController.laundry.value!.info.name,
-                      style: Get.textTheme.headline3,
+                      style: Get.textTheme.headline3
+                          ?.copyWith(fontWeight: FontWeight.w700),
                     ),
                   ),
                   SizedBox(

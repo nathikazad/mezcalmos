@@ -36,9 +36,10 @@ class LaundryOpOrderCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   //  _orderImageComponent(),
-                  const SizedBox(width: 10),
+
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -62,6 +63,9 @@ class LaundryOpOrderCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(laundryOrder.orderTime.toDayAmPm()),
+                      SizedBox(
+                        height: 3,
+                      ),
                       CircleAvatar(
                         radius: 25,
                         backgroundImage: CachedNetworkImageProvider(
@@ -72,28 +76,25 @@ class LaundryOpOrderCard extends StatelessWidget {
                   // getOrderWidget()
                 ],
               ),
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: const Divider()),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Image.asset(
-                      aMoney,
-                      width: 20,
-                      height: 20,
-                      fit: BoxFit.contain,
-                    ),
-                    Text(
-                      " \$${laundryOrder.costsByType?.weighedCost ?? "-"}",
-                      style: Get.textTheme.bodyText1,
-                    ),
-                    Spacer(),
-                    getOrderWidget()
-                  ],
-                ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Image.asset(
+                    aMoney,
+                    width: 20,
+                    height: 20,
+                    fit: BoxFit.contain,
+                  ),
+                  Text(
+                    " \$${laundryOrder.costsByType?.weighedCost ?? "-"}",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  Spacer(),
+                  getOrderWidget()
+                ],
               )
             ],
           ),
@@ -156,9 +157,9 @@ class LaundryOpOrderCard extends StatelessWidget {
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
               color: Colors.red.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(12)),
+              borderRadius: BorderRadius.circular(25)),
           child: Text(
-            "Cancelled",
+            "${_i18n()["canceled"]}",
             style: Get.textTheme.bodyText1
                 ?.copyWith(color: Colors.red, fontSize: 10.sp),
           ),
@@ -169,9 +170,9 @@ class LaundryOpOrderCard extends StatelessWidget {
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
               color: Colors.green.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(12)),
+              borderRadius: BorderRadius.circular(25)),
           child: Text(
-            "Delivered",
+            "${_i18n()["delivered"]}",
             style: Get.textTheme.bodyText1
                 ?.copyWith(color: Colors.green, fontSize: 10.sp),
           ),
@@ -180,12 +181,12 @@ class LaundryOpOrderCard extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-              color: Colors.amber.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(12)),
+              color: Color(0xFFFFF0CB),
+              borderRadius: BorderRadius.circular(25)),
           child: Text(
-            "Waiting",
+            "${_i18n()["waiting"]}",
             style: Get.textTheme.bodyText1
-                ?.copyWith(color: Colors.amber, fontSize: 10.sp),
+                ?.copyWith(color: Color(0xFFFFB800), fontSize: 10.sp),
           ),
         );
     }

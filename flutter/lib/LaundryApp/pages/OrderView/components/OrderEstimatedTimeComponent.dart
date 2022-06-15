@@ -31,6 +31,7 @@ class _OrderEstimatedTimeComponentState
         widget.order.estimatedLaundryReadyTime != null) {
       return Obx(
         () => Card(
+          margin: const EdgeInsets.only(bottom: 20),
           child: (isClicked.value)
               ? Container(
                   width: double.infinity,
@@ -40,7 +41,7 @@ class _OrderEstimatedTimeComponentState
               : Container(
                   margin: const EdgeInsets.all(8),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleAvatar(

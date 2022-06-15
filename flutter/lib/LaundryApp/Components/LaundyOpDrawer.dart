@@ -148,6 +148,9 @@ class LaundryAppDrawer extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(
+          height: 15,
+        ),
         _navigationLink(
             onClick: () {
               _drawerController.closeMenu();
@@ -210,19 +213,23 @@ class LaundryAppDrawer extends StatelessWidget {
                     : AssetImage(aNoImage) as ImageProvider,
               ),
               SizedBox(
-                height: 15,
+                height: 20,
               ),
               Text(
                 laundryInfoController.laundry.value!.info.name,
-                style: Get.textTheme.headline3,
+                style: Get.textTheme.headline3
+                    ?.copyWith(fontWeight: FontWeight.w700, fontSize: 17.sp),
               ),
               SizedBox(
-                height: 15,
+                height: 45,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Divider(),
               ),
             ],
           ),
         ),
-        Divider(),
       ],
     );
   }
@@ -234,7 +241,7 @@ class LaundryAppDrawer extends StatelessWidget {
     return InkWell(
       onTap: onClick,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+        margin: const EdgeInsets.symmetric(vertical: 18, horizontal: 8),
         child: Row(
           children: [
             SizedBox(

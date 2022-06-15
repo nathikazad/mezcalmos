@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -53,6 +54,7 @@ Notification _laundryOpOrderChangesNotifier(String key, value) {
 
   return Notification(
       id: key,
+      icon: mat.Icons.local_laundry_service,
       linkUrl: getLaundryOpOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
@@ -64,24 +66,7 @@ Notification _laundryOpOrderChangesNotifier(String key, value) {
       variableParams: value);
 }
 
-Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
-  final LaundryOrderStatus newOrdersStatus =
-      value['status'].toString().toLaundryOrderStatus();
-  final Map<String, dynamic> dynamicFields =
-      getLaundryOrderStatusFields(newOrdersStatus)!;
 
-  return Notification(
-      id: key,
-      linkUrl: '',
-      body: dynamicFields["body"],
-      imgUrl: dynamicFields["imgUrl"],
-      title: dynamicFields["title"],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.OrderStatusChange,
-      notificationAction:
-          (value["notificationAction"] as String).toNotificationAction(),
-      variableParams: value);
-}
 
 Map<String, dynamic>? getLaundryOrderStatusFields(
     LaundryOrderStatus laundryOrderStatus) {
