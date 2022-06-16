@@ -5,6 +5,8 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
@@ -290,28 +292,15 @@ class _OrderEstimatedTimeComponentState
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () async {
-        await showDatePicker(
-            context: context,
-            initialDate: selectedDate.value ?? DateTime.now(),
-            firstDate: widget.order.orderTime,
-            lastDate: DateTime(2050),
-            builder: (BuildContext context, Widget? child) {
-              return Theme(
-                data: Theme.of(context).copyWith(
-                  colorScheme: ColorScheme.light(
-                    primary: primaryBlueColor, // header background color
-                    onPrimary: Colors.white, // header text color
-                    onSurface: Colors.black, // body text color
-                  ),
-                  textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(
-                      primary: primaryBlueColor, // button text color
-                    ),
-                  ),
-                ),
-                child: child!,
-              );
-            }).then((DateTime? value) {
+        // ignore: unawaited_futures
+        mezDbgPrint("tappppped");
+
+        await getDatePicker(
+          context,
+          initialDate: selectedDate.value ?? DateTime.now(),
+          firstDate: widget.order.orderTime,
+          lastDate: DateTime(DateTime.now().year + 1),
+        ).then((DateTime? value) {
           if (value != null) {
             selectedDate.value = value;
           }
@@ -342,15 +331,23 @@ class _OrderEstimatedTimeComponentState
 
   void _setOrderEstTime(DateTime value) {
     isClicked.value = true;
-
-    orderController
-        .setEstimatedLaundryReadyTime(widget.order.orderId, value)
-        .whenComplete(() {
+    if (value.difference(widget.order.orderTime).inMinutes > 30) {
+      orderController
+          .setEstimatedLaundryReadyTime(widget.order.orderId, value)
+          .whenComplete(() {
+        isClicked.value = false;
+      }).then((ServerResponse value) {
+        if (value.success) {
+          Get.back(closeOverlays: true);
+        }
+      });
+    } else {
       isClicked.value = false;
-    }).then((ServerResponse value) {
-      if (value.success) {
-        Get.back();
-      }
-    });
+      Get.showSnackbar(GetSnackBar(
+        snackPosition: SnackPosition.TOP,
+        title: "${_i18n()["error"]}",
+        message: "${_i18n()["errorText"]}",
+      ));
+    }
   }
 }

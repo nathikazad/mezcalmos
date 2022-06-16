@@ -1439,7 +1439,10 @@
                         "set": "Set",
                         "estLaundryFinish": "Estimated laundry ready time",
                         "confirm": "Confirm",
-                        "cancel": "Cancel"
+                        "cancel": "Cancel",
+                        "error": "Error",
+                        "errorText": "Please select a correct time."
+
 
                     },
                     "LaundryOpOrderDriverCard": {

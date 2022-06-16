@@ -1432,7 +1432,10 @@
                         "set": "Colocar",
                         "estLaundryFinish": "Tiempo de lavado estimado",
                         "confirm": "Confirmar",
-                        "cancel": "Cancelar"
+                        "cancel": "Cancelar",
+                        "error": "error",
+                        "errorText": "Seleccione una hora correcta."
+
 
                     },
                     "LaundryOpOrderDriverCard": {
