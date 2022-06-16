@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -47,10 +48,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
       child: Scaffold(
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
-        appBar: mezcalmosAppBar(
-          AppBarLeftButtonType.Menu,
-          showNotifications: true,
-        ),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+            showNotifications: true, ordersRoute: kPastOrdersView),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(15),
@@ -58,7 +57,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
               () => Column(
                 children: [
                   TitleWithOnOffSwitcher(
-                    title: "Online",
+                    title: "Incoming orders",
                     onTurnedOn: () {
                       _deliveryAuthController.turnOn();
                     },
@@ -85,6 +84,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                           ),
                         ),
                         errorText: 'You are offline!',
+                        secondLine: "Turn on to see incoming orders",
                       ),
                     )
                   else
@@ -106,7 +106,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           Container(
             padding: const EdgeInsets.all(5),
             child: Text(
-              "Incoming Orders",
+              "Current orders",
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -122,21 +122,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         ],
       );
     } else {
-      return Container(
-        height: 60.h,
-        child: IncomingOrdersStatus(
-          childData: Padding(
-            padding: const EdgeInsets.only(bottom: 17.0),
-            child: Image.asset(
-              noOrdersFound_asset,
-              fit: BoxFit.contain,
-              width: 40.w,
-              height: 25.h,
-            ),
-          ),
-          errorText: 'No Orders found!',
-        ),
-      );
+      return NoOrdersComponent();
     }
   }
 

@@ -109,9 +109,9 @@ class _RestaurantOrderFromToComponentState
       case RestaurantOrderStatus.CancelledByCustomer:
         return '${_i18n()["orderStatus"]["canceled"]}';
       case RestaurantOrderStatus.OrderReceieved:
-        return '${_i18n()["orderStatus"]["waiting"]}';
       case RestaurantOrderStatus.PreparingOrder:
-        return '${_i18n()["orderStatus"]["preparing"]}';
+        return '${_i18n()["orderStatus"]["waiting"]}';
+
       case RestaurantOrderStatus.ReadyForPickup:
         return '${_i18n()["orderStatus"]["readyForPickup"]}';
       case RestaurantOrderStatus.OnTheWay:

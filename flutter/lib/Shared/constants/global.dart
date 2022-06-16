@@ -90,6 +90,13 @@ const String aLocationPicker = "assets/images/shared/purpleLocationPicker.png";
 const String aOrderUnavailable = "assets/images/shared/circularCancel.png";
 const String aTaxiRidePriceController =
     "assets/images/customer/taxi/taxiRidePriceController.png";
+const String aDeliveryIcon = "assets/images/shared/notifications/onTheWay.png";
+const String aDeliveredIcon =
+    "assets/images/shared/notifications/delivered.png";
+const String aCancelledIcon = "assets/images/shared/notifications/cancel.png";
+const String aAtLaundry = "assets/images/shared/notifications/atLaundry.png";
+const String aReadyDeliveryLaundry =
+    "assets/images/shared/notifications/readyForDelivery.png";
 
 enum AppType {
   CustomerApp,

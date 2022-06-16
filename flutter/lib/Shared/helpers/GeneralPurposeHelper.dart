@@ -292,6 +292,7 @@ Future<void> showStatusInfoDialog(
   void Function()? primaryCallBack,
   required String status,
   required String description,
+  bool showSmallIcon = true,
   String? primaryClickTitle = "Ok",
   String? secondaryClickTitle = "View Order",
   IconData? primaryIcon,
@@ -325,27 +326,29 @@ Future<void> showStatusInfoDialog(
                         shape: BoxShape.circle,
                       ),
                     ),
-                    Positioned(
-                      bottom: -5,
-                      right: -10,
-                      child: Container(
-                        height: 30,
-                        width: 30,
-                        child: Center(
-                          child: Icon(
-                            bottomRightIcon ?? Icons.close,
-                            color: btnRightIconColor ?? Colors.red,
-                            size: 18,
+                    if (showSmallIcon)
+                      Positioned(
+                        bottom: -5,
+                        right: -10,
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          child: Center(
+                            child: Icon(
+                              bottomRightIcon ?? Icons.close,
+                              color: btnRightIconColor ?? Colors.red,
+                              size: 18,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color:
+                                bottomRightIcon == null || showSmallIcon == true
+                                    ? Color(0xFFFFEBEC)
+                                    : Colors.white,
+                            shape: BoxShape.circle,
                           ),
                         ),
-                        decoration: BoxDecoration(
-                          color: bottomRightIcon == null
-                              ? Color(0xFFFFEBEC)
-                              : Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    )
+                      )
                   ],
                 ),
               ),

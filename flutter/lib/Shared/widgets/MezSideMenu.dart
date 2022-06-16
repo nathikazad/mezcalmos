@@ -231,6 +231,7 @@ class MezSideMenu extends GetWidget<AuthController> {
           ),
           const SizedBox(height: 15),
           Container(
+            padding: const EdgeInsets.only(left: 5),
             child: Text(
               controller.user?.name ?? "",
               textAlign: TextAlign.center,

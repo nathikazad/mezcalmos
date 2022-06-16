@@ -10,7 +10,6 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/laundryOrderFromToComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -135,11 +134,8 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        onClick: Get.back,
-        showNotifications: true,
-      ),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: Get.back, showNotifications: true, title: getTitle()),
       bottomNavigationBar: Obx(
         () => DriverLaundryBottomButtons(
           order: order.value!,
@@ -348,6 +344,17 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
         mapController.animateAndUpdateBounds();
         break;
       default:
+    }
+  }
+
+  // get appbar title
+  String? getTitle() {
+    if (order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return "Laundry pick-up";
+    } else if (order.value!.status == LaundryOrderStatus.AtLaundry) {
+      return null;
+    } else {
+      return "Laundry drop-off";
     }
   }
 

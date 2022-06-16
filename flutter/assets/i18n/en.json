@@ -1248,7 +1248,7 @@
                                 "pickupOrder": "Start Pickup",
                                 "confirmPickup": "Confirm Order Pickup",
                                 "atLaundry": "At laundry",
-                                "deliverOrder": "Start Delivery",
+                                "deliverOrder": "Start drop-off",
                                 "confirmDelivery": "Confirm Delivery",
                                 "confirmOrderWeight": "Confirm Order weight",
                                 "orderWeightAlert": "Please enter a valid weight",

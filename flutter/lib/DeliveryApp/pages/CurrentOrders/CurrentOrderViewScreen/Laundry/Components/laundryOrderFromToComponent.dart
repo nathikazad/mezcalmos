@@ -81,6 +81,7 @@ class _LaundryOrderFromToComponentState
         // landry
         serviceProviderImage: widget.order.laundry!.image,
         serviceProviderName: widget.order.laundry!.name,
+
         serviceProviderTimeWidgets: _dateTimeSetter(
             (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)
                 ? DeliveryAction.DropOff
@@ -190,8 +191,7 @@ class _LaundryOrderFromToComponentState
               if (_dt != null) onNewDateTimeSet(_dt);
             },
             child: Container(
-              height: 18,
-              width: 18,
+              padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: Color.fromRGBO(237, 237, 237, 1),
                 shape: BoxShape.circle,
@@ -199,7 +199,7 @@ class _LaundryOrderFromToComponentState
               child: Center(
                 child: Icon(
                   Icons.edit,
-                  size: 16,
+                  size: 15,
                 ),
               ),
             ),

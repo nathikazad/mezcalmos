@@ -203,7 +203,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   Row _serviceProviderAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -224,20 +224,20 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                if (showMsgIconInOneLine) ...[
-                  SizedBox(width: 9),
-                  Obx(
-                    () => MessageButton(
-                      withPadding: false,
-                      onTap: onServiceMsgClick,
-                      showRedDot: (_serviceDriverChatId() != null)
-                          ? Get.find<OrderController>()
-                              .hasNewMessageNotification(
-                                  _serviceDriverChatId()!)
-                          : false,
-                    ),
-                  )
-                ],
+                // if (showMsgIconInOneLine) ...[
+                //   SizedBox(width: 9),
+                //   Obx(
+                //     () => MessageButton(
+                //       withPadding: false,
+                //       onTap: onServiceMsgClick,
+                //       showRedDot: (_serviceDriverChatId() != null)
+                //           ? Get.find<OrderController>()
+                //               .hasNewMessageNotification(
+                //                   _serviceDriverChatId()!)
+                //           : false,
+                //     ),
+                //   )
+                // ],
               ],
             ),
             if (!showMsgIconInOneLine)
@@ -246,21 +246,32 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   Row(
                     children: serviceProviderTimeWidgets,
                   ),
-                  SizedBox(width: 15),
-                  Obx(
-                    () => MessageButton(
-                      withPadding: false,
-                      onTap: onServiceMsgClick,
-                      showRedDot: (_serviceDriverChatId() != null)
-                          ? Get.find<OrderController>()
-                              .hasNewMessageNotification(
-                                  _serviceDriverChatId()!)
-                          : false,
-                    ),
-                  ),
+                  // SizedBox(width: 15),
+                  // Obx(
+                  //   () => MessageButton(
+                  //     withPadding: false,
+                  //     onTap: onServiceMsgClick,
+                  //     showRedDot: (_serviceDriverChatId() != null)
+                  //         ? Get.find<OrderController>()
+                  //             .hasNewMessageNotification(
+                  //                 _serviceDriverChatId()!)
+                  //         : false,
+                  //   ),
+                  // ),
                 ],
               ),
           ],
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        MessageButton(
+          withPadding: false,
+          onTap: onServiceMsgClick,
+          showRedDot: (_serviceDriverChatId() != null)
+              ? Get.find<OrderController>()
+                  .hasNewMessageNotification(_serviceDriverChatId()!)
+              : false,
         ),
       ],
     );
@@ -269,7 +280,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   Row _customerAnimatedRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -292,20 +303,20 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (showMsgIconInOneLine) ...[
-                  SizedBox(width: 9),
-                  Obx(
-                    () => MessageButton(
-                      withPadding: false,
-                      onTap: onServiceMsgClick,
-                      showRedDot: (_serviceDriverChatId() != null)
-                          ? Get.find<OrderController>()
-                              .hasNewMessageNotification(
-                                  _serviceDriverChatId()!)
-                          : false,
-                    ),
-                  ),
-                ]
+                // if (showMsgIconInOneLine) ...[
+                //   SizedBox(width: 9),
+                //   Obx(
+                //     () => MessageButton(
+                //       withPadding: false,
+                //       onTap: onServiceMsgClick,
+                //       showRedDot: (_serviceDriverChatId() != null)
+                //           ? Get.find<OrderController>()
+                //               .hasNewMessageNotification(
+                //                   _serviceDriverChatId()!)
+                //           : false,
+                //     ),
+                //   ),
+                // ]
               ],
             ),
             if (!showMsgIconInOneLine)
@@ -314,21 +325,30 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   Row(
                     children: customerTimeWidgets,
                   ),
-                  SizedBox(width: 9),
-                  Obx(
-                    () => MessageButton(
-                      withPadding: false,
-                      onTap: onCustomerMsgClick,
-                      showRedDot: (_customerDriverChatId() != null)
-                          ? Get.find<OrderController>()
-                              .hasNewMessageNotification(
-                                  _customerDriverChatId()!)
-                          : false,
-                    ),
-                  ),
+                  // SizedBox(width: 9),
+                  // Obx(
+                  //   () => MessageButton(
+                  //     withPadding: false,
+                  //     onTap: onCustomerMsgClick,
+                  //     showRedDot: (_customerDriverChatId() != null)
+                  //         ? Get.find<OrderController>()
+                  //             .hasNewMessageNotification(
+                  //                 _customerDriverChatId()!)
+                  //         : false,
+                  //   ),
+                  // ),
                 ],
               ),
           ],
+        ),
+        SizedBox(width: 15),
+        MessageButton(
+          withPadding: false,
+          onTap: onCustomerMsgClick,
+          showRedDot: (_customerDriverChatId() != null)
+              ? Get.find<OrderController>()
+                  .hasNewMessageNotification(_customerDriverChatId()!)
+              : false,
         ),
       ],
     );

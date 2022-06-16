@@ -89,7 +89,9 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         children = todayNotifsWidgets +
             [
               if (todayNotifsWidgets.isNotEmpty && notifsWidgets.isNotEmpty)
-                Divider()
+                SizedBox(
+                  height: 25,
+                ),
             ] +
             notifsWidgets;
         return children;

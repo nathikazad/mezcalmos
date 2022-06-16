@@ -186,28 +186,28 @@ class UserProfileWidgetsClass {
       return mezcalmosAppBar(
         AppBarLeftButtonType.Back,
         actionIcons: [
-          Obx(
-            () => Align(
-              alignment: Alignment.centerLeft,
-              child: GestureDetector(
-                onTap: () =>
-                    Get.find<LanguageController>().changeUserLanguage(),
-                child: Container(
-                  height: 24,
-                  width: 24,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.contain,
-                      image: AssetImage(
-                        Get.find<LanguageController>().oppositFlag,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
+          // Obx(
+          //   () => Align(
+          //     alignment: Alignment.centerLeft,
+          //     child: GestureDetector(
+          //       onTap: () =>
+          //           Get.find<LanguageController>().changeUserLanguage(),
+          //       child: Container(
+          //         height: 24,
+          //         width: 24,
+          //         decoration: BoxDecoration(
+          //           shape: BoxShape.circle,
+          //           image: DecorationImage(
+          //             fit: BoxFit.contain,
+          //             image: AssetImage(
+          //               Get.find<LanguageController>().oppositFlag,
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       );
     }

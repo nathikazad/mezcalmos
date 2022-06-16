@@ -133,11 +133,10 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        onClick: Get.back,
-        showNotifications: true,
-      ),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: Get.back,
+          showNotifications: true,
+          title: 'Restaurant Drop-off'),
       bottomNavigationBar: Obx(
         () => RestaurantControllButtons(
           order: order.value!,
@@ -193,7 +192,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                   Positioned(
                     bottom: 2,
                     left: 5,
-                    right: 5,
+                    right: 4,
                     child: Card(
                       child: Container(
                         padding: const EdgeInsets.all(8),

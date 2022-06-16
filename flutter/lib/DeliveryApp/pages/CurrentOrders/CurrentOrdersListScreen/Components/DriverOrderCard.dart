@@ -97,7 +97,7 @@ class DriverOrderCard extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: Colors.red.shade100,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(25),
             ),
             child: Center(
               child: Text(
@@ -111,7 +111,7 @@ class DriverOrderCard extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: Colors.green.shade100,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(25),
             ),
             child: Center(
               child: Text(
@@ -125,7 +125,7 @@ class DriverOrderCard extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: Colors.amber.shade100,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(25),
             ),
             child: Center(
               child: Text(
@@ -139,7 +139,7 @@ class DriverOrderCard extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: Colors.green.shade100,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(25),
             ),
             child: Center(
               child: Text(
@@ -154,7 +154,7 @@ class DriverOrderCard extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: Colors.amber.shade100,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(25),
             ),
             child: Center(
               child: Text(
@@ -170,8 +170,9 @@ class DriverOrderCard extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-                color: Colors.green.shade100,
-                borderRadius: BorderRadius.circular(12)),
+              color: Colors.green.shade100,
+              borderRadius: BorderRadius.circular(25),
+            ),
             child: Text(
               "Ready",
               style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
@@ -184,8 +185,9 @@ class DriverOrderCard extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-                color: Colors.amber.shade100,
-                borderRadius: BorderRadius.circular(12)),
+              color: Colors.amber.shade100,
+              borderRadius: BorderRadius.circular(25),
+            ),
             child: Text(
               "In transit",
               style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
@@ -196,8 +198,9 @@ class DriverOrderCard extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-                color: Colors.red.shade100,
-                borderRadius: BorderRadius.circular(12)),
+              color: Colors.red.shade100,
+              borderRadius: BorderRadius.circular(25),
+            ),
             child: Text(
               "Canceled",
               style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
@@ -208,8 +211,9 @@ class DriverOrderCard extends StatelessWidget {
             return Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  color: Colors.green.shade100,
-                  borderRadius: BorderRadius.circular(12)),
+                color: Colors.green.shade100,
+                borderRadius: BorderRadius.circular(25),
+              ),
               child: Text(
                 "Delivered",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
@@ -219,8 +223,9 @@ class DriverOrderCard extends StatelessWidget {
             return Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  color: Colors.amber.shade100,
-                  borderRadius: BorderRadius.circular(12)),
+                color: Colors.amber.shade100,
+                borderRadius: BorderRadius.circular(25),
+              ),
               child: Text(
                 "Waiting",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
@@ -232,8 +237,9 @@ class DriverOrderCard extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-                color: Colors.green.shade100,
-                borderRadius: BorderRadius.circular(12)),
+              color: Colors.green.shade100,
+              borderRadius: BorderRadius.circular(25),
+            ),
             child: Text(
               "Delivered",
               style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
@@ -244,8 +250,9 @@ class DriverOrderCard extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-                color: Colors.amber.shade100,
-                borderRadius: BorderRadius.circular(12)),
+              color: Colors.amber.shade100,
+              borderRadius: BorderRadius.circular(25),
+            ),
             child: Text(
               "Waiting",
               style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),

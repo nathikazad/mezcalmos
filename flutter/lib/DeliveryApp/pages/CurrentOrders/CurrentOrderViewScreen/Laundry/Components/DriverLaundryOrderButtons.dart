@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/LaundryControllButtons.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:sizer/sizer.dart';
@@ -81,10 +82,9 @@ class DriverLaundryBottomButtons extends StatelessWidget {
         color: Colors.white,
         child: Row(
           children: [
-            Icon(
-              Icons.check_circle,
-              color: Colors.green,
-              size: 30.sp,
+            CircleAvatar(
+              radius: 18,
+              child: Image.asset(aDeliveredIcon),
             ),
             SizedBox(
               width: 10,
@@ -152,10 +152,9 @@ class DriverLaundryBottomButtons extends StatelessWidget {
       color: Colors.white,
       child: Row(
         children: [
-          Icon(
-            Icons.check_circle,
-            color: Colors.green,
-            size: 30.sp,
+          CircleAvatar(
+            radius: 18,
+            child: Image.asset(aDeliveredIcon),
           ),
           SizedBox(
             width: 10,

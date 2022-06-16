@@ -1243,7 +1243,7 @@
                                 "pickupOrder": "Comenzar a recoger",
                                 "confirmPickup": "Confirmar la recogida",
                                 "atLaundry": "En la lavandería",
-                                "deliverOrder": "Comenzar a Entregar",
+                                "deliverOrder": "Comienza la caída",
                                 "confirmDelivery": "Confirmar el Entregado",
                                 "confirmOrderWeight": "Confirmar peso de orden",
                                 "orderWeightAlert": "Por favor ingrese un peso válido",

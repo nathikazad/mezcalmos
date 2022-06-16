@@ -73,6 +73,9 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       if (ordersRoute != null && Get.find<AuthController>().isUserSignedIn)
         _ordersAppBarIcon(),
       for (int i = 0; i < actionIcons.length; i++) ...<Widget>[actionIcons[i]],
+      SizedBox(
+        width: 5,
+      )
     ],
     title: (title != null)
         ? Text(

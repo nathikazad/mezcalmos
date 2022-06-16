@@ -55,38 +55,46 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       body: Obx(() {
         if (order.value != null) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _orderDetailsHeader(),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 Text(
                   "From",
                   style: Get.textTheme.bodyText1,
                 ),
                 if (_getOrderFromLocation() != null)
-                  Text(_getOrderFromLocation()!),
+                  Container(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(_getOrderFromLocation()!)),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 Text(
                   "Delivered to",
                   style: Get.textTheme.bodyText1,
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 Text("${order.value!.to.address}"),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 Text(
                   "Payment method",
                   style: Get.textTheme.bodyText1,
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 Text(order.value!.paymentType.toNormalString()),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 _serviceProviderCard(),
                 _customerCard(),
@@ -130,7 +138,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             style: Get.textTheme.bodyText1,
           ),
           Text(order.value!.isCanceled() ? "Cancelled" : "Approved",
-              style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor))
+              style: Get.textTheme.bodyText1?.copyWith(
+                  color: order.value!.isCanceled()
+                      ? Colors.red
+                      : primaryBlueColor))
         ],
       ),
     );
@@ -138,6 +149,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   Card _customerCard() {
     return Card(
+      margin: EdgeInsets.zero,
       child: Container(
         padding: const EdgeInsets.all(8),
         child: Row(
@@ -163,6 +175,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   Card _serviceProviderCard() {
     return Card(
+      margin: EdgeInsets.zero,
       child: Container(
         padding: const EdgeInsets.all(8),
         child: Row(
