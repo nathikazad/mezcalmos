@@ -261,7 +261,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       onPressed: (customerLoc == null)
           ? null
           : () async {
-              _createLaundryOrder();
+              await _createLaundryOrder();
             },
       child: (clicked.value)
           ? CircularProgressIndicator(
@@ -276,14 +276,14 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     );
   }
 
-  void _createLaundryOrder() {
+  Future<void> _createLaundryOrder() async {
     mezDbgPrint("GotRoute !!!!!!!");
 
     clicked.value = true;
     final LaundryRequest _laundryRequest =
         LaundryRequest(laundryId: selectedLaundry.info.id);
     // get route info first
-    MapHelper.getDurationAndDistance(
+    await MapHelper.getDurationAndDistance(
             selectedLaundry.info.location, customerLoc!)
         .then((MapHelper.Route? route) {
       mezDbgPrint("GotRoute !!!!!!!");
@@ -302,30 +302,34 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       _laundryRequest.paymentType = PaymentType.Cash;
 
       // Since routeInformation is nullable, we have to handle it in other apps.
-      laundryController
-          .requestLaundryService(_laundryRequest)
-          .then(
-            (ServerResponse response) {
-              mezDbgPrint("rrrrrrrrrrrrrrrrrrrr ===> ${response.errorMessage}");
-
-              if (response.data['orderId'] != null) {
-                sharedRoute.popEverythingAndNavigateTo(
-                  getLaundyOrderRoute(
-                    response.data['orderId'],
-                  ),
-                );
-              } else {
-                Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
-              }
-            },
-          )
-          .whenComplete(() => clicked.value = false)
-          .onError((Object? error, StackTrace stackTrace) {
-            mezDbgPrint(
-                "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
-            mezDbgPrint(
-                "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
-          });
+      _sendLaundryRequest(_laundryRequest);
     });
+  }
+
+  void _sendLaundryRequest(LaundryRequest request) {
+    laundryController
+        .requestLaundryService(request)
+        .then(
+          (ServerResponse response) {
+            mezDbgPrint("rrrrrrrrrrrrrrrrrrrr ===> ${response.errorMessage}");
+
+            if (response.data['orderId'] != null) {
+              sharedRoute.popEverythingAndNavigateTo(
+                getLaundyOrderRoute(
+                  response.data['orderId'],
+                ),
+              );
+            } else {
+              Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
+            }
+          },
+        )
+        .whenComplete(() => clicked.value = false)
+        .onError((Object? error, StackTrace stackTrace) {
+          mezDbgPrint(
+              "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
+          mezDbgPrint(
+              "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
+        });
   }
 }

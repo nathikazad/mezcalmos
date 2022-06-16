@@ -576,6 +576,8 @@
         },
         "helpers": {
             "ImageHelper": {
+                "fromCamera": "Take a picture",
+                "fromGallery": "Upload from gallery",
                 "camera": "Camera",
                 "gallery": "Gallery",
                 "cameraAccessOffTitle": "App can't access Camera.",

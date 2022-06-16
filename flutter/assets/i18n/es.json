@@ -584,6 +584,8 @@
         },
         "helpers": {
             "ImageHelper": {
+                "fromCamera": "Toma una foto",
+                "fromGallery": "Subiendo desde la galería",
                 "camera": "Cámara",
                 "gallery": "Galería",
                 "cameraAccessOffTitle": "La aplicación no puede acceder a la cámara.",
