@@ -1319,7 +1319,7 @@
                             "set": "Set",
                             "time": "Time",
                             "dropoff": "Drop-off",
-                            "pickup": "`Pick-up",
+                            "pickup": "Pick-up",
                             "pickupTimeError": "The Pickup time should be before the dropoff time.",
                             "wrongTime": "You picked a wrong time",
                             "orderStatus": {
@@ -1334,7 +1334,12 @@
                                 "confirmPickup": "Confirm Order Pickup",
                                 "confirmDelivery": "Confirm Delivery",
                                 "timeErrorTitle": "Time not set !",
-                                "timeErrorBody": "Please set the estimated times first."
+                                "timeErrorBody": "Please set the estimated times first.",
+                                "notReadyTitle": "Waiting for order",
+                                "notReadyBody": "Order is not ready for delivery yet"
+
+
+
 
 
                             }

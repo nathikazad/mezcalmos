@@ -1311,7 +1311,10 @@
                                 "confirmPickup": "Confirmar la recogida",
                                 "confirmDelivery": "Confirmar el envío",
                                 "timeErrorTitle": "¡Tiempo no listo!to!",
-                                "timeErrorBody": "Establezca primero los tiempos estimadosados.dos.dos."
+                                "timeErrorBody": "Establezca primero los tiempos estimadosados.dos.dos.",
+                                "notReadyTitle": "Esperando el pedido",
+                                "notReadyBody": "El pedido aún no está listo para la entrega"
+
 
                             }
                         }

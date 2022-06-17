@@ -47,7 +47,9 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
     switch (widget.order.status) {
       case RestaurantOrderStatus.OrderReceieved:
       case RestaurantOrderStatus.PreparingOrder:
-        return _waitingDisabledButton();
+        return _waitingDisabledButton(
+            header: "${_i18n()["RestaurantControllButtons"]["notReadyTitle"]}",
+            body: "${_i18n()["RestaurantControllButtons"]["notReadyBody"]}");
 
       case RestaurantOrderStatus.ReadyForPickup:
         return _startDeliveryButton();
