@@ -50,8 +50,7 @@ class MezServiceOpenHours extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                    "${v.value.from.join(":").capitalizeFirst} - ${v.value.to.join(":").capitalizeFirst}",
-                    style: Get.textTheme.bodyText2)
+                    "${convertToAmPm(v.value.from[0], v.value.from[1])} : ${convertToAmPm(v.value.to[0], v.value.to[1])}"),
               ],
             ),
           );
@@ -70,4 +69,20 @@ class MezServiceOpenHours extends StatelessWidget {
         .toList()
         .join("-");
   }
+}
+
+String convertToAmPm(int hours, int minutes) {
+  String minutesFormattedString;
+  String formattedString;
+  if (minutes < 10) {
+    minutesFormattedString = "0$minutes";
+  } else {
+    minutesFormattedString = "$minutes";
+  }
+  if (hours <= 12) {
+    formattedString = "$hours:$minutesFormattedString AM";
+  } else {
+    formattedString = "${hours - 12}:$minutesFormattedString PM";
+  }
+  return formattedString;
 }

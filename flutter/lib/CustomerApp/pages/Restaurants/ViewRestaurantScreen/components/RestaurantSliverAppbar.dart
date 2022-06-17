@@ -79,13 +79,16 @@ class RestaurantSliverAppBar extends StatelessWidget {
                   width: 5,
                 ),
                 if (!showInfo)
-                  InkWell(
-                      onTap: onInfoTap,
-                      child: Icon(
-                        Icons.info_outline_rounded,
-                        size: 14.sp,
-                        color: Colors.white,
-                      ))
+                  Container(
+                    alignment: Alignment.bottomCenter,
+                    child: InkWell(
+                        onTap: onInfoTap,
+                        child: Icon(
+                          Icons.info_outline_rounded,
+                          size: 14.sp,
+                          color: Colors.white,
+                        )),
+                  )
               ],
             ),
           ),
