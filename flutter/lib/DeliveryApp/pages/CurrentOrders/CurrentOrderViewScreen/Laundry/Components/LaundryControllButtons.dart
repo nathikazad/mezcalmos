@@ -33,8 +33,8 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
   Widget build(BuildContext context) {
     if (shouldDisableBottomButton()) {
       return _waitingDisabledButton(
-        header: 'Time not set!',
-        body: 'Please set the estimated times first.',
+        header: '${_i18n()["timeErrorTitle"]}',
+        body: '${_i18n()["timeErrorBody"]}',
         child: Icon(Icons.error),
       );
     } else {

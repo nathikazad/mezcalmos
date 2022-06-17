@@ -152,7 +152,7 @@ class _RestaurantOrderFromToComponentState
           if (_finalDt.isAfter(DateTime.now())) {
             return _finalDt;
           } else
-            MezSnackbar('Oops', 'You picked a wrong time!');
+            MezSnackbar('${_i18n()['oops']}', '${_i18n()['wrongTime']}');
         }
       }
 
@@ -201,7 +201,7 @@ class _RestaurantOrderFromToComponentState
               ),
               child: Center(
                 child: Text(
-                  'Set ${deliveryAction == DeliveryAction.DropOff ? "dropoff" : "pickup"} time',
+                  '${_i18n()['set']} ${deliveryAction == DeliveryAction.DropOff ? "${_i18n()['dropoff']}" : "${_i18n()['pickup']}"} ${_i18n()['time']}',
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Montserrat',
@@ -228,14 +228,14 @@ class _RestaurantOrderFromToComponentState
                 !widget.order.estimatedPickupFromServiceProviderTime!
                     .isBefore(newDt)) {
               MezSnackbar(
-                  "Oops", "The Pickup time should be before the dropoff time.");
+                  "${_i18n()['oops']}", "${_i18n()['pickupTimeError']}");
             }
             // PickUp
           } else {
             if (widget.order.estimatedDropoffAtCustomerTime != null &&
                 !widget.order.estimatedDropoffAtCustomerTime!.isAfter(newDt)) {
               MezSnackbar(
-                  "Oops", "The Pickup time should be before the dropoff time.");
+                  "${_i18n()['oops']}", "${_i18n()['pickupTimeError']}");
             }
           }
           final ServerResponse _resp =

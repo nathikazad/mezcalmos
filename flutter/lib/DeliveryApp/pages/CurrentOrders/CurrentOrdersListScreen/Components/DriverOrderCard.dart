@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -43,8 +43,7 @@ class DriverOrderCard extends StatelessWidget {
           cardTitle: _getOrderTitle(),
           primaryBodyContent: Text(order.to.address),
           cardStatus: _getOrderWidget(),
-          cardTime:
-              Text(DateFormat("EE, hh:mm a").format(order.orderTime.toLocal())),
+          cardTime: Text(order.orderTime.getOrderTime()),
           rightImage: _getOrderIcon()),
       order: order,
     );
@@ -101,7 +100,7 @@ class DriverOrderCard extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                "Canceled",
+                "${_i18n()["cancelled"]}",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
               ),
             ),
@@ -115,7 +114,7 @@ class DriverOrderCard extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                "Deliverd",
+                "${_i18n()["delivered"]}",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
               ),
             ),
@@ -129,7 +128,7 @@ class DriverOrderCard extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                "In transit",
+                "${_i18n()["inTransit"]}",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
               ),
             ),
@@ -143,7 +142,7 @@ class DriverOrderCard extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                "Ready",
+                "${_i18n()["ready"]}",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
               ),
             ),
@@ -158,7 +157,7 @@ class DriverOrderCard extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                "Waiting",
+                "${_i18n()["waiting"]}",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
               ),
             ),
@@ -174,7 +173,7 @@ class DriverOrderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
             ),
             child: Text(
-              "Ready",
+              "${_i18n()["ready"]}",
               style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
             ),
           );
@@ -189,7 +188,7 @@ class DriverOrderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
             ),
             child: Text(
-              "In transit",
+              "${_i18n()["inTransit"]}",
               style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
             ),
           );
@@ -202,7 +201,7 @@ class DriverOrderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
             ),
             child: Text(
-              "Canceled",
+              "${_i18n()["cancelled"]}",
               style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
             ),
           );
@@ -215,7 +214,7 @@ class DriverOrderCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Text(
-                "Delivered",
+                "${_i18n()["delivered"]}",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
               ),
             );
@@ -227,7 +226,7 @@ class DriverOrderCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Text(
-                "Waiting",
+                "${_i18n()["waiting"]}",
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
               ),
             );
@@ -241,7 +240,7 @@ class DriverOrderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
             ),
             child: Text(
-              "Delivered",
+              "${_i18n()["delivered"]}",
               style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
             ),
           );
@@ -254,7 +253,7 @@ class DriverOrderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
             ),
             child: Text(
-              "Waiting",
+              "${_i18n()["waiting"]}",
               style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
             ),
           );

@@ -10,6 +10,7 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -19,6 +20,11 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+    ["pages"]["RestaurantOrderView"];
+//
 
 class RestaurantOrderView extends StatefulWidget {
   const RestaurantOrderView({Key? key}) : super(key: key);
@@ -133,10 +139,12 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back,
-          showNotifications: true,
-          title: 'Restaurant Drop-off'),
+      appBar: mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: Get.back,
+        showNotifications: true,
+        title: '${_i18n()["title"]}',
+      ),
       bottomNavigationBar: Obx(
         () => RestaurantControllButtons(
           order: order.value!,

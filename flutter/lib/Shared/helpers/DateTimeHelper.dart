@@ -40,11 +40,15 @@ extension parseDateTime on DateTime {
 
   String getOrderTime() {
     final DateTime cDate = DateTime.now();
+    final String userLangCode =
+        Get.find<LanguageController>().userLanguageKey.toLanguageCode();
+    final DateFormat formatLongDay = DateFormat.MMMd(userLangCode);
+    final DateFormat formatDay = DateFormat.E(userLangCode);
 
     if (cDate.difference(toLocal()).inDays < 7) {
-      return "${DateFormat("EE, hh:mm a").format(toLocal())}";
+      return "${formatDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${DateFormat("dd MMMM, hh:mm a").format(toLocal())}";
+      return "${formatLongDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
     }
   }
 

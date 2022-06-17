@@ -475,7 +475,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         SizedBox(width: 3),
         Flexible(
           child: Text(
-            order.routeInformation?.duration.longTextVersion ?? '- - - -',
+            order.routeInformation?.duration.shortTextVersion ?? '- - - -',
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             style: TextStyle(

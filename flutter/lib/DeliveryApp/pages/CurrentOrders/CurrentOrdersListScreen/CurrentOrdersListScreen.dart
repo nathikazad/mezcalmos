@@ -57,7 +57,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
               () => Column(
                 children: [
                   TitleWithOnOffSwitcher(
-                    title: "Incoming orders",
+                    title: "${_i18n()["title"]}",
                     onTurnedOn: () {
                       _deliveryAuthController.turnOn();
                     },
@@ -83,8 +83,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                             height: 25.h,
                           ),
                         ),
-                        errorText: 'You are offline!',
-                        secondLine: "Turn on to see incoming orders",
+                        errorText: '${_i18n()["offlineTitle"]}',
+                        secondLine: "${_i18n()["offlineBody"]}",
                       ),
                     )
                   else
@@ -106,7 +106,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           Container(
             padding: const EdgeInsets.all(5),
             child: Text(
-              "Current orders",
+              "${_i18n()["currentOrders"]}",
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -124,25 +124,5 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
     } else {
       return NoOrdersComponent();
     }
-  }
-
-  List<Widget> _currentOrdersList() {
-    return [
-      Container(
-        padding: const EdgeInsets.all(5),
-        child: Text(
-          _i18n()["currentOrders"],
-          style: Theme.of(context).textTheme.bodyText1,
-        ),
-      ),
-      Column(
-        children: List.generate(
-            orderController.currentOrders.length,
-            (int index) => DriverOrderCard(
-                  order: orderController.currentOrders[index],
-                  isPastOrder: false,
-                )).reversed.toList(),
-      ),
-    ];
   }
 }

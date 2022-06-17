@@ -35,7 +35,7 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return Container(
-      height: 60,
+      height: 70,
       // color: (order.inDeliveryPhase())
       //     ? Theme.of(context).primaryColorLight
       //     : Colors.grey,
@@ -94,8 +94,8 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
             ),
           )
         : _waitingDisabledButton(
-            header: 'Time not set!',
-            body: 'Please set the estimated times first.',
+            header: '${_i18n()["RestaurantControllButtons"]["timeErrorTitle"]}',
+            body: '${_i18n()["RestaurantControllButtons"]["timeErrorBody"]}',
             child: Icon(Icons.error),
           );
   }

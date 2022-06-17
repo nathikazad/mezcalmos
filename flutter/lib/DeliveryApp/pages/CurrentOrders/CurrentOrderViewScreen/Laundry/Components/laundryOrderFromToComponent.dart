@@ -172,7 +172,7 @@ class _LaundryOrderFromToComponentState
           if (_finalDt.isAfter(DateTime.now())) {
             return _finalDt;
           } else
-            MezSnackbar('Oops', 'You picked a wrong time!');
+            MezSnackbar('${_i18n()["oops"]}', '${_i18n()["wrongTime"]}');
         }
       }
 
@@ -220,7 +220,7 @@ class _LaundryOrderFromToComponentState
               ),
               child: Center(
                 child: Text(
-                  'Set ${deliveryAction == DeliveryAction.DropOff ? "dropoff" : "pickup"} time',
+                  '${_i18n()["set"]} ${deliveryAction == DeliveryAction.DropOff ? "${_i18n()["dropoff"]}" : "${_i18n()["pickup"]}"} ${_i18n()["time"]}',
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Montserrat',

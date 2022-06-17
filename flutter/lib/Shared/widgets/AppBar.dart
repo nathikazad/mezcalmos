@@ -36,7 +36,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   // INIT ORDERS ICON
   Widget _ordersAppBarIcon() {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 12),
+      padding: const EdgeInsets.only(left: 3, right: 3),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {

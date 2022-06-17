@@ -1193,10 +1193,25 @@
     },
     "DeliveryApp": {
         "pages": {
+            "OrderDetailsScreen": {
+                "cancelled": "Cancelada",
+                "approved": "Aprobada",
+                "paymentMethod": "Método de pago",
+                "cash": "Dinero",
+                "from": "De",
+                "deliveredTo": "Entregado a",
+                "deliveryCost": "Coste de envío",
+                "customer": "Cliente",
+                "restuarant": "Restaurante",
+                "laundry": "Ropa sucia"
+
+            },
             "CurrentOrders": {
                 "CurrentOrdersListScreen": {
                     "currentOrders": "Órdenes actuales",
-                    "pastOrders": "Órdenes pasadas",
+                    "offlineTitle": "Estas desconectado",
+                    "offlineBody": "Enciende para ver las órdenes entrantes",
+                    "pastOrders": "órdenes Pasadas",
                     "title": "Órdenes  Entrantes",
                     "Components": {
                         "DriverNoOrdersComponent": {
@@ -1212,7 +1227,13 @@
                                 "restaurantDelivery": "Entrega de restaurantes",
                                 "laundryPickup": "Recogida de lavandería",
                                 "laundryDelivery": "Entrega de lavandería"
-                            }
+
+                            },
+                            "waiting": "Esperando",
+                            "ready": "Listo",
+                            "inTransit": "En tránsito",
+                            "delivered": "Entregada",
+                            "cancelled": "Cancelada"
                         }
                     },
                     "CurrentOrdersListScreen": {
@@ -1222,6 +1243,11 @@
 
                 },
                 "CurrentOrderViewScreen": {
+                    "LaundryOrderView": {
+                        "pickup": "Recogida de lavandería",
+                        "dropoff": "Caída de lavandería"
+
+                    },
                     "Components": {
                         "DriverBottomLaundryOrderCard": {
                             "orderStatus": {
@@ -1235,6 +1261,13 @@
                                 "canceled": "Orden cancelada"
 
                             },
+                            "oops": "Ups",
+                            "set": "Establecer",
+                            "time": "Tiempo",
+                            "dropoff": "Dejar",
+                            "pickup": "Levantar",
+                            "pickupTimeError": "El tiempo de recogida debe ser antes del tiempo de caída.",
+                            "wrongTime": "Elegiste un momento equivocado",
                             "laundeyOrderHeader": {
                                 "laundryOrder": "Orden de lavandería"
 
@@ -1249,11 +1282,21 @@
                                 "orderWeightAlert": "Por favor ingrese un peso válido",
                                 "confirm": "Confirmar",
                                 "cancel": "Cancelar",
-                                "orderWeight": "Peso de pedido"
+                                "orderWeight": "Peso de pedido",
+                                "timeErrorTitle": "¡Tiempo no listo!to!",
+                                "timeErrorBody": "Establezca primero los tiempos estimadosados.dos.dos."
+
                             }
                         },
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Entrega de restaurantes",
+                            "oops": "Ups",
+                            "set": "Establecer",
+                            "time": "Tiempo",
+                            "dropoff": "Dejar",
+                            "pickup": "Levantar",
+                            "pickupTimeError": "El tiempo de recogida debe ser antes del tiempo de caída.",
+                            "wrongTime": "Elegiste un momento equivocado",
                             "orderStatus": {
                                 "waiting": "Esperando el restaurante",
                                 "preparing": "Orden se está preparando",
@@ -1264,9 +1307,34 @@
                             },
                             "RestaurantControllButtons": {
                                 "confirmPickup": "Confirmar la recogida",
-                                "confirmDelivery": "Confirmar el envío"
+                                "confirmDelivery": "Confirmar el envío",
+                                "timeErrorTitle": "¡Tiempo no listo!to!",
+                                "timeErrorBody": "Establezca primero los tiempos estimadosados.dos.dos."
 
                             }
+                        }
+                    }
+                }
+            },
+            "RestaurantOrderView": {
+                "title": "Caída del restaurante",
+                "components": {
+                    "RestaurantOrderFromToComponent": {
+                        "pickUpTimeErrorTitle": "Oops",
+                        "pickUpTimeError": "The Pickup time should be before the dropoff time.",
+                        "restaurantDelivery": "Entrega de restaurantes",
+                        "orderStatus": {
+                            "waiting": "Esperando el restaurante",
+                            "preparing": "Orden se está preparando",
+                            "readyForPickup": "Listo para recojer",
+                            "deliveryOtw": "Entrega en el camino",
+                            "delivered": "Orden entregado",
+                            "canceled": "Orden cancelada"
+                        },
+                        "RestaurantControllButtons": {
+                            "confirmPickup": "Confirmar la recogida",
+                            "confirmDelivery": "Confirmar el envío"
+
                         }
                     }
                 }

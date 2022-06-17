@@ -11,6 +11,7 @@ import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -20,6 +21,11 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+    ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["LaundryOrderView"];
+//
 
 class LaundryOrderView extends StatefulWidget {
   const LaundryOrderView({Key? key}) : super(key: key);
@@ -350,11 +356,11 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
   // get appbar title
   String? getTitle() {
     if (order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup) {
-      return "Laundry pick-up";
+      return "${_i18n()['pickup']}";
     } else if (order.value!.status == LaundryOrderStatus.AtLaundry) {
       return null;
     } else {
-      return "Laundry drop-off";
+      return "${_i18n()['dropoff']}";
     }
   }
 

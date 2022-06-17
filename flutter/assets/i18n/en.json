@@ -1197,15 +1197,50 @@
     },
     "DeliveryApp": {
         "pages": {
+
             "OrderDetailsScreen": {
+                "cancelled": "Cancelled",
+                "approved": "Approved",
+                "paymentMethod": "Payment method",
+                "cash": "Cash",
+                "from": "From",
+                "deliveredTo": "Delivered to",
+                "deliveryCost": "Delivery Cost",
+                "customer": "Customer",
+                "restuarant": "Restaurant",
+                "laundry": "Laundry"
 
+            },
+            "RestaurantOrderView": {
+                "components": {
+                    "RestaurantOrderFromToComponent": {
+                        "pickUpTimeErrorTitle": "Oops",
+                        "pickUpTimeError": "The Pickup time should be before the dropoff time.",
+                        "restaurantDelivery": "Restaurant Delivery",
+                        "orderStatus": {
+                            "waiting": "Waiting for restaurant",
+                            "preparing": "Order is being prepared",
+                            "readyForPickup": "Ready for pickup",
+                            "deliveryOtw": "Delivery on the way",
+                            "delivered": "Order Delivered",
+                            "canceled": "Order Cancelled"
+                        },
+                        "RestaurantControllButtons": {
+                            "confirmPickup": "Confirm Order Pickup",
+                            "confirmDelivery": "Confirm Delivery"
 
+                        }
+                    }
+                },
+                "title": "Restaurant drop-off"
             },
             "CurrentOrders": {
                 "CurrentOrdersListScreen": {
                     "currentOrders": "Current orders",
                     "pastOrders": "Past orders",
                     "title": "Incoming  Orders",
+                    "offlineTitle": "You are offline",
+                    "offlineBody": "Turn on to see incoming orders",
                     "Components": {
                         "DriverNoOrdersComponent": {
                             "noOrdersTitle": "No Orders Found",
@@ -1220,17 +1255,33 @@
                                 "restaurantDelivery": "Restaurant Delivery",
                                 "laundryPickup": "Laundry Pick-up",
                                 "laundryDelivery": "Laundry Delivery"
-                            }
+
+                            },
+                            "waiting": "Waiting",
+                            "ready": "Ready",
+                            "inTransit": "In transit",
+                            "delivered": "Delivered",
+                            "cancelled": "Cancelled"
                         }
-                    },
-                    "CurrentOrdersListScreen": {
-                        "title": "Incoming  Orders"
                     }
+
 
                 },
                 "CurrentOrderViewScreen": {
+                    "LaundryOrderView": {
+                        "pickup": "Laundry pick-up",
+                        "dropoff": "Laundry drop-off"
+
+                    },
                     "Components": {
                         "DriverBottomLaundryOrderCard": {
+                            "oops": "Oops",
+                            "set": "Set",
+                            "time": "Time",
+                            "dropoff": "Drop-off",
+                            "pickup": "`Pick-up",
+                            "pickupTimeError": "The Pickup time should be before the dropoff time.",
+                            "wrongTime": "You picked a wrong time",
                             "orderStatus": {
                                 "readyForPickup": "Ready for pickup",
                                 "pickupOtw": "Pickup on the way",
@@ -1254,12 +1305,21 @@
                                 "orderWeightAlert": "Please enter a valid weight",
                                 "confirm": "Confirm",
                                 "cancel": "Cancel",
-                                "orderWeight": "Order Weight"
+                                "orderWeight": "Order Weight",
+                                "timeErrorTitle": "Time not set !",
+                                "timeErrorBody": "Please set the estimated times first."
                             }
 
                         },
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Restaurant Delivery",
+                            "oops": "Oops",
+                            "set": "Set",
+                            "time": "Time",
+                            "dropoff": "Drop-off",
+                            "pickup": "`Pick-up",
+                            "pickupTimeError": "The Pickup time should be before the dropoff time.",
+                            "wrongTime": "You picked a wrong time",
                             "orderStatus": {
                                 "waiting": "Waiting for restaurant",
                                 "preparing": "Order is being prepared",
@@ -1270,7 +1330,10 @@
                             },
                             "RestaurantControllButtons": {
                                 "confirmPickup": "Confirm Order Pickup",
-                                "confirmDelivery": "Confirm Delivery"
+                                "confirmDelivery": "Confirm Delivery",
+                                "timeErrorTitle": "Time not set !",
+                                "timeErrorBody": "Please set the estimated times first."
+
 
                             }
                         }

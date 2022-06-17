@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/widgets/MezSwitch.dart';
+import 'package:sizer/sizer.dart';
 
 class TitleWithOnOffSwitcher extends StatelessWidget {
   final bool initialSwitcherValue;
@@ -26,7 +27,7 @@ class TitleWithOnOffSwitcher extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w700,
-              fontSize: 24,
+              fontSize: 16.sp,
             ),
           ),
           SizedBox(
