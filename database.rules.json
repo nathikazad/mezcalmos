@@ -328,6 +328,9 @@
       "info": {
         "$uid": {
           ".read": "$uid === auth.uid",
+          "info": {
+            ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
+          },
           "notificationInfo": {
             ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
           },
