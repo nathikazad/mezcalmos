@@ -367,7 +367,7 @@
             "CustomerWrapper": {
                 "savedLocations": "Saved Locations",
                 "welcomeText": "Welcome to MEZCALMOS 👋",
-                "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and hight quality services.",
+                "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",
                 "services": "Services",
                 "taxi": {
                     "subtitle": "Get the nearest taxi around and get your destinatiion asap .",
@@ -649,7 +649,9 @@
                     "today": "Today",
                     "alertClearNotificationTitle": "Clear All Notifications",
                     "clear": "Clear",
-                    "no": "No"
+                    "no": "No",
+                    "noNotifTitle": "No notifications yet !",
+                    "noNotifBody": "You have currently no notifications. We will notify you when something new arrives."
                 }
             },
             "UserProfileScreen": {

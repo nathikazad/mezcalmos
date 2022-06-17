@@ -41,19 +41,65 @@ class _ViewNotificationsState extends State<ViewNotifications> {
       () => Scaffold(
         appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
             onClick: Get.back, title: _i18n()['title']),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Column(
-              children: [
-                _notifsHeader(),
-                Obx(() => _buildNotification(
-                    controller.notifications.reversed.toList()))
-              ],
-            ),
+        body: Obx(() {
+          if (controller.notifications.isNotEmpty) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Column(
+                  children: [
+                    _notifsHeader(),
+                    Obx(() => _buildNotification(
+                        controller.notifications.reversed.toList()))
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return noNotifsComponent();
+          }
+        }),
+      ),
+    );
+  }
+
+  Widget noNotifsComponent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Container(
+          alignment: Alignment.center,
+          height: 40.h,
+          width: 80.w,
+          child: Image.asset(
+            "assets/images/shared/noNotifs.png",
+            fit: BoxFit.cover,
           ),
         ),
-      ),
+        SizedBox(
+          height: 5,
+        ),
+        Text(
+          "${_i18n()["noNotifTitle"]}",
+          style: Get.textTheme.bodyText1,
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 12),
+          child: Text(
+            "${_i18n()["noNotifBody"]}",
+            style: Get.textTheme.bodyText2,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SizedBox(
+          height: 50,
+        ),
+      ],
     );
   }
 

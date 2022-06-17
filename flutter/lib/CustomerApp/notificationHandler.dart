@@ -90,6 +90,7 @@ Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
 }
 
 Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
+  mezDbgPrint(value);
   final RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic> dynamicFields =
@@ -100,6 +101,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
     linkUrl: getRestaurantOrderRoute(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
+    
     imgUrl: dynamicFields["imgUrl"],
     title: dynamicFields["title"],
     timestamp: DateTime.parse(value['time']),

@@ -14,11 +14,13 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final bool? autoBack;
   final AppBarLeftButtonType leftBtnType;
+  bool showPastOrders;
 
   CustomerAppBar(
       {Key? key,
       this.title,
       this.autoBack = false,
+      this.showPastOrders = true,
       this.leftBtnType = AppBarLeftButtonType.Back})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
@@ -29,10 +31,13 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       titleSpacing: 20,
       title: (title != null)
-          ? Text(
-              title!,
-              style: Theme.of(context).textTheme.headline3,
-              textAlign: TextAlign.center,
+          ? FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                title!,
+                style: Theme.of(context).textTheme.headline3,
+                textAlign: TextAlign.center,
+              ),
             )
           : Container(
               alignment: Alignment.center,
@@ -111,6 +116,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Icon(
             Icons.menu,
             color: Colors.white,
+            size: 33,
           ),
         ),
       ),
@@ -119,7 +125,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _ordersAppBarIcon() {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 12),
+      padding: const EdgeInsets.only(left: 5),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
@@ -142,8 +148,8 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _noUserButton() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 16),
+    return Container(
+      // padding: const EdgeInsets.only(left: 3, right: 16),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
@@ -170,7 +176,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       if (Get.find<ForegroundNotificationsController>().notifications.length >
           0) {
         return Padding(
-          padding: const EdgeInsets.only(left: 3, right: 7),
+          padding: const EdgeInsets.only(right: 3),
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
@@ -205,10 +211,17 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Obx(() {
       return Row(
         children: [
+          SizedBox(
+            width: 5,
+          ),
           if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
           if (Get.find<AuthController>().isUserSignedIn)
             _notificationAppBarIcon(),
-          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+          if (Get.find<AuthController>().isUserSignedIn && showPastOrders)
+            _ordersAppBarIcon(),
+          SizedBox(
+            width: 10,
+          ),
         ],
       );
     });

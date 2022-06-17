@@ -63,7 +63,7 @@ class OrderInfosCard extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w700,
-                                fontSize: 16.4,
+                                fontSize: 17,
                               ),
                             ),
                           ),

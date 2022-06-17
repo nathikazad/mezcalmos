@@ -65,9 +65,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  height: 15,
-                  alignment: Alignment.center,
-                  // padding: const EdgeInsets.only(left: 8, right: 3),
+                  alignment: Alignment.bottomCenter,
                   child: Text(
                     (showInfo) ? "Informations" : restaurant.info.name,
                     style: Get.textTheme.headline3
@@ -163,7 +161,6 @@ class RestaurantSliverAppBar extends StatelessWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(48),
       child: Container(
-        
         width: double.infinity,
         color: Colors.white,
         margin: const EdgeInsets.only(
@@ -171,7 +168,6 @@ class RestaurantSliverAppBar extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(4),
         child: TabBar(
-          
           isScrollable: true,
           controller: tabController,
           labelColor: primaryBlueColor,

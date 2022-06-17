@@ -61,6 +61,8 @@ class _LaundriesListViewState extends State<LaundriesListView> {
                               snapshot.data!.length,
                               (int index) => CustomerLaundrySelectCard(
                                     laundry: snapshot.data![index],
+                                    shippingPrice:
+                                        laundryController.shippingPrice.value,
                                   )),
                         );
                       } else {

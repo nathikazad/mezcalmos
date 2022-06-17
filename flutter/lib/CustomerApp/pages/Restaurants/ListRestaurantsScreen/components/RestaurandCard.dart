@@ -68,8 +68,13 @@ class RestaurantCard extends StatelessWidget {
                           children: <Widget>[
                             Flexible(
                               flex: 1,
-                              child:
-                                  Text(_getDollarsSign(), style: txt.bodyText1),
+                              child: Text(_getDollarsSign(),
+                                  style: txt.bodyText1?.copyWith(
+                                    color: Colors.grey.shade800,
+                                  )),
+                            ),
+                            SizedBox(
+                              width: 5,
                             ),
                             Flexible(
                               flex: 4,

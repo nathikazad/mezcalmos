@@ -14,7 +14,9 @@ import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 class LaundryController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  RxInt shippingPrice = 50.obs;
   Future<List<Laundry>> getLaundries() {
+    getShippingPrice();
     return _databaseHelper.firebaseDatabase
         .ref()
         .child(serviceProviderInfos(orderType: OrderType.Laundry))
@@ -99,6 +101,7 @@ class LaundryController extends GetxController {
             .child(baseShippingPriceNode())
             .once())
         .snapshot;
+    shippingPrice.value = snapshot.value as int;
     return snapshot.value as int;
   }
 

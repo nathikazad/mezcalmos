@@ -75,7 +75,7 @@ void notificationSnackBar(
       await onClick();
     },
     maxWidth: Get.width,
-    margin: EdgeInsets.all(0),
+    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
     duration: Duration(milliseconds: 5000),
     icon: Container(
       height: 50,
@@ -102,7 +102,7 @@ void notificationSnackBar(
     backgroundColor: Colors.black,
     borderWidth: 1,
     borderColor: Colors.black,
-    borderRadius: 0,
+    borderRadius: 12,
     messageText: Text(
       msg,
       style: TextStyle(color: Colors.white),
@@ -125,6 +125,6 @@ void notificationSnackBar(
     ),
     padding: EdgeInsets.all(25),
     snackPosition: SnackPosition.TOP,
-    snackStyle: SnackStyle.GROUNDED,
+    snackStyle: SnackStyle.FLOATING,
   );
 }

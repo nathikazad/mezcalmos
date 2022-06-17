@@ -18,7 +18,7 @@ class ServicesCard extends StatelessWidget {
   final String title;
   final String? subtitle;
   final String url;
-  
+
   final GestureTapCallback? onTap;
 
   @override
@@ -27,7 +27,7 @@ class ServicesCard extends StatelessWidget {
     final dynamic i18n = Get.find<LanguageController>().strings["CustomerApp"]
         ["components"]["ServicesCard"];
     return Card(
-      margin: EdgeInsets.all(5),
+      margin: EdgeInsets.only(bottom: 5, top: 5),
       color: onTap != null ? Colors.white : Colors.grey.shade300,
       child: InkWell(
         borderRadius: BorderRadius.circular(10),

@@ -147,9 +147,9 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                     order: order.value!,
                   ),
                   const SizedBox(height: 10),
-                  if (order.value!.getCurrentPhase() !=
-                      LaundryOrderPhase.Neither)
-                    ..._mapWidget,
+                  // if (order.value!.getCurrentPhase() !=
+                  //     LaundryOrderPhase.Neither)
+                  //   ..._mapWidget,
                   LaundryProviderCard(
                     order: order.value!,
                   ),

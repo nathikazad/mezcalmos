@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
         ["LaundriesListView"]["components"]["CustomerLaundrySelectCard"];
 
 class CustomerLaundrySelectCard extends StatelessWidget {
-  const CustomerLaundrySelectCard({Key? key, required this.laundry})
+  const CustomerLaundrySelectCard(
+      {Key? key, required this.laundry, required this.shippingPrice})
       : super(key: key);
   final Laundry laundry;
+  final int shippingPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -63,24 +65,26 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   height: 7,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Flexible(
-                      flex: 2,
-                      fit: FlexFit.loose,
+                      flex: 3,
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.delivery_dining,
-                            size: 20,
                             color: Colors.grey.shade800,
                           ),
                           SizedBox(
-                            width: 3,
+                            width: 2,
                           ),
-                          Text(50.toPriceString(),
-                              style: Get.textTheme.bodyText2),
+                          Flexible(
+                            child: ShippingCostComponent(
+                              shippingCost: shippingPrice,
+                              alignment: MainAxisAlignment.start,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -105,15 +109,28 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: 5,
-                    ),
+                    // SizedBox(
+                    //   width: 5,
+                    // ),
                     Flexible(
-                      flex: 4,
-                      fit: FlexFit.tight,
-                      child: Text(
-                          "${_i18n()["startingFrom"]}: \$${laundry.getCheapestCategory}/kg",
-                          style: Get.textTheme.bodyText2),
+                      flex: 2,
+                      fit: FlexFit.loose,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.north_east_sharp,
+                            size: 18,
+                            color: Colors.grey.shade800,
+                          ),
+                          SizedBox(
+                            width: 3,
+                          ),
+                          Flexible(
+                              child: Text('${laundry.getCheapestCategory}/kg',
+                                  style: Get.textTheme.bodyText2)),
+                        ],
+                      ),
                     ),
                   ],
                 ),

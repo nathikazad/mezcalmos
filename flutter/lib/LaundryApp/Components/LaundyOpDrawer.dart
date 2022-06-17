@@ -17,26 +17,28 @@ import 'package:url_launcher/url_launcher.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
 
-class LaundryAppDrawer extends StatelessWidget {
+class LaundryAppDrawer extends StatefulWidget {
   const LaundryAppDrawer({Key? key}) : super(key: key);
-  // controllers //
-  static final LanguageController languageController =
-      Get.find<LanguageController>();
-  static final SideMenuDrawerController _drawerController =
-      Get.find<SideMenuDrawerController>();
-  static AuthController authController = Get.find<AuthController>();
-  static LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
-  static LaundryOpAuthController laundryOpAuthController =
-      Get.find<LaundryOpAuthController>();
 
+  @override
+  State<LaundryAppDrawer> createState() => _LaundryAppDrawerState();
+}
+
+class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
+  // controllers //
+  final LanguageController languageController = Get.find<LanguageController>();
+  final SideMenuDrawerController _drawerController =
+      Get.find<SideMenuDrawerController>();
+  AuthController authController = Get.find<AuthController>();
+  LaundryInfoController laundryInfoController =
+      Get.find<LaundryInfoController>();
+  LaundryOpAuthController laundryOpAuthController =
+      Get.find<LaundryOpAuthController>();
   // helpers //
-  static final AppLaunchMode lmd = getAppLaunchMode();
+  final AppLaunchMode lmd = getAppLaunchMode();
 
   // variables //
-  static final String version =
-      GetStorage().read<String>(getxAppVersion) as String;
-
+  final String version = GetStorage().read<String>(getxAppVersion) as String;
   @override
   Widget build(BuildContext context) {
     return Drawer(
