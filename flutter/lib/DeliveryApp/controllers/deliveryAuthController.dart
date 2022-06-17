@@ -101,11 +101,12 @@ class DeliveryAuthController extends GetxController {
 
     await _userInfoStreamListener?.cancel();
     _authController.userInfoStream.listen((MainUserInfo? userInfo) {
-      if (userInfo != null)
+      if (userInfo != null) {
         _databaseHelper.firebaseDatabase
             .ref()
             .child(deliveryDriverInfoNode(user.uid))
             .set(userInfo.toFirebaseFormatJson());
+      }
     });
   }
 
