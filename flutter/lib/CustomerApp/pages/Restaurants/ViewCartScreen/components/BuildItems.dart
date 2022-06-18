@@ -53,7 +53,7 @@ class CartItemsBuilder extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: buildChoices(cartItem.chosenChoices),
+                    children: buildChoices(cartItem),
                   ),
                 ),
                 if (cartItem.notes != null)
@@ -103,12 +103,13 @@ class CartItemsBuilder extends StatelessWidget {
     );
   }
 
-  List<Widget> buildChoices(Map<String, List<Choice>> choices) {
+  List<Widget> buildChoices(CartItem cartItem) {
     final List<Widget> viewWidgets = [];
-    choices.forEach((String key, List<Choice> value) {
+    cartItem.chosenChoices.forEach((String key, List<Choice> value) {
       viewWidgets.add(ItemChosenChoiceComponent(
         choices: value,
-        optionName: key,
+          optionName:
+              cartItem.item.findOption(key)?.name ?? <LanguageType, String>{}
       ));
     });
     return viewWidgets;

@@ -231,7 +231,7 @@
                             "canceledByCustomer": "Cancelada",
                             "received": "Recibida",
                             "preparing": "Preparando",
-                            "onTheWay": "En camino",
+                            "onTheWay": "En Camino",
                             "readyForPickUp": "Lista para recoger",
                             "delivered": "Entregado",
                             "helperText-canceledByAdmin": "Tu pedido es cancelado por el Restaurante.",
@@ -541,13 +541,13 @@
             "deliveredBody": "Tu pedido ha sido entregado",
             "cancelledTitle": "Orden Cancelada",
             "cancelledBody": "Tu pedido ha sido cancelado",
-            "taxiOnTheWayTitle": "En camino",
+            "taxiOnTheWayTitle": "En Camino",
             "taxiOnTheWayBody": "Tu taxi esta en camino",
-            "taxiInTransitTitle": "En tránsito",
+            "taxiInTransitTitle": "En Tránsito",
             "taxiInTransitBody": "Estas en camino a tu destino",
             "taxiDroppedOffTitle": "Alcanzada",
             "taxiDroppedOffBody": "Ha llegado a su destino",
-            "taxiCancelledTitle": "Orden cancelada",
+            "taxiCancelledTitle": "Orden Cancelada",
             "taxiCancelledBody": "Su pedido ha sido cancelado",
             "taxiExpiredTitle": "No hay taxis disponibles",
             "taxiExpiredBody": "Desafortunadamente, no pudimos encontrar un taxi para ti.Por favor, inténtelo de nuevo más tarde",
@@ -555,11 +555,11 @@
             "taxiFwdToCompanyBody": "Estamos llamando a una compañía local para encontrarte un taxi.",
             "taxiFwdSuccessTitle": "Reenviado con éxito",
             "taxiFwdSuccessBody": "Taxi local encontró ",
-            "taxiFwdCancelTitle": "Reenvío cancelado ",
+            "taxiFwdCancelTitle": "Reenvío Cancelado ",
             "taxiFwdCancelBody": "Tu orden ha sido cancelado ",
             "laundryOtwPickupTitle": "Recogida en el camino",
             "laundryOtwPickupBody": "Conductor en la forma de recoger su pedido.",
-            "laundryPickedTitle": "Pedido recogido",
+            "laundryPickedTitle": "Pedido Recogido",
             "laundryPickedBody": "El orden es recogido con éxito",
             "laundryAtLaundryTitle": "En la lavandería",
             "laundryAtLaundryBody": "Tu orden es recibido por la lavandería.",
@@ -569,7 +569,7 @@
             "laundryOtwDeliveryBody": "Tu orden está en camino",
             "laundryDeliveredTitle": "Entregada",
             "LaundryDeliveredBody": "Su pedido ha sido entregado",
-            "LaundryCancelledTitle": "Orden cancelada",
+            "LaundryCancelledTitle": "Orden Cancelada",
             "LaundryCancelledBody": "Su pedido ha sido cancelado",
             "counterOfferTitle": "Nueva Contraoferta",
             "counterOfferBody": "New oferta de "
@@ -1268,7 +1268,7 @@
                             "time": "Tiempo",
                             "dropoff": "Dejar",
                             "pickup": "Recoger",
-                            "pickupTimeError": "El tiempo de recogida debe ser antes del tiempo de caída.",
+                            "pickupTimeError": "El tiempo de recogida debe ser antes del tiempo de entregado.",
                             "wrongTime": "Elegiste un momento equivocado",
                             "laundeyOrderHeader": {
                                 "laundryOrder": "Orden de lavandería"
@@ -1278,7 +1278,7 @@
                                 "pickupOrder": "Comenzar a Recoger",
                                 "confirmPickup": "Confirmar la Recogida",
                                 "atLaundry": "En la Lavandería",
-                                "deliverOrder": "Comienza la Caída",
+                                "deliverOrder": "Comenzar el Entregado",
                                 "confirmDelivery": "Confirmar el Entregado",
                                 "confirmOrderWeight": "Confirmar peso de orden",
                                 "orderWeightAlert": "Por favor ingrese un peso válido",
@@ -1297,7 +1297,7 @@
                             "time": "Tiempo",
                             "dropoff": "Dejar",
                             "pickup": "Recoger",
-                            "pickupTimeError": "El tiempo de recogida debe ser antes del tiempo de caída.",
+                            "pickupTimeError": "El tiempo de recogida debe ser antes del tiempo de entregada.",
                             "wrongTime": "Elegiste un momento equivocado",
                             "orderStatus": {
                                 "waiting": "Esperando el restaurante",
@@ -1310,8 +1310,8 @@
                             "RestaurantControllButtons": {
                                 "confirmPickup": "Confirmar la recogida",
                                 "confirmDelivery": "Confirmar el envío",
-                                "timeErrorTitle": "¡Tiempo no listo!to!",
-                                "timeErrorBody": "Establezca primero los tiempos estimadosados.dos.dos.",
+                                "timeErrorTitle": "La hora no esta",
+                                "timeErrorBody": "Establezca primero los tiempos estimadosados",
                                 "notReadyTitle": "Esperando el pedido",
                                 "notReadyBody": "El pedido aún no está listo para la entrega"
 
@@ -1322,7 +1322,7 @@
                 }
             },
             "RestaurantOrderView": {
-                "title": "Caída del restaurante",
+                "title": "Entregada del restaurante",
                 "components": {
                     "RestaurantOrderFromToComponent": {
                         "pickUpTimeErrorTitle": "Oops",
