@@ -65,7 +65,7 @@
                             "orderReceived": "Order Received",
                             "otwPickUp": "Pick-up on the way",
                             "pickedUp": "Order Picked-up",
-                            "atLaundry": "At laundry",
+                            "atLaundry": "At Laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered"
@@ -77,7 +77,7 @@
                             "orderReceived": "Order Received",
                             "otwPickUp": "Pick-up on the way",
                             "pickedUp": "Order Picked-up",
-                            "atLaundry": "At laundry",
+                            "atLaundry": "At Laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered"
@@ -126,7 +126,7 @@
                     "components": {
                         "BuildCart": {
                             "inCart": "My orders",
-                            "yesClear": "Yes clear",
+                            "yesClear": "Yes",
                             "no": "No",
                             "clearCart": "Clear Cart",
                             "clearCartConfirm": "Are you sure you want to clear the cart ?",
@@ -1032,7 +1032,7 @@
                             "otwDeliveryTitle": "Delivery On the way",
                             "delivered": "Order Delivered",
                             "deliveredText": "Confirm that the order is delivered to the customer",
-                            "deliveredTitle": "Order delivered"
+                            "deliveredTitle": "Order Delivered"
                         },
                         "LaundryOrderCustomer": {
                             "customer": "Customer"
@@ -1271,8 +1271,8 @@
                 },
                 "CurrentOrderViewScreen": {
                     "LaundryOrderView": {
-                        "pickup": "Laundry pick-up",
-                        "dropoff": "Laundry drop-off"
+                        "pickup": "Laundry Pick up",
+                        "dropoff": "Laundry Drop off"
 
                     },
                     "Components": {
@@ -1281,7 +1281,7 @@
                             "set": "Set",
                             "time": "Time",
                             "dropoff": "Drop-off",
-                            "pickup": "`Pick-up",
+                            "pickup": "Pick-up",
                             "pickupTimeError": "The Pickup time should be before the dropoff time.",
                             "wrongTime": "You picked a wrong time",
                             "orderStatus": {
@@ -1308,7 +1308,7 @@
                                 "confirm": "Confirm",
                                 "cancel": "Cancel",
                                 "orderWeight": "Order Weight",
-                                "timeErrorTitle": "Time not set !",
+                                "timeErrorTitle": "Time not set!",
                                 "timeErrorBody": "Please set the estimated times first."
                             }
 
@@ -1489,7 +1489,7 @@
                             "orderReceived": "Order Received",
                             "otwPickUp": "Pick-up on the way",
                             "pickedUp": "Order Picked-up",
-                            "atLaundry": "At laundry",
+                            "atLaundry": "At Laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered"
@@ -1563,7 +1563,7 @@
 
                 },
                 "LaundryOpOrderView": {
-                    "customer": "Customer info : ",
+                    "customer": "Customer Info",
                     "orderDate": "Order Date",
                     "total": "Total",
                     "orderReady": "Order ready for delivery"
