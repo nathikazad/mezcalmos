@@ -657,7 +657,7 @@
                     "latest": "Más reciente",
                     "today": "Hoy dia",
                     "alertClearNotificationTitle": "Borrar todas las notificaciones",
-                    "clear": "Clara",
+                    "clear": "Borra",
                     "no": "No",
                     "noNotifTitle": "¡No hay notificaciones todavía!",
                     "noNotifBody": "Actualmente no tienes notificaciones.Te notificaremos cuando se llega a algo nuevo."
@@ -1114,7 +1114,7 @@
                             "deliveredAlertSubTitle": "Estás seguro de que quieres\nentregar el pedido?"
                         },
                         "OrderInfoCard": {
-                            "orderItems": "Encargar Artículos"
+                            "orderItems": "Artículos del orden"
                         },
                         "OrderNoteCard": {
                             "notes": "Notas"

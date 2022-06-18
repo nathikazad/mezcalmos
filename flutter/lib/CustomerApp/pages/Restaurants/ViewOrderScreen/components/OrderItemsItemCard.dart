@@ -137,7 +137,8 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                 data: Theme.of(context)
                     .copyWith(dividerColor: Colors.grey.shade400),
                 child: Column(
-                  children: buildChoices(widget.item.chosenChoices),
+                  children: buildChoices(
+                      widget.item.chosenChoices, widget.item.optionNames),
                 ),
               ),
               if (widget.item.notes != null)
@@ -175,12 +176,13 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
     );
   }
 
-  List<Widget> buildChoices(Map<String, List<Choice>> choices) {
+  List<Widget> buildChoices(
+      Map<String, List<Choice>> choices, Map<String, LanguageMap> optionNames) {
     final List<Widget> viewWidgets = [];
     choices.forEach((String key, List<Choice> value) {
       viewWidgets.add(ItemChosenChoiceComponent(
         choices: value,
-        optionName: key,
+        optionName: optionNames[key]!,
       ));
     });
     return viewWidgets;
