@@ -597,8 +597,9 @@
             },
             "DateTimeHelper": {
                 "today": "Today",
-                "in": "in: ",
-                "at": "at: "
+                "on": "on",
+                "in": "in",
+                "at": "at"
             }
         },
         "pages": {

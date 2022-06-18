@@ -95,7 +95,7 @@
                     },
                     "orders": {
                         "noOrders": "Sin pedidos",
-                        "onGoingOrders": "Pedidos en curso"
+                        "onGoingOrders": "Órdenes actuales"
                     }
                 }
             },
@@ -453,7 +453,7 @@
                             "totalCost": "Costo Total",
                             "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido.",
                             "item": "Articulo",
-                            "perKilo": "Para kilo",
+                            "perKilo": "Por kilo",
                             "weight": "Peso",
                             "cost": "Costo"
                         },
@@ -605,8 +605,9 @@
             },
             "DateTimeHelper": {
                 "today": "Hoy dia",
-                "in": "en: ",
-                "at": "a: "
+                "on": "el",
+                "in": "en",
+                "at": "a"
             }
         },
         "pages": {
