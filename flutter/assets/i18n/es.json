@@ -47,7 +47,7 @@
                             "onTheWay": "Taxi en el camino",
                             "lookingForTaxi": "Buscando Taxi",
                             "inTransit": "Taxi en tránsito",
-                            "droppedOff": "Dejado",
+                            "droppedOff": "Entregado",
                             "expired": "Caducado",
                             "forwarding": "Reenvío a la empresa",
                             "forwardSuccess": "Reenviada",
@@ -898,7 +898,7 @@
                     "orderId": "Solicitar ID",
                     "appVersion": "Version De Aplicacion",
                     "totalOrders": "Órdenes Totales",
-                    "droppedOff": "Dejado",
+                    "droppedOff": "Entregado",
                     "firstOrder": "Primer pedido",
                     "lastOrder": "Último pedido",
                     "notifications": "Notificaciones",
@@ -1165,7 +1165,7 @@
                                 "onTheWay": "Taxi en el camino",
                                 "lookingForTaxi": "Buscando un taxi",
                                 "inTransit": "Taxi en tránsito",
-                                "droppedOff": "Dejado caer",
+                                "droppedOff": "Entregado",
                                 "expired": "Caducada",
                                 "forwarding": "Reenvío a la empresa",
                                 "forwardSuccess": "Reenviada",
@@ -1233,7 +1233,7 @@
                             },
                             "waiting": "Esperando",
                             "ready": "Listo",
-                            "inTransit": "En tránsito",
+                            "inTransit": "En Tránsito",
                             "delivered": "Entregada",
                             "cancelled": "Cancelada"
                         }
@@ -1247,7 +1247,7 @@
                 "CurrentOrderViewScreen": {
                     "LaundryOrderView": {
                         "pickup": "Recogida de lavandería",
-                        "dropoff": "Dejando en lavandería"
+                        "dropoff": "Entregando en lavandería"
 
                     },
                     "Components": {
@@ -1266,7 +1266,7 @@
                             "oops": "Ups",
                             "set": "Establecer",
                             "time": "Tiempo",
-                            "dropoff": "Dejar",
+                            "dropoff": "Entregar",
                             "pickup": "Recoger",
                             "pickupTimeError": "El tiempo de recogida debe ser antes del tiempo de entregado.",
                             "wrongTime": "Elegiste un momento equivocado",
@@ -1295,7 +1295,7 @@
                             "oops": "Ups",
                             "set": "Establecer",
                             "time": "Tiempo",
-                            "dropoff": "Dejar",
+                            "dropoff": "Entregar",
                             "pickup": "Recoger",
                             "pickupTimeError": "El tiempo de recogida debe ser antes del tiempo de entregada.",
                             "wrongTime": "Elegiste un momento equivocado",
@@ -1494,7 +1494,7 @@
                             "laundryArriving": "Lavandería que llega",
                             "laundryFinish": "Terminendo",
                             "driverArriving": "Que llega al conductor",
-                            "willBeDropped": "Se dejará caer"
+                            "willBeDropped": "Será entregado"
 
                         }
 
