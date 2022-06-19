@@ -604,7 +604,8 @@
                 "view": "Ver"
             },
             "DateTimeHelper": {
-                "today": "Hoy dia",
+                "today": "Hoy",
+                "tomorrow": "mañana",
                 "on": "el",
                 "in": "en",
                 "at": "a"

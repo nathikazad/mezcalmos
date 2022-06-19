@@ -31,8 +31,13 @@ extension parseDateTime on DateTime {
     if (DateTime(toLocal().year, toLocal().month, toLocal().day)
             .difference(DateTime(now.year, now.month, now.day))
             .inDays >
-        0) {
+        1) {
       return "${_i18n()["on"]} ${formatMonth.format(toLocal())} ${formatTime.format(toLocal())}";
+    } else if (DateTime(toLocal().year, toLocal().month, toLocal().day)
+            .difference(DateTime(now.year, now.month, now.day))
+            .inDays >
+        0) {
+      return "${_i18n()["tomorrow"]} ${DateFormat("hh:mm a").format(toLocal())}";
     } else if (now.difference(toLocal()).inHours < 0) {
       return "${_i18n()["at"]} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
