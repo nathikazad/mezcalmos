@@ -265,7 +265,8 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
         order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup &&
             order.value!.status == LaundryOrderStatus.PickedUpFromCustomer)
       return Container(
-        color: Colors.black,
+        // color: Colors.black,
+        margin: const EdgeInsets.only(bottom: 20),
         height: 250,
         child: MGoogleMap(
           mGoogleMapController: mGoogleMapController,
