@@ -25,20 +25,14 @@ class LaundryOrderStatusCard extends StatelessWidget {
       child: Container(
         width: double.infinity,
         margin: const EdgeInsets.all(12),
-        child: Column(
+        child: Row(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                order.getOrderWidget(),
-                Spacer(),
-                _orderStatusText(context),
-                Spacer(
-                  flex: 2,
-                ),
-              ],
+            order.getOrderWidget(),
+            Spacer(),
+            _orderStatusText(context),
+            Spacer(
+              flex: 1,
             ),
-            if (_getEstimatedText() != null) _orderEtaTimeWidget()
           ],
         ),
       ),
@@ -62,16 +56,23 @@ class LaundryOrderStatusCard extends StatelessWidget {
     return Flexible(
       flex: 8,
       fit: FlexFit.tight,
-      child: Container(
-        alignment: Alignment.center,
-        child: Text(
-          order.orderStatusTitleForCustomer(),
-          style:
-              Theme.of(context).textTheme.headline3?.copyWith(fontSize: 14.sp),
-          textAlign: TextAlign.center,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            child: Text(
+              order.orderStatusTitleForCustomer(),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline3
+                  ?.copyWith(fontSize: 14.sp),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          if (_getEstimatedText() != null) _orderEtaTimeWidget()
+        ],
       ),
     );
   }
