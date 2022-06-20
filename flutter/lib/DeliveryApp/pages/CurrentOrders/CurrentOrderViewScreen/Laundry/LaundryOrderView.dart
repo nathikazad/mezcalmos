@@ -60,13 +60,14 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
       }
     });
     // init the map
-    Future<void>.microtask(
-      () => mapController.setLocation(
-        Location.fromLocationData(
-          deliveryAuthAuthController.currentLocation,
-        ),
+    mapController.setLocation(
+      Location.fromLocationData(
+        deliveryAuthAuthController.currentLocation,
       ),
     );
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+    mapController.animateMarkersPolyLinesBounds.value = true;
+    mapController.periodicRerendering.value = true;
 
     // Future.wait(<Future<void>>[
     // DESTINATION MARKER
@@ -92,15 +93,13 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
       customImgHttpUrl: order.value!.laundry!.image,
       markerId: order.value!.laundry!.id,
     );
-    // ]).then((_) {
-    // add polylines
+
     if (order.value?.routeInformation?.polyline != null)
       mapController.decodeAndAddPolyline(
         encodedPolylineString: order.value!.routeInformation!.polyline,
       );
 
     handleLaundryOrder(order.value as LaundryOrder);
-    // });
 
     waitForOrderIfNotLoaded().then((void value) {
       if (order.value == null) {
