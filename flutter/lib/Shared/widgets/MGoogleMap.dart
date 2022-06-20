@@ -81,9 +81,13 @@ class MGoogleMapState extends State<MGoogleMap> {
   @override
   void dispose() {
     _reRenderingTimer?.cancel();
+    _reRenderingTimer = null;
     // gmapControlelr disposing.
     widget.mGoogleMapController.controller?.dispose();
     widget.mGoogleMapController.controller = null;
+    mezDbgPrint(
+        "MGoogleMap - Disposed { controller:${widget.mGoogleMapController.controller} | _reRenderingTimer:$_reRenderingTimer } !!!");
+
     super.dispose();
   }
 
@@ -92,7 +96,10 @@ class MGoogleMapState extends State<MGoogleMap> {
       widget.mGoogleMapController.animateAndUpdateBounds();
       // start new timer.
       _reRenderingTimer = Timer.periodic(widget.rerenderDuration, (_) {
-        if (_reRenderingTimer == null) _.cancel();
+        if (_reRenderingTimer == null) {
+          _.cancel();
+          return;
+        }
         widget.mGoogleMapController.animateAndUpdateBounds();
       });
     } else {

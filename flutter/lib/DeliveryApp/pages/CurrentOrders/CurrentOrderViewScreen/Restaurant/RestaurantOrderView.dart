@@ -63,42 +63,45 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       }
     });
 
-    // doing this once to avoid doing it constaintly in [handleRestaurantOrder::switch::default]
-    Future.wait(<Future<void>>[
-      // DESTINATION MARKER
-      mapController.addOrUpdatePurpleDestinationMarker(
-        latLng: LatLng(
-          order.value!.to.latitude,
-          order.value!.to.longitude,
-        ),
-      ),
-      // USER MARKER
-      mapController.addOrUpdateUserMarker(
-        latLng: LatLng(
-          deliveryAuthAuthController.currentLocation.latitude!,
-          deliveryAuthAuthController.currentLocation.longitude!,
-        ),
-      ),
-      // Restaurant Marker
-      mapController.addOrUpdateUserMarker(
-        latLng: LatLng(
-          order.value!.restaurant.location.latitude,
-          order.value!.restaurant.location.longitude,
-        ),
-        markerId: order.value!.restaurantId,
-        customImgHttpUrl: order.value!.restaurant.image,
-      )
-    ]).then((_) {
-      mapController.setLocation(
+    // init the map
+    Future<void>.microtask(
+      () => mapController.setLocation(
         Location.fromLocationData(
           deliveryAuthAuthController.currentLocation,
         ),
-      );
-      mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
-      mapController.animateMarkersPolyLinesBounds.value = true;
-      mapController.periodicRerendering.value = true;
-      handleRestaurantOrder(order.value as RestaurantOrder);
-    });
+      ),
+    );
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+    mapController.animateMarkersPolyLinesBounds.value = true;
+    mapController.periodicRerendering.value = true;
+
+    // doing this once to avoid doing it constaintly in [handleRestaurantOrder::switch::default]
+    // Future.wait(<Future<void>>[
+    // DESTINATION MARKER
+    mapController.addOrUpdatePurpleDestinationMarker(
+      latLng: LatLng(
+        order.value!.to.latitude,
+        order.value!.to.longitude,
+      ),
+    );
+    // USER MARKER
+    mapController.addOrUpdateUserMarker(
+      latLng: LatLng(
+        deliveryAuthAuthController.currentLocation.latitude!,
+        deliveryAuthAuthController.currentLocation.longitude!,
+      ),
+    );
+    // Restaurant Marker
+    mapController.addOrUpdateUserMarker(
+      latLng: LatLng(
+        order.value!.restaurant.location.latitude,
+        order.value!.restaurant.location.longitude,
+      ),
+      markerId: order.value!.restaurantId,
+      customImgHttpUrl: order.value!.restaurant.image,
+    );
+
+    handleRestaurantOrder(order.value as RestaurantOrder);
 
     waitForOrderIfNotLoaded().then((void value) {
       if (order.value == null) {

@@ -39,6 +39,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   final VoidCallback onServiceMsgClick;
 
   final String formattedOrderStatus;
+  final String? subtitle;
   final Order order;
   final bool enableExpand;
 
@@ -46,6 +47,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     required this.formattedOrderStatus,
     this.showMsgIconInOneLine = false,
     this.isCustomerRowFirst = true,
+    this.subtitle,
     this.initialCardState = OrderInfoCardState.Minimized,
     this.onCardStateChange,
     this.enableExpand = true,
@@ -145,16 +147,23 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         Flexible(
           child: Container(
             width: 64.w,
-            child: Text(
-              formattedOrderStatus.replaceAll('', '\u{200B}'),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: Color.fromRGBO(103, 121, 254, 1),
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w700,
-                fontSize: 13.sp,
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  formattedOrderStatus.replaceAll('', '\u{200B}'),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Color.fromRGBO(103, 121, 254, 1),
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13.sp,
+                  ),
+                ),
+                if (subtitle != null) Text(subtitle!),
+              ],
             ),
           ),
         ),

@@ -59,47 +59,47 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
         order.refresh();
       }
     });
+    // init the map
+    mapController.setLocation(
+      Location.fromLocationData(
+        deliveryAuthAuthController.currentLocation,
+      ),
+    );
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+    mapController.animateMarkersPolyLinesBounds.value = true;
+    mapController.periodicRerendering.value = true;
 
-    Future.wait(<Future<void>>[
-      // DESTINATION MARKER
-      mapController.addOrUpdatePurpleDestinationMarker(
-        latLng: LatLng(
-          order.value!.to.latitude,
-          order.value!.to.longitude,
-        ),
+    // Future.wait(<Future<void>>[
+    // DESTINATION MARKER
+    mapController.addOrUpdatePurpleDestinationMarker(
+      latLng: LatLng(
+        order.value!.to.latitude,
+        order.value!.to.longitude,
       ),
-      // USER MARKER
-      mapController.addOrUpdateUserMarker(
-        latLng: LatLng(
-          deliveryAuthAuthController.currentLocation.latitude!,
-          deliveryAuthAuthController.currentLocation.longitude!,
-        ),
+    );
+    // USER MARKER
+    mapController.addOrUpdateUserMarker(
+      latLng: LatLng(
+        deliveryAuthAuthController.currentLocation.latitude!,
+        deliveryAuthAuthController.currentLocation.longitude!,
       ),
-      // LAUNDRY MARKER
-      mapController.addOrUpdateUserMarker(
-        latLng: LatLng(
-          order.value!.laundry!.location.latitude,
-          order.value!.laundry!.location.longitude,
-        ),
-        customImgHttpUrl: order.value!.laundry!.image,
-        markerId: order.value!.laundry!.id,
+    );
+    // LAUNDRY MARKER
+    mapController.addOrUpdateUserMarker(
+      latLng: LatLng(
+        order.value!.laundry!.location.latitude,
+        order.value!.laundry!.location.longitude,
       ),
-    ]).then((_) {
-      // add polylines
-      if (order.value?.routeInformation?.polyline != null)
-        mapController.decodeAndAddPolyline(
-          encodedPolylineString: order.value!.routeInformation!.polyline,
-        );
-      mapController.setLocation(
-        Location.fromLocationData(
-          deliveryAuthAuthController.currentLocation,
-        ),
+      customImgHttpUrl: order.value!.laundry!.image,
+      markerId: order.value!.laundry!.id,
+    );
+
+    if (order.value?.routeInformation?.polyline != null)
+      mapController.decodeAndAddPolyline(
+        encodedPolylineString: order.value!.routeInformation!.polyline,
       );
-      mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
-      mapController.animateMarkersPolyLinesBounds.value = true;
-      mapController.periodicRerendering.value = true;
-      handleLaundryOrder(order.value as LaundryOrder);
-    });
+
+    handleLaundryOrder(order.value as LaundryOrder);
 
     waitForOrderIfNotLoaded().then((void value) {
       if (order.value == null) {
