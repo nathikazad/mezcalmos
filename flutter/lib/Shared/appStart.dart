@@ -8,7 +8,8 @@
 
 import 'dart:async';
 import 'dart:io';
-
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -248,10 +249,10 @@ class _StartingPointState extends State<StartingPoint> {
   }
 
   Future<void> putControllers() async {
-    await Get.put<LanguageController>(LanguageController())
-        .isLamgInitialized
-        .stream
-        .first;
+    final LanguageController lc =
+        Get.put<LanguageController>(LanguageController());
+    await lc.isLamgInitialized.stream.first;
+    await initializeDateFormatting(lc.userLanguageKey.name.toLowerCase());
     Get.put<AuthController>(
       AuthController(widget.signInCallback, widget.signOutCallback),
       permanent: true,
