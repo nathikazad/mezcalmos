@@ -261,6 +261,9 @@
                 },
                 "ViewRestaurantScreen": {
                     "components": {
+                        "RestaurantSliverAppBar": {
+                            "info": "Información"
+                        },
                         "restaurantInfoTab": {
                             "description": "Descripción",
                             "location": "Dirección",

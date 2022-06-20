@@ -16,6 +16,12 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+        ["pages"]["Restaurants"]["ViewRestaurantScreen"]["components"]
+    ["RestaurantSliverAppBar"];
+//
+
 class RestaurantSliverAppBar extends StatelessWidget {
   RestaurantSliverAppBar(
       {Key? key,
@@ -58,7 +64,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           centerTitle: true,
           title: Container(
             alignment: Alignment.bottomCenter,
-            width: 58.w,
+            width: 55.w,
             padding: const EdgeInsets.only(bottom: 5, left: 5, right: 5),
             child: FittedBox(
               child: Row(
@@ -68,10 +74,12 @@ class RestaurantSliverAppBar extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Container(
-                      alignment: Alignment.bottomCenter,
+                      alignment: Alignment.bottomCenter,       
                       margin: const EdgeInsets.only(bottom: 3),
                       child: Text(
-                        (showInfo) ? "Informations" : restaurant.info.name,
+                        (showInfo)
+                            ? "${_i18n()["info"]}"
+                            : restaurant.info.name,
                         style: Get.textTheme.headline3
                             ?.copyWith(color: Colors.white, fontSize: 14.sp),
                         maxLines: 1,
