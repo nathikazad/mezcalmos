@@ -172,13 +172,13 @@ class _LaundryOrderFromToComponentState
   }
 
   List<Widget> _dateTimeSetter(DeliveryAction deliveryAction) {
-    Future<DateTime?> _dateTimePicker() async {
+    Future<DateTime?> _dateTimePicker({DateTime? initialDate}) async {
       final DateTime? pickedDate = await getDatePicker(
         context,
-        initialDate: DateTime.now(),
+        initialDate: initialDate ?? DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(
-          Duration(hours: 12),
+          Duration(days: 3),
         ),
       );
 
@@ -186,7 +186,7 @@ class _LaundryOrderFromToComponentState
         final TimeOfDay? pickedTime = await getTimePicker(
           context,
           initialTime: TimeOfDay.fromDateTime(
-            DateTime.now(),
+            initialDate ?? DateTime.now(),
           ),
         );
         if (pickedTime != null) {
@@ -209,7 +209,7 @@ class _LaundryOrderFromToComponentState
           SizedBox(width: 7),
           InkWell(
             onTap: () async {
-              final DateTime? _dt = await _dateTimePicker();
+              final DateTime? _dt = await _dateTimePicker(initialDate: dt);
               if (_dt != null) onNewDateTimeSet(_dt);
             },
             child: Container(
@@ -263,6 +263,27 @@ class _LaundryOrderFromToComponentState
             ? widget.order.estimatedPickupFromCustomerTime?.toLocal()
             : widget.order.estimatedDropoffAtServiceProviderTime?.toLocal(),
         onNewDateTimeSet: (DateTime newDt) async {
+          switch (deliveryAction) {
+            case DeliveryAction.Pickup:
+              if (widget.order.estimatedDropoffAtServiceProviderTime != null &&
+                  widget.order.estimatedDropoffAtServiceProviderTime!
+                      .isBefore(newDt)) {
+                MezSnackbar(
+                    "Oops", "Pickup time should be before dropOff time!");
+                return;
+              }
+              break;
+            case DeliveryAction.DropOff:
+              if (widget.order.estimatedPickupFromCustomerTime != null &&
+                  widget.order.estimatedPickupFromCustomerTime!
+                      .isAfter(newDt)) {
+                MezSnackbar(
+                    "Oops", "Pickup time should be before dropOff time!");
+                return;
+              }
+              break;
+          }
+
           final ServerResponse _resp =
               await Get.find<OrderController>().setEstimatedTime(
             widget.order.orderId,
@@ -288,8 +309,26 @@ class _LaundryOrderFromToComponentState
             ? widget.order.estimatedPickupFromServiceProviderTime?.toLocal()
             : widget.order.estimatedDropoffAtCustomerTime?.toLocal(),
         onNewDateTimeSet: (DateTime newDt) async {
-          mezDbgPrint("newTime ==> $newDt");
-
+          switch (deliveryAction) {
+            case DeliveryAction.Pickup:
+              if (widget.order.estimatedDropoffAtCustomerTime != null &&
+                  widget.order.estimatedDropoffAtCustomerTime!
+                      .isBefore(newDt)) {
+                MezSnackbar(
+                    "Oops", "Pickup time should be before dropOff time!");
+                return;
+              }
+              break;
+            case DeliveryAction.DropOff:
+              if (widget.order.estimatedPickupFromServiceProviderTime != null &&
+                  widget.order.estimatedPickupFromServiceProviderTime!
+                      .isAfter(newDt)) {
+                MezSnackbar(
+                    "Oops", "Pickup time should be before dropOff time!");
+                return;
+              }
+              break;
+          }
           final ServerResponse _resp =
               await Get.find<OrderController>().setEstimatedTime(
             widget.order.orderId,
