@@ -96,6 +96,7 @@ class _LaundryOrderFromToComponentState
         },
         // order
         formattedOrderStatus: _getOrderStatus(),
+        subtitle: getSubTitle(),
         order: widget.order,
         // card Settings
         isCustomerRowFirst:
@@ -120,6 +121,27 @@ class _LaundryOrderFromToComponentState
           widget.order.estimatedPickupFromServiceProviderTime != null;
     } else
       return false;
+  }
+
+  String? getSubTitle() {
+    String _getFormattedTime(DateTime dt) {
+      final Duration _duration =
+          DateTime.now().difference(widget.order.estimatedLaundryReadyTime!);
+
+      if (_duration.inMinutes > 59) {
+        return "1 hour +";
+      } else if (_duration.inMinutes < 1) {
+        return "${_duration.inSeconds.abs()} seconds";
+      } else {
+        return "${_duration.inMinutes.abs()} minutes";
+      }
+    }
+
+    return widget.order.status == LaundryOrderStatus.AtLaundry
+        ? (widget.order.estimatedLaundryReadyTime != null
+            ? "Estimated ready time: ${_getFormattedTime(widget.order.estimatedLaundryReadyTime!)}"
+            : null)
+        : null;
   }
 
   String _getOrderStatus() {

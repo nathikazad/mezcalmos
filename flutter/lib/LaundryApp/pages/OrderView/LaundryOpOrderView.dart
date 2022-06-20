@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpCustomer.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpDriverCard.dart';
@@ -11,9 +12,13 @@ import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCate
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/OrderEstimatedTimeComponent.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
@@ -29,19 +34,36 @@ class LaundryOpOrderView extends StatefulWidget {
 class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
   OrderController controller = Get.find<OrderController>();
+  final MGoogleMapController mGoogleMapController = MGoogleMapController(
+    enableMezSmartPointer: false,
+  );
   StreamSubscription? _orderListener;
+
+  LaundryOrderStatus? _statusSnapshot;
+
   @override
   void initState() {
     final String orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as LaundryOrder;
+    // first time init map
+    mGoogleMapController.animateMarkersPolyLinesBounds(true);
+    mGoogleMapController.recenterButtonEnabled.value = false;
+    mGoogleMapController.periodicRerendering.value = true;
+    if (order.value?.routeInformation?.polyline != null)
+      mGoogleMapController.decodeAndAddPolyline(
+        encodedPolylineString: order.value!.routeInformation!.polyline,
+      );
+
+    _updateMapByPhaseAndStatus();
     _orderListener = controller
         .getOrderStream(orderId)
         .listen((LaundryOrder? newOrderEvent) {
       if (newOrderEvent != null) {
         order.value = newOrderEvent;
-
         order.refresh();
+        mezDbgPrint("getOrderStream.listen");
+        _updateMapByPhaseAndStatus();
       }
     });
 
@@ -54,6 +76,87 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
         });
       }
     });
+  }
+
+  void _updateMapByPhaseAndStatus() {
+    if (order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup &&
+        order.value!.status == LaundryOrderStatus.PickedUpFromCustomer) {
+      mezDbgPrint(
+          "PICK UP PHASE snapshot [$_statusSnapshot] - [${order.value!.status}]");
+      if (_statusSnapshot != order.value!.status) {
+        mGoogleMapController.setLocation(
+          LocModel.Location(
+            "_",
+            LocationData.fromMap({
+              "latitude": order.value!.laundry!.location.latitude,
+              "longitude": order.value!.laundry!.location.longitude
+            }),
+          ),
+        );
+
+        _statusSnapshot = order.value!.status;
+        // add laundry marker
+        mGoogleMapController.addOrUpdateUserMarker(
+          latLng: order.value!.laundry!.location.toLatLng(),
+          customImgHttpUrl: order.value!.laundry!.image,
+          fitWithinBounds: true,
+          markerId: order.value!.laundry!.id,
+        );
+        // add customer's marker - destination
+        mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+          latLng: order.value!.to.toLatLng(),
+          fitWithinBounds: true,
+        );
+      }
+      // keep updating driver's marker
+      if (order.value!.pickupDriver?.location != null)
+        mGoogleMapController.addOrUpdateUserMarker(
+          latLng: order.value!.pickupDriver!.location!,
+          customImgHttpUrl: order.value!.pickupDriver!.image,
+          fitWithinBounds: true,
+          markerId: "pickup_driver",
+        );
+
+      mGoogleMapController.animateAndUpdateBounds();
+    } else if (order.value!.getCurrentPhase() == LaundryOrderPhase.Dropoff &&
+        order.value!.status == LaundryOrderStatus.PickedUpFromLaundry) {
+      mezDbgPrint("DROP OFF PHASE");
+
+      if (_statusSnapshot != order.value!.status) {
+        mGoogleMapController.setLocation(
+          LocModel.Location(
+            "_",
+            LocationData.fromMap({
+              "latitude": order.value!.laundry!.location.latitude,
+              "longitude": order.value!.laundry!.location.longitude
+            }),
+          ),
+        );
+        _statusSnapshot = order.value!.status;
+        mGoogleMapController.removeMarkerById("pickup_driver");
+        // add laundry marker
+        mGoogleMapController.addOrUpdateUserMarker(
+          latLng: order.value!.laundry!.location.toLatLng(),
+          customImgHttpUrl: order.value!.laundry!.image,
+          fitWithinBounds: true,
+          markerId: order.value!.laundry!.id,
+        );
+        // add customer's marker - destination
+        mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+          latLng: order.value!.to.toLatLng(),
+          fitWithinBounds: true,
+        );
+      }
+      // keep updating driver marker
+      if (order.value!.dropoffDriver?.location != null)
+        mGoogleMapController.addOrUpdateUserMarker(
+          latLng: order.value!.dropoffDriver!.location!,
+          customImgHttpUrl: order.value!.dropoffDriver!.image,
+          fitWithinBounds: true,
+          markerId: "dropoff_driver",
+        );
+      mGoogleMapController.animateAndUpdateBounds();
+    }
   }
 
   Future<void> waitForOrderIfNotLoaded() {
@@ -89,7 +192,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               OrderEstimatedTimeComponent(order: order.value!),
 
               LaundryOpOrderDriverCard(order: order.value!),
-
+              _getMapWidget(),
               LaundryOpCustomer(order: order.value!),
               if (order.value!.afterAtLaundry())
                 LaundyOpSetCategoryComponent(
@@ -154,5 +257,23 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
       );
     }
     return null;
+  }
+
+  Widget _getMapWidget() {
+    if (order.value!.getCurrentPhase() == LaundryOrderPhase.Dropoff &&
+            order.value!.status == LaundryOrderStatus.PickedUpFromLaundry ||
+        order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup &&
+            order.value!.status == LaundryOrderStatus.PickedUpFromCustomer)
+      return Container(
+        color: Colors.black,
+        height: 250,
+        child: MGoogleMap(
+          mGoogleMapController: mGoogleMapController,
+          rerenderDuration: Duration(seconds: 30),
+          // recenterBtnBottomPadding: 10,
+        ),
+      );
+    else
+      return SizedBox();
   }
 }
