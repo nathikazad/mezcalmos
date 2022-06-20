@@ -484,7 +484,7 @@
                     "startingFrom": "Empezando ",
                     "minimumCost": "Costo mínimo",
                     "description": "Descripción",
-                    "openHours": "horarios de apertura",
+                    "openHours": "Horas Laborales",
                     "sendMyLaundry": "Envía mi ropa"
 
                 },
@@ -750,7 +750,7 @@
                 "free": "Gratis"
             },
             "MezServiceOpenHours": {
-                "openHours": "Horarios de apertura",
+                "openHours": "Horas Laborales",
                 "weekDays": {
                     "monday": "Lunes",
                     "tuesday": "Martes",
