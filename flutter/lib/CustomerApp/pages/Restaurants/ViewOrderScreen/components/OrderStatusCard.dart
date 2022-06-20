@@ -28,20 +28,15 @@ class OrderStatusCard extends StatelessWidget {
       child: Container(
         width: double.infinity,
         margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                orderStatusImage(ordersStates),
-                Spacer(),
-                _orderStatusText(context),
-                Spacer(
-                  flex: 2,
-                ),
-              ],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            orderStatusImage(ordersStates),
+            _orderStatusText(context),
+            Spacer(
+              flex: 1,
             ),
-            if (_getEstimatedText() != null) _orderEtaTimeWidget()
           ],
         ),
       ),
@@ -50,26 +45,34 @@ class OrderStatusCard extends StatelessWidget {
 
   Widget _orderEtaTimeWidget() {
     return Container(
+        padding: const EdgeInsets.only(top: 3, left: 5),
         child: Text(
-      _getEstimatedText()!,
-      textAlign: TextAlign.center,
-    ));
+          _getEstimatedText()!,
+          textAlign: TextAlign.center,
+        ));
   }
 
   Widget _orderStatusText(BuildContext context) {
     return Flexible(
-      flex: 6,
-      fit: FlexFit.loose,
-      child: Container(
-        alignment: Alignment.center,
-        child: Text(
-          order.getOrderStatus(),
-          style:
-              Theme.of(context).textTheme.headline3?.copyWith(fontSize: 14.sp),
-          textAlign: TextAlign.center,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
+      flex: 8,
+      fit: FlexFit.tight,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            child: Text(
+              order.getOrderStatus(),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline3
+                  ?.copyWith(fontSize: 14.sp),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          if (_getEstimatedText() != null) _orderEtaTimeWidget()
+        ],
       ),
     );
   }
@@ -129,7 +132,7 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
     case RestaurantOrderStatus.PreparingOrder:
       return Container(
         height: 50,
-        width: 60,
+        width: 50,
         child: RiveAnimation.asset(
           "assets/animation/cooking.riv",
           fit: BoxFit.cover,
@@ -138,7 +141,7 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
     case RestaurantOrderStatus.OnTheWay:
       return Container(
         height: 50,
-        width: 60,
+        width: 50,
         child: RiveAnimation.asset(
           "assets/animation/motorbikeWithSmokeAnimation.riv",
           fit: BoxFit.cover,

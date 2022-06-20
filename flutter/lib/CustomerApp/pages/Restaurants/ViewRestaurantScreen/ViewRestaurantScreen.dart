@@ -37,8 +37,9 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   void initState() {
     restaurant = Get.arguments as Restaurant;
     mezDbgPrint(restaurant.info.id);
-    itemKeys.assign(999999, "info");
-    itemKeys[999999] = RectGetter.createGlobalKey();
+    itemKeys.assign((restaurant.getCategories.length + 1), "info");
+    itemKeys[(restaurant.getCategories.length + 1)] =
+        RectGetter.createGlobalKey();
 
     tabController =
         TabController(length: restaurant.getCategories.length, vsync: this);

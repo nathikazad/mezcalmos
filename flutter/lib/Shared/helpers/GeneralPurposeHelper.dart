@@ -297,6 +297,7 @@ Future<void> showStatusInfoDialog(
   String? secondaryClickTitle = "View Order",
   IconData? primaryIcon,
   Color? btnRightIconColor,
+  Color? btnRightIconBgColor = offRedColor,
   String? primaryImageUrl,
   IconData? bottomRightIcon,
 }) async {
@@ -341,10 +342,7 @@ Future<void> showStatusInfoDialog(
                             ),
                           ),
                           decoration: BoxDecoration(
-                            color:
-                                bottomRightIcon == null || showSmallIcon == true
-                                    ? Color(0xFFFFEBEC)
-                                    : Colors.white,
+                            color: btnRightIconBgColor,
                             shape: BoxShape.circle,
                           ),
                         ),

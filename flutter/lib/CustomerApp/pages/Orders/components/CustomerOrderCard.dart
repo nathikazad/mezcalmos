@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LaundryOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/RestaurantOrderHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TaxiOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -30,7 +31,7 @@ class CustomerOrderCard extends StatelessWidget {
           primaryBodyContent: _getRightBody(),
           cardTitle: _getServiceProvider()?.name ?? "",
           cardStatus: _getOrderStatus(),
-          cardTime: Text(order.orderTime.getOrderTime()),
+          cardTime: Text(order.orderTime.getOrderTime().inCaps),
           rightImage: _rightImage()),
     );
   }

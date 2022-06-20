@@ -129,6 +129,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
                         await showStatusInfoDialog(
                           context,
                           bottomRightIcon: Icons.shopping_cart,
+                          btnRightIconBgColor: Colors.white,
                           primaryImageUrl: restaurantCartController
                               .associatedRestaurant?.info.image,
                           btnRightIconColor: primaryBlueColor,
