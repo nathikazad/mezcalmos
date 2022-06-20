@@ -46,12 +46,12 @@ export const LaundryOrderStatusChangeMessages:
   },
   [LaundryOrderStatus.ReadyForDelivery]: {
     [Language.EN]: {
-      title: "Your laundry is clean and dry",
-      body: "Your clothes have been washed and will be delivered shortly."
+      title: "Laundry is clean and dry",
+      body: "Clothes have been washed and will be delivered shortly."
     },
     [Language.ES]: {
-      title: "Tu ropa está limpia y seca.",
-      body: "Su ropa ha sido lavada y será entregada en breve.."
+      title: "La ropa está limpia y seca.",
+      body: "La ropa ha sido lavada y será entregada en breve.."
     }
   },
   [LaundryOrderStatus.OtwPickupFromLaundry]: {

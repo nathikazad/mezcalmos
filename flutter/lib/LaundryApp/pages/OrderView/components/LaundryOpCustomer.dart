@@ -24,7 +24,7 @@ class LaundryOpCustomer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${_i18n()["customer"]}",
+            "${_i18n()["customer"]}:",
             style: Get.textTheme.bodyText1,
           ),
           SizedBox(

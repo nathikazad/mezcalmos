@@ -21,20 +21,27 @@ extension DurationParser on Duration {
 
 extension parseDateTime on DateTime {
   String getEstimatedTime() {
-    final DateTime cDate = DateTime.now();
+    final DateTime now = DateTime.now();
 
     final String userLangCode =
         Get.find<LanguageController>().userLanguageKey.toLanguageCode();
 
-    //final DateFormat formatTime = DateFormat.jm(userLangCode);
-    final DateFormat formatMonth = DateFormat.EEEE(userLangCode);
-
-    if (cDate.difference(toLocal()).inDays < 0) {
-      return "${_i18n()["in"]} ${formatMonth.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
-    } else if (cDate.difference(toLocal()).inHours < 0) {
+    final DateFormat formatTime = DateFormat.jm(userLangCode);
+    final DateFormat formatMonth = DateFormat.MMMMEEEEd(userLangCode);
+    if (DateTime(toLocal().year, toLocal().month, toLocal().day)
+            .difference(DateTime(now.year, now.month, now.day))
+            .inDays >
+        1) {
+      return "${_i18n()["on"]} ${formatMonth.format(toLocal())} ${formatTime.format(toLocal())}";
+    } else if (DateTime(toLocal().year, toLocal().month, toLocal().day)
+            .difference(DateTime(now.year, now.month, now.day))
+            .inDays >
+        0) {
+      return "${_i18n()["tomorrow"]} ${DateFormat("hh:mm a").format(toLocal())}";
+    } else if (now.difference(toLocal()).inHours < 0) {
       return "${_i18n()["at"]} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${_i18n()["in"]} ${cDate.difference(toLocal()).inMinutes.abs()} min";
+      return "${_i18n()["in"]} ${now.difference(toLocal()).inMinutes.abs()} mins";
     }
   }
 

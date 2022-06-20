@@ -47,7 +47,7 @@
                             "onTheWay": "Taxi on the way",
                             "lookingForTaxi": "Looking for Taxi",
                             "inTransit": "Taxi in transit",
-                            "droppedOff": "Dropped off",
+                            "droppedOff": "Delivered",
                             "expired": "Expired",
                             "forwarding": "Forwarding to company",
                             "forwardSuccess": "Forwarded",
@@ -63,9 +63,9 @@
                         "status": {
                             "canceled": "Order Cancelled",
                             "orderReceived": "Order Received",
-                            "otwPickUp": "Pick-up on the way",
-                            "pickedUp": "Order Picked-up",
-                            "atLaundry": "At laundry",
+                            "otwPickUp": "Pickup on the way",
+                            "pickedUp": "Order Picked up",
+                            "atLaundry": "At Laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered"
@@ -75,9 +75,9 @@
                         "totalCost": "Total Cost",
                         "status": {
                             "orderReceived": "Order Received",
-                            "otwPickUp": "Pick-up on the way",
-                            "pickedUp": "Order Picked-up",
-                            "atLaundry": "At laundry",
+                            "otwPickUp": "Pickup on the way",
+                            "pickedUp": "Order Picked up",
+                            "atLaundry": "At Laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered"
@@ -126,7 +126,7 @@
                     "components": {
                         "BuildCart": {
                             "inCart": "My orders",
-                            "yesClear": "Yes clear",
+                            "yesClear": "Yes",
                             "no": "No",
                             "clearCart": "Clear Cart",
                             "clearCartConfirm": "Are you sure you want to clear the cart ?",
@@ -202,7 +202,7 @@
                             "willBeDelivered": "Will be delivered"
                         },
                         "RestaurantOrderDriverCard": {
-                            "dropOffTime": "Drop-off time"
+                            "dropOffTime": "Delivery time"
 
                         },
                         "notesWidget": {
@@ -393,8 +393,8 @@
                 "LaundryCurrentOrderView": {
                     "Components": {
                         "LaundryOrderDriverCard": {
-                            "dropOffTime": "Drop-off time",
-                            "pickUpTime": "Pick-up time"
+                            "dropOffTime": "Delivery time",
+                            "pickUpTime": "Pickup time"
                         },
                         "LaundryOrderComponent": {
                             "notes": "Notes"
@@ -414,8 +414,8 @@
                         },
                         "LaundryOrderStatusCard": {
                             "orderReceived": "Order Received",
-                            "otwPickUp": "Pick-up on the way",
-                            "pickedUp": "Order Picked-up",
+                            "otwPickUp": "Pickup on the way",
+                            "pickedUp": "Order Pickedup",
                             "atLaundry": "At laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
@@ -437,7 +437,7 @@
                             "orderHelperDelivered": "Order has been successfully delivered",
                             "willBePickedUp": "Will be picked up",
                             "willBeReady": "Will be ready",
-                            "willBeDropped": "Will be dropped"
+                            "willBeDropped": "Will be delivered"
 
 
                         },
@@ -552,7 +552,7 @@
             "taxiFwdCancelBody": "You order has been cancelled ",
             "laundryOtwPickupTitle": "Pickup on the way",
             "laundryOtwPickupBody": "Driver on the way to pick up your order",
-            "laundryPickedTitle": "Order Picked-up",
+            "laundryPickedTitle": "Order Picked up",
             "laundryPickedBody": "Order is picked up successfuly",
             "laundryAtLaundryTitle": "At laundry",
             "laundryAtLaundryBody": "You order is received by the laundry",
@@ -597,8 +597,10 @@
             },
             "DateTimeHelper": {
                 "today": "Today",
-                "in": "in: ",
-                "at": "at: "
+                "tomorrow": "tomorrow",
+                "on": "on",
+                "in": "in",
+                "at": "at"
             }
         },
         "pages": {
@@ -882,7 +884,7 @@
                     "orderId": "Order Id",
                     "appVersion": "App Version",
                     "totalOrders": "Total Orders",
-                    "droppedOff": "Dropped Off",
+                    "droppedOff": "Delivered",
                     "firstOrder": "First Order",
                     "lastOrder": "Last Order",
                     "notifications": "Notifications",
@@ -1019,7 +1021,7 @@
                             "startPickUp": "Start pickup",
                             "startPickUpText": "The driver should be notified to pick up the order",
                             "startPickUpTitle": "Start order Pickup",
-                            "pickedUp": "Order Picked-up",
+                            "pickedUp": "Order Picked up",
                             "atLaundry": "At laundry",
                             "atLaundryText": "Confirm the order received by the laundry by setting the order weight ",
                             "atLaundryTitle": "Order at laundry",
@@ -1032,15 +1034,15 @@
                             "otwDeliveryTitle": "Delivery On the way",
                             "delivered": "Order Delivered",
                             "deliveredText": "Confirm that the order is delivered to the customer",
-                            "deliveredTitle": "Order delivered"
+                            "deliveredTitle": "Order Delivered"
                         },
                         "LaundryOrderCustomer": {
                             "customer": "Customer"
                         },
                         "LaundryOrderStatusCard": {
                             "orderReceived": "Order Received",
-                            "otwPickUp": "Pick-up on the way",
-                            "pickedUp": "Order Picked-up",
+                            "otwPickUp": "Pickup on the way",
+                            "pickedUp": "Order Picked up",
                             "atLaundry": "At laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
@@ -1109,7 +1111,7 @@
                             "preparing": "PREPARE",
                             "prepareAlertTitle": "Prepare Order",
                             "prepareAlertSubTitle": "Are you sure you want\nto prepare order?",
-                            "received": "DROPPED",
+                            "received": "DELIVERED",
                             "deliveredAlertTitle": "Deliver",
                             "deliveredAlertSubTitle": "Are you sure you want\nto deliver the order?"
                         },
@@ -1166,7 +1168,7 @@
                                 "onTheWay": "Taxi on the way",
                                 "lookingForTaxi": "Looking for Taxi",
                                 "inTransit": "Taxi in transit",
-                                "droppedOff": "Dropped off",
+                                "droppedOff": "Delivered",
                                 "expired": "Expired",
                                 "forwarding": "Forwarding to company",
                                 "forwardSuccess": "Forwarded",
@@ -1217,7 +1219,7 @@
                 "components": {
                     "RestaurantOrderFromToComponent": {
                         "pickUpTimeErrorTitle": "Oops",
-                        "pickUpTimeError": "The Pickup time should be before the dropoff time.",
+                        "pickUpTimeError": "The Pickup time should be before the delivery time.",
                         "restaurantDelivery": "Restaurant Delivery",
                         "orderStatus": {
                             "waiting": "Waiting for restaurant",
@@ -1234,7 +1236,7 @@
                         }
                     }
                 },
-                "title": "Restaurant drop-off"
+                "title": "Restaurant Delivery"
             },
             "CurrentOrders": {
                 "CurrentOrdersListScreen": {
@@ -1255,7 +1257,7 @@
                         "DriverOrderCard": {
                             "orderTitle": {
                                 "restaurantDelivery": "Restaurant Delivery",
-                                "laundryPickup": "Laundry Pick-up",
+                                "laundryPickup": "Laundry Pickup",
                                 "laundryDelivery": "Laundry Delivery"
 
                             },
@@ -1271,8 +1273,8 @@
                 },
                 "CurrentOrderViewScreen": {
                     "LaundryOrderView": {
-                        "pickup": "Laundry pick-up",
-                        "dropoff": "Laundry drop-off"
+                        "pickup": "Laundry Pick up",
+                        "dropoff": "Laundry Delivery"
 
                     },
                     "Components": {
@@ -1280,14 +1282,14 @@
                             "oops": "Oops",
                             "set": "Set",
                             "time": "Time",
-                            "dropoff": "Drop-off",
-                            "pickup": "`Pick-up",
-                            "pickupTimeError": "The Pickup time should be before the dropoff time.",
+                            "dropoff": "Delivery",
+                            "pickup": "Pickup",
+                            "pickupTimeError": "The Pickup time should be before the delivery time.",
                             "wrongTime": "You picked a wrong time",
                             "orderStatus": {
                                 "readyForPickup": "Ready for pickup",
                                 "pickupOtw": "Pickup on the way",
-                                "pickedUp": "Order Picked-up",
+                                "pickedUp": "Order Picked up",
                                 "atLaundry": "At laundry",
                                 "readyForDelivery": "Ready for Delivery",
                                 "deliveryOtw": "Delivery on the way",
@@ -1301,14 +1303,14 @@
                                 "pickupOrder": "Start Pickup",
                                 "confirmPickup": "Confirm Order Pickup",
                                 "atLaundry": "At laundry",
-                                "deliverOrder": "Start drop-off",
+                                "deliverOrder": "Start Delivery",
                                 "confirmDelivery": "Confirm Delivery",
                                 "confirmOrderWeight": "Confirm Order weight",
                                 "orderWeightAlert": "Please enter a valid weight",
                                 "confirm": "Confirm",
                                 "cancel": "Cancel",
                                 "orderWeight": "Order Weight",
-                                "timeErrorTitle": "Time not set !",
+                                "timeErrorTitle": "Time not set!",
                                 "timeErrorBody": "Please set the estimated times first."
                             }
 
@@ -1318,9 +1320,9 @@
                             "oops": "Oops",
                             "set": "Set",
                             "time": "Time",
-                            "dropoff": "Drop-off",
-                            "pickup": "Pick-up",
-                            "pickupTimeError": "The Pickup time should be before the dropoff time.",
+                            "dropoff": "Delivery",
+                            "pickup": "Pickup",
+                            "pickupTimeError": "The Pickup time should be before the delivery time.",
                             "wrongTime": "You picked a wrong time",
                             "orderStatus": {
                                 "waiting": "Waiting for restaurant",
@@ -1357,7 +1359,7 @@
             "cancelledBody": "Your order has been cancelled",
             "laundryOtwPickupTitle": "Pickup on the way",
             "laundryOtwPickupBody": " on the way to pick up the order",
-            "laundryPickedTitle": "Order Picked-up",
+            "laundryPickedTitle": "Order Picked up",
             "laundryPickedBody": "Order is picked up successfuly",
             "laundryAtLaundryTitle": "At laundry",
             "laundryAtLaundryBody": "Order is received by the laundry",
@@ -1487,9 +1489,9 @@
                         "status": {
                             "canceled": "Order Cancelled",
                             "orderReceived": "Order Received",
-                            "otwPickUp": "Pick-up on the way",
-                            "pickedUp": "Order Picked-up",
-                            "atLaundry": "At laundry",
+                            "otwPickUp": "Pickup on the way",
+                            "pickedUp": "Order Picked up",
+                            "atLaundry": "At Laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered"
@@ -1498,7 +1500,7 @@
                             "laundryArriving": "Laundry arriving",
                             "laundryFinish": "Finishing",
                             "driverArriving": "Driver arriving",
-                            "willBeDropped": "Will be dropped"
+                            "willBeDropped": "Will be delivered"
 
                         }
 
@@ -1518,8 +1520,8 @@
                     "LaundryOpOrderDriverCard": {
                         "driver": "Driver",
                         "noDriver": "No driver assigned yet",
-                        "dropOffTime": "Drop-off time",
-                        "pickUpTime": "Pick-up time"
+                        "dropOffTime": "Delivery time",
+                        "pickUpTime": "Pickup time"
                     },
                     "LaundryOpSetCategoryComponent": {
 
@@ -1563,7 +1565,7 @@
 
                 },
                 "LaundryOpOrderView": {
-                    "customer": "Customer info : ",
+                    "customer": "Customer Info",
                     "orderDate": "Order Date",
                     "total": "Total",
                     "orderReady": "Order ready for delivery"

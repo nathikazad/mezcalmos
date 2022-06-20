@@ -115,7 +115,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "${_i18n()["total"]} :",
+              "${_i18n()["total"]}:",
               style: Theme.of(context).textTheme.bodyText1,
             ),
             Text(

@@ -10,7 +10,7 @@ class ItemChosenChoiceComponent extends StatelessWidget {
     required this.optionName,
     required this.choices,
   }) : super(key: key);
-  final String optionName;
+  final LanguageMap optionName;
   final List<Choice> choices;
   LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
 
@@ -26,7 +26,7 @@ class ItemChosenChoiceComponent extends StatelessWidget {
           height: 5,
         ),
         Text(
-          optionName,
+          optionName[userLanguage] ?? "OptionName",
           style: Get.textTheme.bodyText1,
         ),
         SizedBox(
@@ -41,7 +41,7 @@ class ItemChosenChoiceComponent extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          choices[index].name[userLanguage] ?? "null",
+                          choices[index].name[userLanguage] ?? "choiceName",
                           style: Get.theme.textTheme.bodyText2,
                         ),
                         if (choices[index].cost > 0)
