@@ -130,13 +130,13 @@ class _RestaurantOrderFromToComponentState
   }
 
   List<Widget> _dateTimeSetter(DeliveryAction deliveryAction) {
-    Future<DateTime?> _dateTimePicker() async {
+    Future<DateTime?> _dateTimePicker({DateTime? initialDate}) async {
       final DateTime? pickedDate = await getDatePicker(
         context,
-        initialDate: DateTime.now(),
+        initialDate: initialDate ?? DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(
-          Duration(hours: 12),
+          Duration(days: 3),
         ),
       );
 
@@ -144,7 +144,7 @@ class _RestaurantOrderFromToComponentState
         final TimeOfDay? pickedTime = await getTimePicker(
           context,
           initialTime: TimeOfDay.fromDateTime(
-            DateTime.now(),
+            initialDate ?? DateTime.now(),
           ),
         );
         if (pickedTime != null) {
@@ -167,7 +167,7 @@ class _RestaurantOrderFromToComponentState
           SizedBox(width: 7),
           InkWell(
             onTap: () async {
-              final DateTime? _dt = await _dateTimePicker();
+              final DateTime? _dt = await _dateTimePicker(initialDate: dt);
               if (_dt != null) onNewDateTimeSet(_dt);
             },
             child: Container(
@@ -228,14 +228,21 @@ class _RestaurantOrderFromToComponentState
                 !widget.order.estimatedPickupFromServiceProviderTime!
                     .isBefore(newDt)) {
               MezSnackbar(
-                  "${_i18n()['oops']}", "${_i18n()['pickupTimeError']}");
+                "${_i18n()['oops']}",
+                "${_i18n()['pickupTimeError']}",
+              );
+              return;
             }
             // PickUp
           } else {
             if (widget.order.estimatedDropoffAtCustomerTime != null &&
                 !widget.order.estimatedDropoffAtCustomerTime!.isAfter(newDt)) {
               MezSnackbar(
-                  "${_i18n()['oops']}", "${_i18n()['pickupTimeError']}");
+                "${_i18n()['oops']}",
+                "${_i18n()['pickupTimeError']}",
+              );
+
+              return;
             }
           }
           final ServerResponse _resp =
