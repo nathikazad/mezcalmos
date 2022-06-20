@@ -111,10 +111,6 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               ],
             ),
           ),
-          // SizedBox(
-          //   width: 10,
-          // ),
-
           Spacer(),
           if (widget.option.optionType == OptionType.ChooseMany)
             _selectCircle(
@@ -126,6 +122,14 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                 }),
           if (widget.option.optionType == OptionType.ChooseOne)
             _radioCircle(
+                value: widget.cartItem.value!.chosenChoices[optionId]
+                        ?.contains(choice) ??
+                    false,
+                onTap: (bool? v) {
+                  handleChoiceCheckBox(choice);
+                }),
+          if (widget.option.optionType == OptionType.Custom)
+            _selectCircle(
                 value: widget.cartItem.value!.chosenChoices[optionId]
                         ?.contains(choice) ??
                     false,

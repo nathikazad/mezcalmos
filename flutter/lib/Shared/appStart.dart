@@ -19,7 +19,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -249,7 +248,6 @@ class _StartingPointState extends State<StartingPoint> {
   }
 
   Future<void> putControllers() async {
-    await initializeDateFormatting();
     await Get.put<LanguageController>(LanguageController())
         .isLamgInitialized
         .stream
@@ -331,6 +329,8 @@ class _StartingPointState extends State<StartingPoint> {
       enabled: isPreviewModeEnabled == true ? true : false,
       builder: (BuildContext context) => GetMaterialApp(
         useInheritedMediaQuery: true,
+        // locale:
+        //     isPreviewModeEnabled == true ? DevicePreview.locale(context) : null,
         builder: isPreviewModeEnabled == true ? DevicePreview.appBuilder : null,
         debugShowCheckedModeBanner: false,
         onInit: () async => _initializeConfig(),
