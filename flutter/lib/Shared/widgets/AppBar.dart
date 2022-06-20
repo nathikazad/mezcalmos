@@ -77,21 +77,47 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
         width: 5,
       )
     ],
+    titleSpacing: 20,
     title: (title != null)
-        ? Text(
-            title,
-            style: TextStyle(
+        ? FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              title,
+             style: TextStyle(
               fontFamily: "Poppins",
               fontWeight: FontWeight.w600,
               fontSize: 15.sp,
               color: Colors.black,
             ),
+              textAlign: TextAlign.center,
+            ),
           )
         : (titleWidget != null)
             ? titleWidget
-            : MezcalmosSharedWidgets.fillTitle(
-                actionLength: actionIcons.length,
-                showLogo: (Get.width > 380) ? true : false),
+            : Container(
+                alignment: Alignment.center,
+                width: 180,
+                child: FittedBox(
+                  child: MezcalmosSharedWidgets.fillTitle(
+                      actionLength: 2,
+                      showLogo: (Get.width > 320) ? true : false),
+                ),
+              ),
+    // title: (title != null)
+    //     ? Text(
+    //         title,
+    //         style: TextStyle(
+    //           fontFamily: "Poppins",
+    //           fontWeight: FontWeight.w600,
+    //           fontSize: 15.sp,
+    //           color: Colors.black,
+    //         ),
+    //       )
+    //     : (titleWidget != null)
+    //         ? titleWidget
+    //         : MezcalmosSharedWidgets.fillTitle(
+    //             actionLength: actionIcons.length,
+    //             showLogo: (Get.width > 380) ? true : false),
   );
 }
 

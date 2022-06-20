@@ -38,64 +38,67 @@ class RestaurantSliverAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: Theme.of(context).primaryColorLight,
-      elevation: 0.4,
-      expandedHeight: 220,
-      centerTitle: true,
-      automaticallyImplyLeading: false,
-      bottom:
-          (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
-      leading: _BackButtonAppBar(),
-      actions: <Widget>[
-        getAppbarIconsButton(),
-      ],
-      pinned: true,
-      flexibleSpace: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        return FlexibleSpaceBar(
+        backgroundColor: Theme.of(context).primaryColorLight,
+        elevation: 0.4,
+        centerTitle: true,
+        expandedHeight: 220,
+        automaticallyImplyLeading: false,
+        bottom:
+            (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
+        leading: _BackButtonAppBar(),
+        actions: <Widget>[
+          getAppbarIconsButton(),
+        ],
+        pinned: true,
+        flexibleSpace: FlexibleSpaceBar(
+          expandedTitleScale: 1.7,
           titlePadding: EdgeInsets.only(
               bottom:
                   (restaurant.getCategories.length > 1 && !showInfo) ? 60 : 12),
-          // centerTitle: true,
+          centerTitle: true,
           title: Container(
             alignment: Alignment.bottomCenter,
+            width: 58.w,
             padding: const EdgeInsets.only(bottom: 5, left: 5, right: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    (showInfo) ? "Informations" : restaurant.info.name,
-                    style: Get.textTheme.headline3
-                        ?.copyWith(color: Colors.white, fontSize: 14.sp),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
+            child: FittedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      margin: const EdgeInsets.only(bottom: 3),
+                      child: Text(
+                        (showInfo) ? "Informations" : restaurant.info.name,
+                        style: Get.textTheme.headline3
+                            ?.copyWith(color: Colors.white, fontSize: 14.sp),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                if (!showInfo)
-                  Container(
-                    alignment: Alignment.bottomCenter,
-                    child: InkWell(
-                        onTap: onInfoTap,
-                        child: Icon(
-                          Icons.info_outline_rounded,
-                          size: 14.sp,
-                          color: Colors.white,
-                        )),
-                  )
-              ],
+                  if (!showInfo)
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      margin:
+                          const EdgeInsets.only(left: 5, right: 5, bottom: 3),
+                      child: InkWell(
+                          onTap: onInfoTap,
+                          child: Icon(
+                            Icons.info_outline_rounded,
+                            size: 15.sp,
+                            color: Colors.white,
+                          )),
+                    )
+                ],
+              ),
             ),
           ),
           background: _backgroundImageComponent(),
-        );
-      }),
-    );
+        ));
   }
 
   Widget _backgroundImageComponent() {

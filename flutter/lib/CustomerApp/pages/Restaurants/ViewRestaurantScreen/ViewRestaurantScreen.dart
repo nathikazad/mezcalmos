@@ -137,7 +137,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
                 sliver: SliverList(
                     delegate: SliverChildListDelegate([
                   RectGetter(
-                      key: itemKeys[999999],
+                      key: itemKeys[restaurant.getCategories.length + 1],
                       child: RestaurantInfoTab(
                         restaurant: restaurant,
                       )),

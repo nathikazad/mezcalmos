@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
@@ -12,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Comp
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryPricingComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderLaundryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderSummaryComponent.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -19,8 +19,10 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
@@ -104,10 +106,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomerAppBar(
-        autoBack: true,
-        title: '${order.value?.laundry?.name ?? ""}',
-      ),
+      appBar: _appBar(),
       body: Obx(
         () {
           if (order.value != null) {
@@ -174,6 +173,21 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         },
       ),
     );
+  }
+
+  AppBar _appBar() {
+    return mezcalmosAppBar(AppBarLeftButtonType.Back,
+        titleWidget: Obx(() => Text(
+              '${order.value?.laundry?.name ?? ""}',
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w600,
+                fontSize: 15.sp,
+                color: Colors.black,
+              ),
+            )),
+        showNotifications: true,
+        ordersRoute: kOrdersRoute);
   }
 
   List<Widget> get _mapWidget => <Widget>[
