@@ -1316,7 +1316,7 @@
                                 "confirmPickup": "Confirmar la recogida",
                                 "confirmDelivery": "Confirmar el envío",
                                 "timeErrorTitle": "La hora no esta",
-                                "timeErrorBody": "Establezca primero los tiempos estimadosados",
+                                "timeErrorBody": "Establezca primero los tiempos estimados",
                                 "notReadyTitle": "Esperando el pedido",
                                 "notReadyBody": "El pedido aún no está listo para la entrega"
 
