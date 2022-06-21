@@ -18,7 +18,6 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:sizer/sizer.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -310,57 +309,59 @@ class SendMessageBox extends StatelessWidget {
       height: 70,
       padding: EdgeInsets.symmetric(horizontal: 10),
       color: Colors.white,
+      width: double.infinity,
       child: Center(
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(240, 241, 255, 1),
-                borderRadius: BorderRadius.circular(75),
-              ),
-              child: SizedBox(
-                width: 80.w,
-                height: 40,
-                child: Center(
-                  child: TextField(
-                    maxLines: 1,
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 7,
+              child: Container(
+                clipBehavior: Clip.hardEdge,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(240, 241, 255, 1),
+                  borderRadius: BorderRadius.circular(75),
+                ),
+                child: TextFormField(
+                  maxLines: 1,
 
-                    clipBehavior: Clip.none,
-                    textAlign: TextAlign.start,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(14),
-                        alignLabelWithHint: true,
-                        hintStyle: TextStyle(
-                          color: Color.fromRGBO(120, 120, 120, 1),
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Nunito',
-                        ),
-                        fillColor: SecondaryLightBlueColor,
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        hintText: 'Message...' //_i18n()['namePlaceHolder'],
-                        ),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Nunito',
-                    ),
-                    //  TextStyle(
-                    //   color: Color.fromARGB(255, 0, 0, 0),
-                    //   fontSize: 18,
-                    //   fontFamily: 'Montserrat',
-                    //   fontWeight: FontWeight.w600,
-                    // ),
-                    controller: _textEditingController,
-                    onChanged: (String value) {
-                      _typedMsg.value = value;
-                    },
+                  // clipBehavior: Clip.none,
+
+                  textAlign: TextAlign.start,
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(14),
+                      alignLabelWithHint: true,
+                      hintStyle: TextStyle(
+                        color: Color.fromRGBO(120, 120, 120, 1),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Nunito',
+                      ),
+                      fillColor: SecondaryLightBlueColor,
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      hintText: 'Message...' //_i18n()['namePlaceHolder'],
+                      ),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Nunito',
                   ),
+                  //  TextStyle(
+                  //   color: Color.fromARGB(255, 0, 0, 0),
+                  //   fontSize: 18,
+                  //   fontFamily: 'Montserrat',
+                  //   fontWeight: FontWeight.w600,
+                  // ),
+                  controller: _textEditingController,
+                  onChanged: (String value) {
+                    _typedMsg.value = value;
+                  },
                 ),
               ),
             ),
