@@ -138,6 +138,8 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
             if (_restaurantController.cart.value.quantity() == 0) {
               _restaurantController.clearCart();
               Get.until((Route route) => route.settings.name == kHomeRoute);
+            } else {
+              Get.back(closeOverlays: true);
             }
           });
           // final YesNoDialogButton yesNoResult = await cancelAlertDialog(
