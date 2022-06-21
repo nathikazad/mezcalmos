@@ -62,7 +62,7 @@ class _LaundryOrderFromToComponentState
         // customer
         customerImage: widget.order.customer.image,
         customerName: widget.order.customer.name,
-        enableExpand: _isTimesSetted(),
+        enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
 
         customerTimeWidgets: _dateTimeSetter(
             (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)

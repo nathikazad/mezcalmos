@@ -13,7 +13,6 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
@@ -60,7 +59,7 @@ class _RestaurantOrderFromToComponentState
         // customer
         customerImage: widget.order.customer.image,
         customerName: widget.order.customer.name,
-        enableExpand: _isTimesSetted(),
+        enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
         customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff),
         onCustomerMsgClick: () {
           if (widget.order.customerDropOffDriverChatId != null) {
