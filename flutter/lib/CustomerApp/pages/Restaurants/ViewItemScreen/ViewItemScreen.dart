@@ -108,14 +108,15 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        bottomNavigationBar: (cartItem.value != null)
-            ? BottomBarItemViewScreen(
-                currentRestaurantId: currentRestaurant?.info.id,
-                isAvailable: (currentRestaurant?.isOpen() ?? false),
-                cartItem: cartItem,
-                mode: widget.viewItemScreenMode,
-              )
-            : null,
+        bottomNavigationBar:
+            (cartItem.value != null && currentRestaurant != null)
+                ? BottomBarItemViewScreen(
+                    currentRestaurantId: currentRestaurant?.info.id,
+                    isAvailable: (currentRestaurant!.isOpen()),
+                    cartItem: cartItem,
+                    mode: widget.viewItemScreenMode,
+                  )
+                : null,
         body: (cartItem.value == null)
             ? Container(
                 alignment: Alignment.center,
@@ -141,7 +142,8 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 ),
                 Text(
                   item.cost.toPriceString(),
-                  style: Get.textTheme.headline3?.copyWith(color: primaryBlueColor),
+                  style: Get.textTheme.headline3
+                      ?.copyWith(color: primaryBlueColor),
                 ),
                 SizedBox(
                   height: 10,
