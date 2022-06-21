@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io' show Platform;
+//import 'dart:io' show Platform;
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -20,7 +20,7 @@ class LanguageController extends GetxController {
 
   LanguageController() {
     final LanguageType? lang =
-        Platform.localeName.substring(0, 2).toLanguageType();
+        Get.deviceLocale?.languageCode.substring(0, 2).toLanguageType();
 
     // mezDbgPrint("\n\n\n\n\nUSER LANGUAGE [[ $lang ]]\n\n\n\n\n");
     if (lang == LanguageType.EN)
@@ -81,6 +81,11 @@ class LanguageController extends GetxController {
     } else if (Get.find<AuthController>().user == null) {
       _userLanguageKey.value = language;
     }
+  }
+
+  ///this function [changeLangForWeb] used only for web
+  void changeLangForWeb(LanguageType? language) {
+    _userLanguageKey.value = language ?? LanguageType.EN;
   }
 
   void setLanguage(LanguageType language) {

@@ -24,12 +24,14 @@ class RestaurantSliverAppBar extends StatelessWidget {
       required this.tabController,
       required this.onTap,
       required this.onInfoTap,
-      required this.showInfo})
+      required this.showInfo,
+      this.appType})
       : super(key: key);
 
   final Restaurant restaurant;
   final AutoScrollController scrollController;
   final TabController tabController;
+  final String? appType;
 
   final void Function(int index) onTap;
   final void Function() onInfoTap;
@@ -40,15 +42,17 @@ class RestaurantSliverAppBar extends StatelessWidget {
     return SliverAppBar(
       backgroundColor: Theme.of(context).primaryColorLight,
       elevation: 0.4,
-      expandedHeight: 220,
+      expandedHeight: 230,
       centerTitle: true,
       automaticallyImplyLeading: false,
       bottom:
           (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
       leading: _BackButtonAppBar(),
-      actions: <Widget>[
-        getAppbarIconsButton(),
-      ],
+      actions: appType != "webVirsion"
+          ? <Widget>[
+              getAppbarIconsButton(),
+            ]
+          : null,
       pinned: true,
       flexibleSpace: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
@@ -71,7 +75,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                   child: Text(
                     (showInfo) ? "Informations" : restaurant.info.name,
                     style: Get.textTheme.headline3
-                        ?.copyWith(color: Colors.white, fontSize: 14.sp),
+                        ?.copyWith(color: Colors.white, fontSize: 13.sp),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -85,7 +89,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                       onTap: onInfoTap,
                       child: Icon(
                         Icons.info_outline_rounded,
-                        size: 14.sp,
+                        size: 13.sp,
                         color: Colors.white,
                       ))
               ],
@@ -163,7 +167,6 @@ class RestaurantSliverAppBar extends StatelessWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(48),
       child: Container(
-        
         width: double.infinity,
         color: Colors.white,
         margin: const EdgeInsets.only(
@@ -171,7 +174,6 @@ class RestaurantSliverAppBar extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(4),
         child: TabBar(
-          
           isScrollable: true,
           controller: tabController,
           labelColor: primaryBlueColor,

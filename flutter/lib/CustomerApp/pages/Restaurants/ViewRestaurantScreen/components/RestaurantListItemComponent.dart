@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -27,8 +28,9 @@ class _RestaurantsListOfItemsComponentState
     final TextTheme txt = Theme.of(context).textTheme;
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
-    return Card(
-      child: Container(
+    return Card(child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      return Container(
         height: 70,
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: InkWell(
@@ -41,6 +43,8 @@ class _RestaurantsListOfItemsComponentState
                   backgroundImage:
                       CachedNetworkImageProvider(widget.item.image ?? ""),
                   onBackgroundImageError: (Object e, StackTrace? s) {
+                    mezDbgPrint(
+                        "this is a test ot see if ther is images ${e.toString()}  ");
                     setState(() {
                       isImageExist = false;
                     });
@@ -68,7 +72,10 @@ class _RestaurantsListOfItemsComponentState
               ),
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text("\$${widget.item.cost}", style: txt.headline3),
+                child: Text("\$${widget.item.cost}",
+                    style: txt.headline3!.copyWith(
+                      fontSize: 13.sp,
+                    )),
               )
             ],
           ),
@@ -76,7 +83,7 @@ class _RestaurantsListOfItemsComponentState
             widget.function!();
           },
         ),
-      ),
-    );
+      );
+    }));
   }
 }

@@ -63,7 +63,10 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
                       Get.toNamed<void>(
                         getRestaurantRoute(
                             viewController.filteredRestaurants[index].info.id),
-                        arguments: viewController.filteredRestaurants[index],
+                        arguments: [
+                          viewController.filteredRestaurants[index],
+                          ""
+                        ],
                       );
                     },
                   )),

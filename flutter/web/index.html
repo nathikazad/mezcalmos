@@ -27,23 +27,50 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+  
+  </script>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
-	<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+
+	<!-- <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script> -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js";
+   // 
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBRQTIUx_-oMdp5_S5e9F8h4Uc4ViZKM4U",
+      authDomain: "mezcalmos-staging.firebaseapp.com",
+      databaseURL: "https://mezcalmos-staging-default-rtdb.firebaseio.com",
+      projectId: "mezcalmos-staging",
+      storageBucket: "mezcalmos-staging.appspot.com",
+      messagingSenderId: "606383265109",
+      appId: "1:606383265109:web:a2050a8335ee6e37d8cbdc"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
 	<script>
-      var firebaseConfig = {
-        apiKey: "AIzaSyAKu4WzLR4iZPk4qnEgYdVh1SWqnRXbS-M",
-        authDomain: "http://localhost:4000/auth",
-        databaseURL: "http://localhost:4000/database",
-        projectId: "mezcalmos-85ff1",
-        storageBucket: "http://localhost:4000/storage"
-      };
+      // var firebaseConfig = {
+      //   apiKey: "AIzaSyAKu4WzLR4iZPk4qnEgYdVh1SWqnRXbS-M",
+      //   authDomain: "http://localhost:4000/auth",
+      //   databaseURL: "http://localhost:4000/database",
+      //   projectId: "mezcalmos-85ff1",
+      //   storageBucket: "http://localhost:4000/storage"
+      // };
+    
 
       // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
+      // firebase.initializeApp(firebaseConfig);
     </script>
 	
 	<script>

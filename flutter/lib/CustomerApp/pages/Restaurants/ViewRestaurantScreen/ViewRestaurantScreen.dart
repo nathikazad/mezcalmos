@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
+//import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/RestaurantListItemComponent.dart';
@@ -25,6 +26,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   late TabController tabController;
 
   late Restaurant restaurant;
+  late String? appType;
 
   final GlobalKey<RectGetterState> listViewKey = RectGetter.createGlobalKey();
 
@@ -35,7 +37,8 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   @override
   void initState() {
-    restaurant = Get.arguments as Restaurant;
+    restaurant = Get.arguments[0] as Restaurant;
+    appType = Get.arguments[1] as String;
     mezDbgPrint(restaurant.info.id);
     itemKeys.assign(999999, "info");
     itemKeys[999999] = RectGetter.createGlobalKey();
@@ -50,6 +53,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   void dispose() {
     scrollController.dispose();
     tabController.dispose();
+    mezDbgPrint("==================> test <====================");
     super.dispose();
   }
 
@@ -101,7 +105,8 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      floatingActionButton: FloatingCartComponent(),
+      floatingActionButton:
+          (appType == "webVirsion") ? null : FloatingCartComponent(),
       body: RectGetter(
         key: listViewKey,
         child: NotificationListener<ScrollNotification>(
@@ -113,37 +118,40 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   }
 
   Widget buildSliverScrollView() {
-    return CustomScrollView(
-      //physics: const ClampingScrollPhysics(),
-      controller: scrollController,
-      slivers: [
-        RestaurantSliverAppBar(
-          restaurant: restaurant,
-          tabController: tabController,
-          showInfo: showInfo,
-          onInfoTap: () {
-            setState(() {
-              showInfo = !showInfo;
-              pauseRectGetterIndex = !pauseRectGetterIndex;
-            });
-          },
-          onTap: (int index) => animateAndScrollTo(index),
-          scrollController: scrollController,
-        ),
-        (showInfo)
-            ? SliverPadding(
-                padding: const EdgeInsets.all(12),
-                sliver: SliverList(
-                    delegate: SliverChildListDelegate([
-                  RectGetter(
-                      key: itemKeys[999999],
-                      child: RestaurantInfoTab(
-                        restaurant: restaurant,
-                      )),
-                ])))
-            : _buildCategoriesList(),
-      ],
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      return CustomScrollView(
+        //physics: const ClampingScrollPhysics(),
+        controller: scrollController,
+        slivers: [
+          RestaurantSliverAppBar(
+            restaurant: restaurant,
+            appType: "webVirsion",
+            tabController: tabController,
+            showInfo: showInfo,
+            onInfoTap: () {
+              setState(() {
+                showInfo = !showInfo;
+                pauseRectGetterIndex = !pauseRectGetterIndex;
+              });
+            },
+            onTap: (int index) => animateAndScrollTo(index),
+            scrollController: scrollController,
+          ),
+          (showInfo)
+              ? SliverPadding(
+                  padding: const EdgeInsets.all(12),
+                  sliver: SliverList(
+                      delegate: SliverChildListDelegate([
+                    RectGetter(
+                        key: itemKeys[999999],
+                        child: RestaurantInfoTab(
+                          restaurant: restaurant,
+                        )),
+                  ])))
+              : _buildCategoriesList(),
+        ],
+      );
+    });
   }
 
   Widget _buildCategoriesList() {
@@ -217,10 +225,15 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
           children.add(RestaurantsListOfItemsComponent(
               item: item,
               function: () {
-                Get.toNamed(
-                  getItemRoute(restaurantId, item.id),
-                  arguments: {"mode": ViewItemScreenMode.AddItemMode},
-                );
+                if (appType == "webVirsion") {
+                  Get.toNamed("/restaurant/${restaurant.info.id}/${item.id}",
+                      arguments: restaurant.info.id);
+                } else {
+                  Get.toNamed(
+                    getItemRoute(restaurantId, item.id),
+                    arguments: {"mode": ViewItemScreenMode.AddItemMode},
+                  );
+                }
               }));
           children.add(SizedBox(
             height: 8,

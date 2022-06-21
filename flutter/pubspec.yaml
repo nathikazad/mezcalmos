@@ -99,6 +99,7 @@ dependencies:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.2
+  flutter_dotenv: ^5.0.2
   flutter_test:
     sdk: flutter
 
@@ -130,6 +131,7 @@ flutter:
     - assets/animation/
     - assets/sounds/
     - assets/icons/appstore.png
+    - .env
 
   fonts:
     - family: psr  # Product Sans Regular

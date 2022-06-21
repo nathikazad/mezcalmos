@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
@@ -73,7 +72,7 @@ class DeepLinkHandler {
             Duration.zero,
             () => Get.toNamed<void>(
               getRestaurantRoute(providerId),
-              arguments: _rest,
+              arguments: [_rest, ""],
             ),
           );
         }
