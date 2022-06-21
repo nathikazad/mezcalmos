@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -118,7 +119,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       style: Get.textTheme.bodyText1,
                     ),
                     Text(
-                      "\$50",
+                      50.toPriceString(),
                       style: Get.textTheme.bodyText1,
                     ),
                   ],
@@ -133,6 +134,18 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         }
       }),
     );
+  }
+
+  num? _getOrderShippingCost() {
+    switch (order.value!.orderType) {
+      case OrderType.Restaurant:
+        return (order as RestaurantOrder).shippingCost;
+        break;
+      case OrderType.Laundry:
+        return (order as LaundryOrder).shippingCost;
+      default:
+        return null;
+    }
   }
 
   Container _orderDetailsHeader() {
