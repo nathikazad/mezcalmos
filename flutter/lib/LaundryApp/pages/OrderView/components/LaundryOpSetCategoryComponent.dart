@@ -97,7 +97,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
     return () {
       showModalBottomSheet(
           isDismissible: false,
-          useRootNavigator: false,
+          useRootNavigator: true,
           isScrollControlled: true,
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(

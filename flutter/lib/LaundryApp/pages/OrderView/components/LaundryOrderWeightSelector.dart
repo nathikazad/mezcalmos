@@ -60,6 +60,7 @@ class _LaundryOrderWeightSelectorState
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<LaundryCostLineItem>(
                   value: widget.newCategory.value,
+                  isExpanded: true,
                   isDense: true,
                   onChanged: (LaundryCostLineItem? newValue) {
                     if (newValue != null) {
@@ -72,10 +73,14 @@ class _LaundryOrderWeightSelectorState
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              value.name[userLanguage] ?? "Error catgeory name",
-                              style: Get.textTheme.bodyText1
-                                  ?.copyWith(fontSize: 11.sp),
+                            Flexible(
+                              flex: 3,
+                              child: Text(
+                                value.name[userLanguage] ??
+                                    "Error catgeory name",
+                                style: Get.textTheme.bodyText1
+                                    ?.copyWith(fontSize: 11.sp),
+                              ),
                             ),
                             SizedBox(
                               width: 20,

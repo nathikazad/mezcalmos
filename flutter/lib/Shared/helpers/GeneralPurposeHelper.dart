@@ -161,6 +161,7 @@ Future<void> showConfirmationDialog(
   final RxBool _clickedYes = false.obs;
   return showDialog(
       context: context,
+      useRootNavigator: true,
       builder: (BuildContext ctx) {
         return AlertDialog(
           contentPadding: EdgeInsets.all(16),

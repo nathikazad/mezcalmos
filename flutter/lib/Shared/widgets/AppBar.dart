@@ -61,64 +61,43 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   }
 
   return AppBar(
-    // toolbarHeight: 65,
-    elevation: 0,
-    bottom: tabBar,
-
-    automaticallyImplyLeading: false,
-    leading: _getRightLeading(),
-    actions: [
-      if (showNotifications && Get.find<AuthController>().isUserSignedIn)
-        _notificationAppBarIcon(),
-      if (ordersRoute != null && Get.find<AuthController>().isUserSignedIn)
-        _ordersAppBarIcon(),
-      for (int i = 0; i < actionIcons.length; i++) ...<Widget>[actionIcons[i]],
-      SizedBox(
-        width: 5,
-      )
-    ],
-    titleSpacing: 20,
-    title: (title != null)
-        ? FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(
-              title,
-             style: TextStyle(
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.w600,
-              fontSize: 15.sp,
-              color: Colors.black,
-            ),
-              textAlign: TextAlign.center,
-            ),
-          )
-        : (titleWidget != null)
-            ? titleWidget
-            : Container(
-                alignment: Alignment.center,
-                width: 180,
-                child: FittedBox(
-                  child: MezcalmosSharedWidgets.fillTitle(
-                      actionLength: 2,
-                      showLogo: (Get.width > 320) ? true : false),
+      // toolbarHeight: 65,
+      elevation: 0,
+      bottom: tabBar,
+      automaticallyImplyLeading: false,
+      leading: _getRightLeading(),
+      actions: [
+        if (showNotifications && Get.find<AuthController>().isUserSignedIn)
+          _notificationAppBarIcon(),
+        if (ordersRoute != null && Get.find<AuthController>().isUserSignedIn)
+          _ordersAppBarIcon(),
+        for (int i = 0; i < actionIcons.length; i++) ...<Widget>[
+          actionIcons[i]
+        ],
+        SizedBox(
+          width: 5,
+        )
+      ],
+      // titleSpacing: 20,
+      title: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: (title != null)
+            ? Text(
+                title,
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15.sp,
+                  color: Colors.black,
                 ),
-              ),
-    // title: (title != null)
-    //     ? Text(
-    //         title,
-    //         style: TextStyle(
-    //           fontFamily: "Poppins",
-    //           fontWeight: FontWeight.w600,
-    //           fontSize: 15.sp,
-    //           color: Colors.black,
-    //         ),
-    //       )
-    //     : (titleWidget != null)
-    //         ? titleWidget
-    //         : MezcalmosSharedWidgets.fillTitle(
-    //             actionLength: actionIcons.length,
-    //             showLogo: (Get.width > 380) ? true : false),
-  );
+                textAlign: TextAlign.center,
+              )
+            : (titleWidget != null)
+                ? titleWidget
+                : MezcalmosSharedWidgets.fillTitle(
+                    actionLength: 2,
+                    showLogo: (Get.width > 320) ? true : false),
+      ));
 }
 
 Widget _BackButtonAppBar() {
@@ -214,7 +193,7 @@ Widget _notificationAppBarIcon() {
     if (Get.find<ForegroundNotificationsController>().notifications.length >
         0) {
       return Padding(
-        padding: const EdgeInsets.only(left: 3, right: 7),
+        padding: const EdgeInsets.only(left: 3, right: 3),
         child: InkWell(
           customBorder: CircleBorder(),
           onTap: () {

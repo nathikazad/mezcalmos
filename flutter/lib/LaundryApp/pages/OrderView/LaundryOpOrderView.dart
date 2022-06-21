@@ -234,26 +234,37 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   }
 
   Widget? _setReadyForDeliveryButton() {
+    final RxBool isClicked = RxBool(false);
     if (order.value!.isAtLaundry()) {
-      return Container(
-        margin: const EdgeInsets.only(bottom: 20),
-        child: TextButton(
-            onPressed: (order.value!.costsByType != null &&
-                    order.value!.costsByType!.lineItems.isNotEmpty)
-                ? () {
-                    controller.setAsReadyForDelivery(order.value!.orderId);
-                  }
-                : null,
-            style: TextButton.styleFrom(
-                backgroundColor: (order.value!.costsByType != null &&
-                        order.value!.costsByType!.lineItems.isNotEmpty)
-                    ? primaryBlueColor
-                    : Colors.grey),
-            child: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-              child: Text("${_i18n()["orderReady"]}"),
-            )),
+      return Obx(
+        () => Container(
+          margin: const EdgeInsets.only(bottom: 20),
+          child: TextButton(
+              onPressed: (order.value!.costsByType != null &&
+                      order.value!.costsByType!.lineItems.isNotEmpty)
+                  ? () {
+                      isClicked.value = true;
+                      controller
+                          .setAsReadyForDelivery(order.value!.orderId)
+                          .whenComplete(() => isClicked.value = false);
+                    }
+                  : null,
+              style: TextButton.styleFrom(
+                  backgroundColor: (order.value!.costsByType != null &&
+                          order.value!.costsByType!.lineItems.isNotEmpty)
+                      ? primaryBlueColor
+                      : Colors.grey),
+              child: Container(
+                alignment: Alignment.center,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                child: (isClicked.isTrue)
+                    ? CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : Text("${_i18n()["orderReady"]}"),
+              )),
+        ),
       );
     }
     return null;
@@ -271,7 +282,6 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
         child: MGoogleMap(
           mGoogleMapController: mGoogleMapController,
           rerenderDuration: Duration(seconds: 30),
-          // recenterBtnBottomPadding: 10,
         ),
       );
     else

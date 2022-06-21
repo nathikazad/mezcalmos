@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOrderWeightSelector.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -98,21 +99,24 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                   Spacer(),
                   if (widget.editMode)
                     InkWell(
-                      onTap: () async {
-                        bool isDeleted = false;
-                        await showConfirmationDialog(context,
+                      onTap: () {
+                        // bool isDeleted = false;
+                        // ignore: unawaited_futures
+                        showConfirmationDialog(context,
                             primaryButtonText: "${_i18n()["deleteTitle"]}",
                             helperText: "${_i18n()["deleteBody"]}",
                             title: "${_i18n()["deleteItem"]}",
                             onYesClick: () async {
-                          await deleteItem(widget.oldItem!).whenComplete(() {
-                            Get.back();
-                            isDeleted = true;
+                          mezDbgPrint("tapped");
+
+                          // ignore: unawaited_futures
+
+                          await deleteItem(widget.oldItem!)
+                              .then((Object? value) {
+                            Get.until((Route route) =>
+                                route.settings.name ==
+                                getLaundryOpOrderRoute(widget.order.orderId));
                           });
-                        }).whenComplete(() {
-                          if (isDeleted == true) {
-                            Get.back();
-                          }
                         });
                       },
                       child: Ink(
@@ -261,9 +265,12 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
     final LaundryOrderCosts? oldCosts = widget.order.costsByType;
     if (oldCosts != null) {
       if (oldCosts.lineItems.length > 1) {
+        mezDbgPrint("deleted");
         oldCosts.lineItems.removeWhere(
-            (LaundryOrderCostLineItem element) => element.name == item.name);
+            (LaundryOrderCostLineItem element) => element.id == item.id);
+
         await orderController.setOrderWeight(widget.order.orderId, oldCosts);
+        mezDbgPrint("deleted");
       } else {
         Get.snackbar(
           "${_i18n()["error"]}",

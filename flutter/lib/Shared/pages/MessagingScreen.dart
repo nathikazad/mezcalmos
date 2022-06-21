@@ -327,9 +327,6 @@ class SendMessageBox extends StatelessWidget {
                 ),
                 child: TextFormField(
                   maxLines: 1,
-
-                  // clipBehavior: Clip.none,
-
                   textAlign: TextAlign.start,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(14),
