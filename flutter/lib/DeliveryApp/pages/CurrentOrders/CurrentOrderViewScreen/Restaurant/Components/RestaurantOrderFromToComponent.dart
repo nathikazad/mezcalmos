@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
@@ -39,6 +40,9 @@ class _RestaurantOrderFromToComponentState
   ServiceInfo? restaurant;
   final Rx<OrderInfoCardState> orderInfoCardState =
       OrderInfoCardState.Maximized.obs;
+
+  // This will lock the setEstimatedTime button click and show loading instead.
+  bool _edittingEstimatedTime = false;
   @override
   void initState() {
     super.initState();
@@ -166,22 +170,36 @@ class _RestaurantOrderFromToComponentState
           Text(DateFormat('hh:mm a').format(dt)),
           SizedBox(width: 7),
           InkWell(
-            onTap: () async {
-              final DateTime? _dt = await _dateTimePicker(initialDate: dt);
-              if (_dt != null) onNewDateTimeSet(_dt);
-            },
+            onTap: _edittingEstimatedTime
+                ? null
+                : () async {
+                    final DateTime? _dt =
+                        await _dateTimePicker(initialDate: dt);
+                    if (_dt != null) onNewDateTimeSet(_dt);
+                  },
             child: Container(
               height: 18,
               width: 18,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(237, 237, 237, 1),
-                shape: BoxShape.circle,
-              ),
+              decoration: _edittingEstimatedTime
+                  ? null
+                  : BoxDecoration(
+                      color: Color.fromRGBO(237, 237, 237, 1),
+                      shape: BoxShape.circle,
+                    ),
               child: Center(
-                child: Icon(
-                  Icons.edit,
-                  size: 16,
-                ),
+                child: _edittingEstimatedTime
+                    ? Container(
+                        height: 16,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: CircularProgressIndicator(
+                          color: Colors.grey.shade600,
+                          strokeWidth: 1.8,
+                        ),
+                      )
+                    : Icon(
+                        Icons.edit,
+                        size: 16,
+                      ),
               ),
             ),
           )
@@ -245,6 +263,9 @@ class _RestaurantOrderFromToComponentState
               return;
             }
           }
+          setState(() {
+            _edittingEstimatedTime = true;
+          });
           final ServerResponse _resp =
               await Get.find<OrderController>().setEstimatedTime(
             widget.order.orderId,
@@ -253,6 +274,9 @@ class _RestaurantOrderFromToComponentState
             deliveryAction,
             OrderType.Restaurant,
           );
+          setState(() {
+            _edittingEstimatedTime = false;
+          });
           mezDbgPrint("Responsoooooo ===> $_resp");
           if (_resp.success) {
             if (deliveryAction == DeliveryAction.Pickup)
