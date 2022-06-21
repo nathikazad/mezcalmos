@@ -26,8 +26,7 @@ class ItemSliverAppBar extends StatelessWidget {
       elevation: 0.4,
       expandedHeight: (item.image != null) ? 220 : 0,
       automaticallyImplyLeading: false,
-      // titleSpacing: 12,
-
+      titleSpacing: 12,
       leading: _BackButtonAppBar(),
       actions: <Widget>[
         getAppbarIconsButton(),
@@ -37,17 +36,22 @@ class ItemSliverAppBar extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         centerTitle: true,
+        expandedTitleScale: 1.6,
         title: Container(
-          width: 70.w,
-          child: Text(
-            " ${item.name[userLanguage]!} ",
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context)
-                .textTheme
-                .headline3!
-                .copyWith(fontSize: 13.sp, color: Colors.white),
+          width: 50.w,
+          padding: const EdgeInsets.only(bottom: 3),
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              " ${item.name[userLanguage]!} ",
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline3!
+                  .copyWith(fontSize: 13.sp, color: Colors.white),
+            ),
           ),
         ),
         background: (item.image != null)

@@ -57,7 +57,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
         ],
         pinned: true,
         flexibleSpace: FlexibleSpaceBar(
-          expandedTitleScale: 1.7,
+          expandedTitleScale: 1.6,
           titlePadding: EdgeInsets.only(
               bottom:
                   (restaurant.getCategories.length > 1 && !showInfo) ? 60 : 12),
@@ -74,7 +74,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Container(
-                      alignment: Alignment.bottomCenter,       
+                      alignment: Alignment.bottomCenter,
                       margin: const EdgeInsets.only(bottom: 3),
                       child: Text(
                         (showInfo)

@@ -132,6 +132,9 @@
                             "clearCartConfirm": "Are you sure you want to clear the cart ?",
                             "clear": "Clear"
                         },
+                        "CartIsEmptyScreen": {
+                            "title": "Your cart is empty"
+                        },
                         "BuildItems": {
                             "deleteItem": "Delete  item",
                             "deleteItemConfirm": "Are you sure you would like to delete?",

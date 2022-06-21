@@ -65,12 +65,14 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   height: 7,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Flexible(
-                      flex: 3,
+                      flex: 4,
+                      fit: FlexFit.loose,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
                             Icons.delivery_dining,
@@ -88,6 +90,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                     ),
+
                     Flexible(
                       flex: 2,
                       fit: FlexFit.loose,

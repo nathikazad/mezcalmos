@@ -152,7 +152,6 @@ class IconSavedLocationButton extends StatelessWidget {
     return InkWell(
       child: Container(
         alignment: Alignment.center,
-        width: Get.width,
         decoration: BoxDecoration(
           color: const Color(0xffffffff),
         ),

@@ -126,6 +126,9 @@
                 },
                 "ViewCartScreen": {
                     "components": {
+                        "CartIsEmptyScreen": {
+                            "title": "Tu carrito esta vacío"
+                        },
                         "BuildCart": {
                             "inCart": "Mis Ordenes",
                             "yesClear": "Sí",
@@ -181,7 +184,7 @@
                             "rightBtn": "Sobrescribir",
                             "subtitle": "Ya tiene algunos artículos en su carrito de otro restaurante, ¿quiere revisarlos primero o sobrescribirlos?",
                             "addToCart": "Añadir artículo",
-                            "modifyItem": "Modificar artículo"
+                            "modifyItem": "Modificar"
                         },
                         "ChoosenManyCheckBox": {
                             "optional": "Opcional"

@@ -97,7 +97,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
           ),
           const Spacer(),
           Flexible(
-            flex: 5,
+            flex: 6,
             fit: FlexFit.tight,
             child: TextButton(
               style: TextButton.styleFrom(
