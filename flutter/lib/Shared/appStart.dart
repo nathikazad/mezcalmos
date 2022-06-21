@@ -8,8 +8,7 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +19,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -249,10 +249,13 @@ class _StartingPointState extends State<StartingPoint> {
   }
 
   Future<void> putControllers() async {
+    final bool? isPreviewModeEnabled = GetStorage().read<bool?>('previewMode');
     final LanguageController lc =
         Get.put<LanguageController>(LanguageController());
     await lc.isLamgInitialized.stream.first;
-    await initializeDateFormatting(lc.userLanguageKey.name.toLowerCase());
+    if (isPreviewModeEnabled == false) {
+      await initializeDateFormatting(lc.userLanguageKey.name.toLowerCase());
+    }
     Get.put<AuthController>(
       AuthController(widget.signInCallback, widget.signOutCallback),
       permanent: true,
