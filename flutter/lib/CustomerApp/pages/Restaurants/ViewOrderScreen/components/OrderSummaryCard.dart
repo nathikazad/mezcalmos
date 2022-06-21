@@ -80,7 +80,8 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyText1,
                         ),
                         Text(
-                          (order.itemsCost).toPriceString(),
+                          (order.itemsCost + order.shippingCost)
+                              .toPriceString(),
                           style: txt.bodyText1!.copyWith(fontSize: 14.sp),
                         ),
                       ],
