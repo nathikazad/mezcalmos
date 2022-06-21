@@ -36,22 +36,18 @@ class ItemSliverAppBar extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         centerTitle: true,
-        expandedTitleScale: 1.6,
         title: Container(
-          width: 50.w,
-          padding: const EdgeInsets.only(bottom: 3),
-          child: FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(
-              " ${item.name[userLanguage]!} ",
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline3!
-                  .copyWith(fontSize: 13.sp, color: Colors.white),
-            ),
+          width: 55.w,
+          padding: const EdgeInsets.only(bottom: 4),
+          child: Text(
+            " ${item.name[userLanguage]!} ",
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context)
+                .textTheme
+                .headline3!
+                .copyWith(fontSize: 13.sp, color: Colors.white),
           ),
         ),
         background: (item.image != null)

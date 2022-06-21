@@ -107,10 +107,9 @@ class CartItemsBuilder extends StatelessWidget {
     final List<Widget> viewWidgets = [];
     cartItem.chosenChoices.forEach((String key, List<Choice> value) {
       viewWidgets.add(ItemChosenChoiceComponent(
-        choices: value,
+          choices: value,
           optionName:
-              cartItem.item.findOption(key)?.name ?? <LanguageType, String>{}
-      ));
+              cartItem.item.findOption(key)?.name ?? <LanguageType, String>{}));
     });
     return viewWidgets;
   }
