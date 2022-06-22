@@ -38,7 +38,7 @@ class MessageController extends GetxController {
         .ref()
         .child(chatNode(chatId))
         .onValue
-        .listen((event) {
+        .listen((DatabaseEvent event) {
       if (event.snapshot.value != null) {
         mezDbgPrint(
             "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
@@ -51,7 +51,7 @@ class MessageController extends GetxController {
     });
   }
 
-  void sendMessage(
+  Future<void> sendMessage(
       {required String message,
       required String chatId,
       String? orderId}) async {
@@ -70,6 +70,8 @@ class MessageController extends GetxController {
       "timestamp": DateTime.now().toUtc().toString(),
       "chatId": chatId,
       "orderId": orderId
+    }).onError((Object? error, StackTrace stackTrace) {
+      mezDbgPrint(stackTrace);
     });
 
     // ignore: unawaited_futures

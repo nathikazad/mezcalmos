@@ -89,6 +89,8 @@ class OrderController extends GetxController {
         });
       }
       currentOrders.value = orders;
+      currentOrders.sort((DeliverableOrder a, DeliverableOrder b) =>
+          b.orderTime.toLocal().compareTo(a.orderTime.toLocal()));
     });
     super.onInit();
   }

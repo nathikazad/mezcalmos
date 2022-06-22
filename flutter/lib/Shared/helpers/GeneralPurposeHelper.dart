@@ -294,8 +294,8 @@ Future<void> showStatusInfoDialog(
   required String status,
   required String description,
   bool showSmallIcon = true,
-  String? primaryClickTitle = "Ok",
-  String? secondaryClickTitle = "View Order",
+  String? primaryClickTitle,
+  String? secondaryClickTitle,
   IconData? primaryIcon,
   Color? btnRightIconColor,
   Color? btnRightIconBgColor = offRedColor,
@@ -392,7 +392,7 @@ Future<void> showStatusInfoDialog(
                     ),
                     child: Center(
                       child: Text(
-                        primaryClickTitle ?? "Ok",
+                        primaryClickTitle ?? "${_i18n()["ok"]}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Color.fromRGBO(103, 121, 254, 1),
@@ -415,7 +415,7 @@ Future<void> showStatusInfoDialog(
                       GestureDetector(
                         onTap: secondaryCallBack,
                         child: Text(
-                          secondaryClickTitle ?? "View order",
+                          secondaryClickTitle ?? "${_i18n()["viewOrder"]}",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color.fromRGBO(120, 120, 120, 1),

@@ -596,7 +596,9 @@
                 "no": "No",
                 "cancelOrder": "Cancel Order",
                 "cancelConfirmationText": "Are you sure you would like to cancel ?",
-                "subtitle": "This action cannot be undone."
+                "subtitle": "This action cannot be undone.",
+                "ok": "Ok",
+                "viewOrder": "View Order"
             },
             "NotificationsHelper": {
                 "view": "View"

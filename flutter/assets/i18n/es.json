@@ -604,7 +604,9 @@
                 "no": "No",
                 "cancelOrder": "Cancelar orden",
                 "cancelConfirmationText": "¿Estás seguro de que te gustaría cancelar?",
-                "subtitle": "Esta acción no se puede deshacer."
+                "subtitle": "Esta acción no se puede deshacer.",
+                "ok": "OK",
+                "viewOrder": "Ver pedido"
             },
             "NotificationsHelper": {
                 "view": "Ver"
