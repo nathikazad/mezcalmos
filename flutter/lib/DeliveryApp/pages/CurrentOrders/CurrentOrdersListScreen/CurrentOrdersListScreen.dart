@@ -32,6 +32,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   void initState() {
     Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
     orderController.clearNewOrderNotificationsOfPastOrders();
+    
+
     super.initState();
   }
 

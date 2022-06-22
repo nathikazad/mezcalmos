@@ -118,10 +118,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       "${_i18n()["deliveryCost"]}",
                       style: Get.textTheme.bodyText1,
                     ),
-                    Text(
-                      50.toPriceString(),
-                      style: Get.textTheme.bodyText1,
-                    ),
+                    if (_getOrderShippingCost() != null)
+                      Text(
+                        _getOrderShippingCost()!.toPriceString(),
+                        style: Get.textTheme.bodyText1,
+                      ),
                   ],
                 ),
               ],
@@ -140,7 +141,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     switch (order.value!.orderType) {
       case OrderType.Restaurant:
         return (order as RestaurantOrder).shippingCost;
-        break;
+
       case OrderType.Laundry:
         return (order as LaundryOrder).shippingCost;
       default:

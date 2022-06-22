@@ -179,6 +179,7 @@ class OrderController extends GetxController {
             !currentOrderIds.contains(notification.orderId!))
         .forEach((Notification notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
+      mezDbgPrint("Clearing notifs");
     });
   }
 
