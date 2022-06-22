@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -42,7 +43,8 @@ class _LaundryOrderFromToComponentState
       OrderInfoCardState.Maximized.obs;
 
   ServiceInfo? laundry;
-
+  // This will lock the setEstimatedTime button click and show loading instead.
+  bool _edittingEstimatedTime = false;
   @override
   void initState() {
     super.initState();
@@ -205,24 +207,47 @@ class _LaundryOrderFromToComponentState
         {required void Function(DateTime) onNewDateTimeSet}) {
       if (dt != null) {
         return [
-          Text(DateFormat('hh:mm a').format(dt)),
+          Text(DateFormat('EE, hh:mm a').format(dt)),
           SizedBox(width: 7),
           InkWell(
-            onTap: () async {
-              final DateTime? _dt = await _dateTimePicker(initialDate: dt);
-              if (_dt != null) onNewDateTimeSet(_dt);
-            },
+            onTap: _edittingEstimatedTime
+                ? null
+                : () async {
+                    setState(() {
+                      _edittingEstimatedTime = true;
+                    });
+                    final DateTime? _dt =
+                        await _dateTimePicker(initialDate: dt);
+                    if (_dt != null) onNewDateTimeSet(_dt);
+
+                    setState(() {
+                      _edittingEstimatedTime = false;
+                    });
+                  },
             child: Container(
+              height: 18,
+              width: 18,
               padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(237, 237, 237, 1),
-                shape: BoxShape.circle,
-              ),
+              decoration: _edittingEstimatedTime
+                  ? null
+                  : BoxDecoration(
+                      color: Color.fromRGBO(237, 237, 237, 1),
+                      shape: BoxShape.circle,
+                    ),
               child: Center(
-                child: Icon(
-                  Icons.edit,
-                  size: 15,
-                ),
+                child: _edittingEstimatedTime
+                    ? Container(
+                        height: 16,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: CircularProgressIndicator(
+                          color: Colors.grey.shade600,
+                          strokeWidth: 1.8,
+                        ),
+                      )
+                    : Icon(
+                        Icons.edit,
+                        size: 15,
+                      ),
               ),
             ),
           )
@@ -230,26 +255,38 @@ class _LaundryOrderFromToComponentState
       } else {
         return [
           InkWell(
-            onTap: () async {
-              final DateTime? _dt = await _dateTimePicker();
-              if (_dt != null) onNewDateTimeSet(_dt);
-            },
+            onTap: _edittingEstimatedTime
+                ? null
+                : () async {
+                    setState(() {
+                      _edittingEstimatedTime = true;
+                    });
+                    final DateTime? _dt = await _dateTimePicker();
+                    if (_dt != null) onNewDateTimeSet(_dt);
+                    setState(() {
+                      _edittingEstimatedTime = false;
+                    });
+                  },
             child: Container(
               padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(226, 18, 51, 1),
-                borderRadius: BorderRadius.circular(4),
-              ),
+              decoration: _edittingEstimatedTime
+                  ? null
+                  : BoxDecoration(
+                      color: Color.fromRGBO(226, 18, 51, 1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
               child: Center(
-                child: Text(
-                  '${_i18n()["set"]} ${deliveryAction == DeliveryAction.DropOff ? "${_i18n()["dropoff"]}" : "${_i18n()["pickup"]}"} ${_i18n()["time"]}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 13,
-                  ),
-                ),
+                child: _edittingEstimatedTime
+                    ? ThreeDotsLoading(dotsColor: Colors.black)
+                    : Text(
+                        '${_i18n()["set"]} ${deliveryAction == DeliveryAction.DropOff ? "${_i18n()["dropoff"]}" : "${_i18n()["pickup"]}"} ${_i18n()["time"]}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
+                      ),
               ),
             ),
           )

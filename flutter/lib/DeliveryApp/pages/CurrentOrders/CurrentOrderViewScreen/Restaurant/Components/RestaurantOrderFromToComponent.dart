@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
         ['pages']['CurrentOrders']['CurrentOrderViewScreen']['Components']
@@ -166,19 +167,27 @@ class _RestaurantOrderFromToComponentState
         {required void Function(DateTime) onNewDateTimeSet}) {
       if (dt != null) {
         return [
-          Text(DateFormat('hh:mm a').format(dt)),
+          Text(DateFormat('EE, hh:mm a').format(dt)),
           SizedBox(width: 7),
           InkWell(
             onTap: _edittingEstimatedTime
                 ? null
                 : () async {
+                    setState(() {
+                      _edittingEstimatedTime = true;
+                    });
                     final DateTime? _dt =
                         await _dateTimePicker(initialDate: dt);
                     if (_dt != null) onNewDateTimeSet(_dt);
+
+                    setState(() {
+                      _edittingEstimatedTime = false;
+                    });
                   },
             child: Container(
               height: 18,
               width: 18,
+              padding: const EdgeInsets.all(6),
               decoration: _edittingEstimatedTime
                   ? null
                   : BoxDecoration(
@@ -206,26 +215,38 @@ class _RestaurantOrderFromToComponentState
       } else {
         return [
           InkWell(
-            onTap: () async {
-              final DateTime? _dt = await _dateTimePicker();
-              if (_dt != null) onNewDateTimeSet(_dt);
-            },
+            onTap: _edittingEstimatedTime
+                ? null
+                : () async {
+                    setState(() {
+                      _edittingEstimatedTime = true;
+                    });
+                    final DateTime? _dt = await _dateTimePicker();
+                    if (_dt != null) onNewDateTimeSet(_dt);
+                    setState(() {
+                      _edittingEstimatedTime = false;
+                    });
+                  },
             child: Container(
               padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(226, 18, 51, 1),
-                borderRadius: BorderRadius.circular(4),
-              ),
+              decoration: _edittingEstimatedTime
+                  ? null
+                  : BoxDecoration(
+                      color: Color.fromRGBO(226, 18, 51, 1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
               child: Center(
-                child: Text(
-                  '${_i18n()['set']} ${deliveryAction == DeliveryAction.DropOff ? "${_i18n()['dropoff']}" : "${_i18n()['pickup']}"} ${_i18n()['time']}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 13,
-                  ),
-                ),
+                child: _edittingEstimatedTime
+                    ? ThreeDotsLoading(dotsColor: Colors.black)
+                    : Text(
+                        '${_i18n()['set']} ${deliveryAction == DeliveryAction.DropOff ? "${_i18n()['dropoff']}" : "${_i18n()['pickup']}"} ${_i18n()['time']}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
+                      ),
               ),
             ),
           )
@@ -262,9 +283,7 @@ class _RestaurantOrderFromToComponentState
               return;
             }
           }
-          setState(() {
-            _edittingEstimatedTime = true;
-          });
+
           final ServerResponse _resp =
               await Get.find<OrderController>().setEstimatedTime(
             widget.order.orderId,
@@ -273,9 +292,7 @@ class _RestaurantOrderFromToComponentState
             deliveryAction,
             OrderType.Restaurant,
           );
-          setState(() {
-            _edittingEstimatedTime = false;
-          });
+
           mezDbgPrint("Responsoooooo ===> $_resp");
           if (_resp.success) {
             if (deliveryAction == DeliveryAction.Pickup)

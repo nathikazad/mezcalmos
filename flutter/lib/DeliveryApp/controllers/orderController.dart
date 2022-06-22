@@ -44,7 +44,8 @@ class OrderController extends GetxController {
             final dynamic orderData =
                 (event.snapshot.value as dynamic)[orderId];
             if (orderData["orderType"] ==
-                OrderType.Restaurant.toFirebaseFormatString()) {
+                    OrderType.Restaurant.toFirebaseFormatString() &&
+                orderData["restaurant"]?['location'] != null) {
               orders.add(RestaurantOrder.fromData(orderId, orderData));
             } else if (orderData["orderType"] ==
                 OrderType.Laundry.toFirebaseFormatString())
@@ -109,11 +110,13 @@ class OrderController extends GetxController {
     }
   }
 
-  Stream<DeliverableOrder?> getOrderStream(String orderId) {
-    return StreamGroup.merge(<Stream<DeliverableOrder?>>[
-      _getInProcessOrderStream(orderId),
-      _getPastOrderStream(orderId)
-    ]);
+  Stream<DeliverableOrder?> getOrderStream(String orderId) async* {
+    yield* StreamGroup.merge(
+      <Stream<DeliverableOrder?>>[
+        _getInProcessOrderStream(orderId),
+        _getPastOrderStream(orderId)
+      ],
+    );
   }
 
   Stream<DeliverableOrder?> _getInProcessOrderStream(String orderId) {
