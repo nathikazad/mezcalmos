@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   mezDbgPrint("Handling a background message");
@@ -65,13 +66,30 @@ class BackgroundNotificationsController extends GetxController {
         "_____________________________________________ BACKROUNG MESSAGE ____________________________________");
     if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
     if (message.data['linkUrl'].toString().contains('/messages/')) {
-      Future<void>.delayed(
-        Duration(milliseconds: 100),
-        () => Get.toNamed<void>(
-          message.data["linkUrl"],
-          arguments: <String, bool>{'showViewOrderBtn': true},
-        ),
-      );
+      mezDbgPrint(
+          "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<MessagesRouting");
+      mezDbgPrint("GET CURRENT ROUTE 1 =================${Get.currentRoute}");
+      if (Get.currentRoute == kWrapperRoute) {
+        mezDbgPrint("GET CURRENT ROUTE 2 =================${Get.currentRoute}");
+        Future<void>.delayed(Duration(milliseconds: 100), () {
+          mezDbgPrint(Get.currentRoute);
+          Get.toNamed(kHomeRoute);
+          mezDbgPrint(
+              "GET CURRENT ROUTE 3 =================${Get.currentRoute}");
+          Get.toNamed<void>(
+            message.data["linkUrl"],
+            arguments: <String, bool>{'showViewOrderBtn': true},
+          );
+        });
+      } else {
+        Future<void>.delayed(
+          Duration(milliseconds: 100),
+          () => Get.toNamed<void>(
+            message.data["linkUrl"],
+            arguments: <String, bool>{'showViewOrderBtn': true},
+          ),
+        );
+      }
     } else
       Future<void>.delayed(
         Duration(milliseconds: 100),

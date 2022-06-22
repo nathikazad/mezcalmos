@@ -21,6 +21,7 @@ import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -84,7 +85,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     }
     startAuthListener();
     //
-  
 
     /// Check if app was opened through a DeepLink
     Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
@@ -117,7 +117,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
 
-    responsiveSize(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

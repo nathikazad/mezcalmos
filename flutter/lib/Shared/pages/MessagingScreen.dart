@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -40,6 +41,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   String? recipientId;
   MessageController controller =
       Get.put<MessageController>(MessageController());
+  bool isChatLoaded = false;
   @override
   void initState() {
     print("inside messaginScreen onInitState !");
@@ -59,7 +61,16 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     controller.clearMessageNotifications(chatId: chatId);
     mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
-
+    if (controller.chat.value == null) {
+      controller.chat.stream.first.then((_) {
+        setState(() {
+          isChatLoaded = true;
+        });
+      });
+    } else
+      setState(() {
+        isChatLoaded = true;
+      });
     super.initState();
   }
 
@@ -190,7 +201,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
           );
         },
       ));
-
       scrollDown();
     }
 
@@ -252,35 +262,39 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 onTap: () => Get.toNamed<void>(orderLink!))
         ],
       ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.1),
-              child: Center(
-                child: Text(formattedDate),
+      body: isChatLoaded
+          ? Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.1),
+                    child: Center(
+                      child: Text(formattedDate),
+                    ),
+                  ),
+                  Expanded(
+                    child: Obx(
+                      () => ListView(
+                        shrinkWrap: true,
+                        controller: _listViewScrollController,
+                        children: List<Widget>.from(chatLines.reversed),
+                      ),
+                    ),
+                  ),
+                  SendMessageBox(
+                      typedMsg: _typedMsg,
+                      textEditingController: _textEditingController,
+                      controller: controller,
+                      chatId: chatId,
+                      orderId: orderId)
+                ],
               ),
+            )
+          : MezLogoAnimation(
+              centered: true,
             ),
-            Expanded(
-              child: Obx(
-                () => ListView(
-                  shrinkWrap: true,
-                  controller: _listViewScrollController,
-                  children: List<Widget>.from(chatLines.reversed),
-                ),
-              ),
-            ),
-            SendMessageBox(
-                typedMsg: _typedMsg,
-                textEditingController: _textEditingController,
-                controller: controller,
-                chatId: chatId,
-                orderId: orderId)
-          ],
-        ),
-      ),
     );
   }
 }

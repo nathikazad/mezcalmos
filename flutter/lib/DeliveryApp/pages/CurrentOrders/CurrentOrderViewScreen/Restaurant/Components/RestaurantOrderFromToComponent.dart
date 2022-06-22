@@ -187,7 +187,7 @@ class _RestaurantOrderFromToComponentState
             child: Container(
               height: 18,
               width: 18,
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(5),
               decoration: _edittingEstimatedTime
                   ? null
                   : BoxDecoration(
@@ -198,6 +198,7 @@ class _RestaurantOrderFromToComponentState
                 child: _edittingEstimatedTime
                     ? Container(
                         height: 16,
+                        width: 16,
                         decoration: BoxDecoration(shape: BoxShape.circle),
                         child: CircularProgressIndicator(
                           color: Colors.grey.shade600,
@@ -206,7 +207,7 @@ class _RestaurantOrderFromToComponentState
                       )
                     : Icon(
                         Icons.edit,
-                        size: 16,
+                        size: 15,
                       ),
               ),
             ),
