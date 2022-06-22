@@ -136,8 +136,8 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
     super.dispose();
   }
 
-  double _recenterBtnBottomPadding = 180;
-  EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 180);
+  double _recenterBtnBottomPadding = 320;
+  EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 320);
 
   @override
   Widget build(BuildContext context) {

@@ -31,6 +31,7 @@ GoogleService-Info.plist
 ios/Runner/Info.plist
 ios/Runner.xcodeproj/project.pbxproj
 *.backup
+*sksl*.json
  
 # font awesome
 font_awesome_flutter/
