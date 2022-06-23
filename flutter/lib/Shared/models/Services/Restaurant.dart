@@ -67,7 +67,7 @@ class Restaurant extends Service {
     final Schedule? schedule = restaurantData["details"]["schedule"] != null
         ? Schedule.fromData(restaurantData["details"]["schedule"])
         : null;
-    
+
     final LanguageType primaryLanguage = restaurantData["details"]?["language"]
                 ?["primary"]
             .toString()
@@ -77,8 +77,8 @@ class Restaurant extends Service {
     final LanguageType? secondaryLanguage = restaurantData["details"]
                 ?["language"]?["secondary"]
             .toString()
-            .toNullableLanguageType() ??
-        null;
+            .toLanguageType() ??
+        LanguageType.EN;
     final Restaurant restaurant = Restaurant(
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
         description: description ?? null,
@@ -174,7 +174,7 @@ class Restaurant extends Service {
 
 class Category {
   LanguageMap? name;
-  String id;
+  String? id;
   LanguageMap? dialog;
   int position = 0;
   List<Item> items = <Item>[];
@@ -186,7 +186,7 @@ class Category {
 
   Category({
     this.name,
-    required this.id,
+    this.id,
     this.position = 0,
     this.dialog,
   });
@@ -200,8 +200,11 @@ class Category {
       category.name = convertToLanguageMap(categoryData["name"]);
     if (categoryData["dialog"] != null)
       category.dialog = convertToLanguageMap(categoryData["dialog"]);
-    categoryData["items"].forEach((itemId, itemData) {
-      category.items.add(Item.itemFromData(itemId, itemData));
+    categoryData["items"]?.forEach((itemId, itemData) {
+      category.items.add(Item.itemFromData(
+        itemId,
+        itemData,
+      ));
     });
     category.sortItems();
     return category;
@@ -216,7 +219,7 @@ class Category {
       "name": name?.toFirebaseFormat(),
       "dialog": dialog?.toFirebaseFormat(),
       "position": position,
-      "items": jsonEncode(items),
+      'items': items.map((Item x) => x.toJson()).toList(),
     };
   }
 }
@@ -225,6 +228,7 @@ class Item {
   String id;
   bool available;
   LanguageMap? description;
+
   String? image;
   Map<LanguageType, String> name;
   num cost = 0;
@@ -245,7 +249,10 @@ class Item {
       required this.cost,
       this.position = 0});
 
-  factory Item.itemFromData(String itemId, itemData) {
+  factory Item.itemFromData(
+    String itemId,
+    itemData,
+  ) {
     final Item item = Item(
         id: itemId,
         available: itemData["available"],
@@ -271,7 +278,9 @@ class Item {
   void sortOptions() {
     _options.sort((Option a, Option b) => a.position.compareTo(b.position));
   }
+//  Category? getCategory(){
 
+//  }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       "id": id,

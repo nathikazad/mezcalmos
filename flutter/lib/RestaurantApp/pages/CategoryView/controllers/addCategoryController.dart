@@ -1,136 +1,94 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-
-// ignore_for_file: constant_identifier_names
-enum SelectedTab { Primary, Secondary }
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class AddCategoryController {
-  /// TextEditingController Primary
+  /// Text input controllers ///
   final TextEditingController primaryCategoryNameController =
       TextEditingController();
-  final TextEditingController categoryPricingController =
-      TextEditingController();
+  final TextEditingController primaryCatDesc = TextEditingController();
+  final TextEditingController secondaryCatDesc = TextEditingController();
 
-  /// TextEditingController Secondary
   final TextEditingController secondaryCategoryNameController =
       TextEditingController();
+
+  /// Controllers ///
   TabController? tabController;
 
-  // @m66are Work //
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+  RestaurantInfoController restaurantInfoController =
+      Get.find<RestaurantInfoController>();
+
+  /// Variables ///
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  final Rxn<Laundry> laundry = Rxn<Laundry>();
-  final Rxn<LaundryCosts> laundryCosts = Rxn();
-  final Rxn<LaundryCostLineItem> copyOfCategory = Rxn();
+  Rxn<Restaurant> restaurant = Rxn();
+  Rxn<Category> category = Rxn<Category>();
 
-  final Rxn<LanguageType> primaryLang = Rxn();
-  final Rxn<LanguageType> secondaryLang = Rxn();
+  Rxn<LanguageType> primaryLang = Rxn();
+
+  Rxn<LanguageType> secondaryLang = Rxn();
 
   RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
   RxBool editMode = RxBool(false);
   String? editableCategoryId;
 
+  /// LOGIC ///
+
   // INIT STATE ///
   void init({String? categoryId}) {
-    laundry.value = laundryInfoController.laundry.value;
-    if (laundry.value != null) {
-      initLanguages();
-      assignCategories();
-      if (categoryId != null) {
-        initEditMode(categoryId);
-      }
+    restaurant.value = restaurantInfoController.restaurant.value!;
+    initLanguages();
+    if (categoryId != null) {
+      initEditMode(categoryId);
     }
   }
 
   void initLanguages() {
-    primaryLang.value = laundry.value!.primaryLanguage;
-    secondaryLang.value = laundry.value!.secondaryLanguage;
-  }
-
-  void assignCategories() {
-    laundryCosts.value = laundry.value!.laundryCosts;
-    laundry.value!.laundryCosts.lineItems
-        .forEach((LaundryCostLineItem element) {
-      categories.value.add(element);
-    });
+    primaryLang.value = restaurant.value!.primaryLanguage;
+    secondaryLang.value = restaurant.value!.secondaryLanguage!;
   }
 
   void initEditMode(String categoryId) {
     editMode.value = true;
     editableCategoryId = categoryId;
 
-    copyOfCategory.value = categories.firstWhereOrNull(
-        (LaundryCostLineItem element) => element.id == categoryId);
-
-    if (copyOfCategory.value!.name[primaryLang.value] != null) {
-      primaryCategoryNameController.text =
-          copyOfCategory.value!.name[primaryLang.value]!;
-    }
-    if (copyOfCategory.value!.name[secondaryLang.value] != null) {
+    category.value = restaurant.value!.getCategories.firstWhereOrNull(
+        (Category element) => element.id == editableCategoryId);
+    if (category.value != null) {
+      primaryCategoryNameController.text = category.value!.name![primaryLang]!;
       secondaryCategoryNameController.text =
-          copyOfCategory.value!.name[secondaryLang.value]!;
+          category.value!.name![secondaryLang]!;
+      primaryCatDesc.text = category.value!.dialog?[primaryLang] ?? "";
+      secondaryCatDesc.text = category.value!.dialog?[secondaryLang] ?? "";
     }
-
-    categoryPricingController.text =
-        copyOfCategory.value?.cost.toString() ?? "";
   }
 
-  void addCategory() {
-    final LaundryCostLineItem newCategory = LaundryCostLineItem(
-        id: getRandomString(12),
-        name: {
-          primaryLang.value!: primaryCategoryNameController.text,
-          if (secondaryLang.value != null)
-            secondaryLang.value!: secondaryCategoryNameController.text,
-        },
-        cost: num.parse(categoryPricingController.text));
-    categories.add(newCategory);
-
-    laundryCosts.value!.lineItems = categories;
-
-    laundryInfoController.setCosts(laundryCosts.value!).then((value) {
-      Get.back();
-    });
+  Future<void> saveCategory() async {
+    final Category newCategory =
+        Category(name: _contructName(), dialog: _contructDescription());
+    // ignore: unawaited_futures
+    restaurantInfoController
+        .addCategory(category: newCategory)
+        .then((value) => Get.back());
   }
 
-  void editCategory() {
-    final int index = categories
-        .indexWhere((LaundryCostLineItem p0) => p0.id == editableCategoryId);
-
-    categories.value[index].name = {
+  Map<LanguageType, String> _contructName() {
+    final Map<LanguageType, String> name = {
       primaryLang.value!: primaryCategoryNameController.text,
-      if (secondaryLang.value != null)
-        secondaryLang.value!: secondaryCategoryNameController.text,
+      secondaryLang.value!: secondaryCategoryNameController.text,
     };
-    categories.value[index].cost = num.parse(categoryPricingController.text);
-    laundryCosts.value!.lineItems = categories;
-    laundryInfoController.setCosts(laundryCosts.value!).then((value) {
-      Get.back();
-    });
+    return name;
   }
 
-  void handleFooterButtonClick() {
-    if (editMode.value) {
-      editCategory();
-    } else {
-      addCategory();
-    }
-  }
-
-  String getRightName() {
-    final String availableName =
-        copyOfCategory.value!.name[copyOfCategory.value!.name.keys.first]!;
-    if (copyOfCategory.value!.name[primaryLang] != null) {
-      return copyOfCategory.value!.name[primaryLang]!;
-    } else {
-      return availableName;
-    }
+  Map<LanguageType, String>? _contructDescription() {
+    final Map<LanguageType, String>? desc = {
+      primaryLang.value!: primaryCatDesc.text,
+      secondaryLang.value!: secondaryCatDesc.text,
+    };
+    return desc;
   }
 }

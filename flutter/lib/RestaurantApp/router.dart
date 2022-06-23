@@ -40,11 +40,11 @@ class XRouter {
         GetPage(name: kHomeRoute, page: () => RestaurantWrapper()),
         GetPage(
           name: kCategoryView,
-          page: () => LaundryOpCategoryScreen(),
+          page: () => ROpCategoryView(),
         ),
         GetPage(
           name: kEditCategoryScreen,
-          page: () => LaundryOpCategoryScreen(),
+          page: () => ROpCategoryView(),
         ),
         GetPage(name: kOrderView, page: () => LaundryOpOrderView())
       ] +

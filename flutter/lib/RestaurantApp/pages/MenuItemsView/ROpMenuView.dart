@@ -6,6 +6,7 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dar
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpCategoryGridCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpCategoryItems.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpItemCard.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -57,6 +58,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
               controller: _tabController,
               labelColor: primaryBlueColor,
               unselectedLabelColor: Colors.grey.shade800,
+              labelStyle: Get.textTheme.bodyText1,
+              unselectedLabelStyle: Get.textTheme.bodyText2,
               tabs: [
                 Tab(
                   text: "My items",
@@ -71,10 +74,31 @@ class _ROpMenuViewState extends State<ROpMenuView>
           children: [
             // Items view //
             SingleChildScrollView(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(12),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Categories",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                   _categoriesGridList(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Items",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                   _categoriesItemsList(),
                   _noCategoryItemsList()
                 ],
@@ -97,10 +121,15 @@ class _ROpMenuViewState extends State<ROpMenuView>
   Widget _categoriesItemsList() {
     return Container(
       child: Column(
-        children: List.generate(
-            restaurant.value!.getCategories.length,
-            (int index) => ROpCategoryItems(
-                category: restaurant.value!.getCategories[index])),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            children: List.generate(
+                restaurant.value!.getCategories.length,
+                (int index) => ROpCategoryItems(
+                    category: restaurant.value!.getCategories[index])),
+          ),
+        ],
       ),
     );
   }
@@ -109,10 +138,19 @@ class _ROpMenuViewState extends State<ROpMenuView>
     if (restaurant.value!.getItemsWithoutCategory != null) {
       return Container(
         child: Column(
-          children: List.generate(
-              restaurant.value!.getItemsWithoutCategory!.length,
-              (int index) => ROpItemCard(
-                  item: restaurant.value!.getItemsWithoutCategory![index])),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("No category"),
+            SizedBox(
+              height: 5,
+            ),
+            Column(
+              children: List.generate(
+                  restaurant.value!.getItemsWithoutCategory!.length,
+                  (int index) => ROpItemCard(
+                      item: restaurant.value!.getItemsWithoutCategory![index])),
+            ),
+          ],
         ),
       );
     } else {
@@ -130,7 +168,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
       children: List<Widget>.generate(restaurant.value!.getCategories.length,
               (int index) {
             return ROpCategoryGridCard(
-                item: restaurant.value!.getCategories[index]);
+                category: restaurant.value!.getCategories[index]);
           }) +
           [
             Card(
@@ -138,7 +176,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
               child: InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
-                  //     Get.toNamed(kCategoryView);
+                  Get.toNamed(kCategoryView);
                 },
                 child: Container(
                   child: Icon(

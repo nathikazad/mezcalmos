@@ -29,7 +29,7 @@ class RestaurantOpAuthController extends GetxController {
   RestaurantOperatorState? get restaurantOperatorState => operator.value?.state;
   Stream<RestaurantOperator?> get operatorInfoStream => operator.stream;
 
-  StreamSubscription<Event>? _restaurantOperatorNodeListener;
+  StreamSubscription? _restaurantOperatorNodeListener;
 
   bool _checkedAppVersion = false;
   String? _previousStateValue = "init";
@@ -59,14 +59,14 @@ class RestaurantOpAuthController extends GetxController {
         .child(operatorAuthNode(
             operatorType: OperatorType.Restaurant, uid: user.uid))
         .once()
-        .then((DataSnapshot value) => mezDbgPrint(value.value));
+        .then((DatabaseEvent value) => mezDbgPrint(value));
     // mezDbgPrint("Listening");
     _restaurantOperatorNodeListener = _databaseHelper.firebaseDatabase
         .reference()
         .child(operatorAuthNode(
             operatorType: OperatorType.Restaurant, uid: user.uid))
         .onValue
-        .listen((Event event) async {
+        .listen((DatabaseEvent event) async {
       if (event.snapshot.value.toString() == _previousStateValue) {
         return;
       }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
-import 'package:mezcalmos/LaundryApp/pages/CategoryView/controllers/addCategoryController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -10,28 +10,27 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['CategoryView'];
 
-class LaundryOpCategoryScreen extends StatefulWidget {
-  const LaundryOpCategoryScreen({Key? key}) : super(key: key);
+class ROpCategoryView extends StatefulWidget {
+  const ROpCategoryView({Key? key}) : super(key: key);
 
   @override
-  State<LaundryOpCategoryScreen> createState() =>
-      _LaundryOpCategoryScreenState();
+  State<ROpCategoryView> createState() => _ROpCategoryViewState();
 }
 
-class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
+class _ROpCategoryViewState extends State<ROpCategoryView> {
   /// AddCategoryController
   ///
   AddCategoryController _viewController = AddCategoryController();
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  String? categoryName;
+  String? _categoryId;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    categoryName = Get.parameters["categoryId"];
+    _categoryId = Get.parameters["categoryId"];
 
-    _viewController.init(categoryId: categoryName);
+    _viewController.init(categoryId: _categoryId);
 
     super.initState();
   }
@@ -56,7 +55,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
       child: InkWell(
           onTap: () {
             if (_formKey.currentState?.validate() ?? false) {
-              _viewController.handleFooterButtonClick();
+              _viewController.saveCategory();
             }
           },
           child: Ink(
@@ -79,7 +78,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
       leftBtnType: AppBarLeftButtonType.Back,
       onClick: Get.back,
       title: (_viewController.editMode.value)
-          ? _viewController.getRightName()
+          ? _viewController.category.value!.name![userLanguage]
           : "${_i18n()["addCategory"]}",
     );
   }
@@ -100,25 +99,70 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
               const SizedBox(height: 8),
               _categoryNameComponent(
                   controller: _viewController.primaryCategoryNameController),
-              if (_viewController.secondaryLang.value != null)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
-                      style: Get.textTheme.headline4,
-                    ),
-                    const SizedBox(height: 8),
-                    _categoryNameComponent(
-                        controller:
-                            _viewController.secondaryCategoryNameController),
-                  ],
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
+                    style: Get.textTheme.headline4,
+                  ),
+                  const SizedBox(height: 8),
+                  _categoryNameComponent(
+                      controller:
+                          _viewController.secondaryCategoryNameController),
+                ],
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                "Category Description",
+                style: Get.textTheme.bodyText1,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                maxLines: 7,
+                minLines: 3,
+                controller: _viewController.primaryCatDesc,
+                decoration: InputDecoration(
+                  isDense: true,
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: '${_i18n()["categoryNameHint"]}',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
-              const SizedBox(height: 16),
-              _categoryPriceComponent(),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                "Category Description in ${_viewController.secondaryLang.value!.toLanguageName()}",
+                style: Get.textTheme.bodyText1,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                maxLines: 7,
+                minLines: 3,
+                controller: _viewController.secondaryCatDesc,
+                decoration: InputDecoration(
+                  isDense: true,
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: '${_i18n()["categoryNameHint"]}',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -147,39 +191,6 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
           borderRadius: BorderRadius.circular(5),
         ),
       ),
-    );
-  }
-
-  Widget _categoryPriceComponent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "${_i18n()["categoryPrice"]}",
-          style: Get.textTheme.headline4,
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          controller: _viewController.categoryPricingController,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (String? v) {
-            if (v != null && v.isNotEmpty && int.tryParse(v) != null) {
-              return null;
-            } else {
-              return "${_i18n()["categoryPriceError"]}";
-            }
-          },
-          decoration: InputDecoration(
-            isDense: true,
-            filled: true,
-            fillColor: Colors.white,
-            hintText: '${_i18n()["categoryPriceHint"]}',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

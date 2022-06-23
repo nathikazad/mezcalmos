@@ -9,8 +9,8 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
 class OrderController extends GetxController {
@@ -20,8 +20,8 @@ class OrderController extends GetxController {
 
   RxList<RestaurantOrder> currentOrders = <RestaurantOrder>[].obs;
   RxList<RestaurantOrder> pastOrders = <RestaurantOrder>[].obs;
-  StreamSubscription<Event>? _currentOrdersListener;
-  StreamSubscription<Event>? _pastOrdersListener;
+  StreamSubscription? _currentOrdersListener;
+  StreamSubscription? _pastOrdersListener;
 
   Future<void> init(String restaurantId) async {
     mezDbgPrint(
@@ -32,16 +32,16 @@ class OrderController extends GetxController {
         .child(serviceProviderPastOrders(
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .onValue
-        .listen((Event event) {
+        .listen((DatabaseEvent event) {
       mezDbgPrint(
           "PAST ORDERS ======> the event value ------------> ${event.snapshot.value}");
 
       final List<RestaurantOrder> orders = [];
       if (event.snapshot.value != null) {
         mezDbgPrint("the event value ------------> ${event.snapshot.value}");
-        event.snapshot.value.keys.forEach((orderId) {
+        (event.snapshot.value as dynamic).keys.forEach((orderId) {
           mezDbgPrint("-------------------->>>>>>>>>>Hndling Order : $orderId");
-          final dynamic orderData = event.snapshot.value[orderId];
+          final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
           mezDbgPrint("Order Data ======================> $orderData");
           orders.add(RestaurantOrder.fromData(orderId, orderData));
         });
@@ -59,7 +59,7 @@ class OrderController extends GetxController {
         .child(serviceProviderInProcessOrders(
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .onValue
-        .listen((Event event) {
+        .listen((DatabaseEvent event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
       mezDbgPrint(
           "CURRENT ORDERS ======> the event value ------------> ${event.snapshot.value}");
@@ -67,9 +67,9 @@ class OrderController extends GetxController {
       final List<RestaurantOrder> orders = [];
       if (event.snapshot.value != null) {
         // mezDbgPrint("orderController: new incoming order data");
-        event.snapshot.value.keys?.forEach((orderId) {
+        (event.snapshot.value as dynamic).keys?.forEach((orderId) {
           // mezDbgPrint("Hndling Order : $orderId");
-          final dynamic orderData = event.snapshot.value[orderId];
+          final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
           orders.add(RestaurantOrder.fromData(orderId, orderData));
         });
       }

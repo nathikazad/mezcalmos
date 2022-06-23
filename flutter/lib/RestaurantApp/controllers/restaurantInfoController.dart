@@ -6,6 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -27,11 +28,11 @@ class RestaurantInfoController extends GetxController {
         "--------------------> Start listening service providers info  ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurantId)}");
     await _restaurantInfoListener?.cancel();
     _restaurantInfoListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .onValue
-        .listen((Event event) {
+        .listen((DatabaseEvent event) {
       mezDbgPrint(
           "eveeeeeeennnnnnnnnnnnnnnnnnnnnnnnnnnnt ====> ${event.snapshot.value} ");
       if (event.snapshot.value != null) {
@@ -69,7 +70,7 @@ class RestaurantInfoController extends GetxController {
     mezDbgPrint(
         "------->>> ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurant.value!.info.id)}/name");
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(
                 orderType: OrderType.Restaurant,
                 providerId: restaurant.value!.info.id) +
@@ -82,7 +83,7 @@ class RestaurantInfoController extends GetxController {
     mezDbgPrint(
         "------->>> ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurant.value!.info.id)}/name");
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(
                 orderType: OrderType.Restaurant,
                 providerId: restaurant.value!.info.id) +
@@ -93,7 +94,7 @@ class RestaurantInfoController extends GetxController {
 
   Future<void> setSchedule(Schedule schedule) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderSchedule(
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .set(schedule.toFirebaseFormattedJson());
@@ -101,7 +102,7 @@ class RestaurantInfoController extends GetxController {
 
   Future<void> setPrimaryLanguage(LanguageType lang) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderPrimaryLanguage(
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .set(lang.toFirebaseFormatString());
@@ -109,7 +110,7 @@ class RestaurantInfoController extends GetxController {
 
   Future<void> setSecondaryLanguage(LanguageType? lang) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderSecondaryLanguage(
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .set(lang?.toFirebaseFormatString() ?? null);
@@ -117,10 +118,36 @@ class RestaurantInfoController extends GetxController {
 
   Future<void> setLocation(Location loc) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderLocation(
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .set(loc.toFirebaseFormattedJson());
+  }
+
+// ----------------------------------------------------- ITEMS FUNCTIONS ----------------------------------------------------- //
+  Future<void> switchItemAvailable(String itemId, bool value) {
+    mezDbgPrint(itemNode(uid: restaurantId, itemId: itemId) + "/available");
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(itemNode(uid: restaurantId, itemId: itemId) + "/available")
+        .set(value);
+  }
+
+  Future<void> setItemCost(String itemId, num cost) {
+    mezDbgPrint(itemNode(uid: restaurantId, itemId: itemId) + "/available");
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(itemNode(uid: restaurantId, itemId: itemId) + "/cost")
+        .set(cost);
+  }
+
+  Future<void> addCategory({required Category category}) async {
+    final DatabaseReference categoryNode = _databaseHelper.firebaseDatabase
+        .ref()
+        .child(menuNode(uid: restaurantId))
+        .push();
+
+    await categoryNode.set(category.toJson());
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -11,8 +12,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["AdminView"]["components"]["ROpCategoryGridCard"];
 
 class ROpCategoryGridCard extends StatefulWidget {
-  const ROpCategoryGridCard({Key? key, required this.item}) : super(key: key);
-  final Category item;
+  const ROpCategoryGridCard({Key? key, required this.category})
+      : super(key: key);
+  final Category category;
 
   @override
   State<ROpCategoryGridCard> createState() => _ROpCategoryGridCardState();
@@ -50,19 +52,6 @@ class _ROpCategoryGridCardState extends State<ROpCategoryGridCard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (nameMissing.isTrue)
-                Container(
-                  alignment: Alignment.topRight,
-                  child: Tooltip(
-                    message: "${_i18n()["nameTooltip"]}",
-                    triggerMode: TooltipTriggerMode.tap,
-                    child: Icon(
-                      Icons.help,
-                      size: 18,
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
               Flexible(
                 child: Text(
                   _getRightName(),
@@ -71,7 +60,7 @@ class _ROpCategoryGridCardState extends State<ROpCategoryGridCard> {
                 ),
               ),
               SizedBox(
-                height: 5,
+                height: 8,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +68,7 @@ class _ROpCategoryGridCardState extends State<ROpCategoryGridCard> {
                   InkWell(
                     customBorder: CircleBorder(),
                     onTap: () {
-                      //  Get.toNamed(getCategoryEditRoute(widget.item.id));
+                      Get.toNamed(getCategoryEditRoute(widget.category.id!));
                     },
                     child: Ink(
                       padding: const EdgeInsets.all(5),
@@ -102,7 +91,7 @@ class _ROpCategoryGridCardState extends State<ROpCategoryGridCard> {
                           helperText: "${_i18n()["deleteHelperText"]}",
                           primaryButtonText: "${_i18n()["yesDelete"]}",
                           onYesClick: () async {
-                        // await deleteCategory(item: widget.item)
+                        // await deleteCategory(category: widget.category)
                         //     .then((value) => Get.back());
                       });
                     },
@@ -126,7 +115,7 @@ class _ROpCategoryGridCardState extends State<ROpCategoryGridCard> {
     );
   }
 
-  Future<void> deleteCategory({required LaundryCostLineItem item}) async {
+  Future<void> deleteCategory({required LaundryCostLineItem category}) async {
     // final List<LaundryCostLineItem> categories = [];
     // final LaundryCosts laundryCosts =
     //     laundryInfoController.laundry.value!.laundryCosts;
@@ -137,7 +126,7 @@ class _ROpCategoryGridCardState extends State<ROpCategoryGridCard> {
     // });
 
     // categories.removeWhere((LaundryCostLineItem element) =>
-    //     element.name[primaryLang] == item.name[primaryLang]);
+    //     element.name[primaryLang] == category.name[primaryLang]);
 
     // laundryCosts.lineItems = categories;
 
@@ -146,10 +135,10 @@ class _ROpCategoryGridCardState extends State<ROpCategoryGridCard> {
 
   String _getRightName() {
     final String availableName =
-        widget.item.name![widget.item.name!.keys.first]!;
-    if (widget.item.name![primaryLang] != null) {
+        widget.category.name![widget.category.name!.keys.first]!;
+    if (widget.category.name![primaryLang] != null) {
       nameMissing.value = false;
-      return widget.item.name![primaryLang]!;
+      return widget.category.name![primaryLang]!;
     } else {
       nameMissing.value = true;
       return availableName;
