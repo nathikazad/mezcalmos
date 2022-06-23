@@ -18,8 +18,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   ionicons: ^0.1.2
-  font_awesome_flutter: ^9.1.0
-  google_fonts: ^2.1.0
+  font_awesome_flutter: ^10.1.0
+  google_fonts: ^3.0.1
   scroll_to_index:
   rect_getter:
 
@@ -31,8 +31,8 @@ dependencies:
   url_launcher: ^6.0.9
   package_info_plus: ^1.4.0
   device_info_plus: ^3.2.2
-  device_preview: ^0.7.4
-  permission_handler: ^9.2.0
+  device_preview: ^1.1.0
+  # permission_handler: ^9.2.0
 
   # Get
   get: ^4.3.8
@@ -43,18 +43,18 @@ dependencies:
   cached_network_image: ^3.2.0
   flutter_cache_manager: ^3.2.0
   image_downloader: 0.31.0
-  image_cropper: ^1.4.1
+  image_cropper: ^2.0.3
   image_picker: ^0.8.4
   flutter_image_compress: ^1.1.0
 
   # Firebase
   firebase_core: ^1.13.1
-  firebase_database: ^7.1.1
-  firebase_auth: ^1.4.1
+  firebase_database: ^9.0.15
+  firebase_auth: ^3.3.19
   firebase_storage: ^10.2.9
   firebase_messaging: ^11.1.0
   firebase_dynamic_links: ^4.1.1
-  cloud_functions: 3.0.3
+  cloud_functions: ^3.2.16
 
   # Maps
   google_maps_flutter: ^2.0.9
@@ -66,31 +66,34 @@ dependencies:
   graphql: ^5.0.0
 
   # Animations
-  rive: 0.7.28
+  rive: ^0.8.4
   shimmer: ^2.0.0
-  toggle_switch: ^1.2.0
+  toggle_switch: ^2.0.1
   progress_indicators: ^1.0.0
 
   # UI
-  flutter_facebook_auth: ^3.5.0
   pin_code_fields: ^7.2.0
   badges: ^2.0.2
-  flutter_local_notifications: ^8.1.1
+  flutter_local_notifications: ^9.6.0
   sliding_up_panel: ^2.0.0+1
   month_picker_dialog: ^0.4.0
   charts_flutter: ^0.12.0
   soundpool: ^2.2.0
-  grouped_list: ^4.1.0
+  grouped_list: ^5.1.1
   internet_connection_checker: ^0.0.1+3
   flutter_countdown_timer: ^4.1.0
-  sign_in_with_apple: ^3.0.0
+  sign_in_with_apple: ^4.0.0
   sizer: ^2.0.15
   crypto: ^3.0.0-nullsafety.0
   equatable: ^2.0.3
+  intl: ^0.17.0
 
   # Check if a user has the most recent version of your app installed.
   new_version: ^0.3.0
   store_redirect: ^2.0.1
+  app_settings: ^4.1.8
+  flutter_facebook_auth: ^4.3.4+2
+  permission_handler: ^10.0.0
   # in_app_review: ^2.0.4
 
 

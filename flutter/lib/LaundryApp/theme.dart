@@ -22,7 +22,6 @@ class LaundryAppTheme {
       scaffoldBackgroundColor: Color(0XFFFAFAFA),
 
       timePickerTheme: TimePickerThemeData(
-        
         dialHandColor: primaryBlueColor,
         backgroundColor: Colors.white,
         hourMinuteColor: MaterialStateColor.resolveWith(
@@ -98,6 +97,7 @@ class LaundryAppTheme {
       cardTheme: CardTheme(
           elevation: 0.5,
           color: Colors.white,
+          margin: EdgeInsets.only(bottom: 3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -148,20 +148,30 @@ class LaundryAppTheme {
           color: Colors.black,
         ),
         bodyText1: TextStyle(
-            fontFamily: "Montserrat",
-            fontWeight: FontWeight.w600,
-            fontSize: 12.sp,
-            color: Colors.black),
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w600,
+          fontSize: 12.sp,
+          color: Colors.black,
+        ),
         bodyText2: TextStyle(
-            fontFamily: "Nunito",
-            fontWeight: FontWeight.w400,
-            fontSize: 11.sp,
-            color: Colors.black),
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w500,
+          height: 1.5,
+          fontSize: 11.sp,
+          color: Color(0xFF494949),
+        ),
+        subtitle2: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w500,
+          fontSize: 12.sp,
+          color: Color(0xFF494949),
+        ),
         subtitle1: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontFamily: "Nunito",
-            fontSize: 10.sp,
-            color: Colors.black.withOpacity(0.8)),
+          fontFamily: "Nunito",
+          fontWeight: FontWeight.w400,
+          fontSize: 11.sp,
+          color: Colors.black,
+        ),
       ),
     );
   }

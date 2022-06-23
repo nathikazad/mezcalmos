@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -12,22 +13,22 @@ dynamic _i18n() =>
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
     Key? key,
-    this.orderCost,
-    this.deliveryCost,
-    this.setLocationCallBack,
-    this.totalCost,
+    required this.orderCost,
+    required this.deliveryCost,
+    required this.setLocationCallBack,
+    required this.totalCost,
   }) : super(key: key);
 
-  final String? orderCost;
-  final String? deliveryCost;
-  final String? totalCost;
+  final String orderCost;
+  final num deliveryCost;
+  final String totalCost;
   final void Function({Location? location})? setLocationCallBack;
 
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      // padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
         decoration: BoxDecoration(
@@ -45,7 +46,7 @@ class OrderSummaryCard extends StatelessWidget {
               width: Get.width,
               child: Text("${_i18n()["orderSummary"]}", style: txt.bodyText1),
             ),
-            const Divider(height: 20),
+            const SizedBox(height: 20),
             //==================Order cost :==================
             Container(
               padding: const EdgeInsets.only(bottom: 10),
@@ -61,7 +62,7 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text("\$$orderCost", style: txt.bodyText1),
+                      child: Text(orderCost),
                     ),
                   )
                 ],
@@ -69,9 +70,12 @@ class OrderSummaryCard extends StatelessWidget {
             ),
             //=======================Delivery cost :===============
             Container(
-              padding: EdgeInsets.only(bottom: 10),
+              padding: EdgeInsets.only(
+                bottom: 10,
+              ),
               width: Get.width,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Expanded(
                     child: Container(
@@ -79,18 +83,17 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyText2),
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      child: Text("\$$deliveryCost", style: txt.bodyText1),
-                    ),
-                  )
+                  Flexible(
+                      child: ShippingCostComponent(
+                    alignment: MainAxisAlignment.end,
+                    shippingCost: deliveryCost,
+                  ))
                 ],
               ),
             ),
             //=======================Total cost : ==================
             Container(
-              padding: EdgeInsets.only(bottom: 10),
+              padding: EdgeInsets.only(bottom: 10, top: 3),
               width: Get.width,
               child: Row(
                 children: <Widget>[
@@ -103,13 +106,15 @@ class OrderSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text("\$$totalCost", style: txt.bodyText1),
+                      child: Text(totalCost, style: txt.bodyText1),
                     ),
                   ),
                 ],
               ),
             ),
-            Divider(),
+            SizedBox(
+              height: 15,
+            ),
             //=======================Delivery location :===========
             Container(
               alignment: Alignment.centerLeft,

@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
@@ -88,6 +90,7 @@ Notification taxiOrderStatusChangeNotificationHandler(String key, value) {
 }
 
 Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
+  mezDbgPrint(value);
   final RestaurantOrderStatus newOrdersStatus =
       value['status'].toString().toRestaurantOrderStatus();
   final Map<String, dynamic> dynamicFields =
@@ -98,6 +101,7 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
     linkUrl: getRestaurantOrderRoute(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
+    
     imgUrl: dynamicFields["imgUrl"],
     title: dynamicFields["title"],
     timestamp: DateTime.parse(value['time']),
@@ -177,8 +181,7 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
       return <String, dynamic>{
         "title": "${_i18n()["readyForPickUpTitle"]}",
         "body": "${_i18n()["readyForPickUpBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/readyOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/onTheWay.png",
       };
     case RestaurantOrderStatus.OnTheWay:
       return <String, dynamic>{
@@ -274,10 +277,13 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
-  mezDbgPrint(value['linkUrl']);
   return Notification(
       id: key,
-      linkUrl: value['linkUrl'] ?? value["orderId"],
+      linkUrl: getMessagesRoute(
+        chatId: value['chatId'],
+        recipientType:
+            value["sender"]["particpantType"].toString().toParticipantType(),
+      ),
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],

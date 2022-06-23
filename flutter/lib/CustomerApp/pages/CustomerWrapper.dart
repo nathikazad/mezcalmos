@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
-import 'package:mezcalmos/CustomerApp/components/CustomerHomeFooterButtons.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -22,6 +21,7 @@ import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -84,6 +84,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
+    //
 
     /// Check if app was opened through a DeepLink
     Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
@@ -116,7 +117,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
 
-    responsiveSize(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -125,42 +125,29 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         appBar: CustomerAppBar(
           leftBtnType: AppBarLeftButtonType.Menu,
         ),
-        body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    minWidth: constraints.maxWidth,
-                    minHeight: constraints.maxHeight),
-                child: IntrinsicHeight(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        const SizedBox(height: 10),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              const SizedBox(height: 10),
 
-                        mezWelcomeContainer(
-                          Theme.of(context).textTheme.headline2!,
-                        ),
-                        //============================== description=============================
-                        mezDescription(txt.subtitle1!),
-
-                        //============================Service title===================================
-                        const SizedBox(height: 10),
-                        mezServiceTitle(txt.headline2!),
-
-                        //========================= list of services ===========================
-                        Expanded(child: mezListOfServices()),
-                        // Spacer(),
-                        HomeFooterButtons(),
-                      ],
-                    ),
-                  ),
-                ),
+              mezWelcomeContainer(
+                Theme.of(context).textTheme.headline2!,
               ),
-            );
-          },
+              //============================== description=============================
+              mezDescription(txt.subtitle1!),
+
+              //============================Service title===================================
+              const SizedBox(height: 10),
+              mezServiceTitle(txt.headline2!),
+
+              //========================= list of services ===========================
+              mezListOfServices(),
+              // Spacer(),
+              //  HomeFooterButtons(),
+            ],
+          ),
         ),
       ),
     );
@@ -267,21 +254,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     return Column(
       children: [
         //====================Taxi===================
-        Obx(
-          () => ServicesCard(
-            title: "${_i18n()['taxi']["title"]}",
-            url: "assets/images/customer/taxi/taxiService.png",
-            subtitle: "${_i18n()['taxi']["subtitle"]}",
-            onTap: () {
-              getServiceRoute(
-                  orderType: OrderType.Taxi,
-                  serviceRoute: kTaxiRequestRoute,
-                  singleOrderRoute: (String orderId) {
-                    Get.toNamed<void>(getTaxiOrderRoute(orderId));
-                  });
-            },
-          ),
-        ),
 
         //==================Food====================
         Obx(
@@ -314,6 +286,21 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                     Get.toNamed<void>(getLaundyOrderRoute(v));
                   });
             },
+          ),
+        ),
+        Obx(
+          () => ServicesCard(
+            title: "${_i18n()['taxi']["title"]}",
+            url: "assets/images/customer/taxi/taxiService.png",
+            subtitle: "${_i18n()["comingSoon"]}",
+            // onTap: () {
+            //   getServiceRoute(
+            //       orderType: OrderType.Taxi,
+            //       serviceRoute: kTaxiRequestRoute,
+            //       singleOrderRoute: (String orderId) {
+            //         Get.toNamed<void>(getTaxiOrderRoute(orderId));
+            //       });
+            // },
           ),
         ),
       ],

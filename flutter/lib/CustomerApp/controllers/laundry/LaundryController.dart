@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -13,14 +14,16 @@ import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
 class LaundryController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  RxInt shippingPrice = 50.obs;
   Future<List<Laundry>> getLaundries() {
+    getShippingPrice();
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(orderType: OrderType.Laundry))
         .once()
-        .then<List<Laundry>>((DataSnapshot snapshot) {
+        .then<List<Laundry>>((DatabaseEvent event) {
       final List<Laundry> laundries = [];
-      snapshot.value?.forEach((key, value) {
+      (event.snapshot.value as dynamic)?.forEach((key, value) {
         try {
           laundries
               .add(Laundry.fromLaundryData(laundryId: key, laundryData: value));
@@ -35,13 +38,13 @@ class LaundryController extends GetxController {
 
   Future<Laundry> getLaundry(String laundryId) async {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInfos(
             orderType: OrderType.Laundry, providerId: laundryId))
         .once()
-        .then<Laundry>((DataSnapshot snapshot) {
+        .then<Laundry>((DatabaseEvent event) {
       return Laundry.fromLaundryData(
-          laundryId: laundryId, laundryData: snapshot.value);
+          laundryId: laundryId, laundryData: event.snapshot.value);
     });
   }
 
@@ -62,6 +65,7 @@ class LaundryController extends GetxController {
   Future<ServerResponse> requestLaundryService(
     LaundryRequest laundryRequest,
   ) async {
+    laundryRequest.shippingCost = await getShippingPrice() ?? 0;
     if (laundryRequest.isFromToSet()) {
       final HttpsCallable requestTaxiFunction =
           FirebaseFunctions.instance.httpsCallable("laundry-requestLaundry");
@@ -89,6 +93,16 @@ class LaundryController extends GetxController {
         errorCode: "Both customer's and laundry's Location are required.",
       );
     }
+  }
+
+  Future<int?> getShippingPrice() async {
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(baseShippingPriceNode())
+            .once())
+        .snapshot;
+    shippingPrice.value = snapshot.value as int;
+    return snapshot.value as int;
   }
 
   @override

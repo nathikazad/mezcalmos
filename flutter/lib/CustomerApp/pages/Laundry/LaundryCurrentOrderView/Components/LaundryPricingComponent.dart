@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
@@ -21,7 +22,7 @@ class LaundryPricingCompnent extends StatelessWidget {
     return Card(
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -35,24 +36,26 @@ class LaundryPricingCompnent extends StatelessWidget {
             if (order.costsByType?.lineItems.isNotEmpty ?? false)
               _PricingTable(),
             if (order.costsByType?.lineItems.isEmpty ?? true)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Icon(
-                    Icons.info_outline_rounded,
-                    color: Colors.grey.shade800,
-                  ),
-                  const SizedBox(width: 10),
-                  Flexible(
-                    child: Text(
-                      _i18n()['laundryPricingNote'],
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                      ),
-                      maxLines: 3,
+              Container(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Icon(
+                      Icons.info_outline_rounded,
+                      color: Colors.grey.shade800,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 10),
+                    Flexible(
+                      child: Text(
+                        _i18n()['laundryPricingNote'],
+                        style: TextStyle(
+                          color: Colors.grey.shade800,
+                        ),
+                        maxLines: 3,
+                      ),
+                    ),
+                  ],
+                ),
               ),
           ],
         ),
@@ -64,11 +67,11 @@ class LaundryPricingCompnent extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: DataTable(
-          dividerThickness: 0,
-          // dataTextStyle: TextStyle(),
-
+          dividerThickness: 0.01,
+          horizontalMargin: 6,
+          columnSpacing: 45.0,
+          headingRowHeight: 30.0,
           showBottomBorder: false,
-          columnSpacing: 20,
           columns: _PricingTableColumns(),
           rows: _PricingTableRows() +
               [
@@ -79,9 +82,12 @@ class LaundryPricingCompnent extends StatelessWidget {
                   DataCell(Container()),
                   DataCell(Container()),
                   DataCell(
-                    Text(
-                      "\$${order.cost - 50}",
-                      style: Get.textTheme.bodyText1,
+                    Container(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        order.costsByType?.weighedCost.toPriceString() ?? "",
+                        style: Get.textTheme.bodyText1,
+                      ),
                     ),
                   ),
                 ])
@@ -91,10 +97,34 @@ class LaundryPricingCompnent extends StatelessWidget {
 
   List<DataColumn> _PricingTableColumns() {
     return [
-      DataColumn(label: Text('${_i18n()["item"]}')),
-      DataColumn(label: Text('${_i18n()["perKilo"]}')),
-      DataColumn(label: Text('${_i18n()["weight"]}')),
-      DataColumn(label: Text('${_i18n()["cost"]}'))
+      DataColumn(
+          label: Text(
+        '${_i18n()["item"]}',
+        textAlign: TextAlign.start,
+      )),
+      DataColumn(
+          label: Center(
+        child: Text(
+          '${_i18n()["perKilo"]}',
+          textAlign: TextAlign.center,
+        ),
+      )),
+      DataColumn(
+          label: Text(
+        '${_i18n()["weight"]}',
+        textAlign: TextAlign.start,
+      )),
+      DataColumn(
+          label: Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              '${_i18n()["cost"]}',
+            ),
+          ],
+        ),
+      ))
     ];
   }
 
@@ -103,17 +133,24 @@ class LaundryPricingCompnent extends StatelessWidget {
         order.costsByType!.lineItems.length,
         (int index) => DataRow(cells: [
               DataCell(Container(
-                width: 100,
+                alignment: Alignment.centerLeft,
+                // width: 80,
                 child: Text(
-                  order.costsByType!.lineItems[index].name[userLanguage] ?? "",
+                  order.costsByType!.lineItems[index].getRightNameForUser(),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               )),
-              DataCell(Text("\$${order.costsByType!.lineItems[index].cost}")),
-              DataCell(Text("${order.costsByType!.lineItems[index].weight}")),
-              DataCell(
-                  Text("\$${order.costsByType!.lineItems[index].weighedCost}")),
+              DataCell(Center(
+                  child:
+                      Text("\$${order.costsByType!.lineItems[index].cost}"))),
+              DataCell(Center(
+                  child:
+                      Text("${order.costsByType!.lineItems[index].weight}"))),
+              DataCell(Container(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                      "\$${order.costsByType!.lineItems[index].weighedCost}"))),
             ]));
   }
 }

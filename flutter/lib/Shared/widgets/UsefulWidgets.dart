@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:sizer/sizer.dart';
 
 class MezcalmosSharedWidgets {
   // Admin Appbar
@@ -43,16 +42,18 @@ class MezcalmosSharedWidgets {
         ),
       );
 
-  static Widget fillTitle(int actionLength) {
+  static Widget fillTitle({required int actionLength, bool showLogo = true}) {
     return Container(
-      width: Get.width * 0.55,
+      width: 45.w,
       //  width: ,
       child: FittedBox(
-        // fit: BoxFit.scaleDown,
+        fit: BoxFit.scaleDown,
         alignment: Alignment.centerLeft,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            logo(size: getSizeRelativeToScreen(80, Get.width, Get.height)),
+            if (showLogo)
+              logo(size: getSizeRelativeToScreen(60, Get.width, Get.height)),
             Padding(
               padding: EdgeInsets.only(left: 10),
               child: mezcalmosTitle(),

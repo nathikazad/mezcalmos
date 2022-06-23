@@ -37,8 +37,9 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   void initState() {
     restaurant = Get.arguments as Restaurant;
     mezDbgPrint(restaurant.info.id);
-    itemKeys.assign(999999, "info");
-    itemKeys[999999] = RectGetter.createGlobalKey();
+    itemKeys.assign((restaurant.getCategories.length + 1), "info");
+    itemKeys[(restaurant.getCategories.length + 1)] =
+        RectGetter.createGlobalKey();
 
     tabController =
         TabController(length: restaurant.getCategories.length, vsync: this);
@@ -114,7 +115,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget buildSliverScrollView() {
     return CustomScrollView(
-      physics: const ClampingScrollPhysics(),
+      //physics: const ClampingScrollPhysics(),
       controller: scrollController,
       slivers: [
         RestaurantSliverAppBar(
@@ -132,12 +133,11 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
         ),
         (showInfo)
             ? SliverPadding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                padding: const EdgeInsets.all(12),
                 sliver: SliverList(
                     delegate: SliverChildListDelegate([
                   RectGetter(
-                      key: itemKeys[999999],
+                      key: itemKeys[restaurant.getCategories.length + 1],
                       child: RestaurantInfoTab(
                         restaurant: restaurant,
                       )),
@@ -149,7 +149,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget _buildCategoriesList() {
     return SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        padding: const EdgeInsets.all(12),
         sliver: SliverList(
           delegate: SliverChildListDelegate(
             List.generate(_getList().length, (int index) {
@@ -185,7 +185,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget _buildCategory(Category category, int index) {
     return Container(
-     // margin: const EdgeInsets.symmetric(vertical: 12),
+      // margin: const EdgeInsets.symmetric(vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -232,8 +232,8 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
     } else {
       return GridView.count(
         crossAxisCount: 2,
-        mainAxisSpacing: 5,
-        crossAxisSpacing: 5,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         physics: NeverScrollableScrollPhysics(),

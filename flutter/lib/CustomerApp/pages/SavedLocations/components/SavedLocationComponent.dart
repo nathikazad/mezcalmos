@@ -59,8 +59,7 @@ class SavedLocationComponent extends StatelessWidget {
                       color: Color.fromRGBO(172, 89, 252, 1),
                     ),
                     const SizedBox(width: 5),
-                    Container(
-                      width: Get.width * 0.8,
+                    Flexible(
                       child: Text(
                         "${savelocation.location?.address}",
                         maxLines: 2,
@@ -153,7 +152,6 @@ class IconSavedLocationButton extends StatelessWidget {
     return InkWell(
       child: Container(
         alignment: Alignment.center,
-        width: Get.width,
         decoration: BoxDecoration(
           color: const Color(0xffffffff),
         ),
@@ -170,7 +168,7 @@ class IconSavedLocationButton extends StatelessWidget {
               child: iCon,
             ),
             const SizedBox(width: 5),
-            Container(
+            Flexible(
               //width: Get.width * 0.25,
               child: Text(
                 "$title",

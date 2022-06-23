@@ -28,15 +28,17 @@ class _LaundriesListViewState extends State<LaundriesListView> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(5),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: 10,
             ),
             Container(
-              margin: const EdgeInsets.all(5),
+              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               child: Text(
                 "${_i18n()["title"]}",
-                style: Get.textTheme.headline3,
+                style: Get.textTheme.headline2,
+                textAlign: TextAlign.start,
               ),
             ),
             SizedBox(
@@ -59,6 +61,8 @@ class _LaundriesListViewState extends State<LaundriesListView> {
                               snapshot.data!.length,
                               (int index) => CustomerLaundrySelectCard(
                                     laundry: snapshot.data![index],
+                                    shippingPrice:
+                                        laundryController.shippingPrice.value,
                                   )),
                         );
                       } else {

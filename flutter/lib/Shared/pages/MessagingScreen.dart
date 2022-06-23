@@ -6,6 +6,7 @@
 // chat: {deliveryAdminDropOffDriver: 'dsfdsf', deliveryAdminPickupDriver: 'dsfs'}
 import 'dart:async';
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
@@ -17,8 +18,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -41,6 +41,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   String? recipientId;
   MessageController controller =
       Get.put<MessageController>(MessageController());
+  bool isChatLoaded = false;
   @override
   void initState() {
     print("inside messaginScreen onInitState !");
@@ -60,7 +61,16 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     controller.clearMessageNotifications(chatId: chatId);
     mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
-
+    if (controller.chat.value == null) {
+      controller.chat.stream.first.then((_) {
+        setState(() {
+          isChatLoaded = true;
+        });
+      });
+    } else
+      setState(() {
+        isChatLoaded = true;
+      });
     super.initState();
   }
 
@@ -191,7 +201,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
           );
         },
       ));
-
       scrollDown();
     }
 
@@ -201,7 +210,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
       appBar: AppBar(
         leading: Center(
           child: GestureDetector(
-            onTap: Get.back,
+            onTap: () => Get.back<void>(closeOverlays: true),
             child: Container(
               height: 30,
               width: 30,
@@ -253,35 +262,39 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 onTap: () => Get.toNamed<void>(orderLink!))
         ],
       ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.1),
-              child: Center(
-                child: Text(formattedDate),
+      body: isChatLoaded
+          ? Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.1),
+                    child: Center(
+                      child: Text(formattedDate),
+                    ),
+                  ),
+                  Expanded(
+                    child: Obx(
+                      () => ListView(
+                        shrinkWrap: true,
+                        controller: _listViewScrollController,
+                        children: List<Widget>.from(chatLines.reversed),
+                      ),
+                    ),
+                  ),
+                  SendMessageBox(
+                      typedMsg: _typedMsg,
+                      textEditingController: _textEditingController,
+                      controller: controller,
+                      chatId: chatId,
+                      orderId: orderId)
+                ],
               ),
+            )
+          : MezLogoAnimation(
+              centered: true,
             ),
-            Expanded(
-              child: Obx(
-                () => ListView(
-                  shrinkWrap: true,
-                  controller: _listViewScrollController,
-                  children: List<Widget>.from(chatLines.reversed),
-                ),
-              ),
-            ),
-            SendMessageBox(
-                typedMsg: _typedMsg,
-                textEditingController: _textEditingController,
-                controller: controller,
-                chatId: chatId,
-                orderId: orderId)
-          ],
-        ),
-      ),
     );
   }
 }
@@ -310,50 +323,56 @@ class SendMessageBox extends StatelessWidget {
       height: 70,
       padding: EdgeInsets.symmetric(horizontal: 10),
       color: Colors.white,
+      width: double.infinity,
       child: Center(
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(240, 241, 255, 1),
-                borderRadius: BorderRadius.circular(75),
-              ),
-              child: SizedBox(
-                width: 80.w,
-                height: 40,
-                child: Center(
-                  child: TextField(
-                    maxLines: 1,
-                    clipBehavior: Clip.none,
-                    textAlign: TextAlign.start,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(14),
-                        alignLabelWithHint: true,
-                        hintStyle: TextStyle(
-                          color: Color.fromRGBO(120, 120, 120, 1),
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Nunito',
-                        ),
-                        fillColor: Colors.white,
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        hintText: 'Message...' //_i18n()['namePlaceHolder'],
-                        ),
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0),
-                      fontSize: 18,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                    ),
-                    controller: _textEditingController,
-                    onChanged: (String value) {
-                      _typedMsg.value = value;
-                    },
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 7,
+              child: Container(
+                clipBehavior: Clip.hardEdge,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(240, 241, 255, 1),
+                  borderRadius: BorderRadius.circular(75),
+                ),
+                child: TextFormField(
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(14),
+                      alignLabelWithHint: true,
+                      hintStyle: TextStyle(
+                        color: Color.fromRGBO(120, 120, 120, 1),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Nunito',
+                      ),
+                      fillColor: SecondaryLightBlueColor,
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      hintText: 'Message...' //_i18n()['namePlaceHolder'],
+                      ),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Nunito',
                   ),
+                  //  TextStyle(
+                  //   color: Color.fromARGB(255, 0, 0, 0),
+                  //   fontSize: 18,
+                  //   fontFamily: 'Montserrat',
+                  //   fontWeight: FontWeight.w600,
+                  // ),
+                  controller: _textEditingController,
+                  onChanged: (String value) {
+                    _typedMsg.value = value;
+                  },
                 ),
               ),
             ),

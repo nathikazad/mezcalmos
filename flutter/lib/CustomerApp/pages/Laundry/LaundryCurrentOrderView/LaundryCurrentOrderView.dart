@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
@@ -12,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Comp
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryPricingComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderLaundryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderSummaryComponent.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -19,8 +19,10 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
@@ -38,13 +40,11 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   LaundryOrderPhase? _phaseSnapshot;
 
   Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
-  StreamSubscription? _orderListener;
+  StreamSubscription<Order?>? _orderListener;
   final OrderController controller = Get.find<OrderController>();
   final MGoogleMapController mapController = MGoogleMapController(
-    enableMezSmartPointer: false,
+    enableMezSmartPointer: true,
   );
-
-  // LaundryController laundryController = Get.find<LaundryController>();
 
   @override
   void initState() {
@@ -63,6 +63,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       if (newOrderEvent != null) {
         order.value = newOrderEvent as LaundryOrder?;
         if (order.value!.inProcess()) {
+          // @here
           updateMapByPhase(order.value!.getCurrentPhase());
         }
       }
@@ -98,16 +99,14 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   @override
   void dispose() {
     _orderListener?.cancel();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomerAppBar(
-        autoBack: true,
-        title: '${order.value?.laundry?.name ?? ""}',
-      ),
+      appBar: _appBar(),
       body: Obx(
         () {
           if (order.value != null) {
@@ -122,9 +121,12 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: <Widget>[
-                            const SizedBox(height: 8),
+                            SizedBox(
+                              height: 20,
+                            ),
                             LaundryOrderStatusCard(order: order.value!),
                             LaundryOrderDriverCard(order: order.value!),
+                            // @ here
                             if (order.value!.inDeliveryPhase())
                               Column(
                                 children: [
@@ -144,10 +146,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                             ),
                             LaundryPricingCompnent(order: order.value!),
                             SizedBox(
-                              height: 10,
+                              height: 20,
                             ),
                             LaundryOrderNoteComponent(order: order.value!),
-                            const SizedBox(height: 10),
                             OrderSummaryComponent(
                               order: order.value!,
                             ),
@@ -174,10 +175,29 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     );
   }
 
+  AppBar _appBar() {
+    return mezcalmosAppBar(AppBarLeftButtonType.Back,
+        titleWidget: Obx(() => Text(
+              '${order.value?.laundry?.name ?? ""}',
+              style: TextStyle(
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w600,
+                fontSize: 15.sp,
+                color: Colors.black,
+              ),
+            )),
+        showNotifications: true,
+        ordersRoute: kOrdersRoute);
+  }
+
   List<Widget> get _mapWidget => <Widget>[
         Container(
           height: 350,
-          child: MGoogleMap(mGoogleMapController: mapController),
+          child: MGoogleMap(
+            mGoogleMapController: mapController,
+            recenterBtnBottomPadding: 20,
+            // rerenderDuration: Duration(seconds: 10),
+          ),
         ),
         SizedBox(
           height: 10,
@@ -185,9 +205,10 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       ];
 
   void initMap() {
+    // mapController.enableMezSmartPointer = true;
     mapController.periodicRerendering.value = true;
-    mapController.recenterButtonEnabled.value = false;
-    mapController.setAnimateMarkersPolyLinesBounds(true);
+    mapController.recenterButtonEnabled.value = true;
+
     mapController.setLocation(
       LocModel.Location(
         "",
@@ -234,31 +255,35 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           );
           mapController.addOrUpdatePurpleDestinationMarker(
             latLng: order.value!.to.toLatLng(),
-            fitWithinBounds: false,
+            fitWithinBounds: true,
           );
         }
         // only if pickUpDriver not null
-        if (order.value!.pickupDriver != null) {
+        if (order.value?.pickupDriver != null &&
+            order.value!.inDeliveryPhase()) {
           mapController.addOrUpdateUserMarker(
             latLng: order.value!.pickupDriver!.location!,
-            markerId: order.value!.pickupDriver!.id,
+            markerId: "pickup_driver", //order.value!.pickupDriver!.id,
             customImgHttpUrl: order.value!.pickupDriver!.image,
             fitWithinBounds: true,
           );
         }
 
-        mapController.animateAndUpdateBounds(shouldFitPolylineInBound: false);
+        // mapController.animateAndUpdateBounds(shouldFitPolylineInBound: false);
         break;
 
       case LaundryOrderPhase.Dropoff:
         if (_phaseSnapshot != phase) {
           _phaseSnapshot = phase;
+          // needed when the view is not disposed, we have to remove it..
+          mapController.removeMarkerById("pickup_driver");
+          mezDbgPrint("Phaaaaazeeee::_phaseSnapshot ==> $_phaseSnapshot");
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value!.laundry!.location.toLatLng(),
             markerId: order.value!.laundry!.id,
             customImgHttpUrl: order.value!.laundry!.image,
-            fitWithinBounds: false,
+            fitWithinBounds: true,
           );
           // we fit the destination into bounds
           mapController.addOrUpdatePurpleDestinationMarker(
@@ -268,15 +293,18 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         }
 
         // we keep updating the delivery's
-        if (order.value!.dropoffDriver != null) {
+        if (order.value?.dropoffDriver != null) {
+          mezDbgPrint(
+              "Phaaaaazeeee::dropoffDriver ==> ${order.value!.dropoffDriver?.location}");
+
           mapController.addOrUpdateUserMarker(
             latLng: order.value!.dropoffDriver!.location!,
-            markerId: order.value!.dropoffDriver!.id,
+            markerId: "dropoff_driver", //order.value!.dropoffDriver!.id,
             customImgHttpUrl: order.value!.dropoffDriver!.image,
             fitWithinBounds: true,
           );
         }
-        mapController.animateAndUpdateBounds();
+        // mapController.animateAndUpdateBounds();
         break;
       default:
     }

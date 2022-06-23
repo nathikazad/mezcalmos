@@ -5,8 +5,8 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/TextFieldComponent.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
@@ -57,29 +57,40 @@ class _ViewCartBodyState extends State<ViewCartBody> {
             ),
             Obx(() => OrderSummaryCard(
                   setLocationCallBack: widget.setLocationCallBack,
-                  deliveryCost:
-                      controller.cart.value.shippingCost.toStringAsFixed(0),
-                  orderCost:
-                      controller.cart.value.itemsCost().toStringAsFixed(0),
-                  totalCost:
-                      controller.cart.value.totalCost().toStringAsFixed(0),
+                  deliveryCost: controller.cart.value.shippingCost ?? 50,
+                  orderCost: controller.cart.value.itemsCost().toPriceString(),
+                  totalCost: controller.cart.value.totalCost().toPriceString(),
                 )),
             SizedBox(
               height: 20,
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+              ),
               alignment: Alignment.centerLeft,
-              child:
-                  Text("${_i18n()['notes']}", style: Get.textTheme.bodyText1),
+              child: Text("${_i18n()['notesTitle']}",
+                  style: Get.textTheme.bodyText1),
             ),
             SizedBox(
               height: 15,
             ),
-            TextFieldComponent(
-              textController: widget.notesTextController,
-              hint: _i18n()["notes"],
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+              ),
+              child: TextFormField(
+                  style: Get.textTheme.bodyText2
+                      ?.copyWith(fontWeight: FontWeight.w700),
+                  controller: widget.notesTextController,
+                  maxLines: 7,
+                  minLines: 4,
+                  decoration: InputDecoration(hintText: "${_i18n()["notes"]}")),
             ),
+            // TextFieldComponent(
+            //   textController: widget.notesTextController,
+            //   hint: _i18n()["notes"],
+            // ),
             SizedBox(
               height: 25,
             ),

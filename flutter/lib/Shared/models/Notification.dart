@@ -51,6 +51,7 @@ class Notification {
   bool isEmpty = false;
   DateTime timestamp;
   IconData? icon;
+  IconData? secondaryIcon;
   String title;
   String body;
   String imgUrl;
@@ -65,6 +66,7 @@ class Notification {
       {required this.id,
       this.variableParams,
       this.icon,
+      this.secondaryIcon,
       required this.timestamp,
       required this.title,
       required this.body,

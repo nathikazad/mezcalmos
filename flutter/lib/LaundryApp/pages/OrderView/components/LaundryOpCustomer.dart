@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['LaundryOpOrderView'];
@@ -18,22 +19,26 @@ class LaundryOpCustomer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(5),
+      margin: const EdgeInsets.only(bottom: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${_i18n()["customer"]}"),
+          Text(
+            "${_i18n()["customer"]}:",
+            style: Get.textTheme.bodyText1,
+          ),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
           Card(
+            margin: EdgeInsets.zero,
             child: Container(
-              margin: const EdgeInsets.all(5),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 25,
+                    radius: 23,
                     backgroundImage:
                         CachedNetworkImageProvider(order.customer.image),
                   ),
@@ -49,7 +54,17 @@ class LaundryOpCustomer extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  _messageButton(context),
+                  Obx(
+                    () => MessageButton(
+                        showRedDot: Get.find<OrderController>()
+                            .hasNewMessageNotification(order.orderId),
+                        onTap: () {
+                          Get.toNamed(getMessagesRoute(
+                              orderId: order.orderId,
+                              chatId: order.orderId,
+                              recipientType: ParticipantType.Customer));
+                        }),
+                  )
                 ],
               ),
             ),

@@ -99,7 +99,11 @@ Widget _workingHourCard(
               child: openHours.isOpen
                   ? Column(children: [
                       Text(
-                        "${openHours.from[0]} : ${openHours.from[1]}  ",
+                        convertToAmPm(openHours.from[0], openHours.from[1])
+
+                        //     "${openHours.from[0]} : ${openHours.from[1]}  "
+
+                        ,
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(
@@ -117,4 +121,20 @@ Widget _workingHourCard(
       ),
     ),
   );
+}
+
+String convertToAmPm(int hours, int minutes) {
+  String minutesFormattedString;
+  String formattedString;
+  if (minutes < 10) {
+    minutesFormattedString = "0$minutes";
+  } else {
+    minutesFormattedString = "$minutes";
+  }
+  if (hours <= 12) {
+    formattedString = "$hours:$minutesFormattedString AM";
+  } else {
+    formattedString = "${hours - 12}:$minutesFormattedString PM";
+  }
+  return formattedString;
 }

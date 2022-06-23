@@ -22,17 +22,19 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
 
 String generateRandomString(int len) {
-  var r = Random();
-  const _chars =
+  final Random r = Random();
+  const String _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
+  return List.generate(len, (int index) => _chars[r.nextInt(_chars.length)])
+      .join();
 }
 
 /// this compresses the Original Image using jpeg format Since it's much ligher.
 ///
 /// and reduce the quality down to [qualityCompressionOfUserImage = 25%].
 Future<Uint8List> compressImageBytes(Uint8List originalImg) async {
-  final result = await FlutterImageCompress.compressWithList(originalImg,
+  final Uint8List result = await FlutterImageCompress.compressWithList(
+      originalImg,
       quality: nQualityCompressionOfUserImage);
   return result;
 }
@@ -40,8 +42,8 @@ Future<Uint8List> compressImageBytes(Uint8List originalImg) async {
 Future<File> writeFileFromBytesAndReturnIt(
     {required String filePath, required Uint8List imgBytes}) async {
   // compressed Image
-  List<String> splittedPath = filePath.split('.');
-  String pathWithoutExtension =
+  final List<String> splittedPath = filePath.split('.');
+  final String pathWithoutExtension =
       splittedPath.sublist(0, splittedPath.length - 1).join('.');
   mezDbgPrint("PATH WITHOUT EXTENSION $pathWithoutExtension");
   mezDbgPrint("PATH WITH EXTENSION $filePath");
@@ -71,7 +73,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
 
   await showDialog(
       context: context,
-      builder: (context) {
+      builder: (BuildContext context) {
         return AlertDialog(
           contentPadding: EdgeInsets.all(0),
           content: Container(
@@ -98,7 +100,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                           SizedBox(width: 11),
                           Center(
                             child: Text(
-                              "Take Picture",
+                              "${_i18n()["fromCamera"]}",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Montserrat',
@@ -115,7 +117,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                 Divider(),
                 InkWell(
                   onTap: () {
-                    _result = imPicker.ImageSource.camera;
+                    _result = imPicker.ImageSource.gallery;
                     Get.back();
                   },
                   child: Container(
@@ -127,7 +129,7 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                           SizedBox(width: 11),
                           Center(
                             child: Text(
-                              "Upload from gallery",
+                              "${_i18n()["fromGallery"]}",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Montserrat',
@@ -274,8 +276,7 @@ Image mLoadImage({
 
 // BitmapLoading stuff -------------------
 
-Future<BitmapDescriptor> bitmapDescriptorLoader(
-    dynamic asset, num width, num height,
+Future<BitmapDescriptor> bitmapDescriptorLoader(asset, num width, num height,
     {bool isBytes = false}) async {
   return BitmapDescriptor.fromBytes(
       await getBytesFromCanvas(width, height, asset, isBytes: isBytes));
@@ -289,7 +290,7 @@ Future<Uint8List> getBytesFromCanvas(num width, num height, urlAsset,
   late final ByteData datai;
 
   if (!isBytes) datai = await rootBundle.load(urlAsset);
-  var imaged =
+  final ui.Image imaged =
       await loadImage(!isBytes ? new Uint8List.view(datai.buffer) : urlAsset);
   canvas.drawImageRect(
     imaged,
@@ -299,10 +300,10 @@ Future<Uint8List> getBytesFromCanvas(num width, num height, urlAsset,
     new ui.Paint(),
   );
 
-  final img = await pictureRecorder
+  final ui.Image img = await pictureRecorder
       .endRecording()
       .toImage(width.toInt(), height.toInt());
-  final data = await img.toByteData(format: ui.ImageByteFormat.png);
+  final ByteData? data = await img.toByteData(format: ui.ImageByteFormat.png);
   return data!.buffer.asUint8List();
 }
 
@@ -315,26 +316,28 @@ Future<ui.Image> loadImage(Uint8List img) async {
 }
 
 Future<List<int>> cropRonded(Uint8List bytes) async {
-  ui.Image image = await loadImage(bytes);
-  var recorder = ui.PictureRecorder();
-  var canvas = Canvas(recorder);
-  var imageSize = Size(image.width.toDouble(), image.height.toDouble());
-  var boundsToCrop = Rect.fromCenter(
+  final ui.Image image = await loadImage(bytes);
+  final ui.PictureRecorder recorder = ui.PictureRecorder();
+  final ui.Canvas canvas = Canvas(recorder);
+  final ui.Size imageSize =
+      Size(image.width.toDouble(), image.height.toDouble());
+  final ui.Rect boundsToCrop = Rect.fromCenter(
       center: imageSize.center(Offset.zero),
       width: imageSize.shortestSide,
       height: imageSize.shortestSide);
-  var matrix = Matrix4.translationValues(
+  final Float64List matrix = Matrix4.translationValues(
           -boundsToCrop.topLeft.dx, -boundsToCrop.topLeft.dy, 0)
       .storage;
-  var paint = Paint()
+  final ui.Paint paint = Paint()
     ..shader = ImageShader(image, TileMode.clamp, TileMode.clamp, matrix);
-  var radius = imageSize.shortestSide / 2;
+  final double radius = imageSize.shortestSide / 2;
   canvas.drawCircle(Offset(radius, radius), radius, paint);
 
-  ui.Image cropped = await recorder
+  final ui.Image cropped = await recorder
       .endRecording()
       .toImage(imageSize.shortestSide.toInt(), imageSize.shortestSide.toInt());
-  var byteData = await cropped.toByteData(format: ui.ImageByteFormat.png);
+  final ByteData? byteData =
+      await cropped.toByteData(format: ui.ImageByteFormat.png);
 
   return byteData!.buffer.asUint8List();
 }

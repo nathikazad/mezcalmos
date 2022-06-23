@@ -29,7 +29,7 @@ const String tEmailTestPassword = "password";
 
 // ----------------- Costants Numbers ----------------- //
 
-const double nDefaultMezcalmosTextSize = 30.5;
+const double nDefaultMezcalmosTextSize = 27;
 const int nSplashScreenTimer = 1;
 const int nQualityCompressionOfUserImage = 10;
 const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;
@@ -71,6 +71,7 @@ const String aNoImage = "assets/images/shared/noImage.png";
 const String a404 = "assets/images/shared/404.png";
 const String aUpdate = "assets/images/shared/update.png";
 const String aMoney = "assets/images/shared/money.png";
+const String noOrdersAsset = "assets/images/shared/noOrderIllustration.png";
 const String aDefaultDbUserImgAsset =
     "assets/images/shared/defaultUserLogo.png";
 const String aDefaultAvatar = "assets/images/shared/noUserImage.jpg";
@@ -89,6 +90,13 @@ const String aLocationPicker = "assets/images/shared/purpleLocationPicker.png";
 const String aOrderUnavailable = "assets/images/shared/circularCancel.png";
 const String aTaxiRidePriceController =
     "assets/images/customer/taxi/taxiRidePriceController.png";
+const String aDeliveryIcon = "assets/images/shared/notifications/onTheWay.png";
+const String aDeliveredIcon =
+    "assets/images/shared/notifications/delivered.png";
+const String aCancelledIcon = "assets/images/shared/notifications/cancel.png";
+const String aAtLaundry = "assets/images/shared/notifications/atLaundry.png";
+const String aReadyDeliveryLaundry =
+    "assets/images/shared/notifications/readyForDelivery.png";
 
 enum AppType {
   CustomerApp,

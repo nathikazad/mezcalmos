@@ -13,3 +13,7 @@ String userInfoNode(String? userId) {
 String appStoreIdNode(String appName) {
   return 'metadata/appStoreIds/$appName';
 }
+
+String baseShippingPriceNode() {
+  return 'metadata/baseShippingPrice';
+}

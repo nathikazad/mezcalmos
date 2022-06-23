@@ -1,7 +1,7 @@
 import 'dart:async';
+
 import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -33,29 +33,32 @@ class OrderController extends GetxController {
         "--------------------> Start listening on past orders  ${deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid)}");
 
     _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(deliveryDriversPastOrdersNode(_authController.fireAuthUser!.uid))
         .onValue
-        .listen((Event event) {
-      mezDbgPrint("-----------------Paaast evvvvveeeeent $event");
+        .listen((DatabaseEvent event) {
       final List<DeliverableOrder> orders = [];
       if (event.snapshot.value != null) {
-        event.snapshot.value.keys.forEach((orderId) {
+        (event.snapshot.value as dynamic).keys.forEach((orderId) {
           try {
-            mezDbgPrint("Hndling Order : $orderId");
-            final dynamic orderData = event.snapshot.value[orderId];
+            final dynamic orderData =
+                (event.snapshot.value as dynamic)[orderId];
             if (orderData["orderType"] ==
-                OrderType.Restaurant.toFirebaseFormatString()) {
+                    OrderType.Restaurant.toFirebaseFormatString() &&
+                orderData["restaurant"]?['location'] != null) {
               orders.add(RestaurantOrder.fromData(orderId, orderData));
             } else if (orderData["orderType"] ==
                 OrderType.Laundry.toFirebaseFormatString())
               orders.add(LaundryOrder.fromData(orderId, orderData));
-          } catch (e) {
+          } catch (e, stk) {
+            mezDbgPrint(stk);
             // TODO
           }
         });
       }
       pastOrders.value = orders;
+      pastOrders.sort((DeliverableOrder a, DeliverableOrder b) =>
+          b.orderTime.toLocal().compareTo(a.orderTime.toLocal()));
     }, onError: (error) {
       mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
     });
@@ -64,19 +67,19 @@ class OrderController extends GetxController {
         "Starting listening on inProcess : ${deliveryDriversInProcessOrdersNode(_authController.fireAuthUser!.uid)}");
     _currentOrdersListener?.cancel();
     _currentOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(deliveryDriversInProcessOrdersNode(
             _authController.fireAuthUser!.uid))
         .onValue
-        .listen((Event event) {
+        .listen((DatabaseEvent event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
 
       final List<DeliverableOrder> orders = [];
       if (event.snapshot.value != null) {
         // mezDbgPrint("orderController: new incoming order data");
-        event.snapshot.value.keys?.forEach((orderId) {
+        (event.snapshot.value as dynamic).keys?.forEach((orderId) {
           // mezDbgPrint("Hndling Order : $orderId");
-          final dynamic orderData = event.snapshot.value[orderId];
+          final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
           if (orderData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
             orders.add(RestaurantOrder.fromData(orderId, orderData));
@@ -87,6 +90,8 @@ class OrderController extends GetxController {
         });
       }
       currentOrders.value = orders;
+      currentOrders.sort((DeliverableOrder a, DeliverableOrder b) =>
+          b.orderTime.toLocal().compareTo(a.orderTime.toLocal()));
     });
     super.onInit();
   }
@@ -107,11 +112,13 @@ class OrderController extends GetxController {
     }
   }
 
-  Stream<DeliverableOrder?> getOrderStream(String orderId) {
-    return StreamGroup.merge(<Stream<DeliverableOrder?>>[
-      _getInProcessOrderStream(orderId),
-      _getPastOrderStream(orderId)
-    ]);
+  Stream<DeliverableOrder?> getOrderStream(String orderId) async* {
+    yield* StreamGroup.merge(
+      <Stream<DeliverableOrder?>>[
+        _getInProcessOrderStream(orderId),
+        _getPastOrderStream(orderId)
+      ],
+    );
   }
 
   Stream<DeliverableOrder?> _getInProcessOrderStream(String orderId) {
@@ -140,12 +147,12 @@ class OrderController extends GetxController {
     });
   }
 
-  bool hasNewMessageNotification(String orderId) {
+  bool hasNewMessageNotification(String chatId) {
     return _foregroundNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! == orderId)
+            notification.chatId == chatId)
         .isNotEmpty;
   }
 
@@ -172,6 +179,7 @@ class OrderController extends GetxController {
             !currentOrderIds.contains(notification.orderId!))
         .forEach((Notification notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
+      mezDbgPrint("Clearing notifs");
     });
   }
 
@@ -195,7 +203,8 @@ class OrderController extends GetxController {
 
       final HttpsCallableResult response = await dropOrderFunction.call(_map);
       return ServerResponse.fromJson(response.data);
-    } catch (e) {
+    } catch (e, s) {
+      mezDbgPrint("Error ===> $e | $s");
       return ServerResponse(ResponseStatus.Error,
           errorMessage: "Server Error", errorCode: "serverError");
     }

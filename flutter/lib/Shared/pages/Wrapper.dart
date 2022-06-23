@@ -160,6 +160,7 @@ class _WrapperState extends State<Wrapper> {
       */
       // We pop everything till wrapper and push kHomeRoute
       Get.offNamedUntil<void>(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+
       // then we push kUserProfile on top of kHomeRoute
       Get.toNamed<void>(kUserProfile);
       // now the Nav Stack is correct and looks like this :  wrapper > kHomeRoute > kUserProfile
@@ -177,7 +178,8 @@ class _WrapperState extends State<Wrapper> {
     if (Get.currentRoute == kSignInRouteOptional) {
       Get.back<void>();
     } else {
-      Get.offNamedUntil<void>(kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      if (!Get.currentRoute.contains('/messages/'))
+        Get.offNamedUntil<void>(kHomeRoute, ModalRoute.withName(kWrapperRoute));
     }
     authController.preserveNavigationStackAfterSignIn = false;
   }

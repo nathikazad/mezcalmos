@@ -38,12 +38,12 @@ class OrderInfosCard extends StatelessWidget {
             ],
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 // left column
 
                 Flexible(
-                  flex: 2,
+                  flex: 4,
                   child: Flex(
                     direction: Axis.vertical,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -63,7 +63,7 @@ class OrderInfosCard extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w700,
-                                fontSize: 15,
+                                fontSize: 17,
                               ),
                             ),
                           ),
@@ -92,36 +92,45 @@ class OrderInfosCard extends StatelessWidget {
               ],
             ),
             Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    height: 15,
-                    width: 20,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(money_asset),
+            Container(
+              // height: 30,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      height: 15,
+                      width: 20,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(money_asset),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(width: 5),
-                Text(
-                  "\$${order.cost.toString()}",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15,
+                  SizedBox(width: 5),
+                  Center(
+                    child: Text(
+                      "\$${order.cost.toString()}",
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                      ),
+                    ),
                   ),
-                ),
-                Spacer(),
-                orderCardSubWidgets.cardStatus,
-              ],
+                  Spacer(),
+                  Container(
+                    // height: 30,
+                    child: orderCardSubWidgets.cardStatus,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

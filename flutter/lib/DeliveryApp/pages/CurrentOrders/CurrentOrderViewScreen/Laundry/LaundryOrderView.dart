@@ -8,8 +8,11 @@ import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/DriverLaundryOrderButtons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/laundryOrderFromToComponent.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -17,6 +20,12 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+    ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["LaundryOrderView"];
+//
 
 class LaundryOrderView extends StatefulWidget {
   const LaundryOrderView({Key? key}) : super(key: key);
@@ -50,42 +59,47 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
         order.refresh();
       }
     });
+    // init the map
+    mapController.setLocation(
+      Location.fromLocationData(
+        deliveryAuthAuthController.currentLocation,
+      ),
+    );
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+    mapController.animateMarkersPolyLinesBounds.value = true;
+    mapController.periodicRerendering.value = true;
 
-    Future.wait(<Future<void>>[
-      // DESTINATION MARKER
-      mapController.addOrUpdatePurpleDestinationMarker(
-        latLng: LatLng(
-          order.value!.to.latitude,
-          order.value!.to.longitude,
-        ),
+    // Future.wait(<Future<void>>[
+    // DESTINATION MARKER
+    mapController.addOrUpdatePurpleDestinationMarker(
+      latLng: LatLng(
+        order.value!.to.latitude,
+        order.value!.to.longitude,
       ),
-      // USER MARKER
-      mapController.addOrUpdateUserMarker(
-        latLng: LatLng(
-          deliveryAuthAuthController.currentLocation.latitude!,
-          deliveryAuthAuthController.currentLocation.longitude!,
-        ),
+    );
+    // USER MARKER
+    mapController.addOrUpdateUserMarker(
+      latLng: LatLng(
+        deliveryAuthAuthController.currentLocation.latitude!,
+        deliveryAuthAuthController.currentLocation.longitude!,
       ),
-      // LAUNDRY MARKER
-      mapController.addOrUpdateUserMarker(
-        latLng: LatLng(
-          order.value!.laundry!.location.latitude,
-          order.value!.laundry!.location.longitude,
-        ),
-        customImgHttpUrl: order.value!.laundry!.image,
-        markerId: order.value!.laundry!.id,
-      )
-    ]).then((_) {
-      mapController.setLocation(
-        Location.fromLocationData(
-          deliveryAuthAuthController.currentLocation,
-        ),
+    );
+    // LAUNDRY MARKER
+    mapController.addOrUpdateUserMarker(
+      latLng: LatLng(
+        order.value!.laundry!.location.latitude,
+        order.value!.laundry!.location.longitude,
+      ),
+      customImgHttpUrl: order.value!.laundry!.image,
+      markerId: order.value!.laundry!.id,
+    );
+
+    if (order.value?.routeInformation?.polyline != null)
+      mapController.decodeAndAddPolyline(
+        encodedPolylineString: order.value!.routeInformation!.polyline,
       );
-      mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
-      mapController.animateMarkersPolyLinesBounds.value = true;
-      mapController.periodicRerendering.value = true;
-      handleLaundryOrder(order.value as LaundryOrder);
-    });
+
+    handleLaundryOrder(order.value as LaundryOrder);
 
     waitForOrderIfNotLoaded().then((void value) {
       if (order.value == null) {
@@ -121,11 +135,13 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
   double _recenterBtnBottomPadding = 180;
   EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 180);
+  OrderInfoCardState initialCardStat = OrderInfoCardState.Minimized;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: Get.back, showNotifications: true, title: getTitle()),
       bottomNavigationBar: Obx(
         () => DriverLaundryBottomButtons(
           order: order.value!,
@@ -141,6 +157,44 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                     padding: _mapPadding,
                   ),
                   Positioned(
+                    bottom: _recenterBtnBottomPadding,
+                    right: 12,
+                    child: InkWell(
+                      onTap: () async {
+                        final LatLng _destination = LatLng(
+                            order.value!.to.latitude,
+                            order.value!.to.longitude);
+
+                        final String url =
+                            "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
+
+                        try {
+                          await launch(url);
+                        } catch (e) {
+                          await launch(url);
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(.2),
+                                offset: Offset(-1, 0),
+                                spreadRadius: 2.5,
+                                blurRadius: 9)
+                          ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.navigation_rounded,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
                     bottom: 2,
                     left: 5,
                     right: 5,
@@ -148,16 +202,17 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         child: LaundryOrderFromToComponent(
-                          onSlide: (bool isExpanded) {
+                          onCardStateChange: (OrderInfoCardState state) {
+                            mezDbgPrint("New State ==> $state");
                             setState(() {
-                              if (isExpanded) {
-                                _recenterBtnBottomPadding = 275;
+                              if (state == OrderInfoCardState.Maximized) {
+                                _recenterBtnBottomPadding = 310;
                                 _mapPadding =
-                                    EdgeInsets.only(top: 10, bottom: 275);
+                                    EdgeInsets.only(top: 10, bottom: 310);
                               } else {
-                                _recenterBtnBottomPadding = 180;
+                                _recenterBtnBottomPadding = 170;
                                 _mapPadding =
-                                    EdgeInsets.only(top: 10, bottom: 180);
+                                    EdgeInsets.only(top: 10, bottom: 170);
                               }
                             });
                           },
@@ -295,6 +350,17 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
         mapController.animateAndUpdateBounds();
         break;
       default:
+    }
+  }
+
+  // get appbar title
+  String? getTitle() {
+    if (order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return "${_i18n()['pickup']}";
+    } else if (order.value!.status == LaundryOrderStatus.AtLaundry) {
+      return null;
+    } else {
+      return "${_i18n()['dropoff']}";
     }
   }
 

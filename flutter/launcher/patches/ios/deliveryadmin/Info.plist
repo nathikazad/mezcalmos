@@ -35,6 +35,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
 	<string>394067681830405</string>
+	<key>FacebookClientToken</key>
+	<string><mez-fb-client-token></string>
 	<key>FacebookDisplayName</key>
 	<string>Mezcalmos</string>
 	<key>LSApplicationQueriesSchemes</key>

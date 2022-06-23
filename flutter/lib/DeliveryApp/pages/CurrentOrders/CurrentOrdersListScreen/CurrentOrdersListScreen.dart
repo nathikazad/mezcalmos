@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNoOrdersComponent.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverNotLookingComponent.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/DriverOrderCard.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrdersListScreen/Components/MezSwitch.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
+import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -26,25 +24,16 @@ class CurrentOrdersListScreen extends StatefulWidget {
 }
 
 class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
-  RxList<Order> currentOrders = RxList.empty();
-  RxList<Order> pastOrders = RxList.empty();
   OrderController orderController = Get.find<OrderController>();
-
   DeliveryAuthController _deliveryAuthController =
       Get.find<DeliveryAuthController>();
 
   @override
   void initState() {
-    Get.find<SideMenuDrawerController>().showPastOrders = true;
     Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
-    orderController.currentOrders.stream.listen((List<DeliverableOrder> value) {
-      currentOrders.value = value;
-    });
-
-    orderController.pastOrders.stream.listen((List<DeliverableOrder> value) {
-      pastOrders.value = value;
-    });
     orderController.clearNewOrderNotificationsOfPastOrders();
+    
+
     super.initState();
   }
 
@@ -57,46 +46,61 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-            key: Get.find<SideMenuDrawerController>().getNewKey(),
-            drawer: MezSideMenu(),
-            appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(children: [
-                  viewHeader(),
-                  Obx(
-                    () => Container(
-                      child: (_deliveryAuthController
-                              .deliveryDriverState!.isOnline)
-                          ? _currentOrdersList(context)
-                          : DriverNotLookingComponent(),
-                    ),
+      onWillPop: () async => false,
+      child: Scaffold(
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
+        drawer: MezSideMenu(),
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+            showNotifications: true, ordersRoute: kPastOrdersView),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Obx(
+              () => Column(
+                children: [
+                  TitleWithOnOffSwitcher(
+                    title: "${_i18n()["title"]}",
+                    onTurnedOn: () {
+                      _deliveryAuthController.turnOn();
+                    },
+                    onTurnedOff: () {
+                      _deliveryAuthController.turnOff();
+                    },
+                    initialSwitcherValue:
+                        _deliveryAuthController.deliveryDriverState?.isOnline ??
+                            false,
                   ),
-                  // Divider(),
-                  // Obx(() => _pastOrdersList(context)),
-                ]),
+                  if (_deliveryAuthController.deliveryDriverState?.isOnline !=
+                          true &&
+                      orderController.currentOrders.isEmpty)
+                    Container(
+                      height: 60.h,
+                      child: IncomingOrdersStatus(
+                        childData: Padding(
+                          padding: const EdgeInsets.only(bottom: 17.0),
+                          child: Image.asset(
+                            turnOn_asset,
+                            fit: BoxFit.contain,
+                            width: 40.w,
+                            height: 25.h,
+                          ),
+                        ),
+                        errorText: '${_i18n()["offlineTitle"]}',
+                        secondLine: "${_i18n()["offlineBody"]}",
+                      ),
+                    )
+                  else
+                    _incomingOrdersList()
+                ],
               ),
-            )));
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
-  Widget deliveryAppBar() {
-    return mezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: [
-      InkWell(
-          customBorder: CircleBorder(),
-          onTap: () {
-            Get.toNamed(kNotificationsRoute);
-          },
-          child: Icon(
-            Ionicons.notifications,
-            color: Get.theme.primaryColorLight,
-          ))
-    ]);
-  }
-
-  Widget _currentOrdersList(BuildContext context) {
+  Widget _incomingOrdersList() {
     if (orderController.currentOrders.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,10 +108,11 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           Container(
             padding: const EdgeInsets.all(5),
             child: Text(
-              _i18n()["currentOrders"],
+              "${_i18n()["currentOrders"]}",
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
+          SizedBox(height: 5),
           Column(
             children: List.generate(
                 orderController.currentOrders.length,
@@ -119,60 +124,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         ],
       );
     } else {
-      return DriverNoOrdersComponent();
+      return NoOrdersComponent();
     }
-  }
-
-  Widget viewHeader() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Flexible(
-            flex: 2,
-            child: Obx(
-              () => Text(
-                _i18n()["title"],
-                style: Theme.of(context).textTheme.headline2,
-              ),
-            ),
-          ),
-          onOffSwitcher()
-        ],
-      ),
-    );
-  }
-
-  /// this is a Container wrapping the [MezSwitch]!
-  Widget onOffSwitcher() {
-    return Flexible(
-        child: Obx(() => Container(
-              height: 40.sp,
-              width: 115.sp,
-              child: MezSwitch(
-                buttonSize: Size(50.sp, 40.sp),
-                initialPosition:
-                    _deliveryAuthController.deliveryDriverState?.isOnline ??
-                        false,
-                values: [' ON ', ' OFF '],
-                onToggleCallback: (int v) {
-                  // turn ut ON
-                  if (v == 0) {
-                    _deliveryAuthController.turnOn();
-                  } else {
-                    _deliveryAuthController.turnOff();
-                  }
-                },
-                backgroundColor: Colors.white,
-                buttonColor:
-                    _deliveryAuthController.deliveryDriverState?.isOnline ==
-                            true
-                        ? Colors.green
-                        : Colors.red,
-                textColor: const Color(0xFFFFFFFF),
-              ),
-            )));
   }
 }

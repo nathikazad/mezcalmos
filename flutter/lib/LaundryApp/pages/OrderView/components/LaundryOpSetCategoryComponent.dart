@@ -24,8 +24,32 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [_PricingTable(context)],
+    return Card(
+      margin: const EdgeInsets.only(bottom: 20),
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              padding: const EdgeInsets.all(5),
+              child: Text(
+                "${_i18n()["itemsWeight"]}",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            _PricingTable(),
+            if (order.isAtLaundry()) setItemsWeightButton(context),
+          ],
+        ),
+      ),
     );
   }
 
@@ -34,7 +58,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
     return InkWell(
         onTap: handleClick(context: context),
         child: Ink(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -73,9 +97,9 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
     return () {
       showModalBottomSheet(
           isDismissible: false,
-          useRootNavigator: false,
+          useRootNavigator: true,
           isScrollControlled: true,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10),
@@ -112,29 +136,50 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
     }
   }
 
-  Widget _PricingTable(BuildContext context) {
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          DataTable(
-              dividerThickness: 0,
-              showBottomBorder: false,
-              columnSpacing: 20,
-              columns: _PricingTableColumns(),
-              rows: _PricingTableRows()),
-          setItemsWeightButton(context),
-        ],
-      ),
+  Widget _PricingTable() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: DataTable(
+          dividerThickness: 0.01,
+          horizontalMargin: 6,
+          columnSpacing: 45.0,
+          headingRowHeight: 30.0,
+          showBottomBorder: false,
+          columns: _PricingTableColumns(),
+          rows: _PricingTableRows()),
     );
   }
 
   List<DataColumn> _PricingTableColumns() {
     return [
-      DataColumn(label: Text('${_i18n()["item"]}')),
-      DataColumn(label: Text('${_i18n()["perKilo"]}')),
-      DataColumn(label: Text('${_i18n()["weight"]}')),
-      DataColumn(label: Text('${_i18n()["cost"]}'))
+      DataColumn(
+          label: Text(
+        '${_i18n()["item"]}',
+        textAlign: TextAlign.start,
+      )),
+      DataColumn(
+          label: Center(
+        child: Text(
+          '${_i18n()["perKilo"]}',
+          textAlign: TextAlign.center,
+        ),
+      )),
+      DataColumn(
+          label: Text(
+        '${_i18n()["weight"]}',
+        textAlign: TextAlign.start,
+      )),
+      DataColumn(
+          label: Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              '${_i18n()["cost"]}',
+            ),
+          ],
+        ),
+      ))
     ];
   }
 
@@ -145,41 +190,48 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
               DataCell(Container(
                 width: 100,
                 child: Text(
-                  order.costsByType!.lineItems[index].name[laundryInfoController
-                          .laundry.value?.primaryLanguage] ??
-                      "",
+                  order.costsByType!.lineItems[index].getRightNameForUser(),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               )),
-              DataCell(Text("\$${order.costsByType!.lineItems[index].cost}")),
+              DataCell(Center(
+                  child:
+                      Text("\$${order.costsByType!.lineItems[index].cost}"))),
               DataCell(Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("${order.costsByType!.lineItems[index].weight} "),
-                  InkWell(
-                    customBorder: CircleBorder(),
-                    onTap: (order.isAtLaundry())
-                        ? assignNewCategory(
-                            context: Get.context!,
-                            editMode: true,
-                            laundryOrderCostLineItem:
-                                order.costsByType?.lineItems[index])
-                        : null,
-                    child: Ink(
-                        padding: const EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey.shade400),
-                        child: Icon(
-                          Icons.mode_edit_outline_outlined,
-                          size: 18,
-                          color: Colors.black,
-                        )),
-                  )
+                  if (order.isAtLaundry())
+                    InkWell(
+                      customBorder: CircleBorder(),
+                      onTap: (order.isAtLaundry())
+                          ? assignNewCategory(
+                              context: Get.context!,
+                              editMode: true,
+                              laundryOrderCostLineItem:
+                                  order.costsByType?.lineItems[index])
+                          : null,
+                      child: Ink(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey.shade200),
+                          child: Icon(
+                            Icons.mode_edit_outline_outlined,
+                            size: 18,
+                            color: Colors.black,
+                          )),
+                    )
                 ],
               )),
-              DataCell(
-                  Text("\$${order.costsByType!.lineItems[index].weighedCost}")),
+              DataCell(Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text("\$${order.costsByType!.lineItems[index].weighedCost}"),
+                ],
+              )),
             ]));
   }
 }

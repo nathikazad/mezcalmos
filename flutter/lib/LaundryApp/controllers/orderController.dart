@@ -20,33 +20,34 @@ class OrderController extends GetxController {
 
   RxList<LaundryOrder> currentOrders = <LaundryOrder>[].obs;
   RxList<LaundryOrder> pastOrders = <LaundryOrder>[].obs;
-  StreamSubscription<Event>? _currentOrdersListener;
-  StreamSubscription<Event>? _pastOrdersListener;
+  StreamSubscription<dynamic>? _currentOrdersListener;
+  StreamSubscription<dynamic>? _pastOrdersListener;
 
   Future<void> init(String laundryId) async {
     mezDbgPrint(
         "--------------------> Start listening on past orders  ${serviceProviderPastOrders(orderType: OrderType.Laundry, providerId: laundryId)}");
     await _pastOrdersListener?.cancel();
     _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderPastOrders(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
-        .listen((Event event) {
-      mezDbgPrint(
-          "PAST ORDERS ======> the event value ------------> ${event.snapshot.value}");
+        .listen((dynamic event) {
+     
 
       final List<LaundryOrder> orders = [];
       if (event.snapshot.value != null) {
         mezDbgPrint("the event value ------------> ${event.snapshot.value}");
         event.snapshot.value.keys.forEach((orderId) {
-          mezDbgPrint("-------------------->>>>>>>>>>Hndling Order : $orderId");
+     
           final dynamic orderData = event.snapshot.value[orderId];
-          mezDbgPrint("Order Data ======================> $orderData");
+         
           orders.add(LaundryOrder.fromData(orderId, orderData));
         });
       }
       pastOrders.value = orders;
+       pastOrders.sort((DeliverableOrder a, DeliverableOrder b) =>
+          a.orderTime.toLocal().compareTo(b.orderTime.toLocal()));
     }, onError: (error) {
       mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
     });
@@ -55,11 +56,11 @@ class OrderController extends GetxController {
         "Starting listening on inProcess : ${serviceProviderInProcessOrders(orderType: OrderType.Laundry, providerId: laundryId)}");
     await _currentOrdersListener?.cancel();
     _currentOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(serviceProviderInProcessOrders(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
-        .listen((Event event) {
+        .listen((dynamic event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
       mezDbgPrint(
           "CURRENT ORDERS ======> the event value ------------> ${event.snapshot.value}");

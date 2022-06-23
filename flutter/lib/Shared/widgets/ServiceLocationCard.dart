@@ -42,12 +42,12 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
         children: [
           Container(
             child: Text(
-              '${_i18n()["location"]} :',
+              '${_i18n()["location"]}',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 5,
           ),
           Container(
             child: Text(
@@ -64,7 +64,7 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
               child: Container(
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                height: 40.h,
+                height: 35.h,
                 width: double.infinity,
                 child: MGoogleMap(mGoogleMapController: mapController),
               ),

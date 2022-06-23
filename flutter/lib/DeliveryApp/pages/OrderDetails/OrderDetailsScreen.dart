@@ -6,12 +6,20 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+    ["pages"]["OrderDetailsScreen"];
+
+//
 class OrderDetailsScreen extends StatefulWidget {
   const OrderDetailsScreen({Key? key}) : super(key: key);
 
@@ -28,8 +36,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   void initState() {
     final String orderId = Get.parameters['orderId']!;
+    mezDbgPrint("Get.parameters ===> $orderId");
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId);
+    mezDbgPrint("order.value.id ===> ${order.value?.orderId}");
     _orderListener =
         controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
       if (newOrderEvent != null) {
@@ -52,40 +62,51 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       body: Obx(() {
         if (order.value != null) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _orderDetailsHeader(),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 Text(
-                  "From",
+                  "${_i18n()["from"]}",
                   style: Get.textTheme.bodyText1,
                 ),
                 if (_getOrderFromLocation() != null)
-                  Text(_getOrderFromLocation()!),
+                  Container(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(_getOrderFromLocation()!)),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 Text(
-                  "Delivered to",
+                  "${_i18n()["deliveredTo"]}",
                   style: Get.textTheme.bodyText1,
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Text("${order.value!.to.address}"),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 Text(
-                  "Payment method",
+                  "${_i18n()["paymentMethod"]}",
                   style: Get.textTheme.bodyText1,
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Text(order.value!.paymentType.toNormalString()),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 _serviceProviderCard(),
+                SizedBox(
+                  height: 10,
+                ),
                 _customerCard(),
                 Divider(
                   height: 30,
@@ -94,13 +115,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Delivery Cost",
+                      "${_i18n()["deliveryCost"]}",
                       style: Get.textTheme.bodyText1,
                     ),
-                    Text(
-                      "\$50",
-                      style: Get.textTheme.bodyText1,
-                    ),
+                    if (_getOrderShippingCost() != null)
+                      Text(
+                        _getOrderShippingCost()!.toPriceString(),
+                        style: Get.textTheme.bodyText1,
+                      ),
                   ],
                 ),
               ],
@@ -115,6 +137,18 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
+  num? _getOrderShippingCost() {
+    switch (order.value!.orderType) {
+      case OrderType.Restaurant:
+        return (order as RestaurantOrder).shippingCost;
+
+      case OrderType.Laundry:
+        return (order as LaundryOrder).shippingCost;
+      default:
+        return null;
+    }
+  }
+
   Container _orderDetailsHeader() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
@@ -126,8 +160,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 .format(order.value!.orderTime.toLocal()),
             style: Get.textTheme.bodyText1,
           ),
-          Text(order.value!.isCanceled() ? "Cancelled" : "Approved",
-              style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor))
+          Text(
+              order.value!.isCanceled()
+                  ? "${_i18n()["cancelled"]}"
+                  : "${_i18n()["approved"]}",
+              style: Get.textTheme.bodyText1?.copyWith(
+                  color: order.value!.isCanceled()
+                      ? Colors.red
+                      : primaryBlueColor))
         ],
       ),
     );
@@ -135,6 +175,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   Card _customerCard() {
     return Card(
+      margin: EdgeInsets.zero,
       child: Container(
         padding: const EdgeInsets.all(8),
         child: Row(
@@ -151,7 +192,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               style: Get.textTheme.bodyText1,
             ),
             Spacer(),
-            Text("Customer")
+            Text("${_i18n()["customer"]}")
           ],
         ),
       ),
@@ -160,6 +201,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   Card _serviceProviderCard() {
     return Card(
+      margin: EdgeInsets.zero,
       child: Container(
         padding: const EdgeInsets.all(8),
         child: Row(
@@ -186,9 +228,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   String _getOrderType() {
     switch (order.value!.orderType) {
       case OrderType.Restaurant:
-        return "Restaurant";
+        return "${_i18n()["restaurant"]}";
       case OrderType.Laundry:
-        return "Laundry";
+        return "${_i18n()["laundry"]}";
 
       default:
         return "";

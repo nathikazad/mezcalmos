@@ -11,35 +11,39 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
 
-class LaundryAppDrawer extends StatelessWidget {
+class LaundryAppDrawer extends StatefulWidget {
   const LaundryAppDrawer({Key? key}) : super(key: key);
-  // controllers //
-  static final LanguageController languageController =
-      Get.find<LanguageController>();
-  static final SideMenuDrawerController _drawerController =
-      Get.find<SideMenuDrawerController>();
-  static AuthController authController = Get.find<AuthController>();
-  static LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
-  static LaundryOpAuthController laundryOpAuthController =
-      Get.find<LaundryOpAuthController>();
 
+  @override
+  State<LaundryAppDrawer> createState() => _LaundryAppDrawerState();
+}
+
+class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
+  // controllers //
+  final LanguageController languageController = Get.find<LanguageController>();
+  final SideMenuDrawerController _drawerController =
+      Get.find<SideMenuDrawerController>();
+  AuthController authController = Get.find<AuthController>();
+  LaundryInfoController laundryInfoController =
+      Get.find<LaundryInfoController>();
+  LaundryOpAuthController laundryOpAuthController =
+      Get.find<LaundryOpAuthController>();
   // helpers //
-  static final AppLaunchMode lmd = getAppLaunchMode();
+  final AppLaunchMode lmd = getAppLaunchMode();
 
   // variables //
-  static final String version =
-      GetStorage().read<String>(getxAppVersion) as String;
-
+  final String version = GetStorage().read<String>(getxAppVersion) as String;
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
+        width: 70.w,
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
           children: [
@@ -146,6 +150,9 @@ class LaundryAppDrawer extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(
+          height: 15,
+        ),
         _navigationLink(
             onClick: () {
               _drawerController.closeMenu();
@@ -208,19 +215,23 @@ class LaundryAppDrawer extends StatelessWidget {
                     : AssetImage(aNoImage) as ImageProvider,
               ),
               SizedBox(
-                height: 15,
+                height: 20,
               ),
               Text(
                 laundryInfoController.laundry.value!.info.name,
-                style: Get.textTheme.headline3,
+                style: Get.textTheme.headline3
+                    ?.copyWith(fontWeight: FontWeight.w700, fontSize: 17.sp),
               ),
               SizedBox(
-                height: 15,
+                height: 45,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Divider(),
               ),
             ],
           ),
         ),
-        Divider(),
       ],
     );
   }
@@ -232,16 +243,19 @@ class LaundryAppDrawer extends StatelessWidget {
     return InkWell(
       onTap: onClick,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        margin: const EdgeInsets.symmetric(vertical: 18, horizontal: 8),
         child: Row(
           children: [
+            SizedBox(
+              width: 10,
+            ),
             Icon(
               icon,
               color: Colors.grey.shade400,
-              size: 35,
+              size: 25,
             ),
             SizedBox(
-              width: 25,
+              width: 20,
             ),
             titleWidget
           ],

@@ -26,8 +26,7 @@ class ItemSliverAppBar extends StatelessWidget {
       elevation: 0.4,
       expandedHeight: (item.image != null) ? 220 : 0,
       automaticallyImplyLeading: false,
-      // titleSpacing: 12,
-
+      titleSpacing: 12,
       leading: _BackButtonAppBar(),
       actions: <Widget>[
         getAppbarIconsButton(),
@@ -38,7 +37,8 @@ class ItemSliverAppBar extends StatelessWidget {
         titlePadding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         centerTitle: true,
         title: Container(
-          width: 200,
+          width: 55.w,
+          padding: const EdgeInsets.only(bottom: 4),
           child: Text(
             " ${item.name[userLanguage]!} ",
             textAlign: TextAlign.center,
@@ -125,14 +125,14 @@ class ItemSliverAppBar extends StatelessWidget {
 
   Widget _ordersAppBarIcon() {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 8),
+      padding: const EdgeInsets.only(left: 3, right: 12),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
           Get.toNamed(kOrdersRoute);
         },
         child: Ink(
-          padding: const EdgeInsets.all(7),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.white,
@@ -147,12 +147,36 @@ class ItemSliverAppBar extends StatelessWidget {
     );
   }
 
+  Widget _noUserButton() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 16),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          Get.toNamed(kSignInRouteOptional);
+        },
+        child: Ink(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: Icon(
+            Icons.person,
+            size: 20,
+            color: primaryBlueColor,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _notificationAppBarIcon() {
     return Obx(() {
       if (Get.find<ForegroundNotificationsController>().notifications.length >
           0) {
         return Padding(
-          padding: const EdgeInsets.only(left: 3, right: 3),
+          padding: const EdgeInsets.only(left: 3, right: 7),
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
@@ -161,9 +185,9 @@ class ItemSliverAppBar extends StatelessWidget {
             child: Badge(
               badgeColor: Colors.red,
               showBadge: true,
-              position: BadgePosition.topEnd(top: 5, end: 5),
+              position: BadgePosition.topEnd(top: 0, end: 0),
               child: Ink(
-                padding: const EdgeInsets.all(7),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
@@ -181,30 +205,6 @@ class ItemSliverAppBar extends StatelessWidget {
         return Container();
       }
     });
-  }
-
-  Widget _noUserButton() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 12),
-      child: InkWell(
-        customBorder: CircleBorder(),
-        onTap: () {
-          Get.toNamed(kSignInRouteOptional);
-        },
-        child: Ink(
-          padding: const EdgeInsets.all(7),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: SecondaryLightBlueColor,
-          ),
-          child: Icon(
-            Icons.person,
-            size: 20,
-            color: primaryBlueColor,
-          ),
-        ),
-      ),
-    );
   }
 
   Widget getAppbarIconsButton() {

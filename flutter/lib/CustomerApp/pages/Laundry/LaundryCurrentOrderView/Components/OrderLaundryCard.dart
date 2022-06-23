@@ -16,20 +16,20 @@ class OrderLaundryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
         child: Row(
           children: [
             CircleAvatar(
               backgroundImage:
                   CachedNetworkImageProvider(order.laundry?.image ?? ""),
-              radius: 25,
+              radius: 23,
             ),
             SizedBox(
-              width: 5,
+              width: 7,
             ),
             Flexible(
                 fit: FlexFit.tight,
-                flex: 7,
+                flex: 8,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -41,25 +41,18 @@ class OrderLaundryCard extends StatelessWidget {
                       height: 5,
                     ),
                     Row(
-                      children: [
+                      children: <Widget>[
                         Icon(
                           Icons.place,
                           size: 18,
-                          color: primaryBlueColor,
+                          color: Theme.of(context).primaryColorLight,
                         ),
                         SizedBox(
-                          width: 5,
+                          width: 3,
                         ),
-                        Flexible(
-                          child: Text(
-                            order.laundry?.location.address ?? "",
-                            style: Get.textTheme.bodyText2,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                        ),
+                        Flexible(child: Text(order.to.address, maxLines: 1)),
                       ],
-                    ),
+                    )
                   ],
                 )),
             Spacer(),

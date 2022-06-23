@@ -3,20 +3,28 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:mezcalmos/DeliveryApp/components/deliveryAppBar.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Components/DriverOrderMapComponent.dart';
-import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/DriverBottomRestaurantOrderCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantControllButtons.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Restaurant/Components/RestaurantOrderFromToComponent.dart';
+import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/mapInitHelper.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+    ["pages"]["RestaurantOrderView"];
+//
 
 class RestaurantOrderView extends StatefulWidget {
   const RestaurantOrderView({Key? key}) : super(key: key);
@@ -36,9 +44,11 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   @override
   void initState() {
     final String orderId = Get.parameters['orderId']!;
+
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder;
-
+    mezDbgPrint(
+        "orderID ===============================================> $orderId");
     if (order.value!.routeInformation != null) {
       mapController.decodeAndAddPolyline(
           encodedPolylineString: order.value!.routeInformation!.polyline);
@@ -53,42 +63,45 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       }
     });
 
-    // doing this once to avoid doing it constaintly in [handleRestaurantOrder::switch::default]
-    Future.wait(<Future<void>>[
-      // DESTINATION MARKER
-      mapController.addOrUpdatePurpleDestinationMarker(
-        latLng: LatLng(
-          order.value!.to.latitude,
-          order.value!.to.longitude,
-        ),
-      ),
-      // USER MARKER
-      mapController.addOrUpdateUserMarker(
-        latLng: LatLng(
-          deliveryAuthAuthController.currentLocation.latitude!,
-          deliveryAuthAuthController.currentLocation.longitude!,
-        ),
-      ),
-      // Restaurant Marker
-      mapController.addOrUpdateUserMarker(
-        latLng: LatLng(
-          order.value!.restaurant.location.latitude,
-          order.value!.restaurant.location.longitude,
-        ),
-        markerId: order.value!.restaurantId,
-        customImgHttpUrl: order.value!.restaurant.image,
-      )
-    ]).then((_) {
-      mapController.setLocation(
+    // init the map
+    Future<void>.microtask(
+      () => mapController.setLocation(
         Location.fromLocationData(
           deliveryAuthAuthController.currentLocation,
         ),
-      );
-      mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
-      mapController.animateMarkersPolyLinesBounds.value = true;
-      mapController.periodicRerendering.value = true;
-      handleRestaurantOrder(order.value as RestaurantOrder);
-    });
+      ),
+    );
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+    mapController.animateMarkersPolyLinesBounds.value = true;
+    mapController.periodicRerendering.value = true;
+
+    // doing this once to avoid doing it constaintly in [handleRestaurantOrder::switch::default]
+    // Future.wait(<Future<void>>[
+    // DESTINATION MARKER
+    mapController.addOrUpdatePurpleDestinationMarker(
+      latLng: LatLng(
+        order.value!.to.latitude,
+        order.value!.to.longitude,
+      ),
+    );
+    // USER MARKER
+    mapController.addOrUpdateUserMarker(
+      latLng: LatLng(
+        deliveryAuthAuthController.currentLocation.latitude!,
+        deliveryAuthAuthController.currentLocation.longitude!,
+      ),
+    );
+    // Restaurant Marker
+    mapController.addOrUpdateUserMarker(
+      latLng: LatLng(
+        order.value!.restaurant.location.latitude,
+        order.value!.restaurant.location.longitude,
+      ),
+      markerId: order.value!.restaurantId,
+      customImgHttpUrl: order.value!.restaurant.image,
+    );
+
+    handleRestaurantOrder(order.value as RestaurantOrder);
 
     waitForOrderIfNotLoaded().then((void value) {
       if (order.value == null) {
@@ -120,37 +133,105 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   void dispose() {
     _orderListener?.cancel();
     _orderListener = null;
-
     super.dispose();
   }
 
+  double _recenterBtnBottomPadding = 320;
+  EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 320);
+
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        if (order.value != null) {
-          return Scaffold(
-              appBar:
-                  mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
-              bottomNavigationBar:
-                  RestaurantControllButtons(order: order.value!),
-              body: Column(children: <Widget>[
-                DriverOrderMapComponent(
-                  order: order.value!,
-                  mapController: mapController,
-                ),
-                Expanded(
-                  child: DriverBottomRestaurantOrderCard(
-                    order: order.value as RestaurantOrder,
+    return Scaffold(
+      appBar: mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: Get.back,
+        showNotifications: true,
+        title: '${_i18n()["title"]}',
+      ),
+      bottomNavigationBar: Obx(
+        () => RestaurantControllButtons(
+          order: order.value!,
+        ),
+      ),
+      body: Obx(
+        () => order.value != null
+            ? Stack(
+                children: [
+                  MGoogleMap(
+                    recenterBtnBottomPadding: _recenterBtnBottomPadding,
+                    mGoogleMapController: mapController,
+                    padding: _mapPadding,
                   ),
-                ),
-              ]));
-        } else {
-          return MezLogoAnimation(
-            centered: true,
-          );
-        }
-      },
+                  Positioned(
+                    bottom: _recenterBtnBottomPadding,
+                    right: 12,
+                    child: InkWell(
+                      onTap: () async {
+                        final LatLng _destination = LatLng(
+                            order.value!.to.latitude,
+                            order.value!.to.longitude);
+
+                        final String url =
+                            "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
+
+                        try {
+                          await launch(url);
+                        } catch (e) {
+                          await launch(url);
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(.5),
+                                offset: Offset(-1, 0),
+                                spreadRadius: 1,
+                                blurRadius: 10)
+                          ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.navigation_rounded,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 2,
+                    left: 5,
+                    right: 4,
+                    child: Card(
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: RestaurantOrderFromToComponent(
+                          order: order.value!,
+                          onCardStateChange: (OrderInfoCardState state) {
+                            setState(() {
+                              if (state == OrderInfoCardState.Maximized) {
+                                _recenterBtnBottomPadding = 320;
+                                _mapPadding =
+                                    EdgeInsets.only(top: 10, bottom: 320);
+                              } else {
+                                _recenterBtnBottomPadding = 180;
+                                _mapPadding =
+                                    EdgeInsets.only(top: 10, bottom: 180);
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            : MezLogoAnimation(
+                centered: true,
+              ),
+      ),
     );
   }
 

@@ -8,6 +8,8 @@ extension CapExtension on String {
   String get allInCaps => toUpperCase();
   String get capitalizeFirstofEach =>
       split(" ").map((String str) => str.capitalize).join(" ");
+  String get capitalizeDays =>
+      split("-").map((String str) => str.capitalize).join("-");
 }
 
 /// This Generates the first letters of the first 2 words in a String,

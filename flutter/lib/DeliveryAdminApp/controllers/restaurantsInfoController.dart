@@ -15,12 +15,12 @@ class RestaurantsInfoController extends GetxController {
 
   Future<List<Restaurant>> getRestaurants() {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child('restaurants/info')
         .once()
-        .then<List<Restaurant>>((snapshot) {
+        .then<List<Restaurant>>((event) {
       List<Restaurant> restaurants = [];
-      snapshot.value.forEach((dynamic key, dynamic value) {
+      (event.snapshot.value as dynamic).forEach((dynamic key, dynamic value) {
         try {
           restaurants.add(Restaurant.fromRestaurantData(
               restaurantId: key, restaurantData: value));
@@ -34,20 +34,20 @@ class RestaurantsInfoController extends GetxController {
 
   Future<Restaurant> getRestaurant(String restaurantId) async {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child('restaurants/info/$restaurantId')
         .once()
-        .then<Restaurant>((snapshot) {
+        .then<Restaurant>((event) {
       return Restaurant.fromRestaurantData(
-          restaurantId: restaurantId, restaurantData: snapshot.value);
+          restaurantId: restaurantId, restaurantData: event.snapshot.value);
     });
   }
 
   Future<Item> getItem(String restaurantId, String itemId) {
     return _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child('restaurants/info/$restaurantId/menu/$itemId')
         .once()
-        .then<Item>((snapshot) => Item.itemFromData(itemId, snapshot.value));
+        .then<Item>((event) => Item.itemFromData(itemId, event.snapshot.value));
   }
 }

@@ -16,6 +16,12 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+        ["pages"]["Restaurants"]["ViewRestaurantScreen"]["components"]
+    ["RestaurantSliverAppBar"];
+//
+
 class RestaurantSliverAppBar extends StatelessWidget {
   RestaurantSliverAppBar(
       {Key? key,
@@ -38,57 +44,69 @@ class RestaurantSliverAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: Theme.of(context).primaryColorLight,
-      elevation: 0.4,
-      expandedHeight: 220,
-      automaticallyImplyLeading: false,
-      bottom:
-          (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
-      leading: _BackButtonAppBar(),
-      actions: <Widget>[
-        getAppbarIconsButton(),
-      ],
-      pinned: true,
-      flexibleSpace: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        return FlexibleSpaceBar(
+        backgroundColor: Theme.of(context).primaryColorLight,
+        elevation: 0.4,
+        centerTitle: true,
+        expandedHeight: 220,
+        automaticallyImplyLeading: false,
+        bottom:
+            (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
+        leading: _BackButtonAppBar(),
+        actions: <Widget>[
+          getAppbarIconsButton(),
+        ],
+        pinned: true,
+        flexibleSpace: FlexibleSpaceBar(
+          expandedTitleScale: 1.6,
           titlePadding: EdgeInsets.only(
               bottom:
                   (restaurant.getCategories.length > 1 && !showInfo) ? 60 : 12),
-          // centerTitle: true,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                flex: 1,
-                fit: FlexFit.loose,
-                child: Text(
-                  (showInfo) ? "Informations" : restaurant.info.name,
-                  style: Get.textTheme.headline3
-                      ?.copyWith(color: Colors.white, fontSize: 14.sp),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                ),
+          centerTitle: true,
+          title: Container(
+            alignment: Alignment.bottomCenter,
+            width: 55.w,
+            padding: const EdgeInsets.only(bottom: 5, left: 5, right: 5),
+            child: FittedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      margin: const EdgeInsets.only(bottom: 3),
+                      child: Text(
+                        (showInfo)
+                            ? "${_i18n()["info"]}"
+                            : restaurant.info.name,
+                        style: Get.textTheme.headline3
+                            ?.copyWith(color: Colors.white, fontSize: 14.sp),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  if (!showInfo)
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      margin:
+                          const EdgeInsets.only(left: 5, right: 5, bottom: 3),
+                      child: InkWell(
+                          onTap: onInfoTap,
+                          child: Icon(
+                            Icons.info_outline_rounded,
+                            size: 15.sp,
+                            color: Colors.white,
+                          )),
+                    )
+                ],
               ),
-              SizedBox(
-                width: 5,
-              ),
-              if (!showInfo)
-                InkWell(
-                    onTap: onInfoTap,
-                    child: Icon(
-                      Icons.info_outline_rounded,
-                      size: 14.sp,
-                      color: Colors.white,
-                    ))
-            ],
+            ),
           ),
           background: _backgroundImageComponent(),
-        );
-      }),
-    );
+        ));
   }
 
   Widget _backgroundImageComponent() {
@@ -159,32 +177,31 @@ class RestaurantSliverAppBar extends StatelessWidget {
       child: Container(
         width: double.infinity,
         color: Colors.white,
+        margin: const EdgeInsets.only(
+          top: 8,
+        ),
+        padding: const EdgeInsets.all(4),
         child: TabBar(
           isScrollable: true,
           controller: tabController,
-
-          // indicatorPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-          // indicatorColor: Get.theme.primaryColorLight,
-          indicatorWeight: 0.1,
-          labelColor: Colors.black,
+          labelColor: primaryBlueColor,
+          labelStyle: Get.textTheme.bodyText1,
+          unselectedLabelStyle: Get.textTheme.bodyText1?.copyWith(
+              fontWeight: FontWeight.w500, color: Colors.grey.shade800),
+          unselectedLabelColor: Colors.grey.shade700,
+          indicatorPadding: const EdgeInsets.all(5),
+          indicatorSize: TabBarIndicatorSize.tab,
+          indicatorColor: Get.theme.primaryColorLight,
+          indicator: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              shape: BoxShape.rectangle,
+              color: SecondaryLightBlueColor),
           tabs: List.generate(restaurant.getCategories.length, (int index) {
             return Tab(
-              child: FilterChip(
-                showCheckmark: false,
-                labelStyle: Get.textTheme.bodyText2?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: tabController.index != index
-                        ? primaryBlueColor
-                        : Colors.black),
-                label: Text(
-                    restaurant.getCategories[index].name?[userLanguage] ?? ""),
-                onSelected: (bool v) {
-                  onTap(index);
-                },
-                selected: tabController.index == index,
-              ),
+              text: restaurant.getCategories[index].name?[userLanguage],
             );
           }),
+          onTap: onTap,
         ),
       ),
     );
@@ -224,14 +241,14 @@ class RestaurantSliverAppBar extends StatelessWidget {
 
   Widget _ordersAppBarIcon() {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 8),
+      padding: const EdgeInsets.only(left: 3, right: 12),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
           Get.toNamed(kOrdersRoute);
         },
         child: Ink(
-          padding: const EdgeInsets.all(7),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.white,
@@ -246,12 +263,36 @@ class RestaurantSliverAppBar extends StatelessWidget {
     );
   }
 
+  Widget _noUserButton() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 16),
+      child: InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          Get.toNamed(kSignInRouteOptional);
+        },
+        child: Ink(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: Icon(
+            Icons.person,
+            size: 20,
+            color: primaryBlueColor,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _notificationAppBarIcon() {
     return Obx(() {
       if (Get.find<ForegroundNotificationsController>().notifications.length >
           0) {
         return Padding(
-          padding: const EdgeInsets.only(left: 3, right: 3),
+          padding: const EdgeInsets.only(left: 3, right: 7),
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
@@ -260,9 +301,9 @@ class RestaurantSliverAppBar extends StatelessWidget {
             child: Badge(
               badgeColor: Colors.red,
               showBadge: true,
-              position: BadgePosition.topEnd(top: 5, end: 5),
+              position: BadgePosition.topEnd(top: 0, end: 0),
               child: Ink(
-                padding: const EdgeInsets.all(7),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
@@ -280,30 +321,6 @@ class RestaurantSliverAppBar extends StatelessWidget {
         return Container();
       }
     });
-  }
-
-  Widget _noUserButton() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 12),
-      child: InkWell(
-        customBorder: CircleBorder(),
-        onTap: () {
-          Get.toNamed(kSignInRouteOptional);
-        },
-        child: Ink(
-          padding: const EdgeInsets.all(7),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: SecondaryLightBlueColor,
-          ),
-          child: Icon(
-            Icons.person,
-            size: 20,
-            color: primaryBlueColor,
-          ),
-        ),
-      ),
-    );
   }
 
   Widget getAppbarIconsButton() {

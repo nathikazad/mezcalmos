@@ -84,6 +84,9 @@ export = functions.https.onCall(async (data, context) => {
           status: ServerResponseStatus.Error,
           errorMessage: "dropoffDriver is already set"
         }
+      if(deliveryDriverId == order.pickupDriver?.id){
+        deliveryDriverNodes.pastOrders(deliveryDriverId, orderId).remove();
+      }
       order.dropoffDriver = driverInfo;
       order.secondaryChats.serviceProviderDropOffDriver = serviceProviderDriverChatId
       order.secondaryChats.customerDropOffDriver = customerDriverChatId

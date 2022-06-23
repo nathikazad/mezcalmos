@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/Laundry/Components/LaundryControllButtons.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:sizer/sizer.dart';
@@ -17,7 +18,7 @@ class DriverLaundryBottomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 62,
+        height: 70,
         color: (order.inProcess())
             ? Theme.of(context).primaryColorLight
             : Colors.transparent,
@@ -81,10 +82,9 @@ class DriverLaundryBottomButtons extends StatelessWidget {
         color: Colors.white,
         child: Row(
           children: [
-            Icon(
-              Icons.check_circle,
-              color: Colors.green,
-              size: 30.sp,
+            CircleAvatar(
+              radius: 18,
+              child: Image.asset(aDeliveredIcon),
             ),
             SizedBox(
               width: 10,
@@ -99,7 +99,7 @@ class DriverLaundryBottomButtons extends StatelessWidget {
                   style: Get.textTheme.bodyText1,
                 ),
                 Text(
-                  DateFormat('dd MMM yy h:m').format(order.orderTime),
+                  DateFormat('dd MMM yy h:m').format(order.orderTime.toLocal()),
                   style: Get.textTheme.subtitle1,
                 )
               ],
@@ -135,7 +135,7 @@ class DriverLaundryBottomButtons extends StatelessWidget {
                 style: textTheme.bodyText1,
               ),
               Text(
-                DateFormat('dd MMM yy h:m').format(order.orderTime),
+                DateFormat('dd MMM yy h:m').format(order.orderTime.toLocal()),
                 style: textTheme.subtitle1,
               )
             ],
@@ -152,10 +152,9 @@ class DriverLaundryBottomButtons extends StatelessWidget {
       color: Colors.white,
       child: Row(
         children: [
-          Icon(
-            Icons.check_circle,
-            color: Colors.green,
-            size: 30.sp,
+          CircleAvatar(
+            radius: 18,
+            child: Image.asset(aDeliveredIcon),
           ),
           SizedBox(
             width: 10,

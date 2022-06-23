@@ -30,41 +30,43 @@ class MezSideMenu extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(height: 50),
-                    _drawerHeader(),
-                    // SizedBox(height: 43),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Divider(
-                        color: Color.fromRGBO(196, 196, 196, 0.29),
+      child: Obx(
+        () => Container(
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 50),
+                      _drawerHeader(),
+                      // SizedBox(height: 43),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Divider(
+                          color: Color.fromRGBO(196, 196, 196, 0.29),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    _buildSideMenuItem(),
-                    _basicSideMenuItems(),
-                  ],
+                      SizedBox(height: 10),
+                      _buildSideMenuItem(),
+                      _basicSideMenuItems(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Container(
-                alignment: Alignment.center,
-                child: Text(
-                  version +
-                      (lmd != AppLaunchMode.prod
-                          ? " ${lmd.toShortString()}"
-                          : ""),
-                ))
-          ],
+              Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    version +
+                        (lmd != AppLaunchMode.prod
+                            ? " ${lmd.toShortString()}"
+                            : ""),
+                  ))
+            ],
+          ),
         ),
       ),
     );
@@ -78,27 +80,32 @@ class MezSideMenu extends GetWidget<AuthController> {
         SideMenuItem(
           icon: Icons.person,
 
-          title: "Profile", // _i18n()["userInfo"],
+          title: (controller.isUserSignedIn)
+              ? "${_i18n()["profile"]}"
+              : "${_i18n()["login"]}", // _i18n()["userInfo"],
           onClick: () {
             _drawerController.closeMenu();
-            Get.toNamed<void>(kUserProfile);
+            if (controller.isUserSignedIn) {
+              Get.toNamed<void>(kUserProfile);
+            } else
+              Get.toNamed<void>(kSignInRouteOptional);
           },
         ),
-        SideMenuItem(
-          icon: Icons.notifications,
+        if (controller.isUserSignedIn)
+          SideMenuItem(
+            icon: Icons.notifications,
 
-          title: "Notifications", // _i18n()["userInfo"],
-          onClick: () {
-            _drawerController.closeMenu();
-            Get.toNamed<void>(kNotificationsRoute);
-          },
-        ),
-        if (_drawerController.showPastOrders &&
-            _drawerController.pastOrdersRoute != null)
+            title: "${_i18n()["notifications"]}", // _i18n()["userInfo"],
+            onClick: () {
+              _drawerController.closeMenu();
+              Get.toNamed<void>(kNotificationsRoute);
+            },
+          ),
+        if (_drawerController.pastOrdersRoute != null)
           SideMenuItem(
             icon: Icons.restore,
 
-            title: "Past orders", // _i18n()["userInfo"],
+            title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
             onClick: () {
               _drawerController.closeMenu();
               Get.toNamed<void>(_drawerController.pastOrdersRoute!);
@@ -109,7 +116,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Language",
+                "${_i18n()["language"]}",
                 style: Get.textTheme.bodyText1,
               ),
               SizedBox(
@@ -150,24 +157,24 @@ class MezSideMenu extends GetWidget<AuthController> {
             onClick: () => launch(GetStorage().read(getxPrivacyPolicyLink)),
           ),
         ),
-        controller.fireAuthUser != null ? _buildSideMenuItem() : Container(),
-        Obx(
-          () => SideMenuItem(
-            icon: Icons.logout,
-            title: _i18n()["logout"],
-            onClick: () async {
-              _drawerController.closeMenu();
-              await controller.signOut();
-            },
+        if (controller.isUserSignedIn)
+          Obx(
+            () => SideMenuItem(
+              icon: Icons.logout,
+              title: _i18n()["logout"],
+              onClick: () async {
+                _drawerController.closeMenu();
+                await controller.signOut();
+              },
+            ),
           ),
-        ),
       ],
     );
   }
 
   Container _drawerHeader() {
     return Container(
-      padding: EdgeInsets.only(left: 21),
+      padding: EdgeInsets.only(left: 21, top: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -178,7 +185,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             width: 136,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Color.fromARGB(255, 214, 214, 214),
+              color: SecondaryLightBlueColor,
               // border: Border.all(color: Colors.black),
             ),
             child: ClipOval(
@@ -186,8 +193,9 @@ class MezSideMenu extends GetWidget<AuthController> {
               child: controller.user?.image == null ||
                       controller.user?.image == ""
                   ? Icon(
-                      Icons.account_circle_outlined,
-                      size: 136,
+                      Icons.person,
+                      size: 70,
+                      color: primaryBlueColor,
                     )
                   : CachedNetworkImage(
                       imageUrl: controller.user!.image!,
@@ -223,6 +231,7 @@ class MezSideMenu extends GetWidget<AuthController> {
           ),
           const SizedBox(height: 15),
           Container(
+            padding: const EdgeInsets.only(left: 5),
             child: Text(
               controller.user?.name ?? "",
               textAlign: TextAlign.center,
@@ -240,9 +249,9 @@ class MezSideMenu extends GetWidget<AuthController> {
   }
 
   Widget _buildSideMenuItem() {
-    if (_drawerController.sideMenuItems != null) {
+    if (controller.isUserSignedIn) {
       return Column(
-        children: _drawerController.sideMenuItems!,
+        children: _drawerController.sideMenuItems,
       );
     } else
       return Container();
@@ -254,12 +263,14 @@ class SideMenuItem extends StatelessWidget {
       {Key? key,
       required this.onClick,
       required this.icon,
+      this.isI18nPath = false,
       this.title,
       this.titleWidget})
       : super(key: key);
   final IconData icon;
   final Widget? titleWidget;
   final String? title;
+  final bool isI18nPath;
   final Function()? onClick;
 
   @override
@@ -267,7 +278,7 @@ class SideMenuItem extends StatelessWidget {
     return InkWell(
       onTap: onClick,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         child: Row(
           children: [
             SizedBox(
@@ -281,12 +292,16 @@ class SideMenuItem extends StatelessWidget {
             SizedBox(
               width: 25,
             ),
-            title != null
-                ? Text(
-                    title!,
-                    style: Get.textTheme.bodyText1,
-                  )
-                : titleWidget ?? Container()
+            Container(
+              child: title != null
+                  ? Text(
+                      (isI18nPath)
+                          ? Get.find<LanguageController>().getLMap(title!)
+                          : title!,
+                      style: Get.textTheme.bodyText1,
+                    )
+                  : titleWidget ?? Container(),
+            )
           ],
         ),
       ),

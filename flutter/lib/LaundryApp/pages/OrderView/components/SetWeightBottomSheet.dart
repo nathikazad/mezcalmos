@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOrderWeightSelector.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -83,31 +84,39 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                     (widget.editMode && widget.oldItem != null)
                         ? widget.oldItem!.name[userLanguage]!
                         : "${_i18n()["newItemsWeight"]}",
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.headline3,
                   )),
-              Divider(),
+              SizedBox(
+                height: 30,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("${_i18n()["itemsCategory"]}"),
+                  Text(
+                    "${_i18n()["itemsCategory"]}",
+                    style: Get.textTheme.bodyText1,
+                  ),
                   Spacer(),
                   if (widget.editMode)
                     InkWell(
-                      onTap: () async {
-                        bool isDeleted = false;
-                        await showConfirmationDialog(context,
-                            primaryButtonText: "Yes delete item",
-                            helperText:
-                                "Are you sure you want to delete this item",
-                            title: "Delete item", onYesClick: () async {
-                          await deleteItem(widget.oldItem!).whenComplete(() {
-                            Get.back();
-                            isDeleted = true;
+                      onTap: () {
+                        // bool isDeleted = false;
+                        // ignore: unawaited_futures
+                        showConfirmationDialog(context,
+                            primaryButtonText: "${_i18n()["deleteTitle"]}",
+                            helperText: "${_i18n()["deleteBody"]}",
+                            title: "${_i18n()["deleteItem"]}",
+                            onYesClick: () async {
+                          mezDbgPrint("tapped");
+
+                          // ignore: unawaited_futures
+
+                          await deleteItem(widget.oldItem!)
+                              .then((Object? value) {
+                            Get.until((Route route) =>
+                                route.settings.name ==
+                                getLaundryOpOrderRoute(widget.order.orderId));
                           });
-                        }).whenComplete(() {
-                          if (isDeleted == true) {
-                            Get.back();
-                          }
                         });
                       },
                       child: Ink(
@@ -119,7 +128,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                               color: Colors.red,
                             ),
                             Text(
-                              "Delete",
+                              "${_i18n()["deleteItem"]}",
                               style: Get.textTheme.bodyText2?.copyWith(
                                   color: Colors.red,
                                   fontWeight: FontWeight.w700),
@@ -130,15 +139,21 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                     )
                 ],
               ),
+              SizedBox(
+                height: 10,
+              ),
               //    Category selector
               LaundryOrderWeightSelector(
                 newCategory: newCategory,
               ),
 
               SizedBox(
-                height: 15,
+                height: 25,
               ),
-              Text("${_i18n()["itemsWeight"]}"),
+              Text("${_i18n()["itemsWeight"]}", style: Get.textTheme.bodyText1),
+              SizedBox(
+                height: 10,
+              ),
               TextFormField(
                 controller: itemsWeightController,
                 style: Theme.of(context).textTheme.bodyText1,
@@ -155,14 +170,19 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                   }
                 },
                 decoration: InputDecoration(
-                    suffixText: "KG",
+                    isDense: true,
+                    suffix: Container(
+                        padding: const EdgeInsets.all(1), child: Text("KG")),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     alignLabelWithHint: false,
-                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8)),
+                    fillColor: Colors.grey.shade200,
                     filled: true),
               ),
               SizedBox(
-                height: 10,
+                height: 25,
               ),
               Obx(
                 () => InkWell(
@@ -173,12 +193,12 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                             saveItemsWeight();
                           },
                     child: Ink(
+                      height: 50,
                       width: double.infinity,
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
-                              colors: [primaryBlueColor, Colors.purple])),
+                          gradient: bluePurpleGradient),
                       child: Center(
                         child: (isClicked.value)
                             ? SizedBox(
@@ -200,15 +220,22 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
               SizedBox(
                 height: 10,
               ),
-              TextButton(
-                  onPressed: () {
+              InkWell(
+                  onTap: () {
                     Get.back();
                   },
-                  style: TextButton.styleFrom(backgroundColor: Colors.red),
-                  child: Container(
-                    alignment: Alignment.center,
+                  child: Ink(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFF9D8D6),
+                        borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.all(5),
-                    child: Text("${_i18n()["cancel"]}"),
+                    child: Center(
+                        child: Text(
+                      "${_i18n()["cancel"]}",
+                      style:
+                          Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+                    )),
                   )),
             ],
           ),
@@ -238,9 +265,12 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
     final LaundryOrderCosts? oldCosts = widget.order.costsByType;
     if (oldCosts != null) {
       if (oldCosts.lineItems.length > 1) {
+        mezDbgPrint("deleted");
         oldCosts.lineItems.removeWhere(
-            (LaundryOrderCostLineItem element) => element.name == item.name);
+            (LaundryOrderCostLineItem element) => element.id == item.id);
+
         await orderController.setOrderWeight(widget.order.orderId, oldCosts);
+        mezDbgPrint("deleted");
       } else {
         Get.snackbar(
           "${_i18n()["error"]}",

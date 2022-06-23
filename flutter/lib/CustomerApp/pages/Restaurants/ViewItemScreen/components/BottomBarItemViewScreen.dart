@@ -74,6 +74,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
           const SizedBox(width: 5),
           IncrementalComponent(
             btnColors: primaryBlueColor,
+            onMinValueBtnColor: Colors.grey.shade300,
             incrementCallback: () {
               widget.cartItem.value!.quantity++;
               widget.cartItem.refresh();
@@ -96,7 +97,7 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
           ),
           const Spacer(),
           Flexible(
-            flex: 5,
+            flex: 6,
             fit: FlexFit.tight,
             child: TextButton(
               style: TextButton.styleFrom(
@@ -127,7 +128,8 @@ class _BottomBarItemViewScreenState extends State<BottomBarItemViewScreen> {
 
                         await showStatusInfoDialog(
                           context,
-                          bottomRightIcon: Icons.flatware,
+                          bottomRightIcon: Icons.shopping_cart,
+                          btnRightIconBgColor: Colors.white,
                           primaryImageUrl: restaurantCartController
                               .associatedRestaurant?.info.image,
                           btnRightIconColor: primaryBlueColor,

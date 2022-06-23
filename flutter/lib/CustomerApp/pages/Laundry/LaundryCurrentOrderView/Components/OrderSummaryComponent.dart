@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 class OrderSummaryComponent extends StatelessWidget {
   final LaundryOrder order;
@@ -37,10 +39,7 @@ class OrderSummaryComponent extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
                 Text(
-                  order.costsByType?.weighedCost.toString() ?? '-',
-                  // (order.costsByType.weighedCost != null)
-                  //     ? ' \$ ${order.costsByType.weighedCost}'
-                  //     : "_",
+                  order.costsByType?.weighedCost.toPriceString() ?? '-',
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ],
@@ -53,10 +52,9 @@ class OrderSummaryComponent extends StatelessWidget {
                   "${_i18n()["deliveryCost"]} :",
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
-                Text(
-                  "50 \$",
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
+                Flexible(
+                    child:
+                        ShippingCostComponent(shippingCost: order.shippingCost))
               ],
             ),
             const SizedBox(height: 10),
@@ -69,7 +67,7 @@ class OrderSummaryComponent extends StatelessWidget {
                 ),
                 Text(
                   (order.costsByType?.weighedCost != null)
-                      ? '\$${order.costsByType!.weighedCost}'
+                      ? order.costsByType!.weighedCost.toPriceString()
                       : "-",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -79,7 +77,7 @@ class OrderSummaryComponent extends StatelessWidget {
             Container(
               alignment: Alignment.centerLeft,
               child: Text(
-                "${_i18n()["deliveryLocation"]} :",
+                "${_i18n()["deliveryLocation"]}",
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -87,12 +85,13 @@ class OrderSummaryComponent extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: <Widget>[
                   Icon(
-                    Icons.place_rounded,
+                    Icons.place,
+                    size: 18,
                     color: Theme.of(context).primaryColorLight,
                   ),
                   const SizedBox(height: 5),

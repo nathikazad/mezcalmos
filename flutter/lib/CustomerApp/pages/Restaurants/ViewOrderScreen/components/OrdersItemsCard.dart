@@ -21,9 +21,12 @@ class OrderItemsCard extends StatelessWidget {
     final TextTheme txt = Theme.of(context).textTheme;
     return Column(
       children: <Widget>[
+        SizedBox(
+          height: 20,
+        ),
         Container(
           alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 5),
+          padding: const EdgeInsets.only(left: 8),
           child: Text(
             '${_i18n()["orderItems"]}',
             style: txt.bodyText1,

@@ -36,6 +36,9 @@ class RestaurantInfoTab extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 10,
+              ),
               Container(
                 child: Text(
                   '${_i18n()["description"]} :',
@@ -43,7 +46,7 @@ class RestaurantInfoTab extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 15),
+                margin: EdgeInsets.only(top: 10, bottom: 25),
                 child: Text(restaurant.description?[userLanguage] ?? ""),
               ),
             ],
@@ -51,7 +54,7 @@ class RestaurantInfoTab extends StatelessWidget {
         if (restaurant.schedule != null)
           MezServiceOpenHours(schedule: restaurant.schedule!),
         SizedBox(
-          height: 15,
+          height: 25,
         ),
         if (restaurant.info.location != null)
           ServiceLocationCard(

@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:sizer/sizer.dart';
 
 typedef OnDropDownNewValue = void Function({Location? location});
 
@@ -84,8 +85,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         // ),
       ),
       child: DropdownButtonHideUnderline(
-        child: Obx(() {
-          return DropdownButton<SavedLocation>(
+          child: DropdownButton<SavedLocation>(
               selectedItemBuilder: (BuildContext context) {
                 return dropDownSelectedItemBuilder(textTheme);
               },
@@ -95,17 +95,6 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               dropdownColor: widget.bgColor,
               isDense: true,
               isExpanded: true,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
-                  ?.copyWith(fontWeight: FontWeight.w800),
-              hint: Center(
-                child: Text(_i18n()["pickLocation"],
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(fontWeight: FontWeight.w800)),
-              ),
               icon: Icon(Icons.expand_more),
               items: listOfSavedLoacations
                   .map<DropdownMenuItem<SavedLocation>>(
@@ -113,9 +102,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                   .toList(),
               onChanged: (SavedLocation? newLocation) async {
                 await locationChangedHandler(newLocation);
-              });
-        }),
-      ),
+              })),
     );
   }
 
@@ -158,11 +145,12 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   ) {
     return DropdownMenuItem<SavedLocation>(
       value: e,
+      alignment: AlignmentDirectional.centerStart,
       child: Container(
           child: Row(
         children: <Widget>[
           Icon(
-            Icons.location_on_outlined,
+            Icons.place,
             size: 18,
             color: primaryBlueColor,
           ),
@@ -173,10 +161,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               child: Text(
                 e.name,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.headline2!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
-                ),
+                style: Get.textTheme.bodyText2,
               ),
             ),
           ),
@@ -194,8 +179,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               alignment: Alignment.centerLeft,
               child: Text(
                 item.name,
-                style: txt.headline2!
-                    .copyWith(fontWeight: FontWeight.w400, fontSize: 12),
+                style: Get.textTheme.bodyText2
+                    ?.copyWith(fontSize: 12.sp, fontWeight: FontWeight.w600),
               ),
             ),
           ),

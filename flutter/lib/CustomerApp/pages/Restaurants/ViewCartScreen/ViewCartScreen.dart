@@ -100,13 +100,16 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           return CartIsEmptyScreen();
         }
       }),
-      bottomNavigationBar: ButtonComponent(
-        bgColor: getTheRightButtonColor(),
-        canClick: canClick(),
-        widget:
-            Center(child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
-        function: !_clickedOrderNow ? checkoutActionButton : () {},
-      ),
+      bottomNavigationBar: (_restaurantController.cart.value.cartItems.length >
+              0)
+          ? ButtonComponent(
+              bgColor: getTheRightButtonColor(),
+              canClick: canClick(),
+              widget: Center(
+                  child: getTheRightWidgetForOrderNowButton(_clickedOrderNow)),
+              function: !_clickedOrderNow ? checkoutActionButton : () {},
+            )
+          : null,
     );
   }
 

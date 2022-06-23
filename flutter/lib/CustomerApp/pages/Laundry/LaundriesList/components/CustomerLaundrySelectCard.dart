@@ -4,45 +4,44 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
         ["LaundriesListView"]["components"]["CustomerLaundrySelectCard"];
 
 class CustomerLaundrySelectCard extends StatelessWidget {
-  const CustomerLaundrySelectCard({Key? key, required this.laundry})
+  const CustomerLaundrySelectCard(
+      {Key? key, required this.laundry, required this.shippingPrice})
       : super(key: key);
   final Laundry laundry;
+  final int shippingPrice;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+        elevation: 1,
         child: InkWell(
-      borderRadius: BorderRadius.circular(10),
-      onTap: () {
-        Get.toNamed(getSingleLaundryRoute(laundry.info.id));
-      },
-      child: Container(
-        child: Column(
-          children: [
-            _laundryInfoHeader(),
-
-            // Divider(),
-            //   _costsExpandableComponent()
-          ],
-        ),
-      ),
-    ));
+          borderRadius: BorderRadius.circular(10),
+          onTap: () {
+            Get.toNamed(getSingleLaundryRoute(laundry.info.id));
+          },
+          child: Container(
+            child: _laundryInfoHeader(),
+          ),
+        ));
   }
 
   Widget _laundryInfoHeader() {
     return Container(
-      margin: const EdgeInsets.only(top: 8, right: 3, left: 3, bottom: 8),
+      padding: const EdgeInsets.only(top: 10, right: 5, left: 5, bottom: 10),
+      alignment: Alignment.center,
       child: Row(
-        //crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: 25,
+            radius: 23,
             backgroundImage: CachedNetworkImageProvider(laundry.info.image),
           ),
           SizedBox(
@@ -50,71 +49,93 @@ class CustomerLaundrySelectCard extends StatelessWidget {
           ),
           Flexible(
             flex: 5,
-            fit: FlexFit.tight,
+            fit: FlexFit.loose,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 5,
+                ),
                 Text(
                   laundry.info.name,
                   style: Get.textTheme.bodyText1,
                 ),
-                Divider(
-                  height: 10,
+                SizedBox(
+                  height: 7,
                 ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 4,
+                      fit: FlexFit.loose,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
                             Icons.delivery_dining,
-                            size: 17,
+                            color: Colors.grey.shade800,
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Flexible(
+                            child: ShippingCostComponent(
+                              shippingCost: shippingPrice,
+                              alignment: MainAxisAlignment.start,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Flexible(
+                      flex: 2,
+                      fit: FlexFit.loose,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.watch_later,
+                            size: 18,
                             color: Colors.grey.shade800,
                           ),
                           SizedBox(
                             width: 3,
                           ),
-                          Text('\$50', style: Get.textTheme.bodyText2),
+                          Flexible(
+                              child: Text(
+                                  '${laundry.averageNumberOfDays} ${_i18n()["days"]}',
+                                  style: Get.textTheme.bodyText2)),
                         ],
                       ),
-                      SizedBox(
-                        width: 8,
+                    ),
+                    // SizedBox(
+                    //   width: 5,
+                    // ),
+                    Flexible(
+                      flex: 2,
+                      fit: FlexFit.loose,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.north_east_sharp,
+                            size: 18,
+                            color: Colors.grey.shade800,
+                          ),
+                          SizedBox(
+                            width: 3,
+                          ),
+                          Flexible(
+                              child: Text('${laundry.getCheapestCategory}/kg',
+                                  style: Get.textTheme.bodyText2)),
+                        ],
                       ),
-                      Flexible(
-                        flex: 2,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.watch_later,
-                              size: 17,
-                              color: Colors.grey.shade800,
-                            ),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            Flexible(
-                                child: Text(
-                                    '${laundry.averageNumberOfDays} ${_i18n()["days"]}',
-                                    style: Get.textTheme.bodyText2)),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Flexible(
-                        flex: 3,
-                        fit: FlexFit.tight,
-                        child: Text(
-                            "${_i18n()["startingFrom"]} \$${laundry.getCheapestCategory}",
-                            style: Get.textTheme.bodyText2),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
+                    ),
+                  ],
                 ),
               ],
             ),

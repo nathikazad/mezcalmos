@@ -35,7 +35,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
         Get.find<LanguageController>().userLanguageKey;
     return Card(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 3),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         child: Theme(
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(
@@ -58,14 +58,15 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
             ),
 
             //  tilePadding: EdgeInsets.all(5),
+            tilePadding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
             title: Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(5),
-                    height: 45,
-                    width: 45,
+                    //  padding: const EdgeInsets.all(5),
+                    height: 55,
+                    width: 55,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         image: DecorationImage(
@@ -136,26 +137,35 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                 data: Theme.of(context)
                     .copyWith(dividerColor: Colors.grey.shade400),
                 child: Column(
-                  children: buildChoices(widget.item.chosenChoices),
+                  children: buildChoices(
+                      widget.item.chosenChoices, widget.item.optionNames),
                 ),
               ),
               if (widget.item.notes != null)
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  alignment: Alignment.centerLeft,
+                  // margin: const EdgeInsets.symmetric(horizontal: 8),
+                  //   alignment: Alignment.centerLeft,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Divider(
+                        color: Colors.grey.shade400,
+                      ),
                       Container(
-                        child: Text("${_i18n()["itemNotes"]}"),
+                        child: Text(
+                          "${_i18n()["itemNotes"]}",
+                          style: Get.textTheme.bodyText1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
                       ),
                       Container(
                         child: Text(
                           widget.item.notes!,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
-                      Divider(color: Get.theme.dividerColor),
                     ],
                   ),
                 ),
@@ -166,12 +176,13 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
     );
   }
 
-  List<Widget> buildChoices(Map<String, List<Choice>> choices) {
+  List<Widget> buildChoices(
+      Map<String, List<Choice>> choices, Map<String, LanguageMap> optionNames) {
     final List<Widget> viewWidgets = [];
     choices.forEach((String key, List<Choice> value) {
       viewWidgets.add(ItemChosenChoiceComponent(
         choices: value,
-        optionName: key,
+        optionName: optionNames[key]!,
       ));
     });
     return viewWidgets;

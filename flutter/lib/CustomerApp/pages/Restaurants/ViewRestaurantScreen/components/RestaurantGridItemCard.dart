@@ -33,15 +33,14 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
             arguments: {"mode": ViewItemScreenMode.AddItemMode},
           );
         },
-        child: Container(
-          //  padding: const EdgeInsets.all(5),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (isImageExist)
-                CircleAvatar(
-                  radius: 30,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (!isImageExist)
+              Expanded(
+                child: CircleAvatar(
+                  radius: 45,
                   backgroundImage:
                       CachedNetworkImageProvider(widget.item.image ?? ""),
                   onBackgroundImageError: (Object e, StackTrace? s) {
@@ -50,23 +49,26 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
                     });
                   },
                 ),
-              SizedBox(
-                height: 10,
               ),
-              Text(
-                widget.item.name[userLanguage] ?? "",
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                "\$${widget.item.cost}",
-                style: Get.textTheme.bodyText1,
-                textAlign: TextAlign.center,
-              )
-            ],
-          ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              widget.item.name[userLanguage] ?? "",
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 3,
+            ),
+            Text(
+              "\$${widget.item.cost}",
+              style: Get.textTheme.bodyText1,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+          ],
         ),
       ),
     );

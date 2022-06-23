@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
@@ -186,7 +187,12 @@ class SignIn extends GetWidget<AuthController> {
             lmode != AppLaunchMode.dev
                 ? controller
                     .signInWithFacebook()
-                    .onError((_, __) => clickedLogin.value = false)
+                    .onError((Object? e, StackTrace stk) {
+                    mezDbgPrint(e);
+                    mezDbgPrint(stk);
+
+                    clickedLogin.value = false;
+                  })
                 : await Get.defaultDialog<dynamic>(
                     title: "Choose Test User",
                     content: Column(

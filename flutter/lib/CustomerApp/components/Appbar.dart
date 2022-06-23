@@ -14,11 +14,13 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final bool? autoBack;
   final AppBarLeftButtonType leftBtnType;
+  bool showPastOrders;
 
   CustomerAppBar(
       {Key? key,
       this.title,
       this.autoBack = false,
+      this.showPastOrders = true,
       this.leftBtnType = AppBarLeftButtonType.Back})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
@@ -27,16 +29,23 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      titleSpacing: 20,
       title: (title != null)
-          ? Text(
-              title!,
-              style: Theme.of(context).textTheme.headline2,
+          ? FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                title!,
+                style: Theme.of(context).textTheme.headline3,
+                textAlign: TextAlign.center,
+              ),
             )
           : Container(
               alignment: Alignment.center,
               width: 180,
               child: FittedBox(
-                child: MezcalmosSharedWidgets.fillTitle(1),
+                child: MezcalmosSharedWidgets.fillTitle(
+                    actionLength: 2,
+                    showLogo: (Get.width > 320) ? true : false),
               ),
             ),
       automaticallyImplyLeading: autoBack ?? false,
@@ -44,6 +53,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? _MenuButtonAppBar()
           : _BackButtonAppBar(),
       actions: [getAppbarIconsButton()],
+      centerTitle: true,
     );
   }
 
@@ -106,6 +116,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Icon(
             Icons.menu,
             color: Colors.white,
+            size: 33,
           ),
         ),
       ),
@@ -114,14 +125,14 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _ordersAppBarIcon() {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 12),
+      padding: const EdgeInsets.only(left: 5),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
           Get.toNamed(kOrdersRoute);
         },
         child: Ink(
-          padding: const EdgeInsets.all(7),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: SecondaryLightBlueColor,
@@ -137,8 +148,8 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _noUserButton() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 12),
+    return Container(
+      // padding: const EdgeInsets.only(left: 3, right: 16),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
@@ -165,7 +176,7 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
       if (Get.find<ForegroundNotificationsController>().notifications.length >
           0) {
         return Padding(
-          padding: const EdgeInsets.only(left: 3, right: 3),
+          padding: const EdgeInsets.only(right: 3),
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
@@ -174,9 +185,9 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Badge(
               badgeColor: Colors.red,
               showBadge: true,
-              position: BadgePosition.topEnd(top: 8, end: 0),
+              position: BadgePosition.topEnd(top: 0, end: 0),
               child: Ink(
-                padding: const EdgeInsets.all(7),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: SecondaryLightBlueColor,
@@ -200,10 +211,17 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Obx(() {
       return Row(
         children: [
+          SizedBox(
+            width: 5,
+          ),
           if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
           if (Get.find<AuthController>().isUserSignedIn)
             _notificationAppBarIcon(),
-          if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+          if (Get.find<AuthController>().isUserSignedIn && showPastOrders)
+            _ordersAppBarIcon(),
+          SizedBox(
+            width: 10,
+          ),
         ],
       );
     });

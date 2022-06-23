@@ -1,12 +1,13 @@
 import 'dart:async';
+
 import 'package:async/async.dart' show StreamGroup;
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -21,6 +22,7 @@ class OrderController extends GetxController {
       Get.find<ForegroundNotificationsController>();
   RxList<Order> currentOrders = <Order>[].obs;
   RxList<Order> pastOrders = <Order>[].obs;
+  RxInt shippingCost = 50.obs;
 
   StreamSubscription<dynamic>? _currentOrdersListener;
   StreamSubscription<dynamic>? _pastOrdersListener;
@@ -31,13 +33,14 @@ class OrderController extends GetxController {
     mezDbgPrint(
         "--------------------> OrderController Initialized ! and the user uid is ${_authController.fireAuthUser?.uid} ");
     if (_authController.fireAuthUser?.uid != null) {
+      getShippingPrice().then((int value) => shippingCost.value = value);
       _pastOrdersListener?.cancel();
       _pastOrdersListener = _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(customerPastOrders(_authController.fireAuthUser!.uid))
           .onValue
           .listen(
-        (Event event) async {
+        (dynamic event) async {
           final List<Order> orders = <Order>[];
           if (event.snapshot.value != null) {
             for (String orderId in event.snapshot.value.keys) {
@@ -45,7 +48,10 @@ class OrderController extends GetxController {
               try {
                 if (orderData["orderType"] ==
                     OrderType.Restaurant.toFirebaseFormatString()) {
-                  orders.add(RestaurantOrder.fromData(orderId, orderData));
+                  orders.add(RestaurantOrder.fromData(
+                    orderId,
+                    orderData,
+                  ));
                 }
 
                 if (orderData["orderType"] ==
@@ -54,7 +60,10 @@ class OrderController extends GetxController {
                 }
                 if (orderData["orderType"] ==
                     OrderType.Laundry.toFirebaseFormatString()) {
-                  orders.add(LaundryOrder.fromData(orderId, orderData));
+                  orders.add(LaundryOrder.fromData(
+                    orderId,
+                    orderData,
+                  ));
                 }
               } catch (e) {
                 mezDbgPrint(
@@ -67,11 +76,12 @@ class OrderController extends GetxController {
       );
 
       _currentOrdersListener?.cancel();
+
       _currentOrdersListener = _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(customerInProcessOrders(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((Event event) async {
+          .listen((dynamic event) async {
         final List<Order> orders = <Order>[];
 
         if (event.snapshot.value != null) {
@@ -90,7 +100,10 @@ class OrderController extends GetxController {
             }
             if (orderData["orderType"] ==
                 OrderType.Laundry.toFirebaseFormatString()) {
-              orders.add(LaundryOrder.fromData(orderId, orderData));
+              orders.add(LaundryOrder.fromData(
+                orderId,
+                orderData,
+              ));
             }
           }
         }
@@ -110,12 +123,12 @@ class OrderController extends GetxController {
     }
   }
 
-  bool hasNewMessageNotification(String orderId) {
+  bool hasNewMessageNotification(String chatId) {
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId == orderId)
+            notification.chatId == chatId)
         .isNotEmpty;
   }
 
@@ -162,6 +175,7 @@ class OrderController extends GetxController {
         // do nothing
         // return null;
       }
+      return null;
     });
   }
 
@@ -175,15 +189,25 @@ class OrderController extends GetxController {
         // do nothing
         // return null;
       }
+      return null;
     });
   }
 
-  bool orderHaveNewMessageNotifications(String orderId) {
+  Future<int> getShippingPrice() async {
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(baseShippingPriceNode())
+            .once())
+        .snapshot;
+    return snapshot.value as int;
+  }
+
+  bool orderHaveNewMessageNotifications(String chatId) {
     return _fbNotificationsController
         .notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId == orderId)
+            notification.chatId == chatId)
         .isNotEmpty;
   }
 
@@ -202,7 +226,7 @@ class OrderController extends GetxController {
   }
 
   @override
-  void onClose() async {
+  Future<void> onClose() async {
     print("[+] OrderController::onClose ---------> Was invoked !");
     await _currentOrdersListener?.cancel();
     _currentOrdersListener = null;

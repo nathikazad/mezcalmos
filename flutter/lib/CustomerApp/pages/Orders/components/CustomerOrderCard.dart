@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LaundryOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/RestaurantOrderHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TaxiOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -14,6 +15,8 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
+import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomerOrderCard extends StatelessWidget {
   const CustomerOrderCard({Key? key, required this.order}) : super(key: key);
@@ -28,7 +31,7 @@ class CustomerOrderCard extends StatelessWidget {
           primaryBodyContent: _getRightBody(),
           cardTitle: _getServiceProvider()?.name ?? "",
           cardStatus: _getOrderStatus(),
-          cardTime: Text(order.orderTime.getOrderTime()),
+          cardTime: Text(order.orderTime.getOrderTime().inCaps),
           rightImage: _rightImage()),
     );
   }
@@ -42,9 +45,9 @@ class CustomerOrderCard extends StatelessWidget {
         // mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Positioned(
-            left: -40,
+            left: -28,
             child: CircleAvatar(
-              radius: 25,
+              radius: 23,
               backgroundImage: CachedNetworkImageProvider(
                   _getServiceProvider()?.image ?? ""),
             ),
@@ -73,7 +76,17 @@ class CustomerOrderCard extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-              Text(50.toPriceString())
+              (order as RestaurantOrder).shippingCost == 0
+                  ? Flexible(
+                      flex: 4,
+                      fit: FlexFit.tight,
+                      child: ShippingCostComponent(
+                        shippingCost: (order as RestaurantOrder).shippingCost,
+                        alignment: MainAxisAlignment.start,
+                      ),
+                    )
+                  : Text(
+                      (order as RestaurantOrder).shippingCost.toPriceString())
             ],
           ),
         );
@@ -98,7 +111,14 @@ class CustomerOrderCard extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-              Text(50.toPriceString())
+              (order as LaundryOrder).shippingCost == 0
+                  ? Flexible(
+                      child: ShippingCostComponent(
+                        shippingCost: (order as LaundryOrder).shippingCost,
+                        alignment: MainAxisAlignment.start,
+                      ),
+                    )
+                  : Text((order as LaundryOrder).shippingCost.toPriceString())
             ],
           ),
         );
@@ -152,16 +172,17 @@ class CustomerOrderCard extends StatelessWidget {
 
   Widget _getOrderWidget() {
     return CircleAvatar(
-      radius: 22,
+      radius: 24,
       backgroundColor: Colors.white,
       child: CircleAvatar(
-        radius: 20,
+        radius: 23,
         child: Container(
           padding: const EdgeInsets.all(8),
           decoration:
               BoxDecoration(shape: BoxShape.circle, color: primaryBlueColor),
           child: Icon(
             _getOrderIcon(),
+            size: 30,
             color: Colors.white,
           ),
         ),
@@ -205,44 +226,47 @@ class CustomerOrderCard extends StatelessWidget {
     switch (order.orderType) {
       case OrderType.Restaurant:
         return Container(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())
-                  ? Colors.red.withOpacity(0.4)
+                  ? Colors.red.withOpacity(0.2)
                   : SecondaryLightBlueColor),
           child: Text(
             (order as RestaurantOrder).getOrderStatus(),
             style: Get.textTheme.bodyText1?.copyWith(
+                fontSize: 10.sp,
                 color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
           ),
         );
 
       case OrderType.Laundry:
         return Container(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())
-                  ? Colors.red.withOpacity(0.4)
+                  ? Colors.red.withOpacity(0.2)
                   : SecondaryLightBlueColor),
           child: Text(
             (order as LaundryOrder).orderStatusTitleForCustomer(),
             style: Get.textTheme.bodyText1?.copyWith(
+                fontSize: 10.sp,
                 color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
           ),
         );
       case OrderType.Taxi:
         return Container(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())
-                  ? Colors.red.withOpacity(0.4)
+                  ? Colors.red.withOpacity(0.2)
                   : SecondaryLightBlueColor),
           child: Text(
             (order as TaxiOrder).getTaxiOrderStatus(),
             style: Get.textTheme.bodyText1?.copyWith(
+                fontSize: 10.sp,
                 color: (order.isCanceled()) ? Colors.red : primaryBlueColor),
           ),
         );

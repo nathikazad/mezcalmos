@@ -11,12 +11,13 @@ class ListRestaurantsController {
   RxBool isLoading = RxBool(false);
   RxBool showOnlyOpen = RxBool(true);
   RxString searchQuery = RxString("");
+  num baseShippingPrice = 50;
   RestaurantsInfoController _restaurantsInfoController =
       Get.find<RestaurantsInfoController>();
 
   void init() {
     isLoading.value = true;
-
+    getShiipingPrice();
     _restaurantsInfoController.getRestaurants().then((List<Restaurant> list) {
       _restaurants = list;
       filterRestaurants();
@@ -27,6 +28,10 @@ class ListRestaurantsController {
 
   void changeAlwaysOpenSwitch(bool value) {
     showOnlyOpen.value = value;
+  }
+
+  getShiipingPrice() async {
+    baseShippingPrice = await _restaurantsInfoController.getShippingPrice();
   }
 
   void filterRestaurants() {

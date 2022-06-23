@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -13,15 +15,19 @@ Notification laundryNotificationHandler(String key, value) {
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
     case NotificationType.NewOrder:
+      mezDbgPrint(
+          "order Status notifier ================================================");
+      mezDbgPrint(value);
       return Notification(
           id: key,
           linkUrl: getLaundryOpOrderRoute(value["orderId"]),
+          icon: mat.Icons.local_laundry_service,
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
-              'assets/images/laundryApp/washingMachine.png', // needs to be changed
+              'assets/images/shared/notifications/atLaundry.png', // needs to be changed
           title: '${_i18n()['newOrderTitle']}',
           timestamp: DateTime.parse(value['time']),
-          notificationType: NotificationType.NewMessage,
+          notificationType: NotificationType.NewOrder,
           notificationAction:
               (value["notificationAction"] as String).toNotificationAction(),
           variableParams: value);
@@ -34,17 +40,6 @@ Notification laundryNotificationHandler(String key, value) {
   }
 }
 
-// String getLinkUrl(OrderType orderType, String orderId) {
-//   switch (orderType) {
-//     case OrderType.Laundry:
-//       return getLaundryOrderRoute(orderId);
-//     case OrderType.Restaurant:
-//       return getRestaurantOrderRoute(orderId);
-//     default:
-//       return kHomeRoute;
-//   }
-// }
-
 Notification _laundryOpOrderChangesNotifier(String key, value) {
   final LaundryOrderStatus newOrdersStatus =
       value['status'].toString().toLaundryOrderStatus();
@@ -53,26 +48,9 @@ Notification _laundryOpOrderChangesNotifier(String key, value) {
 
   return Notification(
       id: key,
+      icon: mat.Icons.local_laundry_service,
+      secondaryIcon: mat.Icons.close,
       linkUrl: getLaundryOpOrderRoute(value["orderId"]),
-      body: dynamicFields["body"],
-      imgUrl: dynamicFields["imgUrl"],
-      title: dynamicFields["title"],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.OrderStatusChange,
-      notificationAction:
-          (value["notificationAction"] as String).toNotificationAction(),
-      variableParams: value);
-}
-
-Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
-  final LaundryOrderStatus newOrdersStatus =
-      value['status'].toString().toLaundryOrderStatus();
-  final Map<String, dynamic> dynamicFields =
-      getLaundryOrderStatusFields(newOrdersStatus)!;
-
-  return Notification(
-      id: key,
-      linkUrl: '',
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -114,7 +92,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
     //         "assets/images/shared/notifications/readyOrderNotificationIcon.png",
     //   };
     // case LaundryOrderStatus.OtwPickupFromLaundry:
-    case LaundryOrderStatus.PickedUpFromLaundry:
+    //case LaundryOrderStatus.PickedUpFromLaundry:
     //   return <String, dynamic>{
     //     "title": "${_i18n()["laundryOtwDeliveryTitle"]}",
     //     "body": "${_i18n()["laundryOtwDeliveryBody"]}",
@@ -129,12 +107,16 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
     //         "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
     //   };
     case LaundryOrderStatus.CancelledByAdmin:
+      return <String, dynamic>{
+        "title": "${_i18n()["canceledOrderTitle"]}",
+        "body": "${_i18n()["canceledOrderBody"]}",
+        "imgUrl": "assets/images/shared/notifications/cancel.png",
+      };
     case LaundryOrderStatus.CancelledByCustomer:
       return <String, dynamic>{
         "title": "${_i18n()["canceledOrderTitle"]}",
         "body": "${_i18n()["canceledOrderBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+        "imgUrl": "assets/images/shared/notifications/cancel.png",
       };
     default:
       // do nothing

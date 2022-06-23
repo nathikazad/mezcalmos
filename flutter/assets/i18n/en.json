@@ -1,5 +1,8 @@
 {
     "CustomerApp": {
+        "main": {
+            "savedLocations": "Saved Locations"
+        },
         "components": {
             "Menu": {
                 "UserMenuComponent": {
@@ -44,7 +47,7 @@
                             "onTheWay": "Taxi on the way",
                             "lookingForTaxi": "Looking for Taxi",
                             "inTransit": "Taxi in transit",
-                            "droppedOff": "Dropped off",
+                            "droppedOff": "Delivered",
                             "expired": "Expired",
                             "forwarding": "Forwarding to company",
                             "forwardSuccess": "Forwarded",
@@ -60,9 +63,9 @@
                         "status": {
                             "canceled": "Order Cancelled",
                             "orderReceived": "Order Received",
-                            "otwPickUp": "Pick-up on the way",
-                            "pickedUp": "Order Picked-up",
-                            "atLaundry": "At laundry",
+                            "otwPickUp": "Pickup on the way",
+                            "pickedUp": "Order Picked up",
+                            "atLaundry": "At Laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered"
@@ -72,9 +75,9 @@
                         "totalCost": "Total Cost",
                         "status": {
                             "orderReceived": "Order Received",
-                            "otwPickUp": "Pick-up on the way",
-                            "pickedUp": "Order Picked-up",
-                            "atLaundry": "At laundry",
+                            "otwPickUp": "Pickup on the way",
+                            "pickedUp": "Order Picked up",
+                            "atLaundry": "At Laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered"
@@ -106,7 +109,7 @@
                     "components": {
                         "RestaurandCard": {
                             "items": "Items",
-                            "closed": "Closed"
+                            "closed": "CLOSED"
                         },
                         "searchField": {
                             "search": "Search"
@@ -122,16 +125,20 @@
                 "ViewCartScreen": {
                     "components": {
                         "BuildCart": {
-                            "inCart": "In Cart",
-                            "yesClear": "Yes clear",
+                            "inCart": "My orders",
+                            "yesClear": "Yes",
                             "no": "No",
                             "clearCart": "Clear Cart",
                             "clearCartConfirm": "Are you sure you want to clear the cart ?",
                             "clear": "Clear"
                         },
+                        "CartIsEmptyScreen": {
+                            "title": "Your cart is empty"
+                        },
                         "BuildItems": {
-                            "deleteItem": "Delete This Item.",
-                            "deleteItemConfirm": "Would you like to delete this item?",
+                            "deleteItem": "Delete  item",
+                            "deleteItemConfirm": "Are you sure you would like to delete?",
+                            "deleteBtn": "Yes, delete item",
                             "itemNotes": "Item notes :"
                         },
                         "ChoosenManyOption": {
@@ -155,7 +162,8 @@
                             "addLocationDialogSkip": "Skip"
                         },
                         "ViewCartBody": {
-                            "notes": "Notes"
+                            "notesTitle": "Notes",
+                            "notes": "Write your notes here"
                         }
                     },
                     "ViewCartScreen": {
@@ -169,7 +177,7 @@
                         "BottomBarItemViewScreen": {
                             "notAvailable": "This restaurant is closed",
                             "title": "Warning",
-                            "leftBtn": "Checkout",
+                            "leftBtn": "Checkout first",
                             "rightBtn": "Overwrite",
                             "subtitle": "You already have some items in your cart from another restaurant, do you want to check them out first or overwrite them?",
                             "addToCart": "Add item",
@@ -192,8 +200,16 @@
                 },
                 "ViewOrderScreen": {
                     "components": {
+                        "OrderStatusCard": {
+                            "willBePicked": "Will be picked up",
+                            "willBeDelivered": "Will be delivered"
+                        },
+                        "RestaurantOrderDriverCard": {
+                            "dropOffTime": "Delivery time"
+
+                        },
                         "notesWidget": {
-                            "notes": "Notes"
+                            "notes": "Order note :"
                         },
                         "OrderFooterCard": {
                             "cancelOrder": "Cancel Order",
@@ -224,13 +240,14 @@
                             "helperText-onTheWay": "Your order is on the way",
                             "helperText-readyForPickUp": "Your order is prepared and ready for pickup by the delivery driver",
                             "helperText-delivered": "Your order has been successfully delivered",
-                            "itemNotes": "Item notes : "
+                            "itemNotes": "Note : "
                         },
                         "OrderSummaryCard": {
                             "totalCost": "Total Cost",
                             "orderSummary": "Summary",
                             "orderCost": "Order Cost",
                             "deliveryCost": "Delivery Cost",
+                            "free": "Free",
                             "total": "Total",
                             "deliveryLocation": "Delivery Location"
                         }
@@ -241,6 +258,9 @@
                 },
                 "ViewRestaurantScreen": {
                     "components": {
+                        "RestaurantSliverAppBar": {
+                            "info": "Information"
+                        },
                         "restaurantInfoTab": {
                             "description": "Description",
                             "location": "Location",
@@ -351,8 +371,9 @@
                 }
             },
             "CustomerWrapper": {
+                "savedLocations": "Saved Locations",
                 "welcomeText": "Welcome to MEZCALMOS 👋",
-                "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and hight quality services.",
+                "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",
                 "services": "Services",
                 "taxi": {
                     "subtitle": "Get the nearest taxi around and get your destinatiion asap .",
@@ -366,6 +387,7 @@
                     "subtitle": "Get your clothes cleaned by your nearest laundry service",
                     "title": "Laundry"
                 },
+                "comingSoon": "Coming soon ...",
                 "supportText": "need help ? Contact our support team"
             },
             "Laundry": {
@@ -376,6 +398,10 @@
                 },
                 "LaundryCurrentOrderView": {
                     "Components": {
+                        "LaundryOrderDriverCard": {
+                            "dropOffTime": "Delivery time",
+                            "pickUpTime": "Pickup time"
+                        },
                         "LaundryOrderComponent": {
                             "notes": "Notes"
                         },
@@ -394,8 +420,8 @@
                         },
                         "LaundryOrderStatusCard": {
                             "orderReceived": "Order Received",
-                            "otwPickUp": "Pick-up on the way",
-                            "pickedUp": "Order Picked-up",
+                            "otwPickUp": "Pickup on the way",
+                            "pickedUp": "Order Pickedup",
                             "atLaundry": "At laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
@@ -403,8 +429,8 @@
                             "canceled": "Order Cancelled",
                             "otwToCustomer": "On the way to customer",
                             "otwToLaundry": "On the way to laundry",
-                            "pickedUpFromCustomer": "Picked up from customer",
-                            "pickedUpFromLaundry": "Picked up from laundry",
+                            "pickedUpFromCustomer": "On the way to laundry",
+                            "pickedUpFromLaundry": "Delivery on the way",
 
                             "cancelByAdmin": " Order Canceled by the admin",
                             "cancelByUser": " You canceled the order",
@@ -422,7 +448,7 @@
 
                         },
                         "LaundryPricingComponent": {
-                            "laundryPricing": "Laundry Pricing",
+                            "laundryPricing": "Laundry cost",
                             "fixedRate": "Cost Per Kilo",
                             "orderWeight": "Order Weight",
                             "minimumCost": "Minimum Cost",
@@ -442,6 +468,7 @@
                             "laundryPricing": "Laundry Pricing",
                             "fixedRate": "Cost Per Kilo",
                             "orderWeight": "Order Weight",
+                            "free": "Free",
                             "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
                         }
                     },
@@ -460,16 +487,16 @@
                         },
                         "CustomerLaundrySelectCard": {
                             "days": "days",
-                            "startingFrom": "Starting from :"
+                            "startingFrom": "Starting"
                         }
                     },
 
                     "laundries": "Laundries",
 
-                    "title": "Find your closest laundries or dry cleaners "
+                    "title": "Find your closest laundries\nor dry cleaners "
                 },
                 "SingleLaundryScreen": {
-                    "startingFrom": "Starting from :",
+                    "startingFrom": "Starting from ",
                     "minimumCost": "Minimum Cost",
                     "description": "Description",
                     "openHours": "openHours",
@@ -478,6 +505,7 @@
                 },
                 "LaundryRequestView": {
                     "LaundryOrderRequestView": {
+
                         "howItWorks": "How it works",
                         "deliveryLocation": "Delivery Location",
                         "orderSummary": "Order Summary",
@@ -490,7 +518,8 @@
                         "signInToMakeOrder": "Sign in to make order",
                         "notes": "Notes",
                         "error": "Error",
-                        "errorText": "Can't make an order please try again"
+                        "errorText": "Can't make an order please try again",
+                        "noteHint": "Write your notes here"
                     }
                 },
                 "LaundryPickLocView": {
@@ -529,7 +558,7 @@
             "taxiFwdCancelBody": "You order has been cancelled ",
             "laundryOtwPickupTitle": "Pickup on the way",
             "laundryOtwPickupBody": "Driver on the way to pick up your order",
-            "laundryPickedTitle": "Order Picked-up",
+            "laundryPickedTitle": "Order Picked up",
             "laundryPickedBody": "Order is picked up successfuly",
             "laundryAtLaundryTitle": "At laundry",
             "laundryAtLaundryBody": "You order is received by the laundry",
@@ -553,6 +582,8 @@
         },
         "helpers": {
             "ImageHelper": {
+                "fromCamera": "Take a picture",
+                "fromGallery": "Upload from gallery",
                 "camera": "Camera",
                 "gallery": "Gallery",
                 "cameraAccessOffTitle": "App can't access Camera.",
@@ -561,19 +592,23 @@
                 "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
             },
             "GeneralPurposeHelper": {
-                "yesCancel": "Yes cancel order",
+                "yesCancel": "Yes, cancel order",
                 "no": "No",
                 "cancelOrder": "Cancel Order",
-                "cancelConfirmationText": "Are you sure you want to cancel the order",
-                "subtitle": "This action cannot be undone."
+                "cancelConfirmationText": "Are you sure you would like to cancel ?",
+                "subtitle": "This action cannot be undone.",
+                "ok": "Ok",
+                "viewOrder": "View Order"
             },
             "NotificationsHelper": {
                 "view": "View"
             },
             "DateTimeHelper": {
                 "today": "Today",
-                "in": "in : ",
-                "at": "at : "
+                "tomorrow": "tomorrow",
+                "on": "on",
+                "in": "in",
+                "at": "at"
             }
         },
         "pages": {
@@ -624,7 +659,9 @@
                     "today": "Today",
                     "alertClearNotificationTitle": "Clear All Notifications",
                     "clear": "Clear",
-                    "no": "No"
+                    "no": "No",
+                    "noNotifTitle": "No notifications yet !",
+                    "noNotifBody": "You have currently no notifications. We will notify you when something new arrives."
                 }
             },
             "UserProfileScreen": {
@@ -639,6 +676,8 @@
                     "uploadPic": "Upload Image",
                     "title": " User Information",
                     "cancel": "Cancel",
+                    "name": "Name",
+                    "memberSince": "Member since",
                     "editInfo": "Edit Information",
                     "noChangesToApply": "No Changes to be applied!",
                     "saveBtn": "Save"
@@ -696,6 +735,25 @@
             }
         },
         "widgets": {
+            "NoOrdersComponent": {
+                "title": "No orders at the moment",
+                "subtitle": "Try again later"
+            },
+            "FreeShippingComponent": {
+                "free": "Free"
+            },
+            "MezServiceOpenHours": {
+                "openHours": "Open hours",
+                "weekDays": {
+                    "monday": "Monday",
+                    "tuesday": "Tuesday",
+                    "wednesday": "Wednesday",
+                    "thursday": "Thursday",
+                    "friday": "Friday",
+                    "saturday": "Saturday",
+                    "sunday": "Sunday"
+                }
+            },
             "MezWorkingHours": {
                 "save": "Save",
                 "cancel": "Cancel",
@@ -736,6 +794,12 @@
             },
             "MezSideMenu": {
                 "userInfo": "User Information",
+                "profile": "Profile",
+                "notifications": "Notifications",
+                "pastOrders": "Past orders",
+                "login": "Login",
+                "language": "Language",
+
                 "logout": "Logout",
                 "legal": "Privacy policy"
             }
@@ -828,7 +892,7 @@
                     "orderId": "Order Id",
                     "appVersion": "App Version",
                     "totalOrders": "Total Orders",
-                    "droppedOff": "Dropped Off",
+                    "droppedOff": "Delivered",
                     "firstOrder": "First Order",
                     "lastOrder": "Last Order",
                     "notifications": "Notifications",
@@ -965,7 +1029,7 @@
                             "startPickUp": "Start pickup",
                             "startPickUpText": "The driver should be notified to pick up the order",
                             "startPickUpTitle": "Start order Pickup",
-                            "pickedUp": "Order Picked-up",
+                            "pickedUp": "Order Picked up",
                             "atLaundry": "At laundry",
                             "atLaundryText": "Confirm the order received by the laundry by setting the order weight ",
                             "atLaundryTitle": "Order at laundry",
@@ -978,15 +1042,15 @@
                             "otwDeliveryTitle": "Delivery On the way",
                             "delivered": "Order Delivered",
                             "deliveredText": "Confirm that the order is delivered to the customer",
-                            "deliveredTitle": "Order delivered"
+                            "deliveredTitle": "Order Delivered"
                         },
                         "LaundryOrderCustomer": {
                             "customer": "Customer"
                         },
                         "LaundryOrderStatusCard": {
                             "orderReceived": "Order Received",
-                            "otwPickUp": "Pick-up on the way",
-                            "pickedUp": "Order Picked-up",
+                            "otwPickUp": "Pickup on the way",
+                            "pickedUp": "Order Picked up",
                             "atLaundry": "At laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
@@ -997,7 +1061,8 @@
                             "orderWeight": "Order Weight",
                             "orderCost": "Order Cost",
                             "totalCost": "Total Cost",
-                            "deliveryCost": "Shipping Cost"
+                            "deliveryCost": "Shipping Cost",
+                            "free": "Free"
                         }
                     },
                     "LaundryOrderScreen": {
@@ -1054,7 +1119,7 @@
                             "preparing": "PREPARE",
                             "prepareAlertTitle": "Prepare Order",
                             "prepareAlertSubTitle": "Are you sure you want\nto prepare order?",
-                            "received": "DROPPED",
+                            "received": "DELIVERED",
                             "deliveredAlertTitle": "Deliver",
                             "deliveredAlertSubTitle": "Are you sure you want\nto deliver the order?"
                         },
@@ -1067,7 +1132,8 @@
                         "OrderTotalCostCard": {
                             "totalCost": "Total Cost",
                             "deliveryCost": "Delivery Cost",
-                            "total": "Total"
+                            "total": "Total",
+                            "free": "Free"
                         },
                         "PastOrderInfo": {
                             "canceledByAdmin": "Order Cancelled",
@@ -1110,7 +1176,7 @@
                                 "onTheWay": "Taxi on the way",
                                 "lookingForTaxi": "Looking for Taxi",
                                 "inTransit": "Taxi in transit",
-                                "droppedOff": "Dropped off",
+                                "droppedOff": "Delivered",
                                 "expired": "Expired",
                                 "forwarding": "Forwarding to company",
                                 "forwardSuccess": "Forwarded",
@@ -1143,15 +1209,50 @@
     },
     "DeliveryApp": {
         "pages": {
+
             "OrderDetailsScreen": {
+                "cancelled": "Cancelled",
+                "approved": "Approved",
+                "paymentMethod": "Payment method",
+                "cash": "Cash",
+                "from": "From",
+                "deliveredTo": "Delivered to",
+                "deliveryCost": "Delivery Cost",
+                "customer": "Customer",
+                "restaurant": "Restaurant",
+                "laundry": "Laundry"
 
+            },
+            "RestaurantOrderView": {
+                "components": {
+                    "RestaurantOrderFromToComponent": {
+                        "pickUpTimeErrorTitle": "Oops",
+                        "pickUpTimeError": "The Pickup time should be before the delivery time.",
+                        "restaurantDelivery": "Restaurant Delivery",
+                        "orderStatus": {
+                            "waiting": "Waiting for restaurant",
+                            "preparing": "Order is being prepared",
+                            "readyForPickup": "Ready for pickup",
+                            "deliveryOtw": "Delivery on the way",
+                            "delivered": "Order Delivered",
+                            "canceled": "Order Cancelled"
+                        },
+                        "RestaurantControllButtons": {
+                            "confirmPickup": "Confirm Order Pickup",
+                            "confirmDelivery": "Confirm Delivery"
 
+                        }
+                    }
+                },
+                "title": "Restaurant Delivery"
             },
             "CurrentOrders": {
                 "CurrentOrdersListScreen": {
                     "currentOrders": "Current orders",
                     "pastOrders": "Past orders",
                     "title": "Incoming  Orders",
+                    "offlineTitle": "You are offline",
+                    "offlineBody": "Turn on to see incoming orders",
                     "Components": {
                         "DriverNoOrdersComponent": {
                             "noOrdersTitle": "No Orders Found",
@@ -1164,23 +1265,39 @@
                         "DriverOrderCard": {
                             "orderTitle": {
                                 "restaurantDelivery": "Restaurant Delivery",
-                                "laundryPickup": "Laundry Pick-up",
+                                "laundryPickup": "Laundry Pickup",
                                 "laundryDelivery": "Laundry Delivery"
-                            }
+
+                            },
+                            "waiting": "Waiting",
+                            "ready": "Ready",
+                            "inTransit": "In transit",
+                            "delivered": "Delivered",
+                            "cancelled": "Cancelled"
                         }
-                    },
-                    "CurrentOrdersListScreen": {
-                        "title": "Incoming  Orders"
                     }
+
 
                 },
                 "CurrentOrderViewScreen": {
+                    "LaundryOrderView": {
+                        "pickup": "Laundry Pick up",
+                        "dropoff": "Laundry Delivery"
+
+                    },
                     "Components": {
                         "DriverBottomLaundryOrderCard": {
+                            "oops": "Oops",
+                            "set": "Set",
+                            "time": "Time",
+                            "dropoff": "Delivery",
+                            "pickup": "Pickup",
+                            "pickupTimeError": "The Pickup time should be before the delivery time.",
+                            "wrongTime": "You picked a wrong time",
                             "orderStatus": {
                                 "readyForPickup": "Ready for pickup",
                                 "pickupOtw": "Pickup on the way",
-                                "pickedUp": "Order Picked-up",
+                                "pickedUp": "Order Picked up",
                                 "atLaundry": "At laundry",
                                 "readyForDelivery": "Ready for Delivery",
                                 "deliveryOtw": "Delivery on the way",
@@ -1200,14 +1317,23 @@
                                 "orderWeightAlert": "Please enter a valid weight",
                                 "confirm": "Confirm",
                                 "cancel": "Cancel",
-                                "orderWeight": "Order Weight"
+                                "orderWeight": "Order Weight",
+                                "timeErrorTitle": "Time not set!",
+                                "timeErrorBody": "Please set the estimated times first."
                             }
 
                         },
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Restaurant Delivery",
+                            "oops": "Oops",
+                            "set": "Set",
+                            "time": "Time",
+                            "dropoff": "Delivery",
+                            "pickup": "Pickup",
+                            "pickupTimeError": "The Pickup time should be before the delivery time.",
+                            "wrongTime": "You picked a wrong time",
                             "orderStatus": {
-                                "waiting": "Waiting for preparing the order",
+                                "waiting": "Waiting for restaurant",
                                 "preparing": "Order is being prepared",
                                 "readyForPickup": "Ready for pickup",
                                 "deliveryOtw": "Delivery on the way",
@@ -1216,7 +1342,15 @@
                             },
                             "RestaurantControllButtons": {
                                 "confirmPickup": "Confirm Order Pickup",
-                                "confirmDelivery": "Confirm Delivery"
+                                "confirmDelivery": "Confirm Delivery",
+                                "timeErrorTitle": "Time not set !",
+                                "timeErrorBody": "Please set the estimated times first.",
+                                "notReadyTitle": "Waiting for order",
+                                "notReadyBody": "Order is not ready for delivery yet"
+
+
+
+
 
                             }
                         }
@@ -1233,7 +1367,7 @@
             "cancelledBody": "Your order has been cancelled",
             "laundryOtwPickupTitle": "Pickup on the way",
             "laundryOtwPickupBody": " on the way to pick up the order",
-            "laundryPickedTitle": "Order Picked-up",
+            "laundryPickedTitle": "Order Picked up",
             "laundryPickedBody": "Order is picked up successfuly",
             "laundryAtLaundryTitle": "At laundry",
             "laundryAtLaundryBody": "Order is received by the laundry",
@@ -1295,7 +1429,7 @@
                         "location": "Location",
                         "categories": "Categories",
                         "addCategory": "Add category",
-                        "editMyInfo": "Edit my informations"
+                        "editMyInfo": "Edit my information"
 
                     }
                 },
@@ -1304,7 +1438,10 @@
                         "components": {
                             "LaundryOpOrderCard": {
                                 "date": "Date : ",
-                                "totalCost": "Total Cost : "
+                                "totalCost": "Total Cost : ",
+                                "waiting": "Waiting",
+                                "delivered": "Delivered",
+                                "canceled": "Cancelled"
                             }
                         },
                         "currentOrders": "Current orders",
@@ -1322,11 +1459,13 @@
                 },
                 "components": {
                     "LanguageSelectorComponent": {
-                        "none": "None"
+                        "none": "None",
+                        "errorText": "Please select language "
                     }
                 },
                 "EditInfoView": {
                     "laundryName": "Laundry name",
+                    "nameErrorText": "please provide a name",
                     "defaultLanguage": "Default language",
                     "secondaryLanguage": "Secondary language",
                     "location": "Location",
@@ -1334,13 +1473,17 @@
                 }
             },
             "AdminView": {
+                "LaundryOpAdminView": {
+                    "save": "Save",
+                    "categories": "Categories"
+                },
                 "components": {
                     "CategoryGridCard": {
                         "nameTooltip": "Name missing in your selected primary language",
                         "deleteTitle": "Delete Category",
 
-                        "deleteHelperText": "are you sure you want to delete this category",
-                        "yesDelete": "Yes, delete"
+                        "deleteHelperText": "are you sure you would like to delete ?",
+                        "yesDelete": "Yes, delete category"
                     },
                     "LaundryOpNormalDeliveryTime": {
                         "normalDeliverytime": "Normal delivery time",
@@ -1354,12 +1497,19 @@
                         "status": {
                             "canceled": "Order Cancelled",
                             "orderReceived": "Order Received",
-                            "otwPickUp": "Pick-up on the way",
-                            "pickedUp": "Order Picked-up",
-                            "atLaundry": "At laundry",
+                            "otwPickUp": "Pickup on the way",
+                            "pickedUp": "Order Picked up",
+                            "atLaundry": "At Laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered"
+                        },
+                        "estTimes": {
+                            "laundryArriving": "Laundry arriving",
+                            "laundryFinish": "Finishing",
+                            "driverArriving": "Driver arriving",
+                            "willBeDropped": "Will be delivered"
+
                         }
 
                     },
@@ -1369,19 +1519,27 @@
                         "set": "Set",
                         "estLaundryFinish": "Estimated laundry ready time",
                         "confirm": "Confirm",
-                        "cancel": "Cancel"
+                        "cancel": "Cancel",
+                        "error": "Error",
+                        "errorText": "Please select a correct time."
+
 
                     },
                     "LaundryOpOrderDriverCard": {
                         "driver": "Driver",
-                        "noDriver": "No driver has been assigned"
+                        "noDriver": "No driver assigned yet",
+                        "dropOffTime": "Delivery time",
+                        "pickUpTime": "Pickup time"
                     },
                     "LaundryOpSetCategoryComponent": {
 
+                        "deleteTitle": "Yes, delete item",
+                        "deleteBody": " are you sure you'd like to delete ?",
+                        "deleteItem": "Delete item",
                         "itemsWeights": "Items weights",
                         "newItemsWeight": "New items weight",
                         "itemsCategory": "Items Category",
-                        "itemsWeight": "Items Weight",
+                        "itemsWeight": "Items weight",
                         "itemsWeightErrorText": "Please enter a valid weight",
                         "saveItemsWeight": "Save items weight",
                         "cancel": "Cancel",
@@ -1415,7 +1573,7 @@
 
                 },
                 "LaundryOpOrderView": {
-                    "customer": "Customer",
+                    "customer": "Customer Info",
                     "orderDate": "Order Date",
                     "total": "Total",
                     "orderReady": "Order ready for delivery"
@@ -1423,10 +1581,10 @@
             }
         },
         "notificationHandler": {
-            "newOrderTitle": "New Order",
+            "newOrderTitle": "Order received",
             "newOrderBody": "You got a new order",
-            "canceledOrderTitle": "Order canceled",
-            "canceledOrderBody": "Your order has been canceled"
+            "canceledOrderTitle": "Order cancelled",
+            "canceledOrderBody": "Your order has been cancelled"
 
         }
 

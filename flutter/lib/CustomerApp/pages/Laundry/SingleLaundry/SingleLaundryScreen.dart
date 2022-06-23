@@ -42,50 +42,39 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomerAppBar(),
-      body: Obx(() {
+    return Obx(
+      () {
         if (laundry.value != null) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _laundryImage(),
-                SizedBox(
-                  height: 15,
-                ),
-                _laundryInfoHeader(),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "${_i18n()["description"]}",
-                  style: Get.textTheme.bodyText1,
-                ),
-                Text("laundry.value!.info.description"),
-                const SizedBox(
-                  height: 10,
-                ),
-                MezServiceOpenHours(schedule: laundry.value!.schedule!),
-                SizedBox(
-                  height: 10,
-                ),
-                ServiceLocationCard(location: laundry.value!.info.location),
-                Text(
-                  laundry.value!.info.location.address,
-                  style: Get.textTheme.bodyText2,
-                ),
-              ],
+          return Scaffold(
+            appBar: CustomerAppBar(
+              title: laundry.value?.info.name,
             ),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _laundryImage(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _laundryInfoHeader(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  MezServiceOpenHours(schedule: laundry.value!.schedule!),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  ServiceLocationCard(location: laundry.value!.info.location),
+                ],
+              ),
+            ),
+            bottomNavigationBar: _sendMyLaundryButton(),
           );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      }),
-      bottomNavigationBar: _sendMyLaundryButton(),
+        } else
+          return Container();
+      },
     );
   }
 
@@ -110,6 +99,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
     return CachedNetworkImage(
         width: double.infinity,
         height: 20.h,
+        fit: BoxFit.cover,
         imageUrl: laundry.value!.info.image);
   }
 
@@ -128,11 +118,15 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   laundry.value!.info.name,
                   style: Get.textTheme.bodyText1,
                 ),
+                SizedBox(
+                  height: 5,
+                ),
                 Row(children: [
                   Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(3),
+                    child: Container(
                       child: Chip(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(35)),
                           padding: const EdgeInsets.all(3),
                           labelStyle: Get.textTheme.bodyText2?.copyWith(
                               fontWeight: FontWeight.w700,
@@ -146,18 +140,24 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             ),
           ),
           Flexible(
+              flex: 1,
               child: Column(
-            children: [
-              Text(
-                "${_i18n()["startingFrom"]}",
-              ),
-              Text(
-                "\$${laundry.value!.getCheapestCategory}/KG",
-                style: Get.textTheme.bodyText1
-                    ?.copyWith(color: Get.theme.primaryColorLight),
-              ),
-            ],
-          )),
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    "${_i18n()["startingFrom"]}",
+                  ),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.all(5),
+                    child: Text(
+                      "\$${laundry.value!.getCheapestCategory}/KG",
+                      style: Get.textTheme.bodyText1
+                          ?.copyWith(color: Get.theme.primaryColorLight),
+                    ),
+                  ),
+                ],
+              )),
         ],
       ),
     );

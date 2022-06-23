@@ -96,7 +96,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             estimatedDropoffAtServiceProviderTime:
                 estimatedDropoffAtServiceProviderTime);
 
-  factory LaundryOrder.fromData(id, data) {
+  factory LaundryOrder.fromData(
+    id,
+    data,
+  ) {
     final dynamic _estimatedPickupFromServiceProviderTime =
         data["estimatedDeliveryTimes"]?["dropoff"]?["pickup"];
     final dynamic _estimatedDropoffAtCustomerTime =
@@ -114,7 +117,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       to: Location.fromFirebaseData(data['to']),
       orderTime: DateTime.parse(data["orderTime"]),
       paymentType: data["paymentType"].toString().toPaymentType(),
-      shippingCost: data['shippingCost'] ?? 50,
+      shippingCost: data["shippingCost"] ?? 50,
       notes: data["notes"],
       costsByType: (data["costsByType"] != null)
           ? LaundryOrderCosts.fromData(data["costsByType"])
@@ -158,7 +161,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       laundryPickupDriverChatId: data['secondaryChats']
           ?['serviceProviderPickupDriver'],
       customerPickupDriverChatId: data['secondaryChats']
-          ?['customerPickupDriverDriver'],
+          ?['customerPickupDriver'],
     );
 
     if (data["routeInformation"] != null) {
@@ -193,6 +196,34 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.CancelledByAdmin;
   }
 
+  bool afterAtLaundry() {
+    return status == LaundryOrderStatus.AtLaundry ||
+        status == LaundryOrderStatus.Delivered ||
+        status == LaundryOrderStatus.OtwPickupFromLaundry ||
+        status == LaundryOrderStatus.PickedUpFromLaundry ||
+        status == LaundryOrderStatus.ReadyForDelivery;
+  }
+
+  String? getCustomerDriverChatId() {
+    if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
+        customerPickupDriverChatId != null) {
+      return customerPickupDriverChatId;
+    } else if (customerDropOffDriverChatId != null) {
+      return customerDropOffDriverChatId;
+    }
+    return null;
+  }
+
+  String? getServiceDriverChatId() {
+    if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
+        serviceProviderPickupDriverChatId != null) {
+      return serviceProviderPickupDriverChatId;
+    } else if (serviceProviderDropOffDriverChatId != null) {
+      return serviceProviderDropOffDriverChatId;
+    }
+    return null;
+  }
+
   @override
   bool inProcess() {
     return status == LaundryOrderStatus.OrderReceieved ||
@@ -213,11 +244,6 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
   bool isAtLaundry() {
     return status == LaundryOrderStatus.AtLaundry;
-  }
-
-  // TODO @montasarre remove getPrice as it comes from costsByType
-  num? getPrice() {
-    return null;
   }
 
   LaundryOrderPhase getCurrentPhase() {

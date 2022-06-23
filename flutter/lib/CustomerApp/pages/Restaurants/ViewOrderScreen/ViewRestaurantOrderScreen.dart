@@ -92,7 +92,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     // orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
-    initMap();
+    if (order.value != null) {
+      initMap();
+    }
 
     _orderListener =
         controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
@@ -169,33 +171,32 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                     child: IntrinsicHeight(
                       child: Column(
                         children: <Widget>[
+                          SizedBox(
+                            height: 20,
+                          ),
                           OrderStatusCard(
                             order: order.value!,
                             ordersStates: order.value!.status,
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
+
                           RestaurantOrderDriverCard(
                             order: order.value!,
                           ),
                           if (order.value!.inDeliveryPhase()) ..._mapWidget,
+
                           OrderRestaurantCard(order: order.value!),
 
-                          SizedBox(
-                            height: 15,
-                          ),
                           OrderItemsCard(
                             items: order.value!.items,
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          OrderSummaryCard(order: order.value!),
                           order.value?.notes == null ||
                                   order.value!.notes!.length <= 0
                               ? Container()
                               : notesWidget(order),
+                        
+
+                          OrderSummaryCard(order: order.value!),
+
                           //===============================>button cancel===========================
                           //  Expanded(child: Container()),
                           Spacer(),
@@ -220,14 +221,14 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   }
 
   List<Widget> get _mapWidget => <Widget>[
+        SizedBox(
+          height: 20,
+        ),
         Container(
           height: 350,
           width: Get.width - 20,
           child: MGoogleMap(mGoogleMapController: mapController),
         ),
-        SizedBox(
-          height: 10,
-        )
       ];
 
   void initMap() {

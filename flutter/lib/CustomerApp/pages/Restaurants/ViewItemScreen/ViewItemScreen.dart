@@ -6,9 +6,11 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/BottomBarItemViewScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ITemSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ItemOptionCard.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -106,14 +108,15 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        bottomNavigationBar: (cartItem.value != null)
-            ? BottomBarItemViewScreen(
-                currentRestaurantId: currentRestaurant?.info.id,
-                isAvailable: (currentRestaurant?.isOpen() ?? false),
-                cartItem: cartItem,
-                mode: widget.viewItemScreenMode,
-              )
-            : null,
+        bottomNavigationBar:
+            (cartItem.value != null && currentRestaurant != null)
+                ? BottomBarItemViewScreen(
+                    currentRestaurantId: currentRestaurant?.info.id,
+                    isAvailable: (currentRestaurant!.isOpen()),
+                    cartItem: cartItem,
+                    mode: widget.viewItemScreenMode,
+                  )
+                : null,
         body: (cartItem.value == null)
             ? Container(
                 alignment: Alignment.center,
@@ -135,28 +138,18 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 20,
+                  height: 10,
+                ),
+                Text(
+                  item.cost.toPriceString(),
+                  style: Get.textTheme.headline3
+                      ?.copyWith(color: primaryBlueColor),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 if (cartItem.value?.item.description != null)
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("${_i18n()["itemDescription"]}",
-                            style: Get.textTheme.bodyText1),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                            "${cartItem.value!.item.description![userLanguage]!.inCaps}",
-                            textAlign: TextAlign.left,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(fontSize: 12.sp)),
-                      ],
-                    ),
-                  ),
+                  _itemDescription(context),
                 SizedBox(
                   height: 10,
                 ),
@@ -185,6 +178,26 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     );
   }
 
+  Container _itemDescription(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("${_i18n()["itemDescription"]}", style: Get.textTheme.bodyText1),
+          SizedBox(
+            height: 10,
+          ),
+          Text("${cartItem.value!.item.description![userLanguage]!.inCaps}",
+              textAlign: TextAlign.left,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(fontSize: 12.sp)),
+        ],
+      ),
+    );
+  }
+
   Container _itemNotesComponent() {
     return Container(
       child: Column(
@@ -195,8 +208,11 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
             "${_i18n()["itemNotes"]}",
             style: Get.textTheme.bodyText1,
           )),
+          SizedBox(
+            height: 5,
+          ),
           Container(
-            margin: const EdgeInsets.all(8),
+            margin: const EdgeInsets.symmetric(vertical: 8),
             child: TextFormField(
               minLines: 3,
               maxLines: 10,

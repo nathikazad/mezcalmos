@@ -2,16 +2,12 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
-import 'dart:convert';
-
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
@@ -24,6 +20,7 @@ class RestaurantController extends GetxController {
   StreamSubscription<dynamic>? _cartListener;
   Restaurant? associatedRestaurant;
   Rx<Cart> cart = Cart().obs;
+  RxInt shippingPrice = 50.obs;
 
   @override
   void onInit() {
@@ -31,15 +28,19 @@ class RestaurantController extends GetxController {
     mezDbgPrint(
         "--------------------> RestaurantsCartController Initialized !");
     if (_authController.fireAuthUser != null) {
+      getShippingPrice().then((int value) => shippingPrice.value = value);
+
       _cartListener?.cancel();
       _cartListener = _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(customerCart(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((Event event) async {
+          .listen((event) async {
         final dynamic cartData = event.snapshot.value;
         // check if cart has data
         if (cartData != null) {
+          // assign the shipping price
+
           // check if cart data is for restaurant
           if (cartData["orderType"] ==
               OrderType.Restaurant.toFirebaseFormatString()) {
@@ -61,7 +62,8 @@ class RestaurantController extends GetxController {
               cart.value = Cart();
             }
 
-            cart.value = Cart.fromCartData(cartData, associatedRestaurant!);
+            cart.value = Cart.fromCartData(
+                cartData, associatedRestaurant!, shippingPrice.value);
           }
         } else {
           cart.value = Cart();
@@ -72,17 +74,29 @@ class RestaurantController extends GetxController {
   }
 
   Future<Restaurant> getAssociatedRestaurant(String restaurantId) async {
-    final DataSnapshot snapshot = await _databaseHelper.firebaseDatabase
-        .reference()
-        .child('restaurants/info/$restaurantId')
-        .once();
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child('restaurants/info/$restaurantId')
+            .once())
+        .snapshot;
     return Restaurant.fromRestaurantData(
         restaurantId: restaurantId, restaurantData: snapshot.value);
   }
 
+  Future<int> getShippingPrice() async {
+    final DataSnapshot snapshot = (await _databaseHelper.firebaseDatabase
+            .ref()
+            .child(baseShippingPriceNode())
+            .once())
+        .snapshot;
+    mezDbgPrint(
+        "Gettting shipping cost ==================================>>>>>> ${snapshot.value}");
+    return snapshot.value as int;
+  }
+
   Future<void> saveCart() async {
     await _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(customerCart(_authController.fireAuthUser!.uid))
         .set(cart.value.toFirebaseFormattedJson());
   }
@@ -124,7 +138,7 @@ class RestaurantController extends GetxController {
 
   void clearCart() {
     _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(customerCart(_authController.user!.id))
         .remove()
         .then((_) {

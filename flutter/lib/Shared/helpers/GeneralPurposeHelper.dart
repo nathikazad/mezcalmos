@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart' show NumberFormat;
@@ -161,6 +161,7 @@ Future<void> showConfirmationDialog(
   final RxBool _clickedYes = false.obs;
   return showDialog(
       context: context,
+      useRootNavigator: true,
       builder: (BuildContext ctx) {
         return AlertDialog(
           contentPadding: EdgeInsets.all(16),
@@ -292,156 +293,171 @@ Future<void> showStatusInfoDialog(
   void Function()? primaryCallBack,
   required String status,
   required String description,
-  String? primaryClickTitle = "Ok",
-  String? secondaryClickTitle = "View Order",
+  bool showSmallIcon = true,
+  String? primaryClickTitle,
+  String? secondaryClickTitle,
   IconData? primaryIcon,
   Color? btnRightIconColor,
+  Color? btnRightIconBgColor = offRedColor,
   String? primaryImageUrl,
   IconData? bottomRightIcon,
 }) async {
   return await showDialog(
       context: context,
-      builder: (ctx) {
-        return Material(
-          color: Colors.transparent,
-          child: Center(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-              //  height: onViewOrderClick == null ? 30.h : 35.h,
-              width: 85.w,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Flex(
-                direction: Axis.vertical,
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Flexible(
-                    flex: 3,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          height: 66,
-                          width: 66,
-                          child:
-                              getRightNotifIcon(primaryImageUrl, primaryIcon),
+      barrierDismissible: true,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          //  color: Colors.transparent,
+          content: Flex(
+            direction: Axis.vertical,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Flexible(
+                flex: 3,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      height: 66,
+                      width: 66,
+                      child: getRightNotifIcon(primaryImageUrl, primaryIcon),
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(103, 121, 254, 1),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    if (showSmallIcon)
+                      Positioned(
+                        bottom: -5,
+                        right: -10,
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          child: Center(
+                            child: Icon(
+                              bottomRightIcon ?? Icons.close,
+                              color: btnRightIconColor ?? Colors.red,
+                              size: 18,
+                            ),
+                          ),
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(103, 121, 254, 1),
+                            color: btnRightIconBgColor,
                             shape: BoxShape.circle,
                           ),
                         ),
-                        Positioned(
-                          bottom: -5,
-                          right: -10,
-                          child: Container(
-                            height: 30,
-                            width: 30,
-                            child: Center(
-                              child: Icon(
-                                bottomRightIcon ?? Icons.close,
-                                color: btnRightIconColor ?? Colors.red,
-                                size: 18,
-                              ),
-                            ),
-                            decoration: BoxDecoration(
-                              color: bottomRightIcon == null
-                                  ? Color(0xFFFFEBEC)
-                                  : Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Flexible(
-                    flex: 2,
-                    child: Text(
-                      status,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Flexible(
-                    flex: 2,
-                    child: Text(
-                      description,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 18),
-                  Flexible(
-                    flex: 2,
-                    child: GestureDetector(
-                      onTap: (primaryCallBack == null)
-                          ? () => Get.back<void>(closeOverlays: true)
-                          : primaryCallBack,
-                      child: Container(
-                        height: 44,
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(225, 228, 255, 1),
-                          borderRadius: BorderRadius.circular(9),
-                        ),
-                        child: Center(
-                          child: Text(
-                            primaryClickTitle ?? "Ok",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color.fromRGBO(103, 121, 254, 1),
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16.34,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (secondaryCallBack != null)
-                    Flexible(
-                      flex: 2,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(height: 12),
-                          GestureDetector(
-                            onTap: secondaryCallBack,
-                            child: Text(
-                              secondaryClickTitle ?? "View order",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color.fromRGBO(120, 120, 120, 1),
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16.99,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 12),
-                        ],
-                      ),
-                    ),
-                ],
+                      )
+                  ],
+                ),
               ),
-            ),
+              SizedBox(height: 10),
+              Flexible(
+                flex: 2,
+                child: Text(
+                  status,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              Flexible(
+                flex: 2,
+                child: Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              SizedBox(height: 18),
+              Flexible(
+                flex: 2,
+                child: GestureDetector(
+                  onTap: (primaryCallBack == null)
+                      ? () => Get.back<void>(closeOverlays: true)
+                      : primaryCallBack,
+                  child: Container(
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(225, 228, 255, 1),
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    child: Center(
+                      child: Text(
+                        primaryClickTitle ?? "${_i18n()["ok"]}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color.fromRGBO(103, 121, 254, 1),
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16.34,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              if (secondaryCallBack != null)
+                Flexible(
+                  flex: 2,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 12),
+                      GestureDetector(
+                        onTap: secondaryCallBack,
+                        child: Text(
+                          secondaryClickTitle ?? "${_i18n()["viewOrder"]}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromRGBO(120, 120, 120, 1),
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16.99,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                    ],
+                  ),
+                ),
+            ],
           ),
         );
       });
+}
+
+Widget radioCircleButton(
+    {bool value = false, required void Function(bool?) onTap}) {
+  return InkWell(
+    customBorder: CircleBorder(),
+    onTap: () {
+      onTap.call(null);
+    },
+    child: Ink(
+        child: (value)
+            ? Icon(
+                Icons.radio_button_checked,
+                size: 25,
+                color: primaryBlueColor,
+              )
+            : Icon(
+                Icons.circle_outlined,
+                color: primaryBlueColor,
+                size: 25,
+              ),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+        )),
+  );
 }
 
 Widget multipleSelectOptionComponent(

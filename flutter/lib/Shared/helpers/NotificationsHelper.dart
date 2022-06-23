@@ -45,22 +45,23 @@ Future<void> _displayNotification(notifs.Notification notification) async {
 Future<void> decideWhichButtonDialogToUse(
     notifs.Notification notification) async {
   if (Get.currentRoute == notification.linkUrl)
-    await showStatusInfoDialog(
-      Get.context!,
-      status: notification.title,
-      description: notification.body,
-      bottomRightIcon: notification.icon,
-    );
+    await showStatusInfoDialog(Get.context!,
+        status: notification.title,
+        description: notification.body,
+        primaryIcon: notification.icon,
+        bottomRightIcon: notification.secondaryIcon,
+        showSmallIcon: notification.secondaryIcon != null);
   else
     await showStatusInfoDialog(
       Get.context!,
       status: notification.title,
       primaryIcon: notification.icon,
       description: notification.body,
+      showSmallIcon: notification.secondaryIcon != null,
+      bottomRightIcon: notification.secondaryIcon,
       primaryCallBack: () {
         Get.back(closeOverlays: true);
       },
-      // bottomRightIcon: notification.icon,
       secondaryCallBack: () => Get.toNamed(notification.linkUrl),
     );
 }
@@ -74,7 +75,7 @@ void notificationSnackBar(
       await onClick();
     },
     maxWidth: Get.width,
-    margin: EdgeInsets.all(0),
+    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
     duration: Duration(milliseconds: 5000),
     icon: Container(
       height: 50,
@@ -101,7 +102,7 @@ void notificationSnackBar(
     backgroundColor: Colors.black,
     borderWidth: 1,
     borderColor: Colors.black,
-    borderRadius: 0,
+    borderRadius: 12,
     messageText: Text(
       msg,
       style: TextStyle(color: Colors.white),
@@ -124,6 +125,6 @@ void notificationSnackBar(
     ),
     padding: EdgeInsets.all(25),
     snackPosition: SnackPosition.TOP,
-    snackStyle: SnackStyle.GROUNDED,
+    snackStyle: SnackStyle.FLOATING,
   );
 }

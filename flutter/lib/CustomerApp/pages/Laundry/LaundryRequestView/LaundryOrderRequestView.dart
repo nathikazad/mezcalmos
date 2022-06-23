@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
+import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
@@ -65,7 +65,9 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomerAppBar(autoBack: true),
+        appBar: CustomerAppBar(
+          title: selectedLaundry.info.name,
+        ),
         //  bottomNavigationBar: bottomButton(context),
         body: Column(children: <Widget>[
           Expanded(
@@ -78,92 +80,34 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                     CachedNetworkImage(
                         width: double.infinity,
                         height: 20.h,
+                        fit: BoxFit.cover,
                         imageUrl: selectedLaundry.info.image),
                     SizedBox(
-                      height: 20,
+                      height: 25,
                     ),
                     Text(
                       selectedLaundry.info.name,
                       style: Get.textTheme.headline3,
                     ),
                     SizedBox(
-                      height: 8,
+                      height: 10,
                     ),
                     Row(
                       children: [
                         Icon(
                           Icons.place,
+                          size: 20,
                           color: primaryBlueColor,
                         ),
                         SizedBox(
-                          width: 5,
+                          width: 2,
                         ),
-                        Text(selectedLaundry.info.location.address)
+                        Flexible(
+                            child: Text(selectedLaundry.info.location.address))
                       ],
                     ),
-
-                    // Text(
-                    //   "Additional services",
-                    //   style: Get.textTheme.headline3,
-                    // ),
-                    // SizedBox(
-                    //   height: 15,
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Text(
-                    //       "Service name ",
-                    //       style: Get.textTheme.bodyText2
-                    //           ?.copyWith(fontWeight: FontWeight.w700),
-                    //     ),
-                    //     Text(
-                    //       "+ 5\$ per article",
-                    //       style: Get.textTheme.bodyText2?.copyWith(
-                    //           color: customerAppColor,
-                    //           fontWeight: FontWeight.w700),
-                    //     ),
-                    //     Spacer(),
-                    //     multipleSelectOptionComponent(
-                    //         onTap: (bool? p0) {}, value: true)
-                    //   ],
-                    // ),
-                    // SizedBox(
-                    //   height: 15,
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.start,
-                    //   children: [
-                    //     Text(
-                    //       "Service name ",
-                    //       style: Get.textTheme.bodyText2,
-                    //     ),
-                    //     Text(
-                    //       "+ 12\$ per article",
-                    //       style: Get.textTheme.bodyText2
-                    //           ?.copyWith(color: customerAppColor),
-                    //     ),
-                    //     Spacer(),
-                    //     multipleSelectOptionComponent(
-                    //         onTap: (bool? p0) {}, value: false)
-                    //   ],
-                    // ),
-                    // SizedBox(
-                    //   height: 15,
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Text(
-                    //       "Service name ",
-                    //       style: Get.textTheme.bodyText2,
-                    //     ),
-                    //     multipleSelectOptionComponent(
-                    //         onTap: (bool? p0) {}, value: false)
-                    //   ],
-                    // ),
                     SizedBox(
-                      height: 20,
+                      height: 25,
                     ),
                     Container(
                       //  margin: const EdgeInsets.all(8),
@@ -191,7 +135,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 25,
                     ),
                     _orderNoteComponent(),
                     SizedBox(
@@ -208,7 +152,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
 
   Widget _orderNoteComponent() {
     return Container(
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -219,8 +163,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             maxLines: 5,
             minLines: 3,
             decoration: InputDecoration(
-              hintText: "Write your notes here",
-              hintStyle: Get.textTheme.subtitle1,
+              hintText: "${_i18n()["noteHint"]}",
+              hintStyle: Get.textTheme.bodyText2,
               filled: true,
               fillColor: Theme.of(context).primaryColor,
             ),
@@ -316,8 +260,8 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       ),
       onPressed: (customerLoc == null)
           ? null
-          : () {
-              _createLaundryOrder();
+          : () async {
+              await _createLaundryOrder();
             },
       child: (clicked.value)
           ? CircularProgressIndicator(
@@ -332,33 +276,43 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     );
   }
 
-  void _createLaundryOrder() {
-    clicked.value = true;
-    final LaundryRequest _req = LaundryRequest(
-      laundryId: selectedLaundry.info.id,
-      from: selectedLaundry.info.location,
-      to: customerLoc,
-      notes: _orderNote.text,
-      paymentType: PaymentType.Cash,
-    );
+  Future<void> _createLaundryOrder() async {
+    mezDbgPrint("GotRoute !!!!!!!");
 
-    // get route info
-    MapHelper.getDurationAndDistance(_req.from!, _req.to!)
+    clicked.value = true;
+    final LaundryRequest _laundryRequest =
+        LaundryRequest(laundryId: selectedLaundry.info.id);
+    // get route info first
+    await MapHelper.getDurationAndDistance(
+            selectedLaundry.info.location, customerLoc!)
         .then((MapHelper.Route? route) {
+      mezDbgPrint("GotRoute !!!!!!!");
       if (route != null) {
-        _req.routeInformation = MapHelper.RouteInformation(
+        _laundryRequest.routeInformation = MapHelper.RouteInformation(
           polyline: route.encodedPolyLine,
           distance: route.distance,
           duration: route.duration,
         );
       }
-    });
 
-    // Since routeInformation is nullable, we have to handle it in other apps.
+      _laundryRequest.laundryId = selectedLaundry.info.id;
+      _laundryRequest.from = selectedLaundry.info.location;
+      _laundryRequest.to = customerLoc;
+      _laundryRequest.notes = _orderNote.text;
+      _laundryRequest.paymentType = PaymentType.Cash;
+
+      // Since routeInformation is nullable, we have to handle it in other apps.
+      _sendLaundryRequest(_laundryRequest);
+    });
+  }
+
+  void _sendLaundryRequest(LaundryRequest request) {
     laundryController
-        .requestLaundryService(_req)
+        .requestLaundryService(request)
         .then(
           (ServerResponse response) {
+            mezDbgPrint("rrrrrrrrrrrrrrrrrrrr ===> ${response.errorMessage}");
+
             if (response.data['orderId'] != null) {
               sharedRoute.popEverythingAndNavigateTo(
                 getLaundyOrderRoute(

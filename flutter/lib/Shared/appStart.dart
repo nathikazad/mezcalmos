@@ -19,6 +19,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -191,12 +192,13 @@ class _StartingPointState extends State<StartingPoint> {
     late FirebaseDatabase firebaseDb;
 
     if (_launchMode == AppLaunchMode.prod) {
-      firebaseDb = FirebaseDatabase(app: _app);
+      firebaseDb = FirebaseDatabase.instanceFor(app: _app);
     } else if (_launchMode == AppLaunchMode.dev) {
       mezDbgPrint("DEV MODE");
-      firebaseDb = FirebaseDatabase(app: _app, databaseURL: _host + dbRoot);
-      await FirebaseDatabase.instance.setPersistenceEnabled(true);
-      await FirebaseDatabase.instance.setPersistenceCacheSizeBytes(10000000);
+      firebaseDb =
+          FirebaseDatabase.instanceFor(app: _app, databaseURL: _host + dbRoot);
+      firebaseDb.setPersistenceEnabled(true);
+      firebaseDb.setPersistenceCacheSizeBytes(10000000);
       await FirebaseAuth.instance.useEmulator(_host + authPort);
       FirebaseFunctions.instance
           .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
@@ -247,10 +249,13 @@ class _StartingPointState extends State<StartingPoint> {
   }
 
   Future<void> putControllers() async {
-    await Get.put<LanguageController>(LanguageController())
-        .isLamgInitialized
-        .stream
-        .first;
+    final bool? isPreviewModeEnabled = GetStorage().read<bool?>('previewMode');
+    final LanguageController lc =
+        Get.put<LanguageController>(LanguageController());
+    await lc.isLamgInitialized.stream.first;
+    if (isPreviewModeEnabled == false) {
+      await initializeDateFormatting(lc.userLanguageKey.name.toLowerCase());
+    }
     Get.put<AuthController>(
       AuthController(widget.signInCallback, widget.signOutCallback),
       permanent: true,
@@ -260,8 +265,8 @@ class _StartingPointState extends State<StartingPoint> {
       permanent: true,
     );
     Get.put<SettingsController>(
-      SettingsController(
-          widget.appType, widget.sideMenuItems, widget.locationPermissionType),
+      SettingsController(widget.appType, widget.locationPermissionType,
+          sideMenuItems: widget.sideMenuItems ?? []),
       permanent: true,
     );
   }
@@ -297,9 +302,10 @@ class _StartingPointState extends State<StartingPoint> {
   Future<void> setupIosAppStoreId(String appName) async {
     final String? res = (await Get.find<FirebaseDb>()
             .firebaseDatabase
-            .reference()
+            .ref()
             .child(appStoreIdNode(appName))
             .once())
+        .snapshot
         .value
         .toString();
     mezDbgPrint("Got setupIosAppStoreId @ ==> $res");
@@ -327,6 +333,8 @@ class _StartingPointState extends State<StartingPoint> {
       enabled: isPreviewModeEnabled == true ? true : false,
       builder: (BuildContext context) => GetMaterialApp(
         useInheritedMediaQuery: true,
+        locale:
+            isPreviewModeEnabled == true ? DevicePreview.locale(context) : null,
         builder: isPreviewModeEnabled == true ? DevicePreview.appBuilder : null,
         debugShowCheckedModeBanner: false,
         onInit: () async => _initializeConfig(),

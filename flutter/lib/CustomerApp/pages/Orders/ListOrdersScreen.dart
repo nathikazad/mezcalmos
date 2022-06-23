@@ -49,6 +49,7 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     return Scaffold(
       appBar: CustomerAppBar(
         title: '${_i18n()["title"]}',
+        showPastOrders: false,
         autoBack: true,
       ),
       body: Obx(

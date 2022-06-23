@@ -38,17 +38,17 @@ class CustomerAuthController extends GetxController {
           "CustomerAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
       await _customerNodeListener?.cancel();
       _customerNodeListener = _databaseHelper.firebaseDatabase
-          .reference()
+          .ref()
           .child(customerNode(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((Event event) async {
+          .listen((event) async {
         customer.value = Customer.fromSnapshotData(event.snapshot.value);
 
         if (_checkedAppVersion == false) {
           final String VERSION = GetStorage().read(getxAppVersion);
           print("[+] Customer currently using App v$VERSION");
           await _databaseHelper.firebaseDatabase
-              .reference()
+              .ref()
               .child(customerAppVersionNode(_authController.fireAuthUser!.uid))
               .set(VERSION);
 
@@ -60,7 +60,7 @@ class CustomerAuthController extends GetxController {
           await _notificationsController.getToken();
       if (deviceNotificationToken != null)
         await _databaseHelper.firebaseDatabase
-            .reference()
+            .ref()
             .child(
               customerNotificationInfoNode(_authController.fireAuthUser!.uid),
             )
@@ -74,7 +74,7 @@ class CustomerAuthController extends GetxController {
 
   void saveNewLocation(SavedLocation savedLocation) {
     _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(savedLocationsNode(_authController.fireAuthUser!.uid))
         .push()
         .set(savedLocation.toFirebaseFormattedJson());
@@ -82,7 +82,7 @@ class CustomerAuthController extends GetxController {
 
   void editLocation(SavedLocation savedLocation) {
     _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(
           savedLocationNode(
               _authController.fireAuthUser!.uid, savedLocation.id!),
@@ -92,7 +92,7 @@ class CustomerAuthController extends GetxController {
 
   void deleteLocation(SavedLocation savedLocation) {
     _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(
           savedLocationNode(
             _authController.fireAuthUser!.uid,

@@ -38,16 +38,18 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // margin: EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 10,
+          ),
           Text(
             widget.option.name[userLanguage].toString(),
             style: Get.theme.textTheme.bodyText1,
           ),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
           Column(
             children: List.generate(
@@ -55,7 +57,10 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                 (int index) => optionChoiceCard(
                       choice: widget.option.choices[index],
                     )),
-          )
+          ),
+          SizedBox(
+            height: 10,
+          ),
         ],
       ),
     );
@@ -66,7 +71,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
     required Choice choice,
   }) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
           Flexible(
@@ -106,10 +111,6 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               ],
             ),
           ),
-          // SizedBox(
-          //   width: 10,
-          // ),
-
           Spacer(),
           if (widget.option.optionType == OptionType.ChooseMany)
             _selectCircle(
@@ -121,6 +122,14 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                 }),
           if (widget.option.optionType == OptionType.ChooseOne)
             _radioCircle(
+                value: widget.cartItem.value!.chosenChoices[optionId]
+                        ?.contains(choice) ??
+                    false,
+                onTap: (bool? v) {
+                  handleChoiceCheckBox(choice);
+                }),
+          if (widget.option.optionType == OptionType.Custom)
+            _selectCircle(
                 value: widget.cartItem.value!.chosenChoices[optionId]
                         ?.contains(choice) ??
                     false,

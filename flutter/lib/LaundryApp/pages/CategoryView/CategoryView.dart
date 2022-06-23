@@ -44,6 +44,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: _addCategoryAppBar(),
       body: _getRightBody(),
       bottomNavigationBar: _addCategoryFooterButton(),
@@ -87,17 +88,18 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
   Widget _getRightBody() {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              const SizedBox(height: 20),
               Text(
                 "${_i18n()["categoryName"]}",
-                style: Get.textTheme.headline4,
+                style: Get.textTheme.bodyText1,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 15),
               _categoryNameComponent(
                   controller: _viewController.primaryCategoryNameController),
               if (_viewController.secondaryLang.value != null)
@@ -105,19 +107,19 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     Text(
                       "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
                       style: Get.textTheme.headline4,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 15),
                     _categoryNameComponent(
                         controller:
                             _viewController.secondaryCategoryNameController),
                   ],
                 ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
               _categoryPriceComponent(),
             ],
           ),
@@ -139,14 +141,14 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
         }
       },
       decoration: InputDecoration(
-        isDense: true,
-        filled: true,
-        fillColor: Colors.white,
-        hintText: '${_i18n()["categoryNameHint"]}',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-        ),
-      ),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          filled: true,
+          fillColor: Colors.grey.shade200,
+          hintText: '${_i18n()["categoryNameHint"]}',
+          border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(8))),
     );
   }
 
@@ -170,14 +172,14 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
             }
           },
           decoration: InputDecoration(
-            isDense: true,
-            filled: true,
-            fillColor: Colors.white,
-            hintText: '${_i18n()["categoryPriceHint"]}',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-          ),
+              filled: true,
+              fillColor: Colors.grey.shade200,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              hintText: '${_i18n()["categoryPriceHint"]}',
+              border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(8))),
         ),
       ],
     );

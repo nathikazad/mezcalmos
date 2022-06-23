@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
 from ast import Str
+from dataclasses import replace
 import os , json
 from sys import argv, stderr, platform
 from enum import Enum
 import subprocess as proc
+import sys
 
 # LAST UPDATE INFOS : 
 # ADDED Patching Android - Ios icons.
@@ -66,6 +68,7 @@ class DW_EXIT_REASONS(Enum):
     FLUTTER_STDERR = -37
     NO_APP_SPECIFIED = -38
     INVALID_PERMISSION_LEN_OR_NULL = -39
+    ENV_VAR_NOT_FOUND = -40
 
     REACH_THE_LAZY_SAAD = -10000
 
@@ -270,7 +273,12 @@ class Launcher:
 
         open(_project_pbxproj_path , 'w+').write(_cloned)
         PRINTLN(f"[+]  Patched ios/project.pbxproj => {_appPackageName}")
-        _cloned = open(f'patches/ios/{_ios_app_folder_name}/Info.plist').read().replace('<mez-output-name>', _outputAppName).replace('<mez-app-type>' , _ios_app_folder_name)
+        _cloned = open(f'patches/ios/{_ios_app_folder_name}/Info.plist')\
+        .read()\
+        .replace('<mez-output-name>', _outputAppName)\
+        .replace('<mez-app-type>' , _ios_app_folder_name)\
+        .replace('<mez-fb-client-token>' , Config.fromEnv('FB_CLIENT_TOKEN'))
+
         open(_info_plist_path , 'w+').write(_cloned)
         PRINTLN(f"[+] Patched ios/Runner/Info.plist => {_outputAppName}!")
 	    # Getting rid of 8.0
@@ -388,6 +396,20 @@ class Config:
         PS : if an Error happend Send DW_EXIT_REASON.<NAME>.
         """)
     
+
+    @staticmethod
+    def fromEnv(env_var_name: str) -> str:
+        import re
+        try:
+            assert(os.path.exists('.env'))
+            var =  re.match(r'^('+ re.escape(env_var_name)+'{0,}\=)[^\n]+\n*' , open('.env').read())
+            assert(var != None)
+            return ''.join(var.group(0).split('=')[1:])
+           
+        except AssertionError as ae:
+            PRINTLN(f"[!] launcher/.env does not exists or the variable {env_var_name} is not defined in launcher/.env !")
+            exit(DW_EXIT_REASONS.ENV_VAR_NOT_FOUND)
+
     @staticmethod
     def launch_flutter_app(binary , filter_file=None, filter_mode=OUTPUT_FILTERS.SHOW):
         PRINTLN(f"\n[~] binary has : {binary} \n\n")
@@ -635,7 +657,7 @@ class Config:
                 # min required now is 10.0
                 if patch_line_index != None:
                     print("[+] Fixing Podfile ..")
-                    pod_lines[patch_line_index] = "platform :ios, '13.0'"
+                    pod_lines[patch_line_index] = "platform :ios, '12.0'"
                 open('../ios/Podfile' , 'w+').write('\n'.join(pod_lines))    
                 print("[+] Installing Pods ..")
                 os.system('cd .. && flutter pub get && cd ios && arch -x86_64 pod install && cd ../launcher')

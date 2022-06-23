@@ -1,9 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
@@ -22,30 +22,32 @@ class SettingsController extends GetxController {
       options: SoundpoolOptions(streamType: StreamType.notification));
   int? _selectedNotificationsSoundId;
 
-  final List<SideMenuItem>? sideMenuItems;
+  final List<SideMenuItem> sideMenuItems;
   final LocationPermissionType locationType;
   AppType appType;
   ThemeController get appTheme => _appTheme;
   LanguageController get appLanguage => _appLanguage;
-  SettingsController(this.appType, this.sideMenuItems, this.locationType);
+  SettingsController(this.appType, this.locationType,
+      {this.sideMenuItems = const []});
   StreamSubscription<InternetConnectionStatus>?
       _internetConnectionStatusListener;
 
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     Get.put(LocationController(locationType: locationType), permanent: true);
     // here --------
     // FOR NOW WE SET IT TO EN (default  if not passed to LangController)
     _appTheme = Get.put(ThemeController(), permanent: true);
     _appLanguage = Get.put(LanguageController(), permanent: true);
     Get.put(SideMenuDrawerController(), permanent: false).sideMenuItems =
-        this.sideMenuItems;
+        sideMenuItems;
 
     if (GetStorage().read('notifSound') != null) {
       // if it's not null then the user already specified a path to the Notification SOund (cached),
       // which we will use it here.
     } else {
-      ByteData _soundData = await rootBundle.load(aDefaultNotificationsSound);
+      final ByteData _soundData =
+          await rootBundle.load(aDefaultNotificationsSound);
       _selectedNotificationsSoundId =
           await _userNotificationsSoundPool.load(_soundData);
     }

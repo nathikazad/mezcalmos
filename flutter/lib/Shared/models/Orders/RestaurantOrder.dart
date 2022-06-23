@@ -1,5 +1,3 @@
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
@@ -84,7 +82,10 @@ class RestaurantOrder extends DeliverableOrder {
         );
 
   //ignore_for_file:avoid_annotating_with_dynamic
-  factory RestaurantOrder.fromData(dynamic id, dynamic data) {
+  factory RestaurantOrder.fromData(
+    dynamic id,
+    dynamic data,
+  ) {
     final RestaurantOrder restaurantOrder = RestaurantOrder(
       orderId: id,
       status: data["status"].toString().toRestaurantOrderStatus(),
@@ -111,7 +112,7 @@ class RestaurantOrder extends DeliverableOrder {
       restaurant: ServiceInfo.fromData(data["restaurant"]),
       customer: UserInfo.fromData(data["customer"]),
       itemsCost: data['itemsCost'],
-      shippingCost: data['shippingCost'],
+      shippingCost: data["shippingCost"] ?? 0,
       dropoffDriver: (data["dropoffDriver"] != null)
           ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
           : null,
@@ -170,6 +171,15 @@ class RestaurantOrder extends DeliverableOrder {
     return status == RestaurantOrderStatus.CancelledByCustomer ||
         status == RestaurantOrderStatus.CancelledByAdmin;
   }
+  //   String getRightChatId() {
+  //   if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
+  //       customerPickupDriverChatId != null) {
+  //     return customerPickupDriverChatId;
+  //   } else if (customerDropOffDriverChatId != null) {
+  //     return customerDropOffDriverChatId;
+  //   }
+  //   return null;
+  // }
 
   @override
   bool inProcess() {
@@ -180,8 +190,7 @@ class RestaurantOrder extends DeliverableOrder {
   }
 
   bool inDeliveryPhase() {
-    return status == RestaurantOrderStatus.ReadyForPickup ||
-        status == RestaurantOrderStatus.OnTheWay;
+    return status == RestaurantOrderStatus.OnTheWay;
   }
 
   String clipBoardText(LanguageType languageType) {
@@ -214,8 +223,6 @@ class RestaurantOrder extends DeliverableOrder {
 
     return text;
   }
-
- 
 }
 
 class RestaurantOrderItem {

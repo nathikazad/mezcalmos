@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
     ["DateTimeHelper"];
@@ -20,28 +21,50 @@ extension DurationParser on Duration {
 
 extension parseDateTime on DateTime {
   String getEstimatedTime() {
-    final DateTime cDate = DateTime.now();
+    final DateTime now = DateTime.now();
 
-    if (cDate.difference(toLocal()).inDays < 0) {
-      return "${_i18n()["in"]} ${DateFormat().add_EEEE().add_d().add_MMM().add_jm().format(toLocal())}";
-    } else if (cDate.difference(toLocal()).inHours < 0) {
+    final String userLangCode =
+        Get.find<LanguageController>().userLanguageKey.toLanguageCode();
+
+    final DateFormat formatTime = DateFormat.jm(userLangCode);
+    final DateFormat formatMonth = DateFormat.MMMMEEEEd(userLangCode);
+    if (DateTime(toLocal().year, toLocal().month, toLocal().day)
+            .difference(DateTime(now.year, now.month, now.day))
+            .inDays >
+        1) {
+      return "${_i18n()["on"]} ${formatMonth.format(toLocal())} ${formatTime.format(toLocal())}";
+    } else if (DateTime(toLocal().year, toLocal().month, toLocal().day)
+            .difference(DateTime(now.year, now.month, now.day))
+            .inDays >
+        0) {
+      return "${_i18n()["tomorrow"]} ${DateFormat("hh:mm a").format(toLocal())}";
+    } else if (now.difference(toLocal()).inHours < 0) {
       return "${_i18n()["at"]} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${_i18n()["in"]} ${cDate.difference(toLocal()).inMinutes} min";
+      return "${_i18n()["in"]} ${now.difference(toLocal()).inMinutes.abs()} mins";
     }
   }
 
   String getOrderTime() {
     final DateTime cDate = DateTime.now();
+    final String userLangCode =
+        Get.find<LanguageController>().userLanguageKey.toLanguageCode();
+    final DateFormat formatLongDay = DateFormat.MMMd(userLangCode);
+    final DateFormat formatDay = DateFormat.E(userLangCode);
 
     if (cDate.difference(toLocal()).inDays < 7) {
-      return "${DateFormat("EEEE, hh:mm a").format(this)}";
+      return "${formatDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${DateFormat("dd MMMM, hh:mm a").format(this)}";
+      return "${formatLongDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
     }
   }
 
   String toDayAmPm() {
-    return DateFormat("EEE, hh:mm a").format(this);
+    final String userLangCode =
+        Get.find<LanguageController>().userLanguageKey.toLanguageCode();
+    final DateFormat formatTime = DateFormat.jm(userLangCode);
+    final DateFormat formatDay = DateFormat.E(userLangCode);
+
+    return "${formatDay.format(toLocal())} ${formatTime.format(toLocal())}";
   }
 }

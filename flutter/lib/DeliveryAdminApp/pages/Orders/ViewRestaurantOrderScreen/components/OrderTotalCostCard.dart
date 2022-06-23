@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
 
@@ -58,13 +60,23 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
                             fontSize: 20.0),
                         textAlign: TextAlign.left),
                     Spacer(),
-                    Text(" \$40.00",
-                        style: TextStyle(
-                            color: const Color(0xff000f1c),
-                            fontFamily: "psb",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 20.0.sp),
-                        textAlign: TextAlign.right)
+                    Row(
+                      children: [
+                        Text(
+                          order.value!.shippingCost.toPriceString(),
+                          style: Get.textTheme.bodyText1?.copyWith(
+                              decoration: TextDecoration.lineThrough),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "${_i18n()["free"]}",
+                          style: Get.textTheme.bodyText1
+                              ?.copyWith(color: primaryBlueColor),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),

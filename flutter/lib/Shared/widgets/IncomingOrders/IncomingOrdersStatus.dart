@@ -46,13 +46,16 @@ class IncomingOrdersStatus extends StatelessWidget {
           ),
         ),
         if (secondLine != null)
-          Text(
-            secondLine!,
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w600,
-              fontSize: 13,
-              color: Color.fromRGBO(120, 120, 120, 1),
+          Container(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text(
+              secondLine!,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+                color: Color.fromRGBO(120, 120, 120, 1),
+              ),
             ),
           )
       ],

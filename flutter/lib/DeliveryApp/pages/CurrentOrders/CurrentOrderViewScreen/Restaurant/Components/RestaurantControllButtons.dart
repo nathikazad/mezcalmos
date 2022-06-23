@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
@@ -33,17 +35,11 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return Container(
-      height: 60,
+      height: 70,
       // color: (order.inDeliveryPhase())
       //     ? Theme.of(context).primaryColorLight
       //     : Colors.grey,
-      child: Obx(() {
-        if (clicked) {
-          return _loadingPlaceholder();
-        } else {
-          return _getFooterComponent();
-        }
-      }),
+      child: (clicked) ? _loadingPlaceholder() : _getFooterComponent(),
     );
   }
 
@@ -51,7 +47,9 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
     switch (widget.order.status) {
       case RestaurantOrderStatus.OrderReceieved:
       case RestaurantOrderStatus.PreparingOrder:
-        return _waitingDisabledButton();
+        return _waitingDisabledButton(
+            header: "${_i18n()["RestaurantControllButtons"]["notReadyTitle"]}",
+            body: "${_i18n()["RestaurantControllButtons"]["notReadyBody"]}");
 
       case RestaurantOrderStatus.ReadyForPickup:
         return _startDeliveryButton();
@@ -68,38 +66,71 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
   }
 
   Widget _startDeliveryButton() {
-    return TextButton(
-        onPressed: () async {
-          setState(() {
-            clicked = true;
-          });
-          await restaurantOrderController
-              .startRestaurantDelivery(widget.order.orderId)
-              .then((ServerResponse value) {
-            setState(() {
-              clicked = false;
-            });
-          });
-        },
-        style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
-        child: Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(8),
-            child: Text(
-                '${_i18n()["RestaurantControllButtons"]["confirmPickup"]}')));
+    return !shouldDisableBottomButton()
+        ? InkWell(
+            onTap: () async {
+              setState(() {
+                clicked = true;
+              });
+              await restaurantOrderController
+                  .startRestaurantDelivery(widget.order.orderId)
+                  .then((ServerResponse value) {
+                setState(() {
+                  clicked = false;
+                });
+              });
+            },
+            child: Container(
+              decoration: BoxDecoration(gradient: bluePurpleGradient),
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(8),
+              child: Text(
+                '${_i18n()["RestaurantControllButtons"]["confirmPickup"]}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 21,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Montserrat',
+                ),
+              ),
+            ),
+          )
+        : _waitingDisabledButton(
+            header: '${_i18n()["RestaurantControllButtons"]["timeErrorTitle"]}',
+            body: '${_i18n()["RestaurantControllButtons"]["timeErrorBody"]}',
+            child: Icon(Icons.error),
+          );
+  }
+
+  bool shouldDisableBottomButton() {
+    if (widget.order.estimatedDropoffAtCustomerTime != null &&
+        widget.order.estimatedPickupFromServiceProviderTime != null) {
+      return false;
+    }
+
+    return true;
   }
 
   Widget _orderDeliveredComponent() {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(
-            Icons.check_circle,
-            color: Colors.green,
-            size: 30.sp,
+          Container(
+            height: 35,
+            width: 35,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color.fromRGBO(225, 228, 255, 1),
+            ),
+            child: Center(
+              child: Icon(
+                Icons.check,
+                color: Color.fromRGBO(103, 121, 254, 1),
+              ),
+            ),
           ),
           SizedBox(
             width: 20,
@@ -114,7 +145,8 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
                 style: Get.textTheme.bodyText1,
               ),
               Text(
-                DateFormat('dd MMM yy h:m').format(widget.order.orderTime),
+                DateFormat('dd MMM yy h:m')
+                    .format(widget.order.orderTime.toLocal()),
                 style: Get.textTheme.subtitle1,
               )
             ],
@@ -135,17 +167,57 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
     );
   }
 
-  Widget _waitingDisabledButton() {
-    return TextButton(
-        onPressed: null,
-        style: TextButton.styleFrom(
-            backgroundColor: Colors.grey, shape: RoundedRectangleBorder()),
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          alignment: Alignment.center,
-          child:
-              Text('${_i18n()["RestaurantControllButtons"]["confirmPickup"]}'),
-        ));
+  Widget _waitingDisabledButton({
+    String header = 'Waiting for order',
+    String body = 'Order is not ready yet for delivery',
+    Widget? child,
+  }) {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            height: 35,
+            width: 35,
+            child: child ??
+                GradientProgressIndicator(
+                  radius: 11,
+                  duration: 3,
+                  strokeWidth: 1,
+                  gradientStops: const [
+                    0.2,
+                    0.8,
+                  ],
+                  gradientColors: const [
+                    Colors.white,
+                    Colors.grey,
+                  ],
+                  child: SizedBox(),
+                ),
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          Flexible(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                header,
+                style: Get.textTheme.bodyText1,
+              ),
+              Text(
+                body,
+                style: Get.textTheme.subtitle1,
+              )
+            ],
+          ))
+        ],
+      ),
+    );
   }
 
   Widget _canceledOrderComponent() {
@@ -173,7 +245,8 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
                 style: Get.textTheme.bodyText1,
               ),
               Text(
-                DateFormat('dd MMM yy h:m').format(widget.order.orderTime),
+                DateFormat('dd MMM yy h:m')
+                    .format(widget.order.orderTime.toLocal()),
                 style: Get.textTheme.subtitle1,
               )
             ],
@@ -184,8 +257,8 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
   }
 
   Widget _confirmDeliveryButton() {
-    return TextButton(
-        onPressed: () async {
+    return InkWell(
+        onTap: () async {
           setState(() {
             clicked = true;
           });
@@ -196,12 +269,19 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
                   }));
           // Get.back(closeOverlays: true);
         },
-        style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
         child: Container(
           padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(gradient: bluePurpleGradient),
           alignment: Alignment.center,
           child: Text(
-              '${_i18n()["RestaurantControllButtons"]["confirmDelivery"]}'),
+            '${_i18n()["RestaurantControllButtons"]["confirmDelivery"]}',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 21,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Montserrat',
+            ),
+          ),
         ));
   }
 }

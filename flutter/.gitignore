@@ -5,6 +5,7 @@
 *.jks
 key.properties
 upload_certificate.pem
+.env
  
 # flutter plugins related files
 generated_plugin_registrant.dart
@@ -30,6 +31,7 @@ GoogleService-Info.plist
 ios/Runner/Info.plist
 ios/Runner.xcodeproj/project.pbxproj
 *.backup
+*sksl*.json
  
 # font awesome
 font_awesome_flutter/

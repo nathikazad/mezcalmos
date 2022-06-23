@@ -29,12 +29,12 @@ class OrderController extends GetxController {
     print("--------------------> RestaurantsOrderController Initialized !");
     _pastOrdersListener?.cancel();
     _pastOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(taxiPastOrdersNode(_authController.fireAuthUser!.uid))
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAdded
-        .listen((Event event) {
+        .listen((dynamic event) {
       pastOrders
           .add(TaxiOrder.fromData(event.snapshot.key, event.snapshot.value));
     });
@@ -43,7 +43,7 @@ class OrderController extends GetxController {
         "Starting listening on inProcess : ${taxiInProcessOrderNode(_authController.fireAuthUser!.uid)}");
     _currentOrdersListener?.cancel();
     _currentOrdersListener = _databaseHelper.firebaseDatabase
-        .reference()
+        .ref()
         .child(taxiInProcessOrderNode(_authController.fireAuthUser!.uid))
         .onValue
         .listen((event) {
@@ -52,9 +52,9 @@ class OrderController extends GetxController {
       List<TaxiOrder> orders = [];
       if (event.snapshot.value != null) {
         // mezDbgPrint("orderController: new incoming order data");
-        event.snapshot.value.keys?.forEach((orderId) {
+        (event.snapshot.value as dynamic)?.keys.forEach((orderId) {
           // mezDbgPrint("Hndling Order : $orderId");
-          dynamic orderData = event.snapshot.value[orderId];
+          dynamic orderData = (event.snapshot.value as dynamic)[orderId];
           // mezDbgPrint("Order Data => $orderData");
           orders.add(TaxiOrder.fromData(orderId, orderData));
           // try {
