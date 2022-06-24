@@ -81,7 +81,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Divider(),
-
                       Padding(
                         padding: const EdgeInsets.only(top: 6),
                         child: Row(

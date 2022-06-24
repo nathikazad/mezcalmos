@@ -133,9 +133,8 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
     super.dispose();
   }
 
-  double _recenterBtnBottomPadding = 180;
-  EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 180);
-  OrderInfoCardState initialCardStat = OrderInfoCardState.Minimized;
+  double _recenterBtnBottomPadding = 300;
+  EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 300);
 
   @override
   Widget build(BuildContext context) {
@@ -206,9 +205,9 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                             mezDbgPrint("New State ==> $state");
                             setState(() {
                               if (state == OrderInfoCardState.Maximized) {
-                                _recenterBtnBottomPadding = 310;
+                                _recenterBtnBottomPadding = 300;
                                 _mapPadding =
-                                    EdgeInsets.only(top: 10, bottom: 310);
+                                    EdgeInsets.only(top: 10, bottom: 300);
                               } else {
                                 _recenterBtnBottomPadding = 170;
                                 _mapPadding =
