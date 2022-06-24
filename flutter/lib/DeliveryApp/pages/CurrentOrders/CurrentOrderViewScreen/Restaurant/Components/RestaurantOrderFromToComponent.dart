@@ -61,7 +61,7 @@ class _RestaurantOrderFromToComponentState
         customerImage: widget.order.customer.image,
         customerName: widget.order.customer.name,
         enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
-        customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff),
+        customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
         onCustomerMsgClick: () {
           if (widget.order.customerDropOffDriverChatId != null) {
             Get.toNamed(
@@ -75,7 +75,8 @@ class _RestaurantOrderFromToComponentState
         // landry
         serviceProviderImage: widget.order.restaurant.image,
         serviceProviderName: widget.order.restaurant.name,
-        serviceProviderTimeWidgets: _dateTimeSetter(DeliveryAction.Pickup),
+        serviceProviderTimeWidgets:
+            _dateTimeSetter(DeliveryAction.Pickup, context),
         onServiceMsgClick: () {
           if (widget.order.serviceProviderDropOffDriverChatId != null) {
             Get.toNamed(
@@ -133,7 +134,8 @@ class _RestaurantOrderFromToComponentState
         widget.order.status == RestaurantOrderStatus.PreparingOrder;
   }
 
-  List<Widget> _dateTimeSetter(DeliveryAction deliveryAction) {
+  List<Widget> _dateTimeSetter(
+      DeliveryAction deliveryAction, BuildContext context) {
     Future<DateTime?> _dateTimePicker({DateTime? initialDate}) async {
       final DateTime? pickedDate = await getDatePicker(
         context,
