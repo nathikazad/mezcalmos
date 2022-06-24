@@ -225,31 +225,28 @@ class _LaundryOrderFromToComponentState
                     });
                   },
             child: Container(
-              height: 18,
-              width: 18,
-              padding: const EdgeInsets.all(5),
+              padding: EdgeInsets.all(4),
               decoration: _edittingEstimatedTime
                   ? null
                   : BoxDecoration(
                       color: Color.fromRGBO(237, 237, 237, 1),
                       shape: BoxShape.circle,
                     ),
-              child: Center(
-                child: _edittingEstimatedTime
-                    ? Container(
-                        height: 16,
-                        width: 16,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: CircularProgressIndicator(
-                          color: Colors.grey.shade600,
-                          strokeWidth: 1.8,
-                        ),
-                      )
-                    : Icon(
-                        Icons.edit,
-                        size: 15,
+              child: _edittingEstimatedTime
+                  ? Container(
+                      height: 16,
+                      width: 16,
+                      decoration: BoxDecoration(shape: BoxShape.circle),
+                      child: CircularProgressIndicator(
+                        color: Colors.grey.shade600,
+                        strokeWidth: 1.8,
                       ),
-              ),
+                    )
+                  : Icon(
+                      Icons.edit,
+                      size: 16,
+                      color: Colors.grey.shade600,
+                    ),
             ),
           )
         ];

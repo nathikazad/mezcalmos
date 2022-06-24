@@ -185,9 +185,7 @@ class _RestaurantOrderFromToComponentState
                     });
                   },
             child: Container(
-              height: 18,
-              width: 18,
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(4),
               decoration: _edittingEstimatedTime
                   ? null
                   : BoxDecoration(
@@ -208,6 +206,7 @@ class _RestaurantOrderFromToComponentState
                     : Icon(
                         Icons.edit,
                         size: 15,
+                        color: Colors.grey.shade600,
                       ),
               ),
             ),

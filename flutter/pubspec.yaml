@@ -85,16 +85,15 @@ dependencies:
   sign_in_with_apple: ^4.0.0
   sizer: ^2.0.15
   crypto: ^3.0.0-nullsafety.0
-  equatable: ^2.0.3
+  # Newest version of this always requires initialization on the root!
   intl: ^0.17.0
+
 
   # Check if a user has the most recent version of your app installed.
   new_version: ^0.3.0
   store_redirect: ^2.0.1
-  app_settings: ^4.1.8
   flutter_facebook_auth: ^4.3.4+2
   permission_handler: ^10.0.0
-  # in_app_review: ^2.0.4
 
 
 
