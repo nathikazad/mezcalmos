@@ -92,29 +92,24 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              const SizedBox(height: 8),
               Text(
                 "${_i18n()["categoryName"]}",
                 style: Get.textTheme.headline4,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               _categoryNameComponent(
                   controller: _viewController.primaryCategoryNameController),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
-                    style: Get.textTheme.headline4,
-                  ),
-                  const SizedBox(height: 8),
-                  _categoryNameComponent(
-                      controller:
-                          _viewController.secondaryCategoryNameController),
-                ],
+              SizedBox(
+                height: 25,
               ),
+              Text(
+                "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
+                style: Get.textTheme.headline4,
+              ),
+              const SizedBox(height: 10),
+              _categoryNameComponent(
+                  controller: _viewController.secondaryCategoryNameController),
               SizedBox(
                 height: 25,
               ),
@@ -128,15 +123,10 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               TextFormField(
                 maxLines: 7,
                 minLines: 3,
+                style: Get.textTheme.bodyText1,
                 controller: _viewController.primaryCatDesc,
                 decoration: InputDecoration(
-                  isDense: true,
-                  filled: true,
-                  fillColor: Colors.white,
                   hintText: '${_i18n()["categoryNameHint"]}',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
                 ),
               ),
               SizedBox(
@@ -152,15 +142,10 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               TextFormField(
                 maxLines: 7,
                 minLines: 3,
+                style: Get.textTheme.bodyText1,
                 controller: _viewController.secondaryCatDesc,
                 decoration: InputDecoration(
-                  isDense: true,
-                  filled: true,
-                  fillColor: Colors.white,
                   hintText: '${_i18n()["categoryNameHint"]}',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
                 ),
               ),
             ],
@@ -174,6 +159,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
       {required TextEditingController controller, bool isSecodary = false}) {
     return TextFormField(
       controller: controller,
+      style: Get.textTheme.bodyText1,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (String? v) {
         if (v != null && v.isNotEmpty) {
@@ -183,13 +169,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
         }
       },
       decoration: InputDecoration(
-        isDense: true,
-        filled: true,
-        fillColor: Colors.white,
         hintText: '${_i18n()["categoryNameHint"]}',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-        ),
       ),
     );
   }

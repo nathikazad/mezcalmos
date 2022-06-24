@@ -9,7 +9,7 @@ String menuNode({required String uid}) {
 }
 
 String categoryNode({required String uid, required String categoryId}) {
-  return menuNode(uid: uid) + "/category/$categoryId";
+  return menuNode(uid: uid) + "/$categoryId";
 }
 
 String noCategoryNode({required String uid}) {

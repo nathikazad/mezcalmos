@@ -1586,6 +1586,19 @@
             "canceledOrderBody": "Su pedido ha sido cancelado"
 
         }
+    },
+    "RestaurantApp": {
+        "pages": {
+            "MenuItemsView": {
+                "components": {
+                    "ROpCategoryGridCard": {
+                        "deleteTitle": "Eliminar la categoría",
+                        "deleteHelperText": "¿Estás seguro de que te gustaría eliminar?",
+                        "yesDelete": "Sí, eliminar la categoría"
+                    }
+                }
+            }
+        }
     }
 
 }

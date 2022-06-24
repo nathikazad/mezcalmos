@@ -20,6 +20,17 @@ class RestaurantAppTheme {
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       scaffoldBackgroundColor: Color(0XFFFAFAFA),
+      inputDecorationTheme: InputDecorationTheme(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          isDense: true,
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide.none),
+          focusedBorder: InputBorder.none,
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Colors.grey.shade200),
 
       timePickerTheme: TimePickerThemeData(
         dialHandColor: primaryBlueColor,
@@ -173,6 +184,7 @@ class RestaurantAppTheme {
           color: Colors.black,
         ),
       ),
+      textSelectionTheme: TextSelectionThemeData(cursorColor: primaryBlueColor),
     );
   }
 }

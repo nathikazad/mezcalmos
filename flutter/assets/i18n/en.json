@@ -1588,5 +1588,18 @@
 
         }
 
+    },
+    "RestaurantApp": {
+        "pages": {
+            "MenuItemsView": {
+                "components": {
+                    "ROpCategoryGridCard": {
+                        "deleteTitle": "Delete Category",
+                        "deleteHelperText": "are you sure you would like to delete ?",
+                        "yesDelete": "Yes, delete category"
+                    }
+                }
+            }
+        }
     }
 }

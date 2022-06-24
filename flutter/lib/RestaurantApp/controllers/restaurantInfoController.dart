@@ -140,6 +140,7 @@ class RestaurantInfoController extends GetxController {
         .child(itemNode(uid: restaurantId, itemId: itemId) + "/cost")
         .set(cost);
   }
+  // ----------------------------------------------------- CATEGORIES ----------------------------------------------------- //
 
   Future<void> addCategory({required Category category}) async {
     final DatabaseReference categoryNode = _databaseHelper.firebaseDatabase
@@ -148,6 +149,16 @@ class RestaurantInfoController extends GetxController {
         .push();
 
     await categoryNode.set(category.toJson());
+  }
+
+  Future<void> deleteCategory({required String categoryId}) async {
+    // ignore: unawaited_futures
+    _databaseHelper.firebaseDatabase
+        .ref()
+        .child(categoryNode(uid: restaurantId, categoryId: categoryId))
+        .remove();
+    mezDbgPrint("Deleting $categoryId");
+    mezDbgPrint(categoryNode(uid: restaurantId, categoryId: categoryId));
   }
 
   @override
