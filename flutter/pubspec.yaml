@@ -32,6 +32,7 @@ dependencies:
   package_info_plus: ^1.4.0
   device_info_plus: ^3.2.2
   device_preview: ^1.1.0
+  flutter_email_sender: ^5.1.0
   # permission_handler: ^9.2.0
 
   # Get

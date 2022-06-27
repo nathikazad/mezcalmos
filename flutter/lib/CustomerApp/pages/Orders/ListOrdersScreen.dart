@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:sizer/sizer.dart';
 
 final DateFormat f = new DateFormat('MM.dd.yyyy');
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
@@ -70,23 +71,43 @@ class _ListOrdersScreen extends State<ListOrdersScreen> {
     );
   }
 
-  Center _noOrdersWidget() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Icon(Icons.error, color: Colors.black, size: 30),
-          Text(
-            _i18n()['orders']['noOrders'],
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w300,
-              fontSize: 14,
-            ),
+  Widget _noOrdersWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Container(
+          alignment: Alignment.center,
+          height: 40.h,
+          width: double.infinity,
+          child: Image.asset(
+            "assets/images/customer/customerNoOrders.png",
+            fit: BoxFit.cover,
           ),
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Text(
+          "${_i18n()["orders"]["noOrders"]}",
+          style: Get.textTheme.headline3,
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 12),
+          child: Text(
+            "${_i18n()["orders"]["noOrdersBody"]}",
+            style: Get.textTheme.bodyText2,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SizedBox(
+          height: 50,
+        ),
+      ],
     );
   }
 }

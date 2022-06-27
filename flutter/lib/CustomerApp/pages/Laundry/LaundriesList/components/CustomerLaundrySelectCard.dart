@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
@@ -130,7 +131,8 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             width: 3,
                           ),
                           Flexible(
-                              child: Text('${laundry.getCheapestCategory}/kg',
+                              child: Text(
+                                  '${laundry.getCheapestCategory.toPriceString()}/kg',
                                   style: Get.textTheme.bodyText2)),
                         ],
                       ),

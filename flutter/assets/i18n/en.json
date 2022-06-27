@@ -1,7 +1,8 @@
 {
     "CustomerApp": {
         "main": {
-            "savedLocations": "Saved Locations"
+            "savedLocations": "Saved Locations",
+            "contactUs": "Contact us"
         },
         "components": {
             "Menu": {
@@ -93,7 +94,8 @@
                         }
                     },
                     "orders": {
-                        "noOrders": "No orders found",
+                        "noOrders": "No orders yet",
+                        "noOrdersBody": "You have currently no orders.",
                         "onGoingOrders": "Ongoing Orders"
                     }
                 }
@@ -732,6 +734,18 @@
                 "downloading": "A new version is being downloaded.",
                 "news": "News",
                 "update": "Update now!"
+            },
+            "ContactUsView": {
+                "name": "Name",
+                "email": "Email Adress",
+                "subject": "Subject",
+                "message": "Message",
+                "send": "Send",
+                "sendedTitle": "Thank you",
+                "sendedBody": "We will be in touch, shortly!",
+                "requiredError": "Field required",
+                "emailError": "Email is not correct"
+
             }
         },
         "widgets": {

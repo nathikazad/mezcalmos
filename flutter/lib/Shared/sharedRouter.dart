@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dar
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
+import 'package:mezcalmos/Shared/pages/ContactUsView/ContactUsView.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
@@ -34,6 +35,7 @@ const String kNotificationsRoute = '/notifications';
 const String kAppNeedsUpdate = '/needs_update';
 // const String kInAppReview = '/in-app_review';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
+const String kContactUsRoute = "/contactUs";
 
 String getMessagesRoute(
     {required String chatId,
@@ -111,5 +113,6 @@ class SharedRouter {
     GetPage(
         name: kPickLocationWithoutAuth,
         page: () => PickLocationView(PickLocationMode.NonLoggedInPick)),
+    GetPage(name: kContactUsRoute, page: () => ContactUsView()),
   ];
 }

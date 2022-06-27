@@ -307,29 +307,27 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   }
 
   void _sendLaundryRequest(LaundryRequest request) {
-    laundryController
-        .requestLaundryService(request)
-        .then(
-          (ServerResponse response) {
-            mezDbgPrint("rrrrrrrrrrrrrrrrrrrr ===> ${response.errorMessage}");
+    laundryController.requestLaundryService(request).then(
+      (ServerResponse response) {
+        mezDbgPrint("rrrrrrrrrrrrrrrrrrrr ===> ${response.errorMessage}");
 
-            if (response.data['orderId'] != null) {
-              sharedRoute.popEverythingAndNavigateTo(
-                getLaundyOrderRoute(
-                  response.data['orderId'],
-                ),
-              );
-            } else {
-              Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
-            }
-          },
-        )
-        .whenComplete(() => clicked.value = false)
-        .onError((Object? error, StackTrace stackTrace) {
-          mezDbgPrint(
-              "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
-          mezDbgPrint(
-              "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
-        });
+        if (response.data['orderId'] != null) {
+          sharedRoute.popEverythingAndNavigateTo(
+            getLaundyOrderRoute(
+              response.data['orderId'],
+            ),
+          );
+        } else {
+          Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
+        }
+      },
+    ).whenComplete(() {
+      clicked.value = false;
+    }).onError((Object? error, StackTrace stackTrace) {
+      mezDbgPrint(
+          "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
+      mezDbgPrint(
+          "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
+    });
   }
 }

@@ -1,7 +1,8 @@
 {
     "CustomerApp": {
         "main": {
-            "savedLocations": "Ubicaciones guardadas"
+            "savedLocations": "Ubicaciones guardadas",
+            "contactUs": "Contáctenos"
         },
         "components": {
             "Menu": {
@@ -94,7 +95,8 @@
                         }
                     },
                     "orders": {
-                        "noOrders": "Sin pedidos",
+                        "noOrders": "Sin pedidos todavía",
+                        "noOrdersBody": "Actualmente no tienes pedidos.",
                         "onGoingOrders": "Órdenes actuales"
                     }
                 }
@@ -747,6 +749,18 @@
                 "downloading": "Se está descargando una nueva versión.",
                 "news": "Noticias",
                 "update": "¡Actualizar ahora!"
+            },
+            "ContactUsView": {
+                "name": "Nombre",
+                "email": "Dirección de correo electrónico",
+                "subject": "Tema",
+                "message": "Mensaje",
+                "send": "Enviar",
+                "sendedTitle": "Gracias",
+                "sendedBody": "¡Estaremos en contacto dentro de poco!",
+                "requiredError": "Campo requerido",
+                "emailError": "El correo electrónico no es correcto"
+
             }
         },
         "widgets": {
