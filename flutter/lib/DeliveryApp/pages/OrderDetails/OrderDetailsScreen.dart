@@ -140,10 +140,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   num? _getOrderShippingCost() {
     switch (order.value!.orderType) {
       case OrderType.Restaurant:
-        return (order as RestaurantOrder).shippingCost;
+        return (order.value as RestaurantOrder).shippingCost;
 
       case OrderType.Laundry:
-        return (order as LaundryOrder).shippingCost;
+        return (order.value as LaundryOrder).shippingCost;
       default:
         return null;
     }

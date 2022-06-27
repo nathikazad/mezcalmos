@@ -65,11 +65,12 @@ class _LaundryOrderFromToComponentState
         customerImage: widget.order.customer.image,
         customerName: widget.order.customer.name,
         enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
-
         customerTimeWidgets: _dateTimeSetter(
-            (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)
-                ? DeliveryAction.Pickup
-                : DeliveryAction.DropOff),
+          (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)
+              ? DeliveryAction.Pickup
+              : DeliveryAction.DropOff,
+          context,
+        ),
         onCustomerMsgClick: () {
           if (widget.order.getCustomerDriverChatId() != null) {
             Get.toNamed<void>(
@@ -83,14 +84,15 @@ class _LaundryOrderFromToComponentState
         // landry
         serviceProviderImage: widget.order.laundry!.image,
         serviceProviderName: widget.order.laundry!.name,
-
         serviceProviderTimeWidgets: _dateTimeSetter(
-            (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)
-                ? DeliveryAction.DropOff
-                : DeliveryAction.Pickup),
+          (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)
+              ? DeliveryAction.DropOff
+              : DeliveryAction.Pickup,
+          context,
+        ),
         onServiceMsgClick: () {
           if (widget.order.getServiceDriverChatId() != null) {
-            Get.toNamed(getMessagesRoute(
+            Get.toNamed<void>(getMessagesRoute(
                 chatId: widget.order.getServiceDriverChatId()!,
                 orderId: widget.order.orderId,
                 recipientType: ParticipantType.DeliveryAdmin));
@@ -173,8 +175,10 @@ class _LaundryOrderFromToComponentState
     }
   }
 
-  List<Widget> _dateTimeSetter(DeliveryAction deliveryAction) {
+  List<Widget> _dateTimeSetter(
+      DeliveryAction deliveryAction, BuildContext context) {
     Future<DateTime?> _dateTimePicker({DateTime? initialDate}) async {
+      mezDbgPrint("called :: _dateTimeSetter ");
       final DateTime? pickedDate = await getDatePicker(
         context,
         initialDate: initialDate ?? DateTime.now(),
@@ -225,31 +229,28 @@ class _LaundryOrderFromToComponentState
                     });
                   },
             child: Container(
-              height: 18,
-              width: 18,
-              padding: const EdgeInsets.all(5),
+              padding: EdgeInsets.all(4),
               decoration: _edittingEstimatedTime
                   ? null
                   : BoxDecoration(
                       color: Color.fromRGBO(237, 237, 237, 1),
                       shape: BoxShape.circle,
                     ),
-              child: Center(
-                child: _edittingEstimatedTime
-                    ? Container(
-                        height: 16,
-                        width: 16,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: CircularProgressIndicator(
-                          color: Colors.grey.shade600,
-                          strokeWidth: 1.8,
-                        ),
-                      )
-                    : Icon(
-                        Icons.edit,
-                        size: 15,
+              child: _edittingEstimatedTime
+                  ? Container(
+                      height: 16,
+                      width: 16,
+                      decoration: BoxDecoration(shape: BoxShape.circle),
+                      child: CircularProgressIndicator(
+                        color: Colors.grey.shade600,
+                        strokeWidth: 1.8,
                       ),
-              ),
+                    )
+                  : Icon(
+                      Icons.edit,
+                      size: 16,
+                      color: Colors.grey.shade600,
+                    ),
             ),
           )
         ];
