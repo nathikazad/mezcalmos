@@ -2,6 +2,7 @@ import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/RestaurantApp/pages/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/ROpCurrentOrders.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/EditInfoView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/LaundryOpOrderView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/PastOrdresList/LaundryOpPastOrdersList.dart';
@@ -15,8 +16,10 @@ const String kMenuView = '/menu';
 
 const String kEditInfoView = '/editInfo';
 
-const String kCategoryView = '/categoryScreen/';
+const String kCategoryView = '/categoryScreen';
 const String kEditCategoryScreen = '/categoryScreen/:categoryId';
+const String kItemView = '/itemView';
+const String kEditItemView = '/itemView/:itemId';
 const String kOrderView = '/dashboard/orderView/:orderId';
 
 String getCategoryEditRoute(String categoryId) {
@@ -45,6 +48,14 @@ class XRouter {
         GetPage(
           name: kEditCategoryScreen,
           page: () => ROpCategoryView(),
+        ),
+        GetPage(
+          name: kItemView,
+          page: () => ROpItemView(),
+        ),
+        GetPage(
+          name: kEditItemView,
+          page: () => ROpItemView(),
         ),
         GetPage(name: kOrderView, page: () => LaundryOpOrderView())
       ] +

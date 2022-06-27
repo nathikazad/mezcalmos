@@ -15,15 +15,33 @@ class RestaurantAppTheme {
       brightness: Brightness.light,
 
       dividerColor: Colors.grey.withOpacity(0.8),
-      colorScheme: ColorScheme.light().copyWith(secondary: Colors.grey[850]),
+      colorScheme: ColorScheme.light()
+          .copyWith(primary: primaryBlueColor, secondary: Colors.grey[850]),
 
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       scaffoldBackgroundColor: Color(0XFFFAFAFA),
+      tabBarTheme: TabBarTheme(
+        labelColor: primaryBlueColor,
+        unselectedLabelColor: Colors.grey.shade800,
+        unselectedLabelStyle: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w500,
+          height: 1.5,
+          fontSize: 11.sp,
+          color: Color(0xFF494949),
+        ),
+        labelStyle: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w600,
+          fontSize: 12.sp,
+          color: Colors.black,
+        ),
+      ),
       inputDecorationTheme: InputDecorationTheme(
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          isDense: true,
+          isDense: false,
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide.none),

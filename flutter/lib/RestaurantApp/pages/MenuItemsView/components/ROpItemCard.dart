@@ -93,7 +93,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                   value: widget.item.available,
                   onChanged: (bool v) {
                     _restaurantInfoController.switchItemAvailable(
-                        widget.item.id, v);
+                        widget.item.id!, v);
                   },
                   activeColor: primaryBlueColor,
                   activeTrackColor: SecondaryLightBlueColor,

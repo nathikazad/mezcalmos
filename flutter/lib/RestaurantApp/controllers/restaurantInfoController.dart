@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -43,27 +44,6 @@ class RestaurantInfoController extends GetxController {
     }, onError: (error) {
       mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
     });
-  }
-
-  Future<String> uploadUserImgToFbStorage(
-      {required File imageFile, bool isCompressed = false}) async {
-    String _uploadedImgUrl;
-    final List<String> splitted = imageFile.path.split('.');
-    final String imgPath =
-        "laundries/${restaurant.value?.info.id}/avatar/${restaurant.value?.info.id}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
-    try {
-      await firebase_storage.FirebaseStorage.instance
-          .ref(imgPath)
-          .putFile(imageFile);
-    } on firebase_core.FirebaseException catch (e) {
-      mezDbgPrint(e.message.toString());
-    } finally {
-      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
-          .ref(imgPath)
-          .getDownloadURL();
-    }
-
-    return _uploadedImgUrl;
   }
 
   Future<void> setRestaurantName(String newName) async {
@@ -125,6 +105,16 @@ class RestaurantInfoController extends GetxController {
   }
 
 // ----------------------------------------------------- ITEMS FUNCTIONS ----------------------------------------------------- //
+
+  Future<void> addItem({required Item item, required String categoryId}) async {
+    final DatabaseReference newItemNode = _databaseHelper.firebaseDatabase
+        .ref()
+        .child(itemsNode(uid: restaurantId, categoryId: categoryId))
+        .push();
+    mezDbgPrint("adding =============> $item");
+    await newItemNode.set(item.toJson());
+  }
+
   Future<void> switchItemAvailable(String itemId, bool value) {
     mezDbgPrint(itemNode(uid: restaurantId, itemId: itemId) + "/available");
     return _databaseHelper.firebaseDatabase
@@ -159,6 +149,28 @@ class RestaurantInfoController extends GetxController {
         .remove();
     mezDbgPrint("Deleting $categoryId");
     mezDbgPrint(categoryNode(uid: restaurantId, categoryId: categoryId));
+  }
+// ----------------------------------------------------- Images upload ----------------------------------------------------- //
+
+  Future<String> uploadImgToDb(
+      {required File imageFile, bool isCompressed = false}) async {
+    String _uploadedImgUrl;
+    final List<String> splitted = imageFile.path.split('.');
+    final String imgPath =
+        "restaurants/${restaurant.value?.info.id}/items/${getRandomString(8)}.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
+          .putFile(imageFile);
+    } on firebase_core.FirebaseException catch (e) {
+      mezDbgPrint(e.message.toString());
+    } finally {
+      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
+          .getDownloadURL();
+    }
+
+    return _uploadedImgUrl;
   }
 
   @override

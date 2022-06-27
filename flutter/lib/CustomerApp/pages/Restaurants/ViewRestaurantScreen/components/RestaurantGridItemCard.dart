@@ -29,7 +29,7 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
       child: InkWell(
         onTap: () {
           Get.toNamed(
-            getItemRoute(widget.restaurant.info.id, widget.item.id),
+            getItemRoute(widget.restaurant.info.id, widget.item.id!),
             arguments: {"mode": ViewItemScreenMode.AddItemMode},
           );
         },

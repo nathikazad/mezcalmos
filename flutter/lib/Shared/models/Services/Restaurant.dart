@@ -225,7 +225,7 @@ class Category {
 }
 
 class Item {
-  String id;
+  String? id;
   bool available;
   LanguageMap? description;
 
@@ -241,7 +241,7 @@ class Item {
 
   int position = 0;
   Item(
-      {required this.id,
+      {this.id,
       this.available = false,
       this.description,
       this.image,
@@ -289,7 +289,7 @@ class Item {
       "image": image,
       "cost": cost,
       "name": name.toFirebaseFormat(),
-      "options": jsonEncode(_options),
+      "options": options.map((Option x) => x.toJson()).toList(),
       "position": position
     };
   }

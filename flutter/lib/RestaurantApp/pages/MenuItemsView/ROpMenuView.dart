@@ -96,6 +96,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     "Items",
                     style: Get.textTheme.bodyText1,
                   ),
+                  _addItemButton(),
                   SizedBox(
                     height: 15,
                   ),
@@ -113,6 +114,28 @@ class _ROpMenuViewState extends State<ROpMenuView>
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _addItemButton() {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      color: Colors.grey.shade200,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: () {
+          Get.toNamed(kItemView);
+        },
+        child: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 5),
+          child: Icon(
+            Icons.add_circle_outline_outlined,
+            color: primaryBlueColor,
+            size: 25,
+          ),
         ),
       ),
     );

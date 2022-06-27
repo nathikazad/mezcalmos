@@ -219,7 +219,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
               item: item,
               function: () {
                 Get.toNamed(
-                  getItemRoute(restaurantId, item.id),
+                  getItemRoute(restaurantId, item.id!),
                   arguments: {"mode": ViewItemScreenMode.AddItemMode},
                 );
               }));
