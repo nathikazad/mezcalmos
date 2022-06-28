@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -52,7 +53,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                       ),
                       SizedBox(height: 10),
                       _buildSideMenuItem(),
-                      _basicSideMenuItems(),
+                      _basicSideMenuItems(context),
                     ],
                   ),
                 ),
@@ -72,7 +73,7 @@ class MezSideMenu extends GetWidget<AuthController> {
     );
   }
 
-  Widget _basicSideMenuItems() {
+  Widget _basicSideMenuItems(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,6 +112,18 @@ class MezSideMenu extends GetWidget<AuthController> {
               Get.toNamed<void>(_drawerController.pastOrdersRoute!);
             },
           ),
+        SideMenuItem(
+          onClick: () {
+            _drawerController.closeMenu();
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return ContactUsPopUp();
+                });
+          },
+          icon: Icons.alternate_email,
+          title: '${_i18n()["contact"]}',
+        ),
         SideMenuItem(
           titleWidget: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

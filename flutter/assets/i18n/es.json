@@ -764,6 +764,13 @@
             }
         },
         "widgets": {
+            "ContactUsPopUp": {
+                "contactEmail": "Contáctenos Email ",
+                "contactWhatsapp": "Contáctenos con WhatsApp",
+                "hello": "Hola",
+                "team": "Equipo",
+                "help": "Ayuda"
+            },
             "NoOrdersComponent": {
                 "title": "No hay pedidos en este momento",
                 "subtitle": "Inténtalo de nuevo más tarde"
@@ -829,6 +836,7 @@
                 "notifications": "Notificaciones",
                 "pastOrders": "Órdenes pasadas",
                 "login": "Acceso",
+                "contact": "Contáctenos",
                 "language": "Idioma",
                 "logout": "Cerrar sesión",
                 "legal": "Política de privacidad"

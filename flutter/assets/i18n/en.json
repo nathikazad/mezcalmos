@@ -749,6 +749,13 @@
             }
         },
         "widgets": {
+            "ContactUsPopUp": {
+                "contactEmail": "Contact us with Email",
+                "contactWhatsapp": "Contact us with WhatsApp",
+                "hello": "Hello",
+                "team": "Team",
+                "help": "Help"
+            },
             "NoOrdersComponent": {
                 "title": "No orders at the moment",
                 "subtitle": "Try again later"
@@ -813,7 +820,7 @@
                 "pastOrders": "Past orders",
                 "login": "Login",
                 "language": "Language",
-
+                "contact": "Contact us",
                 "logout": "Logout",
                 "legal": "Privacy policy"
             }
