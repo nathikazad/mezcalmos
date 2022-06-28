@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
-
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';

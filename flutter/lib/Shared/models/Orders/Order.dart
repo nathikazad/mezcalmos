@@ -147,16 +147,17 @@ abstract class DeliverableOrder extends Order {
       this.estimatedDropoffAtCustomerTime,
       RouteInformation? routeInformation})
       : super(
-            orderId: orderId,
-            orderType: orderType,
-            serviceProviderId: serviceProviderId,
-            paymentType: paymentType,
-            orderTime: orderTime,
-            cost: cost,
-            customer: customer,
-            serviceProvider: serviceProvider,
-            to: to,
-            routeInformation: routeInformation);
+          orderId: orderId,
+          orderType: orderType,
+          serviceProviderId: serviceProviderId,
+          paymentType: paymentType,
+          orderTime: orderTime,
+          cost: cost,
+          customer: customer,
+          serviceProvider: serviceProvider,
+          to: to,
+          routeInformation: routeInformation,
+        );
 }
 
 abstract class TwoWayDeliverableOrder extends DeliverableOrder {

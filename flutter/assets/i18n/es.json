@@ -1147,7 +1147,7 @@
                             "totalCost": "Costo Total",
                             "deliveryCost": "Costo de envío",
                             "total": "Total",
-                            "free": "Libre"
+                            "free": "Gratis"
                         },
                         "PastOrderInfo": {
                             "canceledByAdmin": "Cancelada",
