@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart' as MezNotification;
 import 'package:mezcalmos/Shared/models/Operators/LaundryOperator.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -37,9 +38,9 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
       mezDbgPrint("LaundryWrapper::microtask handleState first time");
       LaundryOperator? laundryOperator =
           Get.find<LaundryOpAuthController>().operator.value;
-      if (laundryOperator == null)
-        laundryOperator =
-            await Get.find<LaundryOpAuthController>().operatorInfoStream.first;
+      // if (laundryOperator == null)
+      // laundryOperator =
+      //     await Get.find<LaundryOpAuthController>().operatorInfoStream.first;
       mezDbgPrint("LaundryWrapper::microtask data received");
       handleState(laundryOperator);
     });
@@ -61,7 +62,7 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
       // ignore: unawaited_futures, inference_failure_on_function_invocation
       Get.toNamed(kCurrentOrdersListView);
     } else {
-      mezDbgPrint("LaundryWrappper::handleState state is null, ERROR");
+      Get.toNamed(kUnauthorizedRoute);
     }
   }
 

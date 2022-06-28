@@ -2,14 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/constants/MezIcons.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/TaxiApp/constants/assets.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["AuthScreens"]["UnauthorizedScreen"];
@@ -46,24 +45,17 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
             appBar: mezcalmosAppBar(
               AppBarLeftButtonType.Menu,
             ),
-            body: SafeArea(
-                child: Center(
-                    child: Flex(
+            body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              direction: Axis.vertical,
               children: [
                 Container(
-                  child: Icon(
-                    MezcalmosIcons.ban,
-                    color: Color.fromARGB(150, 198, 90, 252),
-                    size: getSizeRelativeToScreen(80, Get.height, Get.width),
-                  ),
-                  padding: EdgeInsets.all(0),
-                  margin: EdgeInsets.all(0),
+                  height: 40.h,
+                  width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(taxiAnauthorizedAsset),
+                        image: AssetImage(
+                            "assets/images/shared/notAuthorized.png"),
                         fit: BoxFit.contain),
                     color: Colors.white,
                     shape: BoxShape.circle,
@@ -74,11 +66,10 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                 ),
                 Text(
                   '${_i18n()['unauthorized']}',
-                  style: TextStyle(
-                      color: Colors.black38, fontSize: 20, fontFamily: 'psr'),
+                  style: Get.textTheme.headline3,
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 InkWell(
                     onTap: () async {
@@ -92,36 +83,29 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                       //       "Failed launching https://meztaxi.com on browser , maybe try to browse to it manually ? ");
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.symmetric(horizontal: 12),
                       child: RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
                           children: <TextSpan>[
                             TextSpan(
                                 text: '${_i18n()['subTitle1']} ',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'psr',
-                                    color: Colors.black26)),
+                                style: Get.textTheme.bodyText2),
                             TextSpan(
                                 text: '+52 954 118 4711',
-                                style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.black26,
-                                    fontSize: 14,
-                                    fontFamily: 'psr',
-                                    fontWeight: FontWeight.bold)),
+                                style: Get.textTheme.bodyText1
+                                    ?.copyWith(color: primaryBlueColor)),
                             TextSpan(
                                 text: '${_i18n()['subTitle2']}',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: 'psr',
-                                    color: Colors.black26)),
+                                style: Get.textTheme.bodyText2),
                           ],
                         ),
                       ),
-                    ))
+                    )),
+                SizedBox(
+                  height: 35,
+                ),
               ],
-            )))));
+            )));
   }
 }
