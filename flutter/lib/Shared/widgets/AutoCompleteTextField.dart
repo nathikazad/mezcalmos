@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AutoCompleteTextView extends StatefulWidget {
@@ -31,7 +30,7 @@ class AutoCompleteTextView extends StatefulWidget {
   final double? dropDownDxOffset;
   final FocusNode? focusNode;
 
-  AutoCompleteTextView({
+  const AutoCompleteTextView({
     required this.controller,
     this.tfHint = "",
     this.onTapCallback,
@@ -80,7 +79,8 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
   FocusNode _focusNode = FocusNode();
   late OverlayEntry _overlayEntry;
   LayerLink _layerLink = LayerLink();
-  final suggestionsStreamController = new BehaviorSubject<List<String>>();
+  final BehaviorSubject<List<String>> suggestionsStreamController =
+      new BehaviorSubject<List<String>>();
   List<String> suggestionShowList = <String>[];
 
   // place_id => description aka name
@@ -90,7 +90,7 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
   bool isSearching = true;
 
   FocusNode getActiveFocusNode() {
-    return widget.focusNode ?? this._focusNode;
+    return widget.focusNode ?? _focusNode;
   }
 
   @override
@@ -98,11 +98,11 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
     super.initState();
     getActiveFocusNode().addListener(() {
       if (getActiveFocusNode().hasFocus) {
-        this._overlayEntry = this._createOverlayEntry();
-        Overlay.of(context)?.insert(this._overlayEntry);
+        _overlayEntry = _createOverlayEntry();
+        Overlay.of(context)?.insert(_overlayEntry);
         widget.focusGained();
       } else {
-        this._overlayEntry.remove();
+        _overlayEntry.remove();
         widget.focusLost();
       }
     });
@@ -129,13 +129,13 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
   }
 
   OverlayEntry _createOverlayEntry() {
-    RenderBox renderBox = context.findRenderObject() as RenderBox;
-    var size = renderBox.size;
+    final RenderBox renderBox = context.findRenderObject() as RenderBox;
+    Size size = renderBox.size;
     return OverlayEntry(
-        builder: (context) => Positioned(
+        builder: (BuildContext context) => Positioned(
               width: widget.dropDownWidth ?? size.width,
               child: CompositedTransformFollower(
-                link: this._layerLink,
+                link: _layerLink,
                 showWhenUnlinked: false,
                 offset:
                     Offset(widget.dropDownDxOffset ?? 0.0, size.height + 5.0),
@@ -143,7 +143,8 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
                   elevation: 4.0,
                   child: StreamBuilder<Object>(
                       stream: suggestionsStreamController.stream,
-                      builder: (context, suggestionData) {
+                      builder: (BuildContext context,
+                          AsyncSnapshot<Object> suggestionData) {
                         if (suggestionData.hasData &&
                             widget.controller.text.isNotEmpty) {
                           suggestionShowList =
@@ -157,7 +158,7 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
                                 padding: EdgeInsets.zero,
                                 shrinkWrap: true,
                                 itemCount: suggestionShowList.length,
-                                itemBuilder: (context, index) {
+                                itemBuilder: (BuildContext context, int index) {
                                   return ListTile(
                                     minLeadingWidth: 10,
                                     leading: Icon(Icons.search_rounded),
@@ -170,11 +171,10 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
                                       isSearching = false;
                                       widget.controller.text =
                                           suggestionShowList[index];
-                                      mezDbgPrint(idWithDescription.keys);
-                                      String placeId = idWithDescription.keys
-                                          .firstWhere((placeId) {
-                                        mezDbgPrint(placeId);
 
+                                      final String placeId = idWithDescription
+                                          .keys
+                                          .firstWhere((String placeId) {
                                         return idWithDescription[placeId] ==
                                             suggestionShowList[index];
                                       });
@@ -199,14 +199,14 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       if (widget.controller.text.isEmpty && widget.tfInitialText != null) {
         widget.controller.text = widget.tfInitialText!;
       }
     });
 
     return CompositedTransformTarget(
-      link: this._layerLink,
+      link: _layerLink,
       child: TextField(
         readOnly: widget.readOnly,
         controller: widget.controller,
@@ -216,7 +216,7 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
         cursorWidth: widget.tfCursorWidth,
         textAlign: widget.tfTextAlign,
         focusNode: getActiveFocusNode(),
-        onChanged: (text) {
+        onChanged: (String text) {
           if (text.trim().isNotEmpty) {
             widget.onValueChanged(text);
 

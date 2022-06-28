@@ -9,8 +9,8 @@ import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:sizer/sizer.dart';
 
@@ -38,6 +38,8 @@ class _PickLocationViewState extends State<PickLocationView> {
 
   @override
   void initState() {
+    mezDbgPrint(
+        "Pick location view ===========================================>>>");
     if (widget.pickLocationMode == PickLocationMode.AddNewLocation) {
       GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
         // first we set Location without GeoCoding the address
@@ -48,6 +50,9 @@ class _PickLocationViewState extends State<PickLocationView> {
             LatLng(locData.latitude!, locData.longitude!));
       });
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
+      currentLatLng = Get.arguments as LatLng;
+      mezDbgPrint(currentLatLng);
+      geoCodeAndSetLocation(currentLatLng!);
     } else {
       mezDbgPrint("Iniiit");
 
@@ -61,7 +66,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     super.initState();
   }
 
-  void geoCodeAndSetLocation(LatLng currentLoc) async {
+  Future<void> geoCodeAndSetLocation(LatLng currentLoc) async {
     final String? address = await getAdressFromLatLng(currentLoc);
 
     setState(() {
@@ -81,7 +86,6 @@ class _PickLocationViewState extends State<PickLocationView> {
 
   @override
   Widget build(BuildContext context) {
-    responsiveSize(context);
     return Scaffold(
         bottomNavigationBar: showScreenLoading == false
             ? Container(
@@ -110,9 +114,9 @@ class _PickLocationViewState extends State<PickLocationView> {
                     ))),
               ),
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          automaticallyImplyLeading: true,
-          title: Text(_i18n()["pickLocation"]),
+        appBar: mezcalmosAppBar(
+          AppBarLeftButtonType.Back,
+          title: "${_i18n()["pickLocation"]}",
         ),
         body: mezPickLocationViewBody());
   }
@@ -153,14 +157,18 @@ class _PickLocationViewState extends State<PickLocationView> {
     String? _result;
     final LatLng _pickedLoc = await locationPickerController.getMapCenter();
 
-    locationPickerController.moveToNewLatLng(
+    await locationPickerController.moveToNewLatLng(
         _pickedLoc.latitude, _pickedLoc.longitude);
-
+    //  locationPickerController.setLocation(_pickedLoc);
+    await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
     setState(() {
-      showScreenLoading = true;
+      // showScreenLoading = true;
     });
     if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
       Get.back<Location>(result: locationPickerController.location.value);
+    } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
+      Get.back<Location>(result: locationPickerController.location.value);
+      mezDbgPrint(locationPickerController.location.value!.address);
     }
   }
 
@@ -212,6 +220,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                     locationPickerMapController: locationPickerController,
                     notifyParentOfConfirm: (_) {},
                     notifyParentOfLocationFinalized: (Location location) {
+                      mezDbgPrint("NEwLOC notif");
                       setState(() {
                         locationPickerController.setLocation(location);
                       });
