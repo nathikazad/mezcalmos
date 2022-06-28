@@ -193,7 +193,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                   order.value!.notes!.length <= 0
                               ? Container()
                               : notesWidget(order),
-                        
 
                           OrderSummaryCard(order: order.value!),
 
