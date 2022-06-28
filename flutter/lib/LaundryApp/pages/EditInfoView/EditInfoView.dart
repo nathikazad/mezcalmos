@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['EditInfoView']['EditInfoView'];
@@ -48,91 +49,99 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
         leftBtnType: AppBarLeftButtonType.Back,
         onClick: Get.back,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(12.0),
-        child: Form(
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // image
-              LaundryOpImageEditComponent(
-                  editInfoController: editInfoController),
-              SizedBox(
-                height: 25,
-              ),
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  editInfoController.laundry.value?.info.name ?? "",
-                  style: Get.textTheme.headline3
-                      ?.copyWith(fontWeight: FontWeight.w700),
-                ),
-              )
-              // Laundry name fiels
-              ,
-              SizedBox(
-                height: 25,
-              ),
+      body: Obx(() {
+        if (editInfoController.laundry.value != null) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(12.0),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // image
+                  LaundryOpImageEditComponent(
+                      editInfoController: editInfoController),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      editInfoController.laundry.value?.info.name ?? "",
+                      style: Get.textTheme.headline3
+                          ?.copyWith(fontWeight: FontWeight.w700),
+                    ),
+                  )
+                  // Laundry name fiels
+                  ,
+                  SizedBox(
+                    height: 25,
+                  ),
 
-              Text("${_i18n()["laundryName"]}"),
-              SizedBox(
-                height: 10,
-              ),
-              _laundryNameTextField(),
-              SizedBox(
-                height: 25,
-              ),
-              Text("${_i18n()["defaultLanguage"]}"),
-              SizedBox(
-                height: 10,
-              ),
-              _laundryPrimaryLang(),
-              // LanguageSelectorComponent(
-              //     languageValue: editInfoController.primaryLang,
-              //     oppositeLanguageValue: editInfoController.secondaryLang,
-              //     onChangeShouldUpdateLang:
-              //         editInfoController.validatePrimaryLanguUpdate),
+                  Text("${_i18n()["laundryName"]}"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _laundryNameTextField(),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Text("${_i18n()["defaultLanguage"]}"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _laundryPrimaryLang(),
+                  // LanguageSelectorComponent(
+                  //     languageValue: editInfoController.primaryLang,
+                  //     oppositeLanguageValue: editInfoController.secondaryLang,
+                  //     onChangeShouldUpdateLang:
+                  //         editInfoController.validatePrimaryLanguUpdate),
 
-              SizedBox(
-                height: 25,
-              ),
-              Text("${_i18n()["secondaryLanguage"]}"),
-              SizedBox(
-                height: 10,
-              ),
-              _laundrySecondaryang(),
-              // LanguageSelectorComponent(
-              //   languageValue: editInfoController.secondaryLang,
-              //   oppositeLanguageValue: editInfoController.primaryLang,
-              //   onChangeShouldUpdateLang:
-              //       editInfoController.validateSecondaryLanguUpdate,
-              //   showDeleteIcon: true,
-              // ),
-              SizedBox(
-                height: 25,
-              ),
-              Text('${_i18n()["location"]}'),
-              SizedBox(
-                height: 10,
-              ),
-              LaundryOpEditLocationCard(
-                editInfoController: editInfoController,
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Container(
-                child: viewWidgets.editWorkingHoursComponent(),
-              ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Text("${_i18n()["secondaryLanguage"]}"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _laundrySecondaryang(),
+                  // LanguageSelectorComponent(
+                  //   languageValue: editInfoController.secondaryLang,
+                  //   oppositeLanguageValue: editInfoController.primaryLang,
+                  //   onChangeShouldUpdateLang:
+                  //       editInfoController.validateSecondaryLanguUpdate,
+                  //   showDeleteIcon: true,
+                  // ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Text('${_i18n()["location"]}'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  LaundryOpEditLocationCard(
+                    editInfoController: editInfoController,
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    child: viewWidgets.editWorkingHoursComponent(),
+                  ),
 
-              SizedBox(
-                height: 25,
+                  SizedBox(
+                    height: 25,
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        } else {
+          return MezLogoAnimation(
+            centered: true,
+          );
+        }
+      }),
       bottomNavigationBar: _editInfoSaveButton(),
     );
   }

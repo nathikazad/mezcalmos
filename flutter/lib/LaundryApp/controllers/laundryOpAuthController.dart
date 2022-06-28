@@ -73,7 +73,7 @@ class LaundryOpAuthController extends GetxController {
           // init controllers with new id
           laundryId = operator.value!.state.laundryId;
           await _orderController.init(laundryId!);
-          await _laundryInfoController.init(laundryId!);
+         // await _laundryInfoController.init(laundryId!);
         }
       }
     });

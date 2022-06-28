@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -39,6 +40,21 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
 
   // variables //
   final String version = GetStorage().read<String>(getxAppVersion) as String;
+  Rxn<Laundry> laundry = Rxn();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    laundryInfoController
+        .getLaundry(laundryOpAuthController.laundryId!)
+        .listen((Laundry? event) {
+      if (event != null) {
+        laundry.value = event;
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -47,48 +63,49 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
           children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 40,
-                    ),
-                    // Laundry IMAGE AND NAME
+            Obx(
+              () => Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 40,
+                      ),
+                      // Laundry IMAGE AND NAME
 
-                    if (laundryInfoController.laundry.value != null)
-                      _laundryImageAndName(),
+                      if (laundry.value != null) _laundryImageAndName(),
 
-                    // Navigation links
-                    if (laundryOpAuthController.operator.value != null &&
-                        laundryOpAuthController
-                                .operator.value?.state.laundryId !=
-                            null)
-                      _operatorNavLinks(),
-                    _languageSwitcher(),
-                    _navigationLink(
-                        onClick: () {
-                          _drawerController.closeMenu();
-                          launch(GetStorage().read(getxPrivacyPolicyLink));
-                        },
-                        icon: Icons.privacy_tip,
-                        titleWidget: Text(
-                          "${_i18n()["privacyPolicies"]}",
-                          style: Get.textTheme.bodyText1,
-                        )),
-                    _navigationLink(
-                        onClick: () async {
-                          _drawerController.closeMenu();
-                          await authController.signOut();
-                        },
-                        icon: Icons.logout,
-                        titleWidget: Text(
-                          "${_i18n()["logout"]}",
-                          style: Get.textTheme.bodyText1,
-                        )),
-                  ],
+                      // Navigation links
+                      if (laundryOpAuthController.operator.value != null &&
+                          laundryOpAuthController
+                                  .operator.value?.state.laundryId !=
+                              null)
+                        _operatorNavLinks(),
+                      _languageSwitcher(),
+                      _navigationLink(
+                          onClick: () {
+                            _drawerController.closeMenu();
+                            launch(GetStorage().read(getxPrivacyPolicyLink));
+                          },
+                          icon: Icons.privacy_tip,
+                          titleWidget: Text(
+                            "${_i18n()["privacyPolicies"]}",
+                            style: Get.textTheme.bodyText1,
+                          )),
+                      _navigationLink(
+                          onClick: () async {
+                            _drawerController.closeMenu();
+                            await authController.signOut();
+                          },
+                          icon: Icons.logout,
+                          titleWidget: Text(
+                            "${_i18n()["logout"]}",
+                            style: Get.textTheme.bodyText1,
+                          )),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -207,18 +224,16 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
             children: [
               CircleAvatar(
                 radius: 45,
-                backgroundImage: (laundryInfoController
-                            .laundry.value!.info.image !=
-                        null)
+                backgroundImage: (laundry.value!.info.image != null)
                     ? CachedNetworkImageProvider(
-                        laundryInfoController.laundry.value?.info.image ?? "")
+                        laundry.value?.info.image ?? "")
                     : AssetImage(aNoImage) as ImageProvider,
               ),
               SizedBox(
                 height: 20,
               ),
               Text(
-                laundryInfoController.laundry.value!.info.name,
+                laundry.value!.info.name,
                 style: Get.textTheme.headline3
                     ?.copyWith(fontWeight: FontWeight.w700, fontSize: 17.sp),
               ),

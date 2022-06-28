@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -26,16 +27,24 @@ class _LaundryOrderWeightSelectorState
 
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
+  LaundryOpAuthController opAuthController =
+      Get.find<LaundryOpAuthController>();
+
   RxList<LaundryCostLineItem> laundryCategories = RxList.empty();
 
   @override
   void initState() {
-    laundryInfoController.laundry.value!.laundryCosts.lineItems
-        .forEach((LaundryCostLineItem element) {
+    getcatgeories();
+    super.initState();
+  }
+
+  Future<void> getcatgeories() async {
+    final Laundry laundry = await laundryInfoController
+        .getLaundryAsFuture(opAuthController.laundryId!);
+
+    laundry.laundryCosts.lineItems.forEach((LaundryCostLineItem element) {
       laundryCategories.add(element);
     });
-
-    super.initState();
   }
 
   @override

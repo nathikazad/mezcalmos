@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/Components/CategoryGridCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/Components/LaundryOpNormalDeliveryTime.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
@@ -12,6 +13,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
@@ -28,20 +30,26 @@ class LaundryOpAdminView extends StatefulWidget {
 class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
+  LaundryOpAuthController laundryOpAuthController =
+      Get.find<LaundryOpAuthController>();
   Rxn<Laundry> laundry = Rxn();
   Rxn<num> avgDays = Rxn();
   RxBool btnClicked = RxBool(false);
+  late String laundryId;
 
   StreamSubscription? laundryListener;
 
   @override
   void initState() {
-    laundry = laundryInfoController.laundry;
-    avgDays.value = laundry.value!.averageNumberOfDays;
-    laundryListener =
-        laundryInfoController.laundry.stream.listen((Laundry? event) {
+    // laundry = laundryInfoController.getLaundry(laundryOpAuthController.laundryId!).;
+    // avgDays.value = laundry.value!.averageNumberOfDays;
+    laundryId = laundryOpAuthController.laundryId!;
+    laundryListener = laundryInfoController
+        .getLaundry(laundryOpAuthController.laundryId!)
+        .listen((Laundry? event) {
       if (event != null) {
         laundry.value = event;
+        avgDays.value = event.averageNumberOfDays;
       } else {
         Get.back();
       }
@@ -64,79 +72,90 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
       ),
       bottomNavigationBar: _footerSaveButton(),
       body: Obx(
-        () => SingleChildScrollView(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
+        () {
+          if (laundry.value != null) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(12),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    alignment: Alignment.center,
-                    child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: CachedNetworkImageProvider(
-                            laundryInfoController.laundry.value!.info.image)),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      laundryInfoController.laundry.value!.info.name,
-                      style: Get.textTheme.headline3
-                          ?.copyWith(fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Container(
-                    child: Text(
-                      "${_i18n()["categories"]}",
-                      style: Get.textTheme.bodyText1,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  _categoriesGridList(),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Obx(
-                    () => LaundryOpNormalDeliveryTime(
-                      data: avgDays.value!,
-                      onTapPlus: () {
-                        avgDays.value = avgDays.value! + 1;
-                      },
-                      onTapMinus: () {
-                        if (avgDays.value! > 1) {
-                          avgDays.value = avgDays.value! - 1;
-                        }
-                      },
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage: CachedNetworkImageProvider(
+                                laundry.value!.info.image)),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          laundry.value!.info.name,
+                          style: Get.textTheme.headline3
+                              ?.copyWith(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Container(
+                        child: Text(
+                          "${_i18n()["categories"]}",
+                          style: Get.textTheme.bodyText1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      _categoriesGridList(),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Obx(
+                        () => LaundryOpNormalDeliveryTime(
+                          data: avgDays.value!,
+                          onTapPlus: () {
+                            avgDays.value = avgDays.value! + 1;
+                          },
+                          onTapMinus: () {
+                            if (avgDays.value! > 1) {
+                              avgDays.value = avgDays.value! - 1;
+                            }
+                          },
+                        ),
+                      )
+                    ],
                   )
                 ],
-              )
-            ],
-          ),
-        ),
+              ),
+            );
+          } else {
+            return MezLogoAnimation(
+              centered: true,
+            );
+          }
+        },
       ),
     );
   }
 
   Widget _footerSaveButton() {
     return Obx(() {
-      if (avgDays.value! != laundry.value!.averageNumberOfDays) {
+      if (avgDays.value != null &&
+          avgDays != laundry.value!.averageNumberOfDays) {
         return InkWell(
           onTap: () {
             if (avgDays.value != null) {
               btnClicked.value = true;
               laundryInfoController
-                  .setAverageNumberOfDays(avgDays.value!)
+                  .setAverageNumberOfDays(
+                      laundryId: laundryOpAuthController.laundryId!,
+                      averageNumberOfDays: avgDays.value!)
                   .whenComplete(() => btnClicked.value = false);
             }
           },
@@ -174,7 +193,9 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
       children: List<Widget>.generate(
               laundry.value!.laundryCosts.lineItems.length, (int index) {
             return CategoryGridCard(
-                item: laundry.value!.laundryCosts.lineItems[index]);
+              item: laundry.value!.laundryCosts.lineItems[index],
+              laundry: laundry.value!,
+            );
           }) +
           [
             Card(

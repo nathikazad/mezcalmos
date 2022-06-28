@@ -25,12 +25,24 @@ class LaundryInfoController extends GetxController {
         .child(serviceProviderInfos(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
-        .map<Laundry?>((dynamic event) {
+        .map<Laundry?>((DatabaseEvent event) {
       if (event.snapshot.value != null) {
         return Laundry.fromLaundryData(
             laundryId: laundryId, laundryData: event.snapshot.value);
       }
       return null;
+    });
+  }
+
+  Future<Laundry> getLaundryAsFuture(String laundryId) async {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderInfos(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .once()
+        .then<Laundry>((DatabaseEvent event) {
+      return Laundry.fromLaundryData(
+          laundryId: laundryId, laundryData: event.snapshot.value);
     });
   }
 
@@ -77,59 +89,62 @@ class LaundryInfoController extends GetxController {
     await _databaseHelper.firebaseDatabase
         .ref()
         .child(serviceProviderInfos(
-                orderType: OrderType.Laundry,
-                providerId: laundryId) +
+                orderType: OrderType.Laundry, providerId: laundryId) +
             '/info')
         .child('image')
         .set(newImage);
   }
 
-//   Future<void> setSchedule(Schedule schedule) {
-//     return _databaseHelper.firebaseDatabase
-//         .ref()
-//         .child(serviceProviderSchedule(
-//             orderType: OrderType.Laundry, providerId: laundryId))
-//         .set(schedule.toFirebaseFormattedJson());
-//   }
+  Future<void> setSchedule(
+      {required String laundryId, required Schedule schedule}) {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderSchedule(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(schedule.toFirebaseFormattedJson());
+  }
 
-//   Future<void> setCosts(LaundryCosts laundryCosts) {
-//     return _databaseHelper.firebaseDatabase
-//         .ref()
-//         .child(serviceProviderCosts(
-//             orderType: OrderType.Laundry, providerId: laundryId))
-//         .set(laundryCosts.toFirebasFormat());
-//   }
+  Future<void> setCosts(
+      {required String laundryId, required LaundryCosts laundryCosts}) {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderCosts(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(laundryCosts.toFirebasFormat());
+  }
 
-//   Future<void> setAverageNumberOfDays(num averageNumberOfDays) {
-//     return _databaseHelper.firebaseDatabase
-//         .ref()
-//         .child(serviceProviderAverageNumberOfDays(
-//             orderType: OrderType.Laundry, providerId: laundryId))
-//         .set(averageNumberOfDays);
-//   }
+  Future<void> setAverageNumberOfDays(
+      {required String laundryId, required num averageNumberOfDays}) {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderAverageNumberOfDays(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(averageNumberOfDays);
+  }
 
-//   Future<void> setPrimaryLanguage(LanguageType lang) {
-//     return _databaseHelper.firebaseDatabase
-//         .ref()
-//         .child(serviceProviderPrimaryLanguage(
-//             orderType: OrderType.Laundry, providerId: laundryId))
-//         .set(lang.toFirebaseFormatString());
-//   }
+  Future<void> setPrimaryLanguage(
+      {required String laundryId, required LanguageType lang}) {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderPrimaryLanguage(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(lang.toFirebaseFormatString());
+  }
 
-//   Future<void> setSecondaryLanguage(LanguageType? lang) {
-//     return _databaseHelper.firebaseDatabase
-//         .ref()
-//         .child(serviceProviderSecondaryLanguage(
-//             orderType: OrderType.Laundry, providerId: laundryId))
-//         .set(lang?.toFirebaseFormatString() ?? null);
-//   }
+  Future<void> setSecondaryLanguage(
+      {required String laundryId, LanguageType? lang}) {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderSecondaryLanguage(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(lang?.toFirebaseFormatString() ?? null);
+  }
 
-//   Future<void> setLocation(Location loc) {
-//     return _databaseHelper.firebaseDatabase
-//         .ref()
-//         .child(serviceProviderLocation(
-//             orderType: OrderType.Laundry, providerId: laundryId))
-//         .set(loc.toFirebaseFormattedJson());
-//   }
-
+  Future<void> setLocation({required String laundryId, required Location loc}) {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderLocation(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(loc.toFirebaseFormattedJson());
+  }
 }

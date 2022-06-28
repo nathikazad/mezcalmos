@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -20,6 +21,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
 class EditInfoController {
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
+  LaundryOpAuthController opAuthController =
+      Get.find<LaundryOpAuthController>();
   final Rxn<Laundry> laundry = Rxn<Laundry>();
   TextEditingController laundryNameController = TextEditingController();
   final Rxn<String> newImageUrl = Rxn();
@@ -39,8 +42,9 @@ class EditInfoController {
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
 
-  void init() {
-    laundry.value = laundryInfoController.laundry.value;
+  Future<void> init() async {
+    laundry.value = await laundryInfoController
+        .getLaundryAsFuture(opAuthController.laundryId!);
 
     if (laundry.value != null) {
       laundryNameController.text = laundry.value?.info.name ?? '';
@@ -62,32 +66,42 @@ class EditInfoController {
     btnClicked.value = true;
     if (laundryNameController.text != '' &&
         laundryNameController.text != laundry.value?.info.name) {
-      await laundryInfoController.setLaundryName(laundryNameController.text);
+      await laundryInfoController.setLaundryName(
+          laundryId: opAuthController.laundryId!,
+          newName: laundryNameController.text);
     }
     if (newImageFile.value != null) {
       await laundryInfoController
-          .uploadUserImgToFbStorage(imageFile: newImageFile.value!)
+          .uploadUserImgToFbStorage(
+              laundryId: opAuthController.laundryId!,
+              imageFile: newImageFile.value!)
           .then((String value) {
-        laundryInfoController.setLaundryImage(value);
+        laundryInfoController.setLaundryImage(
+            laundryId: opAuthController.laundryId!, newImage: value);
       });
     }
     if (newLocation.value != null &&
         newLocation.value?.address != laundry.value?.info.location.address) {
-      await laundryInfoController.setLocation(newLocation.value!);
+      await laundryInfoController.setLocation(
+          laundryId: opAuthController.laundryId!, loc: newLocation.value!);
     }
     if (primaryLang.value != null &&
         primaryLang.value != laundry.value?.primaryLanguage) {
-      await laundryInfoController.setPrimaryLanguage(primaryLang.value!);
+      await laundryInfoController.setPrimaryLanguage(
+          laundryId: opAuthController.laundryId!, lang: primaryLang.value!);
     }
     if (secondaryLang.value != null &&
         secondaryLang.value != laundry.value?.secondaryLanguage) {
-      await laundryInfoController.setSecondaryLanguage(secondaryLang.value!);
+      await laundryInfoController.setSecondaryLanguage(
+          laundryId: opAuthController.laundryId!, lang: secondaryLang.value!);
     } else if (secondaryLang.value == null) {
-      await laundryInfoController.setSecondaryLanguage(null);
+      await laundryInfoController.setSecondaryLanguage(
+          laundryId: opAuthController.laundryId!, lang: null);
     }
 
     if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
-      await laundryInfoController.setSchedule(newSchedule.value!);
+      await laundryInfoController.setSchedule(
+          laundryId: opAuthController.laundryId!, schedule: newSchedule.value!);
     }
 
     btnClicked.value = false;
@@ -142,16 +156,5 @@ class EditInfoController {
             "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
       }
     }
-  }
-
-  Future<void> dispose() async {
-    laundry.value = laundryInfoController.laundry.value;
-
-    laundryNameController.text = laundry.value?.info.name ?? '';
-
-    newLocation.value = laundry.value!.info.location;
-    newImageUrl.value = laundry.value?.info.image ?? '';
-    primaryLang.value = laundry.value!.primaryLanguage;
-    secondaryLang.value = laundry.value!.secondaryLanguage;
   }
 }

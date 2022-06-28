@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -21,9 +22,10 @@ class AddCategoryController {
       TextEditingController();
   TabController? tabController;
 
-  // @m66are Work //
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
+  LaundryOpAuthController laundryOpAuthController =
+      Get.find<LaundryOpAuthController>();
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
   final Rxn<Laundry> laundry = Rxn<Laundry>();
@@ -38,8 +40,9 @@ class AddCategoryController {
   String? editableCategoryId;
 
   // INIT STATE ///
-  void init({String? categoryId}) {
-    laundry.value = laundryInfoController.laundry.value;
+  Future<void> init({String? categoryId}) async {
+    laundry.value = await laundryInfoController
+        .getLaundryAsFuture(laundryOpAuthController.laundryId!);
     if (laundry.value != null) {
       initLanguages();
       assignCategories();
@@ -95,7 +98,11 @@ class AddCategoryController {
 
     laundryCosts.value!.lineItems = categories;
 
-    laundryInfoController.setCosts(laundryCosts.value!).then((value) {
+    laundryInfoController
+        .setCosts(
+            laundryId: laundryOpAuthController.laundryId!,
+            laundryCosts: laundryCosts.value!)
+        .then((value) {
       Get.back();
     });
   }
@@ -111,7 +118,11 @@ class AddCategoryController {
     };
     categories.value[index].cost = num.parse(categoryPricingController.text);
     laundryCosts.value!.lineItems = categories;
-    laundryInfoController.setCosts(laundryCosts.value!).then((value) {
+    laundryInfoController
+        .setCosts(
+            laundryId: laundryOpAuthController.laundryId!,
+            laundryCosts: laundryCosts.value!)
+        .then((value) {
       Get.back();
     });
   }

@@ -12,8 +12,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["AdminView"]["components"]["CategoryGridCard"];
 
 class CategoryGridCard extends StatefulWidget {
-  const CategoryGridCard({Key? key, required this.item}) : super(key: key);
+  const CategoryGridCard({Key? key, required this.item, required this.laundry})
+      : super(key: key);
   final LaundryCostLineItem item;
+  final Laundry laundry;
 
   @override
   State<CategoryGridCard> createState() => _CategoryGridCardState();
@@ -29,8 +31,8 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
   late LanguageType? secondaryLang;
   @override
   void initState() {
-    primaryLang = laundryInfoController.laundry.value!.primaryLanguage;
-    secondaryLang = laundryInfoController.laundry.value!.secondaryLanguage;
+    primaryLang = widget.laundry.primaryLanguage;
+    secondaryLang = widget.laundry.secondaryLanguage;
     _getRightName();
     super.initState();
   }
@@ -114,10 +116,9 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
 
   Future<void> deleteCategory({required LaundryCostLineItem item}) async {
     final List<LaundryCostLineItem> categories = [];
-    final LaundryCosts laundryCosts =
-        laundryInfoController.laundry.value!.laundryCosts;
+    final LaundryCosts laundryCosts = widget.laundry.laundryCosts;
 
-    laundryInfoController.laundry.value!.laundryCosts.lineItems
+    widget.laundry.laundryCosts.lineItems
         .forEach((LaundryCostLineItem element) {
       categories.add(element.copyWith());
     });
@@ -127,7 +128,8 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
 
     laundryCosts.lineItems = categories;
 
-    await laundryInfoController.setCosts(laundryCosts);
+    await laundryInfoController.setCosts(
+        laundryCosts: laundryCosts, laundryId: widget.laundry.info.id);
   }
 
   String _getRightName() {
