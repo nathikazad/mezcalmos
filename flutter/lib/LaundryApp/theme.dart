@@ -15,7 +15,8 @@ class LaundryAppTheme {
       brightness: Brightness.light,
 
       dividerColor: Colors.grey.withOpacity(0.8),
-      colorScheme: ColorScheme.light().copyWith(secondary: Colors.grey[850]),
+      colorScheme: ColorScheme.light()
+          .copyWith(primary: primaryBlueColor, secondary: Colors.grey[850]),
 
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
@@ -46,6 +47,19 @@ class LaundryAppTheme {
                 states.contains(MaterialState.selected)
                     ? Colors.white
                     : Colors.black),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        fillColor: Colors.grey.shade200,
+        filled: true,
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: BorderSide.none),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: BorderSide.none),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: BorderSide.none),
       ),
       appBarTheme: AppBarTheme(
           backgroundColor: Colors.white,

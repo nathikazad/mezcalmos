@@ -7,6 +7,7 @@ import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/Components/CategoryGridCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/Components/LaundryOpNormalDeliveryTime.dart';
+import 'package:mezcalmos/LaundryApp/pages/AdminView/Components/MinmumCostCard.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -31,21 +32,27 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
   Rxn<Laundry> laundry = Rxn();
   Rxn<num> avgDays = Rxn();
   RxBool btnClicked = RxBool(false);
+  Rxn<num> minCost = Rxn();
 
   StreamSubscription? laundryListener;
 
   @override
   void initState() {
     laundry = laundryInfoController.laundry;
-    avgDays.value = laundry.value!.averageNumberOfDays;
-    laundryListener =
-        laundryInfoController.laundry.stream.listen((Laundry? event) {
-      if (event != null) {
-        laundry.value = event;
-      } else {
-        Get.back();
-      }
-    });
+    if (laundry.value != null) {
+      avgDays.value = laundry.value!.averageNumberOfDays;
+      minCost.value = laundry.value!.laundryCosts.minimumCost;
+      laundryListener =
+          laundryInfoController.laundry.stream.listen((Laundry? event) {
+        if (event != null) {
+          laundry.value = event;
+        } else {
+          Get.back();
+        }
+      });
+    } else {
+      Get.back();
+    }
     super.initState();
   }
 
@@ -118,7 +125,13 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                         }
                       },
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  LaundryOpMinimumCost(
+                    minCost: minCost,
+                  ),
                 ],
               )
             ],
@@ -130,15 +143,10 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
 
   Widget _footerSaveButton() {
     return Obx(() {
-      if (avgDays.value! != laundry.value!.averageNumberOfDays) {
+      if (_shouldUSave()) {
         return InkWell(
           onTap: () {
-            if (avgDays.value != null) {
-              btnClicked.value = true;
-              laundryInfoController
-                  .setAverageNumberOfDays(avgDays.value!)
-                  .whenComplete(() => btnClicked.value = false);
-            }
+            saveInfo();
           },
           child: Ink(
               height: 55,
@@ -195,5 +203,26 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
             )
           ],
     );
+  }
+
+  bool _shouldUSave() {
+    return avgDays.value != laundry.value!.averageNumberOfDays ||
+        minCost.value != laundry.value!.laundryCosts.minimumCost;
+  }
+
+  void saveInfo() {
+    if (avgDays.value != null) {
+      btnClicked.value = true;
+      laundryInfoController
+          .setAverageNumberOfDays(avgDays.value!)
+          .whenComplete(() => btnClicked.value = false);
+    }
+    if (minCost.value != null) {
+      btnClicked.value = true;
+      laundryInfoController.setMinCost(minCost.value!).whenComplete(() {
+        FocusScope.of(context).unfocus();
+        return btnClicked.value = false;
+      });
+    }
   }
 }

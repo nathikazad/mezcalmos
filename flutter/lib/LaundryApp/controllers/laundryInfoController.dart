@@ -31,7 +31,7 @@ class LaundryInfoController extends GetxController {
         .child(serviceProviderInfos(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
-        .listen((dynamic event) {
+        .listen((DatabaseEvent event) {
       if (event.snapshot.value != null) {
         laundry.value = Laundry.fromLaundryData(
             laundryId: laundryId, laundryData: event.snapshot.value);
@@ -111,6 +111,14 @@ class LaundryInfoController extends GetxController {
         .child(serviceProviderAverageNumberOfDays(
             orderType: OrderType.Laundry, providerId: laundryId))
         .set(averageNumberOfDays);
+  }
+
+  Future<void> setMinCost(num minCost) {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderMinCost(
+            orderType: OrderType.Laundry, providerId: laundryId))
+        .set(minCost);
   }
 
   Future<void> setPrimaryLanguage(LanguageType lang) {

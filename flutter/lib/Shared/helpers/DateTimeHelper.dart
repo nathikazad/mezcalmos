@@ -68,3 +68,50 @@ extension parseDateTime on DateTime {
     return "${formatDay.format(toLocal())} ${formatTime.format(toLocal())}";
   }
 }
+
+String convertToAmPm(int hours, int minutes) {
+  String minutesFormattedString;
+  String hoursFormattedString;
+  String formattedString;
+  if (minutes < 10) {
+    minutesFormattedString = "0$minutes";
+  } else {
+    minutesFormattedString = "$minutes";
+  }
+  if (hours < 10) {
+    hoursFormattedString = "0$hours";
+  } else {
+    hoursFormattedString = "$hours";
+  }
+  if (hours <= 12) {
+    formattedString = "$hours:$minutesFormattedString AM";
+  } else {
+    formattedString = "${hours - 12}:$minutesFormattedString PM";
+  }
+  return formattedString;
+}
+
+extension timeHelper on int {
+  String convertHoursToAmPm() {
+    String formattedString;
+
+    if (this <= 12) {
+      formattedString = "$this";
+    } else {
+      formattedString = "${this - 12}";
+    }
+    if (this < 0) {
+      return "0$formattedString";
+    } else {
+      return formattedString;
+    }
+  }
+
+  String convertToMinutes() {
+    if (this < 10) {
+      return "0$this";
+    } else {
+      return "$this";
+    }
+  }
+}

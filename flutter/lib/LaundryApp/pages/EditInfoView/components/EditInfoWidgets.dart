@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:sizer/sizer.dart';
@@ -62,7 +63,7 @@ class EditInfoWidgets {
             children: [
               Flexible(
                 flex: 4,
-                fit: FlexFit.tight,
+                fit: FlexFit.loose,
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
@@ -73,20 +74,26 @@ class EditInfoWidgets {
                 ),
               ),
               Flexible(
-                  flex: 4,
+                  flex: 6,
                   fit: FlexFit.tight,
                   child: editInfoController
                           .newSchedule.value!.openHours[weekday]!.isOpen
-                      ? Row(children: [
-                          Text(
-                            "${editInfoController.newSchedule.value!.openHours[weekday]!.from[0]}:${editInfoController.schedulePreview.value!.openHours[weekday]!.from[1]} ",
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            " :  ${editInfoController.newSchedule.value!.openHours[weekday]!.to[0]}:${editInfoController.schedulePreview.value!.openHours[weekday]!.to[1]}",
-                            textAlign: TextAlign.center,
-                          ),
-                        ])
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                              Text(
+                                convertToAmPm(
+                                    editInfoController.newSchedule.value!
+                                        .openHours[weekday]!.from[0],
+                                    editInfoController.newSchedule.value!
+                                        .openHours[weekday]!.from[1]),
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                " : ${convertToAmPm(editInfoController.newSchedule.value!.openHours[weekday]!.to[0], editInfoController.newSchedule.value!.openHours[weekday]!.to[1])}",
+                                textAlign: TextAlign.center,
+                              ),
+                            ])
                       : Container(
                           height: 40,
                         )),

@@ -1502,6 +1502,9 @@
                     "LaundryOpNormalDeliveryTime": {
                         "normalDeliverytime": "Normal delivery time",
                         "days": "days"
+                    },
+                    "MinimumCostCard": {
+                        "minCost": "Minimum Cost"
                     }
                 }
             },
