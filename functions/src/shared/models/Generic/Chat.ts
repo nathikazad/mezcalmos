@@ -84,3 +84,12 @@ export interface MessageNotificationForQueue extends NotificationForQueue {
   messageId: string,
   orderId?: string
 }
+
+export interface CallNotificationForQueue extends NotificationForQueue {
+  chatId: string,
+  callerId: string,
+  callerParticipantType: ParticipantType,
+  calleeId: string,
+  calleeParticipantType: ParticipantType,
+  orderId?: string
+}

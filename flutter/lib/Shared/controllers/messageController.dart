@@ -89,6 +89,30 @@ class MessageController extends GetxController {
             .toFirebaseFormatJson());
   }
 
+  Future<void> callUser(
+      {required String chatId,
+      required Participant callee,
+      String? orderId}) async {
+    final DatabaseReference notificationNode = _databaseHelper.firebaseDatabase
+        .ref()
+        .child('notificationQueue')
+        .push();
+
+    // ignore: unawaited_futures
+    _databaseHelper.firebaseDatabase
+        .ref()
+        .child('notificationQueue/${notificationNode.key}')
+        .set(CallNotificationForQueue(
+                chatId: chatId,
+                callerId: _authController.user!.id,
+                callerParticipantType:
+                    _settingsController.appType.toParticipantTypefromAppType(),
+                calleeId: callee.id,
+                calleeParticipantType: callee.participantType,
+                orderId: orderId)
+            .toFirebaseFormatJson());
+  }
+
   Participant? sender() {
     return chat.value?.getParticipant(
         _settingsController.appType.toParticipantTypefromAppType(),

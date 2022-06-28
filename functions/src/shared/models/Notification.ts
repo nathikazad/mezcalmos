@@ -7,7 +7,8 @@ export enum NotificationType {
   NewOrder = "newOrder",
   OrderStatusChange = "orderStatusChange",
   NewMessage = "newMessage",
-  NewCounterOffer = "newCounterOffer"
+  NewCounterOffer = "newCounterOffer",
+  Call = "call"
 }
 
 export enum NotificationAction {
@@ -35,6 +36,12 @@ export interface NewMessageNotification extends ForegroundNotification {
   sender: UserInfo,
   message: string,
   orderId: string
+}
+
+export interface NewCallNotification extends ForegroundNotification {
+  chatId: string,
+  caller: UserInfo,
+  callee: UserInfo,
 }
 
 export interface OrderNotification extends ForegroundNotification {
