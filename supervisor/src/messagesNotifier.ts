@@ -1,9 +1,9 @@
-import { ChatData, MessageNotificationForQueue, nonNotifiableParticipants, Participant, ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
+import { CallNotificationForQueue, ChatData, MessageNotificationForQueue, nonNotifiableParticipants, Participant, ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
 import { getChat, setChatMessageNotifiedAsTrue } from "../../functions/src/shared/controllers/chatController";
 import * as notifyUser from "../../functions/src/utilities/senders/notifyUser";
 import { chatUrl, orderUrl } from "../../functions/src/utilities/senders/appRoutes";
 import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
-import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue } from "../../functions/src/shared/models/Notification";
+import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue, NewCallNotification } from "../../functions/src/shared/models/Notification";
 import { CounterOfferNotification, CounterOfferNotificationForQueue } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
 import { OrderType } from "../../functions/src/shared/models/Generic/Order";
 
@@ -18,15 +18,46 @@ export function startWatchingMessageNotificationQueue() {
       case NotificationType.NewCounterOffer:
         notifyCustomerAboutCounterOffer(notification as CounterOfferNotificationForQueue)
         break;
+      case NotificationType.Call:
+        notifyCallerRecipient(notification as CallNotificationForQueue)
+        break;
     }
     rootNodes.notificationsQueueNode(snap.key!).remove();
   });
 }
 
+async function notifyCallerRecipient(notificationForQueue: CallNotificationForQueue) {
+  let chatData: ChatData = (await getChat(notificationForQueue.chatId)).chatData;
+
+
+  let callerInfo: Participant = chatData.participants[notificationForQueue.callerParticipantType]![notificationForQueue.callerId]
+  let calleeInfo: Participant = chatData.participants[notificationForQueue.calleeParticipantType]![notificationForQueue.calleeId]
+  let notification: Notification = {
+    foreground: <NewCallNotification>{
+      chatId: notificationForQueue.chatId,
+      callee: calleeInfo,
+      caller: callerInfo,
+      time: notificationForQueue.timestamp,
+      notificationType: NotificationType.Call,
+      notificationAction: NotificationAction.ShowPopUp,
+    },
+    background: {
+      en: {
+        title: `New call from ${callerInfo.name}`,
+        body: `${callerInfo.name}`
+      },
+      es: {
+        title: `Nueva mensaje de ${callerInfo.name}`,
+        body: `${callerInfo.name}`
+      }
+    },
+    linkUrl: chatUrl(notificationForQueue.chatId)
+  }
+  notifyUser.pushNotification(calleeInfo.id, notification, calleeInfo.particpantType);
+
+}
+
 async function notifyOtherMessageParticipants(notificationForQueue: MessageNotificationForQueue) {
-  // TO BE REMOVED, added for backwards compatibility in cases where message does not have chatId field
-  notificationForQueue.chatId = notificationForQueue.chatId ?? notificationForQueue.orderId;
-  // TILL HERE
   let chatData: ChatData = (await getChat(notificationForQueue.chatId)).chatData;
 
   if (chatData.messages && chatData.messages![notificationForQueue.messageId].notified) {

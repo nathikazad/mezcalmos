@@ -6,7 +6,8 @@ enum NotificationType {
   NewAdminMessage,
   OrderStatusChange,
   NewOrder,
-  NewCounterOffer
+  NewCounterOffer,
+  Call
 }
 
 extension ParseNotificationTypeToString on NotificationType {

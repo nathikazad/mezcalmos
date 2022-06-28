@@ -38,6 +38,8 @@ Notification customerNotificationHandler(
         default:
           throw StateError("Invalid Notification Type");
       }
+    case NotificationType.Call:
+    //@saad needs to be implemented
     default:
       throw StateError("Invalid Notification Type");
   }
@@ -101,7 +103,6 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
     linkUrl: getRestaurantOrderRoute(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
-    
     imgUrl: dynamicFields["imgUrl"],
     title: dynamicFields["title"],
     timestamp: DateTime.parse(value['time']),

@@ -187,3 +187,35 @@ class MessageNotificationForQueue extends NotificationForQueue {
         "orderId": orderId
       };
 }
+
+
+class CallNotificationForQueue extends NotificationForQueue {
+  String chatId;
+  String callerId;
+  ParticipantType callerParticipantType;
+  String calleeId;
+  ParticipantType calleeParticipantType;
+  String? orderId;
+  CallNotificationForQueue(
+      {required this.chatId,
+      required this.callerId,
+      required this.callerParticipantType,
+      required this.calleeId,
+      required this.calleeParticipantType,
+      this.orderId})
+      : super(
+            notificationType: NotificationType.NewMessage,
+            timeStamp: DateTime.now().toUtc());
+
+  Map<String, dynamic> toFirebaseFormatJson() => {
+        ...super.toFirebaseFormatJson(),
+        "chatId": chatId,
+        "callerId": callerId,
+        "callerParticipantType":
+            callerParticipantType.toFirebaseFormattedString(),
+        "calleeId": calleeId,
+        "calleeParticipantType":
+            calleeParticipantType.toFirebaseFormattedString(),
+        "orderId": orderId
+      };
+}
