@@ -70,7 +70,7 @@ class _ServicesViewState extends State<ServicesView> {
     return Card(
       margin: const EdgeInsets.only(bottom: 5),
       child: Container(
-        padding: const EdgeInsets.all(5),
+        margin: const EdgeInsets.all(8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -91,11 +91,9 @@ class _ServicesViewState extends State<ServicesView> {
                       laundry.info.name,
                       style: Get.textTheme.bodyText1,
                     ),
-                    SizedBox(
-                      height: 2,
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextButton.icon(
                           style: TextButton.styleFrom(
