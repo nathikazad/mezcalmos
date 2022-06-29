@@ -960,6 +960,9 @@
         }
     },
     "DeliveryAdminApp": {
+        "main": {
+            "services": "Services"
+        },
         "notificationHandler": {
             "restaurantTitle": "New Restaurant Order",
             "laundryTitle": "New Laundry Order",

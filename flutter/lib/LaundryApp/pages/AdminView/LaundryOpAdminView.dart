@@ -27,7 +27,7 @@ class LaundryOpAdminView extends StatefulWidget {
 }
 
 class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
-  late LaundryInfoController laundryInfoController;
+  late OpLaundryInfoController laundryInfoController;
 
   Rxn<Laundry> laundry = Rxn();
   Rxn<num> avgDays = Rxn();
@@ -42,8 +42,8 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
     // avgDays.value = laundry.value!.averageNumberOfDays;
     laundryId = Get.parameters["laundryId"];
     if (laundryId != null) {
-      Get.put(LaundryInfoController(), permanent: false);
-      laundryInfoController = Get.find<LaundryInfoController>();
+      Get.put(OpLaundryInfoController(), permanent: false);
+      laundryInfoController = Get.find<OpLaundryInfoController>();
 
       laundryListener =
           laundryInfoController.getLaundry(laundryId!).listen((Laundry? event) {
@@ -63,7 +63,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
 
   @override
   void dispose() {
-    Get.delete<LaundryInfoController>();
+    Get.delete<OpLaundryInfoController>();
     laundryListener?.cancel();
     super.dispose();
   }

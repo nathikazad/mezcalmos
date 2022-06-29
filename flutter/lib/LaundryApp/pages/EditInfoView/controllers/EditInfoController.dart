@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -19,10 +18,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
 
 //
 class EditInfoController {
-  late LaundryInfoController laundryInfoController;
+  late OpLaundryInfoController laundryInfoController;
 
-  LaundryOpAuthController opAuthController =
-      Get.find<LaundryOpAuthController>();
   final Rxn<Laundry> laundry = Rxn<Laundry>();
   TextEditingController laundryNameController = TextEditingController();
   final Rxn<String> newImageUrl = Rxn();
@@ -45,10 +42,9 @@ class EditInfoController {
 
   Future<void> init({required String laundryID}) async {
     laundryId = laundryID;
-    Get.put(LaundryInfoController(), permanent: false);
-    laundryInfoController = Get.find<LaundryInfoController>();
-    laundry.value = await laundryInfoController
-        .getLaundryAsFuture(laundryId);
+    Get.put(OpLaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<OpLaundryInfoController>();
+    laundry.value = await laundryInfoController.getLaundryAsFuture(laundryId);
 
     if (laundry.value != null) {
       laundryNameController.text = laundry.value?.info.name ?? '';
@@ -71,14 +67,12 @@ class EditInfoController {
     if (laundryNameController.text != '' &&
         laundryNameController.text != laundry.value?.info.name) {
       await laundryInfoController.setLaundryName(
-          laundryId: laundryId,
-          newName: laundryNameController.text);
+          laundryId: laundryId, newName: laundryNameController.text);
     }
     if (newImageFile.value != null) {
       await laundryInfoController
           .uploadUserImgToFbStorage(
-              laundryId: laundryId,
-              imageFile: newImageFile.value!)
+              laundryId: laundryId, imageFile: newImageFile.value!)
           .then((String value) {
         laundryInfoController.setLaundryImage(
             laundryId: laundryId, newImage: value);
@@ -163,6 +157,6 @@ class EditInfoController {
   }
 
   void dispose() {
-    Get.delete<LaundryInfoController>(force: true);
+    Get.delete<OpLaundryInfoController>(force: true);
   }
 }

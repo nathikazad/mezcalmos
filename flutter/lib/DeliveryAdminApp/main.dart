@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
 
 const String defaultDb = "test";
@@ -14,6 +15,17 @@ const String defaultLaunchMode = "stage";
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
 List<GetPage<dynamic>> routes = XRouter.mainRoutes;
+List<SideMenuItem> sideMenuItems = [
+  SideMenuItem(
+    onClick: () {
+      //  Get.find<SideMenuDrawerController>().closeMenu();
+      Get.toNamed<void>(kServicesRoute);
+    },
+    icon: Icons.store_rounded,
+    title: "DeliveryAdminApp/main/services",
+    isI18nPath: true,
+  ),
+];
 
 void main() {
   runMainGuarded(
@@ -25,6 +37,7 @@ void main() {
             appTheme: DeliveryAdminTheme.lightTheme,
             signInCallback: signInCallback,
             signOutCallback: signOutCallback,
+            sideMenuItems: sideMenuItems,
             routes: routes,
           );
         },

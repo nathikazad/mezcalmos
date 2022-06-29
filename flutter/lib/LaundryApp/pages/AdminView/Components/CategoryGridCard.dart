@@ -116,9 +116,9 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
   }
 
   Future<void> deleteCategory({required LaundryCostLineItem item}) async {
-    Get.put(LaundryInfoController(), permanent: false);
-    final LaundryInfoController _laundryInfoController =
-        Get.find<LaundryInfoController>();
+    Get.put(OpLaundryInfoController(), permanent: false);
+    final OpLaundryInfoController _laundryInfoController =
+        Get.find<OpLaundryInfoController>();
     final List<LaundryCostLineItem> categories = [];
     final LaundryCosts laundryCosts = widget.laundry.laundryCosts;
 
@@ -135,7 +135,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
     await _laundryInfoController.setCosts(
         laundryCosts: laundryCosts, laundryId: widget.laundry.info.id);
 
-    await Get.delete<LaundryInfoController>(force: true);
+    await Get.delete<OpLaundryInfoController>(force: true);
   }
 
   String _getRightName() {

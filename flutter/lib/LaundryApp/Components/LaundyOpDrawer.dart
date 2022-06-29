@@ -31,7 +31,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
   final SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
   AuthController authController = Get.find<AuthController>();
-  late LaundryInfoController laundryInfoController;
+  late OpLaundryInfoController laundryInfoController;
 
   LaundryOpAuthController laundryOpAuthController =
       Get.find<LaundryOpAuthController>();
@@ -45,8 +45,8 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
   @override
   void initState() {
     // TODO: implement initState
-    Get.put(LaundryInfoController(), permanent: false);
-    laundryInfoController = Get.find<LaundryInfoController>();
+    Get.put(OpLaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<OpLaundryInfoController>();
     laundryInfoController
         .getLaundry(laundryOpAuthController.laundryId!)
         .listen((Laundry? event) {
@@ -60,7 +60,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
   @override
   void dispose() {
     // TODO: implement dispose
-    Get.delete<LaundryInfoController>(force: true);
+    Get.delete<OpLaundryInfoController>(force: true);
     super.dispose();
   }
 

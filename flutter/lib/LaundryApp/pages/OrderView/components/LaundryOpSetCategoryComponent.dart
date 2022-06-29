@@ -24,20 +24,20 @@ class _LaundyOpSetCategoryComponentState extends State<LaundyOpSetCategoryCompon
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
-  late LaundryInfoController laundryInfoController;
+  late OpLaundryInfoController laundryInfoController;
 
 
   OrderController orderController = Get.find<OrderController>();
   @override
   void initState() {
- Get.put(LaundryInfoController(), permanent: false);
-    laundryInfoController = Get.find<LaundryInfoController>();
+ Get.put(OpLaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<OpLaundryInfoController>();
 
     super.initState();
   }
   @override
   void dispose() {
-    Get.delete<LaundryInfoController>(force: true);
+    Get.delete<OpLaundryInfoController>(force: true);
     super.dispose();
   }
 

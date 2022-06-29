@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 
-class LaundryInfoController extends GetxController {
+class OpLaundryInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
 
   Stream<Laundry?> getLaundry(String laundryId) {

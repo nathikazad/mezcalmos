@@ -22,7 +22,7 @@ class AddCategoryController {
       TextEditingController();
   TabController? tabController;
 
-  late LaundryInfoController laundryInfoController;
+  late OpLaundryInfoController laundryInfoController;
   LaundryOpAuthController laundryOpAuthController =
       Get.find<LaundryOpAuthController>();
   final LanguageType userLanguage =
@@ -42,8 +42,8 @@ class AddCategoryController {
   // INIT STATE ///
   Future<void> init({required String laundryID, String? categoryId}) async {
     laundryId = laundryID;
-    Get.put(LaundryInfoController(), permanent: false);
-    laundryInfoController = Get.find<LaundryInfoController>();
+    Get.put(OpLaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<OpLaundryInfoController>();
     laundry.value = await laundryInfoController.getLaundryAsFuture(laundryId);
     if (laundry.value != null) {
       initLanguages();
@@ -145,6 +145,6 @@ class AddCategoryController {
   }
 
   void dispose() {
-    Get.delete<LaundryInfoController>(force: true);
+    Get.delete<OpLaundryInfoController>(force: true);
   }
 }
