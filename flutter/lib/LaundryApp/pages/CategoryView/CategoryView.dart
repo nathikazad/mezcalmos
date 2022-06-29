@@ -26,12 +26,17 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
       Get.find<LanguageController>().userLanguageKey;
   String? categoryName;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  String? laundryId;
   @override
   void initState() {
+    laundryId = Get.parameters["laundryId"];
     categoryName = Get.parameters["categoryId"];
 
-    _viewController.init(categoryId: categoryName);
+    if (laundryId != null) {
+      _viewController.init(categoryId: categoryName, laundryID: laundryId!);
+    } else {
+      Get.back();
+    }
 
     super.initState();
   }
@@ -43,11 +48,13 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: _addCategoryAppBar(),
-      body: _getRightBody(),
-      bottomNavigationBar: _addCategoryFooterButton(),
+    return Obx(
+      () => Scaffold(
+        backgroundColor: Colors.white,
+        appBar: _addCategoryAppBar(),
+        body: _getRightBody(),
+        bottomNavigationBar: _addCategoryFooterButton(),
+      ),
     );
   }
 

@@ -43,8 +43,8 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
   TextEditingController itemsWeightController = TextEditingController();
 
   OrderController orderController = Get.find<OrderController>();
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+  late LaundryInfoController laundryInfoController;
+
   LaundryOpAuthController opAuthController =
       Get.find<LaundryOpAuthController>();
 
@@ -55,6 +55,8 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
 
   @override
   void initState() {
+    Get.put(LaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<LaundryInfoController>();
     if (widget.editMode && widget.oldItem != null) {
       newCategory.value = widget.oldItem;
       itemsWeightController.text = widget.oldItem!.weight.toString();
@@ -64,7 +66,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    Get.delete<LaundryInfoController>(force: true);
     itemsWeightController.dispose();
     newCategory.value = null;
     super.dispose();
@@ -322,7 +324,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
         _tempCatgeory.name != widget.oldItem!.name) {
       handlingCategroryAlreadySelected();
     } else {
-      settingNewOrderWeight(newCostLineItem);
+      await settingNewOrderWeight(newCostLineItem);
     }
   }
 

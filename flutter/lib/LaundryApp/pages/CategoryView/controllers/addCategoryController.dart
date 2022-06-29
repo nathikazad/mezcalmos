@@ -22,8 +22,7 @@ class AddCategoryController {
       TextEditingController();
   TabController? tabController;
 
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+  late LaundryInfoController laundryInfoController;
   LaundryOpAuthController laundryOpAuthController =
       Get.find<LaundryOpAuthController>();
   final LanguageType userLanguage =
@@ -38,11 +37,14 @@ class AddCategoryController {
   RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
   RxBool editMode = RxBool(false);
   String? editableCategoryId;
+  late String laundryId;
 
   // INIT STATE ///
-  Future<void> init({String? categoryId}) async {
-    laundry.value = await laundryInfoController
-        .getLaundryAsFuture(laundryOpAuthController.laundryId!);
+  Future<void> init({required String laundryID, String? categoryId}) async {
+    laundryId = laundryID;
+    Get.put(LaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<LaundryInfoController>();
+    laundry.value = await laundryInfoController.getLaundryAsFuture(laundryId);
     if (laundry.value != null) {
       initLanguages();
       assignCategories();
@@ -67,6 +69,7 @@ class AddCategoryController {
 
   void initEditMode(String categoryId) {
     editMode.value = true;
+
     editableCategoryId = categoryId;
 
     copyOfCategory.value = categories.firstWhereOrNull(
@@ -99,9 +102,7 @@ class AddCategoryController {
     laundryCosts.value!.lineItems = categories;
 
     laundryInfoController
-        .setCosts(
-            laundryId: laundryOpAuthController.laundryId!,
-            laundryCosts: laundryCosts.value!)
+        .setCosts(laundryId: laundryId, laundryCosts: laundryCosts.value!)
         .then((value) {
       Get.back();
     });
@@ -119,9 +120,7 @@ class AddCategoryController {
     categories.value[index].cost = num.parse(categoryPricingController.text);
     laundryCosts.value!.lineItems = categories;
     laundryInfoController
-        .setCosts(
-            laundryId: laundryOpAuthController.laundryId!,
-            laundryCosts: laundryCosts.value!)
+        .setCosts(laundryId: laundryId, laundryCosts: laundryCosts.value!)
         .then((value) {
       Get.back();
     });
@@ -143,5 +142,9 @@ class AddCategoryController {
     } else {
       return availableName;
     }
+  }
+
+  void dispose() {
+    Get.delete<LaundryInfoController>(force: true);
   }
 }

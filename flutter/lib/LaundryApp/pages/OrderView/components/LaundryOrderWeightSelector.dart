@@ -25,8 +25,8 @@ class _LaundryOrderWeightSelectorState
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+  late LaundryInfoController laundryInfoController;
+    
   LaundryOpAuthController opAuthController =
       Get.find<LaundryOpAuthController>();
 
@@ -34,6 +34,8 @@ class _LaundryOrderWeightSelectorState
 
   @override
   void initState() {
+     Get.put(LaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<LaundryInfoController>();
     getcatgeories();
     super.initState();
   }
@@ -45,6 +47,12 @@ class _LaundryOrderWeightSelectorState
     laundry.laundryCosts.lineItems.forEach((LaundryCostLineItem element) {
       laundryCategories.add(element);
     });
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    Get.delete<LaundryInfoController>(force: true);
+    super.dispose();
   }
 
   @override

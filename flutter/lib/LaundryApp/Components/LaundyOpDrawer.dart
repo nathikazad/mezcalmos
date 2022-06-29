@@ -31,8 +31,8 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
   final SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
   AuthController authController = Get.find<AuthController>();
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+  late LaundryInfoController laundryInfoController;
+
   LaundryOpAuthController laundryOpAuthController =
       Get.find<LaundryOpAuthController>();
   // helpers //
@@ -45,6 +45,8 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
   @override
   void initState() {
     // TODO: implement initState
+    Get.put(LaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<LaundryInfoController>();
     laundryInfoController
         .getLaundry(laundryOpAuthController.laundryId!)
         .listen((Laundry? event) {
@@ -53,6 +55,13 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
       }
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    Get.delete<LaundryInfoController>(force: true);
+    super.dispose();
   }
 
   @override
@@ -173,7 +182,8 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
         _navigationLink(
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed(kEditInfoView);
+              Get.toNamed(getEditInfoRoute(
+                  laundryId: laundryOpAuthController.laundryId!));
             },
             icon: Icons.person,
             titleWidget: Text(
@@ -184,7 +194,8 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
             icon: Icons.settings,
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed(kAdminView);
+              Get.toNamed(
+                  getAdminRoute(laundryId: laundryOpAuthController.laundryId!));
             },
             titleWidget: Text(
               "${_i18n()["admin"]}",

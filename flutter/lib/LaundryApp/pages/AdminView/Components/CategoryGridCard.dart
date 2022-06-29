@@ -24,8 +24,7 @@ class CategoryGridCard extends StatefulWidget {
 class _CategoryGridCardState extends State<CategoryGridCard> {
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+
   late LanguageType primaryLang;
   RxBool nameMissing = RxBool(false);
   late LanguageType? secondaryLang;
@@ -67,7 +66,9 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                 InkWell(
                   customBorder: CircleBorder(),
                   onTap: () {
-                    Get.toNamed(getCategoryEditRoute(widget.item.id));
+                    Get.toNamed(getCategoryRoute(
+                        laundryId: widget.laundry.info.id,
+                        categoryId: widget.item.id));
                   },
                   child: Ink(
                     padding: const EdgeInsets.all(5),
@@ -115,6 +116,9 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
   }
 
   Future<void> deleteCategory({required LaundryCostLineItem item}) async {
+    Get.put(LaundryInfoController(), permanent: false);
+    final LaundryInfoController _laundryInfoController =
+        Get.find<LaundryInfoController>();
     final List<LaundryCostLineItem> categories = [];
     final LaundryCosts laundryCosts = widget.laundry.laundryCosts;
 
@@ -128,8 +132,10 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
 
     laundryCosts.lineItems = categories;
 
-    await laundryInfoController.setCosts(
+    await _laundryInfoController.setCosts(
         laundryCosts: laundryCosts, laundryId: widget.laundry.info.id);
+
+    await Get.delete<LaundryInfoController>(force: true);
   }
 
   String _getRightName() {

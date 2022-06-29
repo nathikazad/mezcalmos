@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/Components/CategoryGridCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/Components/LaundryOpNormalDeliveryTime.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
@@ -28,14 +27,12 @@ class LaundryOpAdminView extends StatefulWidget {
 }
 
 class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
-  LaundryOpAuthController laundryOpAuthController =
-      Get.find<LaundryOpAuthController>();
+  late LaundryInfoController laundryInfoController;
+
   Rxn<Laundry> laundry = Rxn();
   Rxn<num> avgDays = Rxn();
   RxBool btnClicked = RxBool(false);
-  late String laundryId;
+  String? laundryId;
 
   StreamSubscription? laundryListener;
 
@@ -43,22 +40,30 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
   void initState() {
     // laundry = laundryInfoController.getLaundry(laundryOpAuthController.laundryId!).;
     // avgDays.value = laundry.value!.averageNumberOfDays;
-    laundryId = laundryOpAuthController.laundryId!;
-    laundryListener = laundryInfoController
-        .getLaundry(laundryOpAuthController.laundryId!)
-        .listen((Laundry? event) {
-      if (event != null) {
-        laundry.value = event;
-        avgDays.value = event.averageNumberOfDays;
-      } else {
-        Get.back();
-      }
-    });
+    laundryId = Get.parameters["laundryId"];
+    if (laundryId != null) {
+      Get.put(LaundryInfoController(), permanent: false);
+      laundryInfoController = Get.find<LaundryInfoController>();
+
+      laundryListener =
+          laundryInfoController.getLaundry(laundryId!).listen((Laundry? event) {
+        if (event != null) {
+          laundry.value = event;
+          avgDays.value = event.averageNumberOfDays;
+        } else {
+          Get.back();
+        }
+      });
+    } else {
+      Get.back();
+    }
+
     super.initState();
   }
 
   @override
   void dispose() {
+    Get.delete<LaundryInfoController>();
     laundryListener?.cancel();
     super.dispose();
   }
@@ -154,7 +159,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
               btnClicked.value = true;
               laundryInfoController
                   .setAverageNumberOfDays(
-                      laundryId: laundryOpAuthController.laundryId!,
+                      laundryId: laundryId!,
                       averageNumberOfDays: avgDays.value!)
                   .whenComplete(() => btnClicked.value = false);
             }
@@ -203,7 +208,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
-                  Get.toNamed(kCategoryView);
+                  Get.toNamed(getCategoryRoute(laundryId: laundryId!));
                 },
                 child: Container(
                   child: Icon(

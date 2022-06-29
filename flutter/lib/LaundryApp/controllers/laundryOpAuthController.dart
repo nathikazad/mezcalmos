@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -19,8 +18,8 @@ class LaundryOpAuthController extends GetxController {
   Rxn<LaundryOperator> operator = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
-  LaundryInfoController _laundryInfoController =
-      Get.find<LaundryInfoController>();
+  // LaundryInfoController _laundryInfoController =
+  //     Get.find<LaundryInfoController>();
   OrderController _orderController = Get.find<OrderController>();
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
@@ -57,7 +56,7 @@ class LaundryOpAuthController extends GetxController {
         .child(
             operatorAuthNode(operatorType: OperatorType.Laundry, uid: user.uid))
         .onValue
-        .listen((event) async {
+        .listen((DatabaseEvent event) async {
       if (event.snapshot.value.toString() == _previousStateValue) {
         return;
       }
@@ -73,7 +72,7 @@ class LaundryOpAuthController extends GetxController {
           // init controllers with new id
           laundryId = operator.value!.state.laundryId;
           await _orderController.init(laundryId!);
-         // await _laundryInfoController.init(laundryId!);
+          // await _laundryInfoController.init(laundryId!);
         }
       }
     });

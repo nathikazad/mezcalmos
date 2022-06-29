@@ -11,16 +11,27 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 // const String kCurrentOrdersListRoute = '/currentOrders';
 const String kCurrentOrdersListView = '/orders';
 const String kPastOrdersListView = '/pastorders';
-const String kAdminView = '/admin';
+const String kAdminView = '/admin/:laundryId';
 
-const String kEditInfoView = '/editInfo';
+const String kEditInfoView = '/editInfo/:laundryId';
 
-const String kCategoryView = '/categoryScreen/';
-const String kEditCategoryScreen = '/categoryScreen/:categoryId';
+const String kCategoryView = '/categoryScreen/:laundryId/:categoryId';
 const String kOrderView = '/dashboard/orderView/:orderId';
 
-String getCategoryEditRoute(String categoryId) {
-  return kEditCategoryScreen.replaceFirst(":categoryId", categoryId);
+String getCategoryRoute({String? categoryId, required String laundryId}) {
+  final String catgRoute = kCategoryView.replaceFirst(":laundryId", laundryId);
+  if (categoryId != null) {
+    catgRoute.replaceFirst(":categoryId", categoryId);
+  }
+  return catgRoute;
+}
+
+String getAdminRoute({required String laundryId}) {
+  return kAdminView.replaceFirst(":laundryId", laundryId);
+}
+
+String getEditInfoRoute({required String laundryId}) {
+  return kEditInfoView.replaceFirst(":laundryId", laundryId);
 }
 
 String getLaundryOpOrderRoute(String orderId) {
@@ -40,10 +51,6 @@ class XRouter {
         GetPage(name: kHomeRoute, page: () => LaundryWrapper()),
         GetPage(
           name: kCategoryView,
-          page: () => LaundryOpCategoryScreen(),
-        ),
-        GetPage(
-          name: kEditCategoryScreen,
           page: () => LaundryOpCategoryScreen(),
         ),
         GetPage(name: kOrderView, page: () => LaundryOpOrderView())

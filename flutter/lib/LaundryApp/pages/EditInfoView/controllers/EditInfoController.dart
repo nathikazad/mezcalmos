@@ -19,8 +19,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
 
 //
 class EditInfoController {
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+  late LaundryInfoController laundryInfoController;
+
   LaundryOpAuthController opAuthController =
       Get.find<LaundryOpAuthController>();
   final Rxn<Laundry> laundry = Rxn<Laundry>();
@@ -39,12 +39,16 @@ class EditInfoController {
   final Rxn<Schedule> oldSchedule = Rxn();
   final Rxn<LaundryCosts> laundryCosts = Rxn();
   final Rxn<List<LaundryCostLineItem>> categories = Rxn();
+  late String laundryId;
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
 
-  Future<void> init() async {
+  Future<void> init({required String laundryID}) async {
+    laundryId = laundryID;
+    Get.put(LaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<LaundryInfoController>();
     laundry.value = await laundryInfoController
-        .getLaundryAsFuture(opAuthController.laundryId!);
+        .getLaundryAsFuture(laundryId);
 
     if (laundry.value != null) {
       laundryNameController.text = laundry.value?.info.name ?? '';
@@ -67,41 +71,41 @@ class EditInfoController {
     if (laundryNameController.text != '' &&
         laundryNameController.text != laundry.value?.info.name) {
       await laundryInfoController.setLaundryName(
-          laundryId: opAuthController.laundryId!,
+          laundryId: laundryId,
           newName: laundryNameController.text);
     }
     if (newImageFile.value != null) {
       await laundryInfoController
           .uploadUserImgToFbStorage(
-              laundryId: opAuthController.laundryId!,
+              laundryId: laundryId,
               imageFile: newImageFile.value!)
           .then((String value) {
         laundryInfoController.setLaundryImage(
-            laundryId: opAuthController.laundryId!, newImage: value);
+            laundryId: laundryId, newImage: value);
       });
     }
     if (newLocation.value != null &&
         newLocation.value?.address != laundry.value?.info.location.address) {
       await laundryInfoController.setLocation(
-          laundryId: opAuthController.laundryId!, loc: newLocation.value!);
+          laundryId: laundryId, loc: newLocation.value!);
     }
     if (primaryLang.value != null &&
         primaryLang.value != laundry.value?.primaryLanguage) {
       await laundryInfoController.setPrimaryLanguage(
-          laundryId: opAuthController.laundryId!, lang: primaryLang.value!);
+          laundryId: laundryId, lang: primaryLang.value!);
     }
     if (secondaryLang.value != null &&
         secondaryLang.value != laundry.value?.secondaryLanguage) {
       await laundryInfoController.setSecondaryLanguage(
-          laundryId: opAuthController.laundryId!, lang: secondaryLang.value!);
+          laundryId: laundryId, lang: secondaryLang.value!);
     } else if (secondaryLang.value == null) {
       await laundryInfoController.setSecondaryLanguage(
-          laundryId: opAuthController.laundryId!, lang: null);
+          laundryId: laundryId, lang: null);
     }
 
     if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
       await laundryInfoController.setSchedule(
-          laundryId: opAuthController.laundryId!, schedule: newSchedule.value!);
+          laundryId: laundryId, schedule: newSchedule.value!);
     }
 
     btnClicked.value = false;
@@ -156,5 +160,9 @@ class EditInfoController {
             "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
       }
     }
+  }
+
+  void dispose() {
+    Get.delete<LaundryInfoController>(force: true);
   }
 }

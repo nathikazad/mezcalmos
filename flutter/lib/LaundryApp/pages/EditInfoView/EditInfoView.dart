@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/EditInfoWidgets.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/LaundryOpEditLocationCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/LaundryOpImageEditComponent.dart';
@@ -24,21 +23,30 @@ class LaundryOpEditInfoView extends StatefulWidget {
 }
 
 class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
   AnimatedSliderController animatedSliderController =
       AnimatedSliderController();
   EditInfoController editInfoController = EditInfoController();
   late final EditInfoWidgets viewWidgets;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
+  String? laundryId;
   @override
   void initState() {
-    editInfoController.init();
-    viewWidgets = EditInfoWidgets(
-        editInfoController: editInfoController, context: context);
+    laundryId = Get.parameters["laundryId"];
+    if (laundryId != null) {
+      editInfoController.init(laundryID: laundryId!);
+      viewWidgets = EditInfoWidgets(
+          editInfoController: editInfoController, context: context);
+    } else {
+      Get.back();
+    }
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    editInfoController.dispose();
+    super.dispose();
   }
 
   @override
