@@ -1000,6 +1000,12 @@
             }
         },
         "pages": {
+            "ServicesView": {
+                "services": "Servicios",
+                "noLaundries": "No hay lavas disponibles",
+                "editProfile": "Editar perfil",
+                "editAdmin": "Editar administrador"
+            },
             "Orders": {
                 "components": {
                     "driverOrderCard": {

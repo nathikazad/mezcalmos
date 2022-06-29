@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
@@ -23,8 +23,7 @@ class AddCategoryController {
   TabController? tabController;
 
   late OpLaundryInfoController laundryInfoController;
-  LaundryOpAuthController laundryOpAuthController =
-      Get.find<LaundryOpAuthController>();
+
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
   final Rxn<Laundry> laundry = Rxn<Laundry>();
@@ -42,6 +41,7 @@ class AddCategoryController {
   // INIT STATE ///
   Future<void> init({required String laundryID, String? categoryId}) async {
     laundryId = laundryID;
+    mezDbgPrint("From init =======> $categoryId");
     Get.put(OpLaundryInfoController(), permanent: false);
     laundryInfoController = Get.find<OpLaundryInfoController>();
     laundry.value = await laundryInfoController.getLaundryAsFuture(laundryId);
@@ -71,21 +71,24 @@ class AddCategoryController {
     editMode.value = true;
 
     editableCategoryId = categoryId;
+    mezDbgPrint("Cattttttttt ====>$editableCategoryId");
 
-    copyOfCategory.value = categories.firstWhereOrNull(
-        (LaundryCostLineItem element) => element.id == categoryId);
+    copyOfCategory.value = laundry.value!.laundryCosts.lineItems
+        .firstWhere((LaundryCostLineItem element) => element.id == categoryId);
 
-    if (copyOfCategory.value!.name[primaryLang.value] != null) {
-      primaryCategoryNameController.text =
-          copyOfCategory.value!.name[primaryLang.value]!;
+    if (copyOfCategory.value != null) {
+      if (copyOfCategory.value!.name[primaryLang.value] != null) {
+        primaryCategoryNameController.text =
+            copyOfCategory.value!.name[primaryLang.value]!;
+      }
+      if (copyOfCategory.value!.name[secondaryLang.value] != null) {
+        secondaryCategoryNameController.text =
+            copyOfCategory.value!.name[secondaryLang.value]!;
+      }
+
+      categoryPricingController.text =
+          copyOfCategory.value?.cost.toString() ?? "";
     }
-    if (copyOfCategory.value!.name[secondaryLang.value] != null) {
-      secondaryCategoryNameController.text =
-          copyOfCategory.value!.name[secondaryLang.value]!;
-    }
-
-    categoryPricingController.text =
-        copyOfCategory.value?.cost.toString() ?? "";
   }
 
   void addCategory() {
@@ -134,7 +137,9 @@ class AddCategoryController {
     }
   }
 
-  String getRightName() {
+  String? getRightName() {
+    mezDbgPrint(
+        "copyofCate ================================> ${copyOfCategory.value!.name}");
     final String availableName =
         copyOfCategory.value!.name[copyOfCategory.value!.name.keys.first]!;
     if (copyOfCategory.value!.name[primaryLang] != null) {

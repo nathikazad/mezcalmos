@@ -41,16 +41,18 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
     return Card(
       child: Container(
         padding: const EdgeInsets.all(8),
-        child: Column(
+        child: Flex(
           mainAxisAlignment: MainAxisAlignment.center,
+          direction: Axis.vertical,
           children: [
             Flexible(
+              flex: 4,
               child: Text(
                 _getRightName(),
                 style: Get.textTheme.headline3?.copyWith(fontSize: 12.sp),
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+                maxLines: 3,
               ),
             ),
             SizedBox(

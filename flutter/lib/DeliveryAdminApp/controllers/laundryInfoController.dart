@@ -14,10 +14,29 @@ import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 class LaundryInfoController extends GetxController {
   LanguageController lang = Get.find<LanguageController>();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  RxList<Laundry> laundries = <Laundry>[].obs;
+  StreamSubscription? _laundrisListener;
   @override
   void onInit() {
     super.onInit();
     print("--------------------> LaundrysInfoController Initialized !");
+
+    _laundrisListener = _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderInfos(orderType: OrderType.Laundry))
+        .onValue
+        .listen((DatabaseEvent element) {
+      final List<Laundry> data = [];
+      if (element.snapshot.value != null) {
+        for (var laundryId in (element.snapshot.value as dynamic).keys) {
+          final dynamic laundryData =
+              (element.snapshot.value as dynamic)[laundryId];
+          data.add(Laundry.fromLaundryData(
+              laundryData: laundryData, laundryId: laundryId));
+        }
+      } else {}
+      laundries.value = data;
+    });
   }
 
   Future<List<Laundry>> getLaundries() {
@@ -56,6 +75,7 @@ class LaundryInfoController extends GetxController {
       required String laundryPhoneOrEmail}) async {
     final HttpsCallable createLaundryFunc =
         FirebaseFunctions.instance.httpsCallable('laundry-createLaundry');
+    mezDbgPrint("name : $laundryName ========= email : $laundryPhoneOrEmail");
     try {
       final HttpsCallableResult<dynamic> response = await createLaundryFunc
           .call({
@@ -65,6 +85,8 @@ class LaundryInfoController extends GetxController {
       mezDbgPrint('HttpsCallableResult response: ${response.data}');
       return ServerResponse.fromJson(response.data);
     } catch (e) {
+      mezDbgPrint(e);
+
       return ServerResponse(
         ResponseStatus.Error,
         errorMessage: "Server Error",

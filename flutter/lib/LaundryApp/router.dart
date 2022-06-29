@@ -6,6 +6,7 @@ import 'package:mezcalmos/LaundryApp/pages/EditInfoView/EditInfoView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/LaundryOpOrderView.dart';
 import 'package:mezcalmos/LaundryApp/pages/PastOrdresList/LaundryOpPastOrdersList.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // const String kCurrentOrdersListRoute = '/currentOrders';
@@ -19,10 +20,12 @@ const String kCategoryView = '/categoryScreen/:laundryId/:categoryId';
 const String kOrderView = '/dashboard/orderView/:orderId';
 
 String getCategoryRoute({String? categoryId, required String laundryId}) {
-  final String catgRoute = kCategoryView.replaceFirst(":laundryId", laundryId);
+  mezDbgPrint("Categ =========>$categoryId");
+  String catgRoute = kCategoryView.replaceFirst(":laundryId", laundryId);
   if (categoryId != null) {
-    catgRoute.replaceFirst(":categoryId", categoryId);
+    catgRoute = catgRoute.replaceFirst(":categoryId", categoryId);
   }
+  mezDbgPrint("finalroute :======> $catgRoute");
   return catgRoute;
 }
 

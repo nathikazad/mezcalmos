@@ -24,16 +24,16 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
   AddCategoryController _viewController = AddCategoryController();
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  String? categoryName;
+  String? categoryId;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? laundryId;
   @override
   void initState() {
     laundryId = Get.parameters["laundryId"];
-    categoryName = Get.parameters["categoryId"];
+    categoryId = Get.parameters["categoryId"];
 
     if (laundryId != null) {
-      _viewController.init(categoryId: categoryName, laundryID: laundryId!);
+      _viewController.init(categoryId: categoryId, laundryID: laundryId!);
     } else {
       Get.back();
     }
@@ -87,7 +87,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
       leftBtnType: AppBarLeftButtonType.Back,
       onClick: Get.back,
       title: (_viewController.editMode.value)
-          ? _viewController.getRightName()
+          ? _viewController.getRightName() ?? ""
           : "${_i18n()["addCategory"]}",
     );
   }
