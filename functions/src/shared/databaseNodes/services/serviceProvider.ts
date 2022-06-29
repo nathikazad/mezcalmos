@@ -17,8 +17,12 @@ export function serviceProviderPastOrders(orderType: OrderType, providerId: stri
   return firebase.database().ref(dbNode);
 }
 
-export function serviceProviderInfo(orderType: OrderType, providerId: string) {
-  return firebase.database().ref(`/${pluralizeOrderType(orderType)}/info/${providerId}`)
+export function serviceProviderInfo(orderType: OrderType, providerId?: string) {
+  let dbNode: string = `/${pluralizeOrderType(orderType)}/info`
+  if (providerId != undefined) {
+    dbNode += `/${providerId}`
+  }
+  return firebase.database().ref(dbNode);
 }
 
 export function serviceProviderState(orderType: OrderType, providerId: string) {

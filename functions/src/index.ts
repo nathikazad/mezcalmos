@@ -50,6 +50,7 @@ export const taxi = {
 
 import * as laundryStatusChange from './laundry/adminStatusChanges'
 export const laundry = {
+  createLaundry: require("./laundry/createNewLaundry"),
   requestLaundry: require("./laundry/laundryRequest"),
   readyForDeliveryOrder: laundryStatusChange.readyForDeliveryOrder,
   cancelFromCustomer: require("./laundry/cancelLaundryFromCustomer"),

@@ -7,24 +7,13 @@ import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import * as laundryNodes from "../shared/databaseNodes/services/laundry";
-import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
-import { finishOrder } from "./helper";
+import { expectedPreviousStatus, finishOrder, passChecksForLaundry } from "./helper";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
 
-let statusArrayInSeq: Array<LaundryOrderStatus> =
-  [LaundryOrderStatus.OrderReceieved,
-    LaundryOrderStatus.OtwPickupFromCustomer,
-    LaundryOrderStatus.PickedUpFromCustomer,
-  LaundryOrderStatus.AtLaundry,
-  LaundryOrderStatus.ReadyForDelivery,
-    LaundryOrderStatus.OtwPickupFromLaundry,
-    LaundryOrderStatus.PickedUpFromLaundry,
-  LaundryOrderStatus.Delivered
-  ]
 
 export const cancelOrder =
   functions.https.onCall(async (data, context) => {
@@ -37,9 +26,6 @@ export const readyForDeliveryOrder = functions.https.onCall(async (data, context
   return response
 });
 
-function expectedPreviousStatus(status: LaundryOrderStatus): LaundryOrderStatus {
-  return statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == status) - 1];
-}
 
 async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: AuthData): Promise<ServerResponse> {
 
@@ -175,70 +161,3 @@ export const setEstimatedLaundryReadyTime = functions.https.onCall(async (data, 
   return { status: ServerResponseStatus.Success }
 });
 
-async function checkLaundryOperator(laundryId: string, operatorId: string): Promise<ServerResponse | undefined> {
-  let operator = (await laundryNodes.laundryOperators(laundryId, operatorId).once('value')).val();
-  let isOperator = operator != null && operator == true
-  if (!isOperator) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Only authorized laundry operators can run this operation"
-    }
-  }
-  return undefined;
-}
-
-async function passChecksForLaundry(data: any, auth?: AuthData): Promise<ValidationPass> {
-  let response = await isSignedIn(auth)
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response
-    }
-  }
-  if (data.orderId == null) {
-    return {
-      ok: false,
-      error: {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Expected order id`,
-        errorCode: "orderIdNotGiven"
-      }
-    }
-  }
-
-  let orderId: string = data.orderId;
-  let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
-  if (order == null) {
-    return {
-      ok: false,
-      error: {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Order does not exist`,
-        errorCode: "orderDontExist"
-      }
-    }
-  }
-
-  if (data.fromLaundryOperator) {
-    response = await checkLaundryOperator(order.laundry.id, auth!.uid)
-    if (response != undefined) {
-      return {
-        ok: false,
-        error: response
-      };
-    }
-  } else {
-    response = await checkDeliveryAdmin(auth!.uid)
-    if (response != undefined) {
-      return {
-        ok: false,
-        error: response
-      };
-    }
-  }
-
-  return {
-    ok: true,
-    order: order
-  }
-}
