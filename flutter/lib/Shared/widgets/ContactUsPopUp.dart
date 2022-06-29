@@ -52,9 +52,17 @@ class ContactUsPopUp extends StatelessWidget {
           InkWell(
             borderRadius: BorderRadius.circular(10),
             onTap: () async {
-              final Uri _url = Uri.parse(
-                  "https://wa.me/529541184711?text=${_i18n()["hello"]}%20MezCalmos%20${_i18n()["team"]},");
-              if (!await launchUrl(_url)) throw 'Could not launch ';
+              final String recieverNumber = "+529541184711";
+              final String text =
+                  "${_i18n()["hello"]}%20MezCalmos%20${_i18n()["team"]}";
+              final String whatsappUrl =
+                  "whatsapp://send?phone=$recieverNumber" + "&text=$text";
+              try {
+                await launch(whatsappUrl);
+              } catch (e) {
+                //To handle error and display error message
+                Get.snackbar("Error", "");
+              }
             },
             child: Ink(
               padding: const EdgeInsets.all(5),
