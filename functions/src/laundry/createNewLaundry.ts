@@ -38,25 +38,15 @@ export = functions.https.onCall(async (data, context) => {
     user = await firebase.auth().getUserByPhoneNumber(data.emailIdOrPhoneNumber);
   } catch (a) {
     console.log("phone number not there");
-    let e: any = a;
-    console.log(e)
-      try {
-        user = await firebase.auth().getUserByEmail(data.emailIdOrPhoneNumber)
-      } catch (a) {
-        console.log("email also not there");
-        let e: any = a;
-        console.log(e);
-        return {
-          status: ServerResponseStatus.Error,
-          errorMessage: e.errorInfo.message,
-        }
+    try {
+      user = await firebase.auth().getUserByEmail(data.emailIdOrPhoneNumber)
+    } catch (a) {
+      console.log("email also not there");
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: "User not found",
       }
-    // } else {
-    //   return {
-    //     status: ServerResponseStatus.Error,
-    //     errorMessage: "User not found",
-    //   }
-    // }
+    }
   }
 
   let laundryId: string = (await laundryNodes.info().push()).key!;
@@ -69,8 +59,6 @@ export = functions.https.onCall(async (data, context) => {
   let operatorInfo = (await userInfoNode(user.uid).once('value')).val();
   let newOperator = { info: operatorInfo, state: { laundryId: laundryId } };
   laundryOperatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
-
-
   return { status: ServerResponseStatus.Success }
 })
 
