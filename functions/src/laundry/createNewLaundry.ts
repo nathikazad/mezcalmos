@@ -40,7 +40,7 @@ export = functions.https.onCall(async (data, context) => {
   } catch (a) {
     console.log("phone number not there");
     let e: any = a;
-    if (e.errorInfo.code == "auth/user-not-found") {
+    console.log(e)
       try {
         user = await firebase.auth().getUserByEmail(data.emailIdOrPhoneNumber)
       } catch (a) {
@@ -51,12 +51,12 @@ export = functions.https.onCall(async (data, context) => {
           errorMessage: e.errorInfo.message,
         }
       }
-    } else {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: "User not found",
-      }
-    }
+    // } else {
+    //   return {
+    //     status: ServerResponseStatus.Error,
+    //     errorMessage: "User not found",
+    //   }
+    // }
   }
 
   let laundryId: string = (await laundryNodes.info().push()).key!;
