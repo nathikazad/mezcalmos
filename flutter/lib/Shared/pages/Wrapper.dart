@@ -40,7 +40,7 @@ class _WrapperState extends State<Wrapper> {
       });
     }).then((_) {
       // only when we use location permissions
-      if (_locationController.locationType != LocationPermissionType.Null) {
+      if (_locationController.locationType != LocationPermissionType.None) {
         startListeningOnLocationPermission();
       }
 
