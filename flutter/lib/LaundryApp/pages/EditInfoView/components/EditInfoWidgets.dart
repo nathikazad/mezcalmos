@@ -59,27 +59,27 @@ class EditInfoWidgets {
           padding: const EdgeInsets.all(5),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Flexible(
-                flex: 4,
-                fit: FlexFit.loose,
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Text(
-                    "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
-                    style: Get.textTheme.bodyText2
-                        ?.copyWith(fontWeight: FontWeight.w700),
-                  ),
+              Container(
+                // margin: const EdgeInsets.symmetric(horizontal: 5),
+                width: 15.w,
+                child: Text(
+                  "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
+                  style: Get.textTheme.bodyText2
+                      ?.copyWith(fontWeight: FontWeight.w700),
                 ),
+              ),
+              SizedBox(
+                width: 5,
               ),
               Flexible(
                   flex: 6,
-                  fit: FlexFit.tight,
+                  fit: FlexFit.loose,
                   child: editInfoController
                           .newSchedule.value!.openHours[weekday]!.isOpen
                       ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                               Text(
                                 convertToAmPm(

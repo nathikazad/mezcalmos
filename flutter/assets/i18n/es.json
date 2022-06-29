@@ -796,13 +796,13 @@
                 "cancel": "Cancelar",
                 "workingHours": "Horas Laborales",
                 "weekDays": {
-                    "monday": "Lunes",
-                    "tuesday": "Martes",
-                    "wednesday": "Miércoles",
-                    "thursday": "Jueves",
-                    "friday": "Viernes",
-                    "saturday": "Sábado",
-                    "sunday": "Domingo"
+                    "monday": "Lun",
+                    "tuesday": "Mar",
+                    "wednesday": "Mié",
+                    "thursday": "Jue",
+                    "friday": "Vie",
+                    "saturday": "Sáb",
+                    "sunday": "Dom"
                 },
                 "workingHoursCard": {
                     "open": "Abierto",
