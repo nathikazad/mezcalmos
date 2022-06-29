@@ -672,7 +672,7 @@
                     "clear": "Borra",
                     "no": "No",
                     "noNotifTitle": "¡No hay notificaciones todavía!",
-                    "noNotifBody": "Actualmente no tienes notificaciones.Te notificaremos cuando se llega a algo nuevo."
+                    "noNotifBody": "Actualmente no tienes notificaciones. Te notificaremos cuando se llega a algo nuevo."
                 }
             },
             "UserProfileScreen": {
