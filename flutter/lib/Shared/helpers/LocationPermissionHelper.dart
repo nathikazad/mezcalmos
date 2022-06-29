@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-enum LocationPermissionType { Null, Foreground, ForegroundAndBackground }
+enum LocationPermissionType { None, Foreground, ForegroundAndBackground }
 enum LocationPermissionsStatus {
   /// When the actual Location Service is OFF
   ServiceOff,

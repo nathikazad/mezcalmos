@@ -38,11 +38,14 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
       mezDbgPrint("LaundryWrapper::microtask handleState first time");
       LaundryOperator? laundryOperator =
           Get.find<LaundryOpAuthController>().operator.value;
-      // if (laundryOperator == null)
-      // laundryOperator =
-      //     await Get.find<LaundryOpAuthController>().operatorInfoStream.first;
-      mezDbgPrint("LaundryWrapper::microtask data received");
-      handleState(laundryOperator);
+      if (laundryOperator == null) {
+        Future.delayed(Duration(seconds: 5), () {
+          laundryOperator = Get.find<LaundryOpAuthController>().operator.value;
+          handleState(laundryOperator);
+        });
+      } else {
+        handleState(laundryOperator);
+      }
     });
 
     final String userId = Get.find<AuthController>().fireAuthUser!.uid;
@@ -57,6 +60,7 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
   }
 
   void handleState(LaundryOperator? operator) {
+    mezDbgPrint("LaundryWrapper::microtask data received");
     mezDbgPrint(operator);
     if (operator != null && operator.state.laundryId != null) {
       // ignore: unawaited_futures, inference_failure_on_function_invocation
