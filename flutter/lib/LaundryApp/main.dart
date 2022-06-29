@@ -30,7 +30,7 @@ void main() {
             appTheme: LaundryAppTheme.lightTheme,
             signOutCallback: signOutCallback,
             routes: routes,
-            locationPermissionType: LocationPermissionType.None,
+            locationPermissionType: LocationPermissionType.Foreground,
           );
         },
       ),
