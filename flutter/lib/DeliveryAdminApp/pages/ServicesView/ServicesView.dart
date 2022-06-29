@@ -40,6 +40,27 @@ class _ServicesViewState extends State<ServicesView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Card(
+              color: Colors.grey.shade200,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(10),
+                onTap: () {
+                  Get.toNamed(kAddLaundryServiceRoute);
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 70,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.add_circle_outline,
+                    color: primaryBlueColor,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
             FutureBuilder<List<Laundry>>(
                 future: laundryInfoController.getLaundries(),
                 builder: (BuildContext context,

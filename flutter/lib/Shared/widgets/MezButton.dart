@@ -7,6 +7,8 @@ class MezButton extends StatefulWidget {
     Key? key,
     this.enabled = true,
     this.withGradient = false,
+    this.borderRadius = 10,
+    this.height = 55,
     required this.label,
     this.onClick,
   }) : super(key: key);
@@ -14,7 +16,9 @@ class MezButton extends StatefulWidget {
   final bool enabled;
   final bool withGradient;
   final String label;
+  final double height;
   final Future<void> Function()? onClick;
+  final double? borderRadius;
 
   @override
   State<MezButton> createState() => _MezButtonState();
@@ -26,7 +30,12 @@ class _MezButtonState extends State<MezButton> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Card(
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
+            side: BorderSide.none),
         child: InkWell(
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
             onTap:
                 (!isLoading.value && widget.enabled && widget.onClick != null)
                     ? () {
@@ -36,22 +45,16 @@ class _MezButtonState extends State<MezButton> {
                             .whenComplete(() => isLoading.value = false);
                       }
                     : null,
-            // style: TextButton.styleFrom(
-            //     padding: withGradient ? EdgeInsets.zero : null,
-            //     fixedSize: const Size(double.infinity, 60),
-            //     backgroundColor: (enabled && onClick != null)
-            //         ? primaryBlueColor
-            //         : Colors.grey.shade400),
             child: Ink(
-              //  alignment: Alignment.center,
               width: double.infinity,
-              height: 55,
+              height: widget.height,
               decoration: BoxDecoration(
                   color: (widget.enabled && widget.onClick != null)
                       ? primaryBlueColor
                       : Colors.grey.shade400,
                   gradient: (widget.withGradient) ? bluePurpleGradient : null,
-                  borderRadius: BorderRadius.circular(10)),
+                  borderRadius:
+                      BorderRadius.circular(widget.borderRadius ?? 10)),
               child: Container(
                 alignment: Alignment.center,
                 child: (isLoading.value)
