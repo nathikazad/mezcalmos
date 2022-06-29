@@ -47,8 +47,6 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
 
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as RestaurantOrder;
-    mezDbgPrint(
-        "orderID ===============================================> $orderId");
     if (order.value!.routeInformation != null) {
       mapController.decodeAndAddPolyline(
           encodedPolylineString: order.value!.routeInformation!.polyline);
@@ -111,7 +109,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
-        initilializeMap(mapController, order, order.value!.restaurant);
+        initilizeMap(mapController, order, order.value!.restaurant);
       }
     });
     super.initState();

@@ -94,6 +94,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     order.value = controller.getOrder(orderId) as RestaurantOrder?;
     if (order.value != null) {
       initMap();
+      updateMapIfDeliveryPhase(order.value!.status);
     }
 
     _orderListener =
@@ -109,9 +110,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     waitForOrderIfNotLoaded().then((void value) {
       if (order.value == null) {
         // ignore: inference_failure_on_function_invocation
-
-        Future<Null>.delayed(Duration.zero, () {
-          Get.back<Null>();
+        Future<void>.delayed(Duration.zero, () {
+          Get.back<void>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
@@ -272,8 +272,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   void updateMapIfDeliveryPhase(RestaurantOrderStatus status) {
     switch (status) {
       case RestaurantOrderStatus.ReadyForPickup:
-        mezDbgPrint(
-            "Encoded poly => ${order.value!.routeInformation?.toJson()}");
+        mezDbgPrint("+ poly => ${order.value!.routeInformation?.toJson()}");
         mezDbgPrint("+ markers => ${mapController.markers.length}");
         mezDbgPrint("+ polys => ${mapController.polylines.length}");
 
@@ -292,7 +291,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           );
           mapController.addOrUpdatePurpleDestinationMarker(
             latLng: order.value!.to.toLatLng(),
-            fitWithinBounds: false,
+            fitWithinBounds: true,
           );
         }
 
@@ -313,7 +312,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
             latLng: order.value!.restaurant.location.toLatLng(),
             markerId: order.value!.restaurant.id,
             customImgHttpUrl: order.value!.restaurant.image,
-            fitWithinBounds: false,
+            fitWithinBounds: true,
           );
           // we fit the destination into bounds
           mapController.addOrUpdatePurpleDestinationMarker(

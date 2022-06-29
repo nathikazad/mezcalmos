@@ -60,7 +60,7 @@ class _RestaurantOrderFromToComponentState
         // customer
         customerImage: widget.order.customer.image,
         customerName: widget.order.customer.name,
-        enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
+        // enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
         customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
         onCustomerMsgClick: () {
           if (widget.order.customerDropOffDriverChatId != null) {
@@ -134,6 +134,7 @@ class _RestaurantOrderFromToComponentState
         widget.order.status == RestaurantOrderStatus.PreparingOrder;
   }
 
+// @here
   List<Widget> _dateTimeSetter(
       DeliveryAction deliveryAction, BuildContext context) {
     Future<DateTime?> _dateTimePicker({DateTime? initialDate}) async {

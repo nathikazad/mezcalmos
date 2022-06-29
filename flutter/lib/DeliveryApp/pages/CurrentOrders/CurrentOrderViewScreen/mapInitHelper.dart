@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
-void initilializeMap(
+void initilizeMap(
     MGoogleMapController mapController, Rxn<Order> order, ServiceInfo service) {
   DeliveryAuthController deliveryAuthAuthController =
       Get.find<DeliveryAuthController>();
