@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustomerWrapper'];
-
-class ServicesCard extends StatelessWidget {
-  const ServicesCard({
+class WebServicesCard extends StatelessWidget {
+  const WebServicesCard({
     Key? key,
     required this.title,
     this.subtitle,
     required this.url,
+    required this.imageSize,
+    required this.titleSize,
+    required this.subtitleSize,
     this.onTap,
   }) : super(key: key);
 
   final String title;
   final String? subtitle;
   final String url;
+  final double titleSize;
+  final double subtitleSize;
+  final double imageSize;
 
   final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final dynamic i18n = Get.find<LanguageController>().strings["CustomerApp"]
-        ["components"]["ServicesCard"];
+    // final dynamic i18n = Get.find<LanguageController>().strings["CustomerApp"]
+    //     ["components"]["ServicesCard"];
     return Card(
       margin: EdgeInsets.all(5),
       color: onTap != null ? Colors.white : Colors.grey.shade300,
@@ -46,7 +47,11 @@ class ServicesCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(3),
                       alignment: Alignment.centerLeft,
-                      child: Text("$title", style: textTheme.headline3),
+                      child: Text("$title",
+                          style: textTheme.headline3!.copyWith(
+                              fontSize: titleSize,
+                              color: Colors.black,
+                              fontFamily: "Poppins")),
                     ),
                     //================ subtitle============
                     Container(
@@ -58,19 +63,24 @@ class ServicesCard extends StatelessWidget {
                       // padding:
                       //     subtitle == null ? EdgeInsets.only(left: 10) : null,
                       child: subtitle != null
-                          ? Text("$subtitle", style: textTheme.subtitle1)
-                          : Text(
-                              "${i18n["comingSoon"]}",
-                              style: textTheme.subtitle1,
-                            ),
+                          ? Text("$subtitle",
+                              style: textTheme.subtitle1!.copyWith(
+                                  fontSize: subtitleSize,
+                                  color: Colors.black45,
+                                  fontFamily: "Nunito"))
+                          : Text("Coming Soon",
+                              style: textTheme.subtitle1!.copyWith(
+                                  fontSize: subtitleSize,
+                                  color: Colors.black45,
+                                  fontFamily: "Nunito")),
                     )
                   ],
                 ),
               ),
               const SizedBox(width: 15),
               Container(
-                width: 20.w,
-                height: 20.w,
+                width: imageSize,
+                height: imageSize,
                 child: Image.asset(
                   url,
                   fit: BoxFit.fill,

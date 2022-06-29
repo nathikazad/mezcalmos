@@ -64,7 +64,7 @@ class _AppStartState extends State<AppStart> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       unknownRoute: GetPage(name: '/notfound', page: () => UnknownRoutePage()),
-      initialRoute: "/home",
+      initialRoute: "/",
       // theme: CustomerAppTheme.lightTheme,
       getPages: AppRoutes.getRoutes,
     );

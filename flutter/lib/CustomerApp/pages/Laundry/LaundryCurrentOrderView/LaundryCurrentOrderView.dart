@@ -149,7 +149,6 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                               height: 20,
                             ),
                             LaundryOrderNoteComponent(order: order.value!),
-                          
                             OrderSummaryComponent(
                               order: order.value!,
                             ),

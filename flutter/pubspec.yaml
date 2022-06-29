@@ -131,6 +131,7 @@ flutter:
     - assets/animation/
     - assets/sounds/
     - assets/icons/appstore.png
+    - assets/images/webApp/
     - .env
 
   fonts:
