@@ -1,19 +1,31 @@
 import * as functions from "firebase-functions";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { passChecksForLaundry } from "./helper";
 import * as firebase from "firebase-admin";
 import { UserRecord } from "firebase-functions/v1/auth";
 import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 import * as laundryOperatorNodes from "../shared/databaseNodes/operators/operator";
 import { OrderType } from "../shared/models/Generic/Order";
 import { userInfoNode } from "../shared/databaseNodes/root";
+import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
 
 
 export = functions.https.onCall(async (data, context) => {
-  let validationPass = await passChecksForLaundry(data, context.auth);
-  if (!validationPass.ok) {
-    return validationPass.error;
+  let response = await isSignedIn(context.auth)
+  if (response != undefined) {
+    return {
+      ok: false,
+      error: response
+    }
   }
+
+  response = await checkDeliveryAdmin(context.auth!.uid)
+  if (response != undefined) {
+    return {
+      ok: false,
+      error: response
+    };
+  }
+
 
   if (!data.emailIdOrPhoneNumber && !data.laundryName) {
     return {
@@ -21,23 +33,15 @@ export = functions.https.onCall(async (data, context) => {
       errorMessage: "required parameters emailIdOrPhoneNumber and laundryName"
     }
   }
-
   let user: UserRecord;
   try {
-    user = await firebase.auth().getUserByPhoneNumber(data.phoneNumber);
+    user = await firebase.auth().getUserByPhoneNumber(data.emailIdOrPhoneNumber);
   } catch (a) {
-    let e: any = a;
-    if (e.errorInfo.code == "auth/user-not-found") {
-      try {
-        user = await firebase.auth().getUserByEmail(data.emailIdOrPhoneNumber)
-      } catch (a) {
-        let e: any = a;
-        return {
-          status: ServerResponseStatus.Error,
-          errorMessage: e.errorInfo.message,
-        }
-      }
-    } else {
+    console.log("phone number not there");
+    try {
+      user = await firebase.auth().getUserByEmail(data.emailIdOrPhoneNumber)
+    } catch (a) {
+      console.log("email also not there");
       return {
         status: ServerResponseStatus.Error,
         errorMessage: "User not found",
@@ -55,8 +59,6 @@ export = functions.https.onCall(async (data, context) => {
   let operatorInfo = (await userInfoNode(user.uid).once('value')).val();
   let newOperator = { info: operatorInfo, state: { laundryId: laundryId } };
   laundryOperatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
-
-
   return { status: ServerResponseStatus.Success }
 })
 
@@ -117,19 +119,18 @@ let laundryTemplateInJson = `{
   },
   "info": {
     "id": null,
-    "image": "https://firebasestorage.googleapis.com/v0/b/mezcalmos-staging.appspot.com/o/laundries%2Fyurimar.jpg?alt=media&token=4f5561c0-070d-416b-a1c6-885de0cb42b9",
+    "image": "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d",
     "location": {
       "address": "Boulevard Lic. José Murat a un costado del Hotel Yurimar, Puerto Escondido, México, 70934",
       "lat": 15.861492064236634,
       "lng": -97.05935736662569
     },
-    "name": data.laundryName,
+    "name": null
   },
   "state": {
     "authorizationStatus": "authorized",
     "available": true,
-    "operators": {
-      [user.uid]: true
-    }
-  }`;
+    "operators": {}
+  }
+}`;
 
