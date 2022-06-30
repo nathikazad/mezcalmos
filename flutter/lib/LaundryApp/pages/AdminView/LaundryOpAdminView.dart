@@ -44,23 +44,28 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
     // avgDays.value = laundry.value!.averageNumberOfDays;
     laundryId = Get.parameters["laundryId"];
     if (laundryId != null) {
-      Get.put(OpLaundryInfoController(), permanent: false);
-      laundryInfoController = Get.find<OpLaundryInfoController>();
+      _getLaundry(laundryId!);
 
-      laundryListener =
-          laundryInfoController.getLaundry(laundryId!).listen((Laundry? event) {
-        if (event != null) {
-          laundry.value = event;
-          avgDays.value = event.averageNumberOfDays;
-        } else {
-          Get.back();
-        }
-      });
-    } else {
-      Get.back();
+      super.initState();
     }
+  }
 
-    super.initState();
+  Future<void> _getLaundry(String laundryId) async {
+    Get.put(OpLaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<OpLaundryInfoController>();
+    laundry.value = await laundryInfoController.getLaundryAsFuture(laundryId);
+    avgDays.value = laundry.value!.averageNumberOfDays;
+    minCost.value = laundry.value!.laundryCosts.minimumCost;
+    laundryListener =
+        laundryInfoController.getLaundry(laundryId).listen((Laundry? event) {
+      if (event != null) {
+        laundry.value = event;
+        avgDays.value = event.averageNumberOfDays;
+        minCost.value = event.laundryCosts.minimumCost;
+      } else {
+        Get.back();
+      }
+    });
   }
 
   @override
@@ -77,7 +82,12 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
         leftBtnType: AppBarLeftButtonType.Back,
         onClick: Get.back,
       ),
-      bottomNavigationBar: _footerSaveButton(),
+      bottomNavigationBar: Obx(() {
+        if (laundry.value != null) {
+          return _footerSaveButton();
+        } else
+          return SizedBox();
+      }),
       body: Obx(
         () {
           if (laundry.value != null) {

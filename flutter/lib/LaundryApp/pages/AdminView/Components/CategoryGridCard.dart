@@ -46,7 +46,8 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
           direction: Axis.vertical,
           children: [
             Flexible(
-              flex: 4,
+              flex: 6,
+              fit: FlexFit.tight,
               child: Text(
                 _getRightName(),
                 style: Get.textTheme.headline3?.copyWith(fontSize: 12.sp),
