@@ -967,6 +967,9 @@
         }
     },
     "DeliveryAdminApp": {
+        "main": {
+            "services": "Services"
+        },
         "notificationHandler": {
             "restaurantTitle": "New Restaurant Order",
             "laundryTitle": "New Laundry Order",
@@ -987,6 +990,12 @@
 
         },
         "pages": {
+            "ServicesView": {
+                "services": "Services",
+                "noLaundries": "No laundries are available",
+                "editProfile": "Edit Profile",
+                "editAdmin": "Edit Admin"
+            },
             "Orders": {
                 "components": {
                     "driverOrderCard": {

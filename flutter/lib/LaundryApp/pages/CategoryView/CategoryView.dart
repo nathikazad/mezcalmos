@@ -24,14 +24,19 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
   AddCategoryController _viewController = AddCategoryController();
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  String? categoryName;
+  String? categoryId;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  String? laundryId;
   @override
   void initState() {
-    categoryName = Get.parameters["categoryId"];
+    laundryId = Get.parameters["laundryId"];
+    categoryId = Get.parameters["categoryId"];
 
-    _viewController.init(categoryId: categoryName);
+    if (laundryId != null) {
+      _viewController.init(categoryId: categoryId, laundryID: laundryId!);
+    } else {
+      Get.back();
+    }
 
     super.initState();
   }
@@ -43,11 +48,13 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: _addCategoryAppBar(),
-      body: _getRightBody(),
-      bottomNavigationBar: _addCategoryFooterButton(),
+    return Obx(
+      () => Scaffold(
+        backgroundColor: Colors.white,
+        appBar: _addCategoryAppBar(),
+        body: _getRightBody(),
+        bottomNavigationBar: _addCategoryFooterButton(),
+      ),
     );
   }
 
@@ -80,7 +87,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
       leftBtnType: AppBarLeftButtonType.Back,
       onClick: Get.back,
       title: (_viewController.editMode.value)
-          ? _viewController.getRightName()
+          ? _viewController.getRightName() ?? ""
           : "${_i18n()["addCategory"]}",
     );
   }

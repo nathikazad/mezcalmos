@@ -1,5 +1,4 @@
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
@@ -123,7 +122,6 @@ class RestaurantOrder extends DeliverableOrder {
     );
 
     if (data["routeInformation"] != null) {
-      mezDbgPrint("routeInformation not nulllll !!!!!!!!!!");
       restaurantOrder.routeInformation = RouteInformation(
         polyline: data["routeInformation"]["polyline"],
         distance: RideDistance.fromJson(data["routeInformation"]["distance"]),

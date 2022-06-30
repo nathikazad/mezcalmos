@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -24,18 +25,34 @@ class _LaundryOrderWeightSelectorState
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+  late OpLaundryInfoController laundryInfoController;
+    
+  LaundryOpAuthController opAuthController =
+      Get.find<LaundryOpAuthController>();
+
   RxList<LaundryCostLineItem> laundryCategories = RxList.empty();
 
   @override
   void initState() {
-    laundryInfoController.laundry.value!.laundryCosts.lineItems
-        .forEach((LaundryCostLineItem element) {
+     Get.put(OpLaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<OpLaundryInfoController>();
+    getcatgeories();
+    super.initState();
+  }
+
+  Future<void> getcatgeories() async {
+    final Laundry laundry = await laundryInfoController
+        .getLaundryAsFuture(opAuthController.laundryId!);
+
+    laundry.laundryCosts.lineItems.forEach((LaundryCostLineItem element) {
       laundryCategories.add(element);
     });
-
-    super.initState();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    Get.delete<OpLaundryInfoController>(force: true);
+    super.dispose();
   }
 
   @override

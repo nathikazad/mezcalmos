@@ -94,7 +94,7 @@ class LaundryCosts {
     final LaundryCosts laundryCosts = LaundryCosts();
     laundryCosts.minimumCost = laundryCostsData?['minimumCost'];
 
-    laundryCostsData?["byType"].forEach((elemnt) {
+    laundryCostsData?["byType"]?.forEach((elemnt) {
       laundryCosts.lineItems.add(LaundryCostLineItem.fromData(elemnt));
     });
 

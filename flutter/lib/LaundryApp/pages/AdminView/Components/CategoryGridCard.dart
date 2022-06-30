@@ -12,8 +12,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["AdminView"]["components"]["CategoryGridCard"];
 
 class CategoryGridCard extends StatefulWidget {
-  const CategoryGridCard({Key? key, required this.item}) : super(key: key);
+  const CategoryGridCard({Key? key, required this.item, required this.laundry})
+      : super(key: key);
   final LaundryCostLineItem item;
+  final Laundry laundry;
 
   @override
   State<CategoryGridCard> createState() => _CategoryGridCardState();
@@ -22,15 +24,14 @@ class CategoryGridCard extends StatefulWidget {
 class _CategoryGridCardState extends State<CategoryGridCard> {
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+
   late LanguageType primaryLang;
   RxBool nameMissing = RxBool(false);
   late LanguageType? secondaryLang;
   @override
   void initState() {
-    primaryLang = laundryInfoController.laundry.value!.primaryLanguage;
-    secondaryLang = laundryInfoController.laundry.value!.secondaryLanguage;
+    primaryLang = widget.laundry.primaryLanguage;
+    secondaryLang = widget.laundry.secondaryLanguage;
     _getRightName();
     super.initState();
   }
@@ -67,7 +68,9 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                 InkWell(
                   customBorder: CircleBorder(),
                   onTap: () {
-                    Get.toNamed(getCategoryEditRoute(widget.item.id));
+                    Get.toNamed(getCategoryRoute(
+                        laundryId: widget.laundry.info.id,
+                        categoryId: widget.item.id));
                   },
                   child: Ink(
                     padding: const EdgeInsets.all(5),
@@ -115,11 +118,13 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
   }
 
   Future<void> deleteCategory({required LaundryCostLineItem item}) async {
+    Get.put(OpLaundryInfoController(), permanent: false);
+    final OpLaundryInfoController _laundryInfoController =
+        Get.find<OpLaundryInfoController>();
     final List<LaundryCostLineItem> categories = [];
-    final LaundryCosts laundryCosts =
-        laundryInfoController.laundry.value!.laundryCosts;
+    final LaundryCosts laundryCosts = widget.laundry.laundryCosts;
 
-    laundryInfoController.laundry.value!.laundryCosts.lineItems
+    widget.laundry.laundryCosts.lineItems
         .forEach((LaundryCostLineItem element) {
       categories.add(element.copyWith());
     });
@@ -129,7 +134,10 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
 
     laundryCosts.lineItems = categories;
 
-    await laundryInfoController.setCosts(laundryCosts);
+    await _laundryInfoController.setCosts(
+        laundryCosts: laundryCosts, laundryId: widget.laundry.info.id);
+
+    await Get.delete<OpLaundryInfoController>(force: true);
   }
 
   String _getRightName() {

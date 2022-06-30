@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
@@ -14,10 +13,10 @@ class AuthHooks {
     await Get.delete<MessageController>(force: true);
 
     await Get.delete<OrderController>(force: true);
-    await Get.delete<LaundryInfoController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
     await Get.delete<LaundryOpAuthController>(force: true);
+    // await Get.delete<LaundryInfoController>(force: true);
   }
 
   static void onSignInHook() {
@@ -27,11 +26,9 @@ class AuthHooks {
     Get.put(ForegroundNotificationsController(), permanent: true);
     Get.put(BackgroundNotificationsController(), permanent: true);
 
-    Get.put(LaundryInfoController(), permanent: true);
+    // Get.put(LaundryInfoController(), permanent: true);
 
     Get.put(OrderController(), permanent: true);
     Get.put(LaundryOpAuthController(), permanent: true);
-
-    Get.put(MessageController(), permanent: true);
   }
 }

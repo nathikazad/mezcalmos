@@ -672,7 +672,7 @@
                     "clear": "Borra",
                     "no": "No",
                     "noNotifTitle": "¡No hay notificaciones todavía!",
-                    "noNotifBody": "Actualmente no tienes notificaciones.Te notificaremos cuando se llega a algo nuevo."
+                    "noNotifBody": "Actualmente no tienes notificaciones. Te notificaremos cuando se llega a algo nuevo."
                 }
             },
             "UserProfileScreen": {
@@ -984,6 +984,9 @@
         }
     },
     "DeliveryAdminApp": {
+        "main": {
+            "services": "Servicios"
+        },
         "notificationHandler": {
             "restaurantTitle": "Nuevo pedido de restaurante",
             "laundryTitle": "Nuevo pedido de lavandería",
@@ -1005,6 +1008,12 @@
             }
         },
         "pages": {
+            "ServicesView": {
+                "services": "Servicios",
+                "noLaundries": "No hay lavas disponibles",
+                "editProfile": "Editar perfil",
+                "editAdmin": "Editar administrador"
+            },
             "Orders": {
                 "components": {
                     "driverOrderCard": {
