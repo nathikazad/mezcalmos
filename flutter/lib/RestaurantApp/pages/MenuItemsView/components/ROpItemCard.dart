@@ -36,8 +36,9 @@ class _ROpItemCardState extends State<ROpItemCard> {
               children: [
                 CircleAvatar(
                   radius: 25,
-                  backgroundImage:
-                      CachedNetworkImageProvider(widget.item.image!),
+                  backgroundImage: (widget.item.image != null)
+                      ? CachedNetworkImageProvider(widget.item.image!)
+                      : AssetImage(aNoImage) as ImageProvider,
                 ),
                 SizedBox(
                   width: 15,
@@ -93,7 +94,11 @@ class _ROpItemCardState extends State<ROpItemCard> {
                   value: widget.item.available,
                   onChanged: (bool v) {
                     _restaurantInfoController.switchItemAvailable(
-                        widget.item.id!, v);
+                        itemId: widget.item.id!,
+                        value: v,
+                        caytegoryId: (widget.category != null)
+                            ? widget.category!.id
+                            : null);
                   },
                   activeColor: primaryBlueColor,
                   activeTrackColor: SecondaryLightBlueColor,

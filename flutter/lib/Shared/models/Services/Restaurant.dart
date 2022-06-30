@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -232,11 +233,11 @@ class Item {
   String? image;
   Map<LanguageType, String> name;
   num cost = 0;
-  List<Option> _options = <Option>[];
+  List<Option> options = <Option>[];
 
-  List<Option> get options {
+  List<Option> get getOptions {
     sortOptions();
-    return _options;
+    return options;
   }
 
   int position = 0;
@@ -245,6 +246,7 @@ class Item {
       this.available = false,
       this.description,
       this.image,
+      this.options = const <Option>[],
       required this.name,
       required this.cost,
       this.position = 0});
@@ -253,6 +255,7 @@ class Item {
     String itemId,
     itemData,
   ) {
+    mezDbgPrint(itemData);
     final Item item = Item(
         id: itemId,
         available: itemData["available"],
@@ -268,7 +271,7 @@ class Item {
     // TODO: change to options
     if (itemData["options2"] != null) {
       itemData["options2"].forEach((optionId, optionData) {
-        item._options.add(Option.fromData(optionId, optionData));
+        item.options.add(Option.fromData(optionId, optionData));
       });
       item.sortOptions();
     }
@@ -276,7 +279,7 @@ class Item {
   }
 
   void sortOptions() {
-    _options.sort((Option a, Option b) => a.position.compareTo(b.position));
+    options.sort((Option a, Option b) => a.position.compareTo(b.position));
   }
 //  Category? getCategory(){
 
@@ -295,8 +298,8 @@ class Item {
   }
 
   Option? findOption(String id) {
-    if (_options.length == 0) return null;
-    return _options.firstWhereOrNull((Option element) => element.id == id);
+    if (options.length == 0) return null;
+    return options.firstWhereOrNull((Option element) => element.id == id);
   }
 }
 
@@ -306,6 +309,16 @@ extension ParseOrderTypeToString on OptionType {
   String toFirebaseFormatString() {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+
+  String toOptionName() {
+    String str = toString().split('.').last;
+
+    if (str.length > 6) {
+      str = str.substring(6, str.length);
+    }
+    str[0].toUpperCase();
+    return str;
   }
 }
 
@@ -320,22 +333,23 @@ class Option {
   String id;
   OptionType optionType;
   Map<LanguageType, String> name;
-  List<Choice> _choices = <Choice>[];
+  List<Choice> choices = <Choice>[];
   int position = 0;
   num minimumChoice = 0;
   num freeChoice = 0;
   num maximumChoice = 0;
   num costPerExtra = 0;
 
-  List<Choice> get choices {
+  List<Choice> get getChoices {
     sortChoices();
-    return _choices;
+    return choices;
   }
 
   Option(
       {required this.id,
       required this.optionType,
       required this.name,
+      this.choices = const <Choice>[],
       this.position = 0});
   factory Option.fromData(String id, data) {
     final Option option = Option(
@@ -346,7 +360,7 @@ class Option {
 
     data["choices"].forEach((optionKey, optionData) {
       final Choice choice = Choice.fromData(optionKey, optionData);
-      option._choices.add(choice);
+      option.choices.add(choice);
     });
     option.sortChoices();
     option.changeOptionType(
@@ -360,7 +374,7 @@ class Option {
   }
 
   void sortChoices() {
-    _choices.sort((Choice a, Choice b) => a.position.compareTo(b.position));
+    choices.sort((Choice a, Choice b) => a.position.compareTo(b.position));
   }
 
   void changeOptionType(
@@ -378,14 +392,14 @@ class Option {
         break;
       case OptionType.ChooseMany:
         this.minimumChoice = 0;
-        this.freeChoice = _choices.length;
-        this.maximumChoice = _choices.length;
+        this.freeChoice = choices.length;
+        this.maximumChoice = choices.length;
         this.costPerExtra = 0;
         break;
       case OptionType.Custom:
         this.minimumChoice = minimumChoice ?? 0;
         this.freeChoice = freeChoice ?? 0;
-        this.maximumChoice = maximumChoice ?? _choices.length;
+        this.maximumChoice = maximumChoice ?? choices.length;
         this.costPerExtra = costPerExtra ?? 0;
         break;
     }
@@ -405,7 +419,7 @@ class Option {
       "id": id,
       "name": name.toFirebaseFormat(),
       "optionType": optionType.toFirebaseFormatString(),
-      "choices": jsonEncode(_choices)
+      "choices": choices.map((Choice x) => x.toJson()).toList(),
     };
   }
 }

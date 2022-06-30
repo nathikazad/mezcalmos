@@ -4,6 +4,7 @@ import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/ROpCurrentOrders
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/EditInfoView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/LaundryOpOrderView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/PastOrdresList/LaundryOpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
@@ -21,7 +22,7 @@ const String kEditCategoryScreen = '/categoryScreen/:categoryId';
 const String kItemView = '/itemView';
 const String kEditItemView = '/itemView/:itemId';
 const String kOrderView = '/dashboard/orderView/:orderId';
-
+const String kOptionView = "/optionView/:optionId";
 String getCategoryEditRoute(String categoryId) {
   return kEditCategoryScreen.replaceFirst(":categoryId", categoryId);
 }
@@ -57,7 +58,8 @@ class XRouter {
           name: kEditItemView,
           page: () => ROpItemView(),
         ),
-        GetPage(name: kOrderView, page: () => LaundryOpOrderView())
+        GetPage(name: kOrderView, page: () => LaundryOpOrderView()),
+        GetPage(name: kOptionView, page: () => ROpOptionView())
       ] +
       SharedRouter.sharedRoutes;
 }

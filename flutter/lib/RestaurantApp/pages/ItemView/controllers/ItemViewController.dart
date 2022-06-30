@@ -34,6 +34,7 @@ class ItemViewController {
   final Rxn<File> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
+  final RxList<Option> itemOptions = RxList([]);
 
   // initalisation //
   // the itemId arguments for edit mode //
@@ -60,8 +61,13 @@ class ItemViewController {
           restaurant.value!.primaryLanguage: prItemDescController.text,
           restaurant.value!.secondaryLanguage!: scItemDescController.text,
         },
-        cost: num.parse(itemPriceController.text));
+        cost: num.parse(itemPriceController.text),
+        options: itemOptions);
     return newItem;
+  }
+
+  void addOption(Option option) {
+    itemOptions.add(option);
   }
 
 // push item to db //
@@ -74,14 +80,12 @@ class ItemViewController {
         newImageUrl.value = value;
       });
     }
-    if (newImageUrl.value != null) {
-      mezDbgPrint("adding =============> ${_contructItem().toJson()} ");
-      mezDbgPrint("adding =============> ${currentCategory.value!.id} ");
-      await _restaurantInfoController
-          .addItem(
-              item: _contructItem(), categoryId: currentCategory.value!.id!)
-          .then((value) => Get.back());
-    }
+    //  if (newImageUrl.value != null) {
+    mezDbgPrint("adding =============> ${_contructItem().toJson()} ");
+    mezDbgPrint("adding =============> ${currentCategory.value!.id} ");
+    await _restaurantInfoController
+        .addItem(item: _contructItem(), categoryId: currentCategory.value!.id!)
+        .then((value) => Get.back());
   }
 
   // add categories //
@@ -122,5 +126,9 @@ class ItemViewController {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else
       return null;
+  }
+
+  bool get isSecondLangValid {
+    return scItemNameController.text.isNotEmpty;
   }
 }

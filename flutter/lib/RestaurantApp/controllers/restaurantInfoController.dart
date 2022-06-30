@@ -106,20 +106,37 @@ class RestaurantInfoController extends GetxController {
 
 // ----------------------------------------------------- ITEMS FUNCTIONS ----------------------------------------------------- //
 
-  Future<void> addItem({required Item item, required String categoryId}) async {
-    final DatabaseReference newItemNode = _databaseHelper.firebaseDatabase
-        .ref()
-        .child(itemsNode(uid: restaurantId, categoryId: categoryId))
-        .push();
-    mezDbgPrint("adding =============> $item");
+  Future<void> addItem({required Item item, String? categoryId}) async {
+    mezDbgPrint("Final item ===========================>>>>>${item.toJson()}");
+    final DatabaseReference newItemNode;
+    // adding to new category
+    if (categoryId != null) {
+      newItemNode = _databaseHelper.firebaseDatabase
+          .ref()
+          .child(itemsNode(uid: restaurantId, categoryId: categoryId))
+          .push();
+    }
+    // adding to noCatgeory
+    else {
+      newItemNode = _databaseHelper.firebaseDatabase
+          .ref()
+          .child(noCategoryNode(uid: restaurantId))
+          .push();
+    }
+
     await newItemNode.set(item.toJson());
   }
 
-  Future<void> switchItemAvailable(String itemId, bool value) {
-    mezDbgPrint(itemNode(uid: restaurantId, itemId: itemId) + "/available");
+  Future<void> switchItemAvailable(
+      {required String itemId, required bool value, String? caytegoryId}) {
+    mezDbgPrint(
+        itemNode(uid: restaurantId, itemId: itemId, categoryId: caytegoryId) +
+            "/available");
     return _databaseHelper.firebaseDatabase
         .ref()
-        .child(itemNode(uid: restaurantId, itemId: itemId) + "/available")
+        .child(itemNode(
+                uid: restaurantId, itemId: itemId, categoryId: caytegoryId) +
+            "/available")
         .set(value);
   }
 

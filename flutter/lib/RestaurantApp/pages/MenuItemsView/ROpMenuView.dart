@@ -101,7 +101,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     height: 15,
                   ),
                   _categoriesItemsList(),
-                  _noCategoryItemsList()
+                  //   _noCategoryItemsList()
                 ],
               ),
             ),

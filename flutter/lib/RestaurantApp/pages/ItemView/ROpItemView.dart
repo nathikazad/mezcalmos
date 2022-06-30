@@ -6,7 +6,9 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dar
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ItemCategorySelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ROpItemImage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -48,6 +50,7 @@ class _ROpItemViewState extends State<ROpItemView>
 
   @override
   void dispose() {
+    _tabController.dispose();
     _restaurantListener?.cancel();
     super.dispose();
   }
@@ -71,8 +74,14 @@ class _ROpItemViewState extends State<ROpItemView>
         height: 65,
         text: "Add item",
         onTap: () {
-          if (_formKey.currentState!.validate()) {
-            viewController.addItemToDb();
+          if (viewController.isSecondLangValid) {
+            _tabController.index = _tabController.length - 2;
+            if (_formKey.currentState!.validate()) {
+              viewController.addItemToDb();
+            }
+          } else {
+            _tabController.index = _tabController.length - 1;
+            _formKey.currentState!.validate();
           }
         },
       ),
@@ -130,7 +139,6 @@ class _ROpItemViewState extends State<ROpItemView>
                             }
                             return null;
                           },
-                          textAlignVertical: TextAlignVertical.center,
                           style: Get.textTheme.bodyText1,
                           decoration: InputDecoration(
                               prefixIconColor: primaryBlueColor,
@@ -237,8 +245,13 @@ class _ROpItemViewState extends State<ROpItemView>
       color: Colors.grey.shade200,
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          //  Get.toNamed(kItemView);
+        onTap: () async {
+          mezDbgPrint("Tapped");
+          final Option? newOption = await Get.toNamed(kOptionView) as Option?;
+          if (newOption != null) {
+            mezDbgPrint(newOption.toJson());
+            viewController.addOption(newOption);
+          }
         },
         child: Container(
           alignment: Alignment.center,

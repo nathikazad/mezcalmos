@@ -47,6 +47,9 @@ class RestaurantAppTheme {
               borderSide: BorderSide.none),
           focusedBorder: InputBorder.none,
           border: InputBorder.none,
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(color: Colors.red, width: 0.5)),
           filled: true,
           fillColor: Colors.grey.shade200),
 
