@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
+import 'package:get/get.dart';
 
 import '../../../services/widgets/mezCalmosResizer.dart';
 
-class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
-  const WepAppIndexBodyIntroductionComponent({Key? key}) : super(key: key);
+dynamic _i18n() => Get.find<LanguageController>().strings["WebApp"];
 
+class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
+  WepAppIndexBodyIntroductionComponent({Key? key}) : super(key: key);
+  final LanguageController langController = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
@@ -68,14 +72,16 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
     final txt = Theme.of(context).textTheme;
     return Container(
       alignment: Alignment.centerLeft,
-      child: Text(
-        "Built for all your\ntransportatin\nneeds",
-        style: txt.headline1!.copyWith(
-            fontWeight: FontWeight.w700,
-            fontFamily: "Montserrat",
-            height: 1.3,
-            fontSize: getSizeForFirstText(context),
-            color: Colors.black),
+      child: Obx(
+        () => Text(
+          "${langController.strings["WebApp"]["title"]}",
+          style: txt.headline1!.copyWith(
+              fontWeight: FontWeight.w700,
+              fontFamily: "Montserrat",
+              height: 1.3,
+              fontSize: getSizeForFirstText(context),
+              color: Colors.black),
+        ),
       ),
     );
   }
@@ -85,14 +91,16 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
 
     return Container(
       alignment: Alignment.centerLeft,
-      child: Text(
-        "Your one stop place to find all your needed local services \nand where you can enjoy fast and high quality services.",
-        textAlign: TextAlign.left,
-        style: txt.bodyText1!.copyWith(
-            color: Colors.black,
-            fontSize: getSizeForSecondText(context),
-            fontWeight: FontWeight.w300,
-            fontFamily: "Nunito"),
+      child: Obx(
+        () => Text(
+          "${langController.strings["WebApp"]["subtitle"]}",
+          textAlign: TextAlign.left,
+          style: txt.bodyText1!.copyWith(
+              color: Colors.black,
+              fontSize: getSizeForSecondText(context),
+              fontWeight: FontWeight.w300,
+              fontFamily: "Nunito"),
+        ),
       ),
     );
   }
@@ -115,13 +123,15 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
             ]),
       ),
       child: Center(
-          child: Text(
-        "Get the app",
-        style: txt.bodyText1!.copyWith(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
-            fontSize: getSizeForGetAppBtn(context),
-            fontFamily: "Montserrat"),
+          child: Obx(
+        () => Text(
+          "${langController.strings["WebApp"]["getAppBtn"]}",
+          style: txt.bodyText1!.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+              fontSize: getSizeForGetAppBtn(context),
+              fontFamily: "Montserrat"),
+        ),
       )),
     );
   }

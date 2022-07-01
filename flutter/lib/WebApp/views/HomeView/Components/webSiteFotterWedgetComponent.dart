@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sizer/sizer.dart';
 
 class WebSiteFotterWedgetComponent extends StatelessWidget {
+  WebSiteFotterWedgetComponent({required this.controller});
+  final AutoScrollController controller;
+  final LanguageController langController = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -38,6 +43,12 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
     );
   }
 
+  Future _scrollToCounter(AutoScrollController controller, int index) async {
+    await controller.scrollToIndex(index,
+        preferPosition: AutoScrollPosition.begin);
+    controller.highlight(index);
+  }
+
   Widget BuildWidgetForMobile(BuildContext context) {
     return Container(
       width: Get.width,
@@ -52,26 +63,38 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                FotterBottonsComponents(
-                  text: "services",
-                  func: () {},
+                Obx(
+                  () => FotterBottonsComponents(
+                    text:
+                        "${langController.strings["WebApp"]["fotterBar"]["mobile"]["services"]}",
+                    func: () {},
+                  ),
                 ),
                 Spacer(),
-                FotterBottonsComponents(
-                  text: "Blog",
-                  func: () {},
+                Obx(
+                  () => FotterBottonsComponents(
+                    text:
+                        "${langController.strings["WebApp"]["fotterBar"]["mobile"]["blog"]}",
+                    func: () {},
+                  ),
                 ),
                 Spacer(),
-                FotterBottonsComponents(
-                  text: "FAQ",
-                  func: () {},
+                Obx(
+                  () => FotterBottonsComponents(
+                    text:
+                        "${langController.strings["WebApp"]["fotterBar"]["mobile"]["fAQ"]}",
+                    func: () {},
+                  ),
                 ),
                 Spacer(),
-                FotterBottonsComponents(
-                  text: "Contact us",
-                  func: () {
-                    // print("test ome");
-                  },
+                Obx(
+                  () => FotterBottonsComponents(
+                    text:
+                        "${langController.strings["WebApp"]["fotterBar"]["mobile"]["contactUs"]}",
+                    func: () {
+                      // print("test ome");
+                    },
+                  ),
                 )
               ],
             ),
@@ -106,31 +129,59 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            FotterBottonsComponents(
-              text: "Our services",
-              func: () {},
+            Obx(
+              () => FotterBottonsComponents(
+                text:
+                    "${langController.strings["WebApp"]["fotterBar"]["desktopAndTablet"]["services"]}",
+                func: () {
+                  _scrollToCounter(controller, 0);
+                },
+              ),
             ),
-            FotterBottonsComponents(
-              text: "Our vision",
-              func: () {},
+            Obx(
+              () => FotterBottonsComponents(
+                text:
+                    "${langController.strings["WebApp"]["fotterBar"]["desktopAndTablet"]["vision"]}",
+                func: () {
+                  print("test 2");
+                },
+              ),
             ),
-            FotterBottonsComponents(
-              text: "For business",
-              func: () {},
+            Obx(
+              () => FotterBottonsComponents(
+                text:
+                    "${langController.strings["WebApp"]["fotterBar"]["desktopAndTablet"]["business"]}",
+                func: () {
+                  print("test 3");
+                },
+              ),
             ),
-            FotterBottonsComponents(
-              text: "Blog",
-              func: () {},
+            Obx(
+              () => FotterBottonsComponents(
+                text:
+                    "${langController.strings["WebApp"]["fotterBar"]["desktopAndTablet"]["blog"]}",
+                func: () {
+                  _scrollToCounter(controller, 2);
+                },
+              ),
             ),
-            FotterBottonsComponents(
-              text: "FAQ",
-              func: () {},
+            Obx(
+              () => FotterBottonsComponents(
+                text:
+                    "${langController.strings["WebApp"]["fotterBar"]["desktopAndTablet"]["fAQ"]}",
+                func: () {
+                  _scrollToCounter(controller, 1);
+                },
+              ),
             ),
-            FotterBottonsComponents(
-              text: "Contact us",
-              func: () {
-                // print("test ome");
-              },
+            Obx(
+              () => FotterBottonsComponents(
+                text:
+                    "${langController.strings["WebApp"]["fotterBar"]["desktopAndTablet"]["contactUs"]}",
+                func: () {
+                  _scrollToCounter(controller, 3);
+                },
+              ),
             )
           ],
         ),
@@ -156,9 +207,12 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
   }
 
   Widget BuidCopyRightText(BuildContext context) {
-    return Text(
-      "© Mezcalmos ${DateTime.now().year}, All right reserved",
-      style: TextStyle(color: Colors.white, fontSize: getSizeForText(context)),
+    return Obx(
+      () => Text(
+        "© Mezcalmos ${DateTime.now().year}, ${langController.strings["WebApp"]["fotterBar"]["allRightReserved"]}",
+        style:
+            TextStyle(color: Colors.white, fontSize: getSizeForText(context)),
+      ),
     );
   }
 
@@ -202,12 +256,14 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
   }
 
   Widget BuildPrivacyAndPolicyText(BuildContext context) {
-    return Text(
-      "Privacy policy",
-      style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w600,
-          fontSize: getSizeForText(context)),
+    return Obx(
+      () => Text(
+        "${langController.strings["WebApp"]["fotterBar"]["policy"]}",
+        style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: getSizeForText(context)),
+      ),
     );
   }
 
@@ -269,7 +325,9 @@ class FotterBottonsComponents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: func(),
+      onPressed: () {
+        func();
+      },
       child: Text(
         text,
         style: TextStyle(color: Colors.white),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/WebApp/services/Models/blogModle.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:sizer/sizer.dart';
 
 class BlogPartComponent extends StatelessWidget {
-  const BlogPartComponent({Key? key}) : super(key: key);
+  BlogPartComponent({Key? key}) : super(key: key);
+  final LanguageController langController = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,23 +27,27 @@ class BlogPartComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text(
-                "Our latest blog",
-                style: txt.headline1!.copyWith(
-                    fontSize: getSizeForTitle(context),
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Montserrat",
-                    color: Colors.black),
+              Obx(
+                () => Text(
+                  "${langController.strings["WebApp"]["blogTitle"]}",
+                  style: txt.headline1!.copyWith(
+                      fontSize: getSizeForTitle(context),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "Montserrat",
+                      color: Colors.black),
+                ),
               ),
               Spacer(),
-              Text(
-                "View all blogs",
-                style: txt.headline1!.copyWith(
-                    fontSize: getSizeShowMoreText(context),
-                    fontWeight: FontWeight.w500,
-                    decoration: TextDecoration.underline,
-                    fontFamily: "Montserrat",
-                    color: Color.fromRGBO(103, 121, 254, 1)),
+              Obx(
+                () => Text(
+                  "${langController.strings["WebApp"]["showAll"]}",
+                  style: txt.headline1!.copyWith(
+                      fontSize: getSizeShowMoreText(context),
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.underline,
+                      fontFamily: "Montserrat",
+                      color: Color.fromRGBO(103, 121, 254, 1)),
+                ),
               ),
             ],
           ),

@@ -1498,6 +1498,53 @@
             "canceledOrderBody": "Su pedido ha sido cancelado"
 
         }
+    },
+
+    "WebApp": {
+        "appBarActions": {
+            "Services": "Servicios",
+            "FAQ": "PMF",
+            "Blog": "Blog",
+            "ContactUs": "Contacta con nosotros"
+        },
+        "title": "Creado para todas sus \nnecesidades de \ntransporte",
+        "subtitle": "Su lugar único para encontrar todos los servicios locales que necesita \ny donde puede disfrutar de servicios rápidos y de alta calidad.",
+        "getAppBtn": "Obtener la aplicación",
+        "food": "Alimento",
+        "foodDescription": "Descubre los platos más deliciosos de los restaurantes más cercanos..",
+        "laundry": "Ropa sucia",
+        "laundryDescription": "Haz que tu ropa sea lavada por tu servicio de lavandería más cercano.",
+        "taxi": "Taxi",
+        "taxiDescription": "Próximamente, en breve, pronto",
+        "FAQ(FAQ)": "Preguntas frecuentes (FAQ)",
+        "blogTitle": "Nuestro último blog",
+        "showAll": "Ver todos los blogs",
+        "questionText": "¿Preguntas sobre nuestro producto?",
+        "questionTitle": "Nuestro equipo de expertos está listo para responder a sus preguntas, brindarle más información y ayudarlo.",
+        "questionSubtitle": "Rellene el siguiente formulario y recibirá una respuesta en un plazo de 2 días laborables.",
+        "fullName":"Nombre completo",
+        "email":"Correo electrónico",
+        "messageOrQuestion":"mensaje o pregunta",
+        "submitBtn":"Enviar mensaje",
+        "getAppNow":"Obtenga su aplicación ahora.",
+        "fotterBar":{
+            "desktopAndTablet":{
+                "services":"Nuestros servicios",
+                "vision":"Nuestra visión",
+                "business":"Para negocios",
+                "blog":"Blog",
+                "fAQ":"FAQ",
+                "contactUs":"Contact us"
+            },
+            "mobile":{
+                "services":"Services",
+                "blog":"Blog",
+                "fAQ":"PMF",
+                "contactUs":"Contacta con nosotros"
+            },
+            "allRightReserved":"Todos los derechos reservados",
+            "policy":"Política de privacidad"
+        }
     }
 
 }

@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosLogo.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/services/widgets/responsive.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/WebApp/views/HomeView/Components/drawerComponent.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 
 class WebAppBar extends StatefulWidget implements PreferredSizeWidget {
-  WebAppBar({Key? key, required this.golbalKey}) : super(key: key);
+  WebAppBar({Key? key, required this.golbalKey, required this.controller})
+      : super(key: key);
   GlobalKey<ScaffoldState> golbalKey;
+  final AutoScrollController controller;
 
   @override
   State<WebAppBar> createState() => _WebAppBarState();
@@ -17,6 +24,11 @@ class WebAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _WebAppBarState extends State<WebAppBar> {
   List<bool> isSelected = <bool>[false, false, false, false, false];
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
@@ -32,7 +44,10 @@ class _WebAppBarState extends State<WebAppBar> {
             ),
             buildTitle(logoSize: 25, titleSize: 20, spaceSize: 5),
             Spacer(),
-            buildWidgetForTabletAndDesktop(txt: txt, isSelected: isSelected),
+            buildWidgetForTabletAndDesktop(
+                txt: txt,
+                isSelected: isSelected,
+                controller: widget.controller),
             SizedBox(
               width: 100,
             )
@@ -45,7 +60,10 @@ class _WebAppBarState extends State<WebAppBar> {
             ),
             buildTitle(logoSize: 25, titleSize: 20, spaceSize: 5),
             Spacer(),
-            buildWidgetForTabletAndDesktop(txt: txt, isSelected: isSelected),
+            buildWidgetForTabletAndDesktop(
+                txt: txt,
+                isSelected: isSelected,
+                controller: widget.controller),
             SizedBox(
               width: 50,
             )
@@ -123,7 +141,10 @@ Widget buildWidgetForMobile({required Function func}) {
 Widget buildWidgetForTabletAndDesktop(
     {required TextTheme txt,
     required List<bool> isSelected,
+    required AutoScrollController controller,
     String? direction = "horizontal"}) {
+  final LanguageController langController = Get.find<LanguageController>();
+
   return StatefulBuilder(
     builder: (BuildContext context, setState) {
       return ToggleButtons(
@@ -133,47 +154,120 @@ Widget buildWidgetForTabletAndDesktop(
         children: <Widget>[
           ContainerForActionListtile(
             direction: direction,
-            title: Text("Services",
-                style: getRightTextStyle(txt: txt, isEnable: isSelected[0])),
-          ),
-          ContainerForActionListtile(
-            direction: direction,
-            title: Text("FAQ",
-                style: getRightTextStyle(txt: txt, isEnable: isSelected[1])),
-          ),
-          ContainerForActionListtile(
-            direction: direction,
-            title: Text(
-              "Blog",
-              style: getRightTextStyle(txt: txt, isEnable: isSelected[2]),
+            title: Obx(
+              () => Text(
+                  langController.strings["WebApp"]["appBarActions"]["Services"],
+                  //  "${langController.strings["WebApp"]["appBarActions"]["Services"]}",
+                  style: getRightTextStyle(txt: txt, isEnable: isSelected[0])),
             ),
           ),
           ContainerForActionListtile(
             direction: direction,
-            title: Text(
-              "Contact us",
-              style: getRightTextStyle(txt: txt, isEnable: isSelected[3]),
+            title: Obx(
+              () => Text(
+                  "${langController.strings["WebApp"]["appBarActions"]["FAQ"]}",
+                  style: getRightTextStyle(txt: txt, isEnable: isSelected[1])),
             ),
           ),
           ContainerForActionListtile(
             direction: direction,
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "EN",
-                  style: getRightTextStyle(txt: txt, isEnable: isSelected[4]),
-                ),
-                Icon(
-                  Icons.expand_more_outlined,
-                  size: 11,
-                  color: isSelected[4]
-                      ? Color.fromRGBO(103, 121, 254, 1)
-                      : Colors.black,
+            title: Obx(
+              () => Text(
+                "${langController.strings["WebApp"]["appBarActions"]["Blog"]}",
+                style: getRightTextStyle(txt: txt, isEnable: isSelected[2]),
+              ),
+            ),
+          ),
+          ContainerForActionListtile(
+            direction: direction,
+            title: Obx(
+              () => Text(
+                "${langController.strings["WebApp"]["appBarActions"]["ContactUs"]}",
+                style: getRightTextStyle(txt: txt, isEnable: isSelected[3]),
+              ),
+            ),
+          ),
+          direction != "horizontal"
+              ? ContainerForActionListtile(
+                  direction: direction,
+                  title: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Obx(
+                        () => Text(
+                          "${langController.userLanguageKey.toFirebaseFormatString() == "en" ? "To English" : "To Spanish"}",
+                          style: getRightTextStyle(
+                              txt: txt, isEnable: isSelected[4]),
+                        ),
+                      ),
+                      Icon(
+                        Icons.expand_more_outlined,
+                        size: 11,
+                        color: isSelected[4]
+                            ? Color.fromRGBO(103, 121, 254, 1)
+                            : Colors.black,
+                      )
+                    ],
+                  ),
                 )
-              ],
-            ),
-          )
+              : Theme(
+                  data: ThemeData(
+                      cardTheme: CardTheme(color: Colors.red),
+                      backgroundColor: Colors.red),
+                  child: PopupMenuButton<int>(
+                    child: Container(
+                      height: kToolbarHeight,
+                      width: kToolbarHeight,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Obx(
+                            () => Text(
+                              "${langController.userLanguageKey.toFirebaseFormatString().toUpperCase()}",
+                              style: getRightTextStyle(
+                                  txt: txt, isEnable: isSelected[4]),
+                            ),
+                          ),
+                          Icon(
+                            Icons.expand_more_outlined,
+                            size: 11,
+                            color: isSelected[4]
+                                ? Color.fromRGBO(103, 121, 254, 1)
+                                : Colors.black,
+                          )
+                        ],
+                      ),
+                    ),
+                    onSelected: (index) {
+                      if (index == 1) {
+                        langController.changeLangForWeb(LanguageType.EN);
+                      } else {
+                        langController.changeLangForWeb(LanguageType.ES);
+                      }
+                    },
+                    offset: Offset(0, kToolbarHeight * 0.75),
+                    itemBuilder: (context) => [
+                      // popupmenu item 1
+                      PopupMenuItem(
+                        value: 1,
+                        // row has two child icon and text.
+                        child: Row(
+                          children: [Text("English")],
+                        ),
+                      ),
+                      // popupmenu item 2
+                      PopupMenuItem(
+                        value: 2,
+                        // row has two child icon and text
+                        child: Row(
+                          children: [Text("Spanish")],
+                        ),
+                      ),
+                    ],
+                    color: Colors.grey,
+                    elevation: 2,
+                  ),
+                ),
         ],
         onPressed: (int index) {
           setState(() {
@@ -182,6 +276,7 @@ Widget buildWidgetForTabletAndDesktop(
                 buttonIndex++) {
               if (buttonIndex == index) {
                 isSelected[buttonIndex] = true;
+                doActionByIndex(index, direction!, controller);
               } else {
                 isSelected[buttonIndex] = false;
               }
@@ -192,6 +287,47 @@ Widget buildWidgetForTabletAndDesktop(
       );
     },
   );
+}
+
+void doActionByIndex(
+    int index, String direction, AutoScrollController controller) {
+  switch (index) {
+    case 0:
+      _scrollToCounter(controller, index);
+      if (direction == "vertical") {
+        Get.back();
+      }
+      break;
+    case 1:
+      _scrollToCounter(controller, index);
+      if (direction == "vertical") {
+        Get.back();
+      }
+      break;
+    case 2:
+      _scrollToCounter(controller, index);
+      if (direction == "vertical") {
+        Get.back();
+      }
+      break;
+    case 3:
+      _scrollToCounter(controller, index);
+      if (direction == "vertical") {
+        Get.back();
+      }
+      break;
+    case 4:
+      Get.to(() => LangaugePageForMobile());
+
+      break;
+    default:
+  }
+}
+
+Future _scrollToCounter(AutoScrollController controller, int index) async {
+  await controller.scrollToIndex(index,
+      preferPosition: AutoScrollPosition.begin);
+  controller.highlight(index);
 }
 
 TextStyle getRightTextStyle({required TextTheme txt, required bool isEnable}) {

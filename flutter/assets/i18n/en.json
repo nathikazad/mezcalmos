@@ -203,7 +203,6 @@
                         },
                         "RestaurantOrderDriverCard": {
                             "dropOffTime": "Drop-off time"
-
                         },
                         "notesWidget": {
                             "notes": "Order note :"
@@ -356,7 +355,6 @@
                             "cancel": "Cancel",
                             "taxiRidePriceTooltip": "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out.",
                             "serverCommunicationError": "Failed to communicate with the server :("
-
                         }
                     },
                     "ViewTaxiOrderScreen": {
@@ -425,7 +423,6 @@
                             "otwToLaundry": "On the way to laundry",
                             "pickedUpFromCustomer": "On the way to laundry",
                             "pickedUpFromLaundry": "Delivery on the way",
-
                             "cancelByAdmin": " Order Canceled by the admin",
                             "cancelByUser": " You canceled the order",
                             "received": " Order received and will be proceed as soon as possible",
@@ -438,8 +435,6 @@
                             "willBePickedUp": "Will be picked up",
                             "willBeReady": "Will be ready",
                             "willBeDropped": "Will be dropped"
-
-
                         },
                         "LaundryPricingComponent": {
                             "laundryPricing": "Laundry cost",
@@ -471,7 +466,6 @@
                         "laundry": "Laundry",
                         "estimatedDeliveryTime": "Estimated delivery time"
                     }
-
                 },
                 "LaundriesListView": {
                     "components": {
@@ -484,9 +478,7 @@
                             "startingFrom": "Starting"
                         }
                     },
-
                     "laundries": "Laundries",
-
                     "title": "Find your closest laundries\nor dry cleaners "
                 },
                 "SingleLaundryScreen": {
@@ -495,11 +487,9 @@
                     "description": "Description",
                     "openHours": "openHours",
                     "sendMyLaundry": "Send my laundry"
-
                 },
                 "LaundryRequestView": {
                     "LaundryOrderRequestView": {
-
                         "howItWorks": "How it works",
                         "deliveryLocation": "Delivery Location",
                         "orderSummary": "Order Summary",
@@ -759,8 +749,6 @@
                     "from": "From :",
                     "to": "To :"
                 }
-
-
             },
             "LocationSearchComponent": {
                 "address": "Enter Address"
@@ -785,7 +773,6 @@
                 "pastOrders": "Past orders",
                 "login": "Login",
                 "language": "Language",
-
                 "logout": "Logout",
                 "legal": "Privacy policy"
             }
@@ -949,7 +936,6 @@
                 "canceledByCustomer": "Order Cancelled",
                 "canceledByAdmin": "Order Cancelled"
             }
-
         },
         "pages": {
             "Orders": {
@@ -962,7 +948,6 @@
                         "laundry": "Laundry",
                         "noLaundry": "Pick a laundry"
                     }
-
                 },
                 "driversListView": {
                     "driversListScreen": {
@@ -973,7 +958,6 @@
                                 "unavailable": "Unavailable"
                             }
                         }
-
                     }
                 },
                 "SingleLaundryScreen": {
@@ -982,14 +966,11 @@
                     "description": "Description",
                     "openHours": "openHours",
                     "sendMyLaundry": "Send my laundry"
-
                 },
                 "laundryListView": {
                     "laundriesListView": {
                         "title": "Pick a laundry",
                         "laundries": "Laundries",
-
-
                         "components": {
                             "laundrySelectCard": {
                                 "available": "Available",
@@ -1000,10 +981,8 @@
                                 "startingFrom": "Starting from :"
                             }
                         }
-
                     }
                 },
-
                 "LaundryOrder": {
                     "Components": {
                         "LaundryOrderButtons": {
@@ -1072,9 +1051,7 @@
                             "currentOrders": "Current orders",
                             "pastOrders": "Past orders",
                             "noOrders": "No orders found"
-
                         }
-
                     },
                     "ListOrdersScreen": {
                         "title": "Orders",
@@ -1143,7 +1120,6 @@
                     }
                 },
                 "TaxiOrder": {
-
                     "components": {
                         "taxiOrderBottomCard": {
                             "customer": "Customer",
@@ -1167,8 +1143,6 @@
                                 "forwarding": "Forwarding to company",
                                 "forwardSuccess": "Forwarded",
                                 "forwardUnsuccess": "Forwarding canceled"
-
-
                             },
                             "TaxiOpenOrderControllButton": {
                                 "fwdToCompany": "Forward to company",
@@ -1177,28 +1151,19 @@
                                 "fwdAlertErrorText": "Please enter a valid taxi number",
                                 "taxiNumber": "Taxi number",
                                 "confirmTaxi": "Confirm local taxi"
-
-
                             }
-
                         }
-
                     },
                     "TaxiOrderView": {
                         "order": "Order"
                     }
-
                 }
-
             }
         }
     },
     "DeliveryApp": {
         "pages": {
-            "OrderDetailsScreen": {
-
-
-            },
+            "OrderDetailsScreen": {},
             "CurrentOrders": {
                 "CurrentOrdersListScreen": {
                     "currentOrders": "Current orders",
@@ -1224,7 +1189,6 @@
                     "CurrentOrdersListScreen": {
                         "title": "Incoming  Orders"
                     }
-
                 },
                 "CurrentOrderViewScreen": {
                     "Components": {
@@ -1254,7 +1218,6 @@
                                 "cancel": "Cancel",
                                 "orderWeight": "Order Weight"
                             }
-
                         },
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Restaurant Delivery",
@@ -1269,7 +1232,6 @@
                             "RestaurantControllButtons": {
                                 "confirmPickup": "Confirm Order Pickup",
                                 "confirmDelivery": "Confirm Delivery"
-
                             }
                         }
                     }
@@ -1297,7 +1259,6 @@
             "LaundryDeliveredBody": "Order has been delivered",
             "driverNotifTitle": "New Order",
             "driverNotifBody": "You got a new order"
-
         }
     },
     "LaundryApp": {
@@ -1313,7 +1274,6 @@
                 "logout": "Logout"
             }
         },
-
         "pages": {
             "CategoryView": {
                 "components": {
@@ -1323,10 +1283,8 @@
                         "categoryNameHint": "Enter a category name",
                         "categoryPrice": "Category pricing per kilogramme",
                         "categoryPriceHint": "Enter category pricing per kilogramme..."
-
                     }
                 },
-
                 "addCategory": "Add category",
                 "editCategory": "Edit category",
                 "categoryName": "Category name",
@@ -1336,7 +1294,6 @@
                 "categoryPriceHint": "Enter category pricing per kilogramme...",
                 "categoryNameError": "Please add a category name",
                 "catgeoryPriceError": "Please add a correct category price"
-
             },
             "DashboardView": {
                 "orders": "Orders",
@@ -1348,7 +1305,6 @@
                         "categories": "Categories",
                         "addCategory": "Add category",
                         "editMyInfo": "Edit my informations"
-
                     }
                 },
                 "OrdersListView": {
@@ -1372,7 +1328,6 @@
                     "EditInfoController": {
                         "error": "Error",
                         "selectPrimaryFirst": "Select Primary language first"
-
                     }
                 },
                 "components": {
@@ -1399,7 +1354,6 @@
                     "CategoryGridCard": {
                         "nameTooltip": "Name missing in your selected primary language",
                         "deleteTitle": "Delete Category",
-
                         "deleteHelperText": "are you sure you would like to delete ?",
                         "yesDelete": "Yes, delete category"
                     },
@@ -1427,9 +1381,7 @@
                             "laundryFinish": "Finishing",
                             "driverArriving": "Driver arriving",
                             "willBeDropped": "Will be dropped"
-
                         }
-
                     },
                     "OrderEstimatedTimeComponent": {
                         "estFinishTime": "Estimated finish time",
@@ -1438,7 +1390,6 @@
                         "estLaundryFinish": "Estimated laundry ready time",
                         "confirm": "Confirm",
                         "cancel": "Cancel"
-
                     },
                     "LaundryOpOrderDriverCard": {
                         "driver": "Driver",
@@ -1447,7 +1398,6 @@
                         "pickUpTime": "Pick-up time"
                     },
                     "LaundryOpSetCategoryComponent": {
-
                         "deleteTitle": "Yes, delete item",
                         "deleteBody": " are you sure you'd like to delete ?",
                         "deleteItem": "Delete item",
@@ -1468,8 +1418,6 @@
                         "perKilo": "Per kilo",
                         "weight": "Weight",
                         "cost": "Cost"
-
-
                     },
                     "LaundryOpOrderNote": {
                         "notes": "Notes"
@@ -1485,7 +1433,6 @@
                         "orderWeight": "Order Weight",
                         "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
                     }
-
                 },
                 "LaundryOpOrderView": {
                     "customer": "Customer info : ",
@@ -1500,8 +1447,52 @@
             "newOrderBody": "You got a new order",
             "canceledOrderTitle": "Order cancelled",
             "canceledOrderBody": "Your order has been cancelled"
-
         }
-
+    },
+    "WebApp": {
+        "appBarActions": {
+            "Services": "Services",
+            "FAQ": "FAQ",
+            "Blog": "Blog",
+            "ContactUs": "Contact us"
+        },
+        "title": "Built for all your\ntransportatin\nneeds",
+        "subtitle": "Your one stop place to find all your needed local services \nand where you can enjoy fast and high quality services.",
+        "getAppBtn": "Get the app",
+        "food": "Food",
+        "foodDescription": "Discover most delicious dishes from the nearest restaurents.",
+        "laundry": "Laundry",
+        "laundryDescription": "Get your clothes cleaned by your nearest laundry service.",
+        "taxi": "Taxi",
+        "taxiDescription": "Coming soon",
+        "FAQ(FAQ)": "Frequently asked questions(FAQ)",
+        "blogTitle": "Our latest blog",
+        "showAll": "View all blogs",
+        "questionText": "Questions about our product?",
+        "questionTitle": "Our team of experts is ready to answer your questions, give you more info and help you.",
+        "questionSubtitle": "Fill in the form below and you will receive an answer within 2 working days.",
+        "fullName":"Full name",
+        "email":"Email",
+        "messageOrQuestion":"Message or question",
+        "submitBtn":"Send message",
+        "getAppNow":"Get your app now.",
+        "fotterBar":{
+            "desktopAndTablet":{
+                "services":"Our services",
+                "vision":"Our vision",
+                "business":"For business",
+                "blog":"Blog",
+                "fAQ":"FAQ",
+                "contactUs":"Contact us"
+            },
+            "mobile":{
+                "services":"Services",
+                "blog":"Blog",
+                "fAQ":"FAQ",
+                "contactUs":"Contact us"
+            },
+            "allRightReserved":"All right reserved",
+            "policy":"Privacy policy"
+        }
     }
 }

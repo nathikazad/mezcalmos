@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:sizer/sizer.dart';
 
 import 'components.dart';
 
 class FormForQuestionAndFeedBack extends StatelessWidget {
-  const FormForQuestionAndFeedBack({Key? key}) : super(key: key);
+  FormForQuestionAndFeedBack({Key? key}) : super(key: key);
+  final LanguageController langController = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,35 +26,41 @@ class FormForQuestionAndFeedBack extends StatelessWidget {
   }
 
   Widget BuildTextTilte(BuildContext context, TextTheme txt) {
-    return Text(
-      "Questions about our product?",
-      style: txt.headline1!.copyWith(
-          fontSize: getSizeForTitle(context),
-          fontWeight: FontWeight.w700,
-          fontFamily: "Montserrat",
-          color: Colors.black),
+    return Obx(
+      () => Text(
+        "${langController.strings["WebApp"]["questionText"]}",
+        style: txt.headline1!.copyWith(
+            fontSize: getSizeForTitle(context),
+            fontWeight: FontWeight.w700,
+            fontFamily: "Montserrat",
+            color: Colors.black),
+      ),
     );
   }
 
   Widget BuildTextSecondTitle(BuildContext context, TextTheme txt) {
-    return Text(
-      "Our team of experts is ready to answer your questions, give you more info and help you.",
-      style: txt.headline1!.copyWith(
-          fontSize: getSizeForSecondTitle(context),
-          fontWeight: FontWeight.w500,
-          fontFamily: "Montserrat",
-          color: Colors.black),
+    return Obx(
+      () => Text(
+        "${langController.strings["WebApp"]["questionTitle"]}",
+        style: txt.headline1!.copyWith(
+            fontSize: getSizeForSecondTitle(context),
+            fontWeight: FontWeight.w500,
+            fontFamily: "Montserrat",
+            color: Colors.black),
+      ),
     );
   }
 
   Widget BuildTextSubtitle(BuildContext context, TextTheme txt) {
-    return Text(
-      "Fill in the form below and you will receive an answer within 2 working days.",
-      style: txt.headline1!.copyWith(
-          fontSize: getSizeSubtitleTitle(context),
-          fontWeight: FontWeight.w500,
-          fontFamily: "Nunito",
-          color: Colors.black),
+    return Obx(
+      () => Text(
+        "${langController.strings["WebApp"]["questionSubtitle"]}",
+        style: txt.headline1!.copyWith(
+            fontSize: getSizeSubtitleTitle(context),
+            fontWeight: FontWeight.w500,
+            fontFamily: "Nunito",
+            color: Colors.black),
+      ),
     );
   }
 
@@ -159,7 +167,8 @@ class FormForQuestionAndFeedBack extends StatelessWidget {
 }
 
 class FAQFormComponent extends StatelessWidget {
-  const FAQFormComponent({Key? key}) : super(key: key);
+  FAQFormComponent({Key? key}) : super(key: key);
+  final LanguageController langController = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -168,21 +177,27 @@ class FAQFormComponent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         //full name form;
-        WebappTextFieldComponent(
-          title: "Full Name",
+        Obx(
+          () => WebappTextFieldComponent(
+            title: "${langController.strings["WebApp"]["fullName"]}",
+          ),
         ),
         SizedBox(
           height: getSizeForSpacing(context),
         ),
-        WebappTextFieldComponent(
-          title: "Email",
+        Obx(
+          () => WebappTextFieldComponent(
+            title: "${langController.strings["WebApp"]["email"]}",
+          ),
         ),
         SizedBox(
           height: getSizeForSpacing(context),
         ),
-        WebappTextFieldComponent(
-          title: "Message or question",
-          maxLine: 500,
+        Obx(
+          () => WebappTextFieldComponent(
+            title: "${langController.strings["WebApp"]["messageOrQuestion"]}",
+            maxLine: 500,
+          ),
         ),
         SizedBox(
           height: getSpaceOnTop(context),
@@ -204,7 +219,7 @@ class FAQFormComponent extends StatelessWidget {
           ),
           child: Center(
               child: Text(
-            "Send message",
+            "${langController.strings["WebApp"]["submitBtn"]}",
             style: txt.bodyText1!.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,

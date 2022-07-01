@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/views/HomeView/Components/components.dart';
 import 'package:sizer/sizer.dart';
 
 class ServicesPartComponent extends StatelessWidget {
-  const ServicesPartComponent({Key? key}) : super(key: key);
+  ServicesPartComponent({Key? key}) : super(key: key);
+  final LanguageController langController = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +69,14 @@ class ServicesPartComponent extends StatelessWidget {
   }
 
   Widget buildServiceTitle(TextTheme txt, BuildContext context) {
-    return Text(
-      "Services",
-      style: txt.bodyText1!.copyWith(
-          fontSize: getSizeForTextOne(context),
-          fontFamily: "Montserrat",
-          fontWeight: FontWeight.w700),
+    return Obx(
+      () => Text(
+        "${langController.strings["WebApp"]["appBarActions"]["Services"]}",
+        style: txt.bodyText1!.copyWith(
+            fontSize: getSizeForTextOne(context),
+            fontFamily: "Montserrat",
+            fontWeight: FontWeight.w700),
+      ),
     );
   }
 
@@ -98,40 +102,44 @@ class ServicesPartComponent extends StatelessWidget {
       children: [
         Padding(
           padding: getServiceCardPddining(context),
-          child: WebServicesCard(
-            title: "Food",
-            titleSize: getSizeForTextOne(context),
-            url: "assets/images/customer/restaurants/restaurantService.png",
-            imageSize: getImageSizeForServiceCard(context),
-            subtitle:
-                "Discover most delicious dishes from the nearest restaurents.",
-            subtitleSize: getSizeForTextTwo(context),
-            onTap: () {},
+          child: Obx(
+            () => WebServicesCard(
+              title: "${langController.strings["WebApp"]["food"]}",
+              titleSize: getSizeForTextOne(context),
+              url: "assets/images/customer/restaurants/restaurantService.png",
+              imageSize: getImageSizeForServiceCard(context),
+              subtitle:
+                  "${langController.strings["WebApp"]["foodDescription"]}",
+              subtitleSize: getSizeForTextTwo(context),
+              onTap: () {},
+            ),
+          ),
+        ),
+        Padding(
+          padding: getServiceCardPddining(context),
+          child: Obx(
+            () => WebServicesCard(
+              title: "${langController.strings["WebApp"]["laundry"]}",
+              titleSize: getSizeForTextOne(context),
+              url: "assets/images/customer/laundryService.png",
+              imageSize: getImageSizeForServiceCard(context),
+              subtitle:
+                  "${langController.strings["WebApp"]["laundryDescription"]}",
+              subtitleSize: getSizeForTextTwo(context),
+              onTap: () {},
+            ),
           ),
         ),
         Padding(
           padding: getServiceCardPddining(context),
           child: WebServicesCard(
-            title: "Laundry",
-            titleSize: getSizeForTextOne(context),
-            url: "assets/images/customer/laundryService.png",
-            imageSize: getImageSizeForServiceCard(context),
-            subtitle:
-                "Get your clothes cleaned by your nearest laundry service.",
-            subtitleSize: getSizeForTextTwo(context),
-            onTap: () {},
-          ),
-        ),
-        Padding(
-          padding: getServiceCardPddining(context),
-          child: WebServicesCard(
-            title: "Taxi",
+            title: "${langController.strings["WebApp"]["taxi"]}",
             titleSize: getSizeForTextOne(context),
             url: "assets/images/customer/taxi/taxiService.png",
             imageSize: getImageSizeForServiceCard(context),
-            subtitle: "Coming Soon",
+            subtitle: "${langController.strings["WebApp"]["taxiDescription"]}",
             subtitleSize: getSizeForTextTwo(context),
-            onTap: () {},
+            onTap: null,
           ),
         ),
       ],

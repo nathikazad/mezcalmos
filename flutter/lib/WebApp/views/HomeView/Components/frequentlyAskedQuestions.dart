@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:sizer/sizer.dart';
 
 class FrequentlyAskedQuestions extends StatelessWidget {
-  const FrequentlyAskedQuestions({Key? key}) : super(key: key);
+  FrequentlyAskedQuestions({Key? key}) : super(key: key);
+  final LanguageController langController = Get.find<LanguageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +21,15 @@ class FrequentlyAskedQuestions extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               horizontal:
                   MezCalmosResizer.getWepPageHorizontalPadding(context)),
-          child: Text(
-            "Frequently asked questions(FAQ)",
-            style: txt.headline1!.copyWith(
-                fontSize: getSizeForTitle(context),
-                fontWeight: FontWeight.w700,
-                fontFamily: "Montserrat",
-                color: Colors.black),
+          child: Obx(
+            () => Text(
+              "${langController.strings["WebApp"]["FAQ(FAQ)"]}",
+              style: txt.headline1!.copyWith(
+                  fontSize: getSizeForTitle(context),
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Montserrat",
+                  color: Colors.black),
+            ),
           ),
         ),
         Padding(

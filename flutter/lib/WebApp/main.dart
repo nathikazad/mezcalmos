@@ -73,7 +73,7 @@ class _AppStartState extends State<AppStart> {
 
 Future<bool> intailizeApp(AppLaunchMode _launchMode) async {
   Completer<bool> completer = Completer();
-  setupFirebase(_launchMode);
+//setupFirebase(_launchMode);
 
   mezDbgPrint(Get.locale?.countryCode);
   hookOnFlutterErrorsStdout();
@@ -82,7 +82,7 @@ Future<bool> intailizeApp(AppLaunchMode _launchMode) async {
   return completer.future;
 }
 
-Future<void> setupFirebase(AppLaunchMode _launchMode) async {
+Future<bool> setupFirebase(AppLaunchMode _launchMode) async {
   const String _host =
       String.fromEnvironment('HOST', defaultValue: "http://127.0.0.1");
   // final AppLaunchMode _launchMode =
@@ -129,6 +129,9 @@ Future<void> setupFirebase(AppLaunchMode _launchMode) async {
       ),
       permanent: true);
   putControllers();
+  return Future.delayed(Duration(
+    seconds: 5,
+  )).then((value) => true);
 }
 
 Future<void> putControllers() async {
