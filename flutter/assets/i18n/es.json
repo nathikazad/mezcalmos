@@ -123,7 +123,8 @@
 
                         "search": "Búsqueda",
                         "showOnlyOpen": "Mostrar solo restaurantes abiertos",
-                        "emptRestaurantList": "Lo siento, no se encontró ningún restaurante"
+                        "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
+                        "noOpenRestaurant": "No hay restaurantes abiertos Funds"
                     }
                 },
                 "ViewCartScreen": {

@@ -9,6 +9,8 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ListRestaurantsScreen"]["ListRestaurantScreen"];
@@ -52,7 +54,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
         return Column(
           children: List.generate(10, (int index) => RestaurantShimmerCard()),
         );
-      } else {
+      } else if (!noRestaurantIsOpen) {
         return Column(
           children: List.generate(
               viewController.filteredRestaurants.length,
@@ -67,6 +69,24 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
                       );
                     },
                   )),
+        );
+      } else {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/images/customer/restaurants/noOpenRestaurants.png",
+              height: 50.h,
+              width: 80.w,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              '${_i18n()["noOpenRestaurant"]}',
+              style: Get.textTheme.bodyText1,
+            )
+          ],
         );
       }
     });
@@ -109,5 +129,16 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
           ),
           hintText: "${_i18n()["search"]}"),
     );
+  }
+
+  bool get noRestaurantIsOpen {
+    bool value = true;
+    for (final Restaurant element in viewController.filteredRestaurants) {
+      if (element.isOpen()) {
+        value = false;
+        break;
+      }
+    }
+    return value;
   }
 }

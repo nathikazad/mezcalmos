@@ -121,7 +121,8 @@
                         "restaurants": "Restaurants",
                         "search": "Search",
                         "showOnlyOpen": "Show only open restaurents",
-                        "emptRestaurantList": "Sorry no restaurant found."
+                        "emptRestaurantList": "Sorry no restaurant found.",
+                        "noOpenRestaurant": "No open restaurants founds"
                     }
                 },
                 "ViewCartScreen": {
