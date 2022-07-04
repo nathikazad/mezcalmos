@@ -13,30 +13,33 @@ class ROpCategoryItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          category.name![userLanguage]!,
-          style: Get.textTheme.bodyText1,
-        ),
-        if (category.dialog != null)
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            child: Text(
-              category.dialog![userLanguage]!,
-              style: Get.textTheme.bodyText2,
-            ),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            category.name![userLanguage]!,
+            style: Get.textTheme.bodyText1,
           ),
-        Column(
-          children: List.generate(
-              category.getItems.length,
-              (int index) => ROpItemCard(
-                    item: category.getItems[index],
-                    category: category,
-                  )),
-        )
-      ],
+          if (category.dialog != null)
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                category.dialog![userLanguage]!,
+                style: Get.textTheme.bodyText2,
+              ),
+            ),
+          Column(
+            children: List.generate(
+                category.getItems.length,
+                (int index) => ROpItemCard(
+                      item: category.getItems[index],
+                      category: category,
+                    )),
+          )
+        ],
+      ),
     );
   }
 }

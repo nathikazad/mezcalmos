@@ -84,9 +84,13 @@ class _ROpItemCardState extends State<ROpItemCard> {
             Row(
               children: [
                 Text("Category: "),
-                Text(
-                  widget.category?.name![userLanguage] ?? "None",
-                  style: Get.textTheme.bodyText1,
+                Flexible(
+                  flex: 6,
+                  fit: FlexFit.tight,
+                  child: Text(
+                    widget.category?.name![userLanguage] ?? "None",
+                    style: Get.textTheme.bodyText1,
+                  ),
                 ),
                 Spacer(),
                 Text("Item status"),

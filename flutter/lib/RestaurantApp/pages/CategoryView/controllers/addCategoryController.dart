@@ -70,10 +70,18 @@ class AddCategoryController {
   Future<void> saveCategory() async {
     final Category newCategory =
         Category(name: _contructName(), dialog: _contructDescription());
-    // ignore: unawaited_futures
-    restaurantInfoController
-        .addCategory(category: newCategory)
-        .then((value) => Get.back());
+
+    if (editMode.isFalse) {
+      // ignore: unawaited_futures
+      restaurantInfoController
+          .addCategory(category: newCategory)
+          .then((value) => Get.back());
+    } else {
+      // ignore: unawaited_futures
+      restaurantInfoController.EditCatgeory(
+              category: newCategory, categoryId: editableCategoryId!)
+          .then((value) => Get.back());
+    }
   }
 
   Map<LanguageType, String> _contructName() {

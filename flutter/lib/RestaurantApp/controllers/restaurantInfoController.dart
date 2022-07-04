@@ -158,6 +158,14 @@ class RestaurantInfoController extends GetxController {
     await categoryNode.set(category.toJson());
   }
 
+  Future<void> EditCatgeory(
+      {required Category category, required String categoryId}) async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(categoryNode(uid: restaurantId, categoryId: categoryId))
+        .set(category.toJson());
+  }
+
   Future<void> deleteCategory({required String categoryId}) async {
     // ignore: unawaited_futures
     _databaseHelper.firebaseDatabase

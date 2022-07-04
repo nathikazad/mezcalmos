@@ -143,16 +143,13 @@ class _ROpMenuViewState extends State<ROpMenuView>
 
   Widget _categoriesItemsList() {
     return Container(
+      alignment: Alignment.centerLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            children: List.generate(
-                restaurant.value!.getCategories.length,
-                (int index) => ROpCategoryItems(
-                    category: restaurant.value!.getCategories[index])),
-          ),
-        ],
+        children: List.generate(
+            restaurant.value!.getCategories.length,
+            (int index) => ROpCategoryItems(
+                category: restaurant.value!.getCategories[index])),
       ),
     );
   }

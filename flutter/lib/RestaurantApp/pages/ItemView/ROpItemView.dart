@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ItemCategorySelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ROpItemImage.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/RopItemOptionCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -13,6 +14,7 @@ import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 
 class ROpItemView extends StatefulWidget {
   const ROpItemView({Key? key}) : super(key: key);
@@ -139,6 +141,7 @@ class _ROpItemViewState extends State<ROpItemView>
                             }
                             return null;
                           },
+                          textAlignVertical: TextAlignVertical.center,
                           style: Get.textTheme.bodyText1,
                           decoration: InputDecoration(
                               prefixIconColor: primaryBlueColor,
@@ -180,12 +183,27 @@ class _ROpItemViewState extends State<ROpItemView>
                         const SizedBox(
                           height: 10,
                         ),
-                        _addOptionButton()
+                        Column(
+                          children: List.generate(
+                              viewController.itemOptions.length,
+                              (int index) => ROpItemOptionCard(
+                                  option: viewController.itemOptions[index])),
+                        ),
+                        MezAddButton(
+                          title: "Add option",
+                          onClick: () async {
+                            final Option? newOption =
+                                await Get.toNamed(kOptionView) as Option?;
+                            if (newOption != null) {
+                              mezDbgPrint(newOption.toJson());
+                              viewController.addOption(newOption);
+                            }
+                          },
+                        )
                       ],
                     ),
                   ),
 
-                  // specials view //
                   SingleChildScrollView(
                     padding: const EdgeInsets.all(8),
                     child: Column(
@@ -245,14 +263,7 @@ class _ROpItemViewState extends State<ROpItemView>
       color: Colors.grey.shade200,
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () async {
-          mezDbgPrint("Tapped");
-          final Option? newOption = await Get.toNamed(kOptionView) as Option?;
-          if (newOption != null) {
-            mezDbgPrint(newOption.toJson());
-            viewController.addOption(newOption);
-          }
-        },
+        onTap: () async {},
         child: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 5),
