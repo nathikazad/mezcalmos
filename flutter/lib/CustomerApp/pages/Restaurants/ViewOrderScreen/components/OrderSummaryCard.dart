@@ -38,7 +38,7 @@ class OrderSummaryCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(12),
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -93,7 +93,7 @@ class OrderSummaryCard extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 8),
                   child: Divider()),
               Container(
-                margin: EdgeInsets.all(3),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   '${_i18n()["deliveryLocation"]}',

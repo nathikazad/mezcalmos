@@ -29,6 +29,7 @@ class RestaurantCard extends StatelessWidget {
         Get.find<LanguageController>().userLanguageKey;
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
+      margin: EdgeInsets.only(bottom: 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: onClick,
@@ -64,7 +65,7 @@ class RestaurantCard extends StatelessWidget {
                       Container(
                         //  alignment: Alignment.bottomLeft,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Flexible(
                               flex: 1,
@@ -73,11 +74,9 @@ class RestaurantCard extends StatelessWidget {
                                     color: Colors.grey.shade800,
                                   )),
                             ),
-                            SizedBox(
-                              width: 5,
-                            ),
+                            Spacer(),
                             Flexible(
-                              flex: 4,
+                              flex: 6,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -97,6 +96,7 @@ class RestaurantCard extends StatelessWidget {
                                 ],
                               ),
                             ),
+                            Spacer(),
                             Flexible(
                               flex: 1,
                               child: Icon(

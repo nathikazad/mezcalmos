@@ -26,7 +26,7 @@ class OrderItemsCard extends StatelessWidget {
         ),
         Container(
           alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 8),
+          padding: const EdgeInsets.only(left: 3),
           child: Text(
             '${_i18n()["orderItems"]}',
             style: txt.bodyText1,

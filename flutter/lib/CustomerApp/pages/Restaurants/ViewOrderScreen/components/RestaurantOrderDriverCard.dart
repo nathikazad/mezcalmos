@@ -100,7 +100,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
     final String userLangCode =
         Get.find<LanguageController>().userLanguageKey.toLanguageCode();
     if (order.estimatedDropoffAtCustomerTime != null) {
-      return "${_i18n()["dropOffTime"]}: \n ${DateFormat.MMMd(userLangCode).format(order.estimatedDropoffAtCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
+      return "${_i18n()["dropOffTime"]}: \n ${DateFormat.MMMd(userLangCode).format(order.estimatedDropoffAtCustomerTime!.toLocal())}, ${DateFormat("hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
     } else {
       return null;
     }
