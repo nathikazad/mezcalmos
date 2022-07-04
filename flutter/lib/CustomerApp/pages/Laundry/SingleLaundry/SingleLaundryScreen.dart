@@ -168,7 +168,8 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   height: 5,
                 ),
                 Container(
-                    padding: const EdgeInsets.all(5),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(35),
                         color: SecondaryLightBlueColor),
