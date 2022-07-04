@@ -24,7 +24,7 @@ class MezServiceOpenHours extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 10,
+          height: 8,
         ),
         Container(
             child: Column(
@@ -33,7 +33,7 @@ class MezServiceOpenHours extends StatelessWidget {
                     .entries
                     .map((MapEntry<String, OpenHours> v) {
           return Container(
-            margin: const EdgeInsets.symmetric(vertical: 3),
+            margin: const EdgeInsets.only(bottom: 3),
             child: Row(
               children: [
                 Icon(

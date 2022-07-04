@@ -6,6 +6,9 @@ import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
@@ -25,6 +28,8 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
   LaundryController laundryController = Get.find<LaundryController>();
   String? laundryId;
   Rxn<Laundry> laundry = Rxn();
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
   @override
   void initState() {
     // TODO: implement initState
@@ -56,15 +61,32 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                 children: [
                   _laundryImage(),
                   SizedBox(
-                    height: 15,
+                    height: 20,
                   ),
                   _laundryInfoHeader(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "${_i18n()["categories"]}",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Column(
+                    children: List.generate(
+                        laundry.value!.laundryCosts.lineItems.length,
+                        (int index) => _laundryCostCard(
+                            item:
+                                laundry.value!.laundryCosts.lineItems[index])),
+                  ),
                   SizedBox(
                     height: 15,
                   ),
                   MezServiceOpenHours(schedule: laundry.value!.schedule!),
                   SizedBox(
-                    height: 25,
+                    height: 20,
                   ),
                   ServiceLocationCard(location: laundry.value!.info.location),
                 ],
@@ -75,6 +97,31 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
         } else
           return Container();
       },
+    );
+  }
+
+  Widget _laundryCostCard({required LaundryCostLineItem item}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 5),
+      child: Row(
+        children: [
+          Flexible(
+            flex: 1,
+            child: Text(
+              item.name[userLanguage]?.toString().inCaps ?? "",
+              style: Get.textTheme.bodyText2,
+              maxLines: 1,
+            ),
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          Text(
+            "${item.cost.toPriceString()}/KG",
+            style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+          )
+        ],
+      ),
     );
   }
 
@@ -105,7 +152,6 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
 
   Widget _laundryInfoHeader() {
     return Container(
-      padding: const EdgeInsets.all(5),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -121,21 +167,16 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                 SizedBox(
                   height: 5,
                 ),
-                Row(children: [
-                  Flexible(
-                    child: Container(
-                      child: Chip(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(35)),
-                          padding: const EdgeInsets.all(3),
-                          labelStyle: Get.textTheme.bodyText2?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: primaryBlueColor),
-                          label: Text(
-                              "${_i18n()["minimumCost"]} \$${laundry.value!.laundryCosts.minimumCost} ")),
-                    ),
-                  )
-                ]),
+                Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(35),
+                        color: SecondaryLightBlueColor),
+                    child: Text(
+                      "${_i18n()["minimumCost"]} \$${laundry.value!.laundryCosts.minimumCost} ",
+                      style: Get.textTheme.bodyText2?.copyWith(
+                          fontWeight: FontWeight.w700, color: primaryBlueColor),
+                    )),
               ],
             ),
           ),

@@ -1025,7 +1025,8 @@
                     "minimumCost": "Minimum Cost",
                     "description": "Description",
                     "openHours": "openHours",
-                    "sendMyLaundry": "Send my laundry"
+                    "sendMyLaundry": "Send my laundry",
+                    "categories": "Categories"
 
                 },
                 "laundryListView": {

@@ -493,7 +493,8 @@
                     "minimumCost": "Costo mínimo",
                     "description": "Descripción",
                     "openHours": "Horas Laborales",
-                    "sendMyLaundry": "Envía mi ropa"
+                    "sendMyLaundry": "Envía mi ropa",
+                    "categories": "Categorías"
 
                 },
                 "LaundriesListView": {
