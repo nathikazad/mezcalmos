@@ -271,10 +271,10 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   }
 
   Widget _getMapWidget() {
-    if (order.value!.getCurrentPhase() == LaundryOrderPhase.Dropoff &&
-            order.value!.status == LaundryOrderStatus.PickedUpFromLaundry ||
-        order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup &&
-            order.value!.status == LaundryOrderStatus.PickedUpFromCustomer)
+    if ((order.value!.getCurrentPhase() == LaundryOrderPhase.Dropoff &&
+            order.value!.status == LaundryOrderStatus.OtwPickupFromLaundry) ||
+        (order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup &&
+            order.value!.status == LaundryOrderStatus.PickedUpFromCustomer))
       return Container(
         // color: Colors.black,
         margin: const EdgeInsets.only(bottom: 20),
