@@ -48,9 +48,9 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
     order.value = controller.getOrder(orderId) as LaundryOrder;
     // first time init map
     //mGoogleMapController.animateMarkersPolyLinesBounds(true);
-  //  mGoogleMapController.recenterButtonEnabled.value = true;
+    mGoogleMapController.recenterButtonEnabled.value = true;
 
-   // mGoogleMapController.periodicRerendering.value = true;
+    // mGoogleMapController.periodicRerendering.value = true;
     if (order.value?.routeInformation?.polyline != null)
       mGoogleMapController.decodeAndAddPolyline(
         encodedPolylineString: order.value!.routeInformation!.polyline,
