@@ -218,7 +218,8 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
-                  Get.toNamed(getCategoryRoute(laundryId: laundryId!));
+                  Get.toNamed(getCategoryRoute(
+                      laundryId: laundryId!, categoryId: null));
                 },
                 child: Container(
                   child: Icon(

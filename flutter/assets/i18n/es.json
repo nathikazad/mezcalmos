@@ -1445,7 +1445,7 @@
                 "categoryPrice": "Categoría Precios por kilogramo",
                 "categoryPriceHint": "Entrar en la categoría Precios por kilogramo ...",
                 "categoryNameError": "Agregue un nombre de categoría",
-                "catgeoryPriceError": "Agregue un precio de categoría correcto"
+                "categoryPriceError": "Ingrese el precio válido"
 
             },
             "DashboardView": {

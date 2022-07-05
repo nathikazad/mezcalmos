@@ -41,12 +41,13 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              _getRightName() * 9,
+              _getRightName(),
               style: Get.textTheme.headline3?.copyWith(fontSize: 12.sp),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
@@ -74,10 +75,12 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                         color: Colors.grey.shade100, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.edit_outlined,
-                      size: 22,
-                      color: Color(0xFF5B5A5A),
+                    child: Center(
+                      child: Icon(
+                        Icons.edit_outlined,
+                        size: 22,
+                        color: Color(0xFF5B5A5A),
+                      ),
                     ),
                   ),
                 ),
@@ -100,15 +103,17 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                         color: Colors.red.shade100, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.delete_outline,
-                      size: 22,
-                      color: Colors.red,
+                    child: Center(
+                      child: Icon(
+                        Icons.delete_outline,
+                        size: 22,
+                        color: Colors.red,
+                      ),
                     ),
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

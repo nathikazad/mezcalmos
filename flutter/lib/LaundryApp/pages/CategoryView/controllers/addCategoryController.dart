@@ -48,7 +48,7 @@ class AddCategoryController {
     if (laundry.value != null) {
       initLanguages();
       assignCategories();
-      if (categoryId != null) {
+      if (categoryId != null && categoryId != ":categoryId") {
         initEditMode(categoryId);
       }
     }

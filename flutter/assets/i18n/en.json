@@ -1437,7 +1437,8 @@
                         "categoryNameIn": "Category name in ",
                         "categoryNameHint": "Enter a category name",
                         "categoryPrice": "Category pricing per kilogramme",
-                        "categoryPriceHint": "Enter category pricing per kilogramme..."
+                        "categoryPriceHint": "Enter category pricing per kilogramme...",
+                        "categoryPriceError": "Please enter valid price"
 
                     }
                 },
