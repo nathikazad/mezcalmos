@@ -62,10 +62,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     super.initState();
     // check if cart empty
     // if yes redirect to home page
-    _restaurantController.cart.value.cartItems.map((CartItem item) {
-      mezDbgPrint(
-          "+++ From ViewCartScreen ==> ${item.idInCart} <= notes => ${item.notes}");
-    });
+    _restaurantController.cart.value.cartItems.map((CartItem item) {});
   }
 
   @override
@@ -82,8 +79,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         title: "${_i18n()["myCart"]}",
       ),
       body: Obx(() {
-        mezDbgPrint(
-            "@sa@d@: ${_restaurantController.cart.value.cartItems.length}");
         if (_restaurantController.cart.value.cartItems.length > 0) {
           return SingleChildScrollView(
             child: ViewCartBody(
@@ -91,7 +86,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 setState(() {
                   orderToLocation = location;
                 });
-                mezDbgPrint(orderToLocation);
               },
               notesTextController: _textEditingController,
             ),
@@ -192,45 +186,46 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         _restaurantController.cart.value.toLocation = orderToLocation;
         _restaurantController.cart.value.notes = _textEditingController.text;
 
-        // get route info
-        final MapHelper.Route? _route = await MapHelper.getDurationAndDistance(
+        // ignore: unawaited_futures
+        MapHelper.getDurationAndDistance(
           _restaurantController.cart.value.restaurant!.info.location,
           orderToLocation!,
-        );
-
-        if (_route != null) {
-          _restaurantController.cart.value.routeInformation =
-              MapHelper.RouteInformation(
-            polyline: _route.encodedPolyLine,
-            distance: _route.distance,
-            duration: _route.duration,
-          );
-        }
-
-        final ServerResponse _serverResponse =
-            await _restaurantController.checkout();
-
-        if (_serverResponse.success) {
-          // await avoidCheckoutRaceCondition(response.data["orderId"]);
-          _restaurantController.clearCart();
-          popEverythingAndNavigateTo(
-              getRestaurantOrderRoute(_serverResponse.data["orderId"]));
-          //  _restaurantController.clearCart();
-        } else {
-          print(_serverResponse);
-          if (_serverResponse.errorCode == "serverError") {
-            // do something
-          } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
-            // do something
-          } else if (_serverResponse.errorCode == "restaurantClosed") {
-            // do something
-          } else {
-            // do something
+        ).then((MapHelper.Route? value) {
+          if (value != null) {
+            mezDbgPrint("Route info succesfully ===================> $value");
+            _restaurantController.cart.value.setRouteInformation =
+                MapHelper.RouteInformation(
+              polyline: value.encodedPolyLine,
+              distance: value.distance,
+              duration: value.duration,
+            );
           }
-        }
-
-        setState(() {
-          _clickedOrderNow = false;
+        }).catchError((e, stk) {
+          mezDbgPrint("ERROR GETTING ROUTE INFO =================>>> $e");
+        }).whenComplete(() async {
+          final ServerResponse _serverResponse =
+              await _restaurantController.checkout();
+          if (_serverResponse.success) {
+            // await avoidCheckoutRaceCondition(response.data["orderId"]);
+            _restaurantController.clearCart();
+            popEverythingAndNavigateTo(
+                getRestaurantOrderRoute(_serverResponse.data["orderId"]));
+            //  _restaurantController.clearCart();
+          } else {
+            print(_serverResponse);
+            if (_serverResponse.errorCode == "serverError") {
+              // do something
+            } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
+              // do something
+            } else if (_serverResponse.errorCode == "restaurantClosed") {
+              // do something
+            } else {
+              // do something
+            }
+          }
+          setState(() {
+            _clickedOrderNow = false;
+          });
         });
       }
     }
