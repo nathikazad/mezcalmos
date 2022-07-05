@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,9 +11,9 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
 import 'package:mezcalmos/Shared/widgets/MezSmartPointer.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
 
 class MGoogleMap extends StatefulWidget {
   final MapHelper.LocationChangesNotifier? notifyParentOfNewLocation;
@@ -142,6 +144,17 @@ class MGoogleMapState extends State<MGoogleMap> {
                 },
                 padding: widget.padding,
                 mapToolbarEnabled: false,
+                // gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+                //   new Factory<OneSequenceGestureRecognizer>(
+                //     () => new EagerGestureRecognizer(),
+                //   ),
+                // ].toSet(),
+                gestureRecognizers: Set()
+                  ..add(Factory<PanGestureRecognizer>(() {
+                    mezDbgPrint(
+                        "Pan gesture is enabled ==================> $PanGestureRecognizer()");
+                    return PanGestureRecognizer();
+                  })),
                 minMaxZoomPreference:
                     widget.mGoogleMapController.getMapMinMaxZommPrefs(),
                 onCameraMove: (CameraPosition camMove) {

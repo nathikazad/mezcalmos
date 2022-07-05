@@ -35,7 +35,7 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 
 class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   final MGoogleMapController mapController = MGoogleMapController(
-    enableMezSmartPointer: false,
+    enableMezSmartPointer: true,
   );
 
   /// order
@@ -226,14 +226,19 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         Container(
           height: 350,
           width: Get.width - 20,
-          child: MGoogleMap(mGoogleMapController: mapController),
+          child: MGoogleMap(
+            mGoogleMapController: mapController,
+            recenterBtnBottomPadding: 20,
+          ),
         ),
       ];
 
   void initMap() {
-    mapController.periodicRerendering.value = true;
-    mapController.recenterButtonEnabled.value = false;
-    mapController.setAnimateMarkersPolyLinesBounds(true);
+    // mapController.periodicRerendering.value = false;
+    // mapController.recenterButtonEnabled.value = true;
+    // mapController.setAnimateMarkersPolyLinesBounds(true);
+    mapController.lockInAutoZoomAnimation();
+
     mapController.setLocation(
       LocModel.Location(
         "",
