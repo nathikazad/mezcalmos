@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -67,7 +68,7 @@ class BackgroundNotificationsController extends GetxController {
     }
     // ignore: unawaited_futures, always_specify_types
     _messaging.getInitialMessage().then(
-          (message) =>
+          (RemoteMessage? message) =>
               message != null ? notificationClickHandler(message) : null,
         );
     onMessageOpenedAppListener =
@@ -80,23 +81,14 @@ class BackgroundNotificationsController extends GetxController {
   void notificationClickHandler(RemoteMessage message) {
     if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
     if (message.data['linkUrl'].toString().contains('/messages/')) {
-      if (Get.currentRoute == kWrapperRoute) {
-        Future<void>.delayed(Duration(milliseconds: 100), () {
-          Get.toNamed<void>(kHomeRoute);
-          Get.toNamed<void>(
-            message.data["linkUrl"],
-            arguments: <String, bool>{'showViewOrderBtn': true},
-          );
-        });
-      } else {
-        Future<void>.delayed(
-          Duration(milliseconds: 100),
-          () => Get.toNamed<void>(
-            message.data["linkUrl"],
-            arguments: <String, bool>{'showViewOrderBtn': true},
-          ),
+      Future<void>.delayed(Duration(milliseconds: 100), () {
+        Get.toNamed<void>(kHomeRoute);
+
+        Get.toNamed<void>(
+          message.data["linkUrl"],
+          arguments: <String, bool>{'showViewOrderBtn': true},
         );
-      }
+      });
     } else
       Future<void>.delayed(
         Duration(milliseconds: 100),
