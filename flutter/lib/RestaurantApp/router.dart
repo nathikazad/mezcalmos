@@ -20,7 +20,7 @@ const String kEditInfoView = '/editInfo';
 const String kCategoryView = '/categoryScreen';
 const String kEditCategoryScreen = '/categoryScreen/:categoryId';
 const String kItemView = '/itemView';
-const String kEditItemView = '/itemView/:itemId';
+const String kEditItemView = '/itemView/:itemId/:categoryId';
 const String kOrderView = '/dashboard/orderView/:orderId';
 const String kOptionView = "/optionView/:optionId";
 String getCategoryEditRoute(String categoryId) {
@@ -29,6 +29,15 @@ String getCategoryEditRoute(String categoryId) {
 
 String getLaundryOpOrderRoute(String orderId) {
   return kOrderView.replaceFirst(":orderId", orderId);
+}
+
+String getEditItemRoute({required String itemId, String? categoryId}) {
+  String route = kEditItemView.replaceFirst(":itemId", itemId);
+
+  if (categoryId != null) {
+    route = route.replaceFirst(":categoryId", categoryId);
+  }
+  return route;
 }
 
 // GetX based Router (For navigating)

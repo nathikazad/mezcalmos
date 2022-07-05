@@ -34,8 +34,6 @@ class RestaurantInfoController extends GetxController {
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .onValue
         .listen((DatabaseEvent event) {
-      mezDbgPrint(
-          "eveeeeeeennnnnnnnnnnnnnnnnnnnnnnnnnnnt ====> ${event.snapshot.value} ");
       if (event.snapshot.value != null) {
         restaurant.value = Restaurant.fromRestaurantData(
             restaurantId: restaurantId, restaurantData: event.snapshot.value);
@@ -127,6 +125,43 @@ class RestaurantInfoController extends GetxController {
     await newItemNode.set(item.toJson());
   }
 
+  Future<void> editItem(
+      {required Item item, required String itemId, String? categoryId}) async {
+    mezDbgPrint("Final item ===========================>>>>>${item.toJson()}");
+
+    // adding to new category
+    if (categoryId != null) {
+      await _databaseHelper.firebaseDatabase
+          .ref()
+          .child(itemNode(
+              uid: restaurantId, itemId: itemId, categoryId: categoryId))
+          .set(item.toJson());
+    }
+    // adding to noCatgeory
+    else {
+      await _databaseHelper.firebaseDatabase
+          .ref()
+          .child(itemNode(uid: restaurantId, itemId: itemId))
+          .set(item.toJson());
+    }
+  }
+
+  Future<void> deleteItem({required String itemId, String? categoryId}) async {
+    // ignore: unawaited_futures
+    if (categoryId != null) {
+      await _databaseHelper.firebaseDatabase
+          .ref()
+          .child(itemNode(
+              uid: restaurantId, categoryId: categoryId, itemId: itemId))
+          .remove();
+    } else {
+      await _databaseHelper.firebaseDatabase
+          .ref()
+          .child(itemNode(uid: restaurantId, itemId: itemId))
+          .remove();
+    }
+  }
+
   Future<void> switchItemAvailable(
       {required String itemId, required bool value, String? caytegoryId}) {
     mezDbgPrint(
@@ -155,7 +190,10 @@ class RestaurantInfoController extends GetxController {
         .child(menuNode(uid: restaurantId))
         .push();
 
-    await categoryNode.set(category.toJson());
+    await categoryNode.set(category.toJson()).catchError((e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    });
   }
 
   Future<void> EditCatgeory(

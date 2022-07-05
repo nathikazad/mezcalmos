@@ -132,6 +132,13 @@ class Restaurant extends Service {
         if (item.id == id) returnVal = item;
       });
     });
+    if (returnVal == null) {
+      getItemsWithoutCategory?.forEach((Item element) {
+        if (element.id == id) {
+          returnVal = element;
+        }
+      });
+    }
     return returnVal;
   }
 
@@ -246,16 +253,16 @@ class Item {
       this.available = false,
       this.description,
       this.image,
-      this.options = const <Option>[],
+      options,
       required this.name,
       required this.cost,
-      this.position = 0});
+      this.position = 0})
+      : options = options ?? [];
 
   factory Item.itemFromData(
     String itemId,
     itemData,
   ) {
-    mezDbgPrint(itemData);
     final Item item = Item(
         id: itemId,
         available: itemData["available"],
@@ -269,10 +276,13 @@ class Item {
         //itemData["name"].toLanguageMap(),
         cost: itemData["cost"]);
     // TODO: change to options
-    if (itemData["options2"] != null) {
-      itemData["options2"].forEach((optionId, optionData) {
-        item.options.add(Option.fromData(optionId, optionData));
-      });
+    if (itemData["options"] != null) {
+      mezDbgPrint("options Data ===================> ${itemData["options"]}");
+      for (int i = 0; i < itemData["options"].length; i++) {
+        mezDbgPrint("eeeeeee ===========> ${itemData["options"][i]}");
+        item.options.add(Option.fromData(i.toString(), itemData["options"][i]));
+      }
+
       item.sortOptions();
     }
     return item;
@@ -333,7 +343,7 @@ class Option {
   String id;
   OptionType optionType;
   Map<LanguageType, String> name;
-  List<Choice> choices = <Choice>[];
+  List<Choice> choices = [];
   int position = 0;
   num minimumChoice = 0;
   num freeChoice = 0;
@@ -349,19 +359,23 @@ class Option {
       {required this.id,
       required this.optionType,
       required this.name,
-      this.choices = const <Choice>[],
-      this.position = 0});
+      choices,
+      this.position = 0})
+      : choices = choices ?? [];
   factory Option.fromData(String id, data) {
     final Option option = Option(
         id: id,
         name: convertToLanguageMap(data["name"]),
         position: data["position"] ?? 0,
         optionType: data["optionType"].toString().toOptionType());
-
-    data["choices"].forEach((optionKey, optionData) {
-      final Choice choice = Choice.fromData(optionKey, optionData);
+    for (int i = 0; i < data["choices"].length; i++) {
+      final Choice choice = Choice.fromData(i.toString(), data["choices"][i]);
       option.choices.add(choice);
-    });
+    }
+    // data["choices"]?.forEach((optionKey, optionData) {
+    //   final Choice choice = Choice.fromData(optionKey, optionData);
+    //   option.choices.add(choice);
+    // });
     option.sortChoices();
     option.changeOptionType(
       option.optionType,

@@ -30,13 +30,17 @@ class _ROpItemViewState extends State<ROpItemView>
       Get.find<RestaurantInfoController>();
   StreamSubscription? _restaurantListener;
   late TabController _tabController;
+  String? itemId;
+  String? categoryId;
   ItemViewController viewController = ItemViewController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
+    itemId = Get.parameters["itemId"];
+    categoryId = Get.parameters["categoryId"];
     _tabController = TabController(length: 2, vsync: this);
-    viewController.init();
+    viewController.init(itemId: itemId, categoryId: categoryId);
     restaurant.value = _restaurantInfoController.restaurant.value;
     _restaurantListener =
         _restaurantInfoController.restaurant.stream.listen((Restaurant? event) {
@@ -72,20 +76,22 @@ class _ROpItemViewState extends State<ROpItemView>
               text: "${restaurant.value!.secondaryLanguage!.toLanguageName()}",
             ),
           ])),
-      bottomNavigationBar: CallToActionButton(
-        height: 65,
-        text: "Add item",
-        onTap: () {
-          if (viewController.isSecondLangValid) {
-            _tabController.index = _tabController.length - 2;
-            if (_formKey.currentState!.validate()) {
-              viewController.addItemToDb();
+      bottomNavigationBar: Obx(
+        () => CallToActionButton(
+          height: 65,
+          text: (viewController.editMode.isTrue) ? "Save item" : "Add item",
+          onTap: () {
+            if (viewController.isSecondLangValid) {
+              _tabController.index = _tabController.length - 2;
+              if (_formKey.currentState!.validate()) {
+                viewController.saveItem();
+              }
+            } else {
+              _tabController.index = _tabController.length - 1;
+              _formKey.currentState!.validate();
             }
-          } else {
-            _tabController.index = _tabController.length - 1;
-            _formKey.currentState!.validate();
-          }
-        },
+          },
+        ),
       ),
       body: Obx(
         () {
