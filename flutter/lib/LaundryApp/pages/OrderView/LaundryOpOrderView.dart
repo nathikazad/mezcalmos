@@ -35,7 +35,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
   OrderController controller = Get.find<OrderController>();
   final MGoogleMapController mGoogleMapController = MGoogleMapController(
-    enableMezSmartPointer: false,
+    enableMezSmartPointer: true,
   );
   StreamSubscription? _orderListener;
 
@@ -47,10 +47,10 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as LaundryOrder;
     // first time init map
-    mGoogleMapController.animateMarkersPolyLinesBounds(true);
+    //mGoogleMapController.animateMarkersPolyLinesBounds(true);
     mGoogleMapController.recenterButtonEnabled.value = true;
 
-    mGoogleMapController.periodicRerendering.value = true;
+   // mGoogleMapController.periodicRerendering.value = true;
     if (order.value?.routeInformation?.polyline != null)
       mGoogleMapController.decodeAndAddPolyline(
         encodedPolylineString: order.value!.routeInformation!.polyline,
