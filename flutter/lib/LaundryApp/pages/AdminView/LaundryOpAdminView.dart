@@ -203,7 +203,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
       mainAxisSpacing: 5,
       crossAxisSpacing: 5,
       childAspectRatio: MediaQuery.of(context).size.width /
-          (MediaQuery.of(context).size.height / 1.3),
+          (MediaQuery.of(context).size.height / 1.4),
       padding: EdgeInsets.zero,
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
