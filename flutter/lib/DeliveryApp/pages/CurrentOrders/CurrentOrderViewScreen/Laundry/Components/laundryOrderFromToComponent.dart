@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
@@ -143,7 +144,7 @@ class _LaundryOrderFromToComponentState
 
     return widget.order.status == LaundryOrderStatus.AtLaundry
         ? (widget.order.estimatedLaundryReadyTime != null
-            ? "Estimated ready time: ${_getFormattedTime(widget.order.estimatedLaundryReadyTime!)}"
+            ? "Estimated ready time: ${widget.order.estimatedLaundryReadyTime!.getEstimatedTime()}"
             : null)
         : null;
   }
