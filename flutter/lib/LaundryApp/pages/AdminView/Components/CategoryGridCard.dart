@@ -4,6 +4,7 @@ import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:sizer/sizer.dart';
@@ -41,20 +42,15 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
     return Card(
       child: Container(
         padding: const EdgeInsets.all(8),
-        child: Flex(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          direction: Axis.vertical,
           children: [
-            Flexible(
-              flex: 6,
-              fit: FlexFit.tight,
-              child: Text(
-                _getRightName(),
-                style: Get.textTheme.headline3?.copyWith(fontSize: 12.sp),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
-              ),
+            Text(
+              _getRightName() * 9,
+              style: Get.textTheme.headline3?.copyWith(fontSize: 12.sp),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
             ),
             SizedBox(
               height: 5,
@@ -69,6 +65,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                 InkWell(
                   customBorder: CircleBorder(),
                   onTap: () {
+                    mezDbgPrint(widget.item.id);
                     Get.toNamed(getCategoryRoute(
                         laundryId: widget.laundry.info.id,
                         categoryId: widget.item.id));
