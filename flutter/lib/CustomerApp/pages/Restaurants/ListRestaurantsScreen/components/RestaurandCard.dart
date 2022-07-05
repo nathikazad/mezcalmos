@@ -68,7 +68,7 @@ class RestaurantCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Flexible(
-                              flex: 3,
+                              flex: 2,
                               fit: FlexFit.tight,
                               child: Text(_getDollarsSign(),
                                   style: txt.bodyText1?.copyWith(
@@ -76,17 +76,14 @@ class RestaurantCard extends StatelessWidget {
                                   )),
                             ),
                             Flexible(
-                              flex: 8,
+                              flex: 7,
                               fit: FlexFit.tight,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Flexible(
-                                    flex: 3,
-                                    child: Icon(
-                                      Icons.delivery_dining,
-                                      color: Colors.grey.shade800,
-                                    ),
+                                  Icon(
+                                    Icons.delivery_dining,
+                                    color: Colors.grey.shade800,
                                   ),
                                   Flexible(
                                     flex: 5,
