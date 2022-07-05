@@ -43,7 +43,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.max,
           children: [
             Text(
@@ -51,15 +51,9 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
               style: Get.textTheme.headline3?.copyWith(fontSize: 12.sp),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            ),
-            SizedBox(
-              height: 5,
+              maxLines: 3,
             ),
             Text("\$${widget.item.cost}/Kg"),
-            SizedBox(
-              height: 5,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
