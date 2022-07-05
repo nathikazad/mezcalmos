@@ -248,12 +248,13 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
             fitWithinBounds: false,
           );
         }
-        mapController.addOrUpdateUserMarker(
-          latLng: order.value!.dropoffDriver!.location!,
-          markerId: order.value!.dropoffDriver!.id,
-          customImgHttpUrl: order.value!.dropoffDriver!.image,
-          fitWithinBounds: true,
-        );
+        if (order.value!.dropoffDriver?.location != null)
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value!.dropoffDriver!.location!,
+            markerId: order.value!.dropoffDriver!.id,
+            customImgHttpUrl: order.value!.dropoffDriver!.image,
+            fitWithinBounds: true,
+          );
         mapController.animateAndUpdateBounds(shouldFitPolylineInBound: false);
         break;
 
@@ -275,12 +276,13 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         }
 
         // we keep updating the delivery's
-        mapController.addOrUpdateUserMarker(
-          latLng: order.value!.dropoffDriver!.location!,
-          markerId: order.value!.dropoffDriver!.id,
-          customImgHttpUrl: order.value!.dropoffDriver!.image,
-          fitWithinBounds: true,
-        );
+        if (order.value!.dropoffDriver?.location != null)
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value!.dropoffDriver!.location!,
+            markerId: order.value!.dropoffDriver!.id,
+            customImgHttpUrl: order.value!.dropoffDriver!.image,
+            fitWithinBounds: true,
+          );
         mapController.animateAndUpdateBounds();
         break;
       default:

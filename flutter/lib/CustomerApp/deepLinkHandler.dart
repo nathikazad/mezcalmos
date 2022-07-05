@@ -76,6 +76,16 @@ class DeepLinkHandler {
           );
         }
         break;
+      case CustomerDeepLinkType.Laundry:
+        mezDbgPrint("@deepLink@ ===> handling laundry routing ! ");
+        Future<void>.delayed(
+          Duration.zero,
+          () => Get.toNamed<void>(
+            getLaundyOrderRoute(providerId),
+          ),
+        );
+        
+        break;
       default:
         mezDbgPrint("@deepLink@ ===> handling unknown default type");
 
