@@ -283,6 +283,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
         child: MGoogleMap(
           mGoogleMapController: mGoogleMapController,
           rerenderDuration: Duration(seconds: 30),
+          recenterBtnBottomPadding: 20,
         ),
       );
     else
