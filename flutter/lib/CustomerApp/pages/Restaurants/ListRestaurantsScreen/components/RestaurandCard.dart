@@ -65,29 +65,31 @@ class RestaurantCard extends StatelessWidget {
                       Container(
                         //  alignment: Alignment.bottomLeft,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Flexible(
-                              flex: 1,
+                              flex: 3,
+                              fit: FlexFit.tight,
                               child: Text(_getDollarsSign(),
                                   style: txt.bodyText1?.copyWith(
                                     color: Colors.grey.shade800,
                                   )),
                             ),
-                            Spacer(),
                             Flexible(
-                              flex: 6,
+                              flex: 8,
+                              fit: FlexFit.tight,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Icon(
-                                    Icons.delivery_dining,
-                                    color: Colors.grey.shade800,
-                                  ),
-                                  SizedBox(
-                                    width: 2,
+                                  Flexible(
+                                    flex: 3,
+                                    child: Icon(
+                                      Icons.delivery_dining,
+                                      color: Colors.grey.shade800,
+                                    ),
                                   ),
                                   Flexible(
+                                    flex: 5,
                                     child: ShippingCostComponent(
                                       shippingCost: shippingPrice,
                                       alignment: MainAxisAlignment.start,
@@ -96,7 +98,6 @@ class RestaurantCard extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Spacer(),
                             Flexible(
                               flex: 1,
                               child: Icon(

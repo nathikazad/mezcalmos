@@ -144,7 +144,7 @@ class _LaundryOrderFromToComponentState
 
     return widget.order.status == LaundryOrderStatus.AtLaundry
         ? (widget.order.estimatedLaundryReadyTime != null
-            ? "Estimated ready time: ${widget.order.estimatedLaundryReadyTime!.getEstimatedTime()}"
+            ? "Estimated ready time:\n${widget.order.estimatedLaundryReadyTime!.getEstimatedTime()}"
             : null)
         : null;
   }
