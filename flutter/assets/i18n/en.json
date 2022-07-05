@@ -429,7 +429,7 @@
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Order Delivered",
-                            "canceled": "Order Cancelled",
+                            "canceled": "Cancelled",
                             "otwToCustomer": "On the way to customer",
                             "otwToLaundry": "On the way to laundry",
                             "pickedUpFromCustomer": "On the way to laundry",

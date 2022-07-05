@@ -434,7 +434,7 @@
                             "readyForDelivery": "Listo para la entrega",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden Entregado",
-                            "canceled": "Orden Cancelada",
+                            "canceled": "Cancelada",
                             "otwToCustomer": "De camino al cliente",
                             "otwToLaundry": "De camino a la lavandería",
                             "pickedUpFromCustomer": "De camino a la lavandería",
