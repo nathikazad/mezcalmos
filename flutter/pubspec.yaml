@@ -95,6 +95,10 @@ dependencies:
   flutter_facebook_auth: ^4.3.4+2
   # in_app_review: ^2.0.4
 
+  # webApp plugins
+  webfeed: ^0.7.0
+  flutter_html: ^2.2.1
+
 
 
 dev_dependencies:

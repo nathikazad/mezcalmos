@@ -5,12 +5,16 @@ import 'package:mezcalmos/WebApp/bindings/initialBinding.dart';
 import 'package:mezcalmos/WebApp/views/HomeView/index.dart';
 import 'package:mezcalmos/WebApp/views/ViewItemScreen/ViewItemScreen.dart'
     as test;
+import 'package:mezcalmos/WebApp/views/blogDetails/blogDetails.dart';
+import 'package:mezcalmos/WebApp/views/blogsView/blogsView.dart';
 import 'package:mezcalmos/WebApp/views/wrapper.dart' as web;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 const String restaurantByID = "/restaurant";
 const String restaurantView = "/:id";
 const String showRestaurantInfo = "/:itemId";
+const String blogsView = "/blogs";
+const String blogDetails = "/blog";
 //const String INITIAL = "/";
 
 class AppRoutes {
@@ -20,6 +24,8 @@ class AppRoutes {
       page: () => IndexPage(),
       binding: InitialBinding(dotenv.env['LMODE'].toString().toLaunchMode()),
       children: [
+        GetPage(name: blogsView, page: () => BlogsView()),
+        GetPage(name: blogDetails, page: () => BlogDetails()),
         GetPage(name: restaurantByID, page: () => web.Wrapper(), children: [
           GetPage(
               name: restaurantView,

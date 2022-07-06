@@ -13,6 +13,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/WebApp/controllers/blogController.dart';
 import 'package:mezcalmos/WebApp/routes/AppRoutes.dart';
 import 'package:mezcalmos/WebApp/views/ErrorViews/unknownRoutePage.dart';
 import 'package:sizer/sizer.dart';
@@ -130,7 +131,7 @@ Future<bool> setupFirebase(AppLaunchMode _launchMode) async {
       permanent: true);
   putControllers();
   return Future.delayed(Duration(
-    seconds: 5,
+    seconds: 2,
   )).then((value) => true);
 }
 
@@ -146,6 +147,10 @@ Future<void> putControllers() async {
   );
   Get.put<AppLifeCycleController>(
     AppLifeCycleController(logs: true),
+    permanent: true,
+  );
+  Get.put<BolgController>(
+    BolgController(),
     permanent: true,
   );
 }

@@ -22,7 +22,6 @@ class _IndexPageState extends State<IndexPage> {
   final scrollDirection = Axis.vertical;
 
   late AutoScrollController controller;
-  late List<Widget> randomList;
   //late LanguageController langController;
 
   @override

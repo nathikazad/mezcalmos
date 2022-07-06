@@ -27,7 +27,8 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
           width: Get.width,
           child: Column(
             children: [
-              MezCalmosResizer.isMobile(context)
+              (MezCalmosResizer.isMobile(context) ||
+                      MezCalmosResizer.isSmallMobile(context))
                   //for mobile
                   ? BuildWidgetForMobile(context)
                   :
@@ -56,7 +57,7 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: getSpaceSize(context) / 2,
+            height: 5,
           ),
           Container(
             width: Get.width,
@@ -100,19 +101,17 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: getSpaceSize(context) / 3,
+            height: 10,
           ),
           BuildDivider(),
-          SizedBox(
-            height: getSpaceSize(context) / 3,
-          ),
+          SizedBox(height: 10),
           BuildSocailMedaiIcons(context),
           SizedBox(
-            height: getSpaceSize(context) / 2,
+            height: 5,
           ),
           BuidCopyRightText(context),
           SizedBox(
-            height: getSpaceSize(context) / 3,
+            height: 5,
           ),
           BuildPrivacyAndPolicyText(context)
         ],
@@ -287,7 +286,7 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
     } else {
-      return 0;
+      return 15;
     }
   }
 
@@ -299,7 +298,7 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 11.sp;
     } else {
-      return 0;
+      return 11.sp;
     }
   }
 
@@ -311,7 +310,7 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 7.sp;
     } else {
-      return 0;
+      return 7.sp;
     }
   }
 }
@@ -324,23 +323,31 @@ class FotterBottonsComponents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
+    return InkWell(
+      onTap: () {
         func();
       },
       child: Text(
         text,
         style: TextStyle(color: Colors.white),
       ),
-      style: ButtonStyle(
-        textStyle: MaterialStateProperty.resolveWith((states) {
-          return TextStyle(
-              fontFamily: "Montserrat",
-              fontSize: getSizeForText(context),
-              fontWeight: FontWeight.w600,
-              color: Colors.white);
-        }),
-      ),
+      // style: ButtonStyle(
+      //   padding: MaterialStateProperty.resolveWith(
+      //     (states) {
+      //       if (MezCalmosResizer.isSmallMobile(context)) {
+      //         return EdgeInsets.only(left: 0, right: 0);
+      //       } else
+      //         return EdgeInsets.all(8);
+      //     },
+      //   ),
+      //   textStyle: MaterialStateProperty.resolveWith((states) {
+      //     return TextStyle(
+      //         fontFamily: "Montserrat",
+      //         fontSize: getSizeForText(context),
+      //         fontWeight: FontWeight.w600,
+      //         color: Colors.white);
+      //   }),
+      // ),
     );
   }
 
@@ -352,7 +359,7 @@ class FotterBottonsComponents extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 7.sp;
     } else {
-      return 0;
+      return 6;
     }
   }
 }
