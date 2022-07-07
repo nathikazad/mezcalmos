@@ -21,7 +21,7 @@ export function addServiceProviderOperatorsToChat(orderId: string, order: Order,
   switch (order.orderType) {
     case OrderType.Laundry:
       laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
-        let laundryOperators: Record<string, boolean> = snapshot.val();
+        let laundryOperators: Record<string, boolean> = snapshot.val() || {};
         addParticipantsToChat(Object.keys(laundryOperators), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.LaundryOperator)
       })
       break;
