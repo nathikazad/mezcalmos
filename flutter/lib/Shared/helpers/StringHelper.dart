@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 
 extension CapExtension on String {
   String get inCaps =>
@@ -32,6 +34,7 @@ extension TwoLettersGenerator on String {
   }
 }
 
+LanguageType userLanguage = Get.find<LanguageController>().userLanguageKey;
 String getRandomString(int length) {
   const String _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';

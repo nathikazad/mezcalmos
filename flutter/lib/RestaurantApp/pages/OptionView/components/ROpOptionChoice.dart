@@ -68,10 +68,9 @@ class ROpOptionChoice extends StatelessWidget {
                         hintStyle: Get.textTheme.bodyText2),
                   ),
                 )),
-          // IconButton(onPressed: () {}, icon: Icon(Icons.delete))
           if (isSecondary == false)
-            Padding(
-              padding: const EdgeInsets.only(left: 5),
+            Container(
+              margin: const EdgeInsets.all(8),
               child: InkWell(
                 onTap: () {
                   viewController

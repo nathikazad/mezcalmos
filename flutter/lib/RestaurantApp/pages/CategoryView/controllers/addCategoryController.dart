@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -68,23 +67,21 @@ class AddCategoryController {
     }
   }
 
-  Future<void> saveCategory() async {
+  Category constructCategory() {
     final Category newCategory =
         Category(name: _contructName(), dialog: _contructDescription());
-    mezDbgPrint("Adding =================>");
-    mezDbgPrint(editMode.value);
-    mezDbgPrint(editableCategoryId);
+    return newCategory;
+  }
 
+  Future<void> saveCategory() async {
     if (editMode.value == true) {
       await restaurantInfoController.EditCatgeory(
-              category: newCategory, categoryId: editableCategoryId!)
+              category: constructCategory(), categoryId: editableCategoryId!)
           .then((value) => Get.back());
     } else {
-      await restaurantInfoController
-          .addCategory(
-            category: newCategory,
-          )
-          .then((value) => Get.back());
+      await restaurantInfoController.addCategory(
+        category: constructCategory(),
+      );
     }
   }
 

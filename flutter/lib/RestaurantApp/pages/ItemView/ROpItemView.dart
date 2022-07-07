@@ -84,6 +84,7 @@ class _ROpItemViewState extends State<ROpItemView>
             if (viewController.isSecondLangValid) {
               _tabController.index = _tabController.length - 2;
               if (_formKey.currentState!.validate()) {
+                mezDbgPrint("Calling save");
                 viewController.saveItem();
               }
             } else {
@@ -193,6 +194,8 @@ class _ROpItemViewState extends State<ROpItemView>
                           children: List.generate(
                               viewController.itemOptions.length,
                               (int index) => ROpItemOptionCard(
+                                  viewController: viewController,
+                                  itemId: itemId,
                                   option: viewController.itemOptions[index])),
                         ),
                         MezAddButton(
@@ -201,8 +204,9 @@ class _ROpItemViewState extends State<ROpItemView>
                             final Option? newOption =
                                 await Get.toNamed(kOptionView) as Option?;
                             if (newOption != null) {
-                              mezDbgPrint(newOption.toJson());
-                              viewController.addOption(newOption);
+                              mezDbgPrint(
+                                  "From item view ===> ${newOption.toJson()}");
+                              // viewController.addOption(newOption);
                             }
                           },
                         )
@@ -259,26 +263,6 @@ class _ROpItemViewState extends State<ROpItemView>
             return CircularProgressIndicator();
           }
         },
-      ),
-    );
-  }
-
-  Widget _addOptionButton() {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      color: Colors.grey.shade200,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        onTap: () async {},
-        child: Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 5),
-          child: Icon(
-            Icons.add_circle_outline_outlined,
-            color: primaryBlueColor,
-            size: 25,
-          ),
-        ),
       ),
     );
   }

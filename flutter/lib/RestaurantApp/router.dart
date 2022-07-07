@@ -22,7 +22,7 @@ const String kEditCategoryScreen = '/categoryScreen/:categoryId';
 const String kItemView = '/itemView';
 const String kEditItemView = '/itemView/:itemId/:categoryId';
 const String kOrderView = '/dashboard/orderView/:orderId';
-const String kOptionView = "/optionView/:optionId";
+const String kOptionView = "/optionView/:itemId/:optionId";
 String getCategoryEditRoute(String categoryId) {
   return kEditCategoryScreen.replaceFirst(":categoryId", categoryId);
 }
@@ -37,6 +37,12 @@ String getEditItemRoute({required String itemId, String? categoryId}) {
   if (categoryId != null) {
     route = route.replaceFirst(":categoryId", categoryId);
   }
+  return route;
+}
+
+String getEditOptionRoute({required String optiondId, required String itemId}) {
+  String route = kOptionView.replaceFirst(":itemId", itemId);
+  route = route.replaceFirst(":optionId", optiondId);
   return route;
 }
 

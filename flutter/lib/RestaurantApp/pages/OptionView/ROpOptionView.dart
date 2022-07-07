@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/components/ROpOptionChoice.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/components/ROpOptionTypeSelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/controllers/ROpOptionViewController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
@@ -22,11 +22,15 @@ class _ROpOptionViewState extends State<ROpOptionView>
   late TabController _tabController;
   ROpOptionViewController _viewController = ROpOptionViewController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String? itemId;
+  String? optionId;
 
   @override
   void initState() {
+    optionId = Get.parameters["optionId"];
+    itemId = Get.parameters["itemId"];
     _tabController = TabController(length: 2, vsync: this);
-    _viewController.init();
+    _viewController.init(optionId: optionId, itemId: itemId);
     super.initState();
   }
 
@@ -44,12 +48,12 @@ class _ROpOptionViewState extends State<ROpOptionView>
         height: 65,
         onTap: () {
           if (_formKey.currentState!.validate()) {
-            _viewController.contructOption();
-            mezDbgPrint(_viewController.contructOption());
-            Get.back(result: _viewController.contructOption());
+            _viewController.addOption();
+
+            Get.back(result: _viewController.addOption());
           } else {}
         },
-        text: "Add option",
+        text: (_viewController.editMode.isTrue) ? "Edit option" : "Add option",
       ),
       body: Form(
         key: _formKey,
@@ -85,12 +89,9 @@ class _ROpOptionViewState extends State<ROpOptionView>
                   SizedBox(
                     height: 8,
                   ),
-                  Obx(() => ROpOptionSelector(
-                        value: _viewController.optionType.value,
-                        ontap: (OptionType newOp) {
-                          _viewController.switchOptionType(newOp);
-                        },
-                      )),
+                  ROpOptionSelector(
+                    viewController: _viewController,
+                  ),
                   Obx(() {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +123,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
                         })
                       ],
                     );
-                  })
+                  }),
+                  _deleteOptionBtn()
                 ],
               ),
             ),
@@ -184,10 +186,41 @@ class _ROpOptionViewState extends State<ROpOptionView>
     );
   }
 
+  Widget _deleteOptionBtn() {
+    return Obx(() {
+      return Container(
+          margin: const EdgeInsets.symmetric(vertical: 20),
+          child: (_viewController.editMode.value)
+              ? TextButton(
+                  style: TextButton.styleFrom(
+                      backgroundColor: offRedColor, primary: Colors.redAccent),
+                  onPressed: () {},
+                  child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.delete_outline_rounded,
+                            color: Colors.red,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Delete option"),
+                        ],
+                      )))
+              : null);
+    });
+  }
+
   AppBar _appBar() {
     return mezcalmosAppBar(AppBarLeftButtonType.Back,
         onClick: Get.back,
-        title: "Add option",
+        title: (_viewController.editMode.isTrue)
+            ? _viewController.editableOption.value!.name[userLanguage]
+            : "Add option",
         tabBar: TabBar(controller: _tabController, tabs: [
           Tab(
             text:

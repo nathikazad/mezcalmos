@@ -88,7 +88,7 @@ class Restaurant extends Service {
         restaurantsView: restaurantsView,
         primaryLanguage: primaryLanguage,
         secondaryLanguage: secondaryLanguage);
-    restaurantData["menu2"].forEach((categoryId, categoryData) {
+    restaurantData["menu2"]?.forEach((categoryId, categoryData) {
       restaurant._categories.add(Category.fromData(categoryId, categoryData));
     });
     restaurant._categories
@@ -230,6 +230,29 @@ class Category {
       'items': items.map((Item x) => x.toJson()).toList(),
     };
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    final bool Function(dynamic e1, dynamic e2) listEquals =
+        const DeepCollectionEquality().equals;
+
+    return other is Category &&
+        other.name == name &&
+        other.id == id &&
+        other.dialog == dialog &&
+        other.position == position &&
+        listEquals(other.items, items);
+  }
+
+  @override
+  int get hashCode {
+    return name.hashCode ^
+        id.hashCode ^
+        dialog.hashCode ^
+        position.hashCode ^
+        items.hashCode;
+  }
 }
 
 class Item {
@@ -240,7 +263,7 @@ class Item {
   String? image;
   Map<LanguageType, String> name;
   num cost = 0;
-  List<Option> options = <Option>[];
+  List<Option> options;
 
   List<Option> get getOptions {
     sortOptions();
@@ -253,11 +276,11 @@ class Item {
       this.available = false,
       this.description,
       this.image,
-      options,
+      List<Option>? newOptions,
       required this.name,
       required this.cost,
       this.position = 0})
-      : options = options ?? [];
+      : options = newOptions ?? <Option>[];
 
   factory Item.itemFromData(
     String itemId,
@@ -343,7 +366,7 @@ class Option {
   String id;
   OptionType optionType;
   Map<LanguageType, String> name;
-  List<Choice> choices = [];
+  List<Choice> choices;
   int position = 0;
   num minimumChoice = 0;
   num freeChoice = 0;
@@ -359,9 +382,13 @@ class Option {
       {required this.id,
       required this.optionType,
       required this.name,
-      choices,
+      this.costPerExtra = 0,
+      this.freeChoice = 0,
+      this.maximumChoice = 0,
+      this.minimumChoice = 0,
+      List<Choice>? newChoices,
       this.position = 0})
-      : choices = choices ?? [];
+      : choices = newChoices ?? <Choice>[];
   factory Option.fromData(String id, data) {
     final Option option = Option(
         id: id,
@@ -434,6 +461,10 @@ class Option {
       "name": name.toFirebaseFormat(),
       "optionType": optionType.toFirebaseFormatString(),
       "choices": choices.map((Choice x) => x.toJson()).toList(),
+      "minimumChoice": minimumChoice,
+      "maximumChoice": maximumChoice,
+      "costPerExtra": costPerExtra,
+      "freeChoice": freeChoice,
     };
   }
 }
