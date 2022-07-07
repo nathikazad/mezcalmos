@@ -158,9 +158,11 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                             Spacer(),
                             Flexible(
                               child: Container(
-                                  alignment: Alignment.center,
-                                  child: LaundryOrderFooterCard(
-                                      order: order.value!)),
+                                alignment: Alignment.center,
+                                child: LaundryOrderFooterCard(
+                                  order: order.value!,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -171,7 +173,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
               },
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
         },
       ),

@@ -109,7 +109,7 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
-        initilializeMap(mapController, order, order.value!.laundry!);
+        initilizeMap(mapController, order, order.value!.laundry!);
       }
     });
   }
