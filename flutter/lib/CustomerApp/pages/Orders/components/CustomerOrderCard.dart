@@ -31,7 +31,7 @@ class CustomerOrderCard extends StatelessWidget {
           primaryBodyContent: _getRightBody(),
           cardTitle: _getServiceProvider()?.name ?? "",
           cardStatus: _getOrderStatus(),
-          cardTime: Text(order.orderTime.getOrderTime().inCaps),
+          cardTime: Text(order.orderTime.getOrderTime().inCaps,maxLines: 1,),
           rightImage: _rightImage()),
     );
   }

@@ -175,6 +175,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                         color: SecondaryLightBlueColor),
                     child: Text(
                       "${_i18n()["minimumCost"]} \$${laundry.value!.laundryCosts.minimumCost} ",
+                      maxLines: 1,
                       style: Get.textTheme.bodyText2?.copyWith(
                           fontWeight: FontWeight.w700, color: primaryBlueColor),
                     )),

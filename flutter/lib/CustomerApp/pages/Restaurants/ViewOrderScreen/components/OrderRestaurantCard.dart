@@ -56,10 +56,12 @@ class OrderRestaurantCard extends StatelessWidget {
                               width: 5,
                             ),
                             Flexible(
+                              flex: 8,
+                              fit: FlexFit.tight,
                               child: Text(
                                 order.restaurant.location.address,
                                 style: Get.textTheme.bodyText2,
-                                overflow: TextOverflow.ellipsis,
+                                overflow: TextOverflow.visible,
                                 maxLines: 1,
                               ),
                             ),
@@ -67,7 +69,6 @@ class OrderRestaurantCard extends StatelessWidget {
                         ),
                       ],
                     )),
-                Spacer(),
                 Obx(
                   () => MessageButton(
                       showRedDot: Get.find<OrderController>()

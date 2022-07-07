@@ -66,10 +66,10 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   height: 7,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Flexible(
-                      flex: 4,
+                      flex: 5,
                       fit: FlexFit.loose,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -78,9 +78,6 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           Icon(
                             Icons.delivery_dining,
                             color: Colors.grey.shade800,
-                          ),
-                          SizedBox(
-                            width: 2,
                           ),
                           Flexible(
                             child: ShippingCostComponent(
@@ -91,9 +88,8 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                     ),
-
                     Flexible(
-                      flex: 2,
+                      flex: 4,
                       fit: FlexFit.loose,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,21 +99,15 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             size: 18,
                             color: Colors.grey.shade800,
                           ),
-                          SizedBox(
-                            width: 3,
-                          ),
                           Flexible(
                               child: Text(
-                                  '${laundry.averageNumberOfDays} ${_i18n()["days"]}',
+                                  ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}',
                                   style: Get.textTheme.bodyText2)),
                         ],
                       ),
                     ),
-                    // SizedBox(
-                    //   width: 5,
-                    // ),
                     Flexible(
-                      flex: 2,
+                      flex: 4,
                       fit: FlexFit.loose,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -126,9 +116,6 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             Icons.north_east_sharp,
                             size: 18,
                             color: Colors.grey.shade800,
-                          ),
-                          SizedBox(
-                            width: 3,
                           ),
                           Flexible(
                               child: Text(

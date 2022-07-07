@@ -79,7 +79,7 @@ class OrderInfosCard extends StatelessWidget {
                 ),
 
                 Flexible(
-                  flex: 2,
+                  flex: 3,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,

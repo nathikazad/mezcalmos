@@ -377,41 +377,38 @@ class SendMessageBox extends StatelessWidget {
               ),
             ),
             SizedBox(width: 10),
-            Flexible(
-              child: InkWell(
-                onTap: () {
-                  final bool msgReady2Send =
-                      _textEditingController.text.replaceAll(' ', '').length >
-                          0;
-                  if (msgReady2Send) {
-                    controller.sendMessage(
-                      message: _typedMsg.value,
-                      chatId: chatId,
-                      orderId: orderId,
-                    );
-                    _textEditingController.clear();
-                    _typedMsg.value = "";
-                  } else {
-                    _textEditingController.clear();
-                    _typedMsg.value = "";
-                  }
-                },
-                child: Container(
-                  height: 35,
-                  width: 35,
-                  decoration: BoxDecoration(
+            InkWell(
+              customBorder: CircleBorder(),
+              onTap: () {
+                final bool msgReady2Send =
+                    _textEditingController.text.replaceAll(' ', '').length > 0;
+                if (msgReady2Send) {
+                  controller.sendMessage(
+                    message: _typedMsg.value,
+                    chatId: chatId,
+                    orderId: orderId,
+                  );
+                  _textEditingController.clear();
+                  _typedMsg.value = "";
+                } else {
+                  _textEditingController.clear();
+                  _typedMsg.value = "";
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color.fromRGBO(
-                        240, 241, 255, 1), //Color.fromRGBO(240, 241, 255, 1),
-                  ),
-                  child: Transform.rotate(
-                    angle: -math.pi / 5.0,
-                    child: Center(
-                      child: Icon(
-                        Icons.send,
-                        size: 20,
-                        color: Color.fromRGBO(103, 121, 254, 1),
-                      ),
+                    color:
+                        SecondaryLightBlueColor //Color.fromRGBO(240, 241, 255, 1),
+                    ),
+                child: Transform.rotate(
+                  angle: -math.pi / 5.0,
+                  child: Center(
+                    child: Icon(
+                      Icons.send,
+                      size: 28,
+                      color: Color.fromRGBO(103, 121, 254, 1),
                     ),
                   ),
                 ),

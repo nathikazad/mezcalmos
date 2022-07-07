@@ -234,9 +234,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       ];
 
   void initMap() {
-    // mapController.periodicRerendering.value = false;
-    // mapController.recenterButtonEnabled.value = true;
-    // mapController.setAnimateMarkersPolyLinesBounds(true);
+   
     mapController.lockInAutoZoomAnimation();
 
     mapController.setLocation(

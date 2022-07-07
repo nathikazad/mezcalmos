@@ -150,7 +150,7 @@ class PastOrderList extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           groupHeaderBuilder: (Order element) {
             return Container(
-              margin: const EdgeInsets.all(8),
+              margin: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 (calculateDifference(element.orderTime) == 0)
                     ? _i18n()["shared"]["notification"]["today"]
@@ -211,7 +211,7 @@ class OngoingOrderList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 _i18n()['orders']["onGoingOrders"],
                 style: txt.headline3,

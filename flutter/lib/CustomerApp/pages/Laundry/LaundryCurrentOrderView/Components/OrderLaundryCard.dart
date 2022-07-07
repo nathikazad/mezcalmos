@@ -50,12 +50,14 @@ class OrderLaundryCard extends StatelessWidget {
                         SizedBox(
                           width: 3,
                         ),
-                        Flexible(child: Text(order.to.address, maxLines: 1)),
+                        Flexible(
+                            fit: FlexFit.tight,
+                            flex: 8,
+                            child: Text(order.to.address, maxLines: 1)),
                       ],
                     )
                   ],
                 )),
-            Spacer(),
             Obx(
               () => MessageButton(
                 showRedDot: Get.find<OrderController>()
