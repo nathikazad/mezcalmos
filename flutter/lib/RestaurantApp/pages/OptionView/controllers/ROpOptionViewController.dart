@@ -112,7 +112,7 @@ class ROpOptionViewController {
         optionType: optionType.value,
         maximumChoice: max.value!,
         minimumChoice: min.value!,
-        costPerExtra: int.parse(costPerExtra.text),
+        costPerExtra: int.tryParse(costPerExtra.text) ?? 0,
         freeChoice: free.value!,
         name: {
           restaurant.value!.primaryLanguage: prOptionName.text,

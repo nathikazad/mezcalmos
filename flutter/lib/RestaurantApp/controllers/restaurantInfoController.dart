@@ -182,6 +182,37 @@ class RestaurantInfoController extends GetxController {
         .child(itemNode(uid: restaurantId, itemId: itemId) + "/cost")
         .set(cost);
   }
+
+  Future<void> switchChoiceAvailablity(
+      {required String choiceId,
+      required String optionId,
+      required String itemId,
+      required bool value,
+      String? catgeoryId}) async {
+    mezDbgPrint(value);
+    mezDbgPrint(choiceNode(
+            uid: restaurantId,
+            itemId: itemId,
+            optionId: optionId,
+            categoryId: catgeoryId,
+            choiceId: choiceId) +
+        "/available");
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(choiceNode(
+                uid: restaurantId,
+                itemId: itemId,
+                optionId: optionId,
+                categoryId: catgeoryId,
+                choiceId: choiceId) +
+            "/available")
+        .set(value)
+        .catchError((e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    });
+  }
+
   // ----------------------------------------------------- CATEGORIES ----------------------------------------------------- //
 
   Future<void> addCategory({required Category category}) async {

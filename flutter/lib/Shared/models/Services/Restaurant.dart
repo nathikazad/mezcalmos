@@ -288,7 +288,7 @@ class Item {
   ) {
     final Item item = Item(
         id: itemId,
-        available: itemData["available"],
+        available: itemData["available"] ?? false,
         description: itemData["description"] != null
             ? convertToLanguageMap(itemData["description"])
             : null,
@@ -474,17 +474,22 @@ class Choice {
   num cost = 0;
   Map<LanguageType, String> name;
   int position = 0;
+  bool available = true;
   Choice(
       {required this.id,
       required this.name,
       required this.cost,
+      this.available = true,
       this.position = 0});
 
   factory Choice.fromData(key, data) {
+    mezDbgPrint(
+        "Choice available ===============================>>>> ${data["available"]}");
     return Choice(
         id: key,
         name: convertToLanguageMap(data["name"]),
         cost: data["cost"],
+        available: data["available"] ?? true,
         position: data["position"] ?? 0);
   }
   Map<String, dynamic> toJson() => {
@@ -492,5 +497,6 @@ class Choice {
         "cost": cost,
         "name": name.toFirebaseFormat(),
         "position": position,
+        "available": available,
       };
 }

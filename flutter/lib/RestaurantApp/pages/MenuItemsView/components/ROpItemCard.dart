@@ -5,7 +5,6 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dar
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -65,34 +64,34 @@ class _ROpItemCardState extends State<ROpItemCard> {
                   SizedBox(
                     width: 10,
                   ),
-                  InkWell(
-                    customBorder: CircleBorder(),
-                    onTap: () {
-                      showConfirmationDialog(context,
-                          primaryButtonText: "Yes, delete item",
-                          title: "Delete item",
-                          helperText: "Do you really want to delete this item",
-                          onYesClick: () async {
-                        await _restaurantInfoController
-                            .deleteItem(
-                                itemId: widget.item.id!,
-                                categoryId: widget.category?.id)
-                            .then((value) => Get.back());
-                      });
-                    },
-                    child: Ink(
-                      padding: const EdgeInsets.all(3),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: SecondaryLightBlueColor,
-                      ),
-                      child: Icon(
-                        Icons.remove,
-                        color: primaryBlueColor,
-                        size: 23,
-                      ),
-                    ),
-                  )
+                  // InkWell(
+                  //   customBorder: CircleBorder(),
+                  //   onTap: () {
+                  //     showConfirmationDialog(context,
+                  //         primaryButtonText: "Yes, delete item",
+                  //         title: "Delete item",
+                  //         helperText: "Do you really want to delete this item",
+                  //         onYesClick: () async {
+                  //       await _restaurantInfoController
+                  //           .deleteItem(
+                  //               itemId: widget.item.id!,
+                  //               categoryId: widget.category?.id)
+                  //           .then((value) => Get.back());
+                  //     });
+                  //   },
+                  //   child: Ink(
+                  //     padding: const EdgeInsets.all(3),
+                  //     decoration: BoxDecoration(
+                  //       shape: BoxShape.circle,
+                  //       color: SecondaryLightBlueColor,
+                  //     ),
+                  //     child: Icon(
+                  //       Icons.remove,
+                  //       color: primaryBlueColor,
+                  //       size: 23,
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
               SizedBox(

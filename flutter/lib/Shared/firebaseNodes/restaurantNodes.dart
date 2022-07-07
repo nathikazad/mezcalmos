@@ -28,3 +28,39 @@ String itemNode(
     return noCategoryNode(uid: uid) + "/items/$itemId";
   }
 }
+
+String optionNode({
+  required String uid,
+  required String itemId,
+  required String optionId,
+  String? categoryId,
+}) {
+  if (categoryId != null) {
+    return itemNode(uid: uid, categoryId: categoryId, itemId: itemId) +
+        "/options/$optionId";
+  } else {
+    return itemNode(uid: uid, categoryId: null, itemId: itemId) +
+        "/options/$optionId";
+  }
+}
+
+String choiceNode({
+  required String uid,
+  required String itemId,
+  required String optionId,
+  required String choiceId,
+  String? categoryId,
+}) {
+  if (categoryId != null) {
+    return optionNode(
+            uid: uid,
+            categoryId: categoryId,
+            itemId: itemId,
+            optionId: optionId) +
+        "/choices/$optionId";
+  } else {
+    return optionNode(
+            uid: uid, categoryId: null, itemId: itemId, optionId: optionId) +
+        "/choices/$optionId";
+  }
+}

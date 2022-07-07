@@ -55,10 +55,9 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
       child: InkWell(
           onTap: () {
             if (_formKey.currentState?.validate() ?? false) {
-              // _viewController.saveCategory().then((value) {
-              //   Get.back();
-              // });
-              Get.back(result: _viewController.constructCategory());
+              _viewController.saveCategory().then((value) {
+                Get.back(result: _viewController.constructCategory());
+              });
             }
           },
           child: Ink(

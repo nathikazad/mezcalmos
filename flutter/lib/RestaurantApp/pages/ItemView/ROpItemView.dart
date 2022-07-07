@@ -25,9 +25,8 @@ class ROpItemView extends StatefulWidget {
 
 class _ROpItemViewState extends State<ROpItemView>
     with SingleTickerProviderStateMixin {
-  Rxn<Restaurant> restaurant = Rxn();
-  RestaurantInfoController _restaurantInfoController =
-      Get.find<RestaurantInfoController>();
+ 
+  
   StreamSubscription? _restaurantListener;
   late TabController _tabController;
   String? itemId;
@@ -41,15 +40,6 @@ class _ROpItemViewState extends State<ROpItemView>
     categoryId = Get.parameters["categoryId"];
     _tabController = TabController(length: 2, vsync: this);
     viewController.init(itemId: itemId, categoryId: categoryId);
-    restaurant.value = _restaurantInfoController.restaurant.value;
-    _restaurantListener =
-        _restaurantInfoController.restaurant.stream.listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-      } else {
-        Get.back();
-      }
-    });
 
     super.initState();
   }
@@ -57,7 +47,7 @@ class _ROpItemViewState extends State<ROpItemView>
   @override
   void dispose() {
     _tabController.dispose();
-    _restaurantListener?.cancel();
+    
     super.dispose();
   }
 
@@ -70,10 +60,10 @@ class _ROpItemViewState extends State<ROpItemView>
           showNotifications: true,
           tabBar: TabBar(controller: _tabController, tabs: [
             Tab(
-              text: "${restaurant.value!.primaryLanguage.toLanguageName()}",
+              text: "${viewController.restaurant.value!.primaryLanguage.toLanguageName()}",
             ),
             Tab(
-              text: "${restaurant.value!.secondaryLanguage!.toLanguageName()}",
+              text: "${viewController.restaurant.value!.secondaryLanguage!.toLanguageName()}",
             ),
           ])),
       bottomNavigationBar: Obx(
@@ -96,7 +86,7 @@ class _ROpItemViewState extends State<ROpItemView>
       ),
       body: Obx(
         () {
-          if (restaurant.value != null) {
+          if (viewController.restaurant.value != null) {
             return Form(
               key: _formKey,
               child: TabBarView(
@@ -190,13 +180,16 @@ class _ROpItemViewState extends State<ROpItemView>
                         const SizedBox(
                           height: 10,
                         ),
-                        Column(
-                          children: List.generate(
-                              viewController.itemOptions.length,
-                              (int index) => ROpItemOptionCard(
-                                  viewController: viewController,
-                                  itemId: itemId,
-                                  option: viewController.itemOptions[index])),
+                        Obx(
+                          () => Column(
+                            children: List.generate(
+                                viewController.itemOptions.length,
+                                (int index) => ROpItemOptionCard(
+                                    viewController: viewController,
+                                    itemId: itemId,
+                                    categoryID: categoryId,
+                                    option: viewController.itemOptions[index])),
+                          ),
                         ),
                         MezAddButton(
                           title: "Add option",
@@ -206,7 +199,7 @@ class _ROpItemViewState extends State<ROpItemView>
                             if (newOption != null) {
                               mezDbgPrint(
                                   "From item view ===> ${newOption.toJson()}");
-                              // viewController.addOption(newOption);
+                              viewController.addOption(newOption);
                             }
                           },
                         )

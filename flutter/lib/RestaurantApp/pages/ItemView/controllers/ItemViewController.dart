@@ -46,19 +46,19 @@ class ItemViewController {
   final Rxn<Item> editableItem = Rxn();
   RxBool newCategoryAdded = RxBool(false);
   Rxn<Category> addedCatgeory = Rxn();
-  StreamSubscription? restaurantListener;
+  StreamSubscription? _restaurantListener;
 
   // initalisation //
   // the itemId arguments for edit mode //
   void init({String? itemId, String? categoryId}) {
     restaurant.value = _restaurantInfoController.restaurant.value;
-    // restaurantListener =
-    //     _restaurantInfoController.restaurant.stream.listen((Restaurant? event) {
-    //   if (event != null) {
-    //     restaurant.value = event;
-    //     categories.value = event.getCategories;
-    //   }
-    // });
+    _restaurantListener =
+        _restaurantInfoController.restaurant.stream.listen((Restaurant? event) {
+      if (event != null) {
+        restaurant.value = event;
+        mezDbgPrint("NEW EVENT FROM ============>>>>ItemViewController");
+      }
+    });
     if (restaurant.value != null) {
       prLang = restaurant.value!.primaryLanguage;
       scLang = restaurant.value!.secondaryLanguage!;
@@ -136,7 +136,20 @@ class ItemViewController {
     itemOptions.add(option);
   }
 
-  void refreshCategories() {}
+  void switchChoiceAvailablity({
+    required String choiceId,
+    required String optionId,
+    required bool value,
+    required String itemId,
+    String? catgeoryId,
+  }) {
+    _restaurantInfoController.switchChoiceAvailablity(
+        catgeoryId: catgeoryId,
+        choiceId: choiceId,
+        optionId: optionId,
+        itemId: itemId,
+        value: value);
+  }
 
   void editOption(String optionId, Option newOption) {
     final int index =
