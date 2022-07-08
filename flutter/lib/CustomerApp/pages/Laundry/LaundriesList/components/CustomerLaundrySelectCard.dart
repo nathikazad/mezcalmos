@@ -66,10 +66,10 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   height: 7,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Flexible(
-                      flex: 5,
+                      flex: 6,
                       fit: FlexFit.loose,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -90,7 +90,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                     ),
                     Flexible(
                       flex: 4,
-                      fit: FlexFit.loose,
+                      fit: FlexFit.tight,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -108,7 +108,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                     ),
                     Flexible(
                       flex: 4,
-                      fit: FlexFit.loose,
+                      fit: FlexFit.tight,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
