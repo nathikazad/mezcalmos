@@ -46,7 +46,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 10,
+            height: 28,
           ),
           Text(
             widget.option.name[userLanguage].toString(),
@@ -56,7 +56,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
           ),
           if (widget.option.optionType == OptionType.Custom)
             Container(
-              margin: const EdgeInsets.only(top: 3),
+              margin: const EdgeInsets.only(top: 5),
               child: Text(
                 "${widget.option.freeChoice} ${_i18n()["included"]}, ${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()}",
                 style: Get.textTheme.bodyText2,
@@ -85,7 +85,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
     required Choice choice,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: [
           Flexible(
