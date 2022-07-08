@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:callkeep/callkeep.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/Appbar.dart';
@@ -30,7 +28,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:uuid/uuid.dart';
 //import 'package:mezcalmos/Shared/widgets/MyAppBarPopUp.dart';
 
 class CustomerWrapper extends StatefulWidget {
@@ -74,167 +71,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   /// _authStateChnagesListener
   StreamSubscription<dynamic>? _authStateChnagesListener;
 
-  final FlutterCallkeep _callKeep = FlutterCallkeep();
-
-  // Map<String, Call> calls = {};
-  // String newUUID() => Uuid().v4();
-  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
-  // void removeCall(String callUUID) {
-  //   setState(() {
-  //     calls.remove(callUUID);
-  //   });
-  // }
-
-  // void setCallHeld(String callUUID, bool held) {
-  //   setState(() {
-  //     calls[callUUID]!.held = held;
-  //   });
-  // }
-
-  // void setCallMuted(String callUUID, bool muted) {
-  //   setState(() {
-  //     calls[callUUID]!.muted = muted;
-  //   });
-  // }
-
-  // Future<void> answerCall(CallKeepPerformAnswerCallAction event) async {
-  //   final String callUUID = event.callUUID!;
-  //   final String number = calls[callUUID]!.number;
-  //   print('[answerCall] $callUUID, number: $number');
-  //   Timer(const Duration(seconds: 1), () {
-  //     print('[setCurrentCallActive] $callUUID, number: $number');
-  //     _callKeep.setCurrentCallActive(callUUID);
-  //   });
-  // }
-
-  // Future<void> endCall(CallKeepPerformEndCallAction event) async {
-  //   print('endCall: ${event.callUUID}');
-  //   removeCall(event.callUUID!);
-  // }
-
-  // Future<void> didPerformDTMFAction(CallKeepDidPerformDTMFAction event) async {
-  //   print('[didPerformDTMFAction] ${event.callUUID}, digits: ${event.digits}');
-  // }
-
-  // Future<void> didReceiveStartCallAction(
-  //     CallKeepDidReceiveStartCallAction event) async {
-  //   if (event.handle == null) {
-  //     // @TODO: sometime we receive `didReceiveStartCallAction` with handle` undefined`
-  //     return;
-  //   }
-  //   final String callUUID = event.callUUID ?? newUUID();
-  //   setState(() {
-  //     calls[callUUID] = Call(event.handle!);
-  //   });
-  //   print('[didReceiveStartCallAction] $callUUID, number: ${event.handle}');
-
-  //   _callKeep.startCall(callUUID, event.handle!, event.handle!);
-
-  //   Timer(const Duration(seconds: 1), () {
-  //     print('[setCurrentCallActive] $callUUID, number: ${event.handle}');
-  //     _callKeep.setCurrentCallActive(callUUID);
-  //   });
-  // }
-
-  // Future<void> didPerformSetMutedCallAction(
-  //     CallKeepDidPerformSetMutedCallAction event) async {
-  //   final String number = calls[event.callUUID]!.number;
-  //   print(
-  //       '[didPerformSetMutedCallAction] ${event.callUUID}, number: $number (${event.muted})');
-
-  //   setCallMuted(event.callUUID!, event.muted!);
-  // }
-
-  // Future<void> didToggleHoldCallAction(
-  //     CallKeepDidToggleHoldAction event) async {
-  //   final String number = calls[event.callUUID]!.number;
-  //   print(
-  //       '[didToggleHoldCallAction] ${event.callUUID}, number: $number (${event.hold})');
-
-  //   setCallHeld(event.callUUID!, event.hold!);
-  // }
-
-  // Future<void> hangup(String callUUID) async {
-  //   _callKeep.endCall(callUUID);
-  //   removeCall(callUUID);
-  // }
-
-  // Future<void> setOnHold(String callUUID, bool held) async {
-  //   _callKeep.setOnHold(callUUID, held);
-  //   final String handle = calls[callUUID]!.number;
-  //   print('[setOnHold: $held] $callUUID, number: $handle');
-  //   setCallHeld(callUUID, held);
-  // }
-
-  // Future<void> setMutedCall(String callUUID, bool muted) async {
-  //   _callKeep.setMutedCall(callUUID, muted);
-  //   final String handle = calls[callUUID]!.number;
-  //   print('[setMutedCall: $muted] $callUUID, number: $handle');
-  //   setCallMuted(callUUID, muted);
-  // }
-
-  // Future<void> updateDisplay(String callUUID) async {
-  //   final String number = calls[callUUID]!.number;
-  //   // Workaround because Android doesn't display well displayName, se we have to switch ...
-  //   if (isIOS) {
-  //     _callKeep.updateDisplay(callUUID,
-  //         displayName: 'New Name', handle: number);
-  //   } else {
-  //     _callKeep.updateDisplay(callUUID,
-  //         displayName: number, handle: 'New Name');
-  //   }
-
-  //   print('[updateDisplay: $number] $callUUID');
-  // }
-
-  // Future<void> displayIncomingCallDelayed(String number) async {
-  //   Timer(const Duration(seconds: 3), () {
-  //     displayIncomingCall(number);
-  //   });
-  // }
-
-  // Future<void> displayIncomingCall(String number) async {
-  //   final String callUUID = newUUID();
-  //   setState(() {
-  //     calls[callUUID] = Call(number);
-  //   });
-  //   print('Display incoming call now');
-  //   final bool hasPhoneAccount = await _callKeep.hasPhoneAccount();
-  //   if (!hasPhoneAccount) {
-  //     await _callKeep.hasDefaultPhoneAccount(context, <String, dynamic>{
-  //       'alertTitle': 'Permissions required',
-  //       'alertDescription':
-  //           'This application needs to access your phone accounts',
-  //       'cancelButton': 'Cancel',
-  //       'okButton': 'ok',
-  //       'foregroundService': {
-  //         'channelId': 'com.company.my',
-  //         'channelName': 'Foreground service for my app',
-  //         'notificationTitle': 'My app is running on background',
-  //         'notificationIcon': 'Path to the resource icon of the notification',
-  //       },
-  //     });
-  //   }
-
-  //   print('[displayIncomingCall] $callUUID number: $number');
-  //   _callKeep.displayIncomingCall(callUUID, number,
-  //       handleType: 'number', hasVideo: false);
-  // }
-
-  // void didDisplayIncomingCall(CallKeepDidDisplayIncomingCall event) {
-  //   var callUUID = event.callUUID;
-  //   var number = event.handle;
-  //   print('[displayIncomingCall] $callUUID number: $number');
-  //   setState(() {
-  //     calls[callUUID!] = Call(number!);
-  //   });
-  // }
-
-  // void onPushKitToken(CallKeepPushKitToken event) {
-  //   print('[onPushKitToken] token => ${event.token}');
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -252,37 +88,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
     /// Check if app was opened through a DeepLink
     Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
-
-    super.initState();
-    // _callKeep.on(CallKeepDidDisplayIncomingCall(), didDisplayIncomingCall);
-    // _callKeep.on(CallKeepPerformAnswerCallAction(), answerCall);
-    // _callKeep.on(CallKeepDidPerformDTMFAction(), didPerformDTMFAction);
-    // _callKeep.on(
-    //     CallKeepDidReceiveStartCallAction(), didReceiveStartCallAction);
-    // _callKeep.on(CallKeepDidToggleHoldAction(), didToggleHoldCallAction);
-    // _callKeep.on(
-    //     CallKeepDidPerformSetMutedCallAction(), didPerformSetMutedCallAction);
-    // _callKeep.on(CallKeepPerformEndCallAction(), endCall);
-    // _callKeep.on(CallKeepPushKitToken(), onPushKitToken);
-
-    // _callKeep.setup(context, <String, dynamic>{
-    //   'ios': {
-    //     'appName': 'CallKeepDemo',
-    //   },
-    //   'android': {
-    //     'alertTitle': 'Permissions required',
-    //     'alertDescription':
-    //         'This application needs to access your phone accounts',
-    //     'cancelButton': 'Cancel',
-    //     'okButton': 'ok',
-    //     'foregroundService': {
-    //       'channelId': 'com.company.my',
-    //       'channelName': 'Foreground service for my app',
-    //       'notificationTitle': 'My app is running on background',
-    //       'notificationIcon': 'Path to the resource icon of the notification',
-    //     },
-    //   },
-    // });
   }
 
   @override
