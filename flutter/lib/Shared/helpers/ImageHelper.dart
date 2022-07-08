@@ -92,22 +92,16 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                     Get.back();
                   },
                   child: Container(
-                    padding: EdgeInsets.only(left: 22, top: 17, bottom: 10),
+                    padding:
+                        EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 5),
                     child: Center(
                       child: Row(
                         children: [
                           Icon(Icons.camera_alt_outlined),
                           SizedBox(width: 11),
-                          Center(
-                            child: Text(
-                              "${_i18n()["fromCamera"]}",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
-                            ),
+                          Flexible(
+                            child: Text("${_i18n()["fromCamera"]}",
+                                style: Get.textTheme.bodyText1),
                           ),
                         ],
                       ),
@@ -121,22 +115,16 @@ Future<imPicker.ImageSource?> imagePickerChoiceDialog(
                     Get.back();
                   },
                   child: Container(
-                    padding: EdgeInsets.only(left: 22, top: 10, bottom: 17),
+                    padding:
+                        EdgeInsets.only(left: 8, right: 8, top: 5, bottom: 10),
                     child: Center(
                       child: Row(
                         children: [
                           Icon(Icons.photo_library_outlined),
                           SizedBox(width: 11),
-                          Center(
-                            child: Text(
-                              "${_i18n()["fromGallery"]}",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
-                            ),
+                          Flexible(
+                            child: Text("${_i18n()["fromGallery"]}",
+                                style: Get.textTheme.bodyText1),
                           ),
                         ],
                       ),
