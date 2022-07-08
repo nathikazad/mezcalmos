@@ -34,51 +34,59 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: ExpansionTile(
-          childrenPadding: const EdgeInsets.all(8),
-          collapsedIconColor: primaryBlueColor,
-          onExpansionChanged: (bool v) {
-            setState(() {
-              isExpanded = v;
-            });
-          },
-          iconColor: primaryBlueColor,
-          trailing: Container(
-            width: 25,
-            height: 25,
-            decoration: BoxDecoration(
-                color: SecondaryLightBlueColor, shape: BoxShape.circle),
-            child: (isExpanded)
-                ? Icon(Icons.expand_less)
-                : Icon(Icons.expand_more),
-          ),
-
-          //  tilePadding: EdgeInsets.all(5),
-          tilePadding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
-          title: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(
-                    widget.option.name[userLanguage]!,
-                    style: Get.textTheme.bodyText1,
-                  ),
+      child: (widget.itemId != null)
+          ? Theme(
+              data:
+                  Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                childrenPadding: const EdgeInsets.all(8),
+                collapsedIconColor: primaryBlueColor,
+                onExpansionChanged: (bool v) {
+                  setState(() {
+                    isExpanded = v;
+                  });
+                },
+                iconColor: primaryBlueColor,
+                trailing: Container(
+                  width: 25,
+                  height: 25,
+                  decoration: BoxDecoration(
+                      color: SecondaryLightBlueColor, shape: BoxShape.circle),
+                  child: (isExpanded)
+                      ? Icon(Icons.expand_less)
+                      : Icon(Icons.expand_more),
                 ),
-                _editBtn()
-              ],
+
+                //  tilePadding: EdgeInsets.all(5),
+                tilePadding: EdgeInsets.zero,
+                title: _optionHeader(),
+                children: [
+                  Theme(
+                      data: Theme.of(context)
+                          .copyWith(dividerColor: Colors.grey.shade400),
+                      child: _buildChoices(widget.option.choices)),
+                ],
+              ),
+            )
+          : _optionHeader(),
+    );
+  }
+
+  Container _optionHeader() {
+    return Container(
+      margin: const EdgeInsets.all(12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Flexible(
+            fit: FlexFit.tight,
+            child: Text(
+              widget.option.name[userLanguage]!,
+              style: Get.textTheme.bodyText1,
             ),
           ),
-          children: [
-            Theme(
-                data: Theme.of(context)
-                    .copyWith(dividerColor: Colors.grey.shade400),
-                child: _buildChoices(widget.option.choices)),
-          ],
-        ),
+          _editBtn()
+        ],
       ),
     );
   }
@@ -114,34 +122,31 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   Widget _buildChoices(List<Choice> choices) {
     return Column(
       children: List.generate(choices.length, (int index) {
-        return Card(
-          child: Container(
-            child: Row(
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(
-                    choices[index].name[userLanguage]!,
-                    style: Get.textTheme.bodyText1,
-                  ),
+        return Container(
+          child: Row(
+            children: [
+              Flexible(
+                fit: FlexFit.tight,
+                child: Text(
+                  choices[index].name[userLanguage]!,
+                  style: Get.textTheme.bodyText1,
                 ),
-                Text(choices[index].available.toString()),
-                Switch(
-                  value: choices[index].available,
-                  onChanged: (bool v) {
-                    widget.viewController.switchChoiceAvailablity(
-                        choiceId: choices[index].id,
-                        optionId: widget.option.id,
-                        value: v,
-                        catgeoryId: widget.categoryID ?? null,
-                        itemId: widget.itemId!);
-                  },
-                  activeColor: primaryBlueColor,
-                  activeTrackColor: SecondaryLightBlueColor,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                )
-              ],
-            ),
+              ),
+              Switch(
+                value: choices[index].available,
+                onChanged: (bool v) {
+                  widget.viewController.switchChoiceAvailablity(
+                      choiceId: choices[index].id,
+                      optionId: widget.option.id,
+                      value: v,
+                      catgeoryId: widget.categoryID ?? null,
+                      itemId: widget.itemId!);
+                },
+                activeColor: primaryBlueColor,
+                activeTrackColor: SecondaryLightBlueColor,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              )
+            ],
           ),
         );
       }),

@@ -131,7 +131,7 @@ class ROpOptionViewController {
           restaurant.value!.primaryLanguage: prChoicesNames[i].text,
           restaurant.value!.secondaryLanguage!: scChoicesNames[i].text,
         },
-        cost: int.parse(choicesPrices[i].text),
+        cost: int.tryParse(choicesPrices[i].text) ?? 0,
       ));
     }
     return data;
