@@ -93,7 +93,7 @@ class DriverOrderCard extends StatelessWidget {
         case RestaurantOrderStatus.CancelledByAdmin:
         case RestaurantOrderStatus.CancelledByCustomer:
           return Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.red.shade100,
               borderRadius: BorderRadius.circular(25),
@@ -107,7 +107,7 @@ class DriverOrderCard extends StatelessWidget {
           );
         case RestaurantOrderStatus.Delivered:
           return Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.green.shade100,
               borderRadius: BorderRadius.circular(25),
@@ -121,7 +121,7 @@ class DriverOrderCard extends StatelessWidget {
           );
         case RestaurantOrderStatus.OnTheWay:
           return Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.amber.shade100,
               borderRadius: BorderRadius.circular(25),
@@ -135,7 +135,7 @@ class DriverOrderCard extends StatelessWidget {
           );
         case RestaurantOrderStatus.ReadyForPickup:
           return Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.green.shade100,
               borderRadius: BorderRadius.circular(25),
@@ -150,7 +150,7 @@ class DriverOrderCard extends StatelessWidget {
 
         default:
           return Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.amber.shade100,
               borderRadius: BorderRadius.circular(25),
