@@ -74,9 +74,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
             padding: const EdgeInsets.all(8),
             child: Center(
               child: Text(
-                (_viewController.editMode.value)
-                    ? "${_i18n()["editCategory"]}"
-                    : "${_i18n()["addCategory"]}",
+                '${_i18n()["saveCategory"]}',
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
               ),
             ),

@@ -177,6 +177,10 @@
                 },
                 "ViewItemScreen": {
                     "components": {
+                        "ItemOptionCard": {
+                            "included": "included",
+                            "extra": "extra"
+                        },
                         "BottomBarItemViewScreen": {
                             "notAvailable": "This restaurant is closed",
                             "title": "Warning",
@@ -1445,6 +1449,7 @@
 
                 "addCategory": "Add category",
                 "editCategory": "Edit category",
+                "saveCategory": "Save category",
                 "categoryName": "Category name",
                 "categoryNameIn": "Category name in ",
                 "categoryNameHint": "Enter a category name",

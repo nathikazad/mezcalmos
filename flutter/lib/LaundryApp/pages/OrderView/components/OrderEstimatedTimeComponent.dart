@@ -34,54 +34,48 @@ class _OrderEstimatedTimeComponentState
       return Obx(
         () => Card(
           margin: const EdgeInsets.only(bottom: 20),
-          child: (isClicked.value)
-              ? Container(
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.all(5),
-                  child: CircularProgressIndicator())
-              : Container(
-                  margin: const EdgeInsets.all(8),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 20,
+                  child: Icon(
+                    Icons.watch_later,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Flexible(
+                  flex: 8,
+                  fit: FlexFit.tight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                        radius: 20,
-                        child: Icon(
-                          Icons.watch_later,
-                          color: Colors.white,
-                        ),
+                      Text(
+                        "${_i18n()["estFinishTime"]}",
+                        style: Get.theme.textTheme.bodyText1,
                       ),
                       SizedBox(
-                        width: 10,
+                        height: 5,
                       ),
-                      Flexible(
-                        flex: 8,
-                        fit: FlexFit.tight,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${_i18n()["estFinishTime"]}",
-                              style: Get.theme.textTheme.bodyText1,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            if (widget.order.estimatedLaundryReadyTime != null)
-                              Text(
-                                "${DateFormat("dd MMMM yyyy, hh:mm a ").format(widget.order.estimatedLaundryReadyTime!.toLocal())}",
-                                style: Get.theme.textTheme.bodyText2,
-                              ),
-                          ],
+                      if (widget.order.estimatedLaundryReadyTime != null)
+                        Text(
+                          "${DateFormat("dd MMMM yyyy, hh:mm a ").format(widget.order.estimatedLaundryReadyTime!.toLocal())}",
+                          style: Get.theme.textTheme.bodyText2,
                         ),
-                      ),
-                      Spacer(),
-                      _editSetButton(context)
                     ],
                   ),
                 ),
+                Spacer(),
+                _editSetButton(context)
+              ],
+            ),
+          ),
         ),
       );
     } else {

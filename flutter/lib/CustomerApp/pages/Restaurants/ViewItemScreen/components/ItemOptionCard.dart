@@ -3,9 +3,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Restaurants"]["ViewItemScreen"]["components"]["ItemOptionCard"];
 
 class ItemOptionCard extends StatefulWidget {
   const ItemOptionCard(
@@ -46,8 +50,17 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
           ),
           Text(
             widget.option.name[userLanguage].toString(),
-            style: Get.theme.textTheme.bodyText1,
+            style: Get.theme.textTheme.headline3?.copyWith(
+              color: primaryBlueColor,
+            ),
           ),
+          if (widget.option.optionType == OptionType.Custom)
+            Container(
+              child: Text(
+                "${widget.option.freeChoice} ${_i18n()["included"]}, ${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()}",
+                style: Get.textTheme.bodyText2,
+              ),
+            ),
           SizedBox(
             height: 10,
           ),

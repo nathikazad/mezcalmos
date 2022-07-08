@@ -77,9 +77,7 @@ class LaundryOpOrderCard extends StatelessWidget {
                   // getOrderWidget()
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
+              Divider(),
               Row(
                 //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[

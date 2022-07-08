@@ -180,6 +180,10 @@
                 },
                 "ViewItemScreen": {
                     "components": {
+                        "ItemOptionCard": {
+                            "included": "incluida",
+                            "extra": "extra"
+                        },
                         "BottomBarItemViewScreen": {
                             "notAvailable": "Su restaurante está cerrado",
                             "title": "Advertencia",
@@ -1439,6 +1443,7 @@
                 },
                 "addCategory": "Añadir categoría",
                 "editCategory": "Editar categoria",
+                "saveCategory": "Guardar categoría",
                 "categoryName": "Nombre de la categoría",
                 "categoryNameIn": "Nombre de categoría en",
                 "categoryNameHint": "Ingrese un nombre de categoría",
