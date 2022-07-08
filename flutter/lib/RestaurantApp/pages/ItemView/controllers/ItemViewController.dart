@@ -33,9 +33,9 @@ class ItemViewController {
     LanguageType.ES: "Añadir nueva categoria"
   }, id: "addNew");
   // Variables //
-  Rxn<Restaurant> restaurant = Rxn();
-  RxList<Category> categories = RxList.empty();
-  Rxn<Category> currentCategory = Rxn();
+  final Rxn<Restaurant> restaurant = Rxn();
+  final RxList<Category> categories = RxList.empty();
+  final Rxn<Category> currentCategory = Rxn();
   late LanguageType prLang;
   late LanguageType scLang;
   final Rxn<File> newImageFile = Rxn();
@@ -52,10 +52,12 @@ class ItemViewController {
   // the itemId arguments for edit mode //
   void init({String? itemId, String? categoryId}) {
     restaurant.value = _restaurantInfoController.restaurant.value;
+    restaurant.refresh();
     _restaurantListener =
         _restaurantInfoController.restaurant.stream.listen((Restaurant? event) {
       if (event != null) {
         restaurant.value = event;
+        restaurant.refresh();
         mezDbgPrint("NEW EVENT FROM ============>>>>ItemViewController");
       }
     });
@@ -68,9 +70,6 @@ class ItemViewController {
       }
     }
   }
-
-  // dispose //
-  void dispose() {}
 
   // edit item init //
   void initEditMode({required String itemId, String? categoryId}) {
@@ -244,5 +243,10 @@ class ItemViewController {
 
   bool get isSecondLangValid {
     return scItemNameController.text.isNotEmpty;
+  }
+
+  void dispose() {
+    _restaurantListener?.cancel();
+    _restaurantListener = null;
   }
 }

@@ -47,6 +47,7 @@ class _ROpItemViewState extends State<ROpItemView>
   @override
   void dispose() {
     _tabController.dispose();
+    viewController.dispose();
     
     super.dispose();
   }
