@@ -27,12 +27,12 @@ extension parseDateTime on DateTime {
         Get.find<LanguageController>().userLanguageKey.toLanguageCode();
 
     final DateFormat formatTime = DateFormat.jm(userLangCode);
-    final DateFormat formatMonth = DateFormat.MMMMEEEEd(userLangCode);
+    final DateFormat formatMonth = DateFormat.MMMMd(userLangCode);
     if (DateTime(toLocal().year, toLocal().month, toLocal().day)
             .difference(DateTime(now.year, now.month, now.day))
             .inDays >
         1) {
-      return "${_i18n()["on"]} ${formatMonth.format(toLocal())} ${formatTime.format(toLocal())}";
+      return "${_i18n()["on"]} ${formatMonth.format(toLocal())}, ${_i18n()["at"]} ${formatTime.format(toLocal())}";
     } else if (DateTime(toLocal().year, toLocal().month, toLocal().day)
             .difference(DateTime(now.year, now.month, now.day))
             .inDays >

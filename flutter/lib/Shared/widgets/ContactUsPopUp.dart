@@ -46,8 +46,13 @@ class ContactUsPopUp extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  Text('${_i18n()["contactEmail"]}',
-                      style: Get.textTheme.bodyText1)
+                  Flexible(
+                    child: Text(
+                      '${_i18n()["contactEmail"]}',
+                      style: Get.textTheme.bodyText1,
+                      maxLines: 1,
+                    ),
+                  )
                 ],
               ),
             ),
@@ -86,8 +91,13 @@ class ContactUsPopUp extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  Text('${_i18n()["contactWhatsapp"]}',
-                      style: Get.textTheme.bodyText1)
+                  Flexible(
+                    child: Text(
+                      '${_i18n()["contactWhatsapp"]}',
+                      style: Get.textTheme.bodyText1,
+                      maxLines: 1,
+                    ),
+                  )
                 ],
               ),
             ),

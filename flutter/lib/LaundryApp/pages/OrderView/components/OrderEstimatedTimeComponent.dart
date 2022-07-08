@@ -65,7 +65,7 @@ class _OrderEstimatedTimeComponentState
                       ),
                       if (widget.order.estimatedLaundryReadyTime != null)
                         Text(
-                          "${DateFormat("dd MMMM yyyy, hh:mm a ").format(widget.order.estimatedLaundryReadyTime!.toLocal())}",
+                          "${DateFormat("dd MMMM, hh:mm a ").format(widget.order.estimatedLaundryReadyTime!.toLocal())}",
                           style: Get.theme.textTheme.bodyText2,
                         ),
                     ],

@@ -4,6 +4,7 @@ import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -43,7 +44,7 @@ class DriverOrderCard extends StatelessWidget {
           cardTitle: _getOrderTitle(),
           primaryBodyContent: Text(order.to.address),
           cardStatus: _getOrderWidget(),
-          cardTime: Text(order.orderTime.getOrderTime()),
+          cardTime: Text(order.orderTime.getOrderTime().inCaps),
           rightImage: _getOrderIcon()),
       order: order,
     );
