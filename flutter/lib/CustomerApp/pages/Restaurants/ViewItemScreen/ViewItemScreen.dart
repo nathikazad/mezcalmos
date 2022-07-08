@@ -137,13 +137,13 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  item.cost.toPriceString(),
-                  style: Get.textTheme.headline3
-                      ?.copyWith(color: primaryBlueColor),
+                Container(
+                  margin: const EdgeInsets.only(top: 25),
+                  child: Text(
+                    item.cost.toPriceString(),
+                    style: Get.textTheme.headline3
+                        ?.copyWith(color: primaryBlueColor),
+                  ),
                 ),
                 SizedBox(
                   height: 10,

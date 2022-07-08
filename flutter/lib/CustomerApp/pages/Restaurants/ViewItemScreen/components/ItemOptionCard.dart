@@ -48,18 +48,15 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
           SizedBox(
             height: 28,
           ),
-          Text(
-            widget.option.name[userLanguage].toString(),
-            style: Get.theme.textTheme.headline3?.copyWith(
-              color: primaryBlueColor,
-            ),
-          ),
+          Text(widget.option.name[userLanguage].toString(),
+              style: Get.theme.textTheme.headline3),
           if (widget.option.optionType == OptionType.Custom)
             Container(
               margin: const EdgeInsets.only(top: 5),
               child: Text(
-                "${widget.option.freeChoice} ${_i18n()["included"]}, ${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()}",
-                style: Get.textTheme.bodyText2,
+                "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
+                style: Get.textTheme.bodyText2?.copyWith(
+                    fontStyle: FontStyle.italic, fontWeight: FontWeight.w600),
               ),
             ),
           SizedBox(
@@ -98,6 +95,11 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                   child: Text(
                     choice.name[userLanguage].toString(),
                     style: Get.theme.textTheme.bodyText2?.copyWith(
+                      color: (widget.cartItem.value!.chosenChoices[optionId]
+                                  ?.contains(choice) ??
+                              false)
+                          ? primaryBlueColor
+                          : null,
                       fontWeight: (widget
                                   .cartItem.value!.chosenChoices[optionId]
                                   ?.contains(choice) ??
