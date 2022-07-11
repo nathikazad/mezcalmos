@@ -381,12 +381,12 @@
       },
       "inProcessOrders": {
         "$uid": {
-          ".read": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)"
+          ".read": "root.child('laundries/info/' + $uid + '/state/operators').hasChild(auth.uid)"
         }
       },
       "pastOrders": {
         "$uid": {
-          ".read": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)"
+          ".read": "root.child('laundries/info/' + $uid + '/state/operators').hasChild(auth.uid)"
         }
       }
     },
