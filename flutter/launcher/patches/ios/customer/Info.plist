@@ -51,21 +51,17 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>App needs location always and when in use to update your Taxi Driver about your location!</string>
+	<string>App needs location always and when in use to update the Delivery driver about your location!</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>App needs location always and when in use to update your Taxi Driver about your location, so can the app have location always?</string>
+	<string>App needs location always and when in use to update your Delivery Driver about your location, so can the app have location always?</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Older devices need location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>App needs location when in use to update your Taxi Driver about your location</string>
+	<string>App needs location when in use to update your Delivery Driver about your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App need access to PhotoLibrary in order to change User's profile pictures.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>App Needs camera access in case the user wanted to change his/her profile picture directly using his iPhone's camera.</string>
-	<key>BGTaskSchedulerPermittedIdentifiers</key>
-	<array>
-    	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
