@@ -24,22 +24,22 @@ export const deleteUser = functions.database.ref(
     await firebase.auth().updateUser(context.params.userId, { disabled : isDisabled })
   })
 
-// export const addName = functions.database.ref(
-//   '/users/{userId}/info/name').onCreate(async (snap, context) => {
-//     await firebase.auth().updateUser(context.params.userId, { displayName: snap.val() })
-//   })
+export const addName = functions.database.ref(
+  '/users/{userId}/info/name').onCreate(async (snap, context) => {
+    await firebase.auth().updateUser(context.params.userId, { displayName: snap.val() })
+  })
 
 export const changeName = functions.database.ref(
-  '/users/{userId}/info/name').onWrite(async (snap, context) => {
+  '/users/{userId}/info/name').onUpdate(async (snap, context) => {
     await firebase.auth().updateUser(context.params.userId, { displayName: snap.after.val() })
   })
 
-// export const addPhoto = functions.database.ref(
-//   '/users/{userId}/info/image').onCreate(async (snap, context) => {
-//     await firebase.auth().updateUser(context.params.userId, { photoURL: snap.val() })
-//   })
+export const addPhoto = functions.database.ref(
+  '/users/{userId}/info/image').onCreate(async (snap, context) => {
+    await firebase.auth().updateUser(context.params.userId, { photoURL: snap.val() })
+  })
 
 export const changePhoto = functions.database.ref(
-  '/users/{userId}/info/image').onWrite(async (snap, context) => {
+  '/users/{userId}/info/image').onUpdate(async (snap, context) => {
     await firebase.auth().updateUser(context.params.userId, { photoURL: snap.after.val() })
   })

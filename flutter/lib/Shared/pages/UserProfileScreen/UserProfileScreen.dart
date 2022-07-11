@@ -92,25 +92,37 @@ class _UserProfileState extends State<UserProfile>
                       isImageBeingUploaded: isUploadingImg.value,
                       clickedSave: clickedSave.value,
                     ),
+                    SizedBox(height: 10),
                     Center(
                       child: InkWell(
                         onTap: () {
                           showConfirmationDialog(
                             context,
                             title: "Confirm account deletion!",
+                            primaryButtonText: "Yes, delete!",
+                            secondaryButtonText: "Cancel",
                             helperText:
                                 "Clicking yes will permanently delete you account, are you sure?",
                             onYesClick: () async =>
                                 _authController.deleteAccount(),
                           );
                         },
-                        child: Text(
-                          "Delete account",
-                          style: TextStyle(
-                            color: Colors.grey.shade600,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Montserrat',
+                        child: Container(
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            // color: Colors.red.shade100,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            "Delete account",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat',
+                            ),
                           ),
                         ),
                       ),
