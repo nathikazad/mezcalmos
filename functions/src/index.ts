@@ -13,10 +13,11 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
 import * as userChanges from './utilities/userChanges'
 export const user = {
   processSignUp: userChanges.processSignUp,
-  addName: userChanges.addName,
+  // addName: userChanges.addName,
   changeName: userChanges.changeName,
-  addPhoto: userChanges.addPhoto,
-  changePhoto: userChanges.changePhoto
+  // addPhoto: userChanges.addPhoto,
+  changePhoto: userChanges.changePhoto,
+  deleteUser : userChanges.deleteUser
 }
 
 import * as otpAuth from './utilities/otpAuth'

@@ -24,6 +24,9 @@
           },
           "phone": {
             ".write": "$uid === auth.uid"
+          },
+          "deleted": {
+            ".write": "$uid === auth.uid"
           }
         },
         "auth": {
