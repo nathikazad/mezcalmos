@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
@@ -83,13 +84,38 @@ class _UserProfileState extends State<UserProfile>
                   direction: Axis.vertical,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: widget.userProfileWidgets.bodyContent(
-                    onBrowsImageClick: onBrowsImageClick,
-                    onSaveClick: onSaveChangesClick,
-                    onEditButtonClick: onStartEdit,
-                    isImageBeingUploaded: isUploadingImg.value,
-                    clickedSave: clickedSave.value,
-                  ),
+                  children: [
+                    ...widget.userProfileWidgets.bodyContent(
+                      onBrowsImageClick: onBrowsImageClick,
+                      onSaveClick: onSaveChangesClick,
+                      onEditButtonClick: onStartEdit,
+                      isImageBeingUploaded: isUploadingImg.value,
+                      clickedSave: clickedSave.value,
+                    ),
+                    Center(
+                      child: InkWell(
+                        onTap: () {
+                          showConfirmationDialog(
+                            context,
+                            title: "Confirm account deletion!",
+                            helperText:
+                                "Clicking yes will permanently delete you account, are you sure?",
+                            onYesClick: () async =>
+                                _authController.deleteAccount(),
+                          );
+                        },
+                        child: Text(
+                          "Delete account",
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'Montserrat',
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
                 if (isUploadingImg.value)
                   Container(

@@ -130,6 +130,20 @@ class AuthController extends GetxController {
         _user.value?.image != defaultUserImgUrl;
   }
 
+  Future<void> deleteAccount() async {
+    if (_user.value?.id != null) {
+      // we don't have to await this, we straight forward logout!
+      unawaited(
+        _databaseHelper.firebaseDatabase
+            .ref()
+            .child(userDeletedNode(_user.value!.id))
+            .set(true),
+      );
+      // we await the signing Out!
+      await signOut();
+    }
+  }
+
   /// This Functions takes a File (Image) and an optional [isCompressed]
   ///
   /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
