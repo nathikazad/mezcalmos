@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ItemCategorySelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ROpItemImage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/RopItemOptionCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -25,8 +26,6 @@ class ROpItemView extends StatefulWidget {
 
 class _ROpItemViewState extends State<ROpItemView>
     with SingleTickerProviderStateMixin {
- 
-  
   StreamSubscription? _restaurantListener;
   late TabController _tabController;
   String? itemId;
@@ -48,7 +47,7 @@ class _ROpItemViewState extends State<ROpItemView>
   void dispose() {
     _tabController.dispose();
     viewController.dispose();
-    
+
     super.dispose();
   }
 
@@ -61,15 +60,18 @@ class _ROpItemViewState extends State<ROpItemView>
           showNotifications: true,
           tabBar: TabBar(controller: _tabController, tabs: [
             Tab(
-              text: "${viewController.restaurant.value!.primaryLanguage.toLanguageName()}",
+              text:
+                  "${viewController.restaurant.value!.primaryLanguage.toLanguageName()}",
             ),
             Tab(
-              text: "${viewController.restaurant.value!.secondaryLanguage!.toLanguageName()}",
+              text:
+                  "${viewController.restaurant.value!.secondaryLanguage!.toLanguageName()}",
             ),
           ])),
       bottomNavigationBar: Obx(
         () => CallToActionButton(
           height: 65,
+          isLoading: viewController.isLoading,
           text: (viewController.editMode.isTrue) ? "Save item" : "Add item",
           onTap: () {
             if (viewController.isSecondLangValid) {
@@ -93,163 +95,9 @@ class _ROpItemViewState extends State<ROpItemView>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  // Items view //
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.all(12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ROpItemImage(
-                          viewController: viewController,
-                        ),
-                        const SizedBox(
-                          height: 35,
-                        ),
-                        Text(
-                          "Item name",
-                          style: Get.textTheme.bodyText1,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          controller: viewController.prItemNameController,
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return "Required";
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          "Item Price",
-                          style: Get.textTheme.bodyText1,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          controller: viewController.itemPriceController,
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return "Required";
-                            }
-                            return null;
-                          },
-                          textAlignVertical: TextAlignVertical.center,
-                          style: Get.textTheme.bodyText1,
-                          decoration: InputDecoration(
-                              prefixIconColor: primaryBlueColor,
-                              prefixIcon: Icon(Icons.attach_money)),
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          "Item Description",
-                          style: Get.textTheme.bodyText1,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          maxLines: 6,
-                          minLines: 4,
-                          controller: viewController.prItemDescController,
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          "Category",
-                          style: Get.textTheme.bodyText1,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ROpItemCategorySelector(viewController: viewController),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          "Item options",
-                          style: Get.textTheme.bodyText1,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Obx(
-                          () => Column(
-                            children: List.generate(
-                                viewController.itemOptions.length,
-                                (int index) => ROpItemOptionCard(
-                                    viewController: viewController,
-                                    itemId: itemId,
-                                    categoryID: categoryId,
-                                    option: viewController.itemOptions[index])),
-                          ),
-                        ),
-                        MezAddButton(
-                          title: "Add option",
-                          onClick: () async {
-                            final Option? newOption =
-                                await Get.toNamed(kOptionView) as Option?;
-                            if (newOption != null) {
-                              mezDbgPrint(
-                                  "From item view ===> ${newOption.toJson()}");
-                              viewController.addOption(newOption);
-                            }
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          "Item name",
-                          style: Get.textTheme.bodyText1,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          controller: viewController.scItemNameController,
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return "Required";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          "Item Description",
-                          style: Get.textTheme.bodyText1,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          minLines: 4,
-                          maxLines: 6,
-                          controller: viewController.scItemDescController,
-                        ),
-                      ],
-                    ),
-                  )
+                  _primaryTab(),
+//
+                  _secondaryTab()
                 ],
               ),
             );
@@ -259,5 +107,201 @@ class _ROpItemViewState extends State<ROpItemView>
         },
       ),
     );
+  }
+
+  SingleChildScrollView _secondaryTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 25,
+          ),
+          Text(
+            "Item name",
+            style: Get.textTheme.bodyText1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            style: Get.textTheme.bodyText1,
+            controller: viewController.scItemNameController,
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Required";
+              }
+              return null;
+            },
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Text(
+            "Item Description",
+            style: Get.textTheme.bodyText1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            style: Get.textTheme.bodyText1,
+            minLines: 4,
+            maxLines: 6,
+            controller: viewController.scItemDescController,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _primaryTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ROpItemImage(
+            viewController: viewController,
+          ),
+          const SizedBox(
+            height: 35,
+          ),
+          Text(
+            "Item name",
+            style: Get.textTheme.bodyText1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            style: Get.textTheme.bodyText1,
+            controller: viewController.prItemNameController,
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Required";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Text(
+            "Item Price",
+            style: Get.textTheme.bodyText1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            controller: viewController.itemPriceController,
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Required";
+              }
+              return null;
+            },
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+            ],
+            textAlignVertical: TextAlignVertical.center,
+            style: Get.textTheme.bodyText1,
+            decoration: InputDecoration(
+                prefixIconColor: primaryBlueColor,
+                prefixIcon: Icon(Icons.attach_money)),
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Text(
+            "Item Description",
+            style: Get.textTheme.bodyText1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            style: Get.textTheme.bodyText1,
+            maxLines: 6,
+            minLines: 4,
+            controller: viewController.prItemDescController,
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Text(
+            "Category",
+            style: Get.textTheme.bodyText1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ROpItemCategorySelector(viewController: viewController),
+          const SizedBox(
+            height: 25,
+          ),
+          Text(
+            "Item options",
+            style: Get.textTheme.bodyText1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ROpItemOptionCard(viewController: viewController),
+          MezAddButton(
+            title: "Add option",
+            onClick: () async {
+              final Option? newOption =
+                  await Get.toNamed(kOptionView) as Option?;
+              if (newOption != null) {
+                mezDbgPrint("From item view ===> ${newOption.toJson()}");
+                viewController.addOption(newOption);
+              }
+            },
+          ),
+          _deleteItemBtn()
+        ],
+      ),
+    );
+  }
+
+  Widget _deleteItemBtn() {
+    return Obx(() {
+      return Container(
+          margin: const EdgeInsets.symmetric(vertical: 20),
+          child: (viewController.editMode.value)
+              ? TextButton(
+                  style: TextButton.styleFrom(
+                      backgroundColor: offRedColor, primary: Colors.redAccent),
+                  onPressed: () {
+                    showConfirmationDialog(context, onYesClick: () async {
+                      await viewController
+                          .deleteItem(itemId: itemId!, catgeoryId: categoryId)
+                          .then((value) => Get.back());
+                    },
+                        title: "Delete this item",
+                        helperText:
+                            "Are you sure you want to delete this item ");
+                  },
+                  child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.delete_outline_rounded,
+                            color: Colors.red,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Delete item"),
+                        ],
+                      )))
+              : null);
+    });
   }
 }

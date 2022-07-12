@@ -57,10 +57,10 @@ String choiceNode({
             categoryId: categoryId,
             itemId: itemId,
             optionId: optionId) +
-        "/choices/$optionId";
+        "/choices/$choiceId";
   } else {
     return optionNode(
             uid: uid, categoryId: null, itemId: itemId, optionId: optionId) +
-        "/choices/$optionId";
+        "/choices/$choiceId";
   }
 }

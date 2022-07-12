@@ -40,9 +40,8 @@ String getEditItemRoute({required String itemId, String? categoryId}) {
   return route;
 }
 
-String getEditOptionRoute({required String optiondId, required String itemId}) {
-  String route = kOptionView.replaceFirst(":itemId", itemId);
-  route = route.replaceFirst(":optionId", optiondId);
+String getEditOptionRoute({required String itemId}) {
+  final String route = kOptionView.replaceFirst(":itemId", itemId);
   return route;
 }
 

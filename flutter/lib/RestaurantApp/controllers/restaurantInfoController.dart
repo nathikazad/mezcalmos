@@ -105,7 +105,8 @@ class RestaurantInfoController extends GetxController {
 // ----------------------------------------------------- ITEMS FUNCTIONS ----------------------------------------------------- //
 
   Future<void> addItem({required Item item, String? categoryId}) async {
-    mezDbgPrint("Final item ===========================>>>>>${item.toJson()}");
+    mezDbgPrint(
+        "Adding  item to db ===========================>>>>>${item.toJson()}");
     final DatabaseReference newItemNode;
     // adding to new category
     if (categoryId != null) {
@@ -153,12 +154,20 @@ class RestaurantInfoController extends GetxController {
           .ref()
           .child(itemNode(
               uid: restaurantId, categoryId: categoryId, itemId: itemId))
-          .remove();
+          .remove()
+          .catchError((e, stk) {
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      });
     } else {
       await _databaseHelper.firebaseDatabase
           .ref()
           .child(itemNode(uid: restaurantId, itemId: itemId))
-          .remove();
+          .remove()
+          .catchError((e, stk) {
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      });
     }
   }
 
@@ -215,7 +224,7 @@ class RestaurantInfoController extends GetxController {
 
   // ----------------------------------------------------- CATEGORIES ----------------------------------------------------- //
 
-  Future<void> addCategory({required Category category}) async {
+  Future<String?> addCategory({required Category category}) async {
     final DatabaseReference categoryNode = _databaseHelper.firebaseDatabase
         .ref()
         .child(menuNode(uid: restaurantId))
@@ -225,6 +234,7 @@ class RestaurantInfoController extends GetxController {
       mezDbgPrint(e);
       mezDbgPrint(stk);
     });
+    return categoryNode.key;
   }
 
   Future<void> EditCatgeory(

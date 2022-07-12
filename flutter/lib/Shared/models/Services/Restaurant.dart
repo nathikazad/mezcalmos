@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -300,9 +299,7 @@ class Item {
         cost: itemData["cost"]);
     // TODO: change to options
     if (itemData["options"] != null) {
-      mezDbgPrint("options Data ===================> ${itemData["options"]}");
       for (int i = 0; i < itemData["options"].length; i++) {
-        mezDbgPrint("eeeeeee ===========> ${itemData["options"][i]}");
         item.options.add(Option.fromData(i.toString(), itemData["options"][i]));
       }
 
@@ -483,8 +480,6 @@ class Choice {
       this.position = 0});
 
   factory Choice.fromData(key, data) {
-    mezDbgPrint(
-        "Choice available ===============================>>>> ${data["available"]}");
     return Choice(
         id: key,
         name: convertToLanguageMap(data["name"]),

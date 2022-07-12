@@ -55,15 +55,18 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
               if (newValue.id == "addNew") {
                 mezDbgPrint("ADDING NEW CATEGORY");
                 // ignore: unawaited_futures
-                final Category? newCat =
-                    await Get.toNamed(kCategoryView) as Category?;
+                final Category? newCat = await Get.toNamed(kCategoryView,
+                    arguments: {"shouldSave": false}) as Category?;
 
                 mezDbgPrint("Done adding ✅");
 
                 if (newCat != null) {
                   widget.viewController.categories.add(newCat);
                   widget.viewController.categories.refresh();
+                  widget.viewController.newCategoryAdded.value = true;
+                  widget.viewController.addNewCatgeory = newCat;
                   widget.viewController.currentCategory.value = newCat;
+
                   // widget.viewController.newCategoryAdded.value = true;
                   // widget.viewController.addedCatgeory.value = newCat;
                 }

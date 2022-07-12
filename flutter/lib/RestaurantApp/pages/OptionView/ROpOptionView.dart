@@ -6,6 +6,7 @@ import 'package:mezcalmos/RestaurantApp/pages/OptionView/controllers/ROpOptionVi
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
@@ -21,16 +22,23 @@ class _ROpOptionViewState extends State<ROpOptionView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   ROpOptionViewController _viewController = ROpOptionViewController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String? itemId;
+  final GlobalKey<FormState> prFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
+
   String? optionId;
+  Rxn<Option> option = Rxn<Option>();
 
   @override
   void initState() {
-    optionId = Get.parameters["optionId"];
-    itemId = Get.parameters["itemId"];
+    if (Get.arguments != null) {
+      option.value = Get.arguments["option"] as Option?;
+    }
+
     _tabController = TabController(length: 2, vsync: this);
-    _viewController.init(optionId: optionId, itemId: itemId);
+
+    _viewController.init(
+      option: option.value,
+    );
     super.initState();
   }
 
@@ -47,22 +55,18 @@ class _ROpOptionViewState extends State<ROpOptionView>
       bottomNavigationBar: CallToActionButton(
         height: 65,
         onTap: () {
-          if (_formKey.currentState!.validate()) {
-            _viewController.addOption();
-
-            Get.back(result: _viewController.addOption());
-          } else {}
+          saveOption();
         },
         text: (_viewController.editMode.isTrue) ? "Edit option" : "Add option",
       ),
-      body: Form(
-        key: _formKey,
-        child: TabBarView(
-          controller: _tabController,
-          children: [
-            // Primary language tab view
-            SingleChildScrollView(
-              padding: const EdgeInsets.all(12),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          // Primary language tab view
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
+            child: Form(
+              key: prFormKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -128,9 +132,12 @@ class _ROpOptionViewState extends State<ROpOptionView>
                 ],
               ),
             ),
-            // Secondary language tab view
-            SingleChildScrollView(
-              padding: const EdgeInsets.all(12),
+          ),
+          // Secondary language tab view
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
+            child: Form(
+              key: scFormKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -180,8 +187,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -231,5 +238,36 @@ class _ROpOptionViewState extends State<ROpOptionView>
                 "${_viewController.restaurant.value!.secondaryLanguage!.toLanguageName()}",
           ),
         ]));
+  }
+
+  void saveOption() {
+    prFormKey.currentState?.save();
+    scFormKey.currentState?.save();
+    switch (isFormValid()) {
+      case FormValid.Valid:
+        _viewController.addOption();
+        Get.back(result: _viewController.addOption());
+        break;
+      case FormValid.PrimaryNotValid:
+        _tabController.animateTo(0);
+
+        break;
+      case FormValid.SecondaryNotValid:
+        _tabController.animateTo(1);
+
+        break;
+      default:
+    }
+  }
+
+  FormValid isFormValid() {
+    if (prFormKey.currentState == null ||
+        prFormKey.currentState!.validate() == false) {
+      return FormValid.PrimaryNotValid;
+    } else if (scFormKey.currentState == null ||
+        scFormKey.currentState!.validate() == false) {
+      return FormValid.SecondaryNotValid;
+    } else
+      return FormValid.Valid;
   }
 }

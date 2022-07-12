@@ -11,13 +11,9 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class ROpItemOptionCard extends StatefulWidget {
   const ROpItemOptionCard(
-      {Key? key,
-      required this.option,
-      this.itemId,
-      this.categoryID,
-      required this.viewController})
+      {Key? key, this.itemId, this.categoryID, required this.viewController})
       : super(key: key);
-  final Option option;
+
   final String? categoryID;
   final String? itemId;
   final ItemViewController viewController;
@@ -33,46 +29,53 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: (widget.itemId != null)
-          ? Theme(
-              data:
-                  Theme.of(context).copyWith(dividerColor: Colors.transparent),
-              child: ExpansionTile(
-                childrenPadding: const EdgeInsets.all(8),
-                collapsedIconColor: primaryBlueColor,
-                onExpansionChanged: (bool v) {
-                  setState(() {
-                    isExpanded = v;
-                  });
-                },
-                iconColor: primaryBlueColor,
-                trailing: Container(
-                  width: 25,
-                  height: 25,
-                  decoration: BoxDecoration(
-                      color: SecondaryLightBlueColor, shape: BoxShape.circle),
-                  child: (isExpanded)
-                      ? Icon(Icons.expand_less)
-                      : Icon(Icons.expand_more),
-                ),
-
-                //  tilePadding: EdgeInsets.all(5),
-                tilePadding: EdgeInsets.zero,
-                title: _optionHeader(),
-                children: [
-                  Theme(
-                      data: Theme.of(context)
-                          .copyWith(dividerColor: Colors.grey.shade400),
-                      child: _buildChoices(widget.option.choices)),
-                ],
-              ),
-            )
-          : _optionHeader(),
+    return Obx(
+      () => Column(
+          children: List.generate(
+              widget.viewController.itemOptions.length,
+              (int index) => _itemOptionCard(
+                  option: widget.viewController.itemOptions[index],
+                  context: context))),
     );
   }
 
-  Container _optionHeader() {
+  Card _itemOptionCard(
+      {required Option option, required BuildContext context}) {
+    return Card(
+        child: Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        childrenPadding: const EdgeInsets.all(8),
+        collapsedIconColor: primaryBlueColor,
+        onExpansionChanged: (bool v) {
+          setState(() {
+            isExpanded = v;
+          });
+        },
+        iconColor: primaryBlueColor,
+        trailing: Container(
+          width: 25,
+          height: 25,
+          decoration: BoxDecoration(
+              color: SecondaryLightBlueColor, shape: BoxShape.circle),
+          child:
+              (isExpanded) ? Icon(Icons.expand_less) : Icon(Icons.expand_more),
+        ),
+
+        //  tilePadding: EdgeInsets.all(5),
+        tilePadding: EdgeInsets.zero,
+        title: _optionHeader(option: option),
+        children: [
+          Theme(
+              data: Theme.of(context)
+                  .copyWith(dividerColor: Colors.grey.shade400),
+              child: _buildChoices(option: option)),
+        ],
+      ),
+    ));
+  }
+
+  Container _optionHeader({required Option option}) {
     return Container(
       margin: const EdgeInsets.all(12),
       child: Row(
@@ -81,26 +84,25 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
           Flexible(
             fit: FlexFit.tight,
             child: Text(
-              widget.option.name[userLanguage]!,
+              option.name[userLanguage]!,
               style: Get.textTheme.bodyText1,
             ),
           ),
-          _editBtn()
+          _editBtn(option: option)
         ],
       ),
     );
   }
 
-  Widget _editBtn() {
+  Widget _editBtn({required Option option}) {
     return InkWell(
       onTap: () async {
-        if (widget.itemId != null) {
-          mezDbgPrint("Tapped");
-          final Option? newOp = await Get.toNamed(getEditOptionRoute(
-              optiondId: widget.option.id, itemId: widget.itemId!)) as Option?;
-          if (newOp != null) {
-            widget.viewController.editOption(widget.option.id, newOp);
-          }
+        mezDbgPrint("Tapped");
+        final Option? newOp =
+            await Get.toNamed(kOptionView, arguments: {"option": option})
+                as Option?;
+        if (newOp != null) {
+          widget.viewController.editOption(option.id, newOp);
         }
       },
       customBorder: CircleBorder(),
@@ -119,28 +121,27 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
     );
   }
 
-  Widget _buildChoices(List<Choice> choices) {
+  Widget _buildChoices({required Option option}) {
     return Column(
-      children: List.generate(choices.length, (int index) {
+      children: List.generate(option.choices.length, (int index) {
         return Container(
           child: Row(
             children: [
               Flexible(
                 fit: FlexFit.tight,
                 child: Text(
-                  choices[index].name[userLanguage]!,
+                  option.choices[index].name[userLanguage]!,
                   style: Get.textTheme.bodyText1,
                 ),
               ),
               Switch(
-                value: choices[index].available,
+                value: option.choices[index].available,
                 onChanged: (bool v) {
-                  widget.viewController.switchChoiceAvailablity(
-                      choiceId: choices[index].id,
-                      optionId: widget.option.id,
-                      value: v,
-                      catgeoryId: widget.categoryID ?? null,
-                      itemId: widget.itemId!);
+                  widget.viewController.switchChoiceAv(
+                      choiceId: option.choices[index].id,
+                      optionId: option.id,
+                      value: v);
+                  widget.viewController.itemOptions.refresh();
                 },
                 activeColor: primaryBlueColor,
                 activeTrackColor: SecondaryLightBlueColor,

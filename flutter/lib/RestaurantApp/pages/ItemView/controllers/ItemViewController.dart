@@ -46,25 +46,18 @@ class ItemViewController {
   final Rxn<Item> editableItem = Rxn();
   RxBool newCategoryAdded = RxBool(false);
   Rxn<Category> addedCatgeory = Rxn();
-  StreamSubscription? _restaurantListener;
+  RxBool isLoading = RxBool(false);
 
   // initalisation //
   // the itemId arguments for edit mode //
   void init({String? itemId, String? categoryId}) {
     restaurant.value = _restaurantInfoController.restaurant.value;
-    restaurant.refresh();
-    _restaurantListener =
-        _restaurantInfoController.restaurant.stream.listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-        restaurant.refresh();
-        mezDbgPrint("NEW EVENT FROM ============>>>>ItemViewController");
-      }
-    });
+
     if (restaurant.value != null) {
       prLang = restaurant.value!.primaryLanguage;
       scLang = restaurant.value!.secondaryLanguage!;
       _assignCategories();
+      mezDbgPrint("Item id ===========>>>>> $itemId");
       if (itemId != null) {
         initEditMode(itemId: itemId, categoryId: categoryId);
       }
@@ -107,7 +100,6 @@ class ItemViewController {
         },
         cost: num.parse(itemPriceController.text),
         newOptions: _contructOptions());
-    mezDbgPrint("Contruction item ======================> ${newItem.toJson()}");
     return newItem;
   }
 
@@ -135,49 +127,55 @@ class ItemViewController {
     itemOptions.add(option);
   }
 
-  void switchChoiceAvailablity({
-    required String choiceId,
-    required String optionId,
-    required bool value,
-    required String itemId,
-    String? catgeoryId,
-  }) {
-    _restaurantInfoController.switchChoiceAvailablity(
-        catgeoryId: catgeoryId,
-        choiceId: choiceId,
-        optionId: optionId,
-        itemId: itemId,
-        value: value);
+  void switchChoiceAv(
+      {required String choiceId,
+      required String optionId,
+      required bool value}) {
+    itemOptions
+        .firstWhere((Option p0) => p0.id == optionId)
+        .choices
+        .firstWhere((Choice element) => element.id == choiceId)
+        .available = value;
   }
+
+  //
 
   void editOption(String optionId, Option newOption) {
     final int index =
         itemOptions.indexWhere((Option element) => element.id == optionId);
-    itemOptions[index].choices = newOption.choices;
-    itemOptions[index].optionType = newOption.optionType;
-    itemOptions[index].name = newOption.name;
-    itemOptions[index].costPerExtra = newOption.costPerExtra;
-    itemOptions[index].freeChoice = newOption.freeChoice;
-    itemOptions[index].maximumChoice = newOption.maximumChoice;
-    itemOptions[index].minimumChoice = newOption.minimumChoice;
+    itemOptions[index] = newOption;
   }
 
 // push item to db //
   Future<void> saveItem() async {
-    // uploading image if needed
+    isLoading.value = true;
+    mezDbgPrint("Saving item =========<<<<=========");
+
+    //  uploading image if needed
     if (newImageFile.value != null) {
+      mezDbgPrint("m66are =====> uploading new image");
       await _restaurantInfoController
           .uploadImgToDb(imageFile: newImageFile.value!)
           .then((String value) {
         newImageUrl.value = value;
       });
     }
-    if (newCategoryAdded.isTrue && addedCatgeory.value != null) {
-      await _restaurantInfoController.addCategory(
-          category: addedCatgeory.value!);
+    mezDbgPrint("NEW CATEGORY ? ${newCategoryAdded.value}}");
+
+    if (newCategoryAdded.value == true) {
+      mezDbgPrint("Adding category ======>>>> ${currentCategory.toJson()}");
+      await _restaurantInfoController
+          .addCategory(category: currentCategory.value!)
+          .then((String? value) {
+        if (value != null) {
+          currentCategory.value!.id = value;
+        }
+      });
     }
 
     if (editMode.value == false) {
+      mezDbgPrint(_contructItem().toJson());
+      mezDbgPrint("${currentCategory.value!.id}");
       //  ignore: unawaited_futures
       _restaurantInfoController
           .addItem(
@@ -187,6 +185,7 @@ class ItemViewController {
         mezDbgPrint(stackTrace);
       }).then((value) => Get.back());
     } else {
+      mezDbgPrint("Editing item .......");
       // ignore: unawaited_futures
       _restaurantInfoController
           .editItem(
@@ -198,6 +197,14 @@ class ItemViewController {
         mezDbgPrint(stackTrace);
       }).then((value) => Get.back());
     }
+    isLoading.value = false;
+  }
+
+  // delete item
+  Future<void> deleteItem({required String itemId, String? catgeoryId}) async {
+    await _restaurantInfoController
+        .deleteItem(itemId: itemId, categoryId: catgeoryId)
+        .then((value) => Get.back());
   }
 
   // add categories //
@@ -245,8 +252,5 @@ class ItemViewController {
     return scItemNameController.text.isNotEmpty;
   }
 
-  void dispose() {
-    _restaurantListener?.cancel();
-    _restaurantListener = null;
-  }
+  void dispose() {}
 }

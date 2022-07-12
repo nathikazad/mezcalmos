@@ -25,10 +25,14 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
       Get.find<LanguageController>().userLanguageKey;
   String? _categoryId;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool shouldSave = true;
 
   @override
   void initState() {
     _categoryId = Get.parameters["categoryId"];
+    if (Get.arguments != null) {
+      shouldSave = Get.arguments["shouldSave"] as bool;
+    }
 
     _viewController.init(categoryId: _categoryId);
 
@@ -55,9 +59,13 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
       child: InkWell(
           onTap: () {
             if (_formKey.currentState?.validate() ?? false) {
-              _viewController.saveCategory().then((value) {
+              if (shouldSave) {
+                _viewController.saveCategory().then((value) {
+                  Get.back();
+                });
+              } else {
                 Get.back(result: _viewController.constructCategory());
-              });
+              }
             }
           },
           child: Ink(

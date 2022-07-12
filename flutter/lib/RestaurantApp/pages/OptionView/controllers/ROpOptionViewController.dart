@@ -3,19 +3,26 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+
+enum FormValid { Valid, PrimaryNotValid, SecondaryNotValid }
 
 class ROpOptionViewController {
   // instances //
   RestaurantInfoController _restaurantInfoController =
       Get.find<RestaurantInfoController>();
+
   // Text inputs //
   TextEditingController prOptionName = TextEditingController();
   TextEditingController scOptionName = TextEditingController();
   TextEditingController costPerExtra = TextEditingController();
 
+  // formKeys //
+
   // variables //
+
   Rxn<Restaurant> restaurant = Rxn();
   Rx<OptionType> optionType = Rx(OptionType.ChooseOne);
   RxList<Choice> optionChoices = RxList([]);
@@ -36,51 +43,50 @@ class ROpOptionViewController {
   };
 
 // init //
-  void init({String? optionId, String? itemId}) {
+  void init({Option? option,}) {
     restaurant.value = _restaurantInfoController.restaurant.value;
-    if (optionId != null && itemId != null) {
-      editableOption.value = restaurant.value!
-          .findItemById(itemId)
-          ?.options
-          .firstWhere((Option element) => element.id == optionId);
+    editableOption.value = option;
+
+    if (editableOption.value != null ) {
       initEditMode();
     }
   }
 
 // when editing an existing option //
   void initEditMode() {
-    if (editableOption.value != null) {
-      editMode.value = true;
-      optionType.value = editableOption.value!.optionType;
-      prOptionName.text =
-          editableOption.value!.name[restaurant.value!.primaryLanguage]!;
-      scOptionName.text =
-          editableOption.value!.name[restaurant.value!.secondaryLanguage]!;
-      if (editableOption.value!.optionType == OptionType.Custom) {
-        free.value = editableOption.value!.freeChoice as int;
-        min.value = editableOption.value!.minimumChoice as int;
-        max.value = editableOption.value!.maximumChoice as int;
-        costPerExtra.text = editableOption.value!.costPerExtra.toString();
-      }
-      if (editableOption.value!.choices.isNotEmpty) {
-        editableOption.value!.choices.forEach((Choice element) {
-          optionChoices.add(element);
-          choicesPrices.add(TextEditingController());
-          prChoicesNames.add(TextEditingController());
-          scChoicesNames.add(TextEditingController());
-        });
-      }
-      if (optionChoices.isNotEmpty) {
-        for (int i = 0; i < optionChoices.length; i++) {
-          choicesPrices[i].text = optionChoices[i].cost.toString();
-          prChoicesNames[i].text =
-              optionChoices[i].name[restaurant.value!.primaryLanguage]!;
-          scChoicesNames[i].text =
-              optionChoices[i].name[restaurant.value!.secondaryLanguage]!;
-        }
+    editMode.value = true;
+    optionType.value = editableOption.value!.optionType;
+    prOptionName.text =
+        editableOption.value!.name[restaurant.value!.primaryLanguage]!;
+    scOptionName.text =
+        editableOption.value!.name[restaurant.value!.secondaryLanguage]!;
+    if (editableOption.value!.optionType == OptionType.Custom) {
+      free.value = editableOption.value!.freeChoice as int;
+      min.value = editableOption.value!.minimumChoice as int;
+      max.value = editableOption.value!.maximumChoice as int;
+      costPerExtra.text = editableOption.value!.costPerExtra.toString();
+    }
+    if (editableOption.value!.choices.isNotEmpty) {
+      editableOption.value!.choices.forEach((Choice element) {
+        optionChoices.add(element);
+        choicesPrices.add(TextEditingController());
+        prChoicesNames.add(TextEditingController());
+        scChoicesNames.add(TextEditingController());
+      });
+    }
+    if (optionChoices.isNotEmpty) {
+      for (int i = 0; i < optionChoices.length; i++) {
+        choicesPrices[i].text = optionChoices[i].cost.toString();
+        prChoicesNames[i].text =
+            optionChoices[i].name[restaurant.value!.primaryLanguage]!;
+        scChoicesNames[i].text =
+            optionChoices[i].name[restaurant.value!.secondaryLanguage]!;
       }
     }
   }
+
+// form validation //
+
 
   void switchOptionType(OptionType optionType) {
     this.optionType.value = optionType;
@@ -96,7 +102,7 @@ class ROpOptionViewController {
 
   Option _contructOption() {
     final Option newOption = Option(
-        id: getRandomString(8),
+        id: editMode.value ? editableOption.value!.id : getRandomString(8),
         optionType: optionType.value,
         name: {
           restaurant.value!.primaryLanguage: prOptionName.text,
