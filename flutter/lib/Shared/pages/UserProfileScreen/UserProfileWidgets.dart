@@ -154,61 +154,13 @@ class UserProfileWidgetsClass {
       // return popable button
       return mezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        onClick: () => Get.back(closeOverlays: true),
-        // actionIcons: [
-        //   Obx(
-        //     () => Container(
-        //       padding: const EdgeInsets.all(8),
-        //       alignment: Alignment.centerLeft,
-        //       child: GestureDetector(
-        //         onTap: () =>
-        //             Get.find<LanguageController>().changeUserLanguage(),
-        //         child: Container(
-        //           height: 24,
-        //           width: 24,
-        //           decoration: BoxDecoration(
-        //             shape: BoxShape.circle,
-        //             image: DecorationImage(
-        //               fit: BoxFit.contain,
-        //               image: AssetImage(
-        //                 Get.find<LanguageController>().oppositFlag,
-        //               ),
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   )
-        // ],
+        onClick: () => Get.back<void>(closeOverlays: true),
       );
     } else {
       // none popable buttom
       return mezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        actionIcons: [
-          // Obx(
-          //   () => Align(
-          //     alignment: Alignment.centerLeft,
-          //     child: GestureDetector(
-          //       onTap: () =>
-          //           Get.find<LanguageController>().changeUserLanguage(),
-          //       child: Container(
-          //         height: 24,
-          //         width: 24,
-          //         decoration: BoxDecoration(
-          //           shape: BoxShape.circle,
-          //           image: DecorationImage(
-          //             fit: BoxFit.contain,
-          //             image: AssetImage(
-          //               Get.find<LanguageController>().oppositFlag,
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // )
-        ],
+        onClick: null,
       );
     }
   }

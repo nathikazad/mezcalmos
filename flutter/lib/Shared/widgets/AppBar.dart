@@ -25,7 +25,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   Widget _getRightLeading() {
     switch (leftBtnType) {
       case AppBarLeftButtonType.Back:
-        return _BackButtonAppBar();
+        return _BackButtonAppBar(onClick);
       case AppBarLeftButtonType.Menu:
         return _MenuButtonAppBar();
       case AppBarLeftButtonType.Lang:
@@ -100,12 +100,12 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       ));
 }
 
-Widget _BackButtonAppBar() {
+Widget _BackButtonAppBar(Function? onclick) {
   return Transform.scale(
     scale: 0.6,
     child: InkWell(
       onTap: () {
-        Get.back();
+        onclick?.call() ?? Get.back();
       },
       child: Ink(
         decoration: BoxDecoration(
