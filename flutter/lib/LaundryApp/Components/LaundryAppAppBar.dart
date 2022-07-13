@@ -23,7 +23,7 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return mezcalmosAppBar(leftBtnType,
         title: title,
-        onClick: onClick,
+        onClick: () => onClick?.call(),
         showNotifications: true,
         ordersRoute: kPastOrdersListView);
   }

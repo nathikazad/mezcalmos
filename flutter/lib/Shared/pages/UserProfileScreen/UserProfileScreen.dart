@@ -92,41 +92,56 @@ class _UserProfileState extends State<UserProfile>
                       isImageBeingUploaded: isUploadingImg.value,
                       clickedSave: clickedSave.value,
                     ),
-                    SizedBox(height: 10),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          showConfirmationDialog(
-                            context,
-                            title: "Confirm account deletion!",
-                            primaryButtonText: "Yes, delete!",
-                            secondaryButtonText: "Cancel",
-                            helperText:
-                                "Clicking yes will permanently delete you account, are you sure?",
-                            onYesClick: () async =>
-                                _authController.deleteAccount(),
-                          );
-                        },
-                        child: Container(
-                          width: Get.width,
-                          decoration: BoxDecoration(
-                            // color: Colors.red.shade100,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          padding: EdgeInsets.all(8),
-                          child: Text(
-                            "Delete account",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Montserrat',
+                    if (widget.userProfileController.stateMode.value ==
+                        UserProfileMode.Show) ...[
+                      SizedBox(height: 10),
+                      Center(
+                        child: InkWell(
+                          onTap: () {
+                            showConfirmationDialog(
+                              context,
+                              title: "Confirm account deletion!",
+                              primaryButtonText: "Yes, delete!",
+                              secondaryButtonText: "Cancel",
+                              helperText:
+                                  "Clicking yes will permanently delete you account, are you sure?",
+                              onYesClick: () async =>
+                                  _authController.deleteAccount(),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 24),
+                            width: Get.width,
+                            // margin: ,
+                            decoration: BoxDecoration(
+                              // color: Colors.red.shade100,
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(
+                                width: 1,
+                                color: Colors.red,
+                              ),
+                            ),
+                            padding: EdgeInsets.all(8),
+                            child: Text(
+                              "Delete account",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 18,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                              ),
+                              // style: TextStyle(
+                              //   color: Colors.red,
+                              //   fontSize: 15,
+                              //   fontWeight: FontWeight.w600,
+                              //   fontFamily: 'Montserrat',
+                              // ),
                             ),
                           ),
                         ),
-                      ),
-                    )
+                      )
+                    ]
                   ],
                 ),
                 if (isUploadingImg.value)
@@ -218,7 +233,9 @@ class _UserProfileState extends State<UserProfile>
     }
 
     //3. check if name only letters
-    if (!widget.userProfileController.userName.value!.isAlphabetOnly) {
+    if (!widget.userProfileController.userName.value!
+        .replaceAll(' ', '')
+        .isAlphabetOnly) {
       widget.userProfileController.setErrorTextForXDuration(
         _i18n()['nameMustBeLettersOnly'],
         duration: Duration(seconds: 5),
@@ -234,6 +251,9 @@ class _UserProfileState extends State<UserProfile>
       );
       return;
     }
+    // We trim the user name given :
+    widget.userProfileController.userName.value =
+        widget.userProfileController.userName.value!.trim();
     // we set the new changes.
     clickedSave.value = true;
     if (_authController.user!.name !=
