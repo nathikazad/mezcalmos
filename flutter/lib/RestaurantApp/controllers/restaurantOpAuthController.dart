@@ -21,7 +21,7 @@ class RestaurantOpAuthController extends GetxController {
   AuthController _authController = Get.find<AuthController>();
   RestaurantInfoController _restaurantInfoController =
       Get.find<RestaurantInfoController>();
-  OrderController _orderController = Get.find<OrderController>();
+  ROpOrderController _orderController = Get.find<ROpOrderController>();
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
   String? restaurantId;

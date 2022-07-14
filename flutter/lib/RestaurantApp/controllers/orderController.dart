@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 
-class OrderController extends GetxController {
+class ROpOrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   ForegroundNotificationsController _foregroundNotificationsController =
       Get.find<ForegroundNotificationsController>();
@@ -195,7 +195,7 @@ class OrderController extends GetxController {
     mezDbgPrint(
         "CURRENT ORDER CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! $hashCode");
     mezDbgPrint(
-        "--------------------> CurrentOrderController::onClose called  !");
+        "--------------------> CurrentROpOrderController::onClose called  !");
     print("[+] Orderontroller::onClose ---------> Was invoked !");
     _currentOrdersListener?.cancel();
     _currentOrdersListener = null;

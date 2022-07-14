@@ -1,25 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
-        ['DashboardView']['OrdersListView']['LaundryOpOrdersListView']
-    ['components']['LaundryOpOrderCard'];
+// dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
+//         ['DashboardView']['OrdersListView']['LaundryOpOrdersListView']
+//     ['components']['ROpOrderCard'];
 
-class LaundryOpOrderCard extends StatelessWidget {
-  const LaundryOpOrderCard({
+class ROpOrderCard extends StatelessWidget {
+  const ROpOrderCard({
     Key? key,
-    required this.laundryOrder,
+    required this.order,
   }) : super(key: key);
 
-  final LaundryOrder laundryOrder;
+  final RestaurantOrder order;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class LaundryOpOrderCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          Get.toNamed(getLaundryOpOrderRoute(laundryOrder.orderId));
+          //   Get.toNamed(getLaundryOpOrderRoute(order.orderId));
         },
         child: Container(
           padding: EdgeInsets.all(8),
@@ -45,14 +44,14 @@ class LaundryOpOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          laundryOrder.customer.name,
+                          order.customer.name,
                           style: textTheme.bodyText1,
                         ),
                         SizedBox(
                           height: 5,
                         ),
                         Text(
-                          laundryOrder.to.address,
+                          order.to.address,
                           style: textTheme.bodyText2,
                         ),
                       ],
@@ -61,11 +60,11 @@ class LaundryOpOrderCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(laundryOrder.orderTime.toDayAmPm()),
+                      Text(order.orderTime.toDayAmPm()),
                       CircleAvatar(
                         radius: 25,
-                        backgroundImage: CachedNetworkImageProvider(
-                            laundryOrder.customer.image),
+                        backgroundImage:
+                            CachedNetworkImageProvider(order.customer.image),
                       ),
                     ],
                   )
@@ -85,7 +84,7 @@ class LaundryOpOrderCard extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
                     Text(
-                      " \$${laundryOrder.costsByType?.weighedCost ?? "-"}",
+                      " \$${order.itemsCost}",
                       style: Get.textTheme.bodyText1,
                     ),
                     Spacer(),
@@ -102,7 +101,7 @@ class LaundryOpOrderCard extends StatelessWidget {
 
   Widget _orderImageComponent() {
     return CachedNetworkImage(
-      imageUrl: laundryOrder.customer.image,
+      imageUrl: order.customer.image,
       fit: BoxFit.fill,
       imageBuilder: (BuildContext context, ImageProvider<Object> image) {
         return Container(
@@ -147,9 +146,9 @@ class LaundryOpOrderCard extends StatelessWidget {
   }
 
   Widget getOrderWidget() {
-    switch (laundryOrder.status) {
-      case LaundryOrderStatus.CancelledByAdmin:
-      case LaundryOrderStatus.CancelledByCustomer:
+    switch (order.status) {
+      case RestaurantOrderStatus.CancelledByAdmin:
+      case RestaurantOrderStatus.CancelledByCustomer:
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
@@ -162,7 +161,7 @@ class LaundryOpOrderCard extends StatelessWidget {
           ),
         );
 
-      case LaundryOrderStatus.Delivered:
+      case RestaurantOrderStatus.Delivered:
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(

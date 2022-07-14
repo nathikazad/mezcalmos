@@ -13,7 +13,7 @@ class AuthHooks {
         "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Executed.");
     await Get.delete<MessageController>(force: true);
 
-    await Get.delete<OrderController>(force: true);
+    await Get.delete<ROpOrderController>(force: true);
     await Get.delete<RestaurantInfoController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
@@ -28,7 +28,7 @@ class AuthHooks {
     Get.put(BackgroundNotificationsController(), permanent: true);
 
     Get.put(RestaurantInfoController(), permanent: true);
-    Get.put(OrderController(), permanent: true);
+    Get.put(ROpOrderController(), permanent: true);
     Get.put(RestaurantOpAuthController(), permanent: true);
 
     Get.put(MessageController(), permanent: true);

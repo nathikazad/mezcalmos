@@ -6,7 +6,7 @@ import 'package:mezcalmos/RestaurantApp/pages/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/LaundryOpOrderView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/PastOrdresList/LaundryOpPastOrdersList.dart';
+import 'package:mezcalmos/RestaurantApp/pages/PastOrdresList/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -53,8 +53,7 @@ class XRouter {
         GetPage(
             name: kCurrentOrdersListView,
             page: () => LaundryOpCurrentOrdersListView()),
-        GetPage(
-            name: kPastOrdersListView, page: () => LaundryOpPastOrdersList()),
+        GetPage(name: kPastOrdersListView, page: () => ROpPastOrdersList()),
         GetPage(name: kHomeRoute, page: () => RestaurantWrapper()),
         GetPage(
           name: kCategoryView,

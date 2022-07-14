@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/components/ROpOrderCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -22,31 +23,31 @@ class LaundryOpCurrentOrdersListView extends StatefulWidget {
 
 class _LaundryOpCurrentOrdersListViewState
     extends State<LaundryOpCurrentOrdersListView> {
-  OrderController orderController = Get.find<OrderController>();
+  ROpOrderController orderController = Get.find<ROpOrderController>();
   RxList<RestaurantOrder> inProcessOrders = RxList.empty();
   RxList<RestaurantOrder> pastOrders = RxList.empty();
   StreamSubscription? _inProcessOrdersListener;
   StreamSubscription? _pastOrdersListener;
   @override
   void initState() {
-    // inProcessOrders = orderController.currentOrders;
-    // pastOrders = orderController.pastOrders;
-    // _inProcessOrdersListener = orderController.currentOrders.stream
-    //     .listen((List<RestaurantOrder> event) {
-    //   inProcessOrders.value = event;
-    // });
-    // _pastOrdersListener =
-    //     orderController.pastOrders.stream.listen((List<RestaurantOrder> event) {
-    //   pastOrders.value = event;
-    // });
+    inProcessOrders = orderController.currentOrders;
+    pastOrders = orderController.pastOrders;
+    _inProcessOrdersListener = orderController.currentOrders.stream
+        .listen((List<RestaurantOrder> event) {
+      inProcessOrders.value = event;
+    });
+    _pastOrdersListener =
+        orderController.pastOrders.stream.listen((List<RestaurantOrder> event) {
+      pastOrders.value = event;
+    });
 
     super.initState();
   }
 
   @override
   void dispose() {
-    // _pastOrdersListener?.cancel();
-    // _inProcessOrdersListener?.cancel();
+    _pastOrdersListener?.cancel();
+    _inProcessOrdersListener?.cancel();
 
     super.dispose();
   }
@@ -72,26 +73,25 @@ class _LaundryOpCurrentOrdersListViewState
                   style: textTheme.bodyText1,
                 ),
                 const SizedBox(height: 5),
-                Text("hhhh")
-                // (inProcessOrders.isNotEmpty)
-                //     ? ListView.builder(
-                //         shrinkWrap: true,
-                //         itemCount: inProcessOrders.length,
-                //         physics: const NeverScrollableScrollPhysics(),
-                //         itemBuilder: (_, int index) {
-                //           return LaundryOpOrderCard(
-                //             laundryOrder: inProcessOrders[index],
-                //           );
-                //         },
-                //       )
-                //     : Container(
-                //         margin: const EdgeInsets.all(16),
-                //         alignment: Alignment.center,
-                //         child: Text(
-                //           "No current orders at the moment",
-                //           style: Get.textTheme.bodyText2,
-                //         ),
-                //       ),
+                (inProcessOrders.isNotEmpty)
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: inProcessOrders.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (_, int index) {
+                          return ROpOrderCard(
+                            order: inProcessOrders[index],
+                          );
+                        },
+                      )
+                    : Container(
+                        margin: const EdgeInsets.all(16),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "No current orders at the moment",
+                          style: Get.textTheme.bodyText2,
+                        ),
+                      ),
               ],
             ),
           ),
