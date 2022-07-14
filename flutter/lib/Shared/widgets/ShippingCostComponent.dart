@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -43,7 +44,7 @@ class ShippingCostComponent extends StatelessWidget {
                   child: Text(
                     "${_i18n()["free"]}",
                     style: Get.textTheme.bodyText1
-                        ?.copyWith(color: primaryBlueColor),
+                        ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
                   ),
                 )
               ],

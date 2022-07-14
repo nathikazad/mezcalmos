@@ -43,7 +43,8 @@ class OrderInfosCard extends StatelessWidget {
                 // left column
 
                 Flexible(
-                  flex: 4,
+                  flex: 7,
+                  fit: FlexFit.tight,
                   child: Flex(
                     direction: Axis.vertical,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -79,7 +80,7 @@ class OrderInfosCard extends StatelessWidget {
                 ),
 
                 Flexible(
-                  flex: 2,
+                  flex: 3,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,

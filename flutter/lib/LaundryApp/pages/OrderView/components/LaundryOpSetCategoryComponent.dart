@@ -11,16 +11,35 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpSetCategoryComponent'];
 
-class LaundyOpSetCategoryComponent extends StatelessWidget {
+class LaundyOpSetCategoryComponent extends StatefulWidget {
   LaundyOpSetCategoryComponent({Key? key, required this.order})
       : super(key: key);
   final LaundryOrder order;
+
+  @override
+  State<LaundyOpSetCategoryComponent> createState() => _LaundyOpSetCategoryComponentState();
+}
+
+class _LaundyOpSetCategoryComponentState extends State<LaundyOpSetCategoryComponent> {
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+
+  late OpLaundryInfoController laundryInfoController;
+
 
   OrderController orderController = Get.find<OrderController>();
+  @override
+  void initState() {
+ Get.put(OpLaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<OpLaundryInfoController>();
+
+    super.initState();
+  }
+  @override
+  void dispose() {
+    Get.delete<OpLaundryInfoController>(force: true);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +65,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
               height: 10,
             ),
             _PricingTable(),
-            if (order.isAtLaundry()) setItemsWeightButton(context),
+            if (widget.order.isAtLaundry()) setItemsWeightButton(context),
           ],
         ),
       ),
@@ -80,9 +99,8 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
   }
 
 //----------------------------------// ------>>>> FUNCTIONS <<<<----------//--------------------------------//
-// button click functions
   Function()? handleClick({required BuildContext context}) {
-    if (order.isAtLaundry()) {
+    if (widget.order.isAtLaundry()) {
       return assignNewCategory(context: context);
     } else {
       return null;
@@ -108,7 +126,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return SetOrderWeightBottomSheet(
-              order: order,
+              order: widget.order,
               editMode: editMode,
               oldItem: laundryOrderCostLineItem,
             );
@@ -118,12 +136,12 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
 
   // delete item
   void deleteItem(LaundryOrderCostLineItem item) {
-    final LaundryOrderCosts? oldCosts = order.costsByType;
+    final LaundryOrderCosts? oldCosts = widget.order.costsByType;
     if (oldCosts != null) {
       if (oldCosts.lineItems.length > 1) {
         oldCosts.lineItems.removeWhere(
             (LaundryOrderCostLineItem element) => element.name == item.name);
-        orderController.setOrderWeight(order.orderId, oldCosts);
+        orderController.setOrderWeight(widget.order.orderId, oldCosts);
       } else {
         Get.snackbar(
           "${_i18n()["error"]}",
@@ -185,32 +203,32 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
 
   List<DataRow> _PricingTableRows() {
     return List.generate(
-        order.costsByType?.lineItems.length ?? 0,
+        widget.order.costsByType?.lineItems.length ?? 0,
         (int index) => DataRow(cells: [
               DataCell(Container(
                 width: 100,
                 child: Text(
-                  order.costsByType!.lineItems[index].getRightNameForUser(),
+                  widget.order.costsByType!.lineItems[index].getRightNameForUser(),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               )),
               DataCell(Center(
                   child:
-                      Text("\$${order.costsByType!.lineItems[index].cost}"))),
+                      Text("\$${widget.order.costsByType!.lineItems[index].cost}"))),
               DataCell(Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("${order.costsByType!.lineItems[index].weight} "),
-                  if (order.isAtLaundry())
+                  Text("${widget.order.costsByType!.lineItems[index].weight} "),
+                  if (widget.order.isAtLaundry())
                     InkWell(
                       customBorder: CircleBorder(),
-                      onTap: (order.isAtLaundry())
+                      onTap: (widget.order.isAtLaundry())
                           ? assignNewCategory(
                               context: Get.context!,
                               editMode: true,
                               laundryOrderCostLineItem:
-                                  order.costsByType?.lineItems[index])
+                                  widget.order.costsByType?.lineItems[index])
                           : null,
                       child: Ink(
                           padding: const EdgeInsets.all(5),
@@ -229,7 +247,7 @@ class LaundyOpSetCategoryComponent extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text("\$${order.costsByType!.lineItems[index].weighedCost}"),
+                  Text("\$${widget.order.costsByType!.lineItems[index].weighedCost}"),
                 ],
               )),
             ]));

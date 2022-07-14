@@ -81,7 +81,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Divider(),
-
                       Padding(
                         padding: const EdgeInsets.only(top: 6),
                         child: Row(
@@ -123,13 +122,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                           ],
                         ),
                       ),
-
-                      // Container(
-                      //   padding: EdgeInsets.only(left: 30),
-                      //   child: Row(
-                      //     children: serviceProviderTimeWidgets,
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -233,20 +225,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                // if (showMsgIconInOneLine) ...[
-                //   SizedBox(width: 9),
-                //   Obx(
-                //     () => MessageButton(
-                //       withPadding: false,
-                //       onTap: onServiceMsgClick,
-                //       showRedDot: (_serviceDriverChatId() != null)
-                //           ? Get.find<OrderController>()
-                //               .hasNewMessageNotification(
-                //                   _serviceDriverChatId()!)
-                //           : false,
-                //     ),
-                //   )
-                // ],
               ],
             ),
             if (!showMsgIconInOneLine)
@@ -255,18 +233,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   Row(
                     children: serviceProviderTimeWidgets,
                   ),
-                  // SizedBox(width: 15),
-                  // Obx(
-                  //   () => MessageButton(
-                  //     withPadding: false,
-                  //     onTap: onServiceMsgClick,
-                  //     showRedDot: (_serviceDriverChatId() != null)
-                  //         ? Get.find<OrderController>()
-                  //             .hasNewMessageNotification(
-                  //                 _serviceDriverChatId()!)
-                  //         : false,
-                  //   ),
-                  // ),
                 ],
               ),
           ],
@@ -312,20 +278,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // if (showMsgIconInOneLine) ...[
-                //   SizedBox(width: 9),
-                //   Obx(
-                //     () => MessageButton(
-                //       withPadding: false,
-                //       onTap: onServiceMsgClick,
-                //       showRedDot: (_serviceDriverChatId() != null)
-                //           ? Get.find<OrderController>()
-                //               .hasNewMessageNotification(
-                //                   _serviceDriverChatId()!)
-                //           : false,
-                //     ),
-                //   ),
-                // ]
               ],
             ),
             if (!showMsgIconInOneLine)
@@ -334,18 +286,6 @@ class AnimatedOrderInfoCard extends StatelessWidget {
                   Row(
                     children: customerTimeWidgets,
                   ),
-                  // SizedBox(width: 9),
-                  // Obx(
-                  //   () => MessageButton(
-                  //     withPadding: false,
-                  //     onTap: onCustomerMsgClick,
-                  //     showRedDot: (_customerDriverChatId() != null)
-                  //         ? Get.find<OrderController>()
-                  //             .hasNewMessageNotification(
-                  //                 _customerDriverChatId()!)
-                  //         : false,
-                  //   ),
-                  // ),
                 ],
               ),
           ],

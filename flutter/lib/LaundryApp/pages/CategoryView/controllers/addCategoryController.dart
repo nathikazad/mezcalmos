@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
@@ -21,9 +22,8 @@ class AddCategoryController {
       TextEditingController();
   TabController? tabController;
 
-  // @m66are Work //
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+  late OpLaundryInfoController laundryInfoController;
+
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
   final Rxn<Laundry> laundry = Rxn<Laundry>();
@@ -36,14 +36,19 @@ class AddCategoryController {
   RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
   RxBool editMode = RxBool(false);
   String? editableCategoryId;
+  late String laundryId;
 
   // INIT STATE ///
-  void init({String? categoryId}) {
-    laundry.value = laundryInfoController.laundry.value;
+  Future<void> init({required String laundryID, String? categoryId}) async {
+    laundryId = laundryID;
+    mezDbgPrint("From init =======> $categoryId");
+    Get.put(OpLaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<OpLaundryInfoController>();
+    laundry.value = await laundryInfoController.getLaundryAsFuture(laundryId);
     if (laundry.value != null) {
       initLanguages();
       assignCategories();
-      if (categoryId != null) {
+      if (categoryId != null && categoryId != ":categoryId") {
         initEditMode(categoryId);
       }
     }
@@ -64,22 +69,26 @@ class AddCategoryController {
 
   void initEditMode(String categoryId) {
     editMode.value = true;
+
     editableCategoryId = categoryId;
+    mezDbgPrint("Cattttttttt ====>$editableCategoryId");
 
-    copyOfCategory.value = categories.firstWhereOrNull(
-        (LaundryCostLineItem element) => element.id == categoryId);
+    copyOfCategory.value = laundry.value!.laundryCosts.lineItems
+        .firstWhere((LaundryCostLineItem element) => element.id == categoryId);
 
-    if (copyOfCategory.value!.name[primaryLang.value] != null) {
-      primaryCategoryNameController.text =
-          copyOfCategory.value!.name[primaryLang.value]!;
+    if (copyOfCategory.value != null) {
+      if (copyOfCategory.value!.name[primaryLang.value] != null) {
+        primaryCategoryNameController.text =
+            copyOfCategory.value!.name[primaryLang.value]!;
+      }
+      if (copyOfCategory.value!.name[secondaryLang.value] != null) {
+        secondaryCategoryNameController.text =
+            copyOfCategory.value!.name[secondaryLang.value]!;
+      }
+
+      categoryPricingController.text =
+          copyOfCategory.value?.cost.toString() ?? "";
     }
-    if (copyOfCategory.value!.name[secondaryLang.value] != null) {
-      secondaryCategoryNameController.text =
-          copyOfCategory.value!.name[secondaryLang.value]!;
-    }
-
-    categoryPricingController.text =
-        copyOfCategory.value?.cost.toString() ?? "";
   }
 
   void addCategory() {
@@ -95,7 +104,9 @@ class AddCategoryController {
 
     laundryCosts.value!.lineItems = categories;
 
-    laundryInfoController.setCosts(laundryCosts.value!).then((value) {
+    laundryInfoController
+        .setCosts(laundryId: laundryId, laundryCosts: laundryCosts.value!)
+        .then((value) {
       Get.back();
     });
   }
@@ -111,7 +122,9 @@ class AddCategoryController {
     };
     categories.value[index].cost = num.parse(categoryPricingController.text);
     laundryCosts.value!.lineItems = categories;
-    laundryInfoController.setCosts(laundryCosts.value!).then((value) {
+    laundryInfoController
+        .setCosts(laundryId: laundryId, laundryCosts: laundryCosts.value!)
+        .then((value) {
       Get.back();
     });
   }
@@ -124,7 +137,9 @@ class AddCategoryController {
     }
   }
 
-  String getRightName() {
+  String? getRightName() {
+    mezDbgPrint(
+        "copyofCate ================================> ${copyOfCategory.value!.name}");
     final String availableName =
         copyOfCategory.value!.name[copyOfCategory.value!.name.keys.first]!;
     if (copyOfCategory.value!.name[primaryLang] != null) {
@@ -132,5 +147,9 @@ class AddCategoryController {
     } else {
       return availableName;
     }
+  }
+
+  void dispose() {
+    Get.delete<OpLaundryInfoController>(force: true);
   }
 }

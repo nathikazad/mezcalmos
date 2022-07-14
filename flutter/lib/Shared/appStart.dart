@@ -64,7 +64,7 @@ class StartingPoint extends StatefulWidget {
     required this.signOutCallback,
     required this.routes,
     this.sideMenuItems,
-    this.locationPermissionType = LocationPermissionType.Null,
+    this.locationPermissionType = LocationPermissionType.None,
   });
 
   @override

@@ -28,7 +28,9 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return mezcalmosAppBar(leftBtnType,
-        title: title, onClick: onClick, actionIcons: [getAppbarIconsButton()]);
+        title: title,
+        onClick: onClick?.call(),
+        actionIcons: [getAppbarIconsButton()]);
   }
 
   Widget _ordersAppBarIcon() {

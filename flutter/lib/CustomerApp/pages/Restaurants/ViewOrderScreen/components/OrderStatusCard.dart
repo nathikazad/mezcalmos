@@ -81,18 +81,18 @@ class OrderStatusCard extends StatelessWidget {
     switch (order.status) {
       case RestaurantOrderStatus.PreparingOrder:
         if (order.estimatedFoodReadyTime != null) {
-          return "${_i18n()["willBePicked"]} ${order.estimatedFoodReadyTime!.getEstimatedTime()}";
+          return "${_i18n()["willBePicked"]}\n${order.estimatedFoodReadyTime!.getEstimatedTime()}";
         }
 
         break;
       case RestaurantOrderStatus.ReadyForPickup:
         if (order.estimatedPickupFromServiceProviderTime != null) {
-          return "${_i18n()["willBePicked"]} ${order.estimatedPickupFromServiceProviderTime!.getEstimatedTime()}";
+          return "${_i18n()["willBePicked"]}\n${order.estimatedPickupFromServiceProviderTime!.getEstimatedTime()}";
         }
         break;
       case RestaurantOrderStatus.OnTheWay:
         if (order.estimatedDropoffAtCustomerTime != null) {
-          return "${_i18n()["willBeDelivered"]} ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
+          return "${_i18n()["willBeDelivered"]}\n${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
         }
 
         break;
@@ -153,7 +153,7 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
         child: Icon(
           Icons.check_circle,
           size: 40,
-          color: secondaryLightBlueColor,
+          color: primaryBlueColor,
         ),
       );
 

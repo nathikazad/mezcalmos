@@ -24,6 +24,9 @@
                     },
                     "phone": {
                         ".write": "$uid === auth.uid"
+                    },
+                    "deleted": {
+                        ".write": "$uid === auth.uid"
                     }
                 },
                 "auth": {
@@ -369,7 +372,7 @@
             }
         },
         "laundries": {
-            ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true || root.child('deliveryDrivers/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized' || ",
+            ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true || root.child('deliveryDrivers/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'",
             "info": {
                 "$laundryId": {
                     ".read": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)",
@@ -378,12 +381,12 @@
             },
             "inProcessOrders": {
                 "$uid": {
-                    ".read": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)"
+                    ".read": "root.child('laundries/info/' + $uid + '/state/operators').hasChild(auth.uid)"
                 }
             },
             "pastOrders": {
                 "$uid": {
-                    ".read": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)"
+                    ".read": "root.child('laundries/info/' + $uid + '/state/operators').hasChild(auth.uid)"
                 }
             }
         },

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
@@ -37,13 +38,15 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (!isImageExist)
+            if (isImageExist && widget.item.image != null)
               Expanded(
                 child: CircleAvatar(
                   radius: 45,
                   backgroundImage:
-                      CachedNetworkImageProvider(widget.item.image ?? ""),
+                      CachedNetworkImageProvider(widget.item.image!),
                   onBackgroundImageError: (Object e, StackTrace? s) {
+                    mezDbgPrint(
+                        "Item ${widget.item.name} ==========> Image url corrupted please check ");
                     setState(() {
                       isImageExist = false;
                     });

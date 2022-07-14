@@ -15,9 +15,11 @@ class Cart {
   String? notes;
   PaymentType paymentType = PaymentType.Cash;
   num? shippingCost;
-  RouteInformation? routeInformation;
+  RouteInformation? _routeInformation;
 
   Cart({this.restaurant});
+
+  set setRouteInformation(RouteInformation? info) => _routeInformation = info;
 
   Cart.fromCartData(dynamic cartData, this.restaurant, num? shippingPrice) {
     if (restaurant != null) {
@@ -36,7 +38,7 @@ class Cart {
           : null;
       notes = cartData["notes"];
       shippingCost = shippingPrice ?? 50;
-      routeInformation = cartData['routeInformation'] == null
+      _routeInformation = cartData['routeInformation'] == null
           ? null
           : RouteInformation(
               polyline: cartData['routeInformation']['polyline'],
@@ -58,7 +60,7 @@ class Cart {
 
     return <String, dynamic>{
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
-      "routeInformation": routeInformation?.toJson(),
+      "routeInformation": _routeInformation?.toJson(),
       "serviceProviderId": restaurant?.info.id,
       "quantity": quantity(),
       "cost": totalCost().toInt(),

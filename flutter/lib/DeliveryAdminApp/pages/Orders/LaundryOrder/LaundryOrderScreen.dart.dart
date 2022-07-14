@@ -418,7 +418,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
           );
         }
         // only if pickUpDriver not null
-        if (order.value!.pickupDriver != null) {
+        if (order.value!.pickupDriver?.location != null) {
           mapController.addOrUpdateUserMarker(
             latLng: order.value!.pickupDriver!.location!,
             markerId: order.value!.pickupDriver!.id,
@@ -448,7 +448,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
         }
 
         // we keep updating the delivery's
-        if (order.value!.dropoffDriver != null) {
+        if (order.value!.dropoffDriver?.location != null) {
           mapController.addOrUpdateUserMarker(
             latLng: order.value!.dropoffDriver!.location!,
             markerId: order.value!.dropoffDriver!.id,

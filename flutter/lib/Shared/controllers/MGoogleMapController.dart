@@ -44,7 +44,7 @@ class MGoogleMapController {
   ///
   /// We save it in _taxiDriverImgDescruptorCopy.
   List<int>? _taxiDriverImgDescruptorCopy;
-  RxDouble markersDefaultSize = 10.h.obs;
+  RxDouble markersDefaultSize = 60.0.obs;
 
   MinMaxZoomPreference? minMaxZoomPrefs;
 

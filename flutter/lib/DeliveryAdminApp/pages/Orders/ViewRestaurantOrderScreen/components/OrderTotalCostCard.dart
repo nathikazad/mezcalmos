@@ -21,13 +21,16 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         alignment: Alignment.centerLeft,
-        child: Text("${_i18n()['totalCost']}",
-            style: TextStyle(
-                color: const Color(0xff000f1c),
-                fontFamily: "psb",
-                fontStyle: FontStyle.normal,
-                fontSize: 14.0),
-            textAlign: TextAlign.left),
+        child: Text(
+          "${_i18n()['totalCost']}",
+          style: TextStyle(
+            color: const Color(0xff000f1c),
+            fontFamily: "psb",
+            fontStyle: FontStyle.normal,
+            fontSize: 14.0,
+          ),
+          textAlign: TextAlign.left,
+        ),
       ),
       SizedBox(
         height: 10,
@@ -52,20 +55,24 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                   children: [
-                    Text("${_i18n()['deliveryCost']}",
-                        style: const TextStyle(
-                            color: Color(0xff000f1c),
-                            fontFamily: "psr",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 20.0),
-                        textAlign: TextAlign.left),
+                    Text(
+                      "${_i18n()['deliveryCost']}",
+                      style: const TextStyle(
+                        color: Color(0xff000f1c),
+                        fontFamily: "psr",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 20.0,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
                     Spacer(),
                     Row(
                       children: [
                         Text(
                           order.value!.shippingCost.toPriceString(),
                           style: Get.textTheme.bodyText1?.copyWith(
-                              decoration: TextDecoration.lineThrough),
+                            decoration: TextDecoration.lineThrough,
+                          ),
                         ),
                         SizedBox(
                           width: 5,
@@ -95,13 +102,16 @@ Widget orderTotalCostCard(Rxn<RestaurantOrder> order) {
                 child: Row(
                   children: <Widget>[
                     // Total
-                    Text("${_i18n()['total']}",
-                        style: const TextStyle(
-                            color: Color(0xff000f1c),
-                            fontFamily: "psr",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 20.0),
-                        textAlign: TextAlign.left),
+                    Text(
+                      "${_i18n()['total']}",
+                      style: const TextStyle(
+                        color: Color(0xff000f1c),
+                        fontFamily: "psr",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 20.0,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
                     const Spacer(),
                     Text(
                       "  \$${currency.format(order.value!.cost)}",

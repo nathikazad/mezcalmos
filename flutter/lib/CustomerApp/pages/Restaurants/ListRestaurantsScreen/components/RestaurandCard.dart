@@ -29,6 +29,7 @@ class RestaurantCard extends StatelessWidget {
         Get.find<LanguageController>().userLanguageKey;
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
+      margin: EdgeInsets.only(bottom: 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: onClick,
@@ -64,20 +65,19 @@ class RestaurantCard extends StatelessWidget {
                       Container(
                         //  alignment: Alignment.bottomLeft,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Flexible(
-                              flex: 1,
+                              flex: 2,
+                              fit: FlexFit.tight,
                               child: Text(_getDollarsSign(),
                                   style: txt.bodyText1?.copyWith(
                                     color: Colors.grey.shade800,
                                   )),
                             ),
-                            SizedBox(
-                              width: 5,
-                            ),
                             Flexible(
-                              flex: 4,
+                              flex: 7,
+                              fit: FlexFit.tight,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -85,10 +85,8 @@ class RestaurantCard extends StatelessWidget {
                                     Icons.delivery_dining,
                                     color: Colors.grey.shade800,
                                   ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
                                   Flexible(
+                                    flex: 5,
                                     child: ShippingCostComponent(
                                       shippingCost: shippingPrice,
                                       alignment: MainAxisAlignment.start,

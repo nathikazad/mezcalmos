@@ -13,10 +13,9 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
 import * as userChanges from './utilities/userChanges'
 export const user = {
   processSignUp: userChanges.processSignUp,
-  addName: userChanges.addName,
-  changeName: userChanges.changeName,
-  addPhoto: userChanges.addPhoto,
-  changePhoto: userChanges.changePhoto
+  changeName: userChanges.onNameUpdate,
+  changePhoto: userChanges.onPhotoUpdate,
+  deleteUser : userChanges.onDeleteUpdate
 }
 
 import * as otpAuth from './utilities/otpAuth'
@@ -50,6 +49,7 @@ export const taxi = {
 
 import * as laundryStatusChange from './laundry/adminStatusChanges'
 export const laundry = {
+  createLaundry: require("./laundry/createNewLaundry"),
   requestLaundry: require("./laundry/laundryRequest"),
   readyForDeliveryOrder: laundryStatusChange.readyForDeliveryOrder,
   cancelFromCustomer: require("./laundry/cancelLaundryFromCustomer"),

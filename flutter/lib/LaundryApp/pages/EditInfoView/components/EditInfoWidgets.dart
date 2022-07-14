@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:sizer/sizer.dart';
@@ -58,35 +59,41 @@ class EditInfoWidgets {
           padding: const EdgeInsets.all(5),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Flexible(
-                flex: 4,
-                fit: FlexFit.tight,
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Text(
-                    "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
-                    style: Get.textTheme.bodyText2
-                        ?.copyWith(fontWeight: FontWeight.w700),
-                  ),
+              Container(
+                // margin: const EdgeInsets.symmetric(horizontal: 5),
+                width: 15.w,
+                child: Text(
+                  "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
+                  style: Get.textTheme.bodyText2
+                      ?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
+              SizedBox(
+                width: 5,
+              ),
               Flexible(
-                  flex: 4,
-                  fit: FlexFit.tight,
+                  flex: 6,
+                  fit: FlexFit.loose,
                   child: editInfoController
                           .newSchedule.value!.openHours[weekday]!.isOpen
-                      ? Row(children: [
-                          Text(
-                            "${editInfoController.newSchedule.value!.openHours[weekday]!.from[0]}:${editInfoController.schedulePreview.value!.openHours[weekday]!.from[1]} ",
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            " :  ${editInfoController.newSchedule.value!.openHours[weekday]!.to[0]}:${editInfoController.schedulePreview.value!.openHours[weekday]!.to[1]}",
-                            textAlign: TextAlign.center,
-                          ),
-                        ])
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                              Text(
+                                convertToAmPm(
+                                    editInfoController.newSchedule.value!
+                                        .openHours[weekday]!.from[0],
+                                    editInfoController.newSchedule.value!
+                                        .openHours[weekday]!.from[1]),
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                " : ${convertToAmPm(editInfoController.newSchedule.value!.openHours[weekday]!.to[0], editInfoController.newSchedule.value!.openHours[weekday]!.to[1])}",
+                                textAlign: TextAlign.center,
+                              ),
+                            ])
                       : Container(
                           height: 40,
                         )),

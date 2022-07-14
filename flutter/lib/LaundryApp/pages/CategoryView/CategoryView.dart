@@ -4,6 +4,7 @@ import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/pages/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
@@ -24,14 +25,20 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
   AddCategoryController _viewController = AddCategoryController();
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  String? categoryName;
+  String? categoryId;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  String? laundryId;
   @override
   void initState() {
-    categoryName = Get.parameters["categoryId"];
+    laundryId = Get.parameters["laundryId"];
+    categoryId = Get.parameters["categoryId"];
+    mezDbgPrint("Category from admin view ========>$categoryId");
 
-    _viewController.init(categoryId: categoryName);
+    if (laundryId != null) {
+      _viewController.init(categoryId: categoryId, laundryID: laundryId!);
+    } else {
+      Get.back();
+    }
 
     super.initState();
   }
@@ -43,11 +50,13 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: _addCategoryAppBar(),
-      body: _getRightBody(),
-      bottomNavigationBar: _addCategoryFooterButton(),
+    return Obx(
+      () => Scaffold(
+        backgroundColor: Colors.white,
+        appBar: _addCategoryAppBar(),
+        body: _getRightBody(),
+        bottomNavigationBar: _addCategoryFooterButton(),
+      ),
     );
   }
 
@@ -65,9 +74,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
             padding: const EdgeInsets.all(8),
             child: Center(
               child: Text(
-                (_viewController.editMode.value)
-                    ? "${_i18n()["editCategory"]}"
-                    : "${_i18n()["addCategory"]}",
+                '${_i18n()["saveCategory"]}',
                 style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
               ),
             ),
@@ -80,7 +87,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
       leftBtnType: AppBarLeftButtonType.Back,
       onClick: Get.back,
       title: (_viewController.editMode.value)
-          ? _viewController.getRightName()
+          ? _viewController.getRightName() ?? ""
           : "${_i18n()["addCategory"]}",
     );
   }

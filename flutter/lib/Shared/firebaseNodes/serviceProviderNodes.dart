@@ -48,6 +48,12 @@ String serviceProviderCosts(
       '/costs';
 }
 
+String serviceProviderMinCost(
+    {required OrderType orderType, required String providerId}) {
+  return serviceProviderDetails(orderType: orderType, providerId: providerId) +
+      '/costs/minimumCost';
+}
+
 String serviceProviderPrimaryLanguage(
     {required OrderType orderType, required String providerId}) {
   return serviceProviderDetails(orderType: orderType, providerId: providerId) +

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
@@ -21,16 +19,16 @@ class CategoryGridCard extends StatefulWidget {
 class _CategoryGridCardState extends State<CategoryGridCard> {
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+  // LaundryInfoController laundryInfoController =
+  //     Get.find<LaundryInfoController>();
   late LanguageType primaryLang;
   RxBool nameMissing = RxBool(false);
   late LanguageType? secondaryLang;
   @override
   void initState() {
-    primaryLang = laundryInfoController.laundry.value!.primaryLanguage;
-    secondaryLang = laundryInfoController.laundry.value!.secondaryLanguage;
-    _getRightName();
+    // primaryLang = laundryInfoController.laundry.value!.primaryLanguage;
+    // secondaryLang = laundryInfoController.laundry.value!.secondaryLanguage;
+    // _getRightName();
     super.initState();
   }
 
@@ -83,7 +81,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                   InkWell(
                     customBorder: CircleBorder(),
                     onTap: () {
-                      Get.toNamed(getCategoryEditRoute(widget.item.id));
+                      //    Get.toNamed(getCategoryEditRoute(widget.item.id));
                     },
                     child: Ink(
                       padding: const EdgeInsets.all(5),
@@ -101,14 +99,14 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                   InkWell(
                     customBorder: CircleBorder(),
                     onTap: () {
-                      showConfirmationDialog(context,
-                          title: "${_i18n()["deleteTitle"]}",
-                          helperText: "${_i18n()["deleteHelperText"]}",
-                          primaryButtonText: "${_i18n()["yesDelete"]}",
-                          onYesClick: () async {
-                        await deleteCategory(item: widget.item)
-                            .then((value) => Get.back());
-                      });
+                      // showConfirmationDialog(context,
+                      //     title: "${_i18n()["deleteTitle"]}",
+                      //     helperText: "${_i18n()["deleteHelperText"]}",
+                      //     primaryButtonText: "${_i18n()["yesDelete"]}",
+                      //     onYesClick: () async {
+                      //   await deleteCategory(item: widget.item)
+                      //       .then((value) => Get.back());
+                      // });
                     },
                     child: Ink(
                       padding: const EdgeInsets.all(5),
@@ -128,24 +126,6 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
         ),
       ),
     );
-  }
-
-  Future<void> deleteCategory({required LaundryCostLineItem item}) async {
-    final List<LaundryCostLineItem> categories = [];
-    final LaundryCosts laundryCosts =
-        laundryInfoController.laundry.value!.laundryCosts;
-
-    laundryInfoController.laundry.value!.laundryCosts.lineItems
-        .forEach((LaundryCostLineItem element) {
-      categories.add(element.copyWith());
-    });
-
-    categories.removeWhere((LaundryCostLineItem element) =>
-        element.name[primaryLang] == item.name[primaryLang]);
-
-    laundryCosts.lineItems = categories;
-
-    await laundryInfoController.setCosts(laundryCosts);
   }
 
   String _getRightName() {

@@ -187,12 +187,7 @@ class SignIn extends GetWidget<AuthController> {
             lmode != AppLaunchMode.dev
                 ? controller
                     .signInWithFacebook()
-                    .onError((Object? e, StackTrace stk) {
-                    mezDbgPrint(e);
-                    mezDbgPrint(stk);
-
-                    clickedLogin.value = false;
-                  })
+                    .then((value) => clickedLogin.value = false)
                 : await Get.defaultDialog<dynamic>(
                     title: "Choose Test User",
                     content: Column(

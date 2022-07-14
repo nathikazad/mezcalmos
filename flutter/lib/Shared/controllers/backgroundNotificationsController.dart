@@ -47,8 +47,10 @@ class BackgroundNotificationsController extends GetxController {
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     }
     // ignore: unawaited_futures, always_specify_types
-    _messaging.getInitialMessage().then((message) =>
-        message != null ? notificationClickHandler(message) : null);
+    _messaging.getInitialMessage().then(
+          (RemoteMessage? message) =>
+              message != null ? notificationClickHandler(message) : null,
+        );
     onMessageOpenedAppListener =
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       _lastTimeBackgroundNotificationOpenedApp = DateTime.now();
@@ -89,7 +91,7 @@ class BackgroundNotificationsController extends GetxController {
             arguments: <String, bool>{'showViewOrderBtn': true},
           ),
         );
-      }
+      };
     } else
       Future<void>.delayed(
         Duration(milliseconds: 100),

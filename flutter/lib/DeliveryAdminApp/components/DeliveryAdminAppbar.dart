@@ -6,17 +6,16 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 AppBar deliveryAdminAppBar(AppBarLeftButtonType leftBtnType,
     {bool withOrder = false, Function? function, PreferredSizeWidget? tabbar}) {
-  return mezcalmosAppBar(leftBtnType,
-      tabBar: tabbar,
-      actionIcons: [
-        Get.find<ForegroundNotificationsController>()
-                    .notifications
-                    .value
-                    .length >
-                0
-            ? ActionIconsComponents.notificationIcon(
-                hasNewNotif: true, margin: EdgeInsets.all(0))
-            : SizedBox(),
-      ],
-      onClick: function);
+  return mezcalmosAppBar(
+    leftBtnType,
+    tabBar: tabbar,
+    actionIcons: [
+      Get.find<ForegroundNotificationsController>().notifications.value.length >
+              0
+          ? ActionIconsComponents.notificationIcon(
+              hasNewNotif: true, margin: EdgeInsets.all(0))
+          : SizedBox(),
+    ],
+    onClick: () => function?.call(),
+  );
 }

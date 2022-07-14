@@ -27,6 +27,7 @@ class ItemSliverAppBar extends StatelessWidget {
       expandedHeight: (item.image != null) ? 220 : 0,
       automaticallyImplyLeading: false,
       titleSpacing: 12,
+      leadingWidth: 35,
       leading: _BackButtonAppBar(),
       actions: <Widget>[
         getAppbarIconsButton(),
@@ -96,27 +97,27 @@ class ItemSliverAppBar extends StatelessWidget {
   }
 
   Widget _BackButtonAppBar() {
-    return Transform.scale(
-      scale: 0.6,
-      child: InkWell(
-        onTap: () {
-          Get.back();
-        },
-        child: Ink(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.9),
-                  spreadRadius: 0,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-              color: Colors.white),
-          child: Icon(
-            Icons.arrow_back_ios_new,
-            color: primaryBlueColor,
+    return Container(
+      margin: EdgeInsets.only(left: 5),
+      child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: InkWell(
+          onTap: () {
+            Get.back();
+          },
+          child: Ink(
+            width: 25,
+            height: 25,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8), color: Colors.white),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: primaryBlueColor,
+                size: 15,
+              ),
+            ),
           ),
         ),
       ),

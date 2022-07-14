@@ -13,6 +13,8 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 
+import '../../../Shared/helpers/PrintHelper.dart';
+
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['DashboardView']['OrdersListView']['LaundryOpOrdersListView'];
 
@@ -32,8 +34,7 @@ class _LaundryOpCurrentOrdersListViewState
 
   @override
   void initState() {
-    // inProcessOrders.value = orderController.currentOrders;
-
+    inProcessOrders.value = orderController.currentOrders;
     _inProcessOrdersListener =
         orderController.currentOrders.stream.listen((List<LaundryOrder> event) {
       inProcessOrders.value = event;

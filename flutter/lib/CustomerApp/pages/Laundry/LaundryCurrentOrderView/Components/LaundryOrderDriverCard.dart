@@ -107,9 +107,9 @@ class LaundryOrderDriverCard extends StatelessWidget {
         Get.find<LanguageController>().userLanguageKey.toLanguageCode();
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
         order.estimatedPickupFromCustomerTime != null) {
-      return "${_i18n()["pickUpTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedPickupFromCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(order.estimatedPickupFromCustomerTime!.toLocal())}";
+      return "${_i18n()["pickUpTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedPickupFromCustomerTime!.toLocal())}, ${DateFormat("hh:mm a").format(order.estimatedPickupFromCustomerTime!.toLocal())}";
     } else if (order.estimatedDropoffAtCustomerTime != null) {
-      return "${_i18n()["dropOffTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedDropoffAtCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
+      return "${_i18n()["dropOffTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedDropoffAtCustomerTime!.toLocal())}, ${DateFormat("hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
     } else {
       return null;
     }

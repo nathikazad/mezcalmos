@@ -35,7 +35,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
   OrderController controller = Get.find<OrderController>();
   final MGoogleMapController mGoogleMapController = MGoogleMapController(
-    enableMezSmartPointer: false,
+    enableMezSmartPointer: true,
   );
   StreamSubscription? _orderListener;
 
@@ -47,9 +47,10 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as LaundryOrder;
     // first time init map
-    mGoogleMapController.animateMarkersPolyLinesBounds(true);
-    mGoogleMapController.recenterButtonEnabled.value = false;
-    mGoogleMapController.periodicRerendering.value = true;
+    //mGoogleMapController.animateMarkersPolyLinesBounds(true);
+    mGoogleMapController.recenterButtonEnabled.value = true;
+
+    // mGoogleMapController.periodicRerendering.value = true;
     if (order.value?.routeInformation?.polyline != null)
       mGoogleMapController.decodeAndAddPolyline(
         encodedPolylineString: order.value!.routeInformation!.polyline,
@@ -271,10 +272,10 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   }
 
   Widget _getMapWidget() {
-    if (order.value!.getCurrentPhase() == LaundryOrderPhase.Dropoff &&
-            order.value!.status == LaundryOrderStatus.PickedUpFromLaundry ||
-        order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup &&
-            order.value!.status == LaundryOrderStatus.PickedUpFromCustomer)
+    if ((order.value!.getCurrentPhase() == LaundryOrderPhase.Dropoff &&
+            order.value!.status == LaundryOrderStatus.OtwPickupFromLaundry) ||
+        (order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup &&
+            order.value!.status == LaundryOrderStatus.PickedUpFromCustomer))
       return Container(
         // color: Colors.black,
         margin: const EdgeInsets.only(bottom: 20),
@@ -282,6 +283,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
         child: MGoogleMap(
           mGoogleMapController: mGoogleMapController,
           rerenderDuration: Duration(seconds: 30),
+          recenterBtnBottomPadding: 20,
         ),
       );
     else

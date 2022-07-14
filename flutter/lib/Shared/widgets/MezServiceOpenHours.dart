@@ -24,7 +24,7 @@ class MezServiceOpenHours extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 10,
+          height: 8,
         ),
         Container(
             child: Column(
@@ -33,7 +33,7 @@ class MezServiceOpenHours extends StatelessWidget {
                     .entries
                     .map((MapEntry<String, OpenHours> v) {
           return Container(
-            margin: const EdgeInsets.symmetric(vertical: 3),
+            margin: const EdgeInsets.only(bottom: 3),
             child: Row(
               children: [
                 Icon(
@@ -50,7 +50,7 @@ class MezServiceOpenHours extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                    "${convertToAmPm(v.value.from[0], v.value.from[1])} : ${convertToAmPm(v.value.to[0], v.value.to[1])}"),
+                    "${convertToAmPm(v.value.from[0], v.value.from[1])} - ${convertToAmPm(v.value.to[0], v.value.to[1])}"),
               ],
             ),
           );

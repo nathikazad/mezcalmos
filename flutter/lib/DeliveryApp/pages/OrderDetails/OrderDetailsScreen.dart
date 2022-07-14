@@ -140,10 +140,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   num? _getOrderShippingCost() {
     switch (order.value!.orderType) {
       case OrderType.Restaurant:
-        return (order as RestaurantOrder).shippingCost;
+        return (order.value as RestaurantOrder).shippingCost;
 
       case OrderType.Laundry:
-        return (order as LaundryOrder).shippingCost;
+        return (order.value as LaundryOrder).shippingCost;
       default:
         return null;
     }
@@ -151,7 +151,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   Container _orderDetailsHeader() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+      padding: const EdgeInsets.symmetric(
+        vertical: 8,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -23,8 +23,8 @@ class LaundryOpEditInfoView extends StatefulWidget {
 }
 
 class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+  // LaundryInfoController laundryInfoController =
+  //     Get.find<LaundryInfoController>();
   AnimatedSliderController animatedSliderController =
       AnimatedSliderController();
   EditInfoController editInfoController = EditInfoController();
@@ -32,7 +32,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
 
   @override
   void initState() {
-    editInfoController.init();
+   // editInfoController.init();
     viewWidgets = EditInfoWidgets(
         editInfoController: editInfoController, context: context);
 

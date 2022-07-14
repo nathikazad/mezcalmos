@@ -197,10 +197,10 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
             height: 5,
           ),
           if (category.dialog?[userLanguage] != null)
-            Text(category.dialog![userLanguage]!),
-          SizedBox(
-            height: 5,
-          ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: Text(category.dialog![userLanguage]!),
+            ),
           _buildResturantItems(category.items, restaurant.info.id),
           SizedBox(
             height: 10,

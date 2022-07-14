@@ -34,6 +34,7 @@ const String kNotificationsRoute = '/notifications';
 const String kAppNeedsUpdate = '/needs_update';
 // const String kInAppReview = '/in-app_review';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
+const String kPickLocationEdit = "/pick_location/edit";
 
 String getMessagesRoute(
     {required String chatId,
@@ -111,5 +112,8 @@ class SharedRouter {
     GetPage(
         name: kPickLocationWithoutAuth,
         page: () => PickLocationView(PickLocationMode.NonLoggedInPick)),
+    GetPage(
+        name: kPickLocationEdit,
+        page: () => PickLocationView(PickLocationMode.EditLocation)),
   ];
 }

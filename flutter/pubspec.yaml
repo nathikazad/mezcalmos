@@ -4,7 +4,7 @@ description: A rideshare app.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 2.0.0+1
+version: 2.2.0+20
 
 environment:
   sdk: ">=2.16.0<3.0.0"
@@ -32,6 +32,7 @@ dependencies:
   package_info_plus: ^1.4.0
   device_info_plus: ^3.2.2
   device_preview: ^1.1.0
+  flutter_email_sender: ^5.1.0
   # permission_handler: ^9.2.0
 
   # Get
@@ -85,16 +86,17 @@ dependencies:
   sign_in_with_apple: ^4.0.0
   sizer: ^2.0.15
   crypto: ^3.0.0-nullsafety.0
-  equatable: ^2.0.3
+  # Newest version of this always requires initialization on the root!
   intl: ^0.17.0
+
 
   # Check if a user has the most recent version of your app installed.
   new_version: ^0.3.0
   store_redirect: ^2.0.1
-  app_settings: ^4.1.8
   flutter_facebook_auth: ^4.3.4+2
   permission_handler: ^10.0.0
-  # in_app_review: ^2.0.4
+  callkeep: ^0.3.2
+  uuid: ^3.0.6
 
 
 

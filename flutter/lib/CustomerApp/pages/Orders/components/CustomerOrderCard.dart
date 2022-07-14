@@ -31,7 +31,10 @@ class CustomerOrderCard extends StatelessWidget {
           primaryBodyContent: _getRightBody(),
           cardTitle: _getServiceProvider()?.name ?? "",
           cardStatus: _getOrderStatus(),
-          cardTime: Text(order.orderTime.getOrderTime().inCaps),
+          cardTime: Text(
+            order.orderTime.getOrderTime().inCaps,
+            maxLines: 1,
+          ),
           rightImage: _rightImage()),
     );
   }
@@ -78,7 +81,7 @@ class CustomerOrderCard extends StatelessWidget {
               ),
               (order as RestaurantOrder).shippingCost == 0
                   ? Flexible(
-                      flex: 4,
+                      flex: 6,
                       fit: FlexFit.tight,
                       child: ShippingCostComponent(
                         shippingCost: (order as RestaurantOrder).shippingCost,
@@ -113,6 +116,7 @@ class CustomerOrderCard extends StatelessWidget {
               ),
               (order as LaundryOrder).shippingCost == 0
                   ? Flexible(
+                      flex: 6,
                       child: ShippingCostComponent(
                         shippingCost: (order as LaundryOrder).shippingCost,
                         alignment: MainAxisAlignment.start,

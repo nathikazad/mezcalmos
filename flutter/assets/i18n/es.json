@@ -1,7 +1,8 @@
 {
     "CustomerApp": {
         "main": {
-            "savedLocations": "Ubicaciones guardadas"
+            "savedLocations": "Ubicaciones guardadas",
+            "contactUs": "Contáctenos"
         },
         "components": {
             "Menu": {
@@ -94,7 +95,8 @@
                         }
                     },
                     "orders": {
-                        "noOrders": "Sin pedidos",
+                        "noOrders": "Sin pedidos todavía",
+                        "noOrdersBody": "Actualmente no tienes pedidos.",
                         "onGoingOrders": "Órdenes actuales"
                     }
                 }
@@ -121,7 +123,8 @@
 
                         "search": "Búsqueda",
                         "showOnlyOpen": "Mostrar solo restaurantes abiertos",
-                        "emptRestaurantList": "Lo siento, no se encontró ningún restaurante"
+                        "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
+                        "noOpenRestaurant": "No hay restaurantes abiertos Funds"
                     }
                 },
                 "ViewCartScreen": {
@@ -177,6 +180,10 @@
                 },
                 "ViewItemScreen": {
                     "components": {
+                        "ItemOptionCard": {
+                            "included": "incluida",
+                            "extra": "extra"
+                        },
                         "BottomBarItemViewScreen": {
                             "notAvailable": "Su restaurante está cerrado",
                             "title": "Advertencia",
@@ -430,8 +437,8 @@
                             "atLaundry": "En la lavandería",
                             "readyForDelivery": "Listo para la entrega",
                             "otwDelivery": "Entrega en el camino",
-                            "delivered": "Orden Entregado",
-                            "canceled": "Orden Cancelada",
+                            "delivered": "Entregado",
+                            "canceled": "Cancelada",
                             "otwToCustomer": "De camino al cliente",
                             "otwToLaundry": "De camino a la lavandería",
                             "pickedUpFromCustomer": "De camino a la lavandería",
@@ -491,7 +498,8 @@
                     "minimumCost": "Costo mínimo",
                     "description": "Descripción",
                     "openHours": "Horas Laborales",
-                    "sendMyLaundry": "Envía mi ropa"
+                    "sendMyLaundry": "Envía mi ropa",
+                    "categories": "Categorías"
 
                 },
                 "LaundriesListView": {
@@ -670,7 +678,7 @@
                     "clear": "Borra",
                     "no": "No",
                     "noNotifTitle": "¡No hay notificaciones todavía!",
-                    "noNotifBody": "Actualmente no tienes notificaciones.Te notificaremos cuando se llega a algo nuevo."
+                    "noNotifBody": "Actualmente no tienes notificaciones. Te notificaremos cuando se llega a algo nuevo."
                 }
             },
             "UserProfileScreen": {
@@ -747,9 +755,28 @@
                 "downloading": "Se está descargando una nueva versión.",
                 "news": "Noticias",
                 "update": "¡Actualizar ahora!"
+            },
+            "ContactUsView": {
+                "name": "Nombre",
+                "email": "Dirección de correo electrónico",
+                "subject": "Tema",
+                "message": "Mensaje",
+                "send": "Enviar",
+                "sendedTitle": "Gracias",
+                "sendedBody": "¡Estaremos en contacto dentro de poco!",
+                "requiredError": "Campo requerido",
+                "emailError": "El correo electrónico no es correcto"
+
             }
         },
         "widgets": {
+            "ContactUsPopUp": {
+                "contactEmail": "Contáctenos Email ",
+                "contactWhatsapp": "Contáctenos con WhatsApp",
+                "hello": "Hola",
+                "team": "Equipo",
+                "help": "Ayuda"
+            },
             "NoOrdersComponent": {
                 "title": "No hay pedidos en este momento",
                 "subtitle": "Inténtalo de nuevo más tarde"
@@ -775,13 +802,13 @@
                 "cancel": "Cancelar",
                 "workingHours": "Horas Laborales",
                 "weekDays": {
-                    "monday": "Lunes",
-                    "tuesday": "Martes",
-                    "wednesday": "Miércoles",
-                    "thursday": "Jueves",
-                    "friday": "Viernes",
-                    "saturday": "Sábado",
-                    "sunday": "Domingo"
+                    "monday": "Lun",
+                    "tuesday": "Mar",
+                    "wednesday": "Mié",
+                    "thursday": "Jue",
+                    "friday": "Vie",
+                    "saturday": "Sáb",
+                    "sunday": "Dom"
                 },
                 "workingHoursCard": {
                     "open": "Abierto",
@@ -815,6 +842,7 @@
                 "notifications": "Notificaciones",
                 "pastOrders": "Órdenes pasadas",
                 "login": "Acceso",
+                "contact": "Contáctenos",
                 "language": "Idioma",
                 "logout": "Cerrar sesión",
                 "legal": "Política de privacidad"
@@ -962,6 +990,9 @@
         }
     },
     "DeliveryAdminApp": {
+        "main": {
+            "services": "Servicios"
+        },
         "notificationHandler": {
             "restaurantTitle": "Nuevo pedido de restaurante",
             "laundryTitle": "Nuevo pedido de lavandería",
@@ -983,6 +1014,26 @@
             }
         },
         "pages": {
+            "AddLaundryServiceView": {
+                "newLaundry": "Ropa nueva",
+                "createLaundry": "Crear lavandería",
+                "laundryName": "Nombre de lavandería",
+                "email": "Correo electrónico",
+                "phoneNumber": "Número de teléfono",
+                "helperText": "Debe proporcionar la dirección de correo electrónico o el número de teléfono de la lavandería",
+                "required": "Requerida",
+                "emailNotCorrect": "Correo electrónico no es correcta",
+                "phoneNotCorrect": "El número de teléfono no es correcto"
+
+
+            },
+
+            "ServicesView": {
+                "services": "Servicios",
+                "noLaundries": "No hay lavas disponibles",
+                "editProfile": "Editar perfil",
+                "editAdmin": "Editar administrador"
+            },
             "Orders": {
                 "components": {
                     "driverOrderCard": {
@@ -1133,7 +1184,7 @@
                             "totalCost": "Costo Total",
                             "deliveryCost": "Costo de envío",
                             "total": "Total",
-                            "free": "Libre"
+                            "free": "Gratis"
                         },
                         "PastOrderInfo": {
                             "canceledByAdmin": "Cancelada",
@@ -1406,13 +1457,14 @@
                 },
                 "addCategory": "Añadir categoría",
                 "editCategory": "Editar categoria",
+                "saveCategory": "Guardar categoría",
                 "categoryName": "Nombre de la categoría",
                 "categoryNameIn": "Nombre de categoría en",
                 "categoryNameHint": "Ingrese un nombre de categoría",
                 "categoryPrice": "Categoría Precios por kilogramo",
                 "categoryPriceHint": "Entrar en la categoría Precios por kilogramo ...",
                 "categoryNameError": "Agregue un nombre de categoría",
-                "catgeoryPriceError": "Agregue un precio de categoría correcto"
+                "categoryPriceError": "Ingrese el precio válido"
 
             },
             "DashboardView": {
@@ -1484,6 +1536,9 @@
                     "LaundryOpNormalDeliveryTime": {
                         "normalDeliverytime": "Tiempo de entrega normal",
                         "days": "dias"
+                    },
+                    "MinimumCostCard": {
+                        "minCost": "Minimum Cost"
                     }
                 }
             },

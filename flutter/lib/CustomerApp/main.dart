@@ -5,7 +5,6 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -21,13 +20,13 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
     onClick: () {
-      //  Get.find<SideMenuDrawerController>().closeMenu();
+      // Get.find<SideMenuDrawerController>().closeMenu();
       Get.toNamed<void>(kSavedLocations);
     },
     icon: Icons.near_me_outlined,
     title: "CustomerApp/main/savedLocations",
     isI18nPath: true,
-  )
+  ),
 ];
 
 void main() {

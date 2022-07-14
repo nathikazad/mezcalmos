@@ -14,7 +14,7 @@ enum AppBarLeftButtonType { Back, Menu, Lang }
 
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {Color bgColor = Colors.white,
-    Function? onClick,
+    VoidCallback? onClick,
     String? title,
     Widget? titleWidget,
     bool showNotifications = false,
@@ -25,7 +25,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   Widget _getRightLeading() {
     switch (leftBtnType) {
       case AppBarLeftButtonType.Back:
-        return _BackButtonAppBar(onClick);
+        return _BackButtonAppBar(click: onClick ?? () => Get.back<void>());
       case AppBarLeftButtonType.Menu:
         return _MenuButtonAppBar();
       case AppBarLeftButtonType.Lang:
@@ -100,16 +100,11 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       ));
 }
 
-Widget _BackButtonAppBar(Function? onClick) {
+Widget _BackButtonAppBar({required VoidCallback click}) {
   return Transform.scale(
     scale: 0.6,
     child: InkWell(
-      onTap: () {
-        if (onClick != null) {
-          onClick.call();
-        } else
-          Get.back();
-      },
+      onTap: click,
       child: Ink(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),

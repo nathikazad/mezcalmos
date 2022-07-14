@@ -130,6 +130,20 @@ class AuthController extends GetxController {
         _user.value?.image != defaultUserImgUrl;
   }
 
+  Future<void> deleteAccount() async {
+    if (_user.value?.id != null) {
+      // we don't have to await this, we straight forward logout!
+      unawaited(
+        _databaseHelper.firebaseDatabase
+            .ref()
+            .child(userDeletedNode(_user.value!.id))
+            .set(true),
+      );
+      // we await the signing Out!
+      await signOut();
+    }
+  }
+
   /// This Functions takes a File (Image) and an optional [isCompressed]
   ///
   /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
@@ -224,16 +238,22 @@ class AuthController extends GetxController {
   }
 
   Future<void> signIn(String email, String password) async {
-    await _auth
-        .signInWithEmailAndPassword(email: email, password: password)
-        .timeout(Duration(seconds: 10),
-            onTimeout: () =>
-                Future.error(Exception("Timed out , Check your Internet.")))
-        .then((fireAuth.UserCredential value) {},
-            onError: ((Object e, StackTrace stackTrace) {
-      Get.snackbar("Failed to Sign you in!", e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
-    }));
+    try {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .timeout(Duration(seconds: 10),
+              onTimeout: () =>
+                  Future.error(Exception("Timed out , Check your Internet.")))
+          .then(
+        (fireAuth.UserCredential value) {},
+        onError: ((Object e, StackTrace stackTrace) {
+          Get.snackbar("Failed to Sign you in!", e.toString(),
+              snackPosition: SnackPosition.BOTTOM);
+        }),
+      );
+    } catch (e, s) {
+      mezDbgPrint("owoawoaowaowoaow ==> $e | $s");
+    }
   }
 
   Future<ServerResponse> sendOTPForLogin(String phoneNumber) async {
@@ -295,7 +315,17 @@ class AuthController extends GetxController {
 
       if (serverResponse.success) {
         fireAuth.FirebaseAuth.instance
-            .signInWithCustomToken(response.data["token"]);
+            .signInWithCustomToken(response.data["token"])
+            .catchError((Object error, StackTrace sr) {
+          if (error.toString().contains('user-disabled')) {
+            MezSnackbar(
+              "Notice ~",
+              "Your account has been deleted permanently!",
+              position: SnackPosition.TOP,
+            );
+            return null;
+          }
+        });
       }
     } catch (e) {
       MezSnackbar("Oops ..", _i18n()['failedOTPConfirmRequest']);
@@ -317,8 +347,20 @@ class AuthController extends GetxController {
       final fireAuth.OAuthCredential facebookAuthCredential =
           fireAuth.FacebookAuthProvider.credential(result.accessToken!.token);
       // Once signed in, return the UserCredential
-      fireAuth.FirebaseAuth.instance
-          .signInWithCredential(facebookAuthCredential);
+      unawaited(
+        fireAuth.FirebaseAuth.instance
+            .signInWithCredential(facebookAuthCredential)
+            .catchError((Object error, StackTrace sr) {
+          if (error.toString().contains('user-disabled')) {
+            MezSnackbar(
+              "Notice ~",
+              "Your account has been deleted permanently!",
+              position: SnackPosition.TOP,
+            );
+            return null;
+          }
+        }),
+      );
     } else {
       MezSnackbar("Notice ~", "Failed SignIn with Facebook !");
       throw Exception("Failed SignIn with Facebook !");
@@ -355,7 +397,18 @@ class AuthController extends GetxController {
 
       // Sign in the user with Firebase. If the nonce we generated earlier does
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
-      fireAuth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      unawaited(fireAuth.FirebaseAuth.instance
+          .signInWithCredential(oauthCredential)
+          .catchError((Object error, StackTrace sr) {
+        if (error.toString().contains('user-disabled')) {
+          MezSnackbar(
+            "Notice ~",
+            "Your account has been deleted permanently!",
+            position: SnackPosition.TOP,
+          );
+          return null;
+        }
+      }));
     } catch (exception) {
       mezDbgPrint(exception);
       MezSnackbar("Notice ~", "Failed SignIn with Apple !");

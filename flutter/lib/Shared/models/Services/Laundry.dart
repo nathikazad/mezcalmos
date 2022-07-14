@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:get/get.dart';
-
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
@@ -97,11 +96,12 @@ class LaundryCosts {
 
   factory LaundryCosts.fromData(laundryCostsData) {
     final LaundryCosts laundryCosts = LaundryCosts();
-    laundryCosts.minimumCost = laundryCostsData['minimumCost'];
+    laundryCosts.minimumCost = laundryCostsData?['minimumCost'];
 
-    for (var item in laundryCostsData["byType"]) {
-      laundryCosts.lineItems.add(LaundryCostLineItem.fromData(item));
-    }
+    laundryCostsData?["byType"]?.forEach((elemnt) {
+      laundryCosts.lineItems.add(LaundryCostLineItem.fromData(elemnt));
+    });
+
     return laundryCosts;
   }
 
@@ -169,11 +169,12 @@ class LaundryCostLineItem {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    final mapEquals = const DeepCollectionEquality().equals;
-  
+    final bool Function(dynamic e1, dynamic e2) mapEquals =
+        const DeepCollectionEquality().equals;
+
     return other is LaundryCostLineItem &&
-      other.id == id &&
-      mapEquals(other.name, name) &&
-      other.cost == cost;
+        other.id == id &&
+        mapEquals(other.name, name) &&
+        other.cost == cost;
   }
 }

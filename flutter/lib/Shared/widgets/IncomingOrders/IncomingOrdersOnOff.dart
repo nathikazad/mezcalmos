@@ -27,7 +27,7 @@ class TitleWithOnOffSwitcher extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w700,
-              fontSize: 16.sp,
+              fontSize: 13.sp,
             ),
           ),
           SizedBox(

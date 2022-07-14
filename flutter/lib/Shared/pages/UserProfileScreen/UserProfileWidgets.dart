@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart' show CapExtension;
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
-    ["UserProfileScreen"]["UserProfileWidgets"];
+    ["UserProfileScreen"];
 
 class UserProfileWidgetsClass {
   // Singleton
@@ -133,7 +134,7 @@ class UserProfileWidgetsClass {
     return Padding(
       padding: const EdgeInsets.only(top: 17.0),
       child: Text(
-        _i18n()['title'],
+        _i18n()["UserProfileWidgets"]['title'],
         style: TextStyle(
           fontSize: 24,
           fontFamily: 'Montserrat',
@@ -151,64 +152,28 @@ class UserProfileWidgetsClass {
   AppBar getRightAppBar({required bool isImageBeingUploaded}) {
     if (userProfileController.checkIfUserHasAllInfosSet() &&
         !isImageBeingUploaded) {
+      mezDbgPrint("CheckIfUserHasAllInfosSet -[ True ]- !!!");
       // return popable button
       return mezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        onClick: () => Get.back(closeOverlays: true),
-        // actionIcons: [
-        //   Obx(
-        //     () => Container(
-        //       padding: const EdgeInsets.all(8),
-        //       alignment: Alignment.centerLeft,
-        //       child: GestureDetector(
-        //         onTap: () =>
-        //             Get.find<LanguageController>().changeUserLanguage(),
-        //         child: Container(
-        //           height: 24,
-        //           width: 24,
-        //           decoration: BoxDecoration(
-        //             shape: BoxShape.circle,
-        //             image: DecorationImage(
-        //               fit: BoxFit.contain,
-        //               image: AssetImage(
-        //                 Get.find<LanguageController>().oppositFlag,
-        //               ),
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   )
-        // ],
+        onClick: () => Get.back<void>(closeOverlays: true),
       );
     } else {
+      mezDbgPrint("CheckIfUserHasAllInfosSet -[ False ]- !!!");
       // none popable buttom
       return mezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        actionIcons: [
-          // Obx(
-          //   () => Align(
-          //     alignment: Alignment.centerLeft,
-          //     child: GestureDetector(
-          //       onTap: () =>
-          //           Get.find<LanguageController>().changeUserLanguage(),
-          //       child: Container(
-          //         height: 24,
-          //         width: 24,
-          //         decoration: BoxDecoration(
-          //           shape: BoxShape.circle,
-          //           image: DecorationImage(
-          //             fit: BoxFit.contain,
-          //             image: AssetImage(
-          //               Get.find<LanguageController>().oppositFlag,
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // )
-        ],
+        onClick: () {
+          Get.closeAllSnackbars();
+
+          MezSnackbar(
+            "Oops",
+            _i18n()["UserProfileScreen"]['mustSetUserNameError'],
+            position: SnackPosition.TOP,
+          );
+
+          mezDbgPrint(_i18n()["UserProfileScreen"]['mustSetUserNameError']);
+        },
       );
     }
   }
@@ -239,7 +204,7 @@ class UserProfileWidgetsClass {
           ),
           SizedBox(height: 11),
           Text(
-            "${_i18n()["memberSince"]} 12/04/2022",
+            "${_i18n()["UserProfileWidgets"]["memberSince"]} 12/04/2022",
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -262,7 +227,7 @@ class UserProfileWidgetsClass {
           ),
           SizedBox(height: 11),
           Text(
-            "${_i18n()["memberSince"]} 12/04/2022",
+            "${_i18n()["UserProfileWidgets"]["memberSince"]} 12/04/2022",
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -276,7 +241,7 @@ class UserProfileWidgetsClass {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "${_i18n()["name"]}",
+                "${_i18n()["UserProfileWidgets"]["name"]}",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 18,
@@ -301,7 +266,7 @@ class UserProfileWidgetsClass {
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,
-                hintText: _i18n()['namePlaceHolder'],
+                hintText: _i18n()["UserProfileWidgets"]['namePlaceHolder'],
               ),
               enabled: !isImageBeingUploaded,
               style: TextStyle(
@@ -416,7 +381,7 @@ class UserProfileWidgetsClass {
             // width: Get.width - 100,
             child: Center(
                 child: Text(
-              _i18n()['cancel'],
+              _i18n()["UserProfileWidgets"]['cancel'],
               style: TextStyle(
                 color: Colors.red,
                 fontWeight: FontWeight.w600,
@@ -446,7 +411,7 @@ class UserProfileWidgetsClass {
         // width: Get.width - 100,
         child: Center(
           child: Text(
-            _i18n()['editInfo'],
+            _i18n()["UserProfileWidgets"]['editInfo'],
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,
@@ -466,7 +431,8 @@ class UserProfileWidgetsClass {
               await onSaveChangesClick();
             }
           : () {
-              MezSnackbar("Oops", _i18n()['noChangesToApply'],
+              MezSnackbar(
+                  "Oops", _i18n()["UserProfileWidgets"]['noChangesToApply'],
                   position: SnackPosition.TOP);
             },
       child: Container(
@@ -485,7 +451,7 @@ class UserProfileWidgetsClass {
         child: Center(
           child: !clickedSave
               ? Text(
-                  _i18n()['saveBtn'],
+                  _i18n()["UserProfileWidgets"]['saveBtn'],
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,

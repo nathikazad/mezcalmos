@@ -36,142 +36,154 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
     return Card(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Theme(
-          data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-          child: ExpansionTile(
-            childrenPadding: const EdgeInsets.all(8),
-            collapsedIconColor: primaryBlueColor,
-            onExpansionChanged: (bool v) {
-              setState(() {
-                isExpanded = v;
-              });
-            },
-            iconColor: primaryBlueColor,
-            trailing: Container(
-              width: 25,
-              height: 25,
-              decoration: BoxDecoration(
-                  color: secondaryLightBlueColor, shape: BoxShape.circle),
-              child: (isExpanded)
-                  ? Icon(Icons.expand_less)
-                  : Icon(Icons.expand_more),
-            ),
+        child: (widget.item.chosenChoices.isEmpty && widget.item.notes == null)
+            ? _itemHeader(userLanguage, txt)
+            : _itemExpandableComponent(context, userLanguage, txt),
+      ),
+    );
+  }
 
-            //  tilePadding: EdgeInsets.all(5),
-            tilePadding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
-            title: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+  Widget _itemExpandableComponent(
+      BuildContext context, LanguageType userLanguage, TextTheme txt) {
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        childrenPadding: const EdgeInsets.all(8),
+        collapsedIconColor: primaryBlueColor,
+        onExpansionChanged: (bool v) {
+          setState(() {
+            isExpanded = v;
+          });
+        },
+        iconColor: primaryBlueColor,
+        trailing: Container(
+          width: 25,
+          height: 25,
+          decoration: BoxDecoration(
+              color: secondaryLightBlueColor, shape: BoxShape.circle),
+          child:
+              (isExpanded) ? Icon(Icons.expand_less) : Icon(Icons.expand_more),
+        ),
+
+        //  tilePadding: EdgeInsets.all(5),
+        tilePadding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+        title: _itemHeader(userLanguage, txt),
+        children: [
+          Theme(
+            data:
+                Theme.of(context).copyWith(dividerColor: Colors.grey.shade400),
+            child: Column(
+              children: buildChoices(
+                  widget.item.chosenChoices, widget.item.optionNames),
+            ),
+          ),
+          if (widget.item.notes != null)
+            Container(
+              // margin: const EdgeInsets.symmetric(horizontal: 8),
+              //   alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Divider(
+                    color: Colors.grey.shade400,
+                  ),
                   Container(
-                    //  padding: const EdgeInsets.all(5),
-                    height: 55,
-                    width: 55,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: (imageLoded)
-                              ? CachedNetworkImageProvider(
-                                  widget.item.image ?? '', errorListener: () {
-                                  setState(() {
-                                    imageLoded = false;
-                                  });
-                                })
-                              : AssetImage(aNoImage) as ImageProvider<Object>,
-                        )),
+                    child: Text(
+                      "${_i18n()["itemNotes"]}",
+                      style: Get.textTheme.bodyText1,
+                    ),
                   ),
                   SizedBox(
-                    width: 10,
+                    height: 5,
                   ),
-                  if (widget.item.name[userLanguage] != null)
-                    Flexible(
-                      flex: 6,
-                      fit: FlexFit.tight,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Flexible(
-                                flex: 3,
-                                child: Text(
-                                  widget.item.name[userLanguage]!,
-                                  style: txt.bodyText1,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Flexible(
-                                child: Text(
-                                  "x${widget.item.quantity}",
-                                  style: txt.bodyText1
-                                      ?.copyWith(fontWeight: FontWeight.w700),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 3,
-                          ),
-                          Container(
-                            // margin: EdgeInsets.all(5),
-
-                            child: Text(
-                                '\$' + widget.item.totalCost.toInt().toString(),
-                                style: txt.bodyText1),
-                          ),
-                        ],
-                      ),
+                  Container(
+                    child: Text(
+                      widget.item.notes!,
+                      style: Theme.of(context).textTheme.bodyText2,
                     ),
+                  ),
                 ],
               ),
             ),
-            children: [
-              Theme(
-                data: Theme.of(context)
-                    .copyWith(dividerColor: Colors.grey.shade400),
-                child: Column(
-                  children: buildChoices(
-                      widget.item.chosenChoices, widget.item.optionNames),
-                ),
-              ),
-              if (widget.item.notes != null)
-                Container(
-                  // margin: const EdgeInsets.symmetric(horizontal: 8),
-                  //   alignment: Alignment.centerLeft,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        ],
+      ),
+    );
+  }
+
+  Widget _itemHeader(LanguageType userLanguage, TextTheme txt) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 5,
+          ),
+          Container(
+            //  padding: const EdgeInsets.all(5),
+            height: 55,
+            width: 55,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: (imageLoded)
+                      ? CachedNetworkImageProvider(widget.item.image ?? '',
+                          errorListener: () {
+                          setState(() {
+                            imageLoded = false;
+                          });
+                        })
+                      : AssetImage(aNoImage) as ImageProvider<Object>,
+                )),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          if (widget.item.name[userLanguage] != null)
+            Flexible(
+              flex: 6,
+              fit: FlexFit.tight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
-                      Divider(
-                        color: Colors.grey.shade400,
-                      ),
-                      Container(
+                      Flexible(
+                        flex: 3,
                         child: Text(
-                          "${_i18n()["itemNotes"]}",
-                          style: Get.textTheme.bodyText1,
+                          widget.item.name[userLanguage]!,
+                          style: txt.bodyText1,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(
-                        height: 5,
+                        width: 5,
                       ),
-                      Container(
+                      Flexible(
                         child: Text(
-                          widget.item.notes!,
-                          style: Theme.of(context).textTheme.bodyText2,
+                          "x${widget.item.quantity}",
+                          style: txt.bodyText1
+                              ?.copyWith(fontWeight: FontWeight.w700),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
                   ),
-                ),
-            ],
-          ),
-        ),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  Container(
+                    // margin: EdgeInsets.all(5),
+
+                    child: Text('\$' + widget.item.totalCost.toInt().toString(),
+                        style: txt.bodyText1),
+                  ),
+                ],
+              ),
+            ),
+        ],
       ),
     );
   }

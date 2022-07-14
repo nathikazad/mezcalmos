@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
@@ -68,7 +69,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Flexible(
-                      flex: 4,
+                      flex: 6,
                       fit: FlexFit.loose,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -77,9 +78,6 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           Icon(
                             Icons.delivery_dining,
                             color: Colors.grey.shade800,
-                          ),
-                          SizedBox(
-                            width: 2,
                           ),
                           Flexible(
                             child: ShippingCostComponent(
@@ -90,10 +88,9 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                     ),
-
                     Flexible(
-                      flex: 2,
-                      fit: FlexFit.loose,
+                      flex: 4,
+                      fit: FlexFit.tight,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -102,22 +99,16 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             size: 18,
                             color: Colors.grey.shade800,
                           ),
-                          SizedBox(
-                            width: 3,
-                          ),
                           Flexible(
                               child: Text(
-                                  '${laundry.averageNumberOfDays} ${_i18n()["days"]}',
+                                  ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}',
                                   style: Get.textTheme.bodyText2)),
                         ],
                       ),
                     ),
-                    // SizedBox(
-                    //   width: 5,
-                    // ),
                     Flexible(
-                      flex: 2,
-                      fit: FlexFit.loose,
+                      flex: 4,
+                      fit: FlexFit.tight,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -126,11 +117,9 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             size: 18,
                             color: Colors.grey.shade800,
                           ),
-                          SizedBox(
-                            width: 3,
-                          ),
                           Flexible(
-                              child: Text('${laundry.getCheapestCategory}/kg',
+                              child: Text(
+                                  '${laundry.getCheapestCategory.toPriceString()}/kg',
                                   style: Get.textTheme.bodyText2)),
                         ],
                       ),

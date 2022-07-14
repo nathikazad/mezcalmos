@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["notificationHandler"];
@@ -118,7 +119,7 @@ Notification newOrderNotification(String key, value) {
 Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: value['linkUrl'] ?? value['orderId'],
+      linkUrl: value['linkUrl'] ?? getMessagesRoute(chatId: value['chatId']),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

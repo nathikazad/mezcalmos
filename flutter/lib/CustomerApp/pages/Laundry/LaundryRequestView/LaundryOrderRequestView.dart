@@ -93,17 +93,24 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       height: 10,
                     ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.place,
-                          size: 20,
-                          color: primaryBlueColor,
+                        Container(
+                          margin: const EdgeInsets.only(top: 3),
+                          child: Icon(
+                            Icons.place,
+                            size: 20,
+                            color: primaryBlueColor,
+                          ),
                         ),
                         SizedBox(
                           width: 2,
                         ),
                         Flexible(
-                            child: Text(selectedLaundry.info.location.address))
+                            child: Text(
+                          selectedLaundry.info.location.address,
+                          maxLines: 2,
+                        ))
                       ],
                     ),
                     SizedBox(
@@ -307,29 +314,27 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
   }
 
   void _sendLaundryRequest(LaundryRequest request) {
-    laundryController
-        .requestLaundryService(request)
-        .then(
-          (ServerResponse response) {
-            mezDbgPrint("rrrrrrrrrrrrrrrrrrrr ===> ${response.errorMessage}");
+    laundryController.requestLaundryService(request).then(
+      (ServerResponse response) {
+        mezDbgPrint("rrrrrrrrrrrrrrrrrrrr ===> ${response.errorMessage}");
 
-            if (response.data['orderId'] != null) {
-              sharedRoute.popEverythingAndNavigateTo(
-                getLaundyOrderRoute(
-                  response.data['orderId'],
-                ),
-              );
-            } else {
-              Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
-            }
-          },
-        )
-        .whenComplete(() => clicked.value = false)
-        .onError((Object? error, StackTrace stackTrace) {
-          mezDbgPrint(
-              "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
-          mezDbgPrint(
-              "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
-        });
+        if (response.data['orderId'] != null) {
+          sharedRoute.popEverythingAndNavigateTo(
+            getLaundyOrderRoute(
+              response.data['orderId'],
+            ),
+          );
+        } else {
+          Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
+        }
+      },
+    ).whenComplete(() {
+      clicked.value = false;
+    }).onError((Object? error, StackTrace stackTrace) {
+      mezDbgPrint(
+          "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
+      mezDbgPrint(
+          "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
+    });
   }
 }

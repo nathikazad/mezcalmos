@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class LaundryOpEditLocationCard extends StatelessWidget {
@@ -19,13 +21,27 @@ class LaundryOpEditLocationCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () async {
-            // TODO @m66are change the pick location view to shared page and work with it here
+            final Location newLoc = await Get.toNamed(kPickLocationEdit,
+                    arguments: LatLng(
+                        editInfoController.newLocation.value!.latitude,
+                        editInfoController.newLocation.value!.longitude))
+                as Location;
+            editInfoController.setNewLocation(newLoc);
+            editInfoController.newLocation.refresh();
 
-            await Get.toNamed(kPickLocationWithoutAuth)!.then((value) {
-              if (value != null) {
-                editInfoController.setNewLocation(value);
-              }
-            });
+            // await Get.toNamed(kPickLocationEdit,
+            //         arguments: LatLng(
+            //             editInfoController.newLocation.value!.latitude,
+            //             editInfoController.newLocation.value!.longitude))!
+            //     .then((value) {
+            //   if (value != null) {
+            //     mezDbgPrint("New location ======> ${value.adress}");
+            //     editInfoController.setNewLocation(value);
+            //     editInfoController.newLocation.refresh();
+            //   } else {
+            //     mezDbgPrint("Newloc is nuuuuuulll---------");
+            //   }
+            // });
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 6),

@@ -186,15 +186,16 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                       "${DateFormat("hh:mm a").format(notification.timestamp.toLocal())}"),
                   Container(
                     alignment: Alignment.center,
+                    padding: const EdgeInsets.only(top: 5),
                     child: (notification.imgUrl.isURL)
                         ? CircleAvatar(
-                            radius: 25,
+                            radius: 23,
                             backgroundColor: Colors.transparent,
                             backgroundImage:
                                 CachedNetworkImageProvider(notification.imgUrl),
                           )
                         : CircleAvatar(
-                            radius: 25,
+                            radius: 23,
                             backgroundColor: Colors.transparent,
                             backgroundImage: AssetImage(notification.imgUrl),
                           ),

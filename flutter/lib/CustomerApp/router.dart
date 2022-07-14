@@ -174,20 +174,14 @@ class XRouter {
         GetPage(
           name: kLaundryOrderRequest,
           page: () => LaundryOrderRequestView(),
-          transitionDuration: Duration(milliseconds: 500),
-          transition: Transition.rightToLeft,
         ),
         GetPage(
           name: kSingleLaundryRoute,
           page: () => SingleLaundryScreen(),
-          transitionDuration: Duration(milliseconds: 500),
-          transition: Transition.rightToLeft,
         ),
         GetPage(
           name: kLaundryCurrentOrder,
           page: () => LaundryCurrentOrderView(),
-          transitionDuration: Duration(milliseconds: 500),
-          transition: Transition.rightToLeft,
         ),
       ] +
       SharedRouter.sharedRoutes;

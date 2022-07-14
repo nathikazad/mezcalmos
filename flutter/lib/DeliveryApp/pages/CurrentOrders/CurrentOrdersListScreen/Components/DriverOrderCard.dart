@@ -4,6 +4,7 @@ import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -43,7 +44,7 @@ class DriverOrderCard extends StatelessWidget {
           cardTitle: _getOrderTitle(),
           primaryBodyContent: Text(order.to.address),
           cardStatus: _getOrderWidget(),
-          cardTime: Text(order.orderTime.getOrderTime()),
+          cardTime: Text(order.orderTime.getOrderTime().inCaps),
           rightImage: _getOrderIcon()),
       order: order,
     );
@@ -93,7 +94,7 @@ class DriverOrderCard extends StatelessWidget {
         case RestaurantOrderStatus.CancelledByAdmin:
         case RestaurantOrderStatus.CancelledByCustomer:
           return Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.red.shade100,
               borderRadius: BorderRadius.circular(25),
@@ -107,7 +108,7 @@ class DriverOrderCard extends StatelessWidget {
           );
         case RestaurantOrderStatus.Delivered:
           return Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.green.shade100,
               borderRadius: BorderRadius.circular(25),
@@ -121,7 +122,7 @@ class DriverOrderCard extends StatelessWidget {
           );
         case RestaurantOrderStatus.OnTheWay:
           return Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.amber.shade100,
               borderRadius: BorderRadius.circular(25),
@@ -135,7 +136,7 @@ class DriverOrderCard extends StatelessWidget {
           );
         case RestaurantOrderStatus.ReadyForPickup:
           return Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.green.shade100,
               borderRadius: BorderRadius.circular(25),
@@ -150,7 +151,7 @@ class DriverOrderCard extends StatelessWidget {
 
         default:
           return Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.amber.shade100,
               borderRadius: BorderRadius.circular(25),

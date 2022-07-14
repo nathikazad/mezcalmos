@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOrderWeightSelector.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
@@ -42,8 +43,10 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
   TextEditingController itemsWeightController = TextEditingController();
 
   OrderController orderController = Get.find<OrderController>();
-  LaundryInfoController laundryInfoController =
-      Get.find<LaundryInfoController>();
+  late OpLaundryInfoController laundryInfoController;
+
+  LaundryOpAuthController opAuthController =
+      Get.find<LaundryOpAuthController>();
 
   Rxn<LaundryCostLineItem?> newCategory = Rxn();
   RxBool isLoading = RxBool(false);
@@ -52,6 +55,8 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
 
   @override
   void initState() {
+    Get.put(OpLaundryInfoController(), permanent: false);
+    laundryInfoController = Get.find<OpLaundryInfoController>();
     if (widget.editMode && widget.oldItem != null) {
       newCategory.value = widget.oldItem;
       itemsWeightController.text = widget.oldItem!.weight.toString();
@@ -61,7 +66,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    Get.delete<OpLaundryInfoController>(force: true);
     itemsWeightController.dispose();
     newCategory.value = null;
     super.dispose();
@@ -297,9 +302,10 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
   }
 
 // handling when the weight and category is well formated and go throught the process of editing or adding new items weight
-  void handlingNewOrderWeight() {
-    final LanguageType primaryLangauge =
-        laundryInfoController.laundry.value!.primaryLanguage;
+  Future<void> handlingNewOrderWeight() async {
+    final Laundry laundry = await laundryInfoController
+        .getLaundryAsFuture(opAuthController.laundryId!);
+    final LanguageType primaryLangauge = laundry.primaryLanguage;
     final LaundryOrderCostLineItem newCostLineItem = LaundryOrderCostLineItem(
         id: newCategory.value!.id,
         weight: num.parse(itemsWeightController.text),
@@ -318,14 +324,16 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
         _tempCatgeory.name != widget.oldItem!.name) {
       handlingCategroryAlreadySelected();
     } else {
-      settingNewOrderWeight(newCostLineItem);
+      await settingNewOrderWeight(newCostLineItem);
     }
   }
 
 // final function that will trigger the order controller with setting the final order cost items
-  void settingNewOrderWeight(LaundryOrderCostLineItem newCostLineItem) {
-    final LanguageType primaryLangauge =
-        laundryInfoController.laundry.value!.primaryLanguage;
+  Future<void> settingNewOrderWeight(
+      LaundryOrderCostLineItem newCostLineItem) async {
+    final Laundry laundry = await laundryInfoController
+        .getLaundryAsFuture(opAuthController.laundryId!);
+    final LanguageType primaryLangauge = laundry.primaryLanguage;
     LaundryOrderCosts? oldCosts = widget.order.costsByType;
     if (oldCosts != null) {
       if (widget.editMode) {
@@ -339,7 +347,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
       oldCosts.lineItems.add(newCostLineItem);
     }
 
-    orderController
+    await orderController
         .setOrderWeight(widget.order.orderId, oldCosts)
         .then((ServerResponse value) {
       mezDbgPrint("Done");

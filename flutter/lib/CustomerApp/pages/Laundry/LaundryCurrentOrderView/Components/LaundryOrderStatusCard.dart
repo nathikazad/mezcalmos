@@ -26,12 +26,13 @@ class LaundryOrderStatusCard extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.all(12),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             order.getOrderWidget(),
             Spacer(),
             _orderStatusText(context),
             Spacer(
-              flex: 1,
+              flex: 2,
             ),
           ],
         ),
@@ -40,16 +41,11 @@ class LaundryOrderStatusCard extends StatelessWidget {
   }
 
   Widget _orderEtaTimeWidget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-            child: Text(
-          _getEstimatedText()!,
-          textAlign: TextAlign.center,
-        )),
-      ],
-    );
+    return Container(
+        child: Text(
+      _getEstimatedText()!,
+      textAlign: TextAlign.center,
+    ));
   }
 
   Widget _orderStatusText(BuildContext context) {
@@ -57,6 +53,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
       flex: 8,
       fit: FlexFit.tight,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             alignment: Alignment.center,
@@ -71,7 +68,7 @@ class LaundryOrderStatusCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          if (_getEstimatedText() != null) _orderEtaTimeWidget()
+          if (_getEstimatedText() != null) _orderEtaTimeWidget(),
         ],
       ),
     );
@@ -83,29 +80,29 @@ class LaundryOrderStatusCard extends StatelessWidget {
 
       case LaundryOrderStatus.OtwPickupFromCustomer:
         if (order.estimatedPickupFromCustomerTime != null) {
-          return "${_i18n()["willBePickedUp"]} ${order.estimatedPickupFromCustomerTime!.getEstimatedTime()}";
+          return "${_i18n()["willBePickedUp"]}\n${order.estimatedPickupFromCustomerTime!.getEstimatedTime()}";
         }
         break;
       case LaundryOrderStatus.PickedUpFromCustomer:
         if (order.estimatedDropoffAtServiceProviderTime != null) {
-          return "${_i18n()["willBeDropped"]} ${order.estimatedDropoffAtServiceProviderTime!.getEstimatedTime()}";
+          return "${_i18n()["willBeDropped"]}\n${order.estimatedDropoffAtServiceProviderTime!.getEstimatedTime()}";
         }
         break;
       case LaundryOrderStatus.AtLaundry:
         if (order.estimatedLaundryReadyTime != null) {
-          return "${_i18n()["willBeReady"]} ${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
+          return "${_i18n()["willBeReady"]}\n${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
         }
 
         break;
       case LaundryOrderStatus.OtwPickupFromLaundry:
         if (order.estimatedPickupFromServiceProviderTime != null) {
-          return "${_i18n()["willBePickedUp"]} ${order.estimatedPickupFromServiceProviderTime!.getEstimatedTime()}";
+          return "${_i18n()["willBePickedUp"]}\n${order.estimatedPickupFromServiceProviderTime!.getEstimatedTime()}";
         }
         break;
 
       case LaundryOrderStatus.PickedUpFromLaundry:
         if (order.estimatedDropoffAtCustomerTime != null) {
-          return "${_i18n()["willBeDropped"]} ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
+          return "${_i18n()["willBeDropped"]}\n${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
         }
 
         break;
