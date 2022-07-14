@@ -157,6 +157,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
+            fit: FlexFit.tight,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -168,17 +169,19 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   height: 5,
                 ),
                 Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(35),
-                        color: SecondaryLightBlueColor),
-                    child: Text(
-                      "${_i18n()["minimumCost"]} \$${laundry.value!.laundryCosts.minimumCost} ",
-                      maxLines: 1,
-                      style: Get.textTheme.bodyText2?.copyWith(
-                          fontWeight: FontWeight.w700, color: primaryBlueColor),
-                    )),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(35),
+                      color: SecondaryLightBlueColor),
+                  child: Text(
+                    "${_i18n()["minimumCost"]} \$${laundry.value!.laundryCosts.minimumCost} ",
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: Get.textTheme.bodyText2?.copyWith(
+                        fontWeight: FontWeight.w700, color: primaryBlueColor),
+                  ),
+                ),
               ],
             ),
           ),

@@ -93,17 +93,24 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       height: 10,
                     ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.place,
-                          size: 20,
-                          color: primaryBlueColor,
+                        Container(
+                          margin: const EdgeInsets.only(top: 3),
+                          child: Icon(
+                            Icons.place,
+                            size: 20,
+                            color: primaryBlueColor,
+                          ),
                         ),
                         SizedBox(
                           width: 2,
                         ),
                         Flexible(
-                            child: Text(selectedLaundry.info.location.address))
+                            child: Text(
+                          selectedLaundry.info.location.address,
+                          maxLines: 2,
+                        ))
                       ],
                     ),
                     SizedBox(

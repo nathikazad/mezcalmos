@@ -437,7 +437,7 @@
                             "atLaundry": "En la lavandería",
                             "readyForDelivery": "Listo para la entrega",
                             "otwDelivery": "Entrega en el camino",
-                            "delivered": "Orden Entregado",
+                            "delivered": "Entregado",
                             "canceled": "Cancelada",
                             "otwToCustomer": "De camino al cliente",
                             "otwToLaundry": "De camino a la lavandería",
