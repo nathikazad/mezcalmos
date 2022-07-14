@@ -1014,6 +1014,20 @@
             }
         },
         "pages": {
+            "AddLaundryServiceView": {
+                "newLaundry": "Ropa nueva",
+                "createLaundry": "Crear lavandería",
+                "laundryName": "Nombre de lavandería",
+                "email": "Correo electrónico",
+                "phoneNumber": "Número de teléfono",
+                "helperText": "Debe proporcionar la dirección de correo electrónico o el número de teléfono de la lavandería",
+                "required": "Requerida",
+                "emailNotCorrect": "Correo electrónico no es correcta",
+                "phoneNotCorrect": "El número de teléfono no es correcto"
+
+
+            },
+
             "ServicesView": {
                 "services": "Servicios",
                 "noLaundries": "No hay lavas disponibles",
