@@ -226,7 +226,7 @@ class Category {
       "name": name?.toFirebaseFormat(),
       "dialog": dialog?.toFirebaseFormat(),
       "position": position,
-      'items': items.map((Item x) => x.toJson()).toList(),
+      // 'items': items.map((Item x) => x.toJson()).toList(),
     };
   }
 

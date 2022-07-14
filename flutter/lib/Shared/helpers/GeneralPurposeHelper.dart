@@ -141,8 +141,6 @@ Future<TimeOfDay?> getTimePicker(
   return showTimePicker(
       context: context,
       initialTime: initialTime,
-
-      
       builder: (BuildContext ctx, Widget? child) {
         return Theme(
           data: theme,
@@ -485,7 +483,7 @@ Widget multipleSelectOptionComponent(
               ),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: value ? primaryBlueColor : SecondaryLightBlueColor,
+          color: value ? primaryBlueColor : secondaryLightBlueColor,
         )),
   );
 }

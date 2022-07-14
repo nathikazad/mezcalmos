@@ -231,7 +231,7 @@ class CustomerOrderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())
                   ? Colors.red.withOpacity(0.2)
-                  : SecondaryLightBlueColor),
+                  : secondaryLightBlueColor),
           child: Text(
             (order as RestaurantOrder).getOrderStatus(),
             style: Get.textTheme.bodyText1?.copyWith(
@@ -247,7 +247,7 @@ class CustomerOrderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())
                   ? Colors.red.withOpacity(0.2)
-                  : SecondaryLightBlueColor),
+                  : secondaryLightBlueColor),
           child: Text(
             (order as LaundryOrder).orderStatusTitleForCustomer(),
             style: Get.textTheme.bodyText1?.copyWith(
@@ -262,7 +262,7 @@ class CustomerOrderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               color: (order.isCanceled())
                   ? Colors.red.withOpacity(0.2)
-                  : SecondaryLightBlueColor),
+                  : secondaryLightBlueColor),
           child: Text(
             (order as TaxiOrder).getTaxiOrderStatus(),
             style: Get.textTheme.bodyText1?.copyWith(

@@ -79,7 +79,8 @@ class ItemViewController {
       mezDbgPrint("options adding");
       itemOptions.add(element);
     });
-    if (categoryId != null) {
+    if (categoryId != null && categoryId != ":categoryId") {
+      mezDbgPrint("category iiiiiiiiiiiiiiiid  =======>>>>> $categoryId");
       currentCategory.value = restaurant.value!.getCategories
           .firstWhere((Category element) => element.id == categoryId);
     }

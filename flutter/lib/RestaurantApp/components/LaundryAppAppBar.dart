@@ -43,7 +43,7 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: SecondaryLightBlueColor,
+            color: secondaryLightBlueColor,
           ),
           child: Icon(
             Icons.watch_later,
@@ -67,7 +67,7 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: SecondaryLightBlueColor,
+            color: secondaryLightBlueColor,
           ),
           child: Icon(
             Icons.person,
@@ -98,7 +98,7 @@ class LaundryAppAppBar extends StatelessWidget implements PreferredSizeWidget {
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: SecondaryLightBlueColor,
+                  color: secondaryLightBlueColor,
                 ),
                 child: Icon(
                   Icons.notifications,

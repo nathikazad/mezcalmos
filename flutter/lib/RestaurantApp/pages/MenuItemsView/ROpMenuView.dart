@@ -1,15 +1,16 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpCategoryGridCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpCategoryItems.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpItemCard.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 
 class ROpMenuView extends StatefulWidget {
   const ROpMenuView({Key? key}) : super(key: key);
@@ -20,30 +21,19 @@ class ROpMenuView extends StatefulWidget {
 
 class _ROpMenuViewState extends State<ROpMenuView>
     with SingleTickerProviderStateMixin {
-  Rxn<Restaurant> restaurant = Rxn();
-  RestaurantInfoController _restaurantInfoController =
-      Get.find<RestaurantInfoController>();
-  StreamSubscription? _restaurantListener;
   late TabController _tabController;
+  ROpMenuViewController viewController = ROpMenuViewController();
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
-    restaurant.value = _restaurantInfoController.restaurant.value;
-    _restaurantListener =
-        _restaurantInfoController.restaurant.stream.listen((Restaurant? event) {
-      if (event != null) {
-        restaurant.value = event;
-      } else {
-        Get.back();
-      }
-    });
+    viewController.init();
 
     super.initState();
   }
 
   @override
   void dispose() {
-    _restaurantListener?.cancel();
+    viewController.dispose();
     super.dispose();
   }
 
@@ -51,23 +41,26 @@ class _ROpMenuViewState extends State<ROpMenuView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back,
+          onClick: handleBack,
           title: "Menu",
           showNotifications: true,
-          tabBar: TabBar(
-              controller: _tabController,
-              labelColor: primaryBlueColor,
-              unselectedLabelColor: Colors.grey.shade800,
-              labelStyle: Get.textTheme.bodyText1,
-              unselectedLabelStyle: Get.textTheme.bodyText2,
-              tabs: [
-                Tab(
-                  text: "My items",
-                ),
-                Tab(
-                  text: "Specials",
-                ),
-              ])),
+          tabBar: _tabBar()),
+      bottomNavigationBar: Obx(() {
+        if (viewController.reOrderMode.isTrue) {
+          return CallToActionButton(
+            onTap: () async {
+              await viewController
+                  .saveReorder()
+                  .then((value) => viewController.reOrderMode.value = false);
+            },
+            text: "Save order",
+            height: 65,
+          );
+        } else
+          return Container(
+            height: 0,
+          );
+      }),
       body: Obx(
         () => TabBarView(
           controller: _tabController,
@@ -79,26 +72,39 @@ class _ROpMenuViewState extends State<ROpMenuView>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
+                    height: 5,
+                  ),
+                  MezAddButton(
+                    onClick: () {},
+                    title: "Add category",
+                    btnColor: primaryBlueColor,
+                    primaryColor: Colors.white,
+                  ),
+                  MezAddButton(
+                    onClick: () {
+                      Get.toNamed(kItemView);
+                    },
+                    title: "Add item",
+                  ),
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    "Categories",
-                    style: Get.textTheme.bodyText1,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Categories",
+                        style: Get.textTheme.bodyText1,
+                      ),
+                      (viewController.reOrderMode.isTrue)
+                          ? SizedBox()
+                          : _reorderBtn()
+                    ],
                   ),
+                  Divider(),
+
                   SizedBox(
-                    height: 15,
-                  ),
-                  _categoriesGridList(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Items",
-                    style: Get.textTheme.bodyText1,
-                  ),
-                  _addItemButton(),
-                  SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
                   _categoriesItemsList(),
                   //   _noCategoryItemsList()
@@ -119,43 +125,95 @@ class _ROpMenuViewState extends State<ROpMenuView>
     );
   }
 
-  Widget _addItemButton() {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      color: Colors.grey.shade200,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          Get.toNamed(kItemView);
-        },
-        child: Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 5),
-          child: Icon(
-            Icons.add_circle_outline_outlined,
-            color: primaryBlueColor,
-            size: 25,
+  TabBar _tabBar() {
+    return TabBar(
+        controller: _tabController,
+        labelColor: primaryBlueColor,
+        unselectedLabelColor: Colors.grey.shade800,
+        labelStyle: Get.textTheme.bodyText1,
+        unselectedLabelStyle: Get.textTheme.bodyText2,
+        tabs: [
+          Tab(
+            text: "My items",
           ),
+          Tab(
+            text: "Specials",
+          ),
+        ]);
+  }
+
+  InkWell _reorderBtn() {
+    return InkWell(
+      onTap: () {
+        viewController.startReoderMode();
+      },
+      child: Ink(
+        padding: const EdgeInsets.all(5),
+        child: Row(
+          children: [
+            Ink(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: secondaryLightBlueColor),
+              child: Icon(
+                Icons.low_priority_rounded,
+                color: primaryBlueColor,
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              "Reorder",
+              style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+            ),
+          ],
         ),
       ),
     );
   }
 
   Widget _categoriesItemsList() {
-    return Container(
-      alignment: Alignment.centerLeft,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(
-            restaurant.value!.getCategories.length,
-            (int index) => ROpCategoryItems(
-                category: restaurant.value!.getCategories[index])),
+    return Obx(
+      () => Container(
+        alignment: Alignment.centerLeft,
+        child: (viewController.reOrderMode.isTrue)
+            ? ReorderableListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  for (int index = 0;
+                      index < viewController.rOcategories.length;
+                      index += 1)
+                    ROpCategoryItems(
+                        key: Key('$index'),
+                        category: viewController.rOcategories[index],
+                        viewController: viewController)
+                ],
+                onReorder: (int oldIndex, int newIndex) {
+                  mezDbgPrint("OLD INDEX ======>>>>> $oldIndex");
+                  mezDbgPrint("NEw INDEX ======>>>>> $newIndex");
+                  // to avoid last element missbehavior
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  viewController.rorderSingleCategory(
+                      oldIndex: oldIndex, newIndex: newIndex);
+                })
+            : Column(
+                children: List.generate(
+                    viewController.restaurant.value!.getCategories.length,
+                    (int index) => ROpCategoryItems(
+                        viewController: viewController,
+                        category: viewController
+                            .restaurant.value!.getCategories[index])),
+              ),
       ),
     );
   }
 
   Widget _noCategoryItemsList() {
-    if (restaurant.value!.getItemsWithoutCategory != null) {
+    if (viewController.restaurant.value!.getItemsWithoutCategory != null) {
       return Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,9 +224,12 @@ class _ROpMenuViewState extends State<ROpMenuView>
             ),
             Column(
               children: List.generate(
-                  restaurant.value!.getItemsWithoutCategory!.length,
+                  viewController
+                      .restaurant.value!.getItemsWithoutCategory!.length,
                   (int index) => ROpItemCard(
-                      item: restaurant.value!.getItemsWithoutCategory![index])),
+                      viewController: viewController,
+                      item: viewController
+                          .restaurant.value!.getItemsWithoutCategory![index])),
             ),
           ],
         ),
@@ -180,34 +241,31 @@ class _ROpMenuViewState extends State<ROpMenuView>
 
   Widget _categoriesGridList() {
     return GridView.count(
-      crossAxisCount: 3,
-      mainAxisSpacing: 5,
-      crossAxisSpacing: 5,
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      children: List<Widget>.generate(restaurant.value!.getCategories.length,
-              (int index) {
-            return ROpCategoryGridCard(
-                category: restaurant.value!.getCategories[index]);
-          }) +
-          [
-            Card(
-              color: Colors.grey.shade200,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(10),
-                onTap: () {
-                  Get.toNamed(kCategoryView);
-                },
-                child: Container(
-                  child: Icon(
-                    Icons.add_circle_outline,
-                    size: 25,
-                    color: primaryBlueColor,
-                  ),
-                ),
-              ),
-            )
-          ],
-    );
+        crossAxisCount: 3,
+        mainAxisSpacing: 5,
+        crossAxisSpacing: 5,
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        children: List<Widget>.generate(
+            viewController.restaurant.value!.getCategories.length, (int index) {
+          return ROpCategoryGridCard(
+              category: viewController.restaurant.value!.getCategories[index]);
+        }));
+  }
+
+  void handleBack() {
+    mezDbgPrint(viewController.reOrderMode.value);
+    if (viewController.reOrderMode.isTrue) {
+      showConfirmationDialog(context,
+          title: "Cancel reorder",
+          primaryButtonText: "Yes, Cancel reorder",
+          helperText: "Are you sure you want to cancel the reorder process",
+          onYesClick: () async {
+        viewController.cancelReoderMode();
+        Get.back();
+      });
+    } else {
+      Get.back();
+    }
   }
 }

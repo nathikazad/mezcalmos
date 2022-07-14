@@ -8,6 +8,8 @@ class MezAddButton extends StatelessWidget {
     required this.onClick,
     this.title,
     this.icon = Icons.add_circle_outline_outlined,
+    this.btnColor = secondaryLightBlueColor,
+    this.primaryColor = primaryBlueColor,
     this.btnHeight = 65,
     this.iconSize = 25,
   }) : super(key: key);
@@ -16,12 +18,14 @@ class MezAddButton extends StatelessWidget {
   final double btnHeight;
   final IconData icon;
   final String? title;
+  final Color? btnColor;
+  final Color? primaryColor;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
-      color: Colors.grey.shade200,
+      color: btnColor,
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: onClick,
@@ -34,16 +38,16 @@ class MezAddButton extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: primaryBlueColor,
+                color: primaryColor,
                 size: iconSize,
               ),
               if (title != null)
                 Container(
-                  padding: const EdgeInsets.only(left: 5),
+                  padding: const EdgeInsets.only(left: 12),
                   child: Text(
                     title!,
-                    style: Get.textTheme.bodyText1
-                        ?.copyWith(color: primaryBlueColor),
+                    style:
+                        Get.textTheme.bodyText1?.copyWith(color: primaryColor),
                   ),
                 )
             ],

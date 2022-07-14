@@ -351,7 +351,7 @@ class SendMessageBox extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         fontFamily: 'Nunito',
                       ),
-                      fillColor: SecondaryLightBlueColor,
+                      fillColor: secondaryLightBlueColor,
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,

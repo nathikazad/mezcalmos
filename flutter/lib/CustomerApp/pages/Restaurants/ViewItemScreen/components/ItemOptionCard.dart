@@ -164,7 +164,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                 ),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: value ? primaryBlueColor : SecondaryLightBlueColor,
+            color: value ? primaryBlueColor : secondaryLightBlueColor,
           )),
     );
   }

@@ -4,6 +4,8 @@ import 'package:mezcalmos/RestaurantApp/pages/OptionView/components/ROpOptionCho
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/components/ROpOptionTypeSelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/controllers/ROpOptionViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -25,13 +27,16 @@ class _ROpOptionViewState extends State<ROpOptionView>
   final GlobalKey<FormState> prFormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
 
-  String? optionId;
+  String? itemId;
+  String? categoryId;
   Rxn<Option> option = Rxn<Option>();
 
   @override
   void initState() {
     if (Get.arguments != null) {
       option.value = Get.arguments["option"] as Option?;
+      itemId = Get.arguments["itemId"] as String?;
+      categoryId = Get.arguments["categoryId"] as String?;
     }
 
     _tabController = TabController(length: 2, vsync: this);
@@ -54,7 +59,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
       appBar: _appBar(),
       bottomNavigationBar: CallToActionButton(
         height: 65,
-        onTap: () {
+        onTap: () async {
           saveOption();
         },
         text: (_viewController.editMode.isTrue) ? "Edit option" : "Add option",
@@ -201,7 +206,25 @@ class _ROpOptionViewState extends State<ROpOptionView>
               ? TextButton(
                   style: TextButton.styleFrom(
                       backgroundColor: offRedColor, primary: Colors.redAccent),
-                  onPressed: () {},
+                  onPressed: () {
+                    mezDbgPrint("Delete option");
+                    mezDbgPrint("$itemId");
+                    if (itemId != null) {
+                      showConfirmationDialog(context, onYesClick: () async {
+                        await _viewController
+                            .deleteOption(
+                                itemId: itemId!,
+                                optionId: option.value!.id,
+                                categoryId: categoryId)
+                            .then((value) {
+                          Get.back();
+                        });
+                      },
+                          title: "Delete this option",
+                          helperText:
+                              "Are you sure you want to delete this option ");
+                    }
+                  },
                   child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       alignment: Alignment.center,

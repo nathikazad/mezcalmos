@@ -4,7 +4,6 @@ import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewContr
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -57,7 +56,7 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
           width: 25,
           height: 25,
           decoration: BoxDecoration(
-              color: SecondaryLightBlueColor, shape: BoxShape.circle),
+              color: secondaryLightBlueColor, shape: BoxShape.circle),
           child:
               (isExpanded) ? Icon(Icons.expand_less) : Icon(Icons.expand_more),
         ),
@@ -97,10 +96,11 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   Widget _editBtn({required Option option}) {
     return InkWell(
       onTap: () async {
-        mezDbgPrint("Tapped");
-        final Option? newOp =
-            await Get.toNamed(kOptionView, arguments: {"option": option})
-                as Option?;
+        final Option? newOp = await Get.toNamed(kOptionView, arguments: {
+          "option": option,
+          "itemId": widget.itemId,
+          "categoryId": widget.categoryID
+        }) as Option?;
         if (newOp != null) {
           widget.viewController.editOption(option.id, newOp);
         }
@@ -144,7 +144,7 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
                   widget.viewController.itemOptions.refresh();
                 },
                 activeColor: primaryBlueColor,
-                activeTrackColor: SecondaryLightBlueColor,
+                activeTrackColor: secondaryLightBlueColor,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               )
             ],

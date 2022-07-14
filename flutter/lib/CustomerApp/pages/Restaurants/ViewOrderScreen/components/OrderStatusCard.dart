@@ -153,7 +153,7 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
         child: Icon(
           Icons.check_circle,
           size: 40,
-          color: SecondaryLightBlueColor,
+          color: secondaryLightBlueColor,
         ),
       );
 
@@ -161,7 +161,7 @@ Widget orderStatusImage(RestaurantOrderStatus status) {
       return Container(
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-            color: SecondaryLightBlueColor, shape: BoxShape.circle),
+            color: secondaryLightBlueColor, shape: BoxShape.circle),
         child: Icon(
           Icons.check,
           size: 25,

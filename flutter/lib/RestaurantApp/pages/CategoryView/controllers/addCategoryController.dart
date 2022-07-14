@@ -75,7 +75,8 @@ class AddCategoryController {
 
   Future<void> saveCategory() async {
     if (editMode.value == true) {
-      await restaurantInfoController.EditCatgeory(
+      await restaurantInfoController
+          .editCategory(
               category: constructCategory(), categoryId: editableCategoryId!)
           .then((value) => Get.back());
     } else {

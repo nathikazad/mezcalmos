@@ -51,7 +51,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
               width: 25,
               height: 25,
               decoration: BoxDecoration(
-                  color: SecondaryLightBlueColor, shape: BoxShape.circle),
+                  color: secondaryLightBlueColor, shape: BoxShape.circle),
               child: (isExpanded)
                   ? Icon(Icons.expand_less)
                   : Icon(Icons.expand_more),

@@ -123,7 +123,7 @@ extension LaundryOrderWidgets on LaundryOrder {
         return Container(
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
-              color: SecondaryLightBlueColor, shape: BoxShape.circle),
+              color: secondaryLightBlueColor, shape: BoxShape.circle),
           child: Icon(
             Icons.check,
             size: 25,

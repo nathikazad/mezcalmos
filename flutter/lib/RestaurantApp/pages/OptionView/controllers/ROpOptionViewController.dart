@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
@@ -43,11 +42,13 @@ class ROpOptionViewController {
   };
 
 // init //
-  void init({Option? option,}) {
+  void init({
+    Option? option,
+  }) {
     restaurant.value = _restaurantInfoController.restaurant.value;
     editableOption.value = option;
 
-    if (editableOption.value != null ) {
+    if (editableOption.value != null) {
       initEditMode();
     }
   }
@@ -86,7 +87,6 @@ class ROpOptionViewController {
   }
 
 // form validation //
-
 
   void switchOptionType(OptionType optionType) {
     this.optionType.value = optionType;
@@ -153,5 +153,12 @@ class ROpOptionViewController {
 
   void deleteChoice(String choiceID) {
     optionChoices.removeWhere((Choice element) => element.id == choiceID);
+  }
+
+  Future<void> deleteOption(
+      {required String itemId,
+      required String optionId,
+      String? categoryId}) async {
+    // TODO @m66are
   }
 }

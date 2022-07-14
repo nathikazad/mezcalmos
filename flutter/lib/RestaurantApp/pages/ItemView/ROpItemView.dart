@@ -71,14 +71,13 @@ class _ROpItemViewState extends State<ROpItemView>
       bottomNavigationBar: Obx(
         () => CallToActionButton(
           height: 65,
-          isLoading: viewController.isLoading,
           text: (viewController.editMode.isTrue) ? "Save item" : "Add item",
-          onTap: () {
+          onTap: () async {
             if (viewController.isSecondLangValid) {
               _tabController.index = _tabController.length - 2;
               if (_formKey.currentState!.validate()) {
                 mezDbgPrint("Calling save");
-                viewController.saveItem();
+                await viewController.saveItem();
               }
             } else {
               _tabController.index = _tabController.length - 1;
@@ -249,7 +248,11 @@ class _ROpItemViewState extends State<ROpItemView>
           const SizedBox(
             height: 10,
           ),
-          ROpItemOptionCard(viewController: viewController),
+          ROpItemOptionCard(
+            viewController: viewController,
+            itemId: itemId,
+            categoryID: categoryId,
+          ),
           MezAddButton(
             title: "Add option",
             onClick: () async {

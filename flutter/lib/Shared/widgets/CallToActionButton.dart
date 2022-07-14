@@ -2,47 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
-class CallToActionButton extends StatelessWidget {
+class CallToActionButton extends StatefulWidget {
   const CallToActionButton(
       {Key? key,
       this.height,
       this.width,
       this.enabled = true,
-      this.isLoading,
       required this.onTap,
       required this.text})
       : super(key: key);
   final double? height;
   final double? width;
   final bool enabled;
-  final RxBool? isLoading;
-  final String text;
-  final void Function()? onTap;
 
+  final String text;
+  final Future<void> Function()? onTap;
+
+  @override
+  State<CallToActionButton> createState() => _CallToActionButtonState();
+}
+
+class _CallToActionButtonState extends State<CallToActionButton> {
+  RxBool _isLoading = RxBool(false);
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
-        height: height,
-        width: width,
+        height: widget.height,
+        width: widget.width,
         child: Card(
           margin: EdgeInsets.zero,
           child: InkWell(
             child: Ink(
                 decoration: BoxDecoration(
-                    color: (!enabled) ? Colors.grey.shade300 : null,
-                    gradient: (enabled) ? bluePurpleGradient : null),
+                    color: (!widget.enabled) ? Colors.grey.shade300 : null,
+                    gradient: (widget.enabled) ? bluePurpleGradient : null),
                 child: Center(
-                    child: (isLoading != null && isLoading!.isTrue)
+                    child: (_isLoading.isTrue)
                         ? CircularProgressIndicator(
                             color: Colors.white,
                           )
                         : Text(
-                            text,
+                            widget.text,
                             style: Get.textTheme.bodyText1
                                 ?.copyWith(color: Colors.white),
                           ))),
-            onTap: onTap,
+            onTap: widget.onTap != null
+                ? () {
+                    _isLoading.value = true;
+                    widget.onTap!
+                        .call()
+                        .whenComplete(() => _isLoading.value = false);
+                  }
+                : null,
           ),
         ),
       ),

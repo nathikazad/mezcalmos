@@ -123,7 +123,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       () => Card(
                         child: authController.user != null
                             ? DropDownLocationList(
-                                bgColor: SecondaryLightBlueColor,
+                                bgColor: secondaryLightBlueColor,
                                 passedInLocation: customerLoc,
                                 onValueChangeCallback: ({Location? location}) {
                                   setState(() {

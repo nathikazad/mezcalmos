@@ -147,6 +147,28 @@ class RestaurantInfoController extends GetxController {
     }
   }
 
+  Future<void> editItemPosition(
+      {required int position,
+      required String itemId,
+      String? categoryId}) async {
+    // adding to new category
+    if (categoryId != null) {
+      await _databaseHelper.firebaseDatabase
+          .ref()
+          .child(itemNode(
+                  uid: restaurantId, itemId: itemId, categoryId: categoryId) +
+              "/position")
+          .set(position);
+    }
+    // adding to noCatgeory
+    else {
+      await _databaseHelper.firebaseDatabase
+          .ref()
+          .child(itemNode(uid: restaurantId, itemId: itemId) + "/position")
+          .set(position);
+    }
+  }
+
   Future<void> deleteItem({required String itemId, String? categoryId}) async {
     // ignore: unawaited_futures
     if (categoryId != null) {
@@ -237,12 +259,21 @@ class RestaurantInfoController extends GetxController {
     return categoryNode.key;
   }
 
-  Future<void> EditCatgeory(
+  Future<void> editCategory(
       {required Category category, required String categoryId}) async {
     await _databaseHelper.firebaseDatabase
         .ref()
         .child(categoryNode(uid: restaurantId, categoryId: categoryId))
         .set(category.toJson());
+  }
+
+  Future<void> editCategoryPosition(
+      {required int position, required String categoryId}) async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(categoryNode(uid: restaurantId, categoryId: categoryId) +
+            "/position")
+        .set(position);
   }
 
   Future<void> deleteCategory({required String categoryId}) async {
@@ -254,6 +285,23 @@ class RestaurantInfoController extends GetxController {
     mezDbgPrint("Deleting $categoryId");
     mezDbgPrint(categoryNode(uid: restaurantId, categoryId: categoryId));
   }
+
+  // ----------------------------------------------------- Options ----------------------------------------------------- //
+  Future<void> deleteOption(
+      {required String itemId,
+      required String optionId,
+      String? categoryId}) async {
+    // ignore: unawaited_futures
+    _databaseHelper.firebaseDatabase
+        .ref()
+        .child(optionNode(
+            uid: restaurantId,
+            itemId: itemId,
+            optionId: optionId,
+            categoryId: categoryId))
+        .remove();
+  }
+
 // ----------------------------------------------------- Images upload ----------------------------------------------------- //
 
   Future<String> uploadImgToDb(
