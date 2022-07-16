@@ -25,6 +25,12 @@ export function addServiceProviderOperatorsToChat(orderId: string, order: Order,
         addParticipantsToChat(Object.keys(laundryOperators), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.LaundryOperator)
       })
       break;
+    case OrderType.Restaurant:
+      restaurantNodes.restaurantOperators(order.serviceProviderId!).once('value').then((snapshot) => {
+        let restaurantOperators: Record<string, boolean> = snapshot.val() || {};
+        addParticipantsToChat(Object.keys(restaurantOperators), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.RestaurantOperator)
+      })
+      break;
 
     default:
       break;

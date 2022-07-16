@@ -99,9 +99,17 @@ export = functions.https.onCall(async (data, context) => {
     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
       chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryAdmin)
-      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId, restaurant.info)
+      notifyParticipants(Object.keys(deliveryAdmins), orderId, ParticipantType.DeliveryAdmin, restaurant.info)
     })
-    
+
+    restaurantNodes.restaurantOperators(cart.serviceProviderId).once('value').then((snapshot) => {
+      if (snapshot.val() != null) {
+        let restaurantOperators: Record<string, boolean> = snapshot.val();
+        chatController.addParticipantsToChat(Object.keys(restaurantOperators), chat, orderId, ParticipantType.RestaurantOperator)
+        notifyParticipants(Object.keys(restaurantOperators), orderId, ParticipantType.RestaurantOperator, restaurant.info)
+      }
+    })
+
     setTimeout(() => customerNodes.cart(customerId).remove(), 1000);
     return {
       status: ServerResponseStatus.Success,
@@ -119,8 +127,9 @@ export = functions.https.onCall(async (data, context) => {
   }
 })
 
-async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
-  orderId: string, restaurant: UserInfo) {
+
+async function notifyParticipants(participants: Array<string>,
+  orderId: string, participantType: ParticipantType, restaurant: UserInfo) {
 
   let notification: Notification = {
     foreground: <NewRestaurantOrderNotification>{
@@ -141,10 +150,11 @@ async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, Deliv
         body: `There is a new restaurant order`
       }
     },
-    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Restaurant, orderId)
+    linkUrl: orderUrl(participantType, OrderType.Restaurant, orderId)
   }
 
-  for (let adminId in deliveryAdmins) {
-    pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  for (let index in participants) {
+    let participantId: string = participants[index]
+    pushNotification(participantId, notification, participantType);
   }
 }

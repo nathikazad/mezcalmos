@@ -136,7 +136,7 @@ async function notifyParticipants(participants: Array<string>,
         body: `There is a new laundry order`
       }
     },
-    linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Laundry, orderId)
+    linkUrl: orderUrl(participantType, OrderType.Laundry, orderId)
   }
 
   for (let index in participants) {

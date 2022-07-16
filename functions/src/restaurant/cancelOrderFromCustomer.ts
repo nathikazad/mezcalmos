@@ -2,6 +2,7 @@ import * as functions from "firebase-functions";
 import { isSignedIn } from "../shared/helper/authorizer";
 import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
+import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
 import { OrderType } from "../shared/models/Generic/Order";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { finishOrder } from "./helper";
@@ -57,15 +58,23 @@ export = functions.https.onCall(async (data, context) => {
   await finishOrder(order, orderId);
 
   deliveryAdminNodes.deliveryAdmins().once('value', (snapshot) => {
-    notifyOthersCancelledOrder(snapshot.val(), orderId, order);
+    let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
+    restaurantNodes.restaurantOperators(order.serviceProviderId!).once('value').then((snapshot) => {
+      let restaurantOperators: Record<string, boolean> = snapshot.val();
+      notifyOthersCancelledOrder(deliveryAdmins, orderId, order, restaurantOperators);
+    });
   });
+
 
   return { status: ServerResponseStatus.Success, orderId: data.orderId }
 });
 
 
-async function notifyOthersCancelledOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
-  orderId: string, order: RestaurantOrder) {
+async function notifyOthersCancelledOrder(
+  deliveryAdmins: Record<string, DeliveryAdmin>,
+  orderId: string,
+  order: RestaurantOrder,
+  restaurantOperators: Record<string, boolean>) {
 
   let notification: Notification = {
     foreground: <RestaurantOrderStatusChangeNotification>{
@@ -82,6 +91,10 @@ async function notifyOthersCancelledOrder(deliveryAdmins: Record<string, Deliver
 
   for (let adminId in deliveryAdmins) {
     pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
+  }
+
+  for (let operatorId in restaurantOperators) {
+    pushNotification(operatorId, notification, ParticipantType.RestaurantOperator);
   }
 
   if (order.dropoffDriver) {

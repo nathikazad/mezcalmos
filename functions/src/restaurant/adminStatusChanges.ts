@@ -7,8 +7,7 @@ import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { checkDeliveryAdmin, isSignedIn } from "../shared/helper/authorizer";
-import { finishOrder } from "./helper";
+import { finishOrder, passChecksForRestaurant } from "./helper";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
@@ -46,26 +45,14 @@ function expectedPreviousStatus(status: RestaurantOrderStatus): RestaurantOrderS
 
 async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: AuthData): Promise<ServerResponse> {
 
-  let response = await isSignedIn(auth)
-  if (response != undefined) {
-    return response;
+  let validationPass: ValidationPass = await passChecksForRestaurant(data, auth);
+  if (!validationPass.ok) {
+    return validationPass.error!;
   }
 
-  response = await checkDeliveryAdmin(auth!.uid)
-  if (response != undefined) {
-    return response;
-  }
+  let order: RestaurantOrder = validationPass.order;
+  let orderId = data.orderId;
 
-  if (data.orderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected order id`,
-      errorCode: "orderIdNotGiven"
-    }
-  }
-
-  let orderId: string = data.orderId;
-  let order: RestaurantOrder = (await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).once('value')).val();
   if (order == null) {
     return {
       status: ServerResponseStatus.Error,
@@ -89,13 +76,6 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
     }
   }
 
-  if (newStatus == RestaurantOrderStatus.ReadyForPickup && order.dropoffDriver == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order cannot be ready for pick up when drop off driver is null`,
-    }
-  }
-
   order.status = newStatus
 
   if (newStatus == RestaurantOrderStatus.Delivered
@@ -103,7 +83,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
     await finishOrder(order, orderId);
   else {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    restaurantNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+    restaurantNodes.inProcessOrders(order.restaurant.id!, orderId).update(order);
     await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
     if (order.dropoffDriver)
       deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
@@ -165,70 +145,3 @@ export const setEstimatedFoodReadyTime = functions.https.onCall(async (data, con
   return { status: ServerResponseStatus.Success }
 });
 
-async function checkRestaurantOperator(laundryId: string, operatorId: string): Promise<ServerResponse | undefined> {
-  let operator = (await restaurantNodes.restaurantOperators(laundryId, operatorId).once('value')).val();
-  let isOperator = operator != null && operator == true
-  if (!isOperator) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Only authorized laundry operators can run this operation"
-    }
-  }
-  return undefined;
-}
-
-async function passChecksForRestaurant(data: any, auth?: AuthData): Promise<ValidationPass> {
-  let response = await isSignedIn(auth)
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response
-    }
-  }
-  if (data.orderId == null) {
-    return {
-      ok: false,
-      error: {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Expected order id`,
-        errorCode: "orderIdNotGiven"
-      }
-    }
-  }
-
-  let orderId: string = data.orderId;
-  let order: RestaurantOrder = (await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).once('value')).val();
-  if (order == null) {
-    return {
-      ok: false,
-      error: {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Order does not exist`,
-        errorCode: "orderDontExist"
-      }
-    }
-  }
-
-  if (data.fromRestaurantOperator) {
-    response = await checkRestaurantOperator(order.restaurant.id, auth!.uid)
-    if (response != undefined) {
-      return {
-        ok: false,
-        error: response
-      };
-    }
-  } else {
-  response = await checkDeliveryAdmin(auth!.uid)
-  if (response != undefined) {
-    return {
-      ok: false,
-      error: response
-    };
-  }
-  }
-
-  return {
-    ok: true,
-    order: order
-  }
-}
