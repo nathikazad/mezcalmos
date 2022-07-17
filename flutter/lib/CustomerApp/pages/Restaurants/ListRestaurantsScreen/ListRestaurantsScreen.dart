@@ -14,7 +14,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ListRestaurantsScreen"]["ListRestaurantScreen"];
 
 class ListRestaurantsScreen extends StatefulWidget {
-  const ListRestaurantsScreen({Key? key}) : super(key: key);
+  const ListRestaurantsScreen({Key? key, this.isRunningOnWeb = false})
+      : super(key: key);
+  //to check if the app running on web
+  final bool? isRunningOnWeb;
 
   @override
   _ListRestaurantsScreenState createState() => _ListRestaurantsScreenState();
@@ -34,10 +37,12 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomerAppBar(
+        isRunningOnWeb: widget.isRunningOnWeb,
         title: "${_i18n()['restaurants']}",
         autoBack: true,
       ),
-      floatingActionButton: FloatingCartComponent(),
+      floatingActionButton:
+          widget.isRunningOnWeb! ? null : FloatingCartComponent(),
       body: SingleChildScrollView(
           padding: const EdgeInsets.all(8),
           child: Column(
@@ -57,17 +62,23 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
           children: List.generate(
               viewController.filteredRestaurants.length,
               (int index) => RestaurantCard(
+                    isRunningOnWeb: widget.isRunningOnWeb,
                     restaurant: viewController.filteredRestaurants[index],
                     shippingPrice: viewController.baseShippingPrice,
                     onClick: () {
-                      Get.toNamed<void>(
-                        getRestaurantRoute(
-                            viewController.filteredRestaurants[index].info.id),
-                        arguments: [
-                          viewController.filteredRestaurants[index],
-                          ""
-                        ],
-                      );
+                      if (widget.isRunningOnWeb!) {
+                        Get.toNamed(
+                            "/restaurant/${viewController.filteredRestaurants[index].info.id}");
+                      } else {
+                        Get.toNamed<void>(
+                          getRestaurantRoute(viewController
+                              .filteredRestaurants[index].info.id),
+                          arguments: [
+                            viewController.filteredRestaurants[index],
+                            ""
+                          ],
+                        );
+                      }
                     },
                   )),
         );

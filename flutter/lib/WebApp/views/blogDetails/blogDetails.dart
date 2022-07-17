@@ -12,7 +12,7 @@ import 'package:sizer/sizer.dart';
 import 'package:webfeed/webfeed.dart';
 import '../../main.dart';
 import '../HomeView/Components/components.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 
@@ -46,7 +46,7 @@ class _BlogDetailsState extends State<BlogDetails> {
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
     return FutureBuilder<bool>(
-        future: setupFirebase(dotenv.env['LMODE'].toString().toLaunchMode()),
+        future: setupFirebase(launchMode: "stage".toLaunchMode()),
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
@@ -126,8 +126,7 @@ class _BlogDetailsState extends State<BlogDetails> {
                                                 TextDecoration.underline),
                                         children: <TextSpan>[
                                           TextSpan(
-                                              text:
-                                                  '${getDate(blog.date).toString()}',
+                                              text: '${blog.date.toString()}',
                                               style: txt.bodyText1!.copyWith(
                                                   fontWeight: FontWeight.w700,
                                                   decoration:
@@ -216,7 +215,7 @@ class _BlogDetailsState extends State<BlogDetails> {
                                         horizontal: MezCalmosResizer
                                             .getWepPageHorizontalPadding(
                                                 context)),
-                                    child: buildContent(blog.items!),
+                                    child: buildContent(blog.content!),
                                   ),
 
                                   WebSiteFotterWedgetComponent(
@@ -295,24 +294,17 @@ Widget? buildTitle(int index, RssItem item) {
   }
 }
 
-Widget buildContent(List<RssItem> items) {
+Widget buildContent(String? content) {
   List<Widget> resultWidget = <Widget>[];
-  for (var i = 0; i < items.length; i++) {
-    var widget = buildTitle(i, items[i]);
-    if (widget != null) {
-      resultWidget.add(widget);
-    }
 
-    if (items[i].content?.value != null) {
-      resultWidget.add(Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Html(
-          data: """
-                ${items[i].content?.value}
+  if (content != null) {
+    resultWidget.add(Container(
+      child: Html(
+        data: """
+                $content
                   """,
-        ),
-      ));
-    }
+      ),
+    ));
   }
 
   return Container(
@@ -320,21 +312,4 @@ Widget buildContent(List<RssItem> items) {
       children: resultWidget,
     ),
   );
-}
-
-String getDate(String date) {
-  try {
-    var ddd = DateTime.parse(date);
-    return DateFormat(
-      'd MMMM y',
-    ).format(ddd);
-  } catch (e) {
-    var x = date.split(" ");
-    var dateTime = DateFormat(
-      'd MMM y',
-    ).parse("${x[1]} ${x[2]} ${x[3]}");
-    return DateFormat(
-      'd MMMM y',
-    ).format(dateTime);
-  }
 }

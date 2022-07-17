@@ -1,8 +1,11 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GetAppForAndroidAndIosComponent extends StatelessWidget {
   GetAppForAndroidAndIosComponent({Key? key}) : super(key: key);
@@ -28,7 +31,7 @@ class GetAppForAndroidAndIosComponent extends StatelessWidget {
           ),
           Obx(
             () => Text(
-              "${langController.strings["WebApp"]["getAppNow"]}}",
+              "${langController.strings["WebApp"]["getAppNow"]}",
               style: txt.headline1!.copyWith(
                   fontSize: getSizeForText(context),
                   fontWeight: FontWeight.w700,
@@ -42,15 +45,31 @@ class GetAppForAndroidAndIosComponent extends StatelessWidget {
           Row(
             children: [
               Spacer(),
-              Container(
-                  width: getSizeForImage(context),
-                  child: Image.asset("assets/images/webApp/googlePlayImg.png")),
+              InkWell(
+                onTap: () async {
+                  print("get app from google play");
+                  _launchURL(
+                      "https://play.google.com/store/apps/details?id=com.mezcalmos.customer");
+                },
+                child: Container(
+                    width: getSizeForImage(context),
+                    child:
+                        Image.asset("assets/images/webApp/googlePlayImg.png")),
+              ),
               SizedBox(
                 width: 3.sp,
               ),
-              Container(
-                  width: getSizeForImage(context),
-                  child: Image.asset("assets/images/webApp/appStroreImg.png")),
+              InkWell(
+                onTap: () {
+                  print("get app from apple store");
+                  _launchURL(
+                      "https://apps.apple.com/us/app/mezcalmos/id1595882320");
+                },
+                child: Container(
+                    width: getSizeForImage(context),
+                    child:
+                        Image.asset("assets/images/webApp/appStroreImg.png")),
+              ),
               Spacer(),
             ],
           ),
@@ -70,7 +89,7 @@ class GetAppForAndroidAndIosComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 11.sp;
     } else {
-      return 0;
+      return 11.sp;
     }
   }
 
@@ -82,7 +101,7 @@ class GetAppForAndroidAndIosComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return Get.width * 0.2;
     } else {
-      return 0;
+      return Get.width * 0.2;
     }
   }
 
@@ -94,7 +113,11 @@ class GetAppForAndroidAndIosComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
     } else {
-      return 0;
+      return 15.sp;
     }
+  }
+
+  _launchURL(String url) async {
+    await launchUrl(Uri.parse(url));
   }
 }

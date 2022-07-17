@@ -33,11 +33,14 @@ class RestaurantsInfoController extends GetxController {
   }
 
   Future<Restaurant> getRestaurant(String restaurantId) async {
+    print("--------| the id is ${restaurantId} |------------");
     return _databaseHelper.firebaseDatabase
         .ref()
         .child('restaurants/info/$restaurantId')
         .once()
         .then<Restaurant>((event) {
+      print(
+          "---------- ${Restaurant.fromRestaurantData(restaurantId: restaurantId, restaurantData: event.snapshot.value)}--------");
       return Restaurant.fromRestaurantData(
           restaurantId: restaurantId, restaurantData: event.snapshot.value);
     });

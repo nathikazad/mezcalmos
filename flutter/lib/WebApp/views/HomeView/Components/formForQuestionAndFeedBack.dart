@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/sockets/src/socket_notifier.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:http/http.dart' as http;
 import 'components.dart';
 
 class FormForQuestionAndFeedBack extends StatelessWidget {
@@ -18,7 +21,8 @@ class FormForQuestionAndFeedBack extends StatelessWidget {
         SizedBox(
           height: 11.sp,
         ),
-        MezCalmosResizer.isMobile(context)
+        (MezCalmosResizer.isMobile(context) ||
+                MezCalmosResizer.isSmallMobile(context))
             ? BuildWidgetForMobile(context, txt)
             : BuildWidgetForTabletAndDesktop(context, txt)
       ],
@@ -137,7 +141,7 @@ class FormForQuestionAndFeedBack extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
     } else {
-      return 0;
+      return 15.sp;
     }
   }
 
@@ -149,7 +153,7 @@ class FormForQuestionAndFeedBack extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 11.sp;
     } else {
-      return 0;
+      return 11.sp;
     }
   }
 
@@ -161,7 +165,7 @@ class FormForQuestionAndFeedBack extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.sp;
     } else {
-      return 0;
+      return 8.sp;
     }
   }
 }
@@ -169,6 +173,10 @@ class FormForQuestionAndFeedBack extends StatelessWidget {
 class FAQFormComponent extends StatelessWidget {
   FAQFormComponent({Key? key}) : super(key: key);
   final LanguageController langController = Get.find<LanguageController>();
+
+  final TextEditingController fullName = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController message = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -179,6 +187,7 @@ class FAQFormComponent extends StatelessWidget {
         //full name form;
         Obx(
           () => WebappTextFieldComponent(
+            controller: fullName,
             title: "${langController.strings["WebApp"]["fullName"]}",
           ),
         ),
@@ -187,6 +196,7 @@ class FAQFormComponent extends StatelessWidget {
         ),
         Obx(
           () => WebappTextFieldComponent(
+            controller: email,
             title: "${langController.strings["WebApp"]["email"]}",
           ),
         ),
@@ -195,6 +205,7 @@ class FAQFormComponent extends StatelessWidget {
         ),
         Obx(
           () => WebappTextFieldComponent(
+            controller: message,
             title: "${langController.strings["WebApp"]["messageOrQuestion"]}",
             maxLine: 500,
           ),
@@ -202,30 +213,35 @@ class FAQFormComponent extends StatelessWidget {
         SizedBox(
           height: getSpaceOnTop(context),
         ),
-        Container(
-          width: getSizeForSendBtn(context).width,
-          height: getSizeForSendBtn(context).height,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(279),
+        InkWell(
+          onTap: () {
+            sendMessage();
+          },
+          child: Container(
+            width: getSizeForSendBtn(context).width,
+            height: getSizeForSendBtn(context).height,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(279),
+              ),
+              gradient: LinearGradient(
+                  begin: Alignment(1, 0.5),
+                  end: Alignment(-0.75, 0.75),
+                  colors: [
+                    Color.fromRGBO(172, 89, 252, 1),
+                    Color.fromRGBO(103, 121, 254, 1)
+                  ]),
             ),
-            gradient: LinearGradient(
-                begin: Alignment(1, 0.5),
-                end: Alignment(-0.75, 0.75),
-                colors: [
-                  Color.fromRGBO(172, 89, 252, 1),
-                  Color.fromRGBO(103, 121, 254, 1)
-                ]),
+            child: Center(
+                child: Text(
+              "${langController.strings["WebApp"]["submitBtn"]}",
+              style: txt.bodyText1!.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: getSizeForSndBtnText(context),
+                  fontFamily: "Montserrat"),
+            )),
           ),
-          child: Center(
-              child: Text(
-            "${langController.strings["WebApp"]["submitBtn"]}",
-            style: txt.bodyText1!.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: getSizeForSndBtnText(context),
-                fontFamily: "Montserrat"),
-          )),
         ),
         SizedBox(
           height: getSpaceOnTop(context),
@@ -242,7 +258,7 @@ class FAQFormComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 25.sp;
     } else {
-      return 0;
+      return 25.sp;
     }
   }
 
@@ -254,7 +270,7 @@ class FAQFormComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 6.sp;
     } else {
-      return 0;
+      return 6.sp;
     }
   }
 
@@ -266,7 +282,7 @@ class FAQFormComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.sp;
     } else {
-      return 0;
+      return 8.sp;
     }
   }
 
@@ -278,7 +294,38 @@ class FAQFormComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return Size(75.sp, 20.sp);
     } else {
-      return Size(0, 0);
+      return Size(75.sp, 20.sp);
     }
+  }
+
+  void sendMessage() async {
+    final String serviceId = "service_lmcyttk";
+    final String templateID = "template_fozmbe8";
+    final String userID = "vhILBmiHW4kZ2zPlp";
+
+    final url = Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
+    final response = await http
+        .post(url,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: json.encode({
+              'service_id': serviceId,
+              'template_id': templateID,
+              'user_id': userID,
+              'template_params': {
+                "email_user": email.text.trim(),
+                'to_name': fullName.text.trim(),
+                "message": message.text.trim()
+              }
+            }))
+        .then((value) {
+      if (value != null && value.statusCode == 200) {
+        print("you email sent ");
+      } else {
+        print("something went wrong  ${value.statusCode} ${value.body}");
+      }
+      return value;
+    });
   }
 }

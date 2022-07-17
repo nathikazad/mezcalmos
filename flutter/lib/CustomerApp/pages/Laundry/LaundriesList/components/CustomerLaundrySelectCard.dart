@@ -5,15 +5,18 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/WebApp/routes/AppRoutes.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
         ["LaundriesListView"]["components"]["CustomerLaundrySelectCard"];
 
 class CustomerLaundrySelectCard extends StatelessWidget {
-  const CustomerLaundrySelectCard({Key? key, required this.laundry})
+  const CustomerLaundrySelectCard(
+      {Key? key, required this.laundry, this.isRunningOnWeb = false})
       : super(key: key);
   final Laundry laundry;
+  final bool? isRunningOnWeb;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,11 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            Get.toNamed(getSingleLaundryRoute(laundry.info.id));
+            if (isRunningOnWeb!) {
+              Get.toNamed(laundries + "/${laundry.info.id}");
+            } else {
+              Get.toNamed(getSingleLaundryRoute(laundry.info.id));
+            }
           },
           child: Container(
             child: _laundryInfoHeader(),

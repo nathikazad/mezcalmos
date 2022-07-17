@@ -25,13 +25,13 @@ class RestaurantSliverAppBar extends StatelessWidget {
       required this.onTap,
       required this.onInfoTap,
       required this.showInfo,
-      this.appType})
+      this.isRunningOnWeb = false})
       : super(key: key);
 
   final Restaurant restaurant;
   final AutoScrollController scrollController;
   final TabController tabController;
-  final String? appType;
+  final bool? isRunningOnWeb;
 
   final void Function(int index) onTap;
   final void Function() onInfoTap;
@@ -47,8 +47,8 @@ class RestaurantSliverAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       bottom:
           (restaurant.getCategories.length > 1 && !showInfo) ? bottom : null,
-      leading: _BackButtonAppBar(),
-      actions: appType != "webVirsion"
+      leading: !isRunningOnWeb! ? _BackButtonAppBar() : null,
+      actions: !isRunningOnWeb!
           ? <Widget>[
               getAppbarIconsButton(),
             ]

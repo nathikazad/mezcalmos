@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:html' as html;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mezcalmos/CustomerApp/theme.dart';
+//import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -17,11 +18,10 @@ import 'package:mezcalmos/WebApp/controllers/blogController.dart';
 import 'package:mezcalmos/WebApp/routes/AppRoutes.dart';
 import 'package:mezcalmos/WebApp/views/ErrorViews/unknownRoutePage.dart';
 import 'package:sizer/sizer.dart';
-
 import '../Shared/helpers/PrintHelper.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
+  //await dotenv.load(fileName: ".env");
   runApp(Sizer(builder: (
     BuildContext context,
     Orientation orientation,
@@ -32,9 +32,8 @@ void main() async {
   html.window.onBeforeUnload.listen((event) async {
     if (Get.currentRoute.startsWith("/restaurant/")) {
       print("i was here ==============>");
-      intailizeApp(dotenv.env['LMODE'].toString().toLaunchMode()).then(
-          (value) => Get.offAllNamed(
-              "/restaurant?device=phone&id=6Hr3Hc2hkkZa7LX7slnFo3zOTdxx&lang=es"));
+      intailizeApp("stage".toLaunchMode()).then((value) => Get.offAllNamed(
+          "/restaurant?device=phone&id=6Hr3Hc2hkkZa7LX7slnFo3zOTdxx&lang=es"));
     }
     mezDbgPrint("heloo bro ${Get.currentRoute}");
   });
@@ -53,7 +52,7 @@ class _AppStartState extends State<AppStart> {
   @override
   void initState() {
     WidgetsFlutterBinding.ensureInitialized();
-    String _tmpLmode = dotenv.env['LMODE'].toString();
+    String _tmpLmode = "stage";
     _launchMode = _tmpLmode.toLaunchMode();
     intailizeApp(_launchMode);
     // TODO: implement initState
@@ -66,7 +65,7 @@ class _AppStartState extends State<AppStart> {
     return GetMaterialApp(
       unknownRoute: GetPage(name: '/notfound', page: () => UnknownRoutePage()),
       initialRoute: "/",
-      // theme: CustomerAppTheme.lightTheme,
+      theme: CustomerAppTheme.lightTheme,
       getPages: AppRoutes.getRoutes,
     );
   }
@@ -83,12 +82,13 @@ Future<bool> intailizeApp(AppLaunchMode _launchMode) async {
   return completer.future;
 }
 
-Future<bool> setupFirebase(AppLaunchMode _launchMode) async {
+Future<bool> setupFirebase(
+    {required AppLaunchMode launchMode, Function? func}) async {
   const String _host =
       String.fromEnvironment('HOST', defaultValue: "http://127.0.0.1");
   // final AppLaunchMode _launchMode =
   //     String.fromEnvironment('LMODE', defaultValue: "prod").toLaunchMode();
-  mezDbgPrint('mode  -> $_launchMode');
+  mezDbgPrint('mode  -> $launchMode');
   mezDbgPrint('host  -> $_host');
 
   final FirebaseApp _app = await Firebase.initializeApp(
@@ -102,9 +102,9 @@ Future<bool> setupFirebase(AppLaunchMode _launchMode) async {
   mezDbgPrint("[+] App Initialized under Name ${_app.name} .");
   late FirebaseDatabase firebaseDb;
 
-  if (_launchMode == AppLaunchMode.prod) {
+  if (launchMode == AppLaunchMode.prod) {
     firebaseDb = FirebaseDatabase.instanceFor(app: _app);
-  } else if (_launchMode == AppLaunchMode.dev) {
+  } else if (launchMode == AppLaunchMode.dev) {
     mezDbgPrint("DEV MODE");
     firebaseDb =
         FirebaseDatabase.instanceFor(app: _app, databaseURL: _host + dbRoot);
@@ -113,7 +113,7 @@ Future<bool> setupFirebase(AppLaunchMode _launchMode) async {
     await FirebaseAuth.instance.useEmulator(_host + authPort);
     FirebaseFunctions.instance
         .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
-  } else if (_launchMode == AppLaunchMode.stage) {
+  } else if (launchMode == AppLaunchMode.stage) {
     mezDbgPrint("[+] Entered Staging check ----.");
 
     firebaseDb =
@@ -132,7 +132,12 @@ Future<bool> setupFirebase(AppLaunchMode _launchMode) async {
   putControllers();
   return Future.delayed(Duration(
     seconds: 2,
-  )).then((value) => true);
+  )).then((value) {
+    if (func != null) {
+      func();
+    }
+    return true;
+  });
 }
 
 Future<void> putControllers() async {

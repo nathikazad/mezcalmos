@@ -13,12 +13,15 @@ import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final bool? autoBack;
+
   final AppBarLeftButtonType leftBtnType;
+  final bool? isRunningOnWeb;
 
   CustomerAppBar(
       {Key? key,
       this.title,
       this.autoBack = false,
+      this.isRunningOnWeb = false,
       this.leftBtnType = AppBarLeftButtonType.Back})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
@@ -44,10 +47,12 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
       automaticallyImplyLeading: autoBack ?? false,
-      leading: (leftBtnType == AppBarLeftButtonType.Menu)
-          ? _MenuButtonAppBar()
-          : _BackButtonAppBar(),
-      actions: [getAppbarIconsButton()],
+      leading: isRunningOnWeb!
+          ? null
+          : (leftBtnType == AppBarLeftButtonType.Menu)
+              ? _MenuButtonAppBar()
+              : _BackButtonAppBar(),
+      actions: isRunningOnWeb! ? null : [getAppbarIconsButton()],
       centerTitle: true,
     );
   }

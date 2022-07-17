@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/WebApp/services/values/globals.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 
@@ -8,7 +11,9 @@ import '../../../services/widgets/mezCalmosResizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["WebApp"];
 
 class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
-  WepAppIndexBodyIntroductionComponent({Key? key}) : super(key: key);
+  WepAppIndexBodyIntroductionComponent({Key? key, required this.controller})
+      : super(key: key);
+  final AutoScrollController controller;
   final LanguageController langController = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
@@ -19,13 +24,15 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
         padding: EdgeInsets.only(
             left: MezCalmosResizer.getWepPageHorizontalPadding(context),
             top: getVerticalPadding(context)),
-        child: MezCalmosResizer.isMobile(context)
+        child: (MezCalmosResizer.isMobile(context) ||
+                MezCalmosResizer.isSmallMobile(context))
             ? buildWidgetForMobile(context)
             : buildWidgetForTabletAndDesktop(context));
   }
 
   Widget buildWidgetForMobile(BuildContext context) {
     final txt = Theme.of(context).textTheme;
+    final LanguageController lang = Get.find<LanguageController>();
     final Size size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,19 +44,40 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
             Column(
               children: [
                 SizedBox(
+                  height: 60.sp,
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  width: (size.width * 0.3),
+                  child: Obx(() => Image.asset(
+                      lang.userLanguageKey == LanguageType.EN
+                          ? homeMobileUIImageEN
+                          : homeMobileUIImageES)),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
                   height: 30.sp,
                 ),
                 Container(
                   alignment: Alignment.centerRight,
-                  width: (size.width * 0.5) - 35,
-                  child: Image.asset("assets/images/webApp/mobileUI.png"),
+                  width: (size.width * 0.3),
+                  child: Obx(() => Image.asset(
+                      lang.userLanguageKey == LanguageType.EN
+                          ? restaurantMobileUiImageEN
+                          : restaurantMobileUiImageES)),
                 ),
               ],
             ),
             Container(
               alignment: Alignment.centerLeft,
-              width: (size.width * 0.5) - 35,
-              child: Image.asset("assets/images/webApp/mobileUI1.png"),
+              width: (size.width * 0.3),
+              child: Obx(() => Image.asset(
+                  lang.userLanguageKey == LanguageType.EN
+                      ? laundryMobileUIImageEN
+                      : laundryMobileUIImageES)),
             ),
           ],
         ),
@@ -107,36 +135,48 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
 
   Widget getAppBtn(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-    return Container(
-      width: getSizeForGetAppBtn(context) * 13.5,
-      height: getSizeForGetAppBtn(context) * 2.5,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(279),
-        ),
-        gradient: LinearGradient(
-            begin: Alignment(1, 0.5),
-            end: Alignment(-0.75, 0.75),
-            colors: [
-              Color.fromRGBO(172, 89, 252, 1),
-              Color.fromRGBO(103, 121, 254, 1)
-            ]),
+    return ClipRRect(
+      borderRadius: BorderRadius.all(
+        Radius.circular(279),
       ),
-      child: Center(
-          child: Obx(
-        () => Text(
-          "${langController.strings["WebApp"]["getAppBtn"]}",
-          style: txt.bodyText1!.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-              fontSize: getSizeForGetAppBtn(context),
-              fontFamily: "Montserrat"),
+      child: InkWell(
+        onTap: () {
+          _scrollToCounter(controller, 4);
+          print("get App");
+        },
+        child: Container(
+          width: getSizeForGetAppBtn(context) * 13.5,
+          height: getSizeForGetAppBtn(context) * 2.5,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(279),
+            ),
+            gradient: LinearGradient(
+                begin: Alignment(1, 0.5),
+                end: Alignment(-0.75, 0.75),
+                colors: [
+                  Color.fromRGBO(172, 89, 252, 1),
+                  Color.fromRGBO(103, 121, 254, 1)
+                ]),
+          ),
+          child: Center(
+              child: Obx(
+            () => Text(
+              "${langController.strings["WebApp"]["getAppBtn"]}",
+              style: txt.bodyText1!.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: getSizeForGetAppBtn(context),
+                  fontFamily: "Montserrat"),
+            ),
+          )),
         ),
-      )),
+      ),
     );
   }
 
   Widget buildWidgetForTabletAndDesktop(BuildContext context) {
+    final LanguageController lang = Get.find<LanguageController>();
     final txt = Theme.of(context).textTheme;
     final Size size = MediaQuery.of(context).size;
     return Row(
@@ -145,7 +185,7 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
       children: [
         //first container
         Container(
-          width: size.width * 0.53,
+          width: size.width * 0.5,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +204,7 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
         ),
         //second container
         Container(
-          width: size.width * 0.3,
+          width: size.width * 0.32,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,20 +224,41 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
                         child: Stack(
                           children: [
                             Positioned(
-                              left: 30.sp,
+                              left: 45.sp,
                               child: Container(
-                                height: 100.sp,
-                                child: Image.asset(
-                                    "assets/images/webApp/mobileUI.png"),
+                                height: 82.sp,
+                                child: Obx(
+                                  () => Image.asset(
+                                      lang.userLanguageKey == LanguageType.EN
+                                          ? restaurantMobileUiImageEN
+                                          : restaurantMobileUiImageES),
+                                ),
                               ),
                             ),
                             Positioned(
-                              bottom: 5.sp,
-                              left: -5.sp,
+                              top: 50.sp,
                               child: Container(
-                                height: 100.sp,
-                                child: Image.asset(
-                                    "assets/images/webApp/mobileUI1.png"),
+                                height: 82.sp,
+                                child: Obx(
+                                  () => Image.asset(
+                                      lang.userLanguageKey == LanguageType.EN
+                                          ? laundryMobileUIImageEN
+                                          : laundryMobileUIImageES),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 25.sp,
+                              //
+                              left: 25.sp,
+                              child: Container(
+                                height: 82.sp,
+                                child: Obx(
+                                  () => Image.asset(
+                                      lang.userLanguageKey == LanguageType.EN
+                                          ? homeMobileUIImageEN
+                                          : homeMobileUIImageES),
+                                ),
                               ),
                             ),
                           ],
@@ -252,5 +313,11 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
     } else {
       return 11.sp;
     }
+  }
+
+  Future _scrollToCounter(AutoScrollController controller, int index) async {
+    await controller.scrollToIndex(index,
+        preferPosition: AutoScrollPosition.begin);
+    controller.highlight(index);
   }
 }

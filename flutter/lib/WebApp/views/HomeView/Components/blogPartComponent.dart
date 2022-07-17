@@ -64,11 +64,12 @@ class BlogPartComponent extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: MezCalmosResizer.isMobile(context)
+              horizontal: (MezCalmosResizer.isMobile(context) ||
+                      MezCalmosResizer.isSmallMobile(context))
                   ? MezCalmosResizer.getWepPageHorizontalPadding(context)
                   : (MezCalmosResizer.getWepPageHorizontalPadding(context) -
                       20)),
-          child: GetBolgsGridList(context, 3),
+          child: GetBolgsGridList(context, null),
         ),
       ],
     );
@@ -82,7 +83,7 @@ class BlogPartComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
     } else {
-      return 0;
+      return 15.sp;
     }
   }
 
@@ -94,7 +95,7 @@ class BlogPartComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.sp;
     } else {
-      return 0;
+      return 8.sp;
     }
   }
 
@@ -106,7 +107,7 @@ class BlogPartComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 25.sp;
     } else {
-      return 0;
+      return 25.sp;
     }
   }
 }

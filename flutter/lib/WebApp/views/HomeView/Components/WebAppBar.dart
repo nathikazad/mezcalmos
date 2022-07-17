@@ -91,16 +91,21 @@ Widget buildTitle(
     {required double logoSize,
     required double titleSize,
     required double spaceSize}) {
-  return Container(
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        getMezcalmosLogo(logoSize),
-        SizedBox(
-          width: spaceSize,
-        ),
-        getMezcalmosText(titleSize)
-      ],
+  return InkWell(
+    onTap: (() {
+      Get.offNamed("/");
+    }),
+    child: Container(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          getMezcalmosLogo(logoSize),
+          SizedBox(
+            width: spaceSize,
+          ),
+          getMezcalmosText(titleSize)
+        ],
+      ),
     ),
   );
 }
@@ -333,6 +338,7 @@ Future _scrollToCounter(AutoScrollController controller, int index) async {
 TextStyle getRightTextStyle({required TextTheme txt, required bool isEnable}) {
   return txt.bodyText1!.copyWith(
       fontFamily: "Montserrat",
+      fontSize: 15,
       fontWeight: FontWeight.w600,
       color: isEnable ? Color.fromRGBO(103, 121, 254, 1) : Colors.black);
 }

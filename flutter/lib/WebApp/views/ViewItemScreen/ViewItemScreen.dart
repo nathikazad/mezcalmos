@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/WebApp/views/ViewItemScreen/components/ItemSliverAppBar.dart';
 import 'package:mezcalmos/WebApp/views/ViewItemScreen/components/ItemOptionCard.dart';
+import 'package:mezcalmos/WebApp/views/components/installAppBarComponent.dart';
 import 'package:sizer/sizer.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
@@ -106,20 +107,15 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        // bottomNavigationBar: (cartItem.value != null)
-        //     ? BottomBarItemViewScreen(
-        //         currentRestaurantId: currentRestaurant?.info.id,
-        //         isAvailable: (currentRestaurant?.isOpen() ?? false),
-        //         cartItem: cartItem,
-        //         mode: widget.viewItemScreenMode,
-        //       )
-        //     : null,
-        body: (cartItem.value == null)
-            ? Container(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(),
-              )
-            : itemViewScreenBody(context, cartItem.value!),
+        appBar: InstallAppBarComponent(),
+        body: Scaffold(
+          body: (cartItem.value == null)
+              ? Container(
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(),
+                )
+              : itemViewScreenBody(context, cartItem.value!),
+        ),
       ),
     );
   }

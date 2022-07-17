@@ -3,10 +3,15 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class WebappTextFieldComponent extends StatelessWidget {
-  WebappTextFieldComponent({Key? key, required this.title, this.maxLine = 1})
+  WebappTextFieldComponent(
+      {Key? key,
+      required this.title,
+      this.maxLine = 1,
+      required this.controller})
       : super(key: key);
   final String title;
   final int? maxLine;
+  final TextEditingController controller;
 
   bool isMobile(BuildContext context) =>
       MediaQuery.of(context).size.width < 650;
@@ -40,16 +45,20 @@ class WebappTextFieldComponent extends StatelessWidget {
             height:
                 (maxLine! > 1) ? getSizeForHeightOfTextField(context) : null,
             color: Color.fromRGBO(244, 244, 244, 1),
-            child: TextField(
-              maxLines: maxLine,
-              decoration: InputDecoration(
-                  contentPadding: (maxLine! > 1)
-                      ? EdgeInsets.all(10)
-                      : EdgeInsets.symmetric(horizontal: 10),
-                  fillColor: Colors.grey,
-                  focusedBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none),
+            child: Theme(
+              data: ThemeData(),
+              child: TextField(
+                controller: controller,
+                maxLines: maxLine,
+                decoration: InputDecoration(
+                    contentPadding: (maxLine! > 1)
+                        ? EdgeInsets.all(10)
+                        : EdgeInsets.symmetric(horizontal: 10),
+                    fillColor: Colors.grey,
+                    focusedBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none),
+              ),
             ),
           )
         ],

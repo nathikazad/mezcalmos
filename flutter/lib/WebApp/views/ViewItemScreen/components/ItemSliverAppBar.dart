@@ -28,7 +28,7 @@ class ItemSliverAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       // titleSpacing: 12,
 
-      leading: _BackButtonAppBar(),
+      leading: Container(),
       // actions: <Widget>[
       //   getAppbarIconsButton(),
       // ],

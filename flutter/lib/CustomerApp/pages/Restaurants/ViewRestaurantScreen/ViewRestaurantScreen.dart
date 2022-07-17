@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/com
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/components/restaurantInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -16,6 +17,9 @@ import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 class ViewRestaurantScreen extends StatefulWidget {
+  final bool? isRunningOnWeb;
+  final Restaurant? restaurant;
+  ViewRestaurantScreen({this.isRunningOnWeb = false, this.restaurant});
   @override
   _ViewRestaurantScreenState createState() => _ViewRestaurantScreenState();
 }
@@ -26,7 +30,6 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   late TabController tabController;
 
   late Restaurant restaurant;
-  late String? appType;
 
   final GlobalKey<RectGetterState> listViewKey = RectGetter.createGlobalKey();
 
@@ -37,16 +40,26 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   @override
   void initState() {
-    restaurant = Get.arguments[0] as Restaurant;
-    appType = Get.arguments[1] as String;
-    mezDbgPrint(restaurant.info.id);
+    // restaurant = Get.arguments[0] as Restaurant??WidgetOrderTraversalPolicy();
+
     itemKeys.assign(999999, "info");
     itemKeys[999999] = RectGetter.createGlobalKey();
 
-    tabController =
-        TabController(length: restaurant.getCategories.length, vsync: this);
     scrollController = AutoScrollController();
     super.initState();
+  }
+
+  Future<Restaurant?> getRestaurants() async {
+    return await Get.find<RestaurantsInfoController>()
+        .getRestaurant("${Get.parameters["id"].toString()}")
+        .then((value) {
+      if (value != null) {
+        restaurant = value;
+        tabController =
+            TabController(length: restaurant.getCategories.length, vsync: this);
+      }
+      return value;
+    });
   }
 
   @override
@@ -103,18 +116,37 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
       Get.find<LanguageController>().userLanguageKey;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      floatingActionButton:
-          (appType == "webVirsion") ? null : FloatingCartComponent(),
-      body: RectGetter(
-        key: listViewKey,
-        child: NotificationListener<ScrollNotification>(
-          child: buildSliverScrollView(),
-          onNotification: onScrollNotification,
-        ),
-      ),
-    );
+    return FutureBuilder<Restaurant?>(
+        future: getRestaurants(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData || snapshot.data != null) {
+            return Scaffold(
+              extendBodyBehindAppBar: true,
+              floatingActionButton: (widget.isRunningOnWeb == true)
+                  ? null
+                  : FloatingCartComponent(),
+              body: RectGetter(
+                key: listViewKey,
+                child: NotificationListener<ScrollNotification>(
+                  child: buildSliverScrollView(),
+                  onNotification: onScrollNotification,
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        });
   }
 
   Widget buildSliverScrollView() {
@@ -125,7 +157,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
         slivers: [
           RestaurantSliverAppBar(
             restaurant: restaurant,
-            appType: "webVirsion",
+            isRunningOnWeb: widget.isRunningOnWeb,
             tabController: tabController,
             showInfo: showInfo,
             onInfoTap: () {
@@ -225,7 +257,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
           children.add(RestaurantsListOfItemsComponent(
               item: item,
               function: () {
-                if (appType == "webVirsion") {
+                if (widget.isRunningOnWeb == true) {
                   Get.toNamed("/restaurant/${restaurant.info.id}/${item.id}",
                       arguments: restaurant.info.id);
                 } else {

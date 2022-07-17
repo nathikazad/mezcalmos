@@ -173,7 +173,7 @@ class FrequentlyAskedQuestions extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 25.sp;
     } else {
-      return 0;
+      return 25.sp;
     }
   }
 
@@ -185,7 +185,7 @@ class FrequentlyAskedQuestions extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
     } else {
-      return 0;
+      return 15.sp;
     }
   }
 
@@ -197,7 +197,7 @@ class FrequentlyAskedQuestions extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
     } else {
-      return 0;
+      return 15.sp;
     }
   }
 
@@ -209,7 +209,7 @@ class FrequentlyAskedQuestions extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 7.sp;
     } else {
-      return 0;
+      return 7.sp;
     }
   }
 
@@ -221,7 +221,7 @@ class FrequentlyAskedQuestions extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 10.sp;
     } else {
-      return 0;
+      return 10.sp;
     }
   }
 
@@ -233,7 +233,7 @@ class FrequentlyAskedQuestions extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.sp;
     } else {
-      return 0;
+      return 8.sp;
     }
   }
 }

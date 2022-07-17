@@ -8,7 +8,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 import 'Components/components.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class IndexPage extends StatefulWidget {
   IndexPage({Key? key}) : super(key: key);
@@ -44,7 +44,7 @@ class _IndexPageState extends State<IndexPage> {
   Widget build(BuildContext context) {
     // print(langController.userLanguageKey.toString());
     return FutureBuilder<bool>(
-        future: setupFirebase(dotenv.env['LMODE'].toString().toLaunchMode()),
+        future: setupFirebase(launchMode: "stage".toLaunchMode()),
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =
@@ -106,7 +106,9 @@ class _IndexBodyWidgetState extends State<IndexBodyWidget> {
           /// this part of Code [WepAppIndexBodyIntroductionComponent()] shows the small intro of the mezcalos app
           /// it shows the mobile images and to type of text
 
-          WepAppIndexBodyIntroductionComponent(),
+          WepAppIndexBodyIntroductionComponent(
+            controller: widget.controller,
+          ),
 
           /// this part of code [ServicesPartComponent()] shows all mezcalos services
           ///
@@ -145,7 +147,12 @@ class _IndexBodyWidgetState extends State<IndexBodyWidget> {
 
           /// this part of code [GetAppForAndroidAndIosComponent()] allows users to download app for android and ios
 
-          GetAppForAndroidAndIosComponent(),
+          AutoScrollTag(
+            key: ValueKey(4),
+            controller: widget.controller,
+            index: 4,
+            child: GetAppForAndroidAndIosComponent(),
+          ),
 
           /// this part of code [WebSiteFotterWedgetComponent()] is a fotter for the app
 

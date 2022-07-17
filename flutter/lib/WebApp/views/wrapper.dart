@@ -30,6 +30,8 @@ class _WrapperState extends State<Wrapper> {
     lang = Get.parameters["lang"].toString().toLanguageType();
     Get.find<LanguageController>().changeLangForWeb(lang);
 
+    //firebase.json
+
     if (restaurant_id == null ||
         restaurant_id == ":id" ||
         restaurant_id == "") {

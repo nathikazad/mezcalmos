@@ -141,9 +141,7 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
               () => FotterBottonsComponents(
                 text:
                     "${langController.strings["WebApp"]["fotterBar"]["desktopAndTablet"]["vision"]}",
-                func: () {
-                  print("test 2");
-                },
+                func: () {},
               ),
             ),
             Obx(
@@ -329,25 +327,8 @@ class FotterBottonsComponents extends StatelessWidget {
       },
       child: Text(
         text,
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white, fontSize: 15),
       ),
-      // style: ButtonStyle(
-      //   padding: MaterialStateProperty.resolveWith(
-      //     (states) {
-      //       if (MezCalmosResizer.isSmallMobile(context)) {
-      //         return EdgeInsets.only(left: 0, right: 0);
-      //       } else
-      //         return EdgeInsets.all(8);
-      //     },
-      //   ),
-      //   textStyle: MaterialStateProperty.resolveWith((states) {
-      //     return TextStyle(
-      //         fontFamily: "Montserrat",
-      //         fontSize: getSizeForText(context),
-      //         fontWeight: FontWeight.w600,
-      //         color: Colors.white);
-      //   }),
-      // ),
     );
   }
 
