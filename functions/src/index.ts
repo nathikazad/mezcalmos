@@ -15,8 +15,8 @@ export const user = {
   processSignUp: userChanges.processSignUp,
   changeName: userChanges.onNameUpdate,
   changePhoto: userChanges.onPhotoUpdate,
-  deleteUser : userChanges.onDeleteUpdate
-}
+  deleteUserAccount : userChanges.deleteAccount
+ }
 
 import * as otpAuth from './utilities/otpAuth'
 export const otp = {
@@ -73,20 +73,3 @@ export const delivery = {
   laundryFinishDropoff: laundryDelivery.finishDropoff,
   setEstimatedTime: require("./delivery/setEstimatedTime")
 }
-
-// exports.submitAuthorizationRequest = functions.https.onCall(async (data, context) => {
-//   data.userId = context.auth.uid
-//   let response = await admin.submitAuthorizationRequest(firebase, data, hasura)
-//   return response
-// });
-
-// exports.approveAuthorizationRequest = functions.https.onCall(async (data, context) => {
-//   data.adminId = context.auth.uid
-//   let response = await admin.approveAuthorizationRequest(firebase, data, hasura)
-//   return response
-// });
-
-
-
-
-

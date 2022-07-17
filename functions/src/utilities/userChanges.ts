@@ -1,6 +1,8 @@
 import * as functions from "firebase-functions";
 import * as firebase from "firebase-admin";
 import { setUserInfo } from "../shared/controllers/rootController";
+import { isSignedIn } from "../shared/helper/authorizer";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 
 
 // Customer Canceling
@@ -18,13 +20,16 @@ export const processSignUp = functions.auth.user().onCreate(async user => {
 });
  
 
-// This fires everytime `/users/{userId}/info/deleted` gets changed, resulting on
-// either Disabling/Enabling the fireAuthUser depending on deleted value.
-export const onDeleteUpdate = functions.database.ref(
-  '/users/{userId}/info/deleted').onWrite(async (snap, context) => {
-    const isDisabled = snap.after.val() === true;
-    await firebase.auth().updateUser(context.params.userId, { disabled : isDisabled })
-  })
+export const deleteAccount = functions.https.onCall(async (data , context) => {
+  let response = await isSignedIn(context.auth);
+  if (response != undefined) {
+    return response;
+  }
+  await firebase.auth().updateUser(context.auth!.uid!, { disabled : true });
+  firebase.database().ref('/users/{userId}/info/deleted').update(context.auth!.uid);
+  return {status: ServerResponseStatus.Success}
+});
+ 
 
 export const onNameUpdate = functions.database.ref(
   '/users/{userId}/info/name').onWrite(async (snap, context) => {
@@ -35,3 +40,4 @@ export const onPhotoUpdate = functions.database.ref(
   '/users/{userId}/info/image').onWrite(async (snap, context) => {
     await firebase.auth().updateUser(context.params.userId, { photoURL: snap.after.val() })
   })
+  

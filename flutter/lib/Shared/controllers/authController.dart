@@ -130,18 +130,30 @@ class AuthController extends GetxController {
         _user.value?.image != defaultUserImgUrl;
   }
 
-  Future<void> deleteAccount() async {
+  Future<ServerResponse> deleteAccount() async {
     if (_user.value?.id != null) {
-      // we don't have to await this, we straight forward logout!
-      unawaited(
-        _databaseHelper.firebaseDatabase
-            .ref()
-            .child(userDeletedNode(_user.value!.id))
-            .set(true),
-      );
-      // we await the signing Out!
-      await signOut();
+      final HttpsCallable cancelLaundryFunction =
+          FirebaseFunctions.instance.httpsCallable('user-deleteUserAccount');
+      try {
+        final HttpsCallableResult<Map<String, dynamic>> response =
+            await cancelLaundryFunction.call();
+        mezDbgPrint("Responso ===> $response");
+        final ServerResponse _resp = ServerResponse.fromJson(response.data);
+
+        if (_resp.success) {
+          await signOut();
+        }
+        return _resp;
+      } catch (e, st) {
+        mezDbgPrint("Error $e | StackTrace $st");
+        return ServerResponse(ResponseStatus.Error,
+            errorMessage: "Server Error", errorCode: "serverError");
+      }
     }
+    return ServerResponse(
+      ResponseStatus.Error,
+      errorMessage: "User is not authenticated!",
+    );
   }
 
   /// This Functions takes a File (Image) and an optional [isCompressed]

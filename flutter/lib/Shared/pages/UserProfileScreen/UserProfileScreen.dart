@@ -10,8 +10,10 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -105,8 +107,16 @@ class _UserProfileState extends State<UserProfile>
                               secondaryButtonText: "Cancel",
                               helperText:
                                   "Clicking yes will permanently delete you account, are you sure?",
-                              onYesClick: () async =>
-                                  _authController.deleteAccount(),
+                              onYesClick: () async {
+                                final ServerResponse res =
+                                    await _authController.deleteAccount();
+                                if (!res.success) {
+                                  MezSnackbar(
+                                    "Oops",
+                                    res.errorMessage ?? "Server problem!",
+                                  );
+                                }
+                              },
                             );
                           },
                           child: Container(
