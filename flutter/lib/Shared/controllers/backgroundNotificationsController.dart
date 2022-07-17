@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:uuid/uuid.dart';
@@ -18,7 +19,8 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   if (event.data["notificationType"] == "newOrder" &&
       event.data["markReceivedUrl"] != null) {
     await markInDb(event.data["markReceivedUrl"]);
-  } else if (event.data["notificationType"] == "call") {
+  } else if (event.data["notificationType"] ==
+      NotificationType.Call.toFirebaseFormatString()) {
     await showCallkitIncoming(
         callerName: event.data["callerName"],
         callerImage: event.data["callerImage"],
@@ -35,7 +37,7 @@ Future<void> showCallkitIncoming({
 }) async {
   final Map<String, dynamic> params = <String, dynamic>{
     'id': Uuid().v4(),
-    'nameCaller': 'callerName',
+    'nameCaller': callerName,
     'appName': callerName,
     'avatar': callerImage,
     'handle': callerType,
@@ -94,6 +96,7 @@ Future<void> markInDb(String url) async {
 class BackgroundNotificationsController extends GetxController {
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
   StreamSubscription<RemoteMessage>? onMessageOpenedAppListener;
+  StreamSubscription<RemoteMessage>? onMessageListener;
   DateTime? _lastTimeBackgroundNotificationOpenedApp;
   DateTime? get lastTimeBackgroundNotificationOpenedApp =>
       _lastTimeBackgroundNotificationOpenedApp;
@@ -114,6 +117,18 @@ class BackgroundNotificationsController extends GetxController {
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       _lastTimeBackgroundNotificationOpenedApp = DateTime.now();
       notificationClickHandler(message);
+    });
+
+    onMessageListener =
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.data["notificationType"] ==
+          NotificationType.Call.toFirebaseFormatString()) {
+        showCallkitIncoming(
+            callerName: message.data["callerName"],
+            callerImage: message.data["callerImage"],
+            callerType: message.data["callerType"],
+            language: message.data["language"]);
+      }
     });
   }
 
@@ -184,6 +199,7 @@ class BackgroundNotificationsController extends GetxController {
     mezDbgPrint(
         "[+] DeviceNotificationsController::dispose ---------> Was invoked !");
     await onMessageOpenedAppListener?.cancel();
+    await onMessageListener?.cancel();
     super.onClose();
   }
 }
