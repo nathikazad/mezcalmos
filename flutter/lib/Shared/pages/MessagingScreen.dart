@@ -7,17 +7,20 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 DateTime now = DateTime.now().toLocal();
@@ -41,6 +44,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
   String? recipientId;
   MessageController controller =
       Get.put<MessageController>(MessageController());
+  final Sagora agoraController = Get.put<Sagora>(Sagora());
+
   bool isChatLoaded = false;
   @override
   void initState() {
@@ -249,17 +254,56 @@ class _MessagingScreenState extends State<MessagingScreen> {
         actions: <Widget>[
           if (orderLink != null)
             InkWell(
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: Text(
-                      "View\nOrder",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black),
-                    ),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Text(
+                    "View\nOrder",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
-                onTap: () => Get.toNamed<void>(orderLink!))
+              ),
+              onTap: () => Get.toNamed<void>(orderLink!),
+            ),
+          InkWell(
+              onTap: () async {
+                mezDbgPrint("AGORA ---< ClientRole.Broadcaster >--- !");
+                final bool isAllowed =
+                    await agoraController.checkAgoraPermissions();
+                mezDbgPrint("AGORA PERMISSIONS ===> $isAllowed !");
+
+                if (isAllowed) {
+                  mezDbgPrint("AGORA PERMISSIONS ALLOWED !");
+                  // ignore: unawaited_futures
+                  Get.to<void>(
+                    CallPage(
+                      role: ClientRole.Broadcaster,
+                    ),
+                  );
+                }
+              },
+              child: Icon(Icons.abc_outlined)),
+          SizedBox(
+            width: 20,
+          ),
+          InkWell(
+              onTap: () async {
+                final bool isAllowed =
+                    await agoraController.checkAgoraPermissions();
+                mezDbgPrint("AGORA PERMISSIONS ===> $isAllowed !");
+
+                if (isAllowed) {
+                  mezDbgPrint("AGORA PERMISSIONS ALLOWED !");
+                  // ignore: unawaited_futures
+                  Get.to<void>(
+                    CallPage(
+                      role: ClientRole.Audience,
+                    ),
+                  );
+                }
+              },
+              child: Icon(Icons.ac_unit_rounded))
         ],
       ),
       body: isChatLoaded
