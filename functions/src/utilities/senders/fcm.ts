@@ -19,14 +19,8 @@ export interface fcmNotification {
 
 export interface fcmPayload {
   token: string | string[],
-  payload: {
-    notification: fcmNotification,
-    data?: any
-  },
-  options: {
-    collapseKey?: string,
-    priority: NotificationPriority;
-  }
+  payload: firebase.messaging.MessagingPayload
+  options: firebase.messaging.MessagingOptions
 }
 
 
