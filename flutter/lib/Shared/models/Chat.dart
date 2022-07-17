@@ -188,7 +188,6 @@ class MessageNotificationForQueue extends NotificationForQueue {
       };
 }
 
-
 class CallNotificationForQueue extends NotificationForQueue {
   String chatId;
   String callerId;
@@ -204,7 +203,7 @@ class CallNotificationForQueue extends NotificationForQueue {
       required this.calleeParticipantType,
       this.orderId})
       : super(
-            notificationType: NotificationType.NewMessage,
+            notificationType: NotificationType.Call,
             timeStamp: DateTime.now().toUtc());
 
   Map<String, dynamic> toFirebaseFormatJson() => {

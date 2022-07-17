@@ -22,14 +22,17 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
     await showCallkitIncoming(
         callerName: event.data["callerName"],
         callerImage: event.data["callerImage"],
-        callerType: event.data["callerType"]);
+        callerType: event.data["callerType"],
+        language: event.data["language"]);
   }
 }
 
-Future<void> showCallkitIncoming(
-    {required String callerName,
-    required String callerImage,
-    required String callerType}) async {
+Future<void> showCallkitIncoming({
+  required String callerName,
+  required String callerImage,
+  required String callerType,
+  required String? language,
+}) async {
   final Map<String, dynamic> params = <String, dynamic>{
     'id': Uuid().v4(),
     'nameCaller': 'callerName',
