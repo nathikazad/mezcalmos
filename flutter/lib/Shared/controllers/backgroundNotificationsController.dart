@@ -8,13 +8,61 @@ import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
+import 'package:uuid/uuid.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   mezDbgPrint("Handling a background message");
+  mezDbgPrint(event);
+  showCallkitIncoming(Uuid().v4());
   if (event.data["notificationType"] == "newOrder" &&
       event.data["markReceivedUrl"] != null) {
     await markInDb(event.data["markReceivedUrl"]);
   }
+}
+
+Future<void> showCallkitIncoming(String uuid) async {
+  var params = <String, dynamic>{
+    'id': uuid,
+    'nameCaller': 'Hien Nguyen',
+    'appName': 'Callkit',
+    'avatar': 'https://i.pravatar.cc/100',
+    'handle': '0123456789',
+    'type': 0,
+    'duration': 30000,
+    'textAccept': 'Accept',
+    'textDecline': 'Decline',
+    'textMissedCall': 'Missed call',
+    'textCallback': 'Call back',
+    'extra': <String, dynamic>{'userId': '1a2b3c4d'},
+    'headers': <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
+    'android': <String, dynamic>{
+      'isCustomNotification': true,
+      'isShowLogo': false,
+      'isShowCallback': false,
+      'ringtonePath': 'system_ringtone_default',
+      'backgroundColor': '#0955fa',
+      'background': 'https://i.pravatar.cc/500',
+      'actionColor': '#4CAF50'
+    },
+    'ios': <String, dynamic>{
+      'iconName': 'CallKitLogo',
+      'handleType': '',
+      'supportsVideo': true,
+      'maximumCallGroups': 2,
+      'maximumCallsPerCallGroup': 1,
+      'audioSessionMode': 'default',
+      'audioSessionActive': true,
+      'audioSessionPreferredSampleRate': 44100.0,
+      'audioSessionPreferredIOBufferDuration': 0.005,
+      'supportsDTMF': true,
+      'supportsHolding': true,
+      'supportsGrouping': false,
+      'supportsUngrouping': false,
+      'ringtonePath': 'system_ringtone_default'
+    }
+  };
+  await FlutterCallkitIncoming.showCallkitIncoming(params);
 }
 
 Future<void> markInDb(String url) async {
