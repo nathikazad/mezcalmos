@@ -3,9 +3,12 @@ import { getChat, setChatMessageNotifiedAsTrue } from "../../functions/src/share
 import * as notifyUser from "../../functions/src/utilities/senders/notifyUser";
 import { chatUrl, orderUrl } from "../../functions/src/utilities/senders/appRoutes";
 import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
-import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue, NewCallNotification } from "../../functions/src/shared/models/Notification";
+import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue } from "../../functions/src/shared/models/Notification";
 import { CounterOfferNotification, CounterOfferNotificationForQueue } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
 import { OrderType } from "../../functions/src/shared/models/Generic/Order";
+import { Language, NotificationInfo } from "../../functions/src/shared/models/Generic/Generic";
+import { getNotificationInfo } from "../../functions/src/shared/controllers/rootController";
+import * as fcm from "../../functions/src/utilities/senders/fcm";
 
 export function startWatchingMessageNotificationQueue() {
   rootNodes.notificationsQueueNode().on('child_added', function (snap) {
@@ -28,34 +31,32 @@ export function startWatchingMessageNotificationQueue() {
 
 async function notifyCallerRecipient(notificationForQueue: CallNotificationForQueue) {
   let chatData: ChatData = (await getChat(notificationForQueue.chatId)).chatData;
-
-
   let callerInfo: Participant = chatData.participants[notificationForQueue.callerParticipantType]![notificationForQueue.callerId]
   let calleeInfo: Participant = chatData.participants[notificationForQueue.calleeParticipantType]![notificationForQueue.calleeId]
-  let notification: Notification = {
-    foreground: <NewCallNotification>{
-      chatId: notificationForQueue.chatId,
-      callee: calleeInfo,
-      caller: callerInfo,
-      time: notificationForQueue.timestamp,
-      notificationType: NotificationType.Call,
-      notificationAction: NotificationAction.ShowPopUp,
-    },
-    background: {
-      en: {
-        title: `New call from ${callerInfo.name}`,
-        body: `${callerInfo.name}`
+  let subscription: NotificationInfo = await getNotificationInfo(calleeInfo.particpantType, calleeInfo.id);
+  if (subscription != null && subscription.deviceNotificationToken) {
+    let language: Language = calleeInfo.language ?? Language.ES;
+    let fcmMessage: fcm.fcmPayload = {
+      token: subscription.deviceNotificationToken,
+      payload: {
+        data: {
+          linkUrl: chatUrl(notificationForQueue.chatId),
+          language: language,
+          callerName: callerInfo.name ?? "Caller",
+          notificationType: NotificationType.Call,
+          callerImage: callerInfo.image,
+          callerType: callerInfo.particpantType
+        }
       },
-      es: {
-        title: `Nueva mensaje de ${callerInfo.name}`,
-        body: `${callerInfo.name}`
+      options: {
+        priority: fcm.NotificationPriority.High,
+        contentAvailable: true
       }
-    },
-    linkUrl: chatUrl(notificationForQueue.chatId)
+    };
+    fcm.push(fcmMessage);
   }
-  notifyUser.pushNotification(calleeInfo.id, notification, calleeInfo.particpantType);
-
 }
+
 
 async function notifyOtherMessageParticipants(notificationForQueue: MessageNotificationForQueue) {
   let chatData: ChatData = (await getChat(notificationForQueue.chatId)).chatData;

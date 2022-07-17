@@ -13,21 +13,29 @@ import 'package:uuid/uuid.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   mezDbgPrint("Handling a background message");
-  mezDbgPrint(event);
-  showCallkitIncoming(Uuid().v4());
+  mezDbgPrint(event.data);
+
   if (event.data["notificationType"] == "newOrder" &&
       event.data["markReceivedUrl"] != null) {
     await markInDb(event.data["markReceivedUrl"]);
+  } else if (event.data["notificationType"] == "call") {
+    await showCallkitIncoming(
+        callerName: event.data["callerName"],
+        callerImage: event.data["callerImage"],
+        callerType: event.data["callerType"]);
   }
 }
 
-Future<void> showCallkitIncoming(String uuid) async {
-  var params = <String, dynamic>{
-    'id': uuid,
-    'nameCaller': 'Hien Nguyen',
-    'appName': 'Callkit',
-    'avatar': 'https://i.pravatar.cc/100',
-    'handle': '0123456789',
+Future<void> showCallkitIncoming(
+    {required String callerName,
+    required String callerImage,
+    required String callerType}) async {
+  final Map<String, dynamic> params = <String, dynamic>{
+    'id': Uuid().v4(),
+    'nameCaller': 'callerName',
+    'appName': callerName,
+    'avatar': callerImage,
+    'handle': callerType,
     'type': 0,
     'duration': 30000,
     'textAccept': 'Accept',
@@ -42,7 +50,7 @@ Future<void> showCallkitIncoming(String uuid) async {
       'isShowCallback': false,
       'ringtonePath': 'system_ringtone_default',
       'backgroundColor': '#0955fa',
-      'background': 'https://i.pravatar.cc/500',
+      'background': callerImage,
       'actionColor': '#4CAF50'
     },
     'ios': <String, dynamic>{
@@ -139,7 +147,8 @@ class BackgroundNotificationsController extends GetxController {
             arguments: <String, bool>{'showViewOrderBtn': true},
           ),
         );
-      };
+      }
+      ;
     } else
       Future<void>.delayed(
         Duration(milliseconds: 100),
