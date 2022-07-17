@@ -103,6 +103,8 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
         }) as Option?;
         if (newOp != null) {
           widget.viewController.editOption(option.id, newOp);
+        } else {
+          widget.viewController.deleteOption(optionId: option.id);
         }
       },
       customBorder: CircleBorder(),

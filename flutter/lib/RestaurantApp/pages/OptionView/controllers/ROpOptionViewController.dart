@@ -159,6 +159,9 @@ class ROpOptionViewController {
       {required String itemId,
       required String optionId,
       String? categoryId}) async {
-    // TODO @m66are
+    await _restaurantInfoController
+        .deleteOption(
+            itemId: itemId, optionId: optionId, categoryId: categoryId)
+        .then((value) => Get.back());
   }
 }

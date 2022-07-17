@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ItemCategorySelector.dart';
+import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ROpItemAvChips.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/ROpItemImage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/RopItemOptionCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
@@ -54,38 +55,8 @@ class _ROpItemViewState extends State<ROpItemView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back,
-          title: "Item",
-          showNotifications: true,
-          tabBar: TabBar(controller: _tabController, tabs: [
-            Tab(
-              text:
-                  "${viewController.restaurant.value!.primaryLanguage.toLanguageName()}",
-            ),
-            Tab(
-              text:
-                  "${viewController.restaurant.value!.secondaryLanguage!.toLanguageName()}",
-            ),
-          ])),
-      bottomNavigationBar: Obx(
-        () => CallToActionButton(
-          height: 65,
-          text: (viewController.editMode.isTrue) ? "Save item" : "Add item",
-          onTap: () async {
-            if (viewController.isSecondLangValid) {
-              _tabController.index = _tabController.length - 2;
-              if (_formKey.currentState!.validate()) {
-                mezDbgPrint("Calling save");
-                await viewController.saveItem();
-              }
-            } else {
-              _tabController.index = _tabController.length - 1;
-              _formKey.currentState!.validate();
-            }
-          },
-        ),
-      ),
+      appBar: _appBar(),
+      bottomNavigationBar: _saveBtn(),
       body: Obx(
         () {
           if (viewController.restaurant.value != null) {
@@ -106,6 +77,44 @@ class _ROpItemViewState extends State<ROpItemView>
         },
       ),
     );
+  }
+
+  Widget _saveBtn() {
+    return Obx(
+      () => CallToActionButton(
+        height: 65,
+        text: (viewController.editMode.isTrue) ? "Save item" : "Add item",
+        onTap: () async {
+          if (viewController.isSecondLangValid) {
+            _tabController.index = _tabController.length - 2;
+            if (_formKey.currentState!.validate()) {
+              mezDbgPrint("Calling save");
+              await viewController.saveItem();
+            }
+          } else {
+            _tabController.index = _tabController.length - 1;
+            _formKey.currentState!.validate();
+          }
+        },
+      ),
+    );
+  }
+
+  AppBar _appBar() {
+    return mezcalmosAppBar(AppBarLeftButtonType.Back,
+        onClick: Get.back,
+        title: "Item",
+        showNotifications: true,
+        tabBar: TabBar(controller: _tabController, tabs: [
+          Tab(
+            text:
+                "${viewController.restaurant.value!.primaryLanguage.toLanguageName()}",
+          ),
+          Tab(
+            text:
+                "${viewController.restaurant.value!.secondaryLanguage!.toLanguageName()}",
+          ),
+        ]));
   }
 
   SingleChildScrollView _secondaryTab() {
@@ -162,6 +171,12 @@ class _ROpItemViewState extends State<ROpItemView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ROpItemImage(
+            viewController: viewController,
+          ),
+          const SizedBox(
+            height: 35,
+          ),
+          ROpItemAvChips(
             viewController: viewController,
           ),
           const SizedBox(

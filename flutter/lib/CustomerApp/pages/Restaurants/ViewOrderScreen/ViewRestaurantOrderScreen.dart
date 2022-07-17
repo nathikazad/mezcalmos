@@ -234,7 +234,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       ];
 
   void initMap() {
-   
     mapController.lockInAutoZoomAnimation();
 
     mapController.setLocation(
@@ -293,12 +292,14 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           );
         }
 
-        mapController.addOrUpdateUserMarker(
-          latLng: order.value!.dropoffDriver!.location!,
-          markerId: order.value!.dropoffDriver!.id,
-          customImgHttpUrl: order.value!.dropoffDriver!.image,
-          fitWithinBounds: true,
-        );
+        if (order.value!.dropoffDriver != null) {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value!.dropoffDriver!.location!,
+            markerId: order.value!.dropoffDriver!.id,
+            customImgHttpUrl: order.value!.dropoffDriver!.image,
+            fitWithinBounds: true,
+          );
+        }
         mapController.animateAndUpdateBounds();
         break;
 
@@ -306,12 +307,14 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         if (_statusSnapshot != status) {
           _statusSnapshot = status;
           // we ignore the restaurant's marker within bounds
-          mapController.addOrUpdateUserMarker(
-            latLng: order.value!.restaurant.location.toLatLng(),
-            markerId: order.value!.restaurant.id,
-            customImgHttpUrl: order.value!.restaurant.image,
-            fitWithinBounds: true,
-          );
+          if (order.value!.dropoffDriver != null) {
+            mapController.addOrUpdateUserMarker(
+              latLng: order.value!.restaurant.location.toLatLng(),
+              markerId: order.value!.restaurant.id,
+              customImgHttpUrl: order.value!.restaurant.image,
+              fitWithinBounds: true,
+            );
+          }
           // we fit the destination into bounds
           mapController.addOrUpdatePurpleDestinationMarker(
             latLng: order.value!.to.toLatLng(),
@@ -320,13 +323,16 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         }
 
         // we keep updating the delivery's
-        mapController.addOrUpdateUserMarker(
-          latLng: order.value!.dropoffDriver!.location!,
-          markerId: order.value!.dropoffDriver!.id,
-          customImgHttpUrl: order.value!.dropoffDriver!.image,
-          fitWithinBounds: true,
-        );
+        if (order.value!.dropoffDriver != null) {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value!.dropoffDriver!.location!,
+            markerId: order.value!.dropoffDriver!.id,
+            customImgHttpUrl: order.value!.dropoffDriver!.image,
+            fitWithinBounds: true,
+          );
+        }
         mapController.animateAndUpdateBounds();
+
         break;
       default:
     }

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-class LaundryOpEditLocationCard extends StatelessWidget {
-  LaundryOpEditLocationCard({
+class ROpEditLocationCard extends StatelessWidget {
+  ROpEditLocationCard({
     Key? key,
     required this.editInfoController,
   }) : super(key: key);
-  EditInfoController editInfoController;
+  ROpEditInfoController editInfoController;
 
   @override
   Widget build(BuildContext context) {

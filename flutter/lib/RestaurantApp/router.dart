@@ -5,7 +5,7 @@ import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/EditInfoView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/ROpOptionView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrderView/LaundryOpOrderView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrderView/ROpOrderView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/PastOrdresList/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/RestaurantWrapper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -21,13 +21,13 @@ const String kCategoryView = '/categoryScreen';
 const String kEditCategoryScreen = '/categoryScreen/:categoryId';
 const String kItemView = '/itemView';
 const String kEditItemView = '/itemView/:itemId/:categoryId';
-const String kOrderView = '/dashboard/orderView/:orderId';
+const String kOrderView = '/orderView/:orderId';
 const String kOptionView = "/optionView/:itemId/:optionId";
 String getCategoryEditRoute(String categoryId) {
   return kEditCategoryScreen.replaceFirst(":categoryId", categoryId);
 }
 
-String getLaundryOpOrderRoute(String orderId) {
+String getROpOrderRoute(String orderId) {
   return kOrderView.replaceFirst(":orderId", orderId);
 }
 
@@ -48,7 +48,7 @@ String getEditOptionRoute({required String itemId}) {
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
-        GetPage(name: kEditInfoView, page: () => LaundryOpEditInfoView()),
+        GetPage(name: kEditInfoView, page: () => ROpEditInfoView()),
         GetPage(name: kMenuView, page: () => ROpMenuView()),
         GetPage(
             name: kCurrentOrdersListView,
@@ -71,7 +71,7 @@ class XRouter {
           name: kEditItemView,
           page: () => ROpItemView(),
         ),
-        GetPage(name: kOrderView, page: () => LaundryOpOrderView()),
+        GetPage(name: kOrderView, page: () => ROpOrderView()),
         GetPage(name: kOptionView, page: () => ROpOptionView())
       ] +
       SharedRouter.sharedRoutes;

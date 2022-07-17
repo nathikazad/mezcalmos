@@ -10,8 +10,8 @@ typedef bool OnChangeShouldUpdateLang(
   LanguageType languageType,
 );
 
-class LanguageSelectorComponent extends StatefulWidget {
-  const LanguageSelectorComponent({
+class ROpLanguageSelectorComponent extends StatefulWidget {
+  const ROpLanguageSelectorComponent({
     Key? key,
     required this.languageValue,
     this.oppositeLanguageValue,
@@ -25,11 +25,12 @@ class LanguageSelectorComponent extends StatefulWidget {
   final bool showDeleteIcon;
 
   @override
-  State<LanguageSelectorComponent> createState() =>
-      _LanguageSelectorComponentState();
+  State<ROpLanguageSelectorComponent> createState() =>
+      _ROpLanguageSelectorComponentState();
 }
 
-class _LanguageSelectorComponentState extends State<LanguageSelectorComponent> {
+class _ROpLanguageSelectorComponentState
+    extends State<ROpLanguageSelectorComponent> {
   @override
   void initState() {
     super.initState();

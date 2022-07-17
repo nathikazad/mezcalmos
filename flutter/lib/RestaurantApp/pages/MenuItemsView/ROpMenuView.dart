@@ -191,8 +191,6 @@ class _ROpMenuViewState extends State<ROpMenuView>
                         viewController: viewController)
                 ],
                 onReorder: (int oldIndex, int newIndex) {
-                  mezDbgPrint("OLD INDEX ======>>>>> $oldIndex");
-                  mezDbgPrint("NEw INDEX ======>>>>> $newIndex");
                   // to avoid last element missbehavior
                   if (oldIndex < newIndex) {
                     newIndex -= 1;

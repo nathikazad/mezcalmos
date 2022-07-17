@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 
-class EditInfoWidgets {
-  final EditInfoController editInfoController;
+class ROpEditInfoWidgets {
+  final ROpEditInfoController editInfoController;
   final BuildContext context;
-  EditInfoWidgets({required this.editInfoController, required this.context});
+  ROpEditInfoWidgets({required this.editInfoController, required this.context});
 
   dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
       ["MezWorkingHours"];

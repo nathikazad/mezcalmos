@@ -84,7 +84,7 @@ class RestaurantAppTheme {
           titleTextStyle: TextStyle(
               fontFamily: "Poppins",
               fontWeight: FontWeight.w600,
-              fontSize: 17.sp,
+              fontSize: 15.sp,
               color: Colors.black),
           elevation: 0.2,
           centerTitle: true,

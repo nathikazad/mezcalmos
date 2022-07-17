@@ -91,6 +91,7 @@ class ItemViewController {
     final Item newItem = Item(
         image: newImageUrl.value,
         id: generateRandomString(5),
+        available: editableItem.value!.available,
         name: {
           restaurant.value!.primaryLanguage: prItemNameController.text,
           restaurant.value!.secondaryLanguage!: scItemNameController.text,
@@ -139,12 +140,21 @@ class ItemViewController {
         .available = value;
   }
 
+  void switchItemAv(bool v) {
+    editableItem.value!.available = v;
+    editableItem.refresh();
+  }
+
   //
 
   void editOption(String optionId, Option newOption) {
     final int index =
         itemOptions.indexWhere((Option element) => element.id == optionId);
     itemOptions[index] = newOption;
+  }
+
+  void deleteOption({required String optionId}) {
+    itemOptions.removeWhere((Option element) => element.id == optionId);
   }
 
 // push item to db //
@@ -253,5 +263,11 @@ class ItemViewController {
     return scItemNameController.text.isNotEmpty;
   }
 
-  void dispose() {}
+  void dispose() {
+    editableItem.close();
+    prItemDescController.clear();
+    prItemNameController.clear();
+    scItemNameController.clear();
+    scItemDescController.clear();
+  }
 }

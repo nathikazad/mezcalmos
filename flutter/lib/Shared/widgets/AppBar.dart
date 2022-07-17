@@ -14,7 +14,7 @@ enum AppBarLeftButtonType { Back, Menu, Lang }
 
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {Color bgColor = Colors.white,
-    VoidCallback? onClick,
+    void Function()? onClick,
     String? title,
     Widget? titleWidget,
     bool showNotifications = false,

@@ -208,8 +208,9 @@
                 "ViewOrderScreen": {
                     "components": {
                         "OrderStatusCard": {
-                            "willBePicked": "Will be picked up",
-                            "willBeDelivered": "Will be delivered"
+                            "willBeReady": "Estimated food ready time",
+                            "willBePicked": "Estimated pick-up time",
+                            "willBeDelivered": "Estimated delivery time"
                         },
                         "RestaurantOrderDriverCard": {
                             "dropOffTime": "Delivery time"

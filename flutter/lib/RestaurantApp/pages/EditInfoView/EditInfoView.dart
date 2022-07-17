@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/EditInfoWidgets.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/LaundryOpEditLocationCard.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/LaundryOpImageEditComponent.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/components/languageSelectorComponent.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/EditInfoWidgets.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpEditLocationCard.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROplanguageSelectorComponent.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
@@ -15,25 +13,25 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['EditInfoView']['EditInfoView'];
 
-class LaundryOpEditInfoView extends StatefulWidget {
-  const LaundryOpEditInfoView({Key? key}) : super(key: key);
+class ROpEditInfoView extends StatefulWidget {
+  const ROpEditInfoView({Key? key}) : super(key: key);
 
   @override
-  State<LaundryOpEditInfoView> createState() => _LaundryOpEditInfoViewState();
+  State<ROpEditInfoView> createState() => _ROpEditInfoViewState();
 }
 
-class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
+class _ROpEditInfoViewState extends State<ROpEditInfoView> {
   // LaundryInfoController laundryInfoController =
   //     Get.find<LaundryInfoController>();
   AnimatedSliderController animatedSliderController =
       AnimatedSliderController();
-  EditInfoController editInfoController = EditInfoController();
-  late final EditInfoWidgets viewWidgets;
+  ROpEditInfoController editInfoController = ROpEditInfoController();
+  late final ROpEditInfoWidgets viewWidgets;
 
   @override
   void initState() {
-   // editInfoController.init();
-    viewWidgets = EditInfoWidgets(
+    editInfoController.init();
+    viewWidgets = ROpEditInfoWidgets(
         editInfoController: editInfoController, context: context);
 
     super.initState();
@@ -53,14 +51,14 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // image
-            LaundryOpImageEditComponent(editInfoController: editInfoController),
+            //  LaundryOpImageEditComponent(editInfoController: editInfoController),
             SizedBox(
               height: 15,
             ),
             Container(
               alignment: Alignment.center,
               child: Text(
-                editInfoController.laundry.value?.info.name ?? "",
+                editInfoController.restaurant.value?.info.name ?? "",
                 style: Get.textTheme.headline3,
               ),
             )
@@ -70,7 +68,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
               height: 25,
             ),
 
-            Text("${_i18n()["laundryName"]}"),
+            Text("Restaurant name"),
             SizedBox(
               height: 5,
             ),
@@ -79,7 +77,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
               height: 15,
             ),
             Text("${_i18n()["defaultLanguage"]}"),
-            LanguageSelectorComponent(
+            ROpLanguageSelectorComponent(
                 languageValue: editInfoController.primaryLang,
                 oppositeLanguageValue: editInfoController.secondaryLang,
                 onChangeShouldUpdateLang:
@@ -95,7 +93,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
             SizedBox(
               height: 5,
             ),
-            LanguageSelectorComponent(
+            ROpLanguageSelectorComponent(
               languageValue: editInfoController.secondaryLang,
               oppositeLanguageValue: editInfoController.primaryLang,
               onChangeShouldUpdateLang:
@@ -109,7 +107,7 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
             SizedBox(
               height: 5,
             ),
-            LaundryOpEditLocationCard(
+            ROpEditLocationCard(
               editInfoController: editInfoController,
             ),
             SizedBox(
@@ -133,14 +131,6 @@ class _LaundryOpEditInfoViewState extends State<LaundryOpEditInfoView> {
     return TextFormField(
       controller: editInfoController.laundryNameController,
       style: Get.textTheme.bodyText1,
-      decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-              borderSide: BorderSide.none),
-          focusedBorder: InputBorder.none,
-          border: InputBorder.none,
-          filled: true,
-          fillColor: Colors.grey.shade200),
     );
   }
   // SAVE BUTTON ON THE FOOTER OF SCREEN

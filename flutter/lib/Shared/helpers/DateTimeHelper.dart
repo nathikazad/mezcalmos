@@ -32,16 +32,16 @@ extension parseDateTime on DateTime {
             .difference(DateTime(now.year, now.month, now.day))
             .inDays >
         1) {
-      return "${_i18n()["on"]} ${formatMonth.format(toLocal())}, ${_i18n()["at"]} ${formatTime.format(toLocal())}";
+      return " ${formatMonth.format(toLocal())}, ${_i18n()["at"]} ${formatTime.format(toLocal())}";
     } else if (DateTime(toLocal().year, toLocal().month, toLocal().day)
             .difference(DateTime(now.year, now.month, now.day))
             .inDays >
         0) {
       return "${_i18n()["tomorrow"]} ${DateFormat("hh:mm a").format(toLocal())}";
     } else if (now.difference(toLocal()).inHours < 0) {
-      return "${_i18n()["at"]} ${DateFormat("hh:mm a").format(toLocal())}";
+      return "${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${_i18n()["in"]} ${now.difference(toLocal()).inMinutes.abs()} mins";
+      return "${now.difference(toLocal()).inMinutes.abs()} mins";
     }
   }
 

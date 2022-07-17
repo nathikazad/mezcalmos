@@ -212,8 +212,9 @@
                 "ViewOrderScreen": {
                     "components": {
                         "OrderStatusCard": {
-                            "willBePicked": "Será recogido",
-                            "willBeDelivered": "Será entregado"
+                            "willBeReady": "Tiempo de preparación estimado",
+                            "willBePicked": "Tiempo de recogida estimado",
+                            "willBeDelivered": "Tiempo de entrega estimado"
                         },
                         "RestaurantOrderDriverCard": {
                             "dropOffTime": "Hora de entrega"

@@ -35,7 +35,7 @@ class RestaurantController extends GetxController {
           .ref()
           .child(customerCart(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((event) async {
+          .listen((DatabaseEvent event) async {
         final dynamic cartData = event.snapshot.value;
         // check if cart has data
         if (cartData != null) {

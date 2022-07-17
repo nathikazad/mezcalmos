@@ -211,15 +211,10 @@ class _ROpOptionViewState extends State<ROpOptionView>
                     mezDbgPrint("$itemId");
                     if (itemId != null) {
                       showConfirmationDialog(context, onYesClick: () async {
-                        await _viewController
-                            .deleteOption(
-                                itemId: itemId!,
-                                optionId: option.value!.id,
-                                categoryId: categoryId)
-                            .then((value) {
-                          Get.back();
-                        });
+                        Get.back(closeOverlays: true);
+                        Get.back();
                       },
+                          primaryButtonText: "Delete option",
                           title: "Delete this option",
                           helperText:
                               "Are you sure you want to delete this option ");
@@ -246,8 +241,9 @@ class _ROpOptionViewState extends State<ROpOptionView>
   }
 
   AppBar _appBar() {
-    return mezcalmosAppBar(AppBarLeftButtonType.Back,
-        onClick: Get.back,
+    return mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+      Get.back(result: _viewController.editableOption.value);
+    },
         title: (_viewController.editMode.isTrue)
             ? _viewController.editableOption.value!.name[userLanguage]
             : "Add option",
