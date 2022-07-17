@@ -249,17 +249,50 @@ class _MessagingScreenState extends State<MessagingScreen> {
         actions: <Widget>[
           if (orderLink != null)
             InkWell(
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: Text(
-                      "View\nOrder",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black),
-                    ),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Text(
+                    "View\nOrder",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
-                onTap: () => Get.toNamed<void>(orderLink!))
+              ),
+              onTap: () => Get.toNamed<void>(orderLink!),
+            ),
+          SizedBox(
+            width: 10,
+          ),
+          if (controller.sender()?.participantType ==
+              ParticipantType.DeliveryDriver)
+            InkWell(
+              onTap: () {
+                Participant? p = controller.recipient(
+                    recipientType: ParticipantType.Customer);
+                if (p != null) {
+                  controller.callUser(
+                    chatId: chatId,
+                    callee: p,
+                    orderId: orderId,
+                  );
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsets.only(right: 10),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey.shade300,
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.call,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
       body: isChatLoaded
