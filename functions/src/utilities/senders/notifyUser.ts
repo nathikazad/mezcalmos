@@ -30,7 +30,8 @@ export async function pushNotification(
         }
       },
       options: {
-        priority: fcm.NotificationPriority.High
+        priority: fcm.NotificationPriority.High,
+        contentAvailable: true
       }
     };
     fcm.push(fcmMessage, fcmThroughApi);
