@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/CustomerLaundryEstTimes.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderNoteComponent.dart';
@@ -125,33 +126,28 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                               height: 20,
                             ),
                             LaundryOrderStatusCard(order: order.value!),
+                            CustomerLaundryOrderEst(
+                              order: order.value!,
+                            ),
                             LaundryOrderDriverCard(order: order.value!),
                             // @ here
                             if (order.value!.inDeliveryPhase())
                               Column(
                                 children: [
-                                  const SizedBox(height: 20),
                                   Column(
                                     children: _mapWidget,
-                                  )
+                                  ),
+                                  const SizedBox(height: 20),
                                 ],
                               ),
-                            SizedBox(
-                              height: 20,
-                            ),
+                           
                             if (order.value!.laundry != null)
                               OrderLaundryCard(order: order.value!),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            
                             LaundryPricingCompnent(order: order.value!),
-                            SizedBox(
-                              height: 20,
-                            ),
+                           
                             LaundryOrderNoteComponent(order: order.value!),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            
                             OrderSummaryComponent(
                               order: order.value!,
                             ),

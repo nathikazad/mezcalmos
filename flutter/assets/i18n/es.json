@@ -410,6 +410,12 @@
                 },
                 "LaundryCurrentOrderView": {
                     "Components": {
+                        "CustomerLaundryOrderEst": {
+                            "pickup": "Levantar",
+                            "delivery": "Entrega",
+                            "laundryReady": "acabado de lavandería",
+                            "estTimes": "Tiempos estimados"
+                        },
                         "LaundryOrderDriverCard": {
                             "dropOffTime": "Hora de entrega",
                             "pickUpTime": "Hora de recogida"

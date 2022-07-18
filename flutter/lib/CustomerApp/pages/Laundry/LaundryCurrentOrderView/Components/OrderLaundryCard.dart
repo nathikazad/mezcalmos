@@ -15,6 +15,7 @@ class OrderLaundryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.only(bottom: 20),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
         child: Row(

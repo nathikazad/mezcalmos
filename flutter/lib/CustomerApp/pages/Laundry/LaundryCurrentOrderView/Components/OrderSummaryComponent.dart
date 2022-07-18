@@ -18,6 +18,7 @@ class OrderSummaryComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.only(bottom: 20),
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.all(16),

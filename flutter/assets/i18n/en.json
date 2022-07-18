@@ -405,6 +405,13 @@
                 },
                 "LaundryCurrentOrderView": {
                     "Components": {
+                        "CustomerLaundryOrderEst": {
+                            "pickup": "Pickup",
+                            "delivery": "Delivery",
+                            "laundryReady": "Laundry ready",
+                            "estTimes": "Estimated times"
+                        },
+
                         "LaundryOrderDriverCard": {
                             "dropOffTime": "Delivery time",
                             "pickUpTime": "Pickup time"
