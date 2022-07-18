@@ -170,7 +170,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           OrderStatusCard(
                             order: order.value!,
