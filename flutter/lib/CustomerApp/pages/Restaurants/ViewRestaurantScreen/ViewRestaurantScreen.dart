@@ -195,12 +195,11 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
             style: Get.theme.textTheme.headline3
                 ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
           ),
-          SizedBox(
-            height: 10,
-          ),
           if (category.dialog?[userLanguage] != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15),
+            Container(
+              margin: const EdgeInsets.only(
+                top: 5,
+              ),
               child: Text(
                 category.dialog![userLanguage]!,
                 style: Get.textTheme.bodyText2?.copyWith(
@@ -218,20 +217,23 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget _buildResturantItems(List<Item> items, String restaurantId) {
     if (restaurant.restaurantsView == RestaurantsView.Rows) {
-      return Column(
-        children: items.fold<List<Widget>>(<Widget>[],
-            (List<Widget> children, Item item) {
-          children.add(RestaurantsListOfItemsComponent(
-              item: item,
-              function: () {
-                Get.toNamed(
-                  getItemRoute(restaurantId, item.id),
-                  arguments: {"mode": ViewItemScreenMode.AddItemMode},
-                );
-              }));
+      return Container(
+        margin: EdgeInsets.only(top: 17),
+        child: Column(
+          children: items.fold<List<Widget>>(<Widget>[],
+              (List<Widget> children, Item item) {
+            children.add(RestaurantsListOfItemsComponent(
+                item: item,
+                function: () {
+                  Get.toNamed(
+                    getItemRoute(restaurantId, item.id),
+                    arguments: {"mode": ViewItemScreenMode.AddItemMode},
+                  );
+                }));
 
-          return children;
-        }),
+            return children;
+          }),
+        ),
       );
     } else {
       return GridView.count(
@@ -239,7 +241,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
         mainAxisSpacing: 8,
         crossAxisSpacing: 8,
         shrinkWrap: true,
-        padding: EdgeInsets.zero,
+        padding: EdgeInsets.only(top: 17),
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(items.length, (int index) {
           return RestaurantgridItemCard(

@@ -1,4 +1,3 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 
 class Customer {
@@ -12,16 +11,13 @@ class Customer {
     appVersion = data?["versionNumber"] ?? null;
     notificationInfo = data?["notificationInfo"];
 
-    mezDbgPrint("SavedLocations ===> ${data?["savedLocations"]}");
     if (data["savedLocations"] != null) {
       Map<String, dynamic>.from(data?["savedLocations"])
           .entries
           .forEach((MapEntry<String, dynamic> entry) {
-       
         savedLocations.add(
           SavedLocation.fromData(id: entry.key, data: entry.value),
         );
-       
       });
     }
     // for (var locationId in ) {
