@@ -18,6 +18,7 @@ const participantTypeToNodeMap: { [id in ParticipantType]: string } = {
   [ParticipantType.DeliveryDriver]: "deliveryDrivers",
   [ParticipantType.Laundry]: "laundries",
   [ParticipantType.LaundryOperator]: "operators/laundry",
+  [ParticipantType.RestaurantOperator]: "operators/restaurant",
 };
 
 export function notificationInfoNode(participantType: ParticipantType, userId: string) {
