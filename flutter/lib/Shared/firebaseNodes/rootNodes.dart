@@ -1,9 +1,11 @@
-String chatNode(String chatId) {
-  return 'chat/$chatId';
-}
-
 String userLanguageNode(String userId) {
   return 'users/$userId/info/language';
+}
+
+String notificationQueueNode([String? notificationId]) {
+  String address = 'notificationQueue';
+  if (notificationId != null) address += '/$notificationId';
+  return address;
 }
 
 String userInfoNode(String userId) {

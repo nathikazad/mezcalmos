@@ -52,7 +52,7 @@ firebase.initializeApp(firebaseParams)
 setKeys(keys[env]);
 
 
-startWatchingMessageNotificationQueue();
+startWatchingMessageNotificationQueue(keys[env]);
 startWatchingOpenOrders(constructReturnUrl);
 
 /****************************  Some Helper Functions *************************************/

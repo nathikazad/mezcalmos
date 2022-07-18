@@ -25,7 +25,7 @@ export const deleteAccount = functions.https.onCall(async (data , context) => {
   if (response != undefined) {
     return response;
   }
-  await firebase.auth().updateUser(context.auth!.uid!, { disabled : true });
+  await firebase.auth().updateUser(context.auth!.uid!, { disabled: true });
   return {status: ServerResponseStatus.Success}
 });
  

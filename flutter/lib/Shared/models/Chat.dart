@@ -64,6 +64,24 @@ class Participant {
       required this.id});
 }
 
+class AgoraDetails {
+  num uid;
+  String token;
+  AgoraDetails({required this.uid, required this.token});
+}
+
+class ParticipantWithAgora extends Participant {
+  AgoraDetails? agora;
+  ParticipantWithAgora(
+      {required String image,
+      required String name,
+      required ParticipantType participantType,
+      required String id,
+      this.agora})
+      : super(
+            id: id, image: image, participantType: participantType, name: name);
+}
+
 class Message {
   String message;
   DateTime timestamp;
@@ -83,8 +101,8 @@ class Chat {
   String chatType;
   OrderType? orderType;
   String? orderId;
-  Map<ParticipantType?, Map<String, Participant>> _participants =
-      <ParticipantType?, Map<String, Participant>>{};
+  Map<ParticipantType?, Map<String, ParticipantWithAgora>> _participants =
+      <ParticipantType?, Map<String, ParticipantWithAgora>>{};
   List<Message> _messages = <Message>[];
 
   List<Message> get messages {
@@ -122,12 +140,15 @@ class Chat {
       chatData['participants'][participantTypeAsString]
           .forEach((dynamic participantId, dynamic participantData) {
         if (chat._participants[participantType] == null)
-          chat._participants[participantType] = <String, Participant>{};
-        chat._participants[participantType]![participantId] = Participant(
+          chat._participants[participantType] =
+              <String, ParticipantWithAgora>{};
+        chat._participants[participantType]![participantId] =
+            ParticipantWithAgora(
             image: participantData['image'],
             name: participantData['name'],
             participantType: participantType,
-            id: participantId);
+                id: participantId,
+                agora: participantData['agora']);
       });
     });
 

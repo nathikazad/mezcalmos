@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
@@ -57,7 +58,7 @@ class MessageController extends GetxController {
       String? orderId}) async {
     final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
         .ref()
-        .child('${chatNode(chatId)}/messages')
+        .child(messagesNode(chatId))
         .push();
 
     // ignore: unawaited_futures
@@ -77,7 +78,7 @@ class MessageController extends GetxController {
     // ignore: unawaited_futures
     _databaseHelper.firebaseDatabase
         .ref()
-        .child('notificationQueue/${messageNode.key}')
+        .child(notificationQueueNode(messageNode.key))
         .set(MessageNotificationForQueue(
                 message: message,
                 userId: _authController.user!.id,
@@ -95,13 +96,13 @@ class MessageController extends GetxController {
       String? orderId}) async {
     final DatabaseReference notificationNode = _databaseHelper.firebaseDatabase
         .ref()
-        .child('notificationQueue')
+        .child(notificationQueueNode())
         .push();
 
     // ignore: unawaited_futures
     _databaseHelper.firebaseDatabase
         .ref()
-        .child('notificationQueue/${notificationNode.key}')
+        .child(notificationQueueNode(notificationNode.key))
         .set(CallNotificationForQueue(
                 chatId: chatId,
                 callerId: _authController.user!.id,

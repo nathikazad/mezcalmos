@@ -43,7 +43,7 @@ export enum ParticipantType {
   LaundryOperator = "laundryOperator"
 }
 
-export const nonNotifiableParticipants: Array<ParticipantType> = [ParticipantType.Restaurant];
+export const nonNotifiableParticipants: Array<ParticipantType> = [ParticipantType.Restaurant, ParticipantType.Laundry];
 
 
 export interface Participant extends UserInfo {
@@ -92,4 +92,14 @@ export interface CallNotificationForQueue extends NotificationForQueue {
   calleeId: string,
   calleeParticipantType: ParticipantType,
   orderId?: string
+}
+
+export interface ParticipantAgoraDetails {
+  uid: number,
+  token: string,
+  expirationTime: string
+}
+
+export interface ParticipantWithAgora extends Participant {
+  agora: ParticipantAgoraDetails
 }
