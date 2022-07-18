@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -60,18 +58,9 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                 ),
                 Flexible(
                   fit: FlexFit.tight,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        order.dropoffDriver!.name,
-                        style: Get.textTheme.bodyText1,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      if (_getTime() != null) Text(_getTime()!)
-                    ],
+                  child: Text(
+                    order.dropoffDriver!.name,
+                    style: Get.textTheme.bodyText1,
                   ),
                 ),
                 if (order.customerDropOffDriverChatId != null)
@@ -93,16 +82,6 @@ class RestaurantOrderDriverCard extends StatelessWidget {
       );
     } else {
       return Container();
-    }
-  }
-
-  String? _getTime() {
-    final String userLangCode =
-        Get.find<LanguageController>().userLanguageKey.toLanguageCode();
-    if (order.estimatedDropoffAtCustomerTime != null) {
-      return "${_i18n()["dropOffTime"]}: \n ${DateFormat.MMMd(userLangCode).format(order.estimatedDropoffAtCustomerTime!.toLocal())}, ${DateFormat("hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
-    } else {
-      return null;
     }
   }
 }

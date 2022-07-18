@@ -207,6 +207,12 @@
                 },
                 "ViewOrderScreen": {
                     "components": {
+                        "CustomerRestaurantOrderEst": {
+                            "estTimes": "Estimated times",
+                            "foodReady": "Food ready",
+                            "delivery": "Delivery"
+                        },
+
                         "OrderStatusCard": {
                             "willBeReady": "Estimated food ready time",
                             "willBePicked": "Estimated pick-up time",

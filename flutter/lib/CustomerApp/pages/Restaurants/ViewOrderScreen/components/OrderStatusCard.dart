@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/RestaurantOrderHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:sizer/sizer.dart';
 
@@ -42,49 +40,6 @@ class OrderStatusCard extends StatelessWidget {
             ),
           ),
         ),
-        if (_getEstimatedText() != null) _estTimeWidget()
-      ],
-    );
-  }
-
-  Widget _estTimeWidget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 15,
-        ),
-        Card(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 20,
-                  child: Icon(
-                    Icons.watch_later,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _getEstTimeTitle(),
-                      style: Get.textTheme.bodyText2,
-                    ),
-                    Text(_getEstimatedText()!.inCaps,
-                        style: Get.textTheme.bodyText1),
-                  ],
-                ))
-              ],
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -112,46 +67,5 @@ class OrderStatusCard extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String? _getEstimatedText() {
-    switch (order.status) {
-      case RestaurantOrderStatus.PreparingOrder:
-        if (order.estimatedFoodReadyTime != null) {
-          return "${order.estimatedFoodReadyTime!.getEstimatedTime()}";
-        }
-
-        break;
-      case RestaurantOrderStatus.ReadyForPickup:
-        if (order.estimatedPickupFromServiceProviderTime != null) {
-          return "${order.estimatedPickupFromServiceProviderTime!.getEstimatedTime()}";
-        }
-        break;
-      case RestaurantOrderStatus.OnTheWay:
-        if (order.estimatedDropoffAtCustomerTime != null) {
-          return "${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
-        }
-
-        break;
-
-      default:
-        return null;
-    }
-    return null;
-  }
-
-  String _getEstTimeTitle() {
-    switch (order.status) {
-      case RestaurantOrderStatus.OrderReceieved:
-      case RestaurantOrderStatus.PreparingOrder:
-        return '${_i18n()["willBeReady"]}';
-      case RestaurantOrderStatus.ReadyForPickup:
-        return '${_i18n()["willBePicked"]}';
-      case RestaurantOrderStatus.OnTheWay:
-        return '${_i18n()["willBeDelivered"]}';
-
-      default:
-        return "";
-    }
   }
 }
