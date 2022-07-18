@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebSiteFotterWedgetComponent extends StatelessWidget {
   WebSiteFotterWedgetComponent({required this.controller});
@@ -68,7 +69,9 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
                   () => FotterBottonsComponents(
                     text:
                         "${langController.strings["WebApp"]["fotterBar"]["mobile"]["services"]}",
-                    func: () {},
+                    func: () {
+                      _scrollToCounter(controller, 0);
+                    },
                   ),
                 ),
                 Spacer(),
@@ -76,7 +79,9 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
                   () => FotterBottonsComponents(
                     text:
                         "${langController.strings["WebApp"]["fotterBar"]["mobile"]["blog"]}",
-                    func: () {},
+                    func: () {
+                      _scrollToCounter(controller, 2);
+                    },
                   ),
                 ),
                 Spacer(),
@@ -84,7 +89,9 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
                   () => FotterBottonsComponents(
                     text:
                         "${langController.strings["WebApp"]["fotterBar"]["mobile"]["fAQ"]}",
-                    func: () {},
+                    func: () {
+                      _scrollToCounter(controller, 1);
+                    },
                   ),
                 ),
                 Spacer(),
@@ -93,7 +100,7 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
                     text:
                         "${langController.strings["WebApp"]["fotterBar"]["mobile"]["contactUs"]}",
                     func: () {
-                      // print("test ome");
+                      _scrollToCounter(controller, 3);
                     },
                   ),
                 )
@@ -254,12 +261,17 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
 
   Widget BuildPrivacyAndPolicyText(BuildContext context) {
     return Obx(
-      () => Text(
-        "${langController.strings["WebApp"]["fotterBar"]["policy"]}",
-        style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: getSizeForText(context)),
+      () => InkWell(
+        onTap: () async {
+          await launchUrl(Uri.parse("https://mezweb.web.app/privacy-policies"));
+        },
+        child: Text(
+          "${langController.strings["WebApp"]["fotterBar"]["policy"]}",
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: getSizeForText(context)),
+        ),
       ),
     );
   }
@@ -272,14 +284,15 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 25.sp;
     } else {
-      return 0;
+      return 25.sp;
     }
   }
 
   double getSpaceSize(context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 7.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 8.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
@@ -291,7 +304,8 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
   double getIconSize(context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 5.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 7.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 11.sp;
@@ -303,7 +317,8 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
   double getSizeForText(context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 3.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 7.sp;
@@ -327,7 +342,8 @@ class FotterBottonsComponents extends StatelessWidget {
       },
       child: Text(
         text,
-        style: TextStyle(color: Colors.white, fontSize: 15),
+        style:
+            TextStyle(color: Colors.white, fontSize: getSizeForText(context)),
       ),
     );
   }
@@ -335,12 +351,15 @@ class FotterBottonsComponents extends StatelessWidget {
   double getSizeForText(context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 3.5.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
-      return 7.sp;
+      return 13.sp;
+    } else if (MezCalmosResizer.isSmallTablet(context)) {
+      return 8.sp;
     } else {
-      return 6;
+      return 15.sp;
     }
   }
 }

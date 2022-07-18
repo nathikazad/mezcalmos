@@ -136,7 +136,8 @@ class FormForQuestionAndFeedBack extends StatelessWidget {
   double getSizeForTitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 8.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 7.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
@@ -148,7 +149,8 @@ class FormForQuestionAndFeedBack extends StatelessWidget {
   double getSizeForSecondTitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 7.5.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 7.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 11.sp;
@@ -160,7 +162,8 @@ class FormForQuestionAndFeedBack extends StatelessWidget {
   double getSizeSubtitleTitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 4.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.sp;
@@ -253,7 +256,8 @@ class FAQFormComponent extends StatelessWidget {
   double getSpaceOnTop(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 15.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 14.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 25.sp;
@@ -265,7 +269,8 @@ class FAQFormComponent extends StatelessWidget {
   double getSizeForSpacing(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 3.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 6.sp;
@@ -277,7 +282,8 @@ class FAQFormComponent extends StatelessWidget {
   double getSizeForSndBtnText(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 4.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.sp;
@@ -289,7 +295,8 @@ class FAQFormComponent extends StatelessWidget {
   Size getSizeForSendBtn(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return Size(50.sp, 11.sp);
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return Size(55.sp, 12.sp);
     } else if (MezCalmosResizer.isMobile(context)) {
       return Size(75.sp, 20.sp);
@@ -322,6 +329,8 @@ class FAQFormComponent extends StatelessWidget {
         .then((value) {
       if (value != null && value.statusCode == 200) {
         print("you email sent ");
+        Get.snackbar("Success",
+            "Your message sent to sepprt team we will answer you soon");
       } else {
         print("something went wrong  ${value.statusCode} ${value.body}");
       }

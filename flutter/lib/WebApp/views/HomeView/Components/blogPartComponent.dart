@@ -78,7 +78,8 @@ class BlogPartComponent extends StatelessWidget {
   double getSizeForTitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 8.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 7.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
@@ -90,7 +91,8 @@ class BlogPartComponent extends StatelessWidget {
   double getSizeShowMoreText(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 3.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 3.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.sp;
@@ -102,7 +104,8 @@ class BlogPartComponent extends StatelessWidget {
   double getSpaceOnTop(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 15.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 14.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 25.sp;
@@ -247,7 +250,8 @@ class BlogCardComponent extends StatelessWidget {
   double getSizeForTitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 4.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.5.sp;
     } else if (MezCalmosResizer.isSmallMobile(context)) {
       return 13.sp;
@@ -263,7 +267,8 @@ class BlogCardComponent extends StatelessWidget {
       return 75.sp;
     } else if (MezCalmosResizer.isSmallMobile(context)) {
       return 130.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 45.sp;
     } else {
       return 50.sp;
@@ -273,7 +278,8 @@ class BlogCardComponent extends StatelessWidget {
   double getSizeForDateText(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 3.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 5.sp;
@@ -287,7 +293,8 @@ class BlogCardComponent extends StatelessWidget {
   double getSizeForTimeOrReadingText(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 3.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 7.sp;

@@ -36,49 +36,62 @@ class _WebAppBarState extends State<WebAppBar> {
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       elevation: 0,
-      title: Responsive(
-        desktop: Row(
-          children: [
-            SizedBox(
-              width: 100,
-            ),
-            buildTitle(logoSize: 25, titleSize: 20, spaceSize: 5),
-            Spacer(),
-            buildWidgetForTabletAndDesktop(
-                txt: txt,
-                isSelected: isSelected,
-                controller: widget.controller),
-            SizedBox(
-              width: 100,
-            )
-          ],
-        ),
-        tablet: Row(
-          children: [
-            SizedBox(
-              width: 50,
-            ),
-            buildTitle(logoSize: 25, titleSize: 20, spaceSize: 5),
-            Spacer(),
-            buildWidgetForTabletAndDesktop(
-                txt: txt,
-                isSelected: isSelected,
-                controller: widget.controller),
-            SizedBox(
-              width: 50,
-            )
-          ],
-        ),
-        mobile: Row(
-          children: [
-            buildTitle(logoSize: 20, titleSize: 15, spaceSize: 5),
-            Spacer(),
-            buildWidgetForMobile(func: () {
-              widget.golbalKey.currentState!.openDrawer();
-            })
-          ],
-        ),
+      title: LayoutBuilder(
+        builder: (context, constraints) {
+          if (MezCalmosResizer.isDesktop(context) ||
+              MezCalmosResizer.isTablet(context)) {
+            return Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                ),
+                buildTitle(logoSize: 25, titleSize: 20, spaceSize: 5),
+                Spacer(),
+                buildWidgetForTabletAndDesktop(
+                    txt: txt,
+                    isSelected: isSelected,
+                    controller: widget.controller),
+                SizedBox(
+                  width: 100,
+                )
+              ],
+            );
+          }
+
+          // Or less then that we called it mobile
+          else {
+            return Row(
+              children: [
+                buildTitle(logoSize: 20, titleSize: 15, spaceSize: 5),
+                Spacer(),
+                buildWidgetForMobile(func: () {
+                  widget.golbalKey.currentState!.openDrawer();
+                })
+              ],
+            );
+          }
+        },
       ),
+      // title: Responsive(
+      // desktop:
+      //   tablet: Row(
+      //     children: [
+      //       SizedBox(
+      //         width: 50,
+      //       ),
+      //       buildTitle(logoSize: 25, titleSize: 20, spaceSize: 5),
+      //       Spacer(),
+      //       buildWidgetForTabletAndDesktop(
+      //           txt: txt,
+      //           isSelected: isSelected,
+      //           controller: widget.controller),
+      //       SizedBox(
+      //         width: 50,
+      //       )
+      //     ],
+      //   ),
+      // mobile:
+      // ),
       centerTitle: false,
     );
   }

@@ -168,7 +168,8 @@ class FrequentlyAskedQuestions extends StatelessWidget {
   double getSpaceOnTop(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 15.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 14.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 25.sp;
@@ -180,7 +181,8 @@ class FrequentlyAskedQuestions extends StatelessWidget {
   double getSizeForTitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 8.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 8.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
@@ -192,7 +194,8 @@ class FrequentlyAskedQuestions extends StatelessWidget {
   double getSizeForSpaceBetweenQuestions(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 11.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 10.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
@@ -204,7 +207,8 @@ class FrequentlyAskedQuestions extends StatelessWidget {
   double getSizeForLeadingOfListTile(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 3.5.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 7.sp;
@@ -216,7 +220,8 @@ class FrequentlyAskedQuestions extends StatelessWidget {
   double getSizeForListTileTitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 4.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 10.sp;
@@ -228,7 +233,8 @@ class FrequentlyAskedQuestions extends StatelessWidget {
   double getSizeForListTileTraillingIcon(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 4.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.sp;

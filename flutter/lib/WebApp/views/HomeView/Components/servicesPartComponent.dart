@@ -241,7 +241,8 @@ class ServicesPartComponent extends StatelessWidget {
   double getSizeForTextOne(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 8.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 7.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
@@ -253,7 +254,8 @@ class ServicesPartComponent extends StatelessWidget {
   EdgeInsetsGeometry getServiceCardPddining(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return EdgeInsets.only(right: 19.sp, top: 3.sp);
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return EdgeInsets.only(right: 15.sp, top: 2.sp);
     } else if (MezCalmosResizer.isMobile(context)) {
       return EdgeInsets.only(
@@ -271,7 +273,8 @@ class ServicesPartComponent extends StatelessWidget {
   double getSizeForTextTwo(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 3.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 3.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.sp;
@@ -283,7 +286,8 @@ class ServicesPartComponent extends StatelessWidget {
   double getImageSizeForServiceCard(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 25.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 26.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 45.sp;
@@ -295,7 +299,8 @@ class ServicesPartComponent extends StatelessWidget {
   double getVerticalPadding(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 20;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 20;
     } else {
       return 11.sp;

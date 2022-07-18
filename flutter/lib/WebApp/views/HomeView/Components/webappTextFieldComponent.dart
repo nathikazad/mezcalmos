@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:sizer/sizer.dart';
 
 class WebappTextFieldComponent extends StatelessWidget {
@@ -79,10 +80,10 @@ class WebappTextFieldComponent extends StatelessWidget {
   double getSizeForHeightOfTextField(BuildContext context) {
     if (isDesktop(context)) {
       return 50.sp;
-    } else if (isTablet(context)) {
+    } else if (isTablet(context) || MezCalmosResizer.isSmallTablet(context)) {
       return 55.sp;
     } else {
-      return 70.sp;
+      return 45.sp;
     }
   }
 }

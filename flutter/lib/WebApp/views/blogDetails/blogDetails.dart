@@ -249,7 +249,8 @@ class _BlogDetailsState extends State<BlogDetails> {
   double getSizeForTitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 5.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 5.5.sp;
     } else if (MezCalmosResizer.isSmallMobile(context)) {
       return 14.sp;
@@ -261,7 +262,8 @@ class _BlogDetailsState extends State<BlogDetails> {
   double getSizeForSubtitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 4.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 4.5.sp;
     } else if (MezCalmosResizer.isSmallMobile(context)) {
       return 13.sp;
@@ -273,7 +275,8 @@ class _BlogDetailsState extends State<BlogDetails> {
   double getSizeForDate(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 2.5.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 3.sp;
     } else if (MezCalmosResizer.isSmallMobile(context)) {
       return 10.sp;

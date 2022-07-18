@@ -31,9 +31,8 @@ void main() async {
   }));
   html.window.onBeforeUnload.listen((event) async {
     if (Get.currentRoute.startsWith("/restaurant/")) {
-      print("i was here ==============>");
       intailizeApp("stage".toLaunchMode()).then((value) => Get.offAllNamed(
-          "/restaurant?device=phone&id=6Hr3Hc2hkkZa7LX7slnFo3zOTdxx&lang=es"));
+          "/restaurant?id=6Hr3Hc2hkkZa7LX7slnFo3zOTdxx&lang=es"));
     }
     mezDbgPrint("heloo bro ${Get.currentRoute}");
   });

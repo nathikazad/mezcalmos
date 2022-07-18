@@ -54,7 +54,9 @@ class _IndexPageState extends State<IndexPage> {
               backgroundColor: Colors.white,
               drawerEnableOpenDragGesture: false,
               key: _key,
-              drawer: MezCalmosResizer.isMobile(context)
+              drawer: MezCalmosResizer.isMobile(context) ||
+                      MezCalmosResizer.isSmallMobile(context) ||
+                      MezCalmosResizer.isSmallTablet(context)
                   ? DrawerComponent(
                       controller: controller,
                     )

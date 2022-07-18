@@ -278,7 +278,8 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
   double getSizeForFirstText(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 16.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 17.sp;
     } else {
       return 30.sp;
@@ -288,7 +289,10 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
   double getSizeForGetAppBtn(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 5.5.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
+      return 6.sp;
+    } else if (MezCalmosResizer.isSmallTablet(context)) {
       return 6.sp;
     } else {
       return 10.sp;
@@ -298,7 +302,8 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
   double getSizeForSecondText(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 5.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 5.5.sp;
     } else {
       return 10.sp;
@@ -308,7 +313,8 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
   double getVerticalPadding(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 20;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 20;
     } else {
       return 11.sp;

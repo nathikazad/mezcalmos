@@ -11,6 +11,9 @@ abstract class MezCalmosResizer {
 
   static bool isTablet(BuildContext context) =>
       MediaQuery.of(context).size.width < 900 &&
+      MediaQuery.of(context).size.width >= 800;
+  static bool isSmallTablet(BuildContext context) =>
+      MediaQuery.of(context).size.width < 800 &&
       MediaQuery.of(context).size.width >= 650;
 
   static bool isDesktop(BuildContext context) =>
@@ -19,7 +22,8 @@ abstract class MezCalmosResizer {
   static double getWepPageHorizontalPadding(context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 100;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 50;
     } else if (MezCalmosResizer.isSmallMobile(context)) {
       return 10;

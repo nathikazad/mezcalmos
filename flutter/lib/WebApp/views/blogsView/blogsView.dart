@@ -110,7 +110,8 @@ class _BlogsViewState extends State<BlogsView> {
   double getSizeForTitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 8.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 9.sp;
     } else if (MezCalmosResizer.isSmallMobile(context)) {
       return 18.sp;

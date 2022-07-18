@@ -37,7 +37,8 @@ class WebServicesCard extends StatelessWidget {
       color: Colors.white,
       child: Container(
         width: MezCalmosResizer.isMobile(context) ||
-                MezCalmosResizer.isSmallMobile(context)
+                MezCalmosResizer.isSmallMobile(context) ||
+                MezCalmosResizer.isSmallTablet(context)
             ? Get.width
             : null,
         child: Column(
@@ -218,7 +219,8 @@ class WebServicesCard extends StatelessWidget {
   double getSizeForImages(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return (25.sp * 3) - (25.sp * 3) * 0.16;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return (23.sp * 3) - (23.sp * 3) * 0.16;
     } else if (MezCalmosResizer.isMobile(context)) {
       return (55.sp * 3) - (55.sp * 3) * 0.16;
@@ -230,7 +232,8 @@ class WebServicesCard extends StatelessWidget {
   double getSizeForImage(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 25.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 23.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 55.sp;
@@ -242,7 +245,8 @@ class WebServicesCard extends StatelessWidget {
   double getSizeForTitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 8.5.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 8.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 25.sp;
@@ -254,7 +258,8 @@ class WebServicesCard extends StatelessWidget {
   double getSizeForSubtitle(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 3.5.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 3.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 9.sp;
@@ -266,7 +271,8 @@ class WebServicesCard extends StatelessWidget {
   double getSizeForSpaceBetweenItems(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 3.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 3.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.5.sp;
@@ -278,7 +284,8 @@ class WebServicesCard extends StatelessWidget {
   double getSizeForBtnText(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 3.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 3.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.sp;

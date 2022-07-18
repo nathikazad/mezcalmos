@@ -84,7 +84,8 @@ class GetAppForAndroidAndIosComponent extends StatelessWidget {
   double getMargingSizeForContainer(context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 100;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 50;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 11.sp;
@@ -96,7 +97,8 @@ class GetAppForAndroidAndIosComponent extends StatelessWidget {
   double getSizeForImage(context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return Get.width * 0.15;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return Get.width * 0.16;
     } else if (MezCalmosResizer.isMobile(context)) {
       return Get.width * 0.2;
@@ -108,7 +110,8 @@ class GetAppForAndroidAndIosComponent extends StatelessWidget {
   double getSizeForText(context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 11.sp;
-    } else if (MezCalmosResizer.isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 11.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 15.sp;
