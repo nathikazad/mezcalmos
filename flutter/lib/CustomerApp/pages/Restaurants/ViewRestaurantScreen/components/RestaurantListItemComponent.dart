@@ -28,9 +28,12 @@ class _RestaurantsListOfItemsComponentState
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return Card(
+      margin: const EdgeInsets.only(bottom: 8),
       child: Container(
         height: 70,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8,
+        ),
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           child: Row(
@@ -69,7 +72,10 @@ class _RestaurantsListOfItemsComponentState
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text("\$${widget.item.cost}", style: txt.headline3),
-              )
+              ),
+              SizedBox(
+                width: 3,
+              ),
             ],
           ),
           onTap: () {

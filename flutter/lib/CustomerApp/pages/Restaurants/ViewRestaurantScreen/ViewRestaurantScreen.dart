@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:sizer/sizer.dart';
 
 class ViewRestaurantScreen extends StatefulWidget {
   @override
@@ -191,19 +192,24 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
         children: [
           Text(
             category.name?[userLanguage] ?? "",
-            style: Get.theme.textTheme.bodyText1,
+            style: Get.theme.textTheme.headline3
+                ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
           ),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
           if (category.dialog?[userLanguage] != null)
             Padding(
               padding: const EdgeInsets.only(bottom: 15),
-              child: Text(category.dialog![userLanguage]!),
+              child: Text(
+                category.dialog![userLanguage]!,
+                style: Get.textTheme.bodyText2?.copyWith(
+                    fontFamily: "Montserrat", color: Colors.grey.shade700),
+              ),
             ),
           _buildResturantItems(category.items, restaurant.info.id),
           SizedBox(
-            height: 10,
+            height: 20,
           )
         ],
       ),
@@ -223,9 +229,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
                   arguments: {"mode": ViewItemScreenMode.AddItemMode},
                 );
               }));
-          children.add(SizedBox(
-            height: 8,
-          ));
+
           return children;
         }),
       );
