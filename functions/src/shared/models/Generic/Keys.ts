@@ -8,6 +8,11 @@ export interface Hasura {
   url: string;
 }
 
+export interface Agora {
+  certificate: string;
+  appId: string;
+}
+
 export interface Fcm {
   key: string;
 }
@@ -18,4 +23,5 @@ export interface Keys {
   fcm?: Fcm;
   serviceAccount?: string | undefined;
   databaseURL?: string | undefined;
+  agora?: Agora
 }

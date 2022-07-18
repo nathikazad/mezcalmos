@@ -1,5 +1,5 @@
-import { CallNotificationForQueue, ChatData, MessageNotificationForQueue, nonNotifiableParticipants, Participant, ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
-import { getChat, setChatMessageNotifiedAsTrue } from "../../functions/src/shared/controllers/chatController";
+import * as chat from "../../functions/src/shared/models/Generic/Chat";
+import { getChat, setChatMessageNotifiedAsTrue, setUserAgoraInfo } from "../../functions/src/shared/controllers/chatController";
 import * as notifyUser from "../../functions/src/utilities/senders/notifyUser";
 import { chatUrl, orderUrl } from "../../functions/src/utilities/senders/appRoutes";
 import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
@@ -9,30 +9,33 @@ import { OrderType } from "../../functions/src/shared/models/Generic/Order";
 import { Language, NotificationInfo } from "../../functions/src/shared/models/Generic/Generic";
 import { getNotificationInfo } from "../../functions/src/shared/controllers/rootController";
 import * as fcm from "../../functions/src/utilities/senders/fcm";
+import * as agora from 'agora-access-token';
+import { Keys } from "../../functions/src/shared/models/Generic/Keys";
 
-export function startWatchingMessageNotificationQueue() {
+export function startWatchingMessageNotificationQueue(keys: Keys) {
   rootNodes.notificationsQueueNode().on('child_added', function (snap) {
     let notification: NotificationForQueue = snap.val();
     console.log(`Notification type ${notification.notificationType}`)
     switch (notification.notificationType) {
       case NotificationType.NewMessage:
-        notifyOtherMessageParticipants(notification as MessageNotificationForQueue);
+        notifyOtherMessageParticipants(notification as chat.MessageNotificationForQueue);
         break;
       case NotificationType.NewCounterOffer:
         notifyCustomerAboutCounterOffer(notification as CounterOfferNotificationForQueue)
         break;
       case NotificationType.Call:
-        notifyCallerRecipient(notification as CallNotificationForQueue)
+        notifyCallerRecipient(notification as chat.CallNotificationForQueue, keys)
         break;
     }
     rootNodes.notificationsQueueNode(snap.key!).remove();
   });
 }
 
-async function notifyCallerRecipient(notificationForQueue: CallNotificationForQueue) {
-  let chatData: ChatData = (await getChat(notificationForQueue.chatId)).chatData;
-  let callerInfo: Participant = chatData.participants[notificationForQueue.callerParticipantType]![notificationForQueue.callerId]
-  let calleeInfo: Participant = chatData.participants[notificationForQueue.calleeParticipantType]![notificationForQueue.calleeId]
+async function notifyCallerRecipient(notificationForQueue: chat.CallNotificationForQueue, keys: Keys) {
+  let chatData: chat.ChatData = (await getChat(notificationForQueue.chatId)).chatData;
+  let callerInfo: chat.Participant = chatData.participants[notificationForQueue.callerParticipantType]![notificationForQueue.callerId]
+  let calleeInfo: chat.Participant = chatData.participants[notificationForQueue.calleeParticipantType]![notificationForQueue.calleeId]
+  await createAgoraTokensIfNotPresent(notificationForQueue.chatId, callerInfo as chat.ParticipantWithAgora, calleeInfo as chat.ParticipantWithAgora, keys);
   let subscription: NotificationInfo = await getNotificationInfo(calleeInfo.particpantType, calleeInfo.id);
   if (subscription != null && subscription.deviceNotificationToken) {
     let language: Language = calleeInfo.language ?? Language.ES;
@@ -58,20 +61,20 @@ async function notifyCallerRecipient(notificationForQueue: CallNotificationForQu
 }
 
 
-async function notifyOtherMessageParticipants(notificationForQueue: MessageNotificationForQueue) {
-  let chatData: ChatData = (await getChat(notificationForQueue.chatId)).chatData;
+async function notifyOtherMessageParticipants(notificationForQueue: chat.MessageNotificationForQueue) {
+  let chatData: chat.ChatData = (await getChat(notificationForQueue.chatId)).chatData;
 
   if (chatData.messages && chatData.messages![notificationForQueue.messageId].notified) {
     return
   }
-  let senderInfo: Participant = chatData.participants[notificationForQueue.participantType]![notificationForQueue.userId]
+  let senderInfo: chat.Participant = chatData.participants[notificationForQueue.participantType]![notificationForQueue.userId]
   delete chatData.participants[notificationForQueue.participantType];
-  for (let nonNotifiableParticipant in nonNotifiableParticipants) {
-    delete chatData.participants[nonNotifiableParticipants[nonNotifiableParticipant]];
+  for (let nonNotifiableParticipant in chat.nonNotifiableParticipants) {
+    delete chatData.participants[chat.nonNotifiableParticipants[nonNotifiableParticipant]];
   }
   for (let participantType in chatData.participants) {
-    for (let participantId in chatData.participants[participantType as ParticipantType]) {
-      let participant = chatData.participants[participantType as ParticipantType]![participantId]
+    for (let participantId in chatData.participants[participantType as chat.ParticipantType]) {
+      let participant = chatData.participants[participantType as chat.ParticipantType]![participantId]
       let notification: Notification = {
         foreground: <NewMessageNotification>{
           chatId: notificationForQueue.chatId,
@@ -122,7 +125,41 @@ async function notifyCustomerAboutCounterOffer(notificationForQueue: CounterOffe
         body: `Nueva oferta de ${notificationForQueue.driver.name} para ${notificationForQueue.price}`
       }
     },
-    linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, notificationForQueue.orderId)
+    linkUrl: orderUrl(chat.ParticipantType.Customer, OrderType.Taxi, notificationForQueue.orderId)
   }
-  notifyUser.pushNotification(notificationForQueue.customerId, notification, ParticipantType.Customer);
+  notifyUser.pushNotification(notificationForQueue.customerId, notification, chat.ParticipantType.Customer);
+}
+
+
+async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.ParticipantWithAgora, callee: chat.ParticipantWithAgora, keys: Keys) {
+  if (keys.agora == null)
+    return
+  if (callee.agora == null || caller.agora == null || new Date() > new Date(callee.agora.expirationTime) || new Date() > new Date(caller.agora.expirationTime)) {
+    await setAgoraDetails(chatId, callee, keys)
+    await setAgoraDetails(chatId, caller, keys)
+  }
+}
+
+async function setAgoraDetails(chatId: string, user: chat.Participant, keys: Keys) {
+  let expirationTime: number = Math.floor(Date.now() / 1000) + 300;
+  let token: string = agora.RtcTokenBuilder.buildTokenWithUid(keys.agora!.appId,
+    keys.agora!.certificate,
+    chatId,
+    convertFbIdtoInt(user.id),
+    agora.RtcRole.PUBLISHER,
+    expirationTime);
+  await setUserAgoraInfo(chatId, user.particpantType, user.id, <chat.ParticipantAgoraDetails>{
+    token: token,
+    expirationTime: (new Date(expirationTime * 1000)).toISOString(),
+    uid: convertFbIdtoInt(user.id)
+  })
+}
+
+function convertFbIdtoInt(uid: string): number {
+  let encode = '';
+  for (let i = 0; i < 7; i++) {
+    encode += uid[i].charCodeAt(0)
+  }
+
+  return parseInt(encode) % (10 ** 7);
 }
