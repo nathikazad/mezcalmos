@@ -134,10 +134,10 @@ async function notifyCustomerAboutCounterOffer(notificationForQueue: CounterOffe
 async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.ParticipantWithAgora, callee: chat.ParticipantWithAgora, keys: Keys) {
   if (keys.agora == null)
     return
-  if (callee.agora == null || caller.agora == null || new Date() > new Date(callee.agora.expirationTime) || new Date() > new Date(caller.agora.expirationTime)) {
-    await setAgoraDetails(chatId, callee, keys)
-    await setAgoraDetails(chatId, caller, keys)
-  }
+
+  await setAgoraDetails(chatId, callee, keys)
+  await setAgoraDetails(chatId, caller, keys)
+
 }
 
 async function setAgoraDetails(chatId: string, user: chat.Participant, keys: Keys) {
