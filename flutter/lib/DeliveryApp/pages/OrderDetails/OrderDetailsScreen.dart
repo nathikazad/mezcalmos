@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]

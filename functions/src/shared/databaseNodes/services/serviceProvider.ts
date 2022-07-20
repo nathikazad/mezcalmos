@@ -28,3 +28,7 @@ export function serviceProviderInfo(orderType: OrderType, providerId?: string) {
 export function serviceProviderState(orderType: OrderType, providerId: string) {
   return serviceProviderInfo(orderType, providerId).child("state")
 }
+
+export function serviceProviderPaymentInfo(orderType: OrderType, providerId: string) {
+  return serviceProviderInfo(orderType, providerId).child("details/paymentInfo")
+}

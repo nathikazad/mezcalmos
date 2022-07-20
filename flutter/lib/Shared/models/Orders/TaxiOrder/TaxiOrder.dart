@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/TaxiDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/User.dart';

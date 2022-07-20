@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -35,7 +36,8 @@ class Restaurant extends Service {
       {required ServiceInfo userInfo,
       required this.description,
       this.restaurantsView = RestaurantsView.Rows,
-      Schedule? schedule,
+      required Schedule schedule,
+      required PaymentInfo paymentInfo,
       required ServiceState restaurantState,
       required LanguageType primaryLanguage,
       LanguageType? secondaryLanguage})
@@ -45,6 +47,7 @@ class Restaurant extends Service {
           state: restaurantState,
           primaryLanguage: primaryLanguage,
           secondaryLanguage: secondaryLanguage,
+          paymentInfo: paymentInfo
         );
 
   factory Restaurant.fromRestaurantData(
@@ -67,9 +70,13 @@ class Restaurant extends Service {
           .toRestaurantsView();
     }
 
-    final Schedule? schedule = restaurantData["details"]["schedule"] != null
-        ? Schedule.fromData(restaurantData["details"]["schedule"])
-        : null;
+    final Schedule schedule =
+        Schedule.fromData(restaurantData["details"]["schedule"]);
+
+    final PaymentInfo paymentInfo =
+        restaurantData["details"]["paymentInfo"] != null
+            ? PaymentInfo.fromData(restaurantData["details"]["paymentInfo"])
+            : PaymentInfo();
 
     final LanguageType primaryLanguage = restaurantData["details"]?["language"]
                 ?["primary"]
@@ -89,7 +96,8 @@ class Restaurant extends Service {
         restaurantState: restaurantState,
         restaurantsView: restaurantsView,
         primaryLanguage: primaryLanguage,
-        secondaryLanguage: secondaryLanguage);
+        secondaryLanguage: secondaryLanguage,
+        paymentInfo: paymentInfo);
     restaurantData["menu"]?["specials"]?["current"]?.forEach((key, element) {
       restaurant.currentSpecials.add(Item.itemFromData(key, element));
     });

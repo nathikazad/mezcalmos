@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 class Cart {
   List<CartItem> cartItems = <CartItem>[];

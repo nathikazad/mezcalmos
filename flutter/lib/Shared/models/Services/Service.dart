@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
@@ -8,12 +9,14 @@ abstract class Service {
   ServiceState state;
   LanguageType primaryLanguage;
   LanguageType? secondaryLanguage;
+  PaymentInfo paymentInfo;
   Service(
       {required this.info,
       this.schedule,
       required this.state,
       required this.primaryLanguage,
-      this.secondaryLanguage});
+      this.secondaryLanguage,
+      required this.paymentInfo});
 }
 
 class ServiceState {

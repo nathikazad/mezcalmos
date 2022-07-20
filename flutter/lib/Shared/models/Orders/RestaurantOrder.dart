@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 //ignore_for_file:constant_identifier_names
 enum RestaurantOrderStatus {

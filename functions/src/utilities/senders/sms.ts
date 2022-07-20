@@ -1,8 +1,9 @@
 import twilio = require("twilio")
 import { getKeys } from "../../shared/keys";
+import { Keys } from "../../shared/models/Generic/Keys";
 
 
-let keys = getKeys();
+let keys: Keys = getKeys();
 
 export interface Payload {
   message: string,

@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 abstract class Order {
   String orderId;
@@ -100,27 +101,6 @@ extension ParseStringToOrderType on String {
   OrderType toOrderType() {
     return OrderType.values.firstWhere(
         (OrderType e) => e.toFirebaseFormatString().toLowerCase() == this);
-  }
-}
-
-enum PaymentType { Cash, Card }
-
-extension ParsePaymentTypeToString on PaymentType {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-
-  String toNormalString() {
-    final String str = toString().split('.').last;
-    return str;
-  }
-}
-
-extension ParseStringToPaymentType on String {
-  PaymentType toPaymentType() {
-    return PaymentType.values.firstWhere((PaymentType e) =>
-        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 

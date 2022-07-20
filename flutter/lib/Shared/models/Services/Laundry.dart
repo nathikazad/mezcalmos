@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -12,6 +13,7 @@ class Laundry extends Service {
   Laundry(
       {required ServiceInfo userInfo,
       required Schedule schedule,
+      required PaymentInfo paymentInfo,
       required ServiceState laundryState,
       this.averageNumberOfDays = 2,
       required this.laundryCosts,
@@ -23,6 +25,7 @@ class Laundry extends Service {
           state: laundryState,
           primaryLanguage: primaryLanguage,
           secondaryLanguage: secondaryLanguage,
+          paymentInfo: paymentInfo
         );
 
   factory Laundry.fromLaundryData(
@@ -34,6 +37,11 @@ class Laundry extends Service {
 
     final Schedule schedule =
         Schedule.fromData(laundryData["details"]["schedule"]);
+
+    final PaymentInfo paymentInfo =
+        laundryData["details"]["paymentInfo"] != null
+            ? PaymentInfo.fromData(laundryData["details"]["paymentInfo"])
+            : PaymentInfo();
 
     final LaundryCosts laundryCosts =
         LaundryCosts.fromData(laundryData["details"]["costs"]);
@@ -56,6 +64,7 @@ class Laundry extends Service {
     final Laundry laundry = Laundry(
         userInfo: ServiceInfo.fromData(laundryData["info"]),
         schedule: schedule,
+        paymentInfo: paymentInfo,
         laundryState: laundryState,
         averageNumberOfDays: averageNumberOfDays,
         laundryCosts: laundryCosts,
