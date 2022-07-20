@@ -21,7 +21,7 @@ class ROpEditInfoController {
   RestaurantInfoController restaurantInfoController =
       Get.find<RestaurantInfoController>();
   final Rxn<Restaurant> restaurant = Rxn<Restaurant>();
-  TextEditingController laundryNameController = TextEditingController();
+  TextEditingController restaurantNameTxt = TextEditingController();
   final Rxn<String> newImageUrl = Rxn();
   final Rxn<Location> newLocation = Rxn();
 
@@ -39,11 +39,9 @@ class ROpEditInfoController {
 
   void init() {
     restaurant.value = restaurantInfoController.restaurant.value;
-    mezDbgPrint("Iniiiiiit restaurant info");
-    mezDbgPrint("${restaurant.value}");
 
     if (restaurant.value != null) {
-      laundryNameController.text = restaurant.value?.info.name ?? '';
+      restaurantNameTxt.text = restaurant.value?.info.name ?? '';
       settingSchedules();
       newLocation.value = restaurant.value!.info.location;
       newImageUrl.value = restaurant.value?.info.image ?? '';
@@ -60,35 +58,35 @@ class ROpEditInfoController {
 
   Future<void> updateLaundryInfo() async {
     btnClicked.value = true;
-    if (laundryNameController.text != '' &&
-        laundryNameController.text != restaurant.value?.info.name) {
-      //  await restaurantInfoController.setLaundryName(laundryNameController.text);
+    if (restaurantNameTxt.text != '' &&
+        restaurantNameTxt.text != restaurant.value?.info.name) {
+      await restaurantInfoController.setRestaurantName(restaurantNameTxt.text);
     }
     if (newImageFile.value != null) {
-      // await laundryInfoController
-      //     .uploadUserImgToFbStorage(imageFile: newImageFile.value!)
-      //     .then((String value) {
-      //   laundryInfoController.setLaundryImage(value);
-      // });
+      await restaurantInfoController
+          .uploadImgToDb(imageFile: newImageFile.value!)
+          .then((String value) {
+        restaurantInfoController.setRestaurantImage(value);
+      });
     }
-    // if (newLocation.value != null &&
-    //     newLocation.value?.address != laundry.value?.info.location.address) {
-    //   await laundryInfoController.setLocation(newLocation.value!);
-    // }
-    // if (primaryLang.value != null &&
-    //     primaryLang.value != laundry.value?.primaryLanguage) {
-    //   await laundryInfoController.setPrimaryLanguage(primaryLang.value!);
-    // }
-    // if (secondaryLang.value != null &&
-    //     secondaryLang.value != laundry.value?.secondaryLanguage) {
-    //   await laundryInfoController.setSecondaryLanguage(secondaryLang.value!);
-    // } else if (secondaryLang.value == null) {
-    //   await laundryInfoController.setSecondaryLanguage(null);
-    // }
+    if (newLocation.value != null &&
+        newLocation.value?.address != restaurant.value?.info.location.address) {
+      await restaurantInfoController.setLocation(newLocation.value!);
+    }
+    if (primaryLang.value != null &&
+        primaryLang.value != restaurant.value?.primaryLanguage) {
+      await restaurantInfoController.setPrimaryLanguage(primaryLang.value!);
+    }
+    if (secondaryLang.value != null &&
+        secondaryLang.value != restaurant.value?.secondaryLanguage) {
+      await restaurantInfoController.setSecondaryLanguage(secondaryLang.value!);
+    } else if (secondaryLang.value == null) {
+      await restaurantInfoController.setSecondaryLanguage(null);
+    }
 
-    // if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
-    //   await laundryInfoController.setSchedule(newSchedule.value!);
-    // }
+    if (newSchedule.value != null && newSchedule.value != oldSchedule.value) {
+      await restaurantInfoController.setSchedule(newSchedule.value!);
+    }
 
     btnClicked.value = false;
   }
@@ -146,7 +144,7 @@ class ROpEditInfoController {
 
   Future<void> dispose() async {
     restaurant.close();
-    laundryNameController.clear();
+    restaurantNameTxt.clear();
 
     newLocation.close();
     newImageUrl.close();

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
-import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/EditInfoWidgets.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpEditInfoWidgets.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpEditLocationCard.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpImageEditComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROplanguageSelectorComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -50,8 +51,7 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // image
-            //  LaundryOpImageEditComponent(editInfoController: editInfoController),
+            ROpImageEditComponent(editInfoController: editInfoController),
             SizedBox(
               height: 15,
             ),
@@ -67,7 +67,6 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
             SizedBox(
               height: 25,
             ),
-
             Text("Restaurant name"),
             SizedBox(
               height: 5,
@@ -82,7 +81,6 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                 oppositeLanguageValue: editInfoController.secondaryLang,
                 onChangeShouldUpdateLang:
                     editInfoController.validatePrimaryLanguUpdate),
-
             SizedBox(
               height: 5,
             ),
@@ -116,7 +114,6 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
             Container(
               child: viewWidgets.editWorkingHoursComponent(),
             ),
-
             SizedBox(
               height: 15,
             ),
@@ -129,7 +126,7 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
 
   TextFormField _laundryNameTextField() {
     return TextFormField(
-      controller: editInfoController.laundryNameController,
+      controller: editInfoController.restaurantNameTxt,
       style: Get.textTheme.bodyText1,
     );
   }

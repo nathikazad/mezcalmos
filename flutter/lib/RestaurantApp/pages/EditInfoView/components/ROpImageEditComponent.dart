@@ -1,15 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
 
-class LaundryOpImageEditComponent extends StatelessWidget {
-  const LaundryOpImageEditComponent({
+class ROpImageEditComponent extends StatelessWidget {
+  const ROpImageEditComponent({
     Key? key,
     required this.editInfoController,
   }) : super(key: key);
 
-  final EditInfoController editInfoController;
+  final ROpEditInfoController editInfoController;
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/controllers/EditInfoController.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class ROpEditLocationCard extends StatelessWidget {
@@ -20,13 +21,13 @@ class ROpEditLocationCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () async {
-            // TODO @m66are change the pick location view to shared page and work with it here
-
-            await Get.toNamed(kPickLocationWithoutAuth)!.then((value) {
-              if (value != null) {
-                editInfoController.setNewLocation(value);
-              }
-            });
+            final Location newLoc = await Get.toNamed(kPickLocationEdit,
+                    arguments: LatLng(
+                        editInfoController.newLocation.value!.latitude,
+                        editInfoController.newLocation.value!.longitude))
+                as Location;
+            editInfoController.setNewLocation(newLoc);
+            editInfoController.newLocation.refresh();
           },
           child: Container(
             padding: const EdgeInsets.all(12),
