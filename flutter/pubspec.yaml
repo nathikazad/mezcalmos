@@ -97,6 +97,7 @@ dependencies:
   permission_handler: ^10.0.0
   callkeep: ^0.3.2
   uuid: ^3.0.6
+  flutter_stripe: ^4.0.0
 
 
 

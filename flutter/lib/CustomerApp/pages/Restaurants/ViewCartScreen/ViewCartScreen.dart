@@ -203,6 +203,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         }).catchError((e, stk) {
           mezDbgPrint("ERROR GETTING ROUTE INFO =================>>> $e");
         }).whenComplete(() async {
+          // await _restaurantController.getPaymentIntent(customerId: _restaurantController.cart.value.,
+          // serviceProviderId: serviceProviderId,
+          // orderType: orderType,
+          // paymentAmount: paymentAmount)
           final ServerResponse _serverResponse =
               await _restaurantController.checkout();
           if (_serverResponse.success) {
