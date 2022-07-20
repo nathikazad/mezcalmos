@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:uuid/uuid.dart';
@@ -121,13 +122,22 @@ class BackgroundNotificationsController extends GetxController {
 
     onMessageListener =
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (message.data["notificationType"] ==
-          NotificationType.Call.toFirebaseFormatString()) {
-        showCallkitIncoming(
-            callerName: message.data["callerName"],
-            callerImage: message.data["callerImage"],
-            callerType: message.data["callerType"],
-            language: message.data["language"]);
+      if (message.data["notificationType"].toString().toNotificationType() ==
+          NotificationType.Call) {
+        switch (message.data["callNotificationType"]
+            .toString()
+            .toCallNotificationtType()) {
+          case CallNotificationtType.Incoming:
+            showCallkitIncoming(
+                callerName: message.data["callerName"],
+                callerImage: message.data["callerImage"],
+                callerType: message.data["callerType"],
+                language: message.data["language"]);
+            break;
+          case CallNotificationtType.EndCall:
+            break;
+          default:
+        }
       }
     });
   }

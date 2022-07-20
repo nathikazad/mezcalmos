@@ -3,7 +3,7 @@ import { getChat, setChatMessageNotifiedAsTrue, setUserAgoraInfo } from "../../f
 import * as notifyUser from "../../functions/src/utilities/senders/notifyUser";
 import { chatUrl, orderUrl } from "../../functions/src/utilities/senders/appRoutes";
 import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
-import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue } from "../../functions/src/shared/models/Notification";
+import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue, NewCallBackgroundNotification } from "../../functions/src/shared/models/Notification";
 import { CounterOfferNotification, CounterOfferNotificationForQueue } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
 import { OrderType } from "../../functions/src/shared/models/Generic/Order";
 import { Language, NotificationInfo } from "../../functions/src/shared/models/Generic/Generic";
@@ -42,14 +42,15 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
     let fcmMessage: fcm.fcmPayload = {
       token: subscription.deviceNotificationToken,
       payload: {
-        data: {
+        data: <NewCallBackgroundNotification>{
           linkUrl: chatUrl(notificationForQueue.chatId),
           language: language,
           callerName: callerInfo.name ?? "Caller",
           notificationType: NotificationType.Call,
+          callNotificationType: notificationForQueue.callNotificationType,
           callerImage: callerInfo.image,
           callerType: callerInfo.particpantType
-        }
+        } 
       },
       options: {
         priority: fcm.NotificationPriority.High,

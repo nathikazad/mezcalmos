@@ -85,12 +85,18 @@ export interface MessageNotificationForQueue extends NotificationForQueue {
   orderId?: string
 }
 
+export enum CallNotificationtType {
+  Incoming = "incoming",
+  EndCall = "endCall"
+
+}
 export interface CallNotificationForQueue extends NotificationForQueue {
   chatId: string,
   callerId: string,
   callerParticipantType: ParticipantType,
   calleeId: string,
   calleeParticipantType: ParticipantType,
+  callNotificationType: CallNotificationtType,
   orderId?: string
 }
 

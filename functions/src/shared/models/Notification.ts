@@ -1,4 +1,5 @@
 import { fcmNotification } from "../../utilities/senders/fcm";
+import { CallNotificationtType, ParticipantType } from "./Generic/Chat";
 import { Language } from "./Generic/Generic";
 import { OrderType } from "./Generic/Order";
 import { UserInfo } from "./Generic/User";
@@ -38,11 +39,18 @@ export interface NewMessageNotification extends ForegroundNotification {
   orderId: string
 }
 
-export interface NewCallNotification extends ForegroundNotification {
-  chatId: string,
-  caller: UserInfo,
-  callee: UserInfo,
+export interface NewCallBackgroundNotification {
+  linkUrl: string,
+  language: Language,
+  callerName: string,
+  callerImage: string,
+  callerType: ParticipantType,
+  notificationType: NotificationType,
+  callNotificationType: CallNotificationtType,
+  [key: string]: string;
 }
+
+
 
 export interface OrderNotification extends ForegroundNotification {
   orderType: OrderType,
