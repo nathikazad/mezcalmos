@@ -68,6 +68,10 @@ class AgoraDetails {
   num uid;
   String token;
   AgoraDetails({required this.uid, required this.token});
+
+  factory AgoraDetails.fromData(dynamic data) {
+    return AgoraDetails(uid: data['uid'], token: data['token']);
+  }
 }
 
 class ParticipantWithAgora extends Participant {
@@ -144,11 +148,14 @@ class Chat {
               <String, ParticipantWithAgora>{};
         chat._participants[participantType]![participantId] =
             ParticipantWithAgora(
-            image: participantData['image'],
-            name: participantData['name'],
-            participantType: participantType,
-                id: participantId,
-                agora: participantData['agora']);
+          image: participantData['image'],
+          name: participantData['name'],
+          participantType: participantType,
+          id: participantId,
+          agora: AgoraDetails.fromData(
+            participantData['agora'],
+          ),
+        );
       });
     });
 

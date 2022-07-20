@@ -60,11 +60,17 @@
 	<string>App needs location when in use to update your customer about your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app require PhotoLibrary Access</string>
+	<key>NSCameraUsageDescription</key>
+	<string>asasas</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>asasas</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>location</string>
 		<string>remote-notification</string>
+		<string>voip</string>
+		<string>processing</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

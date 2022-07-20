@@ -12,6 +12,21 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:uuid/uuid.dart';
 
+void startListeningOnCallEvents() {
+  mezDbgPrint("startListeningOnCallEvents ===>  oooooooooooooo");
+  FlutterCallkitIncoming.onEvent.listen((CallEvent? event) {
+    if (event != null) {
+      mezDbgPrint("CallEvent ===>  $event");
+      if (event == CallEvent.ACTION_CALL_DECLINE) {
+        // Declined
+      }
+      if (event == CallEvent.ACTION_CALL_ACCEPT) {
+        // Accepted
+      }
+    }
+  });
+}
+
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   mezDbgPrint("Handling a background message");
   mezDbgPrint(event.data);
@@ -75,6 +90,7 @@ Future<void> showCallkitIncoming({
       'ringtonePath': 'system_ringtone_default'
     }
   };
+
   await FlutterCallkitIncoming.showCallkitIncoming(params);
 }
 
@@ -104,6 +120,7 @@ class BackgroundNotificationsController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     mezDbgPrint("BackgroundNotificationsController onInit");
+    startListeningOnCallEvents();
     final NotificationSettings settings = await requestPermission();
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);

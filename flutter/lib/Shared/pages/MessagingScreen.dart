@@ -9,7 +9,9 @@ import 'dart:math' as math;
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -38,6 +40,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   late final String? orderLink;
   late final String? orderId;
   late final String chatId;
+  late final Sagora sagora;
 
   ParticipantType recipientType = ParticipantType.Customer;
   // ParticipantType? senderType;
@@ -76,7 +79,15 @@ class _MessagingScreenState extends State<MessagingScreen> {
       setState(() {
         isChatLoaded = true;
       });
+
+    sagora = Get.put(Sagora());
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    sagora.engine.destroy();
+    super.dispose();
   }
 
   AuthController _authController = Get.find<AuthController>();
@@ -277,8 +288,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   mezDbgPrint("AGORA PERMISSIONS ALLOWED !");
                   // ignore: unawaited_futures
                   Get.to<void>(
-                    CallPage(
-                      role: ClientRole.Broadcaster,
+                    AgoraCall(
+                      calleeInfos: controller.recipient(
+                          recipientType: ParticipantType.Customer)!,
                     ),
                   );
                 }
@@ -287,23 +299,56 @@ class _MessagingScreenState extends State<MessagingScreen> {
           SizedBox(
             width: 20,
           ),
-          InkWell(
-              onTap: () async {
-                final bool isAllowed =
-                    await agoraController.checkAgoraPermissions();
-                mezDbgPrint("AGORA PERMISSIONS ===> $isAllowed !");
-
-                if (isAllowed) {
-                  mezDbgPrint("AGORA PERMISSIONS ALLOWED !");
-                  // ignore: unawaited_futures
-                  Get.to<void>(
-                    CallPage(
-                      role: ClientRole.Audience,
-                    ),
-                  );
-                }
-              },
-              child: Icon(Icons.ac_unit_rounded))
+          if (controller.sender()?.participantType ==
+              ParticipantType.DeliveryDriver)
+            InkWell(
+              onTap: _callerAction,
+              child: Container(
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsets.only(right: 10),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey.shade300,
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.call,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          // if (controller.sender()?.participantType == ParticipantType.Customer)
+          //   InkWell(
+          //     onTap: () async {
+          //       if (await sagora.checkAgoraPermissions()) {
+          //         await sagora.initAgora();
+          //         mezDbgPrint("AGORA :: PERMISSIONS :: DONE ");
+          //         // ignore: unawaited_futures
+          //         Get.to(
+          //           CallPage(
+          //             channelName: 'mezcal',
+          //           ),
+          //         );
+          //       } else {
+          //         mezDbgPrint("AGORA :: PERMISSIONS :: NOT :: DONE ");
+          //       }
+          //     },
+          //     child: Container(
+          //       padding: EdgeInsets.all(5),
+          //       margin: EdgeInsets.only(right: 10),
+          //       decoration: BoxDecoration(
+          //         shape: BoxShape.circle,
+          //         color: Colors.grey.shade300,
+          //       ),
+          //       child: Center(
+          //         child: Icon(
+          //           Icons.call,
+          //           color: Colors.black,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
       body: isChatLoaded
@@ -340,6 +385,76 @@ class _MessagingScreenState extends State<MessagingScreen> {
               centered: true,
             ),
     );
+  }
+
+  Future<void> _callerAction() async {
+    if (await sagora.checkAgoraPermissions()) {
+      if (!sagora.isEngineCreated) await sagora.initAgora();
+      mezDbgPrint("AGORA :: PERMISSIONS + ENGINE CREATION :: DONE ");
+      Participant? p =
+          controller.recipient(recipientType: ParticipantType.Customer);
+      // final String? currentCallId = await sagora.engine.getCallId();
+      // mezDbgPrint("AGORA :: CURRENT :: CALL :: $currentCallId");
+
+      if (p != null) {
+        // await FlutterCallkitIncoming.startCall({
+        //   "id": chatId,
+        // });
+        // ignore: unawaited_futures
+        controller.callUser(
+          chatId: chatId,
+          callee: p,
+          orderId: orderId,
+        );
+        // we check if there is in Local
+        dynamic _agoraAuth = GetStorage().read<dynamic>('agora-$chatId');
+        mezDbgPrint("AgoraAuth in Storage ===> $_agoraAuth !");
+
+        // else we get it from database
+        if (_agoraAuth == null) {
+          mezDbgPrint("AgoraAuth in Storage Was Null !");
+          _agoraAuth = await controller.getAgoraToken(
+            chatId,
+            controller.sender()!.id,
+            ParticipantType.DeliveryDriver,
+          );
+        }
+
+        // then we join if it's not null && it's not expired
+        if (_agoraAuth != null &&
+            DateTime.parse(_agoraAuth['expirationTime'])
+                .toUtc()
+                .isAfter(DateTime.now().toUtc())) {
+          mezDbgPrint("AgoraAuth  :: passed validation test !");
+
+          // save it to storage
+          await GetStorage().write(
+            'agora-$chatId',
+            <String, dynamic>{
+              'uid': _agoraAuth['uid'],
+              'token': _agoraAuth['token'],
+              'exp': _agoraAuth['expirationTime']
+            },
+          );
+          // then join channel
+          sagora.joinChannel(
+            token: _agoraAuth['token'],
+            channelId: chatId,
+            uid: _agoraAuth['uid'],
+            onSuccessJoin: () {},
+            onFailedJoin: () {},
+          );
+          // ignore: unawaited_futures
+          Get.to<void>(
+            AgoraCall(
+              calleeInfos: p,
+            ),
+          );
+        }
+      }
+    } else {
+      mezDbgPrint("AGORA :: PERMISSIONS :: NOT :: DONE ");
+    }
   }
 }
 
