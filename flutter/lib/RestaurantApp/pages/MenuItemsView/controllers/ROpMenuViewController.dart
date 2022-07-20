@@ -118,4 +118,13 @@ class ROpMenuViewController {
       reOrderMode.value = false;
     }
   }
+
+  // ----------------------------------------------------- Specials ----------------------------------------------------- //
+  Future<void> removeFromSpecials({required Item item}) async {
+    await _restaurantInfoController.removeSpecial(item: item);
+  }
+
+  Future<void> addToSpecials({required Item item}) async {
+    await _restaurantInfoController.addToSpecials(item: item);
+  }
 }

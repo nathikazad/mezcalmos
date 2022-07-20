@@ -31,6 +31,7 @@ class _ROpItemViewState extends State<ROpItemView>
   late TabController _tabController;
   String? itemId;
   String? categoryId;
+  bool? specials;
   ItemViewController viewController = ItemViewController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -38,8 +39,12 @@ class _ROpItemViewState extends State<ROpItemView>
   void initState() {
     itemId = Get.parameters["itemId"];
     categoryId = Get.parameters["categoryId"];
+    if (Get.arguments != null) {
+      specials = Get.arguments["specials"] as bool;
+    }
     _tabController = TabController(length: 2, vsync: this);
-    viewController.init(itemId: itemId, categoryId: categoryId);
+    viewController.init(
+        itemId: itemId, categoryId: categoryId, specials: specials);
 
     super.initState();
   }
@@ -66,8 +71,7 @@ class _ROpItemViewState extends State<ROpItemView>
                 controller: _tabController,
                 children: [
                   _primaryTab(),
-//
-                  _secondaryTab()
+                  _secondaryTab(),
                 ],
               ),
             );
@@ -86,7 +90,7 @@ class _ROpItemViewState extends State<ROpItemView>
         text: (viewController.editMode.isTrue) ? "Save item" : "Add item",
         onTap: () async {
           if (viewController.isSecondLangValid) {
-            _tabController.index = _tabController.length - 2;
+            _tabController.index = 0;
             if (_formKey.currentState!.validate()) {
               mezDbgPrint("Calling save");
               await viewController.saveItem();
@@ -117,7 +121,7 @@ class _ROpItemViewState extends State<ROpItemView>
         ]));
   }
 
-  SingleChildScrollView _secondaryTab() {
+  Widget _secondaryTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -173,12 +177,10 @@ class _ROpItemViewState extends State<ROpItemView>
           ROpItemImage(
             viewController: viewController,
           ),
-          const SizedBox(
-            height: 35,
-          ),
-          ROpItemAvChips(
-            viewController: viewController,
-          ),
+          if (viewController.editMode.isTrue)
+            ROpItemAvChips(
+              viewController: viewController,
+            ),
           const SizedBox(
             height: 35,
           ),
@@ -245,14 +247,21 @@ class _ROpItemViewState extends State<ROpItemView>
           const SizedBox(
             height: 25,
           ),
-          Text(
-            "Category",
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ROpItemCategorySelector(viewController: viewController),
+          if (viewController.specialMode.value == null ||
+              viewController.specialMode.value == false)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Category",
+                  style: Get.textTheme.bodyText1,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ROpItemCategorySelector(viewController: viewController),
+              ],
+            ),
           const SizedBox(
             height: 25,
           ),

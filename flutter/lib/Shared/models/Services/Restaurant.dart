@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
+
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -25,6 +26,9 @@ extension ParseStringToRestaurantsView on String {
 class Restaurant extends Service {
   static String kNoCategoryNode = "noCategory";
   LanguageMap? description;
+  List<Item> currentSpecials = <Item>[];
+  List<Item> pastSpecials = <Item>[];
+
   List<Category> _categories = <Category>[];
   List<Item> itemsWithoutCategory = <Item>[];
   RestaurantsView restaurantsView;
@@ -87,7 +91,13 @@ class Restaurant extends Service {
         restaurantsView: restaurantsView,
         primaryLanguage: primaryLanguage,
         secondaryLanguage: secondaryLanguage);
-    restaurantData["menu2"]?.forEach((categoryId, categoryData) {
+    restaurantData["menu"]?["specials"]?["current"]?.forEach((key, element) {
+      restaurant.currentSpecials.add(Item.itemFromData(key, element));
+    });
+    restaurantData["menu"]?["specials"]?["past"]?.forEach((key, element) {
+      restaurant.pastSpecials.add(Item.itemFromData(key, element));
+    });
+    restaurantData["menu"]?["daily"]?.forEach((categoryId, categoryData) {
       restaurant._categories.add(Category.fromData(categoryId, categoryData));
     });
     restaurant._categories
@@ -233,15 +243,14 @@ class Category {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    final bool Function(dynamic e1, dynamic e2) listEquals =
-        const DeepCollectionEquality().equals;
-
+    final listEquals = const DeepCollectionEquality().equals;
+  
     return other is Category &&
-        other.name == name &&
-        other.id == id &&
-        other.dialog == dialog &&
-        other.position == position &&
-        listEquals(other.items, items);
+      other.name == name &&
+      other.id == id &&
+      other.dialog == dialog &&
+      other.position == position &&
+      listEquals(other.items, items);
   }
 
   @override

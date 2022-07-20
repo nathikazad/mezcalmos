@@ -30,15 +30,17 @@ extension parseDateTime on DateTime {
     final DateFormat formatMonth = DateFormat.MMMMd(userLangCode);
     if (DateTime(toLocal().year, toLocal().month, toLocal().day)
             .difference(DateTime(now.year, now.month, now.day))
-            .inDays >
+            .inDays
+            .abs() >
         1) {
       return " ${formatMonth.format(toLocal())}, ${_i18n()["at"]} ${formatTime.format(toLocal())}";
     } else if (DateTime(toLocal().year, toLocal().month, toLocal().day)
             .difference(DateTime(now.year, now.month, now.day))
-            .inDays >
+            .inDays
+            .abs() >
         0) {
       return "${_i18n()["tomorrow"]} ${DateFormat("hh:mm a").format(toLocal())}";
-    } else if (now.difference(toLocal()).inHours < 0) {
+    } else if (now.difference(toLocal()).inHours.abs() > 0) {
       return "${DateFormat("hh:mm a").format(toLocal())}";
     } else {
       return "${now.difference(toLocal()).inMinutes.abs()} mins";

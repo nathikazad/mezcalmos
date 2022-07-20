@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpCategoryGridCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpCategoryItems.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpItemCard.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpSpecialsComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -102,23 +102,17 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     ],
                   ),
                   Divider(),
-
                   SizedBox(
                     height: 5,
                   ),
                   _categoriesItemsList(),
-                  //   _noCategoryItemsList()
+                  // _noCategoryItemsList()
                 ],
               ),
             ),
 
             // specials view //
-            SingleChildScrollView(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                children: [Text("Specials")],
-              ),
-            )
+            ROpSpecialsComponent(viewController: viewController),
           ],
         ),
       ),
@@ -235,20 +229,6 @@ class _ROpMenuViewState extends State<ROpMenuView>
     } else {
       return Container();
     }
-  }
-
-  Widget _categoriesGridList() {
-    return GridView.count(
-        crossAxisCount: 3,
-        mainAxisSpacing: 5,
-        crossAxisSpacing: 5,
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        children: List<Widget>.generate(
-            viewController.restaurant.value!.getCategories.length, (int index) {
-          return ROpCategoryGridCard(
-              category: viewController.restaurant.value!.getCategories[index]);
-        }));
   }
 
   void handleBack() {

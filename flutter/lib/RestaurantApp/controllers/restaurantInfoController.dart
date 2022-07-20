@@ -249,7 +249,7 @@ class RestaurantInfoController extends GetxController {
   Future<String?> addCategory({required Category category}) async {
     final DatabaseReference categoryNode = _databaseHelper.firebaseDatabase
         .ref()
-        .child(menuNode(uid: restaurantId))
+        .child(dailyMenuNode(uid: restaurantId))
         .push();
 
     await categoryNode.set(category.toJson()).catchError((e, stk) {
@@ -323,6 +323,55 @@ class RestaurantInfoController extends GetxController {
     }
 
     return _uploadedImgUrl;
+  }
+
+  // ----------------------------------------------------- Specials ----------------------------------------------------- //
+  Future<void> addSpecialItem({
+    required Item item,
+  }) async {
+    mezDbgPrint("Adding special item ---------");
+    final DatabaseReference newItemNode;
+
+    newItemNode = _databaseHelper.firebaseDatabase
+        .ref()
+        .child(currentSpecialsNode(uid: restaurantId))
+        .push();
+
+    await newItemNode.set(item.toJson());
+  }
+
+  Future<void> removeSpecial({
+    required Item item,
+  }) async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(currentSpecialsNode(uid: restaurantId) + "/${item.id}")
+        .remove();
+    final DatabaseReference newItemNode;
+
+    newItemNode = _databaseHelper.firebaseDatabase
+        .ref()
+        .child(pastSpecialsNode(uid: restaurantId))
+        .push();
+
+    await newItemNode.set(item.toJson());
+  }
+
+  Future<void> addToSpecials({
+    required Item item,
+  }) async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(pastSpecialsNode(uid: restaurantId) + "/${item.id}")
+        .remove();
+    final DatabaseReference newItemNode;
+
+    newItemNode = _databaseHelper.firebaseDatabase
+        .ref()
+        .child(currentSpecialsNode(uid: restaurantId))
+        .push();
+
+    await newItemNode.set(item.toJson());
   }
 
   @override

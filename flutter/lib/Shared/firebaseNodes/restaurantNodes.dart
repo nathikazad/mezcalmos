@@ -4,20 +4,20 @@ String restuarantAuthNode({
   return 'restaurants/info/$uid';
 }
 
-String menuNode({required String uid}) {
-  return restuarantAuthNode(uid: uid) + "/menu2";
+String dailyMenuNode({required String uid}) {
+  return restuarantAuthNode(uid: uid) + "/menu/daily/";
 }
 
 String categoryNode({required String uid, required String categoryId}) {
-  return menuNode(uid: uid) + "/$categoryId";
+  return dailyMenuNode(uid: uid) + "/$categoryId";
 }
 
 String itemsNode({required String uid, required String categoryId}) {
-  return menuNode(uid: uid) + "/$categoryId/items";
+  return dailyMenuNode(uid: uid) + "/$categoryId/items";
 }
 
 String noCategoryNode({required String uid}) {
-  return menuNode(uid: uid) + "/noCategory";
+  return dailyMenuNode(uid: uid) + "/noCategory";
 }
 
 String itemNode(
@@ -63,4 +63,12 @@ String choiceNode({
             uid: uid, categoryId: null, itemId: itemId, optionId: optionId) +
         "/choices/$choiceId";
   }
+}
+
+String currentSpecialsNode({required String uid}) {
+  return restuarantAuthNode(uid: uid) + "/menu/specials/current";
+}
+
+String pastSpecialsNode({required String uid}) {
+  return restuarantAuthNode(uid: uid) + "/menu/specials/past";
 }

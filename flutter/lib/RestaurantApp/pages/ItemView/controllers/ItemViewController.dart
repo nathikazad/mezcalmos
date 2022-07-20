@@ -43,6 +43,7 @@ class ItemViewController {
   final RxBool imageLoading = RxBool(false);
   final RxList<Option> itemOptions = RxList([]);
   RxBool editMode = RxBool(false);
+  RxnBool specialMode = RxnBool();
   final Rxn<Item> editableItem = Rxn();
   RxBool newCategoryAdded = RxBool(false);
   Rxn<Category> addedCatgeory = Rxn();
@@ -50,9 +51,12 @@ class ItemViewController {
 
   // initalisation //
   // the itemId arguments for edit mode //
-  void init({String? itemId, String? categoryId}) {
+  void init({String? itemId, String? categoryId, bool? specials}) {
     restaurant.value = _restaurantInfoController.restaurant.value;
-
+    if (specials != null) {
+      specialMode.value = specials;
+    }
+    mezDbgPrint("Special mode =============>${specialMode.value}");
     if (restaurant.value != null) {
       prLang = restaurant.value!.primaryLanguage;
       scLang = restaurant.value!.secondaryLanguage!;
@@ -91,7 +95,7 @@ class ItemViewController {
     final Item newItem = Item(
         image: newImageUrl.value,
         id: generateRandomString(5),
-        available: editableItem.value!.available,
+        available: editableItem.value?.available ?? false,
         name: {
           restaurant.value!.primaryLanguage: prItemNameController.text,
           restaurant.value!.secondaryLanguage!: scItemNameController.text,
@@ -171,7 +175,6 @@ class ItemViewController {
         newImageUrl.value = value;
       });
     }
-    mezDbgPrint("NEW CATEGORY ? ${newCategoryAdded.value}}");
 
     if (newCategoryAdded.value == true) {
       mezDbgPrint("Adding category ======>>>> ${currentCategory.toJson()}");
@@ -183,10 +186,13 @@ class ItemViewController {
         }
       });
     }
-
-    if (editMode.value == false) {
-      mezDbgPrint(_contructItem().toJson());
-      mezDbgPrint("${currentCategory.value!.id}");
+    if (specialMode.value != null && specialMode.value == true) {
+      // ignore: unawaited_futures
+      _restaurantInfoController
+          .addSpecialItem(item: _contructItem())
+          .onError((Object? error, StackTrace stackTrace) => mezDbgPrint(error))
+          .then((value) => Get.back());
+    } else if (editMode.value == false) {
       //  ignore: unawaited_futures
       _restaurantInfoController
           .addItem(
@@ -196,7 +202,6 @@ class ItemViewController {
         mezDbgPrint(stackTrace);
       }).then((value) => Get.back());
     } else {
-      mezDbgPrint("Editing item .......");
       // ignore: unawaited_futures
       _restaurantInfoController
           .editItem(
