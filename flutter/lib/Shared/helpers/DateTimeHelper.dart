@@ -55,7 +55,7 @@ extension parseDateTime on DateTime {
     final DateFormat formatDay = DateFormat.E(userLangCode);
 
     if (cDate.difference(toLocal()).inDays < 7) {
-      return "${formatDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
+      return "${formatDay.format(toLocal()).replaceFirst(".", "")}, ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
       return "${formatLongDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -21,36 +22,48 @@ class CustomerLaundryOrderEst extends StatelessWidget {
       return Card(
         margin: const EdgeInsets.only(bottom: 20),
         child: Container(
-            margin: const EdgeInsets.all(5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            margin: const EdgeInsets.all(8),
+            child: Row(
               children: [
-                Text(
-                  '${_i18n()["estTimes"]}',
-                  style: Get.textTheme.bodyText1
-                      ?.copyWith(color: Colors.grey.shade800),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Row(
+                Stack(
+                  alignment: Alignment.center,
+                  clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
                       radius: 23,
-                      child: Icon(_getIcon(), color: Colors.white),
+                      backgroundColor: SecondaryLightBlueColor,
+                      child: Icon(Icons.watch_later_rounded,
+                          color: primaryBlueColor),
                     ),
-                    SizedBox(
-                      width: 8,
+                    Positioned(
+                      right: -35,
+                      child: CircleAvatar(
+                        radius: 23,
+                        child: Icon(_getIcon(), color: Colors.white),
+                      ),
                     ),
-                    Flexible(
-                        fit: FlexFit.tight,
-                        child: Text(
-                          _getEstimatedText()!,
-                          style: Get.textTheme.bodyText1,
-                          maxLines: 2,
-                        ))
                   ],
-                )
+                ),
+                SizedBox(
+                  width: 42,
+                ),
+                Flexible(
+                    fit: FlexFit.tight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _getRightTitle()!,
+                          style: Get.textTheme.bodyText1,
+                          maxLines: 1,
+                        ),
+                        Text(
+                          _getEstimatedText()!,
+                          style: Get.textTheme.bodyText2,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ))
               ],
             )),
       );
@@ -64,14 +77,14 @@ class CustomerLaundryOrderEst extends StatelessWidget {
 
       case LaundryOrderStatus.OtwPickupFromCustomer:
         if (order.estimatedPickupFromCustomerTime != null) {
-          return "${_i18n()["pickup"]}: ${order.estimatedPickupFromCustomerTime!.getEstimatedTime()}";
+          return "${order.estimatedPickupFromCustomerTime!.getEstimatedTime()}";
         }
         break;
       case LaundryOrderStatus.PickedUpFromCustomer:
 
       case LaundryOrderStatus.AtLaundry:
         if (order.estimatedLaundryReadyTime != null) {
-          return "${_i18n()["laundryReady"]}: ${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
+          return "${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
         }
 
         break;
@@ -80,7 +93,39 @@ class CustomerLaundryOrderEst extends StatelessWidget {
 
       case LaundryOrderStatus.PickedUpFromLaundry:
         if (order.estimatedDropoffAtCustomerTime != null) {
-          return "${_i18n()["delivery"]}: ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
+          return "${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
+        }
+
+        break;
+      default:
+        return null;
+    }
+    return null;
+  }
+
+  String? _getRightTitle() {
+    switch (order.status) {
+      case LaundryOrderStatus.OrderReceieved:
+
+      case LaundryOrderStatus.OtwPickupFromCustomer:
+        if (order.estimatedPickupFromCustomerTime != null) {
+          return "${_i18n()["pickup"]}:";
+        }
+        break;
+      case LaundryOrderStatus.PickedUpFromCustomer:
+
+      case LaundryOrderStatus.AtLaundry:
+        if (order.estimatedLaundryReadyTime != null) {
+          return "${_i18n()["laundryReady"]}:";
+        }
+
+        break;
+      case LaundryOrderStatus.OtwPickupFromLaundry:
+      case LaundryOrderStatus.ReadyForDelivery:
+
+      case LaundryOrderStatus.PickedUpFromLaundry:
+        if (order.estimatedDropoffAtCustomerTime != null) {
+          return "${_i18n()["delivery"]}:";
         }
 
         break;
