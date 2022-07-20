@@ -156,7 +156,7 @@ class UserProfileWidgetsClass {
       // return popable button
       return mezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        onClick: () => Get.back<void>(closeOverlays: true),
+        autoBack: true,
       );
     } else {
       mezDbgPrint("CheckIfUserHasAllInfosSet -[ False ]- !!!");
