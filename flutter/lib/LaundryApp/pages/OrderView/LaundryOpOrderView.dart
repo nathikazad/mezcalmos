@@ -176,7 +176,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back,
+          autoBack: true,
           showNotifications: true,
           ordersRoute: kPastOrdersListView),
       body: SingleChildScrollView(

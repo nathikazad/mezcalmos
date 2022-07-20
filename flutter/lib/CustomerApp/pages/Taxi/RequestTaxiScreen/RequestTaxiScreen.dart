@@ -62,7 +62,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
       resizeToAvoidBottomInset: false,
       appBar: mezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        onClick: () => Get.back<void>(),
+        autoBack: true,
       ),
       backgroundColor: Colors.white,
       body: Obx(

@@ -216,10 +216,14 @@ class _MessagingScreenState extends State<MessagingScreen> {
               width: 30,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                gradient: LinearGradient(colors: [
-                  Color.fromARGB(255, 97, 127, 255),
-                  Color.fromARGB(255, 198, 90, 252),
-                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 97, 127, 255),
+                    Color.fromARGB(255, 198, 90, 252),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
               child: Icon(
                 Icons.arrow_back_ios_rounded,
@@ -363,12 +367,6 @@ class SendMessageBox extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     fontFamily: 'Nunito',
                   ),
-                  //  TextStyle(
-                  //   color: Color.fromARGB(255, 0, 0, 0),
-                  //   fontSize: 18,
-                  //   fontFamily: 'Montserrat',
-                  //   fontWeight: FontWeight.w600,
-                  // ),
                   controller: _textEditingController,
                   onChanged: (String value) {
                     _typedMsg.value = value;

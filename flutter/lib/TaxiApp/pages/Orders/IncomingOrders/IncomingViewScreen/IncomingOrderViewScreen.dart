@@ -56,16 +56,17 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
             iOrderViewController.counterOffer.value == null ||
             !iOrderViewController.submittedCounterOffer.value,
         child: Scaffold(
-          appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-              onClick: iOrderViewController.counterOffer.value == null ||
-                      iOrderViewController.counterOffer.value?.isValid !=
-                          true ||
-                      iOrderViewController.order.value?.scheduledTime != null
-                  ? () {
-                      iOrderViewController.cancelStreamsSubscriptions();
-                      Get.back<void>();
-                    }
-                  : null),
+          appBar: mezcalmosAppBar(
+            AppBarLeftButtonType.Back,
+            onClick: iOrderViewController.counterOffer.value == null ||
+                    iOrderViewController.counterOffer.value?.isValid != true ||
+                    iOrderViewController.order.value?.scheduledTime != null
+                ? () {
+                    iOrderViewController.cancelStreamsSubscriptions();
+                    Get.back<void>();
+                  }
+                : null,
+          ),
           body: iOrderViewController.order.value != null
               ? Stack(
                   alignment: Alignment.topCenter,

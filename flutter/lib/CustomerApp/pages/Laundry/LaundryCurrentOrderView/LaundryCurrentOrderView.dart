@@ -179,18 +179,21 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   }
 
   AppBar _appBar() {
-    return mezcalmosAppBar(AppBarLeftButtonType.Back,
-        titleWidget: Obx(() => Text(
-              '${order.value?.laundry?.name ?? ""}',
-              style: TextStyle(
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w600,
-                fontSize: 15.sp,
-                color: Colors.black,
-              ),
-            )),
-        showNotifications: true,
-        ordersRoute: kOrdersRoute);
+    return mezcalmosAppBar(
+      AppBarLeftButtonType.Back,
+      autoBack: true,
+      titleWidget: Obx(() => Text(
+            '${order.value?.laundry?.name ?? ""}',
+            style: TextStyle(
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.w600,
+              fontSize: 15.sp,
+              color: Colors.black,
+            ),
+          )),
+      showNotifications: true,
+      ordersRoute: kOrdersRoute,
+    );
   }
 
   List<Widget> get _mapWidget => <Widget>[

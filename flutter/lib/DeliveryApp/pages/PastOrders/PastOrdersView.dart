@@ -51,7 +51,7 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back, title: "${_i18n()["pastOrders"]}"),
+          autoBack: true, title: "${_i18n()["pastOrders"]}"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8),
         child: Column(
