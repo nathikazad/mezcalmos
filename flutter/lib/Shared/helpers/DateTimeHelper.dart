@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
@@ -67,7 +68,7 @@ extension parseDateTime on DateTime {
     final DateFormat formatTime = DateFormat.jm(userLangCode);
     final DateFormat formatDay = DateFormat.E(userLangCode);
 
-    return "${formatDay.format(toLocal())} ${formatTime.format(toLocal())}";
+    return "${formatDay.format(toLocal()).replaceFirst(".", "").inCaps}, ${DateFormat("hh:mm a").format(toLocal())}";
   }
 }
 

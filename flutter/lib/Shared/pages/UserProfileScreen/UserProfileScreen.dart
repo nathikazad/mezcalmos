@@ -102,11 +102,10 @@ class _UserProfileState extends State<UserProfile>
                           onTap: () {
                             showConfirmationDialog(
                               context,
-                              title: "Confirm account deletion!",
-                              primaryButtonText: "Yes, delete!",
-                              secondaryButtonText: "Cancel",
-                              helperText:
-                                  "Clicking yes will permanently delete you account, are you sure?",
+                              title: '${_i18n()["deleteTitle"]}',
+                              primaryButtonText: "${_i18n()["deletePrBtn"]}",
+                              secondaryButtonText: "${_i18n()["deleteScBtn"]}",
+                              helperText: "${_i18n()["deleteHelper"]}",
                               onYesClick: () async {
                                 final ServerResponse res =
                                     await _authController.deleteAccount();
@@ -133,7 +132,7 @@ class _UserProfileState extends State<UserProfile>
                             ),
                             padding: EdgeInsets.all(8),
                             child: Text(
-                              "Delete account",
+                              "${_i18n()["deleteAccount"]}",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.red,
@@ -141,12 +140,6 @@ class _UserProfileState extends State<UserProfile>
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                               ),
-                              // style: TextStyle(
-                              //   color: Colors.red,
-                              //   fontSize: 15,
-                              //   fontWeight: FontWeight.w600,
-                              //   fontFamily: 'Montserrat',
-                              // ),
                             ),
                           ),
                         ),

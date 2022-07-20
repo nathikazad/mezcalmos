@@ -13,8 +13,6 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 
-import '../../../Shared/helpers/PrintHelper.dart';
-
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['DashboardView']['OrdersListView']['LaundryOpOrdersListView'];
 
@@ -63,31 +61,38 @@ class _LaundryOpCurrentOrdersListViewState
           key: Get.find<SideMenuDrawerController>().getNewKey(),
           drawer: LaundryAppDrawer(),
           body: Obx(
-            () => SingleChildScrollView(
-              padding: EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const SizedBox(height: 10),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      "${_i18n()["currentOrders"]}",
-                      style: Get.textTheme.bodyText1,
-                    ),
+            () {
+              if (inProcessOrders.value!.isNotEmpty) {
+                return SingleChildScrollView(
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const SizedBox(height: 10),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          "${_i18n()["currentOrders"]}",
+                          style: Get.textTheme.bodyText1,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Column(
+                        children: List.generate(
+                            inProcessOrders.value!.length,
+                            (int index) => LaundryOpOrderCard(
+                                laundryOrder: inProcessOrders.value![index])),
+                      )
+                    ],
                   ),
-                  const SizedBox(height: 15),
-                  (inProcessOrders.value!.isNotEmpty)
-                      ? Column(
-                          children: List.generate(
-                              inProcessOrders.value!.length,
-                              (int index) => LaundryOpOrderCard(
-                                  laundryOrder: inProcessOrders.value![index])),
-                        )
-                      : NoOrdersComponent(),
-                ],
-              ),
-            ),
+                );
+              } else {
+                return Container(
+                  alignment: Alignment.center,
+                  child: NoOrdersComponent(),
+                );
+              }
+            },
           ),
         );
       } else {

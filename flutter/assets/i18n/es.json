@@ -692,7 +692,13 @@
                     "mustSetUserNameError": "Por favor, ponga su primer nombre.",
                     "mustSetUserImgError": "Por favor, sube una imagen.",
                     "nameMustBeLettersOnly": "Tu primer nombre solo debe tener letras.",
-                    "nameMustBeFourLettersOrMore": "Tu nombre debe tener al menos 4 letras."
+                    "nameMustBeFourLettersOrMore": "Tu nombre debe tener al menos 4 letras.",
+                    "deleteAccount": "Borrar cuenta",
+                    "deleteTitle": "¡Confirme la eliminación de la cuenta!",
+                    "deletePrBtn": "¡Sí, eliminar!",
+                    "deleteScBtn": "Cancelar",
+                    "deleteHelper": "Haga clic en SÍ Eliminará permanentemente su cuenta, ¿está seguro?"
+
                 },
                 "UserProfileWidgets": {
                     "namePlaceHolder": "Ponga su primer nombre",
