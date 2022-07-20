@@ -4,7 +4,7 @@ import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']

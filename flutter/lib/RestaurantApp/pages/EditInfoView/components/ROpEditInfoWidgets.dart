@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/models/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:sizer/sizer.dart';
 
 class ROpEditInfoWidgets {
