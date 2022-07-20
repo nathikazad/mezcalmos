@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
-
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -100,6 +99,7 @@ class Restaurant extends Service {
     restaurantData["menu"]?["daily"]?.forEach((categoryId, categoryData) {
       restaurant._categories.add(Category.fromData(categoryId, categoryData));
     });
+
     restaurant._categories
         .sort((Category a, Category b) => a.position.compareTo(b.position));
     return restaurant;
@@ -243,14 +243,15 @@ class Category {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
-  
+    final bool Function(dynamic e1, dynamic e2) listEquals =
+        const DeepCollectionEquality().equals;
+
     return other is Category &&
-      other.name == name &&
-      other.id == id &&
-      other.dialog == dialog &&
-      other.position == position &&
-      listEquals(other.items, items);
+        other.name == name &&
+        other.id == id &&
+        other.dialog == dialog &&
+        other.position == position &&
+        listEquals(other.items, items);
   }
 
   @override

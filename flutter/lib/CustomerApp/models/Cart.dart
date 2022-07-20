@@ -150,7 +150,8 @@ class CartItem {
       quantity: itemData["quantity"],
       notes: itemData["notes"],
     );
-    itemData["chosenChoices"]?.forEach((optionId, optionData) {
+
+    itemData["choices"]?.forEach((optionId, optionData) {
       if (item.findOption(optionId) != null) {
         cartItem.chosenChoices[optionId] = <Choice>[];
         optionData["choices"]?.forEach((dynamic choiceData) {
