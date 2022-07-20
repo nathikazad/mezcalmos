@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 // ignore_for_file: avoid_annotating_with_dynamic
-import 'package:mezcalmos/Shared/models/Generic.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 

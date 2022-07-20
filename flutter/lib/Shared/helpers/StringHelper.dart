@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 extension CapExtension on String {
   String get inCaps =>

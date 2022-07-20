@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Location.dart' as LocationModel;
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocationModel;
 import 'package:mezcalmos/Shared/widgets/MezSmartPointer.dart';
 import 'package:sizer/sizer.dart';
 

@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class DeliveryDriverController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();

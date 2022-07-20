@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:mezcalmos/CustomerApp/models/OnlineTaxiDriver.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/helpers/OnlineDriversHelper.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class NearByOnlineTaxiDrivers extends StatefulWidget {
   final Rxn<Location> centerLocation;

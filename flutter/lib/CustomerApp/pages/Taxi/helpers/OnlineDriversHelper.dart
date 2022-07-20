@@ -3,7 +3,7 @@ import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/OnlineTaxiDriver.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
-import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 
 /// Call this to fetch online TaxiDrivers.
 ///

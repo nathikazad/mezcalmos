@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Notification.dart' as notifs;
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:sizer/sizer.dart';
 

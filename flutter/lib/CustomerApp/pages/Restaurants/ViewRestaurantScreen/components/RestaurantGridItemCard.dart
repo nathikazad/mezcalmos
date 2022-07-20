@@ -5,7 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemS
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class RestaurantgridItemCard extends StatefulWidget {

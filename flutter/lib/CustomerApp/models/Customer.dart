@@ -1,5 +1,4 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class Customer {
   // List<Order> currentOrders = [];
@@ -12,7 +11,6 @@ class Customer {
     appVersion = data?["versionNumber"] ?? null;
     notificationInfo = data?["notificationInfo"];
 
-    mezDbgPrint("SavedLocations ===> ${data?["savedLocations"]}");
     if (data["savedLocations"] != null) {
       Map<String, dynamic>.from(data?["savedLocations"])
           .entries
