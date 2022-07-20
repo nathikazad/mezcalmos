@@ -106,6 +106,27 @@ class MessageController extends GetxController {
       {required String chatId,
       required Participant callee,
       String? orderId}) async {
+    return sendUserCallNotification(
+        chatId: chatId,
+        callee: callee,
+        callNotificationtType: CallNotificationtType.Incoming);
+  }
+
+  Future<void> endCall(
+      {required String chatId,
+      required Participant callee,
+      String? orderId}) async {
+    return sendUserCallNotification(
+        chatId: chatId,
+        callee: callee,
+        callNotificationtType: CallNotificationtType.EndCall);
+  }
+
+  Future<void> sendUserCallNotification(
+      {required String chatId,
+      required Participant callee,
+      required CallNotificationtType callNotificationtType,
+      String? orderId}) async {
     final DatabaseReference notificationNode = _databaseHelper.firebaseDatabase
         .ref()
         .child(notificationQueueNode())
@@ -122,6 +143,7 @@ class MessageController extends GetxController {
                     _settingsController.appType.toParticipantTypefromAppType(),
                 calleeId: callee.id,
                 calleeParticipantType: callee.participantType,
+                callNotificationtType: callNotificationtType,
                 orderId: orderId)
             .toFirebaseFormatJson());
   }

@@ -67,9 +67,15 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
+<<<<<<< HEAD
    		<string>remote-notification</string>
     	<string>voip</string>
 		<string>processing</string>
+=======
+		<string>processing</string>
+    <string>remote-notification</string>
+    <string>voip</string>
+>>>>>>> inAppCall-Agora
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

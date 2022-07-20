@@ -3,7 +3,7 @@ import { getChat, setChatMessageNotifiedAsTrue, setUserAgoraInfo } from "../../f
 import * as notifyUser from "../../functions/src/utilities/senders/notifyUser";
 import { chatUrl, orderUrl } from "../../functions/src/utilities/senders/appRoutes";
 import * as rootNodes from "../../functions/src/shared/databaseNodes/root";
-import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue } from "../../functions/src/shared/models/Notification";
+import { NewMessageNotification, Notification, NotificationAction, NotificationType, NotificationForQueue, NewCallBackgroundNotification } from "../../functions/src/shared/models/Notification";
 import { CounterOfferNotification, CounterOfferNotificationForQueue } from "../../functions/src/shared/models/Services/Taxi/TaxiOrder";
 import { OrderType } from "../../functions/src/shared/models/Generic/Order";
 import { Language, NotificationInfo } from "../../functions/src/shared/models/Generic/Generic";
@@ -42,14 +42,25 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
     let fcmMessage: fcm.fcmPayload = {
       token: subscription.deviceNotificationToken,
       payload: {
+<<<<<<< HEAD
         data: {
+=======
+        data: <NewCallBackgroundNotification>{
+>>>>>>> inAppCall-Agora
           linkUrl: chatUrl(notificationForQueue.chatId),
           language: language,
           callerName: callerInfo.name ?? "Caller",
           notificationType: NotificationType.Call,
+<<<<<<< HEAD
           callerImage: callerInfo.image,
           callerType: callerInfo.particpantType
         }
+=======
+          callNotificationType: notificationForQueue.callNotificationType,
+          callerImage: callerInfo.image,
+          callerType: callerInfo.particpantType
+        } 
+>>>>>>> inAppCall-Agora
       },
       options: {
         priority: fcm.NotificationPriority.High,
@@ -126,6 +137,7 @@ async function notifyCustomerAboutCounterOffer(notificationForQueue: CounterOffe
       }
     },
     linkUrl: orderUrl(chat.ParticipantType.Customer, OrderType.Taxi, notificationForQueue.orderId)
+<<<<<<< HEAD
   }
   notifyUser.pushNotification(notificationForQueue.customerId, notification, chat.ParticipantType.Customer);
 }
@@ -138,6 +150,20 @@ async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.Partic
     await setAgoraDetails(chatId, callee, keys)
     await setAgoraDetails(chatId, caller, keys)
   }
+=======
+  }
+  notifyUser.pushNotification(notificationForQueue.customerId, notification, chat.ParticipantType.Customer);
+}
+
+
+async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.ParticipantWithAgora, callee: chat.ParticipantWithAgora, keys: Keys) {
+  if (keys.agora == null)
+    return
+
+  await setAgoraDetails(chatId, callee, keys)
+  await setAgoraDetails(chatId, caller, keys)
+
+>>>>>>> inAppCall-Agora
 }
 
 async function setAgoraDetails(chatId: string, user: chat.Participant, keys: Keys) {

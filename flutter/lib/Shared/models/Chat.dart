@@ -216,6 +216,23 @@ class MessageNotificationForQueue extends NotificationForQueue {
       };
 }
 
+enum CallNotificationtType { Incoming, EndCall }
+
+extension ParseCallNotificationtTypeToString on CallNotificationtType {
+  String toFirebaseFormattedString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToCallNotificationtType on String {
+  CallNotificationtType toCallNotificationtType() {
+    return CallNotificationtType.values.firstWhere(
+        (CallNotificationtType callNotificationtType) =>
+            callNotificationtType.toFirebaseFormattedString() == this);
+  }
+}
+
 class CallNotificationForQueue extends NotificationForQueue {
   String chatId;
   String callerId;
@@ -223,12 +240,14 @@ class CallNotificationForQueue extends NotificationForQueue {
   String calleeId;
   ParticipantType calleeParticipantType;
   String? orderId;
+  CallNotificationtType callNotificationtType;
   CallNotificationForQueue(
       {required this.chatId,
       required this.callerId,
       required this.callerParticipantType,
       required this.calleeId,
       required this.calleeParticipantType,
+      required this.callNotificationtType,
       this.orderId})
       : super(
             notificationType: NotificationType.Call,
@@ -243,6 +262,8 @@ class CallNotificationForQueue extends NotificationForQueue {
         "calleeId": calleeId,
         "calleeParticipantType":
             calleeParticipantType.toFirebaseFormattedString(),
+        "callNotificationtType":
+            callNotificationtType.toFirebaseFormattedString(),
         "orderId": orderId
       };
 }
