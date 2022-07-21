@@ -35,7 +35,7 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
   let chatData: chat.ChatData = (await getChat(notificationForQueue.chatId)).chatData;
   let callerInfo: chat.Participant = chatData.participants[notificationForQueue.callerParticipantType]![notificationForQueue.callerId]
   let calleeInfo: chat.Participant = chatData.participants[notificationForQueue.calleeParticipantType]![notificationForQueue.calleeId]
-  await createAgoraTokensIfNotPresent(notificationForQueue.chatId, callerInfo as chat.ParticipantWithAgora, calleeInfo as chat.ParticipantWithAgora, keys);
+  let calleeToken: string? = await createAgoraTokensIfNotPresent(notificationForQueue.chatId, callerInfo as chat.ParticipantWithAgora, calleeInfo as chat.ParticipantWithAgora, keys);
   let subscription: NotificationInfo = await getNotificationInfo(calleeInfo.particpantType, calleeInfo.id);
   if (subscription != null && subscription.deviceNotificationToken) {
     let language: Language = calleeInfo.language ?? Language.ES;
@@ -46,6 +46,9 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
           linkUrl: chatUrl(notificationForQueue.chatId),
           language: language,
           callerName: callerInfo.name ?? "Caller",
+          callerId: callerInfo.id,
+          chatId:chatData.chatId,
+          agoraToken: calleeToken,
           notificationType: NotificationType.Call,
           callNotificationType: notificationForQueue.callNotificationType,
           callerImage: callerInfo.image,
@@ -132,16 +135,15 @@ async function notifyCustomerAboutCounterOffer(notificationForQueue: CounterOffe
 }
 
 
-async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.ParticipantWithAgora, callee: chat.ParticipantWithAgora, keys: Keys) {
+async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.ParticipantWithAgora, callee: chat.ParticipantWithAgora, keys: Keys): Promise<string?> {
   if (keys.agora == null)
-    return
-
-  await setAgoraDetails(chatId, callee, keys)
+    return null
   await setAgoraDetails(chatId, caller, keys)
+  return await setAgoraDetails(chatId, callee, keys)
 
 }
 
-async function setAgoraDetails(chatId: string, user: chat.Participant, keys: Keys) {
+async function setAgoraDetails(chatId: string, user: chat.Participant, keys: Keys): Promise<string> {
   let expirationTime: number = Math.floor(Date.now() / 1000) + 300;
   let token: string = agora.RtcTokenBuilder.buildTokenWithUid(keys.agora!.appId,
     keys.agora!.certificate,
@@ -154,6 +156,7 @@ async function setAgoraDetails(chatId: string, user: chat.Participant, keys: Key
     expirationTime: (new Date(expirationTime * 1000)).toISOString(),
     uid: convertFbIdtoInt(user.id)
   })
+  return token
 }
 
 function convertFbIdtoInt(uid: string): number {

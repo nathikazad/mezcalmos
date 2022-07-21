@@ -69,7 +69,9 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   } else if (event.data["notificationType"] ==
       NotificationType.Call.toFirebaseFormatString()) {
     mezDbgPrint("######## GOT BG FCM ###### ${event.data}");
-    switch (event.data['callNotificationType']) {
+    switch (event.data['callNotificationType']
+        .toString()
+        .toCallNotificationtType()) {
       case CallNotificationtType.Incoming:
         final Map<String, dynamic> _extras = {
           "chatId": event.data['chatId'],
@@ -84,6 +86,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
           extra: _extras,
         );
         break;
+      // not here
       case CallNotificationtType.EndCall:
         await FlutterCallkitIncoming.endAllCalls();
         break;

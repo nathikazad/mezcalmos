@@ -39,14 +39,6 @@ export interface NewMessageNotification extends ForegroundNotification {
   orderId: string
 }
 
-<<<<<<< HEAD
-export interface NewCallNotification extends ForegroundNotification {
-  chatId: string,
-  caller: UserInfo,
-  callee: UserInfo,
-}
-
-=======
 export interface NewCallBackgroundNotification {
   linkUrl: string,
   language: Language,
@@ -60,7 +52,6 @@ export interface NewCallBackgroundNotification {
 
 
 
->>>>>>> inAppCall-Agora
 export interface OrderNotification extends ForegroundNotification {
   orderType: OrderType,
   orderId: string,
