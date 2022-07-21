@@ -35,7 +35,7 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
   let chatData: chat.ChatData = (await getChat(notificationForQueue.chatId)).chatData;
   let callerInfo: chat.Participant = chatData.participants[notificationForQueue.callerParticipantType]![notificationForQueue.callerId]
   let calleeInfo: chat.Participant = chatData.participants[notificationForQueue.calleeParticipantType]![notificationForQueue.calleeId]
-  let calleeToken: string? = await createAgoraTokensIfNotPresent(notificationForQueue.chatId, callerInfo as chat.ParticipantWithAgora, calleeInfo as chat.ParticipantWithAgora, keys);
+  let calleeToken: string | null = await createAgoraTokensIfNotPresent(notificationForQueue.chatId, callerInfo as chat.ParticipantWithAgora, calleeInfo as chat.ParticipantWithAgora, keys);
   let subscription: NotificationInfo = await getNotificationInfo(calleeInfo.particpantType, calleeInfo.id);
   if (subscription != null && subscription.deviceNotificationToken) {
     let language: Language = calleeInfo.language ?? Language.ES;
@@ -47,7 +47,7 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
           language: language,
           callerName: callerInfo.name ?? "Caller",
           callerId: callerInfo.id,
-          chatId:chatData.chatId,
+          chatId: chatData.chatId,
           agoraToken: calleeToken,
           notificationType: NotificationType.Call,
           callNotificationType: notificationForQueue.callNotificationType,
@@ -135,7 +135,7 @@ async function notifyCustomerAboutCounterOffer(notificationForQueue: CounterOffe
 }
 
 
-async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.ParticipantWithAgora, callee: chat.ParticipantWithAgora, keys: Keys): Promise<string?> {
+async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.ParticipantWithAgora, callee: chat.ParticipantWithAgora, keys: Keys): Promise<string | null> {
   if (keys.agora == null)
     return null
   await setAgoraDetails(chatId, caller, keys)
