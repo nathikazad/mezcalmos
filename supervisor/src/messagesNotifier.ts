@@ -35,7 +35,15 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
   let chatData: chat.ChatData = (await getChat(notificationForQueue.chatId)).chatData;
   let callerInfo: chat.Participant = chatData.participants[notificationForQueue.callerParticipantType]![notificationForQueue.callerId]
   let calleeInfo: chat.Participant = chatData.participants[notificationForQueue.calleeParticipantType]![notificationForQueue.calleeId]
-  let calleeToken: string | null = await createAgoraTokensIfNotPresent(notificationForQueue.chatId, callerInfo as chat.ParticipantWithAgora, calleeInfo as chat.ParticipantWithAgora, keys);
+  let calleeToken: string | null = null;
+  if (notificationForQueue.callNotificationType == chat.CallNotificationtType.Incoming) {
+    calleeToken = await createAgoraTokensIfNotPresent(notificationForQueue.chatId, callerInfo as chat.ParticipantWithAgora, calleeInfo as chat.ParticipantWithAgora, keys);
+    if (calleeToken == null)
+      console.log("Agora token generation error");
+    console.log(notificationForQueue);
+    console.log();
+  }
+
   let subscription: NotificationInfo = await getNotificationInfo(calleeInfo.particpantType, calleeInfo.id);
   if (subscription != null && subscription.deviceNotificationToken) {
     let language: Language = calleeInfo.language ?? Language.ES;
@@ -48,7 +56,6 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
           callerName: callerInfo.name ?? "Caller",
           callerId: callerInfo.id,
           chatId: chatData.chatId,
-          agoraToken: calleeToken,
           notificationType: NotificationType.Call,
           callNotificationType: notificationForQueue.callNotificationType,
           callerImage: callerInfo.image,
