@@ -13,7 +13,10 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -53,9 +56,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   /// orderToLocation
   Location? orderToLocation;
-
-  /// nbClicks
-  int nbClicks = 0;
 
   @override
   void initState() {
@@ -178,61 +178,59 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
 //itemviewscreen
   Future<void> checkoutActionButton() async {
-    if (nbClicks == 0) {
-      if (orderToLocation != null) {
-        setState(() {
-          _clickedOrderNow = true;
-        });
-        _restaurantController.cart.value.toLocation = orderToLocation;
-        _restaurantController.cart.value.notes = _textEditingController.text;
+    setState(() {
+      _clickedOrderNow = true;
+    });
+    try {
+      _restaurantController.cart.value.toLocation = orderToLocation;
+      _restaurantController.cart.value.notes = _textEditingController.text;
 
-        // ignore: unawaited_futures
-        MapHelper.getDurationAndDistance(
-          _restaurantController.cart.value.restaurant!.info.location,
-          orderToLocation!,
-        ).then((MapHelper.Route? value) {
-          if (value != null) {
-            mezDbgPrint("Route info succesfully ===================> $value");
-            _restaurantController.cart.value.setRouteInformation =
-                MapHelper.RouteInformation(
-              polyline: value.encodedPolyLine,
-              distance: value.distance,
-              duration: value.duration,
-            );
-          }
-        }).catchError((e, stk) {
-          mezDbgPrint("ERROR GETTING ROUTE INFO =================>>> $e");
-        }).whenComplete(() async {
-          // await _restaurantController.getPaymentIntent(customerId: _restaurantController.cart.value.,
-          // serviceProviderId: serviceProviderId,
-          // orderType: orderType,
-          // paymentAmount: paymentAmount)
-          final ServerResponse _serverResponse =
-              await _restaurantController.checkout();
-          if (_serverResponse.success) {
-            // await avoidCheckoutRaceCondition(response.data["orderId"]);
-            _restaurantController.clearCart();
-            popEverythingAndNavigateTo(
-                getRestaurantOrderRoute(_serverResponse.data["orderId"]));
-            //  _restaurantController.clearCart();
-          } else {
-            print(_serverResponse);
-            if (_serverResponse.errorCode == "serverError") {
-              // do something
-            } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
-              // do something
-            } else if (_serverResponse.errorCode == "restaurantClosed") {
-              // do something
-            } else {
-              // do something
-            }
-          }
-          setState(() {
-            _clickedOrderNow = false;
-          });
-        });
+      final MapHelper.Route routeInfo = await MapHelper.getDurationAndDistance(
+        _restaurantController.cart.value.restaurant!.info.location,
+        orderToLocation!,
+      );
+
+      mezDbgPrint("Route info succesfully ===================> $routeInfo");
+      _restaurantController.cart.value.setRouteInformation =
+          MapHelper.RouteInformation(
+        polyline: routeInfo.encodedPolyLine,
+        distance: routeInfo.distance,
+        duration: routeInfo.duration,
+      );
+      if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
+        final ServerResponse paymentIntentResponse = await getPaymentIntent(
+            customerId: "DQiTXyiJvnWy4z4LaamPTAtBdqo1",
+            serviceProviderId: "8v49lqVlHWeoSQ1JP8Mg1vRe17c2",
+            orderType: OrderType.Restaurant,
+            paymentAmount: _restaurantController.cart.value.totalCost());
+        await acceptPayment(
+            paymentIntentData: paymentIntentResponse.data,
+            merchantName:
+                _restaurantController.cart.value.restaurant!.info.name);
       }
+      // final ServerResponse _serverResponse =
+      //     await _restaurantController.checkout();
+
+      // if (_serverResponse.success) {
+      //   _restaurantController.clearCart();
+      //   popEverythingAndNavigateTo(
+      //       getRestaurantOrderRoute(_serverResponse.data["orderId"]));
+      // } else {
+      //   print(_serverResponse);
+      //   if (_serverResponse.errorCode == "serverError") {
+      //     // do something
+      //   } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
+      //     // do something
+      //   } else if (_serverResponse.errorCode == "restaurantClosed") {
+      //     // do something
+      //   } else {
+      //     // do something
+      //   }
+      // }
+    } finally {
+      setState(() {
+        _clickedOrderNow = false;
+      });
     }
-    nbClicks++;
   }
 }

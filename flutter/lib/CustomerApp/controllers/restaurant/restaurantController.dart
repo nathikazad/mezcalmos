@@ -12,8 +12,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:flutter/material.dart';
 
 class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -150,60 +148,12 @@ class RestaurantController extends GetxController {
     Get.appUpdate();
   }
 
-  Future<ServerResponse> getPaymentIntent(
-      {required String customerId,
-      required String serviceProviderId,
-      required OrderType orderType,
-      required num paymentAmount}) async {
-    final HttpsCallable getPaymentIntent =
-        FirebaseFunctions.instance.httpsCallable("stripe-getPaymentIntent");
-    try {
-      mezDbgPrint(cart.value.notes);
-      mezDbgPrint(cart.value.toFirebaseFormattedJson());
-      final HttpsCallableResult<dynamic> response =
-          await getPaymentIntent.call(<String, String>{
-        "customerId": "DQiTXyiJvnWy4z4LaamPTAtBdqo1",
-        "serviceProviderId": "8v49lqVlHWeoSQ1JP8Mg1vRe17c2",
-        "orderType": "restaurant",
-        "paymentAmount": "1099"
-      });
-
-      Stripe.publishableKey = response.data['publishableKey'];
-      Stripe.stripeAccountId = 'acct_102aka2sNwJeuaBL';
-      await Stripe.instance.applySettings();
-      //2. initialize the payment sheet
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-            paymentIntentClientSecret: response.data['paymentIntent'],
-            merchantDisplayName: 'Flutter Stripe Store Demo',
-            customerId: response.data['customer'],
-            customerEphemeralKeySecret: response.data['ephemeralKey'],
-            style: ThemeMode.light,
-            applePay: PaymentSheetApplePay(merchantCountryCode: "US")),
-      );
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
-    }
-  }
-
   Future<ServerResponse> checkout() async {
     final HttpsCallable checkoutRestaurantCart =
-        FirebaseFunctions.instance.httpsCallable("stripe-getPaymentIntent");
+        FirebaseFunctions.instance.httpsCallable("restaurant-checkoutCart");
     try {
-      mezDbgPrint(cart.value.notes);
-      mezDbgPrint(cart.value.toFirebaseFormattedJson());
-      mezDbgPrint("calling function");
-      final HttpsCallableResult<dynamic> response =
-          await checkoutRestaurantCart.call(<String, String>{
-        "customerId": "DQiTXyiJvnWy4z4LaamPTAtBdqo1",
-        "serviceProviderId": "8v49lqVlHWeoSQ1JP8Mg1vRe17c2",
-        "orderType": "restaurant",
-        "paymentAmount": "1099"
-      });
-      mezDbgPrint("finished function");
-      mezDbgPrint(response.data);
+      final HttpsCallableResult<dynamic> response = await checkoutRestaurantCart
+          .call(cart.value.toFirebaseFormattedJson());
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       mezDbgPrint("error function");

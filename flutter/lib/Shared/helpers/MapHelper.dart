@@ -164,7 +164,7 @@ Future<String?> getAdressFromLatLng(LatLng latlng) async {
 }
 
 /// returns a Map {"distance" : { "text" : [in km] , "value": [in Meters]} , "duration": {"text" : [in days:h] , value : [in Seconds]}}
-Future<Route?> getDurationAndDistance(
+Future<Route> getDurationAndDistance(
     LocModel.Location from, LocModel.Location to) async {
   //units=metric => this is so we can get distances in km , cuz default is miles !
   /// Note : distance.text is in [KM] while distance.value is in [M]!
@@ -190,8 +190,9 @@ Future<Route?> getDurationAndDistance(
         distance: distance,
         polylineList: polylinePoints,
         encodedPolyLine: encodedPolyLine);
+  } else {
+    throw Exception("Error fetching route");
   }
-  return null;
 }
 
 /// Calculate Distance between To [LocationData] , return is in KM!

@@ -39,7 +39,7 @@ export = functions.https.onCall(async (data, context) => {
   }
 
   // remove
-  serviceProviderPaymentInfo.stripeId = "acct_102aka2sNwJeuaBL";
+  // serviceProviderPaymentInfo.stripeId = "acct_102aka2sNwJeuaBL";
 
   let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripeId };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
@@ -56,15 +56,15 @@ export = functions.https.onCall(async (data, context) => {
   }
 
   //remove
-  stripeCustomerId = 'cus_M5qBJBHZSRicoS';
+  // stripeCustomerId = 'cus_M5qBJBHZSRicoS';
 
   const ephemeralKey = await stripe.ephemeralKeys.create(
     { customer: stripeCustomerId },
     stripeOptions
   );
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: 1099,
-    currency: 'usd',
+    amount: data.paymentAmount,
+    currency: 'mxn',
     customer: stripeCustomerId,
 
   }, stripeOptions);
@@ -74,7 +74,8 @@ export = functions.https.onCall(async (data, context) => {
     paymentIntent: paymentIntent.client_secret,
     ephemeralKey: ephemeralKey.secret,
     customer: stripeCustomerId,
-    publishableKey: keys.stripe.publickey
+    publishableKey: keys.stripe.publickey,
+    stripeAccountId: serviceProviderPaymentInfo.stripeId
   }
   return { status: ServerResponseStatus.Success, orderId: data.orderId }
 });
