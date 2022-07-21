@@ -196,7 +196,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
               shape: BoxShape.rectangle,
-              color: SecondaryLightBlueColor),
+              color: secondaryLightBlueColor),
           tabs: List.generate(restaurant.getCategories.length, (int index) {
             return Tab(
               text: restaurant.getCategories[index].name?[userLanguage],

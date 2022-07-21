@@ -47,7 +47,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(32)),
                     color: (widget.value > widget.minVal)
-                        ? SecondaryLightBlueColor
+                        ? secondaryLightBlueColor
                         : widget.onMinValueBtnColor ?? Colors.grey),
                 child: Icon(
                   Icons.remove,

@@ -198,7 +198,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             width: 136,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: SecondaryLightBlueColor,
+              color: secondaryLightBlueColor,
               // border: Border.all(color: Colors.black),
             ),
             child: ClipOval(

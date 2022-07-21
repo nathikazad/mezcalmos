@@ -31,7 +31,7 @@ class CustomerLaundryOrderEst extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 23,
-                      backgroundColor: SecondaryLightBlueColor,
+                      backgroundColor: secondaryLightBlueColor,
                       child: Icon(Icons.watch_later_rounded,
                           color: primaryBlueColor),
                     ),

@@ -127,7 +127,7 @@ class OrderSummaryCard extends StatelessWidget {
             const SizedBox(height: 10),
             DropDownLocationList(
               onValueChangeCallback: setLocationCallBack,
-              bgColor: SecondaryLightBlueColor,
+              bgColor: secondaryLightBlueColor,
             ),
           ],
         ),

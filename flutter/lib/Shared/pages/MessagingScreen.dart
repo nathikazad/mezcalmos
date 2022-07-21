@@ -359,7 +359,7 @@ class SendMessageBox extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         fontFamily: 'Nunito',
                       ),
-                      fillColor: SecondaryLightBlueColor,
+                      fillColor: secondaryLightBlueColor,
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
@@ -402,7 +402,7 @@ class SendMessageBox extends StatelessWidget {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color:
-                        SecondaryLightBlueColor //Color.fromRGBO(240, 241, 255, 1),
+                        secondaryLightBlueColor //Color.fromRGBO(240, 241, 255, 1),
                     ),
                 child: Transform.rotate(
                   angle: -math.pi / 5.0,
