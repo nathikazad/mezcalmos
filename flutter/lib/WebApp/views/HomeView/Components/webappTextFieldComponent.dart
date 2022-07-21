@@ -14,15 +14,6 @@ class WebappTextFieldComponent extends StatelessWidget {
   final int? maxLine;
   final TextEditingController controller;
 
-  bool isMobile(BuildContext context) =>
-      MediaQuery.of(context).size.width < 650;
-
-  bool isTablet(BuildContext context) =>
-      MediaQuery.of(context).size.width < 900 &&
-      MediaQuery.of(context).size.width >= 650;
-
-  bool isDesktop(BuildContext context) =>
-      MediaQuery.of(context).size.width >= 900;
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
@@ -43,8 +34,13 @@ class WebappTextFieldComponent extends StatelessWidget {
             height: 3.sp,
           ),
           Container(
-            height:
-                (maxLine! > 1) ? getSizeForHeightOfTextField(context) : null,
+            height: (maxLine! > 1)
+                ? getSizeForHeightOfTextField(context)
+                : (MezCalmosResizer.isDesktop(context) ||
+                        MezCalmosResizer.isTablet(context) ||
+                        MezCalmosResizer.isSmallTablet(context))
+                    ? null
+                    : 45,
             color: Color.fromRGBO(244, 244, 244, 1),
             child: Theme(
               data: ThemeData(),
@@ -68,22 +64,26 @@ class WebappTextFieldComponent extends StatelessWidget {
   }
 
   double getSizeForTitle(BuildContext context) {
-    if (isDesktop(context)) {
+    if (MezCalmosResizer.isDesktop(context)) {
       return 4.sp;
-    } else if (isTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 5.sp;
+    } else if (MezCalmosResizer.isMobile(context)) {
+      return 11.sp;
     } else {
-      return 8.sp;
+      return 11.5.sp;
     }
   }
 
   double getSizeForHeightOfTextField(BuildContext context) {
-    if (isDesktop(context)) {
+    if (MezCalmosResizer.isDesktop(context)) {
       return 50.sp;
-    } else if (isTablet(context) || MezCalmosResizer.isSmallTablet(context)) {
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
       return 55.sp;
     } else {
-      return 45.sp;
+      return 100;
     }
   }
 }

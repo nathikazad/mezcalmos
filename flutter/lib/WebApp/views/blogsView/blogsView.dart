@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -66,12 +67,15 @@ class _BlogsViewState extends State<BlogsView> {
                               horizontal:
                                   MezCalmosResizer.getWepPageHorizontalPadding(
                                       context)),
-                          child: Text(
-                            "Our news & tips, let's go behind the scenes at Mezcalmos",
-                            style: txt.bodyText1!.copyWith(
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w700,
-                                fontSize: getSizeForTitle(context)),
+                          child: Obx(
+                            () => Text(
+                              Get.find<LanguageController>().strings["WebApp"]
+                                  ["blogsView"]["title"],
+                              style: txt.bodyText1!.copyWith(
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: getSizeForTitle(context)),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -100,7 +104,11 @@ class _BlogsViewState extends State<BlogsView> {
           } else {
             return Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: MezLogoAnimation(
+                  h: 200,
+                  w: 200,
+                  centered: true,
+                ),
               ),
             );
           }

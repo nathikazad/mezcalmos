@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/WebApp/services/values/globals.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:sizer/sizer.dart';
@@ -33,122 +34,139 @@ class WebServicesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
 
-    return Card(
-      color: Colors.white,
-      child: Container(
-        width: MezCalmosResizer.isMobile(context) ||
-                MezCalmosResizer.isSmallMobile(context) ||
-                MezCalmosResizer.isSmallTablet(context)
-            ? Get.width
-            : null,
-        child: Column(
-          children: [
-            SizedBox(
-              height: getSizeForSpaceBetweenItems(context) * 2,
-            ),
-            Container(
-              width: getSizeForImages(context),
-              child: Stack(
-                children: [
-                  Positioned(
-                    child: Container(
-                      height: getSizeForImage(context),
-                      width: getSizeForImage(context),
-                      child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          backgroundImage: AssetImage(firstUrlImage)),
-                    ),
-                  ),
-                  Positioned(
-                    left: (getSizeForImage(context) * 3) * 0.25,
-                    child: Container(
-                      height: getSizeForImage(context),
-                      width: getSizeForImage(context),
-                      child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          backgroundImage: AssetImage(secondUrlImage)),
-                    ),
-                  ),
-                  Positioned(
-                    left: (getSizeForImage(context) * 3) * 0.5,
-                    child: Container(
-                      height: getSizeForImage(context),
-                      width: getSizeForImage(context),
-                      child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          backgroundImage: AssetImage(thirdUrlImage)),
-                    ),
-                  )
-                ],
+    return Container(
+      decoration: new BoxDecoration(
+        boxShadow: [
+          new BoxShadow(
+              offset: Offset(0, 1),
+              color: Color.fromRGBO(0, 0, 0, 0.25),
+              blurRadius: 4.0,
+              spreadRadius: -1),
+        ],
+      ),
+      child: Card(
+        elevation: 0,
+        color: Colors.white,
+        child: Container(
+          width: MezCalmosResizer.isMobile(context) ||
+                  MezCalmosResizer.isSmallMobile(context) ||
+                  MezCalmosResizer.isSmallTablet(context)
+              ? Get.width
+              : null,
+          child: Column(
+            children: [
+              SizedBox(
+                height: getSizeForSpaceBetweenItems(context) * 2,
               ),
-            ),
-            SizedBox(
-              height: getSizeForSpaceBetweenItems(context),
-            ),
-            //title
-            Container(
-              child: Text(
-                title,
-                style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontWeight: FontWeight.w600,
-                    fontSize: getSizeForTitle(context)),
-              ),
-            ),
-            SizedBox(
-              height: getSizeForSpaceBetweenItems(context),
-            ),
-            Container(
-              width: getSizeForImages(context),
-              child: Text(
-                subtitle,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Color.fromRGBO(73, 73, 73, 1),
-                    fontFamily: "Nunito",
-                    fontSize: getSizeForSubtitle(context)),
-              ),
-            ),
-            SizedBox(
-              height: getSizeForSpaceBetweenItems(context),
-            ),
-
-            Container(
-              child: InkWell(
-                onTap: () {
-                  func();
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  width: getSizeForBtnText(context) * 15,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(279),
+              Container(
+                width: getSizeForImages(context),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      child: Container(
+                        height: getSizeForImage(context),
+                        width: getSizeForImage(context),
+                        child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            backgroundImage: AssetImage(firstUrlImage)),
+                      ),
                     ),
-                    gradient: LinearGradient(
-                        begin: Alignment(1, 0.5),
-                        end: Alignment(-0.75, 0.75),
-                        colors: [
-                          Color.fromRGBO(172, 89, 252, 1),
-                          Color.fromRGBO(103, 121, 254, 1)
-                        ]),
-                  ),
-                  child: Center(
-                      child: Text(
-                    "View current restaurants",
-                    style: txt.bodyText1!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: getSizeForBtnText(context),
-                        fontFamily: "Montserrat"),
-                  )),
+                    Positioned(
+                      left: (getSizeForImage(context) * 3) * 0.25,
+                      child: Container(
+                        height: getSizeForImage(context),
+                        width: getSizeForImage(context),
+                        child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            backgroundImage: AssetImage(secondUrlImage)),
+                      ),
+                    ),
+                    Positioned(
+                      left: (getSizeForImage(context) * 3) * 0.5,
+                      child: Container(
+                        height: getSizeForImage(context),
+                        width: getSizeForImage(context),
+                        child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            backgroundImage: AssetImage(thirdUrlImage)),
+                      ),
+                    )
+                  ],
                 ),
               ),
-            ),
-            SizedBox(
-              height: getSizeForSpaceBetweenItems(context) * 2,
-            )
-          ],
+              SizedBox(
+                height: getSizeForSpaceBetweenItems(context),
+              ),
+              //title
+              Container(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w600,
+                      fontSize: getSizeForTitle(context)),
+                ),
+              ),
+              SizedBox(
+                height: getSizeForSpaceBetweenItems(context),
+              ),
+              Container(
+                width: getSizeForImages(context),
+                child: Text(
+                  subtitle,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Color.fromRGBO(73, 73, 73, 1),
+                      fontFamily: "Nunito",
+                      fontSize: getSizeForSubtitle(context)),
+                ),
+              ),
+              SizedBox(
+                height: getSizeForSpaceBetweenItems(context),
+              ),
+
+              Container(
+                child: InkWell(
+                  onTap: () {
+                    func();
+                  },
+                  child: Container(
+                    // padding: EdgeInsets.symmetric(
+                    //     vertical: (MezCalmosResizer.isMobile(context) ||
+                    //             MezCalmosResizer.isSmallMobile(context))
+                    //         ? 5
+                    //         : 10),
+                    height: getSizeForBtnText(context) * 2,
+                    width: getSizeForBtnText(context) * 11,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(279),
+                      ),
+                      gradient: LinearGradient(
+                          begin: Alignment(1, 0.5),
+                          end: Alignment(-0.75, 0.75),
+                          colors: [
+                            Color.fromRGBO(172, 89, 252, 1),
+                            Color.fromRGBO(103, 121, 254, 1)
+                          ]),
+                    ),
+                    child: Center(
+                        child: Text(
+                      btnText,
+                      style: txt.bodyText1!.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: getSizeForBtnTextSize(context),
+                          fontFamily: "Montserrat"),
+                    )),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: getSizeForSpaceBetweenItems(context) * 2,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -283,14 +301,27 @@ class WebServicesCard extends StatelessWidget {
 
   double getSizeForBtnText(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
-      return 3.sp;
+      return 5.5.sp;
     } else if (MezCalmosResizer.isTablet(context) ||
         MezCalmosResizer.isSmallTablet(context)) {
-      return 3.5.sp;
+      return 6.sp;
+    } else if (MezCalmosResizer.isMobile(context)) {
+      return 11.sp;
+    } else {
+      return 11.5.sp;
+    }
+  }
+
+  double getSizeForBtnTextSize(BuildContext context) {
+    if (MezCalmosResizer.isDesktop(context)) {
+      return 4.sp;
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
+      return 4.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
       return 8.sp;
     } else {
-      return 8.sp;
+      return 8.5.sp;
     }
   }
 }

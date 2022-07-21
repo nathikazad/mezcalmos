@@ -1507,8 +1507,8 @@
             "Blog": "Blog",
             "ContactUs": "Contacta con nosotros"
         },
-        "title": "Creado para todas sus \nnecesidades de \ntransporte",
-        "subtitle": "Su lugar único para encontrar todos los servicios locales que necesita \ny donde puede disfrutar de servicios rápidos y de alta calidad.",
+        "title": "Creado para todas sus necesidades de transporte",
+        "subtitle": "Su lugar único para encontrar todos los servicios locales que necesita y donde puede disfrutar de servicios rápidos y de alta calidad.",
         "getAppBtn": "Obtener la aplicación",
         "food": "Alimento",
         "foodDescription": "Descubre los platos más deliciosos de los restaurantes más cercanos..",
@@ -1535,8 +1535,8 @@
                 "vision":"Nuestra visión",
                 "business":"Para negocios",
                 "blog":"Blog",
-                "fAQ":"FAQ",
-                "contactUs":"Contact us"
+                "fAQ":"PMF",
+                "contactUs":"Contacta con nosotros"
             },
             "mobile":{
                 "services":"Services",
@@ -1546,6 +1546,10 @@
             },
             "allRightReserved":"Todos los derechos reservados",
             "policy":"Política de privacidad"
+        },
+
+        "blogsView":{
+            "title":"Nuestras noticias y consejos, vamos detrás de escena en Mezcalmos"
         }
     }
 

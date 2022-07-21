@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/WebApp/main.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -26,14 +27,6 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   void initState() {
-    // if (!Get.isRegistered<LanguageController>() ||
-    //     Get.isRegistered<FirebaseDb>()) {
-    //   //dotenv.env['LMODE'].toString().toLaunchMode()
-    //   setupFirebase(dotenv.env['LMODE'].toString().toLaunchMode())
-    //       .then((value) {
-    //     langController = Get.find<LanguageController>();
-    //   });
-    // }
     controller = AutoScrollController(
         viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, Get.height),
         axis: scrollDirection);
@@ -78,7 +71,11 @@ class _IndexPageState extends State<IndexPage> {
           } else {
             return Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: MezLogoAnimation(
+                  h: 200,
+                  w: 200,
+                  centered: true,
+                ),
               ),
             );
           }

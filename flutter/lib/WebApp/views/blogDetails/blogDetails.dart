@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:image/image.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/WebApp/controllers/blogController.dart';
 import 'package:mezcalmos/WebApp/services/Models/blogModle.dart';
 import 'package:mezcalmos/WebApp/services/values/globals.dart';
@@ -9,7 +9,6 @@ import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:webfeed/webfeed.dart';
 import '../../main.dart';
 import '../HomeView/Components/components.dart';
 //
@@ -163,7 +162,20 @@ class _BlogDetailsState extends State<BlogDetails> {
                                   SizedBox(
                                     height: 20,
                                   ),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: MezCalmosResizer
+                                            .getWepPageHorizontalPadding(
+                                                context)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network("${blog.img}"),
+                                    ),
+                                  ),
 
+                                  SizedBox(
+                                    height: 20,
+                                  ),
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: MezCalmosResizer
@@ -215,7 +227,7 @@ class _BlogDetailsState extends State<BlogDetails> {
                                         horizontal: MezCalmosResizer
                                             .getWepPageHorizontalPadding(
                                                 context)),
-                                    child: buildContent(blog.content!),
+                                    child: buildContent(blog.content!, context),
                                   ),
 
                                   WebSiteFotterWedgetComponent(
@@ -227,7 +239,11 @@ class _BlogDetailsState extends State<BlogDetails> {
                           );
                         } else {
                           return Center(
-                            child: CircularProgressIndicator(),
+                            child: MezLogoAnimation(
+                              h: 200,
+                              w: 200,
+                              centered: true,
+                            ),
                           );
                         }
                       },
@@ -239,7 +255,11 @@ class _BlogDetailsState extends State<BlogDetails> {
           } else {
             return Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: MezLogoAnimation(
+                  h: 200,
+                  w: 200,
+                  centered: true,
+                ),
               ),
             );
           }
@@ -259,19 +279,6 @@ class _BlogDetailsState extends State<BlogDetails> {
     }
   }
 
-  double getSizeForSubtitle(BuildContext context) {
-    if (MezCalmosResizer.isDesktop(context)) {
-      return 4.sp;
-    } else if (MezCalmosResizer.isTablet(context) ||
-        MezCalmosResizer.isSmallTablet(context)) {
-      return 4.5.sp;
-    } else if (MezCalmosResizer.isSmallMobile(context)) {
-      return 13.sp;
-    } else {
-      return 10.sp;
-    }
-  }
-
   double getSizeForDate(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
       return 2.5.sp;
@@ -286,26 +293,50 @@ class _BlogDetailsState extends State<BlogDetails> {
   }
 }
 
-Widget? buildTitle(int index, RssItem item) {
-  if (index == 0) {
-    return null;
+double getSizeForSubtitle(BuildContext context) {
+  if (MezCalmosResizer.isDesktop(context)) {
+    return 4.sp;
+  } else if (MezCalmosResizer.isTablet(context) ||
+      MezCalmosResizer.isSmallTablet(context)) {
+    return 4.5.sp;
+  } else if (MezCalmosResizer.isSmallMobile(context)) {
+    return 13.sp;
   } else {
-    return Text(
-      "${item.title}",
-      style: TextStyle(color: Colors.blue),
-    );
+    return 10.sp;
   }
 }
 
-Widget buildContent(String? content) {
+// Widget? buildTitle(int index, RssItem item) {
+//   if (index == 0) {
+//     return null;
+//   } else {
+//     return Text(
+//       "${item.title}",
+//       style: TextStyle(color: Colors.blue),
+//     );
+//   }
+// }
+
+Widget buildContent(String? content, BuildContext context) {
   List<Widget> resultWidget = <Widget>[];
 
   if (content != null) {
     resultWidget.add(Container(
-      child: Html(
-        data: """
-                $content
-                  """,
+      child: Theme(
+        data: ThemeData(
+            textTheme: TextTheme(
+                bodyText1: TextStyle(fontFamily: "Nunito", color: Colors.red))),
+        child: Html(
+          style: {
+            "p": Style(
+                fontFamily: "Nunito",
+                fontSize: FontSize(getSizeForSubtitle(context)),
+                color: Color.fromRGBO(73, 73, 73, 1))
+          },
+          data: """
+                 <p> $content</p>
+                    """,
+        ),
       ),
     ));
   }

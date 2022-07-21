@@ -81,11 +81,17 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
             ),
           ],
         ),
+        SizedBox(
+          height: 10,
+        ),
         firstText(context),
         SizedBox(
           height: 10,
         ),
-        secondText(context),
+        Container(
+            margin: EdgeInsets.only(
+                right: MezCalmosResizer.getWepPageHorizontalPadding(context)),
+            child: secondText(context)),
         Padding(
             padding: EdgeInsets.symmetric(
                 // horizontal:
@@ -135,43 +141,52 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
 
   Widget getAppBtn(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-    return ClipRRect(
-      borderRadius: BorderRadius.all(
-        Radius.circular(279),
-      ),
-      child: InkWell(
-        onTap: () {
-          _scrollToCounter(controller, 4);
-          print("get App");
-        },
-        child: Container(
-          width: getSizeForGetAppBtn(context) * 13.5,
-          height: getSizeForGetAppBtn(context) * 2.5,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(279),
-            ),
-            gradient: LinearGradient(
-                begin: Alignment(1, 0.5),
-                end: Alignment(-0.75, 0.75),
-                colors: [
-                  Color.fromRGBO(172, 89, 252, 1),
-                  Color.fromRGBO(103, 121, 254, 1)
-                ]),
+    return Row(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.all(
+            Radius.circular(279),
           ),
-          child: Center(
-              child: Obx(
-            () => Text(
-              "${langController.strings["WebApp"]["getAppBtn"]}",
-              style: txt.bodyText1!.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: getSizeForGetAppBtn(context),
-                  fontFamily: "Montserrat"),
+          child: InkWell(
+            onTap: () {
+              _scrollToCounter(controller, 4);
+              print("get App");
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: MezCalmosResizer.isMobile(context) ||
+                          MezCalmosResizer.isMobile(context)
+                      ? 15
+                      : 25),
+              // width: getSizeForGetAppBtn(context) * 12,
+              height: getSizeForGetAppBtn(context) * 2,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(279),
+                ),
+                gradient: LinearGradient(
+                    begin: Alignment(1, 0.5),
+                    end: Alignment(-0.75, 0.75),
+                    colors: [
+                      Color.fromRGBO(172, 89, 252, 1),
+                      Color.fromRGBO(103, 121, 254, 1)
+                    ]),
+              ),
+              child: Center(
+                  child: Obx(
+                () => Text(
+                  "${langController.strings["WebApp"]["getAppBtn"]}",
+                  style: txt.bodyText1!.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: getSizeForGetAppBtn(context),
+                      fontFamily: "Montserrat"),
+                ),
+              )),
             ),
-          )),
+          ),
         ),
-      ),
+      ],
     );
   }
 
@@ -268,6 +283,9 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(
+                height: getBottomSizeForWidget(context),
+              )
             ],
           ),
         ),
@@ -292,10 +310,23 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isTablet(context) ||
         MezCalmosResizer.isSmallTablet(context)) {
       return 6.sp;
-    } else if (MezCalmosResizer.isSmallTablet(context)) {
-      return 6.sp;
+    } else if (MezCalmosResizer.isMobile(context)) {
+      return 11.sp;
     } else {
-      return 10.sp;
+      return 11.5.sp;
+    }
+  }
+
+  double getBottomSizeForWidget(BuildContext context) {
+    if (MezCalmosResizer.isDesktop(context)) {
+      return 8.sp;
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
+      return 9.sp;
+    } else if (MezCalmosResizer.isMobile(context)) {
+      return 16.sp;
+    } else {
+      return 17.5.sp;
     }
   }
 

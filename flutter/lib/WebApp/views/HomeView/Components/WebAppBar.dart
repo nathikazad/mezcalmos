@@ -40,64 +40,55 @@ class _WebAppBarState extends State<WebAppBar> {
         builder: (context, constraints) {
           if (MezCalmosResizer.isDesktop(context) ||
               MezCalmosResizer.isTablet(context)) {
-            return Row(
-              children: [
-                SizedBox(
-                  width: 100,
-                ),
-                buildTitle(logoSize: 25, titleSize: 20, spaceSize: 5),
-                Spacer(),
-                buildWidgetForTabletAndDesktop(
-                    txt: txt,
-                    isSelected: isSelected,
-                    controller: widget.controller),
-                SizedBox(
-                  width: 100,
-                )
-              ],
+            return Container(
+              padding: EdgeInsets.only(
+                  left: MezCalmosResizer.getWepPageHorizontalPadding(context) -
+                      15,
+                  right: MezCalmosResizer.getWepPageHorizontalPadding(context) -
+                      15),
+              child: Row(
+                children: [
+                  buildTitle(logoSize: 25, titleSize: 20, spaceSize: 5),
+                  Spacer(),
+                  buildWidgetForTabletAndDesktop(
+                      txt: txt,
+                      isSelected: isSelected,
+                      controller: widget.controller),
+                ],
+              ),
             );
           }
 
           // Or less then that we called it mobile
           else {
-            return Row(
-              children: [
-                buildTitle(logoSize: 20, titleSize: 15, spaceSize: 5),
-                Spacer(),
-                buildWidgetForMobile(func: () {
-                  widget.golbalKey.currentState!.openDrawer();
-                })
-              ],
+            return Container(
+              padding: MezCalmosResizer.isSmallTablet(context)
+                  ? EdgeInsets.only(
+                      left: MezCalmosResizer.getWepPageHorizontalPadding(
+                              context) -
+                          15,
+                      right: MezCalmosResizer.getWepPageHorizontalPadding(
+                              context) -
+                          10)
+                  : EdgeInsets.symmetric(
+                      horizontal: MezCalmosResizer.getWepPageHorizontalPadding(
+                          context)),
+              child: Row(
+                children: [
+                  buildTitle(logoSize: 20, titleSize: 15, spaceSize: 5),
+                  Spacer(),
+                  buildWidgetForMobile(func: () {
+                    widget.golbalKey.currentState!.openDrawer();
+                  })
+                ],
+              ),
             );
           }
         },
       ),
-      // title: Responsive(
-      // desktop:
-      //   tablet: Row(
-      //     children: [
-      //       SizedBox(
-      //         width: 50,
-      //       ),
-      //       buildTitle(logoSize: 25, titleSize: 20, spaceSize: 5),
-      //       Spacer(),
-      //       buildWidgetForTabletAndDesktop(
-      //           txt: txt,
-      //           isSelected: isSelected,
-      //           controller: widget.controller),
-      //       SizedBox(
-      //         width: 50,
-      //       )
-      //     ],
-      //   ),
-      // mobile:
-      // ),
       centerTitle: false,
     );
   }
-
-  //functions
-
 }
 
 Widget buildTitle(
@@ -208,82 +199,18 @@ Widget buildWidgetForTabletAndDesktop(
           direction != "horizontal"
               ? ContainerForActionListtile(
                   direction: direction,
-                  title: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Obx(
-                        () => Text(
-                          "${langController.userLanguageKey.toFirebaseFormatString() == "en" ? "To English" : "To Spanish"}",
-                          style: getRightTextStyle(
-                              txt: txt, isEnable: isSelected[4]),
-                        ),
-                      ),
-                      Icon(
-                        Icons.expand_more_outlined,
-                        size: 11,
-                        color: isSelected[4]
-                            ? Color.fromRGBO(103, 121, 254, 1)
-                            : Colors.black,
-                      )
-                    ],
+                  title: Obx(
+                    () => Text(
+                      "${langController.userLanguageKey.toFirebaseFormatString() == "en" ? "To English" : "To Spanish"}",
+                      style:
+                          getRightTextStyle(txt: txt, isEnable: isSelected[4]),
+                    ),
                   ),
                 )
-              : Theme(
-                  data: ThemeData(
-                      cardTheme: CardTheme(color: Colors.red),
-                      backgroundColor: Colors.red),
-                  child: PopupMenuButton<int>(
-                    child: Container(
-                      height: kToolbarHeight,
-                      width: kToolbarHeight,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Obx(
-                            () => Text(
-                              "${langController.userLanguageKey.toFirebaseFormatString().toUpperCase()}",
-                              style: getRightTextStyle(
-                                  txt: txt, isEnable: isSelected[4]),
-                            ),
-                          ),
-                          Icon(
-                            Icons.expand_more_outlined,
-                            size: 11,
-                            color: isSelected[4]
-                                ? Color.fromRGBO(103, 121, 254, 1)
-                                : Colors.black,
-                          )
-                        ],
-                      ),
-                    ),
-                    onSelected: (index) {
-                      if (index == 1) {
-                        langController.changeLangForWeb(LanguageType.EN);
-                      } else {
-                        langController.changeLangForWeb(LanguageType.ES);
-                      }
-                    },
-                    offset: Offset(0, kToolbarHeight * 0.75),
-                    itemBuilder: (context) => [
-                      // popupmenu item 1
-                      PopupMenuItem(
-                        value: 1,
-                        // row has two child icon and text.
-                        child: Row(
-                          children: [Text("English")],
-                        ),
-                      ),
-                      // popupmenu item 2
-                      PopupMenuItem(
-                        value: 2,
-                        // row has two child icon and text
-                        child: Row(
-                          children: [Text("Spanish")],
-                        ),
-                      ),
-                    ],
-                    color: Colors.grey,
-                    elevation: 2,
+              : Obx(
+                  () => Text(
+                    "${langController.userLanguageKey.toFirebaseFormatString().toUpperCase()}",
+                    style: getRightTextStyle(txt: txt, isEnable: isSelected[4]),
                   ),
                 ),
         ],
@@ -335,7 +262,14 @@ void doActionByIndex(
       }
       break;
     case 4:
-      Get.to(() => LangaugePageForMobile());
+      final LanguageController lang = Get.find<LanguageController>();
+      if (lang.userLanguageKey == LanguageType.EN) {
+        lang.changeLangForWeb(LanguageType.ES);
+      } else {
+        lang.changeLangForWeb(LanguageType.EN);
+      }
+
+      // Get.to(() => LangaugePageForMobile());
 
       break;
     default:

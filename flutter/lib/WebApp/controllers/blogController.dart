@@ -14,14 +14,16 @@ class BolgController extends GetxController {
 
   @override
   void onInit() {
-    //getFeed();
     getFeeds();
+
     super.onInit();
   }
 
-  Future<dynamic> getFeeds() {
+  Future<List<BlogModel>> getFeeds() async {
+    List<BlogModel> _blogs = <BlogModel>[];
+
     int index = 0;
-    return _databaseHelper.firebaseDatabase
+    await _databaseHelper.firebaseDatabase
         .ref()
         .child('blog')
         .once()
@@ -29,10 +31,7 @@ class BolgController extends GetxController {
       try {
         var value = event.snapshot.value as dynamic;
         value["items"].forEach((dynamic val) {
-          print("============||=========|${val["author"].toString()}|=======");
-          print("============||=========|${val["title"].toString()}|=======");
-          print("============||=========|${val["title"].toString()}|=======");
-          blogs.value.add(BlogModel(
+          _blogs.add(BlogModel(
               index: index,
               date: _getDate(val["pubDate"] ?? DateTime.now().toString()),
               title: val["title"],
@@ -46,6 +45,8 @@ class BolgController extends GetxController {
         print(e);
       }
     });
+    blogs.value = _blogs;
+    return _blogs;
   }
 
   // Future<void> getFeed() async {

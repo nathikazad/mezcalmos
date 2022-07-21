@@ -63,7 +63,7 @@ class FormForQuestionAndFeedBack extends StatelessWidget {
             fontSize: getSizeSubtitleTitle(context),
             fontWeight: FontWeight.w500,
             fontFamily: "Nunito",
-            color: Colors.black),
+            color: Color.fromRGBO(73, 73, 73, 1)),
       ),
     );
   }
@@ -214,37 +214,48 @@ class FAQFormComponent extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: getSpaceOnTop(context),
+          height: getSpaceOnTop(context) / 2,
         ),
-        InkWell(
-          onTap: () {
-            sendMessage();
-          },
-          child: Container(
-            width: getSizeForSendBtn(context).width,
-            height: getSizeForSendBtn(context).height,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(279),
+        Row(
+          children: [
+            InkWell(
+              onTap: () {
+                sendMessage();
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: (MezCalmosResizer.isMobile(context) ||
+                            MezCalmosResizer.isSmallMobile(context))
+                        ? 15
+                        : 25),
+                //ßwidth: getSizeForSendBtn(context) * 10,
+                height: getSizeForSendBtn(context) * 2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(279),
+                  ),
+                  gradient: LinearGradient(
+                      begin: Alignment(1, 0.5),
+                      end: Alignment(-0.75, 0.75),
+                      colors: [
+                        Color.fromRGBO(172, 89, 252, 1),
+                        Color.fromRGBO(103, 121, 254, 1)
+                      ]),
+                ),
+                child: Center(
+                    child: Obx(
+                  () => Text(
+                    "${langController.strings["WebApp"]["submitBtn"]}",
+                    style: txt.bodyText1!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: getSizeForSndBtnText(context),
+                        fontFamily: "Montserrat"),
+                  ),
+                )),
               ),
-              gradient: LinearGradient(
-                  begin: Alignment(1, 0.5),
-                  end: Alignment(-0.75, 0.75),
-                  colors: [
-                    Color.fromRGBO(172, 89, 252, 1),
-                    Color.fromRGBO(103, 121, 254, 1)
-                  ]),
             ),
-            child: Center(
-                child: Text(
-              "${langController.strings["WebApp"]["submitBtn"]}",
-              style: txt.bodyText1!.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: getSizeForSndBtnText(context),
-                  fontFamily: "Montserrat"),
-            )),
-          ),
+          ],
         ),
         SizedBox(
           height: getSpaceOnTop(context),
@@ -292,16 +303,16 @@ class FAQFormComponent extends StatelessWidget {
     }
   }
 
-  Size getSizeForSendBtn(BuildContext context) {
+  double getSizeForSendBtn(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
-      return Size(50.sp, 11.sp);
+      return 5.5.sp;
     } else if (MezCalmosResizer.isTablet(context) ||
         MezCalmosResizer.isSmallTablet(context)) {
-      return Size(55.sp, 12.sp);
+      return 6.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
-      return Size(75.sp, 20.sp);
+      return 11.sp;
     } else {
-      return Size(75.sp, 20.sp);
+      return 11.5.sp;
     }
   }
 

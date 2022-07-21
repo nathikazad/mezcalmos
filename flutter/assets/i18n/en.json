@@ -1456,8 +1456,8 @@
             "Blog": "Blog",
             "ContactUs": "Contact us"
         },
-        "title": "Built for all your\ntransportation\nneeds",
-        "subtitle": "Your one stop place to find all your needed local services \nand where you can enjoy fast and high quality services.",
+        "title": "Built for all your transportation needs",
+        "subtitle": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",
         "getAppBtn": "Get the app",
         "food": "Food",
         "foodDescription": "Discover most delicious dishes from the nearest restaurents.",
@@ -1495,6 +1495,10 @@
             },
             "allRightReserved":"All right reserved",
             "policy":"Privacy policy"
+        },
+
+        "blogsView":{
+            "title":"Our news & tips, let's go behind the scenes at Mezcalmos"
         }
     }
 }

@@ -120,17 +120,19 @@ Future<bool> setupFirebase(
   } else {
     throw Exception("Invalid Launch Mode");
   }
+  if (!Get.isRegistered<FirebaseDb>()) {
+    Get.put(
+        FirebaseDb(
+          dbUrl: _host + dbRoot,
+          firebaseDatabase: firebaseDb,
+          firebaseApp: _app,
+        ),
+        permanent: true);
+  }
 
-  Get.put(
-      FirebaseDb(
-        dbUrl: _host + dbRoot,
-        firebaseDatabase: firebaseDb,
-        firebaseApp: _app,
-      ),
-      permanent: true);
   putControllers();
   return Future.delayed(Duration(
-    seconds: 2,
+    milliseconds: 500,
   )).then((value) {
     if (func != null) {
       func();
@@ -140,23 +142,31 @@ Future<bool> setupFirebase(
 }
 
 Future<void> putControllers() async {
-  await Get.put<LanguageController>(LanguageController())
-      .isLamgInitialized
-      .stream
-      .first;
+  if (!Get.isRegistered<LanguageController>()) {
+    await Get.put<LanguageController>(LanguageController())
+        .isLamgInitialized
+        .stream
+        .first;
+  }
 
-  Get.put<RestaurantsInfoController>(
-    RestaurantsInfoController(),
-    permanent: true,
-  );
-  Get.put<AppLifeCycleController>(
-    AppLifeCycleController(logs: true),
-    permanent: true,
-  );
-  Get.put<BolgController>(
-    BolgController(),
-    permanent: true,
-  );
+  if (!Get.isRegistered<RestaurantsInfoController>()) {
+    Get.put<RestaurantsInfoController>(
+      RestaurantsInfoController(),
+      permanent: true,
+    );
+  }
+  if (!Get.isRegistered<AppLifeCycleController>()) {
+    Get.put<AppLifeCycleController>(
+      AppLifeCycleController(logs: true),
+      permanent: true,
+    );
+  }
+  if (!Get.isRegistered<BolgController>()) {
+    Get.put<BolgController>(
+      BolgController(),
+      permanent: true,
+    );
+  }
 }
 
 void hookOnFlutterErrorsStdout() {

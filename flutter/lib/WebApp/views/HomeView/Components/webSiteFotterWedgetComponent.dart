@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sizer/sizer.dart';
@@ -58,7 +59,7 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 5,
+            height: 15,
           ),
           Container(
             width: Get.width,
@@ -96,13 +97,15 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
                 ),
                 Spacer(),
                 Obx(
-                  () => FotterBottonsComponents(
-                    text:
-                        "${langController.strings["WebApp"]["fotterBar"]["mobile"]["contactUs"]}",
-                    func: () {
-                      _scrollToCounter(controller, 3);
-                    },
-                  ),
+                  () => langController.userLanguageKey == LanguageType.EN
+                      ? FotterBottonsComponents(
+                          text:
+                              "${langController.strings["WebApp"]["fotterBar"]["mobile"]["contactUs"]}",
+                          func: () {
+                            _scrollToCounter(controller, 3);
+                          },
+                        )
+                      : Container(),
                 )
               ],
             ),
@@ -110,15 +113,26 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
+          Obx(
+            () => langController.userLanguageKey == LanguageType.ES
+                ? FotterBottonsComponents(
+                    text:
+                        "${langController.strings["WebApp"]["fotterBar"]["mobile"]["contactUs"]}",
+                    func: () {
+                      _scrollToCounter(controller, 3);
+                    },
+                  )
+                : Container(),
+          ),
           BuildDivider(),
-          SizedBox(height: 10),
+          SizedBox(height: 11.sp),
           BuildSocailMedaiIcons(context),
           SizedBox(
-            height: 5,
+            height: 5.sp,
           ),
           BuidCopyRightText(context),
           SizedBox(
-            height: 5,
+            height: 5.sp,
           ),
           BuildPrivacyAndPolicyText(context)
         ],
@@ -232,7 +246,9 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _launchURL("https://www.linkedin.com/company/mezcalmos/");
+            },
             icon: FaIcon(
               FontAwesomeIcons.linkedinIn,
               size: getIconSize(context),
@@ -240,7 +256,9 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _launchURL("https://www.facebook.com/mezcalmos");
+            },
             icon: FaIcon(
               FontAwesomeIcons.facebookF,
               size: getIconSize(context),
@@ -248,7 +266,9 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
             ),
           ),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                _launchURL("https://www.instagram.com/mezcalmospxm/ ");
+              },
               icon: FaIcon(
                 FontAwesomeIcons.instagram,
                 size: getIconSize(context),
@@ -355,11 +375,15 @@ class FotterBottonsComponents extends StatelessWidget {
         MezCalmosResizer.isSmallTablet(context)) {
       return 4.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
-      return 13.sp;
+      return 11.sp;
     } else if (MezCalmosResizer.isSmallTablet(context)) {
-      return 8.sp;
+      return 11.5.sp;
     } else {
       return 15.sp;
     }
   }
+}
+
+_launchURL(String url) async {
+  await launchUrl(Uri.parse(url));
 }

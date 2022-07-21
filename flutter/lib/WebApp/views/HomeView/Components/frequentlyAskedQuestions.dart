@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/views/components/webAppExpensionPanelComponent.dart';
 import 'package:sizer/sizer.dart';
 
 class FrequentlyAskedQuestions extends StatelessWidget {
@@ -47,122 +48,183 @@ class FrequentlyAskedQuestions extends StatelessWidget {
     );
   }
 
-  Widget GetListOfQuestions(
-      {required TextTheme textTheme,
-      required double separateSize,
-      required double leadingSize,
-      required double titleSize,
-      required double trailingSize}) {
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: separateSize,
-          ),
-          Divider(
-            height: 1,
-            thickness: 1,
-            color: Colors.black,
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            minLeadingWidth: 15,
-            minVerticalPadding: 15,
-            leading: Text(
-              "01.",
-              style: textTheme.bodyText1!.copyWith(
-                  fontSize: leadingSize,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "Montserrat",
-                  color: Colors.black),
+  Widget GetListOfQuestions({
+    required TextTheme textTheme,
+    required double separateSize,
+    required double leadingSize,
+    required double titleSize,
+    required double trailingSize,
+  }) {
+    return StatefulBuilder(builder: (context, setState) {
+      return Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: separateSize,
             ),
-            title: Text(
-              "What kind of services Mezcalmos offer?",
-              style: textTheme.bodyText1!.copyWith(
-                  fontSize: titleSize,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Montserrat",
-                  color: Colors.black),
+            Container(
+              width: Get.width -
+                  (MezCalmosResizer.getWepPageHorizontalPadding(context) * 2),
+              child: MezExpansionTile(
+                  IconSize: trailingSize,
+                  title: Container(
+                      child: Row(
+                    children: [
+                      Text(
+                        "01.",
+                        style: textTheme.bodyText1!.copyWith(
+                            fontSize: leadingSize,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "Montserrat",
+                            color: Colors.black),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Flexible(
+                        child: Text(
+                          "What kind of services Mezcalmos offer?",
+                          overflow: TextOverflow.clip,
+                          style: textTheme.bodyText1!.copyWith(
+                              fontSize: titleSize,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "Montserrat",
+                              color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  )),
+                  children: [
+                    Container(
+                      child: Text(
+                        """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. """,
+                        style: TextStyle(
+                            fontSize:
+                                getSizeForTextInsideExpensionPenel(context)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    )
+                  ]),
             ),
-            trailing: Icon(
-              Icons.add,
-              size: trailingSize,
-              color: Color.fromRGBO(103, 121, 254, 1),
+            Container(
+              width: Get.width -
+                  (MezCalmosResizer.getWepPageHorizontalPadding(context) * 2),
+              child: MezExpansionTile(
+                  IconSize: trailingSize,
+                  title: Container(
+                      child: Row(
+                    children: [
+                      Text(
+                        "02.",
+                        style: textTheme.bodyText1!.copyWith(
+                            fontSize: leadingSize,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "Montserrat",
+                            color: Colors.black),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Flexible(
+                        child: Text(
+                          "What kind of services Mezcalmos offer?",
+                          overflow: TextOverflow.clip,
+                          style: textTheme.bodyText1!.copyWith(
+                              fontSize: titleSize,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "Montserrat",
+                              color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  )),
+                  children: [
+                    Container(
+                      child: Text(
+                        """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. """,
+                        style: TextStyle(
+                            fontSize:
+                                getSizeForTextInsideExpensionPenel(context)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    )
+                  ]),
             ),
-          ),
-          Divider(
-            height: 1,
-            thickness: 1,
-            color: Colors.black,
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            minLeadingWidth: 15,
-            minVerticalPadding: 15,
-            leading: Text(
-              "02.",
-              style: textTheme.bodyText1!.copyWith(
-                  fontSize: leadingSize,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "Montserrat",
-                  color: Colors.black),
+            Container(
+              width: Get.width -
+                  (MezCalmosResizer.getWepPageHorizontalPadding(context) * 2),
+              child: MezExpansionTile(
+                  IconSize: trailingSize,
+                  title: Container(
+                      child: Row(
+                    children: [
+                      Text(
+                        "03.",
+                        style: textTheme.bodyText1!.copyWith(
+                            fontSize: leadingSize,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "Montserrat",
+                            color: Colors.black),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Flexible(
+                        child: Text(
+                          "How can Mezcalmos help to grow my business?",
+                          overflow: TextOverflow.clip,
+                          style: textTheme.bodyText1!.copyWith(
+                              fontSize: titleSize,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "Montserrat",
+                              color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  )),
+                  children: [
+                    Container(
+                      child: Text(
+                        """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. """,
+                        style: TextStyle(
+                            fontSize:
+                                getSizeForTextInsideExpensionPenel(context)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    )
+                  ]),
             ),
-            title: Text(
-              "What kind of services Mezcalmos offer?",
-              style: textTheme.bodyText1!.copyWith(
-                  fontSize: titleSize,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Montserrat",
-                  color: Colors.black),
+            Divider(
+              height: 1,
+              thickness: 1,
+              color: Colors.black,
             ),
-            trailing: Icon(
-              Icons.add,
-              color: Color.fromRGBO(103, 121, 254, 1),
-              size: trailingSize,
-            ),
-          ),
-          Divider(
-            height: 1,
-            thickness: 1,
-            color: Colors.black,
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            minLeadingWidth: 15,
-            minVerticalPadding: 15,
-            leading: Text(
-              "03.",
-              style: textTheme.bodyText1!.copyWith(
-                  fontSize: leadingSize,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "Montserrat",
-                  color: Colors.black),
-            ),
-            title: Text(
-              "How can Mezcalmos help to grow my business?",
-              style: textTheme.bodyText1!.copyWith(
-                  fontSize: titleSize,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Montserrat",
-                  color: Colors.black),
-            ),
-            trailing: Icon(
-              Icons.add,
-              size: trailingSize,
-              color: Color.fromRGBO(103, 121, 254, 1),
-            ),
-          ),
-          Divider(
-            height: 1,
-            thickness: 1,
-            color: Colors.black,
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
+  }
+
+  double getSizeForTextInsideExpensionPenel(BuildContext context) {
+    if (MezCalmosResizer.isDesktop(context)) {
+      return 4.sp;
+    } else if (MezCalmosResizer.isTablet(context) ||
+        MezCalmosResizer.isSmallTablet(context)) {
+      return 4.5.sp;
+    } else if (MezCalmosResizer.isMobile(context)) {
+      return 8.sp;
+    } else {
+      return 8.5.sp;
+    }
   }
 
   double getSpaceOnTop(BuildContext context) {
@@ -232,14 +294,14 @@ class FrequentlyAskedQuestions extends StatelessWidget {
 
   double getSizeForListTileTraillingIcon(BuildContext context) {
     if (MezCalmosResizer.isDesktop(context)) {
-      return 4.sp;
+      return 6.sp;
     } else if (MezCalmosResizer.isTablet(context) ||
         MezCalmosResizer.isSmallTablet(context)) {
-      return 4.5.sp;
+      return 6.5.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
-      return 8.sp;
+      return 11.sp;
     } else {
-      return 8.sp;
+      return 11.sp;
     }
   }
 }

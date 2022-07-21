@@ -41,7 +41,9 @@ class ServicesPartComponent extends StatelessWidget {
             children: [
               // service title
               buildServiceTitle(txt, context),
-
+              SizedBox(
+                height: 7.sp,
+              ),
               //list of services
               ListOfServices(txt, context),
               //
@@ -65,6 +67,9 @@ class ServicesPartComponent extends StatelessWidget {
         // service title
         buildServiceTitle(txt, context),
         //list of services
+        SizedBox(
+          height: 11.sp,
+        ),
         ListOfServices(txt, context),
         //
         SizedBox(
@@ -96,7 +101,10 @@ class ServicesPartComponent extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.only(
-          right: MezCalmosResizer.getWepPageHorizontalPadding(context),
+          right: MezCalmosResizer.isMobile(context) ||
+                  MezCalmosResizer.isSmallMobile(context)
+              ? MezCalmosResizer.getWepPageHorizontalPadding(context)
+              : 0,
           left: MezCalmosResizer.isMobile(context) ||
                   MezCalmosResizer.isSmallMobile(context)
               ? MezCalmosResizer.getWepPageHorizontalPadding(context)

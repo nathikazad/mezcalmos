@@ -5,6 +5,7 @@ import 'package:mezcalmos/WebApp/controllers/blogController.dart';
 import 'package:mezcalmos/WebApp/routes/AppRoutes.dart';
 import 'package:mezcalmos/WebApp/services/Models/blogModle.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:mezcalmos/WebApp/views/HomeView/Components/blogCardShimmerComponent.dart';
 import 'package:sizer/sizer.dart';
 
 class BlogPartComponent extends StatelessWidget {
@@ -137,32 +138,57 @@ class BlogPartComponent extends StatelessWidget {
 // ];
 Widget GetBolgsGridList(BuildContext context, int? lenght) {
   return LayoutBuilder(builder: (context, constraints) {
-    return Container(
-      child: MezCalmosResizer.isSmallMobile(context)
-          ? ListView.builder(
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return BlogCardComponent(
-                  blog: Get.find<BolgController>().blogs.value[index],
-                );
-              },
-              itemCount:
-                  lenght ?? Get.find<BolgController>().blogs.value.length,
-            )
-          : GridView.builder(
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: MezCalmosResizer.isMobile(context) ? 2 : 3,
-              ),
-              itemCount:
-                  lenght ?? Get.find<BolgController>().blogs.value.length,
-              itemBuilder: (BuildContext context, int index) {
-                return BlogCardComponent(
-                  blog: Get.find<BolgController>().blogs.value[index],
-                );
-              },
-            ),
-    );
+    return FutureBuilder<List<BlogModel>>(
+        future: Get.find<BolgController>().getFeeds(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Container(
+              child: MezCalmosResizer.isSmallMobile(context)
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return BlogCardComponent(
+                          blog: snapshot.data![index],
+                        );
+                      },
+                      itemCount: lenght ?? snapshot.data!.length,
+                    )
+                  : GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount:
+                            MezCalmosResizer.isMobile(context) ? 2 : 3,
+                      ),
+                      itemCount: lenght ?? snapshot.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return BlogCardComponent(
+                          blog: snapshot.data![index],
+                        );
+                      },
+                    ),
+            );
+          } else {
+            return MezCalmosResizer.isSmallMobile(context)
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: 1,
+                    itemBuilder: (context, index) {
+                      return BlogCardShimmerComponent();
+                    },
+                  )
+                : GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount:
+                          MezCalmosResizer.isMobile(context) ? 2 : 3,
+                    ),
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return BlogCardShimmerComponent();
+                    },
+                  );
+          }
+        });
   });
 }
 
@@ -201,7 +227,7 @@ class BlogCardComponent extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 5,
+              height: 10,
             ),
             Text(
               blog.date,
@@ -239,6 +265,7 @@ class BlogCardComponent extends StatelessWidget {
               style: txt.bodySmall!.copyWith(
                   color: Color.fromRGBO(103, 121, 254, 1),
                   fontSize: getSizeForTimeOrReadingText(context),
+                  fontFamily: "Nunito",
                   decoration: TextDecoration.underline),
             )
           ],
@@ -253,10 +280,10 @@ class BlogCardComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isTablet(context) ||
         MezCalmosResizer.isSmallTablet(context)) {
       return 4.5.sp;
-    } else if (MezCalmosResizer.isSmallMobile(context)) {
-      return 13.sp;
+    } else if (MezCalmosResizer.isMobile(context)) {
+      return 9.sp;
     } else {
-      return 7.sp;
+      return 12.sp;
     }
   }
 
@@ -282,9 +309,9 @@ class BlogCardComponent extends StatelessWidget {
         MezCalmosResizer.isSmallTablet(context)) {
       return 4.sp;
     } else if (MezCalmosResizer.isMobile(context)) {
-      return 5.sp;
+      return 6.sp;
     } else if (MezCalmosResizer.isSmallMobile(context)) {
-      return 7.5;
+      return 9;
     } else {
       return 6.sp;
     }
@@ -299,7 +326,7 @@ class BlogCardComponent extends StatelessWidget {
     } else if (MezCalmosResizer.isMobile(context)) {
       return 7.sp;
     } else if (MezCalmosResizer.isSmallMobile(context)) {
-      return 7.5;
+      return 11;
     } else {
       return 0;
     }
