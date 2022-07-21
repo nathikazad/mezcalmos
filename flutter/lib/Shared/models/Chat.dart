@@ -70,6 +70,7 @@ class AgoraDetails {
   AgoraDetails({required this.uid, required this.token});
 
   factory AgoraDetails.fromData(dynamic data) {
+    mezDbgPrint("AGORAAAAAATO DATA ===> $data");
     return AgoraDetails(uid: data['uid'], token: data['token']);
   }
 }
@@ -152,9 +153,11 @@ class Chat {
           name: participantData['name'],
           participantType: participantType,
           id: participantId,
-          agora: AgoraDetails.fromData(
-            participantData['agora'],
-          ),
+          agora: participantData['agora'] == null
+              ? null
+              : AgoraDetails.fromData(
+                  participantData['agora'],
+                ),
         );
       });
     });
@@ -241,17 +244,18 @@ class CallNotificationForQueue extends NotificationForQueue {
   ParticipantType calleeParticipantType;
   String? orderId;
   CallNotificationtType callNotificationtType;
-  CallNotificationForQueue(
-      {required this.chatId,
-      required this.callerId,
-      required this.callerParticipantType,
-      required this.calleeId,
-      required this.calleeParticipantType,
-      required this.callNotificationtType,
-      this.orderId})
-      : super(
-            notificationType: NotificationType.Call,
-            timeStamp: DateTime.now().toUtc());
+  CallNotificationForQueue({
+    required this.chatId,
+    required this.callerId,
+    required this.callerParticipantType,
+    required this.calleeId,
+    required this.calleeParticipantType,
+    required this.callNotificationtType,
+    this.orderId,
+  }) : super(
+          notificationType: NotificationType.Call,
+          timeStamp: DateTime.now().toUtc(),
+        );
 
   Map<String, dynamic> toFirebaseFormatJson() => {
         ...super.toFirebaseFormatJson(),

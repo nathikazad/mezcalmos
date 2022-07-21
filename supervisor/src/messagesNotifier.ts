@@ -42,25 +42,15 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
     let fcmMessage: fcm.fcmPayload = {
       token: subscription.deviceNotificationToken,
       payload: {
-<<<<<<< HEAD
-        data: {
-=======
         data: <NewCallBackgroundNotification>{
->>>>>>> inAppCall-Agora
           linkUrl: chatUrl(notificationForQueue.chatId),
           language: language,
           callerName: callerInfo.name ?? "Caller",
           notificationType: NotificationType.Call,
-<<<<<<< HEAD
-          callerImage: callerInfo.image,
-          callerType: callerInfo.particpantType
-        }
-=======
           callNotificationType: notificationForQueue.callNotificationType,
           callerImage: callerInfo.image,
           callerType: callerInfo.particpantType
         } 
->>>>>>> inAppCall-Agora
       },
       options: {
         priority: fcm.NotificationPriority.High,
@@ -137,20 +127,6 @@ async function notifyCustomerAboutCounterOffer(notificationForQueue: CounterOffe
       }
     },
     linkUrl: orderUrl(chat.ParticipantType.Customer, OrderType.Taxi, notificationForQueue.orderId)
-<<<<<<< HEAD
-  }
-  notifyUser.pushNotification(notificationForQueue.customerId, notification, chat.ParticipantType.Customer);
-}
-
-
-async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.ParticipantWithAgora, callee: chat.ParticipantWithAgora, keys: Keys) {
-  if (keys.agora == null)
-    return
-  if (callee.agora == null || caller.agora == null || new Date() > new Date(callee.agora.expirationTime) || new Date() > new Date(caller.agora.expirationTime)) {
-    await setAgoraDetails(chatId, callee, keys)
-    await setAgoraDetails(chatId, caller, keys)
-  }
-=======
   }
   notifyUser.pushNotification(notificationForQueue.customerId, notification, chat.ParticipantType.Customer);
 }
@@ -163,7 +139,6 @@ async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.Partic
   await setAgoraDetails(chatId, callee, keys)
   await setAgoraDetails(chatId, caller, keys)
 
->>>>>>> inAppCall-Agora
 }
 
 async function setAgoraDetails(chatId: string, user: chat.Participant, keys: Keys) {

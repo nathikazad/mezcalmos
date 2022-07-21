@@ -18,6 +18,8 @@ const String authPort = ":9099";
 const String dbRoot = ":9000/?ns=$db";
 const int functionPort = 5001;
 const String placesApikey = "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
+const String agoraAppId = "6def50fdd2804ffaaa70d807ee445d28";
+
 // can be dev / prod
 
 // ----------------- TEST STRINGS ----------------- //

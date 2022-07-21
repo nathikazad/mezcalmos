@@ -1,41 +1,38 @@
 // ignore_for_file: avoid_void_async, always_specify_types, unawaited_futures
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/state_manager.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class AgoraConfig {
-  static const channelId = "mezcal";
-  static const appId = "6def50fdd2804ffaaa70d807ee445d28";
-  static const token =
-      "0066def50fdd2804ffaaa70d807ee445d28IADaFZrWbu5oZeC9Bc21YjPSkOprjv/qdTGSpD/36GJ/lA4HiyIAAAAAEAB0/t05XTnXYgEAAQBdOddi";
-  static RxnInt uid = RxnInt();
-}
-
-class Sagora {
+class Sagora extends GetxController {
   late final RtcEngine _engine;
-  bool isEngineCreated = false;
-  // String channelId = AgoraConfig.channelId;
-  RxBool isJoined = false.obs;
-  // RxBool openMicrophone = true.obs;
-  // RxBool enableSpeakerphone = true.obs;
-  // RxBool playEffect = false.obs;
-  // RxBool enableInEarMonitoring = false.obs;
-  // RxDouble recordingVolume = 100.0.obs;
-  // RxDouble playbackVolume = 100.0.obs;
-  // RxDouble inEarMonitoringVolume = 100.0.obs;
 
   RtcEngine get engine => _engine;
   // late TextEditingController _controller;
 
-  Future<bool> checkAgoraPermissions() async {
-    // Map<Permission, PermissionStatus> r =
-    //     (await [Permission.microphone].request());
-    bool isPermissionGranted = false;
+  @override
+  void onInit() {
+    checkAgoraPermissions();
+    _initAgora();
+    super.onInit();
+  }
 
+  @override
+  void onClose() {
+    removeSession();
+    _engine.destroy();
+    super.onClose();
+  }
+
+  Future<bool> checkAgoraPermissions() async {
+    bool isPermissionGranted = false;
     if (getPlatformType() == MezPlatform.ANDROID) {
       isPermissionGranted = await Permission.microphone.request().isGranted;
       mezDbgPrint(isPermissionGranted);
@@ -47,58 +44,54 @@ class Sagora {
       return true;
   }
 
-  Future<void> initAgora() async {
-    mezDbgPrint("initAgora::Agora ======;");
-    // retrieve permissions
-    // await [Permission.microphone, Permission.camera].request();
-
+  Future<void> _initAgora() async {
     //create the engine
-    _engine =
-        await RtcEngine.createWithContext(RtcEngineContext(AgoraConfig.appId));
-    // await _engine.disableVideo();
+    _engine = await RtcEngine.createWithContext(RtcEngineContext(agoraAppId));
     await _engine.enableAudio();
     await _engine.setChannelProfile(ChannelProfile.Communication);
-    isEngineCreated = true;
-    // await _engine.joinChannel(
-    //   AgoraConfig.token,
-    //   AgoraConfig.channelId,
-    //   null,
-    //   0,
-    // );
   }
 
-  void joinChannel(
-      {required String token,
-      required String channelId,
-      required int uid,
-      required VoidCallback onSuccessJoin,
-      required VoidCallback onFailedJoin}) async {
+  void joinChannel({
+    required String token,
+    required String channelId,
+    required int uid,
+  }) async {
     _engine.setEventHandler(
       RtcEngineEventHandler(
         error: (err) {
           mezDbgPrint("Runtime Error happend $err");
-          onFailedJoin();
         },
         joinChannelSuccess: (String channel, int uid, int elapsed) {
-          onSuccessJoin();
           mezDbgPrint("local user $uid joined");
-          isJoined.value = true;
         },
         userJoined: (int uid, int elapsed) {
           mezDbgPrint("remote user $uid joined");
-          AgoraConfig.uid.value = uid;
         },
         leaveChannel: (state) {
           mezDbgPrint("onLeaveChannel : duration : ${state.duration}");
         },
         userOffline: (int uid, UserOfflineReason reason) {
           mezDbgPrint("remot1e user $uid left channel");
-          AgoraConfig.uid.value = null;
         },
       ),
     );
 
     await _engine.joinChannel(token, channelId, null, uid);
+  }
+
+  Future<void> removeSession() async {
+    await FlutterCallkitIncoming.endAllCalls();
+    _engine.leaveChannel();
+  }
+
+  Future<DatabaseEvent> getAgoraToken(
+      String chatId, String userId, ParticipantType type) async {
+    mezDbgPrint("Listening once on ${agoraChatNode(chatId, userId, type)}");
+    return FirebaseDatabase.instance
+        .ref()
+        .child(agoraChatNode(chatId, userId, type))
+        .onValue
+        .first;
   }
 
   // Methods and Callbacks
@@ -209,4 +202,5 @@ class Sagora {
   //   await _engine.enableInEarMonitoring(enableInEarMonitoring.value);
   //   refresh();
   // }
+
 }

@@ -39,7 +39,9 @@ Notification customerNotificationHandler(
           throw StateError("Invalid Notification Type");
       }
     case NotificationType.Call:
-    //@saad needs to be implemented
+      //@saad needs to be implemented
+      throw StateError("Callllll forgrouned notif!!");
+
     default:
       throw StateError("Invalid Notification Type");
   }

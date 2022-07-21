@@ -85,24 +85,18 @@ export interface MessageNotificationForQueue extends NotificationForQueue {
   orderId?: string
 }
 
-<<<<<<< HEAD
-=======
 export enum CallNotificationtType {
   Incoming = "incoming",
   EndCall = "endCall"
 
 }
->>>>>>> inAppCall-Agora
 export interface CallNotificationForQueue extends NotificationForQueue {
   chatId: string,
   callerId: string,
   callerParticipantType: ParticipantType,
   calleeId: string,
   calleeParticipantType: ParticipantType,
-<<<<<<< HEAD
-=======
   callNotificationType: CallNotificationtType,
->>>>>>> inAppCall-Agora
   orderId?: string
 }
 

@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
+import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 
 class AgoraCall extends StatelessWidget {
-  final Participant calleeInfos;
-  AgoraCall({required this.calleeInfos, Key? key}) : super(key: key);
-
+  final Participant talkingTo;
+  final String chatId;
+  AgoraCall({required this.chatId, required this.talkingTo, Key? key})
+      : super(key: key);
+  final MessageController _msgController = MessageController();
   final Sagora _sagora = Get.find<Sagora>();
 
   @override
@@ -33,13 +36,13 @@ class AgoraCall extends StatelessWidget {
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: Image.network(calleeInfos.image).image,
+                        image: Image.network(talkingTo.image).image,
                       ),
                     ),
                   ),
                   SizedBox(height: 20),
                   Text(
-                    calleeInfos.name,
+                    talkingTo.name,
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Montserrat',
@@ -78,8 +81,9 @@ class AgoraCall extends StatelessWidget {
                     Flexible(
                       child: InkWell(
                         onTap: () async {
-                          await _sagora.engine.leaveChannel();
-                          await FlutterCallkitIncoming.endAllCalls();
+                          await _msgController.endCall(
+                              chatId: chatId, callee: talkingTo);
+                          await _sagora.removeSession();
                           Get.back<void>();
                         },
                         child: Container(

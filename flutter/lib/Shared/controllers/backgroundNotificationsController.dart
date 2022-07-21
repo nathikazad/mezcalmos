@@ -6,23 +6,55 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:uuid/uuid.dart';
 
 void startListeningOnCallEvents() {
-  mezDbgPrint("startListeningOnCallEvents ===>  oooooooooooooo");
-  FlutterCallkitIncoming.onEvent.listen((CallEvent? event) {
-    if (event != null) {
-      mezDbgPrint("CallEvent ===>  $event");
-      if (event == CallEvent.ACTION_CALL_DECLINE) {
-        // Declined
-      }
-      if (event == CallEvent.ACTION_CALL_ACCEPT) {
-        // Accepted
-      }
+  FlutterCallkitIncoming.onEvent.listen((CallEvent? event) async {
+    mezDbgPrint("CallEvent ===>  $event");
+
+    switch (event?.name) {
+      case CallEvent.ACTION_CALL_ENDED:
+        await Get.find<Sagora>().removeSession();
+        break;
+
+      case CallEvent.ACTION_CALL_ACCEPT:
+        final Sagora _sagora = Get.find<Sagora>();
+        if ((await _sagora.checkAgoraPermissions())) {
+          // it's better to send token and chatId withing the variableParams on call notif
+          // that way we wont need to fetch the token and uid from db, using the bellow line :
+          // final dynamic agoraAuth = await _sagora.getAgoraToken();
+          _sagora.joinChannel(
+            token: event?.body?['extra']['agoraToken'],
+            channelId: event?.body?['extra']['chatId'],
+            uid: event?.body?['extra']['uid'],
+          );
+
+          // Pushing to call screen + awaiting in case we wanna return with value.
+          // ignore: unawaited_futures
+          Get.to<dynamic>(
+            AgoraCall(
+              chatId: event?.body?['extra']['chatId'],
+              talkingTo: Participant(
+                image: event!.body['avatar'],
+                name: event.body['nameCaller'],
+                participantType:
+                    event.body['handle'].toString().toParticipantType(),
+                // wrong actual user id, it's more like an agora generated id
+                id: event.body['id'],
+              ),
+            ),
+          );
+        }
+
+        break;
+      default:
     }
   });
 }
@@ -36,20 +68,36 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
     await markInDb(event.data["markReceivedUrl"]);
   } else if (event.data["notificationType"] ==
       NotificationType.Call.toFirebaseFormatString()) {
-    await showCallkitIncoming(
-        callerName: event.data["callerName"],
-        callerImage: event.data["callerImage"],
-        callerType: event.data["callerType"],
-        language: event.data["language"]);
+    mezDbgPrint("######## GOT BG FCM ###### ${event.data}");
+    switch (event.data['callNotificationType']) {
+      case CallNotificationtType.Incoming:
+        final Map<String, dynamic> _extras = {
+          "chatId": event.data['chatId'],
+          "agoraToken": event.data['agoraToken'],
+          "uid": event.data['uid']
+        };
+        await showCallkitIncoming(
+          callerName: event.data["callerName"],
+          callerImage: event.data["callerImage"],
+          callerType: event.data["callerType"],
+          language: event.data["language"],
+          extra: _extras,
+        );
+        break;
+      case CallNotificationtType.EndCall:
+        await FlutterCallkitIncoming.endAllCalls();
+        break;
+      default:
+    }
   }
 }
 
-Future<void> showCallkitIncoming({
-  required String callerName,
-  required String callerImage,
-  required String callerType,
-  required String? language,
-}) async {
+Future<void> showCallkitIncoming(
+    {required String callerName,
+    required String callerImage,
+    required String callerType,
+    required String? language,
+    Map<String, dynamic> extra = const {}}) async {
   final Map<String, dynamic> params = <String, dynamic>{
     'id': Uuid().v4(),
     'nameCaller': callerName,
@@ -62,8 +110,8 @@ Future<void> showCallkitIncoming({
     'textDecline': 'Decline',
     'textMissedCall': 'Missed call',
     'textCallback': 'Call back',
-    'extra': <String, dynamic>{'userId': '1a2b3c4d'},
-    'headers': <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
+    'extra': extra,
+    // 'headers': <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
     'android': <String, dynamic>{
       'isCustomNotification': true,
       'isShowLogo': false,

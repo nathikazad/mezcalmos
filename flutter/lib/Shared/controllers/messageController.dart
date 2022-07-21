@@ -52,16 +52,8 @@ class MessageController extends GetxController {
     });
   }
 
-  Future<dynamic?> getAgoraToken(
-      String chatId, String userId, ParticipantType type) async {
-    mezDbgPrint("Listening once on ${agoraChatNode(chatId, userId, type)}");
-    return (await FirebaseDatabase.instance
-            .ref()
-            .child(agoraChatNode(chatId, userId, type))
-            .onValue
-            .first)
-        .snapshot
-        .value;
+  bool isUserAuthorizedToCall() {
+    return [AppType.CustomerApp, AppType.DeliveryApp].contains(appType);
   }
 
   Future<void> sendMessage(

@@ -3,6 +3,7 @@ import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
+import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
@@ -12,6 +13,7 @@ class AuthHooks {
   static Future<void> onSignOutHook() async {
     mezDbgPrint(
         "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Executed.");
+    await Get.delete<Sagora>(force: true);
     await Get.delete<MessageController>(force: true);
 
     await Get.delete<OrderController>(force: true);
@@ -33,5 +35,6 @@ class AuthHooks {
     Get.put(LaundryOrderController(), permanent: true);
     Get.put(RestaurantOrderController(), permanent: true);
     Get.put(MessageController(), permanent: true);
+    Get.put(Sagora(), permanent: true);
   }
 }

@@ -24,6 +24,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -97,6 +98,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   RxList<Widget> chatLines = <Widget>[].obs;
 
   RxString _typedMsg = "".obs;
+  RxBool clickedCall = false.obs;
 
   Widget singleChatComponent({
     required String message,
@@ -277,32 +279,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
               ),
               onTap: () => Get.toNamed<void>(orderLink!),
             ),
-          InkWell(
-              onTap: () async {
-                mezDbgPrint("AGORA ---< ClientRole.Broadcaster >--- !");
-                final bool isAllowed =
-                    await agoraController.checkAgoraPermissions();
-                mezDbgPrint("AGORA PERMISSIONS ===> $isAllowed !");
-
-                if (isAllowed) {
-                  mezDbgPrint("AGORA PERMISSIONS ALLOWED !");
-                  // ignore: unawaited_futures
-                  Get.to<void>(
-                    AgoraCall(
-                      calleeInfos: controller.recipient(
-                          recipientType: ParticipantType.Customer)!,
-                    ),
-                  );
-                }
-              },
-              child: Icon(Icons.abc_outlined)),
-          SizedBox(
-            width: 20,
-          ),
-          if (controller.sender()?.participantType ==
-              ParticipantType.DeliveryDriver)
+          if (controller.isUserAuthorizedToCall() && !clickedCall.value)
             InkWell(
-              onTap: _callerAction,
+              onTap: _onCallPress,
               child: Container(
                 padding: EdgeInsets.all(5),
                 margin: EdgeInsets.only(right: 10),
@@ -318,66 +297,76 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 ),
               ),
             ),
-          // if (controller.sender()?.participantType == ParticipantType.Customer)
-          //   InkWell(
-          //     onTap: () async {
-          //       if (await sagora.checkAgoraPermissions()) {
-          //         await sagora.initAgora();
-          //         mezDbgPrint("AGORA :: PERMISSIONS :: DONE ");
-          //         // ignore: unawaited_futures
-          //         Get.to(
-          //           CallPage(
-          //             channelName: 'mezcal',
-          //           ),
-          //         );
-          //       } else {
-          //         mezDbgPrint("AGORA :: PERMISSIONS :: NOT :: DONE ");
-          //       }
-          //     },
-          //     child: Container(
-          //       padding: EdgeInsets.all(5),
-          //       margin: EdgeInsets.only(right: 10),
-          //       decoration: BoxDecoration(
-          //         shape: BoxShape.circle,
-          //         color: Colors.grey.shade300,
-          //       ),
-          //       child: Center(
-          //         child: Icon(
-          //           Icons.call,
-          //           color: Colors.black,
-          //         ),
-          //       ),
-          //     ),
-          //   ),
         ],
       ),
       body: isChatLoaded
           ? Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Stack(
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.1),
-                    child: Center(
-                      child: Text(formattedDate),
-                    ),
-                  ),
-                  Expanded(
-                    child: Obx(
-                      () => ListView(
-                        shrinkWrap: true,
-                        controller: _listViewScrollController,
-                        children: List<Widget>.from(chatLines.reversed),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.1),
+                        child: Center(
+                          child: Text(formattedDate),
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        child: Obx(
+                          () => ListView(
+                            shrinkWrap: true,
+                            controller: _listViewScrollController,
+                            children: List<Widget>.from(chatLines.reversed),
+                          ),
+                        ),
+                      ),
+                      SendMessageBox(
+                          typedMsg: _typedMsg,
+                          textEditingController: _textEditingController,
+                          controller: controller,
+                          chatId: chatId,
+                          orderId: orderId)
+                    ],
                   ),
-                  SendMessageBox(
-                      typedMsg: _typedMsg,
-                      textEditingController: _textEditingController,
-                      controller: controller,
-                      chatId: chatId,
-                      orderId: orderId)
+                  Obx(() {
+                    if (clickedCall.value)
+                      return Container(
+                        height: Get.height,
+                        width: Get.width,
+                        color: Colors.black.withOpacity(.6),
+                        child: Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            height: 300,
+                            width: Get.width - 100,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      "Calling ${controller.recipient(recipientType: recipientType)!.name}"),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  ThreeDotsLoading(
+                                    dotsColor:
+                                        Color.fromARGB(255, 19, 105, 197),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    else
+                      return SizedBox();
+                  })
                 ],
               ),
             )
@@ -387,67 +376,58 @@ class _MessagingScreenState extends State<MessagingScreen> {
     );
   }
 
-  Future<void> _callerAction() async {
+  Future<void> _onCallPress() async {
     if (await sagora.checkAgoraPermissions()) {
-      if (!sagora.isEngineCreated) await sagora.initAgora();
-      mezDbgPrint("AGORA :: PERMISSIONS + ENGINE CREATION :: DONE ");
-      Participant? p =
-          controller.recipient(recipientType: ParticipantType.Customer);
-      // final String? currentCallId = await sagora.engine.getCallId();
-      // mezDbgPrint("AGORA :: CURRENT :: CALL :: $currentCallId");
+      ParticipantType _calleeType = ParticipantType.DeliveryDriver;
+      switch (controller.appType) {
+        case AppType.DeliveryApp:
+          _calleeType = ParticipantType.Customer;
+          break;
+        default:
+      }
+      // we get the one We're trying to call first.
+      final Participant? _recipient = controller.recipient(
+        recipientType: _calleeType,
+      );
+      mezDbgPrint("1 [RECIPIENT::calleeType ] $_calleeType");
 
-      if (p != null) {
-        // await FlutterCallkitIncoming.startCall({
-        //   "id": chatId,
-        // });
-        // ignore: unawaited_futures
-        controller.callUser(
+      if (_recipient != null) {
+        clickedCall.value = true;
+        await controller.callUser(
           chatId: chatId,
-          callee: p,
+          callee: _recipient,
           orderId: orderId,
         );
-        // we check if there is in Local
-        dynamic _agoraAuth = GetStorage().read<dynamic>('agora-$chatId');
-        mezDbgPrint("AgoraAuth in Storage ===> $_agoraAuth !");
+        mezDbgPrint("3 - sender id ${controller.sender()?.id}");
+        mezDbgPrint("3 - sender name ${controller.sender()?.participantType}");
 
-        // else we get it from database
-        if (_agoraAuth == null) {
-          mezDbgPrint("AgoraAuth in Storage Was Null !");
-          _agoraAuth = await controller.getAgoraToken(
-            chatId,
-            controller.sender()!.id,
-            ParticipantType.DeliveryDriver,
-          );
-        }
+        // Request Agora auth
+        // @Nathik this part does not work
+        final dynamic _agoraAuth = (await sagora.getAgoraToken(
+          chatId,
+          controller.sender()!.id,
+          controller.sender()!.participantType,
+        ))
+            .snapshot
+            .value;
+
+        mezDbgPrint("4 - A_agoraAuth $_agoraAuth");
 
         // then we join if it's not null && it's not expired
-        if (_agoraAuth != null &&
-            DateTime.parse(_agoraAuth['expirationTime'])
-                .toUtc()
-                .isAfter(DateTime.now().toUtc())) {
+        if (_agoraAuth != null) {
           mezDbgPrint("AgoraAuth  :: passed validation test !");
-
-          // save it to storage
-          await GetStorage().write(
-            'agora-$chatId',
-            <String, dynamic>{
-              'uid': _agoraAuth['uid'],
-              'token': _agoraAuth['token'],
-              'exp': _agoraAuth['expirationTime']
-            },
-          );
           // then join channel
           sagora.joinChannel(
             token: _agoraAuth['token'],
             channelId: chatId,
             uid: _agoraAuth['uid'],
-            onSuccessJoin: () {},
-            onFailedJoin: () {},
           );
+          // Pushing to call screen + awaiting in case we wanna return with value.
           // ignore: unawaited_futures
-          Get.to<void>(
+          final dynamic _retValue = await Get.to<dynamic>(
             AgoraCall(
-              calleeInfos: p,
+              chatId: chatId,
+              talkingTo: _recipient,
             ),
           );
         }
