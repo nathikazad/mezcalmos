@@ -406,9 +406,9 @@
                 "LaundryCurrentOrderView": {
                     "Components": {
                         "CustomerLaundryOrderEst": {
-                            "pickup": "Pickup",
-                            "delivery": "Delivery",
-                            "laundryReady": "Laundry ready",
+                            "pickup": "Pickup time:",
+                            "delivery": "Delivery time:",
+                            "laundryReady": "Laundry ready time:",
                             "estTimes": "Estimated times"
                         },
 

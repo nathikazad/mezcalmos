@@ -411,9 +411,9 @@
                 "LaundryCurrentOrderView": {
                     "Components": {
                         "CustomerLaundryOrderEst": {
-                            "pickup": "Levantar",
-                            "delivery": "Entrega",
-                            "laundryReady": "acabado de lavandería",
+                            "pickup": "Levantar tiempo:",
+                            "delivery": "Entrega tiempo:",
+                            "laundryReady": "acabado de lavandería tiempo:",
                             "estTimes": "Tiempos estimados"
                         },
                         "LaundryOrderDriverCard": {

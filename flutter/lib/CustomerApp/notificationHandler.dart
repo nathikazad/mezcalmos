@@ -101,7 +101,6 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
     linkUrl: getRestaurantOrderRoute(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
-    
     imgUrl: dynamicFields["imgUrl"],
     title: dynamicFields["title"],
     timestamp: DateTime.parse(value['time']),
@@ -277,10 +276,12 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
+  mezDbgPrint("New message notif ==========>>>>>>>>$value");
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
         chatId: value['chatId'],
+        orderId: value["orderId"],
         recipientType:
             value["sender"]["particpantType"].toString().toParticipantType(),
       ),

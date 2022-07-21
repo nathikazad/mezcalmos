@@ -61,16 +61,21 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     controller.clearMessageNotifications(chatId: chatId);
     mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
-    if (controller.chat.value == null) {
-      controller.chat.stream.first.then((_) {
-        setState(() {
-          isChatLoaded = true;
-        });
-      });
-    } else
-      setState(() {
-        isChatLoaded = true;
-      });
+    controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
+    setState(() {
+      isChatLoaded = true;
+    });
+    // if (controller.chat.value == null) {
+    //   controller.chat.stream.first.then((_) {
+    //     setState(() {
+
+    //       isChatLoaded = true;
+    //     });
+    //   });
+    // } else
+    //   setState(() {
+    //     isChatLoaded = true;
+    //   });
     super.initState();
   }
 
@@ -81,95 +86,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
   RxList<Widget> chatLines = <Widget>[].obs;
 
   RxString _typedMsg = "".obs;
-
-  Widget singleChatComponent({
-    required String message,
-    String? time,
-    required bool isMe,
-    // required BuildContext parentContext,
-    String? userImage,
-  }) =>
-      Container(
-        alignment: !isMe ? Alignment.centerLeft : Alignment.centerRight,
-        padding: const EdgeInsets.all(5.0),
-        child: Wrap(
-            alignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
-            runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            textDirection: !isMe ? TextDirection.ltr : TextDirection.rtl,
-            spacing: 10,
-            clipBehavior: Clip.none,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border:
-                        Border.all(color: Colors.grey.shade200, width: 0.5)),
-                child: CircleAvatar(
-                  radius: 23,
-                  backgroundColor: Colors.grey.shade200,
-                  backgroundImage: mLoadImage(
-                          url: !isMe
-                              ? userImage
-                              : _authController.fireAuthUser?.photoURL,
-                          assetInCaseFailed: aDefaultAvatar)
-                      .image,
-                ),
-              ),
-              Wrap(
-                spacing: 5,
-                direction: Axis.vertical,
-                runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
-                children: <Widget>[
-                  Container(
-                      constraints: BoxConstraints(
-                          maxWidth: Get.width - 100, minWidth: 50),
-                      padding: EdgeInsets.only(
-                          left: 16, top: 8, bottom: 8, right: 16),
-                      decoration: BoxDecoration(
-                          color: !isMe
-                              ? Color.fromRGBO(225, 228, 255, 1)
-                              //? Theme.of(parentContext).primaryColorLight
-                              : Color.fromRGBO(103, 121, 254, 1),
-                          borderRadius: !isMe
-                              ? BorderRadius.only(
-                                  topLeft: Radius.zero,
-                                  topRight: Radius.circular(30),
-                                  bottomRight: Radius.circular(30),
-                                  bottomLeft: Radius.circular(20))
-                              : BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  topRight: Radius.zero,
-                                  bottomRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(30))),
-                      child: Text(
-                        message,
-                        softWrap: true,
-                        style: TextStyle(
-                          fontFamily: "Nunito",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                          color: isMe ? Colors.white : Colors.black,
-                        ),
-                      )),
-                  time != null
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
-                          child: Text(
-                            time,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Nunito",
-                              fontSize: 12,
-                              color: Color.fromRGBO(120, 120, 120, 1),
-                            ),
-                          ),
-                        )
-                      : SizedBox(),
-                ],
-              ),
-            ]),
-      );
 
   void scrollDown({Duration? mezChatScrollDuration}) {
     Timer(mezChatScrollDuration ?? Duration(milliseconds: 200), () {
@@ -182,29 +98,28 @@ class _MessagingScreenState extends State<MessagingScreen> {
     });
   }
 
+  void _fillCallBack() {
+    chatLines.assignAll(controller.chat.value!.messages.map(
+      (Message message) {
+        return singleChatComponent(
+          message: message.message,
+          time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
+          isMe: message.userId == _authController.user!.id,
+          userImage: controller.chat.value!
+              .getParticipant(message.participantType, message.userId)
+              ?.image,
+        );
+      },
+    ));
+    scrollDown();
+  }
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       scrollDown(mezChatScrollDuration: timeStamp);
     });
-    void _fillCallBack() {
-      chatLines.assignAll(controller.chat.value!.messages.map(
-        (Message message) {
-          return singleChatComponent(
-            message: message.message,
-            time:
-                intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
-            isMe: message.userId == _authController.user!.id,
-            userImage: controller.chat.value!
-                .getParticipant(message.participantType, message.userId)
-                ?.image,
-          );
-        },
-      ));
-      scrollDown();
-    }
 
-    controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 253, 249, 249),
       appBar: AppBar(
@@ -301,6 +216,95 @@ class _MessagingScreenState extends State<MessagingScreen> {
             ),
     );
   }
+
+  Widget singleChatComponent({
+    required String message,
+    String? time,
+    required bool isMe,
+    // required BuildContext parentContext,
+    String? userImage,
+  }) =>
+      Container(
+        alignment: !isMe ? Alignment.centerLeft : Alignment.centerRight,
+        padding: const EdgeInsets.all(5.0),
+        child: Wrap(
+            alignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
+            runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
+            crossAxisAlignment: WrapCrossAlignment.start,
+            textDirection: !isMe ? TextDirection.ltr : TextDirection.rtl,
+            spacing: 10,
+            clipBehavior: Clip.none,
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border:
+                        Border.all(color: Colors.grey.shade200, width: 0.5)),
+                child: CircleAvatar(
+                  radius: 23,
+                  backgroundColor: Colors.grey.shade200,
+                  backgroundImage: mLoadImage(
+                          url: !isMe
+                              ? userImage
+                              : _authController.fireAuthUser?.photoURL,
+                          assetInCaseFailed: aDefaultAvatar)
+                      .image,
+                ),
+              ),
+              Wrap(
+                spacing: 5,
+                direction: Axis.vertical,
+                runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
+                children: <Widget>[
+                  Container(
+                      constraints: BoxConstraints(
+                          maxWidth: Get.width - 100, minWidth: 50),
+                      padding: EdgeInsets.only(
+                          left: 16, top: 8, bottom: 8, right: 16),
+                      decoration: BoxDecoration(
+                          color: !isMe
+                              ? Color.fromRGBO(225, 228, 255, 1)
+                              //? Theme.of(parentContext).primaryColorLight
+                              : Color.fromRGBO(103, 121, 254, 1),
+                          borderRadius: !isMe
+                              ? BorderRadius.only(
+                                  topLeft: Radius.zero,
+                                  topRight: Radius.circular(30),
+                                  bottomRight: Radius.circular(30),
+                                  bottomLeft: Radius.circular(20))
+                              : BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.zero,
+                                  bottomRight: Radius.circular(20),
+                                  bottomLeft: Radius.circular(30))),
+                      child: Text(
+                        message,
+                        softWrap: true,
+                        style: TextStyle(
+                          fontFamily: "Nunito",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
+                          color: isMe ? Colors.white : Colors.black,
+                        ),
+                      )),
+                  time != null
+                      ? Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: Text(
+                            time,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Nunito",
+                              fontSize: 12,
+                              color: Color.fromRGBO(120, 120, 120, 1),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                ],
+              ),
+            ]),
+      );
 }
 
 class SendMessageBox extends StatelessWidget {
