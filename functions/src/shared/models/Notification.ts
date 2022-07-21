@@ -37,6 +37,22 @@ export interface NewMessageNotification extends ForegroundNotification {
   orderId: string
 }
 
+<<<<<<< Updated upstream
+=======
+export interface NewCallBackgroundNotification {
+  linkUrl: string,
+  language: Language,
+  callerName: string,
+  callerImage: string,
+  callerType: ParticipantType,
+  notificationType: NotificationType,
+  callNotificationType: CallNotificationtType,
+  [key: string]: string;
+}
+
+
+
+>>>>>>> Stashed changes
 export interface OrderNotification extends ForegroundNotification {
   orderType: OrderType,
   orderId: string,
