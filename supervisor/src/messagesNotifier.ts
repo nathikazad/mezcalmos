@@ -60,6 +60,8 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
         contentAvailable: true
       }
     };
+    if (calleeToken != null)
+      fcmMessage.payload.data!.agoraToken = calleeToken;
     fcm.push(fcmMessage);
   }
 }
@@ -139,8 +141,8 @@ async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.Partic
   if (keys.agora == null)
     return null
   await setAgoraDetails(chatId, caller, keys)
-  return await setAgoraDetails(chatId, callee, keys)
-
+  let calleetoken: string = await setAgoraDetails(chatId, callee, keys)
+  return calleetoken;
 }
 
 async function setAgoraDetails(chatId: string, user: chat.Participant, keys: Keys): Promise<string> {
