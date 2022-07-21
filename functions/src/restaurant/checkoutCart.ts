@@ -23,6 +23,7 @@ import * as chatController from "../shared/controllers/chatController";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
+import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe";
 
 export = functions.https.onCall(async (data, context) => {
 
@@ -72,11 +73,15 @@ export = functions.https.onCall(async (data, context) => {
     const order: RestaurantOrder = constructRestaurantOrder({
       cart: cart,
       customer: customerInfo,
-      restaurant: restaurant.info,
-      stripePaymentId: data.stripePaymentId ? data.stripePaymentId : null
+      restaurant: restaurant.info
     })
 
-    let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
+    let orderId: string = (await customerNodes.inProcessOrders(customerId).push(null)).key!;
+
+    if (data.stripePaymentId)
+      updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId)
+
+    customerNodes.inProcessOrders(customerId).push(order);
     restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
     rootNodes.inProcessOrders(OrderType.Restaurant, orderId).set(order);
 

@@ -29,8 +29,7 @@ export enum RestaurantOrderStatus {
 interface ConstructRestaurantOrderParameters {
   cart: Cart,
   customer: UserInfo,
-  restaurant: UserInfo,
-  stripePaymentId: String
+  restaurant: UserInfo
 }
 export function constructRestaurantOrder(
   params: ConstructRestaurantOrderParameters): RestaurantOrder {
@@ -40,8 +39,7 @@ export function constructRestaurantOrder(
     restaurant: params.restaurant,
     orderType: OrderType.Restaurant,
     status: RestaurantOrderStatus.OrderReceieved,
-    orderTime: (new Date()).toISOString(),
-    stripePaymentId: params.stripePaymentId
+    orderTime: (new Date()).toISOString()
   }
 }
 

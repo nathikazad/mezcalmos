@@ -25,7 +25,7 @@ export const otp = {
 }
 
 export const stripe = {
-  getPaymentIntent: require("./utilities/stripe")
+  getPaymentIntent: require("./utilities/stripe").getPaymentIntent
 }
 
 import * as restaurantStatusChange from './restaurant/adminStatusChanges'

@@ -1,3 +1,4 @@
+import { StripePaymentInfo } from "../../../utilities/stripe";
 import { DeliveryDriverType } from "../Drivers/DeliveryDriver";
 import { Location } from "./Generic";
 import { UserInfo } from "./User";
@@ -12,7 +13,7 @@ export interface Order {
   orderTime: string;
   secondaryChats: Record<SecondaryChat, string | null>;
   estimatedDeliveryTimes: Partial<Record<DeliveryDriverType , Record<DeliveryAction, string|null >>>
-  stripePaymentId: string
+  stripePaymentInfo: StripePaymentInfo
 }
 
 export enum DeliveryAction {

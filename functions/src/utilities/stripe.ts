@@ -6,14 +6,23 @@ import { getKeys } from '../shared/keys';
 import { Keys } from '../shared/models/Generic/Keys';
 import * as serviceProviderNodes from '../shared/databaseNodes/services/serviceProvider';
 import { PaymentInfo } from '../shared/models/Generic/PaymentInfo';
-import { PaymentType } from '../shared/models/Generic/Order';
+import { Order, PaymentType } from '../shared/models/Generic/Order';
 import { stripeIdsNode } from '../shared/databaseNodes/customer';
 import { userInfoNode } from '../shared/databaseNodes/root';
 import { UserInfo } from '../shared/models/Generic/User';
 
 let keys: Keys = getKeys();
 
-export = functions.https.onCall(async (data, context) => {
+export interface StripePaymentInfo {
+  id: string,
+  brand?: string,
+  exp_month?: number,
+  exp_year?: number,
+  last4?: string,
+}
+
+export const getPaymentIntent =
+  functions.https.onCall(async (data, context) => {
   let response = await isSignedIn(context.auth)
   if (response != undefined) {
     return response;
@@ -55,14 +64,13 @@ export = functions.https.onCall(async (data, context) => {
     stripeIdsNode(data.customerId, data.serviceProviderId).set(stripeCustomerId);
   }
 
-  //remove
-  // stripeCustomerId = 'cus_M5qBJBHZSRicoS';
+
 
   const ephemeralKey = await stripe.ephemeralKeys.create(
     { customer: stripeCustomerId },
     stripeOptions
   );
-  const paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
     amount: data.paymentAmount,
     currency: 'mxn',
     customer: stripeCustomerId,
@@ -77,5 +85,40 @@ export = functions.https.onCall(async (data, context) => {
     publishableKey: keys.stripe.publickey,
     stripeAccountId: serviceProviderPaymentInfo.stripeId
   }
-  return { status: ServerResponseStatus.Success, orderId: data.orderId }
 });
+
+
+
+export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: Order, stripePaymentId: string) {
+  let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
+  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripeId };
+  const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+
+  await stripe.paymentIntents.update(
+    stripePaymentId,
+    { metadata: { order_id: orderId } },
+    stripeOptions
+  );
+
+  let pi = await stripe.paymentIntents.retrieve(
+    stripePaymentId,
+    stripeOptions
+  );
+
+  let pm: Stripe.PaymentMethod = await stripe.paymentMethods.retrieve(
+    pi.payment_method as string,
+    stripeOptions
+  );
+  order.stripePaymentInfo = {
+    id: stripePaymentId
+  }
+  if (pm.card)
+    order.stripePaymentInfo = {
+      ...order.stripePaymentInfo,
+      last4: pm.card!.last4,
+      exp_month: pm.card!.exp_month,
+      exp_year: pm.card!.exp_year,
+      brand: pm.card!.brand,
+    }
+
+}
