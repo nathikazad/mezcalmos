@@ -41,6 +41,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
     return Container(
       child: Obx(
         () => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             (controller.cart.value.quantity() >= 1)
                 ? Column(
@@ -62,8 +63,26 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                   totalCost: controller.cart.value.totalCost().toPriceString(),
                 )),
             SizedBox(
-              height: 20,
+              height: 15,
             ),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    "Payment Method",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  // Dropd
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 14,

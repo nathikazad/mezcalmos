@@ -2,11 +2,12 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 // ignore_for_file: avoid_annotating_with_dynamic
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 class Cart {
@@ -151,8 +152,20 @@ class CartItem {
       quantity: itemData["quantity"],
       notes: itemData["notes"],
     );
+    mezDbgPrint(itemData);
+    // for (int i = 0; i < itemData["chosenChoices"].length; i++) {
+    //   if (item.findOption(i.toString()) != null) {
+    //     cartItem.chosenChoices[i.toString()] = <Choice>[];
+    //     itemData["chosenChoices"][i]["choices"]?.forEach((dynamic choiceData) {
+    //       final Choice? choice = item
+    //           .findOption(i.toString())!
+    //           .findChoice(convertToLanguageMap(choiceData["name"]));
+    //       if (choice != null) cartItem.chosenChoices[i.toString()]!.add(choice);
+    //     });
+    //   }
+    // }
 
-    itemData["choices"]?.forEach((optionId, optionData) {
+    itemData["chosenChoices"]?.forEach((optionId, optionData) {
       if (item.findOption(optionId) != null) {
         cartItem.chosenChoices[optionId] = <Choice>[];
         optionData["choices"]?.forEach((dynamic choiceData) {
@@ -180,6 +193,7 @@ class CartItem {
     };
 
     chosenChoices.forEach((String optionId, List<Choice> choices) {
+      mezDbgPrint("choice builder ============>>>> $chosenChoices");
       final List data = [];
       choices.forEach((Choice choice) {
         data.add(choice.toJson());
@@ -190,7 +204,7 @@ class CartItem {
           item.findOption(optionId)?.name.toFirebaseFormat();
       json["chosenChoices"][optionId]["choices"] = data;
     });
-
+    mezDbgPrint("LAST DATA -----------> $json");
     return json;
   }
 

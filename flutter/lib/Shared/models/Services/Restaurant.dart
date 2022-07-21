@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
+import 'package:mezcalmos/Shared/models/Services/Service.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Services/Service.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 
 enum RestaurantsView { Rows, Grid }
 
@@ -42,13 +42,12 @@ class Restaurant extends Service {
       required LanguageType primaryLanguage,
       LanguageType? secondaryLanguage})
       : super(
-          info: userInfo,
-          schedule: schedule,
-          state: restaurantState,
-          primaryLanguage: primaryLanguage,
-          secondaryLanguage: secondaryLanguage,
-          paymentInfo: paymentInfo
-        );
+            info: userInfo,
+            schedule: schedule,
+            state: restaurantState,
+            primaryLanguage: primaryLanguage,
+            secondaryLanguage: secondaryLanguage,
+            paymentInfo: paymentInfo);
 
   factory Restaurant.fromRestaurantData(
       {required String restaurantId, required restaurantData}) {
@@ -98,15 +97,21 @@ class Restaurant extends Service {
         primaryLanguage: primaryLanguage,
         secondaryLanguage: secondaryLanguage,
         paymentInfo: paymentInfo);
-    restaurantData["menu"]?["specials"]?["current"]?.forEach((key, element) {
-      restaurant.currentSpecials.add(Item.itemFromData(key, element));
-    });
-    restaurantData["menu"]?["specials"]?["past"]?.forEach((key, element) {
-      restaurant.pastSpecials.add(Item.itemFromData(key, element));
-    });
-    restaurantData["menu"]?["daily"]?.forEach((categoryId, categoryData) {
-      restaurant._categories.add(Category.fromData(categoryId, categoryData));
-    });
+    if (restaurantData["menu"] != null) {
+      restaurantData["menu"]?["specials"]?["current"]?.forEach((key, element) {
+        restaurant.currentSpecials.add(Item.itemFromData(key, element));
+      });
+      restaurantData["menu"]?["specials"]?["past"]?.forEach((key, element) {
+        restaurant.pastSpecials.add(Item.itemFromData(key, element));
+      });
+      restaurantData["menu"]?["daily"]?.forEach((categoryId, categoryData) {
+        restaurant._categories.add(Category.fromData(categoryId, categoryData));
+      });
+    } else {
+      restaurantData["menu2"].forEach((categoryId, categoryData) {
+        restaurant._categories.add(Category.fromData(categoryId, categoryData));
+      });
+    }
 
     restaurant._categories
         .sort((Category a, Category b) => a.position.compareTo(b.position));
@@ -315,14 +320,18 @@ class Item {
         name: convertToLanguageMap(itemData["name"]),
         //itemData["name"].toLanguageMap(),
         cost: itemData["cost"]);
-    // TODO: change to options
     if (itemData["options"] != null) {
-      for (int i = 0; i < itemData["options"].length; i++) {
-        item.options.add(Option.fromData(i.toString(), itemData["options"][i]));
-      }
-
-      item.sortOptions();
+      itemData["options"]?.forEach((opId, opData) {
+        item.options.add(Option.fromData(opId, opData));
+      });
+    } else {
+      itemData["options2"]?.forEach((opId, opData) {
+        item.options.add(Option.fromData(opId, opData));
+      });
     }
+
+    item.sortOptions();
+
     return item;
   }
 
@@ -333,6 +342,16 @@ class Item {
 
 //  }
   Map<String, dynamic> toJson() {
+    Map<String, dynamic> _parseOptionsListToFirebaseFormattedStriing(
+        List<Option> options) {
+      final Map<String, dynamic> _mappedOptions = <String, dynamic>{};
+      options.forEach((Option op) {
+        _mappedOptions[op.name[LanguageType.EN]!] = op.toJson();
+      });
+
+      return _mappedOptions;
+    }
+
     return <String, dynamic>{
       "id": id,
       "available": available,
@@ -340,7 +359,8 @@ class Item {
       "image": image,
       "cost": cost,
       "name": name.toFirebaseFormat(),
-      "options": options.map((Option x) => x.toJson()).toList(),
+      "options": _parseOptionsListToFirebaseFormattedStriing(
+          options), //options.map<List<Option>>((Option x) => <String, dynamic>{x.id: x.toJson()}),
       "position": position
     };
   }
@@ -410,14 +430,11 @@ class Option {
         name: convertToLanguageMap(data["name"]),
         position: data["position"] ?? 0,
         optionType: data["optionType"].toString().toOptionType());
-    for (int i = 0; i < data["choices"].length; i++) {
-      final Choice choice = Choice.fromData(i.toString(), data["choices"][i]);
+
+    data["choices"]?.forEach((optionKey, optionData) {
+      final Choice choice = Choice.fromData(optionKey, optionData);
       option.choices.add(choice);
-    }
-    // data["choices"]?.forEach((optionKey, optionData) {
-    //   final Choice choice = Choice.fromData(optionKey, optionData);
-    //   option.choices.add(choice);
-    // });
+    });
     option.sortChoices();
     option.changeOptionType(
       option.optionType,
@@ -471,11 +488,20 @@ class Option {
   }
 
   Map<String, dynamic> toJson() {
+    Map<String, dynamic> _parseChoices(List<Choice> choices) {
+      final Map<String, dynamic> _mappedChoices = <String, dynamic>{};
+      choices.forEach((Choice ch) {
+        _mappedChoices[ch.name[LanguageType.EN]!] = ch.toJson();
+      });
+
+      return _mappedChoices;
+    }
+
     return {
-      "id": id,
+      // "id": id,
       "name": name.toFirebaseFormat(),
       "optionType": optionType.toFirebaseFormatString(),
-      "choices": choices.map((Choice x) => x.toJson()).toList(),
+      "choices": _parseChoices(choices),
       "minimumChoice": minimumChoice,
       "maximumChoice": maximumChoice,
       "costPerExtra": costPerExtra,

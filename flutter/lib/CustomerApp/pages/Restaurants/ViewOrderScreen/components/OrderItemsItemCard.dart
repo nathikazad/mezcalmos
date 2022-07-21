@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/Components/itemChosenChoices.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -66,7 +67,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
         ),
 
         //  tilePadding: EdgeInsets.all(5),
-        tilePadding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+        tilePadding: EdgeInsets.zero,
         title: _itemHeader(userLanguage, txt),
         children: [
           Theme(
@@ -112,46 +113,43 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
 
   Widget _itemHeader(LanguageType userLanguage, TextTheme txt) {
     return Container(
+      height: 60,
+      alignment: Alignment.center,
+      margin: EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 5,
-          ),
-          Container(
-            //  padding: const EdgeInsets.all(5),
-            height: 55,
-            width: 55,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: (imageLoded)
-                      ? CachedNetworkImageProvider(widget.item.image ?? '',
+          if (imageLoded)
+            Container(
+              margin: const EdgeInsets.only(right: 8),
+              height: 55,
+              width: 55,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: CachedNetworkImageProvider(widget.item.image ?? '',
                           errorListener: () {
-                          setState(() {
-                            imageLoded = false;
-                          });
-                        })
-                      : AssetImage(aNoImage) as ImageProvider<Object>,
-                )),
-          ),
-          SizedBox(
-            width: 10,
-          ),
+                        setState(() {
+                          imageLoded = false;
+                        });
+                      }))),
+            ),
           if (widget.item.name[userLanguage] != null)
             Flexible(
               flex: 6,
               fit: FlexFit.tight,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     children: [
                       Flexible(
                         flex: 3,
                         child: Text(
-                          widget.item.name[userLanguage]!,
+                          widget.item.name[userLanguage]!.inCaps,
                           style: txt.bodyText1,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,

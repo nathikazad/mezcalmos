@@ -1,10 +1,10 @@
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 //ignore_for_file:constant_identifier_names
@@ -143,12 +143,12 @@ class RestaurantOrder extends DeliverableOrder {
           quantity: itemData["quantity"],
           notes: itemData["notes"]);
 
-      itemData["chosenChoices"]?.forEach((optionId, optionData) {
+      itemData?["chosenChoices"]?.forEach((optionId, optionData) {
         restaurantOrderItem.chosenChoices[optionId] = <Choice>[];
         restaurantOrderItem.optionNames[optionId] =
             convertToLanguageMap(optionData["optionName"]);
 
-        optionData["choices"]?.forEach((choiceData) {
+        optionData?["choices"]?.forEach((choiceData) {
           restaurantOrderItem.chosenChoices[optionId]!
               .add(Choice.fromData(choiceData["id"], choiceData));
         });
