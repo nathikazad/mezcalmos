@@ -45,3 +45,7 @@ Future<void> acceptPayment(
   );
   await Stripe.instance.presentPaymentSheet();
 }
+
+String extractPaymentIdFromIntent(String a) {
+  return a.split('_').sublist(0, 2).join('_');
+}

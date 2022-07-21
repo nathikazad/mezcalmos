@@ -148,12 +148,15 @@ class RestaurantController extends GetxController {
     Get.appUpdate();
   }
 
-  Future<ServerResponse> checkout() async {
+  Future<ServerResponse> checkout({String? stripePaymentId}) async {
     final HttpsCallable checkoutRestaurantCart =
         FirebaseFunctions.instance.httpsCallable("restaurant-checkoutCart");
     try {
       final HttpsCallableResult<dynamic> response = await checkoutRestaurantCart
-          .call(cart.value.toFirebaseFormattedJson());
+          .call({
+        ...cart.value.toFirebaseFormattedJson(),
+        "stripePaymentId": stripePaymentId
+      });
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       mezDbgPrint("error function");

@@ -73,6 +73,7 @@ export = functions.https.onCall(async (data, context) => {
       cart: cart,
       customer: customerInfo,
       restaurant: restaurant.info,
+      stripePaymentId: data.stripePaymentId ? data.stripePaymentId : null
     })
 
     let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;

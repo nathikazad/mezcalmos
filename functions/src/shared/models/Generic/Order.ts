@@ -12,6 +12,7 @@ export interface Order {
   orderTime: string;
   secondaryChats: Record<SecondaryChat, string | null>;
   estimatedDeliveryTimes: Partial<Record<DeliveryDriverType , Record<DeliveryAction, string|null >>>
+  stripePaymentId: string
 }
 
 export enum DeliveryAction {

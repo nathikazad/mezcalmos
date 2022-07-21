@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/component
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ViewCartBody.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -197,36 +198,42 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         distance: routeInfo.distance,
         duration: routeInfo.duration,
       );
+
+      String? stripePaymentId;
+      //TODO: should be changed to card
       if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
         final ServerResponse paymentIntentResponse = await getPaymentIntent(
-            customerId: "DQiTXyiJvnWy4z4LaamPTAtBdqo1",
-            serviceProviderId: "8v49lqVlHWeoSQ1JP8Mg1vRe17c2",
+            customerId: Get.find<AuthController>().user!.id,
+            serviceProviderId:
+                _restaurantController.cart.value.restaurant!.info.id,
             orderType: OrderType.Restaurant,
-            paymentAmount: _restaurantController.cart.value.totalCost());
+            paymentAmount: _restaurantController.cart.value.totalCost() * 100);
         await acceptPayment(
             paymentIntentData: paymentIntentResponse.data,
             merchantName:
                 _restaurantController.cart.value.restaurant!.info.name);
+        stripePaymentId = extractPaymentIdFromIntent(
+            paymentIntentResponse.data['paymentIntent'].toString());
       }
-      // final ServerResponse _serverResponse =
-      //     await _restaurantController.checkout();
+      final ServerResponse _serverResponse = await _restaurantController
+          .checkout(stripePaymentId: stripePaymentId);
 
-      // if (_serverResponse.success) {
-      //   _restaurantController.clearCart();
-      //   popEverythingAndNavigateTo(
-      //       getRestaurantOrderRoute(_serverResponse.data["orderId"]));
-      // } else {
-      //   print(_serverResponse);
-      //   if (_serverResponse.errorCode == "serverError") {
-      //     // do something
-      //   } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
-      //     // do something
-      //   } else if (_serverResponse.errorCode == "restaurantClosed") {
-      //     // do something
-      //   } else {
-      //     // do something
-      //   }
-      // }
+      if (_serverResponse.success) {
+        _restaurantController.clearCart();
+        popEverythingAndNavigateTo(
+            getRestaurantOrderRoute(_serverResponse.data["orderId"]));
+      } else {
+        print(_serverResponse);
+        if (_serverResponse.errorCode == "serverError") {
+          // do something
+        } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
+          // do something
+        } else if (_serverResponse.errorCode == "restaurantClosed") {
+          // do something
+        } else {
+          // do something
+        }
+      }
     } finally {
       setState(() {
         _clickedOrderNow = false;
