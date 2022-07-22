@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -202,16 +203,19 @@ class UserProfileWidgetsClass {
               fontFamily: 'Montserrat',
             ),
           ),
-          SizedBox(height: 11),
-          Text(
-            "${_i18n()["UserProfileWidgets"]["memberSince"]} 12/04/2022",
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Nunito',
-              color: Color.fromRGBO(33, 33, 33, 0.5),
+          if (userProfileController.userCreationTime != null)
+            Container(
+              margin: const EdgeInsets.only(top: 11),
+              child: Text(
+                "${_i18n()["UserProfileWidgets"]["memberSince"]} ${DateFormat("dd/MM/yyyy").format(userProfileController.userCreationTime!)}",
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Nunito',
+                  color: Color.fromRGBO(33, 33, 33, 0.5),
+                ),
+              ),
             ),
-          ),
         ],
       );
     } else {
@@ -225,16 +229,20 @@ class UserProfileWidgetsClass {
               fontFamily: 'Montserrat',
             ),
           ),
-          SizedBox(height: 11),
-          Text(
-            "${_i18n()["UserProfileWidgets"]["memberSince"]} 12/04/2022",
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Nunito',
-              color: Color.fromRGBO(33, 33, 33, 0.5),
+
+          if (userProfileController.userCreationTime != null)
+            Container(
+              margin: const EdgeInsets.only(top: 11),
+              child: Text(
+                "${_i18n()["UserProfileWidgets"]["memberSince"]} ${DateFormat("dd/MM/yyyy").format(userProfileController.userCreationTime!)}",
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Nunito',
+                  color: Color.fromRGBO(33, 33, 33, 0.5),
+                ),
+              ),
             ),
-          ),
           SizedBox(height: 46),
           Padding(
             padding: const EdgeInsets.only(left: 24),
