@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/Li
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/WebApp/main.dart';
+import 'package:mezcalmos/WebApp/services/values/globals.dart';
 import 'package:mezcalmos/WebApp/views/components/installAppBarComponent.dart';
 
 class ShowListOfRestaurants extends StatefulWidget {
@@ -17,7 +18,7 @@ class _ShowListOfRestaurantsState extends State<ShowListOfRestaurants> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
-        future: setupFirebase(launchMode: "stage".toLaunchMode()),
+        future: setupFirebase(launchMode: typeMode.toLaunchMode()),
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =

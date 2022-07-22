@@ -45,7 +45,7 @@ class _BlogDetailsState extends State<BlogDetails> {
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
     return FutureBuilder<bool>(
-        future: setupFirebase(launchMode: "stage".toLaunchMode()),
+        future: setupFirebase(launchMode: typeMode.toLaunchMode()),
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =

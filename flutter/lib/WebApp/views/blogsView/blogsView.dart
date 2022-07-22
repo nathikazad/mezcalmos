@@ -4,6 +4,7 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/WebApp/services/values/globals.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -37,7 +38,7 @@ class _BlogsViewState extends State<BlogsView> {
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
     return FutureBuilder<bool>(
-        future: setupFirebase(launchMode: "stage".toLaunchMode()),
+        future: setupFirebase(launchMode: typeMode.toLaunchMode()),
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =

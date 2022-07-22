@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Laundry/SingleLaundry/SingleLaundryS
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/WebApp/main.dart';
+import 'package:mezcalmos/WebApp/services/values/globals.dart';
 import 'package:mezcalmos/WebApp/views/components/installAppBarComponent.dart';
 
 class ShowSingleLaundryView extends StatelessWidget {
@@ -14,7 +15,7 @@ class ShowSingleLaundryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
         future: setupFirebase(
-            launchMode: "stage".toLaunchMode(),
+            launchMode: typeMode.toLaunchMode(),
             func: () {
               Get.put(LaundryController());
             }),

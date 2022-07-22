@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/WebApp/main.dart';
+import 'package:mezcalmos/WebApp/services/values/globals.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sizer/sizer.dart';
@@ -37,7 +38,7 @@ class _IndexPageState extends State<IndexPage> {
   Widget build(BuildContext context) {
     // print(langController.userLanguageKey.toString());
     return FutureBuilder<bool>(
-        future: setupFirebase(launchMode: "stage".toLaunchMode()),
+        future: setupFirebase(launchMode: typeMode.toLaunchMode()),
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true) {
             final LanguageController Lcontroller =

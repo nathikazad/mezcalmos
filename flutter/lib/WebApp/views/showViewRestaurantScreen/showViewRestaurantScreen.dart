@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/WebApp/main.dart';
+import 'package:mezcalmos/WebApp/services/values/globals.dart';
 import 'package:mezcalmos/WebApp/views/components/installAppBarComponent.dart';
 
 import '../../../Shared/controllers/restaurantsInfoController.dart';
@@ -23,7 +24,7 @@ class _ShowViewRestaurantScreenState extends State<ShowViewRestaurantScreen> {
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
         future: setupFirebase(
-          launchMode: "stage".toLaunchMode(),
+          launchMode: typeMode.toLaunchMode(),
         ),
         builder: (context, snapShot) {
           if (snapShot.hasData && snapShot.data == true) {

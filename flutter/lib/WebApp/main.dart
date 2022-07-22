@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'dart:html' as html;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import 'package:mezcalmos/WebApp/routes/AppRoutes.dart';
 import 'package:mezcalmos/WebApp/views/ErrorViews/unknownRoutePage.dart';
 import 'package:sizer/sizer.dart';
 import '../Shared/helpers/PrintHelper.dart';
+import 'services/values/globals.dart';
 
 void main() async {
   //await dotenv.load(fileName: ".env");
@@ -29,13 +31,6 @@ void main() async {
   ) {
     return AppStart();
   }));
-  html.window.onBeforeUnload.listen((event) async {
-    if (Get.currentRoute.startsWith("/restaurant/")) {
-      intailizeApp("stage".toLaunchMode()).then((value) => Get.offAllNamed(
-          "/restaurant?id=6Hr3Hc2hkkZa7LX7slnFo3zOTdxx&lang=es"));
-    }
-    mezDbgPrint("heloo bro ${Get.currentRoute}");
-  });
 }
 
 class AppStart extends StatefulWidget {
@@ -51,9 +46,9 @@ class _AppStartState extends State<AppStart> {
   @override
   void initState() {
     WidgetsFlutterBinding.ensureInitialized();
-    String _tmpLmode = "stage";
+    String _tmpLmode = typeMode;
     _launchMode = _tmpLmode.toLaunchMode();
-    intailizeApp(_launchMode);
+
     // TODO: implement initState
 
     super.initState();
@@ -70,17 +65,6 @@ class _AppStartState extends State<AppStart> {
   }
 }
 
-Future<bool> intailizeApp(AppLaunchMode _launchMode) async {
-  Completer<bool> completer = Completer();
-//setupFirebase(_launchMode);
-
-  mezDbgPrint(Get.locale?.countryCode);
-  hookOnFlutterErrorsStdout();
-
-  completer.complete(true);
-  return completer.future;
-}
-
 Future<bool> setupFirebase(
     {required AppLaunchMode launchMode, Function? func}) async {
   const String _host =
@@ -88,39 +72,56 @@ Future<bool> setupFirebase(
   // final AppLaunchMode _launchMode =
   //     String.fromEnvironment('LMODE', defaultValue: "prod").toLaunchMode();
   mezDbgPrint('mode  -> $launchMode');
-  mezDbgPrint('host  -> $_host');
 
-  final FirebaseApp _app = await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: "AIzaSyBRQTIUx_-oMdp5_S5e9F8h4Uc4ViZKM4U",
-      appId: "1:606383265109:web:a2050a8335ee6e37d8cbdc",
-      messagingSenderId: "606383265109",
-      projectId: "mezcalmos-staging",
-    ),
-  );
-  mezDbgPrint("[+] App Initialized under Name ${_app.name} .");
+  late FirebaseApp _app;
+
   late FirebaseDatabase firebaseDb;
-
-  if (launchMode == AppLaunchMode.prod) {
-    firebaseDb = FirebaseDatabase.instanceFor(app: _app);
-  } else if (launchMode == AppLaunchMode.dev) {
-    mezDbgPrint("DEV MODE");
-    firebaseDb =
-        FirebaseDatabase.instanceFor(app: _app, databaseURL: _host + dbRoot);
-    firebaseDb.setPersistenceEnabled(true);
-    firebaseDb.setPersistenceCacheSizeBytes(10000000);
-    await FirebaseAuth.instance.useEmulator(_host + authPort);
-    FirebaseFunctions.instance
-        .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
-  } else if (launchMode == AppLaunchMode.stage) {
-    mezDbgPrint("[+] Entered Staging check ----.");
-
-    firebaseDb =
-        FirebaseDatabase.instanceFor(app: _app, databaseURL: stagingDb);
-  } else {
-    throw Exception("Invalid Launch Mode");
-  }
   if (!Get.isRegistered<FirebaseDb>()) {
+    if (launchMode == AppLaunchMode.prod) {
+      _app = await Firebase.initializeApp(
+        options: FirebaseOptions(
+          apiKey: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
+          appId: "1:804036698204:web:39b22436cbb4ef633f8699",
+          messagingSenderId: "804036698204",
+          projectId: "mezcalmos-31f1c",
+        ),
+      );
+      firebaseDb = FirebaseDatabase.instanceFor(
+          app: _app,
+          databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com");
+    } else if (launchMode == AppLaunchMode.dev) {
+      mezDbgPrint("DEV MODE");
+      _app = await Firebase.initializeApp(
+        options: FirebaseOptions(
+          apiKey: "AIzaSyAKu4WzLR4iZPk4qnEgYdVh1SWqnRXbS-M",
+          appId: "1:606383265109:web:a2050a8335ee6e37d8cbdc",
+          messagingSenderId: "606383265109",
+          projectId: "mezcalmos-85ff1",
+        ),
+      );
+      firebaseDb =
+          FirebaseDatabase.instanceFor(app: _app, databaseURL: _host + dbRoot);
+      firebaseDb.setPersistenceEnabled(true);
+      firebaseDb.setPersistenceCacheSizeBytes(10000000);
+      await FirebaseAuth.instance.useEmulator(_host + authPort);
+      FirebaseFunctions.instance
+          .useFunctionsEmulator(_host.replaceAll('http://', ''), functionPort);
+    } else if (launchMode == AppLaunchMode.stage) {
+      mezDbgPrint("[+] Entered Staging check ----.");
+      _app = await Firebase.initializeApp(
+        options: FirebaseOptions(
+          apiKey: "AIzaSyBRQTIUx_-oMdp5_S5e9F8h4Uc4ViZKM4U",
+          appId: "1:606383265109:web:a2050a8335ee6e37d8cbdc",
+          messagingSenderId: "606383265109",
+          projectId: "mezcalmos-staging",
+        ),
+      );
+      firebaseDb =
+          FirebaseDatabase.instanceFor(app: _app, databaseURL: stagingDb);
+    } else {
+      throw Exception("Invalid Launch Mode");
+    }
+
     Get.put(
         FirebaseDb(
           dbUrl: _host + dbRoot,

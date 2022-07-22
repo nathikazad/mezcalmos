@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+///change this [typeMode] to prod or dev
+/// if you want to build for production
+const String typeMode = "stage";
+
 const Color myColor = Color.fromRGBO(103, 121, 254, 1);
 
 ///images strings home index page
