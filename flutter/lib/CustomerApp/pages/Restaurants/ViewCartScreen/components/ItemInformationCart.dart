@@ -127,7 +127,6 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
         alignment: MainAxisAlignment.start,
         incrementCallback: () {
           _restaurantController.incrementItem(cartItem.idInCart!, 1);
-          _restaurantController.refresh();
         },
         onChangedToZero: () async {
           await showConfirmationDialog(context,
@@ -142,29 +141,10 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
               Get.back(closeOverlays: true);
             }
           });
-          // final YesNoDialogButton yesNoResult = await cancelAlertDialog(
-          //     title: _i18n()["deleteItem"],
-          //     body: _i18n()["deleteItemConfirm"],
-          //     icon: Container(
-          //       child: Icon(
-          //         Icons.highlight_off,
-          //         size: 65,
-          //         color: Color(0xffdb2846),
-          //       ),
-          //     ));
-          // mezDbgPrint(" the returend value from the dailog $yesNoResult");
-          // if (yesNoResult == YesNoDialogButton.Yes) {
-          //   _restaurantController.deleteItem(cartItem.idInCart!);
-          //   if (_restaurantController.cart.value.quantity() == 0) {
-          //     _restaurantController.clearCart();
-          //     Get.until((Route route) => route.settings.name == kHomeRoute);
-          //   }
-          // }
         },
         value: cartItem.quantity,
         decrementCallback: () {
           _restaurantController.incrementItem(cartItem.idInCart!, -1);
-          _restaurantController.refresh();
         });
   }
 }

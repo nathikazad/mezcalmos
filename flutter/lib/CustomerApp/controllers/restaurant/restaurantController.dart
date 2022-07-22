@@ -10,8 +10,9 @@ import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class RestaurantController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -95,6 +96,7 @@ class RestaurantController extends GetxController {
   }
 
   Future<void> saveCart() async {
+    mezDbgPrint(cart.value.paymentType);
     await _databaseHelper.firebaseDatabase
         .ref()
         .child(customerCart(_authController.fireAuthUser!.uid))
@@ -133,6 +135,14 @@ class RestaurantController extends GetxController {
 
   void deleteItem(String itemId) {
     cart.value.deleteItem(itemId);
+    saveCart();
+  }
+
+  void switchPaymentMedthod(PaymentType paymentType) {
+    cart.value.paymentType = paymentType;
+    mezDbgPrint("PAyment type ====> $paymentType");
+    mezDbgPrint("final Payment type ====> ${cart.value.paymentType}");
+
     saveCart();
   }
 

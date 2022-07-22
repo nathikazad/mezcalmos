@@ -47,8 +47,8 @@ class PaymentInfo {
       },
       this.stripeId});
 
-  factory PaymentInfo.fromData(dynamic data) {
-    Map<PaymentType, bool> acceptedPayments = {
+  factory PaymentInfo.fromData(data) {
+    final Map<PaymentType, bool> acceptedPayments = {
       PaymentType.Card: false,
       PaymentType.Cash: true
     };
@@ -61,5 +61,8 @@ class PaymentInfo {
     if (acceptedPayments[PaymentType.Card] ?? false)
       stripeId = data["stripeId"];
     return PaymentInfo(acceptedPayments: acceptedPayments, stripeId: stripeId);
+  }
+  bool get acceptCard {
+    return acceptedPayments[PaymentType.Card] == true;
   }
 }

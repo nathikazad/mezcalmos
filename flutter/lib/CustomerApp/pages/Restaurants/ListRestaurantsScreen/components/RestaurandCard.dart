@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -67,17 +69,17 @@ class RestaurantCard extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Flexible(
-                              flex: 2,
-                              fit: FlexFit.tight,
-                              child: Text(_getDollarsSign(),
-                                  style: txt.bodyText1?.copyWith(
-                                    color: Colors.grey.shade800,
-                                  )),
-                            ),
+                            // Flexible(
+                            //   flex: 2,
+                            //   fit: FlexFit.tight,
+                            //   child: Text(_getDollarsSign(),
+                            //       style: txt.bodyText1?.copyWith(
+                            //         color: Colors.grey.shade800,
+                            //       )),
+                            // ),
                             Flexible(
                               flex: 7,
-                              fit: FlexFit.tight,
+                              // fit: FlexFit.tight,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -86,7 +88,8 @@ class RestaurantCard extends StatelessWidget {
                                     color: Colors.grey.shade800,
                                   ),
                                   Flexible(
-                                    flex: 5,
+                                    //    flex: 5,
+                                    fit: FlexFit.tight,
                                     child: ShippingCostComponent(
                                       shippingCost: shippingPrice,
                                       alignment: MainAxisAlignment.start,
@@ -99,9 +102,20 @@ class RestaurantCard extends StatelessWidget {
                               flex: 1,
                               child: Icon(
                                 Icons.payments_sharp,
-                                color: Colors.grey.shade800,
+                                color: Colors.green.shade500,
                               ),
                             ),
+                            if (restaurant.paymentInfo.acceptCard)
+                              Flexible(
+                                flex: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 3),
+                                  child: Icon(
+                                    Ionicons.card,
+                                    color: primaryBlueColor,
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
                       )

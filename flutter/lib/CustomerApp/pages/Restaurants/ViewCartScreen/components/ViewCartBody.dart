@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantControlle
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/PaymentMethodPicker.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -69,15 +70,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 14,
               ),
-              child: Column(
-                children: [
-                  Text(
-                    "Payment Method",
-                    style: Get.textTheme.bodyText1,
-                  ),
-                  // Dropd
-                ],
-              ),
+              child: PaymentMethodPicker(),
             ),
             SizedBox(
               height: 15,

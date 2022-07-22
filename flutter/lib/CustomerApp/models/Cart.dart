@@ -39,6 +39,7 @@ class Cart {
           ? Location.fromFirebaseData(cartData["to"])
           : null;
       notes = cartData["notes"];
+      paymentType = cartData["paymentType"].toString().toPaymentType();
       shippingCost = shippingPrice ?? 50;
       _routeInformation = cartData['routeInformation'] == null
           ? null
@@ -189,11 +190,10 @@ class CartItem {
       "name": item.name.toFirebaseFormat(),
       "image": item.image,
       "chosenChoices": {},
-      "notes": notes
+      "notes": notes,
     };
 
     chosenChoices.forEach((String optionId, List<Choice> choices) {
-      mezDbgPrint("choice builder ============>>>> $chosenChoices");
       final List data = [];
       choices.forEach((Choice choice) {
         data.add(choice.toJson());
@@ -204,7 +204,7 @@ class CartItem {
           item.findOption(optionId)?.name.toFirebaseFormat();
       json["chosenChoices"][optionId]["choices"] = data;
     });
-    mezDbgPrint("LAST DATA -----------> $json");
+
     return json;
   }
 
