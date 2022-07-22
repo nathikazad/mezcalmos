@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:js' as js;
 import 'dart:html' as html;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +24,9 @@ import 'services/values/globals.dart';
 
 void main() async {
   //await dotenv.load(fileName: ".env");
+
+  js.context["my_dart_var"] = typeMode;
+  html.document.dispatchEvent(html.CustomEvent("dart_loaded"));
   runApp(Sizer(builder: (
     BuildContext context,
     Orientation orientation,
