@@ -4,7 +4,7 @@ import 'dart:html' as html;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
-//import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -23,8 +23,6 @@ import '../Shared/helpers/PrintHelper.dart';
 import 'services/values/globals.dart';
 
 void main() async {
-  //await dotenv.load(fileName: ".env");
-
   js.context["my_dart_var"] = typeMode;
   html.document.dispatchEvent(html.CustomEvent("dart_loaded"));
   runApp(Sizer(builder: (

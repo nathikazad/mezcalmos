@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 ///change this [typeMode] to prod or dev
 /// if you want to build for production
-const String typeMode = "stage";
+String typeMode = AppLaunchMode.stage.toShortString();
 
 const Color myColor = Color.fromRGBO(103, 121, 254, 1);
 
