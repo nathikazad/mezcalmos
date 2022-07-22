@@ -22,6 +22,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { Laundry } from "../shared/models/Services/Laundry/Laundry";
 import { getLaundry } from "./laundryController";
+import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe";
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)
   if (response != undefined)
@@ -65,7 +66,14 @@ export = functions.https.onCall(async (data, context) => {
     let customerInfo: UserInfo = await getUserInfo(customerId);
     const order: LaundryOrder = constructLaundryOrder(orderParams, customerInfo, laundry.info);
 
-    let orderId: string = (await customerNodes.inProcessOrders(customerId).push(order)).key!;
+
+    let orderId: string = (await customerNodes.inProcessOrders(customerId).push(null)).key!;
+
+    if (data.stripePaymentId)
+      await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId)
+
+    customerNodes.inProcessOrders(customerId, orderId).set(order);
+
     rootNodes.inProcessOrders(OrderType.Laundry, orderId).set(order);
     laundryNodes.inProcessOrders(laundry.info.id, orderId).set(order);
 
