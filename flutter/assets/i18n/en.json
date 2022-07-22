@@ -1496,7 +1496,14 @@
             "allRightReserved":"All right reserved",
             "policy":"Privacy policy"
         },
-
+        "formForQuestionsValidator":{
+            "fullName":"Please enter your full name",
+            "email":{
+                "empty":"Please enter your email",
+                "notValid":"This email not correct"
+            },
+            "message":"Please enter a message"
+        },
         "blogsView":{
             "title":"Our news & tips, let's go behind the scenes at Mezcalmos"
         }

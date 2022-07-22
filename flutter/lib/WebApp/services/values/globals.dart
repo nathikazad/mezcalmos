@@ -25,3 +25,7 @@ const String laundryServiceTwo =
     "assets/images/webApp/laundryServiceImage2.jpeg";
 const String laundryServiceThree =
     "assets/images/webApp/laundryServiceImage3.jpeg";
+
+/// reg experisions
+RegExp emailEeg = RegExp(
+    r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");

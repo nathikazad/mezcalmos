@@ -8,10 +8,14 @@ class WebappTextFieldComponent extends StatelessWidget {
       {Key? key,
       required this.title,
       this.maxLine = 1,
+      this.onSave,
+      this.onValidate,
       required this.controller})
       : super(key: key);
   final String title;
   final int? maxLine;
+  final FormFieldSetter<String?>? onSave;
+  final FormFieldValidator<String?>? onValidate;
   final TextEditingController controller;
 
   @override
@@ -40,13 +44,15 @@ class WebappTextFieldComponent extends StatelessWidget {
                         MezCalmosResizer.isTablet(context) ||
                         MezCalmosResizer.isSmallTablet(context))
                     ? null
-                    : 45,
+                    : null,
             color: Color.fromRGBO(244, 244, 244, 1),
             child: Theme(
               data: ThemeData(),
-              child: TextField(
+              child: TextFormField(
                 controller: controller,
                 maxLines: maxLine,
+                onSaved: onSave,
+                validator: onValidate,
                 decoration: InputDecoration(
                     contentPadding: (maxLine! > 1)
                         ? EdgeInsets.all(10)

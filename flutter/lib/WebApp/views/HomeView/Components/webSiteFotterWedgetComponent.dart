@@ -267,7 +267,7 @@ class WebSiteFotterWedgetComponent extends StatelessWidget {
           ),
           IconButton(
               onPressed: () {
-                _launchURL("https://www.instagram.com/mezcalmospxm/ ");
+                _launchURL("https://www.instagram.com/mezcalmospxm/");
               },
               icon: FaIcon(
                 FontAwesomeIcons.instagram,

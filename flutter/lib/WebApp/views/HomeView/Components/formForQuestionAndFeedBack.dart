@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/sockets/src/socket_notifier.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/WebApp/services/values/globals.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
@@ -180,87 +182,122 @@ class FAQFormComponent extends StatelessWidget {
   final TextEditingController fullName = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController message = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        //full name form;
-        Obx(
-          () => WebappTextFieldComponent(
-            controller: fullName,
-            title: "${langController.strings["WebApp"]["fullName"]}",
-          ),
-        ),
-        SizedBox(
-          height: getSizeForSpacing(context),
-        ),
-        Obx(
-          () => WebappTextFieldComponent(
-            controller: email,
-            title: "${langController.strings["WebApp"]["email"]}",
-          ),
-        ),
-        SizedBox(
-          height: getSizeForSpacing(context),
-        ),
-        Obx(
-          () => WebappTextFieldComponent(
-            controller: message,
-            title: "${langController.strings["WebApp"]["messageOrQuestion"]}",
-            maxLine: 500,
-          ),
-        ),
-        SizedBox(
-          height: getSpaceOnTop(context) / 2,
-        ),
-        Row(
-          children: [
-            InkWell(
-              onTap: () {
-                sendMessage();
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: (MezCalmosResizer.isMobile(context) ||
-                            MezCalmosResizer.isSmallMobile(context))
-                        ? 15
-                        : 25),
-                //ßwidth: getSizeForSendBtn(context) * 10,
-                height: getSizeForSendBtn(context) * 2,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(279),
-                  ),
-                  gradient: LinearGradient(
-                      begin: Alignment(1, 0.5),
-                      end: Alignment(-0.75, 0.75),
-                      colors: [
-                        Color.fromRGBO(172, 89, 252, 1),
-                        Color.fromRGBO(103, 121, 254, 1)
-                      ]),
+    return Shortcuts(
+      shortcuts: const <ShortcutActivator, Intent>{
+        // Pressing space in the field will now move to the next field.
+        SingleActivator(LogicalKeyboardKey.tab): NextFocusIntent(),
+      },
+      child: FocusTraversalGroup(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //full name form;
+              Obx(
+                () => WebappTextFieldComponent(
+                  controller: fullName,
+                  title: "${langController.strings["WebApp"]["fullName"]}",
+                  onValidate: (val) {
+                    if (val == null || val.isEmpty) {
+                      return "${langController.strings["WebApp"]["formForQuestionsValidator"]["fullName"]}";
+                    }
+                  },
                 ),
-                child: Center(
-                    child: Obx(
-                  () => Text(
-                    "${langController.strings["WebApp"]["submitBtn"]}",
-                    style: txt.bodyText1!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: getSizeForSndBtnText(context),
-                        fontFamily: "Montserrat"),
-                  ),
-                )),
               ),
-            ),
-          ],
+              SizedBox(
+                height: getSizeForSpacing(context),
+              ),
+              Obx(
+                () => WebappTextFieldComponent(
+                  onValidate: (val) {
+                    if (val == null || val.isEmpty) {
+                      return "${langController.strings["WebApp"]["formForQuestionsValidator"]["email"]["empty"]}";
+                    } else {
+                      if (!emailEeg.hasMatch(val)) {
+                        return "${langController.strings["WebApp"]["formForQuestionsValidator"]["email"]["notValid"]}";
+                      }
+                    }
+                  },
+                  controller: email,
+                  title: "${langController.strings["WebApp"]["email"]}",
+                ),
+              ),
+              SizedBox(
+                height: getSizeForSpacing(context),
+              ),
+              Obx(
+                () => WebappTextFieldComponent(
+                  controller: message,
+                  onValidate: (val) {
+                    if (val == null || val.isEmpty) {
+                      return "${langController.strings["WebApp"]["formForQuestionsValidator"]["message"]}";
+                    }
+                  },
+                  title:
+                      "${langController.strings["WebApp"]["messageOrQuestion"]}",
+                  maxLine: 500,
+                ),
+              ),
+              SizedBox(
+                height: getSpaceOnTop(context) / 2,
+              ),
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        sendMessage(context);
+                      }
+                      //
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: (MezCalmosResizer.isMobile(context) ||
+                                  MezCalmosResizer.isSmallMobile(context))
+                              ? 15
+                              : 25),
+                      //ßwidth: getSizeForSendBtn(context) * 10,
+                      height: getSizeForSendBtn(context) * 2,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(279),
+                        ),
+                        gradient: LinearGradient(
+                            begin: Alignment(1, 0.5),
+                            end: Alignment(-0.75, 0.75),
+                            colors: [
+                              Color.fromRGBO(172, 89, 252, 1),
+                              Color.fromRGBO(103, 121, 254, 1)
+                            ]),
+                      ),
+                      child: Center(
+                          child: Obx(
+                        () => Text(
+                          "${langController.strings["WebApp"]["submitBtn"]}",
+                          style: txt.bodyText1!.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: getSizeForSndBtnText(context),
+                              fontFamily: "Montserrat"),
+                        ),
+                      )),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: getSpaceOnTop(context),
+              ),
+            ],
+          ),
         ),
-        SizedBox(
-          height: getSpaceOnTop(context),
-        ),
-      ],
+      ),
     );
   }
 
@@ -316,7 +353,7 @@ class FAQFormComponent extends StatelessWidget {
     }
   }
 
-  void sendMessage() async {
+  void sendMessage(BuildContext context) async {
     final String serviceId = "service_lmcyttk";
     final String templateID = "template_fozmbe8";
     final String userID = "vhILBmiHW4kZ2zPlp";
@@ -339,9 +376,18 @@ class FAQFormComponent extends StatelessWidget {
             }))
         .then((value) {
       if (value != null && value.statusCode == 200) {
-        print("you email sent ");
-        Get.snackbar("Success",
-            "Your message sent to sepprt team we will answer you soon");
+        print("your email sent ");
+
+        final snackBar = SnackBar(
+          content: const Text(
+            'Your message sent to support team we will answer you soon',
+            style: TextStyle(color: Colors.green),
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        email.text = "";
+        fullName.text = "";
+        message.text = "";
       } else {
         print("something went wrong  ${value.statusCode} ${value.body}");
       }

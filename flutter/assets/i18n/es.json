@@ -1547,7 +1547,14 @@
             "allRightReserved":"Todos los derechos reservados",
             "policy":"Política de privacidad"
         },
-
+        "formForQuestionsValidator":{
+            "fullName":"Por favor ingresa tu nombre completo",
+            "email":{
+                "empty":"Por favor introduzca su correo electrónico",
+                "notValid":"Este correo electrónico no es correcto"
+            },
+            "message":"Por favor ingrese un mensaje"
+        },
         "blogsView":{
             "title":"Nuestras noticias y consejos, vamos detrás de escena en Mezcalmos"
         }

@@ -3,6 +3,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/WebApp/services/values/globals.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 
@@ -50,9 +51,32 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   width: (size.width * 0.3),
                   child: Obx(() => Image.asset(
-                      lang.userLanguageKey == LanguageType.EN
-                          ? homeMobileUIImageEN
-                          : homeMobileUIImageES)),
+                        lang.userLanguageKey == LanguageType.EN
+                            ? homeMobileUIImageEN
+                            : homeMobileUIImageES,
+                        frameBuilder:
+                            (context, child, frame, wasSynchronouslyLoaded) {
+                          if (frame != null) {
+                            return child;
+                          } else {
+                            return Container(
+                              width: Get.width * 0.25,
+                              height: Get.width * 0.55,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Shimmer.fromColors(
+                                  child: Container(
+                                    color: Colors.grey,
+                                  ),
+                                  highlightColor: Colors.grey[400]!,
+                                  baseColor: Colors.grey[300]!,
+                                  direction: ShimmerDirection.ltr,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      )),
                 ),
               ],
             ),
@@ -64,10 +88,34 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerRight,
                   width: (size.width * 0.3),
-                  child: Obx(() => Image.asset(
-                      lang.userLanguageKey == LanguageType.EN
-                          ? restaurantMobileUiImageEN
-                          : restaurantMobileUiImageES)),
+                  child: Obx(
+                    () => Image.asset(
+                        lang.userLanguageKey == LanguageType.EN
+                            ? restaurantMobileUiImageEN
+                            : restaurantMobileUiImageES,
+                        frameBuilder:
+                            (context, child, frame, wasSynchronouslyLoaded) {
+                      if (frame != null) {
+                        return child;
+                      } else {
+                        return Container(
+                          width: Get.width * 0.25,
+                          height: Get.width * 0.55,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Shimmer.fromColors(
+                              child: Container(
+                                color: Colors.grey,
+                              ),
+                              highlightColor: Colors.grey[400]!,
+                              baseColor: Colors.grey[300]!,
+                              direction: ShimmerDirection.ltr,
+                            ),
+                          ),
+                        );
+                      }
+                    }),
+                  ),
                 ),
               ],
             ),
@@ -75,9 +123,32 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
               alignment: Alignment.centerLeft,
               width: (size.width * 0.3),
               child: Obx(() => Image.asset(
-                  lang.userLanguageKey == LanguageType.EN
-                      ? laundryMobileUIImageEN
-                      : laundryMobileUIImageES)),
+                      lang.userLanguageKey == LanguageType.EN
+                          ? laundryMobileUIImageEN
+                          : laundryMobileUIImageES,
+                      frameBuilder:
+                          (context, child, frame, wasSynchronouslyLoaded) {
+                    if (frame != null) {
+                      return child;
+                    } else {
+                      return Container(
+                        margin: EdgeInsets.only(left: 10),
+                        width: Get.width * 0.25,
+                        height: Get.width * 0.55,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Shimmer.fromColors(
+                            child: Container(
+                              color: Colors.grey,
+                            ),
+                            highlightColor: Colors.grey[400]!,
+                            baseColor: Colors.grey[300]!,
+                            direction: ShimmerDirection.ltr,
+                          ),
+                        ),
+                      );
+                    }
+                  })),
             ),
           ],
         ),
@@ -244,9 +315,32 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
                                 height: 82.sp,
                                 child: Obx(
                                   () => Image.asset(
-                                      lang.userLanguageKey == LanguageType.EN
-                                          ? restaurantMobileUiImageEN
-                                          : restaurantMobileUiImageES),
+                                    lang.userLanguageKey == LanguageType.EN
+                                        ? restaurantMobileUiImageEN
+                                        : restaurantMobileUiImageES,
+                                    frameBuilder: (context, child, frame,
+                                        wasSynchronouslyLoaded) {
+                                      if (frame != null) {
+                                        return child;
+                                      } else {
+                                        return Container(
+                                          width: Get.width * 0.13,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            child: Shimmer.fromColors(
+                                              child: Container(
+                                                color: Colors.grey,
+                                              ),
+                                              highlightColor: Colors.grey[400]!,
+                                              baseColor: Colors.grey[300]!,
+                                              direction: ShimmerDirection.ltr,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
@@ -256,9 +350,32 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
                                 height: 82.sp,
                                 child: Obx(
                                   () => Image.asset(
-                                      lang.userLanguageKey == LanguageType.EN
-                                          ? laundryMobileUIImageEN
-                                          : laundryMobileUIImageES),
+                                    lang.userLanguageKey == LanguageType.EN
+                                        ? laundryMobileUIImageEN
+                                        : laundryMobileUIImageES,
+                                    frameBuilder: (context, child, frame,
+                                        wasSynchronouslyLoaded) {
+                                      if (frame != null) {
+                                        return child;
+                                      } else {
+                                        return Container(
+                                          width: Get.width * 0.13,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            child: Shimmer.fromColors(
+                                              child: Container(
+                                                color: Colors.grey,
+                                              ),
+                                              highlightColor: Colors.grey[400]!,
+                                              baseColor: Colors.grey[300]!,
+                                              direction: ShimmerDirection.ltr,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
@@ -270,9 +387,32 @@ class WepAppIndexBodyIntroductionComponent extends StatelessWidget {
                                 height: 82.sp,
                                 child: Obx(
                                   () => Image.asset(
-                                      lang.userLanguageKey == LanguageType.EN
-                                          ? homeMobileUIImageEN
-                                          : homeMobileUIImageES),
+                                    lang.userLanguageKey == LanguageType.EN
+                                        ? homeMobileUIImageEN
+                                        : homeMobileUIImageES,
+                                    frameBuilder: (context, child, frame,
+                                        wasSynchronouslyLoaded) {
+                                      if (frame != null) {
+                                        return child;
+                                      } else {
+                                        return Container(
+                                          width: Get.width * 0.13,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            child: Shimmer.fromColors(
+                                              child: Container(
+                                                color: Colors.grey,
+                                              ),
+                                              highlightColor: Colors.grey[400]!,
+                                              baseColor: Colors.grey[300]!,
+                                              direction: ShimmerDirection.ltr,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
                                 ),
                               ),
                             ),

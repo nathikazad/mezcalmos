@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/WebApp/services/values/globals.dart';
 import 'package:mezcalmos/WebApp/services/widgets/mezCalmosResizer.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 
@@ -66,9 +67,30 @@ class WebServicesCard extends StatelessWidget {
                       child: Container(
                         height: getSizeForImage(context),
                         width: getSizeForImage(context),
-                        child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            backgroundImage: AssetImage(firstUrlImage)),
+                        child: ClipOval(
+                          child: Image.asset(firstUrlImage, fit: BoxFit.cover,
+                              frameBuilder: (context, child, frame,
+                                  wasSynchronouslyLoaded) {
+                            if (frame != null) {
+                              return child;
+                            } else {
+                              return Container(
+                                height: getSizeForImage(context),
+                                width: getSizeForImage(context),
+                                child: ClipOval(
+                                  child: Shimmer.fromColors(
+                                    child: Container(
+                                      color: Colors.grey,
+                                    ),
+                                    highlightColor: Colors.grey[400]!,
+                                    baseColor: Colors.grey[300]!,
+                                    direction: ShimmerDirection.ltr,
+                                  ),
+                                ),
+                              );
+                            }
+                          }),
+                        ),
                       ),
                     ),
                     Positioned(
@@ -76,9 +98,30 @@ class WebServicesCard extends StatelessWidget {
                       child: Container(
                         height: getSizeForImage(context),
                         width: getSizeForImage(context),
-                        child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            backgroundImage: AssetImage(secondUrlImage)),
+                        child: ClipOval(
+                          child: Image.asset(secondUrlImage, fit: BoxFit.cover,
+                              frameBuilder: (context, child, frame,
+                                  wasSynchronouslyLoaded) {
+                            if (frame != null) {
+                              return child;
+                            } else {
+                              return Container(
+                                height: getSizeForImage(context),
+                                width: getSizeForImage(context),
+                                child: ClipOval(
+                                  child: Shimmer.fromColors(
+                                    child: Container(
+                                      color: Colors.grey,
+                                    ),
+                                    highlightColor: Colors.grey[400]!,
+                                    baseColor: Colors.grey[300]!,
+                                    direction: ShimmerDirection.ltr,
+                                  ),
+                                ),
+                              );
+                            }
+                          }),
+                        ),
                       ),
                     ),
                     Positioned(
@@ -86,9 +129,30 @@ class WebServicesCard extends StatelessWidget {
                       child: Container(
                         height: getSizeForImage(context),
                         width: getSizeForImage(context),
-                        child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            backgroundImage: AssetImage(thirdUrlImage)),
+                        child: ClipOval(
+                          child: Image.asset(thirdUrlImage, fit: BoxFit.cover,
+                              frameBuilder: (context, child, frame,
+                                  wasSynchronouslyLoaded) {
+                            if (frame != null) {
+                              return child;
+                            } else {
+                              return Container(
+                                height: getSizeForImage(context),
+                                width: getSizeForImage(context),
+                                child: ClipOval(
+                                  child: Shimmer.fromColors(
+                                    child: Container(
+                                      color: Colors.grey,
+                                    ),
+                                    highlightColor: Colors.grey[400]!,
+                                    baseColor: Colors.grey[300]!,
+                                    direction: ShimmerDirection.ltr,
+                                  ),
+                                ),
+                              );
+                            }
+                          }),
+                        ),
                       ),
                     )
                   ],
