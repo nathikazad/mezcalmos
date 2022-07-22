@@ -24,69 +24,70 @@ export interface StripePaymentInfo {
 
 export const getPaymentIntent =
   functions.https.onCall(async (data, context) => {
-  let response = await isSignedIn(context.auth)
-  if (response != undefined) {
-    return response;
-  }
-
-  if (data.customerId == null || data.serviceProviderId == null ||
-    data.orderType == null || data.paymentAmount == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected customerId, serviceProviderId, orderType and paymentAmount`,
-      errorCode: "incorrectParams"
+    let response = await isSignedIn(context.auth)
+    if (response != undefined) {
+      return response;
     }
-  }
-  console.log(data);
-  let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).once('value')).val()
 
-  if (!serviceProviderPaymentInfo || serviceProviderPaymentInfo.acceptedPayments[PaymentType.Card] == false || serviceProviderPaymentInfo.stripeId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `This service provider does not accept cards`,
-      errorCode: "paymentsNotSupported"
+    if (data.customerId == null || data.serviceProviderId == null ||
+      data.orderType == null || data.paymentAmount == null) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Expected customerId, serviceProviderId, orderType and paymentAmount`,
+        errorCode: "incorrectParams"
+      }
     }
-  }
+    console.log(data);
+    let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).once('value')).val()
 
-  // remove
-  // serviceProviderPaymentInfo.stripeId = "acct_102aka2sNwJeuaBL";
+    if (!serviceProviderPaymentInfo || serviceProviderPaymentInfo.acceptedPayments[PaymentType.Card] == false || serviceProviderPaymentInfo.stripeId == null) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `This service provider does not accept cards`,
+        errorCode: "paymentsNotSupported"
+      }
+    }
 
-  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripeId };
-  const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+    // remove
+    // serviceProviderPaymentInfo.stripeId = "acct_102aka2sNwJeuaBL";
+
+    let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripeId };
+    const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
     let stripeCustomerId: string = (await stripeIdsNode(data.customerId, data.serviceProviderId).once('value')).val();
-  if (stripeCustomerId == null) {
-    let userInfo: UserInfo = (await userInfoNode(data.customerId).once('value')).val()
-    const customer: Stripe.Customer = await stripe.customers.create({
-      name: userInfo.name,
-      metadata: { customerId: data.customerId }
-    }, stripeOptions)
-    stripeCustomerId = customer.id;
-    stripeIdsNode(data.customerId, data.serviceProviderId).set(stripeCustomerId);
-  }
+    if (stripeCustomerId == null) {
+      let userInfo: UserInfo = (await userInfoNode(data.customerId).once('value')).val()
+      const customer: Stripe.Customer = await stripe.customers.create({
+        name: userInfo.name,
+        metadata: { customerId: data.customerId }
+      }, stripeOptions)
+      stripeCustomerId = customer.id;
+      stripeIdsNode(data.customerId, data.serviceProviderId).set(stripeCustomerId);
+    }
 
 
 
     const ephemeralKey: Stripe.EphemeralKey = await stripe.ephemeralKeys.create(
-    { customer: stripeCustomerId },
-    stripeOptions
-  );
+      { customer: stripeCustomerId },
+      stripeOptions
+    );
+
     const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
-    amount: data.paymentAmount,
-    currency: 'mxn',
-    customer: stripeCustomerId,
+      amount: data.paymentAmount,
+      currency: 'mxn',
+      customer: stripeCustomerId,
+      capture_method: data.captureMethod || 'automatic'
+    }, stripeOptions);
 
-  }, stripeOptions);
-
-  return {
-    status: ServerResponseStatus.Success,
-    paymentIntent: paymentIntent.client_secret,
-    ephemeralKey: ephemeralKey.secret,
-    customer: stripeCustomerId,
-    publishableKey: keys.stripe.publickey,
-    stripeAccountId: serviceProviderPaymentInfo.stripeId
-  }
-});
+    return {
+      status: ServerResponseStatus.Success,
+      paymentIntent: paymentIntent.client_secret,
+      ephemeralKey: ephemeralKey.secret,
+      customer: stripeCustomerId,
+      publishableKey: keys.stripe.publickey,
+      stripeAccountId: serviceProviderPaymentInfo.stripeId
+    }
+  });
 
 
 

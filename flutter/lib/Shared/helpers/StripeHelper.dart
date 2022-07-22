@@ -35,11 +35,26 @@ num getStripeCost(num totalCost) {
   return totalCost + 3 + (totalCost * 0.036) - totalCost;
 }
 
+enum CaptureMethod { Automatic, Manual }
+
+extension ParseCaptureMethodToString on CaptureMethod {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+
+  String toNormalString() {
+    final String str = toString().split('.').last;
+    return str;
+  }
+}
+
 Future<ServerResponse> getPaymentIntent(
     {required String customerId,
     required String serviceProviderId,
     required OrderType orderType,
-    required num paymentAmount}) async {
+    required num paymentAmount,
+    CaptureMethod captureMethod = CaptureMethod.Automatic}) async {
   final HttpsCallable getPaymentIntent =
       FirebaseFunctions.instance.httpsCallable("stripe-getPaymentIntent");
   try {
@@ -48,7 +63,8 @@ Future<ServerResponse> getPaymentIntent(
       "customerId": customerId,
       "serviceProviderId": serviceProviderId,
       "orderType": orderType.toFirebaseFormatString(),
-      "paymentAmount": paymentAmount.toString()
+      "paymentAmount": paymentAmount.toString(),
+      "captureMethod": captureMethod.toFirebaseFormatString()
     });
     return ServerResponse.fromJson(response.data);
   } catch (e) {

@@ -67,7 +67,7 @@ class Cart {
       "routeInformation": _routeInformation?.toJson(),
       "serviceProviderId": restaurant?.info.id,
       "quantity": quantity(),
-      "cost": totalCost().toInt(),
+      "cost": totalCost.toInt(),
       "itemsCost": itemsCost().toInt(),
       "shippingCost": shippingCost,
       "stripeFees": stripeFees,
@@ -90,7 +90,7 @@ class Cart {
         0, (num sum, CartItem cartItem) => sum + cartItem.totalCost());
   }
 
-  num totalCost() {
+  num get totalCost {
     num tcost = itemsCost() + (shippingCost ?? 0);
     if (paymentType == PaymentType.Card) tcost += stripeFees;
     return tcost;

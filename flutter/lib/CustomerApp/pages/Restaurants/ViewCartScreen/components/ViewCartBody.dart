@@ -61,7 +61,7 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                   setLocationCallBack: widget.setLocationCallBack,
                   deliveryCost: controller.cart.value.shippingCost ?? 50,
                   orderCost: controller.cart.value.itemsCost().toPriceString(),
-                  totalCost: controller.cart.value.totalCost().toPriceString(),
+                  totalCost: controller.cart.value.totalCost.toPriceString(),
                 )),
             SizedBox(
               height: 15,
