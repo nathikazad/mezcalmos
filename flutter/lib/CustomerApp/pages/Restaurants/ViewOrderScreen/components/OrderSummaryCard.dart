@@ -38,7 +38,7 @@ class OrderSummaryCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

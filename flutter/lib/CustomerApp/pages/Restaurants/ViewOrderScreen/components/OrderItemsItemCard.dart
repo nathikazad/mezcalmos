@@ -58,6 +58,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
         },
         iconColor: primaryBlueColor,
         trailing: Container(
+          margin: const EdgeInsets.only(right: 14),
           width: 25,
           height: 25,
           decoration: BoxDecoration(
