@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -18,6 +19,7 @@ abstract class Order {
   Location to;
   num cost;
   RouteInformation? routeInformation;
+  StripePaymentInfo? stripePaymentInfo;
 
   Order({
     required this.orderId,
@@ -30,6 +32,7 @@ abstract class Order {
     this.serviceProvider,
     required this.to,
     this.routeInformation,
+    this.stripePaymentInfo
   });
   bool isIncoming() {
     switch (orderType) {
@@ -125,7 +128,8 @@ abstract class DeliverableOrder extends Order {
       required this.customerDropOffDriverChatId,
       this.estimatedPickupFromServiceProviderTime,
       this.estimatedDropoffAtCustomerTime,
-      RouteInformation? routeInformation})
+      RouteInformation? routeInformation,
+      StripePaymentInfo? stripePaymentInfo})
       : super(
           orderId: orderId,
           orderType: orderType,
@@ -137,6 +141,7 @@ abstract class DeliverableOrder extends Order {
           serviceProvider: serviceProvider,
           to: to,
           routeInformation: routeInformation,
+          stripePaymentInfo: stripePaymentInfo
         );
 }
 
@@ -157,6 +162,7 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required Location to,
       required OrderType orderType,
       RouteInformation? routeInformation,
+      StripePaymentInfo? stripePaymentInfo,
       DeliveryDriverUserInfo? dropoffDriver,
       required String? serviceProviderDropOffDriverChatId,
       required String? customerDropOffDriverChatId,

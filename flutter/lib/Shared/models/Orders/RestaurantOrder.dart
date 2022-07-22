@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -130,6 +131,11 @@ class RestaurantOrder extends DeliverableOrder {
           data["routeInformation"]["duration"],
         ),
       );
+    }
+
+    if (data["stripePaymentInfo"] != null) {
+      restaurantOrder.stripePaymentInfo =
+          StripePaymentInfo.fromJson(data["stripePaymentInfo"]);
     }
 
     data["items"].forEach((dynamic itemId, dynamic itemData) {
