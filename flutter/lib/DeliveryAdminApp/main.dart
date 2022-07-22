@@ -19,7 +19,7 @@ List<GetPage<dynamic>> routes = XRouter.mainRoutes;
 List<SideMenuItem> sideMenuItems = [
   SideMenuItem(
     onClick: () {
-      if (!AdminAuthController().initialized ||
+      if (AdminAuthController().initialized ||
           Get.find<AdminAuthController>().admin?.authorized != true) {
       } else {
         Get.toNamed<void>(kServicesRoute);
