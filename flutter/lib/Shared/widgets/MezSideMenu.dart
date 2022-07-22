@@ -276,6 +276,7 @@ class SideMenuItem extends StatelessWidget {
       {Key? key,
       required this.onClick,
       required this.icon,
+      this.shouldBeAuthorized = false,
       this.isI18nPath = false,
       this.title,
       this.titleWidget})
@@ -284,6 +285,7 @@ class SideMenuItem extends StatelessWidget {
   final Widget? titleWidget;
   final String? title;
   final bool isI18nPath;
+  final bool shouldBeAuthorized;
   final Function()? onClick;
 
   @override
@@ -321,56 +323,3 @@ class SideMenuItem extends StatelessWidget {
     );
   }
 }
-
-// class SideMenuItem extends StatefulWidget {
-//   const SideMenuItem({
-//     Key? key,
-//     required this.onClick,
-//     required this.icon,
-//     required this.title,
-//     this.descriptionRow,
-//   }) : super(key: key);
-
-//   final GestureTapCallback onClick;
-//   final Widget icon;
-//   final String title;
-//   final Row? descriptionRow;
-
-//   @override
-//   _SideMenuItemState createState() => _SideMenuItemState();
-// }
-
-// class _SideMenuItemState extends State<SideMenuItem> {
-//   final AuthController _authController = Get.find<AuthController>();
-//   @override
-//   Widget build(BuildContext context) {
-//     return Obx(
-//       () => _authController.user != null
-//           ? Container(
-//               child: Padding(
-//                 padding: const EdgeInsets.only(bottom: 5.0),
-//                 child: ListTile(
-//                   onTap: widget.onClick,
-//                   leading: widget.icon,
-//                   title: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Text(
-//                         "${widget.title}",
-//                         style: TextStyle(
-//                           fontFamily: 'Montserrat',
-//                           fontSize: 18,
-//                           fontWeight: FontWeight.w600,
-//                         ),
-//                       ),
-//                       if (widget.descriptionRow != null) widget.descriptionRow!
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             )
-//           : SizedBox(),
-//     );
-//   }
-// }
