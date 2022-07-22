@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -109,12 +107,11 @@ class RestaurantCard extends StatelessWidget {
                               Flexible(
                                 flex: 1,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 3),
-                                  child: Icon(
-                                    Ionicons.card,
-                                    color: primaryBlueColor,
-                                  ),
-                                ),
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: Icon(
+                                      Icons.credit_card,
+                                      color: Colors.grey.shade800,
+                                    )),
                               ),
                           ],
                         ),

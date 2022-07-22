@@ -71,10 +71,23 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                           value: value,
                           // enabled: (widget.oppositeLanguageValue != null &&
                           //     widget.oppositeLanguageValue!.value != value),
-                          child: Text(value.toNormalString(),
-                              style: Get.textTheme.bodyText2?.copyWith(
-                                fontWeight: FontWeight.w700,
-                              )));
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 3,
+                              ),
+                              Icon(
+                                _getIcon(value),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(value.toNormalString(),
+                                  style: Get.textTheme.bodyText2?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  )),
+                            ],
+                          ));
                     }).toList(),
                   ),
                 ],
@@ -85,5 +98,14 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
           return SizedBox();
       },
     );
+  }
+
+  IconData _getIcon(PaymentType paymentType) {
+    switch (paymentType) {
+      case PaymentType.Card:
+        return Icons.credit_card;
+      case PaymentType.Cash:
+        return Icons.payments;
+    }
   }
 }
