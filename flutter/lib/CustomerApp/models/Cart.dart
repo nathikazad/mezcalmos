@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 // ignore_for_file: avoid_annotating_with_dynamic
@@ -69,6 +70,7 @@ class Cart {
       "cost": totalCost().toInt(),
       "itemsCost": itemsCost().toInt(),
       "shippingCost": shippingCost,
+      "stripeFees": stripeFees,
       "items": items,
       "notes": notes,
       "to": toLocation?.toFirebaseFormattedJson(),
@@ -89,12 +91,12 @@ class Cart {
   }
 
   num totalCost() {
-    if (shippingCost != null) {
-      return itemsCost() + shippingCost!;
-    } else {
-      return itemsCost();
-    }
+    num tcost = itemsCost() + (shippingCost ?? 0);
+    if (paymentType == PaymentType.Card) tcost += stripeFees;
+    return tcost;
   }
+
+  num get stripeFees => getStripeCost(itemsCost() + (shippingCost ?? 0));
 
   void addItem(CartItem cartItem) {
     if (cartItem.idInCart == null) {

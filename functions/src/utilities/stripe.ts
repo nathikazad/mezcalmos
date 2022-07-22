@@ -15,6 +15,7 @@ let keys: Keys = getKeys();
 
 export interface StripePaymentInfo {
   id: string,
+  stripeFees: number,
   brand?: string,
   expMonth?: number,
   expYear?: number,
@@ -53,7 +54,7 @@ export const getPaymentIntent =
   let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripeId };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-  let stripeCustomerId = (await stripeIdsNode(data.customerId, data.serviceProviderId).once('value')).val();
+    let stripeCustomerId: string = (await stripeIdsNode(data.customerId, data.serviceProviderId).once('value')).val();
   if (stripeCustomerId == null) {
     let userInfo: UserInfo = (await userInfoNode(data.customerId).once('value')).val()
     const customer: Stripe.Customer = await stripe.customers.create({
@@ -66,7 +67,7 @@ export const getPaymentIntent =
 
 
 
-  const ephemeralKey = await stripe.ephemeralKeys.create(
+    const ephemeralKey: Stripe.EphemeralKey = await stripe.ephemeralKeys.create(
     { customer: stripeCustomerId },
     stripeOptions
   );
@@ -89,7 +90,7 @@ export const getPaymentIntent =
 
 
 
-export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: Order, stripePaymentId: string) {
+export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: Order, stripePaymentId: string, stripeFees: number) {
   let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
   let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripeId };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
@@ -110,7 +111,8 @@ export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: O
     stripeOptions
   );
   order.stripePaymentInfo = {
-    id: stripePaymentId
+    id: stripePaymentId,
+    stripeFees: stripeFees
   }
   if (pm.card)
     order.stripePaymentInfo = {

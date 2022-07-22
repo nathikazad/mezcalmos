@@ -6,22 +6,33 @@ import 'package:flutter/material.dart';
 
 class StripePaymentInfo {
   String id;
+  num stripeFees;
   String? brand;
   num? expMonth;
   num? expYear;
   String? last4;
 
   StripePaymentInfo(
-      {required this.id, this.brand, this.expYear, this.expMonth, this.last4});
+      {required this.id,
+      required this.stripeFees,
+      this.brand,
+      this.expYear,
+      this.expMonth,
+      this.last4});
 
   factory StripePaymentInfo.fromJson(dynamic data) {
     return StripePaymentInfo(
         id: data["id"],
+        stripeFees: data["stripeFees"],
         brand: data["brand"],
         expYear: data["expYear"],
         expMonth: data["expMonth"],
         last4: data["last4"]);
   }
+}
+
+num getStripeCost(num totalCost) {
+  return totalCost + 3 + (totalCost * 0.036) - totalCost;
 }
 
 Future<ServerResponse> getPaymentIntent(
