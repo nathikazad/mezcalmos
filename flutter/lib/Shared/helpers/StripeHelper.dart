@@ -4,6 +4,26 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
 
+class StripePaymentInfo {
+  String id;
+  String? brand;
+  num? expMonth;
+  num? expYear;
+  String? last4;
+
+  StripePaymentInfo(
+      {required this.id, this.brand, this.expYear, this.expMonth, this.last4});
+
+  factory StripePaymentInfo.fromJson(dynamic data) {
+    return StripePaymentInfo(
+        id: data["id"],
+        brand: data["brand"],
+        expYear: data["expYear"],
+        expMonth: data["expMonth"],
+        last4: data["last4"]);
+  }
+}
+
 Future<ServerResponse> getPaymentIntent(
     {required String customerId,
     required String serviceProviderId,

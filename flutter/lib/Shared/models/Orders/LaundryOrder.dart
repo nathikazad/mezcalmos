@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names, always_specify_types
 
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -173,6 +174,11 @@ class LaundryOrder extends TwoWayDeliverableOrder {
           data["routeInformation"]["duration"],
         ),
       );
+    }
+
+    if (data["stripePaymentInfo"] != null) {
+      laundryOrder.stripePaymentInfo =
+          StripePaymentInfo.fromJson(data["stripePaymentInfo"]);
     }
 
     return laundryOrder;

@@ -16,8 +16,8 @@ let keys: Keys = getKeys();
 export interface StripePaymentInfo {
   id: string,
   brand?: string,
-  exp_month?: number,
-  exp_year?: number,
+  expMonth?: number,
+  expYear?: number,
   last4?: string,
 }
 
@@ -116,8 +116,8 @@ export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: O
     order.stripePaymentInfo = {
       ...order.stripePaymentInfo,
       last4: pm.card!.last4,
-      exp_month: pm.card!.exp_month,
-      exp_year: pm.card!.exp_year,
+      expMonth: pm.card!.exp_month,
+      expYear: pm.card!.exp_year,
       brand: pm.card!.brand,
     }
 
