@@ -24,8 +24,10 @@ export const otp = {
   getAuthUsingOTP: otpAuth.getAuthUsingOTP
 }
 
+import * as stripeFunctions from './utilities/stripe'
 export const stripe = {
-  getPaymentIntent: require("./utilities/stripe").getPaymentIntent
+  getPaymentIntent: stripeFunctions.getPaymentIntent,
+  setupServiceProvider: stripeFunctions.setupServiceProvider
 }
 
 import * as restaurantStatusChange from './restaurant/adminStatusChanges'
