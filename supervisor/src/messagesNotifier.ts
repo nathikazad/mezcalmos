@@ -67,9 +67,12 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
         contentAvailable: true
       }
     };
-    if (calleeToken != null)
+    if (calleeToken != null){
       fcmMessage.payload.data!.agoraToken = calleeToken;
-    fcm.push(fcmMessage);
+      fcmMessage.payload.data!.uid = convertFbIdtoInt(callerInfo.id).toString();
+    }
+console.log(fcmMessage);    
+fcm.push(fcmMessage);
   }
 }
 
