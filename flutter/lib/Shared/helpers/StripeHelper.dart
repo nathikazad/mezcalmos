@@ -1,4 +1,5 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -95,4 +96,24 @@ Future<void> acceptPayment(
 
 String extractPaymentIdFromIntent(String a) {
   return a.split('_').sublist(0, 2).join('_');
+}
+
+
+Future<ServerResponse> onboardServiceProvider(
+    String serviceProviderId, OrderType orderType) async {
+  final HttpsCallable cloudFunction =
+      FirebaseFunctions.instance.httpsCallable('stripe-setupServiceProvider');
+  try {
+    final HttpsCallableResult response = await cloudFunction.call({
+      "serviceProviderId": serviceProviderId,
+      "orderType": orderType.toFirebaseFormatString(),
+      "redirectUrl": "https://example.com/redirect"
+    });
+    mezDbgPrint("Response : ${response.data}");
+    return ServerResponse.fromJson(response.data);
+  } catch (e) {
+    mezDbgPrint("Errrooooooooor =======> $e");
+    return ServerResponse(ResponseStatus.Error,
+        errorMessage: "Server Error", errorCode: "serverError");
+  }
 }

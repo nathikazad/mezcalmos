@@ -23,29 +23,37 @@ extension ParseStringToPaymentType on String {
   }
 }
 
-// extension ParseWeekdayToString on Weekday {
-//   String toFirebaseFormatString() {
-//     final String str = toString().split('.').last;
-//     return str[0].toLowerCase() + str.substring(1);
-//   }
-// }
+enum StripeStatus { InProcess, IsWorking, Inactive }
 
-// extension ParseStringToDaysOfWeek on String {
-//   Weekday toWeekDay() {
-//     return Weekday.values.firstWhere(
-//         (Weekday e) => e.toFirebaseFormatString().toLowerCase() == this);
-//   }
-// }
+extension ParseStripeStatusoString on StripeStatus {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToStripeStatus on String {
+  StripeStatus toStripeStatus() {
+    return StripeStatus.values.firstWhere((StripeStatus e) =>
+        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+class StripeInfo {
+  StripeStatus status;
+  String id;
+  StripeInfo({required this.id, required this.status});
+}
 
 class PaymentInfo {
   final Map<PaymentType, bool> acceptedPayments;
-  String? stripeId;
+  StripeInfo? stripe;
   PaymentInfo(
       {this.acceptedPayments = const <PaymentType, bool>{
         PaymentType.Card: false,
         PaymentType.Cash: true
       },
-      this.stripeId});
+      this.stripe});
 
   factory PaymentInfo.fromData(data) {
     final Map<PaymentType, bool> acceptedPayments = {
@@ -57,12 +65,16 @@ class PaymentInfo {
               ?[paymentType.toFirebaseFormatString()] ??
           false;
     });
-    String? stripeId;
+    StripeInfo? stripe;
     if (acceptedPayments[PaymentType.Card] ?? false)
-      stripeId = data["stripeId"];
-    return PaymentInfo(acceptedPayments: acceptedPayments, stripeId: stripeId);
+      stripe = StripeInfo(
+          id: data["stripe"]["id"],
+          status: data["stripe"]["status"].toString().toStripeStatus());
+    return PaymentInfo(acceptedPayments: acceptedPayments, stripe: stripe);
   }
+  
   bool get acceptCard {
-    return acceptedPayments[PaymentType.Card] == true;
+    return acceptedPayments[PaymentType.Card] == true &&
+        stripe?.status == StripeStatus.IsWorking;
   }
 }

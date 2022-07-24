@@ -1,8 +1,19 @@
 import { PaymentType } from "./Order";
 
 export interface PaymentInfo {
-  stripeId: string;
+  stripe: StripeInfo;
   acceptedPayments: Record<PaymentType, boolean>;
+}
+
+export enum StripeStatus {
+  InProcess = "inProcess",
+  IsWorking = "isWorking",
+  Inactive = "inactive"
+}
+
+export interface StripeInfo {
+  id: string;
+  status: string;
 }
 
 export type StripeIds = Record<string, string>;

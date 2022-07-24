@@ -5,9 +5,9 @@ import { ServerResponseStatus } from '../shared/models/Generic/Generic';
 import { getKeys } from '../shared/keys';
 import { Keys } from '../shared/models/Generic/Keys';
 import * as serviceProviderNodes from '../shared/databaseNodes/services/serviceProvider';
-import { PaymentInfo } from '../shared/models/Generic/PaymentInfo';
-import { Order, PaymentType } from '../shared/models/Generic/Order';
-import { stripeIdsNode } from '../shared/databaseNodes/customer';
+import { PaymentInfo, StripeInfo, StripeStatus } from '../shared/models/Generic/PaymentInfo';
+import { Order, OrderType, PaymentType } from '../shared/models/Generic/Order';
+import * as customerNodes from '../shared/databaseNodes/customer';
 import { userInfoNode } from '../shared/databaseNodes/root';
 import { UserInfo } from '../shared/models/Generic/User';
 
@@ -40,7 +40,7 @@ export const getPaymentIntent =
     console.log(data);
     let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).once('value')).val()
 
-    if (!serviceProviderPaymentInfo || serviceProviderPaymentInfo.acceptedPayments[PaymentType.Card] == false || serviceProviderPaymentInfo.stripeId == null) {
+    if (!serviceProviderPaymentInfo || serviceProviderPaymentInfo.acceptedPayments[PaymentType.Card] == false || serviceProviderPaymentInfo.stripe.id == null || serviceProviderPaymentInfo.stripe.status != StripeStatus.IsWorking) {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: `This service provider does not accept cards`,
@@ -48,13 +48,10 @@ export const getPaymentIntent =
       }
     }
 
-    // remove
-    // serviceProviderPaymentInfo.stripeId = "acct_102aka2sNwJeuaBL";
-
-    let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripeId };
+    let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
     const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-    let stripeCustomerId: string = (await stripeIdsNode(data.customerId, data.serviceProviderId).once('value')).val();
+    let stripeCustomerId: string = (await customerNodes.stripeIdsNode(data.customerId, data.serviceProviderId).once('value')).val();
     if (stripeCustomerId == null) {
       let userInfo: UserInfo = (await userInfoNode(data.customerId).once('value')).val()
       const customer: Stripe.Customer = await stripe.customers.create({
@@ -62,7 +59,7 @@ export const getPaymentIntent =
         metadata: { customerId: data.customerId }
       }, stripeOptions)
       stripeCustomerId = customer.id;
-      stripeIdsNode(data.customerId, data.serviceProviderId).set(stripeCustomerId);
+      customerNodes.stripeIdsNode(data.customerId, data.serviceProviderId).set(stripeCustomerId);
     }
 
 
@@ -85,15 +82,64 @@ export const getPaymentIntent =
       ephemeralKey: ephemeralKey.secret,
       customer: stripeCustomerId,
       publishableKey: keys.stripe.publickey,
-      stripeAccountId: serviceProviderPaymentInfo.stripeId
+      stripeAccountId: serviceProviderPaymentInfo.stripe.id
     }
   });
 
+export const setupServiceProvider =
+  functions.https.onCall(async (data, context) => {
+
+    let response = await isSignedIn(context.auth)
+    if (response != undefined) {
+      return response;
+    }
+
+    if (data.serviceProviderId == null || data.orderType == null
+      || data.redirectUrl == null) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Expected redirectUrl`,
+        errorCode: "incorrectParams"
+      }
+    }
+
+    let authorized = (await serviceProviderNodes.serviceProviderState(data.orderType, data.serviceProviderId).child("/operators").child(context.auth!.uid).once('value')).val();
+    if (!authorized)
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `User not authorized to run this operation`,
+        errorCode: "unauthorized"
+    }
+
+    let stripeOptions = { apiVersion: <any>'2020-08-27' };
+    const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+
+    const account = await stripe.accounts.create({ type: 'standard' }, stripeOptions);
+
+    serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').set(<StripeInfo>{
+      id: account.id,
+      status: StripeStatus.InProcess
+    });
+
+    serviceProviderNodes.serviceProviderPaymentInfo(data.orderType as OrderType, data.serviceProviderId).child(`acceptedPayments/${PaymentType.Card}`).set(true);
+
+    const accountLink = await stripe.accountLinks.create({
+      account: account.id,
+      refresh_url: 'https://example.com/reauth',
+      return_url: data.redirectUrl,
+      type: 'account_onboarding',
+    }, stripeOptions);
+
+    return {
+      status: ServerResponseStatus.Success,
+      ...accountLink
+    }
+  })
 
 
 export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: Order, stripePaymentId: string, stripeFees: number) {
   let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
-  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripeId };
+  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
   await stripe.paymentIntents.update(
