@@ -61,41 +61,45 @@ class DeliveryAuthController extends GetxController {
         "DeliveryAuthController: _DeliveryDriverStateNodeListener init ${deliveryDriverStateNode(user.uid)}");
     await _deliveryDriverStateNodeListener?.cancel();
     _deliveryDriverStateNodeListener = null;
-    _deliveryDriverStateNodeListener = _databaseHelper.firebaseDatabase
+    // ignore: unawaited_futures
+    _databaseHelper.firebaseDatabase
         .ref()
         .child(deliveryDriverStateNode(user.uid))
-        .onValue
-        .listen((event) async {
-      mezDbgPrint(
-          "[++++++ = === ==] DeliveryAuthController$hashCode: _DeliveryDriverStateNodeListener event => ${event.snapshot.value}");
-      if (event.snapshot.value.toString() == _previousStateValue) {
+        .onValueWitchCatch()
+        .then((value) {
+      _deliveryDriverStateNodeListener = value.listen((event) async {
         mezDbgPrint(
-            'DeliveryAuthController:: same state event fired again, skipping it');
-        return;
-      }
-      _previousStateValue = event.snapshot.value.toString();
-      if (event.snapshot.value != null) {
-        // mezDbgPrint(event.snapshot.value);
-        _state.value = DeliveryDriverState.fromSnapshot(event.snapshot.value);
-      } else {
-        _state.value =
-            DeliveryDriverState(isAuthorized: false, isOnline: false);
-      }
-      mezDbgPrint(
-          "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
-      if (_state.value?.isAuthorized ?? false) {
-        saveAppVersionIfNecessary();
-        saveNotificationToken();
-      }
+            "[++++++ = === ==] DeliveryAuthController$hashCode: _DeliveryDriverStateNodeListener event => ${event.snapshot.value}");
+        if (event.snapshot.value.toString() == _previousStateValue) {
+          mezDbgPrint(
+              'DeliveryAuthController:: same state event fired again, skipping it');
+          return;
+        }
+        _previousStateValue = event.snapshot.value.toString();
+        if (event.snapshot.value != null) {
+          // mezDbgPrint(event.snapshot.value);
+          _state.value = DeliveryDriverState.fromSnapshot(event.snapshot.value);
+        } else {
+          _state.value =
+              DeliveryDriverState(isAuthorized: false, isOnline: false);
+        }
+        mezDbgPrint(
+            "/////////////////////////////////////////////${_state.value?.toJson()}////////////////////////////////////////////////////");
+        if (_state.value?.isAuthorized ?? false) {
+          saveAppVersionIfNecessary();
+          saveNotificationToken();
+        }
 
-      if (_state.value!.isOnline == false) {
-        await Location().enableBackgroundMode(enable: false);
-        _locationListener?.pause();
-      } else {
-        await Location().enableBackgroundMode(enable: true);
-        _locationListener?.resume();
-      }
+        if (_state.value!.isOnline == false) {
+          await Location().enableBackgroundMode(enable: false);
+          _locationListener?.pause();
+        } else {
+          await Location().enableBackgroundMode(enable: true);
+          _locationListener?.resume();
+        }
+      });
     });
+
     await _locationListener?.cancel();
     _locationListener = await _listenForLocation();
 
@@ -156,45 +160,40 @@ class DeliveryAuthController extends GetxController {
             "lng": currentLocation.longitude
           }
         };
-        try {
-          //mezDbgPrint(positionUpdate);
+
+        _databaseHelper.firebaseDatabase
+            .ref()
+            .child(deliveryDriverAuthNode(_authController.fireAuthUser!.uid))
+            .child('location')
+            .setWithCatch(value: positionUpdate);
+        final OrderController _orderController = Get.find<OrderController>();
+
+        _orderController.currentOrders.forEach((DeliverableOrder order) {
+          // updating driver location in deliveryDrivers/inProcessOrders
           _databaseHelper.firebaseDatabase
               .ref()
-              .child(deliveryDriverAuthNode(_authController.fireAuthUser!.uid))
-              .child('location')
-              .set(positionUpdate);
-          final OrderController _orderController = Get.find<OrderController>();
+              .child(deliveryDriverInProcessOrderDriverLocationNode(
+                  orderId: order.orderId,
+                  deliveryDriverId: _authController.fireAuthUser!.uid,
+                  driverAddress: order.driverDatabaseAddress()))
+              .setWithCatch(value: positionUpdate);
 
-          _orderController.currentOrders.forEach((DeliverableOrder order) {
-            // updating driver location in deliveryDrivers/inProcessOrders
-            _databaseHelper.firebaseDatabase
-                .ref()
-                .child(deliveryDriverInProcessOrderDriverLocationNode(
-                    orderId: order.orderId,
-                    deliveryDriverId: _authController.fireAuthUser!.uid,
-                    driverAddress: order.driverDatabaseAddress()))
-                .set(positionUpdate);
-
-            // updating driver location in root orders/inProcess/<OrderType>
-            _databaseHelper.firebaseDatabase
-                .ref()
-                .child(rootInProcessOrderDriverLocationNode(
-                    orderId: order.orderId,
-                    orderType: order.orderType,
-                    driverAddress: order.driverDatabaseAddress()))
-                .set(positionUpdate);
-
-            _databaseHelper.firebaseDatabase
-                .ref()
-                .child(customerInProcessOrderDriverLocationNode(
-                    orderId: order.orderId,
-                    customerId: order.customer.id,
-                    driverAddress: order.driverDatabaseAddress()))
-                .set(positionUpdate);
-          });
-        } catch (e) {
-          mezDbgPrint("Write driver position to db error");
-        }
+          // updating driver location in root orders/inProcess/<OrderType>
+          _databaseHelper.firebaseDatabase
+              .ref()
+              .child(rootInProcessOrderDriverLocationNode(
+                  orderId: order.orderId,
+                  orderType: order.orderType,
+                  driverAddress: order.driverDatabaseAddress()))
+              .setWithCatch(value: positionUpdate);
+          _databaseHelper.firebaseDatabase
+              .ref()
+              .child(customerInProcessOrderDriverLocationNode(
+                  orderId: order.orderId,
+                  customerId: order.customer.id,
+                  driverAddress: order.driverDatabaseAddress()))
+              .setWithCatch(value: positionUpdate);
+        });
       }
     });
   }

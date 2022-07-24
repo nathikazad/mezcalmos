@@ -124,7 +124,9 @@ class SignIn extends GetWidget<AuthController> {
             clickedLogin.value = true;
             controller
                 .signInWithApple()
-                .onError((_, __) => clickedLogin.value = false);
+                .onError((_, __) => clickedLogin.value = false)
+                .whenComplete(() => clickedLogin.value = false);
+
             // clickedLogin.value = false;
           },
           style: TextButton.styleFrom(
@@ -187,7 +189,8 @@ class SignIn extends GetWidget<AuthController> {
             lmode != AppLaunchMode.dev
                 ? controller
                     .signInWithFacebook()
-                    .then((value) => clickedLogin.value = false)
+                    .onError((_, __) => clickedLogin.value = false)
+                    .whenComplete(() => clickedLogin.value = false)
                 : await Get.defaultDialog<dynamic>(
                     title: "Choose Test User",
                     content: Column(

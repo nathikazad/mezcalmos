@@ -59,6 +59,11 @@ class _MessagingScreenState extends State<MessagingScreen> {
       Get.snackbar("Error", "Does not have a valid chatId!");
       Get.back<void>();
     }
+
+    agoraController.agoraLogs.listen((event) {
+      mezDbgPrint("👻👻👻👻👻 NEW LOG ====>> $event");
+    });
+
     chatId = Get.parameters['chatId']!;
     orderLink = Get.parameters['orderLink'];
     orderId = Get.parameters['orderId'];
@@ -416,6 +421,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
         // then we join if it's not null && it's not expired
         if (_agoraAuth != null) {
           mezDbgPrint("AgoraAuth  :: passed validation test !");
+          await FlutterCallkitIncoming.startCall(chatId);
           // then join channel
           sagora.joinChannel(
             token: _agoraAuth['token'],
@@ -424,7 +430,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
           );
           // Pushing to call screen + awaiting in case we wanna return with value.
           // ignore: unawaited_futures
-          final dynamic _retValue = await Get.to<dynamic>(
+          Get.to<dynamic>(
             AgoraCall(
               chatId: chatId,
               talkingTo: _recipient,

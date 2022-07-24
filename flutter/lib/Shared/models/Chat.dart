@@ -243,14 +243,14 @@ class CallNotificationForQueue extends NotificationForQueue {
   String calleeId;
   ParticipantType calleeParticipantType;
   String? orderId;
-  CallNotificationtType callNotificationtType;
+  CallNotificationtType callNotificationType;
   CallNotificationForQueue({
     required this.chatId,
     required this.callerId,
     required this.callerParticipantType,
     required this.calleeId,
     required this.calleeParticipantType,
-    required this.callNotificationtType,
+    required this.callNotificationType,
     this.orderId,
   }) : super(
           notificationType: NotificationType.Call,
@@ -266,8 +266,8 @@ class CallNotificationForQueue extends NotificationForQueue {
         "calleeId": calleeId,
         "calleeParticipantType":
             calleeParticipantType.toFirebaseFormattedString(),
-        "callNotificationtType":
-            callNotificationtType.toFirebaseFormattedString(),
+        "callNotificationType":
+            callNotificationType.toFirebaseFormattedString(),
         "orderId": orderId
       };
 }

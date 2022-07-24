@@ -7,8 +7,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
+import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Generic.dart' as Gen;
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -20,6 +22,10 @@ void startListeningOnCallEvents() {
     mezDbgPrint("CallEvent ===>  $event");
 
     switch (event?.name) {
+      case CallEvent.ACTION_CALL_DECLINE:
+        await Get.find<Sagora>().removeSession();
+        break;
+
       case CallEvent.ACTION_CALL_ENDED:
         await Get.find<Sagora>().removeSession();
         break;
@@ -62,7 +68,7 @@ void startListeningOnCallEvents() {
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   mezDbgPrint("Handling a background message");
   mezDbgPrint(event.data);
-
+  print("[MZL]" + event.data.toString());
   if (event.data["notificationType"] == "newOrder" &&
       event.data["markReceivedUrl"] != null) {
     await markInDb(event.data["markReceivedUrl"]);
@@ -73,38 +79,42 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
         .toString()
         .toCallNotificationtType()) {
       case CallNotificationtType.Incoming:
-        final Map<String, dynamic> _extras = {
+        mezDbgPrint(event.data);
+        final Map<String, dynamic> _extras = <String, dynamic>{
           "chatId": event.data['chatId'],
           "agoraToken": event.data['agoraToken'],
-          "uid": event.data['uid']
+          "uid": event.data['uid'],
         };
-        await showCallkitIncoming(
+        await triggerIncomingCallAlert(
           callerName: event.data["callerName"],
           callerImage: event.data["callerImage"],
           callerType: event.data["callerType"],
-          language: event.data["language"],
+          languageType: event.data["language"].toString().toLanguageType(),
           extra: _extras,
         );
         break;
       // not here
       case CallNotificationtType.EndCall:
-        await FlutterCallkitIncoming.endAllCalls();
+        await FlutterCallkitIncoming.endCall(
+          event.data['chatId'],
+        );
         break;
       default:
     }
   }
 }
 
-Future<void> showCallkitIncoming(
-    {required String callerName,
-    required String callerImage,
-    required String callerType,
-    required String? language,
-    Map<String, dynamic> extra = const {}}) async {
+Future<void> triggerIncomingCallAlert({
+  required String callerName,
+  required String callerImage,
+  required String callerType,
+  required Gen.LanguageType languageType,
+  Map<String, dynamic> extra = const <String, dynamic>{},
+}) async {
   final Map<String, dynamic> params = <String, dynamic>{
     'id': Uuid().v4(),
     'nameCaller': callerName,
-    'appName': callerName,
+    'appName': getAppName(),
     'avatar': callerImage,
     'handle': callerType,
     'type': 0,
@@ -191,11 +201,12 @@ class BackgroundNotificationsController extends GetxController {
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.data["notificationType"] ==
           NotificationType.Call.toFirebaseFormatString()) {
-        showCallkitIncoming(
-            callerName: message.data["callerName"],
-            callerImage: message.data["callerImage"],
-            callerType: message.data["callerType"],
-            language: message.data["language"]);
+        triggerIncomingCallAlert(
+          callerName: message.data["callerName"],
+          callerImage: message.data["callerImage"],
+          callerType: message.data["callerType"],
+          languageType: message.data["language"].toString().toLanguageType(),
+        );
       }
     });
   }

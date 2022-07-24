@@ -35,20 +35,22 @@ class MessageController extends GetxController {
       {required String chatId, material.VoidCallback? onValueCallBack}) {
     mezDbgPrint("Load chat id ------------->>>> $chatId");
     chatListener?.cancel();
-    chatListener = _databaseHelper.firebaseDatabase
+    _databaseHelper.firebaseDatabase
         .ref()
         .child(chatNode(chatId))
-        .onValue
-        .listen((DatabaseEvent event) {
-      if (event.snapshot.value != null) {
-        mezDbgPrint(
-            "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
-        // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
-        chat.value = Chat.fromJson(chatId, event.snapshot.value);
-        if (onValueCallBack != null) onValueCallBack();
-        // mezDbgPrint(
-        //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
-      }
+        .onValueWitchCatch()
+        .then((value) {
+      chatListener = value.listen((event) {
+        if (event.snapshot.value != null) {
+          mezDbgPrint(
+              "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
+          // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
+          chat.value = Chat.fromJson(chatId, event.snapshot.value);
+          if (onValueCallBack != null) onValueCallBack();
+          // mezDbgPrint(
+          //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
+        }
+      });
     });
   }
 
@@ -101,7 +103,7 @@ class MessageController extends GetxController {
     return sendUserCallNotification(
         chatId: chatId,
         callee: callee,
-        callNotificationtType: CallNotificationtType.Incoming);
+        callNotificationType: CallNotificationtType.Incoming);
   }
 
   Future<void> endCall(
@@ -111,13 +113,13 @@ class MessageController extends GetxController {
     return sendUserCallNotification(
         chatId: chatId,
         callee: callee,
-        callNotificationtType: CallNotificationtType.EndCall);
+        callNotificationType: CallNotificationtType.EndCall);
   }
 
   Future<void> sendUserCallNotification(
       {required String chatId,
       required Participant callee,
-      required CallNotificationtType callNotificationtType,
+      required CallNotificationtType callNotificationType,
       String? orderId}) async {
     final DatabaseReference notificationNode = _databaseHelper.firebaseDatabase
         .ref()
@@ -135,7 +137,7 @@ class MessageController extends GetxController {
                     _settingsController.appType.toParticipantTypefromAppType(),
                 calleeId: callee.id,
                 calleeParticipantType: callee.participantType,
-                callNotificationtType: callNotificationtType,
+                callNotificationType: callNotificationType,
                 orderId: orderId)
             .toFirebaseFormatJson());
   }

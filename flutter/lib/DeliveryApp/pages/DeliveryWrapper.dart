@@ -7,7 +7,6 @@ import 'package:mezcalmos/DeliveryApp/notificationHandler.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/deliveryNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
@@ -31,7 +30,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
   @override
   void initState() {
     mezDbgPrint("DeliveryWrapper::init state");
-    Future.microtask(() {
+    Future<void>.microtask(() {
       mezDbgPrint("DeliveryWrapper::microtask handleState first time");
       DeliveryDriverState? deliveryDriverState =
           Get.find<DeliveryAuthController>().deliveryDriverState;
@@ -57,10 +56,10 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
     String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
     // listenForLocationPermissions();
-    Get.find<ForegroundNotificationsController>()
-        .startListeningForNotificationsFromFirebase(
-            deliveryDriverNotificationsNode(userId),
-            deliveryDriverNotificationHandler);
+    // Get.find<ForegroundNotificationsController>()
+    //     .startListeningForNotificationsFromFirebase(
+    //         deliveryDriverNotificationsNode(userId),
+    //         deliveryDriverNotificationHandler);
     super.initState();
   }
 

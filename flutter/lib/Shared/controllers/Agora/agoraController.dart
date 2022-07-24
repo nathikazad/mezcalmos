@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_void_async, always_specify_types, unawaited_futures
 
+import 'dart:async';
+
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
@@ -9,6 +11,7 @@ import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Sagora extends GetxController {
@@ -16,7 +19,8 @@ class Sagora extends GetxController {
 
   RtcEngine get engine => _engine;
   // late TextEditingController _controller;
-
+  StreamController<String> _infoStrings = StreamController.broadcast();
+  Stream<String> get agoraLogs => _infoStrings.stream;
   @override
   void onInit() {
     checkAgoraPermissions();
@@ -46,7 +50,7 @@ class Sagora extends GetxController {
 
   Future<void> _initAgora() async {
     //create the engine
-    _engine = await RtcEngine.createWithContext(RtcEngineContext(agoraAppId));
+    _engine = await RtcEngine.create(agoraAppId);
     await _engine.enableAudio();
     await _engine.setChannelProfile(ChannelProfile.Communication);
   }
@@ -56,25 +60,61 @@ class Sagora extends GetxController {
     required String channelId,
     required int uid,
   }) async {
-    _engine.setEventHandler(
-      RtcEngineEventHandler(
-        error: (err) {
-          mezDbgPrint("Runtime Error happend $err");
-        },
-        joinChannelSuccess: (String channel, int uid, int elapsed) {
-          mezDbgPrint("local user $uid joined");
-        },
-        userJoined: (int uid, int elapsed) {
-          mezDbgPrint("remote user $uid joined");
-        },
-        leaveChannel: (state) {
-          mezDbgPrint("onLeaveChannel : duration : ${state.duration}");
-        },
-        userOffline: (int uid, UserOfflineReason reason) {
-          mezDbgPrint("remot1e user $uid left channel");
-        },
-      ),
-    );
+    mezDbgPrint(" 👻👻👻 JOIN CHANNEL CALLED !!!! 👻👻👻  ");
+
+    _engine.setEventHandler(RtcEngineEventHandler(
+      error: (code) {
+        final info = '👻👻👻👻👻 onError: $code';
+        _infoStrings.add(info);
+      },
+      joinChannelSuccess: (channel, uid, elapsed) {
+        final info = '👻👻👻👻👻 onJoinChannel: $channel, uid: $uid';
+        _infoStrings.add(info);
+      },
+      leaveChannel: (stats) {
+        _infoStrings.add(' 👻👻👻👻👻 onLeaveChannel');
+      },
+      userJoined: (uid, elapsed) {
+        final info = '👻👻👻👻👻 userJoined: $uid';
+        _infoStrings.add(info);
+      },
+      userOffline: (uid, reason) {
+        final info = '👻👻👻👻👻 userOffline: $uid , reason: $reason';
+        _infoStrings.add(info);
+      },
+      firstRemoteVideoFrame: (uid, width, height, elapsed) {
+        final info = '👻👻👻👻👻 firstRemoteVideoFrame: $uid';
+        _infoStrings.add(info);
+      },
+    ));
+
+    // _engine.setEventHandler(
+    //   RtcEngineEventHandler(
+    //     error: (err) {
+    //       MezSnackbar("error", "Runtime Error happend $err");
+    //     },
+    //     joinChannelSuccess: (String channel, int uid, int elapsed) {
+    //       mezDbgPrint(" 👻👻👻 LOCAL USER JOINED ");
+
+    //       MezSnackbar("joinChannelSuccess", "local user $uid joined");
+    //     },
+    //     userJoined: (int uid, int elapsed) {
+    //       mezDbgPrint(" 👻👻👻 REMOTE USER JOINED ");
+    //       MezSnackbar("userJoined", "remote user $uid joined");
+    //     },
+    //     leaveChannel: (state) {
+    //       mezDbgPrint(" 👻👻👻 ON LEAVE ");
+
+    //       MezSnackbar(
+    //           "leaveChannel", "onLeaveChannel : duration : ${state.duration}");
+    //     },
+    //     userOffline: (int uid, UserOfflineReason reason) {
+    //       mezDbgPrint(" 👻👻👻 REMOTE USER LEFT ");
+
+    //       MezSnackbar("userOffline", "remot1e user $uid left channel");
+    //     },
+    //   ),
+    // );
 
     await _engine.joinChannel(token, channelId, null, uid);
   }
