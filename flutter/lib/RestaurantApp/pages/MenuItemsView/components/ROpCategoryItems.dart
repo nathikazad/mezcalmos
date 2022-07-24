@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class ROpCategoryItems extends StatelessWidget {
@@ -13,8 +14,7 @@ class ROpCategoryItems extends StatelessWidget {
       {Key? key, required this.category, required this.viewController})
       : super(key: key);
   final Category category;
-  static final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+
   final ROpMenuViewController viewController;
 
   @override
@@ -35,17 +35,21 @@ class ROpCategoryItems extends StatelessWidget {
                     style: Get.textTheme.bodyText1,
                   ),
                 ),
-                if (viewController.reOrderMode.isTrue) ROpRerorderIcon()
+                (viewController.reOrderMode.isTrue)
+                    ? ROpRerorderIcon()
+                    : _categoryMenuBtn(context)
               ],
             ),
-            if (category.dialog != null)
+            if (category.dialog?[userLanguage] != null)
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 5),
+                padding: const EdgeInsets.only(bottom: 5),
                 child: Text(
                   category.dialog![userLanguage]!,
                   style: Get.textTheme.bodyText2,
                 ),
               ),
+            if (category.items.isEmpty)
+              Container(alignment: Alignment.center, child: Text("No items")),
             (viewController.reOrderMode.isTrue)
                 ? ReorderableListView(
                     shrinkWrap: true,
@@ -93,5 +97,73 @@ class ROpCategoryItems extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _categoryMenuBtn(BuildContext context) {
+    return InkWell(
+        customBorder: CircleBorder(),
+        onTap: () {
+          showModalBottomSheet(
+              context: context,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              )),
+              builder: (BuildContext ctx) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: 15,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                        Get.toNamed(getCategoryEditRoute(category.id!));
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 5),
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Edit category",
+                            style: Get.textTheme.bodyText1,
+                          )),
+                    ),
+                    Divider(),
+                    InkWell(
+                      onTap: () {
+                        showConfirmationDialog(context,
+                            title: "Delete category",
+                            helperText:
+                                "Are you sure you want to delete this category",
+                            primaryButtonText: "Yes, delete",
+                            onYesClick: () async {
+                          await viewController.deleteCategory(
+                              categoryId: category.id!);
+                        }).then((value) => Get.back());
+                      },
+                      child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 5),
+                          child: Text(
+                            "Delete category",
+                            style: Get.textTheme.bodyText1
+                                ?.copyWith(color: Colors.red),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                  ],
+                );
+              });
+        },
+        child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(5),
+            child: Icon(Icons.more_horiz_rounded)));
   }
 }

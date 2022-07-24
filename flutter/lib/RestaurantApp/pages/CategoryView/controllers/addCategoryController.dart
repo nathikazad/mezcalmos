@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class AddCategoryController {
   /// Text input controllers ///
@@ -68,17 +68,17 @@ class AddCategoryController {
   }
 
   Category constructCategory() {
-    final Category newCategory =
-        Category(name: _contructName(), dialog: _contructDescription());
+    final Category newCategory = Category(
+      name: _contructName(),
+      dialog: _contructDescription(),
+    );
     return newCategory;
   }
 
   Future<void> saveCategory() async {
     if (editMode.value == true) {
-      await restaurantInfoController
-          .editCategory(
-              category: constructCategory(), categoryId: editableCategoryId!)
-          .then((value) => Get.back());
+      await restaurantInfoController.editCategory(
+          category: constructCategory(), categoryId: editableCategoryId!);
     } else {
       await restaurantInfoController.addCategory(
         category: constructCategory(),

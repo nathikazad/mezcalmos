@@ -1651,13 +1651,27 @@
     },
     "RestaurantApp": {
         "pages": {
-            "MenuItemsView": {
+            "ROpMenuView": {
+                "menu": "Menú",
+                "addCategory": "Añadir categoría",
+                "addItem": "Añadir artículo",
+                "categories": "Categorías",
+                "reorder": "Reordenar",
+                "saveOrder": "Guardar pedido",
+                "myItems": "Mis cosas",
+                "specials": "Especiales",
+                "noCategory": "Ninguna Categoria",
+                "cancelTitle": "Cancelar reordenar",
+                "prCancelBtn": "Sí, cancelar reorden",
+                "cancelHelperText": "¿Estás seguro de que quieres cancelar el proceso de reorden?",
                 "components": {
-                    "ROpCategoryGridCard": {
-                        "deleteTitle": "Eliminar la categoría",
-                        "deleteHelperText": "¿Estás seguro de que te gustaría eliminar?",
-                        "yesDelete": "Sí, eliminar la categoría"
+                    "ROpCategoryItems": {
+                        "noItems": "No hay artículos",
+                        "editCatgeory": "Editar categoria",
+                        "deleteCatgeory": "Eliminar la categoría"
+
                     }
+
                 }
             }
         }

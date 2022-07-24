@@ -6,11 +6,17 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpSpecia
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpMenuView"];
+//
 
 class ROpMenuView extends StatefulWidget {
   const ROpMenuView({Key? key}) : super(key: key);
@@ -42,7 +48,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: handleBack,
-          title: "Menu",
+          title: '${_i18n()["menu"]}',
           showNotifications: true,
           tabBar: _tabBar()),
       bottomNavigationBar: Obx(() {
@@ -53,7 +59,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                   .saveReorder()
                   .then((value) => viewController.reOrderMode.value = false);
             },
-            text: "Save order",
+            text: '${_i18n()["saveOrder"]}',
             height: 65,
           );
         } else
@@ -75,8 +81,10 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     height: 5,
                   ),
                   MezAddButton(
-                    onClick: () {},
-                    title: "Add category",
+                    onClick: () {
+                      Get.toNamed(kCategoryView);
+                    },
+                    title: '${_i18n()["addCategory"]}',
                     btnColor: primaryBlueColor,
                     primaryColor: Colors.white,
                   ),
@@ -84,7 +92,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     onClick: () {
                       Get.toNamed(kItemView);
                     },
-                    title: "Add item",
+                    title: '${_i18n()["addItem"]}',
                   ),
                   const SizedBox(
                     height: 20,
@@ -93,7 +101,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Categories",
+                        '${_i18n()["categories"]}',
                         style: Get.textTheme.bodyText1,
                       ),
                       (viewController.reOrderMode.isTrue)
@@ -106,7 +114,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     height: 5,
                   ),
                   _categoriesItemsList(),
-                  // _noCategoryItemsList()
+                  _noCategoryItemsList()
                 ],
               ),
             ),
@@ -128,10 +136,10 @@ class _ROpMenuViewState extends State<ROpMenuView>
         unselectedLabelStyle: Get.textTheme.bodyText2,
         tabs: [
           Tab(
-            text: "My items",
+            text: '${_i18n()["myItems"]}',
           ),
           Tab(
-            text: "Specials",
+            text: '${_i18n()["specials"]}',
           ),
         ]);
   }
@@ -158,7 +166,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
               width: 5,
             ),
             Text(
-              "Reorder",
+              '${_i18n()["reorder"]}',
               style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
             ),
           ],
@@ -210,7 +218,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("No category"),
+            Text('${_i18n()["noCategory"]}'),
             SizedBox(
               height: 5,
             ),
@@ -235,10 +243,9 @@ class _ROpMenuViewState extends State<ROpMenuView>
     mezDbgPrint(viewController.reOrderMode.value);
     if (viewController.reOrderMode.isTrue) {
       showConfirmationDialog(context,
-          title: "Cancel reorder",
-          primaryButtonText: "Yes, Cancel reorder",
-          helperText: "Are you sure you want to cancel the reorder process",
-          onYesClick: () async {
+          title: '${_i18n()["cancelTitle"]}',
+          primaryButtonText: '${_i18n()["prCancelBtn"]}',
+          helperText: '${_i18n()["cancelHelperText"]}', onYesClick: () async {
         viewController.cancelReoderMode();
         Get.back();
       });

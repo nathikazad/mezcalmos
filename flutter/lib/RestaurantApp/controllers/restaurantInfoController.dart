@@ -10,11 +10,11 @@ import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class RestaurantInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -261,10 +261,20 @@ class RestaurantInfoController extends GetxController {
 
   Future<void> editCategory(
       {required Category category, required String categoryId}) async {
-    await _databaseHelper.firebaseDatabase
-        .ref()
-        .child(categoryNode(uid: restaurantId, categoryId: categoryId))
-        .set(category.toJson());
+    if (category.name != null) {
+      await _databaseHelper.firebaseDatabase
+          .ref()
+          .child(
+              categoryNode(uid: restaurantId, categoryId: categoryId) + "/name")
+          .set(category.name!.toFirebaseFormat());
+    }
+    if (category.dialog != null) {
+      await _databaseHelper.firebaseDatabase
+          .ref()
+          .child(categoryNode(uid: restaurantId, categoryId: categoryId) +
+              "/dialog")
+          .set(category.dialog!.toFirebaseFormat());
+    }
   }
 
   Future<void> editCategoryPosition(

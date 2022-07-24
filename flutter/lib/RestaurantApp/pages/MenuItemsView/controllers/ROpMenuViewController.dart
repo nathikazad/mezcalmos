@@ -43,6 +43,13 @@ class ROpMenuViewController {
     _restaurantListener?.cancel();
   }
 
+  // Catgeory methods //
+  Future<void> deleteCategory({required String categoryId}) async {
+    await _restaurantInfoController
+        .deleteCategory(categoryId: categoryId)
+        .then((value) => Get.back());
+  }
+
   // Reorder methods //
 // when user clicks on reorder button
   void startReoderMode() {
