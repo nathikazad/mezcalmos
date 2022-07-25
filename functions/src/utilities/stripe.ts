@@ -216,7 +216,7 @@ export const updateServiceProvider =
         errorCode: "unauthorized"
       }
 
-    let stripeAccount: string = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').once('value')).val()
+    let stripeAccount: string = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe/id').once('value')).val()
     const account: Stripe.Account = await stripe.accounts.retrieve(stripeAccount, stripeOptions);
     if (!stripeAccount)
       return {
@@ -226,7 +226,7 @@ export const updateServiceProvider =
       }
 
     let isWorking: boolean = account.details_submitted && account.payouts_enabled && account.charges_enabled
-    serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').update(<StripeInfo>{
+    await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').update(<StripeInfo>{
       status: isWorking ? StripeStatus.IsWorking : StripeStatus.InProcess,
       detailsSubmitted: account.details_submitted,
       payoutsEnabled: account.payouts_enabled,
