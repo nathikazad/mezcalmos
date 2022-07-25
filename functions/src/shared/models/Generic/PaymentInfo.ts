@@ -12,8 +12,12 @@ export enum StripeStatus {
 }
 
 export interface StripeInfo {
-  id: string;
+  id?: string;
   status: string;
+  chargesEnabled: boolean;
+  payoutsEnabled: boolean;
+  detailsSubmitted: boolean;
+  requirements: Array<string>;
 }
 
 export type StripeIds = Record<string, string>;

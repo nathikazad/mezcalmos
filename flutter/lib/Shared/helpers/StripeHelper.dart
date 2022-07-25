@@ -98,11 +98,22 @@ String extractPaymentIdFromIntent(String a) {
   return a.split('_').sublist(0, 2).join('_');
 }
 
-
 Future<ServerResponse> onboardServiceProvider(
     String serviceProviderId, OrderType orderType) async {
+  return serviceProviderFunctions(
+      "setupServiceProvider", serviceProviderId, orderType);
+}
+
+Future<ServerResponse> updateServiceProvider(
+    String serviceProviderId, OrderType orderType) async {
+  return serviceProviderFunctions(
+      "updateServiceProvider", serviceProviderId, orderType);
+}
+
+Future<ServerResponse> serviceProviderFunctions(
+    String functionName, String serviceProviderId, OrderType orderType) async {
   final HttpsCallable cloudFunction =
-      FirebaseFunctions.instance.httpsCallable('stripe-setupServiceProvider');
+      FirebaseFunctions.instance.httpsCallable('stripe-$functionName');
   try {
     final HttpsCallableResult response = await cloudFunction.call({
       "serviceProviderId": serviceProviderId,

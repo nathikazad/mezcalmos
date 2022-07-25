@@ -27,7 +27,9 @@ export const otp = {
 import * as stripeFunctions from './utilities/stripe'
 export const stripe = {
   getPaymentIntent: stripeFunctions.getPaymentIntent,
-  setupServiceProvider: stripeFunctions.setupServiceProvider
+  setupServiceProvider: stripeFunctions.setupServiceProvider,
+  accountUpdateEventHandler: stripeFunctions.accountUpdateEventHandler,
+  updateServiceProvider: stripeFunctions.updateServiceProvider
 }
 
 import * as restaurantStatusChange from './restaurant/adminStatusChanges'
