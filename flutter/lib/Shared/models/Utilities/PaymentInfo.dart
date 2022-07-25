@@ -72,7 +72,7 @@ class PaymentInfo {
           status: data["stripe"]["status"].toString().toStripeStatus());
     return PaymentInfo(acceptedPayments: acceptedPayments, stripe: stripe);
   }
-  
+
   bool get acceptCard {
     return acceptedPayments[PaymentType.Card] == true &&
         stripe?.status == StripeStatus.IsWorking;

@@ -29,6 +29,7 @@ dependencies:
   # Device Access
   http: ^0.13.3
   url_launcher: ^6.0.9
+  webview_flutter: ^3.0.4
   package_info_plus: ^1.4.0
   device_info_plus: ^3.2.2
   device_preview: ^1.1.0

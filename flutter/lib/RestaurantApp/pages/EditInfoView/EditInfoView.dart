@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpAcceptedPayments.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpEditInfoWidgets.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpEditLocationCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpImageEditComponent.dart';
+import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROpStripePaymentSetup.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/components/ROplanguageSelectorComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/EditInfoView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -40,88 +42,95 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: LaundryAppAppBar(
-        leftBtnType: AppBarLeftButtonType.Back,
-        onClick: Get.back,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ROpImageEditComponent(editInfoController: editInfoController),
-            SizedBox(
-              height: 15,
+    return Obx(() {
+      if (editInfoController.showStripe.isTrue) {
+        return ROpStripePaymentSetup(viewController: editInfoController);
+      } else {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: LaundryAppAppBar(
+            leftBtnType: AppBarLeftButtonType.Back,
+            onClick: Get.back,
+          ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ROpImageEditComponent(editInfoController: editInfoController),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    editInfoController.restaurant.value?.info.name ?? "",
+                    style: Get.textTheme.headline3,
+                  ),
+                )
+                // Laundry name fiels
+                ,
+                SizedBox(
+                  height: 25,
+                ),
+                Text("Restaurant name"),
+                SizedBox(
+                  height: 5,
+                ),
+                _laundryNameTextField(),
+                SizedBox(
+                  height: 15,
+                ),
+                Text("${_i18n()["defaultLanguage"]}"),
+                ROpLanguageSelectorComponent(
+                    languageValue: editInfoController.primaryLang,
+                    oppositeLanguageValue: editInfoController.secondaryLang,
+                    onChangeShouldUpdateLang:
+                        editInfoController.validatePrimaryLanguUpdate),
+                SizedBox(
+                  height: 5,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text("${_i18n()["secondaryLanguage"]}"),
+                SizedBox(
+                  height: 5,
+                ),
+                ROpLanguageSelectorComponent(
+                  languageValue: editInfoController.secondaryLang,
+                  oppositeLanguageValue: editInfoController.primaryLang,
+                  onChangeShouldUpdateLang:
+                      editInfoController.validateSecondaryLanguUpdate,
+                  showDeleteIcon: true,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text('${_i18n()["location"]}'),
+                SizedBox(
+                  height: 5,
+                ),
+                ROpEditLocationCard(
+                  editInfoController: editInfoController,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                ROpAcceptedPayments(viewController: editInfoController),
+                Container(
+                  child: viewWidgets.editWorkingHoursComponent(),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+              ],
             ),
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                editInfoController.restaurant.value?.info.name ?? "",
-                style: Get.textTheme.headline3,
-              ),
-            )
-            // Laundry name fiels
-            ,
-            SizedBox(
-              height: 25,
-            ),
-            Text("Restaurant name"),
-            SizedBox(
-              height: 5,
-            ),
-            _laundryNameTextField(),
-            SizedBox(
-              height: 15,
-            ),
-            Text("${_i18n()["defaultLanguage"]}"),
-            ROpLanguageSelectorComponent(
-                languageValue: editInfoController.primaryLang,
-                oppositeLanguageValue: editInfoController.secondaryLang,
-                onChangeShouldUpdateLang:
-                    editInfoController.validatePrimaryLanguUpdate),
-            SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text("${_i18n()["secondaryLanguage"]}"),
-            SizedBox(
-              height: 5,
-            ),
-            ROpLanguageSelectorComponent(
-              languageValue: editInfoController.secondaryLang,
-              oppositeLanguageValue: editInfoController.primaryLang,
-              onChangeShouldUpdateLang:
-                  editInfoController.validateSecondaryLanguUpdate,
-              showDeleteIcon: true,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text('${_i18n()["location"]}'),
-            SizedBox(
-              height: 5,
-            ),
-            ROpEditLocationCard(
-              editInfoController: editInfoController,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              child: viewWidgets.editWorkingHoursComponent(),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: _editInfoSaveButton(),
-    );
+          ),
+          bottomNavigationBar: _editInfoSaveButton(),
+        );
+      }
+    });
   }
 
   TextFormField _laundryNameTextField() {

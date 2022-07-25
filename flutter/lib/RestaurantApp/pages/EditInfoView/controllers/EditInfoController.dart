@@ -7,10 +7,10 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dar
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
@@ -34,6 +34,8 @@ class ROpEditInfoController {
   final Rxn<Schedule> newSchedule = Rxn();
   final Rxn<Schedule> schedulePreview = Rxn();
   final Rxn<Schedule> oldSchedule = Rxn();
+  final RxBool showStripe = RxBool(false);
+  String? stripeUrl;
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
 
@@ -103,6 +105,16 @@ class ROpEditInfoController {
     } else {
       return false;
     }
+  }
+
+  void showPaymentSetup({required String url}) {
+    stripeUrl = url;
+    showStripe.value = true;
+  }
+
+  void closePaymentSetup() {
+    stripeUrl = null;
+    showStripe.value = false;
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {
