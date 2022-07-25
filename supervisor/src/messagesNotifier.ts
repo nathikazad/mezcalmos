@@ -156,13 +156,13 @@ async function createAgoraTokensIfNotPresent(chatId: string, caller: chat.Partic
 }
 
 async function setAgoraDetails(chatId: string, user: chat.Participant, keys: Keys): Promise<string> {
-  let expirationTime: number = Math.floor(Date.now() / 1000) + 300;
+  let expirationTime: number = Math.floor(Date.now() / 1000) + 24 * 60 * 60;
   let token: string = agora.RtcTokenBuilder.buildTokenWithUid(keys.agora!.appId,
     keys.agora!.certificate,
     chatId,
     convertFbIdtoInt(user.id),
     agora.RtcRole.PUBLISHER,
-    expirationTime);
+    0);
   await setUserAgoraInfo(chatId, user.particpantType, user.id, <chat.ParticipantAgoraDetails>{
     token: token,
     expirationTime: (new Date(expirationTime * 1000)).toISOString(),
