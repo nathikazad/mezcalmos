@@ -10,7 +10,8 @@ export interface Hasura {
 
 export interface Stripe {
   publickey: string,
-  secretkey: string
+  secretkey: string,
+  accountupdatedsigningsecret: string
 }
 
 export interface Fcm {

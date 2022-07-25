@@ -42,7 +42,17 @@ extension ParseStringToStripeStatus on String {
 class StripeInfo {
   StripeStatus status;
   String id;
-  StripeInfo({required this.id, required this.status});
+  bool chargesEnabled;
+  bool payoutsEnabled;
+  bool detailsSubmitted;
+  List<String> requirements;
+  StripeInfo(
+      {required this.id,
+      required this.status,
+      this.chargesEnabled = false,
+      this.payoutsEnabled = false,
+      this.detailsSubmitted = false,
+      this.requirements = const <String>[]});
 }
 
 class PaymentInfo {
@@ -69,7 +79,11 @@ class PaymentInfo {
     if (acceptedPayments[PaymentType.Card] ?? false)
       stripe = StripeInfo(
           id: data["stripe"]["id"],
-          status: data["stripe"]["status"].toString().toStripeStatus());
+          status: data["stripe"]["status"].toString().toStripeStatus(),
+          payoutsEnabled: data["stripe"]["payoutsEnabled"],
+          detailsSubmitted: data["stripe"]["detailsSubmitted"],
+          chargesEnabled: data["stripe"]["chargesEnabled"],
+          requirements: data["stripe"]["requirements"]);
     return PaymentInfo(acceptedPayments: acceptedPayments, stripe: stripe);
   }
 
