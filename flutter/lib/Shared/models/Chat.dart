@@ -62,6 +62,11 @@ class Participant {
       required this.name,
       required this.participantType,
       required this.id});
+
+  @override
+  String toString() {
+    return "{name : $name , image: $image , id: $id , type: $participantType}";
+  }
 }
 
 class AgoraDetails {

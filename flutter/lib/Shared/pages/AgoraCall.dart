@@ -3,18 +3,20 @@ import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 
 class AgoraCall extends StatelessWidget {
-  final Participant talkingTo;
-  final String chatId;
-  AgoraCall({required this.chatId, required this.talkingTo, Key? key})
-      : super(key: key);
   final MessageController _msgController = MessageController();
   final Sagora _sagora = Get.find<Sagora>();
 
+  final Participant? talkingTo = Get.arguments?['talkingTo'] as Participant?;
+  final String chatId = Get.arguments?['chatId'];
+
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint("TalkingTo : ${talkingTo.toString()}");
+    mezDbgPrint("ChatId : $chatId");
     return Scaffold(
       body: Container(
         height: Get.height,
@@ -33,16 +35,27 @@ class AgoraCall extends StatelessWidget {
                     height: 150,
                     width: 150,
                     decoration: BoxDecoration(
+                      color: Colors.grey.shade400,
                       shape: BoxShape.circle,
-                      image: DecorationImage(
+                      image: talkingTo?.image != null
+                          ? DecorationImage(
+                              fit: BoxFit.cover,
+                              image: Image.network(talkingTo!.image).image,
+                            )
+                          : null,
+                    ),
+                    child: Center(
+                      child: FittedBox(
                         fit: BoxFit.cover,
-                        image: Image.network(talkingTo.image).image,
+                        child: Icon(
+                          Icons.person,
+                        ),
                       ),
                     ),
                   ),
                   SizedBox(height: 20),
                   Text(
-                    talkingTo.name,
+                    talkingTo?.name ?? "_",
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Montserrat',
@@ -62,28 +75,40 @@ class AgoraCall extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Flexible(
-                      child: Container(
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white.withOpacity(.8),
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.speaker,
-                            color: Colors.black,
-                            size: 30,
+                    Obx(
+                      () => Flexible(
+                        child: InkWell(
+                          onTap: _sagora.switchSpeakerphone,
+                          child: Container(
+                            padding: EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white.withOpacity(.8),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                _sagora.enableSpeakerphone.value
+                                    ? Icons.stop
+                                    : Icons.speaker,
+                                color: Colors.black,
+                                size: 30,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Flexible(
                       child: InkWell(
-                        onTap: () async {
-                          await _msgController.endCall(
-                              chatId: chatId, callee: talkingTo);
-                          await _sagora.removeSession();
+                        onTap: () {
+                          _msgController.endCall(
+                            chatId: chatId,
+                            callee: talkingTo!,
+                          );
+                          // await FlutterCallkitIncoming.endCall(
+                          //     {'chatId': chatId});
+                          _sagora.engine.leaveChannel();
+                          // await _sagora.removeSession(chatId: chatId);
                           Get.back<void>();
                         },
                         child: Container(

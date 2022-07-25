@@ -70,8 +70,6 @@
    		<string>remote-notification</string>
     	<string>voip</string>
 		<string>processing</string>
-    <string>remote-notification</string>
-    <string>voip</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

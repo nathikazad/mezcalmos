@@ -1,18 +1,22 @@
 // ignore_for_file: avoid_void_async, always_specify_types, unawaited_futures
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:uuid/uuid.dart';
 
 class Sagora extends GetxController {
   late final RtcEngine _engine;
@@ -24,7 +28,7 @@ class Sagora extends GetxController {
   @override
   void onInit() {
     checkAgoraPermissions();
-    _initAgora();
+    _initAgora().then((value) => _startListeningOnCallEvents());
     super.onInit();
   }
 
@@ -50,18 +54,10 @@ class Sagora extends GetxController {
 
   Future<void> _initAgora() async {
     //create the engine
-    _engine = await RtcEngine.create(agoraAppId);
-    await _engine.enableAudio();
-    await _engine.setChannelProfile(ChannelProfile.Communication);
-  }
-
-  void joinChannel({
-    required String token,
-    required String channelId,
-    required int uid,
-  }) async {
-    mezDbgPrint(" 👻👻👻 JOIN CHANNEL CALLED !!!! 👻👻👻  ");
-
+    // RtcEngineContext _engineContext = RtcEngineContext(agoraAppId);
+    // _engine = await RtcEngine.createWithContext(_engineContext);
+    _engine = await RtcEngine.createWithContext(RtcEngineContext(agoraAppId));
+//  RtcEngine.create(agoraAppId);
     _engine.setEventHandler(RtcEngineEventHandler(
       error: (code) {
         final info = '👻👻👻👻👻 onError: $code';
@@ -73,6 +69,10 @@ class Sagora extends GetxController {
       },
       leaveChannel: (stats) {
         _infoStrings.add(' 👻👻👻👻👻 onLeaveChannel');
+        removeSession();
+        if (Get.currentRoute == kAgoraCallScreen) {
+          Get.back<void>();
+        }
       },
       userJoined: (uid, elapsed) {
         final info = '👻👻👻👻👻 userJoined: $uid';
@@ -82,45 +82,58 @@ class Sagora extends GetxController {
         final info = '👻👻👻👻👻 userOffline: $uid , reason: $reason';
         _infoStrings.add(info);
       },
-      firstRemoteVideoFrame: (uid, width, height, elapsed) {
-        final info = '👻👻👻👻👻 firstRemoteVideoFrame: $uid';
-        _infoStrings.add(info);
-      },
     ));
 
-    // _engine.setEventHandler(
-    //   RtcEngineEventHandler(
-    //     error: (err) {
-    //       MezSnackbar("error", "Runtime Error happend $err");
-    //     },
-    //     joinChannelSuccess: (String channel, int uid, int elapsed) {
-    //       mezDbgPrint(" 👻👻👻 LOCAL USER JOINED ");
+    // int playbackSignalVolume;
+    // int recordingSignalVolume;
 
-    //       MezSnackbar("joinChannelSuccess", "local user $uid joined");
-    //     },
-    //     userJoined: (int uid, int elapsed) {
-    //       mezDbgPrint(" 👻👻👻 REMOTE USER JOINED ");
-    //       MezSnackbar("userJoined", "remote user $uid joined");
-    //     },
-    //     leaveChannel: (state) {
-    //       mezDbgPrint(" 👻👻👻 ON LEAVE ");
+    // int inEarVolume;
+    // if (Platform.isAndroid) {
+    //   playbackSignalVolume = 400;
+    //   recordingSignalVolume = 100;
+    //   inEarVolume = 100;
+    // } else {
+    //   playbackSignalVolume = 100;
+    //   recordingSignalVolume = 400;
+    //   inEarVolume = 400;
+    // }
 
-    //       MezSnackbar(
-    //           "leaveChannel", "onLeaveChannel : duration : ${state.duration}");
-    //     },
-    //     userOffline: (int uid, UserOfflineReason reason) {
-    //       mezDbgPrint(" 👻👻👻 REMOTE USER LEFT ");
+    await _engine.enableAudio();
+    await _engine.disableVideo();
+    // _engine.setAudioProfile(
+    //     AudioProfile.SpeechStandard, AudioScenario.Default),
+    // // // PLAYBACK DEVICE
+    // // // play the audio received on this device at this volume (0 - 400)
+    // _engine.adjustPlaybackSignalVolume(playbackSignalVolume),
+    // // // AUDIO ENGINE
+    // // // do not allow any mixed audio signals when playing audio published from this device
+    // _engine.adjustAudioMixingPublishVolume(0),
+    // // // do not allow any mixed audio signals to be played from this device
+    // _engine.adjustAudioMixingPlayoutVolume(0),
+    // // // RECORDING DEVICE
+    // // // set the recording signal volume of this device
+    // _engine.adjustRecordingSignalVolume(recordingSignalVolume),
+    // // // set the playback volume for listeners with headphones (0 - 100)
+    // _engine.setInEarMonitoringVolume(inEarVolume),
+    await _engine.setChannelProfile(ChannelProfile.Communication);
+  }
 
-    //       MezSnackbar("userOffline", "remot1e user $uid left channel");
-    //     },
-    //   ),
-    // );
-
+  void joinChannel({
+    required String token,
+    required String channelId,
+    required int uid,
+  }) async {
+    // mezDbgPrint(" 👻👻👻 JOIN CHANNEL CALLED !!!! 👻👻👻  ");
+    mezDbgPrint("👻👻👻 Joining using : $token | $channelId | $uid");
     await _engine.joinChannel(token, channelId, null, uid);
   }
 
-  Future<void> removeSession() async {
-    await FlutterCallkitIncoming.endAllCalls();
+  Future<void> removeSession({String? chatId}) async {
+    if (chatId != null) {
+      await FlutterCallkitIncoming.endCall({"chatId": chatId});
+    } else
+      await FlutterCallkitIncoming.endAllCalls();
+
     _engine.leaveChannel();
   }
 
@@ -132,6 +145,87 @@ class Sagora extends GetxController {
         .child(agoraChatNode(chatId, userId, type))
         .onValue
         .first;
+  }
+
+  void _startListeningOnCallEvents() {
+    FlutterCallkitIncoming.onEvent.listen((CallEvent? event) async {
+      mezDbgPrint("CallEvent ===>  $event");
+
+      switch (event?.name) {
+        case CallEvent.ACTION_CALL_DECLINE:
+          mezDbgPrint("CallEvent.DECLINED !");
+          final MessageController _msgCtrl = Get.find<MessageController>();
+          _msgCtrl.endCall(
+            chatId: event?.body['extra']['chatId'],
+            callee: Participant(
+              image: event!.body['avatar'],
+              name: event.body['nameCaller'],
+              participantType:
+                  event.body['number'].toString().toParticipantType(),
+              id: event.body['id'],
+            ),
+          );
+          Get.find<Sagora>().removeSession(
+            chatId: event.body['extra']['chatId'],
+          );
+          if (Get.currentRoute == kAgoraCallScreen) Get.back<void>();
+          break;
+
+        case CallEvent.ACTION_CALL_ENDED:
+          mezDbgPrint("CallEvent.ACTION_CALL_ENDED!");
+          if (event?.body?['extra']?['chatId'] != null) {
+            Get.find<MessageController>().endCall(
+              chatId: event?.body?['extra']['chatId'],
+              callee: Participant(
+                image: event!.body['avatar'],
+                name: event.body['nameCaller'],
+                participantType:
+                    event.body['number'].toString().toParticipantType(),
+                id: event.body['id'],
+              ),
+            );
+          }
+
+          if (Get.currentRoute == kAgoraCallScreen) {
+            Get.back<void>(closeOverlays: true);
+          }
+          break;
+
+        case CallEvent.ACTION_CALL_ACCEPT:
+          final Sagora _sagora = Get.find<Sagora>();
+          if ((await _sagora.checkAgoraPermissions())) {
+            // it's better to send token and chatId withing the variableParams on call notif
+            // that way we wont need to fetch the token and uid from db, using the bellow line :
+            // final dynamic agoraAuth = await _sagora.getAgoraToken();
+            mezDbgPrint(
+                "🎃🎃🎃 ACTION_CALL_ACCEPT::   Calling [_sagora.joinChannel] with extra::uid ${event?.body}");
+            joinChannel(
+              token: event?.body?['extra']['agoraToken'],
+              channelId: event?.body?['extra']['chatId'],
+              uid: 5774112,
+              //  int.parse(
+              //   event?.body?['extra']['uid'],
+              // ),
+            );
+
+            // Pushing to call screen + awaiting in case we wanna return with value.
+            // ignore: unawaited_futures
+            Get.toNamed<void>(kAgoraCallScreen, arguments: <String, dynamic>{
+              "chatId": event?.body?['extra']?['chatId'],
+              "talkingTo": Participant(
+                image: event?.body?['avatar'],
+                name: event?.body?['nameCaller'],
+                participantType:
+                    event!.body['number'].toString().toParticipantType(),
+                // wrong actual user id, it's more like an agora generated id
+                id: event.body['id'],
+              ),
+            });
+          }
+          break;
+        default:
+      }
+    });
   }
 
   // Methods and Callbacks
@@ -202,14 +296,18 @@ class Sagora extends GetxController {
   //     logSink.log('enableLocalAudio $err');
   //   });
   // }
+  final RxBool enableSpeakerphone = false.obs;
+  void switchSpeakerphone() async {
+    await _engine
+        .setEnableSpeakerphone(!enableSpeakerphone.value)
+        .then((value) {
+      mezDbgPrint('setEnableSpeakerphone Enabled!!!');
 
-  // void switchSpeakerphone() {
-  //   _engine.setEnableSpeakerphone(!enableSpeakerphone.value).then((value) {
-  //     enableSpeakerphone.value = !enableSpeakerphone.value;
-  //   }).catchError((err) {
-  //     logSink.log('setEnableSpeakerphone $err');
-  //   });
-  // }
+      enableSpeakerphone.value = !enableSpeakerphone.value;
+    }).catchError((err) {
+      mezDbgPrint('setEnableSpeakerphone $err');
+    });
+  }
 
   // Future<void> switchEffect() async {
   //   if (playEffect.value) {

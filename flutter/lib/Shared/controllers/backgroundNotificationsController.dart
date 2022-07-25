@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:callkeep/callkeep.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,55 +16,8 @@ import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:uuid/uuid.dart';
-
-void startListeningOnCallEvents() {
-  FlutterCallkitIncoming.onEvent.listen((CallEvent? event) async {
-    mezDbgPrint("CallEvent ===>  $event");
-
-    switch (event?.name) {
-      case CallEvent.ACTION_CALL_DECLINE:
-        await Get.find<Sagora>().removeSession();
-        break;
-
-      case CallEvent.ACTION_CALL_ENDED:
-        await Get.find<Sagora>().removeSession();
-        break;
-
-      case CallEvent.ACTION_CALL_ACCEPT:
-        final Sagora _sagora = Get.find<Sagora>();
-        if ((await _sagora.checkAgoraPermissions())) {
-          // it's better to send token and chatId withing the variableParams on call notif
-          // that way we wont need to fetch the token and uid from db, using the bellow line :
-          // final dynamic agoraAuth = await _sagora.getAgoraToken();
-          _sagora.joinChannel(
-            token: event?.body?['extra']['agoraToken'],
-            channelId: event?.body?['extra']['chatId'],
-            uid: event?.body?['extra']['uid'],
-          );
-
-          // Pushing to call screen + awaiting in case we wanna return with value.
-          // ignore: unawaited_futures
-          Get.to<dynamic>(
-            AgoraCall(
-              chatId: event?.body?['extra']['chatId'],
-              talkingTo: Participant(
-                image: event!.body['avatar'],
-                name: event.body['nameCaller'],
-                participantType:
-                    event.body['handle'].toString().toParticipantType(),
-                // wrong actual user id, it's more like an agora generated id
-                id: event.body['id'],
-              ),
-            ),
-          );
-        }
-
-        break;
-      default:
-    }
-  });
-}
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   mezDbgPrint("Handling a background message");
@@ -79,18 +33,20 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
         .toString()
         .toCallNotificationtType()) {
       case CallNotificationtType.Incoming:
+        MezSnackbar("title", "Incoming");
         mezDbgPrint(event.data);
-        final Map<String, dynamic> _extras = <String, dynamic>{
-          "chatId": event.data['chatId'],
-          "agoraToken": event.data['agoraToken'],
-          "uid": event.data['uid'],
-        };
+        // mezDbgPrint("Got extras ===> $_extras");
         await triggerIncomingCallAlert(
           callerName: event.data["callerName"],
           callerImage: event.data["callerImage"],
           callerType: event.data["callerType"],
+          callerId: event.data["callerId"],
           languageType: event.data["language"].toString().toLanguageType(),
-          extra: _extras,
+          extra: {
+            "chatId": event.data['chatId'],
+            "agoraToken": event.data['agoraToken'],
+            "uid": event.data['uid'],
+          },
         );
         break;
       // not here
@@ -100,6 +56,8 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
         );
         break;
       default:
+        mezDbgPrint(
+            "Got dEFAULT #E ===> ${event.data['callNotificationType']}");
     }
   }
 }
@@ -108,23 +66,23 @@ Future<void> triggerIncomingCallAlert({
   required String callerName,
   required String callerImage,
   required String callerType,
+  required String callerId,
   required Gen.LanguageType languageType,
-  Map<String, dynamic> extra = const <String, dynamic>{},
+  required Map<String, dynamic> extra,
 }) async {
   final Map<String, dynamic> params = <String, dynamic>{
-    'id': Uuid().v4(),
+    'id': callerId,
     'nameCaller': callerName,
     'appName': getAppName(),
     'avatar': callerImage,
     'handle': callerType,
-    'type': 0,
+    'type': callerType,
     'duration': 30000,
     'textAccept': 'Accept',
     'textDecline': 'Decline',
     'textMissedCall': 'Missed call',
     'textCallback': 'Call back',
     'extra': extra,
-    // 'headers': <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
     'android': <String, dynamic>{
       'isCustomNotification': true,
       'isShowLogo': false,
@@ -181,7 +139,6 @@ class BackgroundNotificationsController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     mezDbgPrint("BackgroundNotificationsController onInit");
-    startListeningOnCallEvents();
     final NotificationSettings settings = await requestPermission();
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
@@ -198,15 +155,50 @@ class BackgroundNotificationsController extends GetxController {
     });
 
     onMessageListener =
-        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      mezDbgPrint(
+          "FirebaseMessage ======> ${message.data} | ${message.contentAvailable}");
       if (message.data["notificationType"] ==
           NotificationType.Call.toFirebaseFormatString()) {
-        triggerIncomingCallAlert(
-          callerName: message.data["callerName"],
-          callerImage: message.data["callerImage"],
-          callerType: message.data["callerType"],
-          languageType: message.data["language"].toString().toLanguageType(),
-        );
+        if (message.data['callNotificationType']
+                .toString()
+                .toCallNotificationtType() ==
+            CallNotificationtType.Incoming) {
+          // handle incoming
+          if (Get.currentRoute != kAgoraCallScreen) {
+            await triggerIncomingCallAlert(
+                callerName: message.data["callerName"],
+                callerImage: message.data["callerImage"],
+                callerType: message.data["callerType"],
+                callerId: message.data["callerId"],
+                languageType:
+                    message.data["language"].toString().toLanguageType(),
+                extra: <String, dynamic>{
+                  "chatId": message.data['chatId'],
+                  "agoraToken": message.data['agoraToken'],
+                  "uid": message.data['uid'],
+                });
+          }
+        } else {
+          // FirebaseMessage ======> {chatId: -N7lDrRmBPB5g82se9KR, linkUrl: /messages/-N7lDrRmBPB5g82se9KR,
+          //callerImage: https://firebasestorage.googleapis.com/v0/b/mezcalmos-staging.appspot.com/o/users%2FoAxB9JquC1S7zQyRUuZF2gI1suL2%2Favatar%2FoAxB9JquC1S7zQyRUuZF2gI1suL2.compressed.jpg?alt=media&token=af4e39bd-b57e-4470-9a02-b7230bd84dc2,
+          //callerType: customer, callerName: SAADR, notificationType: call, language: en, callerId: oAxB9JquC1S7zQyRUuZF2gI1suL2,
+          //callNotificationType: endCall} | true
+          mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> ${message.data}");
+          // Locally ending the call
+          // FlutterCallkitIncoming.endCall(message.data);
+          await FlutterCallkitIncoming.endAllCalls();
+          mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> endedAllCalls");
+
+          // Agora side- leaving the channel!
+          await Get.find<Sagora>().engine.leaveChannel();
+          mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> leftChannel");
+
+          // if the current route is the agora screen we have to pop it out of the stacks!
+          if (Get.currentRoute == kAgoraCallScreen) {
+            Get.back<void>(closeOverlays: true);
+          }
+        }
       }
     });
   }

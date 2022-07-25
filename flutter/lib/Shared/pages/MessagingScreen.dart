@@ -23,6 +23,7 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
@@ -103,7 +104,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   RxList<Widget> chatLines = <Widget>[].obs;
 
   RxString _typedMsg = "".obs;
-  RxBool clickedCall = false.obs;
+  // RxBool clickedCall = false.obs;
 
   Widget singleChatComponent({
     required String message,
@@ -284,7 +285,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
               ),
               onTap: () => Get.toNamed<void>(orderLink!),
             ),
-          if (controller.isUserAuthorizedToCall() && !clickedCall.value)
+          if (controller.isUserAuthorizedToCall())
             InkWell(
               onTap: _onCallPress,
               child: Container(
@@ -328,50 +329,51 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         ),
                       ),
                       SendMessageBox(
-                          typedMsg: _typedMsg,
-                          textEditingController: _textEditingController,
-                          controller: controller,
-                          chatId: chatId,
-                          orderId: orderId)
+                        typedMsg: _typedMsg,
+                        textEditingController: _textEditingController,
+                        controller: controller,
+                        chatId: chatId,
+                        orderId: orderId,
+                      )
                     ],
                   ),
-                  Obx(() {
-                    if (clickedCall.value)
-                      return Container(
-                        height: Get.height,
-                        width: Get.width,
-                        color: Colors.black.withOpacity(.6),
-                        child: Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            height: 300,
-                            width: Get.width - 100,
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      "Calling ${controller.recipient(recipientType: recipientType)!.name}"),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  ThreeDotsLoading(
-                                    dotsColor:
-                                        Color.fromARGB(255, 19, 105, 197),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    else
-                      return SizedBox();
-                  })
+                  // Obx(() {
+                  //   // if (clickedCall.value)
+                  //   return Container(
+                  //       height: Get.height,
+                  //       width: Get.width,
+                  //       color: Colors.black.withOpacity(.6),
+                  //       child: Center(
+                  //         child: Container(
+                  //           decoration: BoxDecoration(
+                  //             color: Colors.white,
+                  //             borderRadius: BorderRadius.circular(10),
+                  //           ),
+                  //           height: 300,
+                  //           width: Get.width - 100,
+                  //           child: Center(
+                  //             child: Column(
+                  //               mainAxisAlignment: MainAxisAlignment.center,
+                  //               crossAxisAlignment: CrossAxisAlignment.center,
+                  //               children: [
+                  //                 Text(
+                  //                     "Calling ${controller.recipient(recipientType: recipientType)!.name}"),
+                  //                 SizedBox(
+                  //                   height: 10,
+                  //                 ),
+                  //                 ThreeDotsLoading(
+                  //                   dotsColor:
+                  //                       Color.fromARGB(255, 19, 105, 197),
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ));
+                  //   // );
+                  //   // else
+                  //   //   return SizedBox();
+                  // })
                 ],
               ),
             )
@@ -397,7 +399,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
       mezDbgPrint("1 [RECIPIENT::calleeType ] $_calleeType");
 
       if (_recipient != null) {
-        clickedCall.value = true;
+        // clickedCall.value = true;
         await controller.callUser(
           chatId: chatId,
           callee: _recipient,
@@ -421,7 +423,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
         // then we join if it's not null && it's not expired
         if (_agoraAuth != null) {
           mezDbgPrint("AgoraAuth  :: passed validation test !");
-          await FlutterCallkitIncoming.startCall(chatId);
+          // await FlutterCallkitIncoming.startCall(chatId);
           // then join channel
           sagora.joinChannel(
             token: _agoraAuth['token'],
@@ -430,12 +432,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
           );
           // Pushing to call screen + awaiting in case we wanna return with value.
           // ignore: unawaited_futures
-          Get.to<dynamic>(
-            AgoraCall(
-              chatId: chatId,
-              talkingTo: _recipient,
-            ),
-          );
+          Get.toNamed<void>(kAgoraCallScreen, arguments: {
+            "chatId": chatId,
+            "talkingTo": _recipient,
+          });
         }
       }
     } else {
