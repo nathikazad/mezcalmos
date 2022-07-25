@@ -225,7 +225,7 @@ export const updateServiceProvider =
         errorCode: "uncreated"
       }
 
-    let isWorking: boolean = account.details_submitted && account.payouts_enabled && account.charges_enabled
+    let isWorking: boolean = account.details_submitted && account.charges_enabled
     await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').update(<StripeInfo>{
       status: isWorking ? StripeStatus.IsWorking : StripeStatus.InProcess,
       detailsSubmitted: account.details_submitted,
