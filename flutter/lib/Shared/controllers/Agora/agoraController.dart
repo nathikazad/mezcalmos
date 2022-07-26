@@ -127,12 +127,11 @@ class Sagora extends GetxController {
   }
 
   Future<void> removeSession({String? chatId}) async {
+    await _engine.leaveChannel();
     if (chatId != null) {
       await FlutterCallkitIncoming.endCall({"chatId": chatId});
     } else
       await FlutterCallkitIncoming.endAllCalls();
-
-    _engine.leaveChannel();
   }
 
   Future<DatabaseEvent> getAgoraToken(
@@ -164,16 +163,17 @@ class Sagora extends GetxController {
               id: event.body['extra']['callerId'],
             ),
           );
-          Get.find<Sagora>().removeSession(
-            chatId: event.body['extra']['chatId'],
-          );
+          await FlutterCallkitIncoming.endAllCalls();
+          // Get.find<Sagora>().removeSession(
+          //     // chatId: event.body['extra']['chatId'],
+          //     );
           if (Get.currentRoute == kAgoraCallScreen) Get.back<void>();
           break;
 
         case CallEvent.ACTION_CALL_ENDED:
           mezDbgPrint("CallEvent.ACTION_CALL_ENDED!");
           if (event?.body?['extra']?['chatId'] != null) {
-            Get.find<MessageController>().endCall(
+            await Get.find<MessageController>().endCall(
               chatId: event?.body?['extra']['chatId'],
               callee: Participant(
                 image: event!.body['avatar'],

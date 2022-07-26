@@ -37,7 +37,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
           callerType: event.data["callerType"],
           callerId: event.data["callerId"],
           languageType: event.data["language"].toString().toLanguageType(),
-          extra: {
+          extra: <String, dynamic>{
             "chatId": event.data['chatId'],
             "agoraToken": event.data['agoraToken'],
             "calleeuid": event.data['calleeuid'],
@@ -46,9 +46,10 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
         break;
       // not here
       case CallNotificationtType.EndCall:
-        await FlutterCallkitIncoming.endCall(
-          event.data['chatId'],
-        );
+        await FlutterCallkitIncoming.endAllCalls();
+        // await FlutterCallkitIncoming.endCall(
+        //   event.data['chatId'],
+        // );
         break;
       default:
         mezDbgPrint(
@@ -66,11 +67,11 @@ Future<void> triggerIncomingCallAlert({
   required Map<String, dynamic> extra,
 }) async {
   final Map<String, dynamic> params = <String, dynamic>{
-    'id': Uuid().v4(),
+    'id': Uuid().v1(),
     'nameCaller': callerName,
     'appName': getAppName(),
     'avatar': callerImage,
-    // 'handle': callerType,
+    'handle': callerName,
     'type': callerType,
     'duration': 30000,
     'textAccept': 'Accept',
@@ -184,11 +185,9 @@ class BackgroundNotificationsController extends GetxController {
           // FlutterCallkitIncoming.endCall(message.data);
           await FlutterCallkitIncoming.endAllCalls();
           mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> endedAllCalls");
-
           // Agora side- leaving the channel!
           await Get.find<Sagora>().engine.leaveChannel();
           mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> leftChannel");
-
           // if the current route is the agora screen we have to pop it out of the stacks!
           if (Get.currentRoute == kAgoraCallScreen) {
             Get.back<void>(closeOverlays: true);

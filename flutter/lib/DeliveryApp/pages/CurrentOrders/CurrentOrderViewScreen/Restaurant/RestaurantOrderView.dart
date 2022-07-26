@@ -98,8 +98,8 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       markerId: order.value!.restaurantId,
       customImgHttpUrl: order.value!.restaurant.image,
     );
-
-    handleRestaurantOrder(order.value as RestaurantOrder);
+    if (order.value != null)
+      handleRestaurantOrder(order.value as RestaurantOrder);
 
     waitForOrderIfNotLoaded().then((void value) {
       if (order.value == null) {
@@ -249,12 +249,13 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
           );
         }
         // update position of our delivery Guy
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            order.dropoffDriver!.location!.latitude,
-            order.dropoffDriver!.location!.longitude,
-          ),
-        );
+        if (order.dropoffDriver?.location != null)
+          mapController.addOrUpdateUserMarker(
+            latLng: LatLng(
+              order.dropoffDriver!.location!.latitude,
+              order.dropoffDriver!.location!.longitude,
+            ),
+          );
         mapController.animateAndUpdateBounds();
         orderStatusSnapshot = order.status;
         break;
@@ -282,13 +283,14 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
           );
         }
         // updating our delivery guy location
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            order.dropoffDriver!.location!.latitude,
-            order.dropoffDriver!.location!.longitude,
-          ),
-          fitWithinBounds: true,
-        );
+        if (order.dropoffDriver?.location != null)
+          mapController.addOrUpdateUserMarker(
+            latLng: LatLng(
+              order.dropoffDriver!.location!.latitude,
+              order.dropoffDriver!.location!.longitude,
+            ),
+            fitWithinBounds: true,
+          );
         mapController.animateAndUpdateBounds();
         orderStatusSnapshot = order.status;
         break;
