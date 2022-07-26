@@ -89,14 +89,14 @@ export const getPaymentIntent =
   });
 
 
-export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: Order, stripePaymentId: string, stripeFees: number) {
+export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: Order, stripePaymentId: string, stripeFees: number): Promise<Order> {
   let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
   let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
   await stripe.paymentIntents.update(
     stripePaymentId,
-    { metadata: { order_id: orderId } },
+    { metadata: { orderId: orderId, orderType: order.orderType } },
     stripeOptions
   );
 
@@ -121,6 +121,7 @@ export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: O
       expYear: pm.card!.exp_year,
       brand: pm.card!.brand,
     }
+  return order
 }
 
 export const accountUpdateEventHandler = functions.https.onRequest((request, response) => {

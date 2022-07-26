@@ -70,7 +70,7 @@ export = functions.https.onCall(async (data, context) => {
 
   try {
     let customerInfo: UserInfo = await getUserInfo(customerId);
-    const order: RestaurantOrder = constructRestaurantOrder({
+    let order: RestaurantOrder = constructRestaurantOrder({
       cart: cart,
       customer: customerInfo,
       restaurant: restaurant.info
@@ -79,7 +79,7 @@ export = functions.https.onCall(async (data, context) => {
     let orderId: string = (await customerNodes.inProcessOrders(customerId).push(null)).key!;
 
     if (data.stripePaymentId)
-      await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)
+      order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
 
     customerNodes.inProcessOrders(customerId, orderId).set(order);
     restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
