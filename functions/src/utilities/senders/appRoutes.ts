@@ -27,22 +27,11 @@ export function chatUrl(
   let str = `/messages/${chatId}`;
   if (orderId != null)
     str += `?orderId=${orderId}`
-  if (orderType != null && participantType != null)
+  if (orderId != null && orderType != null && participantType != null)
     str += `&orderLink=${orderUrl(participantType, orderType, orderId!)}`
-  if (participantType == ParticipantType.Customer)
-    str += `&recipientType=${orderType}`;
+  if (participantType != null)
+    str += `&recipientType=${participantType}`;
 
-  switch (orderType) {
-    case OrderType.Laundry:
-      str += `&orderLink=/laundryOrders/${orderId}`;
-      break;
-    case OrderType.Restaurant:
-      str += `&orderLink=/restaurantOrders/${orderId}`;
-      break;
-
-    default:
-      break;
-  }
   return str
 }
 

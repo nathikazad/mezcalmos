@@ -206,28 +206,9 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
-  String? orderLink;
-  OrderType? orderType;
-  if (value["orderType"] != null)
-    orderType = value["orderType"].toString().toOrderType();
-  switch (orderType) {
-    case OrderType.Restaurant:
-      orderLink = getRestaurantOrderRoute(value["orderId"]);
-      break;
-    case OrderType.Laundry:
-      orderLink = getLaundryOrderRoute(value['orderId']);
-      break;
-    default:
-  }
   return Notification(
       id: key,
-      linkUrl: getMessagesRoute(
-        chatId: value['chatId'],
-        recipientType:
-            value["sender"]["particpantType"].toString().toParticipantType(),
-          orderLink: orderLink,
-          orderType: orderType
-      ),
+      linkUrl: value["linkUrl"],
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
