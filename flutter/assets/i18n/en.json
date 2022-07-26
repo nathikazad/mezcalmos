@@ -466,7 +466,7 @@
                             "fixedRate": "Cost Per Kilo",
                             "orderWeight": "Order Weight",
                             "minimumCost": "Minimum Cost",
-                            "totalCost": "Total Cost",
+                            "total": "Total",
                             "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order.",
                             "item": "Item",
                             "perKilo": "Per kilo",

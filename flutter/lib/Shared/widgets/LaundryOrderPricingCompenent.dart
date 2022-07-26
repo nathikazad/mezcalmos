@@ -5,10 +5,10 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
-class LaundryPricingCompnent extends StatelessWidget {
+class LaundryOrderPricingComponent extends StatelessWidget {
   final LaundryOrder order;
 
-  const LaundryPricingCompnent({Key? key, required this.order})
+  const LaundryOrderPricingComponent({Key? key, required this.order})
       : super(key: key);
 
   dynamic _i18n() =>

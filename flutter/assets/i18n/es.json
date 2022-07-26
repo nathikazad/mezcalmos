@@ -469,7 +469,7 @@
                             "fixedRate": "Costo por kilo",
                             "orderWeight": "Peso de pedido",
                             "minimumCost": "Costo Minimo",
-                            "totalCost": "Costo Total",
+                            "total": "Total",
                             "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido.",
                             "item": "Articulo",
                             "perKilo": "Por kilo",

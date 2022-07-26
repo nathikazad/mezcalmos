@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 //
@@ -53,12 +54,12 @@ class CustomerLaundryOrderEst extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _getRightTitle()!,
+                          _getRightTitle()!.inCaps,
                           style: Get.textTheme.bodyText1,
                           maxLines: 1,
                         ),
                         Text(
-                          _getEstimatedText()!,
+                          _getEstimatedText()!.inCaps,
                           style: Get.textTheme.bodyText2,
                           maxLines: 1,
                         ),
