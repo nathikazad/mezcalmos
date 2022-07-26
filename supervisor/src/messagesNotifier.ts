@@ -36,13 +36,6 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
   let callerInfo: chat.Participant = chatData.participants[notificationForQueue.callerParticipantType]![notificationForQueue.callerId]
   let calleeInfo: chat.Participant = chatData.participants[notificationForQueue.calleeParticipantType]![notificationForQueue.calleeId]
   let calleeToken: string | null = null;
-  if (notificationForQueue.callNotificationType == chat.CallNotificationtType.Incoming) {
-    calleeToken = await createAgoraTokensIfNotPresent(notificationForQueue.chatId, callerInfo as chat.ParticipantWithAgora, calleeInfo as chat.ParticipantWithAgora, keys);
-    if (calleeToken == null)
-      console.log("Agora token generation error");
-    console.log(notificationForQueue);
-    console.log();
-  }
 
   let subscription: NotificationInfo = await getNotificationInfo(calleeInfo.particpantType, calleeInfo.id);
   if (subscription != null && subscription.deviceNotificationToken) {
@@ -67,12 +60,20 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
         contentAvailable: true
       }
     };
-    if (calleeToken != null){
-      fcmMessage.payload.data!.agoraToken = calleeToken;
-      fcmMessage.payload.data!.uid = convertFbIdtoInt(callerInfo.id).toString();
+    
+    if (notificationForQueue.callNotificationType == chat.CallNotificationtType.Incoming) {
+      calleeToken = await createAgoraTokensIfNotPresent(notificationForQueue.chatId, callerInfo as chat.ParticipantWithAgora, calleeInfo as chat.ParticipantWithAgora, keys);
+      if (calleeToken == null)
+        console.log("Agora token generation error");
+      else {
+        fcmMessage.payload.data!.agoraToken = calleeToken;
+        fcmMessage.payload.data!.calleeuid = convertFbIdtoInt(calleeInfo.id).toString();
+      }
+      console.log(notificationForQueue);
+      console.log();
     }
-console.log(fcmMessage);    
-fcm.push(fcmMessage);
+    console.log(fcmMessage);    
+    fcm.push(fcmMessage);
   }
 }
 
