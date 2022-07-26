@@ -31,6 +31,18 @@ export function chatUrl(
     str += `&orderLink=${orderUrl(participantType, orderType, orderId!)}`
   if (participantType == ParticipantType.Customer)
     str += `&recipientType=${orderType}`;
+
+  switch (orderType) {
+    case OrderType.Laundry:
+      str += `&orderLink=/laundryOrders/${orderId}`;
+      break;
+    case OrderType.Restaurant:
+      str += `&orderLink=/restaurantOrders/${orderId}`;
+      break;
+
+    default:
+      break;
+  }
   return str
 }
 
