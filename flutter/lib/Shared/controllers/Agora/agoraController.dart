@@ -13,10 +13,8 @@ import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:uuid/uuid.dart';
 
 class Sagora extends GetxController {
   late final RtcEngine _engine;
@@ -160,9 +158,10 @@ class Sagora extends GetxController {
             callee: Participant(
               image: event!.body['avatar'],
               name: event.body['nameCaller'],
-              participantType:
-                  event.body['number'].toString().toParticipantType(),
-              id: event.body['id'],
+              participantType: event.body['extra']['callerType']
+                  .toString()
+                  .toParticipantType(),
+              id: event.body['extra']['callerId'],
             ),
           );
           Get.find<Sagora>().removeSession(
@@ -179,9 +178,10 @@ class Sagora extends GetxController {
               callee: Participant(
                 image: event!.body['avatar'],
                 name: event.body['nameCaller'],
-                participantType:
-                    event.body['number'].toString().toParticipantType(),
-                id: event.body['id'],
+                participantType: event.body['extra']['callerType']
+                    .toString()
+                    .toParticipantType(),
+                id: event.body['extra']['callerId'],
               ),
             );
           }
@@ -215,10 +215,11 @@ class Sagora extends GetxController {
               "talkingTo": Participant(
                 image: event?.body?['avatar'],
                 name: event?.body?['nameCaller'],
-                participantType:
-                    event!.body['number'].toString().toParticipantType(),
+                participantType: event!.body['extra']['callerType']
+                    .toString()
+                    .toParticipantType(),
                 // wrong actual user id, it's more like an agora generated id
-                id: event.body['id'],
+                id: event.body['extra']['callerId'],
               ),
             });
           }

@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:callkeep/callkeep.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,10 +11,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart' as Gen;
 import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:uuid/uuid.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
@@ -33,7 +29,6 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
         .toString()
         .toCallNotificationtType()) {
       case CallNotificationtType.Incoming:
-        MezSnackbar("title", "Incoming");
         mezDbgPrint(event.data);
         // mezDbgPrint("Got extras ===> $_extras");
         await triggerIncomingCallAlert(
@@ -71,18 +66,18 @@ Future<void> triggerIncomingCallAlert({
   required Map<String, dynamic> extra,
 }) async {
   final Map<String, dynamic> params = <String, dynamic>{
-    'id': callerId,
+    'id': Uuid().v4(),
     'nameCaller': callerName,
     'appName': getAppName(),
     'avatar': callerImage,
-    'handle': callerType,
+    // 'handle': callerType,
     'type': callerType,
     'duration': 30000,
     'textAccept': 'Accept',
     'textDecline': 'Decline',
     'textMissedCall': 'Missed call',
     'textCallback': 'Call back',
-    'extra': extra,
+    'extra': {...extra, 'callerId': callerId, 'callerType': callerType},
     'android': <String, dynamic>{
       'isCustomNotification': true,
       'isShowLogo': false,
@@ -93,7 +88,7 @@ Future<void> triggerIncomingCallAlert({
       'actionColor': '#4CAF50'
     },
     'ios': <String, dynamic>{
-      'iconName': 'CallKitLogo',
+      'iconName': 'AppIcon',
       'handleType': '',
       'supportsVideo': true,
       'maximumCallGroups': 2,
