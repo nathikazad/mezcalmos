@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 DateTime now = DateTime.now().toLocal();
@@ -33,6 +34,7 @@ class MessagingScreen extends StatefulWidget {
 // TODO : REFACTORING !
 class _MessagingScreenState extends State<MessagingScreen> {
   late final String? orderLink;
+  late final OrderType? orderType;
   late final String? orderId;
   late final String chatId;
 
@@ -53,6 +55,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     chatId = Get.parameters['chatId']!;
     orderLink = Get.parameters['orderLink'];
     orderId = Get.parameters['orderId'];
+    orderType = Get.parameters['orderType']?.toString().toOrderType();
     if (Get.parameters['recipientId'] != null)
       recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {
@@ -207,7 +210,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                       textEditingController: _textEditingController,
                       controller: controller,
                       chatId: chatId,
-                      orderId: orderId)
+                    orderId: orderId,
+                    orderType: orderType,
+                  )
                 ],
               ),
             )
@@ -314,6 +319,7 @@ class SendMessageBox extends StatelessWidget {
       required TextEditingController textEditingController,
       required this.controller,
       required this.chatId,
+      this.orderType,
       this.orderId})
       : _typedMsg = typedMsg,
         _textEditingController = textEditingController,
@@ -325,6 +331,7 @@ class SendMessageBox extends StatelessWidget {
   final MessageController controller;
   final String chatId;
   final String? orderId;
+  final OrderType? orderType;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -386,10 +393,10 @@ class SendMessageBox extends StatelessWidget {
                     _textEditingController.text.replaceAll(' ', '').length > 0;
                 if (msgReady2Send) {
                   controller.sendMessage(
-                    message: _typedMsg.value,
-                    chatId: chatId,
-                    orderId: orderId,
-                  );
+                      message: _typedMsg.value,
+                      chatId: chatId,
+                      orderId: orderId,
+                      orderType: orderType);
                   _textEditingController.clear();
                   _typedMsg.value = "";
                 } else {

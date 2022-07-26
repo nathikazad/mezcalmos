@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -78,6 +79,7 @@ class OrderRestaurantCard extends StatelessWidget {
                           getMessagesRoute(
                             chatId: order.orderId,
                             orderId: order.orderId,
+                            orderType: OrderType.Restaurant,
                             recipientType: ParticipantType.Restaurant,
                           ),
                         );

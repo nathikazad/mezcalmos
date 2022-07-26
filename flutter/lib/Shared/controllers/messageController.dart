@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class MessageController extends GetxController {
   Rxn<Chat> chat = Rxn();
@@ -40,8 +41,7 @@ class MessageController extends GetxController {
         .onValue
         .listen((DatabaseEvent event) {
       if (event.snapshot.value != null) {
-        mezDbgPrint(
-            "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
+
         // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
         chat.value = Chat.fromJson(chatId, event.snapshot.value);
         if (onValueCallBack != null) onValueCallBack();
@@ -54,6 +54,7 @@ class MessageController extends GetxController {
   Future<void> sendMessage(
       {required String message,
       required String chatId,
+      OrderType? orderType,
       String? orderId}) async {
     final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
         .ref()
@@ -69,7 +70,8 @@ class MessageController extends GetxController {
           .toFirebaseFormattedString(),
       "timestamp": DateTime.now().toUtc().toString(),
       "chatId": chatId,
-      "orderId": orderId
+      "orderId": orderId,
+      "orderType": orderType?.toFirebaseFormatString()
     }).onError((Object? error, StackTrace stackTrace) {
       mezDbgPrint(stackTrace);
     });

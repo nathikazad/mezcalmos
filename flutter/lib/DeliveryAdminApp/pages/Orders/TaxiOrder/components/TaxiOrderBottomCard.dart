@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/taxiController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -90,7 +91,8 @@ class _TaxiOrderBottomCardState extends State<TaxiOrderBottomCard> {
                           onPressed: () {
                             Get.toNamed(getMessagesRoute(
                                 chatId: widget.order.orderId,
-                                orderId: widget.order.orderId));
+                                orderId: widget.order.orderId,
+                                orderType: OrderType.Taxi));
                           },
                           icon: Icon(
                             Icons.message_rounded,

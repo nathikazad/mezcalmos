@@ -49,7 +49,7 @@ class ForegroundNotificationsController extends GetxController {
         .listen((DatabaseEvent event) {
       // mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
       // mezDbgPrint(event.snapshot.value);
-      try {
+      // try {
         final Notification _notification =
             notificationHandler(event.snapshot.key!, event.snapshot.value);
         final bool alreadyOnLinkPage =
@@ -77,9 +77,9 @@ class ForegroundNotificationsController extends GetxController {
         } else {
           removeNotification(_notification.id);
         }
-      } on StateError {
-        mezDbgPrint("Invalid notification");
-      }
+      // } on StateError {
+      //   mezDbgPrint("Invalid notification");
+      // }
     });
 
     _notificationNodeRemoveListener?.cancel();

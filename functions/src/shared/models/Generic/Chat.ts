@@ -83,4 +83,5 @@ export interface MessageNotificationForQueue extends NotificationForQueue {
   participantType: ParticipantType,
   messageId: string,
   orderId?: string
+  orderType: string
 }

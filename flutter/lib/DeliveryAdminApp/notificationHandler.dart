@@ -117,9 +117,27 @@ Notification newOrderNotification(String key, value) {
 }
 
 Notification newMessageNotification(String key, value) {
+  String? orderLink;
+  OrderType? orderType;
+  if (value["orderType"] != null)
+    orderType = value["orderType"].toString().toOrderType();
+  switch (orderType) {
+    case OrderType.Restaurant:
+      orderLink = getRestaurantOrderRoute(value["orderId"]);
+      break;
+    case OrderType.Laundry:
+      orderLink = getLaundryOrderRoute(value['orderId']);
+
+      break;
+    default:
+  }
   return Notification(
       id: key,
-      linkUrl: value['linkUrl'] ?? getMessagesRoute(chatId: value['chatId']),
+      linkUrl: value['linkUrl'] ??
+          getMessagesRoute(
+              chatId: value['chatId'],
+              orderLink: orderLink,
+              orderType: orderType),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

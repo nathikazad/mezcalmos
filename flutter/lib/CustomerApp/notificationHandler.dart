@@ -53,7 +53,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
     id: key,
     icon: Material.Icons.local_laundry_service,
-    linkUrl: getLaundyOrderRoute(value['orderId']),
+    linkUrl: getLaundryOrderRoute(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],
@@ -277,14 +277,28 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 
 Notification newMessageNotification(String key, value) {
   mezDbgPrint("New message notif ==========>>>>>>>>$value");
+  String? orderLink;
+  OrderType? orderType;
+  if (value["orderType"] != null)
+    orderType = value["orderType"].toString().toOrderType();
+  switch (orderType) {
+    case OrderType.Restaurant:
+      orderLink = getRestaurantOrderRoute(value["orderId"]);
+      break;
+    case OrderType.Laundry:
+      orderLink = getLaundryOrderRoute(value['orderId']);
+      break;
+    default:
+  }
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
-        chatId: value['chatId'],
-        orderId: value["orderId"],
-        recipientType:
-            value["sender"]["particpantType"].toString().toParticipantType(),
-      ),
+          chatId: value['chatId'],
+          orderId: value["orderId"],
+          recipientType:
+              value["sender"]["particpantType"].toString().toParticipantType(),
+          orderType: orderType,
+          orderLink: orderLink),
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],

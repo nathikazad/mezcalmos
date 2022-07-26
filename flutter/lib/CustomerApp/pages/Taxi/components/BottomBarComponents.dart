@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -195,6 +196,7 @@ Widget messageBtn({required Rxn<TaxiOrder> order, EdgeInsets? margin}) {
         Get.toNamed<void>(getMessagesRoute(
             chatId: order.value!.orderId,
             orderId: order.value!.orderId,
+            orderType: OrderType.Taxi,
             recipientType: ParticipantType.Taxi));
       },
       child: Container(

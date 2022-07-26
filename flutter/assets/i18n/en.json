@@ -158,7 +158,7 @@
                             "deliveryLocation": "Delivery Location"
                         },
                         "SaveLocationDailog": {
-                            "addLocationDialogTitle": "enter location name, if you want to save for future use, else you may skip",
+                            "addLocationDialogTitle": "Enter location name, if you want to save for future use, else you may skip",
                             "editLocationDialogTitle": "Enter location name",
                             "addLocationDialogButton": "OK",
                             "editLocationDialogButton": "EDIT",

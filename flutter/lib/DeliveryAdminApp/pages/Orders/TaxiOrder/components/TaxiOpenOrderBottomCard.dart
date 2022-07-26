@@ -4,6 +4,7 @@ import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
@@ -107,7 +108,9 @@ class TaxiOpenOrderBottomCard extends StatelessWidget {
         IconButton(
             onPressed: () {
               Get.toNamed(getMessagesRoute(
-                  chatId: order.orderId, orderId: order.orderId));
+                  chatId: order.orderId,
+                  orderId: order.orderId,
+                  orderType: OrderType.Taxi));
             },
             icon: Icon(
               Icons.message_rounded,

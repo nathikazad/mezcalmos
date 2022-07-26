@@ -215,7 +215,7 @@ class CustomerOrderCard extends StatelessWidget {
 
         break;
       case OrderType.Laundry:
-        Get.toNamed(getLaundyOrderRoute(order.orderId));
+        Get.toNamed(getLaundryOrderRoute(order.orderId));
 
         break;
       case OrderType.Taxi:

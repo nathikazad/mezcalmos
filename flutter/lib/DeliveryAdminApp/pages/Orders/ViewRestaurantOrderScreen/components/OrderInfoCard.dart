@@ -6,6 +6,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScree
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/RestaurantOrderItems.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -66,6 +67,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
                         onPressed: () {
                           Get.toNamed(
                             getMessagesRoute(
+                                orderType: OrderType.Restaurant,
                                 chatId: widget.order.value?.orderId ?? '',
                                 orderId: widget.order.value!.orderId,
                                 recipientType: ParticipantType.Customer),

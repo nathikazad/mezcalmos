@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
@@ -358,6 +359,7 @@ class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
                 onTap: () {
                   Get.toNamed<void>(
                     getMessagesRoute(
+                        orderType: OrderType.Taxi,
                         chatId: order.orderId,
                         orderId: order.orderId,
                         recipientType: ParticipantType.Customer),

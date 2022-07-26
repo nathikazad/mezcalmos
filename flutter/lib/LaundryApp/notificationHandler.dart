@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() =>
@@ -128,8 +129,9 @@ Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
-        chatId: value['chatId'],
-      ),
+          chatId: value['chatId'],
+          orderLink: getLaundryOpOrderRoute(value['orderId']),
+          orderType: OrderType.Laundry),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
