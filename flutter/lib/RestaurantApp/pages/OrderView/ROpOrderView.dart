@@ -80,7 +80,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
             children: [
               // order status
               ROpOrderStatusCard(order: order.value!),
-
+              if (order.value!.isFinished) ROpRefundButton(),
               ROpOrderHandleButton(order: order.value!),
               ROpOrderEstTime(order: order.value!),
               ROpDriverCard(order: order.value!),
@@ -120,29 +120,25 @@ class _ROpOrderViewState extends State<ROpOrderView> {
       ),
     );
   }
+}
 
-  // Widget? _setReadyForDeliveryButton() {
-  //   if () {
-  //     return Container(
-  //       margin: const EdgeInsets.symmetric(horizontal: 3),
-  //       child: TextButton(
-  //           onPressed: (order.value!.status == LaundryOrderStatus.AtLaundry)
-  //               ? () {
-  //                 //  controller.setAsReadyForDelivery(order.value!.orderId);
-  //                 }
-  //               : null,
-  //           style: TextButton.styleFrom(
-  //               backgroundColor:
-  //                   (order.value!.status == LaundryOrderStatus.AtLaundry)
-  //                       ? primaryBlueColor
-  //                       : Colors.grey),
-  //           child: Container(
-  //             alignment: Alignment.center,
-  //             padding: const EdgeInsets.all(8),
-  //             child: Text("${_i18n()["orderReady"]}"),
-  //           )),
-  //     );
-  //   }
-  //   return null;
-  // }
+class ROpRefundButton extends StatelessWidget {
+  const ROpRefundButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      child: TextButton(
+          onPressed: () {},
+          style: TextButton.styleFrom(backgroundColor: Colors.black),
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(5),
+            child: Text("Refund customer"),
+          )),
+    );
+  }
 }

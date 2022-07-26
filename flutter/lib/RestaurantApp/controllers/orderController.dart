@@ -8,9 +8,9 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class ROpOrderController extends GetxController {
@@ -33,16 +33,11 @@ class ROpOrderController extends GetxController {
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .onValue
         .listen((DatabaseEvent event) {
-      mezDbgPrint(
-          "PAST ORDERS ======> the event value ------------> ${event.snapshot.value}");
-
       final List<RestaurantOrder> orders = [];
       if (event.snapshot.value != null) {
-        mezDbgPrint("the event value ------------> ${event.snapshot.value}");
         (event.snapshot.value as dynamic).keys.forEach((orderId) {
-          mezDbgPrint("-------------------->>>>>>>>>>Hndling Order : $orderId");
           final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
-          mezDbgPrint("Order Data ======================> $orderData");
+
           orders.add(RestaurantOrder.fromData(orderId, orderData));
         });
       }
@@ -61,8 +56,6 @@ class ROpOrderController extends GetxController {
         .onValue
         .listen((DatabaseEvent event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
-      mezDbgPrint(
-          "CURRENT ORDERS ======> the event value ------------> ${event.snapshot.value}");
 
       final List<RestaurantOrder> orders = [];
       if (event.snapshot.value != null) {

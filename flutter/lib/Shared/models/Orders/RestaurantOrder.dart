@@ -176,6 +176,7 @@ class RestaurantOrder extends DeliverableOrder {
     return status == RestaurantOrderStatus.CancelledByCustomer ||
         status == RestaurantOrderStatus.CancelledByAdmin;
   }
+
   //   String getRightChatId() {
   //   if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
   //       customerPickupDriverChatId != null) {
@@ -185,6 +186,9 @@ class RestaurantOrder extends DeliverableOrder {
   //   }
   //   return null;
   // }
+  bool get isFinished {
+    return isCanceled() || status == RestaurantOrderStatus.Delivered;
+  }
 
   @override
   bool inProcess() {

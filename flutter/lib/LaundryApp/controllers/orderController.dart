@@ -2,15 +2,14 @@ import 'dart:async';
 
 import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class OrderController extends GetxController {
@@ -32,21 +31,18 @@ class OrderController extends GetxController {
         .child(serviceProviderPastOrders(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
+        // ignore: avoid_annotating_with_dynamic
         .listen((dynamic event) {
-     
-
       final List<LaundryOrder> orders = [];
       if (event.snapshot.value != null) {
-        mezDbgPrint("the event value ------------> ${event.snapshot.value}");
         event.snapshot.value.keys.forEach((orderId) {
-     
           final dynamic orderData = event.snapshot.value[orderId];
-         
+
           orders.add(LaundryOrder.fromData(orderId, orderData));
         });
       }
       pastOrders.value = orders;
-       pastOrders.sort((DeliverableOrder a, DeliverableOrder b) =>
+      pastOrders.sort((DeliverableOrder a, DeliverableOrder b) =>
           a.orderTime.toLocal().compareTo(b.orderTime.toLocal()));
     }, onError: (error) {
       mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
@@ -60,10 +56,9 @@ class OrderController extends GetxController {
         .child(serviceProviderInProcessOrders(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
+        // ignore: avoid_annotating_with_dynamic
         .listen((dynamic event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
-      mezDbgPrint(
-          "CURRENT ORDERS ======> the event value ------------> ${event.snapshot.value}");
 
       final List<LaundryOrder> orders = [];
       if (event.snapshot.value != null) {

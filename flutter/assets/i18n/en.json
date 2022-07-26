@@ -764,6 +764,11 @@
             }
         },
         "widgets": {
+            "CreditCardInfo": {
+                "creditCardInfo": "Credit card info",
+                "cardType": "Card type",
+                "last4": "Last 4 digits"
+            },
             "ContactUsPopUp": {
                 "contactEmail": "Contact us with Email",
                 "contactWhatsapp": "Contact us with WhatsApp",

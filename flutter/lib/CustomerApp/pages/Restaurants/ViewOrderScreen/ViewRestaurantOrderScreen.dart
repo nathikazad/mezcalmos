@@ -16,9 +16,10 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/componen
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/widgets/CreditCardInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -193,6 +194,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               : notesWidget(order),
 
                           OrderSummaryCard(order: order.value!),
+                          if (order.value!.stripePaymentInfo != null)
+                            CreditCardInfo(
+                                paymentInfo: order.value!.stripePaymentInfo!),
 
                           //===============================>button cancel===========================
                           //  Expanded(child: Container()),
