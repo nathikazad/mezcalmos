@@ -723,6 +723,7 @@
                 "reconnecting": "Reconectando"
             },
             "MessagingScreen": {
+                "order": "Orden",
                 "writeMsgPlaceholder": "Escribe tu mensaje aqui ..."
             },
             "ViewNotifications": {

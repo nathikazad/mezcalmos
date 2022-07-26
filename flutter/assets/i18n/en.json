@@ -709,6 +709,7 @@
                 "reconnecting": "Reconnecting"
             },
             "MessagingScreen": {
+                "order": "Order",
                 "writeMsgPlaceholder": "Write your message here ..."
             },
             "ViewNotifications": {

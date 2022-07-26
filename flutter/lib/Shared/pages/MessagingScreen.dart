@@ -175,7 +175,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   child: Padding(
                     padding: EdgeInsets.only(right: 20),
                     child: Text(
-                      "View\nOrder",
+                      _i18n()['order'],
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.black),
                     ),
@@ -370,7 +370,7 @@ class SendMessageBox extends StatelessWidget {
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
-                      hintText: 'Message...' //_i18n()['namePlaceHolder'],
+                    hintText: _i18n()['writeMsgPlaceholder'],
                       ),
                   style: TextStyle(
                     color: Colors.black,
