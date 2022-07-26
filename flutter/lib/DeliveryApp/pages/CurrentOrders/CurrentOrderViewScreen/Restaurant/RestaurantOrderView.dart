@@ -250,6 +250,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
           );
         }
         // update position of our delivery Guy
+      if (order.dropoffDriver?.location != null)
         mapController.addOrUpdateUserMarker(
           latLng: LatLng(
             order.dropoffDriver!.location!.latitude,
@@ -283,6 +284,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
           );
         }
         // updating our delivery guy location
+      if (order.dropoffDriver?.location != null)
         mapController.addOrUpdateUserMarker(
           latLng: LatLng(
             order.dropoffDriver!.location!.latitude,
