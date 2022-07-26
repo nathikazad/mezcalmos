@@ -70,8 +70,7 @@ class MessageController extends GetxController {
           .toFirebaseFormattedString(),
       "timestamp": DateTime.now().toUtc().toString(),
       "chatId": chatId,
-      "orderId": orderId,
-      "orderType": orderType?.toFirebaseFormatString()
+      "orderId": orderId
     }).onError((Object? error, StackTrace stackTrace) {
       mezDbgPrint(stackTrace);
     });

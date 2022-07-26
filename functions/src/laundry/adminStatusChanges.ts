@@ -76,15 +76,13 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     linkUrl: orderUrl(ParticipantType.Customer, OrderType.Laundry, orderId)
   }
 
-  pushNotification(order.customer.id!, notification);
+  await pushNotification(order.customer.id!, notification);
 
-  pushNotification(order.customer.id!, notification).then(() => {
-    notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Laundry, orderId)
-    if (order.dropoffDriver)
-      pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
-    else if (order.pickupDriver)
-      pushNotification(order.pickupDriver.id!, notification, ParticipantType.DeliveryDriver);
-  });
+  notification.linkUrl = orderUrl(ParticipantType.DeliveryDriver, OrderType.Laundry, orderId)
+  if (order.dropoffDriver)
+    pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
+  else if (order.pickupDriver)
+    pushNotification(order.pickupDriver.id!, notification, ParticipantType.DeliveryDriver);
 
 
 
@@ -112,7 +110,7 @@ export const setWeight = functions.https.onCall(async (data, context) => {
     return {
       ok: false,
       error: {
-      status: ServerResponseStatus.Error,
+        status: ServerResponseStatus.Error,
         errorMessage: `Order weight can only be changed when status is at laundry`,
         errorCode: "orderNotAtLaundry"
       }

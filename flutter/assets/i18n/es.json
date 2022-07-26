@@ -411,9 +411,9 @@
                 "LaundryCurrentOrderView": {
                     "Components": {
                         "CustomerLaundryOrderEst": {
-                            "pickup": "Levantar tiempo:",
-                            "delivery": "Entrega tiempo:",
-                            "laundryReady": "acabado de lavandería tiempo:",
+                            "pickup": "Tiempo de recoger",
+                            "delivery": "Tiempo de entregar",
+                            "laundryReady": "Tiempo de estar listo",
                             "estTimes": "Tiempos estimados"
                         },
                         "LaundryOrderDriverCard": {
@@ -577,14 +577,14 @@
             "taxiFwdSuccessBody": "Taxi local encontró ",
             "taxiFwdCancelTitle": "Reenvío Cancelado ",
             "taxiFwdCancelBody": "Tu orden ha sido cancelado ",
-            "laundryOtwPickupTitle": "Recogida en el camino",
-            "laundryOtwPickupBody": "Conductor en la forma de recoger su pedido.",
+            "laundryOtwPickupTitle": "Conductor en el camino",
+            "laundryOtwPickupBody": "Conductor en la camina de recoger su pedido.",
             "laundryPickedTitle": "Pedido Recogido",
             "laundryPickedBody": "El orden es recogido con éxito",
             "laundryAtLaundryTitle": "En la lavandería",
             "laundryAtLaundryBody": "Tu orden es recibido por la lavandería.",
             "laundryReadyForDeliveryTitle": "Listo para la entrega",
-            "laundryReadyForDeliveryBody": "Usted ordena está listo para la entrega",
+            "laundryReadyForDeliveryBody": "Tu orden está listo para la entrega",
             "laundryOtwDeliveryTitle": "Entrega en el camino",
             "laundryOtwDeliveryBody": "Tu orden está en camino",
             "laundryDeliveredTitle": "Entregada",

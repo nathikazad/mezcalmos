@@ -132,7 +132,8 @@ async function changeStatus(data: any, newStatus: LaundryOrderStatus, auth?: Aut
     linkUrl: orderUrl(ParticipantType.Customer, OrderType.Laundry, orderId)
   }
 
-  pushNotification(order.customer.id!, notification);
+  if (order.status != LaundryOrderStatus.OtwPickupFromLaundry)
+    pushNotification(order.customer.id!, notification);
 
   if (newStatus == LaundryOrderStatus.Delivered) {
     await finishOrder(order, orderId);
