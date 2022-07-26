@@ -49,7 +49,7 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
           time: notificationForQueue.timestamp,
           notificationType: NotificationType.NewMessage,
           notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
-          orderType: notificationForQueue.orderType ?? null
+          orderType: chatData.orderType
         },
         background: {
           en: {

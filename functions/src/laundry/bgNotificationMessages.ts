@@ -27,11 +27,11 @@ export const LaundryOrderStatusChangeMessages:
   [LaundryOrderStatus.PickedUpFromCustomer]: {
     [Language.EN]: {
       title: "Your laundry has been picked up",
-      body: "Your laundry is on the way to the facility."
+      body: "Your laundry is on the way to the laundry."
     },
     [Language.ES]: {
       title: "Tu ropa ha sido recogida",
-      body: "Tu ropa está en camino a la instalación."
+      body: "Tu ropa está en camino a la lavaderia."
     }
   },
   [LaundryOrderStatus.AtLaundry]: {
