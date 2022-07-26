@@ -40,7 +40,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
           extra: {
             "chatId": event.data['chatId'],
             "agoraToken": event.data['agoraToken'],
-            "uid": event.data['uid'],
+            "calleeuid": event.data['calleeuid'],
           },
         );
         break;
@@ -171,7 +171,7 @@ class BackgroundNotificationsController extends GetxController {
                 extra: <String, dynamic>{
                   "chatId": message.data['chatId'],
                   "agoraToken": message.data['agoraToken'],
-                  "uid": message.data['uid'],
+                  "calleeuid": message.data['calleeuid'],
                 });
           }
         } else {

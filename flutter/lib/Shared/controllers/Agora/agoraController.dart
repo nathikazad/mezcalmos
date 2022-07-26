@@ -202,20 +202,20 @@ class Sagora extends GetxController {
             joinChannel(
               token: event?.body?['extra']['agoraToken'],
               channelId: event?.body?['extra']['chatId'],
-              uid: 5774112,
-              //  int.parse(
-              //   event?.body?['extra']['uid'],
-              // ),
+              uid: //5774112,
+                  int.parse(
+                event!.body!['extra']['calleeuid'],
+              ),
             );
 
             // Pushing to call screen + awaiting in case we wanna return with value.
             // ignore: unawaited_futures
             Get.toNamed<void>(kAgoraCallScreen, arguments: <String, dynamic>{
-              "chatId": event?.body?['extra']?['chatId'],
+              "chatId": event.body?['extra']?['chatId'],
               "talkingTo": Participant(
-                image: event?.body?['avatar'],
-                name: event?.body?['nameCaller'],
-                participantType: event!.body['extra']['callerType']
+                image: event.body?['avatar'],
+                name: event.body?['nameCaller'],
+                participantType: event.body['extra']['callerType']
                     .toString()
                     .toParticipantType(),
                 // wrong actual user id, it's more like an agora generated id
