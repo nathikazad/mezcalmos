@@ -33,7 +33,7 @@ class StripePaymentInfo {
 }
 
 num getStripeCost(num totalCost) {
-  return (totalCost + 3 + (totalCost * 0.036) - totalCost).ceil();
+  return ((3 + totalCost * 0.036) * 1.16).ceil();
 }
 
 enum CaptureMethod { Automatic, Manual }

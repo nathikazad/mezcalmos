@@ -18,6 +18,7 @@ export interface StripeInfo {
   payoutsEnabled: boolean;
   detailsSubmitted: boolean;
   requirements: Array<string>;
+  email: string | null;
 }
 
 export type StripeIds = Record<string, string>;
