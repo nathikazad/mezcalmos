@@ -38,7 +38,7 @@ class BolgController extends GetxController {
               content: val["content"],
               authorName: val["author"] ?? "Mezcalmos",
               img: val["image"] ??
-                  "https://images.pexels.com/photos/1591056/pexels-photo-1591056.jpeg",
+                  "https://firebasestorage.googleapis.com/v0/b/mezcalmos-staging.appspot.com/o/webApp%2FnathikBlogImg.jpeg?alt=media&token=971f4974-51c2-4a87-bc6d-7634b1c5a263",
               durationOfReding: "Read in 15 minutes"));
         });
       } catch (e) {

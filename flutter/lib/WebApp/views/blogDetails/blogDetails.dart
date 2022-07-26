@@ -163,6 +163,7 @@ class _BlogDetailsState extends State<BlogDetails> {
                                     height: 20,
                                   ),
                                   Container(
+                                    alignment: Alignment.center,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: MezCalmosResizer
                                             .getWepPageHorizontalPadding(

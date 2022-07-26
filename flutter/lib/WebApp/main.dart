@@ -17,6 +17,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/WebApp/controllers/blogController.dart';
 import 'package:mezcalmos/WebApp/routes/AppRoutes.dart';
+import 'package:mezcalmos/WebApp/services/theme/webAppTheme.dart';
 import 'package:mezcalmos/WebApp/views/ErrorViews/unknownRoutePage.dart';
 import 'package:sizer/sizer.dart';
 import '../Shared/helpers/PrintHelper.dart';
@@ -60,7 +61,7 @@ class _AppStartState extends State<AppStart> {
     return GetMaterialApp(
       unknownRoute: GetPage(name: '/notfound', page: () => UnknownRoutePage()),
       initialRoute: "/",
-      theme: CustomerAppTheme.lightTheme,
+      theme: WebAppTheme.lightTheme,
       getPages: AppRoutes.getRoutes,
     );
   }
