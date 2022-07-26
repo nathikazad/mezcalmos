@@ -30,6 +30,11 @@ extension ParseStripeStatusoString on StripeStatus {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
+
+  String toNormalString() {
+    final String str = toString().split('.').last;
+    return str[0].toUpperCase() + str.substring(1);
+  }
 }
 
 extension ParseStringToStripeStatus on String {
@@ -45,6 +50,7 @@ class StripeInfo {
   bool chargesEnabled;
   bool payoutsEnabled;
   bool detailsSubmitted;
+  String? email;
   List<String> requirements;
   StripeInfo(
       {required this.id,
@@ -52,6 +58,7 @@ class StripeInfo {
       this.chargesEnabled = false,
       this.payoutsEnabled = false,
       this.detailsSubmitted = false,
+      this.email,
       this.requirements = const <String>[]});
 }
 
@@ -76,19 +83,47 @@ class PaymentInfo {
           false;
     });
     StripeInfo? stripe;
-    if (acceptedPayments[PaymentType.Card] ?? false)
+    if (acceptedPayments[PaymentType.Card] == true && data["stripe"] != null) {
+      final List<String> requis = [];
+      data["stripe"]?["requirements"]?.forEach((req) {
+        requis.add(req.toString());
+      });
       stripe = StripeInfo(
           id: data["stripe"]["id"],
           status: data["stripe"]["status"].toString().toStripeStatus(),
-          payoutsEnabled: data["stripe"]["payoutsEnabled"],
-          detailsSubmitted: data["stripe"]["detailsSubmitted"],
-          chargesEnabled: data["stripe"]["chargesEnabled"],
-          requirements: data["stripe"]["requirements"]);
+          payoutsEnabled: data["stripe"]["payoutsEnabled"] ?? false,
+          detailsSubmitted: data["stripe"]["detailsSubmitted"] ?? false,
+          chargesEnabled: data["stripe"]["chargesEnabled"] ?? false,
+          email: data["stripe"]["email"],
+          requirements: requis);
+    }
     return PaymentInfo(acceptedPayments: acceptedPayments, stripe: stripe);
   }
 
   bool get acceptCard {
     return acceptedPayments[PaymentType.Card] == true &&
         stripe?.status == StripeStatus.IsWorking;
+  }
+
+  bool get detailsSubmitted {
+    return stripe?.detailsSubmitted ?? false;
+  }
+
+  bool get chargesEnabled {
+    return stripe?.chargesEnabled ?? false;
+  }
+
+  bool get payoutsEnabled {
+    return stripe?.payoutsEnabled ?? false;
+  }
+
+  List<String> get getReqs {
+    return stripe?.requirements ?? [];
+  }
+
+  bool get shouldFixPayouts {
+    return stripe?.chargesEnabled == true &&
+        stripe?.detailsSubmitted == true &&
+        stripe?.payoutsEnabled == false;
   }
 }

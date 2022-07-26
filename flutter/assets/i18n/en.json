@@ -154,6 +154,7 @@
                             "orderSummary": "Order Summary",
                             "orderCost": "Order Cost",
                             "deliveryCost": "Delivery Cost",
+                            "stripeFees": "Card fees",
                             "totalCost": "Total Cost",
                             "deliveryLocation": "Delivery Location"
                         },
@@ -259,6 +260,7 @@
                         "OrderSummaryCard": {
                             "totalCost": "Total Cost",
                             "orderSummary": "Summary",
+                            "stripeFees": "Card fees",
                             "orderCost": "Order Cost",
                             "deliveryCost": "Delivery Cost",
                             "free": "Free",

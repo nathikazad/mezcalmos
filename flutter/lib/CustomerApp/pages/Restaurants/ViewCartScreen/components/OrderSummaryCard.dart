@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
@@ -17,10 +18,14 @@ class OrderSummaryCard extends StatelessWidget {
     required this.deliveryCost,
     required this.setLocationCallBack,
     required this.totalCost,
+    this.stripeFees,
+    required this.showStripeFees,
   }) : super(key: key);
 
   final String orderCost;
   final num deliveryCost;
+  final num? stripeFees;
+  final bool showStripeFees;
   final String totalCost;
   final void Function({Location? location})? setLocationCallBack;
 
@@ -91,6 +96,31 @@ class OrderSummaryCard extends StatelessWidget {
                 ],
               ),
             ),
+            //=======================Stripe fees :=============== //
+            if (stripeFees != null && showStripeFees)
+              Container(
+                padding: EdgeInsets.only(
+                  bottom: 10,
+                ),
+                width: Get.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        child: Text("${_i18n()["stripeFees"]} :",
+                            style: txt.bodyText2),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(stripeFees!.toPriceString()),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             //=======================Total cost : ==================
             Container(
               padding: EdgeInsets.only(bottom: 10, top: 3),

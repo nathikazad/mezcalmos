@@ -42,35 +42,53 @@ class OrderSummaryCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          '${_i18n()["orderCost"]}',
-                          style: txt.bodyText2,
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            '${_i18n()["orderCost"]}',
+                            style: txt.bodyText2,
+                          ),
+                          Text('\$' + (order.itemsCost).toString(),
+                              style: txt.bodyText2),
+                        ],
+                      ),
+                    ),
+                    if (order.stripePaymentInfo != null)
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              '${_i18n()["stripeFees"]}',
+                              style: txt.bodyText2,
+                            ),
+                            // TODO @m66are remove the null operand
+                            Text(
+                                order.stripePaymentInfo!.stripeFees
+                                    .toPriceString(),
+                                style: txt.bodyText2),
+                          ],
                         ),
-                        Text('\$' + (order.itemsCost).toString(),
-                            style: txt.bodyText2),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          '${_i18n()["deliveryCost"]}',
-                          style: txt.bodyText2,
-                        ),
-                        Flexible(
-                            child: ShippingCostComponent(
-                          shippingCost: order.shippingCost,
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
+                      ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            '${_i18n()["deliveryCost"]}',
+                            style: txt.bodyText2,
+                          ),
+                          Flexible(
+                              child: ShippingCostComponent(
+                            shippingCost: order.shippingCost,
+                          ))
+                        ],
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,8 +98,7 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyText1,
                         ),
                         Text(
-                          (order.itemsCost + order.shippingCost)
-                              .toPriceString(),
+                          order.cost.toPriceString(),
                           style: txt.bodyText1!.copyWith(fontSize: 14.sp),
                         ),
                       ],

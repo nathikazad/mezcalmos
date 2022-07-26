@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,10 +8,14 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dar
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
@@ -20,6 +25,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
 class ROpEditInfoController {
   RestaurantInfoController restaurantInfoController =
       Get.find<RestaurantInfoController>();
+  StreamSubscription? restListner;
   final Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   TextEditingController restaurantNameTxt = TextEditingController();
   final Rxn<String> newImageUrl = Rxn();
@@ -36,11 +42,20 @@ class ROpEditInfoController {
   final Rxn<Schedule> oldSchedule = Rxn();
   final RxBool showStripe = RxBool(false);
   String? stripeUrl;
+  final RxBool showSetupStripe = RxBool(false);
+  final RxBool showStripeReqs = RxBool(false);
+  RxString currentUrl = RxString("");
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
 
   void init() {
     restaurant.value = restaurantInfoController.restaurant.value;
+    restListner =
+        restaurantInfoController.restaurant.stream.listen((Restaurant? event) {
+      if (event != null) {
+        restaurant.value = event;
+      }
+    });
 
     if (restaurant.value != null) {
       restaurantNameTxt.text = restaurant.value?.info.name ?? '';
@@ -107,14 +122,97 @@ class ROpEditInfoController {
     }
   }
 
-  void showPaymentSetup({required String url}) {
-    stripeUrl = url;
-    showStripe.value = true;
+  // stripe and payments methods //
+  void checkStripe() {
+    if (restaurant.value!.paymentInfo.stripe != null &&
+        restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+            true) {
+      updateServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+          .then((ServerResponse value) {
+        _checkStripeDetails();
+      });
+    }
+  }
+
+  void handleCardCheckBoxClick() {
+    if (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+        true) {
+      restaurantInfoController.setCardPayment(false);
+    } else {
+      restaurantInfoController.setCardPayment(true);
+    }
+  }
+
+  void handleStripeUrlChanges(String url) {
+    if (url == "https://example.com/return") {
+      _returnUrlHandler();
+    } else if (url == "https://example.com/reauth") {
+      _reauthUrlHandler();
+    }
+  }
+
+  void _reauthUrlHandler() {
+    onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+        .then((ServerResponse value) {
+      if (value.success) {
+        stripeUrl = value.data["url"];
+        showStripe.value = true;
+      }
+    });
+  }
+
+  void _returnUrlHandler() {
+    showStripe.value = false;
+    updateServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+        .then((ServerResponse value) {
+      _checkStripeDetails();
+    });
+  }
+
+  void _checkStripeDetails() {
+    if (restaurant.value!.paymentInfo.stripe?.detailsSubmitted == false) {
+      showSetupStripe.value = true;
+    } else if (restaurant.value!.paymentInfo.stripe?.chargesEnabled == false ||
+        restaurant.value!.paymentInfo.stripe?.payoutsEnabled == false) {
+      showStripeReqs.value = true;
+    }
+    mezDbgPrint("Checking boooools ");
+    mezDbgPrint(
+        "details ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.detailsSubmitted}");
+    mezDbgPrint(
+        "charges ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.chargesEnabled}");
+    mezDbgPrint(
+        "payouts ==========>>>>> ${restaurant.value!.paymentInfo.stripe?.payoutsEnabled}");
+  }
+
+  void showPaymentSetup() {
+    onboardServiceProvider(restaurant.value!.info.id, OrderType.Restaurant)
+        .then((ServerResponse value) {
+      if (value.success) {
+        stripeUrl = value.data["url"];
+        showStripe.value = true;
+      }
+    });
   }
 
   void closePaymentSetup() {
     stripeUrl = null;
     showStripe.value = false;
+  }
+
+  bool get showSetupBtn {
+    return (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+                true &&
+            restaurant.value!.paymentInfo.stripe == null) ||
+        (restaurant.value!.paymentInfo.acceptedPayments[PaymentType.Card] ==
+                true &&
+            (!restaurant.value!.paymentInfo.detailsSubmitted ||
+                !restaurant.value!.paymentInfo.chargesEnabled));
+  }
+
+  bool get showStatusIcon {
+    return (restaurant.value!.paymentInfo.stripe?.requirements.isNotEmpty ==
+        true);
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {
@@ -154,9 +252,10 @@ class ROpEditInfoController {
     }
   }
 
-  Future<void> dispose() async {
+  void dispose() {
     restaurant.close();
     restaurantNameTxt.clear();
+    restListner?.cancel();
 
     newLocation.close();
     newImageUrl.close();

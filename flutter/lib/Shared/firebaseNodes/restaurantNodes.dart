@@ -72,3 +72,15 @@ String currentSpecialsNode({required String uid}) {
 String pastSpecialsNode({required String uid}) {
   return restuarantAuthNode(uid: uid) + "/menu/specials/past";
 }
+
+String detailsNode({required String uid}) {
+  return restuarantAuthNode(uid: uid) + "/details/";
+}
+
+String payemntInfoNode({required String uid}) {
+  return detailsNode(uid: uid) + "/paymentInfo/";
+}
+
+String acceptedPaymentNode({required String uid}) {
+  return payemntInfoNode(uid: uid) + "/acceptedPayments/";
+}

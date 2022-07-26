@@ -1,9 +1,9 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:flutter/material.dart';
 
 class StripePaymentInfo {
   String id;
@@ -21,7 +21,7 @@ class StripePaymentInfo {
       this.expMonth,
       this.last4});
 
-  factory StripePaymentInfo.fromJson(dynamic data) {
+  factory StripePaymentInfo.fromJson(data) {
     return StripePaymentInfo(
         id: data["id"],
         stripeFees: data["stripeFees"],
@@ -33,7 +33,7 @@ class StripePaymentInfo {
 }
 
 num getStripeCost(num totalCost) {
-  return totalCost + 3 + (totalCost * 0.036) - totalCost;
+  return (totalCost + 3 + (totalCost * 0.036) - totalCost).ceil();
 }
 
 enum CaptureMethod { Automatic, Manual }
@@ -75,7 +75,7 @@ Future<ServerResponse> getPaymentIntent(
 }
 
 Future<void> acceptPayment(
-    {required dynamic paymentIntentData, required String merchantName}) async {
+    {required paymentIntentData, required String merchantName}) async {
   Stripe.publishableKey = paymentIntentData['publishableKey'];
   Stripe.merchantIdentifier = merchantName;
   Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];

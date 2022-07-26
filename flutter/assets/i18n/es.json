@@ -157,6 +157,7 @@
                             "orderSummary": "Resumen de la orden",
                             "orderCost": "Costo de la orden",
                             "deliveryCost": "Costo de envío",
+                            "stripeFees": "Tarifas de tarjeta",
                             "totalCost": "Costo Total",
                             "deliveryLocation": "Lugar De Entrega"
                         },
@@ -266,6 +267,7 @@
                             "deliveryCost": "Costo de envío",
                             "free": "Gratis",
                             "total": "Total",
+                            "stripeFees": "Tarifas de tarjeta",
                             "orderSummary": "Resumen",
                             "orderCost": "Costo de la orden",
 

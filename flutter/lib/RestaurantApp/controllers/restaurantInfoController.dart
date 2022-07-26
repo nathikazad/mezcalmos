@@ -384,6 +384,14 @@ class RestaurantInfoController extends GetxController {
     await newItemNode.set(item.toJson());
   }
 
+  // ----------------------------------------------------- Stripe ----------------------------------------------------- //
+  Future<void> setCardPayment(bool value) async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(acceptedPaymentNode(uid: restaurantId) + "/card/")
+        .set(value);
+  }
+
   @override
   void onClose() {
     mezDbgPrint(
