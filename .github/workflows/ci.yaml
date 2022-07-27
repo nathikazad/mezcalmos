@@ -53,7 +53,13 @@ jobs:
         run: |
           chmod +x launcher/launcher.py
           python3 launcher/launcher.py app=CustomerApp env=prod --build=apk
-      - name: Reealsing on pushed tags.
+  make_artifact:
+    name: Flutter Artifacts
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Releasing on pushed tags.
+        working-directory: ./flutter
         uses: ncipollo/release-action@v1.10.0
         with:
-         artifacts: "flutter/build/app/outputs/flutter-apk/*.apk"
+         artifacts: "build/app/outputs/flutter-apk/*.apk"
