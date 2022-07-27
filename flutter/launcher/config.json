@@ -20,7 +20,7 @@
                 "lmode": "prod"
             }
         },
-        "launcher.xml": "../android/app/src/main/res/values/launcher.xml",
+        "launcher.xml": "android/app/src/main/res/values/launcher.xml",
         "launcherPackageProperties": "../android/launcherPackage.properties",
         "appGoogleServices": "../android/app/google-services.json",
         "appAppleServices": "../ios/Runner/GoogleService-Info.plist",

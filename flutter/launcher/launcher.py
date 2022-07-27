@@ -188,7 +188,7 @@ class Launcher:
         self.__set_up_icons()
 
         # Writing Valid launcher.xml
-        _launcherXmlFile = self.conf['settings']['launcher.xml']
+        _launcherXmlFile = CURDIR_ABS_PATH+self.conf['settings']['launcher.xml']
         _outputAppName = self.conf['apps'][self.user_args["app"]]['packages'][self.user_args['lmode']]['appName'];
         _appPackageName = self.conf['apps'][self.user_args["app"]]['packages'][self.user_args['lmode']]['packageName'];
 
