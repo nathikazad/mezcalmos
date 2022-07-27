@@ -27,10 +27,11 @@ export function chatUrl(
   let str = `/messages/${chatId}`;
   if (orderId != null)
     str += `?orderId=${orderId}`
-  if (orderType != null && participantType != null)
+  if (orderId != null && orderType != null && participantType != null)
     str += `&orderLink=${orderUrl(participantType, orderType, orderId!)}`
-  if (participantType == ParticipantType.Customer)
-    str += `&recipientType=${orderType}`;
+  if (participantType != null)
+    str += `&recipientType=${participantType}`;
+
   return str
 }
 

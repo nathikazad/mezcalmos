@@ -76,7 +76,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                   Flexible(
                     child: Container(
                       alignment: Alignment.bottomCenter,
-                      margin: const EdgeInsets.only(bottom: 3),
+                      //  margin: const EdgeInsets.only(bottom: 3),
                       child: Text(
                         (showInfo)
                             ? "${_i18n()["info"]}"
@@ -93,7 +93,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     Container(
                       alignment: Alignment.bottomCenter,
                       margin:
-                          const EdgeInsets.only(left: 5, right: 5, bottom: 3),
+                          const EdgeInsets.only(left: 5, right: 5, bottom: 0),
                       child: InkWell(
                           onTap: onInfoTap,
                           child: Icon(
@@ -196,7 +196,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
               shape: BoxShape.rectangle,
-              color: SecondaryLightBlueColor),
+              color: secondaryLightBlueColor),
           tabs: List.generate(restaurant.getCategories.length, (int index) {
             return Tab(
               text: restaurant.getCategories[index].name?[userLanguage],

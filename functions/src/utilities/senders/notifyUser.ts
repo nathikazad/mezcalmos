@@ -14,7 +14,7 @@ export async function pushNotification(
   foreground.push({
     particpantType: particpantType,
     userId: userId,
-    notification: notification.foreground,
+    notification: { ...notification.foreground, linkUrl: notification.linkUrl },
     linkUrl: notification.linkUrl
   });
   let subscription: NotificationInfo;

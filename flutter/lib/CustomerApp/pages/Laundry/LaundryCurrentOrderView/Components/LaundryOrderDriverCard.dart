@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
@@ -68,6 +69,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                         Get.toNamed(getMessagesRoute(
                             chatId: _getRightChatId()!,
                             orderId: order.orderId,
+                            orderType: OrderType.Laundry,
                             recipientType: ParticipantType.DeliveryDriver));
                       })
               ],

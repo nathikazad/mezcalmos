@@ -411,9 +411,9 @@
                 "LaundryCurrentOrderView": {
                     "Components": {
                         "CustomerLaundryOrderEst": {
-                            "pickup": "Levantar",
-                            "delivery": "Entrega",
-                            "laundryReady": "acabado de lavandería",
+                            "pickup": "Tiempo de recoger",
+                            "delivery": "Tiempo de entregar",
+                            "laundryReady": "Tiempo de estar listo",
                             "estTimes": "Tiempos estimados"
                         },
                         "LaundryOrderDriverCard": {
@@ -469,7 +469,7 @@
                             "fixedRate": "Costo por kilo",
                             "orderWeight": "Peso de pedido",
                             "minimumCost": "Costo Minimo",
-                            "totalCost": "Costo Total",
+                            "total": "Total",
                             "laundryPricingNote": "El peso del pedido y el costo total se actualizarán una vez que el servicio de lavandería reciba su pedido.",
                             "item": "Articulo",
                             "perKilo": "Por kilo",
@@ -577,14 +577,14 @@
             "taxiFwdSuccessBody": "Taxi local encontró ",
             "taxiFwdCancelTitle": "Reenvío Cancelado ",
             "taxiFwdCancelBody": "Tu orden ha sido cancelado ",
-            "laundryOtwPickupTitle": "Recogida en el camino",
-            "laundryOtwPickupBody": "Conductor en la forma de recoger su pedido.",
+            "laundryOtwPickupTitle": "Conductor en el camino",
+            "laundryOtwPickupBody": "Conductor en la camina de recoger su pedido.",
             "laundryPickedTitle": "Pedido Recogido",
             "laundryPickedBody": "El orden es recogido con éxito",
             "laundryAtLaundryTitle": "En la lavandería",
             "laundryAtLaundryBody": "Tu orden es recibido por la lavandería.",
             "laundryReadyForDeliveryTitle": "Listo para la entrega",
-            "laundryReadyForDeliveryBody": "Usted ordena está listo para la entrega",
+            "laundryReadyForDeliveryBody": "Tu orden está listo para la entrega",
             "laundryOtwDeliveryTitle": "Entrega en el camino",
             "laundryOtwDeliveryBody": "Tu orden está en camino",
             "laundryDeliveredTitle": "Entregada",
@@ -692,7 +692,13 @@
                     "mustSetUserNameError": "Por favor, ponga su primer nombre.",
                     "mustSetUserImgError": "Por favor, sube una imagen.",
                     "nameMustBeLettersOnly": "Tu primer nombre solo debe tener letras.",
-                    "nameMustBeFourLettersOrMore": "Tu nombre debe tener al menos 4 letras."
+                    "nameMustBeFourLettersOrMore": "Tu nombre debe tener al menos 4 letras.",
+                    "deleteAccount": "Borrar cuenta",
+                    "deleteTitle": "¡Confirme la eliminación de la cuenta!",
+                    "deletePrBtn": "¡Sí, eliminar!",
+                    "deleteScBtn": "Cancelar",
+                    "deleteHelper": "Haga clic en SÍ Eliminará permanentemente su cuenta, ¿está seguro?"
+
                 },
                 "UserProfileWidgets": {
                     "namePlaceHolder": "Ponga su primer nombre",
@@ -717,6 +723,7 @@
                 "reconnecting": "Reconectando"
             },
             "MessagingScreen": {
+                "order": "Orden",
                 "writeMsgPlaceholder": "Escribe tu mensaje aqui ..."
             },
             "ViewNotifications": {

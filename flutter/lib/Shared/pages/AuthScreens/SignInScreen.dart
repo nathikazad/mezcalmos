@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:sizer/sizer.dart';
@@ -124,10 +123,7 @@ class SignIn extends GetWidget<AuthController> {
             clickedLogin.value = true;
             controller
                 .signInWithApple()
-                .onError((_, __) => clickedLogin.value = false)
                 .whenComplete(() => clickedLogin.value = false);
-
-            // clickedLogin.value = false;
           },
           style: TextButton.styleFrom(
               backgroundColor: Colors.black,
@@ -189,7 +185,6 @@ class SignIn extends GetWidget<AuthController> {
             lmode != AppLaunchMode.dev
                 ? controller
                     .signInWithFacebook()
-                    .onError((_, __) => clickedLogin.value = false)
                     .whenComplete(() => clickedLogin.value = false)
                 : await Get.defaultDialog<dynamic>(
                     title: "Choose Test User",

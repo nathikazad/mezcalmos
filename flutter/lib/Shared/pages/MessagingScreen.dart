@@ -7,11 +7,8 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -22,10 +19,9 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -40,6 +36,7 @@ class MessagingScreen extends StatefulWidget {
 // TODO : REFACTORING !
 class _MessagingScreenState extends State<MessagingScreen> {
   late final String? orderLink;
+  late final OrderType? orderType;
   late final String? orderId;
   late final String chatId;
   late final Sagora sagora;
@@ -68,6 +65,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     chatId = Get.parameters['chatId']!;
     orderLink = Get.parameters['orderLink'];
     orderId = Get.parameters['orderId'];
+    orderType = Get.parameters['orderType']?.toString().toOrderType();
     if (Get.parameters['recipientId'] != null)
       recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {
@@ -76,18 +74,21 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     controller.clearMessageNotifications(chatId: chatId);
     mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
-    if (controller.chat.value == null) {
-      controller.chat.stream.first.then((_) {
-        setState(() {
-          isChatLoaded = true;
-        });
-      });
-    } else
-      setState(() {
-        isChatLoaded = true;
-      });
+    controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
+    setState(() {
+      isChatLoaded = true;
+    });
+    // if (controller.chat.value == null) {
+    //   controller.chat.stream.first.then((_) {
+    //     setState(() {
 
-    sagora = Get.put(Sagora());
+    //       isChatLoaded = true;
+    //     });
+    //   });
+    // } else
+    //   setState(() {
+    //     isChatLoaded = true;
+    //   });
     super.initState();
   }
 
@@ -106,95 +107,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
   RxString _typedMsg = "".obs;
   // RxBool clickedCall = false.obs;
 
-  Widget singleChatComponent({
-    required String message,
-    String? time,
-    required bool isMe,
-    // required BuildContext parentContext,
-    String? userImage,
-  }) =>
-      Container(
-        alignment: !isMe ? Alignment.centerLeft : Alignment.centerRight,
-        padding: const EdgeInsets.all(5.0),
-        child: Wrap(
-            alignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
-            runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            textDirection: !isMe ? TextDirection.ltr : TextDirection.rtl,
-            spacing: 10,
-            clipBehavior: Clip.none,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border:
-                        Border.all(color: Colors.grey.shade200, width: 0.5)),
-                child: CircleAvatar(
-                  radius: 23,
-                  backgroundColor: Colors.grey.shade200,
-                  backgroundImage: mLoadImage(
-                          url: !isMe
-                              ? userImage
-                              : _authController.fireAuthUser?.photoURL,
-                          assetInCaseFailed: aDefaultAvatar)
-                      .image,
-                ),
-              ),
-              Wrap(
-                spacing: 5,
-                direction: Axis.vertical,
-                runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
-                children: <Widget>[
-                  Container(
-                      constraints: BoxConstraints(
-                          maxWidth: Get.width - 100, minWidth: 50),
-                      padding: EdgeInsets.only(
-                          left: 16, top: 8, bottom: 8, right: 16),
-                      decoration: BoxDecoration(
-                          color: !isMe
-                              ? Color.fromRGBO(225, 228, 255, 1)
-                              //? Theme.of(parentContext).primaryColorLight
-                              : Color.fromRGBO(103, 121, 254, 1),
-                          borderRadius: !isMe
-                              ? BorderRadius.only(
-                                  topLeft: Radius.zero,
-                                  topRight: Radius.circular(30),
-                                  bottomRight: Radius.circular(30),
-                                  bottomLeft: Radius.circular(20))
-                              : BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  topRight: Radius.zero,
-                                  bottomRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(30))),
-                      child: Text(
-                        message,
-                        softWrap: true,
-                        style: TextStyle(
-                          fontFamily: "Nunito",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                          color: isMe ? Colors.white : Colors.black,
-                        ),
-                      )),
-                  time != null
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
-                          child: Text(
-                            time,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Nunito",
-                              fontSize: 12,
-                              color: Color.fromRGBO(120, 120, 120, 1),
-                            ),
-                          ),
-                        )
-                      : SizedBox(),
-                ],
-              ),
-            ]),
-      );
-
   void scrollDown({Duration? mezChatScrollDuration}) {
     Timer(mezChatScrollDuration ?? Duration(milliseconds: 200), () {
       if (_listViewScrollController.hasClients)
@@ -206,29 +118,28 @@ class _MessagingScreenState extends State<MessagingScreen> {
     });
   }
 
+  void _fillCallBack() {
+    chatLines.assignAll(controller.chat.value!.messages.map(
+      (Message message) {
+        return singleChatComponent(
+          message: message.message,
+          time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
+          isMe: message.userId == _authController.user!.id,
+          userImage: controller.chat.value!
+              .getParticipant(message.participantType, message.userId)
+              ?.image,
+        );
+      },
+    ));
+    scrollDown();
+  }
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       scrollDown(mezChatScrollDuration: timeStamp);
     });
-    void _fillCallBack() {
-      chatLines.assignAll(controller.chat.value!.messages.map(
-        (Message message) {
-          return singleChatComponent(
-            message: message.message,
-            time:
-                intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
-            isMe: message.userId == _authController.user!.id,
-            userImage: controller.chat.value!
-                .getParticipant(message.participantType, message.userId)
-                ?.image,
-          );
-        },
-      ));
-      scrollDown();
-    }
 
-    controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 253, 249, 249),
       appBar: AppBar(
@@ -240,10 +151,14 @@ class _MessagingScreenState extends State<MessagingScreen> {
               width: 30,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                gradient: LinearGradient(colors: [
-                  Color.fromARGB(255, 97, 127, 255),
-                  Color.fromARGB(255, 198, 90, 252),
-                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 97, 127, 255),
+                    Color.fromARGB(255, 198, 90, 252),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
               child: Icon(
                 Icons.arrow_back_ios_rounded,
@@ -442,6 +357,95 @@ class _MessagingScreenState extends State<MessagingScreen> {
       mezDbgPrint("AGORA :: PERMISSIONS :: NOT :: DONE ");
     }
   }
+
+  Widget singleChatComponent({
+    required String message,
+    String? time,
+    required bool isMe,
+    // required BuildContext parentContext,
+    String? userImage,
+  }) =>
+      Container(
+        alignment: !isMe ? Alignment.centerLeft : Alignment.centerRight,
+        padding: const EdgeInsets.all(5.0),
+        child: Wrap(
+            alignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
+            runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
+            crossAxisAlignment: WrapCrossAlignment.start,
+            textDirection: !isMe ? TextDirection.ltr : TextDirection.rtl,
+            spacing: 10,
+            clipBehavior: Clip.none,
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border:
+                        Border.all(color: Colors.grey.shade200, width: 0.5)),
+                child: CircleAvatar(
+                  radius: 23,
+                  backgroundColor: Colors.grey.shade200,
+                  backgroundImage: mLoadImage(
+                          url: !isMe
+                              ? userImage
+                              : _authController.fireAuthUser?.photoURL,
+                          assetInCaseFailed: aDefaultAvatar)
+                      .image,
+                ),
+              ),
+              Wrap(
+                spacing: 5,
+                direction: Axis.vertical,
+                runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
+                children: <Widget>[
+                  Container(
+                      constraints: BoxConstraints(
+                          maxWidth: Get.width - 100, minWidth: 50),
+                      padding: EdgeInsets.only(
+                          left: 16, top: 8, bottom: 8, right: 16),
+                      decoration: BoxDecoration(
+                          color: !isMe
+                              ? Color.fromRGBO(225, 228, 255, 1)
+                              //? Theme.of(parentContext).primaryColorLight
+                              : Color.fromRGBO(103, 121, 254, 1),
+                          borderRadius: !isMe
+                              ? BorderRadius.only(
+                                  topLeft: Radius.zero,
+                                  topRight: Radius.circular(30),
+                                  bottomRight: Radius.circular(30),
+                                  bottomLeft: Radius.circular(20))
+                              : BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.zero,
+                                  bottomRight: Radius.circular(20),
+                                  bottomLeft: Radius.circular(30))),
+                      child: Text(
+                        message,
+                        softWrap: true,
+                        style: TextStyle(
+                          fontFamily: "Nunito",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
+                          color: isMe ? Colors.white : Colors.black,
+                        ),
+                      )),
+                  time != null
+                      ? Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: Text(
+                            time,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Nunito",
+                              fontSize: 12,
+                              color: Color.fromRGBO(120, 120, 120, 1),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                ],
+              ),
+            ]),
+      );
 }
 
 class SendMessageBox extends StatelessWidget {
@@ -451,6 +455,7 @@ class SendMessageBox extends StatelessWidget {
       required TextEditingController textEditingController,
       required this.controller,
       required this.chatId,
+      this.orderType,
       this.orderId})
       : _typedMsg = typedMsg,
         _textEditingController = textEditingController,
@@ -462,6 +467,7 @@ class SendMessageBox extends StatelessWidget {
   final MessageController controller;
   final String chatId;
   final String? orderId;
+  final OrderType? orderType;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -488,32 +494,26 @@ class SendMessageBox extends StatelessWidget {
                   maxLines: 1,
                   textAlign: TextAlign.start,
                   decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(14),
-                      alignLabelWithHint: true,
-                      hintStyle: TextStyle(
-                        color: Color.fromRGBO(120, 120, 120, 1),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Nunito',
-                      ),
-                      fillColor: SecondaryLightBlueColor,
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      hintText: 'Message...' //_i18n()['namePlaceHolder'],
-                      ),
+                    contentPadding: EdgeInsets.all(14),
+                    alignLabelWithHint: true,
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(120, 120, 120, 1),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Nunito',
+                    ),
+                    fillColor: secondaryLightBlueColor,
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    hintText: _i18n()['writeMsgPlaceholder'],
+                  ),
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     fontFamily: 'Nunito',
                   ),
-                  //  TextStyle(
-                  //   color: Color.fromARGB(255, 0, 0, 0),
-                  //   fontSize: 18,
-                  //   fontFamily: 'Montserrat',
-                  //   fontWeight: FontWeight.w600,
-                  // ),
                   controller: _textEditingController,
                   onChanged: (String value) {
                     _typedMsg.value = value;
@@ -529,10 +529,10 @@ class SendMessageBox extends StatelessWidget {
                     _textEditingController.text.replaceAll(' ', '').length > 0;
                 if (msgReady2Send) {
                   controller.sendMessage(
-                    message: _typedMsg.value,
-                    chatId: chatId,
-                    orderId: orderId,
-                  );
+                      message: _typedMsg.value,
+                      chatId: chatId,
+                      orderId: orderId,
+                      orderType: orderType);
                   _textEditingController.clear();
                   _typedMsg.value = "";
                 } else {
@@ -545,7 +545,7 @@ class SendMessageBox extends StatelessWidget {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color:
-                        SecondaryLightBlueColor //Color.fromRGBO(240, 241, 255, 1),
+                        secondaryLightBlueColor //Color.fromRGBO(240, 241, 255, 1),
                     ),
                 child: Transform.rotate(
                   angle: -math.pi / 5.0,

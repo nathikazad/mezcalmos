@@ -48,12 +48,11 @@ typedef RestaurantList = List<Restaurant>;
 
 extension RestaurantFilters on RestaurantList {
   RestaurantList searchByName(String search) {
-    if (search.length > 2)
+   
       return where((Restaurant restaurant) =>
               restaurant.info.name.toLowerCase().contains(search.toLowerCase()))
           .toList();
-    else
-      return this;
+  
   }
 
   RestaurantList showOnlyOpen(bool value) {

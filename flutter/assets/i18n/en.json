@@ -158,7 +158,7 @@
                             "deliveryLocation": "Delivery Location"
                         },
                         "SaveLocationDailog": {
-                            "addLocationDialogTitle": "enter location name, if you want to save for future use, else you may skip",
+                            "addLocationDialogTitle": "Enter location name, if you want to save for future use, else you may skip",
                             "editLocationDialogTitle": "Enter location name",
                             "addLocationDialogButton": "OK",
                             "editLocationDialogButton": "EDIT",
@@ -406,9 +406,9 @@
                 "LaundryCurrentOrderView": {
                     "Components": {
                         "CustomerLaundryOrderEst": {
-                            "pickup": "Pickup",
-                            "delivery": "Delivery",
-                            "laundryReady": "Laundry ready",
+                            "pickup": "Pickup time:",
+                            "delivery": "Delivery time:",
+                            "laundryReady": "Laundry ready time:",
                             "estTimes": "Estimated times"
                         },
 
@@ -466,7 +466,7 @@
                             "fixedRate": "Cost Per Kilo",
                             "orderWeight": "Order Weight",
                             "minimumCost": "Minimum Cost",
-                            "totalCost": "Total Cost",
+                            "total": "Total",
                             "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order.",
                             "item": "Item",
                             "perKilo": "Per kilo",
@@ -684,7 +684,13 @@
                     "mustSetUserNameError": "Please enter your first name.",
                     "mustSetUserImgError": "Please upload an image.",
                     "nameMustBeLettersOnly": "Your first name must only have letters.",
-                    "nameMustBeFourLettersOrMore": "Your name must have at least 4 letters."
+                    "nameMustBeFourLettersOrMore": "Your name must have at least 4 letters.",
+                    "deleteAccount": "Delete Account",
+                    "deleteTitle": "Confirm account deletion !",
+                    "deletePrBtn": "Yes, delete !",
+                    "deleteScBtn": "Cancel",
+                    "deleteHelper": "Clicking yes will permanently delete you account, are you sure?"
+
                 },
                 "UserProfileWidgets": {
                     "namePlaceHolder": "Enter your first name",
@@ -703,6 +709,7 @@
                 "reconnecting": "Reconnecting"
             },
             "MessagingScreen": {
+                "order": "Order",
                 "writeMsgPlaceholder": "Write your message here ..."
             },
             "ViewNotifications": {

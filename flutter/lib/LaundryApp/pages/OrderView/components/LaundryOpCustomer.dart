@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
@@ -61,6 +62,7 @@ class LaundryOpCustomer extends StatelessWidget {
                         onTap: () {
                           Get.toNamed(getMessagesRoute(
                               orderId: order.orderId,
+                              orderType: OrderType.Laundry,
                               chatId: order.orderId,
                               recipientType: ParticipantType.Customer));
                         }),
@@ -80,6 +82,7 @@ class LaundryOpCustomer extends StatelessWidget {
       onTap: () {
         Get.toNamed(getMessagesRoute(
             orderId: order.orderId,
+            orderType: OrderType.Laundry,
             chatId: order.orderId,
             recipientType: ParticipantType.Customer));
       },

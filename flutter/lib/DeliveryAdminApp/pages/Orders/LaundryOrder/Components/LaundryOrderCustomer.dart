@@ -5,6 +5,7 @@ import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryOrderController.da
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class LaundryOrderCustomer extends StatelessWidget {
@@ -64,6 +65,7 @@ class LaundryOrderCustomer extends StatelessWidget {
                         getMessagesRoute(
                           chatId: order.orderId,
                           orderId: order.orderId,
+                          orderType: OrderType.Laundry,
                           recipientType: ParticipantType.Customer,
                         ),
                       );

@@ -44,7 +44,7 @@ class _ServicesViewState extends State<ServicesView> {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back, title: '${_i18n()["services"]}'),
+          autoBack: true, title: '${_i18n()["services"]}'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(

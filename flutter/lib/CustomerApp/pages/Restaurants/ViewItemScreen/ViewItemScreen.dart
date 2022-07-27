@@ -138,7 +138,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 25),
+                  margin: const EdgeInsets.only(top: 10),
                   child: Text(
                     item.cost.toPriceString(),
                     style: Get.textTheme.headline3

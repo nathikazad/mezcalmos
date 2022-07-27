@@ -43,7 +43,7 @@ class LaundryOpNormalDeliveryTime extends StatelessWidget {
                   child: Ink(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                        color: SecondaryLightBlueColor, shape: BoxShape.circle),
+                        color: secondaryLightBlueColor, shape: BoxShape.circle),
                     child: Icon(
                       Icons.remove,
                       color: primaryBlueColor,
@@ -60,7 +60,7 @@ class LaundryOpNormalDeliveryTime extends StatelessWidget {
                   child: Ink(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                        color: SecondaryLightBlueColor, shape: BoxShape.circle),
+                        color: secondaryLightBlueColor, shape: BoxShape.circle),
                     child: Icon(
                       Icons.add,
                       color: primaryBlueColor,

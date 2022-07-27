@@ -122,8 +122,8 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
         minVal: 1,
         size: 14,
         minusIconColor: primaryBlueColor,
-        btnColors: SecondaryLightBlueColor,
-        onMinValueBtnColor: SecondaryLightBlueColor,
+        btnColors: secondaryLightBlueColor,
+        onMinValueBtnColor: secondaryLightBlueColor,
         alignment: MainAxisAlignment.start,
         incrementCallback: () {
           _restaurantController.incrementItem(cartItem.idInCart!, 1);

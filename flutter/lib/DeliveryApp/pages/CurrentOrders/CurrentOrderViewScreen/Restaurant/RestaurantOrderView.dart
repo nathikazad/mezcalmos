@@ -142,7 +142,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
     return Scaffold(
       appBar: mezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        onClick: Get.back,
+        autoBack: true,
         showNotifications: true,
         title: '${_i18n()["title"]}',
       ),

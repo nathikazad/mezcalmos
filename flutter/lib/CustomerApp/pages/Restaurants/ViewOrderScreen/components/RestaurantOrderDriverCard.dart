@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -82,6 +83,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                       onTap: () {
                         Get.toNamed(getMessagesRoute(
                           recipientType: ParticipantType.DeliveryDriver,
+                          orderType: OrderType.Restaurant,
                           orderId: order.orderId,
                           chatId: order.customerDropOffDriverChatId!,
                         ));
@@ -100,7 +102,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
     final String userLangCode =
         Get.find<LanguageController>().userLanguageKey.toLanguageCode();
     if (order.estimatedDropoffAtCustomerTime != null) {
-      return "${_i18n()["dropOffTime"]}: \n ${DateFormat.MMMd(userLangCode).format(order.estimatedDropoffAtCustomerTime!.toLocal())}, ${DateFormat("hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
+      return "${_i18n()["dropOffTime"]}: \n ${DateFormat.MMMd(userLangCode).format(order.estimatedDropoffAtCustomerTime!.toLocal()).replaceFirst(".", "")}, ${DateFormat("hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
     } else {
       return null;
     }

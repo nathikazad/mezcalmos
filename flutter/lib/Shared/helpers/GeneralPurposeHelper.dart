@@ -468,7 +468,7 @@ Widget multipleSelectOptionComponent(
               ),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: value ? primaryBlueColor : SecondaryLightBlueColor,
+          color: value ? primaryBlueColor : secondaryLightBlueColor,
         )),
   );
 }

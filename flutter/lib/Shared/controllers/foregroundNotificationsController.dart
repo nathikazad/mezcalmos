@@ -1,11 +1,12 @@
+import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart' as material;
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'dart:async';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
 
 typedef shouldSaveNotification = bool Function(Notification notification);
 
@@ -32,7 +33,9 @@ class ForegroundNotificationsController extends GetxController {
     super.onInit();
   }
 
-  void startListeningForNotificationsFromFirebase(String notificationNode,
+  void startListeningForNotificationsFromFirebase(
+      String notificationNode,
+      // ignore: avoid_annotating_with_dynamic
       Notification Function(String key, dynamic value) notificationHandler) {
     // mezDbgPrint(
     //     "ForegroundNotificationsController:startListeningForNotifications");

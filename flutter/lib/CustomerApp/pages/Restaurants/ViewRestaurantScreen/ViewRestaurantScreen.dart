@@ -116,7 +116,6 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget buildSliverScrollView() {
     return CustomScrollView(
-      //physics: const ClampingScrollPhysics(),
       controller: scrollController,
       slivers: [
         RestaurantSliverAppBar(
@@ -143,14 +142,14 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
                         restaurant: restaurant,
                       )),
                 ])))
-            : _buildCategoriesList(),
+            : _buildCategoriesList()
       ],
     );
   }
 
   Widget _buildCategoriesList() {
     return SliverPadding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
         sliver: SliverList(
           delegate: SliverChildListDelegate(
             List.generate(_getList().length, (int index) {
@@ -186,20 +185,20 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget _buildCategory(Category category, int index) {
     return Container(
-      // margin: const EdgeInsets.symmetric(vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            category.name?[userLanguage] ?? "",
-            style: Get.theme.textTheme.headline3
-                ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
-          ),
+          if (category.name?[userLanguage] != null)
+            Container(
+              margin: const EdgeInsets.only(top: 10, bottom: 5),
+              child: Text(
+                category.name![userLanguage]!,
+                style: Get.theme.textTheme.headline3
+                    ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
+              ),
+            ),
           if (category.dialog?[userLanguage] != null)
             Container(
-              margin: const EdgeInsets.only(
-                top: 5,
-              ),
               child: Text(
                 category.dialog![userLanguage]!,
                 style: Get.textTheme.bodyText2?.copyWith(
@@ -218,7 +217,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
   Widget _buildResturantItems(List<Item> items, String restaurantId) {
     if (restaurant.restaurantsView == RestaurantsView.Rows) {
       return Container(
-        margin: EdgeInsets.only(top: 17),
+        margin: const EdgeInsets.only(top: 5),
         child: Column(
           children: items.fold<List<Widget>>(<Widget>[],
               (List<Widget> children, Item item) {

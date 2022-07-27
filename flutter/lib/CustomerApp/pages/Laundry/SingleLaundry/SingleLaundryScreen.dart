@@ -104,6 +104,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
             flex: 1,
@@ -173,7 +174,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                       const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(35),
-                      color: SecondaryLightBlueColor),
+                      color: secondaryLightBlueColor),
                   child: Text(
                     "${_i18n()["minimumCost"]} \$${laundry.value!.laundryCosts.minimumCost} ",
                     maxLines: 1,

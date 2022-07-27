@@ -101,6 +101,7 @@ async function notifyOtherMessageParticipants(notificationForQueue: chat.Message
           time: notificationForQueue.timestamp,
           notificationType: NotificationType.NewMessage,
           notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+          orderType: chatData.orderType
         },
         background: {
           en: {
@@ -112,7 +113,7 @@ async function notifyOtherMessageParticipants(notificationForQueue: chat.Message
             body: notificationForQueue.message
           }
         },
-        linkUrl: chatUrl(notificationForQueue.chatId)
+        linkUrl: chatUrl(notificationForQueue.chatId, notificationForQueue.orderId, chatData.orderType, notificationForQueue.participantType)
       }
       notifyUser.pushNotification(participantId, notification, participant.particpantType);
     }

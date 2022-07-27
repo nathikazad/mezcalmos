@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/pages/AgoraCall.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/pages/AppNeedsUpdateScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
@@ -42,6 +43,7 @@ String getMessagesRoute(
     {required String chatId,
     String? orderLink,
     String? orderId,
+    OrderType? orderType,
     ParticipantType recipientType = ParticipantType.Customer,
     String? recipientId}) {
   String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId);
@@ -52,6 +54,8 @@ String getMessagesRoute(
     mainUrl += "?recipientType=${recipientType.toFirebaseFormattedString()}";
   if (orderLink != null) mainUrl += "&orderLink=$orderLink";
   if (orderId != null) mainUrl += "&orderId=$orderId";
+  if (orderType != null)
+    mainUrl += "&orderType=${orderType.toFirebaseFormatString()}";
   return mainUrl;
 }
 

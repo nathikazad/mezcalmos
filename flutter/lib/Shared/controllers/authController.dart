@@ -134,13 +134,17 @@ class AuthController extends GetxController {
         _user.value?.image != defaultUserImgUrl;
   }
 
+  DateTime? getUserCreationDate() {
+    return _fireAuthUser.value?.metadata.creationTime;
+  }
+
   Future<ServerResponse> deleteAccount() async {
     if (_user.value?.id != null) {
       final HttpsCallable cancelLaundryFunction =
           FirebaseFunctions.instance.httpsCallable('user-deleteUserAccount');
       try {
         final HttpsCallableResult<Map<String, dynamic>> response =
-            await cancelLaundryFunction.call();
+            await cancelLaundryFunction.call({});
         mezDbgPrint("Responso ===> $response");
         final ServerResponse _resp = ServerResponse.fromJson(response.data);
 
@@ -371,9 +375,9 @@ class AuthController extends GetxController {
             MezSnackbar(
               "Notice ~",
               "Your account has been deleted permanently!",
-              position: SnackPosition.TOP,
+              position: SnackPosition.BOTTOM,
             );
-            return null;
+            throw Exception("Failed SignIn with Facebook !");
           }
         }),
       );

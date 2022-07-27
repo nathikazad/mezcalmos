@@ -130,7 +130,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       () => Card(
                         child: authController.user != null
                             ? DropDownLocationList(
-                                bgColor: SecondaryLightBlueColor,
+                                bgColor: secondaryLightBlueColor,
                                 passedInLocation: customerLoc,
                                 onValueChangeCallback: ({Location? location}) {
                                   setState(() {
@@ -320,7 +320,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
 
         if (response.data['orderId'] != null) {
           sharedRoute.popEverythingAndNavigateTo(
-            getLaundyOrderRoute(
+            getLaundryOrderRoute(
               response.data['orderId'],
             ),
           );
