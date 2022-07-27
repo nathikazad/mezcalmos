@@ -80,18 +80,19 @@ class _ROpOrderViewState extends State<ROpOrderView> {
             children: [
               // order status
               ROpOrderStatusCard(order: order.value!),
-              if (order.value!.isFinished) ROpRefundButton(),
+
               ROpOrderHandleButton(order: order.value!),
               ROpOrderEstTime(order: order.value!),
               ROpDriverCard(order: order.value!),
 
               ROpOrderCustomer(order: order.value!),
               _orderItemsList(),
+
               ROpOrderSummaryCard(
                 order: order.value!,
               ),
-
               ROpOrderNote(order: order.value!),
+              ROpRefundButton(),
             ],
           ),
         ),
@@ -113,8 +114,12 @@ class _ROpOrderViewState extends State<ROpOrderView> {
             height: 10,
           ),
           Column(
-            children: List.generate(order.value!.items.length,
-                (int index) => ROpOrderItems(item: order.value!.items[index])),
+            children: List.generate(
+                order.value!.items.length,
+                (int index) => ROpOrderItems(
+                      item: order.value!.items[index],
+                      order: order.value!,
+                    )),
           ),
         ],
       ),
@@ -136,7 +141,7 @@ class ROpRefundButton extends StatelessWidget {
           style: TextButton.styleFrom(backgroundColor: Colors.black),
           child: Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
             child: Text("Refund customer"),
           )),
     );

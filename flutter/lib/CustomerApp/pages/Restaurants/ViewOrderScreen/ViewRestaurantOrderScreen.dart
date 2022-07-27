@@ -294,7 +294,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           );
         }
 
-        if (order.value!.dropoffDriver != null) {
+        if (order.value!.dropoffDriver != null &&
+            order.value!.dropoffDriver!.location != null) {
           mapController.addOrUpdateUserMarker(
             latLng: order.value!.dropoffDriver!.location!,
             markerId: order.value!.dropoffDriver!.id,

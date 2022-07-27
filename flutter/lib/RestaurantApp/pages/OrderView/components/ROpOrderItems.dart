@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 // dynamic _i18n() =>
 //     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -16,9 +19,11 @@ class ROpOrderItems extends StatefulWidget {
   const ROpOrderItems({
     Key? key,
     required this.item,
+    required this.order,
   }) : super(key: key);
 
   final RestaurantOrderItem item;
+  final RestaurantOrder order;
 
   @override
   State<ROpOrderItems> createState() => _ROpOrderItemsState();
@@ -50,7 +55,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
       child: ExpansionTile(
         childrenPadding: const EdgeInsets.all(8),
         collapsedIconColor: primaryBlueColor,
-        
+
         onExpansionChanged: (bool v) {
           setState(() {
             isExpanded = v;
@@ -184,6 +189,24 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                 ],
               ),
             ),
+          InkWell(
+            onTap: () {
+              Get.find<ROpOrderController>()
+                  .markItemUnavailable(
+                      widget.order.orderId, widget.item.idInCart)
+                  .then((ServerResponse value) => mezDbgPrint("Done"));
+            },
+            child: Ink(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    color: primaryBlueColor,
+                    borderRadius: BorderRadius.circular(8)),
+                child: Text(
+                  "Item unavailable",
+                  style: Get.textTheme.bodyText2?.copyWith(
+                      fontWeight: FontWeight.w600, color: Colors.white),
+                )),
+          )
         ],
       ),
     );

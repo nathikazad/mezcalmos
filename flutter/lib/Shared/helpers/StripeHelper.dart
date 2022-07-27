@@ -29,8 +29,8 @@ class StripePaymentInfo {
     return StripePaymentInfo(
         id: data["id"],
         stripeFees: data["stripeFees"],
-        amountCharged: data["amountCharged"],
-        amountRefunded: data["amountRefunded"],
+        amountCharged: data["amountCharged"] ?? 0,
+        amountRefunded: data["amountRefunded"] ?? 0,
         brand: data["brand"],
         expYear: data["expYear"],
         expMonth: data["expMonth"],
