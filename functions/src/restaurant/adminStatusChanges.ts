@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
-import { OrderType } from "../shared/models/Generic/Order";
+import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { orderInProcess, RestaurantOrderStatusChangeNotification, RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
@@ -13,6 +13,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
+import { capturePayment, refundPayment } from "../utilities/stripe";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [RestaurantOrderStatus.OrderReceieved,
@@ -78,12 +79,23 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
 
   order.status = newStatus
 
-  if (newStatus == RestaurantOrderStatus.Delivered
-    || newStatus == RestaurantOrderStatus.CancelledByAdmin)
+  if (newStatus == RestaurantOrderStatus.Delivered) {
+    if (order.paymentType == PaymentType.Card) {
+      capturePayment(order)
+      // TODO: capture shipping payment
+    }
     await finishOrder(order, orderId);
-  else {
+  } else if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
+    if (order.paymentType == PaymentType.Card) {
+      capturePayment(order, 0)
+      // TODO: cancel or capture shipping payment depending on status
+    }
+    order.refundAmount = order.totalCost;
+    order.costToCustomer = order.totalCost - order.refundAmount;
+    await finishOrder(order, orderId);
+  } else {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-    restaurantNodes.inProcessOrders(order.restaurant.id!, orderId).update(order);
+    await restaurantNodes.inProcessOrders(order.restaurant.id!, orderId).update(order);
     await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
     if (order.dropoffDriver)
       deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
@@ -109,8 +121,6 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
       pushNotification(order.dropoffDriver.id!, notification, ParticipantType.DeliveryDriver);
     }
   });
-
-
 
   return { status: ServerResponseStatus.Success }
 }
@@ -138,10 +148,70 @@ export const setEstimatedFoodReadyTime = functions.https.onCall(async (data, con
 
   customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
   await restaurantNodes.inProcessOrders(order.restaurant.id, orderId).update(order);
-  rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
+  await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
   if (order.dropoffDriver)
     deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
 
   return { status: ServerResponseStatus.Success }
 });
 
+export const refundCustomerCustomAmount =
+  functions.https.onCall(async (data, context) => {
+    if (data.refundAmount == null || data.orderId == null) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Expected refundAmount`,
+        errorCode: "invalidParam"
+      }
+    }
+    let validationPass: ValidationPass = await passChecksForRestaurant(data, context.auth);
+    if (!validationPass.ok) {
+      return validationPass.error!;
+    }
+    return refund(data.orderId, validationPass.order, data.refundAmount);
+  });
+
+export const markOrderItemUnavailable =
+  functions.https.onCall(async (data, context) => {
+    if (data.itemId == null || data.orderId == null) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Expected itemId and orderId`,
+        errorCode: "invalidParam"
+      }
+    }
+    let validationPass: ValidationPass = await passChecksForRestaurant(data, context.auth);
+    if (!validationPass.ok) {
+      return validationPass.error!;
+    }
+    let order: RestaurantOrder = validationPass.order;
+
+    if (order.items[data.itemId] == null) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `invalid item id`,
+        errorCode: "invalidParam"
+      }
+    }
+    order.items[data.itemId].unavailable = true;
+    return refund(data.orderId, validationPass.order, order.items[data.itemId].totalCost);
+
+  });
+
+async function refund(orderId: string, order: RestaurantOrder, newRefundAmount: number): Promise<ServerResponse> {
+  let newCostToCustomer = order.costToCustomer - order.refundAmount - newRefundAmount;
+  if (newCostToCustomer > 0) {
+    order.refundAmount = order.refundAmount + newRefundAmount;
+    order.costToCustomer = newCostToCustomer;
+    if (!orderInProcess(order.status) && order.paymentType == PaymentType.Card) {
+      order = (await refundPayment(order, newRefundAmount)) as RestaurantOrder
+    }
+  }
+  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+  await restaurantNodes.inProcessOrders(order.restaurant.id, orderId).update(order);
+  await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
+  if (order.dropoffDriver)
+    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+
+  return { status: ServerResponseStatus.Success }
+}

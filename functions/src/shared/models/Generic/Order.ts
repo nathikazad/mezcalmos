@@ -10,10 +10,14 @@ export interface Order {
   paymentType: PaymentType,
   to: Location,
   customer: UserInfo,
-  orderTime: string;
-  secondaryChats: Record<SecondaryChat, string | null>;
-  estimatedDeliveryTimes: Partial<Record<DeliveryDriverType , Record<DeliveryAction, string|null >>>
-  stripePaymentInfo: StripePaymentInfo
+  orderTime: string,
+  secondaryChats: Record<SecondaryChat, string | null>,
+  estimatedDeliveryTimes: Partial<Record<DeliveryDriverType, Record<DeliveryAction, string | null>>>,
+  stripePaymentInfo?: StripePaymentInfo,
+  totalCostBeforeShipping: number;
+  totalCost: number;
+  refundAmount: number,
+  costToCustomer: number,
 }
 
 export enum DeliveryAction {
@@ -56,10 +60,12 @@ export enum SecondaryChat {
 
 export interface DeliverableOrder extends Order {
   dropoffDriver?: DeliveryDriverInfo;
+  dropOffShippingCost: number;
 }
 
 export interface TwoWayDeliverableOrder extends DeliverableOrder {
   pickupDriver?: DeliveryDriverInfo;
+  pickupShippingCost: number;
 }
 
 export interface DeliveryDriverInfo extends UserInfo {

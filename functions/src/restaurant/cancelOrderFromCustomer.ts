@@ -3,8 +3,8 @@ import { isSignedIn } from "../shared/helper/authorizer";
 import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
-import { OrderType } from "../shared/models/Generic/Order";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { OrderType, PaymentType } from "../shared/models/Generic/Order";
+import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { finishOrder } from "./helper";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
@@ -13,9 +13,10 @@ import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
+import { capturePayment } from "../utilities/stripe";
 // Customer Canceling
 export = functions.https.onCall(async (data, context) => {
-  let response = await isSignedIn(context.auth)
+  let response: ServerResponse | undefined = await isSignedIn(context.auth)
   if (response != undefined) {
     return response;
   }
@@ -54,6 +55,41 @@ export = functions.https.onCall(async (data, context) => {
       errorCode: "orderNotInProcess"
     }
   }
+
+
+  switch (order.status) {
+    case RestaurantOrderStatus.OrderReceieved:
+      if (order.paymentType == PaymentType.Card) {
+        capturePayment(order, 0)
+        // TODO: cancel delivery payment intent by capturing 0
+      }
+
+      order.refundAmount = order.totalCost;
+      order.costToCustomer = order.totalCost - order.refundAmount;
+      break;
+    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.ReadyForPickup:
+      if (order.paymentType == PaymentType.Card) {
+        capturePayment(order, order.totalCost)
+        // TODO: cancel delivery payment intent by capturing 0
+      }
+
+      order.refundAmount = order.refundAmount + order.shippingCost;
+      order.costToCustomer = order.totalCost - order.refundAmount;
+      break;
+    case RestaurantOrderStatus.OnTheWay:
+      if (order.paymentType == PaymentType.Card) {
+        capturePayment(order)
+        // TODO: capture delivery payment intent
+      }
+
+      break;
+
+    default:
+      break;
+  }
+
+
   order.status = RestaurantOrderStatus.CancelledByCustomer;
   await finishOrder(order, orderId);
 

@@ -22,6 +22,7 @@ export interface Item {
   costPerOne: number;
   name: string;
   chosenChoices: Record<string, Option>;
+  unavailable?: boolean;
 }
 
 export interface Cart {

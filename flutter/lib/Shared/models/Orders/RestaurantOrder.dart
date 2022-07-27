@@ -63,6 +63,11 @@ class RestaurantOrder extends DeliverableOrder {
     DateTime? estimatedDropoffAtCustomerTime,
     this.notes,
     RouteInformation? routeInformation,
+      num? totalCostBeforeShipping,
+      num? totalCost,
+      num? refundAmount,
+      num? costToCustomer,
+      num? dropOffShippingCost
   }) : super(
           orderId: orderId,
           orderType: OrderType.Restaurant,
@@ -80,6 +85,11 @@ class RestaurantOrder extends DeliverableOrder {
           estimatedPickupFromServiceProviderTime:
               estimatedPickupFromServiceProviderTime,
           estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime,
+            totalCostBeforeShipping: totalCostBeforeShipping,
+            totalCost: totalCost,
+            refundAmount: refundAmount,
+            costToCustomer: costToCustomer,
+            dropOffShippingCost: dropOffShippingCost
         );
 
   //ignore_for_file:avoid_annotating_with_dynamic
@@ -121,6 +131,10 @@ class RestaurantOrder extends DeliverableOrder {
           ?['serviceProviderDropOffDriver'],
       customerDropOffDriverChatId: data['secondaryChats']
           ?['customerDropOffDriver'],
+      totalCostBeforeShipping: data['totalCostBeforeShipping'],
+      totalCost: data['totalCost'],
+      refundAmount: data['refundAmount'],
+      costToCustomer: data['costToCustomer'],
     );
 
     if (data["routeInformation"] != null) {
@@ -139,26 +153,8 @@ class RestaurantOrder extends DeliverableOrder {
     }
 
     data["items"].forEach((dynamic itemId, dynamic itemData) {
-      final RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
-          costPerOne: itemData["costPerOne"],
-          totalCost: itemData["totalCost"],
-          idInCart: itemId,
-          idInRestaurant: itemData["id"],
-          name: convertToLanguageMap(itemData["name"]),
-          image: itemData["image"],
-          quantity: itemData["quantity"],
-          notes: itemData["notes"]);
-
-      itemData?["chosenChoices"]?.forEach((optionId, optionData) {
-        restaurantOrderItem.chosenChoices[optionId] = <Choice>[];
-        restaurantOrderItem.optionNames[optionId] =
-            convertToLanguageMap(optionData["optionName"]);
-
-        optionData?["choices"]?.forEach((choiceData) {
-          restaurantOrderItem.chosenChoices[optionId]!
-              .add(Choice.fromData(choiceData["id"], choiceData));
-        });
-      });
+      final RestaurantOrderItem restaurantOrderItem =
+          RestaurantOrderItem.fromData(itemId, itemData);
       restaurantOrder.items.add(restaurantOrderItem);
     });
     return restaurantOrder;
@@ -243,6 +239,7 @@ class RestaurantOrderItem {
   String? image;
   int quantity;
   String? notes;
+  bool unavailable;
   //optionId and list of choices for that option
   Map<String, List<Choice>> chosenChoices = <String, List<Choice>>{};
   //optionId and list of choices for that option
@@ -255,5 +252,31 @@ class RestaurantOrderItem {
       required this.name,
       required this.image,
       required this.quantity,
-      this.notes});
+      this.notes,
+      this.unavailable = false});
+
+  factory RestaurantOrderItem.fromData(dynamic itemId, dynamic itemData) {
+    final RestaurantOrderItem restaurantOrderItem = RestaurantOrderItem(
+        costPerOne: itemData["costPerOne"],
+        totalCost: itemData["totalCost"],
+        idInCart: itemId,
+        idInRestaurant: itemData["id"],
+        name: convertToLanguageMap(itemData["name"]),
+        image: itemData["image"],
+        quantity: itemData["quantity"],
+        notes: itemData["notes"],
+        unavailable: itemData["unavailable"] ?? false);
+
+    itemData?["chosenChoices"]?.forEach((optionId, optionData) {
+      restaurantOrderItem.chosenChoices[optionId] = <Choice>[];
+      restaurantOrderItem.optionNames[optionId] =
+          convertToLanguageMap(optionData["optionName"]);
+
+      optionData?["choices"]?.forEach((choiceData) {
+        restaurantOrderItem.chosenChoices[optionId]!
+            .add(Choice.fromData(choiceData["id"], choiceData));
+      });
+    });
+    return restaurantOrderItem;
+  }
 }
