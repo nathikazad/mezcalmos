@@ -110,14 +110,14 @@ class CustomerLaundryOrderEst extends StatelessWidget {
 
       case LaundryOrderStatus.OtwPickupFromCustomer:
         if (order.estimatedPickupFromCustomerTime != null) {
-          return "${_i18n()["pickup"]}:";
+          return "${_i18n()["pickup"]}";
         }
         break;
       case LaundryOrderStatus.PickedUpFromCustomer:
 
       case LaundryOrderStatus.AtLaundry:
         if (order.estimatedLaundryReadyTime != null) {
-          return "${_i18n()["laundryReady"]}:";
+          return "${_i18n()["laundryReady"]}";
         }
 
         break;
@@ -126,7 +126,7 @@ class CustomerLaundryOrderEst extends StatelessWidget {
 
       case LaundryOrderStatus.PickedUpFromLaundry:
         if (order.estimatedDropoffAtCustomerTime != null) {
-          return "${_i18n()["delivery"]}:";
+          return "${_i18n()["delivery"]}";
         }
 
         break;
@@ -141,7 +141,7 @@ class CustomerLaundryOrderEst extends StatelessWidget {
       case LaundryOrderStatus.OrderReceieved:
 
       case LaundryOrderStatus.OtwPickupFromCustomer:
-        return Icons.delivery_dining;
+        return Icons.route;
 
       case LaundryOrderStatus.PickedUpFromCustomer:
       case LaundryOrderStatus.AtLaundry:
