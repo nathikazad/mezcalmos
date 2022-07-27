@@ -20,6 +20,10 @@ abstract class Order {
   num cost;
   RouteInformation? routeInformation;
   StripePaymentInfo? stripePaymentInfo;
+  num? totalCostBeforeShipping;
+  num? totalCost;
+  num? refundAmount;
+  num? costToCustomer;
 
   Order({
     required this.orderId,
@@ -32,7 +36,11 @@ abstract class Order {
     this.serviceProvider,
     required this.to,
     this.routeInformation,
-    this.stripePaymentInfo
+    this.stripePaymentInfo,
+    this.totalCostBeforeShipping,
+    this.totalCost,
+    this.refundAmount,
+    this.costToCustomer,
   });
   bool isIncoming() {
     switch (orderType) {
@@ -113,6 +121,7 @@ abstract class DeliverableOrder extends Order {
   String? customerDropOffDriverChatId;
   DateTime? estimatedPickupFromServiceProviderTime;
   DateTime? estimatedDropoffAtCustomerTime;
+  num? dropOffShippingCost;
   DeliverableOrder(
       {required String orderId,
       String? serviceProviderId,
@@ -129,7 +138,12 @@ abstract class DeliverableOrder extends Order {
       this.estimatedPickupFromServiceProviderTime,
       this.estimatedDropoffAtCustomerTime,
       RouteInformation? routeInformation,
-      StripePaymentInfo? stripePaymentInfo})
+      StripePaymentInfo? stripePaymentInfo,
+      num? totalCostBeforeShipping,
+      num? totalCost,
+      num? refundAmount,
+      num? costToCustomer,
+      this.dropOffShippingCost})
       : super(
           orderId: orderId,
           orderType: orderType,
@@ -141,7 +155,11 @@ abstract class DeliverableOrder extends Order {
           serviceProvider: serviceProvider,
           to: to,
           routeInformation: routeInformation,
-          stripePaymentInfo: stripePaymentInfo
+          stripePaymentInfo: stripePaymentInfo,
+          totalCostBeforeShipping: totalCostBeforeShipping,
+          totalCost: totalCost,
+          refundAmount: refundAmount,
+          costToCustomer: costToCustomer,
         );
 }
 
@@ -151,6 +169,7 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
   String? customerPickupDriverChatId;
   DateTime? estimatedPickupFromCustomerTime;
   DateTime? estimatedDropoffAtServiceProviderTime;
+  num? pickupShippingCost;
   TwoWayDeliverableOrder(
       {required String orderId,
       String? serviceProviderId,
@@ -172,7 +191,13 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       DateTime? estimatedPickupFromServiceProviderTime,
       DateTime? estimatedDropoffAtCustomerTime,
       this.estimatedPickupFromCustomerTime,
-      this.estimatedDropoffAtServiceProviderTime})
+      this.estimatedDropoffAtServiceProviderTime,
+      num? totalCostBeforeShipping,
+      num? totalCost,
+      num? refundAmount,
+      num? costToCustomer,
+      num? dropoffShippingCost,
+      this.pickupShippingCost})
       : super(
             orderId: orderId,
             orderType: orderType,
@@ -190,5 +215,10 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
             customerDropOffDriverChatId: customerDropOffDriverChatId,
             estimatedPickupFromServiceProviderTime:
                 estimatedPickupFromServiceProviderTime,
-            estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime);
+            estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime,
+            totalCostBeforeShipping: totalCostBeforeShipping,
+            totalCost: totalCost,
+            refundAmount: refundAmount,
+            costToCustomer: costToCustomer,
+            dropOffShippingCost: dropoffShippingCost);
 }

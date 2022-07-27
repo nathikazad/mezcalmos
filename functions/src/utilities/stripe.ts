@@ -18,6 +18,8 @@ let keys: Keys = getKeys();
 export interface StripePaymentInfo {
   id: string,
   stripeFees: number,
+  amountCharged: number,
+  amountRefunded: number,
   brand?: string,
   expMonth?: number,
   expYear?: number,
@@ -58,7 +60,7 @@ export const getPaymentIntent =
       let userInfo: UserInfo = (await userInfoNode(data.customerId).once('value')).val()
       const customer: Stripe.Customer = await stripe.customers.create({
         name: userInfo.name,
-        metadata: { customerId: data.customerId }
+        metadata: { customerId: data.customerId },
       }, stripeOptions)
       stripeCustomerId = customer.id;
       customerNodes.stripeIdsNode(data.customerId, data.serviceProviderId).set(stripeCustomerId);
@@ -75,7 +77,7 @@ export const getPaymentIntent =
       amount: data.paymentAmount,
       currency: 'mxn',
       customer: stripeCustomerId,
-      capture_method: data.captureMethod || 'automatic'
+      capture_method: 'manual'
     }, stripeOptions);
 
     return {
@@ -88,6 +90,33 @@ export const getPaymentIntent =
     }
   });
 
+
+export async function capturePayment(order: Order, amountToCapture?: number) {
+  let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
+  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
+  const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+  if (amountToCapture == null) {
+    await stripe.paymentIntents.capture(order.stripePaymentInfo!.id, {}, stripeOptions)
+  } else if (amountToCapture > 0) {
+    await stripe.paymentIntents.capture(order.stripePaymentInfo!.id, {
+      amount_to_capture: amountToCapture,
+    }, stripeOptions)
+  } else {
+    await stripe.paymentIntents.cancel(order.stripePaymentInfo!.id, stripeOptions)
+  }
+}
+
+export async function refundPayment(order: Order, amountToRefund: number): Promise<Order> {
+  let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
+  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
+  const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+  await stripe.refunds.create({
+    payment_intent: order.stripePaymentInfo!.id,
+    amount: amountToRefund,
+  }, stripeOptions)
+  order.stripePaymentInfo!.amountRefunded += amountToRefund;
+  return order;
+}
 
 export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: Order, stripePaymentId: string, stripeFees: number): Promise<Order> {
   let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
@@ -111,7 +140,9 @@ export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: O
   );
   order.stripePaymentInfo = {
     id: stripePaymentId,
-    stripeFees: stripeFees
+    stripeFees: stripeFees,
+    amountCharged: pi.amount,
+    amountRefunded: 0
   }
   if (pm.card)
     order.stripePaymentInfo = {

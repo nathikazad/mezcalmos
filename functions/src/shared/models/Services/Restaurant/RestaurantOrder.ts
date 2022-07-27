@@ -39,7 +39,12 @@ export function constructRestaurantOrder(
     restaurant: params.restaurant,
     orderType: OrderType.Restaurant,
     status: RestaurantOrderStatus.OrderReceieved,
-    orderTime: (new Date()).toISOString()
+    orderTime: (new Date()).toISOString(),
+    totalCostBeforeShipping: params.cart.cost - params.cart.shippingCost,
+    dropOffShippingCost: params.cart.shippingCost,
+    totalCost: params.cart.cost,
+    refundAmount: 0,
+    costToCustomer: params.cart.cost
   }
 }
 

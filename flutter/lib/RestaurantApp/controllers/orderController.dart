@@ -145,14 +145,12 @@ class ROpOrderController extends GetxController {
 
   Future<ServerResponse> setAsReadyForOrderPickup(String orderId) async {
     mezDbgPrint("Seeting order ready for delivery");
-    return _callRestaurantCloudFunction("readyForOrderPickup", orderId,
-        optionalParams: <String, dynamic>{"fromRestaurantOperator": true});
+    return _callRestaurantCloudFunction("readyForOrderPickup", orderId);
   }
 
   Future<ServerResponse> startPreparingOrder(String orderId) async {
     mezDbgPrint("Seeting order ready for delivery");
-    return _callRestaurantCloudFunction("prepareOrder", orderId,
-        optionalParams: <String, dynamic>{"fromRestaurantOperator": true});
+    return _callRestaurantCloudFunction("prepareOrder", orderId);
   }
 
   Future<ServerResponse> setEstimatedFoodReadyTime(
@@ -160,9 +158,22 @@ class ROpOrderController extends GetxController {
     mezDbgPrint("inside clod set delivery time $estimatedTime");
     return _callRestaurantCloudFunction("setEstimatedFoodReadyTime", orderId,
         optionalParams: {
-          "fromRestaurantOperator": true,
           "estimatedFoodReadyTime": estimatedTime.toUtc().toString()
         });
+  }
+
+  Future<ServerResponse> refundCustomerCustomAmount(
+      String orderId, num refundAmount) async {
+    mezDbgPrint("inside refundCustomerCustomAmount $refundAmount");
+    return _callRestaurantCloudFunction("refundCustomerCustomAmount", orderId,
+        optionalParams: {"refundAmount": refundAmount});
+  }
+
+  Future<ServerResponse> markItemUnavailable(
+      String orderId, String itemId) async {
+    mezDbgPrint("inside markItemUnavailable $itemId");
+    return _callRestaurantCloudFunction("markOrderItemUnavailable", orderId,
+        optionalParams: {"itemId": itemId});
   }
 
   Future<ServerResponse> _callRestaurantCloudFunction(
@@ -173,7 +184,11 @@ class ROpOrderController extends GetxController {
         FirebaseFunctions.instance.httpsCallable('restaurant-$functionName');
     try {
       final HttpsCallableResult response = await cloudFunction
-          .call({"orderId": orderId, ...optionalParams ?? {}});
+          .call({
+        "orderId": orderId,
+        "fromRestaurantOperator": true,
+        ...optionalParams ?? {}
+      });
       mezDbgPrint("Response : ${response.data}");
       return ServerResponse.fromJson(response.data);
     } catch (e) {

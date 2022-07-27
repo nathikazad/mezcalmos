@@ -12,10 +12,14 @@ class StripePaymentInfo {
   num? expMonth;
   num? expYear;
   String? last4;
+  num amountCharged;
+  num amountRefunded;
 
   StripePaymentInfo(
       {required this.id,
       required this.stripeFees,
+      this.amountCharged = 0,
+      this.amountRefunded = 0,
       this.brand,
       this.expYear,
       this.expMonth,
@@ -25,6 +29,8 @@ class StripePaymentInfo {
     return StripePaymentInfo(
         id: data["id"],
         stripeFees: data["stripeFees"],
+        amountCharged: data["amountCharged"],
+        amountRefunded: data["amountRefunded"],
         brand: data["brand"],
         expYear: data["expYear"],
         expMonth: data["expMonth"],

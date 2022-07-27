@@ -39,7 +39,9 @@ export const restaurant = {
   readyForOrderPickup: restaurantStatusChange.readyForPickupOrder,
   cancelOrderFromAdmin: restaurantStatusChange.cancelOrder,
   cancelOrderFromCustomer: require("./restaurant/cancelOrderFromCustomer"),
-  setEstimatedFoodReadyTime: restaurantStatusChange.setEstimatedFoodReadyTime
+  setEstimatedFoodReadyTime: restaurantStatusChange.setEstimatedFoodReadyTime,
+  markOrderItemUnavailable: restaurantStatusChange.markOrderItemUnavailable,
+  refundCustomerCustomAmount: restaurantStatusChange.refundCustomerCustomAmount
 }
 
 // Taxi
