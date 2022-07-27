@@ -20,7 +20,6 @@
                 "lmode": "prod"
             }
         },
-
         "launcher.xml": "../android/app/src/main/res/values/launcher.xml",
         "launcherPackageProperties": "../android/launcherPackage.properties",
         "appGoogleServices": "../android/app/google-services.json",
@@ -98,7 +97,16 @@
                     "googe-service-file": "services/prod/android/customer.json",
                     "apple-service-file": "services/prod/ios/customer.plist"
                 }
-            }
+            },
+            "appPermissions": [
+                "<uses-permission android:name='android.permission.READ_PHONE_STATE' />",
+                "<uses-permission android:name='android.permission.CALL_PHONE' />",
+                "<uses-permission android:name='android.permission.MODIFY_AUDIO_SETTINGS' />",
+                "<uses-permission android:name='android.permission.RECORD_AUDIO' />",
+                "<uses-permission android:name='android.permission.WAKE_LOCK' />"
+            ],
+            "inApplicationInjection" : "<service android:name='io.wazo.callkeep.VoiceConnectionService' android:label='Wazo' android:permission='android.permission.BIND_TELECOM_CONNECTION_SERVICE'> <intent-filter> <action android:name='android.telecom.ConnectionService' /> </intent-filter> </service>"
+
         },
         "DeliveryApp": {
             "folderName": "DeliveryApp",
