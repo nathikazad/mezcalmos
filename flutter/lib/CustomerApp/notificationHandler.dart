@@ -279,7 +279,13 @@ Notification newMessageNotification(String key, value) {
   mezDbgPrint("New message notif ==========>>>>>>>>$value");
   return Notification(
       id: key,
-      linkUrl: value["linkUrl"],
+      linkUrl: value["linkUrl"] ??
+          getMessagesRoute(
+              chatId: value["chatId"],
+              orderId: value["orderId"],
+              recipientType: value["sender"]["particpantType"]
+                  .toString()
+                  .toParticipantType()),
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],
