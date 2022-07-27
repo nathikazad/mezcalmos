@@ -7,11 +7,12 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class ROpOptionView extends StatefulWidget {
   const ROpOptionView({Key? key}) : super(key: key);
@@ -29,21 +30,23 @@ class _ROpOptionViewState extends State<ROpOptionView>
 
   String? itemId;
   String? categoryId;
+  String? restaurantId;
   Rxn<Option> option = Rxn<Option>();
 
   @override
   void initState() {
-    if (Get.arguments != null) {
-      option.value = Get.arguments["option"] as Option?;
-      itemId = Get.arguments["itemId"] as String?;
-      categoryId = Get.arguments["categoryId"] as String?;
+    restaurantId = Get.parameters["restaurantId"];
+    if (restaurantId != null) {
+      if (Get.arguments != null) {
+        option.value = Get.arguments["option"] as Option?;
+        itemId = Get.arguments["itemId"] as String?;
+        categoryId = Get.arguments["categoryId"] as String?;
+      }
+
+      _tabController = TabController(length: 2, vsync: this);
+
+      _viewController.init(option: option.value, restaurantId: restaurantId!);
     }
-
-    _tabController = TabController(length: 2, vsync: this);
-
-    _viewController.init(
-      option: option.value,
-    );
     super.initState();
   }
 
@@ -55,145 +58,164 @@ class _ROpOptionViewState extends State<ROpOptionView>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(),
-      bottomNavigationBar: CallToActionButton(
-        height: 65,
-        onTap: () async {
-          saveOption();
-        },
-        text: (_viewController.editMode.isTrue) ? "Edit option" : "Add option",
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          // Primary language tab view
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(12),
-            child: Form(
-              key: prFormKey,
-              child: Column(
+    return Obx(() {
+      if (_viewController.restaurant.value != null) {
+        return Scaffold(
+          appBar: _appBar(),
+          bottomNavigationBar: CallToActionButton(
+            height: 65,
+            onTap: () async {
+              saveOption();
+            },
+            text: (_viewController.editMode.isTrue)
+                ? "Edit option"
+                : "Add option",
+          ),
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              // Primary language tab view
+              _primaryTab(),
+              // Secondary language tab view
+              _secondarTab(),
+            ],
+          ),
+        );
+      } else
+        return Container(
+          alignment: Alignment.center,
+          color: Colors.white,
+          child: MezLogoAnimation(
+            centered: true,
+          ),
+        );
+    });
+  }
+
+  SingleChildScrollView _secondarTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(12),
+      child: Form(
+        key: scFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Option name", style: Get.textTheme.bodyText1),
+            SizedBox(
+              height: 8,
+            ),
+            TextFormField(
+                controller: _viewController.scOptionName,
+                style: Get.textTheme.bodyText1,
+                validator: (String? v) {
+                  if (v == null || v.isEmpty) {
+                    return "required";
+                  }
+                  return null;
+                }),
+            Obx(() {
+              return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Option name", style: Get.textTheme.bodyText1),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                      controller: _viewController.prOptionName,
-                      style: Get.textTheme.bodyText1,
-                      validator: (String? v) {
-                        if (v == null || v.isEmpty) {
-                          return "required";
-                        }
-                        return null;
-                      }),
                   SizedBox(
                     height: 25,
                   ),
                   Text(
-                    "Option type",
+                    "Option choices",
                     style: Get.textTheme.bodyText1,
                   ),
                   SizedBox(
                     height: 8,
                   ),
-                  ROpOptionSelector(
-                    viewController: _viewController,
+                  Container(
+                    child: Column(
+                      children: List.generate(
+                          _viewController.optionChoices.length, (int index) {
+                        return ROpOptionChoice(
+                          viewController: _viewController,
+                          index: index,
+                          isSecondary: true,
+                        );
+                      }),
+                    ),
                   ),
-                  Obx(() {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          "Option choices",
-                          style: Get.textTheme.bodyText1,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Container(
-                          child: Column(
-                            children: List.generate(
-                                _viewController.optionChoices.length,
-                                (int index) {
-                              return ROpOptionChoice(
-                                viewController: _viewController,
-                                index: index,
-                              );
-                            }),
-                          ),
-                        ),
-                        MezAddButton(onClick: () {
-                          _viewController.addNewEmptyChoice();
-                        })
-                      ],
-                    );
-                  }),
-                  _deleteOptionBtn()
                 ],
-              ),
+              );
+            })
+          ],
+        ),
+      ),
+    );
+  }
+
+  SingleChildScrollView _primaryTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(12),
+      child: Form(
+        key: prFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Option name", style: Get.textTheme.bodyText1),
+            SizedBox(
+              height: 8,
             ),
-          ),
-          // Secondary language tab view
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(12),
-            child: Form(
-              key: scFormKey,
-              child: Column(
+            TextFormField(
+                controller: _viewController.prOptionName,
+                style: Get.textTheme.bodyText1,
+                validator: (String? v) {
+                  if (v == null || v.isEmpty) {
+                    return "required";
+                  }
+                  return null;
+                }),
+            SizedBox(
+              height: 25,
+            ),
+            Text(
+              "Option type",
+              style: Get.textTheme.bodyText1,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            ROpOptionSelector(
+              viewController: _viewController,
+            ),
+            Obx(() {
+              return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Option name", style: Get.textTheme.bodyText1),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    "Option choices",
+                    style: Get.textTheme.bodyText1,
+                  ),
                   SizedBox(
                     height: 8,
                   ),
-                  TextFormField(
-                      controller: _viewController.scOptionName,
-                      style: Get.textTheme.bodyText1,
-                      validator: (String? v) {
-                        if (v == null || v.isEmpty) {
-                          return "required";
-                        }
-                        return null;
+                  Container(
+                    child: Column(
+                      children: List.generate(
+                          _viewController.optionChoices.length, (int index) {
+                        return ROpOptionChoice(
+                          viewController: _viewController,
+                          index: index,
+                        );
                       }),
-                  Obx(() {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          "Option choices",
-                          style: Get.textTheme.bodyText1,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Container(
-                          child: Column(
-                            children: List.generate(
-                                _viewController.optionChoices.length,
-                                (int index) {
-                              return ROpOptionChoice(
-                                viewController: _viewController,
-                                index: index,
-                                isSecondary: true,
-                              );
-                            }),
-                          ),
-                        ),
-                      ],
-                    );
+                    ),
+                  ),
+                  MezAddButton(onClick: () {
+                    _viewController.addNewEmptyChoice();
                   })
                 ],
-              ),
-            ),
-          ),
-        ],
+              );
+            }),
+            _deleteOptionBtn()
+          ],
+        ),
       ),
     );
   }

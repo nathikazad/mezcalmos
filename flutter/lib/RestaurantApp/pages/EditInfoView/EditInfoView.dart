@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['EditInfoView']['EditInfoView'];
@@ -29,13 +30,19 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
   AnimatedSliderController animatedSliderController =
       AnimatedSliderController();
   ROpEditInfoController editInfoController = ROpEditInfoController();
-  late final ROpEditInfoWidgets viewWidgets;
+  late ROpEditInfoWidgets viewWidgets;
+  String? restaurantID;
 
   @override
   void initState() {
-    editInfoController.init();
-    viewWidgets = ROpEditInfoWidgets(
-        editInfoController: editInfoController, context: context);
+    restaurantID = Get.parameters["restaurantId"];
+    if (restaurantID != null) {
+      editInfoController.init(restaurantId: restaurantID!);
+
+      viewWidgets = ROpEditInfoWidgets(
+          editInfoController: editInfoController, context: context);
+    } else
+      Get.back();
 
     super.initState();
   }
@@ -45,7 +52,7 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
     return Obx(() {
       if (editInfoController.showStripe.isTrue) {
         return ROpStripePaymentSetup(viewController: editInfoController);
-      } else {
+      } else if (editInfoController.restaurant.value != null) {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: LaundryAppAppBar(
@@ -128,6 +135,14 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
             ),
           ),
           bottomNavigationBar: _editInfoSaveButton(),
+        );
+      } else {
+        return Container(
+          color: Colors.white,
+          alignment: Alignment.center,
+          child: MezLogoAnimation(
+            centered: true,
+          ),
         );
       }
     });

@@ -12,8 +12,7 @@ class ROpMenuViewController {
   ROpMenuViewController();
 
 // instances and streams subscriptions
-  RestaurantInfoController _restaurantInfoController =
-      Get.find<RestaurantInfoController>();
+  late RestaurantInfoController restaurantInfoController;
   StreamSubscription? _restaurantListener;
 
   // state variables
@@ -24,15 +23,19 @@ class ROpMenuViewController {
 
 // IMPORTANT //
   // This method needs to be called on the initState method of the view
-  void init() {
+  Future<void> init({required String restaurantId}) async {
     // assigning restaurant data and start the stream subscription //
-    restaurant.value = _restaurantInfoController.restaurant.value;
-    _restaurantListener =
-        _restaurantInfoController.restaurant.stream.listen((Restaurant? event) {
+    mezDbgPrint("INIT MENU VIEW =======>$restaurantId");
+    Get.put(RestaurantInfoController(), permanent: false);
+    restaurantInfoController = Get.find<RestaurantInfoController>();
+    restaurantInfoController.init(restId: restaurantId);
+    restaurant.value =
+        await restaurantInfoController.getRestaurantAsFuture(restaurantId);
+    restaurantInfoController
+        .getRestaurant(restaurantId)
+        .listen((Restaurant? event) {
       if (event != null) {
         restaurant.value = event;
-      } else {
-        // TODO handles when the restaurant data comming from the stream is null //
       }
     });
   }
@@ -45,7 +48,7 @@ class ROpMenuViewController {
 
   // Catgeory methods //
   Future<void> deleteCategory({required String categoryId}) async {
-    await _restaurantInfoController
+    await restaurantInfoController
         .deleteCategory(categoryId: categoryId)
         .then((value) => Get.back());
   }
@@ -106,10 +109,10 @@ class ROpMenuViewController {
 
   Future<void> saveReorder() async {
     for (int i = 0; i < rOcategories.length; i++) {
-      await _restaurantInfoController.editCategoryPosition(
+      await restaurantInfoController.editCategoryPosition(
           position: rOcategories[i].position, categoryId: rOcategories[i].id!);
       for (int j = 0; j < rOcategories[i].items.length; j++) {
-        await _restaurantInfoController.editItemPosition(
+        await restaurantInfoController.editItemPosition(
             position: rOcategories[i].items[j].position,
             categoryId: rOcategories[i].id!,
             itemId: rOcategories[i].items[j].id!);
@@ -128,10 +131,10 @@ class ROpMenuViewController {
 
   // ----------------------------------------------------- Specials ----------------------------------------------------- //
   Future<void> removeFromSpecials({required Item item}) async {
-    await _restaurantInfoController.removeSpecial(item: item);
+    await restaurantInfoController.removeSpecial(item: item);
   }
 
   Future<void> addToSpecials({required Item item}) async {
-    await _restaurantInfoController.addToSpecials(item: item);
+    await restaurantInfoController.addToSpecials(item: item);
   }
 }

@@ -6,9 +6,11 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 
 class ROpSpecialsComponent extends StatelessWidget {
-  const ROpSpecialsComponent({Key? key, required this.viewController})
+  const ROpSpecialsComponent(
+      {Key? key, required this.viewController, required this.restaurantID})
       : super(key: key);
   final ROpMenuViewController viewController;
+  final String restaurantID;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,8 @@ class ROpSpecialsComponent extends StatelessWidget {
                 ),
                 MezAddButton(
                   onClick: () {
-                    Get.toNamed(kItemView, arguments: {"specials": true});
+                    Get.toNamed(getROpAddItemRoute(restaurantId: restaurantID),
+                        arguments: {"specials": true});
                   },
                 ),
                 SizedBox(

@@ -13,17 +13,34 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 // const String kCurrentOrdersListRoute = '/currentOrders';
 const String kCurrentOrdersListView = '/orders';
 const String kPastOrdersListView = '/pastorders';
-const String kMenuView = '/menu';
+const String kMenuView = '/menu/:restaurantId';
 
-const String kEditInfoView = '/editInfo';
+const String kEditInfoView = '/editInfo/:restaurantId';
 
 const String kCategoryView = '/categoryScreen';
 const String kEditCategoryScreen = '/categoryScreen/:categoryId';
-const String kItemView = '/itemView';
+const String kAddItemView = '/itemView/:restaurantId';
 
-const String kEditItemView = '/itemView/:itemId/:categoryId';
+const String kEditItemView = '/itemView/:restaurantId/:itemId/:categoryId';
 const String kOrderView = '/orderView/:orderId';
-const String kOptionView = "/optionView/:itemId/:optionId";
+const String kOptionView = "/optionView/:restaurantId/:itemId";
+
+String getROpEditInfoRoute({required String restaurantId}) {
+  return kEditInfoView.replaceFirst(":restaurantId", restaurantId);
+}
+
+String getROpOptionRoute({required String restaurantId}) {
+  return kOptionView.replaceFirst(":restaurantId", restaurantId);
+}
+
+String getROpAddItemRoute({required String restaurantId}) {
+  return kAddItemView.replaceFirst(":restaurantId", restaurantId);
+}
+
+String getROpMenuRoute({required String restaurantId}) {
+  return kMenuView.replaceFirst(":restaurantId", restaurantId);
+}
+
 String getCategoryEditRoute(String categoryId) {
   return kEditCategoryScreen.replaceFirst(":categoryId", categoryId);
 }
@@ -65,7 +82,7 @@ class XRouter {
           page: () => ROpCategoryView(),
         ),
         GetPage(
-          name: kItemView,
+          name: kAddItemView,
           page: () => ROpItemView(),
         ),
         GetPage(

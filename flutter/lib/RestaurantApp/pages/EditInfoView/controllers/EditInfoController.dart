@@ -23,10 +23,14 @@ dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
 
 //
 class ROpEditInfoController {
-  RestaurantInfoController restaurantInfoController =
-      Get.find<RestaurantInfoController>();
+  // RestaurantInfoController restaurantInfoController =
+  //     Get.find<RestaurantInfoController>();
+
+  late RestaurantInfoController restaurantInfoController;
+
   StreamSubscription? restListner;
-  final Rxn<Restaurant> restaurant = Rxn<Restaurant>();
+
+  Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   TextEditingController restaurantNameTxt = TextEditingController();
   final Rxn<String> newImageUrl = Rxn();
   final Rxn<Location> newLocation = Rxn();
@@ -48,18 +52,23 @@ class ROpEditInfoController {
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
 
-  void init() {
-    restaurant.value = restaurantInfoController.restaurant.value;
-    restListner =
-        restaurantInfoController.restaurant.stream.listen((Restaurant? event) {
+  Future<void> init({required String restaurantId}) async {
+    mezDbgPrint("INIT EDIT PROFILE VIEW =======>$restaurantId");
+    Get.put(RestaurantInfoController(), permanent: false);
+    restaurantInfoController = Get.find<RestaurantInfoController>();
+    restaurantInfoController.init(restId: restaurantId);
+    restaurant.value =
+        await restaurantInfoController.getRestaurantAsFuture(restaurantId);
+    restaurantInfoController
+        .getRestaurant(restaurantId)
+        .listen((Restaurant? event) {
       if (event != null) {
         restaurant.value = event;
       }
     });
-
     if (restaurant.value != null) {
+      _settingSchedules();
       restaurantNameTxt.text = restaurant.value?.info.name ?? '';
-      settingSchedules();
       newLocation.value = restaurant.value!.info.location;
       newImageUrl.value = restaurant.value?.info.image ?? '';
       primaryLang.value = restaurant.value!.primaryLanguage;
@@ -67,10 +76,12 @@ class ROpEditInfoController {
     }
   }
 
-  void settingSchedules() {
+  void _settingSchedules() {
+    mezDbgPrint(
+        "Restaurant schedule ===================> ${restaurant.value!.schedule!.toFirebaseFormattedJson()}");
+    oldSchedule.value = Schedule.clone(restaurant.value!.schedule!);
     newSchedule.value = Schedule.clone(restaurant.value!.schedule!);
     schedulePreview.value = Schedule.clone(newSchedule.value!);
-    oldSchedule.value = Schedule.clone(restaurant.value!.schedule!);
   }
 
   Future<void> updateLaundryInfo() async {
@@ -253,13 +264,14 @@ class ROpEditInfoController {
   }
 
   void dispose() {
-    restaurant.close();
-    restaurantNameTxt.clear();
-    restListner?.cancel();
-
     newLocation.close();
     newImageUrl.close();
     primaryLang.close();
     secondaryLang.close();
+    restaurant.close();
+    restaurantNameTxt.clear();
+    restListner?.cancel();
+    restaurantInfoController.dispose();
+    Get.delete<RestaurantInfoController>();
   }
 }

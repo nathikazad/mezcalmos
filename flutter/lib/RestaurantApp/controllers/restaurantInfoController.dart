@@ -22,10 +22,13 @@ class RestaurantInfoController extends GetxController {
   Rxn<LanguageType> restaurantPrimaryLanguage = Rxn();
 
   Rxn<Restaurant> restaurant = Rxn();
+  @override
+  void init({required String restId}) {
+    restaurantId = restId;
+  }
+
   StreamSubscription? _restaurantInfoListener;
-  Stream<Restaurant?> getLaundry(String restaurantId) {
-    mezDbgPrint(
-        "--------------------> Start listening service providers info  ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: restaurantId)}");
+  Stream<Restaurant?> getRestaurant(String restaurantId) {
     return _databaseHelper.firebaseDatabase
         .ref()
         .child(serviceProviderInfos(
@@ -40,7 +43,7 @@ class RestaurantInfoController extends GetxController {
     });
   }
 
-  Future<Restaurant> getLaundryAsFuture(String restaurantId) async {
+  Future<Restaurant> getRestaurantAsFuture(String restaurantId) async {
     return _databaseHelper.firebaseDatabase
         .ref()
         .child(serviceProviderInfos(
@@ -414,7 +417,10 @@ class RestaurantInfoController extends GetxController {
   }
 
   // ----------------------------------------------------- Stripe ----------------------------------------------------- //
-  Future<void> setCardPayment(bool value) async {
+  Future<void> setCardPayment(
+    bool value,
+  ) async {
+    mezDbgPrint("Setting card payment to ====>$value");
     await _databaseHelper.firebaseDatabase
         .ref()
         .child(acceptedPaymentNode(uid: restaurantId) + "/card/")

@@ -5,7 +5,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
@@ -19,8 +18,8 @@ class RestaurantOpAuthController extends GetxController {
   Rxn<RestaurantOperator> operator = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   AuthController _authController = Get.find<AuthController>();
-  RestaurantInfoController _restaurantInfoController =
-      Get.find<RestaurantInfoController>();
+  // RestaurantInfoController _restaurantInfoController =
+  //     Get.find<RestaurantInfoController>();
   ROpOrderController _orderController = Get.find<ROpOrderController>();
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -12,11 +10,12 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class ROpItemView extends StatefulWidget {
   const ROpItemView({Key? key}) : super(key: key);
@@ -27,8 +26,8 @@ class ROpItemView extends StatefulWidget {
 
 class _ROpItemViewState extends State<ROpItemView>
     with SingleTickerProviderStateMixin {
-  StreamSubscription? _restaurantListener;
   late TabController _tabController;
+  String? restuarantID;
   String? itemId;
   String? categoryId;
   bool? specials;
@@ -39,12 +38,19 @@ class _ROpItemViewState extends State<ROpItemView>
   void initState() {
     itemId = Get.parameters["itemId"];
     categoryId = Get.parameters["categoryId"];
-    if (Get.arguments != null) {
-      specials = Get.arguments["specials"] as bool;
-    }
-    _tabController = TabController(length: 2, vsync: this);
-    viewController.init(
-        itemId: itemId, categoryId: categoryId, specials: specials);
+    restuarantID = Get.parameters["restaurantId"];
+    if (restuarantID != null) {
+      if (Get.arguments != null) {
+        specials = Get.arguments["specials"] as bool;
+      }
+      _tabController = TabController(length: 2, vsync: this);
+      viewController.init(
+          itemId: itemId,
+          categoryId: categoryId,
+          specials: specials,
+          restaurantId: restuarantID!);
+    } else
+      Get.back();
 
     super.initState();
   }
@@ -59,27 +65,39 @@ class _ROpItemViewState extends State<ROpItemView>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(),
-      bottomNavigationBar: _saveBtn(),
-      body: Obx(
-        () {
-          if (viewController.restaurant.value != null) {
-            return Form(
-              key: _formKey,
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  _primaryTab(),
-                  _secondaryTab(),
-                ],
-              ),
-            );
-          } else {
-            return CircularProgressIndicator();
-          }
-        },
-      ),
+    return Obx(
+      () {
+        if (viewController.restaurant.value != null) {
+          return Scaffold(
+            appBar: _appBar(),
+            bottomNavigationBar: _saveBtn(),
+            body: Obx(
+              () {
+                if (viewController.restaurant.value != null) {
+                  return Form(
+                    key: _formKey,
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        _primaryTab(),
+                        _secondaryTab(),
+                      ],
+                    ),
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              },
+            ),
+          );
+        } else {
+          return Container(
+            color: Colors.white,
+            alignment: Alignment.center,
+            child: MezLogoAnimation(centered: true),
+          );
+        }
+      },
     );
   }
 
@@ -128,7 +146,7 @@ class _ROpItemViewState extends State<ROpItemView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 25,
+            height: 8,
           ),
           Text(
             "Item name",
@@ -280,8 +298,8 @@ class _ROpItemViewState extends State<ROpItemView>
           MezAddButton(
             title: "Add option",
             onClick: () async {
-              final Option? newOption =
-                  await Get.toNamed(kOptionView) as Option?;
+              final Option? newOption = await Get.toNamed(
+                  getROpOptionRoute(restaurantId: restuarantID!)) as Option?;
               if (newOption != null) {
                 mezDbgPrint("From item view ===> ${newOption.toJson()}");
                 viewController.addOption(newOption);

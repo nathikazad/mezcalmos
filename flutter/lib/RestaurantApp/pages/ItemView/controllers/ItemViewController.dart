@@ -8,16 +8,15 @@ import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class ItemViewController {
   /// Class to control the item view on edit and add mode for restaurant app ///
 
   // controllers //
 
-  RestaurantInfoController _restaurantInfoController =
-      Get.find<RestaurantInfoController>();
+  late RestaurantInfoController _restaurantInfoController;
 
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
   // Text editing controllers //
@@ -51,8 +50,27 @@ class ItemViewController {
 
   // initalisation //
   // the itemId arguments for edit mode //
-  void init({String? itemId, String? categoryId, bool? specials}) {
-    restaurant.value = _restaurantInfoController.restaurant.value;
+  Future<void> init(
+      {String? itemId,
+      String? categoryId,
+      bool? specials,
+      required String restaurantId}) async {
+    Get.put(RestaurantInfoController(), permanent: false);
+    _restaurantInfoController = Get.find<RestaurantInfoController>();
+    _restaurantInfoController.init(restId: restaurantId);
+    restaurant.value =
+        await _restaurantInfoController.getRestaurantAsFuture(restaurantId);
+    mezDbgPrint(
+        "RestaurantId ===============================>>> $restaurantId");
+    mezDbgPrint(
+        "Restaurant ===============================>>> ${restaurant.value!.toJson()}");
+    _restaurantInfoController
+        .getRestaurant(restaurantId)
+        .listen((Restaurant? event) {
+      if (event != null) {
+        restaurant.value = event;
+      }
+    });
     if (specials != null) {
       specialMode.value = specials;
     }

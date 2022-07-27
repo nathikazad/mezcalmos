@@ -10,23 +10,29 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
 
-class ROpDrawer extends StatelessWidget {
+class ROpDrawer extends StatefulWidget {
   const ROpDrawer({Key? key}) : super(key: key);
   // controllers //
-  static final LanguageController languageController =
-      Get.find<LanguageController>();
-  static final SideMenuDrawerController _drawerController =
+
+  @override
+  State<ROpDrawer> createState() => _ROpDrawerState();
+}
+
+class _ROpDrawerState extends State<ROpDrawer> {
+  final LanguageController languageController = Get.find<LanguageController>();
+  final SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
-  static AuthController authController = Get.find<AuthController>();
-  static RestaurantInfoController restaurantInfoController =
-      Get.find<RestaurantInfoController>();
-  static RestaurantOpAuthController restaurantOpAuthController =
+  AuthController authController = Get.find<AuthController>();
+  // static RestaurantInfoController restaurantInfoController =
+  //     Get.find<RestaurantInfoController>();
+  RestaurantOpAuthController restaurantOpAuthController =
       Get.find<RestaurantOpAuthController>();
 
   // helpers //
@@ -35,6 +41,23 @@ class ROpDrawer extends StatelessWidget {
   // variables //
   static final String version =
       GetStorage().read<String>(getxAppVersion) as String;
+  Rxn<Restaurant> restaurant = Rxn();
+  late RestaurantInfoController restaurantInfoController;
+
+  @override
+  void initState() {
+    Get.put(RestaurantInfoController(), permanent: false);
+    restaurantInfoController = Get.find<RestaurantInfoController>();
+    restaurant.value = restaurantInfoController.restaurant.value;
+    restaurantInfoController
+        .getRestaurant(restaurantOpAuthController.restaurantId!)
+        .listen((Restaurant? event) {
+      if (event != null) {
+        restaurant.value = event;
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +77,7 @@ class ROpDrawer extends StatelessWidget {
                     ),
                     // Laundry IMAGE AND NAME
 
-                    if (restaurantInfoController.restaurant.value != null)
-                      _laundryImageAndName(),
+                    _laundryImageAndName(),
 
                     // Navigation links
                     if (restaurantOpAuthController.operator.value != null &&
@@ -149,7 +171,8 @@ class ROpDrawer extends StatelessWidget {
         _navigationLink(
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed(kEditInfoView);
+              Get.toNamed(getROpEditInfoRoute(
+                  restaurantId: restaurantOpAuthController.restaurantId!));
             },
             icon: Icons.person,
             titleWidget: Text(
@@ -160,7 +183,8 @@ class ROpDrawer extends StatelessWidget {
             icon: Icons.flatware_rounded,
             onClick: () {
               _drawerController.closeMenu();
-              Get.toNamed(kMenuView);
+              Get.toNamed(getROpMenuRoute(
+                  restaurantId: restaurantOpAuthController.restaurantId!));
             },
             titleWidget: Text(
               "${_i18n()["menu"] ?? "Menu"}",
@@ -190,39 +214,43 @@ class ROpDrawer extends StatelessWidget {
   }
 
   Widget _laundryImageAndName() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: const EdgeInsets.all(12),
-          child: Column(
+    return Obx(
+      () {
+        if (restaurant.value != null) {
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                radius: 45,
-                backgroundImage: (restaurantInfoController
-                            .restaurant.value!.info.image !=
-                        null)
-                    ? CachedNetworkImageProvider(
-                        restaurantInfoController.restaurant.value?.info.image ??
-                            "")
-                    : AssetImage(aNoImage) as ImageProvider,
+              Container(
+                margin: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      radius: 45,
+                      backgroundImage: (restaurant.value!.info.image != null)
+                          ? CachedNetworkImageProvider(
+                              restaurant.value?.info.image ?? "")
+                          : AssetImage(aNoImage) as ImageProvider,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      restaurant.value!.info.name,
+                      style: Get.textTheme.headline3,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                restaurantInfoController.restaurant.value!.info.name,
-                style: Get.textTheme.headline3,
-              ),
-              SizedBox(
-                height: 15,
-              ),
+              Divider(),
             ],
-          ),
-        ),
-        Divider(),
-      ],
+          );
+        } else
+          return Container();
+      },
     );
   }
 

@@ -3,15 +3,15 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 enum FormValid { Valid, PrimaryNotValid, SecondaryNotValid }
 
 class ROpOptionViewController {
   // instances //
-  RestaurantInfoController _restaurantInfoController =
-      Get.find<RestaurantInfoController>();
+  late RestaurantInfoController restaurantInfoController;
 
   // Text inputs //
   TextEditingController prOptionName = TextEditingController();
@@ -42,10 +42,16 @@ class ROpOptionViewController {
   };
 
 // init //
-  void init({
-    Option? option,
-  }) {
-    restaurant.value = _restaurantInfoController.restaurant.value;
+  Future<void> init({Option? option, required String restaurantId}) async {
+    // restaurant.value = _restaurantInfoController.restaurant.value;
+
+    Get.put(RestaurantInfoController(), permanent: false);
+    restaurantInfoController = Get.find<RestaurantInfoController>();
+    restaurantInfoController.init(restId: restaurantId);
+    mezDbgPrint(restaurantId);
+    restaurant.value =
+        await restaurantInfoController.getRestaurantAsFuture(restaurantId);
+
     editableOption.value = option;
 
     if (editableOption.value != null) {
@@ -159,7 +165,7 @@ class ROpOptionViewController {
       {required String itemId,
       required String optionId,
       String? categoryId}) async {
-    await _restaurantInfoController
+    await restaurantInfoController
         .deleteOption(
             itemId: itemId, optionId: optionId, categoryId: categoryId)
         .then((value) => Get.back());
