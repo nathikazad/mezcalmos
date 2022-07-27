@@ -205,7 +205,7 @@ class Launcher:
         PRINTLN(f"[+] Patched launcher.xml !")
 
         # writing Valid launcherPackage.properties
-        _launcherPackagePropertiesFile = self.conf['settings']['launcherPackageProperties']
+        _launcherPackagePropertiesFile =CURDIR_ABS_PATH+ self.conf['settings']['launcherPackageProperties']
         _launcherPackageProperties = f"package.name={_appPackageName}"
         open(_launcherPackagePropertiesFile , 'w+').write(_launcherPackageProperties)
         PRINTLN(f"[+] Patched launcherPackage.properties !")
@@ -323,8 +323,8 @@ class Launcher:
     def __patch_gs__(self):
         '''If its staging mode Patch the Gpoogle-services.json'''
         # Project's Services files
-        android_flutter_gs_path = self.conf['settings']['appGoogleServices']
-        ios_flutter_gs_path = self.conf['settings']['appAppleServices']
+        android_flutter_gs_path = CURDIR_ABS_PATH+self.conf['settings']['appGoogleServices']
+        ios_flutter_gs_path = CURDIR_ABS_PATH+self.conf['settings']['appAppleServices']
         # launcher Services files
         _launcher_google_services = f"{CURDIR_ABS_PATH}launcher/{self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['googe-service-file']}"
         _launcher_apple_services = f"{CURDIR_ABS_PATH}launcher/{self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['apple-service-file']}"
@@ -530,8 +530,8 @@ class Config:
         if re.match(r'^([1-9]+)\.[0-9]+\.[0-9]+\+[1-9]+$' , v) == None and __v.__len__() != 2:
             PRINTLN(f"[!] Error -> Incorrect Version {v} , type launcher.py help!")
             exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
-        pubspec = self.conf['settings']['pubspec.yaml']
-        localProperties = self.conf['settings']['local.properties']
+        pubspec =   CURDIR_ABS_PATH+self.conf['settings']['pubspec.yaml']
+        localProperties =CURDIR_ABS_PATH+ self.conf['settings']['local.properties']
         if not os.path.exists(pubspec):
             PRINTLN(f'[!] config.json::{pubspec} not found !')
             exit(DW_EXIT_REASONS.PUBSPECT_YAML_NOT_FOUND)
