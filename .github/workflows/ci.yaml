@@ -58,8 +58,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Releasing on pushed tags.
+      - name: changing to ./flutter
         working-directory: ./flutter
+      - name: using release-actions.
         uses: ncipollo/release-action@v1.10.0
         with:
-         artifacts: "build/app/outputs/flutter-apk/*.apk"
+          artifacts: "build/app/outputs/flutter-apk/*.apk"
