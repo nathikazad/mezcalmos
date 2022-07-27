@@ -128,10 +128,7 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
 Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: getMessagesRoute(
-          chatId: value['chatId'],
-          orderLink: getLaundryOpOrderRoute(value['orderId']),
-          orderType: OrderType.Laundry),
+      linkUrl: value["linkUrl"],
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

@@ -25,7 +25,8 @@ export interface Notification {
 export interface ForegroundNotification {
   time: string,
   notificationType: NotificationType,
-  notificationAction: NotificationAction
+  notificationAction: NotificationAction,
+  linkUrl?: string
 }
 
 export type BackgroundNotification = Record<Language, fcmNotification>

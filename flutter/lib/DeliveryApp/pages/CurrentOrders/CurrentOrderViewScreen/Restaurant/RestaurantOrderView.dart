@@ -98,7 +98,8 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       markerId: order.value!.restaurantId,
       customImgHttpUrl: order.value!.restaurant.image,
     );
-
+    
+    if(order.value != null)
     handleRestaurantOrder(order.value as RestaurantOrder);
 
     waitForOrderIfNotLoaded().then((void value) {
@@ -249,6 +250,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
           );
         }
         // update position of our delivery Guy
+      if (order.dropoffDriver?.location != null)
         mapController.addOrUpdateUserMarker(
           latLng: LatLng(
             order.dropoffDriver!.location!.latitude,
@@ -282,6 +284,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
           );
         }
         // updating our delivery guy location
+      if (order.dropoffDriver?.location != null)
         mapController.addOrUpdateUserMarker(
           latLng: LatLng(
             order.dropoffDriver!.location!.latitude,

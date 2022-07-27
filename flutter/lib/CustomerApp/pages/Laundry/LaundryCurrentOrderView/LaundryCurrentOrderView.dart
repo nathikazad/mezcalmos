@@ -283,7 +283,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           _phaseSnapshot = phase;
           // needed when the view is not disposed, we have to remove it..
           mapController.removeMarkerById("pickup_driver");
-          mezDbgPrint("Phaaaaazeeee::_phaseSnapshot ==> $_phaseSnapshot");
+          // mezDbgPrint("Phaaaaazeeee::_phaseSnapshot ==> $_phaseSnapshot");
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
             latLng: order.value!.laundry!.location.toLatLng(),
@@ -300,8 +300,8 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
         // we keep updating the delivery's
         if (order.value?.dropoffDriver != null) {
-          mezDbgPrint(
-              "Phaaaaazeeee::dropoffDriver ==> ${order.value!.dropoffDriver?.location}");
+          // mezDbgPrint(
+          //     "Phaaaaazeeee::dropoffDriver ==> ${order.value!.dropoffDriver?.location}");
 
           mapController.addOrUpdateUserMarker(
             latLng: order.value!.dropoffDriver!.location!,

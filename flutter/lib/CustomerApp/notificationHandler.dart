@@ -277,28 +277,9 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
 
 Notification newMessageNotification(String key, value) {
   mezDbgPrint("New message notif ==========>>>>>>>>$value");
-  String? orderLink;
-  OrderType? orderType;
-  if (value["orderType"] != null)
-    orderType = value["orderType"].toString().toOrderType();
-  switch (orderType) {
-    case OrderType.Restaurant:
-      orderLink = getRestaurantOrderRoute(value["orderId"]);
-      break;
-    case OrderType.Laundry:
-      orderLink = getLaundryOrderRoute(value['orderId']);
-      break;
-    default:
-  }
   return Notification(
       id: key,
-      linkUrl: getMessagesRoute(
-          chatId: value['chatId'],
-          orderId: value["orderId"],
-          recipientType:
-              value["sender"]["particpantType"].toString().toParticipantType(),
-          orderType: orderType,
-          orderLink: orderLink),
+      linkUrl: value["linkUrl"],
       // just for backwards compatibility, future make it just value['orderId']
       body: value['message'],
       imgUrl: value['sender']['image'],
