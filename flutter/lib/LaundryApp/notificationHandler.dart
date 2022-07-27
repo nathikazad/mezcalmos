@@ -126,9 +126,12 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
+  mezDbgPrint("notification Data =================================> $value");
   return Notification(
       id: key,
-      linkUrl: value["linkUrl"],
+      linkUrl: getMessagesRoute(
+          chatId: value['chatId'],
+          orderLink: getLaundryOpOrderRoute(value['orderId'])),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
