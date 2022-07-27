@@ -234,7 +234,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       ];
 
   void initMap() {
-   
     mapController.lockInAutoZoomAnimation();
 
     mapController.setLocation(
@@ -292,13 +291,17 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
             fitWithinBounds: true,
           );
         }
-
-        mapController.addOrUpdateUserMarker(
-          latLng: order.value!.dropoffDriver!.location!,
-          markerId: order.value!.dropoffDriver!.id,
-          customImgHttpUrl: order.value!.dropoffDriver!.image,
-          fitWithinBounds: true,
-        );
+        mezDbgPrint(
+            "Order thing ============================>>>${order.value!.dropoffDriver?.toFirebaseFormatJson()}");
+        if (order.value!.dropoffDriver != null &&
+            order.value!.dropoffDriver!.location != null) {
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value!.dropoffDriver!.location!,
+            markerId: order.value!.dropoffDriver!.id,
+            customImgHttpUrl: order.value!.dropoffDriver!.image,
+            fitWithinBounds: true,
+          );
+        }
         mapController.animateAndUpdateBounds();
         break;
 
