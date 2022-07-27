@@ -1,0 +1,59 @@
+# This is a basic workflow to help you get started with Actions
+name: SPRINT2-CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [sprint2-ci]
+    tags:
+      - '*'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    name: Flutter build
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    env:
+      JAVA_VERSION: "11.0"
+      FLUTTER_VERSION: "2.5.3"
+    permissions:
+      contents: write
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Java Setup
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '16'
+      - name: Setting flutter-actions
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.0.1'
+          channel: 'stable'
+      - name: Setting up Python@v3 - Launcher
+        uses: actions/setup-python@v3
+      - name: Generating KEYSTORE
+        working-directory: ./flutter/android/app
+        run: python3 -c "open('keystore.jks', 'wb+').write(__import__('base64').b64decode(open('kjks' , 'rb').read()))"
+      - name: Generating key.properties
+        working-directory: ./flutter/android
+        run: python3 -c "open('key.properties', 'w').write('storePassword=${{ secrets.KEY_PASSWORD }}\nkeyPassword=${{ secrets.STORE_PASSWORD }}\nkeyAlias=${{ secrets.KEY_ALIAS }}\nstoreFile=${{ secrets.STORE_FILE }}')"
+      - name: Generating launcher/.env file
+        working-directory: ./flutter/launcher
+        run: python3 -c "open('.env', 'w+').write('FB_CLIENT_TOKEN=${{ secrets.FB_CLIENT_TOKEN }}')"
+      - name: Mez-Launcher::build::stage
+        working-directory: ./flutter
+        run: |
+          chmod +x launcher/launcher.py
+          python3 launcher/launcher.py app=CustomerApp env=prod --build=apk
+      - name: Reealsing on pushed tags.
+        uses: ncipollo/release-action@v1.10.0
+        with:
+         artifacts: "flutter/build/app/outputs/flutter-apk/*.apk"

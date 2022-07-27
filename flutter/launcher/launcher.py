@@ -2,6 +2,7 @@
 
 from ast import Str
 from dataclasses import replace
+from importlib.resources import path
 import os , json
 from sys import argv, stderr, platform
 from enum import Enum
@@ -15,10 +16,10 @@ import sys
 # GLOBAL CONSTANTS !
 VERSION = "1.1.13"
 XOR_VALUE = 100
-CONFIG_FILE = "config.json"
 ACTIVE_DEBUG = True
 PRINTLN = lambda x,end='\n' : print(x , end=end) if ACTIVE_DEBUG else None
-
+CURDIR_ABS_PATH = (os.path.abspath(os.curdir)+'/').replace('launcher/', '')
+CONFIG_FILE = f"{CURDIR_ABS_PATH}launcher/config.json"
 VALID_CONFIG_KEYS_LEN = 2
 rm_lambda = lambda path : 'rm -rf {path}*'
 
@@ -79,7 +80,10 @@ class Launcher:
         self.pathname_separator = '/' if not self.isWin else '\\'
         # self.last_app = Config.chSum(user_args['app'])
         try:
-            self.__launch__()
+            ret_code = self.__launch__()
+            if ret_code == DW_EXIT_REASONS.NORMAL:
+                return
+            
             PRINTLN(f"\n[~] Launching with : {user_args} \n\n")
             f_args = self.flutter_setup.split(' ')
             ff = None
@@ -100,22 +104,44 @@ class Launcher:
             Config.launch_flutter_app(binary=binary , filter_file=ff , filter_mode=fmd)
         except KeyboardInterrupt:
             PRINTLN("\n\nExiting the launcher .... bye bye!")
+
+    #def _remote_cd_run_(self):
+	# We check if --cd was passed along the argument, then this function should get executed.
+     
+    #def _remote_ci_run_(self):
+	# This is executed when  --ci is passed along the arguments!
+	# 1.	We make sure the version was given!
+	# 2.	
+	# 3.	We create a tag with the given version as a tag-name
+	# 4.	We create the tag, push it.
+     
     
+    #def __run_multi_apps(self):
+	# only on --build
+	# we have to check if we passed --multi within the args, if so we will have to check the apps given through apps, which will be separated with commas ','
+	# example : launcher.py --build=apk app=CustomerApp env=prod --multi=CustomerApp,DeliveryApp,RestaurantApp
+	# |
+	# 1.	We have to check that --build was passed in.
+	# 2.	We have to check that the Apps given to --multi are correct first, else stip and exit with DW_EXIT_REASONS.INVALID_MULTI_APPS_PASSED
+	# 3.	Make sure to change the name of each built binary to it's Specific appName before building the next App, because by default flutter override the name of the output (because it outputs the same name)
+	# 4.	Once the main flutter process is done, We Launch the queued BUILD JOB.
+	# 5.	Once everything is done, we make sure to dispose/cleane everything up (becasue same option might be run on a local computer which csan cause memory Leaks / dangling pointers).
+	# 6.	That's it :)
+
    
     def __set_up_icons(self):
-
         _userArgsAppName = self.user_args["app"].lower().replace("app" , "")
         _userArgsEnvName = self.user_args["lmode"].lower()
         if _userArgsEnvName != "prod":
             _userArgsEnvName = "stage-dev"
 
-        _androidLauncherPath = f'assets/{_userArgsAppName}/icons/{_userArgsEnvName}/android'
-        _iosLauncherPath = f'assets/{_userArgsAppName}/icons/{_userArgsEnvName}/ios'
+        _androidLauncherPath = f'{CURDIR_ABS_PATH}launcher/assets/{_userArgsAppName}/icons/{_userArgsEnvName}/android'
+        _iosLauncherPath = f'{CURDIR_ABS_PATH}launcher/assets/{_userArgsAppName}/icons/{_userArgsEnvName}/ios'
         #   1. setting flutter projects assets icons --------------------------------------------------------------
 
         PRINTLN("[~] Setting flutter - assets/icons ...")
 
-        _project_icons_path = '..|assets|icons|'.replace('|' , self.pathname_separator)
+        _project_icons_path = f'{CURDIR_ABS_PATH}assets|icons|'.replace('|' , self.pathname_separator)
         if not os.path.exists(_project_icons_path):
             os.system(f'mkdir {_project_icons_path}')
 
@@ -137,7 +163,7 @@ class Launcher:
         #   2. setting mipmaps for Android in android/app/src/main/res --------------------------------------------
         
         PRINTLN("[~] Setting Android's mipmaps - android/app/src/main/res ...")
-        _project_mipmaps_dir = '..|android|app|src|main|res|'.replace('|' , self.pathname_separator)
+        _project_mipmaps_dir = f'{CURDIR_ABS_PATH}android|app|src|main|res|'.replace('|' , self.pathname_separator)
 
         
         rm_lambda(_project_mipmaps_dir+"mipmap") # -> this Executes : rm -rf android/app/src/main/res/mipmap*
@@ -149,7 +175,7 @@ class Launcher:
 
         PRINTLN("[~] Setting iOS's appIconSet - flutter/ios/Runner/Assets/xcassets/AppIcon.appiconset ...")
 
-        _project_app_icon_set_dir = '..|ios|Runner|Assets.xcassets|'.replace('|' , self.pathname_separator)
+        _project_app_icon_set_dir = f'{CURDIR_ABS_PATH}ios|Runner|Assets.xcassets|'.replace('|' , self.pathname_separator)
         rm_lambda(_project_app_icon_set_dir+"AppIcon") # -> this Executes : rm -rf flutter/ios/Runner/Assets/xcassets/AppIcon*
         rm_lambda(_project_app_icon_set_dir+"Contents.json")
         os.system(f'cp -r {_iosLauncherPath}/AppIcon.appiconset {_project_app_icon_set_dir}') # Copies the app's IconSet to the original ios/ folder
@@ -188,7 +214,7 @@ class Launcher:
         # Saad : Be careful while changing this guys.
         # Handling the kotlin - package importing problem !
         dot_separated_package_name = _appPackageName.split('.')
-        project_kotlin_folder = "../android/app/src/main/kotlin/"
+        project_kotlin_folder = f"{CURDIR_ABS_PATH}android/app/src/main/kotlin/"
         main_activity_kt_path = project_kotlin_folder+'/'.join(dot_separated_package_name)+'/'+'MainActivity.kt'
 
         # if condition to pass this process!
@@ -197,7 +223,7 @@ class Launcher:
             # then we create our own correct tree:
             os.makedirs(os.path.dirname(main_activity_kt_path), exist_ok=True)
             # then we write our correct Activity.kt
-            _cloned = open('patches/android/MainActivity.kt').read().replace('<mez-package-name>', _appPackageName)
+            _cloned = open(f'{CURDIR_ABS_PATH}launcher/patches/android/MainActivity.kt').read().replace('<mez-package-name>', _appPackageName)
             open(main_activity_kt_path , 'w+').write(_cloned)
             PRINTLN(f"[+] Set up of : {main_activity_kt_path} .. done!")
 
@@ -205,38 +231,46 @@ class Launcher:
         # Shared Permissions are already stored in self.conf['gen::permissions'] as String
 
         _app_specific_permissions = self.conf['apps'][self.user_args['app']].get('appPermissions')
+        _in_app_injection = self.conf['apps'][self.user_args['app']].get('inApplicationInjection')
+        
         if _app_specific_permissions:
             PRINTLN(f"[~] Validating {self.user_args['app']} Permissions ... ")
             self.conf['gen::permissions'] += Config.validate_manifest_permissions(_app_specific_permissions)
 
+        if _in_app_injection:
+            self.conf['gen::inappinjection'] = _in_app_injection
+        else:
+            self.conf['gen::inappinjection'] = ''
         #  main ManifestXml:
-        _project_main_manifest = "../android/app/src/main/AndroidManifest.xml"
-        os.system(f'{"mv" if not self.isWin else "move"} ..|android|app|src|main|AndroidManifest.xml ..|android|app|src|main|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
-        _cloned = open('patches/android/main/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions'])
+        _project_main_manifest = f"{CURDIR_ABS_PATH}android/app/src/main/AndroidManifest.xml"
+        PRINTLN(F"+ MAIN MANIF PATH {_project_main_manifest}")
+        PRINTLN(F"+ CURDIR_ABS_PATH PATH {CURDIR_ABS_PATH}")
+        
+        if os.path.exists(f'{CURDIR_ABS_PATH}android/app/src/main/AndroidManifest.xml'):
+            os.system(f'{"mv" if not self.isWin else "move"} {CURDIR_ABS_PATH}android|app|src|main|AndroidManifest.xml {CURDIR_ABS_PATH}android|app|src|main|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
+        _cloned = open(f'{CURDIR_ABS_PATH}launcher/patches/android/main/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions']).replace('<in-app-injection>' , self.conf['gen::inappinjection'])
         open(_project_main_manifest , 'w+').write(_cloned)
 
         # profile :
-        _project_profile_manifest = "..|android|app|src|profile|AndroidManifest.xml".replace('|' , self.pathname_separator)
-        if not os.path.exists(os.path.dirname(_project_profile_manifest)):
+        _project_profile_manifest = f'{CURDIR_ABS_PATH}android|app|src|profile|AndroidManifest.xml'.replace('|' , self.pathname_separator)
+        if not os.path.exists(_project_profile_manifest):
             os.system(f'mkdir {os.path.dirname(_project_profile_manifest)}')
+        else:
+            os.system(f'{"mv" if not self.isWin else "move"} {CURDIR_ABS_PATH}android|app|src|profile|AndroidManifest.xml {CURDIR_ABS_PATH}android|app|src|profile|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
         
-        if os.path.exists(_project_profile_manifest):
-            os.system(f'{"mv" if not self.isWin else "move"} ..|android|app|src|profile|AndroidManifest.xml ..|android|app|src|profile|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
-        
-        _cloned = open('patches/android/profile/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions'])
+        _cloned = open(f'{CURDIR_ABS_PATH}launcher/patches/android/profile/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions']).replace('<in-app-injection>' , self.conf['gen::inappinjection'])
         open(_project_profile_manifest , 'w+').write(_cloned)
 
 
         # debug:
-        _project_debug_manifest = "..|android|app|src|debug|AndroidManifest.xml".replace('|' , self.pathname_separator)
+        _project_debug_manifest = f"{CURDIR_ABS_PATH}android|app|src|debug|AndroidManifest.xml".replace('|' , self.pathname_separator)
         
-        if not os.path.exists(os.path.dirname(_project_debug_manifest)):
+        if not os.path.exists( _project_debug_manifest):
             os.system(f'mkdir {os.path.dirname(_project_debug_manifest)}')
+        else:
+            os.system(f'{"mv" if not self.isWin else "move"} {CURDIR_ABS_PATH}android|app|src|debug|AndroidManifest.xml {CURDIR_ABS_PATH}android|app|src|debug|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
         
-        if os.path.exists(_project_debug_manifest):
-            os.system(f'{"mv" if not self.isWin else "move"} ..|android|app|src|debug|AndroidManifest.xml ..|android|app|src|debug|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
-        
-        _cloned = open('patches/android/debug/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions'])
+        _cloned = open(f'{CURDIR_ABS_PATH}launcher/patches/android/debug/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions']).replace('<in-app-injection>' , self.conf['gen::inappinjection'])
         open(_project_debug_manifest , 'w+').write(_cloned)
         
         # Done !
@@ -248,20 +282,20 @@ class Launcher:
         # Patching info.plist & project.pbxproj for IOS!
         _ios_app_folder_name = self.user_args["app"].lower().replace("app" , "")
 
-        _project_pbxproj_path = "../ios/Runner.xcodeproj/project.pbxproj"
-        _info_plist_path = "../ios/Runner/Info.plist"
+        _project_pbxproj_path = f"{CURDIR_ABS_PATH}ios/Runner.xcodeproj/project.pbxproj"
+        _info_plist_path = f"{CURDIR_ABS_PATH}ios/Runner/Info.plist"
         
         # <mez-app-type> -> replaces project.pbxproj 's Icon Set
-        _cloned = open('patches/ios/project.pbxproj').read()
+        _cloned = open(f'{CURDIR_ABS_PATH}launcher/patches/ios/project.pbxproj').read()
         _cloned = _cloned.replace('<mez-package>', _appPackageName) #.replace('<mez-app-type>' , _ios_app_folder_name)
         # Safe check for launching.
         if not self.user_args.get('version_name'):
             self.user_args['version_name'] = '1.0.1'
         if not self.user_args.get('version_code'):
             self.user_args['version_code'] = '1'
-        _continue = input(f"[~] Please Confirm Launching/building with version {self.user_args['version_name']}+{self.user_args['version_code']} ?")
-        if not (_continue.__len__() == 0 or _continue.lower() == "y" or _continue.lower() == "yes"):
-            exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
+        # _continue = input(f"[~] Please Confirm Launching/building with version {self.user_args['version_name']}+{self.user_args['version_code']} ?")
+        # if not (_continue.__len__() == 0 or _continue.lower() == "y" or _continue.lower() == "yes"):
+        #     exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
 
         # patching versions in project.pbxproj
         if self.user_args['version_code'] and self.user_args['version_name']:
@@ -272,7 +306,7 @@ class Launcher:
 
         open(_project_pbxproj_path , 'w+').write(_cloned)
         PRINTLN(f"[+]  Patched ios/project.pbxproj => {_appPackageName}")
-        _cloned = open(f'patches/ios/{_ios_app_folder_name}/Info.plist')\
+        _cloned = open(f'{CURDIR_ABS_PATH}launcher/patches/ios/{_ios_app_folder_name}/Info.plist')\
         .read()\
         .replace('<mez-output-name>', _outputAppName)\
         .replace('<mez-app-type>' , _ios_app_folder_name)\
@@ -281,9 +315,9 @@ class Launcher:
         open(_info_plist_path , 'w+').write(_cloned)
         PRINTLN(f"[+] Patched ios/Runner/Info.plist => {_outputAppName}!")
 	    # Getting rid of 8.0
-        if os.path.exists('../ios/Pods/Pods.xcodeproj/project.pbxproj'):
-            _pods_xcodeproj_project_pbxproj = open('../ios/Pods/Pods.xcodeproj/project.pbxproj').read()
-            open('../ios/Pods/Pods.xcodeproj/project.pbxproj', 'w+').write(_pods_xcodeproj_project_pbxproj.replace('IPHONEOS_DEPLOYMENT_TARGET = 8.0', 'IPHONEOS_DEPLOYMENT_TARGET = 12.0'))
+        if os.path.exists(f'{CURDIR_ABS_PATH}ios/Pods/Pods.xcodeproj/project.pbxproj'):
+            _pods_xcodeproj_project_pbxproj = open(f'{CURDIR_ABS_PATH}ios/Pods/Pods.xcodeproj/project.pbxproj').read()
+            open(f'{CURDIR_ABS_PATH}ios/Pods/Pods.xcodeproj/project.pbxproj', 'w+').write(_pods_xcodeproj_project_pbxproj.replace('IPHONEOS_DEPLOYMENT_TARGET = 8.0', 'IPHONEOS_DEPLOYMENT_TARGET = 9.0'))
             PRINTLN('[+] UPDATED IPHONEOS_DEPLOYMENT_TARGET => 9.0')
             
     def __patch_gs__(self):
@@ -292,8 +326,8 @@ class Launcher:
         android_flutter_gs_path = self.conf['settings']['appGoogleServices']
         ios_flutter_gs_path = self.conf['settings']['appAppleServices']
         # launcher Services files
-        _launcher_google_services = self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['googe-service-file']
-        _launcher_apple_services = self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['apple-service-file']
+        _launcher_google_services = f"{CURDIR_ABS_PATH}launcher/{self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['googe-service-file']}"
+        _launcher_apple_services = f"{CURDIR_ABS_PATH}launcher/{self.conf['apps'][self.user_args['app']]['packages'][self.user_args['lmode']]['apple-service-file']}"
       
         copied_ios = False
         copied_android = False
@@ -354,7 +388,7 @@ class Launcher:
             exit(DW_EXIT_REASONS.NO_APP_SPECIFIED)
 
         if self.user_args['build'] == 'ios' :
-            ios_export_options_plist_path = "patches/ios/ExportOptions.plist"
+            ios_export_options_plist_path = f"{CURDIR_ABS_PATH}launcher/patches/ios/ExportOptions.plist"
             ios_export_options_plist_arg = f" --export-options-plist='{os.path.abspath(ios_export_options_plist_path)}'" if os.path.exists(ios_export_options_plist_path) else ""
             if ios_export_options_plist_arg == "":
                 PRINTLN("[+] Detected a first time xcarchive build , thus can't generate an ipa file you either wait for the build to finish and relaunch or do it from xcode once build is done !")
@@ -372,7 +406,7 @@ class Launcher:
         if 'build' in self.user_args.keys():
             PRINTLN(f"[+] Building the app::{self.user_args['build']} for you ...")
             self.__build_temp()
-            exit(DW_EXIT_REASONS.NORMAL)
+            return DW_EXIT_REASONS.NORMAL
 
         self.__set_flutter_args__()
 class Config:
@@ -387,7 +421,8 @@ class Config:
         + --build=<type> : to order the launcher to build where type is [apk, appbundle, ios] , requires app=<app> and env=<env>.
         + --lan : in case you want to launch to another device connected to the same network.
         + --preview : Passing this along , will result on launching the app in the device-preview for testing an try many resolutions.
-        + version=<version> : Used to set the project's version to a specific version.
+        + --verbose : Launches the flutter process verbosely (usefull when debugggin)!
+	+ version=<version> : Used to set the project's version to a specific version.
        	+ --fix-pods : Special cmd for MAC M1 , meant for fixing pod problems on IOS.
 	    + help : show this help menu
      
@@ -400,7 +435,9 @@ class Config:
     def fromEnv(env_var_name: str) -> str:
         import re
         try:
-            assert(os.path.exists('.env'))
+            if not os.path.exists(f'{CURDIR_ABS_PATH}.env'):
+                os.system(f'echo FB_CLIENT_TOKEN=739be8419ead7891a5841f97be86e512 > {CURDIR_ABS_PATH}.env')
+
             var =  re.match(r'^('+ re.escape(env_var_name)+'{0,}\=)[^\n]+\n*' , open('.env').read())
             assert(var != None)
             return ''.join(var.group(0).split('=')[1:])
@@ -483,7 +520,7 @@ class Config:
             else:
                 PRINTLN("[~] Validating shared Permissions ... ")
                 self.conf['gen::permissions'] = Config.validate_manifest_permissions(_shared_permissions)
-
+        
     def __patch_version__(self, v):
         '''v=Version , Patch the version!'''
         PRINTLN("------------------- [ VERSION PATCHING ] -------------------")
@@ -641,11 +678,11 @@ class Config:
         if _:
             if input('This is only for MAC M1 chips ! Continue : y/n ?') == 'y':
                 print("[+] Clearing cache and Removing lock files ..")
-                os.system('rm -rf ../ios/Pods & rm ../ios/Podfile.lock & rm -rf ../ios/.symlinks & rm ../ios/Flutter/Flutter.podspec & rm ../pubspec.lock')
-                if not os.path.exists('../ios/Podfile'):
+                os.system(f'rm -rf {CURDIR_ABS_PATH}ios/Pods & rm {CURDIR_ABS_PATH}ios/Podfile.lock & rm -rf {CURDIR_ABS_PATH}ios/.symlinks & rm {CURDIR_ABS_PATH}ios/Flutter/Flutter.podspec & rm {CURDIR_ABS_PATH}pubspec.lock')
+                if not os.path.exists(f'{CURDIR_ABS_PATH}ios/Podfile'):
                     os.system('flutter pub get')
                 
-                pod_lines =  open('../ios/Podfile' , 'r').readlines()
+                pod_lines =  open(f'{CURDIR_ABS_PATH}ios/Podfile' , 'r').readlines()
                 patch_line_index = None
                 print("[+] Checking Podfile ..")
 
@@ -658,9 +695,9 @@ class Config:
                 if patch_line_index != None:
                     print("[+] Fixing Podfile ..")
                     pod_lines[patch_line_index] = "platform :ios, '12.0'"
-                open('../ios/Podfile' , 'w+').write('\n'.join(pod_lines))    
+                open(f'{CURDIR_ABS_PATH}ios/Podfile' , 'w+').write('\n'.join(pod_lines))    
                 print("[+] Installing Pods ..")
-                os.system('cd .. && flutter pub get && cd ios && arch -x86_64 pod install && cd ../launcher')
+                os.system(f'cd .. && flutter pub get && cd ios && arch -x86_64 pod install && cd {CURDIR_ABS_PATH}launcher')
             print("\n+ Done !")
             exit(DW_EXIT_REASONS.NORMAL)
 
