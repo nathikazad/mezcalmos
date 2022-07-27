@@ -82,7 +82,7 @@ class RestaurantOpAuthController extends GetxController {
           // init controllers with new id
           restaurantId = operator.value!.state.restaurantId;
           await _orderController.init(restaurantId!);
-          await _restaurantInfoController.init(restaurantId!);
+          //  await _restaurantInfoController.init(restaurantId!);
         }
       }
     });

@@ -23,26 +23,55 @@ class RestaurantInfoController extends GetxController {
 
   Rxn<Restaurant> restaurant = Rxn();
   StreamSubscription? _restaurantInfoListener;
-  Future<void> init(String restaurantId) async {
-    this.restaurantId = restaurantId;
+  Stream<Restaurant?> getLaundry(String restaurantId) {
     mezDbgPrint(
-        "--------------------> Start listening service providers info  ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurantId)}");
-    await _restaurantInfoListener?.cancel();
-    _restaurantInfoListener = _databaseHelper.firebaseDatabase
+        "--------------------> Start listening service providers info  ${serviceProviderInfos(orderType: OrderType.Laundry, providerId: restaurantId)}");
+    return _databaseHelper.firebaseDatabase
         .ref()
         .child(serviceProviderInfos(
             orderType: OrderType.Restaurant, providerId: restaurantId))
         .onValue
-        .listen((DatabaseEvent event) {
+        .map<Restaurant?>((DatabaseEvent event) {
       if (event.snapshot.value != null) {
-        restaurant.value = Restaurant.fromRestaurantData(
+        return Restaurant.fromRestaurantData(
             restaurantId: restaurantId, restaurantData: event.snapshot.value);
-        restaurantPrimaryLanguage.value = restaurant.value?.primaryLanguage;
       }
-    }, onError: (error) {
-      mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
+      return null;
     });
   }
+
+  Future<Restaurant> getLaundryAsFuture(String restaurantId) async {
+    return _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderInfos(
+            orderType: OrderType.Restaurant, providerId: restaurantId))
+        .once()
+        .then<Restaurant>((DatabaseEvent event) {
+      return Restaurant.fromRestaurantData(
+          restaurantId: restaurantId, restaurantData: event.snapshot.value);
+    });
+  }
+
+  // Future<void> init(String restaurantId) async {
+  //   this.restaurantId = restaurantId;
+  //   mezDbgPrint(
+  //       "--------------------> Start listening service providers info  ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurantId)}");
+  //   await _restaurantInfoListener?.cancel();
+  //   _restaurantInfoListener = _databaseHelper.firebaseDatabase
+  //       .ref()
+  //       .child(serviceProviderInfos(
+  //           orderType: OrderType.Restaurant, providerId: restaurantId))
+  //       .onValue
+  //       .listen((DatabaseEvent event) {
+  //     if (event.snapshot.value != null) {
+  //       restaurant.value = Restaurant.fromRestaurantData(
+  //           restaurantId: restaurantId, restaurantData: event.snapshot.value);
+  //       restaurantPrimaryLanguage.value = restaurant.value?.primaryLanguage;
+  //     }
+  //   }, onError: (error) {
+  //     mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
+  //   });
+  // }
 
   Future<void> setRestaurantName(String newName) async {
     mezDbgPrint(
