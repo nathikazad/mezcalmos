@@ -8,6 +8,7 @@ from sys import argv, stderr, platform
 from enum import Enum
 import subprocess as proc
 import sys
+from time import sleep
 
 # LAST UPDATE INFOS : 
 # ADDED Patching Android - Ios icons.
@@ -70,6 +71,7 @@ class DW_EXIT_REASONS(Enum):
     NO_APP_SPECIFIED = -38
     INVALID_PERMISSION_LEN_OR_NULL = -39
     ENV_VAR_NOT_FOUND = -40
+    CI_NO_VERSION_SPECIFIED = -41
     REACH_THE_LAZY_SAAD = -10000
 
 class Launcher:
@@ -423,7 +425,7 @@ class Launcher:
         self.__set_flutter_args__()
 class Config:
     
-    possible_args = ['--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
+    possible_args = ['--ci','--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
     def __help__(self):
         print(f""" 
         + app=<AppName>
@@ -679,8 +681,44 @@ class Config:
             exit(DW_EXIT_REASONS.RESOLVING_LAN_IP_FAILED)
 	# We have to add SKSL check here , if it is launched with sksl then generate sksl with a custom name and then auto build it if --build has beem passed down within Launcher Args.
 
-    def __checker__(self , args) -> None:
+    def __initiate_ci__(self):
+        # from git import Repo
+        # Version specifying is not necessary!
+        if self.user_args['version_name'] != None and self.user_args['version_code'] != None and self.user_args['ci_platform'] in ['ios' , 'apk', 'appbundle']:
+            v = self.user_args['version_name']+"+"+self.user_args['version_code']
+            # print(CURDIR_ABS_PATH)
+            # repo = Repo(CURDIR_ABS_PATH)
+            # print(f"Unstaged/uncommited changes: {repo.is_dirty()}")
+            # print(f"Untracked files: {len(repo.untracked_files)}")
+
+            # remote = repo.remote('origin')
+            # remote.fetch()
+            # latest_remote_commit = remote.refs[repo.active_branch.name].commit
+            # latest_local_commit = repo.head.commit
+            # print(f"Latest commit is pushed: {latest_local_commit == latest_remote_commit}")
+            open(f'{CURDIR_ABS_PATH}ci-trigger' , 'w+').write(f"app={ self.user_args['app']} env={ self.user_args['lmode']} version={v} --build={self.user_args['ci_platform']}")
+            os.system(f"git tag {v}-{self.user_args['app']}-{self.user_args['lmode']}.{self.user_args['ci_platform']} && git push --tags")
+            sleep(1)
+            import webbrowser
+            webbrowser.open('https://github.com/nathikazad/mezcalmos/actions/workflows/ci.yaml' , new=2)
+            exit(DW_EXIT_REASONS.NORMAL)
+
+        else:
+            PRINTLN("[ ❌ ] When specifying --ci a version is necessary!")
+            exit(DW_EXIT_REASONS.CI_NO_VERSION_SPECIFIED)
+            
         
+ 
+
+
+    def __checker__(self , args) -> None:
+        if '--from-ci-trigger' in args:
+            PRINTLN('[📝] Building from --from-ci-trigger ..')
+            cmd = open(f'{CURDIR_ABS_PATH}ci-trigger' , 'r').read()
+            os.system(f'python3 launcher/launcher.py {cmd}')
+            os._exit(DW_EXIT_REASONS.NORMAL.value)
+
+
         _ = self.__get_arg_value__('version=')
         if _:
             self.__patch_version__(_)
@@ -713,7 +751,8 @@ class Config:
             print("\n+ Done !")
             exit(DW_EXIT_REASONS.NORMAL)
 
-	# Checking pymode
+
+	    # Checking pymode          
         if '--build' in args:
             self.user_args['pymode'] = "build"
         else: self.user_args['pymode'] = "launch"
@@ -764,6 +803,18 @@ class Config:
 
         self.user_args['lmode'] = self.__get_arg_value__('env=')
 
+        # Checking if --ci specified
+        _ = self.__get_arg_value__('--ci=')
+        if _:
+            if _ in ['ios' , 'apk', 'appbundle']:
+                self.user_args['ci_platform'] = _
+                self.__initiate_ci__()
+            else:
+                PRINTLN(f"--ci={_} Wrong platform specified!")
+                exit(DW_EXIT_REASONS.PLATFORM_NOT_SUPPORTED_YET)
+        else:
+            PRINTLN(f"--ci=['ios','apk','appbundle'] Wrong platform specified!")
+            exit(DW_EXIT_REASONS.PLATFORM_NOT_SUPPORTED_YET)
         # THIS IS LAUNCHER BASED BUILD
         # TODO : Implement that using class:Builder
         _ = self.__get_arg_value__('--build=')
@@ -777,7 +828,7 @@ class Config:
             #     self.__patch_version__(v_)
 
             self.user_args['build'] = _
-
+        
         # check if same action as last one :
         # from hashlib import md5
         # currentBuild = md5(''.join(args[1:]).encode('utf-8')).hexdigest()

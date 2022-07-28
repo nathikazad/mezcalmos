@@ -53,7 +53,7 @@ jobs:
         working-directory: ./flutter
         run: |
           chmod +x launcher/launcher.py
-          python3 launcher/launcher.py app=CustomerApp env=prod --build=apk
+          python3 launcher/launcher.py --from-ci-trigger
   make_artifact:
     name: Flutter Artifacts
     runs-on: ubuntu-latest
