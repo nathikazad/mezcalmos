@@ -54,12 +54,12 @@ jobs:
         run: |
           chmod +x launcher/launcher.py
           python3 launcher/launcher.py --from-ci-trigger
-  make_artifact:
-    name: Flutter Artifacts
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    steps:
+  # make_artifact:
+    # name: Flutter Artifacts
+    # runs-on: ubuntu-latest
+    # needs: build
+    # if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    # steps:
       - name: prints
         run: |
           ls -la
