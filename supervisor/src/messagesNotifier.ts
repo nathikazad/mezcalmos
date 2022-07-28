@@ -61,7 +61,7 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
             body: notificationForQueue.message
           }
         },
-        linkUrl: chatUrl(notificationForQueue.chatId, notificationForQueue.orderId, chatData.orderType, notificationForQueue.participantType)
+        linkUrl: chatUrl(notificationForQueue.chatId, notificationForQueue.orderId, chatData.orderType, notificationForQueue.participantType, participant.particpantType)
       }
       notifyUser.pushNotification(participantId, notification, participant.particpantType);
     }
