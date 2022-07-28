@@ -174,7 +174,7 @@ export const markOrderItemUnavailable =
         errorCode: "invalidParam"
       }
     }
-    let validationPass: ValidationPass = await passChecksForRestaurant(data, context.auth);
+    let validationPass: ValidationPass = await passChecksForRestaurant(data, context.auth, true);
     if (!validationPass.ok) {
       return validationPass.error!;
     }
