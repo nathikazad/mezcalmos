@@ -816,10 +816,7 @@ class Config:
             else:
                 PRINTLN(f"--ci={_} Wrong platform specified!")
                 exit(DW_EXIT_REASONS.PLATFORM_NOT_SUPPORTED_YET)
-        else:
-            PRINTLN(f"--ci=['ios','apk','appbundle'] Wrong platform specified!")
-            exit(DW_EXIT_REASONS.PLATFORM_NOT_SUPPORTED_YET)
-        # THIS IS LAUNCHER BASED BUILD
+         # THIS IS LAUNCHER BASED BUILD
         # TODO : Implement that using class:Builder
         _ = self.__get_arg_value__('--build=')
         if _:
