@@ -60,6 +60,13 @@ jobs:
     needs: build
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     steps:
+      - name: prints
+        run: |
+          ls -la
+          ls flutter/build
+          ls flutter/build/app/
+          ls flutter/build/app/outputs
+          ls flutter/build/app/outputs/flutter-apk
       - name: using release-actions.
         uses: ncipollo/release-action@v1.10.0
         with:
