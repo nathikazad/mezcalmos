@@ -378,7 +378,7 @@ class Launcher:
     
     def __build_temp(self):
         # TODO : Auto versioning checks.
-        isVerbose = " --verbose" if self.user_args['verbose'] else ""
+        self.isVerbose = " --verbose" if self.user_args['verbose'] else ""
         
         if not self.user_args['lmode']:
             PRINTLN("In order to build you have to specify env=<stage, dev, prod>")
@@ -396,7 +396,19 @@ class Launcher:
                 PRINTLN("[+] Generating .ipa from xcarchive file for you ..")
             os.system(f'flutter build ipa --target lib/{self.user_args["app"]}/main.dart{ios_export_options_plist_arg}{isVerbose}')
         else:
-            os.system(f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {isVerbose}')
+            # Launching it through os.system, does not make the code exits with an exit code that has the lower byte none 0.
+            # more like 00000001.
+            import threading
+            android_build_thread  = threading.Thread(target=self.__ossystembuild__)
+            PRINTLN("[ℹ️] Starting Android building thread ...")
+            android_build_thread.start()
+            android_build_thread.join()
+            PRINTLN("[✅] Building android version done :)")
+            os._exit(DW_EXIT_REASONS.NORMAL)
+
+    def __ossystembuild__(self):
+        os.system(f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {self.isVerbose}')
+
 
     def __launch__(self):
         # self.__f_checker__()
