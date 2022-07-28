@@ -82,7 +82,8 @@ export = functions.https.onCall(async (data, context) => {
     if (data.stripePaymentId) {
       order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
     }
-
+    delete (order as any).stripePaymentId;
+    delete (order as any).stripeFees;
     customerNodes.inProcessOrders(customerId, orderId).set(order);
     restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);
     rootNodes.inProcessOrders(OrderType.Restaurant, orderId).set(order);

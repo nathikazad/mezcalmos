@@ -29,7 +29,8 @@ export interface StripePaymentInfo {
   expMonth?: number,
   expYear?: number,
   last4?: string,
-  status: StripePaymentStatus
+  status: StripePaymentStatus,
+  serviceProviderAccount: string,
 }
 
 export const getPaymentIntent =
@@ -80,7 +81,7 @@ export const getPaymentIntent =
     );
 
     const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
-      amount: data.paymentAmount,
+      amount: parseInt(data.paymentAmount) * 100,
       currency: 'mxn',
       customer: stripeCustomerId,
       capture_method: 'manual'
@@ -106,7 +107,7 @@ export async function capturePayment(order: Order, amountToCapture?: number): Pr
     order.stripePaymentInfo!.status = StripePaymentStatus.Captured
   } else if (amountToCapture > 0) {
     await stripe.paymentIntents.capture(order.stripePaymentInfo!.id, {
-      amount_to_capture: amountToCapture,
+      amount_to_capture: amountToCapture * 100,
     }, stripeOptions)
     order.stripePaymentInfo!.amountCharged = amountToCapture;
     order.stripePaymentInfo!.status = StripePaymentStatus.Captured
@@ -137,7 +138,7 @@ export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: O
 
   await stripe.paymentIntents.update(
     stripePaymentId,
-    { metadata: { orderId: orderId, orderType: order.orderType } },
+    { metadata: { orderId: orderId, orderType: order.orderType, serviceProviderId: order.serviceProviderId ?? "unknown" } },
     stripeOptions
   );
 
@@ -155,7 +156,8 @@ export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: O
     stripeFees: stripeFees,
     amountCharged: pi.amount / 100,
     amountRefunded: 0,
-    status: StripePaymentStatus.Authorized
+    status: StripePaymentStatus.Authorized,
+    serviceProviderAccount: serviceProviderPaymentInfo.stripe.id!
   }
   if (pm.card)
     order.stripePaymentInfo = {

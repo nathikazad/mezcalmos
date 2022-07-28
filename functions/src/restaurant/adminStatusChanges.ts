@@ -79,13 +79,7 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
 
   order.status = newStatus
 
-  if (newStatus == RestaurantOrderStatus.Delivered) {
-    if (order.paymentType == PaymentType.Card) {
-      order = (await capturePayment(order)) as RestaurantOrder
-      // TODO: capture shipping payment
-    }
-    await finishOrder(order, orderId);
-  } else if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
+  if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
     if (order.paymentType == PaymentType.Card) {
       order = (await capturePayment(order, 0)) as RestaurantOrder
       // TODO: cancel or capture shipping payment depending on status
@@ -199,7 +193,7 @@ export const markOrderItemUnavailable =
   });
 
 async function refund(orderId: string, order: RestaurantOrder, newRefundAmount: number): Promise<ServerResponse> {
-  let newCostToCustomer = order.costToCustomer - order.refundAmount - newRefundAmount;
+  let newCostToCustomer = order.totalCost - order.refundAmount - newRefundAmount;
   if (newCostToCustomer > 0) {
     order.refundAmount = order.refundAmount + newRefundAmount;
     order.costToCustomer = newCostToCustomer;
