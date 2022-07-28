@@ -63,4 +63,4 @@ jobs:
       - name: using release-actions.
         uses: ncipollo/release-action@v1.10.0
         with:
-          artifacts: "flutter/build/app/outputs/flutter-apk/*.apk"
+          artifacts: "flutter/build/app/outputs/flutter-apk/app-release.apk"
