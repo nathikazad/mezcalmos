@@ -546,7 +546,7 @@ class Config:
             exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
         pubspec =   CURDIR_ABS_PATH+self.conf['settings']['pubspec.yaml']
         PRINTLN(f"Pubspec path ==> {CURDIR_ABS_PATH} + {self.conf['settings']['pubspec.yaml']}")
-        localProperties = CURDIR_ABS_PATH + self.conf['settings']['local.properties']
+        localProperties = CURDIR_ABS_PATH+self.conf['settings']['local.properties']
         PRINTLN(f"localProperties path ==> {CURDIR_ABS_PATH} +{self.conf['settings']['local.properties']} ")
 
         if not os.path.exists(pubspec):
