@@ -425,7 +425,7 @@ class Launcher:
         self.__set_flutter_args__()
 class Config:
     
-    possible_args = ['--ci','--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
+    possible_args = ['--from-ci-trigger', '--ci','--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
     def __help__(self):
         print(f""" 
         + app=<AppName>
