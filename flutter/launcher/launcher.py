@@ -697,7 +697,7 @@ class Config:
             # latest_local_commit = repo.head.commit
             # print(f"Latest commit is pushed: {latest_local_commit == latest_remote_commit}")
             open(f'{CURDIR_ABS_PATH}ci-trigger' , 'w+').write(f"app={ self.user_args['app']} env={ self.user_args['lmode']} version={v} --build={self.user_args['ci_platform']}")
-            os.system(f"git tag {v}-{self.user_args['app']}-{self.user_args['lmode']}.{self.user_args['ci_platform']} && git push --tags")
+            os.system(f"git tag {v}-{self.user_args['app']}-{self.user_args['lmode']}.{self.user_args['ci_platform']}-{__import__('datetime').datetime.now()} && git push --tags")
             sleep(1)
             import webbrowser
             webbrowser.open('https://github.com/nathikazad/mezcalmos/actions/workflows/ci.yaml' , new=2)
