@@ -60,12 +60,12 @@ export enum SecondaryChat {
 
 export interface DeliverableOrder extends Order {
   dropoffDriver?: DeliveryDriverInfo;
-  dropOffShippingCost: number;
+  dropOffShippingCost?: number;
 }
 
 export interface TwoWayDeliverableOrder extends DeliverableOrder {
   pickupDriver?: DeliveryDriverInfo;
-  pickupShippingCost: number;
+  pickupShippingCost?: number;
 }
 
 export interface DeliveryDriverInfo extends UserInfo {
