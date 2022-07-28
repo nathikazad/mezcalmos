@@ -400,11 +400,11 @@ class Launcher:
             # more like 00000001.
             import threading
             android_build_thread  = threading.Thread(target=self.__ossystembuild__)
-            PRINTLN("[ℹ️] Starting Android building thread ...")
+            PRINTLN("[ ℹ️ ] Starting Android building thread ...")
             android_build_thread.start()
             android_build_thread.join()
             PRINTLN("[✅] Building android version done :)")
-            os._exit(DW_EXIT_REASONS.NORMAL)
+            os._exit(DW_EXIT_REASONS.NORMAL.value)
 
     def __ossystembuild__(self):
         os.system(f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {self.isVerbose}')
