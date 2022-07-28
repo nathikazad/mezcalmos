@@ -191,15 +191,22 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
             ),
           InkWell(
             onTap: () {
-              Get.find<ROpOrderController>()
-                  .markItemUnavailable(
-                      widget.order.orderId, widget.item.idInCart)
-                  .then((ServerResponse value) => mezDbgPrint("Done"));
+              if (widget.item.unavailable) {
+                Get.snackbar("Error", "Item already unavailable",
+                    backgroundColor: Colors.black, colorText: Colors.white);
+              } else {
+                Get.find<ROpOrderController>()
+                    .markItemUnavailable(
+                        widget.order.orderId, widget.item.idInCart)
+                    .then((ServerResponse value) => mezDbgPrint("Done"));
+              }
             },
             child: Ink(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    color: primaryBlueColor,
+                    color: (widget.item.unavailable)
+                        ? Colors.grey
+                        : primaryBlueColor,
                     borderRadius: BorderRadius.circular(8)),
                 child: Text(
                   "Item unavailable",
