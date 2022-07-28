@@ -15,6 +15,11 @@ import { AuthData } from 'firebase-functions/lib/common/providers/https';
 
 let keys: Keys = getKeys();
 
+export enum StripePaymentStatus {
+  Authorized = "authorized",
+  Captured = "captured",
+  Cancelled = "cancelled",
+}
 export interface StripePaymentInfo {
   id: string,
   stripeFees: number,
@@ -24,6 +29,7 @@ export interface StripePaymentInfo {
   expMonth?: number,
   expYear?: number,
   last4?: string,
+  status: StripePaymentStatus
 }
 
 export const getPaymentIntent =
@@ -91,19 +97,25 @@ export const getPaymentIntent =
   });
 
 
-export async function capturePayment(order: Order, amountToCapture?: number) {
+export async function capturePayment(order: Order, amountToCapture?: number): Promise<Order> {
   let serviceProviderPaymentInfo: PaymentInfo = (await serviceProviderNodes.serviceProviderPaymentInfo(order.orderType, order.serviceProviderId!).once('value')).val()
   let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
   if (amountToCapture == null) {
     await stripe.paymentIntents.capture(order.stripePaymentInfo!.id, {}, stripeOptions)
+    order.stripePaymentInfo!.status = StripePaymentStatus.Captured
   } else if (amountToCapture > 0) {
     await stripe.paymentIntents.capture(order.stripePaymentInfo!.id, {
       amount_to_capture: amountToCapture,
     }, stripeOptions)
+    order.stripePaymentInfo!.amountCharged = amountToCapture;
+    order.stripePaymentInfo!.status = StripePaymentStatus.Captured
   } else {
     await stripe.paymentIntents.cancel(order.stripePaymentInfo!.id, stripeOptions)
+    order.stripePaymentInfo!.amountCharged = 0;
+    order.stripePaymentInfo!.status = StripePaymentStatus.Cancelled
   }
+  return order;
 }
 
 export async function refundPayment(order: Order, amountToRefund: number): Promise<Order> {
@@ -141,8 +153,9 @@ export async function updateOrderIdAndFetchPaymentInfo(orderId: string, order: O
   order.stripePaymentInfo = {
     id: stripePaymentId,
     stripeFees: stripeFees,
-    amountCharged: pi.amount,
-    amountRefunded: 0
+    amountCharged: pi.amount / 100,
+    amountRefunded: 0,
+    status: StripePaymentStatus.Authorized
   }
   if (pm.card)
     order.stripePaymentInfo = {

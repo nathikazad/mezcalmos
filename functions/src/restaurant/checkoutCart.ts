@@ -73,13 +73,15 @@ export = functions.https.onCall(async (data, context) => {
     let order: RestaurantOrder = constructRestaurantOrder({
       cart: cart,
       customer: customerInfo,
-      restaurant: restaurant.info
+      restaurant: restaurant.info,
+      stripeFees: data.stripeFees ?? 0
     })
 
     let orderId: string = (await customerNodes.inProcessOrders(customerId).push(null)).key!;
 
-    if (data.stripePaymentId)
+    if (data.stripePaymentId) {
       order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
+    }
 
     customerNodes.inProcessOrders(customerId, orderId).set(order);
     restaurantNodes.inProcessOrders(cart.serviceProviderId, orderId).set(order);

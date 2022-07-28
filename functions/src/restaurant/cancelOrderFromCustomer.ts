@@ -60,7 +60,7 @@ export = functions.https.onCall(async (data, context) => {
   switch (order.status) {
     case RestaurantOrderStatus.OrderReceieved:
       if (order.paymentType == PaymentType.Card) {
-        capturePayment(order, 0)
+        order = (await capturePayment(order, 0)) as RestaurantOrder
         // TODO: cancel delivery payment intent by capturing 0
       }
 
@@ -70,7 +70,7 @@ export = functions.https.onCall(async (data, context) => {
     case RestaurantOrderStatus.PreparingOrder:
     case RestaurantOrderStatus.ReadyForPickup:
       if (order.paymentType == PaymentType.Card) {
-        capturePayment(order, order.totalCost)
+        order = (await capturePayment(order, order.totalCost)) as RestaurantOrder
         // TODO: cancel delivery payment intent by capturing 0
       }
 
@@ -79,7 +79,7 @@ export = functions.https.onCall(async (data, context) => {
       break;
     case RestaurantOrderStatus.OnTheWay:
       if (order.paymentType == PaymentType.Card) {
-        capturePayment(order)
+        order = (await capturePayment(order)) as RestaurantOrder
         // TODO: capture delivery payment intent
       }
 
