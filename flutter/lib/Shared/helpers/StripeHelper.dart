@@ -5,6 +5,22 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
+enum StripePaymentStatus { Authorized, Captured, Cancelled }
+
+extension ParseStripePaymentStatusToString on StripePaymentStatus {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToStripePaymentStatus on String {
+  StripePaymentStatus toStripePaymentStatus() {
+    return StripePaymentStatus.values.firstWhere((StripePaymentStatus e) =>
+        e.toFirebaseFormatString().toLowerCase() == this);
+  }
+}
+
 class StripePaymentInfo {
   String id;
   num stripeFees;
@@ -14,10 +30,12 @@ class StripePaymentInfo {
   String? last4;
   num amountCharged;
   num amountRefunded;
+  StripePaymentStatus status;
 
   StripePaymentInfo(
       {required this.id,
       required this.stripeFees,
+      required this.status,
       this.amountCharged = 0,
       this.amountRefunded = 0,
       this.brand,
@@ -34,7 +52,8 @@ class StripePaymentInfo {
         brand: data["brand"],
         expYear: data["expYear"],
         expMonth: data["expMonth"],
-        last4: data["last4"]);
+        last4: data["last4"],
+        status: data["status"].toString().toStripePaymentStatus());
   }
 }
 

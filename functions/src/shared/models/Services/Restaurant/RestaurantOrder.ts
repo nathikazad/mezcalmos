@@ -29,7 +29,8 @@ export enum RestaurantOrderStatus {
 interface ConstructRestaurantOrderParameters {
   cart: Cart,
   customer: UserInfo,
-  restaurant: UserInfo
+  restaurant: UserInfo,
+  stripeFees: number
 }
 export function constructRestaurantOrder(
   params: ConstructRestaurantOrderParameters): RestaurantOrder {
@@ -40,11 +41,11 @@ export function constructRestaurantOrder(
     orderType: OrderType.Restaurant,
     status: RestaurantOrderStatus.OrderReceieved,
     orderTime: (new Date()).toISOString(),
-    totalCostBeforeShipping: params.cart.cost - params.cart.shippingCost,
     dropOffShippingCost: params.cart.shippingCost,
-    totalCost: params.cart.cost,
+    totalCostBeforeShipping: params.cart.cost - params.cart.shippingCost,
+    totalCost: params.cart.cost + params.stripeFees,
     refundAmount: 0,
-    costToCustomer: params.cart.cost
+    costToCustomer: params.cart.cost + params.stripeFees
   }
 }
 

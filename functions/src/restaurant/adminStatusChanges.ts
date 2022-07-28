@@ -81,13 +81,13 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
 
   if (newStatus == RestaurantOrderStatus.Delivered) {
     if (order.paymentType == PaymentType.Card) {
-      capturePayment(order)
+      order = (await capturePayment(order)) as RestaurantOrder
       // TODO: capture shipping payment
     }
     await finishOrder(order, orderId);
   } else if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
     if (order.paymentType == PaymentType.Card) {
-      capturePayment(order, 0)
+      order = (await capturePayment(order, 0)) as RestaurantOrder
       // TODO: cancel or capture shipping payment depending on status
     }
     order.refundAmount = order.totalCost;
