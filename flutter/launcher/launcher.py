@@ -545,7 +545,10 @@ class Config:
             PRINTLN(f"[!] Error -> Incorrect Version {v} , type launcher.py help!")
             exit(DW_EXIT_REASONS.WRONG_VERSION_GIVEN)
         pubspec =   CURDIR_ABS_PATH+self.conf['settings']['pubspec.yaml']
-        localProperties =CURDIR_ABS_PATH+ self.conf['settings']['local.properties']
+        PRINTLN(f"Pubspec path ==> {CURDIR_ABS_PATH} + {self.conf['settings']['pubspec.yaml']}")
+        localProperties = CURDIR_ABS_PATH + self.conf['settings']['local.properties']
+        PRINTLN(f"localProperties path ==> {CURDIR_ABS_PATH} +{self.conf['settings']['local.properties']} ")
+
         if not os.path.exists(pubspec):
             PRINTLN(f'[!] config.json::{pubspec} not found !')
             exit(DW_EXIT_REASONS.PUBSPECT_YAML_NOT_FOUND)
@@ -697,7 +700,8 @@ class Config:
             # latest_local_commit = repo.head.commit
             # print(f"Latest commit is pushed: {latest_local_commit == latest_remote_commit}")
             open(f'{CURDIR_ABS_PATH}ci-trigger' , 'w+').write(f"app={ self.user_args['app']} env={ self.user_args['lmode']} version={v} --build={self.user_args['ci_platform']}")
-            os.system(f"git tag {v}-{self.user_args['app']}-{self.user_args['lmode']}.{self.user_args['ci_platform']}-{__import__('datetime').datetime.now()} && git push --tags")
+            from datetime import datetime as dt
+            os.system(f"git tag {v}-{self.user_args['app']}-{self.user_args['lmode']}.{self.user_args['ci_platform']}-{dt.timestamp(dt.now())} && git push --tags")
             sleep(1)
             import webbrowser
             webbrowser.open('https://github.com/nathikazad/mezcalmos/actions/workflows/ci.yaml' , new=2)
