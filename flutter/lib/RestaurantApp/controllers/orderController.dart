@@ -121,6 +121,10 @@ class ROpOrderController extends GetxController {
     });
   }
 
+  Future<ServerResponse> cancelOrder(String orderId) async {
+    return _callRestaurantCloudFunction("cancelOrderFromAdmin", orderId);
+  }
+
   bool hasNewMessageNotification(String chatId) {
     return _foregroundNotificationsController
         .notifications()
@@ -183,8 +187,7 @@ class ROpOrderController extends GetxController {
     final HttpsCallable cloudFunction =
         FirebaseFunctions.instance.httpsCallable('restaurant-$functionName');
     try {
-      final HttpsCallableResult response = await cloudFunction
-          .call({
+      final HttpsCallableResult response = await cloudFunction.call({
         "orderId": orderId,
         "fromRestaurantOperator": true,
         ...optionalParams ?? {}

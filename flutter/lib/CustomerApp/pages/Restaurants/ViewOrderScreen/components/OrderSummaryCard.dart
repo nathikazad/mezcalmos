@@ -62,7 +62,6 @@ class OrderSummaryCard extends StatelessWidget {
                           '${_i18n()["stripeFees"]}',
                           style: txt.bodyText2,
                         ),
-                        // TODO @m66are remove the null operand
                         Text(
                             order.stripePaymentInfo!.stripeFees.toPriceString(),
                             style: txt.bodyText2),
@@ -85,6 +84,23 @@ class OrderSummaryCard extends StatelessWidget {
                     ],
                   ),
                 ),
+                if (order.refundAmount != null && order.refundAmount! > 0)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Refund amount',
+                          style: txt.bodyText2,
+                        ),
+                        Text(
+                          order.refundAmount!.toPriceString(),
+                          style: txt.bodyText2,
+                        ),
+                      ],
+                    ),
+                  ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -93,7 +109,8 @@ class OrderSummaryCard extends StatelessWidget {
                       style: txt.bodyText1,
                     ),
                     Text(
-                      order.cost.toPriceString(),
+                      order.costToCustomer?.toPriceString() ??
+                          order.cost.toPriceString(),
                       style: txt.bodyText1!.copyWith(fontSize: 14.sp),
                     ),
                   ],

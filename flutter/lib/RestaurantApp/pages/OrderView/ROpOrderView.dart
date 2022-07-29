@@ -12,6 +12,8 @@ import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderItems
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderNote.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderStatusCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -98,6 +100,20 @@ class _ROpOrderViewState extends State<ROpOrderView> {
               ROpRefundButton(
                 order: order.value!,
               ),
+              if (order.value!.inProcess())
+                TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: offRedColor, primary: Colors.red),
+                    onPressed: () {
+                      showConfirmationDialog(context, onYesClick: () async {
+                        await controller.cancelOrder(order.value!.orderId);
+                      });
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(8),
+                      child: Text("Cancel order"),
+                    ))
             ],
           ),
         ),

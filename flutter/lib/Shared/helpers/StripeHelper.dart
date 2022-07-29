@@ -1,6 +1,7 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -15,9 +16,10 @@ extension ParseStripePaymentStatusToString on StripePaymentStatus {
 }
 
 extension ParseStringToStripePaymentStatus on String {
-  StripePaymentStatus toStripePaymentStatus() {
-    return StripePaymentStatus.values.firstWhere((StripePaymentStatus e) =>
-        e.toFirebaseFormatString().toLowerCase() == this);
+  StripePaymentStatus? toStripePaymentStatus() {
+    return StripePaymentStatus.values.firstWhereOrNull(
+        (StripePaymentStatus e) =>
+            e.toFirebaseFormatString().toLowerCase() == this);
   }
 }
 
@@ -53,7 +55,8 @@ class StripePaymentInfo {
         expYear: data["expYear"],
         expMonth: data["expMonth"],
         last4: data["last4"],
-        status: data["status"].toString().toStripePaymentStatus());
+        status: data["status"].toString().toStripePaymentStatus() ??
+            StripePaymentStatus.Captured);
   }
 }
 
