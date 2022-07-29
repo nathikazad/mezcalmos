@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 typedef shouldSaveNotification = bool Function(Notification notification);
 
@@ -54,7 +55,7 @@ class ForegroundNotificationsController extends GetxController {
       final Notification _notification =
           notificationHandler(event.snapshot.key!, event.snapshot.value);
       final bool alreadyOnLinkPage =
-          (Get.currentRoute == _notification.linkUrl);
+          isCurrentRoute(_notification.linkUrl);
       mezDbgPrint("Current =====>${Get.currentRoute}");
       mezDbgPrint("notif url =====>${_notification.linkUrl}");
       switch (_notification.notificationAction) {

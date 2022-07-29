@@ -67,12 +67,12 @@ class SettingsController extends GetxController {
         InternetConnectionChecker().onStatusChange.listen(
       (InternetConnectionStatus status) {
         if (status == InternetConnectionStatus.disconnected &&
-            Get.currentRoute != kNoInternetConnectionPage) {
+            !isCurrentRoute(kNoInternetConnectionPage)) {
           Future.delayed(Duration.zero, () {
             Get.toNamed(kNoInternetConnectionPage);
           });
         } else {
-          if (Get.currentRoute == kNoInternetConnectionPage) {
+          if (isCurrentRoute(kNoInternetConnectionPage)) {
             Future.delayed(Duration.zero, () {
               Get.back();
             });
