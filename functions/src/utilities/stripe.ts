@@ -125,7 +125,7 @@ export async function refundPayment(order: Order, amountToRefund: number): Promi
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
   await stripe.refunds.create({
     payment_intent: order.stripePaymentInfo!.id,
-    amount: amountToRefund,
+    amount: amountToRefund * 100,
   }, stripeOptions)
   order.stripePaymentInfo!.amountRefunded += amountToRefund;
   return order;
