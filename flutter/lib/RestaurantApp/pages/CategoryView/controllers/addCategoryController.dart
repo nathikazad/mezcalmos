@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -19,8 +20,7 @@ class AddCategoryController {
   /// Controllers ///
   TabController? tabController;
 
-  RestaurantInfoController restaurantInfoController =
-      Get.find<RestaurantInfoController>();
+  late RestaurantInfoController restaurantInfoController;
 
   /// Variables ///
   final LanguageType userLanguage =
@@ -39,9 +39,15 @@ class AddCategoryController {
   /// LOGIC ///
 
   // INIT STATE ///
-  void init({String? categoryId}) {
-    restaurant.value = restaurantInfoController.restaurant.value!;
+  Future<void> init({required String restaurantId, String? categoryId}) async {
+    mezDbgPrint("INIT CATEGORY VIEW ========================>$restaurantId");
+    Get.put(RestaurantInfoController(), permanent: false);
+    restaurantInfoController = Get.find<RestaurantInfoController>();
+    restaurantInfoController.init(restId: restaurantId);
+    restaurant.value =
+        await restaurantInfoController.getRestaurantAsFuture(restaurantId);
     initLanguages();
+
     if (categoryId != null) {
       initEditMode(categoryId);
     }

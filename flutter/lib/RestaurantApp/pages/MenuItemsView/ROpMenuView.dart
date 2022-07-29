@@ -90,7 +90,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
                       ),
                       MezAddButton(
                         onClick: () {
-                          Get.toNamed(kCategoryView);
+                          Get.toNamed(
+                              getROpCategoryRoute(restaurantId: restaurantID!));
                         },
                         title: '${_i18n()["addCategory"]}',
                         btnColor: primaryBlueColor,
@@ -208,6 +209,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     ROpCategoryItems(
                         key: Key('$index'),
                         category: viewController.rOcategories[index],
+                        restaurantId: restaurantID!,
                         viewController: viewController)
                 ],
                 onReorder: (int oldIndex, int newIndex) {
@@ -223,6 +225,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     viewController.restaurant.value!.getCategories.length,
                     (int index) => ROpCategoryItems(
                         viewController: viewController,
+                        restaurantId: restaurantID!,
                         category: viewController
                             .restaurant.value!.getCategories[index])),
               ),

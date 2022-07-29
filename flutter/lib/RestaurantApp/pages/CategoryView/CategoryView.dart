@@ -4,8 +4,10 @@ import 'package:mezcalmos/LaundryApp/Components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CategoryView/controllers/addCategoryController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['CategoryView'];
@@ -24,17 +26,23 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
   String? _categoryId;
+  String? restaurantId;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool shouldSave = true;
 
   @override
   void initState() {
     _categoryId = Get.parameters["categoryId"];
+    restaurantId = Get.parameters["restaurantId"];
+    mezDbgPrint("Restif =======>$restaurantId");
     if (Get.arguments != null) {
       shouldSave = Get.arguments["shouldSave"] as bool;
     }
 
-    _viewController.init(categoryId: _categoryId);
+    if (restaurantId != null) {
+      _viewController.init(
+          categoryId: _categoryId, restaurantId: restaurantId!);
+    }
 
     super.initState();
   }
@@ -46,11 +54,21 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _addCategoryAppBar(),
-      body: _getRightBody(),
-      bottomNavigationBar: _addCategoryFooterButton(),
-    );
+    return Obx(() {
+      if (_viewController.restaurant.value != null) {
+        return Scaffold(
+          appBar: _addCategoryAppBar(),
+          body: _getRightBody(),
+          bottomNavigationBar: _addCategoryFooterButton(),
+        );
+      } else {
+        return Container(
+          color: Colors.white,
+          alignment: Alignment.center,
+          child: MezLogoAnimation(centered: true),
+        );
+      }
+    });
   }
 
   Widget _addCategoryFooterButton() {
@@ -105,7 +123,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               const SizedBox(height: 8),
               Text(
                 "${_i18n()["categoryName"]}",
-                style: Get.textTheme.headline4,
+                style: Get.textTheme.bodyText1,
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(
@@ -115,7 +133,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               Text(
                 "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
-                style: Get.textTheme.headline4,
+                style: Get.textTheme.bodyText1,
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(

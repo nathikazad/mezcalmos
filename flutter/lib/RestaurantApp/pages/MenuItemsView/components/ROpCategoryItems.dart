@@ -11,9 +11,13 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class ROpCategoryItems extends StatelessWidget {
   const ROpCategoryItems(
-      {Key? key, required this.category, required this.viewController})
+      {Key? key,
+      required this.category,
+      required this.viewController,
+      required this.restaurantId})
       : super(key: key);
   final Category category;
+  final String restaurantId;
 
   final ROpMenuViewController viewController;
 
@@ -120,7 +124,8 @@ class ROpCategoryItems extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Get.back();
-                        Get.toNamed(getCategoryEditRoute(category.id!));
+                        Get.toNamed(getCategoryEditRoute(
+                            categoryId: category.id!, restaurantId: ""));
                       },
                       child: Container(
                           padding: const EdgeInsets.symmetric(

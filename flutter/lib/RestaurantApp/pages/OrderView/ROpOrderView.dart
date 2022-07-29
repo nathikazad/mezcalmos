@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpDriverCard.dart';
@@ -12,9 +11,9 @@ import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderItems
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderNote.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderStatusCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderSummaryCard.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpRefundBtn.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -106,7 +105,9 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                         backgroundColor: offRedColor, primary: Colors.red),
                     onPressed: () {
                       showConfirmationDialog(context, onYesClick: () async {
-                        await controller.cancelOrder(order.value!.orderId);
+                        await controller
+                            .cancelOrder(order.value!.orderId)
+                            .then((ServerResponse value) => Get.back());
                       });
                     },
                     child: Container(
@@ -144,94 +145,6 @@ class _ROpOrderViewState extends State<ROpOrderView> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class ROpRefundButton extends StatelessWidget {
-  const ROpRefundButton({
-    Key? key,
-    required this.order,
-  }) : super(key: key);
-  final RestaurantOrder order;
-  static TextEditingController refundAmount = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      child: TextButton(
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext ctx) {
-                  return AlertDialog(
-                    content: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Refund",
-                              style: Get.textTheme.headline3,
-                            ),
-                          ),
-                          Divider(),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            "Amount :",
-                            style: Get.textTheme.bodyText1,
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          TextFormField(
-                            controller: refundAmount,
-                            style: Get.textTheme.bodyText1,
-                            textAlignVertical: TextAlignVertical.center,
-                            decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.attach_money_rounded)),
-                            keyboardType:
-                                TextInputType.numberWithOptions(decimal: true),
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                  RegExp('[0-9.,]')),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                Get.find<ROpOrderController>()
-                                    .refundCustomerCustomAmount(order.orderId,
-                                        num.parse(refundAmount.text))
-                                    .then((ServerResponse value) {
-                                  mezDbgPrint("$value");
-                                  Get.back();
-                                });
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.all(5),
-                                child: Text("Refund"),
-                              ))
-                        ],
-                      ),
-                    ),
-                  );
-                });
-          },
-          style: TextButton.styleFrom(backgroundColor: Colors.black),
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(8),
-            child: Text("Refund customer"),
-          )),
     );
   }
 }

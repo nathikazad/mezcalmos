@@ -17,8 +17,8 @@ const String kMenuView = '/menu/:restaurantId';
 
 const String kEditInfoView = '/editInfo/:restaurantId';
 
-const String kCategoryView = '/categoryScreen';
-const String kEditCategoryScreen = '/categoryScreen/:categoryId';
+const String kCategoryView = '/categoryScreen/:restaurantId';
+const String kEditCategoryScreen = '/categoryScreen/:categoryId/:restaurantId';
 const String kAddItemView = '/itemView/:restaurantId';
 
 const String kEditItemView = '/itemView/:restaurantId/:itemId/:categoryId';
@@ -41,8 +41,16 @@ String getROpMenuRoute({required String restaurantId}) {
   return kMenuView.replaceFirst(":restaurantId", restaurantId);
 }
 
-String getCategoryEditRoute(String categoryId) {
-  return kEditCategoryScreen.replaceFirst(":categoryId", categoryId);
+String getROpCategoryRoute({required String restaurantId}) {
+  return kCategoryView.replaceFirst(":restaurantId", restaurantId);
+}
+
+String getCategoryEditRoute(
+    {required String categoryId, required String restaurantId}) {
+  final String route =
+      kEditCategoryScreen.replaceFirst(":categoryId", categoryId);
+  route.replaceFirst(":restaurantId", restaurantId);
+  return route;
 }
 
 String getROpOrderRoute(String orderId) {
