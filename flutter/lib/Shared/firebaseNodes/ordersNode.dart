@@ -37,6 +37,20 @@ String rootInProcessOrdersNode({OrderType? orderType, String? orderId}) {
   return node;
 }
 
+String rootNotifiedAdminRoute(
+    {required OrderType orderType, required String orderId}) {
+  return rootInProcessOrderDriverLocationNode(
+          orderId: orderId, orderType: orderType) +
+      "/notified/admin";
+}
+
+String rootNotifiedOperatorRoute(
+    {required OrderType orderType, required String orderId}) {
+  return rootInProcessOrderDriverLocationNode(
+          orderId: orderId, orderType: orderType) +
+      "/notified/operator";
+}
+
 String rootPastOrdersNode({OrderType? orderType, String? orderId}) {
   String node = 'orders/past';
   if (orderType != null) {

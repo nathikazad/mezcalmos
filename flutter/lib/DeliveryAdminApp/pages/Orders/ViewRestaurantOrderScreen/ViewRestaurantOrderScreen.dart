@@ -85,6 +85,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
+    
 
     order.value = controller.getOrder(orderId);
     _orderListener = controller
@@ -105,6 +106,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
         }
       });
     } else {
+      controller.setNotifiedAsTrue(order.value!);
       initMap();
       updateMapIfDeliveryPhase(order.value!.status);
     }

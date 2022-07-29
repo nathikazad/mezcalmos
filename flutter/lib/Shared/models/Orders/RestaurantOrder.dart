@@ -41,43 +41,32 @@ class RestaurantOrder extends DeliverableOrder {
   ServiceInfo get restaurant => serviceProvider! as ServiceInfo;
   DateTime? estimatedFoodReadyTime;
   RestaurantOrder({
-    required String orderId,
+    required super.orderId,
+      super.orderType = OrderType.Restaurant,
     required this.status,
     required this.quantity,
-    required String serviceProviderId,
-    required PaymentType paymentType,
-    required DateTime orderTime,
-    required num cost,
+      required super.serviceProviderId,
+      required super.paymentType,
+      required super.orderTime,
+      required super.cost,
     required ServiceInfo restaurant,
-    required UserInfo customer,
-    required Location to,
+      required super.customer,
+      required super.to,
     this.estimatedFoodReadyTime,
-    DeliveryDriverUserInfo? dropoffDriver,
+      super.dropoffDriver,
     String? dropOffDriverChatId,
     required this.itemsCost,
     required this.shippingCost,
-    String? customerDropOffDriverChatId,
-    DateTime? estimatedPickupFromServiceProviderTime,
-    DateTime? estimatedDropoffAtCustomerTime,
+      super.customerDropOffDriverChatId,
+      super.estimatedPickupFromServiceProviderTime,
+      super.estimatedDropoffAtCustomerTime,
     this.notes,
-    RouteInformation? routeInformation,
-  }) : super(
-          orderId: orderId,
-          orderType: OrderType.Restaurant,
-          serviceProviderId: serviceProviderId,
-          paymentType: paymentType,
-          orderTime: orderTime,
-          cost: cost,
-          customer: customer,
+      super.routeInformation,
+      super.notifiedAdmin,
+      super.notifiedOperator})
+      : super(
           serviceProvider: restaurant,
-          to: to,
-          dropoffDriver: dropoffDriver,
-          serviceProviderDropOffDriverChatId: dropOffDriverChatId,
-          customerDropOffDriverChatId: customerDropOffDriverChatId,
-          routeInformation: routeInformation,
-          estimatedPickupFromServiceProviderTime:
-              estimatedPickupFromServiceProviderTime,
-          estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime,
+            serviceProviderDropOffDriverChatId: dropOffDriverChatId
         );
 
   //ignore_for_file:avoid_annotating_with_dynamic
@@ -119,6 +108,8 @@ class RestaurantOrder extends DeliverableOrder {
           ?['serviceProviderDropOffDriver'],
       customerDropOffDriverChatId: data['secondaryChats']
           ?['customerDropOffDriver'],
+      notifiedAdmin: data['notified']?['admin'] ?? false,
+      notifiedOperator: data['notified']?['operator'] ?? false
     );
 
     if (data["routeInformation"] != null) {

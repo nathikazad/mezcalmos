@@ -130,34 +130,27 @@ abstract class DeliverableOrder extends Order {
   String? customerDropOffDriverChatId;
   DateTime? estimatedPickupFromServiceProviderTime;
   DateTime? estimatedDropoffAtCustomerTime;
-  DeliverableOrder(
-      {required String orderId,
-      String? serviceProviderId,
-      required PaymentType paymentType,
-      required DateTime orderTime,
-      required num cost,
-      ServiceInfo? serviceProvider,
-      required UserInfo customer,
-      required Location to,
-      required OrderType orderType,
-      this.dropoffDriver,
-      required this.serviceProviderDropOffDriverChatId,
-      required this.customerDropOffDriverChatId,
-      this.estimatedPickupFromServiceProviderTime,
-      this.estimatedDropoffAtCustomerTime,
-      RouteInformation? routeInformation})
-      : super(
-          orderId: orderId,
-          orderType: orderType,
-          serviceProviderId: serviceProviderId,
-          paymentType: paymentType,
-          orderTime: orderTime,
-          cost: cost,
-          customer: customer,
-          serviceProvider: serviceProvider,
-          to: to,
-          routeInformation: routeInformation,
-        );
+  bool notifiedOperator;
+  bool notifiedAdmin;
+  DeliverableOrder({
+    required super.orderId,
+    super.serviceProviderId,
+    required super.paymentType,
+    required super.orderTime,
+    required super.cost,
+    super.serviceProvider,
+    required super.customer,
+    required super.to,
+    required super.orderType,
+    this.dropoffDriver,
+    required this.serviceProviderDropOffDriverChatId,
+    required this.customerDropOffDriverChatId,
+    this.estimatedPickupFromServiceProviderTime,
+    this.estimatedDropoffAtCustomerTime,
+    super.routeInformation,
+    this.notifiedAdmin = false,
+    this.notifiedOperator = false,
+  });
 }
 
 abstract class TwoWayDeliverableOrder extends DeliverableOrder {
@@ -167,42 +160,26 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
   DateTime? estimatedPickupFromCustomerTime;
   DateTime? estimatedDropoffAtServiceProviderTime;
   TwoWayDeliverableOrder(
-      {required String orderId,
-      String? serviceProviderId,
-      required PaymentType paymentType,
-      required DateTime orderTime,
-      required num cost,
-      ServiceInfo? serviceProvider,
-      required UserInfo customer,
-      required Location to,
-      required OrderType orderType,
-      RouteInformation? routeInformation,
-      DeliveryDriverUserInfo? dropoffDriver,
-      required String? serviceProviderDropOffDriverChatId,
-      required String? customerDropOffDriverChatId,
+      {required super.orderId,
+      super.serviceProviderId,
+      required super.paymentType,
+      required super.orderTime,
+      required super.cost,
+      super.serviceProvider,
+      required super.customer,
+      required super.to,
+      required super.orderType,
+      super.routeInformation,
+      super.dropoffDriver,
+      required super.serviceProviderDropOffDriverChatId,
+      required super.customerDropOffDriverChatId,
       this.pickupDriver,
       required this.serviceProviderPickupDriverChatId,
       required this.customerPickupDriverChatId,
-      DateTime? estimatedPickupFromServiceProviderTime,
-      DateTime? estimatedDropoffAtCustomerTime,
+      super.estimatedPickupFromServiceProviderTime,
+      super.estimatedDropoffAtCustomerTime,
       this.estimatedPickupFromCustomerTime,
-      this.estimatedDropoffAtServiceProviderTime})
-      : super(
-            orderId: orderId,
-            orderType: orderType,
-            serviceProviderId: serviceProviderId,
-            paymentType: paymentType,
-            orderTime: orderTime,
-            cost: cost,
-            customer: customer,
-            serviceProvider: serviceProvider,
-            to: to,
-            routeInformation: routeInformation,
-            dropoffDriver: dropoffDriver,
-            serviceProviderDropOffDriverChatId:
-                serviceProviderDropOffDriverChatId,
-            customerDropOffDriverChatId: customerDropOffDriverChatId,
-            estimatedPickupFromServiceProviderTime:
-                estimatedPickupFromServiceProviderTime,
-            estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime);
+      this.estimatedDropoffAtServiceProviderTime,
+      super.notifiedAdmin,
+      super.notifiedOperator});
 }

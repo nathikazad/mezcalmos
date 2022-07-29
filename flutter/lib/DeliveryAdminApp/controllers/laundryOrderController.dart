@@ -169,6 +169,16 @@ class LaundryOrderController extends GetxController {
     });
   }
 
+  void setNotifiedAsTrue(LaundryOrder order) {
+    if (!order.notifiedAdmin) {
+      _databaseHelper.firebaseDatabase
+          .ref(rootNotifiedAdminRoute(
+              orderType: order.orderType, orderId: order.orderId))
+          .set(true);
+    }
+  }
+
+
   void clearOrderNotifications(String orderId) {
     _fbNotificationsController
         .notifications()
