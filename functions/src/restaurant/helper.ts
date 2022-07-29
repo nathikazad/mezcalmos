@@ -42,7 +42,7 @@ async function checkRestaurantOperator(restaurantId: string, operatorId: string)
   return undefined;
 }
 
-export async function passChecksForRestaurant(data: any, auth?: AuthData): Promise<ValidationPass> {
+export async function passChecksForRestaurant(data: any, auth?: AuthData, checkInPastOrderAlso: boolean = false): Promise<ValidationPass> {
   let response = await isSignedIn(auth)
   if (response != undefined) {
     return {
@@ -64,12 +64,26 @@ export async function passChecksForRestaurant(data: any, auth?: AuthData): Promi
   let orderId: string = data.orderId;
   let order: RestaurantOrder = (await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).once('value')).val();
   if (order == null) {
-    return {
-      ok: false,
-      error: {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Order does not exist`,
-        errorCode: "orderDontExist"
+    if (checkInPastOrderAlso) {
+      order = (await rootDbNodes.pastOrders(OrderType.Restaurant, orderId).once('value')).val();
+      if (order == null) {
+        return {
+          ok: false,
+          error: {
+            status: ServerResponseStatus.Error,
+            errorMessage: `Order does not exist`,
+            errorCode: "orderDontExist"
+          }
+        }
+      }
+    } else {
+      return {
+        ok: false,
+        error: {
+          status: ServerResponseStatus.Error,
+          errorMessage: `Order does not exist`,
+          errorCode: "orderDontExist"
+        }
       }
     }
   }

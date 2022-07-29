@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import { AuthData } from "firebase-functions/lib/common/providers/https";
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { OrderType } from "../shared/models/Generic/Order";
+import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { RestaurantOrderStatusChangeNotification, RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import * as restaurantNodes from "../shared/databaseNodes/services/restaurant";
 import * as customerNodes from "../shared/databaseNodes/customer";
@@ -14,6 +14,7 @@ import { restaurantOrderStatusChangeMessages } from "../restaurant/bgNotificatio
 import { finishOrder } from "../restaurant/helper";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
+import { capturePayment } from "../utilities/stripe";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [
@@ -93,8 +94,11 @@ async function changeStatus(data: any, newStatus: RestaurantOrderStatus, auth?: 
   }
 
   pushNotification(order.customer.id!, notification);
-
   if (newStatus == RestaurantOrderStatus.Delivered) {
+    if (order.paymentType == PaymentType.Card) {
+      order = (await capturePayment(order, order.costToCustomer)) as RestaurantOrder
+      // TODO: capture shipping payment
+    }
     await finishOrder(order, orderId);
   } else {
     customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
