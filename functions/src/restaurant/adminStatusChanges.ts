@@ -158,7 +158,7 @@ export const refundCustomerCustomAmount =
         errorCode: "invalidParam"
       }
     }
-    let validationPass: ValidationPass = await passChecksForRestaurant(data, context.auth);
+    let validationPass: ValidationPass = await passChecksForRestaurant(data, context.auth, true);
     if (!validationPass.ok) {
       return validationPass.error!;
     }
@@ -193,19 +193,34 @@ export const markOrderItemUnavailable =
   });
 
 async function refund(orderId: string, order: RestaurantOrder, newRefundAmount: number): Promise<ServerResponse> {
-  let newCostToCustomer = order.totalCost - order.refundAmount - newRefundAmount;
-  if (newCostToCustomer > 0) {
-    order.refundAmount = order.refundAmount + newRefundAmount;
-    order.costToCustomer = newCostToCustomer;
-    if (!orderInProcess(order.status) && order.paymentType == PaymentType.Card) {
-      order = (await refundPayment(order, newRefundAmount)) as RestaurantOrder
-    }
+  if (order.costToCustomer <= 0) return {
+    status: ServerResponseStatus.Error,
+    errorMessage: `No money left to refund`,
   }
-  customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
-  await restaurantNodes.inProcessOrders(order.restaurant.id, orderId).update(order);
-  await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
-  if (order.dropoffDriver)
-    deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+  let newCostToCustomer = order.totalCost - order.refundAmount - newRefundAmount;
+  if (newCostToCustomer < 0) {
+    newCostToCustomer = 0;
+    newRefundAmount = order.totalCost - order.refundAmount;
+  }
+
+  order.refundAmount = order.refundAmount + newRefundAmount;
+  order.costToCustomer = newCostToCustomer;
+  if (orderInProcess(order.status)) {
+    customerNodes.inProcessOrders(order.customer.id!, orderId).update(order);
+    await restaurantNodes.inProcessOrders(order.restaurant.id, orderId).update(order);
+    await rootDbNodes.inProcessOrders(OrderType.Restaurant, orderId).update(order);
+    if (order.dropoffDriver)
+      deliveryDriverNodes.inProcessOrders(order.dropoffDriver.id, orderId).update(order);
+
+  } else {
+    if (order.paymentType == PaymentType.Card)
+      order = (await refundPayment(order, newRefundAmount)) as RestaurantOrder
+    customerNodes.pastOrders(order.customer.id!, orderId).update(order);
+    await restaurantNodes.pastOrders(order.restaurant.id, orderId).update(order);
+    await rootDbNodes.pastOrders(OrderType.Restaurant, orderId).update(order);
+    if (order.dropoffDriver)
+      deliveryDriverNodes.pastOrders(order.dropoffDriver.id, orderId).update(order);
+  }
 
   return { status: ServerResponseStatus.Success }
 }
