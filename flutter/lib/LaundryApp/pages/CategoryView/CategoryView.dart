@@ -118,7 +118,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
                     ),
                     Text(
                       "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
-                      style: Get.textTheme.headline4,
+                      style: Get.textTheme.bodyText1,
                     ),
                     const SizedBox(height: 15),
                     _categoryNameComponent(
