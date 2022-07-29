@@ -106,7 +106,7 @@ class _WrapperState extends State<Wrapper> {
 
   Future<void> handleAuthStateChange(fireAuth.User? user) async {
     // We should Priotorize the AppNeedsUpdate route to force users to update
-    if (Get.currentRoute != kAppNeedsUpdate) {
+    if (!isCurrentRoute(kAppNeedsUpdate)) {
       if (user == null) {
         if (AppType.CustomerApp == settingsController.appType) {
           // if (Get.currentRoute != kSignInRouteOptional) {
@@ -139,7 +139,7 @@ class _WrapperState extends State<Wrapper> {
   void redirectIfUserInfosNotSet() {
     if ((!Get.find<AuthController>().isDisplayNameSet() ||
             !Get.find<AuthController>().isUserImgSet()) &&
-        Get.currentRoute != kUserProfile) {
+        !isCurrentRoute(kUserProfile)) {
       /* KEEEP THIS HERE FOR FUTURE REFRENCE
         We have so far 3 Scenarios here : 
         - The Current route is kOtpConfirmRoute :
@@ -175,7 +175,7 @@ class _WrapperState extends State<Wrapper> {
       Get.until((Route<dynamic> route) =>
           route.settings.name == kSignInRouteOptional);
 
-    if (Get.currentRoute == kSignInRouteOptional) {
+    if (isCurrentRoute(kSignInRouteOptional)) {
       Get.back<void>();
     } else {
       if (!Get.currentRoute.contains('/messages/'))
