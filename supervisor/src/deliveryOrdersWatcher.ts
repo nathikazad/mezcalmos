@@ -71,7 +71,6 @@ async function checkdeliverableOrders() {
       if ((deliverableOrder as any).notified?.admin == null) {
         console.log("notifying admin")
         for (let adminId in deliveryAdmins) {
-          console
           let deliveryAdmin: DeliveryAdmin = deliveryAdmins[adminId]
           let notification: fcmPayload = clone(payloadTemplate);
           notification.token = deliveryAdmin.notificationInfo.deviceNotificationToken

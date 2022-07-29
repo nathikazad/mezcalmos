@@ -138,6 +138,9 @@
       "inProcess": {
         "$orderType": {
           "$orderId": {
+            "notified": {
+              ".write": true
+            },
             "$driverType": {
               "location": {
                 ".write": "data.parent().parent().exists() && root.child('orders/inProcess/' + $orderType + '/' + $orderId + '/' + $driverType + '/id').val() === auth.uid"
