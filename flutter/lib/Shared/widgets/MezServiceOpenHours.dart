@@ -35,13 +35,17 @@ class MezServiceOpenHours extends StatelessWidget {
           return Container(
             margin: const EdgeInsets.only(bottom: 3),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.schedule,
-                  size: 18,
+                Container(
+                  margin: const EdgeInsets.only(top: 2),
+                  child: Icon(
+                    Icons.schedule,
+                    size: 18,
+                  ),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: 8,
                 ),
                 Text(
                   getDayName(v.key).capitalizeDays,
