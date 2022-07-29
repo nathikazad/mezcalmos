@@ -1,4 +1,4 @@
-import { ChatData, MessageNotificationForQueue, nonNotifiableParticipants, Participant, ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
+import { ChatData, MessageNotificationForQueue, nonNotifiableParticipants, Participant, Participants, ParticipantType } from "../../functions/src/shared/models/Generic/Chat";
 import { getChat, setChatMessageNotifiedAsTrue } from "../../functions/src/shared/controllers/chatController";
 import * as notifyUser from "../../functions/src/utilities/senders/notifyUser";
 import { chatUrl, orderUrl } from "../../functions/src/utilities/senders/appRoutes";
@@ -34,16 +34,16 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
   }
   let senderInfo: Participant = chatData.participants[notificationForQueue.participantType]![notificationForQueue.userId]
   delete chatData.participants[notificationForQueue.participantType];
-  for (let nonNotifiableParticipant in nonNotifiableParticipants) {
-    delete chatData.participants[nonNotifiableParticipants[nonNotifiableParticipant]];
-  }
   for (let participantType in chatData.participants) {
+    if (participantType in nonNotifiableParticipants)
+      continue
     for (let participantId in chatData.participants[participantType as ParticipantType]) {
       let participant = chatData.participants[participantType as ParticipantType]![participantId]
+      let transformedSenderInfo: Participant = transformSender(senderInfo, chatData.participants, chatData.orderType!, notificationForQueue.participantType, participant.particpantType); //TODO: change this to restaurant or laundry
       let notification: Notification = {
         foreground: <NewMessageNotification>{
           chatId: notificationForQueue.chatId,
-          sender: senderInfo,
+          sender: transformedSenderInfo,
           message: notificationForQueue.message,
           orderId: notificationForQueue.orderId ?? null,
           time: notificationForQueue.timestamp,
@@ -53,11 +53,11 @@ async function notifyOtherMessageParticipants(notificationForQueue: MessageNotif
         },
         background: {
           en: {
-            title: `New message from ${senderInfo.name}`,
+            title: `New message from ${transformedSenderInfo.name}`,
             body: notificationForQueue.message
           },
           es: {
-            title: `Nueva mensaje de ${senderInfo.name}`,
+            title: `Nueva mensaje de ${transformedSenderInfo.name}`,
             body: notificationForQueue.message
           }
         },
@@ -94,4 +94,43 @@ async function notifyCustomerAboutCounterOffer(notificationForQueue: CounterOffe
     linkUrl: orderUrl(ParticipantType.Customer, OrderType.Taxi, notificationForQueue.orderId)
   }
   notifyUser.pushNotification(notificationForQueue.customerId, notification, ParticipantType.Customer);
+}
+
+function transformSender(
+  defaultParticipant: Participant,
+  participants: Participants,
+  orderType: OrderType,
+  recipientType: ParticipantType,
+  senderType: ParticipantType,
+): Participant {
+  let returnParticipant: Participant = defaultParticipant;
+  switch (recipientType) {
+    case null:
+      break;
+    case ParticipantType.LaundryOperator: // when receiving message from laundry operator
+      returnParticipant = getServiceProviderFromParticipants(participants, ParticipantType.Laundry)
+      break;
+    case ParticipantType.RestaurantOperator: // when receiving message from restaurant operator
+      returnParticipant = getServiceProviderFromParticipants(participants, ParticipantType.Restaurant)
+      break;
+    case ParticipantType.DeliveryAdmin: // when receiving message from delivery admin operator
+      if (senderType == ParticipantType.Customer) {
+        switch (orderType) {
+          case OrderType.Laundry:
+            returnParticipant = getServiceProviderFromParticipants(participants, ParticipantType.Laundry)
+            break;
+          case OrderType.Restaurant:
+            returnParticipant = getServiceProviderFromParticipants(participants, ParticipantType.Restaurant)
+            break;
+        }
+      }
+      break;
+  }
+  return returnParticipant
+}
+
+function getServiceProviderFromParticipants(
+  participants: Participants,
+  participantType: ParticipantType) {
+  return participants[participantType]![Object.keys(participants[participantType]!)[0]]
 }
