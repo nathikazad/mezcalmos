@@ -45,7 +45,7 @@ export enum ParticipantType {
   RestaurantOperator = "restaurantOperator"
 }
 
-export const nonNotifiableParticipants: Array<ParticipantType> = [ParticipantType.Restaurant];
+export const nonNotifiableParticipants: Array<ParticipantType> = [ParticipantType.Restaurant, ParticipantType.Laundry];
 
 
 export interface Participant extends UserInfo {
