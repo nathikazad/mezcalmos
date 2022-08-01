@@ -23,7 +23,7 @@ class CustomerLaundryOrderEst extends StatelessWidget {
       return Card(
         margin: const EdgeInsets.only(bottom: 20),
         child: Container(
-            margin: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
             child: Row(
               children: [
                 Stack(
@@ -40,13 +40,17 @@ class CustomerLaundryOrderEst extends StatelessWidget {
                       right: -35,
                       child: CircleAvatar(
                         radius: 23,
-                        child: Icon(_getIcon(), color: Colors.white),
+                        child: Icon(
+                          _getIcon(),
+                          color: Colors.white,
+                          size: 30,
+                        ),
                       ),
                     ),
                   ],
                 ),
                 SizedBox(
-                  width: 42,
+                  width: 45,
                 ),
                 Flexible(
                     fit: FlexFit.tight,
