@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/CustomerLaundryEstTimes.dart';
@@ -200,7 +201,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         Container(
           height: 350,
           child: MGoogleMap(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.all(10),
             mGoogleMapController: mapController,
             recenterBtnBottomPadding: 20,
             // rerenderDuration: Duration(seconds: 10),
@@ -212,10 +213,10 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       ];
 
   void initMap() {
-    // mapController.enableMezSmartPointer = true;
     mapController.periodicRerendering.value = true;
-    // mapController.recenterButtonEnabled.value = true;
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
 
+    mezDbgPrint("Set location ===> ${order.value?.to}");
     mapController.setLocation(
       LocModel.Location(
         "",
@@ -227,12 +228,15 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     );
 
     // restaurant ad customer's location are fixed (fit in bound at start)
+    mezDbgPrint("Laundry locatuon ===> ${order.value?.laundry?.location}");
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.laundry?.location.toLatLng(),
       markerId: order.value?.laundry?.id,
       customImgHttpUrl: order.value?.laundry?.image,
       fitWithinBounds: true,
     );
+
+    mezDbgPrint("Customer's locatuon ===> ${order.value?.to.toLatLng()}");
 
     // customer's
     mapController.addOrUpdatePurpleDestinationMarker(
@@ -247,6 +251,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     mapController.animateAndUpdateBounds(
       shouldFitPolylineInBound: order.value!.routeInformation != null,
     );
+    mapController.setAnimateMarkersPolyLinesBounds(true);
   }
 
   void updateMapByPhase(LaundryOrderPhase phase) {
@@ -276,7 +281,6 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
             fitWithinBounds: true,
           );
         }
-
         // mapController.animateAndUpdateBounds(shouldFitPolylineInBound: false);
         break;
 
@@ -316,6 +320,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         break;
       default:
     }
+    mapController.animateAndUpdateBounds();
   }
 
   Container _orderEstimatedDeliveryTime() {

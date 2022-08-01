@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
@@ -235,7 +236,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       ];
 
   void initMap() {
-    mapController.lockInAutoZoomAnimation();
+    mapController.periodicRerendering.value = true;
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
 
     mapController.setLocation(
       LocModel.Location(
@@ -265,6 +267,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
     mapController.animateAndUpdateBounds(
         shouldFitPolylineInBound: order.value!.routeInformation != null);
+    mapController.setAnimateMarkersPolyLinesBounds(true);
   }
 
   void updateMapIfDeliveryPhase(RestaurantOrderStatus status) {
