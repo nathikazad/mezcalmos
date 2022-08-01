@@ -2,83 +2,94 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:sizer/sizer.dart';
 
 void dialogRequiredSignIn() {
   dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
           ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
       ["DialogRequiredSignIn"];
   Get.dialog<void>(
-    Container(
-      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      height: 100,
-      width: Get.width,
-      child: Material(
+    Material(
+      child: Container(
         color: Colors.white,
+        // padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         child: Column(
           children: <Widget>[
-            Container(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Get.back<void>();
-                },
-              ),
-            ),
-            Expanded(
-              child: Image.asset("assets/images/shared/loginImg.jpg"),
-            ),
-            Container(
-              width: Get.width,
-              child: Text(
-                "${_i18n()["title"]}",
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 25),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.black,
-              ),
-              height: 45,
-              width: Get.width,
-              alignment: Alignment.center,
-              child: InkWell(
-                onTap: () {
-                  // to remove the SignIn popUp first!
-                  Get.back<void>();
-                  // then head to kSignInRoute.
-                  Get.find<AuthController>()
-                      .preserveNavigationStackAfterSignIn = true;
-                  Get.toNamed<void>(kSignInRouteOptional);
-                },
-                child: Text(
-                  "${_i18n()["signBtn"]}",
-                  style: TextStyle(color: Colors.white),
+            SafeArea(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                // margin: const EdgeInsets.only(top: 25),
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    mezDbgPrint("Clicked back");
+                    Get.back<void>();
+                  },
                 ),
               ),
             ),
-            const SizedBox(height: 15),
             Container(
+              margin: const EdgeInsets.symmetric(horizontal: 12),
               alignment: Alignment.center,
-              height: 15,
-              child: InkWell(
-                onTap: () {
-                  Get.back<void>();
-                },
-                child: Text(
-                  "${_i18n()["notNowBtn"]}",
-                  style: TextStyle(color: Colors.grey),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    child: Text(
+                      "${_i18n()["title"]}",
+                      textAlign: TextAlign.center,
+                      style: Get.textTheme.headline3
+                          ?.copyWith(fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Image.asset(
+                    "assets/images/shared/loginPopUp.png",
+                    fit: BoxFit.contain,
+                    height: 50.h,
+                    width: double.infinity,
+                  ),
+                  const SizedBox(height: 15),
+                  MezButton(
+                    onClick: () async {
+                      // to remove the SignIn popUp first!
+                      Get.back<void>();
+                      // then head to kSignInRoute.
+                      Get.find<AuthController>()
+                          .preserveNavigationStackAfterSignIn = true;
+                      // ignore: unawaited_futures
+                      Get.toNamed<void>(kSignInRouteOptional);
+                    },
+                    label: "${_i18n()["signBtn"]}",
+                    withGradient: true,
+                  ),
+                  const SizedBox(height: 15),
+                  InkWell(
+                    onTap: () {
+                      Get.back<void>();
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.all(8),
+                      child: Center(
+                        child: Text(
+                          "${_i18n()["notNowBtn"]}",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                ],
               ),
             ),
-            const SizedBox(height: 15),
           ],
         ),
       ),
     ),
+    useSafeArea: false,
   );
 }

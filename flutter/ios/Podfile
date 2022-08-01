@@ -6,6 +6,14 @@
 
 
 
+
+
+
+
+
+
+
+
 platform :ios, '12.0'
 
 
@@ -15,7 +23,23 @@ platform :ios, '12.0'
 
 
 
+
+
+
+
+
+
+
+
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+
+
+
+
+
+
+
+
 
 
 
@@ -39,7 +63,31 @@ ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 project 'Runner', {
+
+
+
+
+
+
+
+
 
 
 
@@ -55,6 +103,14 @@ project 'Runner', {
 
 
 
+
+
+
+
+
+
+
+
   'Profile' => :release,
 
 
@@ -63,7 +119,23 @@ project 'Runner', {
 
 
 
+
+
+
+
+
+
+
+
   'Release' => :release,
+
+
+
+
+
+
+
+
 
 
 
@@ -87,7 +159,31 @@ project 'Runner', {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def flutter_root
+
+
+
+
+
+
+
+
 
 
 
@@ -103,7 +199,23 @@ def flutter_root
 
 
 
+
+
+
+
+
+
+
+
   unless File.exist?(generated_xcode_build_settings_path)
+
+
+
+
+
+
+
+
 
 
 
@@ -119,7 +231,31 @@ def flutter_root
 
 
 
+
+
+
+
+
+
+
+
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -143,7 +279,23 @@ def flutter_root
 
 
 
+
+
+
+
+
+
+
+
     matches = line.match(/FLUTTER_ROOT\=(.*)/)
+
+
+
+
+
+
+
+
 
 
 
@@ -159,7 +311,23 @@ def flutter_root
 
 
 
+
+
+
+
+
+
+
+
   end
+
+
+
+
+
+
+
+
 
 
 
@@ -175,7 +343,31 @@ def flutter_root
 
 
 
+
+
+
+
+
+
+
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -207,7 +399,39 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 flutter_ios_podfile_setup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -231,7 +455,23 @@ target 'Runner' do
 
 
 
+
+
+
+
+
+
+
+
   use_frameworks!
+
+
+
+
+
+
+
+
 
 
 
@@ -255,7 +495,31 @@ target 'Runner' do
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
+
+
+
+
+
+
+
 
 
 
@@ -279,7 +543,31 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 post_install do |installer|
+
+
+
+
+
+
+
+
 
 
 
@@ -295,6 +583,14 @@ post_install do |installer|
 
 
 
+
+
+
+
+
+
+
+
     flutter_additional_ios_build_settings(target)
 
 
@@ -303,7 +599,23 @@ post_install do |installer|
 
 
 
+
+
+
+
+
+
+
+
   end
+
+
+
+
+
+
+
+
 
 
 
