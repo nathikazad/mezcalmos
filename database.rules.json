@@ -139,7 +139,7 @@
         "$orderType": {
           "$orderId": {
             "notified": {
-              ".write": true
+              ".write": "root.child('orders/inProcess/' + $orderType +'/' + $orderId).exists()"
             },
             "$driverType": {
               "location": {
