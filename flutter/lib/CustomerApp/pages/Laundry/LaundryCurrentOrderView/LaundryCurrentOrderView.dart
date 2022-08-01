@@ -214,9 +214,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
   void initMap() {
     mapController.periodicRerendering.value = true;
-    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+    mapController.animateMarkersPolyLinesBounds.value = true;
 
-    mezDbgPrint("Set location ===> ${order.value?.to}");
     mapController.setLocation(
       LocModel.Location(
         "",
@@ -228,15 +228,12 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     );
 
     // restaurant ad customer's location are fixed (fit in bound at start)
-    mezDbgPrint("Laundry locatuon ===> ${order.value?.laundry?.location}");
     mapController.addOrUpdateUserMarker(
       latLng: order.value?.laundry?.location.toLatLng(),
       markerId: order.value?.laundry?.id,
       customImgHttpUrl: order.value?.laundry?.image,
       fitWithinBounds: true,
     );
-
-    mezDbgPrint("Customer's locatuon ===> ${order.value?.to.toLatLng()}");
 
     // customer's
     mapController.addOrUpdatePurpleDestinationMarker(
@@ -251,7 +248,6 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     mapController.animateAndUpdateBounds(
       shouldFitPolylineInBound: order.value!.routeInformation != null,
     );
-    mapController.setAnimateMarkersPolyLinesBounds(true);
   }
 
   void updateMapByPhase(LaundryOrderPhase phase) {

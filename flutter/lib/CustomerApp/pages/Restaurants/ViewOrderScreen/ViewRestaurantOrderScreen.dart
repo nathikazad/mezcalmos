@@ -237,7 +237,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   void initMap() {
     mapController.periodicRerendering.value = true;
-    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+    mapController.animateMarkersPolyLinesBounds.value = true;
 
     mapController.setLocation(
       LocModel.Location(
@@ -267,7 +268,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
     mapController.animateAndUpdateBounds(
         shouldFitPolylineInBound: order.value!.routeInformation != null);
-    mapController.setAnimateMarkersPolyLinesBounds(true);
   }
 
   void updateMapIfDeliveryPhase(RestaurantOrderStatus status) {
