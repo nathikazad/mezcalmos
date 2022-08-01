@@ -42,12 +42,10 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(top: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 28,
-          ),
           Text(widget.option.name[userLanguage].toString(),
               style: Get.theme.textTheme.headline3),
           if (widget.option.optionType == OptionType.Custom)
@@ -82,7 +80,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
     required Choice choice,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.only(bottom: 15),
       child: Row(
         children: [
           Flexible(

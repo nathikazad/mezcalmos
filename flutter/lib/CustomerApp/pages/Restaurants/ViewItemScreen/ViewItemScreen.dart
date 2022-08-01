@@ -147,9 +147,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                 ),
                 if (cartItem.value?.item.description != null)
                   _itemDescription(context),
-                SizedBox(
-                  height: 10,
-                ),
                 if (cartItem.value!.item.options.isNotEmpty)
                   Column(
                     children: List.generate(
@@ -177,7 +174,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   Container _itemDescription(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 20, bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
