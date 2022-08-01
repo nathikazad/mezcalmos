@@ -48,41 +48,38 @@ class ForegroundNotificationsController extends GetxController {
         .child(notificationNode)
         .onChildAdded
         .listen((DatabaseEvent event) {
-      // mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
-      // mezDbgPrint(event.snapshot.value);
-      // try {
-
-      final Notification _notification =
-          notificationHandler(event.snapshot.key!, event.snapshot.value);
-      final bool alreadyOnLinkPage =
-          isCurrentRoute(_notification.linkUrl);
-      mezDbgPrint("Current =====>${Get.currentRoute}");
-      mezDbgPrint("notif url =====>${_notification.linkUrl}");
-      switch (_notification.notificationAction) {
-        case NotificationAction.ShowPopUp:
-          if (Get.find<AppLifeCycleController>().appState ==
-              material.AppLifecycleState.resumed) {
+      mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
+      mezDbgPrint(event.snapshot.value);
+      try {
+        final Notification _notification =
+            notificationHandler(event.snapshot.key!, event.snapshot.value);
+        final bool alreadyOnLinkPage = isCurrentRoute(_notification.linkUrl);
+        switch (_notification.notificationAction) {
+          case NotificationAction.ShowPopUp:
+            if (Get.find<AppLifeCycleController>().appState ==
+                material.AppLifecycleState.resumed) {
+              _displayNotificationsStreamController.add(_notification);
+            }
+            break;
+          case NotificationAction.ShowSnackBarAlways:
             _displayNotificationsStreamController.add(_notification);
-          }
-          break;
-        case NotificationAction.ShowSnackBarAlways:
-          _displayNotificationsStreamController.add(_notification);
-          break;
-        case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
-          if (!alreadyOnLinkPage) {
-            _displayNotificationsStreamController.add(_notification);
-          }
-          break;
-      }
+            break;
+          case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
+            if (!alreadyOnLinkPage) {
+              _displayNotificationsStreamController.add(_notification);
+            }
+            break;
+        }
 
-      if (!alreadyOnLinkPage) {
-        notifications.add(_notification);
-      } else {
-        removeNotification(_notification.id);
+        if (!alreadyOnLinkPage) {
+          notifications.add(_notification);
+        } else {
+          removeNotification(_notification.id);
+        }
+      } catch (e) {
+        mezDbgPrint("Invalid notification");
+        mezDbgPrint(e);
       }
-      // } on StateError {
-      //   mezDbgPrint("Invalid notification");
-      // }
     });
 
     _notificationNodeRemoveListener?.cancel();
