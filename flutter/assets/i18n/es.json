@@ -67,7 +67,7 @@
                             "otwPickUp": "Recoger en el camino",
                             "pickedUp": "Pedido recogido",
                             "atLaundry": "En la lavandería",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden Entregado"
                         }
@@ -80,7 +80,7 @@
                             "otwPickUp": "Recoger en el camino",
                             "pickedUp": "Pedido recogido",
                             "atLaundry": "En la lavandería",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden Entregado"
                         }
@@ -441,7 +441,7 @@
                             "otwPickUp": "Recoger en el camino",
                             "pickedUp": "Pedido recogido",
                             "atLaundry": "En la lavandería",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Entregado",
                             "canceled": "Cancelada",
@@ -583,7 +583,7 @@
             "laundryPickedBody": "El orden es recogido con éxito",
             "laundryAtLaundryTitle": "En la lavandería",
             "laundryAtLaundryBody": "Tu orden es recibido por la lavandería.",
-            "laundryReadyForDeliveryTitle": "Listo para la entrega",
+            "laundryReadyForDeliveryTitle": "Listo para entregar",
             "laundryReadyForDeliveryBody": "Tu orden está listo para la entrega",
             "laundryOtwDeliveryTitle": "Entrega en el camino",
             "laundryOtwDeliveryBody": "Tu orden está en camino",
@@ -1099,7 +1099,7 @@
                             "atLaundryText": "Confirme el pedido recibido por la lavandería configurando el peso del pedido. ",
                             "atLaundryTitle": "Orden en la lavandería",
                             "orderWeightError": " Error, por favor inserte un peso de pedido válido",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "readyForDeliveryText": "Confirme que el pedido está listo para la entrega.",
                             "readyForDeliveryTitle": "Orden listo para la entrega",
                             "otwDelivery": "Entrega en el camino",
@@ -1117,7 +1117,7 @@
                             "otwPickUp": "Recoger en el camino",
                             "pickedUp": "Pedido recogido",
                             "atLaundry": "En la lavandería",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden Entregado"
                         },
@@ -1331,7 +1331,7 @@
                                 "pickupOtw": "Recogida en el camino",
                                 "pickedUp": "Pedido Recogido",
                                 "atLaundry": "En la lavandería",
-                                "readyForDelivery": "Listo para la entrega",
+                                "readyForDelivery": "Listo para entregar",
                                 "deliveryOtw": "Entrega en el camino",
                                 "delivered": "Orden Entregado",
                                 "canceled": "Orden Cancelada"
@@ -1432,7 +1432,7 @@
             "laundryPickedBody": "El orden es recogido con éxito",
             "laundryAtLaundryTitle": "En la lavandería",
             "laundryAtLaundryBody": "El pedido es recibido por la lavandería.",
-            "laundryReadyForDeliveryTitle": "Listo para la entrega",
+            "laundryReadyForDeliveryTitle": "Listo para entregar",
             "laundryReadyForDeliveryBody": "El pedido está listo para la entrega.",
             "laundryOtwDeliveryTitle": "Entrega en el camino",
             "laundryOtwDeliveryBody": "El pedido está en camino al cliente.",
@@ -1564,7 +1564,7 @@
                             "otwPickUp": "Recoger en el camino",
                             "pickedUp": "pedidoRecogido",
                             "atLaundry": "En la lavandería",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden Entregado"
                         },
