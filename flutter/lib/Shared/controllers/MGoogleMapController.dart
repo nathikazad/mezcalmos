@@ -96,7 +96,9 @@ class MGoogleMapController {
           position: latLng,
         ),
       );
-    }
+    } else
+      mezDbgPrint(
+          "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
   }
 
   void removeCircleMarker({String markerId = "default"}) {
@@ -153,7 +155,9 @@ class MGoogleMapController {
           position: latLng,
         ),
       );
-    }
+    } else
+      mezDbgPrint(
+          "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
   }
 
   Future<void> addOrUpdateTaxiDriverMarker(String? markerId, LatLng? latLng,
@@ -187,7 +191,9 @@ class MGoogleMapController {
             flat: true,
             position: latLng!),
       );
-    }
+    } else
+      mezDbgPrint(
+          "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
   }
 
   Future<void> addOrUpdatePurpleDestinationMarker(
@@ -213,7 +219,9 @@ class MGoogleMapController {
           position: latLng,
         ),
       );
-    }
+    } else
+      mezDbgPrint(
+          "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
   }
 
   void removeDestinationMarker({String id = "dest"}) {
