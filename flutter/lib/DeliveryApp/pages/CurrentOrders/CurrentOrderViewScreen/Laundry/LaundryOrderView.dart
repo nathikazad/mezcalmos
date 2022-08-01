@@ -71,28 +71,32 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
     // Future.wait(<Future<void>>[
     // DESTINATION MARKER
-    mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: LatLng(
-        order.value!.to.latitude,
-        order.value!.to.longitude,
-      ),
-    );
+    if (order.value != null)
+      mapController.addOrUpdatePurpleDestinationMarker(
+        latLng: LatLng(
+          order.value!.to.latitude,
+          order.value!.to.longitude,
+        ),
+      );
     // USER MARKER
-    mapController.addOrUpdateUserMarker(
-      latLng: LatLng(
-        deliveryAuthAuthController.currentLocation.latitude!,
-        deliveryAuthAuthController.currentLocation.longitude!,
-      ),
-    );
+    if (deliveryAuthAuthController.currentLocation.latitude != null &&
+        deliveryAuthAuthController.currentLocation.longitude != null)
+      mapController.addOrUpdateUserMarker(
+        latLng: LatLng(
+          deliveryAuthAuthController.currentLocation.latitude!,
+          deliveryAuthAuthController.currentLocation.longitude!,
+        ),
+      );
     // LAUNDRY MARKER
-    mapController.addOrUpdateUserMarker(
-      latLng: LatLng(
-        order.value!.laundry!.location.latitude,
-        order.value!.laundry!.location.longitude,
-      ),
-      customImgHttpUrl: order.value!.laundry!.image,
-      markerId: order.value!.laundry!.id,
-    );
+    if (order.value!.laundry != null)
+      mapController.addOrUpdateUserMarker(
+        latLng: LatLng(
+          order.value!.laundry!.location.latitude,
+          order.value!.laundry!.location.longitude,
+        ),
+        customImgHttpUrl: order.value!.laundry!.image,
+        markerId: order.value!.laundry!.id,
+      );
 
     if (order.value?.routeInformation?.polyline != null)
       mapController.decodeAndAddPolyline(
@@ -273,14 +277,14 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
 
           _orderStatusSnapshot = laundryOrder.status;
         }
-
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            laundryOrder.dropoffDriver!.location!.latitude,
-            laundryOrder.dropoffDriver!.location!.longitude,
-          ),
-          fitWithinBounds: true,
-        );
+        if (laundryOrder.dropoffDriver?.location != null)
+          mapController.addOrUpdateUserMarker(
+            latLng: LatLng(
+              laundryOrder.dropoffDriver!.location!.latitude,
+              laundryOrder.dropoffDriver!.location!.longitude,
+            ),
+            fitWithinBounds: true,
+          );
         break;
       case LaundryOrderStatus.OtwPickupFromCustomer:
         if (_orderStatusSnapshot != laundryOrder.status) {
@@ -292,12 +296,13 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
           _orderStatusSnapshot = laundryOrder.status;
         }
         // DropOff driver Marker
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            laundryOrder.dropoffDriver!.location!.latitude,
-            laundryOrder.dropoffDriver!.location!.longitude,
-          ),
-        );
+        if (laundryOrder.dropoffDriver?.location != null)
+          mapController.addOrUpdateUserMarker(
+            latLng: LatLng(
+              laundryOrder.dropoffDriver!.location!.latitude,
+              laundryOrder.dropoffDriver!.location!.longitude,
+            ),
+          );
         // mapController.moveToNewLatLng(
         //   laundryOrder.dropoffDriver!.location!.latitude,
         //   laundryOrder.dropoffDriver!.location!.longitude,
@@ -323,13 +328,14 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
           // set snapshot to currentSttaus so we don't need to re-update.
           _orderStatusSnapshot = laundryOrder.status;
         }
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            laundryOrder.pickupDriver!.location!.latitude,
-            laundryOrder.pickupDriver!.location!.longitude,
-          ),
-          fitWithinBounds: true,
-        );
+        if (laundryOrder.pickupDriver?.location != null)
+          mapController.addOrUpdateUserMarker(
+            latLng: LatLng(
+              laundryOrder.pickupDriver!.location!.latitude,
+              laundryOrder.pickupDriver!.location!.longitude,
+            ),
+            fitWithinBounds: true,
+          );
 
         mapController.animateAndUpdateBounds();
         break;
@@ -343,13 +349,14 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
           );
           _orderStatusSnapshot = laundryOrder.status;
         }
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            laundryOrder.pickupDriver!.location!.latitude,
-            laundryOrder.pickupDriver!.location!.longitude,
-          ),
-          fitWithinBounds: true,
-        );
+        if (laundryOrder.pickupDriver?.location != null)
+          mapController.addOrUpdateUserMarker(
+            latLng: LatLng(
+              laundryOrder.pickupDriver!.location!.latitude,
+              laundryOrder.pickupDriver!.location!.longitude,
+            ),
+            fitWithinBounds: true,
+          );
         mapController.animateAndUpdateBounds();
         break;
       default:
@@ -389,23 +396,26 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
           fitWithinBounds: true,
         );
         // USER MARKER
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            deliveryAuthAuthController.currentLocation.latitude!,
-            deliveryAuthAuthController.currentLocation.longitude!,
-          ),
-          fitWithinBounds: true,
-        );
+        if (deliveryAuthAuthController.currentLocation.latitude != null &&
+            deliveryAuthAuthController.currentLocation.longitude != null)
+          mapController.addOrUpdateUserMarker(
+            latLng: LatLng(
+              deliveryAuthAuthController.currentLocation.latitude!,
+              deliveryAuthAuthController.currentLocation.longitude!,
+            ),
+            fitWithinBounds: true,
+          );
         // LAUNDRY MARKER
-        mapController.addOrUpdateUserMarker(
-          latLng: LatLng(
-            laundryOrder.laundry!.location.latitude,
-            laundryOrder.laundry!.location.longitude,
-          ),
-          customImgHttpUrl: laundryOrder.laundry!.image,
-          markerId: laundryOrder.laundry!.id,
-          fitWithinBounds: true,
-        );
+        if (laundryOrder.laundry != null)
+          mapController.addOrUpdateUserMarker(
+            latLng: LatLng(
+              laundryOrder.laundry!.location.latitude,
+              laundryOrder.laundry!.location.longitude,
+            ),
+            customImgHttpUrl: laundryOrder.laundry!.image,
+            markerId: laundryOrder.laundry!.id,
+            fitWithinBounds: true,
+          );
       }
     }
   }
