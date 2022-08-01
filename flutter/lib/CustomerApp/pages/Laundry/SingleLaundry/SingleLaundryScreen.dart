@@ -104,6 +104,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
             flex: 1,

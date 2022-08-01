@@ -5,6 +5,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -86,6 +87,15 @@ class OrderController extends GetxController {
       } on StateError {
         return null;
       }
+    }
+  }
+
+  void setNotifiedAsTrue(LaundryOrder order) {
+    if (!order.notifiedOperator) {
+      _databaseHelper.firebaseDatabase
+          .ref(rootNotifiedOperatorRoute(
+              orderType: order.orderType, orderId: order.orderId))
+          .set(true);
     }
   }
 

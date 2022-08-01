@@ -229,6 +229,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           height: 350,
           width: Get.width - 20,
           child: MGoogleMap(
+            padding: EdgeInsets.zero,
             mGoogleMapController: mapController,
             recenterBtnBottomPadding: 20,
           ),
@@ -293,7 +294,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
             fitWithinBounds: true,
           );
         }
-
         if (order.value!.dropoffDriver != null &&
             order.value!.dropoffDriver!.location != null) {
           mapController.addOrUpdateUserMarker(

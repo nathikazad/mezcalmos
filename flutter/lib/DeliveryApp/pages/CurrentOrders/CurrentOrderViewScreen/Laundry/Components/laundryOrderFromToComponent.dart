@@ -76,6 +76,7 @@ class _LaundryOrderFromToComponentState
           if (widget.order.getCustomerDriverChatId() != null) {
             Get.toNamed<void>(
               getMessagesRoute(
+                  orderType: OrderType.Laundry,
                   chatId: widget.order.getCustomerDriverChatId()!,
                   orderId: widget.order.orderId,
                   recipientType: ParticipantType.Customer),
@@ -94,6 +95,7 @@ class _LaundryOrderFromToComponentState
         onServiceMsgClick: () {
           if (widget.order.getServiceDriverChatId() != null) {
             Get.toNamed<void>(getMessagesRoute(
+                orderType: OrderType.Laundry,
                 chatId: widget.order.getServiceDriverChatId()!,
                 orderId: widget.order.orderId,
                 recipientType: ParticipantType.DeliveryAdmin));

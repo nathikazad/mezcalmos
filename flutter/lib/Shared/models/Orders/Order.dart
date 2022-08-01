@@ -1,11 +1,11 @@
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 abstract class Order {
@@ -122,45 +122,31 @@ abstract class DeliverableOrder extends Order {
   DateTime? estimatedPickupFromServiceProviderTime;
   DateTime? estimatedDropoffAtCustomerTime;
   num? dropOffShippingCost;
+  bool notifiedOperator;
+  bool notifiedAdmin;
   DeliverableOrder(
-      {required String orderId,
-      String? serviceProviderId,
-      required PaymentType paymentType,
-      required DateTime orderTime,
-      required num cost,
-      ServiceInfo? serviceProvider,
-      required UserInfo customer,
-      required Location to,
-      required OrderType orderType,
+      {required super.orderId,
+      super.serviceProviderId,
+      required super.paymentType,
+      required super.orderTime,
+      required super.cost,
+      super.serviceProvider,
+      required super.customer,
+      required super.to,
+      required super.orderType,
       this.dropoffDriver,
       required this.serviceProviderDropOffDriverChatId,
       required this.customerDropOffDriverChatId,
       this.estimatedPickupFromServiceProviderTime,
       this.estimatedDropoffAtCustomerTime,
-      RouteInformation? routeInformation,
-      StripePaymentInfo? stripePaymentInfo,
-      num? totalCostBeforeShipping,
-      num? totalCost,
-      num? refundAmount,
-      num? costToCustomer,
-      this.dropOffShippingCost})
-      : super(
-          orderId: orderId,
-          orderType: orderType,
-          serviceProviderId: serviceProviderId,
-          paymentType: paymentType,
-          orderTime: orderTime,
-          cost: cost,
-          customer: customer,
-          serviceProvider: serviceProvider,
-          to: to,
-          routeInformation: routeInformation,
-          stripePaymentInfo: stripePaymentInfo,
-          totalCostBeforeShipping: totalCostBeforeShipping,
-          totalCost: totalCost,
-          refundAmount: refundAmount,
-          costToCustomer: costToCustomer,
-        );
+      super.routeInformation,
+      this.notifiedAdmin = false,
+      this.notifiedOperator = false,
+      super.totalCostBeforeShipping,
+      super.totalCost,
+      super.refundAmount,
+      super.costToCustomer,
+      this.dropOffShippingCost});
 }
 
 abstract class TwoWayDeliverableOrder extends DeliverableOrder {
@@ -171,54 +157,31 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
   DateTime? estimatedDropoffAtServiceProviderTime;
   num? pickupShippingCost;
   TwoWayDeliverableOrder(
-      {required String orderId,
-      String? serviceProviderId,
-      required PaymentType paymentType,
-      required DateTime orderTime,
-      required num cost,
-      ServiceInfo? serviceProvider,
-      required UserInfo customer,
-      required Location to,
-      required OrderType orderType,
-      RouteInformation? routeInformation,
-      StripePaymentInfo? stripePaymentInfo,
-      DeliveryDriverUserInfo? dropoffDriver,
-      required String? serviceProviderDropOffDriverChatId,
-      required String? customerDropOffDriverChatId,
+      {required super.orderId,
+      super.serviceProviderId,
+      required super.paymentType,
+      required super.orderTime,
+      required super.cost,
+      super.serviceProvider,
+      required super.customer,
+      required super.to,
+      required super.orderType,
+      super.routeInformation,
+      super.dropoffDriver,
+      required super.serviceProviderDropOffDriverChatId,
+      required super.customerDropOffDriverChatId,
       this.pickupDriver,
       required this.serviceProviderPickupDriverChatId,
       required this.customerPickupDriverChatId,
-      DateTime? estimatedPickupFromServiceProviderTime,
-      DateTime? estimatedDropoffAtCustomerTime,
+      super.estimatedPickupFromServiceProviderTime,
+      super.estimatedDropoffAtCustomerTime,
       this.estimatedPickupFromCustomerTime,
       this.estimatedDropoffAtServiceProviderTime,
-      num? totalCostBeforeShipping,
-      num? totalCost,
-      num? refundAmount,
-      num? costToCustomer,
-      num? dropoffShippingCost,
-      this.pickupShippingCost})
-      : super(
-            orderId: orderId,
-            orderType: orderType,
-            serviceProviderId: serviceProviderId,
-            paymentType: paymentType,
-            orderTime: orderTime,
-            cost: cost,
-            customer: customer,
-            serviceProvider: serviceProvider,
-            to: to,
-            routeInformation: routeInformation,
-            dropoffDriver: dropoffDriver,
-            serviceProviderDropOffDriverChatId:
-                serviceProviderDropOffDriverChatId,
-            customerDropOffDriverChatId: customerDropOffDriverChatId,
-            estimatedPickupFromServiceProviderTime:
-                estimatedPickupFromServiceProviderTime,
-            estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime,
-            totalCostBeforeShipping: totalCostBeforeShipping,
-            totalCost: totalCost,
-            refundAmount: refundAmount,
-            costToCustomer: costToCustomer,
-            dropOffShippingCost: dropoffShippingCost);
+      super.totalCostBeforeShipping,
+      super.totalCost,
+      super.refundAmount,
+      super.costToCustomer,
+      super.dropOffShippingCost,
+      super.notifiedAdmin,
+      super.notifiedOperator});
 }

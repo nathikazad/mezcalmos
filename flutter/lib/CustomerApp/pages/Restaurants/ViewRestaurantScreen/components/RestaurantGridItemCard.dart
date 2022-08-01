@@ -39,29 +39,26 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (isImageExist && widget.item.image != null)
-              Expanded(
-                child: CircleAvatar(
-                  radius: 45,
-                  backgroundImage:
-                      CachedNetworkImageProvider(widget.item.image!),
-                  onBackgroundImageError: (Object e, StackTrace? s) {
-                    mezDbgPrint(
-                        "Item ${widget.item.name} ==========> Image url corrupted please check ");
-                    setState(() {
-                      isImageExist = false;
-                    });
-                  },
-                ),
+              CircleAvatar(
+                radius: 45,
+                backgroundImage: CachedNetworkImageProvider(widget.item.image!),
+                onBackgroundImageError: (Object e, StackTrace? s) {
+                  mezDbgPrint(
+                      "Item ${widget.item.name} ==========> Image url corrupted please check ");
+                  setState(() {
+                    isImageExist = false;
+                  });
+                },
               ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Text(
               widget.item.name[userLanguage] ?? "",
               textAlign: TextAlign.center,
             ),
             SizedBox(
-              height: 3,
+              height: 5,
             ),
             Text(
               "\$${widget.item.cost}",

@@ -58,7 +58,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     return Scaffold(
       appBar: mezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        onClick: Get.back,
+        autoBack: true,
       ),
       body: Obx(() {
         if (order.value != null) {

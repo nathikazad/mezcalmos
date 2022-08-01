@@ -2,6 +2,7 @@ import { NotificationForQueue } from "../Notification";
 import { OrderType } from "./Order";
 import { UserInfo } from "./User";
 
+export type Participants = { [key in ParticipantType]?: Record<string, Participant> };
 
 export interface ChatData {
   chatType: ChatType;
@@ -9,7 +10,7 @@ export interface ChatData {
   chatId: string;
   orderId?: string;
   messages?: Record<string, Message>;
-  participants: { [key in ParticipantType]?: Record<string, Participant> }
+  participants: Participants
   authorizedUsers: Record<string, boolean>
 }
 
@@ -41,10 +42,10 @@ export enum ParticipantType {
   DeliveryDriver = "deliveryDriver",
   Laundry = "laundry",
   LaundryOperator = "laundryOperator",
-  RestaurantOperator = "restaurantOperator",
+  RestaurantOperator = "restaurantOperator"
 }
 
-export const nonNotifiableParticipants: Array<ParticipantType> = [ParticipantType.Restaurant];
+export const nonNotifiableParticipants: Array<ParticipantType> = [ParticipantType.Restaurant, ParticipantType.Laundry];
 
 
 export interface Participant extends UserInfo {
@@ -84,4 +85,5 @@ export interface MessageNotificationForQueue extends NotificationForQueue {
   participantType: ParticipantType,
   messageId: string,
   orderId?: string
+  orderType: string
 }

@@ -90,7 +90,7 @@ class EditInfoWidgets {
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                " : ${convertToAmPm(editInfoController.newSchedule.value!.openHours[weekday]!.to[0], editInfoController.newSchedule.value!.openHours[weekday]!.to[1])}",
+                                " - ${convertToAmPm(editInfoController.newSchedule.value!.openHours[weekday]!.to[0], editInfoController.newSchedule.value!.openHours[weekday]!.to[1])}",
                                 textAlign: TextAlign.center,
                               ),
                             ])
@@ -297,7 +297,7 @@ class EditInfoWidgets {
                             alignment: Alignment.centerLeft,
                             height: 50,
                             child: Text(
-                              "${editInfoController.schedulePreview.value!.openHours[weekday]!.from[0]} : ${editInfoController.schedulePreview.value!.openHours[weekday]!.from[1]}",
+                              "${editInfoController.schedulePreview.value!.openHours[weekday]!.from[0]} - ${editInfoController.schedulePreview.value!.openHours[weekday]!.from[1]}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
@@ -358,7 +358,7 @@ class EditInfoWidgets {
                             width: double.infinity,
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "${editInfoController.schedulePreview.value!.openHours[weekday]!.to[0]} : ${editInfoController.schedulePreview.value!.openHours[weekday]!.to[1]}",
+                              "${editInfoController.schedulePreview.value!.openHours[weekday]!.to[0]} - ${editInfoController.schedulePreview.value!.openHours[weekday]!.to[1]}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1

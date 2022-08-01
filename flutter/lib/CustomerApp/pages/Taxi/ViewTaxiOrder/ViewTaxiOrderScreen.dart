@@ -82,7 +82,10 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: Get.back),
+      appBar: mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        autoBack: true,
+      ),
       // appBar: AppBar(),
       backgroundColor: Colors.white,
       body: Obx(

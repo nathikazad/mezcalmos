@@ -159,6 +159,15 @@ class RestaurantOrderController extends GetxController {
     });
   }
 
+  void setNotifiedAsTrue(RestaurantOrder order) {
+    if (!order.notifiedAdmin) {
+      _databaseHelper.firebaseDatabase
+          .ref(rootNotifiedAdminRoute(
+              orderType: order.orderType, orderId: order.orderId))
+          .set(true);
+    }
+  }
+
   Future<ServerResponse> cancelOrder(String orderId) async {
     return _callRestaurantCloudFunction("cancelOrderFromAdmin", orderId);
   }

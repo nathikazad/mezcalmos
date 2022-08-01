@@ -354,8 +354,8 @@ class MGoogleMapController {
   void lockInAutoZoomAnimation() {
     if (!periodicRerendering.value) {
       periodicRerendering.value = true;
-      recenterButtonEnabled.value = false;
     }
+    recenterButtonEnabled.value = false;
   }
 
   /// Unlock AutoZoom and AutoAnimation and shows [Recenter Button]

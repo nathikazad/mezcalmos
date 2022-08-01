@@ -10,8 +10,10 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -100,13 +102,20 @@ class _UserProfileState extends State<UserProfile>
                           onTap: () {
                             showConfirmationDialog(
                               context,
-                              title: "Confirm account deletion!",
-                              primaryButtonText: "Yes, delete!",
-                              secondaryButtonText: "Cancel",
-                              helperText:
-                                  "Clicking yes will permanently delete you account, are you sure?",
-                              onYesClick: () async =>
-                                  _authController.deleteAccount(),
+                              title: '${_i18n()["deleteTitle"]}',
+                              primaryButtonText: "${_i18n()["deletePrBtn"]}",
+                              secondaryButtonText: "${_i18n()["deleteScBtn"]}",
+                              helperText: "${_i18n()["deleteHelper"]}",
+                              onYesClick: () async {
+                                final ServerResponse res =
+                                    await _authController.deleteAccount();
+                                if (!res.success) {
+                                  MezSnackbar(
+                                    "Oops",
+                                    res.errorMessage ?? "Server problem!",
+                                  );
+                                }
+                              },
                             );
                           },
                           child: Container(
@@ -123,7 +132,7 @@ class _UserProfileState extends State<UserProfile>
                             ),
                             padding: EdgeInsets.all(8),
                             child: Text(
-                              "Delete account",
+                              "${_i18n()["deleteAccount"]}",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.red,
@@ -131,12 +140,6 @@ class _UserProfileState extends State<UserProfile>
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                               ),
-                              // style: TextStyle(
-                              //   color: Colors.red,
-                              //   fontSize: 15,
-                              //   fontWeight: FontWeight.w600,
-                              //   fontFamily: 'Montserrat',
-                              // ),
                             ),
                           ),
                         ),

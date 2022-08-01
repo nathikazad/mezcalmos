@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
 
@@ -71,6 +72,7 @@ class LaundryOrderHeader extends StatelessWidget {
                   );
                   Get.toNamed(getMessagesRoute(
                       orderId: order.orderId,
+                      orderType: OrderType.Laundry,
                       chatId:
                           (order.getCurrentPhase() == LaundryOrderPhase.Pickup)
                               ? order.serviceProviderPickupDriverChatId!

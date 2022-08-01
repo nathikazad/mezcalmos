@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
@@ -73,6 +74,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                         onTap: () {
                           Get.toNamed(getMessagesRoute(
                               orderId: order.orderId,
+                              orderType: OrderType.Laundry,
                               chatId: _getCorrectChatId(),
                               recipientType: ParticipantType.DeliveryDriver));
                         }),
@@ -163,6 +165,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
   void _laundryDropOffDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
+        orderType: OrderType.Laundry,
         chatId: order.serviceProviderDropOffDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }
@@ -170,6 +173,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
   void _laundryPickupDriverMessageRoute() {
     Get.toNamed<dynamic>(getMessagesRoute(
         orderId: order.orderId,
+        orderType: OrderType.Laundry,
         chatId: order.serviceProviderPickupDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }

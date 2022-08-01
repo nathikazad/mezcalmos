@@ -6,8 +6,9 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
@@ -20,7 +21,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
 class IncomingPositionedBottomBar extends StatelessWidget {
   final TaxiOrder order;
 
-  IncomingPositionedBottomBar({required this.order});
+  const IncomingPositionedBottomBar({required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -358,6 +359,7 @@ class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
                 onTap: () {
                   Get.toNamed<void>(
                     getMessagesRoute(
+                        orderType: OrderType.Taxi,
                         chatId: order.orderId,
                         orderId: order.orderId,
                         recipientType: ParticipantType.Customer),

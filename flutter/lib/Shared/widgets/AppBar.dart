@@ -14,7 +14,8 @@ enum AppBarLeftButtonType { Back, Menu, Lang }
 
 AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {Color bgColor = Colors.white,
-    void Function()? onClick,
+    bool autoBack = false,
+    VoidCallback? onClick,
     String? title,
     Widget? titleWidget,
     bool showNotifications = false,
@@ -25,7 +26,9 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   Widget _getRightLeading() {
     switch (leftBtnType) {
       case AppBarLeftButtonType.Back:
-        return _BackButtonAppBar(click: onClick ?? () => Get.back<void>());
+        return _BackButtonAppBar(
+          click: autoBack ? (onClick ?? () => Get.back<void>()) : onClick,
+        );
       case AppBarLeftButtonType.Menu:
         return _MenuButtonAppBar();
       case AppBarLeftButtonType.Lang:
@@ -100,7 +103,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
       ));
 }
 
-Widget _BackButtonAppBar({required VoidCallback click}) {
+Widget _BackButtonAppBar({required VoidCallback? click}) {
   return Transform.scale(
     scale: 0.6,
     child: InkWell(
@@ -116,10 +119,13 @@ Widget _BackButtonAppBar({required VoidCallback click}) {
               offset: Offset(0, 7), // changes position of shadow
             ),
           ],
-          gradient: LinearGradient(colors: [
-            Color.fromARGB(255, 97, 127, 255),
-            Color.fromARGB(255, 198, 90, 252),
-          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          color: click == null ? Colors.grey.shade200 : null,
+          gradient: click == null
+              ? null
+              : LinearGradient(colors: [
+                  Color.fromARGB(255, 97, 127, 255),
+                  Color.fromARGB(255, 198, 90, 252),
+                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
         ),
         child: Icon(
           Icons.arrow_back_ios_new,

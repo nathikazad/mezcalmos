@@ -9,8 +9,9 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
@@ -217,6 +218,7 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               Get.toNamed<void>(getMessagesRoute(
+                                  orderType: OrderType.Taxi,
                                   chatId: order.orderId,
                                   orderId: order.orderId,
                                   recipientType: ParticipantType.Customer));

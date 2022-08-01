@@ -108,7 +108,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             Duration(seconds: 1)) if (appClosedTime != null &&
         _orderController != null &&
         DateTime.now().difference(appClosedTime!) > Duration(seconds: 10) &&
-        Get.currentRoute != kLocationPermissionPage) {
+        !isCurrentRoute(kLocationPermissionPage)) {
       navigateToOrdersIfNecessary(_orderController!.currentOrders);
     }
   }
@@ -181,7 +181,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             customerNotificationsNode(userId!), customerNotificationHandler);
-    if (Get.currentRoute == kHomeRoute) {
+    if (isCurrentRoute(kHomeRoute)) {
       Future.microtask(() {
         navigateToOrdersIfNecessary(_orderController!.currentOrders);
       });
@@ -283,7 +283,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
                   orderType: OrderType.Laundry,
                   serviceRoute: kLaundriesListRoute,
                   singleOrderRoute: (String v) {
-                    Get.toNamed<void>(getLaundyOrderRoute(v));
+                    Get.toNamed<void>(getLaundryOrderRoute(v));
                   });
             },
           ),
@@ -340,7 +340,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         popEverythingAndNavigateTo(getTaxiOrderRoute(currentOrders[0].orderId));
       } else if (currentOrders[0].orderType == OrderType.Laundry) {
         popEverythingAndNavigateTo(
-            getLaundyOrderRoute(currentOrders[0].orderId));
+            getLaundryOrderRoute(currentOrders[0].orderId));
       }
     } else if (currentOrders.length > 1) {
       popEverythingAndNavigateTo(kOrdersRoute);

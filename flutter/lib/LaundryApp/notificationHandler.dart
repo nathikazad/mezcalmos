@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() =>
@@ -125,11 +126,12 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
 }
 
 Notification newMessageNotification(String key, value) {
+  mezDbgPrint("notification Data =================================> $value");
   return Notification(
       id: key,
       linkUrl: getMessagesRoute(
-        chatId: value['chatId'],
-      ),
+          chatId: value['chatId'],
+          orderLink: getLaundryOpOrderRoute(value['orderId'])),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

@@ -98,6 +98,7 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
+        controller.setNotifiedAsTrue(order.value!);
         initMap();
         updateMapByPhase(order.value!.getCurrentPhase());
       }

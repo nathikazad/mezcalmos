@@ -138,15 +138,12 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 25),
+                  margin: const EdgeInsets.only(top: 10),
                   child: Text(
                     item.cost.toPriceString(),
                     style: Get.textTheme.headline3
                         ?.copyWith(color: primaryBlueColor),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
                 ),
                 if (cartItem.value?.item.description != null)
                   _itemDescription(context),
@@ -180,6 +177,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   Container _itemDescription(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

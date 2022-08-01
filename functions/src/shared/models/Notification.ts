@@ -25,7 +25,8 @@ export interface Notification {
 export interface ForegroundNotification {
   time: string,
   notificationType: NotificationType,
-  notificationAction: NotificationAction
+  notificationAction: NotificationAction,
+  linkUrl?: string
 }
 
 export type BackgroundNotification = Record<Language, fcmNotification>
@@ -35,8 +36,8 @@ export interface NewMessageNotification extends ForegroundNotification {
   sender: UserInfo,
   message: string,
   orderId: string
+  orderType: string
 }
-
 export interface OrderNotification extends ForegroundNotification {
   orderType: OrderType,
   orderId: string,

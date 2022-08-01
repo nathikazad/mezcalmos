@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
@@ -15,6 +16,7 @@ class OrderLaundryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.only(bottom: 20),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
         child: Row(
@@ -66,6 +68,7 @@ class OrderLaundryCard extends StatelessWidget {
                   Get.toNamed<void>(getMessagesRoute(
                       orderId: order.orderId,
                       chatId: order.orderId,
+                      orderType: OrderType.Laundry,
                       recipientType: ParticipantType.DeliveryAdmin));
                 },
               ),
@@ -82,6 +85,7 @@ class OrderLaundryCard extends StatelessWidget {
         Get.toNamed<void>(getMessagesRoute(
             orderId: order.orderId,
             chatId: order.orderId,
+            orderType: OrderType.Laundry,
             recipientType: ParticipantType.DeliveryAdmin));
       },
       icon: Stack(

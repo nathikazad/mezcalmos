@@ -81,7 +81,7 @@ class DeepLinkHandler {
         Future<void>.delayed(
           Duration.zero,
           () => Get.toNamed<void>(
-            getLaundyOrderRoute(providerId),
+            getLaundryOrderRoute(providerId),
           ),
         );
         

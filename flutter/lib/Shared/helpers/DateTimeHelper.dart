@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
@@ -39,9 +40,9 @@ extension parseDateTime on DateTime {
             .inDays
             .abs() >
         0) {
-      return "${_i18n()["tomorrow"]} ${DateFormat("hh:mm a").format(toLocal())}";
+      return "${_i18n()["tomorrow"]}, ${DateFormat("hh:mm a").format(toLocal())}";
     } else if (now.difference(toLocal()).inHours.abs() > 0) {
-      return "${DateFormat("hh:mm a").format(toLocal())}";
+      return "${_i18n()["at"]} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
       return "${now.difference(toLocal()).inMinutes.abs()} mins";
     }
@@ -55,7 +56,7 @@ extension parseDateTime on DateTime {
     final DateFormat formatDay = DateFormat.E(userLangCode);
 
     if (cDate.difference(toLocal()).inDays < 7) {
-      return "${formatDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
+      return "${formatDay.format(toLocal()).replaceFirst(".", "")}, ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
       return "${formatLongDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
     }
@@ -67,7 +68,7 @@ extension parseDateTime on DateTime {
     final DateFormat formatTime = DateFormat.jm(userLangCode);
     final DateFormat formatDay = DateFormat.E(userLangCode);
 
-    return "${formatDay.format(toLocal())} ${formatTime.format(toLocal())}";
+    return "${formatDay.format(toLocal()).replaceFirst(".", "").inCaps}, ${DateFormat("hh:mm a").format(toLocal())}";
   }
 }
 

@@ -66,6 +66,7 @@ class _RestaurantOrderFromToComponentState
           if (widget.order.customerDropOffDriverChatId != null) {
             Get.toNamed(
               getMessagesRoute(
+                  orderType: OrderType.Restaurant,
                   chatId: widget.order.customerDropOffDriverChatId!,
                   orderId: widget.order.orderId,
                   recipientType: ParticipantType.Customer),
@@ -81,6 +82,7 @@ class _RestaurantOrderFromToComponentState
           if (widget.order.serviceProviderDropOffDriverChatId != null) {
             Get.toNamed(
               getMessagesRoute(
+                  orderType: OrderType.Restaurant,
                   chatId: widget.order.serviceProviderDropOffDriverChatId!,
                   orderId: widget.order.orderId,
                   recipientType: ParticipantType.DeliveryAdmin),

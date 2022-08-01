@@ -103,10 +103,6 @@ class _ViewCartBodyState extends State<ViewCartBody> {
                   minLines: 4,
                   decoration: InputDecoration(hintText: "${_i18n()["notes"]}")),
             ),
-            // TextFieldComponent(
-            //   textController: widget.notesTextController,
-            //   hint: _i18n()["notes"],
-            // ),
             SizedBox(
               height: 25,
             ),

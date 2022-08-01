@@ -1,3 +1,5 @@
+import { UserInfo } from "./User";
+
 export interface Location {
   address: string;
   lat: number;
@@ -13,6 +15,17 @@ export type NotificationInfo = Record<TokenType, string>;
 
 export enum TokenType {
   DeviceNotificationToken = "deviceNotificationToken",
+}
+
+export interface Operator {
+  info: UserInfo,
+  versionNumber: string,
+  notificationInfo: NotificationInfo
+}
+export interface LaundryOperator extends Operator {
+  state: {
+    laundryId: string
+  }
 }
 
 export interface ServerResponse {

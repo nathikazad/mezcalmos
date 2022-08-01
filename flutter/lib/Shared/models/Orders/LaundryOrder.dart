@@ -54,49 +54,37 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   RouteInformation? routeInformation;
 
   LaundryOrder(
-      {required String orderId,
-      required num cost,
-      required Location to,
-      required DateTime orderTime,
-      required PaymentType paymentType,
+      {required super.orderId,
+      required super.cost,
+      required super.to,
+      required super.orderTime,
+      required super.paymentType,
       required this.status,
-      required UserInfo customer,
+      required super.customer,
       required this.laundry,
       required this.shippingCost,
       this.costsByType,
       this.estimatedLaundryReadyTime,
       this.routeInformation,
-      DeliveryDriverUserInfo? dropoffDriver,
+      super.dropoffDriver,
       String? laundryDropOffDriverChatId,
-      String? customerDropOffDriverChatId,
-      DeliveryDriverUserInfo? pickupDriver,
+      super.customerDropOffDriverChatId,
+      super.pickupDriver,
       String? laundryPickupDriverChatId,
-      String? customerPickupDriverChatId,
-      DateTime? estimatedPickupFromCustomerTime,
-      DateTime? estimatedDropoffAtServiceProviderTime,
-      DateTime? estimatedPickupFromServiceProviderTime,
-      DateTime? estimatedDropoffAtCustomerTime,
-      this.notes})
+      super.customerPickupDriverChatId,
+      super.estimatedPickupFromCustomerTime,
+      super.estimatedDropoffAtServiceProviderTime,
+      super.estimatedPickupFromServiceProviderTime,
+      super.estimatedDropoffAtCustomerTime,
+      this.notes,
+      super.orderType = OrderType.Laundry,
+      super.notifiedAdmin,
+      super.notifiedOperator})
       : super(
-            orderTime: orderTime,
-            orderId: orderId,
-            paymentType: paymentType,
-            orderType: OrderType.Laundry,
-            cost: cost,
-            customer: customer,
-            to: to,
-            dropoffDriver: dropoffDriver,
             serviceProviderDropOffDriverChatId: laundryDropOffDriverChatId,
-            customerDropOffDriverChatId: customerDropOffDriverChatId,
-            pickupDriver: pickupDriver,
             serviceProviderPickupDriverChatId: laundryPickupDriverChatId,
-            customerPickupDriverChatId: customerPickupDriverChatId,
-            estimatedPickupFromServiceProviderTime:
-                estimatedPickupFromServiceProviderTime,
-            estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime,
-            estimatedPickupFromCustomerTime: estimatedPickupFromCustomerTime,
-            estimatedDropoffAtServiceProviderTime:
-                estimatedDropoffAtServiceProviderTime);
+            serviceProviderId: laundry?.id,
+            serviceProvider: laundry);
 
   factory LaundryOrder.fromData(
     id,
@@ -164,6 +152,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
           ?['serviceProviderPickupDriver'],
       customerPickupDriverChatId: data['secondaryChats']
           ?['customerPickupDriver'],
+      notifiedAdmin: data['notified']?['admin'] ?? false,
+      notifiedOperator: data['notified']?['operator'] ?? false
     );
 
     if (data["routeInformation"] != null) {

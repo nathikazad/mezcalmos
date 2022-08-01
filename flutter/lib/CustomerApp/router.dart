@@ -14,7 +14,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/Vie
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/SavedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 
@@ -64,25 +63,8 @@ String getTaxiOrderRoute(String orderId) {
   return kTaxiOrderRoute.replaceFirst(":orderId", orderId);
 }
 
-String getLaundyOrderRoute(String orderId) {
+String getLaundryOrderRoute(String orderId) {
   return kLaundryCurrentOrder.replaceFirst(":orderId", orderId);
-}
-
-String getRestaurantMessagesRoute(
-    {required String orderId, String? orderLink}) {
-  return getMessagesRoute(
-      chatId: orderId,
-      recipientType: ParticipantType.Restaurant,
-      orderLink: orderLink,
-      orderId: orderId);
-}
-
-String getTaxiMessagesRoute({required String orderId, String? orderLink}) {
-  return getMessagesRoute(
-      chatId: orderId,
-      recipientType: ParticipantType.Taxi,
-      orderLink: orderLink,
-      orderId: orderId);
 }
 
 // GetX based Router (For navigating)

@@ -139,8 +139,12 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back, showNotifications: true, title: getTitle()),
+      appBar: mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        autoBack: true,
+        showNotifications: true,
+        title: getTitle(),
+      ),
       bottomNavigationBar: Obx(
         () => DriverLaundryBottomButtons(
           order: order.value!,

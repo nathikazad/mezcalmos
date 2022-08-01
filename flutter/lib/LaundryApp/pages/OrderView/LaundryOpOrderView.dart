@@ -75,6 +75,8 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
           Get.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
+      } else {
+        controller.setNotifiedAsTrue(order.value!);
       }
     });
   }
@@ -176,7 +178,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back,
+          autoBack: true,
           showNotifications: true,
           ordersRoute: kPastOrdersListView),
       body: SingleChildScrollView(

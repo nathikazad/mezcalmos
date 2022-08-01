@@ -1,7 +1,8 @@
 import 'dart:typed_data';
-import 'package:image_picker/image_picker.dart' as imPicker;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 // ignore: constant_identifier_names
@@ -19,6 +20,7 @@ class UserProfileController {
   Rxn<Uint8List> userImgBytes = Rxn<Uint8List>();
   Rxn<String> userName = Rxn<String>();
   Rxn<String> errorReport = Rxn<String>();
+  DateTime? userCreationTime;
 
   // bool didUserChangedInfos() {
   //   return userName.value != _authController.user?.name &&
@@ -73,6 +75,7 @@ class UserProfileController {
 
   /// This should be called on initState of the page, In order to do Initial Setup and checks.
   void initSetup() {
+    userCreationTime = _authController.getUserCreationDate();
     // first we check the user if he has everything Set
     if (checkIfUserHasAllInfosSet()) {
       // we set the TextField's Text to user name

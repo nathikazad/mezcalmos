@@ -23,14 +23,44 @@ export function chatUrl(
   chatId: string,
   orderId?: string,
   orderType?: OrderType,
-  participantType?: ParticipantType): string {
+  recipientType?: ParticipantType,
+  senderType?: ParticipantType): string {
   let str = `/messages/${chatId}`;
   if (orderId != null)
     str += `?orderId=${orderId}`
-  if (orderType != null && participantType != null)
-    str += `&orderLink=${orderUrl(participantType, orderType, orderId!)}`
-  if (participantType == ParticipantType.Customer)
-    str += `&recipientType=${orderType}`;
+  if (orderType != null && recipientType != null)
+    str += `&orderLink=${orderUrl(recipientType, orderType, orderId!)}`
+  switch (recipientType) {
+    case null:
+      break;
+    case ParticipantType.LaundryOperator:
+      str += `&recipientType=${ParticipantType.Laundry}`;
+      break;
+    case ParticipantType.RestaurantOperator:
+      str += `&recipientType=${ParticipantType.Restaurant}`;
+      break;
+    case ParticipantType.DeliveryAdmin:
+      if (senderType == ParticipantType.Customer) {
+        switch (orderType) {
+          case OrderType.Laundry:
+            str += `&recipientType=${ParticipantType.Laundry}`;
+            break;
+          case OrderType.Restaurant:
+            str += `&recipientType=${ParticipantType.Restaurant}`;
+            break;
+          default:
+            str += `&recipientType=${ParticipantType.DeliveryAdmin}`;
+            break;
+        }
+      } else
+        str += `&recipientType=${ParticipantType.DeliveryAdmin}`;
+      break;
+    default:
+      str += `&recipientType=${recipientType}`;
+      break;
+  }
+
+
   return str
 }
 

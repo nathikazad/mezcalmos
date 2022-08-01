@@ -14,7 +14,7 @@ let orderExpirationLimit: number = 300 // seconds
 
 let openOrders: Record<string, TaxiOrder> = {}
 let constructReturnUrl: Function;
-export function startWatchingOpenOrders(_constructReturnUrl: Function) {
+export function startWatchingTaxiOrders(_constructReturnUrl: Function) {
   constructReturnUrl = _constructReturnUrl;
   rootNodes.openOrders(OrderType.Taxi).on('value', function (snap: any) {
     openOrders = snap.val()

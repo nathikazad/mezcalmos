@@ -42,55 +42,38 @@ class RestaurantOrder extends DeliverableOrder {
   RestaurantOrderStatus status;
   ServiceInfo get restaurant => serviceProvider! as ServiceInfo;
   DateTime? estimatedFoodReadyTime;
-  RestaurantOrder({
-    required String orderId,
-    required this.status,
-    required this.quantity,
-    required String serviceProviderId,
-    required PaymentType paymentType,
-    required DateTime orderTime,
-    required num cost,
-    required ServiceInfo restaurant,
-    required UserInfo customer,
-    required Location to,
-    this.estimatedFoodReadyTime,
-    DeliveryDriverUserInfo? dropoffDriver,
-    String? dropOffDriverChatId,
-    required this.itemsCost,
-    required this.shippingCost,
-    String? customerDropOffDriverChatId,
-    DateTime? estimatedPickupFromServiceProviderTime,
-    DateTime? estimatedDropoffAtCustomerTime,
-    this.notes,
-    RouteInformation? routeInformation,
-      num? totalCostBeforeShipping,
-      num? totalCost,
-      num? refundAmount,
-      num? costToCustomer,
-      num? dropOffShippingCost
-  }) : super(
-          orderId: orderId,
-          orderType: OrderType.Restaurant,
-          serviceProviderId: serviceProviderId,
-          paymentType: paymentType,
-          orderTime: orderTime,
-          cost: cost,
-          customer: customer,
-          serviceProvider: restaurant,
-          to: to,
-          dropoffDriver: dropoffDriver,
-          serviceProviderDropOffDriverChatId: dropOffDriverChatId,
-          customerDropOffDriverChatId: customerDropOffDriverChatId,
-          routeInformation: routeInformation,
-          estimatedPickupFromServiceProviderTime:
-              estimatedPickupFromServiceProviderTime,
-          estimatedDropoffAtCustomerTime: estimatedDropoffAtCustomerTime,
-            totalCostBeforeShipping: totalCostBeforeShipping,
-            totalCost: totalCost,
-            refundAmount: refundAmount,
-            costToCustomer: costToCustomer,
-            dropOffShippingCost: dropOffShippingCost
-        );
+  RestaurantOrder(
+      {required super.orderId,
+      super.orderType = OrderType.Restaurant,
+      required this.status,
+      required this.quantity,
+      required super.serviceProviderId,
+      required super.paymentType,
+      required super.orderTime,
+      required super.cost,
+      required ServiceInfo restaurant,
+      required super.customer,
+      required super.to,
+      this.estimatedFoodReadyTime,
+      super.dropoffDriver,
+      String? dropOffDriverChatId,
+      required this.itemsCost,
+      required this.shippingCost,
+      super.customerDropOffDriverChatId,
+      super.estimatedPickupFromServiceProviderTime,
+      super.estimatedDropoffAtCustomerTime,
+      this.notes,
+      super.routeInformation,
+      super.notifiedAdmin,
+      super.notifiedOperator,
+      super.totalCostBeforeShipping,
+      super.totalCost,
+      super.refundAmount,
+      super.costToCustomer,
+      super.dropOffShippingCost})
+      : super(
+            serviceProvider: restaurant,
+            serviceProviderDropOffDriverChatId: dropOffDriverChatId);
 
   //ignore_for_file:avoid_annotating_with_dynamic
   factory RestaurantOrder.fromData(
@@ -98,44 +81,45 @@ class RestaurantOrder extends DeliverableOrder {
     dynamic data,
   ) {
     final RestaurantOrder restaurantOrder = RestaurantOrder(
-      orderId: id,
-      status: data["status"].toString().toRestaurantOrderStatus(),
-      quantity: data["quantity"],
-      serviceProviderId: data["serviceProviderId"],
-      paymentType: data["paymentType"].toString().toPaymentType(),
-      orderTime: DateTime.parse(data["orderTime"]),
-      estimatedFoodReadyTime: (data["estimatedFoodReadyTime"] != null)
-          ? DateTime.parse(data["estimatedFoodReadyTime"])
-          : null,
-      estimatedPickupFromServiceProviderTime: (data["estimatedDeliveryTimes"]
-                  ?["dropoff"]?["pickup"] !=
-              null)
-          ? DateTime.parse(data["estimatedDeliveryTimes"]["dropoff"]["pickup"])
-          : null,
-      estimatedDropoffAtCustomerTime: (data["estimatedDeliveryTimes"]
-                  ?["dropoff"]?["dropoff"] !=
-              null)
-          ? DateTime.parse(data["estimatedDeliveryTimes"]["dropoff"]["dropoff"])
-          : null,
-      cost: data["cost"],
-      notes: data["notes"],
-      to: Location.fromFirebaseData(data['to']),
-      restaurant: ServiceInfo.fromData(data["restaurant"]),
-      customer: UserInfo.fromData(data["customer"]),
-      itemsCost: data['itemsCost'],
-      shippingCost: data["shippingCost"] ?? 0,
-      dropoffDriver: (data["dropoffDriver"] != null)
-          ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
-          : null,
-      dropOffDriverChatId: data['secondaryChats']
-          ?['serviceProviderDropOffDriver'],
-      customerDropOffDriverChatId: data['secondaryChats']
-          ?['customerDropOffDriver'],
-      totalCostBeforeShipping: data['totalCostBeforeShipping'],
-      totalCost: data['totalCost'],
-      refundAmount: data['refundAmount'],
-      costToCustomer: data['costToCustomer'],
-    );
+        orderId: id,
+        status: data["status"].toString().toRestaurantOrderStatus(),
+        quantity: data["quantity"],
+        serviceProviderId: data["serviceProviderId"],
+        paymentType: data["paymentType"].toString().toPaymentType(),
+        orderTime: DateTime.parse(data["orderTime"]),
+        estimatedFoodReadyTime: (data["estimatedFoodReadyTime"] != null)
+            ? DateTime.parse(data["estimatedFoodReadyTime"])
+            : null,
+        estimatedPickupFromServiceProviderTime:
+            (data["estimatedDeliveryTimes"]?["dropoff"]?["pickup"] != null)
+                ? DateTime.parse(
+                    data["estimatedDeliveryTimes"]["dropoff"]["pickup"])
+                : null,
+        estimatedDropoffAtCustomerTime:
+            (data["estimatedDeliveryTimes"]?["dropoff"]?["dropoff"] != null)
+                ? DateTime.parse(
+                    data["estimatedDeliveryTimes"]["dropoff"]["dropoff"])
+                : null,
+        cost: data["cost"],
+        notes: data["notes"],
+        to: Location.fromFirebaseData(data['to']),
+        restaurant: ServiceInfo.fromData(data["restaurant"]),
+        customer: UserInfo.fromData(data["customer"]),
+        itemsCost: data['itemsCost'],
+        shippingCost: data["shippingCost"] ?? 0,
+        dropoffDriver: (data["dropoffDriver"] != null)
+            ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
+            : null,
+        dropOffDriverChatId: data['secondaryChats']
+            ?['serviceProviderDropOffDriver'],
+        customerDropOffDriverChatId: data['secondaryChats']
+            ?['customerDropOffDriver'],
+        totalCostBeforeShipping: data['totalCostBeforeShipping'],
+        totalCost: data['totalCost'],
+        refundAmount: data['refundAmount'],
+        costToCustomer: data['costToCustomer'],
+        notifiedAdmin: data['notified']?['admin'] ?? false,
+        notifiedOperator: data['notified']?['operator'] ?? false);
 
     if (data["routeInformation"] != null) {
       restaurantOrder.routeInformation = RouteInformation(

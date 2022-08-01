@@ -9,10 +9,11 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/com
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:sizer/sizer.dart';
 
 class ViewRestaurantScreen extends StatefulWidget {
   @override
@@ -115,7 +116,6 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget buildSliverScrollView() {
     return CustomScrollView(
-      //physics: const ClampingScrollPhysics(),
       controller: scrollController,
       slivers: [
         RestaurantSliverAppBar(
@@ -142,14 +142,14 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
                         restaurant: restaurant,
                       )),
                 ])))
-            : _buildCategoriesList(),
+            : _buildCategoriesList()
       ],
     );
   }
 
   Widget _buildCategoriesList() {
     return SliverPadding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
         sliver: SliverList(
           delegate: SliverChildListDelegate(
             List.generate(_getList().length, (int index) {
@@ -185,25 +185,29 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget _buildCategory(Category category, int index) {
     return Container(
-      // margin: const EdgeInsets.symmetric(vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            category.name?[userLanguage] ?? "",
-            style: Get.theme.textTheme.bodyText1,
-          ),
-          SizedBox(
-            height: 5,
-          ),
+          if (category.name?[userLanguage] != null)
+            Container(
+              margin: const EdgeInsets.only(top: 10, bottom: 5),
+              child: Text(
+                category.name![userLanguage]!,
+                style: Get.theme.textTheme.headline3
+                    ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
+              ),
+            ),
           if (category.dialog?[userLanguage] != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: Text(category.dialog![userLanguage]!),
+            Container(
+              child: Text(
+                category.dialog![userLanguage]!,
+                style: Get.textTheme.bodyText2?.copyWith(
+                    fontFamily: "Montserrat", color: Colors.grey.shade700),
+              ),
             ),
           _buildResturantItems(category.items, restaurant.info.id),
           SizedBox(
-            height: 10,
+            height: 20,
           )
         ],
       ),
@@ -212,22 +216,23 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
 
   Widget _buildResturantItems(List<Item> items, String restaurantId) {
     if (restaurant.restaurantsView == RestaurantsView.Rows) {
-      return Column(
-        children: items.fold<List<Widget>>(<Widget>[],
-            (List<Widget> children, Item item) {
-          children.add(RestaurantsListOfItemsComponent(
-              item: item,
-              function: () {
-                Get.toNamed(
-                  getItemRoute(restaurantId, item.id!),
-                  arguments: {"mode": ViewItemScreenMode.AddItemMode},
-                );
-              }));
-          children.add(SizedBox(
-            height: 8,
-          ));
-          return children;
-        }),
+      return Container(
+        margin: const EdgeInsets.only(top: 5),
+        child: Column(
+          children: items.fold<List<Widget>>(<Widget>[],
+              (List<Widget> children, Item item) {
+            children.add(RestaurantsListOfItemsComponent(
+                item: item,
+                function: () {
+                  Get.toNamed(
+                    getItemRoute(restaurantId, item.id!),
+                    arguments: {"mode": ViewItemScreenMode.AddItemMode},
+                  );
+                }));
+
+            return children;
+          }),
+        ),
       );
     } else {
       return GridView.count(
@@ -235,7 +240,7 @@ class _ViewRestaurantScreenState extends State<ViewRestaurantScreen>
         mainAxisSpacing: 8,
         crossAxisSpacing: 8,
         shrinkWrap: true,
-        padding: EdgeInsets.zero,
+        padding: EdgeInsets.only(top: 17),
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(items.length, (int index) {
           return RestaurantgridItemCard(

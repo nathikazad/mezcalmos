@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -33,6 +34,7 @@ class MessagingScreen extends StatefulWidget {
 // TODO : REFACTORING !
 class _MessagingScreenState extends State<MessagingScreen> {
   late final String? orderLink;
+  late final OrderType? orderType;
   late final String? orderId;
   late final String chatId;
 
@@ -53,6 +55,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
     chatId = Get.parameters['chatId']!;
     orderLink = Get.parameters['orderLink'];
     orderId = Get.parameters['orderId'];
+    orderType = Get.parameters['orderType']?.toString().toOrderType();
     if (Get.parameters['recipientId'] != null)
       recipientId = Get.parameters['recipientId'];
     else if (Get.parameters['recipientType'] != null) {
@@ -61,16 +64,21 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
     controller.clearMessageNotifications(chatId: chatId);
     mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
-    if (controller.chat.value == null) {
-      controller.chat.stream.first.then((_) {
-        setState(() {
-          isChatLoaded = true;
-        });
-      });
-    } else
-      setState(() {
-        isChatLoaded = true;
-      });
+    controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
+    setState(() {
+      isChatLoaded = true;
+    });
+    // if (controller.chat.value == null) {
+    //   controller.chat.stream.first.then((_) {
+    //     setState(() {
+
+    //       isChatLoaded = true;
+    //     });
+    //   });
+    // } else
+    //   setState(() {
+    //     isChatLoaded = true;
+    //   });
     super.initState();
   }
 
@@ -81,6 +89,138 @@ class _MessagingScreenState extends State<MessagingScreen> {
   RxList<Widget> chatLines = <Widget>[].obs;
 
   RxString _typedMsg = "".obs;
+
+  void scrollDown({Duration? mezChatScrollDuration}) {
+    Timer(mezChatScrollDuration ?? Duration(milliseconds: 200), () {
+      if (_listViewScrollController.hasClients)
+        _listViewScrollController.jumpTo(
+          _listViewScrollController.position.maxScrollExtent,
+          // duration: Duration(seconds: 1),
+          // curve: Curves.fastOutSlowIn
+        );
+    });
+  }
+
+  void _fillCallBack() {
+    chatLines.assignAll(controller.chat.value!.messages.map(
+      (Message message) {
+        return singleChatComponent(
+          message: message.message,
+          time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
+          isMe: message.userId == _authController.user!.id,
+          userImage: controller.chat.value!
+              .getParticipant(message.participantType, message.userId)
+              ?.image,
+        );
+      },
+    ));
+    scrollDown();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+      scrollDown(mezChatScrollDuration: timeStamp);
+    });
+
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 253, 249, 249),
+      appBar: AppBar(
+        leading: Center(
+          child: GestureDetector(
+            onTap: () => Get.back<void>(closeOverlays: true),
+            child: Container(
+              height: 30,
+              width: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 97, 127, 255),
+                    Color.fromARGB(255, 198, 90, 252),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: Icon(
+                Icons.arrow_back_ios_rounded,
+                color: Colors.white,
+                size: 15,
+              ),
+            ),
+          ),
+        ),
+        title: Obx(
+          () {
+            return (controller
+                        .recipient(recipientType: recipientType)
+                        ?.participantType ==
+                    ParticipantType.DeliveryAdmin)
+                ? Text("Administrador")
+                : Text(
+                    controller
+                            .recipient(
+                                recipientType: recipientType,
+                                recipientId: recipientId)
+                            ?.name ??
+                        "User",
+                  );
+          },
+        ),
+        actions: <Widget>[
+          if (orderLink != null)
+            InkWell(
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Text(
+                      _i18n()['order'],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
+                onTap: () => Get.toNamed<void>(orderLink!))
+        ],
+      ),
+      body: isChatLoaded
+          ? Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.1),
+                    child: Center(
+                      child: Text(formattedDate),
+                    ),
+                  ),
+                  Expanded(
+                    child: Obx(
+                      () => ListView(
+                        shrinkWrap: true,
+                        controller: _listViewScrollController,
+                        children: List<Widget>.from(chatLines.reversed),
+                      ),
+                    ),
+                  ),
+                  SendMessageBox(
+                    typedMsg: _typedMsg,
+                    textEditingController: _textEditingController,
+                    controller: controller,
+                    chatId: chatId,
+                    orderId: orderId,
+                    orderType: orderType,
+                  )
+                ],
+              ),
+            )
+          : MezLogoAnimation(
+              centered: true,
+            ),
+    );
+  }
 
   Widget singleChatComponent({
     required String message,
@@ -170,133 +310,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
               ),
             ]),
       );
-
-  void scrollDown({Duration? mezChatScrollDuration}) {
-    Timer(mezChatScrollDuration ?? Duration(milliseconds: 200), () {
-      if (_listViewScrollController.hasClients)
-        _listViewScrollController.jumpTo(
-          _listViewScrollController.position.maxScrollExtent,
-          // duration: Duration(seconds: 1),
-          // curve: Curves.fastOutSlowIn
-        );
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
-      scrollDown(mezChatScrollDuration: timeStamp);
-    });
-    void _fillCallBack() {
-      chatLines.assignAll(controller.chat.value!.messages.map(
-        (Message message) {
-          return singleChatComponent(
-            message: message.message,
-            time:
-                intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
-            isMe: message.userId == _authController.user!.id,
-            userImage: controller.chat.value!
-                .getParticipant(message.participantType, message.userId)
-                ?.image,
-          );
-        },
-      ));
-      scrollDown();
-    }
-
-    controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
-    return Scaffold(
-      backgroundColor: Color.fromARGB(255, 253, 249, 249),
-      appBar: AppBar(
-        leading: Center(
-          child: GestureDetector(
-            onTap: () => Get.back<void>(closeOverlays: true),
-            child: Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                gradient: LinearGradient(colors: [
-                  Color.fromARGB(255, 97, 127, 255),
-                  Color.fromARGB(255, 198, 90, 252),
-                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-              ),
-              child: Icon(
-                Icons.arrow_back_ios_rounded,
-                color: Colors.white,
-                size: 15,
-              ),
-            ),
-          ),
-        ),
-        title: Obx(
-          () {
-            return (controller
-                        .recipient(recipientType: recipientType)
-                        ?.participantType ==
-                    ParticipantType.DeliveryAdmin)
-                ? Text("Administrador")
-                : Text(
-                    controller
-                            .recipient(
-                                recipientType: recipientType,
-                                recipientId: recipientId)
-                            ?.name ??
-                        "User",
-                  );
-          },
-        ),
-        actions: <Widget>[
-          if (orderLink != null)
-            InkWell(
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: Text(
-                      "View\nOrder",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-                onTap: () => Get.toNamed<void>(orderLink!))
-        ],
-      ),
-      body: isChatLoaded
-          ? Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.1),
-                    child: Center(
-                      child: Text(formattedDate),
-                    ),
-                  ),
-                  Expanded(
-                    child: Obx(
-                      () => ListView(
-                        shrinkWrap: true,
-                        controller: _listViewScrollController,
-                        children: List<Widget>.from(chatLines.reversed),
-                      ),
-                    ),
-                  ),
-                  SendMessageBox(
-                      typedMsg: _typedMsg,
-                      textEditingController: _textEditingController,
-                      controller: controller,
-                      chatId: chatId,
-                      orderId: orderId)
-                ],
-              ),
-            )
-          : MezLogoAnimation(
-              centered: true,
-            ),
-    );
-  }
 }
 
 class SendMessageBox extends StatelessWidget {
@@ -306,6 +319,7 @@ class SendMessageBox extends StatelessWidget {
       required TextEditingController textEditingController,
       required this.controller,
       required this.chatId,
+      this.orderType,
       this.orderId})
       : _typedMsg = typedMsg,
         _textEditingController = textEditingController,
@@ -317,6 +331,7 @@ class SendMessageBox extends StatelessWidget {
   final MessageController controller;
   final String chatId;
   final String? orderId;
+  final OrderType? orderType;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -343,32 +358,26 @@ class SendMessageBox extends StatelessWidget {
                   maxLines: 1,
                   textAlign: TextAlign.start,
                   decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(14),
-                      alignLabelWithHint: true,
-                      hintStyle: TextStyle(
-                        color: Color.fromRGBO(120, 120, 120, 1),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Nunito',
-                      ),
-                      fillColor: secondaryLightBlueColor,
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      hintText: 'Message...' //_i18n()['namePlaceHolder'],
-                      ),
+                    contentPadding: EdgeInsets.all(14),
+                    alignLabelWithHint: true,
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(120, 120, 120, 1),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Nunito',
+                    ),
+                    fillColor: secondaryLightBlueColor,
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    hintText: _i18n()['writeMsgPlaceholder'],
+                  ),
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     fontFamily: 'Nunito',
                   ),
-                  //  TextStyle(
-                  //   color: Color.fromARGB(255, 0, 0, 0),
-                  //   fontSize: 18,
-                  //   fontFamily: 'Montserrat',
-                  //   fontWeight: FontWeight.w600,
-                  // ),
                   controller: _textEditingController,
                   onChanged: (String value) {
                     _typedMsg.value = value;
@@ -384,10 +393,10 @@ class SendMessageBox extends StatelessWidget {
                     _textEditingController.text.replaceAll(' ', '').length > 0;
                 if (msgReady2Send) {
                   controller.sendMessage(
-                    message: _typedMsg.value,
-                    chatId: chatId,
-                    orderId: orderId,
-                  );
+                      message: _typedMsg.value,
+                      chatId: chatId,
+                      orderId: orderId,
+                      orderType: orderType);
                   _textEditingController.clear();
                   _typedMsg.value = "";
                 } else {

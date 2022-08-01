@@ -320,7 +320,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
 
         if (response.data['orderId'] != null) {
           sharedRoute.popEverythingAndNavigateTo(
-            getLaundyOrderRoute(
+            getLaundryOrderRoute(
               response.data['orderId'],
             ),
           );

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
@@ -72,6 +72,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                       onTap: () {
                         Get.toNamed(getMessagesRoute(
                           recipientType: ParticipantType.DeliveryDriver,
+                          orderType: OrderType.Restaurant,
                           orderId: order.orderId,
                           chatId: order.customerDropOffDriverChatId!,
                         ));

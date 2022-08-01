@@ -7,34 +7,37 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpSetCategoryComponent'];
 
 class LaundyOpSetCategoryComponent extends StatefulWidget {
-  LaundyOpSetCategoryComponent({Key? key, required this.order})
+  const LaundyOpSetCategoryComponent({Key? key, required this.order})
       : super(key: key);
   final LaundryOrder order;
 
   @override
-  State<LaundyOpSetCategoryComponent> createState() => _LaundyOpSetCategoryComponentState();
+  State<LaundyOpSetCategoryComponent> createState() =>
+      _LaundyOpSetCategoryComponentState();
 }
 
-class _LaundyOpSetCategoryComponentState extends State<LaundyOpSetCategoryComponent> {
+class _LaundyOpSetCategoryComponentState
+    extends State<LaundyOpSetCategoryComponent> {
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   late OpLaundryInfoController laundryInfoController;
 
-
   OrderController orderController = Get.find<OrderController>();
   @override
   void initState() {
- Get.put(OpLaundryInfoController(), permanent: false);
+    Get.put(OpLaundryInfoController(), permanent: false);
     laundryInfoController = Get.find<OpLaundryInfoController>();
 
     super.initState();
   }
+
   @override
   void dispose() {
     Get.delete<OpLaundryInfoController>(force: true);
@@ -64,7 +67,7 @@ class _LaundyOpSetCategoryComponentState extends State<LaundyOpSetCategoryCompon
             SizedBox(
               height: 10,
             ),
-            _PricingTable(),
+            LaundryOrderPricingComponent(order: widget.order),
             if (widget.order.isAtLaundry()) setItemsWeightButton(context),
           ],
         ),
@@ -152,104 +155,5 @@ class _LaundyOpSetCategoryComponentState extends State<LaundyOpSetCategoryCompon
         );
       }
     }
-  }
-
-  Widget _PricingTable() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-          dividerThickness: 0.01,
-          horizontalMargin: 6,
-          columnSpacing: 45.0,
-          headingRowHeight: 30.0,
-          showBottomBorder: false,
-          columns: _PricingTableColumns(),
-          rows: _PricingTableRows()),
-    );
-  }
-
-  List<DataColumn> _PricingTableColumns() {
-    return [
-      DataColumn(
-          label: Text(
-        '${_i18n()["item"]}',
-        textAlign: TextAlign.start,
-      )),
-      DataColumn(
-          label: Center(
-        child: Text(
-          '${_i18n()["perKilo"]}',
-          textAlign: TextAlign.center,
-        ),
-      )),
-      DataColumn(
-          label: Text(
-        '${_i18n()["weight"]}',
-        textAlign: TextAlign.start,
-      )),
-      DataColumn(
-          label: Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              '${_i18n()["cost"]}',
-            ),
-          ],
-        ),
-      ))
-    ];
-  }
-
-  List<DataRow> _PricingTableRows() {
-    return List.generate(
-        widget.order.costsByType?.lineItems.length ?? 0,
-        (int index) => DataRow(cells: [
-              DataCell(Container(
-                width: 100,
-                child: Text(
-                  widget.order.costsByType!.lineItems[index].getRightNameForUser(),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              )),
-              DataCell(Center(
-                  child:
-                      Text("\$${widget.order.costsByType!.lineItems[index].cost}"))),
-              DataCell(Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("${widget.order.costsByType!.lineItems[index].weight} "),
-                  if (widget.order.isAtLaundry())
-                    InkWell(
-                      customBorder: CircleBorder(),
-                      onTap: (widget.order.isAtLaundry())
-                          ? assignNewCategory(
-                              context: Get.context!,
-                              editMode: true,
-                              laundryOrderCostLineItem:
-                                  widget.order.costsByType?.lineItems[index])
-                          : null,
-                      child: Ink(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.grey.shade200),
-                          child: Icon(
-                            Icons.mode_edit_outline_outlined,
-                            size: 18,
-                            color: Colors.black,
-                          )),
-                    )
-                ],
-              )),
-              DataCell(Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text("\$${widget.order.costsByType!.lineItems[index].weighedCost}"),
-                ],
-              )),
-            ]));
   }
 }

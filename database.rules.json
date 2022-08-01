@@ -191,6 +191,7 @@
                     }
                 }
             }
+<<<<<<< HEAD
         },
         "notifications": {
             "$userType": {
@@ -198,6 +199,29 @@
                     ".write": "$uid === auth.uid",
                     ".read": "$uid === auth.uid"
                 }
+=======
+          }
+        }
+      },
+      "pastOrders": {
+        "$uid": {
+          ".read": "$uid === auth.uid"
+        }
+      }
+    },
+    "orders": {
+      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
+      "inProcess": {
+        "$orderType": {
+          "$orderId": {
+            "notified": {
+              ".write": true
+            },
+            "$driverType": {
+              "location": {
+                ".write": "data.parent().parent().exists() && root.child('orders/inProcess/' + $orderType + '/' + $orderId + '/' + $driverType + '/id').val() === auth.uid"
+              }
+>>>>>>> master
             }
         },
         "taxiAdmins": {
