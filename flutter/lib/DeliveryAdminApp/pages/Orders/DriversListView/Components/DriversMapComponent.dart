@@ -31,7 +31,8 @@ class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
 
     getDriversMarkers();
     mapController.addOrUpdatePurpleDestinationMarker(
-        latLng: LatLng(widget.order.to.latitude, widget.order.to.longitude));
+      latLng: widget.order.to.toLatLng(),
+    );
     mapController.lockInAutoZoomAnimation();
     super.initState();
   }
@@ -51,9 +52,10 @@ class _DriversMapCompnonetState extends State<DriversMapCompnonet> {
   void getDriversMarkers() {
     widget.drivers.forEach((DeliveryDriver _driver) {
       mapController.addOrUpdateUserMarker(
-          latLng: _driver.driverLocation,
-          customImgHttpUrl: _driver.driverInfo.image,
-          markerId: _driver.driverInfo.id);
+        latLng: _driver.driverLocation,
+        customImgHttpUrl: _driver.driverInfo.image,
+        markerId: _driver.driverInfo.id,
+      );
     });
   }
 }

@@ -343,40 +343,45 @@ class CurrentPositionedBottomBar extends StatelessWidget {
     showLoadingCircleInButton.value = false;
   }
 
+  Future<void> _showConfirmDialog(
+      Future<void> Function() callback, String dialogBody) async {
+    final YesNoDialogButton clickedYes = await yesNoDialog(
+      text: 'Oops!',
+      icon: Container(
+        child: Icon(
+          Icons.highlight_off,
+          size: 65,
+          color: Color(0xffdb2846),
+        ),
+      ),
+      body: dialogBody,
+    ); //finishRide);
+
+    if (clickedYes == YesNoDialogButton.Yes) {
+      await callback();
+    }
+  }
+
   Future<void> clickButton() async {
     if (order.status == TaxiOrdersStatus.InTransit) {
       mezDbgPrint("CurrentPositionedBottomBar InTransit!");
 
-      if ((MapHelper.calculateDistance(
-              taxiAuthController.currentLocation, order.to.position) >
+      if (taxiAuthController.currentLocation == null)
+        await _showConfirmDialog(finishRide, _i18n()["tooFarFromfinishRide"]);
+      else if ((MapHelper.calculateDistance(
+              taxiAuthController.currentLocation!, order.to.position) >
           0.5)) {
-        final YesNoDialogButton clickedYes = await yesNoDialog(
-            text: 'Oops!',
-            icon: Container(
-              child: Icon(
-                Icons.highlight_off,
-                size: 65,
-                color: Color(0xffdb2846),
-              ),
-            ),
-            body: _i18n()["tooFarFromfinishRide"]);
-
-        mezDbgPrint("CurrentPositionedBottomBar clickedYes: $clickedYes");
-        if (clickedYes == YesNoDialogButton.Yes) {
-          await finishRide();
-        }
+        await _showConfirmDialog(finishRide, _i18n()["tooFarFromfinishRide"]);
       } else {
         await finishRide();
       }
     } else {
-      if (MapHelper.calculateDistance(
-              taxiAuthController.currentLocation, order.from.position) >
+      if (taxiAuthController.currentLocation == null) {
+        await _showConfirmDialog(startRide, _i18n()["tooFarFromstartRide"]);
+      } else if (MapHelper.calculateDistance(
+              taxiAuthController.currentLocation!, order.from.position) >
           0.5) {
-        final YesNoDialogButton clickedYes = await yesNoDialog(
-            text: "Oops!", body: _i18n()["tooFarFromstartRide"]);
-        if (clickedYes == YesNoDialogButton.Yes) {
-          await startRide();
-        }
+        await _showConfirmDialog(startRide, _i18n()["tooFarFromstartRide"]);
       } else {
         await startRide();
       }

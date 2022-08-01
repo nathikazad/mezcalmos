@@ -383,22 +383,22 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
-      latLng: order.value!.laundry!.location.toLatLng(),
-      markerId: order.value!.laundry!.id,
-      customImgHttpUrl: order.value!.laundry!.image,
+      latLng: order.value?.laundry?.location.toLatLng(),
+      markerId: order.value?.laundry?.id,
+      customImgHttpUrl: order.value?.laundry?.image,
       fitWithinBounds: true,
     );
     // customer's
     mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value!.to.toLatLng(),
+      latLng: order.value?.to.toLatLng(),
       fitWithinBounds: true,
     );
-    if (order.value!.routeInformation != null)
+    if (order.value?.routeInformation != null)
       mapController.decodeAndAddPolyline(
           encodedPolylineString: order.value!.routeInformation!.polyline);
 
     mapController.animateAndUpdateBounds(
-        shouldFitPolylineInBound: order.value!.routeInformation != null);
+        shouldFitPolylineInBound: order.value?.routeInformation != null);
   }
 
   void updateMapByPhase(LaundryOrderPhase phase) {
@@ -408,22 +408,22 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
           _phaseSnapshot = phase;
           // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.laundry!.location.toLatLng(),
-            markerId: order.value!.laundry!.id,
-            customImgHttpUrl: order.value!.laundry!.image,
+            latLng: order.value?.laundry?.location.toLatLng(),
+            markerId: order.value?.laundry?.id,
+            customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: true,
           );
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng(),
+            latLng: order.value?.to.toLatLng(),
             fitWithinBounds: false,
           );
         }
         // only if pickUpDriver not null
-        if (order.value!.pickupDriver?.location != null) {
+        if (order.value?.pickupDriver?.location != null) {
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.pickupDriver!.location!,
-            markerId: order.value!.pickupDriver!.id,
-            customImgHttpUrl: order.value!.pickupDriver!.image,
+            latLng: order.value?.pickupDriver?.location,
+            markerId: order.value?.pickupDriver?.id,
+            customImgHttpUrl: order.value?.pickupDriver?.image,
             fitWithinBounds: true,
           );
         }
@@ -436,24 +436,24 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
           _phaseSnapshot = phase;
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.laundry!.location.toLatLng(),
-            markerId: order.value!.laundry!.id,
-            customImgHttpUrl: order.value!.laundry!.image,
+            latLng: order.value?.laundry?.location.toLatLng(),
+            markerId: order.value?.laundry?.id,
+            customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: false,
           );
           // we fit the destination into bounds
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng(),
+            latLng: order.value?.to.toLatLng(),
             fitWithinBounds: true,
           );
         }
 
         // we keep updating the delivery's
-        if (order.value!.dropoffDriver?.location != null) {
+        if (order.value?.dropoffDriver?.location != null) {
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.dropoffDriver!.location!,
-            markerId: order.value!.dropoffDriver!.id,
-            customImgHttpUrl: order.value!.dropoffDriver!.image,
+            latLng: order.value?.dropoffDriver?.location,
+            markerId: order.value?.dropoffDriver?.id,
+            customImgHttpUrl: order.value?.dropoffDriver?.image,
             fitWithinBounds: true,
           );
         }

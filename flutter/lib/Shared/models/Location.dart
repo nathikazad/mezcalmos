@@ -21,8 +21,10 @@ class Location {
         <String, dynamic>{"latitude": lat, "longitude": lng});
   }
 
-  LatLng toLatLng() {
-    return LatLng(position.latitude!, position.longitude!);
+  LatLng? toLatLng() {
+    if (position.latitude != null && position.longitude != null)
+      return LatLng(position.latitude!, position.longitude!);
+    return null;
   }
 
   Map<String, String> toJson() =>

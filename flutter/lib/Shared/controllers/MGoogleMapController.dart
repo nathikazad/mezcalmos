@@ -79,21 +79,24 @@ class MGoogleMapController {
   /// gets Called whenever a zoom Change happens in [MGoogleMap]
   void onZoomChange(double newZoomValue) {}
 
-  Future<void> addOrUpdateCircleMarker(LatLng latLng,
+  Future<void> addOrUpdateCircleMarker(LatLng? latLng,
       {String markerId = "default", bool fitWithinBounds = true}) async {
-    markers.removeWhere((Marker _marker) => _marker.markerId.value == markerId);
-    markers.add(
-      MezMarker(
-        fitWithinBounds: fitWithinBounds,
-        markerId: MarkerId(markerId),
-        icon: await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(),
-          aPurpleLocationCircle,
+    if (latLng != null) {
+      markers
+          .removeWhere((Marker _marker) => _marker.markerId.value == markerId);
+      markers.add(
+        MezMarker(
+          fitWithinBounds: fitWithinBounds,
+          markerId: MarkerId(markerId),
+          icon: await BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(),
+            aPurpleLocationCircle,
+          ),
+          flat: true,
+          position: latLng,
         ),
-        flat: true,
-        position: latLng,
-      ),
-    );
+      );
+    }
   }
 
   void removeCircleMarker({String markerId = "default"}) {
@@ -113,98 +116,104 @@ class MGoogleMapController {
   Future<void> addOrUpdateUserMarker(
       {String? markerId,
       bool fitWithinBounds = true,
-      required LatLng latLng,
+      required LatLng? latLng,
       String? customImgHttpUrl}) async {
-    BitmapDescriptor icon;
+    if (latLng != null) {
+      BitmapDescriptor icon;
 
-    final String? uImg = Get.find<AuthController>().user?.image ??
-        Get.find<AuthController>().user?.bigImage;
+      final String? uImg = Get.find<AuthController>().user?.image ??
+          Get.find<AuthController>().user?.bigImage;
 
-    if (uImg == null) {
-      icon = await bitmapDescriptorLoader(
-          (await cropRonded(
-              (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
-          _calculateMarkersSize(),
-          _calculateMarkersSize(),
-          isBytes: true);
-    } else {
-      icon = await bitmapDescriptorLoader(
-          (await cropRonded(
-              (await http.get(Uri.parse(customImgHttpUrl ?? uImg)))
-                  .bodyBytes) as Uint8List),
-          _calculateMarkersSize(),
-          _calculateMarkersSize(),
-          isBytes: true);
+      if (uImg == null) {
+        icon = await bitmapDescriptorLoader(
+            (await cropRonded(
+                (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
+            _calculateMarkersSize(),
+            _calculateMarkersSize(),
+            isBytes: true);
+      } else {
+        icon = await bitmapDescriptorLoader(
+            (await cropRonded(
+                (await http.get(Uri.parse(customImgHttpUrl ?? uImg)))
+                    .bodyBytes) as Uint8List),
+            _calculateMarkersSize(),
+            _calculateMarkersSize(),
+            isBytes: true);
+      }
+
+      final String mId =
+          (markerId ?? Get.find<AuthController>().user?.id ?? 'ANONYMOUS');
+
+      // default userId is authenticated's
+      _addOrUpdateMarker(
+        MezMarker(
+          fitWithinBounds: fitWithinBounds,
+          markerId: MarkerId(mId),
+          icon: icon,
+          position: latLng,
+        ),
+      );
     }
-
-    final String mId =
-        (markerId ?? Get.find<AuthController>().user?.id ?? 'ANONYMOUS');
-
-    // default userId is authenticated's
-    _addOrUpdateMarker(
-      MezMarker(
-        fitWithinBounds: fitWithinBounds,
-        markerId: MarkerId(mId),
-        icon: icon,
-        position: latLng,
-      ),
-    );
   }
 
-  Future<void> addOrUpdateTaxiDriverMarker(String markerId, LatLng latLng,
+  Future<void> addOrUpdateTaxiDriverMarker(String? markerId, LatLng? latLng,
       {String? markerTitle, bool fitWithinBounds = true}) async {
-    // this check so we keep one single copy of the asset Bytes instead of re-croping again n again
-    if (_taxiDriverImgDescruptorCopy == null) {
-      _taxiDriverImgDescruptorCopy = await cropRonded(
-          (await rootBundle.load(taxi_driver_marker_asset))
-              .buffer
-              .asUint8List());
-    }
+    if (latLng != null || markerId != null) {
+      // this check so we keep one single copy of the asset Bytes instead of re-croping again n again
+      if (_taxiDriverImgDescruptorCopy == null) {
+        _taxiDriverImgDescruptorCopy = await cropRonded(
+            (await rootBundle.load(taxi_driver_marker_asset))
+                .buffer
+                .asUint8List());
+      }
 
-    _addOrUpdateMarker(
-      MezMarker(
-          fitWithinBounds: fitWithinBounds,
-          infoWindow: markerTitle == null
-              ? InfoWindow.noText
-              : InfoWindow(title: markerTitle),
-          markerId: MarkerId(markerId),
-          icon: await bitmapDescriptorLoader(
-            (await cropRonded(
-              (await rootBundle.load(taxi_driver_marker_asset))
-                  .buffer
-                  .asUint8List(),
-            )),
-            _calculateMarkersSize(),
-            _calculateMarkersSize(),
-            isBytes: true,
-          ),
-          flat: true,
-          position: latLng),
-    );
+      _addOrUpdateMarker(
+        MezMarker(
+            fitWithinBounds: fitWithinBounds,
+            infoWindow: markerTitle == null
+                ? InfoWindow.noText
+                : InfoWindow(title: markerTitle),
+            markerId: MarkerId(markerId!),
+            icon: await bitmapDescriptorLoader(
+              (await cropRonded(
+                (await rootBundle.load(taxi_driver_marker_asset))
+                    .buffer
+                    .asUint8List(),
+              )),
+              _calculateMarkersSize(),
+              _calculateMarkersSize(),
+              isBytes: true,
+            ),
+            flat: true,
+            position: latLng!),
+      );
+    }
   }
 
   Future<void> addOrUpdatePurpleDestinationMarker(
       {String markerId = "dest",
-      required LatLng latLng,
+      required LatLng? latLng,
       bool fitWithinBounds = true}) async {
-    final BitmapDescriptor icon = await bitmapDescriptorLoader(
-        (await cropRonded(
-            (await rootBundle.load(purple_destination_marker_asset))
-                .buffer
-                .asUint8List())),
-        _calculateMarkersSize(),
-        _calculateMarkersSize(),
-        isBytes: true);
-    // markerId = markerId;
+    if (latLng != null) {
+      final BitmapDescriptor icon = await bitmapDescriptorLoader(
+          (await cropRonded(
+              (await rootBundle.load(purple_destination_marker_asset))
+                  .buffer
+                  .asUint8List())),
+          _calculateMarkersSize(),
+          _calculateMarkersSize(),
+          isBytes: true);
+      // markerId = markerId;
 
-    _addOrUpdateMarker(
-      MezMarker(
-        fitWithinBounds: fitWithinBounds,
-        markerId: MarkerId(markerId),
-        icon: icon,
-        position: latLng,
-      ),
-    );
+      _addOrUpdateMarker(
+        MezMarker(
+          fitWithinBounds: fitWithinBounds,
+          markerId: MarkerId(markerId),
+          icon: icon,
+          position: latLng,
+        ),
+      );
+    }
   }
 
   void removeDestinationMarker({String id = "dest"}) {
@@ -217,8 +226,10 @@ class MGoogleMapController {
         .toList());
   }
 
-  void removeMarkerById(String markerId) {
-    markers.removeWhere((Marker _marker) => _marker.markerId.value == markerId);
+  void removeMarkerById(String? markerId) {
+    if (markerId != null)
+      markers
+          .removeWhere((Marker _marker) => _marker.markerId.value == markerId);
   }
 
   void removerAuthenticatedUserMarker() {

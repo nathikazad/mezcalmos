@@ -119,7 +119,7 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
         mezDbgPrint("taxiMarker !!");
         _mapController.addOrUpdateTaxiDriverMarker(
           "taxi",
-          order.value!.driver!.location!,
+          order.value?.driver?.location,
         );
       }
 

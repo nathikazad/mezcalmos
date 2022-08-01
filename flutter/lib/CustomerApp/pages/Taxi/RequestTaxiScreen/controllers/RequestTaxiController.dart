@@ -104,17 +104,14 @@ class RequestTaxiController {
     locationPickerController.setLocation(taxiRequest.value.from!);
     locationPickerController.addOrUpdateUserMarker(
       markerId: SearchComponentType.From.toShortString(),
-      latLng: LatLng(
-        taxiRequest.value.from!.latitude,
-        taxiRequest.value.from!.longitude,
-      ),
+      latLng: taxiRequest.value.from?.toLatLng(),
     );
 
     updateModelAndMarker(SearchComponentType.To, taxiRequest.value.to!);
     locationPickerController.addOrUpdatePurpleDestinationMarker(
-        markerId: SearchComponentType.To.toShortString(),
-        latLng: LatLng(taxiRequest.value.to!.position.latitude!,
-            taxiRequest.value.to!.position.longitude!));
+      markerId: SearchComponentType.To.toShortString(),
+      latLng: taxiRequest.value.to?.position.toLatLng(),
+    );
 
     // locationPickerController.periodicRerendering.value = true;
     locationPickerController.hideFakeMarker();
@@ -264,7 +261,7 @@ class RequestTaxiController {
   void onSuccessSignInUpdateUserMarker() {
     locationPickerController.addOrUpdateUserMarker(
       markerId: SearchComponentType.From.toShortString(),
-      latLng: taxiRequest.value.from!.toLatLng(),
+      latLng: taxiRequest.value.from?.toLatLng(),
     );
   }
 

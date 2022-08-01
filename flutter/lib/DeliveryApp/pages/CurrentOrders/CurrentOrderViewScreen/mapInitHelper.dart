@@ -1,6 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ void initilizeMap(
     MGoogleMapController mapController, Rxn<Order> order, ServiceInfo service) {
   DeliveryAuthController deliveryAuthAuthController =
       Get.find<DeliveryAuthController>();
-  if (order.value!.routeInformation != null) {
+  if (order.value?.routeInformation != null) {
     mapController.decodeAndAddPolyline(
         encodedPolylineString: order.value!.routeInformation!.polyline);
   }
@@ -19,33 +20,25 @@ void initilizeMap(
   Future.wait(<Future<void>>[
     // DESTINATION MARKER
     mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: LatLng(
-        order.value!.to.latitude,
-        order.value!.to.longitude,
-      ),
+      latLng: order.value?.to.toLatLng(),
     ),
     // USER MARKER
     mapController.addOrUpdateUserMarker(
-      latLng: LatLng(
-        deliveryAuthAuthController.currentLocation.latitude!,
-        deliveryAuthAuthController.currentLocation.longitude!,
-      ),
+      latLng: deliveryAuthAuthController.currentLocation?.toLatLng(),
     ),
     // Restaurant Marker
     mapController.addOrUpdateUserMarker(
-      latLng: LatLng(
-        service.location.latitude,
-        service.location.longitude,
-      ),
+      latLng: service.location.toLatLng(),
       markerId: service.id,
       customImgHttpUrl: service.image,
     )
   ]).then((_) {
-    mapController.setLocation(
-      Location.fromLocationData(
-        deliveryAuthAuthController.currentLocation,
-      ),
-    );
+    if (deliveryAuthAuthController.currentLocation != null)
+      mapController.setLocation(
+        Location.fromLocationData(
+          deliveryAuthAuthController.currentLocation!,
+        ),
+      );
     mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
     mapController.animateMarkersPolyLinesBounds.value = true;
     mapController.periodicRerendering.value = true;

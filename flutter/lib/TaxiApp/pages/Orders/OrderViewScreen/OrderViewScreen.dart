@@ -245,22 +245,14 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
               inActiveClick: _clickedBottomButton.value,
               text: 'Pick up',
               onTap: () async {
-                if ((MapHelper.calculateDistance(
-                      Get.find<TaxiAuthController>().currentLocation,
+                if (Get.find<TaxiAuthController>().currentLocation == null)
+                  await _showConfirmationDialog();
+                else if ((MapHelper.calculateDistance(
+                      Get.find<TaxiAuthController>().currentLocation!,
                       order!.to.position,
                     ) >
                     0.5)) {
-                  await showConfirmationDialog(
-                    context,
-                    title: 'Oops!',
-                    primaryButtonText: "Yes, start ride",
-                    helperText: _i18n()["tooFarFromstartRide"],
-                    onYesClick: () async {
-                      await controller.startRide();
-                      setState(() {});
-                      _clickedBottomButton.value = false;
-                    },
-                  );
+                  await _showConfirmationDialog();
                 } else {
                   _clickedBottomButton.value = true;
                   await controller.startRide();
@@ -336,6 +328,20 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     }
   }
 
+  Future<void> _showConfirmationDialog() async {
+    return showConfirmationDialog(
+      context,
+      title: 'Oops!',
+      primaryButtonText: "Yes, start ride",
+      helperText: _i18n()["tooFarFromstartRide"],
+      onYesClick: () async {
+        await controller.startRide();
+        setState(() {});
+        _clickedBottomButton.value = false;
+      },
+    );
+  }
+
   Expanded get _cancelButton => Expanded(
         child: button(
           bgColor: Color.fromRGBO(249, 216, 214, 1),
@@ -381,26 +387,30 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           //       orderStreamEvent.driver!.location!);
 
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-              latLng: orderStreamEvent.to.toLatLng());
+            latLng: orderStreamEvent.to.toLatLng(),
+          );
           break;
         case TaxiOrdersStatus.InTransit:
           // no more showing the customer's marker
           mGoogleMapController.removeMarkerById(orderStreamEvent.customer.id);
           // add the destination marker
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-              latLng: orderStreamEvent.to.toLatLng());
+            latLng: orderStreamEvent.to.toLatLng(),
+          );
           break;
         case TaxiOrdersStatus.DroppedOff:
           // no more showing the taxi's Marker:
           mGoogleMapController.removeMarkerById(orderStreamEvent.driver!.id);
           // Add the customer's from Marker
           mGoogleMapController.addOrUpdateUserMarker(
-              markerId: orderStreamEvent.customer.id,
-              latLng: orderStreamEvent.from.toLatLng(),
-              customImgHttpUrl: orderStreamEvent.customer.image);
+            markerId: orderStreamEvent.customer.id,
+            latLng: orderStreamEvent.from.toLatLng(),
+            customImgHttpUrl: orderStreamEvent.customer.image,
+          );
 
           mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-              latLng: orderStreamEvent.to.toLatLng());
+            latLng: orderStreamEvent.to.toLatLng(),
+          );
 
           break;
         default:
@@ -425,10 +435,11 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
     } else {
       // in case there is no status Changes
       // we simply keep updating the taxi's Marker's location , only if inProcess!
-      if (orderStreamEvent.inProcess() &&
-          orderStreamEvent.driver?.location != null) {
+      if (orderStreamEvent.inProcess()) {
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
-            orderStreamEvent.driver!.id, orderStreamEvent.driver!.location!);
+          orderStreamEvent.driver?.id,
+          orderStreamEvent.driver?.location,
+        );
       }
     }
   }
@@ -609,6 +620,20 @@ Widget getTaxiRideStatusBar(String text, Icon icon) {
   );
 }
 
+Future<void> showNoConfirmationDialog(
+    Function callback, Icon? icon, String bodyText) async {
+  final YesNoDialogButton clickedYes = await yesNoDialog(
+    text: 'Oops!',
+    icon: Container(
+      child: icon,
+    ),
+    body: bodyText,
+  );
+  if (clickedYes == YesNoDialogButton.Yes) {
+    await callback();
+  }
+}
+
 Future<void> checkDistanceAndExecute({
   required TaxiOrder order,
   required dynamic Function() callback,
@@ -616,21 +641,13 @@ Future<void> checkDistanceAndExecute({
   required String bodyText,
 }) async {
   mezDbgPrint("checkDistanceAndExecute => called !");
-  if ((MapHelper.calculateDistance(
-          Get.find<TaxiAuthController>().currentLocation, order.to.position) >
+  if (Get.find<TaxiAuthController>().currentLocation == null)
+    await showNoConfirmationDialog(callback, icon, bodyText);
+  else if ((MapHelper.calculateDistance(
+          Get.find<TaxiAuthController>().currentLocation!, order.to.position) >
       0.5)) {
-    final YesNoDialogButton clickedYes = await yesNoDialog(
-      text: 'Oops!',
-      icon: Container(
-        child: icon,
-      ),
-      body: bodyText,
-    );
-    if (clickedYes == YesNoDialogButton.Yes) {
-      await callback();
-    }
+    await showNoConfirmationDialog(callback, icon, bodyText);
   } else {
-    mezDbgPrint("Distance  is GOOOD  => yesNoDialog");
     await callback();
   }
 }

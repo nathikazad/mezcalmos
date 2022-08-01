@@ -226,18 +226,17 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       ),
     );
 
-    if (order.value!.laundry != null) {
-      // restaurant ad customer's location are fixed (fit in bound at start)
-      mapController.addOrUpdateUserMarker(
-        latLng: order.value!.laundry!.location.toLatLng(),
-        markerId: order.value!.laundry!.id,
-        customImgHttpUrl: order.value!.laundry!.image,
-        fitWithinBounds: true,
-      );
-    }
+    // restaurant ad customer's location are fixed (fit in bound at start)
+    mapController.addOrUpdateUserMarker(
+      latLng: order.value?.laundry?.location.toLatLng(),
+      markerId: order.value?.laundry?.id,
+      customImgHttpUrl: order.value?.laundry?.image,
+      fitWithinBounds: true,
+    );
+
     // customer's
     mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value!.to.toLatLng(),
+      latLng: order.value?.to.toLatLng(),
       fitWithinBounds: true,
     );
     if (order.value!.routeInformation != null)
@@ -256,13 +255,13 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           _phaseSnapshot = phase;
           // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.laundry!.location.toLatLng(),
-            markerId: order.value!.laundry!.id,
-            customImgHttpUrl: order.value!.laundry!.image,
+            latLng: order.value?.laundry?.location.toLatLng(),
+            markerId: order.value?.laundry?.id,
+            customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: true,
           );
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng(),
+            latLng: order.value?.to.toLatLng(),
             fitWithinBounds: true,
           );
         }
@@ -270,9 +269,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         if (order.value?.pickupDriver != null &&
             order.value!.inDeliveryPhase()) {
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.pickupDriver!.location!,
+            latLng: order.value?.pickupDriver?.location,
             markerId: "pickup_driver", //order.value!.pickupDriver!.id,
-            customImgHttpUrl: order.value!.pickupDriver!.image,
+            customImgHttpUrl: order.value?.pickupDriver?.image,
             fitWithinBounds: true,
           );
         }
@@ -288,14 +287,14 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           // mezDbgPrint("Phaaaaazeeee::_phaseSnapshot ==> $_phaseSnapshot");
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.laundry!.location.toLatLng(),
-            markerId: order.value!.laundry!.id,
-            customImgHttpUrl: order.value!.laundry!.image,
+            latLng: order.value?.laundry?.location.toLatLng(),
+            markerId: order.value?.laundry?.id,
+            customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: true,
           );
           // we fit the destination into bounds
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng(),
+            latLng: order.value?.to.toLatLng(),
             fitWithinBounds: true,
           );
         }
@@ -306,9 +305,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           //     "Phaaaaazeeee::dropoffDriver ==> ${order.value!.dropoffDriver?.location}");
 
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.dropoffDriver!.location!,
+            latLng: order.value?.dropoffDriver?.location,
             markerId: "dropoff_driver", //order.value!.dropoffDriver!.id,
-            customImgHttpUrl: order.value!.dropoffDriver!.image,
+            customImgHttpUrl: order.value?.dropoffDriver?.image,
             fitWithinBounds: true,
           );
         }
