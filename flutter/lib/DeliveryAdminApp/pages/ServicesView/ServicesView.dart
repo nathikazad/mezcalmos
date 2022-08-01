@@ -4,10 +4,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/ServicesView/components/DaRestaurantCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
 //
@@ -24,55 +27,121 @@ class ServicesView extends StatefulWidget {
 
 class _ServicesViewState extends State<ServicesView> {
   RxList<Laundry> laundries = RxList([]);
+  RxList<Restaurant> restaurants = RxList([]);
   LaundryInfoController laundryInfoController =
       Get.find<LaundryInfoController>();
   StreamSubscription? laundiesStream;
+  RestaurantsInfoController _restaurantsInfoController =
+      Get.find<RestaurantsInfoController>();
 
   @override
   void initState() {
+    _getData();
+    super.initState();
+  }
+
+  Future<void> _getData() async {
+    restaurants.value = await _restaurantsInfoController.getRestaurants();
     laundries.value = laundryInfoController.laundries;
+
     laundiesStream =
         laundryInfoController.laundries.stream.listen((List<Laundry> event) {
       laundries.value = event;
     });
-
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: Get.back, title: '${_i18n()["services"]}'),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _addLaundryBtn(),
-            SizedBox(
-              height: 10,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Colors.grey.shade100,
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+            tabBar: TabBar(tabs: [
+              Tab(
+                text: "Restaurants",
+              ),
+              Tab(
+                text: "Laundries",
+              ),
+            ]),
+            onClick: Get.back,
+            title: '${_i18n()["services"]}'),
+        body: TabBarView(children: [
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 15,
+                ),
+                FutureBuilder<List<Restaurant>>(
+                    future: _restaurantsInfoController.getRestaurants(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Restaurant>> snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Container(
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator(),
+                          );
+                        case ConnectionState.done:
+                          if (snapshot.data != null) {
+                            return Column(
+                              children: List.generate(
+                                  snapshot.data!.length,
+                                  (int index) => DaRestaurantCard(
+                                      restaurant: snapshot.data![index])),
+                            );
+                          } else {
+                            return Container(
+                              child: Text("Error getting restuarnts"),
+                            );
+                          }
+
+                        default:
+                          return Container(
+                            child: Text("Error getting restuarnts"),
+                          );
+                      }
+                    })
+              ],
             ),
-            Obx(() {
-              if (laundries.isNotEmpty) {
-                return Column(
-                  children: List.generate(laundries.value.length,
-                      (int index) => _laundryCard(laundries.value[index])),
-                );
-              } else {
-                return Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(12),
-                  child: Text(
-                    '${_i18n()["noLaundries"]}',
-                    style: Get.textTheme.bodyText1,
-                  ),
-                );
-              }
-            })
-          ],
-        ),
+          ),
+          _laundrisList()
+        ]),
+      ),
+    );
+  }
+
+  SingleChildScrollView _laundrisList() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _addLaundryBtn(),
+          SizedBox(
+            height: 10,
+          ),
+          Obx(() {
+            if (laundries.isNotEmpty) {
+              return Column(
+                children: List.generate(laundries.value.length,
+                    (int index) => _laundryCard(laundries.value[index])),
+              );
+            } else {
+              return Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(12),
+                child: Text(
+                  '${_i18n()["noLaundries"]}',
+                  style: Get.textTheme.bodyText1,
+                ),
+              );
+            }
+          })
+        ],
       ),
     );
   }

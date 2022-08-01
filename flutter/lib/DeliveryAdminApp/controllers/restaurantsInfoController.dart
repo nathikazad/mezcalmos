@@ -1,9 +1,9 @@
-import 'package:firebase_database/firebase_database.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:get/get.dart';
 import 'dart:async';
+
+import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
 class RestaurantsInfoController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -18,9 +18,9 @@ class RestaurantsInfoController extends GetxController {
         .ref()
         .child('restaurants/info')
         .once()
-        .then<List<Restaurant>>((event) {
-      List<Restaurant> restaurants = [];
-      (event.snapshot.value as dynamic).forEach((dynamic key, dynamic value) {
+        .then<List<Restaurant>>((DatabaseEvent event) {
+      final List<Restaurant> restaurants = [];
+      (event.snapshot.value as dynamic).forEach((key, value) {
         try {
           restaurants.add(Restaurant.fromRestaurantData(
               restaurantId: key, restaurantData: value));
@@ -37,7 +37,7 @@ class RestaurantsInfoController extends GetxController {
         .ref()
         .child('restaurants/info/$restaurantId')
         .once()
-        .then<Restaurant>((event) {
+        .then<Restaurant>((DatabaseEvent event) {
       return Restaurant.fromRestaurantData(
           restaurantId: restaurantId, restaurantData: event.snapshot.value);
     });
@@ -48,6 +48,7 @@ class RestaurantsInfoController extends GetxController {
         .ref()
         .child('restaurants/info/$restaurantId/menu/$itemId')
         .once()
-        .then<Item>((event) => Item.itemFromData(itemId, event.snapshot.value));
+        .then<Item>((DatabaseEvent event) =>
+            Item.itemFromData(itemId, event.snapshot.value));
   }
 }
