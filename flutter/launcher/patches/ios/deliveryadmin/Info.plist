@@ -58,7 +58,6 @@
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App needs location when in use to update your customer about your location</string>
-	<key>NSPhotoLibraryUsageDescription</key>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
