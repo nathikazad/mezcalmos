@@ -18,13 +18,14 @@ const participantTypeToNodeMap: { [id in ParticipantType]: string } = {
   [ParticipantType.DeliveryDriver]: "deliveryDrivers",
   [ParticipantType.Laundry]: "laundries",
   [ParticipantType.LaundryOperator]: "operators/laundry",
+  [ParticipantType.RestaurantOperator]: "operators/restaurant",
 };
 
 export function notificationInfoNode(participantType: ParticipantType, userId: string) {
   return firebase.database().ref(`/${participantTypeToNodeMap[participantType]}/info/${userId}/notificationInfo`);
 }
 
-export function inProcessOrders(orderType: OrderType, orderId?: string) {
+export function inProcessOrders(orderType?: OrderType, orderId?: string) {
   return orders(OrderStatus.InProcess, orderType, orderId);
 }
 
@@ -50,8 +51,11 @@ enum OrderStatus {
   PastOrders = "past"
 }
 
-function orders(orderStatus: OrderStatus, orderType: OrderType, orderId?: string) {
-  let dbNode: string = `orders/${orderStatus}/${orderType}`
+function orders(orderStatus: OrderStatus, orderType?: OrderType, orderId?: string) {
+  let dbNode: string = `orders/${orderStatus}`
+  if (orderType != undefined) {
+    dbNode += `/${orderType}`
+  }
   if (orderId != undefined) {
     dbNode += `/${orderId}`
   }

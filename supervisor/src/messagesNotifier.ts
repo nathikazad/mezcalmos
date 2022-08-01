@@ -86,16 +86,16 @@ async function notifyOtherMessageParticipants(notificationForQueue: chat.Message
   }
   let senderInfo: chat.Participant = chatData.participants[notificationForQueue.participantType]![notificationForQueue.userId]
   delete chatData.participants[notificationForQueue.participantType];
-  for (let nonNotifiableParticipant in chat.nonNotifiableParticipants) {
-    delete chatData.participants[chat.nonNotifiableParticipants[nonNotifiableParticipant]];
-  }
   for (let participantType in chatData.participants) {
+    if (participantType in chat.nonNotifiableParticipants)
+      continue
     for (let participantId in chatData.participants[participantType as chat.ParticipantType]) {
       let participant = chatData.participants[participantType as chat.ParticipantType]![participantId]
+      let transformedSenderInfo: chat.Participant = transformSender(senderInfo, chatData.participants, chatData.orderType!, notificationForQueue.participantType, participant.particpantType); //TODO: change this to restaurant or laundry
       let notification: Notification = {
         foreground: <NewMessageNotification>{
           chatId: notificationForQueue.chatId,
-          sender: senderInfo,
+          sender: transformedSenderInfo,
           message: notificationForQueue.message,
           orderId: notificationForQueue.orderId ?? null,
           time: notificationForQueue.timestamp,
@@ -105,15 +105,15 @@ async function notifyOtherMessageParticipants(notificationForQueue: chat.Message
         },
         background: {
           en: {
-            title: `New message from ${senderInfo.name}`,
+            title: `New message from ${transformedSenderInfo.name}`,
             body: notificationForQueue.message
           },
           es: {
-            title: `Nueva mensaje de ${senderInfo.name}`,
+            title: `Nueva mensaje de ${transformedSenderInfo.name}`,
             body: notificationForQueue.message
           }
         },
-        linkUrl: chatUrl(notificationForQueue.chatId, notificationForQueue.orderId, chatData.orderType, notificationForQueue.participantType)
+        linkUrl: chatUrl(notificationForQueue.chatId, notificationForQueue.orderId, chatData.orderType, notificationForQueue.participantType, participant.particpantType)
       }
       notifyUser.pushNotification(participantId, notification, participant.particpantType);
     }
@@ -180,4 +180,43 @@ function convertFbIdtoInt(uid: string): number {
   }
 
   return parseInt(encode) % (10 ** 7);
+}
+
+function transformSender(
+  defaultParticipant: chat.Participant,
+  participants: chat.Participants,
+  orderType: OrderType,
+  recipientType: chat.ParticipantType,
+  senderType: chat.ParticipantType,
+): chat.Participant {
+  let returnParticipant: chat.Participant = defaultParticipant;
+  switch (recipientType) {
+    case null:
+      break;
+    case chat.ParticipantType.LaundryOperator: // when receiving message from laundry operator
+      returnParticipant = getServiceProviderFromParticipants(participants, chat.ParticipantType.Laundry)
+      break;
+    case chat.ParticipantType.RestaurantOperator: // when receiving message from restaurant operator
+      returnParticipant = getServiceProviderFromParticipants(participants, chat.ParticipantType.Restaurant)
+      break;
+    case chat.ParticipantType.DeliveryAdmin: // when receiving message from delivery admin operator
+      if (senderType == chat.ParticipantType.Customer) {
+        switch (orderType) {
+          case OrderType.Laundry:
+            returnParticipant = getServiceProviderFromParticipants(participants, chat.ParticipantType.Laundry)
+            break;
+          case OrderType.Restaurant:
+            returnParticipant = getServiceProviderFromParticipants(participants, chat.ParticipantType.Restaurant)
+            break;
+        }
+      }
+      break;
+  }
+  return returnParticipant
+}
+
+function getServiceProviderFromParticipants(
+  participants: chat.Participants,
+  participantType: chat.ParticipantType) {
+  return participants[participantType]![Object.keys(participants[participantType]!)[0]]
 }

@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 typedef shouldSaveNotification = bool Function(Notification notification);
 
@@ -51,8 +52,7 @@ class ForegroundNotificationsController extends GetxController {
         try {
           final Notification _notification =
               notificationHandler(event.snapshot.key!, event.snapshot.value);
-          final bool alreadyOnLinkPage =
-              (Get.currentRoute == _notification.linkUrl);
+          final bool alreadyOnLinkPage = isCurrentRoute(_notification.linkUrl);
 
           switch (_notification.notificationAction) {
             case NotificationAction.ShowPopUp:

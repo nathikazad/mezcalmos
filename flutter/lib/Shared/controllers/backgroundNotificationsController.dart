@@ -200,23 +200,12 @@ class BackgroundNotificationsController extends GetxController {
   void notificationClickHandler(RemoteMessage message) {
     mezDbgPrint("notificationClickHandler");
     mezDbgPrint("CurrentRoute : ${Get.currentRoute}");
-    mezDbgPrint(
-        "_____________________________________________ BACKROUNG MESSAGE ____________________________________");
     mezDbgPrint(message.data);
-    mezDbgPrint(
-        "_____________________________________________ BACKROUNG MESSAGE ____________________________________");
     if (message.data["linkUrl"] != null) Get.closeAllSnackbars();
     if (message.data['linkUrl'].toString().contains('/messages/')) {
-      mezDbgPrint(
-          "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<MessagesRouting");
-      mezDbgPrint("GET CURRENT ROUTE 1 =================${Get.currentRoute}");
-      if (Get.currentRoute == kWrapperRoute) {
-        mezDbgPrint("GET CURRENT ROUTE 2 =================${Get.currentRoute}");
+      if (isCurrentRoute(kWrapperRoute)) {
         Future<void>.delayed(Duration(milliseconds: 100), () {
-          mezDbgPrint(Get.currentRoute);
-          Get.toNamed(kHomeRoute);
-          mezDbgPrint(
-              "GET CURRENT ROUTE 3 =================${Get.currentRoute}");
+          Get.toNamed<void>(kHomeRoute);
           Get.toNamed<void>(
             message.data["linkUrl"],
             arguments: <String, bool>{'showViewOrderBtn': true},

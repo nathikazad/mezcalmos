@@ -6,6 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Notification.dart';
@@ -33,20 +34,17 @@ class OrderController extends GetxController {
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
         .listen((dynamic event) {
-     
-
       final List<LaundryOrder> orders = [];
       if (event.snapshot.value != null) {
         mezDbgPrint("the event value ------------> ${event.snapshot.value}");
         event.snapshot.value.keys.forEach((orderId) {
-     
           final dynamic orderData = event.snapshot.value[orderId];
-         
+
           orders.add(LaundryOrder.fromData(orderId, orderData));
         });
       }
       pastOrders.value = orders;
-       pastOrders.sort((DeliverableOrder a, DeliverableOrder b) =>
+      pastOrders.sort((DeliverableOrder a, DeliverableOrder b) =>
           a.orderTime.toLocal().compareTo(b.orderTime.toLocal()));
     }, onError: (error) {
       mezDbgPrint('EROOOOOOR +++++++++++++++++ $error');
@@ -91,6 +89,15 @@ class OrderController extends GetxController {
       } on StateError {
         return null;
       }
+    }
+  }
+
+  void setNotifiedAsTrue(LaundryOrder order) {
+    if (!order.notifiedOperator) {
+      _databaseHelper.firebaseDatabase
+          .ref(rootNotifiedOperatorRoute(
+              orderType: order.orderType, orderId: order.orderId))
+          .set(true);
     }
   }
 

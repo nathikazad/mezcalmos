@@ -17,7 +17,7 @@ const String kAdminView = '/admin/:laundryId';
 const String kEditInfoView = '/editInfo/:laundryId';
 
 const String kCategoryView = '/categoryScreen/:laundryId/:categoryId';
-const String kOrderView = '/dashboard/orderView/:orderId';
+const String kOrderView = '/laundryOrders/:orderId';
 
 String getCategoryRoute({String? categoryId, required String laundryId}) {
   mezDbgPrint("Categ =========>$categoryId");

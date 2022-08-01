@@ -227,6 +227,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           height: 350,
           width: Get.width - 20,
           child: MGoogleMap(
+            padding: EdgeInsets.zero,
             mGoogleMapController: mapController,
             recenterBtnBottomPadding: 20,
           ),

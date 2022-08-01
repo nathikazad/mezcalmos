@@ -75,6 +75,8 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
           Get.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
+      } else {
+        controller.setNotifiedAsTrue(order.value!);
       }
     });
   }

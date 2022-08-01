@@ -145,9 +145,6 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
                         ?.copyWith(color: primaryBlueColor),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
                 if (cartItem.value?.item.description != null)
                   _itemDescription(context),
                 SizedBox(
@@ -180,6 +177,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
 
   Container _itemDescription(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -200,6 +200,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         Container(
           height: 350,
           child: MGoogleMap(
+            padding: EdgeInsets.zero,
             mGoogleMapController: mapController,
             recenterBtnBottomPadding: 20,
             // rerenderDuration: Duration(seconds: 10),
@@ -213,7 +214,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   void initMap() {
     // mapController.enableMezSmartPointer = true;
     mapController.periodicRerendering.value = true;
-    mapController.recenterButtonEnabled.value = true;
+    // mapController.recenterButtonEnabled.value = true;
 
     mapController.setLocation(
       LocModel.Location(
@@ -244,7 +245,8 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           encodedPolylineString: order.value!.routeInformation!.polyline);
 
     mapController.animateAndUpdateBounds(
-        shouldFitPolylineInBound: order.value!.routeInformation != null);
+      shouldFitPolylineInBound: order.value!.routeInformation != null,
+    );
   }
 
   void updateMapByPhase(LaundryOrderPhase phase) {

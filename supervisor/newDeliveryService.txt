@@ -1,0 +1,4 @@
+need to add cases in transformSender of messageNotifier
+nonNotifiableParticipants in chat.ts
+2 ParticipantTypes in chat.ts
+participantTypeToNodeMap in root.ts

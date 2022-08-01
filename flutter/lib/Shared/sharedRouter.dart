@@ -69,6 +69,14 @@ void popUntilAndNavigateTo(untilRoute, toRoute, {args}) {
   }, arguments: args);
 }
 
+bool routeMatch(String routeA, String routeB) {
+  return routeA.split("?")[0] == routeB.split("?")[0];
+}
+
+bool isCurrentRoute(String route) {
+  return routeMatch(route, Get.currentRoute);
+}
+
 // GetX based Router (For navigating)
 class SharedRouter {
   static List<GetPage> sharedRoutes = [
