@@ -236,7 +236,7 @@
                             "orderCancelled": "cancelada"
                         },
                         "OrdersItemsCard": {
-                            "orderItems": "Encargar Artículos",
+                            "orderItems": "Artículos",
                             "canceledByAdmin": "Cancelada",
                             "canceledByCustomer": "Cancelada",
                             "received": "Recibida",
