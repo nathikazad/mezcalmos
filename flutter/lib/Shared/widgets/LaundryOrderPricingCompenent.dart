@@ -98,8 +98,15 @@ class LaundryOrderPricingComponent extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            item.name[userLanguage] ?? "",
+          Flexible(
+            fit: FlexFit.tight,
+            child: Text(
+              item.name[userLanguage] ?? "",
+              maxLines: 1,
+            ),
+          ),
+          SizedBox(
+            width: 8,
           ),
           Text(
             "\$${item.cost} x ${item.weight}KG = \$${item.weighedCost}",
