@@ -1602,6 +1602,7 @@
                         "deleteTitle": "SÍ, Eliminar el artículo",
                         "deleteBody": "¿Estás seguro de que te gustaría eliminar?",
                         "deleteItem": "Eliminar elemento",
+                        "total": "Total",
                         "itemsWeights": "Artículos pesos",
                         "newItemsWeight": "Nuevos artículos de peso",
                         "itemsCategory": "Categoría de artículos",

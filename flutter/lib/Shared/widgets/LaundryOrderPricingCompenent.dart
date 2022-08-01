@@ -8,8 +8,10 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 class LaundryOrderPricingComponent extends StatelessWidget {
   final LaundryOrder order;
 
-  const LaundryOrderPricingComponent({Key? key, required this.order})
-      : super(key: key);
+  const LaundryOrderPricingComponent({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
 
   dynamic _i18n() =>
       Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
@@ -56,7 +58,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
                         Text(
                           order.costsByType!.weighedCost.toPriceString(),
                           style: Get.textTheme.bodyText1,
-                        )
+                        ),
                       ],
                     ),
                   )

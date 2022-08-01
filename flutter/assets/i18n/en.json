@@ -1608,6 +1608,7 @@
                         "newItemsWeight": "New items weight",
                         "itemsCategory": "Items Category",
                         "itemsWeight": "Items weight",
+                        "total": "Total",
                         "itemsWeightErrorText": "Please enter a valid weight",
                         "saveItemsWeight": "Save items weight",
                         "cancel": "Cancel",

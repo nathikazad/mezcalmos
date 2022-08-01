@@ -5,9 +5,9 @@ import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/SetWeightBottomSheet.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpSetCategoryComponent'];
@@ -67,7 +67,35 @@ class _LaundyOpSetCategoryComponentState
             SizedBox(
               height: 10,
             ),
-            LaundryOrderPricingComponent(order: widget.order),
+            if (widget.order.costsByType?.lineItems.isNotEmpty ?? false)
+              Column(
+                children: [
+                  Column(
+                    children: List.generate(
+                        widget.order.costsByType?.lineItems.length ?? 0,
+                        (int index) {
+                      return _itemRowCard(
+                          item: widget.order.costsByType!.lineItems[index]);
+                    }),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${_i18n()["total"]}',
+                          style: Get.textTheme.bodyText1,
+                        ),
+                        Text(
+                          widget.order.costsByType!.weighedCost.toPriceString(),
+                          style: Get.textTheme.bodyText1,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             if (widget.order.isAtLaundry()) setItemsWeightButton(context),
           ],
         ),
@@ -155,5 +183,62 @@ class _LaundyOpSetCategoryComponentState
         );
       }
     }
+  }
+
+  Widget _itemRowCard({required LaundryOrderCostLineItem item}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Flexible(
+            fit: FlexFit.tight,
+            child: Text(
+              item.name[userLanguage] ?? "",
+              maxLines: 1,
+              style: Get.textTheme.bodyText1,
+            ),
+          ),
+          SizedBox(
+            width: 8,
+          ),
+          Text(
+            "\$${item.cost} x ${item.weight}KG = \$${item.weighedCost}",
+          ),
+          SizedBox(
+            width: 8,
+          ),
+          InkWell(
+            onTap: assignNewCategory(
+                context: context,
+                laundryOrderCostLineItem: item,
+                editMode: true),
+            customBorder: CircleBorder(),
+            child: Ink(
+                padding: const EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade300, shape: BoxShape.circle),
+                child: Icon(Icons.edit)),
+          ),
+          SizedBox(
+            width: 8,
+          ),
+          InkWell(
+            onTap: () {
+              deleteItem(item);
+            },
+            customBorder: CircleBorder(),
+            child: Ink(
+                padding: const EdgeInsets.all(3),
+                decoration:
+                    BoxDecoration(color: offRedColor, shape: BoxShape.circle),
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                )),
+          )
+        ],
+      ),
+    );
   }
 }

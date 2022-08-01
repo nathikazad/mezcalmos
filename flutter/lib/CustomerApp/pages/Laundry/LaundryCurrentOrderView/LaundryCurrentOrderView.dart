@@ -239,6 +239,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       latLng: order.value?.to.toLatLng(),
       fitWithinBounds: true,
     );
+
     if (order.value!.routeInformation != null)
       mapController.decodeAndAddPolyline(
           encodedPolylineString: order.value!.routeInformation!.polyline);

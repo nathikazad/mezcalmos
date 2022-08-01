@@ -90,6 +90,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                         ? widget.oldItem!.name[userLanguage]!
                         : "${_i18n()["newItemsWeight"]}",
                     style: Theme.of(context).textTheme.headline3,
+                    maxLines: 2,
                   )),
               SizedBox(
                 height: 30,
