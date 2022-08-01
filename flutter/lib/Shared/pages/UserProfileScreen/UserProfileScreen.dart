@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
