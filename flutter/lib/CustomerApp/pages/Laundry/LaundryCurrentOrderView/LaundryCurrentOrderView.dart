@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/CustomerLaundryEstTimes.dart';
@@ -200,7 +201,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         Container(
           height: 350,
           child: MGoogleMap(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.all(10),
             mGoogleMapController: mapController,
             recenterBtnBottomPadding: 20,
             // rerenderDuration: Duration(seconds: 10),
@@ -212,9 +213,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       ];
 
   void initMap() {
-    // mapController.enableMezSmartPointer = true;
     mapController.periodicRerendering.value = true;
-    // mapController.recenterButtonEnabled.value = true;
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+    mapController.animateMarkersPolyLinesBounds.value = true;
 
     mapController.setLocation(
       LocModel.Location(
@@ -226,20 +227,20 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       ),
     );
 
-    if (order.value!.laundry != null) {
-      // restaurant ad customer's location are fixed (fit in bound at start)
-      mapController.addOrUpdateUserMarker(
-        latLng: order.value!.laundry!.location.toLatLng(),
-        markerId: order.value!.laundry!.id,
-        customImgHttpUrl: order.value!.laundry!.image,
-        fitWithinBounds: true,
-      );
-    }
-    // customer's
-    mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value!.to.toLatLng(),
+    // restaurant ad customer's location are fixed (fit in bound at start)
+    mapController.addOrUpdateUserMarker(
+      latLng: order.value?.laundry?.location.toLatLng(),
+      markerId: order.value?.laundry?.id,
+      customImgHttpUrl: order.value?.laundry?.image,
       fitWithinBounds: true,
     );
+
+    // customer's
+    mapController.addOrUpdatePurpleDestinationMarker(
+      latLng: order.value?.to.toLatLng(),
+      fitWithinBounds: true,
+    );
+
     if (order.value!.routeInformation != null)
       mapController.decodeAndAddPolyline(
           encodedPolylineString: order.value!.routeInformation!.polyline);
@@ -256,13 +257,13 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           _phaseSnapshot = phase;
           // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.laundry!.location.toLatLng(),
-            markerId: order.value!.laundry!.id,
-            customImgHttpUrl: order.value!.laundry!.image,
+            latLng: order.value?.laundry?.location.toLatLng(),
+            markerId: order.value?.laundry?.id,
+            customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: true,
           );
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng(),
+            latLng: order.value?.to.toLatLng(),
             fitWithinBounds: true,
           );
         }
@@ -270,13 +271,12 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         if (order.value?.pickupDriver != null &&
             order.value!.inDeliveryPhase()) {
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.pickupDriver!.location!,
+            latLng: order.value?.pickupDriver?.location,
             markerId: "pickup_driver", //order.value!.pickupDriver!.id,
-            customImgHttpUrl: order.value!.pickupDriver!.image,
+            customImgHttpUrl: order.value?.pickupDriver?.image,
             fitWithinBounds: true,
           );
         }
-
         // mapController.animateAndUpdateBounds(shouldFitPolylineInBound: false);
         break;
 
@@ -288,14 +288,14 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           // mezDbgPrint("Phaaaaazeeee::_phaseSnapshot ==> $_phaseSnapshot");
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.laundry!.location.toLatLng(),
-            markerId: order.value!.laundry!.id,
-            customImgHttpUrl: order.value!.laundry!.image,
+            latLng: order.value?.laundry?.location.toLatLng(),
+            markerId: order.value?.laundry?.id,
+            customImgHttpUrl: order.value?.laundry?.image,
             fitWithinBounds: true,
           );
           // we fit the destination into bounds
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng(),
+            latLng: order.value?.to.toLatLng(),
             fitWithinBounds: true,
           );
         }
@@ -306,9 +306,9 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           //     "Phaaaaazeeee::dropoffDriver ==> ${order.value!.dropoffDriver?.location}");
 
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.dropoffDriver!.location!,
+            latLng: order.value?.dropoffDriver?.location,
             markerId: "dropoff_driver", //order.value!.dropoffDriver!.id,
-            customImgHttpUrl: order.value!.dropoffDriver!.image,
+            customImgHttpUrl: order.value?.dropoffDriver?.image,
             fitWithinBounds: true,
           );
         }
@@ -316,6 +316,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         break;
       default:
     }
+    mapController.animateAndUpdateBounds();
   }
 
   Container _orderEstimatedDeliveryTime() {

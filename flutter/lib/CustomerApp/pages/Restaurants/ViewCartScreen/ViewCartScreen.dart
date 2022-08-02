@@ -75,6 +75,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: CustomerAppBar(
         autoBack: true,
         title: "${_i18n()["myCart"]}",
@@ -95,8 +96,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           return CartIsEmptyScreen();
         }
       }),
-      bottomNavigationBar: (_restaurantController.cart.value.cartItems.length >
-              0)
+      bottomSheet: (_restaurantController.cart.value.cartItems.length > 0)
           ? ButtonComponent(
               bgColor: getTheRightButtonColor(),
               canClick: canClick(),

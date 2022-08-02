@@ -49,17 +49,20 @@ class IOrderViewController {
       startListeningOnCounterOffer(orderId, order.value!.customer.id);
 
       // populate the LatLngPoints from the encoded PolyLine String + SetState!
-      mGoogleMapController.decodeAndAddPolyline(
-          encodedPolylineString: order.value!.routeInformation!.polyline);
+      if (order.value!.routeInformation != null)
+        mGoogleMapController.decodeAndAddPolyline(
+            encodedPolylineString: order.value!.routeInformation!.polyline);
 
       // add the corresponding markers
       mGoogleMapController.addOrUpdateUserMarker(
-          markerId: order.value!.customer.id,
-          latLng: order.value!.from.toLatLng(),
-          customImgHttpUrl: order.value!.customer.image);
+        markerId: order.value?.customer.id,
+        latLng: order.value?.from.toLatLng(),
+        customImgHttpUrl: order.value?.customer.image,
+      );
 
       mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-          latLng: order.value!.to.toLatLng());
+        latLng: order.value?.to.toLatLng(),
+      );
 
       // set initial position
       mGoogleMapController.setLocation(order.value!.from);

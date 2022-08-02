@@ -54,8 +54,11 @@ class IncomingOrdersController extends GetxController {
           // happening becasause.
           if (value.keys.length > 1) {
             TaxiOrder order = TaxiOrder.fromData(key, value);
-            order.distanceToClient = MapHelper.calculateDistance(
-                order.from.position, _taxiAuthController.currentLocation);
+            if (_taxiAuthController.currentLocation != null)
+              order.distanceToClient = MapHelper.calculateDistance(
+                order.from.position,
+                _taxiAuthController.currentLocation!,
+              );
             ordersFromSnapshot.add(order);
             try {
               await markOrderAsReceived(key, order.customer.id);
@@ -75,11 +78,13 @@ class IncomingOrdersController extends GetxController {
     });
     _updateOrderDistanceToClient?.dispose();
     _updateOrderDistanceToClient =
-        ever(_taxiAuthController.currentLocationRx, (userLocation) {
+        ever(_taxiAuthController.currentLocationRxn, (userLocation) {
       // mezDbgPrint("Updating distances");
       orders.forEach((order) {
-        order.distanceToClient = MapHelper.calculateDistance(
-            order.from.position, userLocation as LocationData);
+        if (userLocation != null) {
+          order.distanceToClient = MapHelper.calculateDistance(
+              order.from.position, userLocation as LocationData);
+        }
       });
       orders.sort((a, b) => a.distanceToClient.compareTo(b.distanceToClient));
     });

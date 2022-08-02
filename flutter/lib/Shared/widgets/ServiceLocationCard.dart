@@ -88,7 +88,8 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
     mapController.setLocation(widget.location);
 
     mapController.addOrUpdatePurpleDestinationMarker(
-        latLng: getRestaurantLatLng()!);
+      latLng: getRestaurantLatLng(),
+    );
 //TODO @m66are disable recentre button  enable mez pointer
     //  mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
     // mapController.animateMarkersPolyLinesBounds.value = true;

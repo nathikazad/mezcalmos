@@ -28,12 +28,13 @@ class _TaxiOrderMapComponentState extends State<TaxiOrderMapComponent> {
     widget.mapController.setAnimateMarkersPolyLinesBounds(true);
     widget.mapController.setLocation(widget.order.to);
     widget.mapController.addOrUpdateUserMarker(
-        customImgHttpUrl: widget.order.customer.image,
-        latLng:
-            LatLng(widget.order.from.latitude, widget.order.from.longitude));
+      customImgHttpUrl: widget.order.customer.image,
+      latLng: widget.order.from.toLatLng(),
+    );
 
     widget.mapController.addOrUpdatePurpleDestinationMarker(
-        latLng: LatLng(widget.order.to.latitude, widget.order.to.longitude));
+      latLng: widget.order.to.toLatLng(),
+    );
     widget.mapController.lockInAutoZoomAnimation();
     super.initState();
   }

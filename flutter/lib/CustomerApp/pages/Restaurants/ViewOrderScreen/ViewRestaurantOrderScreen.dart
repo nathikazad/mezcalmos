@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
@@ -237,7 +238,9 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       ];
 
   void initMap() {
-    mapController.lockInAutoZoomAnimation();
+    mapController.periodicRerendering.value = true;
+    mapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded; // LEZEM
+    mapController.animateMarkersPolyLinesBounds.value = true;
 
     mapController.setLocation(
       LocModel.Location(
@@ -251,14 +254,14 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
-      latLng: order.value!.restaurant.location.toLatLng(),
-      markerId: order.value!.restaurant.id,
-      customImgHttpUrl: order.value!.restaurant.image,
+      latLng: order.value?.restaurant.location.toLatLng(),
+      markerId: order.value?.restaurant.id,
+      customImgHttpUrl: order.value?.restaurant.image,
       fitWithinBounds: true,
     );
     // customer's
     mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value!.to.toLatLng(),
+      latLng: order.value?.to.toLatLng(),
       fitWithinBounds: true,
     );
     if (order.value!.routeInformation != null)
@@ -282,27 +285,24 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         //
         if (_statusSnapshot != status) {
           _statusSnapshot = status;
-          // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.restaurant.location.toLatLng(),
-            markerId: order.value!.restaurant.id,
-            customImgHttpUrl: order.value!.restaurant.image,
+            latLng: order.value?.restaurant.location.toLatLng(),
+            markerId: order.value?.restaurant.id,
+            customImgHttpUrl: order.value?.restaurant.image,
             fitWithinBounds: true,
           );
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng(),
+            latLng: order.value?.to.toLatLng(),
             fitWithinBounds: true,
           );
         }
-        if (order.value!.dropoffDriver != null &&
-            order.value!.dropoffDriver!.location != null) {
-          mapController.addOrUpdateUserMarker(
-            latLng: order.value!.dropoffDriver!.location!,
-            markerId: order.value!.dropoffDriver!.id,
-            customImgHttpUrl: order.value!.dropoffDriver!.image,
-            fitWithinBounds: true,
-          );
-        }
+        mapController.addOrUpdateUserMarker(
+          latLng: order.value?.dropoffDriver?.location,
+          markerId: order.value?.dropoffDriver?.id,
+          customImgHttpUrl: order.value?.dropoffDriver?.image,
+          fitWithinBounds: true,
+        );
+
         mapController.animateAndUpdateBounds();
         break;
 
@@ -310,30 +310,26 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
         if (_statusSnapshot != status) {
           _statusSnapshot = status;
           // we ignore the restaurant's marker within bounds
-          if (order.value!.dropoffDriver != null) {
-            mapController.addOrUpdateUserMarker(
-              latLng: order.value!.restaurant.location.toLatLng(),
-              markerId: order.value!.restaurant.id,
-              customImgHttpUrl: order.value!.restaurant.image,
-              fitWithinBounds: true,
-            );
-          }
+          mapController.addOrUpdateUserMarker(
+            latLng: order.value?.restaurant.location.toLatLng(),
+            markerId: order.value?.restaurant.id,
+            customImgHttpUrl: order.value?.restaurant.image,
+            fitWithinBounds: true,
+          );
           // we fit the destination into bounds
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng(),
+            latLng: order.value?.to.toLatLng(),
             fitWithinBounds: true,
           );
         }
 
         // we keep updating the delivery's
-        if (order.value!.dropoffDriver != null) {
-          mapController.addOrUpdateUserMarker(
-            latLng: order.value!.dropoffDriver!.location!,
-            markerId: order.value!.dropoffDriver!.id,
-            customImgHttpUrl: order.value!.dropoffDriver!.image,
-            fitWithinBounds: true,
-          );
-        }
+        mapController.addOrUpdateUserMarker(
+          latLng: order.value?.dropoffDriver?.location,
+          markerId: order.value?.dropoffDriver?.id,
+          customImgHttpUrl: order.value?.dropoffDriver?.image,
+          fitWithinBounds: true,
+        );
         mapController.animateAndUpdateBounds();
 
         break;

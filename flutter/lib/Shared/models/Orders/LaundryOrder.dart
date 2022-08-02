@@ -100,61 +100,48 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         data["estimatedDeliveryTimes"]?["pickup"]?["dropoff"];
 
     final LaundryOrder laundryOrder = LaundryOrder(
-      orderId: id,
-      customer: UserInfo.fromData(data["customer"]),
-      status: data['status'].toString().toLaundryOrderStatus(),
-      cost: data['cost'],
-      to: Location.fromFirebaseData(data['to']),
-      orderTime: DateTime.parse(data["orderTime"]),
-      paymentType: data["paymentType"].toString().toPaymentType(),
-      shippingCost: data["shippingCost"] ?? 50,
-      notes: data["notes"],
-      costsByType: (data["costsByType"] != null)
-          ? LaundryOrderCosts.fromData(data["costsByType"])
-          : null,
-      estimatedLaundryReadyTime: (data["estimatedLaundryReadyTime"] != null)
-          ? DateTime.parse(data["estimatedLaundryReadyTime"])
-          : null,
-      estimatedPickupFromServiceProviderTime:
-          (_estimatedPickupFromServiceProviderTime != null &&
-                  _estimatedPickupFromServiceProviderTime != "")
-              ? DateTime.parse(_estimatedPickupFromServiceProviderTime)
-              : null,
-      estimatedDropoffAtCustomerTime:
-          (_estimatedDropoffAtCustomerTime != null &&
-                  _estimatedDropoffAtCustomerTime != "")
-              ? DateTime.parse(_estimatedDropoffAtCustomerTime)
-              : null,
-      estimatedPickupFromCustomerTime:
-          (_estimatedPickupFromCustomerTime != null &&
-                  _estimatedPickupFromCustomerTime != "")
-              ? DateTime.parse(_estimatedPickupFromCustomerTime)
-              : null,
-      estimatedDropoffAtServiceProviderTime:
-          (_estimatedDropoffAtServiceProviderTime != null &&
-                  _estimatedDropoffAtServiceProviderTime != "")
-              ? DateTime.parse(_estimatedDropoffAtServiceProviderTime)
-              : null,
-      laundry: (data["laundry"] != null)
-          ? ServiceInfo.fromData(data["laundry"])
-          : null,
-      dropoffDriver: (data["dropoffDriver"] != null)
-          ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"])
-          : null,
-      laundryDropOffDriverChatId: data['secondaryChats']
-          ?['serviceProviderDropOffDriver'],
-      customerDropOffDriverChatId: data['secondaryChats']
-          ?['customerDropOffDriver'],
-      pickupDriver: (data["pickupDriver"] != null)
-          ? DeliveryDriverUserInfo.fromData(data["pickupDriver"])
-          : null,
-      laundryPickupDriverChatId: data['secondaryChats']
-          ?['serviceProviderPickupDriver'],
-      customerPickupDriverChatId: data['secondaryChats']
-          ?['customerPickupDriver'],
-      notifiedAdmin: data['notified']?['admin'] ?? false,
-      notifiedOperator: data['notified']?['operator'] ?? false
-    );
+        orderId: id,
+        customer: UserInfo.fromData(data["customer"]),
+        status: data['status'].toString().toLaundryOrderStatus(),
+        cost: data['cost'],
+        to: Location.fromFirebaseData(data['to']),
+        orderTime: DateTime.parse(data["orderTime"]),
+        paymentType: data["paymentType"].toString().toPaymentType(),
+        shippingCost: data["shippingCost"] ?? 50,
+        notes: data["notes"],
+        costsByType: (data["costsByType"] != null)
+            ? LaundryOrderCosts.fromData(data["costsByType"])
+            : null,
+        estimatedLaundryReadyTime: (data["estimatedLaundryReadyTime"] != null)
+            ? DateTime.parse(data["estimatedLaundryReadyTime"])
+            : null,
+        estimatedPickupFromServiceProviderTime:
+            (_estimatedPickupFromServiceProviderTime != null &&
+                    _estimatedPickupFromServiceProviderTime != "")
+                ? DateTime.parse(_estimatedPickupFromServiceProviderTime)
+                : null,
+        estimatedDropoffAtCustomerTime:
+            (_estimatedDropoffAtCustomerTime != null && _estimatedDropoffAtCustomerTime != "")
+                ? DateTime.parse(_estimatedDropoffAtCustomerTime)
+                : null,
+        estimatedPickupFromCustomerTime:
+            (_estimatedPickupFromCustomerTime != null && _estimatedPickupFromCustomerTime != "")
+                ? DateTime.parse(_estimatedPickupFromCustomerTime)
+                : null,
+        estimatedDropoffAtServiceProviderTime:
+            (_estimatedDropoffAtServiceProviderTime != null &&
+                    _estimatedDropoffAtServiceProviderTime != "")
+                ? DateTime.parse(_estimatedDropoffAtServiceProviderTime)
+                : null,
+        laundry: (data["laundry"] != null) ? ServiceInfo.fromData(data["laundry"]) : null,
+        dropoffDriver: (data["dropoffDriver"] != null) ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"]) : null,
+        laundryDropOffDriverChatId: data['secondaryChats']?['serviceProviderDropOffDriver'],
+        customerDropOffDriverChatId: data['secondaryChats']?['customerDropOffDriver'],
+        pickupDriver: (data["pickupDriver"] != null) ? DeliveryDriverUserInfo.fromData(data["pickupDriver"]) : null,
+        laundryPickupDriverChatId: data['secondaryChats']?['serviceProviderPickupDriver'],
+        customerPickupDriverChatId: data['secondaryChats']?['customerPickupDriver'],
+        notifiedAdmin: data['notified']?['admin'] ?? false,
+        notifiedOperator: data['notified']?['operator'] ?? false);
 
     if (data["routeInformation"] != null) {
       laundryOrder.routeInformation = RouteInformation(

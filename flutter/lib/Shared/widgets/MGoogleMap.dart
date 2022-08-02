@@ -177,7 +177,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                 tiltGesturesEnabled: true,
                 initialCameraPosition: CameraPosition(
                     target:
-                        widget.mGoogleMapController.location.value!.toLatLng(),
+                        widget.mGoogleMapController.location.value!.toLatLng()!,
                     tilt: 9.440717697143555,
                     zoom: 5.151926040649414),
                 onMapCreated: (GoogleMapController _gController) async {
