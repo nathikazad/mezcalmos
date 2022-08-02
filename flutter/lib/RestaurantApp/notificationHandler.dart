@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() =>
@@ -18,7 +18,7 @@ Notification restaurantNotificationHandler(String key, value) {
           linkUrl: getLaundryOpOrderRoute(value["orderId"]),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
-              'assets/images/laundryApp/washingMachine.png', // needs to be changed
+              'assets/images/shared/notifications/prepareOrderNotificationIcon.png', // needs to be changed
           title: '${_i18n()['newOrderTitle']}',
           timestamp: DateTime.parse(value['time']),
           notificationType: NotificationType.NewMessage,

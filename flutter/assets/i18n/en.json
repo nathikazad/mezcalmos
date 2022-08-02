@@ -209,7 +209,7 @@
                 "ViewOrderScreen": {
                     "components": {
                         "CustomerRestaurantOrderEst": {
-                            "estTimes": "Estimated times",
+                            "estTimes": "Estimated time",
                             "foodReady": "Food ready",
                             "delivery": "Delivery"
                         },
