@@ -83,7 +83,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
 
   void _updateMapByPhaseAndStatus() {
     if (order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup &&
-        order.value!.status == LaundryOrderStatus.PickedUpFromCustomer) {
+        order.value!.inDeliveryPhase()) {
       mezDbgPrint(
           "PICK UP PHASE snapshot [$_statusSnapshot] - [${order.value!.status}]");
       if (_statusSnapshot != order.value!.status) {
@@ -124,7 +124,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
 
       mGoogleMapController.animateAndUpdateBounds();
     } else if (order.value!.getCurrentPhase() == LaundryOrderPhase.Dropoff &&
-        order.value!.status == LaundryOrderStatus.PickedUpFromLaundry) {
+        order.value!.inDeliveryPhase()) {
       mezDbgPrint("DROP OFF PHASE");
 
       if (_statusSnapshot != order.value!.status) {
@@ -156,6 +156,8 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
         );
       }
       // keep updating driver marker
+      mezDbgPrint(
+          "DROP OFF DRIVER LOCATION FROM ORDER VIEW==============>${order.value?.dropoffDriver?.location}");
       mGoogleMapController.addOrUpdateUserMarker(
         latLng: order.value?.dropoffDriver?.location,
         customImgHttpUrl: order.value?.dropoffDriver?.image,
@@ -278,16 +280,14 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   }
 
   Widget _getMapWidget() {
-    if ((order.value!.getCurrentPhase() == LaundryOrderPhase.Dropoff &&
-            order.value!.status == LaundryOrderStatus.OtwPickupFromLaundry) ||
-        (order.value!.getCurrentPhase() == LaundryOrderPhase.Pickup &&
-            order.value!.status == LaundryOrderStatus.PickedUpFromCustomer))
+    if (order.value!.inDeliveryPhase())
       return Container(
         // color: Colors.black,
-        margin: const EdgeInsets.only(bottom: 20),
-        height: 250,
+
+        height: 350,
         child: MGoogleMap(
           mGoogleMapController: mGoogleMapController,
+          padding: EdgeInsets.symmetric(vertical: 20),
           rerenderDuration: Duration(seconds: 30),
           recenterBtnBottomPadding: 20,
         ),

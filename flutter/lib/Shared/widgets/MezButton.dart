@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class MezButton extends StatefulWidget {
   const MezButton({
@@ -36,15 +37,20 @@ class _MezButtonState extends State<MezButton> {
             side: BorderSide.none),
         child: InkWell(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
-            onTap:
-                (!isLoading.value && widget.enabled && widget.onClick != null)
-                    ? () {
-                        isLoading.value = true;
-                        widget.onClick
-                            ?.call()
-                            .whenComplete(() => isLoading.value = false);
-                      }
-                    : null,
+            onTap: (!isLoading.value &&
+                    widget.enabled &&
+                    widget.onClick != null)
+                ? () {
+                    isLoading.value = true;
+                    widget.onClick
+                        ?.call()
+                        .whenComplete(() => isLoading.value = false)
+                        .onError((Object? e, StackTrace stk) {
+                      mezDbgPrint(stk);
+                      Get.snackbar("Error", "", backgroundColor: Colors.black);
+                    });
+                  }
+                : null,
             child: Ink(
               width: double.infinity,
               height: widget.height,
