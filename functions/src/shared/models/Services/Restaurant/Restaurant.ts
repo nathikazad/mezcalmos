@@ -1,11 +1,6 @@
 import { Language } from "../../Generic/Generic";
 import { Service } from "../Service";
 
-export interface Details {
-  description: Record<Language, string>;
-  languages: Language[];
-}
-
 export interface ChooseManyOption {
   cost: number;
   default: boolean;
@@ -39,6 +34,5 @@ export interface MenuItem {
 
 
 export interface Restaurant extends Service {
-  details: Details;
   menu: Record<string, MenuItem>;
 }
