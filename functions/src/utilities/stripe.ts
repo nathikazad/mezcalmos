@@ -40,7 +40,7 @@ export const getPaymentIntent =
       return response;
     }
 
-    if (data.customerId == null || data.serviceProviderId == null ||
+    if (data.serviceProviderId == null ||
       data.orderType == null || data.paymentAmount == null) {
       return {
         status: ServerResponseStatus.Error,
@@ -62,15 +62,15 @@ export const getPaymentIntent =
     let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
     const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-    let stripeCustomerId: string = (await customerNodes.stripeIdsNode(data.customerId, data.serviceProviderId).once('value')).val();
+    let stripeCustomerId: string = (await customerNodes.stripeIdsNode(context.auth!.uid, data.serviceProviderId).once('value')).val();
     if (stripeCustomerId == null) {
-      let userInfo: UserInfo = (await userInfoNode(data.customerId).once('value')).val()
+      let userInfo: UserInfo = (await userInfoNode(context.auth!.uid).once('value')).val()
       const customer: Stripe.Customer = await stripe.customers.create({
         name: userInfo.name,
-        metadata: { customerId: data.customerId },
+        metadata: { customerId: context.auth!.uid },
       }, stripeOptions)
       stripeCustomerId = customer.id;
-      customerNodes.stripeIdsNode(data.customerId, data.serviceProviderId).set(stripeCustomerId);
+      customerNodes.stripeIdsNode(context.auth!.uid, data.serviceProviderId).set(stripeCustomerId);
     }
 
 
