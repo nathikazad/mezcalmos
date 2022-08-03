@@ -92,7 +92,7 @@ class LocationSearchBar extends StatefulWidget {
   final LocationSearchBarController locationSearchBarController;
   final void Function()? onClear;
 
-  LocationSearchBar({
+  const LocationSearchBar({
     required this.request,
     required this.newLocationChosenEvent,
     required this.locationSearchBarController,

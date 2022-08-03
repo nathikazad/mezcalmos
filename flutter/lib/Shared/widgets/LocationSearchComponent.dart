@@ -126,13 +126,6 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
             child: Stack(
               alignment: Alignment.topLeft,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0, top: 5),
-                  child: Text(
-                    widget.label,
-                    style: widget.labelStyle,
-                  ),
-                ),
                 AutoCompleteTextView(
                   readOnly: widget.readOnly,
                   focusNode: widget.focusNode,
@@ -192,6 +185,13 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                         padding: widget.suffixPadding,
                         child: setSuffixIcon(),
                       )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, top: 5),
+                  child: Text(
+                    widget.label,
+                    style: widget.labelStyle,
+                  ),
                 ),
               ],
             ),
