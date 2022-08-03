@@ -122,13 +122,13 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                     ),
               ),
             ),
-          Positioned(
-            bottom: 140,
-            right: 15,
-            child: NearByOnlineTaxiDrivers(
-              centerLocation: Rxn(viewController.order.value?.from),
-            ),
-          ),
+          // Positioned(
+          //   bottom: 140,
+          //   right: 15,
+          //   child: NearByOnlineTaxiDrivers(
+          //     centerLocation: Rxn(viewController.order.value?.from),
+          //   ),
+          // ),
           TaxiOrderBottomBar(order: viewController.order),
           viewWidgets.getToolTip(),
           Obx(() => bottomButtons()),

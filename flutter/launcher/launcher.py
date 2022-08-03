@@ -110,8 +110,9 @@ def simulateDriverMovements(customerId, orderId, orderType, driverId, driverType
 
     # path1 = f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/'
     # path2 = f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/'
-    path1 = f'taxis/info/{driverId}/location/'
+    path1 = f'taxis/inProcessOrders/{driverId}/{orderId}/{driverType}/location/'
     path2 = f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/'
+    path3 = f'orders/inProcess/taxi/{orderId}/{driverType}/location/'
 
     link = f'https://maps.googleapis.com/maps/api/directions/json?origin={start}&destination={end}&key=AIzaSyBPDCJv6MUMO-cDhVrcJ2g7JZU-bg_6Kq8'
     res  = get(link).content
@@ -138,7 +139,13 @@ def simulateDriverMovements(customerId, orderId, orderType, driverId, driverType
         print(f"[+] Applying {path1} => lat:{coord[0]}, lng:{coord[1]}")
         CHECK_INPUT()
         ref.child(path1).set(to_write)
+       
         print(f"[+] Applying {path2} => lat:{coord[0]}, lng:{coord[1]}")
+        ref.child(path2).set(to_write)
+       
+        print(f"[+] Applying {path3} => lat:{coord[0]}, lng:{coord[1]}")
+        ref.child(path3).set(to_write)
+
         sleep(sleep_time)
         # exit(0)
         # exit(0)
@@ -888,15 +895,17 @@ if __name__ == "__main__":
         # Taxi called from : 
         # Customer's destination To :
         simulateDriverMovements( 
-            customerId="3PxAZf7HgzcjjJMylVhti3uC0l92", # Montassar's customer id
-            orderId="", # taxi order id
+            customerId="tSG0eSFZNGNA7grjBPFEBbpYwjE3", # Montassar's customer id
+            orderId="-N8ZqnonIiPTA1w_iN3i", # taxi order id
             orderType="taxi",
             driverId="oAxB9JquC1S7zQyRUuZF2gI1suL2", # driverId
             driverType="driver",
-            start="15.866373,-97.068697",
-            # start="15.86553, -97.05684",
+            # start="15.866373,-97.068697",
+            start="15.86553,-97.05684",
             # 19.38003452020731 | -98.96333869546652
-            end="15.865125366502896,-97.05751821398735",
+            # destination : 15.835502076340775,-97.04348623752594
+            end="15.833821891976175,-97.04249935224652",
+            # end="15.865125366502896,-97.05751821398735",
             duration_sec=200
         )
     Config(argv)
