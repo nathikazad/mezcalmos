@@ -878,12 +878,12 @@ class Config:
         #     open('.checksum', 'w+').write(currentBuild)
 
 if __name__ == "__main__":
-    if 'offers' in argv:
-        simulate_counter_offers(
-            orderId= ,
-            customerId= "3PxAZf7HgzcjjJMylVhti3uC0l92"
-        )
-        exit(0)
+    # if 'offers' in argv:
+    #     simulate_counter_offers(
+    #         orderId= ,
+    #         customerId= "3PxAZf7HgzcjjJMylVhti3uC0l92"
+    #     )
+    #     exit(0)
     if 'drive' in argv:
         # Taxi called from : 
         # Customer's destination To :

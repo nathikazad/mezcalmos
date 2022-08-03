@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -12,7 +11,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ViewTaxiOrderController {
   final AnimatedSliderController animatedSliderController;
@@ -59,8 +57,10 @@ class ViewTaxiOrderController {
     _orderListener =
         controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
       if (newOrderEvent != null) {
+        mezDbgPrint("New customer iorder event");
         order.value = newOrderEvent as TaxiOrder?;
         _handleCounterOffers(order.value!);
+        processOrder(orderCancelledCallback);
       }
     });
 

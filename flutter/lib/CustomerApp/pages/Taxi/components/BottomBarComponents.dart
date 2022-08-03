@@ -248,7 +248,8 @@ Widget cancelBtn(TaxiOrder order, BuildContext context) {
             MezSnackbar("Oops", _i18n()['serverCommunicationError'],
                 position: SnackPosition.TOP);
           }
-        }).whenComplete(() => Get.back(closeOverlays: true));
+        });
+        Get.back();
       },
       child: Container(
         height: 33,

@@ -1,18 +1,20 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as LocationLibrary;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -24,8 +26,6 @@ import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
     ["Orders"]["CurrentOrderScreen"]["CurrentOrderScreen"];
@@ -395,6 +395,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   /// });
   /// ```
   void updateOrder({required TaxiOrder orderStreamEvent}) {
+    mezDbgPrint("UPDATING ORDER ùùùùùùùù");
     if (orderStreamEvent.status != order?.status) {
       switch (orderStreamEvent.status) {
         case TaxiOrdersStatus.Scheduled:

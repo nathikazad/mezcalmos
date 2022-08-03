@@ -308,7 +308,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
           ),
           child: Column(
             children: dropDownItems
-                .map((d) => Expanded(
+                .map((LocationDropDownItem d) => Expanded(
                       child: InkWell(
                         onTap: () {
                           d.function();
@@ -471,7 +471,9 @@ class LocationSearchBarState extends State<LocationSearchBar> {
               icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
               function: () {
                 final Location? _savedLoc =
-                    _authController!.getLocationById(e.id!);
+                    _authController?.getLocationById(e.id!);
+                mezDbgPrint(
+                    "${e.id} Saved looooooooooooocccc =====>${_savedLoc?.toFirebaseFormattedJson()}");
                 widget.newLocationChosenEvent(_savedLoc,
                     locationSearchBarController.focusedTextField.value);
               },
