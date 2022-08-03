@@ -11,48 +11,51 @@ class AnimatedSliderController {
   // Slider Height getters and setters
   late RxDouble _sliderHeight;
   double get sliderHeight => _sliderHeight.value;
-  set sliderHeight(double height) => this._sliderHeight.value = height;
+  set sliderHeight(double height) => _sliderHeight.value = height;
   // Slider Width getters and setters
   late RxDouble _sliderWidth;
-  double get sliderWidth => this._sliderWidth.value;
-  set sliderWidth(double width) => this._sliderWidth.value = width;
+  double get sliderWidth => _sliderWidth.value;
+  set sliderWidth(double width) => _sliderWidth.value = width;
 
   /// CurveAnimation with getter and setter
   Rx<Curve> _curveAnimation = Curves.easeInExpo.obs;
-  Curve get curveAnimation => this._curveAnimation.value;
-  set curveAnimation(Curve curve) => this._curveAnimation.value = curve;
+  Curve get curveAnimation => _curveAnimation.value;
+  set curveAnimation(Curve curve) => _curveAnimation.value = curve;
 
   /// AnimationDuration with getter and setter
   Rx<Duration> _animationDuration = Duration(seconds: 1).obs;
-  Duration get animationDuration => this._animationDuration.value;
-  set animationDuration(Duration curve) =>
-      this._animationDuration.value = curve;
+  Duration get animationDuration => _animationDuration.value;
+  set animationDuration(Duration curve) => _animationDuration.value = curve;
 
   /// Slider Background color with getter and setter
   Rx<Color> _backgroundColor = Colors.white.obs;
-  Color get backgroundColor => this._backgroundColor.value;
-  set backgroundColor(Color color) => this._backgroundColor.value = color;
+  Color get backgroundColor => _backgroundColor.value;
+  set backgroundColor(Color color) => _backgroundColor.value = color;
 
   AnimatedSliderController(
       {double? maxSliderHeight, double? minSliderHeight, double? sliderWidth}) {
     // setting max-min height
-    this._maxSliderHeight = maxSliderHeight ?? 40.0.h;
-    this._minSliderHeight = minSliderHeight ?? 0.0.h;
+    _maxSliderHeight = maxSliderHeight ?? 40.0.h;
+    _minSliderHeight = minSliderHeight ?? 0.0.h;
     // setting default height to _minSliderHeight
-    this._sliderHeight = RxDouble(_minSliderHeight);
+    _sliderHeight = RxDouble(_minSliderHeight);
     // setting the default slider Width of slider
-    this._sliderWidth = RxDouble(sliderWidth ?? Get.width);
+    _sliderWidth = RxDouble(sliderWidth ?? Get.width);
   }
 
   // Public Functions
   void slideUp() {
-    if (this.sliderHeight != _maxSliderHeight)
-      this.sliderHeight = _maxSliderHeight;
+    if (sliderHeight != _maxSliderHeight) {
+      sliderHeight = _maxSliderHeight;
+      refreshSliderState();
+    }
   }
 
   void slideDown() {
-    if (this.sliderHeight != _minSliderHeight)
-      this.sliderHeight = _minSliderHeight;
+    if (sliderHeight != _minSliderHeight) {
+      sliderHeight = _minSliderHeight;
+      refreshSliderState();
+    }
   }
 
   void refreshSliderState() {
