@@ -385,19 +385,19 @@
             "CustomerWrapper": {
                 "savedLocations": "Ubicaciones guardadas",
                 "welcomeText": "Bienvenido a MEZCALMOS 👋",
-                "appDescription": "Su lugar único para encontrar todos sus servicios locales que necesita y donde puede disfrutar de servicios rápidos y de alta calidad .",
+                "appDescription": " Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad",
                 "services": "Servicios",
                 "taxi": {
                     "title": "Taxi",
-                    "subtitle": "Consiga el taxi más cercano y obtenga su destino lo antes posible."
+                    "subtitle": "Consiga el taxi más cercano y obtenga su destino lo antes posible"
                 },
                 "food": {
                     "title": "Comida",
-                    "subtitle": "Descubre los platos más deliciosos de los restaurantes más cercanos."
+                    "subtitle": "Descubre los platillos más deliciosos de los restaurantes más cercanos"
                 },
                 "laundry": {
                     "title": "Lavandería",
-                    "subtitle": "Haz que tu ropa lave tu lavandería más cercana"
+                    "subtitle": "Haz que tu lavandería más cercana lave tu ropa"
                 },
                 "comingSoon": "Próximamente...",
                 "supportText": "Necesitas ayuda ? Contacta con nuestro equipo de soporte"
