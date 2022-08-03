@@ -5,12 +5,10 @@ import { ServerResponseStatus } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
 import * as serviceProviderNodes from '../../shared/databaseNodes/services/serviceProvider';
-import { PaymentInfo, StripeStatus } from '../../shared/models/Generic/PaymentInfo';
 import { Order, PaymentType } from '../../shared/models/Generic/Order';
-import * as customerNodes from '../../shared/databaseNodes/customer';
-import { userInfoNode } from '../../shared/databaseNodes/root';
-import { UserInfo } from '../../shared/models/Generic/User';
-import { StripePaymentStatus } from './model';
+import { StripePaymentStatus, StripeStatus } from './model';
+import { PaymentInfo } from '../../shared/models/Services/Service';
+import { getCustomerIdFromServiceAccount } from './serviceProvider';
 let keys: Keys = getKeys();
 
 
@@ -43,18 +41,7 @@ export const getPaymentIntent =
     let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
     const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-    let stripeCustomerId: string = (await customerNodes.stripeIdsNode(context.auth!.uid, data.serviceProviderId).once('value')).val();
-    if (stripeCustomerId == null) {
-      let userInfo: UserInfo = (await userInfoNode(context.auth!.uid).once('value')).val()
-      const customer: Stripe.Customer = await stripe.customers.create({
-        name: userInfo.name,
-        metadata: { customerId: context.auth!.uid },
-      }, stripeOptions)
-      stripeCustomerId = customer.id;
-      customerNodes.stripeIdsNode(context.auth!.uid, data.serviceProviderId).set(stripeCustomerId);
-    }
-
-
+    let stripeCustomerId: string = await getCustomerIdFromServiceAccount(context.auth!.uid, data.serviceProviderId, stripe, stripeOptions);
 
     const ephemeralKey: Stripe.EphemeralKey = await stripe.ephemeralKeys.create(
       { customer: stripeCustomerId },

@@ -5,10 +5,12 @@ import { ServerResponseStatus, ValidationPass } from '../../shared/models/Generi
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
 import * as serviceProviderNodes from '../../shared/databaseNodes/services/serviceProvider';
-import { StripeInfo, StripeStatus } from '../../shared/models/Generic/PaymentInfo';
 import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
 import { AuthData } from 'firebase-functions/lib/common/providers/https';
-
+import { ServiceProviderStripeInfo, StripeStatus } from './model';
+import * as customerNodes from '../../shared/databaseNodes/customer';
+import { userInfoNode } from '../../shared/databaseNodes/root';
+import { UserInfo } from '../../shared/models/Generic/User';
 let keys: Keys = getKeys();
 
 
@@ -36,7 +38,7 @@ export const setupServiceProvider =
       }
     });
     // add name, link, descriptor, long name, short name, address, id
-    serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').set(<StripeInfo>{
+    serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').set(<ServiceProviderStripeInfo>{
       id: account.id,
       status: StripeStatus.InProcess,
       detailsSubmitted: false,
@@ -89,7 +91,7 @@ export const updateServiceProvider =
       }
 
     let isWorking: boolean = account.details_submitted && account.charges_enabled
-    await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').update(<StripeInfo>{
+    await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').update(<ServiceProviderStripeInfo>{
       status: isWorking ? StripeStatus.IsWorking : StripeStatus.InProcess,
       detailsSubmitted: account.details_submitted,
       payoutsEnabled: account.payouts_enabled,
@@ -105,6 +107,20 @@ export const updateServiceProvider =
     }
   })
 
+
+export async function getCustomerIdFromServiceAccount(customerId: string, serviceProviderId: string, stripe: Stripe, stripeOptions: any) {
+  let stripeCustomerId: string = (await customerNodes.stripeIdsWithServiceProviderNode(customerId, serviceProviderId).once('value')).val();
+  if (stripeCustomerId == null) {
+    let userInfo: UserInfo = (await userInfoNode(customerId).once('value')).val()
+    const customer: Stripe.Customer = await stripe.customers.create({
+      name: userInfo.name,
+      metadata: { customerId: customerId },
+    }, stripeOptions)
+    stripeCustomerId = customer.id;
+    customerNodes.stripeIdsWithServiceProviderNode(customerId, serviceProviderId).set(stripeCustomerId);
+  }
+  return stripeCustomerId;
+}
 async function passChecksForOperator(data: any, auth?: AuthData): Promise<ValidationPass> {
   let response = await isSignedIn(auth)
   if (response != undefined) {

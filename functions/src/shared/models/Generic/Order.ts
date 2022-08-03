@@ -1,4 +1,4 @@
-import { StripePaymentInfo } from "../../../utilities/stripe/model";
+import { OrderStripeInfo } from "../../../utilities/stripe/model";
 import { DeliveryDriverType } from "../Drivers/DeliveryDriver";
 import { Location } from "./Generic";
 import { UserInfo } from "./User";
@@ -13,7 +13,7 @@ export interface Order {
   orderTime: string,
   secondaryChats: Record<SecondaryChat, string | null>,
   estimatedDeliveryTimes: Partial<Record<DeliveryDriverType, Record<DeliveryAction, string | null>>>,
-  stripePaymentInfo?: StripePaymentInfo,
+  stripePaymentInfo?: OrderStripeInfo,
   totalCostBeforeShipping: number;
   totalCost: number;
   refundAmount: number,
