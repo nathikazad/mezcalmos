@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 
@@ -249,7 +248,7 @@ Widget cancelBtn(TaxiOrder order, BuildContext context) {
             MezSnackbar("Oops", _i18n()['serverCommunicationError'],
                 position: SnackPosition.TOP);
           }
-        });
+        }).whenComplete(() => Get.back(closeOverlays: true));
       },
       child: Container(
         height: 33,
