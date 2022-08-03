@@ -13,7 +13,7 @@ import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
-import { capturePayment } from "../utilities/stripe";
+import { capturePayment } from "../utilities/stripe/payment";
 // Customer Canceling
 export = functions.https.onCall(async (data, context) => {
   let response: ServerResponse | undefined = await isSignedIn(context.auth)

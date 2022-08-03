@@ -22,7 +22,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { Laundry } from "../shared/models/Services/Laundry/Laundry";
 import { getLaundry } from "./laundryController";
-import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe";
+import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 export = functions.https.onCall(async (data, context) => {
   let response = isSignedIn(context.auth)
   if (response != undefined)

@@ -13,7 +13,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { orderUrl } from "../utilities/senders/appRoutes";
-import { capturePayment, refundPayment } from "../utilities/stripe";
+import { capturePayment, refundPayment } from "../utilities/stripe/payment";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [RestaurantOrderStatus.OrderReceieved,

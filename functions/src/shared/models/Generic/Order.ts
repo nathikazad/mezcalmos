@@ -1,4 +1,4 @@
-import { StripePaymentInfo } from "../../../utilities/stripe";
+import { StripePaymentInfo } from "../../../utilities/stripe/model";
 import { DeliveryDriverType } from "../Drivers/DeliveryDriver";
 import { Location } from "./Generic";
 import { UserInfo } from "./User";

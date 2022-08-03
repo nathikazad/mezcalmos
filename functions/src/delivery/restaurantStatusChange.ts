@@ -14,7 +14,7 @@ import { restaurantOrderStatusChangeMessages } from "../restaurant/bgNotificatio
 import { finishOrder } from "../restaurant/helper";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { capturePayment } from "../utilities/stripe";
+import { capturePayment } from "../utilities/stripe/payment";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [

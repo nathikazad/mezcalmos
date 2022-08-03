@@ -23,7 +23,7 @@ import * as chatController from "../shared/controllers/chatController";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
-import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe";
+import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 
 export = functions.https.onCall(async (data, context) => {
 
