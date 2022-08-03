@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/basicCellComponent.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/ChangeStatusButtons.dart';
+//import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/ChangeStatusButtons.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/RestaurantOrderItems.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
@@ -43,8 +44,8 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
         const SizedBox(height: 10),
         Container(
           margin: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
+              //       horizontal: 10,
+              ),
           width: Get.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -105,7 +106,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
               if (widget.order.value?.inProcess() ?? false)
                 Container(
                   margin: EdgeInsets.all(5),
-                  child: Row(
+                  child: Column(
                     children: buildRestOrderButtons(widget.order),
                   ),
                 )
@@ -117,7 +118,7 @@ class _OrderInfoCardState extends State<OrderInfoCard> {
         ),
 
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          //     padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.centerLeft,
           child: Text("${_i18n()["orderItems"]}",
               style: Theme.of(context).textTheme.bodyText2,

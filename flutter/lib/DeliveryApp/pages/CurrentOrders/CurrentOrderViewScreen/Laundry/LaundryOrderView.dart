@@ -265,7 +265,26 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
           fitWithinBounds: true,
         );
         break;
-      case LaundryOrderStatus.OtwPickupFromCustomer:
+      case LaundryOrderStatus.OtwPickupFromLaundry:
+        if (_orderStatusSnapshot != laundryOrder.status) {
+          _addOrUpdateLaundryAndCustomerMarkers(
+            laundryOrder,
+            fitLaundryMarkerInBounds: false,
+            fitCustomerMarlerInBounds: true,
+          );
+          _orderStatusSnapshot = laundryOrder.status;
+        }
+        // DropOff driver Marker
+        mapController.addOrUpdateUserMarker(
+          latLng: laundryOrder.dropoffDriver?.location,
+        );
+        // mapController.moveToNewLatLng(
+        //   laundryOrder.dropoffDriver!.location!.latitude,
+        //   laundryOrder.dropoffDriver!.location!.longitude,
+        // );
+        mapController.animateAndUpdateBounds();
+        break;
+      case LaundryOrderStatus.PickedUpFromLaundry:
         if (_orderStatusSnapshot != laundryOrder.status) {
           _addOrUpdateLaundryAndCustomerMarkers(
             laundryOrder,
