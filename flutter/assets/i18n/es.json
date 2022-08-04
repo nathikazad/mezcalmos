@@ -211,6 +211,12 @@
                 },
                 "ViewOrderScreen": {
                     "components": {
+                        "CustomerRestaurantOrderEst": {
+                            "estTimes": "Tiempos estimados",
+                            "foodReady": "preparación de la comida",
+                            "toBeCalculated": "Para ser calculado",
+                            "delivery": "Entrega"
+                        },
                         "OrderStatusCard": {
                             "willBePicked": "Será recogido",
                             "willBeDelivered": "Será entregado"

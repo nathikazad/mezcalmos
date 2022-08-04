@@ -230,12 +230,16 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               "${_i18n()["total"]}:",
               style: Theme.of(context).textTheme.bodyText1,
             ),
-            Text(
-              (order.value!.costsByType?.totalPrice != null)
-                  ? '\$${order.value!.costsByType?.totalPrice}'
-                  : '-',
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
+            (order.value!.costsByType?.totalPrice != null)
+                ? Text(
+                    '\$${order.value!.costsByType?.totalPrice}',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  )
+                : Text(
+                    '${_i18n()["toBeCalculated"]}',
+                    style: Get.textTheme.bodyText2
+                        ?.copyWith(fontStyle: FontStyle.italic),
+                  ),
           ],
         ),
       ),

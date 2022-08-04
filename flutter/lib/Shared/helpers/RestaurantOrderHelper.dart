@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:rive/rive.dart';
 
 extension RestaurantOrderHelper on RestaurantOrder {
   dynamic _i18n() =>
@@ -25,6 +28,74 @@ extension RestaurantOrderHelper on RestaurantOrder {
 
       default:
         return 'Unknown status';
+    }
+  }
+  // order status image/icon
+
+  Widget orderStatusImage() {
+    switch (status) {
+      case RestaurantOrderStatus.CancelledByAdmin:
+
+      case RestaurantOrderStatus.CancelledByCustomer:
+        return Container(
+          padding: const EdgeInsets.all(5),
+          decoration:
+              BoxDecoration(color: Color(0xFFF9D8D6), shape: BoxShape.circle),
+          child: Icon(
+            Icons.close,
+            size: 25,
+            color: Colors.red,
+          ),
+        );
+
+      case RestaurantOrderStatus.OrderReceieved:
+        return Container(
+          // padding: const EdgeInsets.only(right: 10.0),
+          child: Icon(
+            Icons.flatware_rounded,
+            size: 40,
+            color: primaryBlueColor,
+          ),
+        );
+      case RestaurantOrderStatus.PreparingOrder:
+        return Container(
+          height: 50,
+          width: 50,
+          child: RiveAnimation.asset(
+            "assets/animation/cooking.riv",
+            fit: BoxFit.cover,
+          ),
+        );
+      case RestaurantOrderStatus.OnTheWay:
+        return Container(
+          height: 50,
+          width: 50,
+          child: RiveAnimation.asset(
+            "assets/animation/motorbikeWithSmokeAnimation.riv",
+            fit: BoxFit.cover,
+          ),
+        );
+      case RestaurantOrderStatus.ReadyForPickup:
+        return Container(
+          // padding: const EdgeInsets.only(right: 10.0),
+          child: Icon(
+            Icons.check_circle,
+            size: 40,
+            color: primaryBlueColor,
+          ),
+        );
+
+      case RestaurantOrderStatus.Delivered:
+        return Container(
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              color: secondaryLightBlueColor, shape: BoxShape.circle),
+          child: Icon(
+            Icons.check,
+            size: 25,
+            color: primaryBlueColor,
+          ),
+        );
     }
   }
 }

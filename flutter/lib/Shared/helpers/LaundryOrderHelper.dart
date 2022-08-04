@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
+import 'package:rive/rive.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
@@ -92,30 +92,15 @@ extension LaundryOrderWidgets on LaundryOrder {
           ),
         );
       case LaundryOrderStatus.OtwPickupFromCustomer:
-        return Container(
-          child: GradientProgressIndicator(
-            radius: 17,
-            duration: 5,
-            strokeWidth: 3,
-            gradientStops: [
-              0.2,
-              0.8,
-            ],
-            gradientColors: [
-              Colors.white,
-              primaryBlueColor,
-            ],
-            child: SizedBox(),
-          ),
-        );
       case LaundryOrderStatus.OtwPickupFromLaundry:
       case LaundryOrderStatus.PickedUpFromLaundry:
       case LaundryOrderStatus.PickedUpFromCustomer:
         return Container(
-          child: Icon(
-            Icons.delivery_dining,
-            size: 40,
-            color: primaryBlueColor,
+          height: 50,
+          width: 50,
+          child: RiveAnimation.asset(
+            "assets/animation/motorbikeWithSmokeAnimation.riv",
+            fit: BoxFit.cover,
           ),
         );
 

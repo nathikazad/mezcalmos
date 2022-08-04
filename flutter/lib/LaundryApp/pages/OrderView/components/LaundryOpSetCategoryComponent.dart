@@ -200,7 +200,7 @@ class _LaundyOpSetCategoryComponentState
             ),
           ),
           Text(
-            "\$${item.cost} x ${item.weight}KG = \$${item.weighedCost}",
+            "\$${item.cost.round()} x ${item.weight}KG = \$${item.weighedCost.round()}",
           ),
           if (widget.order.isAtLaundry())
             Padding(
