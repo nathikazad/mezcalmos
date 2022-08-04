@@ -2,26 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/restaurantOrderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
-// dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
-//     ["OrderView"]["Components"]["ROpOrderEstTime"];
-
-class ROpOrderEstTime extends StatefulWidget {
-  const ROpOrderEstTime({Key? key, required this.order}) : super(key: key);
+class DaRestaurantOrderTime extends StatefulWidget {
+  const DaRestaurantOrderTime({Key? key, required this.order})
+      : super(key: key);
   final RestaurantOrder order;
 
   @override
-  State<ROpOrderEstTime> createState() => _ROpOrderEstTimeState();
+  State<DaRestaurantOrderTime> createState() => _DaRestaurantOrderTimeState();
 }
 
-class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
-  ROpOrderController orderController = Get.find<ROpOrderController>();
+class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
+  RestaurantOrderController orderController =
+      Get.find<RestaurantOrderController>();
   RxBool isClicked = RxBool(false);
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -7,9 +8,9 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/ordersNode.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class RestaurantOrderController extends GetxController {
@@ -29,7 +30,7 @@ class RestaurantOrderController extends GetxController {
         .ref()
         .child(rootInProcessOrdersNode(orderType: OrderType.Restaurant))
         .onValue
-        .listen((event) {
+        .listen((DatabaseEvent event) {
       final List<RestaurantOrder> orders = [];
       if (event.snapshot.value != null) {
         for (var orderId in (event.snapshot.value as dynamic).keys) {
@@ -47,7 +48,7 @@ class RestaurantOrderController extends GetxController {
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAdded
-        .listen((event) {
+        .listen((DatabaseEvent event) {
       final dynamic _data = event.snapshot.value;
       // adding this check because old data (past orders are corrupted , most of em don't have restaurant's location)
       // didn't wanna erase the data, which is too much it seems.
@@ -61,7 +62,7 @@ class RestaurantOrderController extends GetxController {
   }
 
   @override
-  void onClose() async {
+  Future<void> onClose() async {
     mezDbgPrint("[+] OrderController::dispose ---------> Was invoked !");
     await _currentOrdersListener?.cancel();
     await _pastOrdersListener?.cancel();
@@ -107,6 +108,7 @@ class RestaurantOrderController extends GetxController {
         // do nothing
         // return null;
       }
+      return null;
     });
   }
 
@@ -114,12 +116,13 @@ class RestaurantOrderController extends GetxController {
     return inProcessOrders.stream.map<RestaurantOrder?>((_) {
       try {
         return pastOrders.firstWhere(
-          (pastOrder) => pastOrder.orderId == orderId,
+          (RestaurantOrder pastOrder) => pastOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
         // return null;
       }
+      return null;
     });
   }
 
@@ -168,6 +171,16 @@ class RestaurantOrderController extends GetxController {
     }
   }
 
+  Future<ServerResponse> setEstimatedFoodReadyTime(
+      String orderId, DateTime estimatedTime) async {
+    mezDbgPrint("inside clod set delivery time $estimatedTime");
+    return _callRestaurantCloudFunction("setEstimatedFoodReadyTime", orderId,
+        optionalParams: {
+          "fromRestaurantOperator": false,
+          "estimatedFoodReadyTime": estimatedTime.toUtc().toString()
+        });
+  }
+
   Future<ServerResponse> cancelOrder(String orderId) async {
     return _callRestaurantCloudFunction("cancelOrderFromAdmin", orderId);
   }
@@ -191,13 +204,14 @@ class RestaurantOrderController extends GetxController {
   }
 
   Future<ServerResponse> _callRestaurantCloudFunction(
-      String functionName, String orderId) async {
+      String functionName, String orderId,
+      {Map<String, dynamic>? optionalParams}) async {
     final HttpsCallable dropOrderFunction =
         FirebaseFunctions.instance.httpsCallable('restaurant-$functionName');
     mezDbgPrint("Drop order");
     try {
-      final HttpsCallableResult response =
-          await dropOrderFunction.call({"orderId": orderId});
+      final HttpsCallableResult response = await dropOrderFunction
+          .call({"orderId": orderId, ...optionalParams ?? {}});
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,

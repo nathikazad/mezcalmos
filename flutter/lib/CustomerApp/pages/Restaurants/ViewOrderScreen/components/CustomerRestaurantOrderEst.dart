@@ -16,27 +16,37 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (_getDeliveryTime() != null || _getFoodReadyTime() != null) {
-      return Card(
-        margin: const EdgeInsets.only(top: 20),
-        child: Container(
-            margin: const EdgeInsets.all(5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${_i18n()["estTimes"]}',
-                  style: Get.textTheme.bodyText1
-                      ?.copyWith(color: Colors.grey.shade800),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                if (_showFoodReadyTime()) _foodReadyTimeWidget(),
-                if (_showFoodReadyTime() && _getDeliveryTime() != null)
-                  Divider(),
-                if (_getDeliveryTime() != null) _deliveryTimeWidget()
-              ],
-            )),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 3),
+            child: Text(
+              '${_i18n()["estTimes"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Card(
+            child: Container(
+                margin: const EdgeInsets.all(5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (_showFoodReadyTime()) _foodReadyTimeWidget(),
+                    if (_showFoodReadyTime() && _getDeliveryTime() != null)
+                      Divider(),
+                    if (_getDeliveryTime() != null) _deliveryTimeWidget()
+                  ],
+                )),
+          ),
+        ],
       );
     } else
       return SizedBox();

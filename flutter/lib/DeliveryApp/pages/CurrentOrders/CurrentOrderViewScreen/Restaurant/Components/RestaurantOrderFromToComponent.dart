@@ -4,14 +4,15 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/CurrentOrders/CurrentOrderViewScreen/components/AnimatedOrderInfoCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
@@ -59,6 +60,9 @@ class _RestaurantOrderFromToComponentState
       child: AnimatedOrderInfoCard(
         // customer
         customerImage: widget.order.customer.image,
+        subtitle: (widget.order.estimatedFoodReadyTime != null)
+            ? "${_i18n()["foodReady"]} ${widget.order.estimatedFoodReadyTime!.getEstimatedTime()}"
+            : null,
         customerName: widget.order.customer.name,
         // enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
         customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
@@ -91,6 +95,7 @@ class _RestaurantOrderFromToComponentState
         },
         // order
         formattedOrderStatus: _getOrderStatus(),
+
         order: widget.order,
         // card Settings
         isCustomerRowFirst: false,
@@ -143,7 +148,7 @@ class _RestaurantOrderFromToComponentState
       final DateTime? pickedDate = await getDatePicker(
         context,
         initialDate: initialDate ?? DateTime.now(),
-        firstDate: DateTime.now(),
+        firstDate: widget.order.estimatedFoodReadyTime ?? DateTime.now(),
         lastDate: DateTime.now().add(
           Duration(days: 3),
         ),
@@ -153,12 +158,13 @@ class _RestaurantOrderFromToComponentState
         final TimeOfDay? pickedTime = await getTimePicker(
           context,
           initialTime: TimeOfDay.fromDateTime(
-            initialDate ?? DateTime.now(),
+            widget.order.estimatedFoodReadyTime?.toLocal() ?? DateTime.now(),
           ),
         );
         if (pickedTime != null) {
           final DateTime _finalDt = pickedDate.copyWithTimeOfDay(pickedTime);
-          if (_finalDt.isAfter(DateTime.now())) {
+          if (_finalDt.isAfter(widget.order.estimatedFoodReadyTime?.toLocal() ??
+              DateTime.now())) {
             return _finalDt;
           } else
             MezSnackbar('${_i18n()['oops']}', '${_i18n()['wrongTime']}');

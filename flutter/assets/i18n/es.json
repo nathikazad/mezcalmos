@@ -1381,6 +1381,7 @@
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Entrega de restaurantes",
                             "oops": "Ups",
+                            "foodReady": "preparación de la comida",
                             "set": "Establecer",
                             "time": "Tiempo",
                             "dropoff": "Entregar",
