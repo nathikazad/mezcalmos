@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -85,8 +87,40 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
                         iOrderViewController.counterOffer.value?.isValid !=
                             true ||
                         iOrderViewController.order.value?.scheduledTime != null)
-                      iOrderViewWidgets.acceptAndOfferButtons(),
-                    iOrderViewWidgets.counterOfferBottomSheet(),
+                      iOrderViewWidgets.acceptAndOfferButtons(
+                        onOfferBtnClick: () {
+                          iOrderViewController.submittedCounterOffer.value =
+                              true;
+                          iOrderViewController.animatedSliderController
+                              .slideUp();
+                          setState(() {});
+                        },
+                      ),
+                    iOrderViewWidgets.counterOfferBottomSheet(
+                      onCounterEnd: () {
+                        iOrderViewController.updateCounterOfferStatus(
+                          newStatus: CounterOfferStatus.Expired,
+                        );
+                        setState(() {});
+                      },
+                      onMakeNewOffer: () {
+                        iOrderViewController.submittedCounterOffer.value =
+                            false;
+                        setState(() {});
+                      },
+                      onCloseClick: () {
+                        mezDbgPrint("Clicked close");
+                        iOrderViewController.animatedSliderController
+                            .slideDown();
+                        setState(() {});
+                      },
+                      onCancelClick: () async {
+                        await iOrderViewController.updateCounterOfferStatus(
+                          newStatus: CounterOfferStatus.Cancelled,
+                        );
+                        setState(() {});
+                      },
+                    ),
                     ...OrderPositionedFromToTopBar.buildWithOrderTimeBar(
                       context: context,
                       order: iOrderViewController.order.value!,

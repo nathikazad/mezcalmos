@@ -249,6 +249,7 @@ Widget cancelBtn(TaxiOrder order, BuildContext context) {
                 position: SnackPosition.TOP);
           }
         });
+        Get.back();
       },
       child: Container(
         height: 33,

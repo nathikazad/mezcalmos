@@ -1,29 +1,31 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as LocationLibrary;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/OrderFromToBar.dart';
 import 'package:mezcalmos/TaxiApp/components/taxiDialogs.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/Orders/IncomingOrders/IncomingViewScreen/components/IPositionedBottomBar.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
-import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["TaxiApp"]["pages"]
     ["Orders"]["CurrentOrderScreen"]["CurrentOrderScreen"];
@@ -159,12 +161,11 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
                     right: 10,
                     child: Container(
                       width: Get.width,
-                      child: Obx(
-                        () => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children:
-                              getRideBottomBtns(_clickedBottomButton.value),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: getRideBottomBtns(
+                          _clickedBottomButton.value,
                         ),
                       ),
                     ),
@@ -183,36 +184,40 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
       case TaxiOrdersStatus.LookingForTaxi:
       case TaxiOrdersStatus.LookingForTaxiScheduled:
       case TaxiOrdersStatus.Scheduled:
-        if (order!.scheduledTime != null) {
+        if (order?.scheduledTime != null) {
           return order!.scheduledTime!.difference(DateTime.now()).inMinutes <=
                   30
               ? [
-                  Expanded(
-                    child: button(
-                      inActiveClick: _clickedBottomButton.value,
-                      bgColor: Color.fromRGBO(233, 219, 245, 1),
-                      color: Color.fromRGBO(172, 89, 252, 1),
-                      text: 'Start Ride',
-                      onTap: () async {
-                        _clickedBottomButton.value = true;
+                  Obx(
+                    () => Expanded(
+                      child: button(
+                        inActiveClick: _clickedBottomButton.value,
+                        bgColor: Color.fromRGBO(233, 219, 245, 1),
+                        color: Color.fromRGBO(172, 89, 252, 1),
+                        text: 'Start Ride',
+                        onTap: () async {
+                          _clickedBottomButton.value = true;
 
-                        await controller.startScheduledRide();
-                        setState(() {});
-                        _clickedBottomButton.value = false;
-                      },
+                          await controller.startScheduledRide();
+                          setState(() {});
+                          _clickedBottomButton.value = false;
+                        },
+                      ),
                     ),
                   ),
                   SizedBox(width: 4),
                   _cancelButton,
                 ]
               : [
-                  Expanded(
-                    child: button(
-                        inActiveClick: _clickedBottomButton.value,
-                        bgColor: Color.fromRGBO(237, 237, 237, 1),
-                        color: Color.fromRGBO(120, 120, 120, 1),
-                        text: 'Start Ride',
-                        onTap: () => null),
+                  Obx(
+                    () => Expanded(
+                      child: button(
+                          inActiveClick: _clickedBottomButton.value,
+                          bgColor: Color.fromRGBO(237, 237, 237, 1),
+                          color: Color.fromRGBO(120, 120, 120, 1),
+                          text: 'Start Ride',
+                          onTap: () => null),
+                    ),
                   ),
                   SizedBox(width: 4),
                   _cancelButton
@@ -220,46 +225,50 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
         }
         // if nto scheduled
         return [
-          Expanded(
-            child: button(
-                bgColor: Color.fromRGBO(233, 219, 245, 1),
-                color: Color.fromRGBO(172, 89, 252, 1),
-                inActiveClick: _clickedBottomButton.value,
-                text: 'Start Ride',
-                onTap: () {
-                  _clickedBottomButton.value = true;
-                  controller.startRide();
-                  setState(() {});
-                  _clickedBottomButton.value = false;
-                }),
+          Obx(
+            () => Expanded(
+              child: button(
+                  bgColor: Color.fromRGBO(233, 219, 245, 1),
+                  color: Color.fromRGBO(172, 89, 252, 1),
+                  inActiveClick: _clickedBottomButton.value,
+                  text: 'Start Ride',
+                  onTap: () {
+                    _clickedBottomButton.value = true;
+                    controller.startRide();
+                    setState(() {});
+                    _clickedBottomButton.value = false;
+                  }),
+            ),
           ),
           SizedBox(width: 4),
           _cancelButton
         ];
       case TaxiOrdersStatus.OnTheWay:
         return [
-          Expanded(
-            child: button(
-              bgColor: Color.fromRGBO(233, 219, 245, 1),
-              color: Color.fromRGBO(172, 89, 252, 1),
-              inActiveClick: _clickedBottomButton.value,
-              text: 'Pick up',
-              onTap: () async {
-                if (Get.find<TaxiAuthController>().currentLocation == null)
-                  await _showConfirmationDialog();
-                else if ((MapHelper.calculateDistance(
-                      Get.find<TaxiAuthController>().currentLocation!,
-                      order!.to.position,
-                    ) >
-                    0.5)) {
-                  await _showConfirmationDialog();
-                } else {
-                  _clickedBottomButton.value = true;
-                  await controller.startRide();
-                  setState(() {});
-                  _clickedBottomButton.value = false;
-                }
-              },
+          Obx(
+            () => Expanded(
+              child: button(
+                bgColor: Color.fromRGBO(233, 219, 245, 1),
+                color: Color.fromRGBO(172, 89, 252, 1),
+                inActiveClick: _clickedBottomButton.value,
+                text: 'Pick up',
+                onTap: () async {
+                  if (Get.find<TaxiAuthController>().currentLocation == null)
+                    await _showConfirmationDialog();
+                  else if ((MapHelper.calculateDistance(
+                        Get.find<TaxiAuthController>().currentLocation!,
+                        order!.to.position,
+                      ) >
+                      0.5)) {
+                    await _showConfirmationDialog();
+                  } else {
+                    _clickedBottomButton.value = true;
+                    await controller.startRide();
+                    setState(() {});
+                    _clickedBottomButton.value = false;
+                  }
+                },
+              ),
             ),
           ),
           SizedBox(width: 4),
@@ -268,25 +277,31 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
 
       case TaxiOrdersStatus.InTransit:
         return [
-          Expanded(
-            child: button(
-              bgColor: Color.fromRGBO(233, 219, 245, 1),
-              color: Color.fromRGBO(172, 89, 252, 1),
-              text: 'Finish ride',
-              inActiveClick: _clickedBottomButton.value,
-              onTap: () async {
-                await showConfirmationDialog(
-                  context,
-                  title: 'Oops!',
-                  primaryButtonText: "Yes, finish ride",
-                  helperText: _i18n()["tooFarFromfinishRide"],
-                  onYesClick: () async {
-                    await controller.finishRide();
-                    setState(() {});
-                    _clickedBottomButton.value = false;
-                  },
-                );
-              },
+          Obx(
+            () => Expanded(
+              child: button(
+                bgColor: Color.fromRGBO(233, 219, 245, 1),
+                color: Color.fromRGBO(172, 89, 252, 1),
+                text: 'Finish ride',
+                inActiveClick: _clickedBottomButton.value,
+                onTap: () async {
+                  await showConfirmationDialog(
+                    context,
+                    title: 'Oops!',
+                    primaryButtonText: "Yes, finish ride",
+                    helperText: _i18n()["tooFarFromfinishRide"],
+                    onYesClick: () async {
+                      final ServerResponse resp = await controller.finishRide();
+                      if (!resp.success) {
+                        MezSnackbar("Error", "Server Error");
+                      }
+                      setState(() {});
+                      _clickedBottomButton.value = false;
+                      Get.back<void>();
+                    },
+                  );
+                },
+              ),
             ),
           ),
           SizedBox(width: 4),
@@ -296,11 +311,12 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
       case TaxiOrdersStatus.DroppedOff:
         return [
           getTaxiRideStatusBar(
-              'Customer has been dropped off.',
-              Icon(
-                Icons.check_circle,
-                color: Color.fromRGBO(33, 145, 37, 0.86),
-              ))
+            'Customer has been dropped off.',
+            Icon(
+              Icons.check_circle,
+              color: Color.fromRGBO(33, 145, 37, 0.86),
+            ),
+          )
         ];
 
       case TaxiOrdersStatus.CancelledByCustomer:
@@ -329,17 +345,36 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   }
 
   Future<void> _showConfirmationDialog() async {
-    return showConfirmationDialog(
+    return showStatusInfoDialog(
       context,
-      title: 'Oops!',
-      primaryButtonText: "Yes, start ride",
-      helperText: _i18n()["tooFarFromstartRide"],
-      onYesClick: () async {
-        await controller.startRide();
-        setState(() {});
-        _clickedBottomButton.value = false;
+      status: "Confirm",
+      description: _i18n()["tooFarFromstartRide"],
+      primaryClickTitle: "Yes, start ride",
+      primaryCallBack: () async {
+        final ServerResponse resp = await controller.startRide();
+        if (!resp.success) {
+          MezSnackbar("Error", "Server Error");
+        }
       },
+      secondaryClickTitle: "No",
+      secondaryCallBack: () => Get.back<void>(),
     );
+
+    // showConfirmationDialog(
+    //   context,
+    //   title: 'Oops!',
+    //   primaryButtonText: "Yes, start ride",
+    //   helperText: _i18n()["tooFarFromstartRide"],
+    //   onYesClick: () async {
+    //     final ServerResponse resp = await controller.startRide();
+    //     if (!resp.success) {
+    //       MezSnackbar("Error", "Server Error");
+    //     }
+    //     _clickedBottomButton.value = false;
+    //     setState(() {});
+    //     Get.back<void>();
+    //   },
+    // );
   }
 
   Expanded get _cancelButton => Expanded(
@@ -351,7 +386,11 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           onTap: () {
             showConfirmationDialog(context, onYesClick: () async {
               _clickedBottomButton.value = true;
-              await controller.cancelTaxi(null);
+              final ServerResponse resp = await controller.cancelTaxi(null);
+              if (!resp.success) {
+                MezSnackbar("Error", "Server Error");
+              }
+              Get.back<void>();
             }).whenComplete(() => _clickedBottomButton.value = false);
           },
         ),
@@ -371,6 +410,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   /// });
   /// ```
   void updateOrder({required TaxiOrder orderStreamEvent}) {
+    mezDbgPrint("UPDATING ORDER ùùùùùùùù");
     if (orderStreamEvent.status != order?.status) {
       switch (orderStreamEvent.status) {
         case TaxiOrdersStatus.Scheduled:
