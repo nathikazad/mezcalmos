@@ -41,7 +41,7 @@ export const getPaymentIntent =
     let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
     const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-    let stripeCustomerId: string = await getCustomerIdFromServiceAccount(context.auth!.uid, data.serviceProviderId, stripe, stripeOptions);
+    let stripeCustomerId: string = await getCustomerIdFromServiceAccount(context.auth!.uid, data.serviceProviderId, data.orderType, stripe, stripeOptions);
 
     const ephemeralKey: Stripe.EphemeralKey = await stripe.ephemeralKeys.create(
       { customer: stripeCustomerId },

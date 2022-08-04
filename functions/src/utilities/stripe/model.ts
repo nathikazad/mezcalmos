@@ -1,8 +1,10 @@
 // **** Customer Models ****
 
+import { OrderType } from "../../shared/models/Generic/Order";
+
 export interface CustomerStripe {
   id: string,
-  idsWithServiceProvider: Record<string, string>,
+  idsWithServiceProvider: Record<OrderType, Record<string, string>>,
   cards: Record<string, CustomerCard>
 }
 
@@ -12,7 +14,7 @@ export interface CustomerCard {
   brand?: string,
   expMonth?: string,
   expYear?: string,
-  idsWithServiceProvider: Record<string, string>,
+  idsWithServiceProvider: Record<OrderType, Record<string, string>>,
 }
 
 // **** Order Models ****

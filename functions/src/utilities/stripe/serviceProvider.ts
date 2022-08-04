@@ -11,6 +11,7 @@ import { ServiceProviderStripeInfo, StripeStatus } from './model';
 import * as customerNodes from '../../shared/databaseNodes/customer';
 import { userInfoNode } from '../../shared/databaseNodes/root';
 import { UserInfo } from '../../shared/models/Generic/User';
+import { getUserInfo } from '../../shared/controllers/rootController';
 let keys: Keys = getKeys();
 
 
@@ -21,37 +22,21 @@ export const setupServiceProvider =
     if (!validation.ok)
       return validation.error;
 
-    const stripe: Stripe = validation.stripe;
-    const stripeOptions = validation.stripeOptions
-    const account = await stripe.accounts.create({
-      type: 'standard',
-      business_type: 'individual',
-      business_profile: {
-        url: `https://mezcalmos.com/?type=${data.orderType}&id=${data.serviceProviderId}`
-      },
-      country: "mx",
-      default_currency: "mxn",
-      metadata: {
-        id: data.serviceProviderId,
-        type: data.orderType,
-        userId: context.auth!.uid
+    if (data.serviceProviderId == null || data.orderType == null) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Expected serviceProviderId and orderType`,
+        errorCode: "incorrectParams"
       }
-    });
-    // add name, link, descriptor, long name, short name, address, id
-    serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe').set(<ServiceProviderStripeInfo>{
-      id: account.id,
-      status: StripeStatus.InProcess,
-      detailsSubmitted: false,
-      payoutsEnabled: false,
-      email: null,
-      chargesEnabled: false,
-      requirements: []
-    });
+    }
 
-    serviceProviderNodes.serviceProviderPaymentInfo(data.orderType as OrderType, data.serviceProviderId).child(`acceptedPayments/${PaymentType.Card}`).set(true);
+    const stripeOptions = { apiVersion: <any>'2020-08-27' };
+    const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+
+    const accountId = await getServiceProviderStripeId(data.serviceProviderId, data.orderType, context.auth!.uid, stripe, stripeOptions);
 
     const accountLink = await stripe.accountLinks.create({
-      account: account.id,
+      account: accountId,
       refresh_url: 'https://example.com/reauth',
       return_url: 'https://example.com/return',
       type: 'account_onboarding',
@@ -70,16 +55,17 @@ export const updateServiceProvider =
     if (!validation.ok)
       return validation.error;
 
-    const stripe: Stripe = validation.stripe;
-    const stripeOptions = validation.stripeOptions
-
-    let authorized = (await serviceProviderNodes.serviceProviderState(data.orderType, data.serviceProviderId).child("/operators").child(context.auth!.uid).once('value')).val();
-    if (!authorized)
+    if (data.serviceProviderId == null || data.orderType == null) {
       return {
         status: ServerResponseStatus.Error,
-        errorMessage: `User not authorized to run this operation`,
-        errorCode: "unauthorized"
+        errorMessage: `Expected serviceProviderId and orderType`,
+        errorCode: "incorrectParams"
       }
+    }
+
+    const stripeOptions = { apiVersion: <any>'2020-08-27' };
+    const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+
 
     let stripeAccount: string = (await serviceProviderNodes.serviceProviderPaymentInfo(data.orderType, data.serviceProviderId).child('stripe/id').once('value')).val()
     const account: Stripe.Account = await stripe.accounts.retrieve(stripeAccount, stripeOptions);
@@ -108,8 +94,8 @@ export const updateServiceProvider =
   })
 
 
-export async function getCustomerIdFromServiceAccount(customerId: string, serviceProviderId: string, stripe: Stripe, stripeOptions: any) {
-  let stripeCustomerId: string = (await customerNodes.stripeIdsWithServiceProviderNode(customerId, serviceProviderId).once('value')).val();
+export async function getCustomerIdFromServiceAccount(customerId: string, serviceProviderId: string, orderType: OrderType, stripe: Stripe, stripeOptions: any) {
+  let stripeCustomerId: string = (await customerNodes.stripeIdsWithServiceProviderNode(customerId, serviceProviderId, orderType).once('value')).val();
   if (stripeCustomerId == null) {
     let userInfo: UserInfo = (await userInfoNode(customerId).once('value')).val()
     const customer: Stripe.Customer = await stripe.customers.create({
@@ -117,10 +103,58 @@ export async function getCustomerIdFromServiceAccount(customerId: string, servic
       metadata: { customerId: customerId },
     }, stripeOptions)
     stripeCustomerId = customer.id;
-    customerNodes.stripeIdsWithServiceProviderNode(customerId, serviceProviderId).set(stripeCustomerId);
+    customerNodes.stripeIdsWithServiceProviderNode(customerId, serviceProviderId, orderType).set(stripeCustomerId);
   }
   return stripeCustomerId;
 }
+
+export async function getServiceProviderStripeId(serviceProviderId: string, orderType: OrderType, userId: string, stripe: Stripe, stripeOptions: any) {
+  let serviceProviderStripeId: string = (await serviceProviderNodes.serviceProviderStripeId(orderType, serviceProviderId).once('value')).val();
+  if (serviceProviderStripeId == null) {
+    let serviceProviderInfo: UserInfo = (await serviceProviderNodes.serviceProviderInfo(orderType, serviceProviderId).once('value')).val().info;
+    let userInfo: UserInfo = await getUserInfo(userId);
+    const account = await stripe.accounts.create({
+      type: 'standard',
+      email: serviceProviderInfo.email ?? userInfo.email,
+      business_type: 'individual',
+      business_profile: {
+        name: serviceProviderInfo.name,
+        support_email: serviceProviderInfo.email ?? userInfo.email,
+        support_phone: serviceProviderInfo.phoneNumber ?? userInfo.phoneNumber,
+        url: `https://mezcalmos.com/?type=${orderType}&id=${serviceProviderId}`
+      },
+      individual: {
+        first_name: userInfo.name,
+        email: userInfo.email,
+        phone: userInfo.phoneNumber,
+      },
+      country: "mx",
+      default_currency: "mxn",
+      metadata: {
+        id: serviceProviderId,
+        type: orderType,
+        user_id: userId
+      }
+    });
+    // add name, link, descriptor, long name, short name, address, id
+    serviceProviderNodes.serviceProviderPaymentInfo(orderType, serviceProviderId).child('stripe').set(<ServiceProviderStripeInfo>{
+      id: account.id,
+      status: StripeStatus.InProcess,
+      detailsSubmitted: false,
+      payoutsEnabled: false,
+      email: null,
+      chargesEnabled: false,
+      requirements: []
+    });
+    serviceProviderStripeId = account.id;
+    serviceProviderNodes.serviceProviderPaymentInfo(orderType as OrderType, serviceProviderId).child(`acceptedPayments`).set({
+      [PaymentType.Card]: true,
+      [PaymentType.Cash]: true
+    });
+  }
+  return serviceProviderStripeId;
+}
+
 async function passChecksForOperator(data: any, auth?: AuthData): Promise<ValidationPass> {
   let response = await isSignedIn(auth)
   if (response != undefined) {
@@ -151,11 +185,7 @@ async function passChecksForOperator(data: any, auth?: AuthData): Promise<Valida
       }
     }
 
-  let stripeOptions = { apiVersion: <any>'2020-08-27' };
-  const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
   return {
-    ok: true,
-    stripe: stripe,
-    stripeOptions: stripeOptions
+    ok: true
   }
 }

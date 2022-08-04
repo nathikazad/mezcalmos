@@ -26,8 +26,12 @@ export const otp = {
 
 import * as stripePaymentFunctions from './utilities/stripe/payment'
 import * as stripeServiceProvderFunctions from './utilities/stripe/serviceProvider'
+import * as stripeCardFunctions from './utilities/stripe/card'
 export const stripe = {
   getPaymentIntent: stripePaymentFunctions.getPaymentIntent,
+  addCard: stripeCardFunctions.addCard,
+  chargeCard: stripeCardFunctions.chargeCard,
+  removeCard: stripeCardFunctions.removeCard,
   setupServiceProvider: stripeServiceProvderFunctions.setupServiceProvider,
   updateServiceProvider: stripeServiceProvderFunctions.updateServiceProvider
 }

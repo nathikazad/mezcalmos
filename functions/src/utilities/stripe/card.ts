@@ -11,7 +11,7 @@ import { UserInfo } from '../../shared/models/Generic/User';
 import { userInfoNode } from '../../shared/databaseNodes/root';
 import { PaymentInfo } from '../../shared/models/Services/Service';
 // import * as serviceProviderNodes from '../../shared/databaseNodes/services/serviceProvider';
-import { PaymentType } from '../../shared/models/Generic/Order';
+import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
 import { getCustomerIdFromServiceAccount } from './serviceProvider';
 // import * as customerNodes from '../../shared/databaseNodes/customer';
 // import { userInfoNode } from '../../shared/databaseNodes/root';
@@ -71,7 +71,7 @@ export const chargeCard =
       data.orderType == null || data.paymentAmount == null) {
       return {
         status: ServerResponseStatus.Error,
-        errorMessage: `Expected customerId, serviceProviderId, orderType and paymentAmount`,
+        errorMessage: `Expected cardId, serviceProviderId, orderType and paymentAmount`,
         errorCode: "incorrectParams"
       }
     }
@@ -100,8 +100,8 @@ export const chargeCard =
     let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderPaymentInfo.stripe.id };
     const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-    let stripeCustomerId: string = await getCustomerIdFromServiceAccount(mezCustomerId, data.serviceProviderId, stripe, stripeOptions);
-    let stripeCardId: string = await getCardIdFromServiceAccount(mezCustomerId, data.cardId, data.serviceProviderId, customerStripe, stripe, stripeOptions);
+    let stripeCustomerId: string = await getCustomerIdFromServiceAccount(mezCustomerId, data.serviceProviderId, data.orderType, stripe, stripeOptions);
+    let stripeCardId: string = await getCardIdFromServiceAccount(mezCustomerId, data.cardId, data.serviceProviderId, data.orderType, mezCustomerId, stripe, stripeOptions);
 
     const paymentIntent = await stripe.paymentIntents.create(
       {
@@ -131,14 +131,23 @@ export const removeCard =
       return response;
     }
 
-    if (data.paymentMethod == null) {
+    if (data.cardId == null) {
       return {
         status: ServerResponseStatus.Error,
-        errorMessage: `Expected paymentMethod`,
+        errorMessage: `Expected cardId`,
         errorCode: "incorrectParams"
       }
     }
+
     const mezCustomerId: string = context.auth!.uid;
+    let inProcessOrders = (await customerNodes.inProcessOrders(mezCustomerId).once('value')).val()
+    if (Object.keys(inProcessOrders).length > 0) {
+      return {
+        status: ServerResponseStatus.Error,
+        errorMessage: `Can't remove cards with in process orders, please wait till you finish your order`,
+        errorCode: "incorrectParams"
+      }
+    }
     let customerStripe: CustomerStripe = (await customerNodes.stripeNode(mezCustomerId).once('value')).val()
     if (customerStripe == null || customerStripe.cards == null || customerStripe.cards[data.cardId] == null) {
       return {
@@ -155,21 +164,24 @@ export const removeCard =
       { apiVersion: <any>'2020-08-27' }
     );
 
-    // Need to figure out order type
-    // for (let serviceProviderId in card.idsWithServiceProvider) {
-    //   let clonedCardId = card.idsWithServiceProvider[serviceProviderId]
-    //   let serviceProviderStripeId: string = (await serviceProviderNodes.serviceProviderStripeId(data.orderType, serviceProviderId).once('value')).val()
-    //   if (!clonedCardId || !serviceProviderStripeId)
-    //     continue
-    //   let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderStripeId };
-    //   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
-    //   await stripe.paymentMethods.detach(
-    //     clonedCardId,
-    //     stripeOptions
-    //   );
-    // }
+    for (let orderTypeId in card.idsWithServiceProvider) {
+      let orderType: OrderType = orderTypeId as OrderType;
+      for (let serviceProviderId in card.idsWithServiceProvider[orderType]) {
+        let clonedCardId = card.idsWithServiceProvider[orderType][serviceProviderId]
+        let serviceProviderStripeId: string = (await serviceProviderNodes.serviceProviderStripeId(data.orderType, serviceProviderId).once('value')).val()
 
-    await customerNodes.stripeCardsNode(mezCustomerId, customerStripe.cards[data.cardId].id).remove()
+        if (!clonedCardId || !serviceProviderStripeId)
+          continue
+        let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProviderStripeId };
+        const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+        await stripe.paymentMethods.detach(
+          clonedCardId,
+          stripeOptions
+        );
+      }
+    }
+
+    await customerNodes.stripeCardsNode(mezCustomerId, data.cardId).remove()
 
     return {
       status: ServerResponseStatus.Success,
@@ -191,9 +203,10 @@ async function getCustomerId(customerId: string, stripe: Stripe) {
   return stripeCustomerId;
 }
 
-export async function getCardIdFromServiceAccount(customerId: string, cardId: string, serviceProviderId: string, customerStripe: CustomerStripe, stripe: Stripe, stripeOptions: any) {
-  let stripeCardIdWithServiceProvider: string = (await customerNodes.stripeClonedCardsNode(customerId, cardId, serviceProviderId).once('value')).val();
+export async function getCardIdFromServiceAccount(customerId: string, cardId: string, serviceProviderId: string, orderType: OrderType, mezCustomerId: string, stripe: Stripe, stripeOptions: any) {
+  let stripeCardIdWithServiceProvider: string = (await customerNodes.stripeClonedCardsNode(customerId, cardId, serviceProviderId, orderType).once('value')).val();
   if (stripeCardIdWithServiceProvider == null) {
+    let customerStripe: CustomerStripe = (await customerNodes.stripeNode(mezCustomerId).once('value')).val();
     const clonedPaymentMethod = await stripe.paymentMethods.create({
       customer: customerStripe.id,
       payment_method: customerStripe.cards[cardId].id,
@@ -201,12 +214,12 @@ export async function getCardIdFromServiceAccount(customerId: string, cardId: st
 
     const paymentMethod = await stripe.paymentMethods.attach(
       clonedPaymentMethod.id,
-      { customer: customerStripe.idsWithServiceProvider[serviceProviderId] },
+      { customer: customerStripe.idsWithServiceProvider[orderType][serviceProviderId] },
       stripeOptions
     );
 
     stripeCardIdWithServiceProvider = paymentMethod.id;
-    customerNodes.stripeClonedCardsNode(customerId, cardId, serviceProviderId).set(stripeCardIdWithServiceProvider);
+    customerNodes.stripeClonedCardsNode(customerId, cardId, serviceProviderId, orderType).set(stripeCardIdWithServiceProvider);
   }
   return stripeCardIdWithServiceProvider;
 }

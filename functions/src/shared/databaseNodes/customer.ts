@@ -1,4 +1,5 @@
 import * as firebase from "firebase-admin";
+import { OrderType } from "../models/Generic/Order";
 
 export function cart(customerId: string) {
   return firebase.database().ref(`/customers/info/${customerId}/cart`)
@@ -26,18 +27,18 @@ export function stripeCardsNode(customerId: string, cardId?: string) {
   return stripeNode(customerId).child(dbNode)
 }
 
-export function stripeClonedCardsNode(customerId: string, cardId: string, serviceProviderId?: string) {
+export function stripeClonedCardsNode(customerId: string, cardId: string, serviceProviderId: string, orderType: string) {
   let dbNode: string = `idsWithServiceProvider`;
-  if (serviceProviderId != undefined) {
-    dbNode += `/${serviceProviderId}`
+  if (serviceProviderId != undefined && orderType != undefined) {
+    dbNode += `/${serviceProviderId}/${orderType}`
   }
   return stripeCardsNode(customerId, cardId).child(dbNode)
 }
 
-export function stripeIdsWithServiceProviderNode(customerId: string, serviceProviderId?: string) {
+export function stripeIdsWithServiceProviderNode(customerId: string, serviceProviderId?: string, orderType?: OrderType) {
   let dbNode: string = `idsWithServiceProvider`;
-  if (serviceProviderId != undefined) {
-    dbNode += `/${serviceProviderId}`
+  if (serviceProviderId != undefined && orderType != undefined) {
+    dbNode += `/${orderType}/${serviceProviderId}`
   }
   return stripeNode(customerId).child(dbNode)
 }
