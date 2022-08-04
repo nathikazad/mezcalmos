@@ -14,6 +14,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScree
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderShippingLocation.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderTotalCostCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/PastOrderInfo.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/SetOrderEstTime.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -152,6 +153,10 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                         : PastOrderInfo(order: order.value!),
 
                     //============================= Customer info====================
+                    if (order.value?.inProcess() ?? false)
+                      DaRestaurantOrderTime(
+                        order: order.value!,
+                      ),
                     if (order.value?.inProcess() ?? false)
                       DriverCard(
                         driver: order.value!.dropoffDriver,

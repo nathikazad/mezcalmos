@@ -1388,6 +1388,7 @@
                         },
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Restaurant Delivery",
+                            "foodReady": "Food ready",
                             "oops": "Oops",
                             "set": "Set",
                             "time": "Time",
