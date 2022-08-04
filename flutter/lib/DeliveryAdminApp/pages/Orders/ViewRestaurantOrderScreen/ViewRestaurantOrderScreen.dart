@@ -153,6 +153,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                         : PastOrderInfo(order: order.value!),
 
                     //============================= Customer info====================
+
                     if (order.value?.inProcess() ?? false)
                       DaRestaurantOrderTime(
                         order: order.value!,
@@ -173,7 +174,10 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                           );
                         },
                       ),
-
+                    if (order.value?.inProcess() ?? false)
+                      DaRestaurantOrderTime(
+                        order: order.value!,
+                      ),
                     if (order.value!.inDeliveryPhase()) ..._mapWidget,
 
                     OrderInfoCard(order: order),

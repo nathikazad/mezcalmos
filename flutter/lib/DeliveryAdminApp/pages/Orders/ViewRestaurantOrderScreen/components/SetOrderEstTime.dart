@@ -25,7 +25,7 @@ class _DaRestaurantOrderTimeState extends State<DaRestaurantOrderTime> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(top: 10, bottom: 10),
       child: Container(
         margin: const EdgeInsets.all(8),
         child: Row(

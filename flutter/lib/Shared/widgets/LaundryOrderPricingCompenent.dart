@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
@@ -101,7 +102,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
           Flexible(
             fit: FlexFit.tight,
             child: Text(
-              item.name[userLanguage] ?? "",
+              item.name[userLanguage]?.inCaps ?? "",
               maxLines: 1,
             ),
           ),
@@ -109,7 +110,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
             width: 8,
           ),
           Text(
-            "\$${item.cost} x ${item.weight}KG = \$${item.weighedCost}",
+            "\$${item.cost.round()} x ${item.weight}KG = \$${item.weighedCost.round()}",
           ),
         ],
       ),

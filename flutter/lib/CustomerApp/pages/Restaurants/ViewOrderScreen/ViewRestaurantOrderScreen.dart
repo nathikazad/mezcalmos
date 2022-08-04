@@ -179,6 +179,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             ordersStates: order.value!.status,
                           ),
                           CustomerRestaurantOrderEst(order: order.value!),
+
                           RestaurantOrderDriverCard(
                             order: order.value!,
                           ),

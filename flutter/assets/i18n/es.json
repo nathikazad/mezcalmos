@@ -215,9 +215,9 @@
                         "CustomerRestaurantOrderEst": {
                             "estTimes": "Tiempos estimados",
                             "foodReady": "preparación de la comida",
+                            "toBeCalculated": "Para ser calculado",
                             "delivery": "Entrega"
                         },
-
                         "OrderStatusCard": {
                             "willBeReady": "Tiempo de preparación estimado",
                             "willBePicked": "Tiempo de recogida estimado",

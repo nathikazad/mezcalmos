@@ -1660,6 +1660,7 @@
                     "customer": "Customer Info",
                     "orderDate": "Order Date",
                     "total": "Total",
+                    "toBeCalculated": "To be calculated",
                     "orderReady": "Order ready for delivery"
                 }
             }

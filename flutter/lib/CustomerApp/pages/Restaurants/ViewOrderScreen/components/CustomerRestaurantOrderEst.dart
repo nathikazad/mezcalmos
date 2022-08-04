@@ -15,7 +15,8 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_getDeliveryTime() != null || _getFoodReadyTime() != null) {
+    if (_getDeliveryTime() != null ||
+        (_showFoodReadyTime() && _getFoodReadyTime() != null)) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -106,14 +107,14 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
 
   String? _getFoodReadyTime() {
     if (order.estimatedFoodReadyTime != null) {
-      return "${_i18n()["foodReady"]}: ${order.estimatedFoodReadyTime!.getEstimatedTime()}";
+      return "${_i18n()["foodReady"]} ${order.estimatedFoodReadyTime!.getEstimatedTime()}";
     } else
       return null;
   }
 
   String? _getDeliveryTime() {
     if (order.estimatedDropoffAtCustomerTime != null) {
-      return "${_i18n()["delivery"]}: ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
+      return "${_i18n()["delivery"]} ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
     } else
       return null;
   }
