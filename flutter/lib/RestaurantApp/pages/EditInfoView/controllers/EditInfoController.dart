@@ -88,7 +88,10 @@ class ROpEditInfoController {
     btnClicked.value = true;
     if (restaurantNameTxt.text != '' &&
         restaurantNameTxt.text != restaurant.value?.info.name) {
+      mezDbgPrint("Updating restuarnt name .....=>${restaurantNameTxt.text}");
+
       await restaurantInfoController.setRestaurantName(restaurantNameTxt.text);
+      mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
     }
     if (newImageFile.value != null) {
       await restaurantInfoController

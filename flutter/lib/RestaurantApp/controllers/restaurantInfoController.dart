@@ -77,26 +77,20 @@ class RestaurantInfoController extends GetxController {
   // }
 
   Future<void> setRestaurantName(String newName) async {
-    mezDbgPrint(
-        "------->>> ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurant.value!.info.id)}/name");
     await _databaseHelper.firebaseDatabase
         .ref()
         .child(serviceProviderInfos(
-                orderType: OrderType.Restaurant,
-                providerId: restaurant.value!.info.id) +
+                orderType: OrderType.Restaurant, providerId: restaurantId) +
             '/info')
         .child('name')
         .set(newName);
   }
 
   Future<void> setRestaurantImage(String newImage) async {
-    mezDbgPrint(
-        "------->>> ${serviceProviderInfos(orderType: OrderType.Restaurant, providerId: restaurant.value!.info.id)}/name");
     await _databaseHelper.firebaseDatabase
         .ref()
         .child(serviceProviderInfos(
-                orderType: OrderType.Restaurant,
-                providerId: restaurant.value!.info.id) +
+                orderType: OrderType.Restaurant, providerId: restaurantId) +
             '/info')
         .child('image')
         .set(newImage);
