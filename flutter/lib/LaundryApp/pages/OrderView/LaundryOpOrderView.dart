@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpCustomer.dart';
@@ -48,7 +49,9 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
     order.value = controller.getOrder(orderId) as LaundryOrder;
     // first time init map
     //mGoogleMapController.animateMarkersPolyLinesBounds(true);
-    mGoogleMapController.recenterButtonEnabled.value = true;
+    mGoogleMapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
+    mGoogleMapController.recenterButtonEnabled.value = false;
+    mGoogleMapController.periodicRerendering.value = true;
 
     // mGoogleMapController.periodicRerendering.value = true;
     if (order.value?.routeInformation?.polyline != null)
@@ -287,7 +290,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
         height: 350,
         child: MGoogleMap(
           mGoogleMapController: mGoogleMapController,
-          padding: EdgeInsets.symmetric(vertical: 20),
+          padding: EdgeInsets.all(20),
           rerenderDuration: Duration(seconds: 30),
           recenterBtnBottomPadding: 20,
         ),

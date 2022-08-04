@@ -42,7 +42,7 @@ class LocationSearchComponent extends StatefulWidget {
     this.suffixPadding = EdgeInsets.zero,
     this.showSearchIcon = false,
     this.readOnly = false,
-    this.hintPadding = const EdgeInsets.only(left: 10, top: 20),
+    this.hintPadding = const EdgeInsets.only(left: 2, top: 2),
     this.useBorders = true,
     this.leftTopRadius = 6,
     this.leftBotRaduis = 6,
@@ -124,7 +124,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
               ),
             ),
             child: Stack(
-              alignment: Alignment.topLeft,
+              alignment: Alignment.center,
               children: <Widget>[
                 AutoCompleteTextView(
                   readOnly: widget.readOnly,
@@ -137,6 +137,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Colors.black87,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   controller: _controller,
                   suggestionsApiFetchDelay: 1,
@@ -186,13 +187,13 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                         child: setSuffixIcon(),
                       )),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0, top: 5),
-                  child: Text(
-                    widget.label,
-                    style: widget.labelStyle,
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 10.0, top: 5),
+                //   child: Text(
+                //     widget.label,
+                //     style: widget.labelStyle,
+                //   ),
+                // ),
               ],
             ),
           ),

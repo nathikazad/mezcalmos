@@ -345,21 +345,36 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
   }
 
   Future<void> _showConfirmationDialog() async {
-    return showConfirmationDialog(
+    return showStatusInfoDialog(
       context,
-      title: 'Oops!',
-      primaryButtonText: "Yes, start ride",
-      helperText: _i18n()["tooFarFromstartRide"],
-      onYesClick: () async {
+      status: "Confirm",
+      description: _i18n()["tooFarFromstartRide"],
+      primaryClickTitle: "Yes, start ride",
+      primaryCallBack: () async {
         final ServerResponse resp = await controller.startRide();
         if (!resp.success) {
           MezSnackbar("Error", "Server Error");
         }
-        _clickedBottomButton.value = false;
-        setState(() {});
-        Get.back<void>();
       },
+      secondaryClickTitle: "No",
+      secondaryCallBack: () => Get.back<void>(),
     );
+
+    // showConfirmationDialog(
+    //   context,
+    //   title: 'Oops!',
+    //   primaryButtonText: "Yes, start ride",
+    //   helperText: _i18n()["tooFarFromstartRide"],
+    //   onYesClick: () async {
+    //     final ServerResponse resp = await controller.startRide();
+    //     if (!resp.success) {
+    //       MezSnackbar("Error", "Server Error");
+    //     }
+    //     _clickedBottomButton.value = false;
+    //     setState(() {});
+    //     Get.back<void>();
+    //   },
+    // );
   }
 
   Expanded get _cancelButton => Expanded(

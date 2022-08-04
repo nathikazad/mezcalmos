@@ -183,15 +183,17 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     return mezcalmosAppBar(
       AppBarLeftButtonType.Back,
       autoBack: true,
-      titleWidget: Obx(() => Text(
-            '${order.value?.laundry?.name ?? ""}',
-            style: TextStyle(
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.w600,
-              fontSize: 15.sp,
-              color: Colors.black,
-            ),
-          )),
+      titleWidget: Obx(
+        () => Text(
+          '${order.value?.laundry?.name ?? ""}',
+          style: TextStyle(
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.w600,
+            fontSize: 15.sp,
+            color: Colors.black,
+          ),
+        ),
+      ),
       showNotifications: true,
       ordersRoute: kOrdersRoute,
     );
@@ -201,7 +203,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         Container(
           height: 350,
           child: MGoogleMap(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.zero,
             mGoogleMapController: mapController,
             recenterBtnBottomPadding: 20,
             // rerenderDuration: Duration(seconds: 10),
