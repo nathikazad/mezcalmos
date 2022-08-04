@@ -65,9 +65,14 @@ class Restaurant extends Service {
         schedule: schedule,
         restaurantState: restaurantState,
         restaurantsView: restaurantsView);
-    restaurantData["menu2"].forEach((categoryId, categoryData) {
-      restaurant._categories.add(Category.fromData(categoryId, categoryData));
-    });
+    if (restaurantData["menu"] != null)
+      restaurantData["menu2"].forEach((categoryId, categoryData) {
+        restaurant._categories.add(Category.fromData(categoryId, categoryData));
+      });
+    if (restaurantData["menu2"] != null)
+      restaurantData["menu2"].forEach((categoryId, categoryData) {
+        restaurant._categories.add(Category.fromData(categoryId, categoryData));
+      });
     restaurant._categories
         .sort((Category a, Category b) => a.position.compareTo(b.position));
     return restaurant;

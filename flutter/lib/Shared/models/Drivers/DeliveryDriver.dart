@@ -1,5 +1,4 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
@@ -120,7 +119,6 @@ class DeliveryDriverUserInfo extends UserInfo {
         );
 
   factory DeliveryDriverUserInfo.fromData(data) {
-    mezDbgPrint("Data ===========> $data");
     final LatLng? location = data["location"] != null
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])
