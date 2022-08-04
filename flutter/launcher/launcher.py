@@ -885,28 +885,28 @@ class Config:
         #     open('.checksum', 'w+').write(currentBuild)
 
 if __name__ == "__main__":
-    # if 'offers' in argv:
-    #     simulate_counter_offers(
-    #         orderId= ,
-    #         customerId= "3PxAZf7HgzcjjJMylVhti3uC0l92"
-    #     )
-    #     exit(0)
+    if 'offers' in argv:
+        simulate_counter_offers(
+            orderId= "-N8_J16QRVKzS9rnI4DH",
+            customerId= "tSG0eSFZNGNA7grjBPFEBbpYwjE3"
+        )
+        exit(0)
     if 'drive' in argv:
         # Taxi called from : 
         # Customer's destination To :
         simulateDriverMovements( 
             customerId="tSG0eSFZNGNA7grjBPFEBbpYwjE3", # Montassar's customer id
-            orderId="-N8ZqnonIiPTA1w_iN3i", # taxi order id
+            orderId="-N8_J16QRVKzS9rnI4DH", # taxi order id
             orderType="taxi",
             driverId="oAxB9JquC1S7zQyRUuZF2gI1suL2", # driverId
             driverType="driver",
             # start="15.866373,-97.068697",
-            start="15.86553,-97.05684",
+            end="15.835721354763855,-97.04348623752594",
             # 19.38003452020731 | -98.96333869546652
             # destination : 15.835502076340775,-97.04348623752594
-            end="15.833821891976175,-97.04249935224652",
+            start="15.83476,-97.04242",
             # end="15.865125366502896,-97.05751821398735",
-            duration_sec=200
+            duration_sec=120
         )
     Config(argv)
     exit(DW_EXIT_REASONS.NORMAL)
