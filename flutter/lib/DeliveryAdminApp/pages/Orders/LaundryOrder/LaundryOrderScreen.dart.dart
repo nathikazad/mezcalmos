@@ -172,8 +172,6 @@ class _LaundryOrderScreenState extends State<LaundryOrderScreen> {
                             ? order.value!.pickupDriver
                             : order.value!.dropoffDriver,
                         order: order.value!,
-                        driverUserInfoAndUpdateStatus: deliveryDriverUserInfo
-                            .driverUserInfoAndUpdateStatus,
                         assignDriverCallback: ({
                           required DeliveryDriver deliveryDriver,
                           required bool changeDriver,

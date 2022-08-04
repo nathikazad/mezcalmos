@@ -72,7 +72,7 @@ class _OrderEstimatedTimeComponentState
                   ),
                 ),
                 Spacer(),
-                _editSetButton(context)
+                if (widget.order.isAtLaundry()) _editSetButton(context)
               ],
             ),
           ),

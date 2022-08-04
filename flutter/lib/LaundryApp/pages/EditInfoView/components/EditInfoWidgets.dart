@@ -117,7 +117,7 @@ class EditInfoWidgets {
                         ? "${_i18n()["workingHoursCard"]["open"]}"
                         : "${_i18n()["workingHoursCard"]["closed"]}",
                     style: Get.textTheme.bodyText2?.copyWith(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w600,
                         color: editInfoController
                                 .newSchedule.value!.openHours[weekday]!.isOpen
                             ? Color(0xFF219125)

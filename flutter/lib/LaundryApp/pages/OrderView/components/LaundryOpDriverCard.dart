@@ -123,7 +123,8 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
     if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
         order.estimatedPickupFromCustomerTime != null) {
       return "${_i18n()["pickUpTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedPickupFromCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(order.estimatedPickupFromCustomerTime!.toLocal())}";
-    } else if (order.estimatedDropoffAtCustomerTime != null) {
+    } else if (order.estimatedDropoffAtCustomerTime != null &&
+        order.status != LaundryOrderStatus.PickedUpFromLaundry) {
       return "${_i18n()["dropOffTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedDropoffAtCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
     } else {
       return null;

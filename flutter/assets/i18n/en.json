@@ -444,7 +444,7 @@
                         "LaundryOrderStatusCard": {
                             "orderReceived": "Order Received",
                             "otwPickUp": "Pickup on the way",
-                            "pickedUp": "Order Pickedup",
+                            "pickedUp": "Order picked up",
                             "atLaundry": "At laundry",
                             "readyForDelivery": "Ready for Delivery",
                             "otwDelivery": "Delivery on the way",

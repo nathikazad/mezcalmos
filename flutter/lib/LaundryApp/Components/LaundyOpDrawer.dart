@@ -136,6 +136,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
     return _navigationLink(
         onClick: () {
           languageController.changeUserLanguage();
+
           _drawerController.closeMenu();
         },
         icon: Icons.translate,

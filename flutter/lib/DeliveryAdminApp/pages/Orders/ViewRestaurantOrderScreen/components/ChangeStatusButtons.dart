@@ -9,6 +9,9 @@ List<Widget> buildRestOrderButtons(
   if (order.value!.inProcess()) {
     return <Widget>[
       changeStatusButton(order)!,
+      SizedBox(
+        height: 8,
+      ),
       ButtonsStyle.cancelButtonWidget(order.value!.orderId)
     ];
   } else

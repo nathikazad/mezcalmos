@@ -145,10 +145,11 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
 
   Widget _laundryImage() {
     return CachedNetworkImage(
-        width: double.infinity,
-        height: 20.h,
-        fit: BoxFit.cover,
-        imageUrl: laundry.value!.info.image);
+      width: double.infinity,
+      height: 20.h,
+      fit: BoxFit.cover,
+      imageUrl: laundry.value!.info.image,
+    );
   }
 
   Widget _laundryInfoHeader() {
