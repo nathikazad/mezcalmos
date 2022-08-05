@@ -331,21 +331,38 @@ class _LaundryOrderFromToComponentState
               break;
           }
 
-          final ServerResponse _resp =
-              await Get.find<OrderController>().setEstimatedTime(
+          if (deliveryAction == DeliveryAction.Pickup) {
+            isSettingPickUpTime.value = true;
+          } else {
+            isSettingDropoffTime.value = true;
+          }
+
+          // ignore: unawaited_futures
+          Get.find<OrderController>()
+              .setEstimatedTime(
             widget.order.orderId,
             newDt,
             DeliveryDriverType.Pickup,
             deliveryAction,
             OrderType.Laundry,
-          );
+          )
+              .then((ServerResponse _resp) {
+            mezDbgPrint("resp::success ===> ${_resp.data}");
 
-          if (_resp.success) {
-            if (deliveryAction == DeliveryAction.Pickup)
-              widget.order.estimatedPickupFromCustomerTime = newDt;
-            else
-              widget.order.estimatedDropoffAtServiceProviderTime = newDt;
-          }
+            if (_resp.success) {
+              if (deliveryAction == DeliveryAction.Pickup)
+                widget.order.estimatedPickupFromCustomerTime = newDt;
+              else
+                widget.order.estimatedDropoffAtServiceProviderTime = newDt;
+            }
+            setState(() {});
+          }).whenComplete(() {
+            if (deliveryAction == DeliveryAction.Pickup) {
+              isSettingPickUpTime.value = false;
+            } else {
+              isSettingDropoffTime.value = false;
+            }
+          });
         },
       );
     } else if (widget.order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
@@ -387,7 +404,8 @@ class _LaundryOrderFromToComponentState
             isSettingDropoffTime.value = true;
           }
 
-          await Get.find<OrderController>()
+          // ignore: unawaited_futures
+          Get.find<OrderController>()
               .setEstimatedTime(
             widget.order.orderId,
             newDt,

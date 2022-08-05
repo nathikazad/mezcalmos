@@ -93,7 +93,7 @@ def simulate_counter_offers(orderId:str , customerId:str) -> None:
     
 
 # driverId, driverType, From, To, Duration
-def simulateDriverMovements(customerId, orderId, orderType, driverId, driverType, start, end , duration_sec):
+def simulateDriverMovements(customerId, orderId, orderType, driverId, driverType, start, end , duration_sec, providerId=None):
 	# google-token : AIzaSyBPDCJv6MUMO-cDhVrcJ2g7JZU-bg_6Kq8
     from requests import get
     import polyline
@@ -108,11 +108,33 @@ def simulateDriverMovements(customerId, orderId, orderType, driverId, driverType
     })
     ref = db.reference('/')
 
-    # path1 = f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/'
-    path1 = f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/'
-    path2 = f'restaurants/inProcessOrders/{driverId}/{orderId}/{driverType}/location/'
-    path3 = f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/'
-    # path3 = f'orders/inProcess/taxi/{orderId}/{driverType}/location/'
+    paths_resto = [
+
+        f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/',
+        f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/',
+        f'restaurants/inProcessOrders/{providerId}/{orderId}/{driverType}/location/',
+        f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/',
+
+    ]
+
+    paths_laundry = [
+
+        f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/',
+        f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/',
+        f'laundries/inProcessOrders/{providerId}/{orderId}/{driverType}/location/',
+        f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/',
+
+    ]
+
+    paths_taxi = [
+
+        f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/',
+        f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/',
+        f'laundries/inProcessOrders/{providerId}/{orderId}/{driverType}/location/',
+        f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/',
+
+    ]
+
 
     link = f'https://maps.googleapis.com/maps/api/directions/json?origin={start}&destination={end}&key=AIzaSyBPDCJv6MUMO-cDhVrcJ2g7JZU-bg_6Kq8'
     res  = get(link).content
@@ -136,20 +158,12 @@ def simulateDriverMovements(customerId, orderId, orderType, driverId, driverType
                 "lng" : coord[1],
             }
         }
-        print(f"[+] Applying {path1} => lat:{coord[0]}, lng:{coord[1]}")
-        CHECK_INPUT()
-        ref.child(path1).set(to_write)
-       
-        print(f"[+] Applying {path2} => lat:{coord[0]}, lng:{coord[1]}")
-        ref.child(path2).set(to_write)
-       
-        print(f"[+] Applying {path3} => lat:{coord[0]}, lng:{coord[1]}")
-        ref.child(path3).set(to_write)
 
+        for path in paths_laundry:
+            print(f"[+] Applying {path} => lat:{coord[0]}, lng:{coord[1]}")
+            CHECK_INPUT()
+            ref.child(path).set(to_write)
         sleep(sleep_time)
-        # exit(0)
-        # exit(0)
-        # else : print(f"Skipping ... {type(coord[0])} , {coord[1]} ")
 
     exit(0)
 # LAST UPDATE INFOS : 
@@ -896,16 +910,18 @@ if __name__ == "__main__":
         # Customer's destination To :
         simulateDriverMovements( 
             customerId="tSG0eSFZNGNA7grjBPFEBbpYwjE3", # Montassar's customer id
-            orderId="-N8j7Jy66jqQ8hp6Z35n", # taxi order id
-            orderType="restaurant",
+            orderId="-N8kKoK-HjkEMVmp-xDN", # taxi order id
+            orderType="laundry",
             driverId="oAxB9JquC1S7zQyRUuZF2gI1suL2", # driverId
-            driverType="dropoffDriver",
+            driverType="pickupDriver",
+            providerId="-N5kJoc2aVz9Qdm9X9yP",
             # Customer's Home : 15.835299822564249,-97.0356907323003
-            # Restaurant : 15.835502076340775,-97.04348623752594
+            # Provider location : 15.835502076340775,-97.04348623752594
             # driver location - 15.8330619,-97.0368584,17
             end="15.835502076340775,-97.04348623752594",
-            start="15.8330619,-97.0368584",
-            duration_sec=100
+            # start="15.8330619,-97.0368584", # sense interdit
+            start="15.8337,-97.04205", # driver near restaurant
+            duration_sec=80
         )
     Config(argv)
     exit(DW_EXIT_REASONS.NORMAL)
