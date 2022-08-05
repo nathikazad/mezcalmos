@@ -232,8 +232,8 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                   );
                 },
                 initialTime: TimeOfDay(
-                    hour: widget.order.orderTime.hour,
-                    minute: widget.order.orderTime.minute))
+                    hour: widget.order.orderTime.toLocal().hour,
+                    minute: widget.order.orderTime.toLocal().minute))
             .then((TimeOfDay? value) {
           if (value != null) {
             selectedTime.value = value;
@@ -299,7 +299,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
             ),
             Obx(
               () => Text(
-                  "${DateFormat("dd MMMM yyyy").format(selectedDate.value?.toLocal() ?? DateTime.now())}"),
+                  "${DateFormat("dd MMMM yyyy").format(selectedDate.value?.toLocal() ?? DateTime.now().toLocal())}"),
             ),
             Spacer(),
             Icon(Icons.chevron_right_rounded)
@@ -311,7 +311,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
 
   void _setOrderEstTime(DateTime value) {
     isClicked.value = true;
-    if (value.difference(widget.order.orderTime).inMinutes > 30) {
+    if (value.difference(widget.order.orderTime).inMinutes > 5) {
       orderController
           .setEstimatedFoodReadyTime(widget.order.orderId, value)
           .whenComplete(() {
@@ -329,7 +329,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
       Get.showSnackbar(GetSnackBar(
         snackPosition: SnackPosition.TOP,
         title: "Error",
-        message: "",
+        message: "Minimum 5 miutes prepare time",
       ));
     }
   }
