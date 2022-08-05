@@ -47,9 +47,9 @@ String getTaxiOrderRoute(String orderId) {
 
 // LAUNDRIES DASHBORD //
 String getCategoryRoute({String? categoryId, required String laundryId}) {
-  final String catgRoute = kCategoryView.replaceFirst(":laundryId", laundryId);
+  String catgRoute = kCategoryView.replaceFirst(":laundryId", laundryId);
   if (categoryId != null) {
-    catgRoute.replaceFirst(":categoryId", categoryId);
+    catgRoute = catgRoute.replaceFirst(":categoryId", categoryId);
   }
   return catgRoute;
 }
