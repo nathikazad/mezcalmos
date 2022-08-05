@@ -208,7 +208,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 _restaurantController.cart.value.restaurant!.info.id,
             orderType: OrderType.Restaurant,
             paymentAmount: _restaurantController.cart.value.totalCost);
-        await acceptPayment(
+        await acceptPaymentWithSheet(
             paymentIntentData: paymentIntentResponse.data,
             merchantName:
                 _restaurantController.cart.value.restaurant!.info.name);

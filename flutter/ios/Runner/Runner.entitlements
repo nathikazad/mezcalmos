@@ -12,5 +12,9 @@
 	<array>
 		<string>applinks:mezprovs.page.link</string>
 	</array>
+	<key>com.apple.developer.in-app-payments</key>
+	<array>
+		<string>merchant.mezcalmos</string>
+	</array>
 </dict>
 </plist>

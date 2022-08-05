@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 enum StripePaymentStatus { Authorized, Captured, Cancelled }
 
@@ -102,7 +103,91 @@ Future<ServerResponse> getPaymentIntent(
   }
 }
 
-Future<void> acceptPayment(
+Future<void> acceptPaymentWithSheet(
+    {required paymentIntentData, required String merchantName}) async {
+  Stripe.publishableKey = paymentIntentData['publishableKey'];
+  Stripe.merchantIdentifier = merchantName;
+  Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];
+  await Stripe.instance.applySettings();
+  //2. initialize the payment sheet
+  await Stripe.instance.initPaymentSheet(
+    paymentSheetParameters: SetupPaymentSheetParameters(
+        paymentIntentClientSecret: paymentIntentData['paymentIntent'],
+        merchantDisplayName: merchantName,
+        customerId: paymentIntentData['customer'],
+        customerEphemeralKeySecret: paymentIntentData['ephemeralKey'],
+        style: ThemeMode.light,
+        applePay: PaymentSheetApplePay(merchantCountryCode: "MX"),
+        googlePay: PaymentSheetGooglePay(merchantCountryCode: "MX")),
+  );
+  await Stripe.instance.presentPaymentSheet();
+}
+
+Future<bool> isApplePaySupported() {
+  return Stripe.instance.checkApplePaySupport();
+}
+
+Future<bool> isGooglePaySupported() {
+  return Stripe.instance.isGooglePaySupported(IsGooglePaySupportedParams(
+      testEnv: true, existingPaymentMethodRequired: true));
+}
+
+Future<void> acceptPaymentWithApplePay(
+    {required paymentIntentData,
+    required String merchantName,
+    required num paymentAmount}) async {
+  try {
+    Stripe.publishableKey = paymentIntentData['publishableKey'];
+    Stripe.merchantIdentifier = merchantName;
+    final clientSecret = paymentIntentData['paymentIntent'];
+    Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];
+    await Stripe.instance.applySettings();
+    // 1. Present Apple Pay sheet
+    await Stripe.instance.presentApplePay(
+      ApplePayPresentParams(
+        cartItems: [
+          ApplePayCartSummaryItem.immediate(
+            label: merchantName,
+            amount: paymentAmount.toString(),
+          ),
+        ],
+        country: 'MX',
+        currency: 'MXN',
+      ),
+    );
+    await Stripe.instance.confirmApplePayPayment(clientSecret);
+    MezSnackbar("Apple Pay Success", "Apple Pay payment succesfully completed");
+  } catch (e) {
+    MezSnackbar("Apple Pay Error", e.toString());
+    throw e;
+  }
+}
+
+Future<void> acceptPaymentWithGooglePay(
+    {required paymentIntentData,
+    required String merchantName,
+    required num paymentAmount}) async {
+  try {
+    Stripe.publishableKey = paymentIntentData['publishableKey'];
+    Stripe.merchantIdentifier = merchantName;
+    final clientSecret = paymentIntentData['paymentIntent'];
+    Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];
+    await Stripe.instance.applySettings();
+
+    await Stripe.instance.initGooglePay(GooglePayInitParams(
+        testEnv: true, merchantName: merchantName, countryCode: 'US'));
+
+    await Stripe.instance.presentGooglePay(
+      PresentGooglePayParams(clientSecret: clientSecret),
+    );
+    MezSnackbar("Google Pay Success", "Payment succesfully completed");
+  } catch (e) {
+    MezSnackbar("Google Pay Error", e.toString());
+    throw e;
+  }
+}
+
+Future<void> acceptPaymentWithSavedCard(
     {required paymentIntentData, required String merchantName}) async {
   Stripe.publishableKey = paymentIntentData['publishableKey'];
   Stripe.merchantIdentifier = merchantName;
