@@ -39,6 +39,7 @@ class _ROpItemViewState extends State<ROpItemView>
     itemId = Get.parameters["itemId"];
     categoryId = Get.parameters["categoryId"];
     restuarantID = Get.parameters["restaurantId"];
+    mezDbgPrint("Restuarnt id in item view ============> $restuarantID");
     if (restuarantID != null) {
       if (Get.arguments != null) {
         specials = Get.arguments["specials"] as bool;
@@ -293,6 +294,7 @@ class _ROpItemViewState extends State<ROpItemView>
           ROpItemOptionCard(
             viewController: viewController,
             itemId: itemId,
+            restaurantID: restuarantID!,
             categoryID: categoryId,
           ),
           MezAddButton(

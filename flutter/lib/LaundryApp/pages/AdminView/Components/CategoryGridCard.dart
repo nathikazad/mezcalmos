@@ -5,8 +5,9 @@ import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
@@ -47,7 +48,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              _getRightName(),
+              _getRightName().inCaps,
               style: Get.textTheme.headline3?.copyWith(fontSize: 12.sp),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,

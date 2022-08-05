@@ -92,6 +92,7 @@ class ItemViewController {
     editableItem.value = restaurant.value!.findItemById(itemId);
     mezDbgPrint(editableItem.value!.toJson());
     prItemNameController.text = editableItem.value!.name[prLang]!;
+    newImageUrl.value = editableItem.value!.image;
     scItemNameController.text = editableItem.value!.name[scLang]!;
     prItemDescController.text = editableItem.value?.name[prLang]! ?? "";
     scItemDescController.text = editableItem.value!.description?[scLang]! ?? "";

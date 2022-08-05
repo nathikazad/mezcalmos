@@ -8,8 +8,8 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class ROpItemCard extends StatefulWidget {
   const ROpItemCard(
@@ -47,7 +47,9 @@ class _ROpItemCardState extends State<ROpItemCard> {
               : () {
                   Get.toNamed(getEditItemRoute(
                       itemId: widget.item.id!,
-                      categoryId: widget.category?.id ?? null));
+                      categoryId: widget.category?.id ?? null,
+                      restaurntID:
+                          widget.viewController.restaurant.value!.info.id));
                 },
           child: Container(
             padding: const EdgeInsets.all(5),

@@ -7,12 +7,12 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
@@ -205,8 +205,13 @@ class _LaundryOrderFromToComponentState
           final DateTime _finalDt = pickedDate.copyWithTimeOfDay(pickedTime);
           if (_finalDt.isAfter(DateTime.now())) {
             return _finalDt;
-          } else
+          } else {
             MezSnackbar('${_i18n()["oops"]}', '${_i18n()["wrongTime"]}');
+            _controllLoadingAnimation(
+              shouldStartAnimation: false,
+              action: deliveryAction,
+            );
+          }
         }
       }
 
@@ -316,26 +321,39 @@ class _LaundryOrderFromToComponentState
                   widget.order.estimatedDropoffAtServiceProviderTime!
                       .isBefore(newDt)) {
                 MezSnackbar(
-                    "Oops", "Pickup time should be before dropOff time!");
+                  "Oops",
+                  "Pickup time should be before dropOff time!",
+                );
+                _controllLoadingAnimation(
+                  shouldStartAnimation: false,
+                  action: deliveryAction,
+                );
                 return;
               }
+
               break;
             case DeliveryAction.DropOff:
               if (widget.order.estimatedPickupFromCustomerTime != null &&
                   widget.order.estimatedPickupFromCustomerTime!
                       .isAfter(newDt)) {
                 MezSnackbar(
-                    "Oops", "Pickup time should be before dropOff time!");
+                  "Oops",
+                  "Pickup time should be before dropOff time!",
+                );
+                _controllLoadingAnimation(
+                  shouldStartAnimation: false,
+                  action: deliveryAction,
+                );
                 return;
               }
+
               break;
           }
 
-          if (deliveryAction == DeliveryAction.Pickup) {
-            isSettingPickUpTime.value = true;
-          } else {
-            isSettingDropoffTime.value = true;
-          }
+          _controllLoadingAnimation(
+            shouldStartAnimation: true,
+            action: deliveryAction,
+          );
 
           // ignore: unawaited_futures
           Get.find<OrderController>()
@@ -357,11 +375,10 @@ class _LaundryOrderFromToComponentState
             }
             setState(() {});
           }).whenComplete(() {
-            if (deliveryAction == DeliveryAction.Pickup) {
-              isSettingPickUpTime.value = false;
-            } else {
-              isSettingDropoffTime.value = false;
-            }
+            _controllLoadingAnimation(
+              shouldStartAnimation: false,
+              action: deliveryAction,
+            );
           });
         },
       );
@@ -383,7 +400,13 @@ class _LaundryOrderFromToComponentState
                   widget.order.estimatedDropoffAtCustomerTime!
                       .isBefore(newDt)) {
                 MezSnackbar(
-                    "Oops", "Pickup time should be before dropOff time!");
+                  "Oops",
+                  "Pickup time should be before dropOff time!",
+                );
+                _controllLoadingAnimation(
+                  shouldStartAnimation: false,
+                  action: deliveryAction,
+                );
                 return;
               }
               break;
@@ -392,18 +415,22 @@ class _LaundryOrderFromToComponentState
                   widget.order.estimatedPickupFromServiceProviderTime!
                       .isAfter(newDt)) {
                 MezSnackbar(
-                    "Oops", "Pickup time should be before dropOff time!");
+                  "Oops",
+                  "Pickup time should be before dropOff time!",
+                );
+                _controllLoadingAnimation(
+                  shouldStartAnimation: false,
+                  action: deliveryAction,
+                );
                 return;
               }
               break;
           }
 
-          if (deliveryAction == DeliveryAction.Pickup) {
-            isSettingPickUpTime.value = true;
-          } else {
-            isSettingDropoffTime.value = true;
-          }
-
+          _controllLoadingAnimation(
+            shouldStartAnimation: true,
+            action: deliveryAction,
+          );
           // ignore: unawaited_futures
           Get.find<OrderController>()
               .setEstimatedTime(
@@ -424,15 +451,23 @@ class _LaundryOrderFromToComponentState
               setState(() {});
             }
           }).whenComplete(() {
-            if (deliveryAction == DeliveryAction.Pickup) {
-              isSettingPickUpTime.value = false;
-            } else {
-              isSettingDropoffTime.value = false;
-            }
+            _controllLoadingAnimation(
+              shouldStartAnimation: false,
+              action: deliveryAction,
+            );
           });
         },
       );
     } else
       return [];
+  }
+
+  void _controllLoadingAnimation(
+      {required bool shouldStartAnimation, required DeliveryAction action}) {
+    if (action == DeliveryAction.DropOff) {
+      isSettingDropoffTime.value = shouldStartAnimation;
+    } else {
+      isSettingDropoffTime.value = shouldStartAnimation;
+    }
   }
 }

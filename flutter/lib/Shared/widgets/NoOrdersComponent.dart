@@ -21,12 +21,9 @@ class NoOrdersComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 10,
-          ),
           Container(
-            height: 220,
-            width: 200,
+            height: 25.h,
+            width: 70.w,
             child: Image.asset(noOrdersAsset),
           ),
           SizedBox(
@@ -46,6 +43,9 @@ class NoOrdersComponent extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 color: Colors.grey.shade800),
           ),
+          SizedBox(
+            height: 20.h,
+          )
         ],
       ),
     );

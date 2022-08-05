@@ -48,7 +48,7 @@ class ROpOptionViewController {
     Get.put(RestaurantInfoController(), permanent: false);
     restaurantInfoController = Get.find<RestaurantInfoController>();
     restaurantInfoController.init(restId: restaurantId);
-    mezDbgPrint(restaurantId);
+    mezDbgPrint("ooooo ===> $restaurantId");
     restaurant.value =
         await restaurantInfoController.getRestaurantAsFuture(restaurantId);
 

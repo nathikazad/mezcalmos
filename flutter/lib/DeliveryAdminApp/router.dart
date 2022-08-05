@@ -85,17 +85,16 @@ String getROpCategoryRoute({required String restaurantId}) {
 
 String getCategoryEditRoute(
     {required String categoryId, required String restaurantId}) {
-  final String route =
-      krEditCategoryScreen.replaceFirst(":categoryId", categoryId);
-  route.replaceFirst(":restaurantId", restaurantId);
+  String route = krEditCategoryScreen.replaceFirst(":categoryId", categoryId);
+  route = route.replaceFirst(":restaurantId", restaurantId);
   return route;
 }
 
 // LAUNDRIES DASHBORD //
 String getCategoryRoute({String? categoryId, required String laundryId}) {
-  final String catgRoute = kCategoryView.replaceFirst(":laundryId", laundryId);
+  String catgRoute = kCategoryView.replaceFirst(":laundryId", laundryId);
   if (categoryId != null) {
-    catgRoute.replaceFirst(":categoryId", categoryId);
+    catgRoute = catgRoute.replaceFirst(":categoryId", categoryId);
   }
   return catgRoute;
 }
