@@ -155,7 +155,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
 
     if (data["stripePaymentInfo"] != null) {
       laundryOrder.stripePaymentInfo =
-          StripePaymentInfo.fromJson(data["stripePaymentInfo"]);
+          StripeOrderPaymentInfo.fromJson(data["stripePaymentInfo"]);
     }
 
     return laundryOrder;

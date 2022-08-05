@@ -32,6 +32,8 @@ class ViewCartScreen extends StatefulWidget {
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["ViewCartScreen"];
 
+enum CardChoice { SavedCard, GooglePay, ApplePay }
+
 class _ViewCartScreenState extends State<ViewCartScreen> {
   /// RestaurantController
   RestaurantController _restaurantController = Get.find<RestaurantController>();
@@ -58,9 +60,16 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   /// orderToLocation
   Location? orderToLocation;
 
+  CardChoice cartPaymentChoice = CardChoice.ApplePay;
+  CreditCard? savedCardChoice;
+
+
   @override
   void initState() {
     super.initState();
+    if (Get.find<CustomerAuthController>().customer.value?.savedCards == null)
+      savedCardChoice =
+          Get.find<CustomerAuthController>().customer.value!.savedCards.first;
     // check if cart empty
     // if yes redirect to home page
     _restaurantController.cart.value.cartItems.map((CartItem item) {});
@@ -200,21 +209,47 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       );
 
       String? stripePaymentId;
-      //TODO: should be changed to card
-      if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
-        final ServerResponse paymentIntentResponse = await getPaymentIntent(
-            customerId: Get.find<AuthController>().user!.id,
-            serviceProviderId:
-                _restaurantController.cart.value.restaurant!.info.id,
-            orderType: OrderType.Restaurant,
-            paymentAmount: _restaurantController.cart.value.totalCost);
-        await acceptPaymentWithSheet(
-            paymentIntentData: paymentIntentResponse.data,
-            merchantName:
-                _restaurantController.cart.value.restaurant!.info.name);
-        stripePaymentId = extractPaymentIdFromIntent(
-            paymentIntentResponse.data['paymentIntent'].toString());
+
+      switch (cartPaymentChoice) {
+        case CardChoice.ApplePay:
+          final ServerResponse paymentIntentResponse = await getPaymentIntent(
+              customerId: Get.find<AuthController>().user!.id,
+              serviceProviderId:
+                  _restaurantController.cart.value.restaurant!.info.id,
+              orderType: OrderType.Restaurant,
+              paymentAmount: _restaurantController.cart.value.totalCost);
+          stripePaymentId = extractPaymentIdFromIntent(
+              paymentIntentResponse.data['paymentIntent'].toString());
+          await acceptPaymentWithApplePay(
+              paymentAmount: _restaurantController.cart.value.totalCost,
+              paymentIntentData: paymentIntentResponse.data,
+              merchantName:
+                  _restaurantController.cart.value.restaurant!.info.name);
+          break;
+        case CardChoice.GooglePay:
+          final ServerResponse paymentIntentResponse = await getPaymentIntent(
+              customerId: Get.find<AuthController>().user!.id,
+              serviceProviderId:
+                  _restaurantController.cart.value.restaurant!.info.id,
+              orderType: OrderType.Restaurant,
+              paymentAmount: _restaurantController.cart.value.totalCost);
+          stripePaymentId = extractPaymentIdFromIntent(
+              paymentIntentResponse.data['paymentIntent'].toString());
+          await acceptPaymentWithGooglePay(
+              paymentAmount: _restaurantController.cart.value.totalCost,
+              paymentIntentData: paymentIntentResponse.data,
+              merchantName:
+                  _restaurantController.cart.value.restaurant!.info.name);
+          break;
+        case CardChoice.SavedCard:
+          stripePaymentId = await acceptPaymentWithSavedCard(
+              serviceProviderId:
+                  _restaurantController.cart.value.restaurant!.info.id,
+              paymentAmount: _restaurantController.cart.value.totalCost,
+              card: savedCardChoice!);
+          break;
       }
+
       final ServerResponse _serverResponse = await _restaurantController
           .checkout(stripePaymentId: stripePaymentId);
 

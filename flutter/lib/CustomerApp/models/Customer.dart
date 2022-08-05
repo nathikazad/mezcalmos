@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class Customer {
@@ -5,6 +7,7 @@ class Customer {
   String? appVersion;
   dynamic notificationInfo;
   List<SavedLocation> savedLocations = <SavedLocation>[];
+  List<CreditCard> savedCards = <CreditCard>[];
   dynamic data;
 
   Customer.fromSnapshotData(data) {
@@ -12,7 +15,7 @@ class Customer {
     notificationInfo = data?["notificationInfo"];
 
     if (data["savedLocations"] != null) {
-      Map<String, dynamic>.from(data?["savedLocations"])
+      Map<String, dynamic>.from(data["savedLocations"])
           .entries
           .forEach((MapEntry<String, dynamic> entry) {
         savedLocations.add(
@@ -20,11 +23,17 @@ class Customer {
         );
       });
     }
-    // for (var locationId in ) {
-    //   dynamic locationData = data["savedLocations"][locationId];
-    //   newSavedLocations
-    //       .add(SavedLocation.fromData(id: locationId, data: locationData));
-    // }
+    if (data["stripe"] != null) {
+      if (data["stripe"]["cards"] != null) {
+        Map<String, dynamic>.from(data["stripe"]["cards"])
+            .entries
+            .forEach((MapEntry<String, dynamic> entry) {
+          savedCards.add(
+            CreditCard.fromData(id: entry.key, data: entry.value),
+          );
+        });
+      }
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -71,5 +80,29 @@ class SavedLocation {
 
     json["name"] = name;
     return json;
+  }
+}
+
+class CreditCard {
+  String id;
+  CardBrand brand;
+  num expMonth;
+  num expYear;
+  String last4;
+
+  CreditCard(
+      {required this.id,
+      required this.brand,
+      required this.expYear,
+      required this.expMonth,
+      required this.last4});
+
+  factory CreditCard.fromData({required String id, required dynamic data}) {
+    return CreditCard(
+        id: id,
+        brand: data["brand"]!.toString().toCardBrand() ?? CardBrand.Visa,
+        expYear: data["expYear"],
+        expMonth: data["expMonth"],
+        last4: data["last4"]);
   }
 }

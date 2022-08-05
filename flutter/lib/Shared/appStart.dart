@@ -16,6 +16,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -168,6 +169,8 @@ class _StartingPointState extends State<StartingPoint> {
       hookOnFlutterErrorsStdout();
       mezDbgPrint("Done : hookOnFlutterErrorsStdout");
 
+      initializeThirdParties();
+
       setState(() => _initialized = true);
       mezDbgPrint("_initialized Set to : $_initialized");
     } catch (e) {
@@ -274,6 +277,11 @@ class _StartingPointState extends State<StartingPoint> {
   Future<void> waitForInitialization() async {
     await Get.find<AuthController>().authStateStream.first;
     return;
+  }
+
+  void initializeThirdParties() {
+    Stripe.publishableKey = stripePublishableKey;
+    Stripe.instance.applySettings();
   }
 
   void hookOnFlutterErrorsStdout() {

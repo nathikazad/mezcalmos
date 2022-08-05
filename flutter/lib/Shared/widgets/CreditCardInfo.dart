@@ -11,7 +11,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 
 class CreditCardInfo extends StatelessWidget {
   const CreditCardInfo({Key? key, required this.paymentInfo}) : super(key: key);
-  final StripePaymentInfo paymentInfo;
+  final StripeOrderPaymentInfo paymentInfo;
   @override
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
@@ -43,7 +43,11 @@ class CreditCardInfo extends StatelessWidget {
                             '${_i18n()["cardType"]}',
                             style: txt.bodyText2,
                           ),
-                          Text(paymentInfo.brand!.inCaps, style: txt.bodyText1),
+                          Text(
+                              paymentInfo.brand!
+                                  .toFirebaseFormatString()
+                                  .inCaps,
+                              style: txt.bodyText1),
                         ],
                       ),
                     ),

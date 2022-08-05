@@ -19,7 +19,7 @@ abstract class Order {
   Location to;
   num cost;
   RouteInformation? routeInformation;
-  StripePaymentInfo? stripePaymentInfo;
+  StripeOrderPaymentInfo? stripePaymentInfo;
   num? totalCostBeforeShipping;
   num? totalCost;
   num? refundAmount;

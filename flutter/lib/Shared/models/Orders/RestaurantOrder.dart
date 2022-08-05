@@ -133,7 +133,7 @@ class RestaurantOrder extends DeliverableOrder {
 
     if (data["stripePaymentInfo"] != null) {
       restaurantOrder.stripePaymentInfo =
-          StripePaymentInfo.fromJson(data["stripePaymentInfo"]);
+          StripeOrderPaymentInfo.fromJson(data["stripePaymentInfo"]);
     }
 
     data["items"].forEach((dynamic itemId, dynamic itemData) {

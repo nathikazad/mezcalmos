@@ -18,6 +18,8 @@ const String authPort = ":9099";
 const String dbRoot = ":9000/?ns=$db";
 const int functionPort = 5001;
 const String placesApikey = "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
+const String stripePublishableKey =
+    "pk_test_51KxdsRDV5wKm9SNKkEwYTuMUdxRAULh7UUy2w42pV27dDtUc9CBNioU426ftPLzxU5dRd8sZv3UnGgpt8RsDF9xf000oUAmiZS";
 // can be dev / prod
 
 // ----------------- TEST STRINGS ----------------- //

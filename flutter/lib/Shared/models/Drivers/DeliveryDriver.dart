@@ -120,7 +120,6 @@ class DeliveryDriverUserInfo extends UserInfo {
         );
 
   factory DeliveryDriverUserInfo.fromData(data) {
-    mezDbgPrint("Data ===========> $data");
     final LatLng? location = data["location"] != null
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])
