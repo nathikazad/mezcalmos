@@ -44,7 +44,7 @@ extension parseDateTime on DateTime {
     } else if (now.difference(toLocal()).inHours.abs() > 0) {
       return "${_i18n()["at"]} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${_i18n()["in"]} ${now.difference(toLocal()).inMinutes.abs()} mins";
+      return " ${_i18n()["in"]} ${now.difference(toLocal()).inMinutes.abs()} min";
     }
   }
 
