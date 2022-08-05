@@ -109,10 +109,10 @@ def simulateDriverMovements(customerId, orderId, orderType, driverId, driverType
     ref = db.reference('/')
 
     # path1 = f'deliveryDrivers/inProcessOrders/{driverId}/{orderId}/{driverType}/location/'
-    # path2 = f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/'
-    path1 = f'taxis/inProcessOrders/{driverId}/{orderId}/{driverType}/location/'
-    path2 = f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/'
-    path3 = f'orders/inProcess/taxi/{orderId}/{driverType}/location/'
+    path1 = f'orders/inProcess/{orderType}/{orderId}/{driverType}/location/'
+    path2 = f'restaurants/inProcessOrders/{driverId}/{orderId}/{driverType}/location/'
+    path3 = f'customers/inProcessOrders/{customerId}/{orderId}/{driverType}/location/'
+    # path3 = f'orders/inProcess/taxi/{orderId}/{driverType}/location/'
 
     link = f'https://maps.googleapis.com/maps/api/directions/json?origin={start}&destination={end}&key=AIzaSyBPDCJv6MUMO-cDhVrcJ2g7JZU-bg_6Kq8'
     res  = get(link).content
@@ -896,17 +896,16 @@ if __name__ == "__main__":
         # Customer's destination To :
         simulateDriverMovements( 
             customerId="tSG0eSFZNGNA7grjBPFEBbpYwjE3", # Montassar's customer id
-            orderId="-N8_J16QRVKzS9rnI4DH", # taxi order id
-            orderType="taxi",
+            orderId="-N8j7Jy66jqQ8hp6Z35n", # taxi order id
+            orderType="restaurant",
             driverId="oAxB9JquC1S7zQyRUuZF2gI1suL2", # driverId
-            driverType="driver",
-            # start="15.866373,-97.068697",
-            end="15.835721354763855,-97.04348623752594",
-            # 19.38003452020731 | -98.96333869546652
-            # destination : 15.835502076340775,-97.04348623752594
-            start="15.83476,-97.04242",
-            # end="15.865125366502896,-97.05751821398735",
-            duration_sec=120
+            driverType="dropoffDriver",
+            # Customer's Home : 15.835299822564249,-97.0356907323003
+            # Restaurant : 15.835502076340775,-97.04348623752594
+            # driver location - 15.8330619,-97.0368584,17
+            end="15.835502076340775,-97.04348623752594",
+            start="15.8330619,-97.0368584",
+            duration_sec=100
         )
     Config(argv)
     exit(DW_EXIT_REASONS.NORMAL)

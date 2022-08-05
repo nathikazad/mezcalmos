@@ -45,7 +45,8 @@ class _LaundryOrderFromToComponentState
 
   ServiceInfo? laundry;
   // This will lock the setEstimatedTime button click and show loading instead.
-  bool _edittingEstimatedTime = false;
+  RxBool isSettingPickUpTime = false.obs;
+  RxBool isSettingDropoffTime = false.obs;
   @override
   void initState() {
     super.initState();
@@ -61,60 +62,62 @@ class _LaundryOrderFromToComponentState
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8),
-      child: AnimatedOrderInfoCard(
-        // customer
-        customerImage: widget.order.customer.image,
-        customerName: widget.order.customer.name,
-        enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
-        customerTimeWidgets: _dateTimeSetter(
-          (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)
-              ? DeliveryAction.Pickup
-              : DeliveryAction.DropOff,
-          context,
-        ),
-        onCustomerMsgClick: () {
-          if (widget.order.getCustomerDriverChatId() != null) {
-            Get.toNamed<void>(
-              getMessagesRoute(
+      child: Obx(
+        () => AnimatedOrderInfoCard(
+          // customer
+          customerImage: widget.order.customer.image,
+          customerName: widget.order.customer.name,
+          enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
+          customerTimeWidgets: _dateTimeSetter(
+            (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)
+                ? DeliveryAction.Pickup
+                : DeliveryAction.DropOff,
+            context,
+          ),
+          onCustomerMsgClick: () {
+            if (widget.order.getCustomerDriverChatId() != null) {
+              Get.toNamed<void>(
+                getMessagesRoute(
+                    orderType: OrderType.Laundry,
+                    chatId: widget.order.getCustomerDriverChatId()!,
+                    orderId: widget.order.orderId,
+                    recipientType: ParticipantType.Customer),
+              );
+            }
+          },
+          // landry
+          serviceProviderImage: widget.order.laundry!.image,
+          serviceProviderName: widget.order.laundry!.name,
+          serviceProviderTimeWidgets: _dateTimeSetter(
+            (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)
+                ? DeliveryAction.DropOff
+                : DeliveryAction.Pickup,
+            context,
+          ),
+          onServiceMsgClick: () {
+            if (widget.order.getServiceDriverChatId() != null) {
+              Get.toNamed<void>(getMessagesRoute(
                   orderType: OrderType.Laundry,
-                  chatId: widget.order.getCustomerDriverChatId()!,
+                  chatId: widget.order.getServiceDriverChatId()!,
                   orderId: widget.order.orderId,
-                  recipientType: ParticipantType.Customer),
-            );
-          }
-        },
-        // landry
-        serviceProviderImage: widget.order.laundry!.image,
-        serviceProviderName: widget.order.laundry!.name,
-        serviceProviderTimeWidgets: _dateTimeSetter(
-          (widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup)
-              ? DeliveryAction.DropOff
-              : DeliveryAction.Pickup,
-          context,
+                  recipientType: ParticipantType.DeliveryAdmin));
+            }
+          },
+          // order
+          formattedOrderStatus: _getOrderStatus(),
+          subtitle: getSubTitle(),
+          order: widget.order,
+          // card Settings
+          isCustomerRowFirst:
+              widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup,
+          showMsgIconInOneLine:
+              widget.order.getCurrentPhase() == LaundryOrderPhase.Neither,
+          initialCardState: orderInfoCardState.value,
+          onCardStateChange: (OrderInfoCardState nwState) {
+            orderInfoCardState.value = nwState;
+            widget.onCardStateChange?.call(nwState);
+          },
         ),
-        onServiceMsgClick: () {
-          if (widget.order.getServiceDriverChatId() != null) {
-            Get.toNamed<void>(getMessagesRoute(
-                orderType: OrderType.Laundry,
-                chatId: widget.order.getServiceDriverChatId()!,
-                orderId: widget.order.orderId,
-                recipientType: ParticipantType.DeliveryAdmin));
-          }
-        },
-        // order
-        formattedOrderStatus: _getOrderStatus(),
-        subtitle: getSubTitle(),
-        order: widget.order,
-        // card Settings
-        isCustomerRowFirst:
-            widget.order.getCurrentPhase() == LaundryOrderPhase.Pickup,
-        showMsgIconInOneLine:
-            widget.order.getCurrentPhase() == LaundryOrderPhase.Neither,
-        initialCardState: orderInfoCardState.value,
-        onCardStateChange: (OrderInfoCardState nwState) {
-          orderInfoCardState.value = nwState;
-          widget.onCardStateChange?.call(nwState);
-        },
       ),
     );
   }
@@ -210,36 +213,37 @@ class _LaundryOrderFromToComponentState
       return null;
     }
 
-    List<Widget> _getRightContainer(DateTime? dt,
-        {required void Function(DateTime) onNewDateTimeSet}) {
+    List<Widget> _getRightContainer(
+      DateTime? dt, {
+      required void Function(DateTime) onNewDateTimeSet,
+      required RxBool isSettingTime,
+    }) {
       if (dt != null) {
         return [
           Text(DateFormat('EE, hh:mm a').format(dt)),
           SizedBox(width: 7),
           InkWell(
-            onTap: _edittingEstimatedTime
+            onTap: isSettingTime.value
                 ? null
                 : () async {
-                    setState(() {
-                      _edittingEstimatedTime = true;
-                    });
+                    isSettingTime.value = true;
+
                     final DateTime? _dt =
                         await _dateTimePicker(initialDate: dt);
-                    if (_dt != null) onNewDateTimeSet(_dt);
-
-                    setState(() {
-                      _edittingEstimatedTime = false;
-                    });
+                    if (_dt != null)
+                      onNewDateTimeSet(_dt);
+                    else
+                      isSettingTime.value = false;
                   },
             child: Container(
               padding: EdgeInsets.all(4),
-              decoration: _edittingEstimatedTime
+              decoration: isSettingTime.value
                   ? null
                   : BoxDecoration(
                       color: Color.fromRGBO(237, 237, 237, 1),
                       shape: BoxShape.circle,
                     ),
-              child: _edittingEstimatedTime
+              child: isSettingTime.value
                   ? Container(
                       height: 16,
                       width: 16,
@@ -260,28 +264,26 @@ class _LaundryOrderFromToComponentState
       } else {
         return [
           InkWell(
-            onTap: _edittingEstimatedTime
+            onTap: isSettingTime.value
                 ? null
                 : () async {
-                    setState(() {
-                      _edittingEstimatedTime = true;
-                    });
+                    isSettingTime.value = true;
                     final DateTime? _dt = await _dateTimePicker();
-                    if (_dt != null) onNewDateTimeSet(_dt);
-                    setState(() {
-                      _edittingEstimatedTime = false;
-                    });
+                    if (_dt != null)
+                      onNewDateTimeSet(_dt);
+                    else
+                      isSettingTime.value = false;
                   },
             child: Container(
               padding: EdgeInsets.all(5),
-              decoration: _edittingEstimatedTime
+              decoration: isSettingTime.value
                   ? null
                   : BoxDecoration(
                       color: Color.fromRGBO(226, 18, 51, 1),
                       borderRadius: BorderRadius.circular(4),
                     ),
               child: Center(
-                child: _edittingEstimatedTime
+                child: isSettingTime.value
                     ? ThreeDotsLoading(dotsColor: Colors.black)
                     : Text(
                         '${_i18n()["set"]} ${deliveryAction == DeliveryAction.DropOff ? "${_i18n()["dropoff"]}" : "${_i18n()["pickup"]}"} ${_i18n()["time"]}',
@@ -304,6 +306,9 @@ class _LaundryOrderFromToComponentState
         deliveryAction == DeliveryAction.Pickup
             ? widget.order.estimatedPickupFromCustomerTime?.toLocal()
             : widget.order.estimatedDropoffAtServiceProviderTime?.toLocal(),
+        isSettingTime: deliveryAction == DeliveryAction.Pickup
+            ? isSettingPickUpTime
+            : isSettingDropoffTime,
         onNewDateTimeSet: (DateTime newDt) async {
           switch (deliveryAction) {
             case DeliveryAction.Pickup:
@@ -346,10 +351,14 @@ class _LaundryOrderFromToComponentState
     } else if (widget.order.getCurrentPhase() == LaundryOrderPhase.Dropoff) {
       mezDbgPrint(" PHASE ==> LaundryOrderPhase.Dropoff");
       mezDbgPrint(" ACTION ==> $deliveryAction");
+
       return _getRightContainer(
         deliveryAction == DeliveryAction.Pickup
             ? widget.order.estimatedPickupFromServiceProviderTime?.toLocal()
             : widget.order.estimatedDropoffAtCustomerTime?.toLocal(),
+        isSettingTime: deliveryAction == DeliveryAction.Pickup
+            ? isSettingPickUpTime
+            : isSettingDropoffTime,
         onNewDateTimeSet: (DateTime newDt) async {
           switch (deliveryAction) {
             case DeliveryAction.Pickup:
@@ -371,25 +380,38 @@ class _LaundryOrderFromToComponentState
               }
               break;
           }
-          final ServerResponse _resp =
-              await Get.find<OrderController>().setEstimatedTime(
+
+          if (deliveryAction == DeliveryAction.Pickup) {
+            isSettingPickUpTime.value = true;
+          } else {
+            isSettingDropoffTime.value = true;
+          }
+
+          await Get.find<OrderController>()
+              .setEstimatedTime(
             widget.order.orderId,
             newDt,
             DeliveryDriverType.DropOff,
             deliveryAction,
             OrderType.Laundry,
-          );
+          )
+              .then((ServerResponse _resp) {
+            mezDbgPrint("resp::success ===> ${_resp.data}");
 
-          mezDbgPrint("resp::success ===> ${_resp.data}");
-
-          if (_resp.success) {
-            if (deliveryAction == DeliveryAction.Pickup)
-              widget.order.estimatedPickupFromServiceProviderTime = newDt;
-            else
-              widget.order.estimatedDropoffAtCustomerTime = newDt;
-
-            setState(() {});
-          }
+            if (_resp.success) {
+              if (deliveryAction == DeliveryAction.Pickup)
+                widget.order.estimatedPickupFromServiceProviderTime = newDt;
+              else
+                widget.order.estimatedDropoffAtCustomerTime = newDt;
+              setState(() {});
+            }
+          }).whenComplete(() {
+            if (deliveryAction == DeliveryAction.Pickup) {
+              isSettingPickUpTime.value = false;
+            } else {
+              isSettingDropoffTime.value = false;
+            }
+          });
         },
       );
     } else
