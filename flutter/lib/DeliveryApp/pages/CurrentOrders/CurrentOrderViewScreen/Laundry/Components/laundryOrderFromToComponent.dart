@@ -395,4 +395,13 @@ class _LaundryOrderFromToComponentState
     } else
       return [];
   }
+
+  void _controllLoadingAnimation(
+      {required bool shouldStartAnimation, required DeliveryAction action}) {
+    if (action == DeliveryAction.DropOff) {
+      isSettingDropoffTime.value = shouldStartAnimation;
+    } else {
+      isSettingPickUpTime.value = shouldStartAnimation;
+    }
+  }
 }

@@ -277,7 +277,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
             fitWithinBounds: true,
           );
         }
-        // mapController.animateAndUpdateBounds(shouldFitPolylineInBound: false);
+
         break;
 
       case LaundryOrderPhase.Dropoff:
@@ -312,7 +312,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
             fitWithinBounds: true,
           );
         }
-        // mapController.animateAndUpdateBounds();
+        mapController.animateAndUpdateBounds();
         break;
       default:
     }

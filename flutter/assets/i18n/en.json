@@ -18,6 +18,7 @@
                 "privacyPolicy": "Privacy policy"
             },
             "DropDownLocationList": {
+                "chooseLoc": "Choose location",
                 "pickLocation": "Pick from map"
             },
             "LocationPicker": {
