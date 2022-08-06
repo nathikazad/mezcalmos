@@ -26,7 +26,7 @@ class DeliveryAuthController extends GetxController {
   Stream<DeliveryDriverState?> get stateStream => _state.stream;
 
   Rxn<LocationData> _currentLocation = Rxn<LocationData>(
-      LocationData.fromMap({"latitude": 15.83386, "longitude": -97.04379}));
+      LocationData.fromMap({"latitude": 15.8337, "longitude": -97.04205}));
 
   LocationData? get currentLocation => _currentLocation.value;
   Rxn<LocationData> get currentLocationRxn => _currentLocation;

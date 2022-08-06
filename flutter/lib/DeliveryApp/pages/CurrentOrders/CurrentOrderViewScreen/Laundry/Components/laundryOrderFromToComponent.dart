@@ -467,7 +467,7 @@ class _LaundryOrderFromToComponentState
     if (action == DeliveryAction.DropOff) {
       isSettingDropoffTime.value = shouldStartAnimation;
     } else {
-      isSettingDropoffTime.value = shouldStartAnimation;
+      isSettingPickUpTime.value = shouldStartAnimation;
     }
   }
 }
