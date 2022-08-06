@@ -910,18 +910,20 @@ if __name__ == "__main__":
         # Customer's destination To :
         simulateDriverMovements( 
             customerId="tSG0eSFZNGNA7grjBPFEBbpYwjE3", # Montassar's customer id
-            orderId="-N8kKoK-HjkEMVmp-xDN", # taxi order id
+            orderId="-N8kdMdTJ5VOwEBXZu5h", # taxi order id
             orderType="laundry",
             driverId="oAxB9JquC1S7zQyRUuZF2gI1suL2", # driverId
-            driverType="pickupDriver",
+            driverType="dropoffDriver",
             providerId="-N5kJoc2aVz9Qdm9X9yP",
             # Customer's Home : 15.835299822564249,-97.0356907323003
             # Provider location : 15.835502076340775,-97.04348623752594
             # driver location - 15.8330619,-97.0368584,17
-            end="15.835502076340775,-97.04348623752594",
+            end="15.835299822564249,-97.0356907323003",
+            start="15.835502076340775,-97.04348623752594",
+            # start="15.835299822564249,-97.0356907323003",
             # start="15.8330619,-97.0368584", # sense interdit
-            start="15.8337,-97.04205", # driver near restaurant
-            duration_sec=80
+            # start="15.8337,-97.04205", # driver near restaurant
+            duration_sec=20
         )
     Config(argv)
     exit(DW_EXIT_REASONS.NORMAL)
