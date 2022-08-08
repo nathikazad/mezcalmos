@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 enum UserInteraction { isSearching, isSorting, isSearchingAndSorting, Nothing }
 
@@ -36,6 +38,8 @@ class ListRestaurantsController {
 
   void filterRestaurants() {
     RestaurantList newList = new RestaurantList.from(_restaurants);
+    newList.searchForFood(searchQuery.value, LanguageType.EN);
+    // .forEach((element) => mezDbgPrint(element.name[LanguageType.EN]));
     newList = newList
         .searchByName(searchQuery.value)
         .showOnlyOpen(showOnlyOpen.value);
@@ -48,11 +52,31 @@ typedef RestaurantList = List<Restaurant>;
 
 extension RestaurantFilters on RestaurantList {
   RestaurantList searchByName(String search) {
-   
-      return where((Restaurant restaurant) =>
-              restaurant.info.name.toLowerCase().contains(search.toLowerCase()))
-          .toList();
-  
+    return where((Restaurant restaurant) =>
+            restaurant.info.name.toLowerCase().contains(search.toLowerCase()))
+        .toList();
+  }
+
+  List<Item> searchForFood(String search, LanguageType languageType) {
+    return fold<List<Category>>(<Category>[],
+            (List<Category> categories, Restaurant restaurant) {
+      final List<Category> restaurantCategories = restaurant.getCategories;
+      categories.forEach(
+          (Category category) => category.restaurantId = restaurant.info.id);
+      categories.addAll(restaurantCategories);
+      return categories;
+    })
+        .fold<List<Item>>(<Item>[], (List<Item> items, Category category) {
+          final List<Item> items = category.getItems;
+          items.forEach(
+              (Item item) => item.restaurantId = category.restaurantId);
+          items.forEach((Item item) => item.categoryId = category.id);
+          items.addAll(category.getItems);
+          return items;
+        })
+        .where(
+            (Item item) => item.name[languageType]?.contains(search) ?? false)
+        .toList();
   }
 
   RestaurantList showOnlyOpen(bool value) {
