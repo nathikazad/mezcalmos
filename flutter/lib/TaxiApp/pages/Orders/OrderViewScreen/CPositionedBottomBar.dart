@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -215,62 +216,22 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           ),
                           // Spacer(),
                           Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                          GestureDetector(
-                            onTap: () {
-                              Get.toNamed<void>(getMessagesRoute(
-                                  orderType: OrderType.Taxi,
-                                  chatId: order.orderId,
-                                  orderId: order.orderId,
-                                  recipientType: ParticipantType.Customer));
-                            },
-                            child: Container(
-                              height: getSizeRelativeToScreen(
-                                  16, Get.height, Get.width),
-                              width: getSizeRelativeToScreen(
-                                  16, Get.height, Get.width),
-                              decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 232, 239, 254),
-                                borderRadius: BorderRadius.circular(4),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: Color.fromARGB(255, 216, 225, 249),
-                                      spreadRadius: 0,
-                                      blurRadius: 4,
-                                      offset: Offset(0, 2))
-                                ],
-                              ),
-                              child: Center(
-                                child: Stack(
-                                  children: [
-                                    Obx(
-                                      () =>
-                                          controller.hasNewMessageNotification()
-                                              ? Positioned(
-                                                  top: 5,
-                                                  right: 5,
-                                                  child: Container(
-                                                    height: 6,
-                                                    width: 6,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.red,
-                                                        shape: BoxShape.circle),
-                                                  ))
-                                              : SizedBox(),
-                                    ),
-                                    Center(
-                                      child: Icon(
-                                        Icons.mail,
-                                        color:
-                                            Color.fromARGB(255, 103, 121, 254),
-                                        size: 16,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                          Obx(
+                            () => MessageButton(
+                              onTap: () {
+                                Get.toNamed<void>(
+                                  getMessagesRoute(
+                                    orderType: OrderType.Taxi,
+                                    chatId: order.orderId,
+                                    orderId: order.orderId,
+                                    recipientType: ParticipantType.Customer,
+                                  ),
+                                );
+                              },
+                              showRedDot:
+                                  controller.hasNewMessageNotification(),
                             ),
                           ),
-                          // Spacer(),
 
                           Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                           GestureDetector(

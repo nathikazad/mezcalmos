@@ -824,7 +824,7 @@
 
             },
             "LocationSearchComponent": {
-                "address": "Enter Address"
+                "address": "Enter address"
             },
             "MezClearButton": {
                 "clear": "Clear"

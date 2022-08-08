@@ -840,7 +840,7 @@
 
 
             "LocationSearchComponent": {
-                "address": "Ingresa Dirección"
+                "address": "Ingresa dirección"
             },
             "MezClearButton": {
                 "clear": "Borrar"

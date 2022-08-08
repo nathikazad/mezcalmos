@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mezcalmos-staging",
+  "private_key_id": "6694f05838897bfe57fa73fe6a6b865e1ca40f93",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCpVXuKwSOL6HCH\nQzgJFr38rTRbWdj3103tDzJBKsxIUQbgHu7th36CEJE2kmZkB0F8nzLplqNwHRVE\nt/8VzgkEl7YCIp5LP/yf/Rfdd/RoocEjYBMMxTC8+eXwO107jMWMlIqIKiGqog5B\nnsde0srGCF+XIMH3aDpIkUtUwjKmD6LaosFwnIU9x/y0vhu5VjyoXwxIy5B88nOo\nSb9YAFsoKfWVb/e2x2BefjxxTqcAPHQzpTe0u5D0R5yldDLMQ11xcip5PlPZ0c/z\nYPE2kqQZFwabHP6aOa425mfohZCCLMAmmd41B17oKTRHz0/W48w8RHXvvjxw5/JR\nnk1FbElVAgMBAAECggEACh2UKr7M68+v4TSvxUM5iD2kkgx0/KE9A3tT6javS2aj\nvYG7ji747LYmppbqTPFuBQ7RkMix7MGgAqHnOBs9yKtzcP82a5Jf+gK5iT5gOFvp\nWL6lhK7G8ZMQHGC/eg43wuUgvW+e4T2bEmp0yIJZIKlhZHrNe4UbbjhXwrFzKx5M\n8qcNtggXJV+vky62hu0s7hl1ruX+JT55wKHPpLd9QyHSCFZppSDwXrxrxabhIdnW\ngdS6Ht/+PrmPggKNWinFFoIbV2DdZ0w71AcmknmbposZyedHB9nrnUP8sanNKbx6\niVhemNzwzEzKIjF6BRQnxJdQWXQ48PMs9W6Y12hrwQKBgQDq59ZSdelGCVZDxzjZ\nZJMFMzYIcTDSDwvmEkDg1WqFxXjKkyNtghbhEbIKtmV/x6m92110jXmioAizFlIF\nBxXnSUVrgUXTm34ZYDkKM62ZAQxifEz8XKWLt0/BknOGzTTClbCBMhkJm0GjhWzF\nGtc7hnpjjTcVzMQqtbE3Nsxt0QKBgQC4ij2ZWJzOgiNS3QYHs0UW8OrHRKFHqpta\n97CTRxJ3pEW45Ng2iYbgfXYLA8cIs6Nc+qCQgKM5BbnDmIuxnTdzIX4I9TX7OwQP\nfMtFhg3nUOGewhX619XzmhjoiITO0jiklRpHSXN9CqBksBnyFD+DhJxvDpiEynNM\noxUm7WOwRQKBgQCJgkV36AYyNW0GKC0jNTjLJntO3dPSY3R3rd/EvampvTtEenWW\nuTxjbFRo6PTppBu9RBilDdxSUpRFIZ/JyagMyFuW3wndIXzjpew+CJpqoq55SIJY\niHNwIlLR4cU2+BEWh0HXn1gAw53c91IA4AF2mvYyKIxCeqeqyMmApNduwQKBgH3Z\nmQS5D8ctrRVXskMSGO36QsK+pRaQ3P3+qSbnc0qwdvQO7PzUcW0rYpNEcjoW+DPy\noAmsEKRUqUkhATORuj0D/EXzpGq+5pgBTUcOkvDLkfKI/iBhjYFh99atM5UwfHyR\nSqiPCPmfg57nEeqrsFzq1RxP4ee9gUAkf8paXn/ZAoGAVhSFaxAsXV8cCuB9DI3A\n/RLszXeqj2fFh5aqtFQ0V9YGb/3T8Rv4fx67S9xFJcAhOnwfw44UAB+JfLqnq/0V\noUfVcVwKyKGsOsLH4O0Kos4Y5sGG/7wVehpjpmN+/e9Shvi7bDsds6LHLHX/j7B4\nYWFkzO4AVu7zba79c/54T3M=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-6dlwj@mezcalmos-staging.iam.gserviceaccount.com",
+  "client_id": "101303771453279654118",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-6dlwj%40mezcalmos-staging.iam.gserviceaccount.com"
+}

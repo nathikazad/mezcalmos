@@ -41,7 +41,7 @@ class CustomerAuthController extends GetxController {
           .ref()
           .child(customerNode(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((event) async {
+          .listen((DatabaseEvent event) async {
         customer.value = Customer.fromSnapshotData(event.snapshot.value);
 
         if (_checkedAppVersion == false) {
@@ -104,15 +104,15 @@ class CustomerAuthController extends GetxController {
 
   Location? getLocationById(String locationId) {
     // we get the user Location by it's id!
-    return _customer.value?.savedLocations
-        .firstWhere(
-            (SavedLocation savedLocation) => savedLocation.id == locationId,
-            orElse: null)
-        .location;
+
+    return customer.value?.savedLocations.firstWhere(
+        (SavedLocation savedLocation) {
+      return savedLocation.id == locationId;
+    }, orElse: null).location;
   }
 
   @override
-  void onClose() async {
+  Future<void> onClose() async {
     print("[+] CustomerAuthController::onClose ---------> Was invoked !");
     await _customerNodeListener?.cancel();
     _customerNodeListener = null;
