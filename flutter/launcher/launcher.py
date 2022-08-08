@@ -887,7 +887,7 @@ class Config:
 if __name__ == "__main__":
     if 'offers' in argv:
         simulate_counter_offers(
-            orderId= "-N8_J16QRVKzS9rnI4DH",
+            orderId= "-N8l0HFq5ygDPouwbaDj",
             customerId= "tSG0eSFZNGNA7grjBPFEBbpYwjE3"
         )
         exit(0)
@@ -896,17 +896,25 @@ if __name__ == "__main__":
         # Customer's destination To :
         simulateDriverMovements( 
             customerId="tSG0eSFZNGNA7grjBPFEBbpYwjE3", # Montassar's customer id
-            orderId="-N8_J16QRVKzS9rnI4DH", # taxi order id
+            orderId="-N8l0HFq5ygDPouwbaDj", # taxi order id
             orderType="taxi",
             driverId="oAxB9JquC1S7zQyRUuZF2gI1suL2", # driverId
             driverType="driver",
+            # Customer's Home : 15.835299822564249,-97.0356907323003
+            # Provider location : 15.835502076340775,-97.04348623752594
+            # driver location - 15.8330619,-97.0368584,17
+            # end="15.835299822564249,-97.0356907323003",
+            # start="15.835502076340775,-97.04348623752594",
+            # start="15.835299822564249,-97.0356907323003",
+            # start="15.8330619,-97.0368584", # sense interdit
+            end="15.835721354763855,-97.04348623752594", # driver near restaurant
             # start="15.866373,-97.068697",
-            end="15.835721354763855,-97.04348623752594",
+            start="15.835299822564249,-97.0356907323003",
             # 19.38003452020731 | -98.96333869546652
             # destination : 15.835502076340775,-97.04348623752594
-            start="15.83476,-97.04242",
+            # start="15.83476,-97.04242",
             # end="15.865125366502896,-97.05751821398735",
-            duration_sec=120
+            duration_sec=40
         )
     Config(argv)
     exit(DW_EXIT_REASONS.NORMAL)
