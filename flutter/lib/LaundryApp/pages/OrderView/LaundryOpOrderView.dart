@@ -290,6 +290,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
     if (order.value!.inDeliveryPhase())
       return Container(
         // color: Colors.black,
+        margin: const EdgeInsets.only(bottom: 20),
 
         height: 350,
         child: MGoogleMap(
