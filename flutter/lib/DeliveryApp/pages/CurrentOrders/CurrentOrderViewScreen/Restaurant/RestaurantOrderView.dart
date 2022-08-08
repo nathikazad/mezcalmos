@@ -129,7 +129,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   }
 
   double _recenterBtnBottomPadding = 300;
-  EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 300);
+  EdgeInsets _mapPadding = EdgeInsets.only(top: 10, bottom: 220);
 
   @override
   Widget build(BuildContext context) {
@@ -206,11 +206,11 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                               if (state == OrderInfoCardState.Maximized) {
                                 _recenterBtnBottomPadding = 300;
                                 _mapPadding =
-                                    EdgeInsets.only(top: 10, bottom: 300);
+                                    EdgeInsets.only(top: 10, bottom: 220);
                               } else {
                                 _recenterBtnBottomPadding = 180;
                                 _mapPadding =
-                                    EdgeInsets.only(top: 10, bottom: 180);
+                                    EdgeInsets.only(top: 10, bottom: 120);
                               }
                             });
                           },
