@@ -148,6 +148,7 @@ class _LaundryOrderFromToComponentState
     }
 
     return widget.order.status == LaundryOrderStatus.AtLaundry
+        // || widget.order.status == LaundryOrderStatus.ReadyForDelivery
         ? (widget.order.estimatedLaundryReadyTime != null
             ? "Estimated ready time:\n${widget.order.estimatedLaundryReadyTime!.getEstimatedTime()}"
             : null)
@@ -467,7 +468,7 @@ class _LaundryOrderFromToComponentState
     if (action == DeliveryAction.DropOff) {
       isSettingDropoffTime.value = shouldStartAnimation;
     } else {
-      isSettingDropoffTime.value = shouldStartAnimation;
+      isSettingPickUpTime.value = shouldStartAnimation;
     }
   }
 }
