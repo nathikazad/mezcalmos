@@ -1677,6 +1677,43 @@
     },
     "RestaurantApp": {
         "pages": {
+            "ROpOrderView": {
+                "cancelOrder": "Cancel order",
+                "orderItems": "Order Items",
+                "components": {
+                    "ROpOrderHandleButton": {
+                        "prepareOrder": "Prepare order",
+                        "orderReady": "Order is ready"
+                    },
+                    "ROpOrderEstTime": {
+                        "title": "Estimated food ready time",
+                        "set": "Set",
+                        "confirm": "Confirm",
+                        "cancel": "Cancel",
+                        "Error": "Error",
+                        "minTimes": "Minimum 5 miutes prepare time"
+                    },
+                    "ROpDriverCard": {
+                        "noDriver": "No driver assigned yet"
+                    },
+                    "ROpOrderCustomer": {
+                        "customer": "Customer"
+                    }
+                }
+            },
+            "ROpPastOrdersList": {
+                "components": {
+                    "ROpOrderCard": {
+                        "date": "Date : ",
+                        "totalCost": "Total Cost : ",
+                        "waiting": "Waiting",
+                        "delivered": "Delivered",
+                        "canceled": "Cancelled"
+                    }
+                },
+                "currentOrders": "Current orders",
+                "pastOrders": "Past orders"
+            },
             "ROpMenuView": {
                 "menu": "Menu",
                 "addCategory": "Add category",

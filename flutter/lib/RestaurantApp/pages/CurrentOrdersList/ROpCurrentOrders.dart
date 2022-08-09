@@ -11,8 +11,8 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
-    ['DashboardView']['OrdersListView']['LaundryOpOrdersListView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpPastOrdersList'];
 
 class LaundryOpCurrentOrdersListView extends StatefulWidget {
   const LaundryOpCurrentOrdersListView({Key? key}) : super(key: key);

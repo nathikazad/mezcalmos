@@ -15,6 +15,7 @@ import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderStatu
 import 'package:mezcalmos/RestaurantApp/pages/OrderView/components/ROpOrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -24,8 +25,8 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
-// dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
-//     ['OrderView']['ROpOrderView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpOrderView'];
 
 class ROpOrderView extends StatefulWidget {
   const ROpOrderView({Key? key}) : super(key: key);
@@ -182,7 +183,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
                     child: Container(
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(8),
-                      child: Text("Cancel order"),
+                      child: Text('${_i18n()["cancelOrder"]}'),
                     ))
             ],
           ),
@@ -198,7 +199,7 @@ class _ROpOrderViewState extends State<ROpOrderView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Order items",
+            '${_i18n()["orderItems"]}',
             style: Get.textTheme.bodyText1,
           ),
           SizedBox(

@@ -35,23 +35,9 @@ class ROpOrderStatusCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (_getEstimatedText() != null) _orderEtaTimeWidget()
           ],
         ),
       ),
-    );
-  }
-
-  Widget _orderEtaTimeWidget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-            child: Text(
-          _getEstimatedText()!,
-          textAlign: TextAlign.center,
-        )),
-      ],
     );
   }
 
@@ -71,39 +57,5 @@ class ROpOrderStatusCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String? _getEstimatedText() {
-    return null;
-
-    // switch (order.status) {
-    //   case LaundryOrderStatus.OrderReceieved:
-    //   case LaundryOrderStatus.OtwPickupFromCustomer:
-    //   case LaundryOrderStatus.PickedUpFromCustomer:
-    //     if (order.estimatedDropoffAtServiceProviderTime != null) {
-    //       return "${_i18n()["estTimes"]["laundryArriving"]} ${order.estimatedDropoffAtServiceProviderTime!.getEstimatedTime()}";
-    //     }
-    //     break;
-    //   case LaundryOrderStatus.AtLaundry:
-    //     if (order.estimatedLaundryReadyTime != null) {
-    //       return "${_i18n()["estTimes"]["laundryFinish"]} ${order.estimatedLaundryReadyTime!.getEstimatedTime()}";
-    //     }
-    //     break;
-
-    //   case LaundryOrderStatus.ReadyForDelivery:
-    //   case LaundryOrderStatus.OtwPickupFromLaundry:
-    //     if (order.estimatedPickupFromServiceProviderTime != null) {
-    //       return "${_i18n()["estTimes"]["driverArriving"]} ${order.estimatedPickupFromServiceProviderTime!.getEstimatedTime()}";
-    //     }
-
-    //     break;
-    //   case LaundryOrderStatus.PickedUpFromLaundry:
-    //     if (order.estimatedDropoffAtCustomerTime != null) {
-    //       return "${_i18n()["estTimes"]["willBeDropped"]} ${order.estimatedDropoffAtCustomerTime!.getEstimatedTime()}";
-    //     }
-
-    //     break;
-    //   default:
-    //     return null;
   }
 }

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
-// dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
-//         ['DashboardView']['OrdersListView']['LaundryOpOrdersListView']
-//     ['components']['ROpOrderCard'];
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpPastOrdersList']["components"]["ROpOrderCard"];
 
 class ROpOrderCard extends StatelessWidget {
   const ROpOrderCard({
@@ -155,7 +155,7 @@ class ROpOrderCard extends StatelessWidget {
               color: Colors.red.withOpacity(0.3),
               borderRadius: BorderRadius.circular(12)),
           child: Text(
-            "Cancelled",
+            '${_i18n()["canceled"]}',
             style: Get.textTheme.bodyText1
                 ?.copyWith(color: Colors.red, fontSize: 10.sp),
           ),
@@ -168,7 +168,7 @@ class ROpOrderCard extends StatelessWidget {
               color: Colors.green.withOpacity(0.3),
               borderRadius: BorderRadius.circular(12)),
           child: Text(
-            "Delivered",
+            '${_i18n()["delivered"]}',
             style: Get.textTheme.bodyText1
                 ?.copyWith(color: Colors.green, fontSize: 10.sp),
           ),
@@ -180,7 +180,7 @@ class ROpOrderCard extends StatelessWidget {
               color: Colors.amber.withOpacity(0.3),
               borderRadius: BorderRadius.circular(12)),
           child: Text(
-            "Waiting",
+            '${_i18n()["waiting"]}',
             style: Get.textTheme.bodyText1
                 ?.copyWith(color: Colors.amber, fontSize: 10.sp),
           ),

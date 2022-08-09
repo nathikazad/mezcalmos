@@ -1674,6 +1674,40 @@
     },
     "RestaurantApp": {
         "pages": {
+            "ROpOrderView": {
+                "cancelOrder": "Cancelar orden",
+                "orderItems": "Encargar artículos",
+                "components": {
+                    "ROpOrderHandleButton": {
+                        "prepareOrder": "Preparar orden",
+                        "orderReady": "El pedido está listo"
+                    },
+                    "ROpOrderEstTime": {
+                        "title": "Tiempo estimado de comida",
+                        "set": "Establecer",
+                        "confirm": "Confirmar",
+                        "cancel": "Cancelar",
+                        "Error": "Error",
+                        "minTimes": "Mínimo 5 Miutes Prepare el tiempo"
+                    },
+                    "ROpDriverCard": {
+                        "noDriver": "No hay controlador asignado todavía"
+                    }
+                }
+            },
+            "ROpPastOrdersList": {
+                "components": {
+                    "ROpOrderCard": {
+                        "date": "Fecha :",
+                        "totalCost": "Coste total :",
+                        "waiting": "Esperando",
+                        "delivered": "Entregada",
+                        "canceled": "Cancelada"
+                    }
+                },
+                "currentOrders": "Órdenes actuales",
+                "pastOrders": "Órdenes pasadas"
+            },
             "ROpMenuView": {
                 "menu": "Menú",
                 "addCategory": "Añadir categoría",

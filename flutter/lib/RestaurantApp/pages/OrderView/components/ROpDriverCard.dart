@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
-// dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
-//     ["OrderView"]["Components"]["ROpDriverCard"];
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpOrderView"]["components"]["ROpDriverCard"];
 
 class ROpDriverCard extends StatelessWidget {
   const ROpDriverCard({Key? key, required this.order}) : super(key: key);
@@ -102,7 +103,7 @@ class ROpDriverCard extends StatelessWidget {
                     ),
                     Flexible(
                       child: Text(
-                        "No diver assigned yet",
+                        '${_i18n()["noDriver"]}',
                         style: Get.textTheme.bodyText1,
                       ),
                     ),
