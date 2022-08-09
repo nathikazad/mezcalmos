@@ -521,7 +521,7 @@ class Launcher:
         self.__set_flutter_args__()
 class Config:
     
-    possible_args = ['--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
+    possible_args = ['--upgrade-env', '--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
     def __help__(self):
         print(f""" 
         + app=<AppName>
@@ -533,6 +533,7 @@ class Config:
         + --preview : Passing this along , will result on launching the app in the device-preview for testing an try many resolutions.
         + version=<version> : Used to set the project's version to a specific version.
        	+ --fix-pods : Special cmd for MAC M1 , meant for fixing pod problems on IOS.
+        + --upgrade-env : Upgrading the flutter environment while also fixing plugings in iOS part.
 	    + help : show this help menu
      
 
@@ -781,9 +782,16 @@ class Config:
             self.__patch_version__(_)
             #exit(DW_EXIT_REASONS.NORMAL)
                 # Cmd to fix Pods Problems
+        _ = self.__get_arg_value__('--upgrade-env')
+        if _:
+            os.system('flutter --version')
+            if input("[❓] Running this will upgrade flutter env and fix plugins related problems : y/n ?").lower() == 'y':
+                os.system('rm -rf ~/Library/Developer/Xcode/DerivedData/* && flutter upgrade --force && flutter pub upgrade && flutter pub upgrade --major-versions && flutter clean && python3 launcher.py --fix-pods')
+            exit(DW_EXIT_REASONS.NORMAL)
+
         _ = self.__get_arg_value__('--fix-pods')
         if _:
-            if input('This is only for MAC M1 chips ! Continue : y/n ?') == 'y':
+            if input('[❓] This is only for MAC M1 chips ! Continue : y/n ?').lower() == 'y':
                 print("[+] Clearing cache and Removing lock files ..")
                 os.system('rm -rf ../ios/Pods & rm ../ios/Podfile.lock & rm -rf ../ios/.symlinks & rm ../ios/Flutter/Flutter.podspec & rm ../pubspec.lock')
                 if not os.path.exists('../ios/Podfile'):
