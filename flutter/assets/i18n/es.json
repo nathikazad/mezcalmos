@@ -1652,6 +1652,7 @@
                     "customer": "Información del cliente",
                     "orderDate": "Fecha de orden",
                     "total": "Total",
+                    "toBeCalculated": "Para ser calculado",
                     "orderReady": "Pedido listo para la entrega"
                 }
             }

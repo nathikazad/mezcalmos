@@ -61,11 +61,11 @@ class _RestaurantOrderFromToComponentState
         () => AnimatedOrderInfoCard(
           // customer
           customerImage: widget.order.customer.image,
-          subtitle: (widget.order.estimatedFoodReadyTime != null)
+          subtitle: (_showFoodReadyTime())
               ? "${_i18n()["foodReady"]} ${widget.order.estimatedFoodReadyTime!.getEstimatedTime()}"
               : null,
           customerName: widget.order.customer.name,
-          // enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
+          enableExpand: (widget.order.inProcess()) ? _isTimesSetted() : true,
           customerTimeWidgets: _dateTimeSetter(DeliveryAction.DropOff, context),
           onCustomerMsgClick: () {
             if (widget.order.customerDropOffDriverChatId != null) {
@@ -141,6 +141,12 @@ class _RestaurantOrderFromToComponentState
     return widget.order.status == RestaurantOrderStatus.OrderReceieved ||
         widget.order.status == RestaurantOrderStatus.ReadyForPickup ||
         widget.order.status == RestaurantOrderStatus.PreparingOrder;
+  }
+
+  bool _showFoodReadyTime() {
+    return widget.order.estimatedFoodReadyTime != null &&
+        (widget.order.status == RestaurantOrderStatus.OrderReceieved ||
+            widget.order.status == RestaurantOrderStatus.PreparingOrder);
   }
 
 // @here
