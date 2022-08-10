@@ -8,6 +8,7 @@ from enum import Enum
 import subprocess as proc
 import sys
 from time import sleep
+from turtle import goto
 from typing import Type
 
 SHOULD_ASK_4_INPUT = False
@@ -650,6 +651,14 @@ class Config:
         _pubspec = open(pubspec , errors='ignore' , encoding='utf-8').readlines()
         _localProperties = open(localProperties , errors='ignore' , encoding='utf-8').readlines()
 
+        _strippedLocalProps = ''.join(_localProperties).replace('\n','')
+        if 'flutter.versionName' not in _strippedLocalProps:
+            open(localProperties, 'a').write('flutter.versionName=1.0.0\n')
+        if 'flutter.versionCode' not in _strippedLocalProps:
+            open(localProperties, 'a').write('flutter.versionCode=1\n')
+        _localProperties = open(localProperties , errors='ignore' , encoding='utf-8').readlines()
+
+
         # pubspect regex check:
         # ex : version: 1.0.4+8
 
@@ -669,14 +678,14 @@ class Config:
         # ex : 
         # flutter.versionName=1.0.4
         # flutter.versionCode=8
-
         _versionName = [i for i,line in enumerate(_localProperties) if re.match(r' {0,}flutter\.versionName {0,}= {0,}[0-9]+\.[0-9]+\.[0-9]+' , line ) != None]
         _versionCode = [i for i,line in enumerate(_localProperties) if re.match(r' {0,}flutter\.versionCode {0,}= {0,}[0-9]+' , line ) != None]
         
 
         if _versionName.__len__() > 1 :
             PRINTLN(f"[?] Found multi version ddffinition in {_localProperties} at lines : {[x for x in _versionName]} ")
-            exit(DW_EXIT_REASONS.FOUND_MULTI_VERSION_NAME_IN_LOCAL_PROPERTIES)
+            exit(DW_EXIT_REASONS.FOUND_MULTI_VERSION_NAME_IN_LOCAL_PROPERTIES)            
+
         if _versionCode.__len__() > 1 :
             PRINTLN(f"[?] Found multi version ddffinition in {_localProperties} at lines : {[x for x in _versionCode]} ")
             exit(DW_EXIT_REASONS.FOUND_MULTI_VERSION_CODE_IN_LOCAL_PROPERTIES)
