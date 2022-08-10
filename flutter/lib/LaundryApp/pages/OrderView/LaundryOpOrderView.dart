@@ -214,6 +214,17 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               _totalCostcomponent(context),
 
               LaundryOpOrderNote(order: order.value!),
+              // TextButton(
+              //     onPressed: () {
+              //       controller.cancelOrder(order.value!.orderId);
+              //     },
+              //     style: TextButton.styleFrom(
+              //         primary: Colors.red, backgroundColor: offRedColor),
+              //     child: Container(
+              //       padding: const EdgeInsets.symmetric(vertical: 5),
+              //       alignment: Alignment.center,
+              //       child: Text("Cancel order"),
+              //     ))
             ],
           ),
         ),
@@ -223,6 +234,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
 
   Widget _totalCostcomponent(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.only(bottom: 20),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(12),

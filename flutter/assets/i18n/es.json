@@ -1559,7 +1559,7 @@
                         "days": "dias"
                     },
                     "MinimumCostCard": {
-                        "minCost": "Minimum Cost"
+                        "minCost": "Costo mínimo"
                     }
                 }
             },
