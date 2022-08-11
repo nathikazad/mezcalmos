@@ -208,7 +208,7 @@ class Category {
   LanguageMap? dialog;
   int position = 0;
   List<Item> items = <Item>[];
-  String? restaurantId;
+  Restaurant? restaurant;
 
   List<Item> get getItems {
     sortItems();
@@ -287,8 +287,9 @@ class Item {
   Map<LanguageType, String> name;
   num cost = 0;
   List<Option> options;
-  String? categoryId;
-  String? restaurantId;
+  Category? category;
+  Restaurant? restaurant;
+  String? linkUrl;
 
   List<Option> get getOptions {
     sortOptions();

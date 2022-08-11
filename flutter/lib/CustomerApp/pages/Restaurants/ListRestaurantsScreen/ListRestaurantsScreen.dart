@@ -97,7 +97,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
         value: viewController.showOnlyOpen.value,
         onChanged: (bool v) {
           viewController.changeAlwaysOpenSwitch(v);
-          viewController.filterRestaurants();
+          viewController.filter();
         },
         activeColor: primaryBlueColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 5),
@@ -115,7 +115,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
       style: Get.textTheme.bodyText1,
       onChanged: (String value) {
         viewController.searchQuery.value = value;
-        viewController.filterRestaurants();
+        viewController.filter();
         mezDbgPrint(viewController.searchQuery);
       },
       decoration: InputDecoration(

@@ -1,13 +1,20 @@
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 enum UserInteraction { isSearching, isSorting, isSearchingAndSorting, Nothing }
 
+enum SearchType { searchByRestaurantName, searchByItemName }
+
 class ListRestaurantsController {
   RxList<Restaurant> filteredRestaurants = RxList<Restaurant>.empty();
+  RxList<Item> filteredItems = RxList<Item>.empty();
   RestaurantList _restaurants = List<Restaurant>.empty();
+  Rx<SearchType> searchType = SearchType.searchByRestaurantName.obs;
 
   RxBool isLoading = RxBool(false);
   RxBool showOnlyOpen = RxBool(true);
@@ -15,13 +22,15 @@ class ListRestaurantsController {
   num baseShippingPrice = 50;
   RestaurantsInfoController _restaurantsInfoController =
       Get.find<RestaurantsInfoController>();
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
 
   void init() {
     isLoading.value = true;
-    getShiipingPrice();
+    getShippingPrice();
     _restaurantsInfoController.getRestaurants().then((List<Restaurant> list) {
       _restaurants = list;
-      filterRestaurants();
+      filter();
     }).whenComplete(() {
       isLoading.value = false;
     });
@@ -31,19 +40,27 @@ class ListRestaurantsController {
     showOnlyOpen.value = value;
   }
 
-  getShiipingPrice() async {
+  Future<void> getShippingPrice() async {
     baseShippingPrice = await _restaurantsInfoController.getShippingPrice();
   }
 
-  void filterRestaurants() {
+  void filter() {
     RestaurantList newList = new RestaurantList.from(_restaurants);
-    newList.searchForFood(searchQuery.value, LanguageType.EN);
-    // .forEach((element) => mezDbgPrint(element.name[LanguageType.EN]));
-    newList = newList
-        .searchByName(searchQuery.value)
-        .showOnlyOpen(showOnlyOpen.value);
-    newList.sortByOpen();
-    filteredRestaurants.value = newList;
+    if (searchType == SearchType.searchByItemName) {
+      newList
+          .showOnlyOpen(showOnlyOpen.value)
+          .searchForFood(searchQuery.value)
+          .forEach((element) => mezDbgPrint(element.name[userLanguage]));
+      filteredItems.value = newList
+          .showOnlyOpen(showOnlyOpen.value)
+          .searchForFood(searchQuery.value);
+    } else {
+      newList = newList
+          .searchByName(searchQuery.value)
+          .showOnlyOpen(showOnlyOpen.value);
+      newList.sortByOpen();
+      filteredRestaurants.value = newList;
+    }
   }
 }
 
@@ -56,31 +73,39 @@ extension RestaurantFilters on RestaurantList {
         .toList();
   }
 
-  List<Item> searchForFood(String search, LanguageType languageType) {
-    final List<Category> cats = fold<List<Category>>(<Category>[],
+
+  List<Item> searchForFood(String search) {
+    return fold<List<Category>>(<Category>[],
         (List<Category> categories, Restaurant restaurant) {
       final List<Category> restaurantCategories = restaurant.getCategories;
-      categories.forEach(
-          (Category category) => category.restaurantId = restaurant.info.id);
+      restaurantCategories
+          .forEach((Category category) => category.restaurant = restaurant);
       categories.addAll(restaurantCategories);
       return categories;
-    });
-    List<Item> allItems = [];
-    allItems = cats
-        .fold<List<Item>>(<Item>[], (List<Item> items, Category category) {
-          final List<Item> items = category.getItems;
-          items.forEach(
-              (Item item) => item.restaurantId = category.restaurantId);
-          items.forEach((Item item) {
-            item.categoryId = category.id;
-          });
-          // items.addAll(category.getItems);
-          return items;
-        })
-        .where(
-            (Item item) => item.name[languageType]?.contains(search) ?? false)
-        .toList();
-    return allItems;
+
+    }).fold<List<Item>>(<Item>[], (List<Item> items, Category category) {
+      final List<Item> categoryItems = category.getItems;
+      categoryItems.forEach((Item item) {
+        item.restaurant = category.restaurant;
+        item.category = category;
+        if (item.restaurant?.info.id != null && item.id != null)
+          item.linkUrl = getItemRoute(item.restaurant!.info.id, item.id!);
+      });
+      items.addAll(categoryItems);
+      return items;
+    }).where((Item item) {
+      for (LanguageType languageType in LanguageType.values) {
+        if (item.name[languageType]
+                ?.toLowerCase()
+                .contains(search.toLowerCase()) ??
+            false) return true;
+        if (item.category?.name?[languageType]
+                ?.toLowerCase()
+                .contains(search.toLowerCase()) ??
+            false) return true;
+      }
+      return false;
+    }).toList();
   }
 
   RestaurantList showOnlyOpen(bool value) {
