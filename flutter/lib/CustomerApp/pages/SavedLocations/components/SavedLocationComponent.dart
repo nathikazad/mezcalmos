@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
@@ -49,18 +48,25 @@ class SavedLocationComponent extends StatelessWidget {
                       style: Get.textTheme.bodyText1,
                     )),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.find<CustomerAuthController>()
+                        .setAsDefaultLocation(savelocation);
+                  },
                   borderRadius: BorderRadius.circular(16),
                   child: Ink(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                     decoration: BoxDecoration(
-                        color: primaryBlueColor,
+                        color: (savelocation.defaultLocation)
+                            ? primaryBlueColor
+                            : Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(16)),
                     child: Text(
                       "Default",
-                      style: Get.textTheme.bodyText2
-                          ?.copyWith(color: Colors.white),
+                      style: Get.textTheme.bodyText2?.copyWith(
+                          color: (savelocation.defaultLocation)
+                              ? Colors.white
+                              : Colors.black),
                     ),
                   ),
                 ),
@@ -76,15 +82,17 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   customBorder: CircleBorder(),
                   child: Ink(
-                      padding: const EdgeInsets.all(7),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade300,
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(
-                        FontAwesomeIcons.penToSquare,
-                        color: Colors.black,
-                        size: 14.sp,
+                      child: Center(
+                        child: Icon(
+                          Icons.edit_outlined,
+                          color: Colors.black,
+                          size: 17.sp,
+                        ),
                       )),
                 ),
                 SizedBox(
@@ -96,15 +104,17 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   customBorder: CircleBorder(),
                   child: Ink(
-                      padding: const EdgeInsets.all(7),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: offRedColor,
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(
-                        FontAwesomeIcons.trash,
-                        color: Colors.red,
-                        size: 14.sp,
+                      child: Center(
+                        child: Icon(
+                          Icons.delete_outline,
+                          color: Colors.red,
+                          size: 17.sp,
+                        ),
                       )),
                 ),
               ],

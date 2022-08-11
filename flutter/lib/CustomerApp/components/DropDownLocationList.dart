@@ -47,7 +47,9 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     listOfSavedLoacations.add(pickLocationPlaceholder!);
 
     if (widget.passedInLocation == null) {
-      dropDownListValue = pickLocationPlaceholder;
+      dropDownListValue = listOfSavedLoacations.firstWhereOrNull(
+              (SavedLocation element) => element.defaultLocation) ??
+          pickLocationPlaceholder;
     } else {
       final SavedLocation passedInLocation = SavedLocation(
         name: widget.passedInLocation!.address,
