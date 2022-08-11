@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["components"]["SavedLocationComponent"];
@@ -24,110 +26,95 @@ class SavedLocationComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme txt = Theme.of(context).textTheme;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-      height: Get.width * 0.3,
-      width: Get.width,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: Colors.white),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const Spacer(),
-              //================location name=================
-              Container(
-                child: Text(
-                  "${savelocation.name}",
-                  style: txt.headline1!
-                      .copyWith(fontWeight: FontWeight.w700, fontSize: 12),
+    return Card(
+      margin: const EdgeInsets.all(5),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.place,
+                  color: primaryBlueColor,
+                  size: 18,
                 ),
-              ),
-              const Spacer(),
-              //===============address================
-              Container(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.location_on_outlined,
-                      size: 14,
-                      color: Color.fromRGBO(172, 89, 252, 1),
-                    ),
-                    const SizedBox(width: 5),
-                    Flexible(
-                      child: Text(
-                        "${savelocation.location?.address}",
-                        maxLines: 2,
-                        softWrap: true,
-                        overflow: TextOverflow.ellipsis,
-                        style: txt.subtitle2!.copyWith(
-                            color: Color.fromRGBO(33, 33, 33, 1),
-                            fontSize: 13.44,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: 3,
                 ),
-              ),
-              const Spacer(),
-              //================== divider================
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                height: 1.2,
-                width: Get.width,
-                color: Color.fromRGBO(237, 237, 237, 1),
-              ),
-              const Spacer(),
-              Container(
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: IconSavedLocationButton(
-                        iCon: Icon(
-                          Icons.history_edu_outlined,
-                          size: 14,
-                          color: Colors.white,
-                        ),
-                        iconColor: Colors.black,
-                        title: "${_i18n()["editLocation"]}",
-                        ontap: () {
-                          mezDbgPrint("edit saved lovation item");
-                          Get.toNamed<void>(
-                            kPickLocationEditRoute,
-                            parameters: <String, String>{
-                              "id": savelocation.id!
-                            },
-                          );
-                        },
-                      ),
+                Flexible(
+                    fit: FlexFit.tight,
+                    child: Text(
+                      savelocation.name,
+                      style: Get.textTheme.bodyText1,
+                    )),
+                InkWell(
+                  onTap: () {},
+                  borderRadius: BorderRadius.circular(16),
+                  child: Ink(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                    decoration: BoxDecoration(
+                        color: primaryBlueColor,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Text(
+                      "Default",
+                      style: Get.textTheme.bodyText2
+                          ?.copyWith(color: Colors.white),
                     ),
-                    Expanded(
-                      child: IconSavedLocationButton(
-                        iCon: Icon(
-                          Icons.delete_outline,
-                          size: 14,
-                          color: Colors.white,
-                        ),
-                        iconColor: Colors.red,
-                        title: "${_i18n()["deleteLocation"]}",
-                        ontap: () {
-                          mezDbgPrint("delete saved location item");
-                          _customerAuthController.deleteLocation(savelocation);
-                        },
-                      ),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-              const Spacer(),
-            ],
-          ))
-        ],
+                SizedBox(
+                  width: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.toNamed<void>(
+                      kPickLocationEditRoute,
+                      parameters: <String, String>{"id": savelocation.id!},
+                    );
+                  },
+                  customBorder: CircleBorder(),
+                  child: Ink(
+                      padding: const EdgeInsets.all(7),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        FontAwesomeIcons.penToSquare,
+                        color: Colors.black,
+                        size: 14.sp,
+                      )),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    _customerAuthController.deleteLocation(savelocation);
+                  },
+                  customBorder: CircleBorder(),
+                  child: Ink(
+                      padding: const EdgeInsets.all(7),
+                      decoration: BoxDecoration(
+                        color: offRedColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        FontAwesomeIcons.trash,
+                        color: Colors.red,
+                        size: 14.sp,
+                      )),
+                ),
+              ],
+            ),
+            if (savelocation.location != null)
+              Container(
+                  margin: const EdgeInsets.only(top: 5),
+                  child: Text(savelocation.location!.address))
+          ],
+        ),
       ),
     );
   }

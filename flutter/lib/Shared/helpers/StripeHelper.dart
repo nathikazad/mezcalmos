@@ -323,9 +323,33 @@ Future<dynamic> addCardSheet() {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  "Add card",
-                  style: Get.textTheme.headline3?.copyWith(fontSize: 17.sp),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: Text(
+                        "Add card",
+                        style:
+                            Get.textTheme.headline3?.copyWith(fontSize: 17.sp),
+                      ),
+                    ),
+                    Text("Powered by"),
+                    SizedBox(
+                      width: 3,
+                    ),
+                    Image.asset(
+                      "assets/images/shared/stripeLogo.png",
+                      width: 50,
+                      height: 20,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    )
+                  ],
                 ),
                 const SizedBox(
                   height: 20,
