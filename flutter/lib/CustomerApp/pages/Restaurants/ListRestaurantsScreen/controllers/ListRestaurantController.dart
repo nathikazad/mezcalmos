@@ -50,7 +50,7 @@ class ListRestaurantsController {
       newList
           .showOnlyOpen(showOnlyOpen.value)
           .searchForFood(searchQuery.value)
-          .forEach((element) => mezDbgPrint(element.name[userLanguage]));
+          .forEach((Item element) => mezDbgPrint(element.name[userLanguage]));
       filteredItems.value = newList
           .showOnlyOpen(showOnlyOpen.value)
           .searchForFood(searchQuery.value);
@@ -61,6 +61,18 @@ class ListRestaurantsController {
       newList.sortByOpen();
       filteredRestaurants.value = newList;
     }
+  }
+
+  void switchSearchType(SearchType value) {
+    searchType.value = value;
+  }
+
+  bool get showFilters {
+    return searchQuery.value.length > 2;
+  }
+
+  bool get byRestaurants {
+    return searchType.value == SearchType.searchByRestaurantName;
   }
 }
 
@@ -73,7 +85,6 @@ extension RestaurantFilters on RestaurantList {
         .toList();
   }
 
-
   List<Item> searchForFood(String search) {
     return fold<List<Category>>(<Category>[],
         (List<Category> categories, Restaurant restaurant) {
@@ -82,7 +93,6 @@ extension RestaurantFilters on RestaurantList {
           .forEach((Category category) => category.restaurant = restaurant);
       categories.addAll(restaurantCategories);
       return categories;
-
     }).fold<List<Item>>(<Item>[], (List<Item> items, Category category) {
       final List<Item> categoryItems = category.getItems;
       categoryItems.forEach((Item item) {
