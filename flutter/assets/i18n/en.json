@@ -2,7 +2,8 @@
     "CustomerApp": {
         "main": {
             "savedLocations": "Saved Locations",
-            "contactUs": "Contact us"
+            "contactUs": "Contact us",
+            "savedCards": "Saved cards"
         },
         "components": {
             "Menu": {

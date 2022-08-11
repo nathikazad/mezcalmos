@@ -1,12 +1,14 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:sizer/sizer.dart';
 
 enum StripePaymentStatus { Authorized, Captured, Cancelled }
 
@@ -75,6 +77,19 @@ extension ParseCardBrandToString on CardBrand {
   }
 }
 
+extension ParseCardBrandToIcon on CardBrand {
+  IconData toIcon() {
+    switch (this) {
+      case CardBrand.Visa:
+        return FontAwesomeIcons.ccVisa;
+      case CardBrand.Mastercard:
+        return FontAwesomeIcons.ccMastercard;
+      case CardBrand.Amex:
+        return FontAwesomeIcons.ccAmex;
+    }
+  }
+}
+
 extension ParseStringToCardBrand on String {
   CardBrand? toCardBrand() {
     return CardBrand.values.firstWhereOrNull(
@@ -123,6 +138,7 @@ Future<ServerResponse> addCard({required String paymentMethod}) async {
         .call(<String, String>{"paymentMethod": paymentMethod});
     return ServerResponse.fromJson(response.data);
   } catch (e) {
+    mezDbgPrint("Error ==========>$e");
     return ServerResponse(ResponseStatus.Error,
         errorMessage: "Server Error", errorCode: "serverError");
   }
@@ -145,6 +161,7 @@ Future<String> acceptPaymentWithSavedCard(
     {required num paymentAmount,
     required CreditCard card,
     required String serviceProviderId}) async {
+  mezDbgPrint("Payment with saved Card ============> ${card.toString()}");
   final HttpsCallable addCardFunction =
       FirebaseFunctions.instance.httpsCallable("stripe-chargeCard");
   try {
@@ -155,7 +172,8 @@ Future<String> acceptPaymentWithSavedCard(
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
       "paymentAmount": paymentAmount
     });
-    ServerResponse serverResponse = ServerResponse.fromJson(response.data);
+    final ServerResponse serverResponse =
+        ServerResponse.fromJson(response.data);
     if (serverResponse.success) {
       return extractPaymentIdFromIntent(
           serverResponse.data['paymentIntent'].toString());
@@ -289,6 +307,35 @@ Future<ServerResponse> serviceProviderFunctions(
   }
 }
 
+Future<dynamic> addCardSheet() {
+  return showModalBottomSheet(
+      isScrollControlled: false,
+      context: Get.context!,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
+      )),
+      builder: (BuildContext ctx) {
+        return Container(
+            margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Add card",
+                  style: Get.textTheme.headline3?.copyWith(fontSize: 17.sp),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CardForm(),
+              ],
+            ));
+      });
+}
+
 class CardForm extends StatefulWidget {
   const CardForm({
     Key? key,
@@ -306,12 +353,15 @@ class _CardFormState extends State<CardForm> {
         //TODO: should be in loading state
         _isButtonEnabled = false;
       });
+      Stripe.stripeAccountId = null;
+      await Stripe.instance.applySettings();
       final PaymentMethod paymentMethod = await Stripe.instance
           .createPaymentMethod(const PaymentMethodParams.card(
               paymentMethodData: PaymentMethodData()));
-
-      ServerResponse serverResponse =
+      mezDbgPrint("payment method from stripe =========>$paymentMethod");
+      final ServerResponse serverResponse =
           await addCard(paymentMethod: paymentMethod.id);
+      mezDbgPrint("Response ====> ${serverResponse.data}");
       if (serverResponse.success) {
         Get.back(result: serverResponse.data['cardId']);
       } else {
@@ -329,25 +379,37 @@ class _CardFormState extends State<CardForm> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: <Widget>[
-      CardFormField(
-        enablePostalCode: true,
-        onCardChanged: (CardFieldInputDetails? card) {
-          setState(() {
-            _isButtonEnabled = card?.complete ?? false;
-          });
-        },
-        countryCode: 'MX',
-        style: CardFormStyle(
-          borderColor: Colors.blueGrey,
-          textColor: Colors.black,
-          fontSize: 24,
-          placeholderColor: Colors.blue,
-        ),
-      ),
-      ElevatedButton(
-          child: new Text("Save"),
-          onPressed: _isButtonEnabled ? createCard : null)
-    ]);
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          CardFormField(
+            enablePostalCode: true,
+            onCardChanged: (CardFieldInputDetails? card) {
+              setState(() {
+                _isButtonEnabled = card?.complete ?? false;
+              });
+            },
+            countryCode: 'MX',
+            style: CardFormStyle(
+              borderColor: Colors.blueGrey,
+              textColor: Colors.black,
+              fontSize: 24,
+              placeholderColor: Colors.blue,
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          TextButton(
+              child: Container(
+                  margin: const EdgeInsets.symmetric(vertical: 5),
+                  alignment: Alignment.center,
+                  child: Text("Save")),
+              onPressed: _isButtonEnabled ? createCard : null),
+          const SizedBox(
+            height: 8,
+          ),
+        ]);
   }
 }

@@ -35,9 +35,10 @@ class CustomerAppTheme {
         actionsIconTheme: IconThemeData(color: Colors.black),
       ),
       inputDecorationTheme: InputDecorationTheme(
-          fillColor: Colors.white,
           filled: true,
-          isDense: true,
+          fillColor: Colors.grey.shade200,
+          //isDense: true,
+
           focusColor: Color(0xFF6779FE),
           prefixIconColor: Color(0xFF6779FE),
           alignLabelWithHint: true,

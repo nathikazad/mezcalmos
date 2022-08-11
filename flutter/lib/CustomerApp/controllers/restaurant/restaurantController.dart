@@ -4,6 +4,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
@@ -96,7 +97,6 @@ class RestaurantController extends GetxController {
   }
 
   Future<void> saveCart() async {
-    mezDbgPrint(cart.value.paymentType);
     await _databaseHelper.firebaseDatabase
         .ref()
         .child(customerCart(_authController.fireAuthUser!.uid))
@@ -138,10 +138,9 @@ class RestaurantController extends GetxController {
     saveCart();
   }
 
-  void switchPaymentMedthod(PaymentType paymentType) {
+  void switchPaymentMedthod(
+      {required PaymentType paymentType, CreditCard? card}) {
     cart.value.paymentType = paymentType;
-    mezDbgPrint("PAyment type ====> $paymentType");
-    mezDbgPrint("final Payment type ====> ${cart.value.paymentType}");
 
     saveCart();
   }

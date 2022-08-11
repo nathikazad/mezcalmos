@@ -12,6 +12,7 @@ extension ParsePaymentTypeToString on PaymentType {
 
   String toNormalString() {
     final String str = toString().split('.').last;
+
     return str;
   }
 }

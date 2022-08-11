@@ -119,6 +119,7 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
         mezDbgPrint(viewController.searchQuery);
       },
       decoration: InputDecoration(
+          fillColor: Colors.white,
           prefixIcon: Icon(
             Icons.search,
             color: Colors.grey.shade300,

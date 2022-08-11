@@ -17,6 +17,7 @@ class Cart {
   Restaurant? restaurant;
   String? notes;
   PaymentType paymentType = PaymentType.Cash;
+
   num? shippingCost;
   RouteInformation? _routeInformation;
 

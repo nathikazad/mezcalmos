@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/Controllers/ViewCartController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/BuildItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/OrderSummaryCard.dart';
@@ -19,9 +20,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class ViewCartBody extends StatefulWidget {
   final void Function({Location? location})? setLocationCallBack;
   final TextEditingController notesTextController;
-
+  final ViewCartController viewCartController;
   const ViewCartBody({
     required this.notesTextController,
+    required this.viewCartController,
     Key? key,
     this.setLocationCallBack,
   }) : super(key: key);
@@ -32,6 +34,13 @@ class ViewCartBody extends StatefulWidget {
 
 class _ViewCartBodyState extends State<ViewCartBody> {
   RestaurantController controller = Get.find<RestaurantController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    widget.viewCartController.init();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -74,12 +83,13 @@ class _ViewCartBodyState extends State<ViewCartBody> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 14,
               ),
-              child: PaymentMethodPicker(),
+              child: PaymentMethodPicker(
+                viewCartController: widget.viewCartController,
+              ),
             ),
             SizedBox(
               height: 15,
             ),
-
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 14,

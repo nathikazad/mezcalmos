@@ -41,7 +41,7 @@ class CustomerAuthController extends GetxController {
           .ref()
           .child(customerNode(_authController.fireAuthUser!.uid))
           .onValue
-          .listen((event) async {
+          .listen((DatabaseEvent event) async {
         customer.value = Customer.fromSnapshotData(event.snapshot.value);
 
         if (_checkedAppVersion == false) {
@@ -112,7 +112,7 @@ class CustomerAuthController extends GetxController {
   }
 
   @override
-  void onClose() async {
+  Future<void> onClose() async {
     print("[+] CustomerAuthController::onClose ---------> Was invoked !");
     await _customerNodeListener?.cancel();
     _customerNodeListener = null;

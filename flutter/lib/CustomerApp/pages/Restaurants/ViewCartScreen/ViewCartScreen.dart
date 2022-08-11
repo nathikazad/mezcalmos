@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/Controllers/ViewCartController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/CartIsEmptyScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/components/ViewCartBody.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -37,6 +38,7 @@ enum CardChoice { SavedCard, GooglePay, ApplePay }
 class _ViewCartScreenState extends State<ViewCartScreen> {
   /// RestaurantController
   RestaurantController _restaurantController = Get.find<RestaurantController>();
+  ViewCartController viewCartController = ViewCartController();
 
   /// _clickedOrderNow
   bool _clickedOrderNow = false;
@@ -62,7 +64,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   CardChoice cartPaymentChoice = CardChoice.ApplePay;
   CreditCard? savedCardChoice;
-
 
   @override
   void initState() {
@@ -93,6 +94,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         if (_restaurantController.cart.value.cartItems.length > 0) {
           return SingleChildScrollView(
             child: ViewCartBody(
+              viewCartController: viewCartController,
               setLocationCallBack: ({Location? location}) {
                 setState(() {
                   orderToLocation = location;
@@ -210,44 +212,46 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
       String? stripePaymentId;
 
-      switch (cartPaymentChoice) {
-        case CardChoice.ApplePay:
-          final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.id,
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
-              orderType: OrderType.Restaurant,
-              paymentAmount: _restaurantController.cart.value.totalCost);
-          stripePaymentId = extractPaymentIdFromIntent(
-              paymentIntentResponse.data['paymentIntent'].toString());
-          await acceptPaymentWithApplePay(
-              paymentAmount: _restaurantController.cart.value.totalCost,
-              paymentIntentData: paymentIntentResponse.data,
-              merchantName:
-                  _restaurantController.cart.value.restaurant!.info.name);
-          break;
-        case CardChoice.GooglePay:
-          final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.id,
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
-              orderType: OrderType.Restaurant,
-              paymentAmount: _restaurantController.cart.value.totalCost);
-          stripePaymentId = extractPaymentIdFromIntent(
-              paymentIntentResponse.data['paymentIntent'].toString());
-          await acceptPaymentWithGooglePay(
-              paymentAmount: _restaurantController.cart.value.totalCost,
-              paymentIntentData: paymentIntentResponse.data,
-              merchantName:
-                  _restaurantController.cart.value.restaurant!.info.name);
-          break;
-        case CardChoice.SavedCard:
-          stripePaymentId = await acceptPaymentWithSavedCard(
-              serviceProviderId:
-                  _restaurantController.cart.value.restaurant!.info.id,
-              paymentAmount: _restaurantController.cart.value.totalCost,
-              card: savedCardChoice!);
-          break;
+      if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
+        switch (viewCartController.getCardChoice) {
+          case CardChoice.ApplePay:
+            final ServerResponse paymentIntentResponse = await getPaymentIntent(
+                customerId: Get.find<AuthController>().user!.id,
+                serviceProviderId:
+                    _restaurantController.cart.value.restaurant!.info.id,
+                orderType: OrderType.Restaurant,
+                paymentAmount: _restaurantController.cart.value.totalCost);
+            stripePaymentId = extractPaymentIdFromIntent(
+                paymentIntentResponse.data['paymentIntent'].toString());
+            await acceptPaymentWithApplePay(
+                paymentAmount: _restaurantController.cart.value.totalCost,
+                paymentIntentData: paymentIntentResponse.data,
+                merchantName:
+                    _restaurantController.cart.value.restaurant!.info.name);
+            break;
+          case CardChoice.GooglePay:
+            final ServerResponse paymentIntentResponse = await getPaymentIntent(
+                customerId: Get.find<AuthController>().user!.id,
+                serviceProviderId:
+                    _restaurantController.cart.value.restaurant!.info.id,
+                orderType: OrderType.Restaurant,
+                paymentAmount: _restaurantController.cart.value.totalCost);
+            stripePaymentId = extractPaymentIdFromIntent(
+                paymentIntentResponse.data['paymentIntent'].toString());
+            await acceptPaymentWithGooglePay(
+                paymentAmount: _restaurantController.cart.value.totalCost,
+                paymentIntentData: paymentIntentResponse.data,
+                merchantName:
+                    _restaurantController.cart.value.restaurant!.info.name);
+            break;
+          case CardChoice.SavedCard:
+            stripePaymentId = await acceptPaymentWithSavedCard(
+                serviceProviderId:
+                    _restaurantController.cart.value.restaurant!.info.id,
+                paymentAmount: _restaurantController.cart.value.totalCost,
+                card: viewCartController.card.value!);
+            break;
+        }
       }
 
       final ServerResponse _serverResponse = await _restaurantController

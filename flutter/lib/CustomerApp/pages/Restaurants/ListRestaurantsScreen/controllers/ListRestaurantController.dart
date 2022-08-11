@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
@@ -58,25 +57,30 @@ extension RestaurantFilters on RestaurantList {
   }
 
   List<Item> searchForFood(String search, LanguageType languageType) {
-    return fold<List<Category>>(<Category>[],
-            (List<Category> categories, Restaurant restaurant) {
+    final List<Category> cats = fold<List<Category>>(<Category>[],
+        (List<Category> categories, Restaurant restaurant) {
       final List<Category> restaurantCategories = restaurant.getCategories;
       categories.forEach(
           (Category category) => category.restaurantId = restaurant.info.id);
       categories.addAll(restaurantCategories);
       return categories;
-    })
+    });
+    List<Item> allItems = [];
+    allItems = cats
         .fold<List<Item>>(<Item>[], (List<Item> items, Category category) {
           final List<Item> items = category.getItems;
           items.forEach(
               (Item item) => item.restaurantId = category.restaurantId);
-          items.forEach((Item item) => item.categoryId = category.id);
-          items.addAll(category.getItems);
+          items.forEach((Item item) {
+            item.categoryId = category.id;
+          });
+          // items.addAll(category.getItems);
           return items;
         })
         .where(
             (Item item) => item.name[languageType]?.contains(search) ?? false)
         .toList();
+    return allItems;
   }
 
   RestaurantList showOnlyOpen(bool value) {

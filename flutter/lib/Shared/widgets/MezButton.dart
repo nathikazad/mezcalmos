@@ -58,7 +58,11 @@ class _MezButtonState extends State<MezButton> {
                   color: (widget.enabled && widget.onClick != null)
                       ? primaryBlueColor
                       : Colors.grey.shade400,
-                  gradient: (widget.withGradient) ? bluePurpleGradient : null,
+                  gradient: (widget.withGradient &&
+                          widget.enabled &&
+                          widget.onClick != null)
+                      ? bluePurpleGradient
+                      : null,
                   borderRadius:
                       BorderRadius.circular(widget.borderRadius ?? 10)),
               child: Container(

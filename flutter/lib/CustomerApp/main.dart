@@ -21,6 +21,15 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
     onClick: () {
       // Get.find<SideMenuDrawerController>().closeMenu();
+      Get.toNamed<void>(kSavedCards);
+    },
+    icon: Icons.credit_card,
+    title: "CustomerApp/main/savedCards",
+    isI18nPath: true,
+  ),
+  SideMenuItem(
+    onClick: () {
+      // Get.find<SideMenuDrawerController>().closeMenu();
       Get.toNamed<void>(kSavedLocations);
     },
     icon: Icons.near_me_outlined,

@@ -1,4 +1,5 @@
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/CustomerApp/pages/Cards/CardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/LaundriesListView.dart';
@@ -35,6 +36,7 @@ const String kPickLocationEditRoute = '/pickLocationFromMap/editLocation';
 const String kPickLocationNotAuth = '/pickLocationFromMap/addLocationNoAuth';
 const String kSavedLocations = '/savedLocations';
 const String kLaundriesListRoute = '/laundriesList';
+const String kSavedCards = '/savedCards';
 const String kSingleLaundryRoute = '/laundriesList/:laundryId';
 
 String getRestaurantRoute(String restaurantId) {
@@ -152,6 +154,7 @@ class XRouter {
         ),
         // Laundry routes
         GetPage(name: kLaundriesListRoute, page: () => LaundriesListView()),
+        GetPage(name: kSavedCards, page: () => SavedCardsListView()),
 
         GetPage(
           name: kLaundryOrderRequest,
