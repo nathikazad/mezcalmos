@@ -1,14 +1,18 @@
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:collection/collection.dart';
 
 class Customer {
   // List<Order> currentOrders = [];
   String? appVersion;
   dynamic notificationInfo;
-  List<SavedLocation> savedLocations = <SavedLocation>[];
+  SavedLocations savedLocations = <SavedLocation>[];
   List<CreditCard> savedCards = <CreditCard>[];
   dynamic data;
+  SavedLocation? get defaultLocation => savedLocations.firstWhereOrNull(
+      (SavedLocation savedLocation) => savedLocation.defaultLocation);
+
 
   Customer.fromSnapshotData(data) {
     appVersion = data?["versionNumber"] ?? null;
@@ -22,6 +26,13 @@ class Customer {
           SavedLocation.fromData(id: entry.key, data: entry.value),
         );
       });
+      // if none of the locations are default, then set the first location as default
+      if (savedLocations.length > 0 &&
+          savedLocations
+                  .where((SavedLocation savedLocation) =>
+                      savedLocation.defaultLocation)
+                  .length ==
+              0) savedLocations[0].defaultLocation = true;
     }
     if (data["stripe"] != null) {
       if (data["stripe"]["cards"] != null) {
@@ -55,22 +66,23 @@ class SavedLocation {
   String name;
   String? id;
   Location? location;
+  bool defaultLocation;
 
-  SavedLocation({
-    required this.name,
-    this.location,
-    this.id,
-  });
+  SavedLocation(
+      {required this.name,
+      this.location,
+      this.id,
+      this.defaultLocation = false});
 
   factory SavedLocation.fromData({
     required String id,
     required data,
   }) {
     return SavedLocation(
-      name: data["name"],
-      location: Location.fromFirebaseData(data),
-      id: id,
-    );
+        name: data["name"],
+        location: Location.fromFirebaseData(data),
+        id: id,
+        defaultLocation: data["default"] ?? false);
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
@@ -79,6 +91,18 @@ class SavedLocation {
         : <String, dynamic>{};
 
     json["name"] = name;
+    json["default"] = defaultLocation;
+    return json;
+  }
+}
+
+typedef SavedLocations = List<SavedLocation>;
+
+extension SavedLocationsFunctions on SavedLocations {
+  Map<String, Object> toFirebaseFormattedJson() {
+    Map<String, Object> json = <String, Object>{};
+    forEach((SavedLocation savedLocation) =>
+        json[savedLocation.id!] = savedLocation.toFirebaseFormattedJson());
     return json;
   }
 }
