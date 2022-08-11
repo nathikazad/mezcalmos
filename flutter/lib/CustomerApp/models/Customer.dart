@@ -6,7 +6,7 @@ class Customer {
   // List<Order> currentOrders = [];
   String? appVersion;
   dynamic notificationInfo;
-  List<SavedLocation> savedLocations = <SavedLocation>[];
+  SavedLocations savedLocations = <SavedLocation>[];
   List<CreditCard> savedCards = <CreditCard>[];
   dynamic data;
 
@@ -55,22 +55,23 @@ class SavedLocation {
   String name;
   String? id;
   Location? location;
+  bool defaultLocation;
 
-  SavedLocation({
-    required this.name,
-    this.location,
-    this.id,
-  });
+  SavedLocation(
+      {required this.name,
+      this.location,
+      this.id,
+      this.defaultLocation = false});
 
   factory SavedLocation.fromData({
     required String id,
     required data,
   }) {
     return SavedLocation(
-      name: data["name"],
-      location: Location.fromFirebaseData(data),
-      id: id,
-    );
+        name: data["name"],
+        location: Location.fromFirebaseData(data),
+        id: id,
+        defaultLocation: data["default"] ?? false);
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
@@ -79,6 +80,18 @@ class SavedLocation {
         : <String, dynamic>{};
 
     json["name"] = name;
+    json["default"] = defaultLocation;
+    return json;
+  }
+}
+
+typedef SavedLocations = List<SavedLocation>;
+
+extension SavedLocationsFunctions on SavedLocations {
+  Map<String, Object> toFirebaseFormattedJson() {
+    Map<String, Object> json = <String, Object>{};
+    forEach((SavedLocation savedLocation) =>
+        json[savedLocation.id!] = savedLocation.toFirebaseFormattedJson());
     return json;
   }
 }

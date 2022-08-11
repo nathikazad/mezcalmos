@@ -90,6 +90,16 @@ class CustomerAuthController extends GetxController {
         .set(savedLocation.toFirebaseFormattedJson());
   }
 
+  void setAsDefaultLocation(SavedLocation newDefaultLocation) {
+    customer.value!.savedLocations.forEach((SavedLocation savedLocation) {
+      savedLocation.defaultLocation = newDefaultLocation.id == savedLocation.id;
+    });
+    _databaseHelper.firebaseDatabase
+        .ref()
+        .child(savedLocationsNode(_authController.fireAuthUser!.uid))
+        .update(customer.value!.savedLocations.toFirebaseFormattedJson());
+  }
+
   void deleteLocation(SavedLocation savedLocation) {
     _databaseHelper.firebaseDatabase
         .ref()
