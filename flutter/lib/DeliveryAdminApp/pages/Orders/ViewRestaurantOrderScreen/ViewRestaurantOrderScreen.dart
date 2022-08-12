@@ -14,6 +14,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScree
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderShippingLocation.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/OrderTotalCostCard.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/PastOrderInfo.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewRestaurantOrderScreen/components/SetOrderEstTime.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -85,7 +86,6 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
     mezDbgPrint("ViewOrderScreen");
     orderId = Get.parameters['orderId']!;
     controller.clearOrderNotifications(orderId);
-    
 
     order.value = controller.getOrder(orderId);
     _orderListener = controller
@@ -153,6 +153,7 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                         : PastOrderInfo(order: order.value!),
 
                     //============================= Customer info====================
+
                     if (order.value?.inProcess() ?? false)
                       DriverCard(
                         driver: order.value!.dropoffDriver,
@@ -169,7 +170,10 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
                           );
                         },
                       ),
-
+                    if (order.value?.inProcess() ?? false)
+                      DaRestaurantOrderTime(
+                        order: order.value!,
+                      ),
                     if (order.value!.inDeliveryPhase()) ..._mapWidget,
 
                     OrderInfoCard(order: order),
@@ -215,22 +219,22 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
-      latLng: order.value!.restaurant.location.toLatLng(),
-      markerId: order.value!.restaurantId,
-      customImgHttpUrl: order.value!.restaurant.image,
+      latLng: order.value?.restaurant.location.toLatLng(),
+      markerId: order.value?.restaurantId,
+      customImgHttpUrl: order.value?.restaurant.image,
       fitWithinBounds: true,
     );
     // customer's
     mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value!.to.toLatLng(),
+      latLng: order.value?.to.toLatLng(),
       fitWithinBounds: true,
     );
-    if (order.value!.routeInformation != null)
+    if (order.value?.routeInformation != null)
       mapController.decodeAndAddPolyline(
           encodedPolylineString: order.value!.routeInformation!.polyline);
 
     mapController.animateAndUpdateBounds(
-        shouldFitPolylineInBound: order.value!.routeInformation != null);
+        shouldFitPolylineInBound: order.value?.routeInformation != null);
   }
 
   void updateMapIfDeliveryPhase(RestaurantOrderStatus status) {
@@ -240,23 +244,22 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           _statusSnapshot = status;
           // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.restaurant.location.toLatLng(),
-            markerId: order.value!.restaurantId,
-            customImgHttpUrl: order.value!.restaurant.image,
+            latLng: order.value?.restaurant.location.toLatLng(),
+            markerId: order.value?.restaurantId,
+            customImgHttpUrl: order.value?.restaurant.image,
             fitWithinBounds: true,
           );
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng(),
+            latLng: order.value?.to.toLatLng(),
             fitWithinBounds: false,
           );
         }
-        if (order.value!.dropoffDriver?.location != null)
-          mapController.addOrUpdateUserMarker(
-            latLng: order.value!.dropoffDriver!.location!,
-            markerId: order.value!.dropoffDriver!.id,
-            customImgHttpUrl: order.value!.dropoffDriver!.image,
-            fitWithinBounds: true,
-          );
+        mapController.addOrUpdateUserMarker(
+          latLng: order.value?.dropoffDriver?.location,
+          markerId: order.value?.dropoffDriver?.id,
+          customImgHttpUrl: order.value?.dropoffDriver?.image,
+          fitWithinBounds: true,
+        );
         mapController.animateAndUpdateBounds(shouldFitPolylineInBound: false);
         break;
 
@@ -265,26 +268,26 @@ class _ViewRestaurantOrderScreen extends State<ViewRestaurantOrderScreen> {
           _statusSnapshot = status;
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value!.restaurant.location.toLatLng(),
-            markerId: order.value!.restaurantId,
-            customImgHttpUrl: order.value!.restaurant.image,
+            latLng: order.value?.restaurant.location.toLatLng(),
+            markerId: order.value?.restaurantId,
+            customImgHttpUrl: order.value?.restaurant.image,
             fitWithinBounds: false,
           );
           // we fit the destination into bounds
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng(),
+            latLng: order.value?.to.toLatLng(),
             fitWithinBounds: true,
           );
         }
 
         // we keep updating the delivery's
-        if (order.value!.dropoffDriver?.location != null)
-          mapController.addOrUpdateUserMarker(
-            latLng: order.value!.dropoffDriver!.location!,
-            markerId: order.value!.dropoffDriver!.id,
-            customImgHttpUrl: order.value!.dropoffDriver!.image,
-            fitWithinBounds: true,
-          );
+
+        mapController.addOrUpdateUserMarker(
+          latLng: order.value?.dropoffDriver?.location,
+          markerId: order.value?.dropoffDriver?.id,
+          customImgHttpUrl: order.value?.dropoffDriver?.image,
+          fitWithinBounds: true,
+        );
         mapController.animateAndUpdateBounds();
         break;
       default:

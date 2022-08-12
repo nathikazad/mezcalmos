@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AutoCompleteTextView extends StatefulWidget {
@@ -102,14 +103,16 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
         Overlay.of(context)?.insert(_overlayEntry);
         widget.focusGained();
       } else {
-        _overlayEntry.remove();
-        widget.focusLost();
+        if (_overlayEntry != null) {
+          _overlayEntry.remove();
+          widget.focusLost();
+        }
       }
     });
     widget.controller.addListener(_onSearchChanged);
   }
 
-  _onSearchChanged() {
+  void _onSearchChanged() {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(Duration(seconds: widget.suggestionsApiFetchDelay), () {
       if (isSearching == true) {
@@ -118,7 +121,7 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
     });
   }
 
-  _getSuggestions(String data) async {
+  Future<void> _getSuggestions(String data) async {
     if (data.length >= 3 && !suggestionsStreamController.isClosed) {
       idWithDescription.clear();
       idWithDescription = await widget.getSuggestionsMethod(data);
@@ -137,8 +140,8 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
               child: CompositedTransformFollower(
                 link: _layerLink,
                 showWhenUnlinked: false,
-                offset:
-                    Offset(widget.dropDownDxOffset ?? 0.0, size.height + 5.0),
+                offset: Offset(-(Get.width / 6.85),
+                    size.height + 10), //Offset(100, size.height + 5.0),
                 child: Material(
                   elevation: 4.0,
                   child: StreamBuilder<Object>(

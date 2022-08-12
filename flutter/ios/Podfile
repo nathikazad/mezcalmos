@@ -6,14 +6,6 @@
 
 
 
-
-
-
-
-
-
-
-
 platform :ios, '12.0'
 
 
@@ -23,23 +15,7 @@ platform :ios, '12.0'
 
 
 
-
-
-
-
-
-
-
-
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
-
-
-
-
-
-
-
-
 
 
 
@@ -63,31 +39,7 @@ ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 project 'Runner', {
-
-
-
-
-
-
-
-
 
 
 
@@ -103,14 +55,6 @@ project 'Runner', {
 
 
 
-
-
-
-
-
-
-
-
   'Profile' => :release,
 
 
@@ -119,23 +63,7 @@ project 'Runner', {
 
 
 
-
-
-
-
-
-
-
-
   'Release' => :release,
-
-
-
-
-
-
-
-
 
 
 
@@ -159,31 +87,7 @@ project 'Runner', {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def flutter_root
-
-
-
-
-
-
-
-
 
 
 
@@ -199,23 +103,7 @@ def flutter_root
 
 
 
-
-
-
-
-
-
-
-
   unless File.exist?(generated_xcode_build_settings_path)
-
-
-
-
-
-
-
-
 
 
 
@@ -231,31 +119,7 @@ def flutter_root
 
 
 
-
-
-
-
-
-
-
-
   end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -279,23 +143,7 @@ def flutter_root
 
 
 
-
-
-
-
-
-
-
-
     matches = line.match(/FLUTTER_ROOT\=(.*)/)
-
-
-
-
-
-
-
-
 
 
 
@@ -311,23 +159,7 @@ def flutter_root
 
 
 
-
-
-
-
-
-
-
-
   end
-
-
-
-
-
-
-
-
 
 
 
@@ -343,31 +175,7 @@ def flutter_root
 
 
 
-
-
-
-
-
-
-
-
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -399,39 +207,7 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 flutter_ios_podfile_setup
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -451,7 +227,15 @@ target 'Runner' do
 
 
 
+
+
+
+
   use_frameworks!
+
+
+
+
 
 
 
@@ -459,7 +243,23 @@ target 'Runner' do
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
+
+
+
 
 
 
@@ -479,39 +279,19 @@ end
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 post_install do |installer|
 
 
 
+
+
+
+
   installer.pods_project.targets.each do |target|
+
+
+
+
 
 
 
@@ -523,214 +303,7 @@ post_install do |installer|
 
 
 
-    target.build_configurations.each do |config|
-
-
-
-      # You can remove unused permissions here
-
-
-
-      # for more infomation: https://github.com/BaseflowIT/flutter-permission-handler/blob/master/permission_handler/ios/Classes/PermissionHandlerEnums.h
-
-
-
-      # e.g. when you don't need camera permission, just add 'PERMISSION_CAMERA=0'
-
-
-
-      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
-      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
-
-
-
-        '$(inherited)',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.calendar
-
-
-
-        # 'PERMISSION_EVENTS=1',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.reminders
-
-
-
-        # 'PERMISSION_REMINDERS=1',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.contacts
-
-
-
-        # 'PERMISSION_CONTACTS=1',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.camera
-
-
-
-        #'PERMISSION_CAMERA=1',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.microphone
-
-
-
-        'PERMISSION_MICROPHONE=1',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.speech
-
-
-
-        # 'PERMISSION_SPEECH_RECOGNIZER=1',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.photos
-
-
-
-        #'PERMISSION_PHOTOS=1',
-
-
-
-
-
-
-
-        ## dart: [PermissionGroup.location, PermissionGroup.locationAlways, PermissionGroup.locationWhenInUse]
-
-
-
-        # 'PERMISSION_LOCATION=1',
-
-
-
-       
-
-
-
-        ## dart: PermissionGroup.notification
-
-
-
-        # 'PERMISSION_NOTIFICATIONS=1',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.mediaLibrary
-
-
-
-        #'PERMISSION_MEDIA_LIBRARY=1',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.sensors
-
-
-
-        # 'PERMISSION_SENSORS=1',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.bluetooth
-
-
-
-        # 'PERMISSION_BLUETOOTH=1',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.appTrackingTransparency
-
-
-
-        # 'PERMISSION_APP_TRACKING_TRANSPARENCY=1',
-
-
-
-
-
-
-
-        ## dart: PermissionGroup.criticalAlerts
-
-
-
-        # 'PERMISSION_CRITICAL_ALERTS=1',
-
-
-
-      ]
-
-
-
-
-
-
-
-    end
-
-
-
   end
-
-
 
 
 

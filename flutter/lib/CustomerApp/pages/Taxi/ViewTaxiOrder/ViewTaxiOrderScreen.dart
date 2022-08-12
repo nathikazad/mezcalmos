@@ -103,10 +103,58 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
         children: <Widget>[
           mGoogleMap(),
           viewWidgets.absorbOrIgnoreUserTapWidget(),
-          ...OrderPositionedFromToTopBar.build(
+          ...OrderPositionedFromToTopBar.buildwithWidgets(
             context: context,
-            order: viewController.order.value!,
+            fromWidget: Padding(
+              padding: EdgeInsets.only(top: 6),
+              child: GestureDetector(
+                onTap: () => MezSnackbar(
+                  _i18n()["from"],
+                  viewController.order.value!.from.address,
+                ),
+                child: Text(
+                  viewController.order.value!.from.address
+                      .replaceAll(' ', '\u00a0'),
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w400,
+                  ),
+                  maxLines: 1,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            toWidget: Padding(
+              padding: EdgeInsets.only(top: 6),
+              child: GestureDetector(
+                onTap: () => MezSnackbar(
+                  _i18n()["from"],
+                  viewController.order.value!.to.address,
+                ),
+                child: Text(
+                  viewController.order.value!.to.address
+                      .replaceAll(' ', '\u00a0'),
+                  textScaleFactor: 1,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w400,
+                  ),
+                  maxLines: 1,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
           ),
+          // ...OrderPositionedFromToTopBar.build(
+          //   context: context,
+          //   order: viewController.order.value!,
+          // ),
           if (viewController.order.value?.scheduledTime != null)
             Positioned(
               top: 90,
@@ -122,13 +170,13 @@ class _ViewTaxiOrderScreenState extends State<ViewTaxiOrderScreen> {
                     ),
               ),
             ),
-          Positioned(
-            bottom: 140,
-            right: 15,
-            child: NearByOnlineTaxiDrivers(
-              centerLocation: Rxn(viewController.order.value?.from),
-            ),
-          ),
+          // Positioned(
+          //   bottom: 140,
+          //   right: 15,
+          //   child: NearByOnlineTaxiDrivers(
+          //     centerLocation: Rxn(viewController.order.value?.from),
+          //   ),
+          // ),
           TaxiOrderBottomBar(order: viewController.order),
           viewWidgets.getToolTip(),
           Obx(() => bottomButtons()),

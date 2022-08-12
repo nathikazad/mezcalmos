@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -12,7 +11,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class ViewTaxiOrderController {
   final AnimatedSliderController animatedSliderController;
@@ -59,8 +57,10 @@ class ViewTaxiOrderController {
     _orderListener =
         controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
       if (newOrderEvent != null) {
+        mezDbgPrint("New customer iorder event");
         order.value = newOrderEvent as TaxiOrder?;
         _handleCounterOffers(order.value!);
+        processOrder(orderCancelledCallback);
       }
     });
 
@@ -160,11 +160,13 @@ class ViewTaxiOrderController {
       mGoogleMapController.removeMarkerById(order.value!.driver!.id);
     // adding customer's marker
     mGoogleMapController.addOrUpdateUserMarker(
-        markerId: order.value!.customer.id,
-        latLng: order.value!.from.toLatLng());
+      markerId: order.value?.customer.id,
+      latLng: order.value?.from.toLatLng(),
+    );
     // updating destination marker.
     mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-        latLng: order.value!.to.toLatLng());
+      latLng: order.value?.to.toLatLng(),
+    );
   }
 
   /// This gets invoked when the order is moved to [inProcess] db node
@@ -179,15 +181,18 @@ class ViewTaxiOrderController {
         // update the to dest marker
         // mGoogleMapController.removeDestinationMarker();
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng());
+          latLng: order.value?.to.toLatLng(),
+        );
         // taxi driver marker
-        if (order.value!.driver?.location != null)
-          mGoogleMapController.addOrUpdateTaxiDriverMarker(
-              order.value!.driver!.id, order.value!.driver!.location!);
+        mGoogleMapController.addOrUpdateTaxiDriverMarker(
+          order.value?.driver?.id,
+          order.value?.driver?.location,
+        );
         // customer marker
         mGoogleMapController.addOrUpdateUserMarker(
-            markerId: order.value!.customer.id,
-            latLng: order.value!.from.toLatLng());
+          markerId: order.value?.customer.id,
+          latLng: order.value?.from.toLatLng(),
+        );
         break;
 
       case TaxiOrdersStatus.InTransit:
@@ -204,15 +209,16 @@ class ViewTaxiOrderController {
         //     order.value!.driver!.id, order.value!.from.toLatLng());
 
         // removing customer marker
-        mGoogleMapController.removeMarkerById(order.value!.customer.id);
+        mGoogleMapController.removeMarkerById(order.value?.customer.id);
         // updating driver's marker
         mGoogleMapController.addOrUpdateTaxiDriverMarker(
-            order.value!.driver!.id,
-            LatLng(order.value!.driver!.location!.latitude,
-                order.value!.driver!.location!.longitude));
+          order.value?.driver?.id,
+          order.value?.driver?.location,
+        );
         // updating destination marker.
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng());
+          latLng: order.value?.to.toLatLng(),
+        );
         break;
 
       default:
@@ -223,11 +229,13 @@ class ViewTaxiOrderController {
 
         // updating destination marker.
         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value!.to.toLatLng());
+          latLng: order.value?.to.toLatLng(),
+        );
         // customer marker
         mGoogleMapController.addOrUpdateUserMarker(
-            markerId: order.value!.customer.id,
-            latLng: order.value!.from.toLatLng());
+          markerId: order.value?.customer.id,
+          latLng: order.value?.from.toLatLng(),
+        );
         break;
     }
   }

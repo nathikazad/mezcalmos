@@ -1,17 +1,18 @@
 import 'dart:async';
+
 import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/models/Notification.dart';
-import 'package:mezcalmos/Shared/models/ServerResponse.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
-import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/taxiNodes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/ServerResponse.dart';
+import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
 
 class OrderController extends GetxController {
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
@@ -34,7 +35,7 @@ class OrderController extends GetxController {
         .orderByChild('orderTime')
         .limitToLast(5)
         .onChildAdded
-        .listen((dynamic event) {
+        .listen((DatabaseEvent event) {
       pastOrders
           .add(TaxiOrder.fromData(event.snapshot.key, event.snapshot.value));
     });
@@ -46,15 +47,15 @@ class OrderController extends GetxController {
         .ref()
         .child(taxiInProcessOrderNode(_authController.fireAuthUser!.uid))
         .onValue
-        .listen((event) {
+        .listen((DatabaseEvent event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
 
-      List<TaxiOrder> orders = [];
+      final List<TaxiOrder> orders = [];
       if (event.snapshot.value != null) {
         // mezDbgPrint("orderController: new incoming order data");
         (event.snapshot.value as dynamic)?.keys.forEach((orderId) {
           // mezDbgPrint("Hndling Order : $orderId");
-          dynamic orderData = (event.snapshot.value as dynamic)[orderId];
+          final dynamic orderData = (event.snapshot.value as dynamic)[orderId];
           // mezDbgPrint("Order Data => $orderData");
           orders.add(TaxiOrder.fromData(orderId, orderData));
           // try {
@@ -70,14 +71,14 @@ class OrderController extends GetxController {
 
   TaxiOrder? getOrder(String orderId) {
     try {
-      return currentOrders.firstWhere((order) {
+      return currentOrders.firstWhere((TaxiOrder order) {
         // mezDbgPrint(
         //     "Checking CurrentOrders::${order.orderId} ==> Driver Loc : ${order.driver?.location?.toJson()}");
         return order.orderId == orderId;
       });
     } on StateError {
       try {
-        return pastOrders.firstWhere((order) {
+        return pastOrders.firstWhere((TaxiOrder order) {
           mezDbgPrint(
               "Checking PastOrders::${order.orderId} ==> ${order.toString()}");
 
@@ -100,12 +101,13 @@ class OrderController extends GetxController {
     return currentOrders.stream.map<TaxiOrder?>((_) {
       try {
         return currentOrders.firstWhere(
-          (currentOrder) => currentOrder.orderId == orderId,
+          (TaxiOrder currentOrder) => currentOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
         // return null;
       }
+      return null;
     });
   }
 
@@ -113,22 +115,23 @@ class OrderController extends GetxController {
     return pastOrders.stream.map<TaxiOrder?>((_) {
       try {
         return pastOrders.firstWhere(
-          (pastOrder) => pastOrder.orderId == orderId,
+          (TaxiOrder pastOrder) => pastOrder.orderId == orderId,
         );
       } on StateError catch (_) {
         // do nothing
         // return null;
       }
+      return null;
     });
   }
 
   bool hasNewMessageNotification() {
     return _foregroundNotificationsController
         .notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
-            notification.orderId! ==
-                Get.find<TaxiAuthController>().taxiState!.currentOrder)
+            notification.chatId ==
+                Get.find<TaxiAuthController>().taxiState?.currentOrder)
         .toList()
         .isNotEmpty;
   }
@@ -136,24 +139,24 @@ class OrderController extends GetxController {
   void clearOrderNotifications() {
     _foregroundNotificationsController
         .notifications()
-        .where((notification) =>
+        .where((Notification notification) =>
             notification.notificationType ==
                 NotificationType.OrderStatusChange &&
             notification.orderId! ==
                 Get.find<TaxiAuthController>().taxiState!.currentOrder!)
-        .forEach((notification) {
+        .forEach((Notification notification) {
       _foregroundNotificationsController.removeNotification(notification.id);
     });
   }
 
   Future<ServerResponse> cancelTaxi(String? reason) async {
-    HttpsCallable cancelTaxiFunction =
+    final HttpsCallable cancelTaxiFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-cancelFromDriver');
     mezDbgPrint("Cancel Taxi Called");
     try {
-      HttpsCallableResult response =
+      final HttpsCallableResult response =
           await cancelTaxiFunction.call(<String, dynamic>{'reason': reason});
-      var res = ServerResponse.fromJson(response.data);
+      final ServerResponse res = ServerResponse.fromJson(response.data);
       mezDbgPrint(res.data);
       mezDbgPrint(res.errorMessage);
       mezDbgPrint(res.errorCode);
@@ -167,11 +170,12 @@ class OrderController extends GetxController {
 
   Future<ServerResponse> startScheduledRide() async {
     mezDbgPrint("Start Taxi Called");
-    HttpsCallable startScheduledRideFunction =
+    final HttpsCallable startScheduledRideFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-startScheduledRide');
     try {
-      HttpsCallableResult response = await startScheduledRideFunction.call({});
-      var res = ServerResponse.fromJson(response.data);
+      final HttpsCallableResult response =
+          await startScheduledRideFunction.call({});
+      final ServerResponse res = ServerResponse.fromJson(response.data);
       mezDbgPrint(res.data);
       mezDbgPrint(res.errorMessage);
       mezDbgPrint(res.errorCode);
@@ -184,11 +188,11 @@ class OrderController extends GetxController {
 
   Future<ServerResponse> startRide() async {
     mezDbgPrint("Start Taxi Called");
-    HttpsCallable startRideFunction =
+    final HttpsCallable startRideFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-startRide');
     try {
-      HttpsCallableResult response = await startRideFunction.call({});
-      var res = ServerResponse.fromJson(response.data);
+      final HttpsCallableResult response = await startRideFunction.call({});
+      final ServerResponse res = ServerResponse.fromJson(response.data);
       mezDbgPrint(res.data);
       mezDbgPrint(res.errorMessage);
       mezDbgPrint(res.errorCode);
@@ -201,10 +205,10 @@ class OrderController extends GetxController {
 
   Future<ServerResponse> finishRide() async {
     mezDbgPrint("Finish Taxi Called");
-    HttpsCallable finishRideFunction =
+    final HttpsCallable finishRideFunction =
         FirebaseFunctions.instance.httpsCallable('taxi-finishRide');
     try {
-      HttpsCallableResult response = await finishRideFunction.call();
+      final HttpsCallableResult response = await finishRideFunction.call();
       return ServerResponse.fromJson(response.data);
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,
@@ -215,7 +219,7 @@ class OrderController extends GetxController {
   @override
   void onClose() {
     mezDbgPrint(
-        "CURRENT ORDER CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! ${this.hashCode}");
+        "CURRENT ORDER CONTROLLER :: ::: :: :: : :   : :::::: DISPOSE ! $hashCode");
     mezDbgPrint(
         "--------------------> CurrentOrderController::onClose called  !");
     print("[+] Orderontroller::onClose ---------> Was invoked !");

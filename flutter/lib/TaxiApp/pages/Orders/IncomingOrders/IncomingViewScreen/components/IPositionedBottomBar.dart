@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:sizer/sizer.dart';
@@ -355,48 +356,19 @@ class CurrentTaxiOrderPositionedBottomBar extends StatelessWidget {
               width: 10,
             ),
             Center(
-              child: GestureDetector(
-                onTap: () {
-                  Get.toNamed<void>(
-                    getMessagesRoute(
-                        orderType: OrderType.Taxi,
-                        chatId: order.orderId,
-                        orderId: order.orderId,
-                        recipientType: ParticipantType.Customer),
-                  );
-                },
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  child: Center(
-                    child: Stack(
-                      children: <Widget>[
-                        Center(
-                          child: Icon(
-                            Icons.textsms_sharp,
-                            // color: Color.fromARGB(255, 103, 121, 254),
-                            color: Colors.black,
-                            size: 30,
-                          ),
-                        ),
-                        Get.find<OrderController>().hasNewMessageNotification()
-                            ? Positioned(
-                                top: 0,
-                                right: 0,
-                                child: Container(
-                                  height: 10,
-                                  width: 10,
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(color: Colors.white),
-                                  ),
-                                ),
-                              )
-                            : SizedBox(),
-                      ],
-                    ),
-                  ),
+              child: Obx(
+                () => MessageButton(
+                  onTap: () {
+                    Get.toNamed<void>(
+                      getMessagesRoute(
+                          orderType: OrderType.Taxi,
+                          chatId: order.orderId,
+                          orderId: order.orderId,
+                          recipientType: ParticipantType.Customer),
+                    );
+                  },
+                  showRedDot:
+                      Get.find<OrderController>().hasNewMessageNotification(),
                 ),
               ),
             ),

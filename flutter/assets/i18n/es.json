@@ -18,6 +18,7 @@
                 "privacyPolicy": "Privacy policy"
             },
             "DropDownLocationList": {
+                "chooseLoc": "Elegir la ubicación",
                 "pickLocation": "Elegir del mapa"
             },
             "LocationPicker": {
@@ -67,7 +68,7 @@
                             "otwPickUp": "Recoger en el camino",
                             "pickedUp": "Pedido recogido",
                             "atLaundry": "En la lavandería",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden Entregado"
                         }
@@ -80,7 +81,7 @@
                             "otwPickUp": "Recoger en el camino",
                             "pickedUp": "Pedido recogido",
                             "atLaundry": "En la lavandería",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden Entregado"
                         }
@@ -211,6 +212,12 @@
                 },
                 "ViewOrderScreen": {
                     "components": {
+                        "CustomerRestaurantOrderEst": {
+                            "estTimes": "Tiempos estimados",
+                            "foodReady": "preparación de la comida",
+                            "toBeCalculated": "Para ser calculado",
+                            "delivery": "Entrega"
+                        },
                         "OrderStatusCard": {
                             "willBePicked": "Será recogido",
                             "willBeDelivered": "Será entregado"
@@ -236,7 +243,7 @@
                             "orderCancelled": "cancelada"
                         },
                         "OrdersItemsCard": {
-                            "orderItems": "Encargar Artículos",
+                            "orderItems": "Artículos",
                             "canceledByAdmin": "Cancelada",
                             "canceledByCustomer": "Cancelada",
                             "received": "Recibida",
@@ -385,19 +392,19 @@
             "CustomerWrapper": {
                 "savedLocations": "Ubicaciones guardadas",
                 "welcomeText": "Bienvenido a MEZCALMOS 👋",
-                "appDescription": "Su lugar único para encontrar todos sus servicios locales que necesita y donde puede disfrutar de servicios rápidos y de alta calidad .",
+                "appDescription": " Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad",
                 "services": "Servicios",
                 "taxi": {
                     "title": "Taxi",
-                    "subtitle": "Consiga el taxi más cercano y obtenga su destino lo antes posible."
+                    "subtitle": "Consiga el taxi más cercano y obtenga su destino lo antes posible"
                 },
                 "food": {
                     "title": "Comida",
-                    "subtitle": "Descubre los platos más deliciosos de los restaurantes más cercanos."
+                    "subtitle": "Descubre los platillos más deliciosos de los restaurantes más cercanos"
                 },
                 "laundry": {
                     "title": "Lavandería",
-                    "subtitle": "Haz que tu ropa lave tu lavandería más cercana"
+                    "subtitle": "Haz que tu lavandería más cercana lave tu ropa"
                 },
                 "comingSoon": "Próximamente...",
                 "supportText": "Necesitas ayuda ? Contacta con nuestro equipo de soporte"
@@ -441,7 +448,7 @@
                             "otwPickUp": "Recoger en el camino",
                             "pickedUp": "Pedido recogido",
                             "atLaundry": "En la lavandería",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Entregado",
                             "canceled": "Cancelada",
@@ -583,7 +590,7 @@
             "laundryPickedBody": "El orden es recogido con éxito",
             "laundryAtLaundryTitle": "En la lavandería",
             "laundryAtLaundryBody": "Tu orden es recibido por la lavandería.",
-            "laundryReadyForDeliveryTitle": "Listo para la entrega",
+            "laundryReadyForDeliveryTitle": "Listo para entregar",
             "laundryReadyForDeliveryBody": "Tu orden está listo para la entrega",
             "laundryOtwDeliveryTitle": "Entrega en el camino",
             "laundryOtwDeliveryBody": "Tu orden está en camino",
@@ -833,7 +840,7 @@
 
 
             "LocationSearchComponent": {
-                "address": "Ingresa Dirección"
+                "address": "Ingresa dirección"
             },
             "MezClearButton": {
                 "clear": "Borrar"
@@ -1099,7 +1106,7 @@
                             "atLaundryText": "Confirme el pedido recibido por la lavandería configurando el peso del pedido. ",
                             "atLaundryTitle": "Orden en la lavandería",
                             "orderWeightError": " Error, por favor inserte un peso de pedido válido",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "readyForDeliveryText": "Confirme que el pedido está listo para la entrega.",
                             "readyForDeliveryTitle": "Orden listo para la entrega",
                             "otwDelivery": "Entrega en el camino",
@@ -1117,7 +1124,7 @@
                             "otwPickUp": "Recoger en el camino",
                             "pickedUp": "Pedido recogido",
                             "atLaundry": "En la lavandería",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden Entregado"
                         },
@@ -1331,7 +1338,7 @@
                                 "pickupOtw": "Recogida en el camino",
                                 "pickedUp": "Pedido Recogido",
                                 "atLaundry": "En la lavandería",
-                                "readyForDelivery": "Listo para la entrega",
+                                "readyForDelivery": "Listo para entregar",
                                 "deliveryOtw": "Entrega en el camino",
                                 "delivered": "Orden Entregado",
                                 "canceled": "Orden Cancelada"
@@ -1367,6 +1374,7 @@
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Entrega de restaurantes",
                             "oops": "Ups",
+                            "foodReady": "preparación de la comida",
                             "set": "Establecer",
                             "time": "Tiempo",
                             "dropoff": "Entregar",
@@ -1432,7 +1440,7 @@
             "laundryPickedBody": "El orden es recogido con éxito",
             "laundryAtLaundryTitle": "En la lavandería",
             "laundryAtLaundryBody": "El pedido es recibido por la lavandería.",
-            "laundryReadyForDeliveryTitle": "Listo para la entrega",
+            "laundryReadyForDeliveryTitle": "Listo para entregar",
             "laundryReadyForDeliveryBody": "El pedido está listo para la entrega.",
             "laundryOtwDeliveryTitle": "Entrega en el camino",
             "laundryOtwDeliveryBody": "El pedido está en camino al cliente.",
@@ -1551,7 +1559,7 @@
                         "days": "dias"
                     },
                     "MinimumCostCard": {
-                        "minCost": "Minimum Cost"
+                        "minCost": "Costo mínimo"
                     }
                 }
             },
@@ -1564,7 +1572,7 @@
                             "otwPickUp": "Recoger en el camino",
                             "pickedUp": "pedidoRecogido",
                             "atLaundry": "En la lavandería",
-                            "readyForDelivery": "Listo para la entrega",
+                            "readyForDelivery": "Listo para entregar",
                             "otwDelivery": "Entrega en el camino",
                             "delivered": "Orden Entregado"
                         },
@@ -1602,6 +1610,7 @@
                         "deleteTitle": "SÍ, Eliminar el artículo",
                         "deleteBody": "¿Estás seguro de que te gustaría eliminar?",
                         "deleteItem": "Eliminar elemento",
+                        "total": "Total",
                         "itemsWeights": "Artículos pesos",
                         "newItemsWeight": "Nuevos artículos de peso",
                         "itemsCategory": "Categoría de artículos",
@@ -1643,6 +1652,7 @@
                     "customer": "Información del cliente",
                     "orderDate": "Fecha de orden",
                     "total": "Total",
+                    "toBeCalculated": "Para ser calculado",
                     "orderReady": "Pedido listo para la entrega"
                 }
             }

@@ -165,7 +165,7 @@ class _LaundryOpCategoryScreenState extends State<LaundryOpCategoryScreen> {
       children: [
         Text(
           "${_i18n()["categoryPrice"]}",
-          style: Get.textTheme.headline4,
+          style: Get.textTheme.bodyText1,
         ),
         const SizedBox(height: 8),
         TextFormField(

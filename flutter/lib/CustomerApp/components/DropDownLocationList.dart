@@ -47,7 +47,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     listOfSavedLoacations.add(pickLocationPlaceholder!);
 
     if (widget.passedInLocation == null) {
-      dropDownListValue = pickLocationPlaceholder;
+      // dropDownListValue = pickLocationPlaceholder;
     } else {
       final SavedLocation passedInLocation = SavedLocation(
         name: widget.passedInLocation!.address,
@@ -96,6 +96,10 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               isDense: true,
               isExpanded: true,
               icon: Icon(Icons.expand_more),
+              hint: Text(
+                '${_i18n()["chooseLoc"]}',
+                style: Get.textTheme.bodyText1,
+              ),
               items: listOfSavedLoacations
                   .map<DropdownMenuItem<SavedLocation>>(
                       (SavedLocation e) => buildItems(e, textTheme))

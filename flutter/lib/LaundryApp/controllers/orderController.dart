@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -33,6 +32,7 @@ class OrderController extends GetxController {
         .child(serviceProviderPastOrders(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
+        // ignore: avoid_annotating_with_dynamic
         .listen((dynamic event) {
       final List<LaundryOrder> orders = [];
       if (event.snapshot.value != null) {
@@ -58,6 +58,7 @@ class OrderController extends GetxController {
         .child(serviceProviderInProcessOrders(
             orderType: OrderType.Laundry, providerId: laundryId))
         .onValue
+        // ignore: avoid_annotating_with_dynamic
         .listen((dynamic event) {
       // mezDbgPrint("[][][][][ got new inProcess Order ]]");
       mezDbgPrint(
@@ -179,6 +180,13 @@ class OrderController extends GetxController {
         optionalParams: {
           "fromLaundryOperator": true,
           "estimatedLaundryReadyTime": estimatedTime.toUtc().toString()
+        });
+  }
+
+  Future<ServerResponse> cancelOrder(String orderId) async {
+    return _callLaundryCloudFunction("cancelOrderFromAdmin", orderId,
+        optionalParams: {
+          "fromLaundryOperator": true,
         });
   }
 

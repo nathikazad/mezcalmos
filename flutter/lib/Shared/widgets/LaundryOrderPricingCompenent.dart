@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Generic.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
 class LaundryOrderPricingComponent extends StatelessWidget {
   final LaundryOrder order;
 
-  const LaundryOrderPricingComponent({Key? key, required this.order})
-      : super(key: key);
+  const LaundryOrderPricingComponent({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
 
   dynamic _i18n() =>
       Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
@@ -56,7 +59,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
                         Text(
                           order.costsByType!.weighedCost.toPriceString(),
                           style: Get.textTheme.bodyText1,
-                        )
+                        ),
                       ],
                     ),
                   )
@@ -96,11 +99,18 @@ class LaundryOrderPricingComponent extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            item.name[userLanguage] ?? "",
+          Flexible(
+            fit: FlexFit.tight,
+            child: Text(
+              item.name[userLanguage]?.inCaps ?? "",
+              maxLines: 1,
+            ),
+          ),
+          SizedBox(
+            width: 8,
           ),
           Text(
-            "\$${item.cost} x ${item.weight}KG = \$${item.weighedCost}",
+            "\$${item.cost.round()} x ${item.weight}KG = \$${item.weighedCost.round()}",
           ),
         ],
       ),

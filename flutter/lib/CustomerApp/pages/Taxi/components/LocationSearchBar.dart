@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
+import 'package:mezcalmos/Shared/widgets/OrderFromToBar.dart';
 
 // ignore: constant_identifier_names
 enum SearchComponentType { From, To, None }
@@ -92,7 +93,7 @@ class LocationSearchBar extends StatefulWidget {
   final LocationSearchBarController locationSearchBarController;
   final void Function()? onClear;
 
-  LocationSearchBar({
+  const LocationSearchBar({
     required this.request,
     required this.newLocationChosenEvent,
     required this.locationSearchBarController,
@@ -126,28 +127,27 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 5,
-      left: 10,
-      right: 10,
-      child: Container(
-        decoration: getDecoration(),
-        child: Center(
+    return Stack(
+      clipBehavior: Clip.none,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(top: 5),
           child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  fromTextField(),
-                  middleLogo(),
-                  toTextField()
-                ],
-              ),
-              // SizedBox(height: 5),
-              pickChoicesDropDown(),
-            ],
+            children: OrderPositionedFromToTopBar.buildwithWidgets(
+              context: context,
+              fromWidget: fromTextField(),
+              toWidget: toTextField(),
+            ),
           ),
         ),
-      ),
+        Positioned(
+          top: locationSearchBarController.focusedTextField.value ==
+                  SearchComponentType.From
+              ? 45
+              : 95,
+          child: pickChoicesDropDown(),
+        ),
+      ],
     );
   }
 
@@ -169,7 +169,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   BoxDecoration getDecoration() {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(10),
-      color: Colors.white,
+      color: Colors.red,
       boxShadow: <BoxShadow>[
         BoxShadow(
           color: Color.fromARGB(60, 0, 0, 0),
@@ -185,19 +185,19 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   Widget fromTextField() {
     return Expanded(
-      flex: locationSearchBarController.fromTextFieldFocusNode.hasFocus ? 7 : 5,
+      // flex: locationSearchBarController.fromTextFieldFocusNode.hasFocus ? 7 : 5,
       child: LocationSearchComponent(
-        suffixPadding: EdgeInsets.only(top: 20, right: 10),
+        // suffixPadding: EdgeInsets.only(top: 20, right: 10),
         focusNode: locationSearchBarController.fromTextFieldFocusNode,
         readOnly: widget.request.from?.address != null &&
             widget.request.from?.address != "",
-        dropDownDxOffset: 0,
-        dropDownWidth: Get.width - 20,
+        // dropDownDxOffset: -110,
+        dropDownWidth: Get.width - 25,
         useBorders: false,
         leftTopRadius: 5,
         leftBotRaduis: 5,
         bgColor: Colors.white,
-        label: _i18n()['from'],
+        // label: _i18n()['from'],
         text: widget.request.from?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.From),
         onTextChange: textFieldOnTextChanged,
@@ -261,19 +261,20 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   Widget toTextField() {
     return Expanded(
-      flex: locationSearchBarController.toTextFieldFocusNode.hasFocus ? 7 : 5,
+      // flex: locationSearchBarController.toTextFieldFocusNode.hasFocus ? 7 : 5,
       child: LocationSearchComponent(
-        suffixPadding: EdgeInsets.only(top: 20, right: 10),
+        // suffixPadding: EdgeInsets.only(top: 20, right: 10),
         focusNode: locationSearchBarController.toTextFieldFocusNode,
         readOnly: widget.request.to?.address != null,
         useBorders: false,
         rightTopRaduis: 5,
         rightBotRaduis: 5,
         bgColor: Colors.white,
+
         // to Controll where to start our dropDown DX (Distance on X axis)
-        dropDownDxOffset: -(Get.width / 2.1),
-        dropDownWidth: Get.width - 20,
-        label: _i18n()['to'],
+        // dropDownDxOffset: -(Get.width / 2.1),
+        dropDownWidth: Get.width - 25,
+        // label: _i18n()['to'],
         text: widget.request.to?.address ?? "",
         onClear: () => textFieldOnClear(SearchComponentType.To),
         onTextChange: textFieldOnTextChanged,
@@ -289,81 +290,51 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   Widget pickChoicesDropDown() {
     return Obx(
       () => AnimatedContainer(
-          clipBehavior: Clip.hardEdge,
-          duration: Duration(milliseconds: 500),
-          curve: Curves.fastOutSlowIn,
-          height: locationSearchBarController.pickChoicesDropDownHeight.value,
-          width: Get.width,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey.shade200,
-              width: 1,
-            ),
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10),
-              topRight: Radius.circular(0),
-            ),
+        clipBehavior: Clip.hardEdge,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn,
+        height: locationSearchBarController.pickChoicesDropDownHeight.value,
+        width: Get.width - 20,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey.shade200,
+            width: 1,
           ),
-          child: Column(
-            children: dropDownItems
-                .map((d) => Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          d.function();
-                          locationSearchBarController.unfocusAllFocusNodes();
-                          setState(() {});
-                        },
-                        child: Row(
-                          children: [
-                            const SizedBox(width: 20),
-                            d.icon,
-                            const SizedBox(width: 10),
-                            Text(
-                              d.title,
-                              style: TextStyle(fontFamily: 'psb'),
-                            ),
-                          ],
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
+            topRight: Radius.circular(0),
+          ),
+        ),
+        child: Column(
+          children: dropDownItems
+              .map(
+                (LocationDropDownItem d) => Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      mezDbgPrint("Clicked ${d.title}");
+                      d.function();
+                      locationSearchBarController.unfocusAllFocusNodes();
+                      setState(() {});
+                    },
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 20),
+                        d.icon,
+                        const SizedBox(width: 10),
+                        Text(
+                          d.title,
+                          style: TextStyle(fontFamily: 'psb'),
                         ),
-                      ),
-                    ))
-                .toList(),
-          )
-
-          // SingleChildScrollView(
-          //   child: Center(
-          //     child: ListView.separated(
-          //       padding: EdgeInsets.symmetric(vertical: 15),
-          //       shrinkWrap: true,
-          //       separatorBuilder: (_, __) {
-          //         return SizedBox(height: 10);
-          //       },
-          //       itemCount: dropDownItems.length,
-          //       itemBuilder: (_, int i) {
-          //         return InkWell(
-          //           onTap: () {
-          //             dropDownItems[i].function();
-          //             locationSearchBarController.unfocusAllFocusNodes();
-          //             setState(() {});
-          //           },
-          //           child: Row(
-          //             children: <Widget>[
-          //               const SizedBox(width: 20),
-          //               dropDownItems[i].icon,
-          //               const SizedBox(width: 10),
-          //               Text(
-          //                 dropDownItems[i].title,
-          //                 style: TextStyle(fontFamily: 'psb'),
-          //               ),
-          //             ],
-          //           ),
-          //         );
-          //       },
-          //     ),
-          //   ),
-          // ),
-          ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+        ),
+      ),
     );
   }
 
@@ -471,7 +442,9 @@ class LocationSearchBarState extends State<LocationSearchBar> {
               icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
               function: () {
                 final Location? _savedLoc =
-                    _authController!.getLocationById(e.id!);
+                    _authController?.getLocationById(e.id!);
+                mezDbgPrint(
+                    "${e.id} Saved looooooooooooocccc =====>${_savedLoc?.toFirebaseFormattedJson()}");
                 widget.newLocationChosenEvent(_savedLoc,
                     locationSearchBarController.focusedTextField.value);
               },

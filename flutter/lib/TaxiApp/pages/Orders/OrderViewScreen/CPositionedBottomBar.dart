@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/TaxiApp/controllers/orderController.dart';
 import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
@@ -215,62 +216,22 @@ class CurrentPositionedBottomBar extends StatelessWidget {
                           ),
                           // Spacer(),
                           Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-                          GestureDetector(
-                            onTap: () {
-                              Get.toNamed<void>(getMessagesRoute(
-                                  orderType: OrderType.Taxi,
-                                  chatId: order.orderId,
-                                  orderId: order.orderId,
-                                  recipientType: ParticipantType.Customer));
-                            },
-                            child: Container(
-                              height: getSizeRelativeToScreen(
-                                  16, Get.height, Get.width),
-                              width: getSizeRelativeToScreen(
-                                  16, Get.height, Get.width),
-                              decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 232, 239, 254),
-                                borderRadius: BorderRadius.circular(4),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      color: Color.fromARGB(255, 216, 225, 249),
-                                      spreadRadius: 0,
-                                      blurRadius: 4,
-                                      offset: Offset(0, 2))
-                                ],
-                              ),
-                              child: Center(
-                                child: Stack(
-                                  children: [
-                                    Obx(
-                                      () =>
-                                          controller.hasNewMessageNotification()
-                                              ? Positioned(
-                                                  top: 5,
-                                                  right: 5,
-                                                  child: Container(
-                                                    height: 6,
-                                                    width: 6,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.red,
-                                                        shape: BoxShape.circle),
-                                                  ))
-                                              : SizedBox(),
-                                    ),
-                                    Center(
-                                      child: Icon(
-                                        Icons.mail,
-                                        color:
-                                            Color.fromARGB(255, 103, 121, 254),
-                                        size: 16,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                          Obx(
+                            () => MessageButton(
+                              onTap: () {
+                                Get.toNamed<void>(
+                                  getMessagesRoute(
+                                    orderType: OrderType.Taxi,
+                                    chatId: order.orderId,
+                                    orderId: order.orderId,
+                                    recipientType: ParticipantType.Customer,
+                                  ),
+                                );
+                              },
+                              showRedDot:
+                                  controller.hasNewMessageNotification(),
                             ),
                           ),
-                          // Spacer(),
 
                           Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                           GestureDetector(
@@ -343,40 +304,45 @@ class CurrentPositionedBottomBar extends StatelessWidget {
     showLoadingCircleInButton.value = false;
   }
 
+  Future<void> _showConfirmDialog(
+      Future<void> Function() callback, String dialogBody) async {
+    final YesNoDialogButton clickedYes = await yesNoDialog(
+      text: 'Oops!',
+      icon: Container(
+        child: Icon(
+          Icons.highlight_off,
+          size: 65,
+          color: Color(0xffdb2846),
+        ),
+      ),
+      body: dialogBody,
+    ); //finishRide);
+
+    if (clickedYes == YesNoDialogButton.Yes) {
+      await callback();
+    }
+  }
+
   Future<void> clickButton() async {
     if (order.status == TaxiOrdersStatus.InTransit) {
       mezDbgPrint("CurrentPositionedBottomBar InTransit!");
 
-      if ((MapHelper.calculateDistance(
-              taxiAuthController.currentLocation, order.to.position) >
+      if (taxiAuthController.currentLocation == null)
+        await _showConfirmDialog(finishRide, _i18n()["tooFarFromfinishRide"]);
+      else if ((MapHelper.calculateDistance(
+              taxiAuthController.currentLocation!, order.to.position) >
           0.5)) {
-        final YesNoDialogButton clickedYes = await yesNoDialog(
-            text: 'Oops!',
-            icon: Container(
-              child: Icon(
-                Icons.highlight_off,
-                size: 65,
-                color: Color(0xffdb2846),
-              ),
-            ),
-            body: _i18n()["tooFarFromfinishRide"]);
-
-        mezDbgPrint("CurrentPositionedBottomBar clickedYes: $clickedYes");
-        if (clickedYes == YesNoDialogButton.Yes) {
-          await finishRide();
-        }
+        await _showConfirmDialog(finishRide, _i18n()["tooFarFromfinishRide"]);
       } else {
         await finishRide();
       }
     } else {
-      if (MapHelper.calculateDistance(
-              taxiAuthController.currentLocation, order.from.position) >
+      if (taxiAuthController.currentLocation == null) {
+        await _showConfirmDialog(startRide, _i18n()["tooFarFromstartRide"]);
+      } else if (MapHelper.calculateDistance(
+              taxiAuthController.currentLocation!, order.from.position) >
           0.5) {
-        final YesNoDialogButton clickedYes = await yesNoDialog(
-            text: "Oops!", body: _i18n()["tooFarFromstartRide"]);
-        if (clickedYes == YesNoDialogButton.Yes) {
-          await startRide();
-        }
+        await _showConfirmDialog(startRide, _i18n()["tooFarFromstartRide"]);
       } else {
         await startRide();
       }

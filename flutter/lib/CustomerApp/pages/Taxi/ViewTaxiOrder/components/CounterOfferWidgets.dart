@@ -163,7 +163,7 @@ class CounterOfferWidgets {
               child: Row(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     decoration: BoxDecoration(
                       color: Color.fromRGBO(83, 172, 94, 0.24),
                       borderRadius: BorderRadius.circular(3),
@@ -171,48 +171,39 @@ class CounterOfferWidgets {
                     ),
                     child: Center(
                       child: InkWell(
-                        onTap: () async {
-                          viewController.clickedAccept.value = true;
+                          onTap: () async {
+                            viewController.clickedAccept.value = true;
 
-                          // we accept counter offer and wait for it.
-                          final ServerResponse _response = await viewController
-                              .taxiController
-                              .acceptCounterOffer(
-                            viewController.order.value!.orderId,
-                            viewController.order.value!.customer.id,
-                            offer.driverInfo.id,
-                          );
-                          if (_response.success) {
-                            viewController.clickedAccept.value = false;
-                            viewController.animatedSliderController.slideDown();
-                          } else {
-                            viewController.offersBtnClicked.value = false;
-                            viewController.animatedSliderController.slideDown();
-                            MezSnackbar("Oops", _i18n()['failedToAcceptOffer']);
-                          }
-                        },
-                        child: context.width <= 320
-                            ? Icon(
-                                Icons.check,
-                                size: 18,
-                                color: Color.fromRGBO(33, 145, 37, 1),
-                              )
-                            : Text(
-                                "Accept",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(33, 145, 37, 1),
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                ),
-                              ),
-                      ),
+                            // we accept counter offer and wait for it.
+                            final ServerResponse _response =
+                                await viewController.taxiController
+                                    .acceptCounterOffer(
+                              viewController.order.value!.orderId,
+                              viewController.order.value!.customer.id,
+                              offer.driverInfo.id,
+                            );
+                            if (_response.success) {
+                              viewController.clickedAccept.value = false;
+                              viewController.animatedSliderController
+                                  .slideDown();
+                            } else {
+                              viewController.offersBtnClicked.value = false;
+                              viewController.animatedSliderController
+                                  .slideDown();
+                              MezSnackbar(
+                                  "Oops", _i18n()['failedToAcceptOffer']);
+                            }
+                          },
+                          child: Icon(
+                            Icons.check,
+                            size: 18,
+                            color: Color.fromRGBO(33, 145, 37, 1),
+                          )),
                     ),
                   ),
                   const SizedBox(width: 15),
                   Container(
-                    height: 35,
-                    width: 35,
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: Color.fromRGBO(255, 235, 236, 1),
                       borderRadius: BorderRadius.circular(4),
@@ -227,9 +218,11 @@ class CounterOfferWidgets {
                                   offer.driverInfo.id)
                               .then(
                             (_) {
-                              viewController.offersBtnClicked.value = false;
-                              viewController.animatedSliderController
-                                  .slideDown();
+                              if (viewController.counterOffers.isEmpty) {
+                                viewController.offersBtnClicked.value = false;
+                                viewController.animatedSliderController
+                                    .slideDown();
+                              }
                             },
                           );
                         },

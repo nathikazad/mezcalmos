@@ -282,3 +282,12 @@ LatLngBounds createMapBounds(List<LatLng> positions) {
       southwest: LatLng(southwestLat, southwestLon),
       northeast: LatLng(northeastLat, northeastLon));
 }
+
+extension LocationDataConverter on LocationData {
+  LatLng? toLatLng() {
+    if (latitude != null && longitude != null) {
+      return LatLng(latitude!, longitude!);
+    }
+    return null;
+  }
+}

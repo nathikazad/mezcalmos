@@ -32,7 +32,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
-        height: 60,
+        height: 65,
         margin: const EdgeInsets.only(bottom: 8),
         child: (widget.order.inProcess())
             ? Container(

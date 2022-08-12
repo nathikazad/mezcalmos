@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart';
@@ -29,11 +28,11 @@ class DeliveryAuthController extends GetxController {
   DeliveryDriverState? get deliveryDriverState => _state.value;
   Stream<DeliveryDriverState?> get stateStream => _state.stream;
 
-  Rx<LocationData> _currentLocation = LocationData.fromMap(
-      <String, dynamic>{"latitude": 15.851385, "longitude": -97.046429}).obs;
+  Rxn<LocationData> _currentLocation = Rxn<LocationData>(
+      LocationData.fromMap({"latitude": 15.8337, "longitude": -97.04205}));
 
-  LocationData get currentLocation => _currentLocation.value;
-  Rx<LocationData> get currentLocationRx => _currentLocation;
+  LocationData? get currentLocation => _currentLocation.value;
+  Rxn<LocationData> get currentLocationRxn => _currentLocation;
 
   StreamSubscription<LocationData>? _locationListener;
   StreamSubscription<dynamic>? _deliveryDriverStateNodeListener;
@@ -52,7 +51,7 @@ class DeliveryAuthController extends GetxController {
     super.onInit();
   }
 
-  void setupDeliveryDriver(User user) async {
+  Future<void> setupDeliveryDriver(User user) async {
     mezDbgPrint("DeliveryAuthController: handle state change user value");
     mezDbgPrint(user);
     // mezDbgPrint(_authController.fireAuthUser);
@@ -114,7 +113,7 @@ class DeliveryAuthController extends GetxController {
     });
   }
 
-  void saveNotificationToken() async {
+  Future<void> saveNotificationToken() async {
     mezDbgPrint(
         "DeliveryAuthController  Messaging Token>> ${await _notificationsController.getToken()}");
     final String? deviceNotificationToken =
