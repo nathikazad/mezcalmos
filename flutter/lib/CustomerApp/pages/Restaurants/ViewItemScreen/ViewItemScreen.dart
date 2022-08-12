@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/BottomBarItemViewScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ITemSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/components/ItemOptionCard.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -13,8 +14,8 @@ import 'package:mezcalmos/Shared/controllers/restaurantsInfoController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
@@ -55,6 +56,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
   Restaurant? currentRestaurant;
   TextEditingController _noteTextEdittingController = TextEditingController();
   RxBool showImage = RxBool(true);
+  bool showViewRestaurant = false;
 
   @override
   void dispose() {
@@ -67,6 +69,7 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
     mezDbgPrint("Args : ${Get.arguments.toString()}");
     mezDbgPrint("params : ${Get.parameters.toString()}");
     mezDbgPrint("widget.viewItemScreenMode => ${widget.viewItemScreenMode}");
+    showViewRestaurant = Get.arguments["showViewRestaurant"] ?? false;
     if (widget.viewItemScreenMode == ViewItemScreenMode.AddItemMode) {
       final String? restaurantId = Get.parameters['restaurantId'];
       controller.getRestaurant("$restaurantId").then((Restaurant? value) {
@@ -139,10 +142,40 @@ class _ViewItemScreenState extends State<ViewItemScreen> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 10),
-                  child: Text(
-                    item.cost.toPriceString(),
-                    style: Get.textTheme.headline3
-                        ?.copyWith(color: primaryBlueColor),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Text(
+                          item.cost.toPriceString(),
+                          style: Get.textTheme.headline3
+                              ?.copyWith(color: primaryBlueColor),
+                        ),
+                      ),
+                      if (currentRestaurant != null && showViewRestaurant)
+                        InkWell(
+                          borderRadius: BorderRadius.circular(18),
+                          onTap: () {
+                            Get.toNamed(
+                                getRestaurantRoute(
+                                  currentRestaurant!.info.id,
+                                ),
+                                arguments: currentRestaurant);
+                          },
+                          child: Ink(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 12),
+                            decoration: BoxDecoration(
+                                color: secondaryLightBlueColor,
+                                borderRadius: BorderRadius.circular(18)),
+                            child: Text(
+                              'View restaurant',
+                              style: Get.textTheme.bodyText1
+                                  ?.copyWith(color: primaryBlueColor),
+                            ),
+                          ),
+                        )
+                    ],
                   ),
                 ),
                 if (cartItem.value?.item.description != null)

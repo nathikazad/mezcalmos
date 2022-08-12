@@ -273,7 +273,10 @@ class _ListRestaurantsScreenState extends State<ListRestaurantsScreen> {
           if (item.restaurant != null && item.id != null) {
             Get.toNamed(
               getItemRoute(item.restaurant!.info.id, item.id!),
-              arguments: {"mode": ViewItemScreenMode.AddItemMode},
+              arguments: {
+                "mode": ViewItemScreenMode.AddItemMode,
+                "showViewRestaurant": true
+              },
             );
           }
         },
