@@ -39,14 +39,14 @@ class _MessagingScreenState extends State<MessagingScreen> {
   late final OrderType? orderType;
   late final String? orderId;
   late final String chatId;
-  late final Sagora sagora;
+  // late final Sagora sagora;
 
   ParticipantType recipientType = ParticipantType.Customer;
   // ParticipantType? senderType;
   String? recipientId;
   MessageController controller =
       Get.put<MessageController>(MessageController());
-  final Sagora agoraController = Get.put<Sagora>(Sagora());
+  final Sagora sagora = Get.put<Sagora>(Sagora());
 
   bool isChatLoaded = false;
   @override
@@ -58,7 +58,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
       Get.back<void>();
     }
 
-    agoraController.agoraLogs.listen((event) {
+    sagora.agoraLogs.listen((event) {
       mezDbgPrint("👻👻👻👻👻 NEW LOG ====>> $event");
     });
 
