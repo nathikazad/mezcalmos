@@ -52,10 +52,7 @@ class Sagora extends GetxController {
 
   Future<void> _initAgora() async {
     //create the engine
-    // RtcEngineContext _engineContext = RtcEngineContext(agoraAppId);
-    // _engine = await RtcEngine.createWithContext(_engineContext);
     _engine = await RtcEngine.createWithContext(RtcEngineContext(agoraAppId));
-//  RtcEngine.create(agoraAppId);
     _engine.setEventHandler(RtcEngineEventHandler(
       error: (code) {
         final info = '👻👻👻👻👻 onError: $code';
@@ -289,14 +286,16 @@ class Sagora extends GetxController {
   //   inEarMonitoringVolume.value = 100;
   // }
 
-  // Future<void> switchMicrophone() async {
-  //   // await _engine.muteLocalAudioStream(!openMicrophone);
-  //   await _engine.enableLocalAudio(!openMicrophone.value).then((value) {
-  //     openMicrophone.value = !openMicrophone.value;
-  //   }).catchError((err) {
-  //     logSink.log('enableLocalAudio $err');
-  //   });
-  // }
+  final RxBool openMicrophone = true.obs;
+  Future<void> switchMicrophone() async {
+    // await _engine.muteLocalAudioStream(!openMicrophone);
+    await _engine.enableLocalAudio(!openMicrophone.value).then((value) {
+      openMicrophone.value = !openMicrophone.value;
+    }).catchError((err) {
+      mezDbgPrint('enableLocalAudio : $err');
+    });
+  }
+
   final RxBool enableSpeakerphone = false.obs;
   void switchSpeakerphone() async {
     await _engine

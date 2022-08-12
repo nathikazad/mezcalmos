@@ -8,7 +8,7 @@ from enum import Enum
 import subprocess as proc
 import sys
 from time import sleep
-from turtle import goto
+# from turtle import goto
 from typing import Type
 
 SHOULD_ASK_4_INPUT = False

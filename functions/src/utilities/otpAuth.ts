@@ -94,14 +94,14 @@ async function _getAuthUsingOTP(data: verifyOtpInterface) {
   }
 
   // this condition for google to gain instant Access.
-  if (data.phoneNumber != "+21650914839") {
+  if (data.phoneNumber != "+21650914839" && user.uid != "tSG0eSFZNGNA7grjBPFEBbpYwjE3") {
     let response = await confirmOTP(data, user.uid);
     if (response) {
       return response;
     }
   }
   else {
-    if (data.OTPCode != "133754") {
+    if (data.OTPCode != "111111") {
       return {
         status: ServerResponseStatus.Error,
         errorMessage: "Invalid OTP Code"
