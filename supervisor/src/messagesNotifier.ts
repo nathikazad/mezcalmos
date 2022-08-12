@@ -44,7 +44,7 @@ async function notifyCallerRecipient(notificationForQueue: chat.CallNotification
       token: subscription.deviceNotificationToken,
       payload: {
         data: <NewCallBackgroundNotification>{
-          linkUrl: chatUrl(notificationForQueue.chatId),
+          linkUrl: chatUrl(notificationForQueue.chatId, notificationForQueue.orderId, undefined, callerInfo.particpantType),
           language: language,
           callerName: callerInfo.name ?? "Caller",
           callerId: callerInfo.id,
