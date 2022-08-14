@@ -55,7 +55,7 @@
             },
             "$driverType": {
               "location": {
-                ".write": "data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
+                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
               }
             }
           }
@@ -117,7 +117,7 @@
             },
             "$driverType": {
               "location": {
-                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && root.child('orders/inProcess/' + $orderType + '/' + $orderId + '/' + $driverType + '/id').val() === auth.uid"
+                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
               }
             }
           }
@@ -239,7 +239,7 @@
           "$orderId": {
             "$driverType": {
               "location": {
-                ".write": "data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
+                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
               }
             }
           }
@@ -291,7 +291,7 @@
           "$orderId": {
             "$driverType": {
               "location": {
-                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && $uid === auth.uid"
+                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
               }
             }
           }
@@ -318,7 +318,7 @@
           "$orderId": {
             "$driverType": {
               "location": {
-                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && $uid === auth.uid"
+                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
               }
             }
           }
