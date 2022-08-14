@@ -2,50 +2,24 @@
   "rules": {
     ".read": "false",
     ".write": "false",
+    "metadata": {
+      ".read": "true"
+    },
     "users": {
-      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true",
+      ".read": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
       "$uid": {
         ".read": "$uid === auth.uid",
-        "notificationInfo": {
-          ".write": "$uid === auth.uid"
-        },
-        "info": {
-          "language": {
-            ".write": "$uid === auth.uid"
-          },
-          "image": {
-            ".write": "$uid === auth.uid"
-          },
-          "bigImage": {
-            ".write": "$uid === auth.uid"
-          },
-          "name": {
-            ".write": "$uid === auth.uid"
-          },
-          "phone": {
-            ".write": "$uid === auth.uid"
-          },
-          "deleted": {
-            ".write": "$uid === auth.uid"
-          }
-        },
-        "auth": {
-          ".read": "false",
-          ".write": "false"
-        }
+        ".write": "$uid === auth.uid"
       }
+    },
+    "blog": {
+      ".read": "true"
     },
     "customers": {
       "info": {
         "$uid": {
           ".read": "$uid === auth.uid",
-          ".write": "$uid === auth.uid",
-          "notificationInfo": {
-            ".write": "$uid === auth.uid"
-          },
-          "savedLocations": {
-            ".write": "$uid === auth.uid"
-          }
+          ".write": "$uid === auth.uid"
         }
       },
       "pastOrders": {
@@ -89,7 +63,7 @@
       }
     },
     "taxis": {
-      ".read": "root.child('taxiAdmins/' + auth.uid + '/authorized').val() === true",
+      ".read": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true",
       "info": {
         "$uid": {
           ".read": "$uid === auth.uid",
@@ -97,7 +71,7 @@
             ".write": "$uid === auth.uid"
           },
           "details": {
-            ".write": "root.child('taxiAdmins/' + auth.uid + '/authorized').val() === true"
+            ".write": "root.child('deliveryAdmins/' + auth.uid + '/authorized').val() === true"
           },
           "state": {
             "isLooking": {
@@ -134,7 +108,7 @@
       }
     },
     "orders": {
-      ".read": "root.child('admins/' + auth.uid + '/authorized').val() === true || root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
+      ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
       "inProcess": {
         "$orderType": {
           "$orderId": {
@@ -143,7 +117,7 @@
             },
             "$driverType": {
               "location": {
-                ".write": "data.parent().parent().exists() && root.child('orders/inProcess/' + $orderType + '/' + $orderId + '/' + $driverType + '/id').val() === auth.uid"
+                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && root.child('orders/inProcess/' + $orderType + '/' + $orderId + '/' + $driverType + '/id').val() === auth.uid"
               }
             }
           }
@@ -203,12 +177,6 @@
         }
       }
     },
-    "taxiAdmins": {
-      "$uid": {
-        ".read": "$uid === auth.uid",
-        ".write": "$uid === auth.uid && root.child('taxiAdmins/' + $uid).exists()"
-      }
-    },
     "deliveryAdmins": {
       "info": {
         "$uid": {
@@ -243,77 +211,38 @@
     },
     "restaurants": {
       ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
-      ".write": "false",
+      ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
       "info": {
         ".read": "true",
-        "$uid": {
+        "$restaurantId": {
+          "menu2": {
+            ".write": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)"
+          },
           "menu": {
-            ".write": "$uid === auth.uid",
-            "$itemid": {
-              ".validate": "newData.hasChildren(['name', 'description', 'available', 'image', 'cost'])",
-              "cost": {
-                ".validate": "newData.isNumber()"
-              },
-              "options": {
-                "chooseOne": {
-                  "$optionId": {
-                    ".validate": "newData.hasChildren(['optionName', 'options'])",
-                    "optionName": {
-                      ".validate": "newData.hasChildren(['en', 'es'])"
-                    },
-                    "optionDialogText": {
-                      ".validate": "newData.hasChildren(['en', 'es'])"
-                    },
-                    "options": {
-                      "$optionChoiceId": {
-                        ".validate": "newData.hasChildren(['name', 'cost'])",
-                        "cost": {
-                          ".validate": "newData.isNumber()"
-                        }
-                      }
-                    }
-                  }
-                },
-                "chooseMany": {
-                  "$optionId": {
-                    ".validate": "newData.hasChildren(['name', 'cost'])",
-                    "name": {
-                      ".validate": "newData.hasChildren(['en', 'es'])"
-                    },
-                    "cost": {
-                      ".validate": "newData.isNumber()"
-                    }
-                  }
-                },
-                "sides": {
-                  "$optionId": {
-                    ".validate": "newData.hasChildren(['name', 'cost'])",
-                    "name": {
-                      ".validate": "newData.hasChildren(['en', 'es'])"
-                    },
-                    "cost": {
-                      ".validate": "newData.isNumber()"
-                    }
-                  }
-                }
-              }
-            }
+            ".write": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)"
           },
           "state": {
             "available": {
-              ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
+              ".write": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)"
             }
           }
         }
       },
       "pastOrders": {
-        "$uid": {
-          ".read": "$uid === auth.uid"
+        "$restaurantId": {
+          ".read": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)"
         }
       },
       "inProcessOrders": {
-        "$uid": {
-          ".read": "$uid === auth.uid"
+        "$restaurantId": {
+          ".read": "root.child('restaurants/info/' + $restaurantId + '/state/operators').hasChild(auth.uid)",
+          "$orderId": {
+            "$driverType": {
+              "location": {
+                ".write": "data.parent().parent().exists() && data.parent().parent().child('/' + $driverType + '/id').val() === auth.uid"
+              }
+            }
+          }
         }
       }
     },
@@ -338,21 +267,21 @@
             ".write": "$uid === auth.uid && root.child('deliveryDrivers/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'"
           },
           "notificationInfo": {
-            ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
+            ".write": "$uid === auth.uid"
           },
           "details": {
-            ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
+            ".write": "$uid === auth.uid && root.child('deliveryDrivers/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'"
           },
           "state": {
             "isOnline": {
-              ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
+              ".write": "$uid === auth.uid"
             }
           },
           "versionNumber": {
-            ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
+            ".write": "$uid === auth.uid"
           },
           "location": {
-            ".write": "$uid === auth.uid && root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true"
+            ".write": "$uid === auth.uid"
           }
         }
       },
@@ -375,21 +304,29 @@
       }
     },
     "laundries": {
-      ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true || root.child('deliveryDrivers/info/' + auth.uid + '/state/authorizationStatus').val() === 'authorized'",
+      ".read": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
+      ".write": "root.child('deliveryAdmins/info/' + auth.uid + '/authorized').val() === true",
       "info": {
+        ".read": "true",
         "$laundryId": {
-          ".read": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)",
           ".write": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)"
         }
       },
       "inProcessOrders": {
-        "$uid": {
-          ".read": "root.child('laundries/info/' + $uid + '/state/operators').hasChild(auth.uid)"
+        "$laundryId": {
+          ".read": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)",
+          "$orderId": {
+            "$driverType": {
+              "location": {
+                ".write": "($driverType == 'dropoffDriver' || $driverType == 'pickupDriver') && data.parent().parent().exists() && $uid === auth.uid"
+              }
+            }
+          }
         }
       },
       "pastOrders": {
-        "$uid": {
-          ".read": "root.child('laundries/info/' + $uid + '/state/operators').hasChild(auth.uid)"
+        "$laundryId": {
+          ".read": "root.child('laundries/info/' + $laundryId + '/state/operators').hasChild(auth.uid)"
         }
       }
     },
