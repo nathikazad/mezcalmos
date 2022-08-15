@@ -289,8 +289,10 @@ class Sagora extends GetxController {
   final RxBool openMicrophone = true.obs;
   Future<void> switchMicrophone() async {
     // await _engine.muteLocalAudioStream(!openMicrophone);
+    mezDbgPrint('OLD switchSpeakerphone -> ${openMicrophone.value}!!!');
     await _engine.enableLocalAudio(!openMicrophone.value).then((value) {
       openMicrophone.value = !openMicrophone.value;
+      mezDbgPrint('NEW switchSpeakerphone -> ${openMicrophone.value}!!!');
     }).catchError((err) {
       mezDbgPrint('enableLocalAudio : $err');
     });
@@ -298,6 +300,8 @@ class Sagora extends GetxController {
 
   final RxBool enableSpeakerphone = false.obs;
   void switchSpeakerphone() async {
+    mezDbgPrint('switchSpeakerphone -> ${enableSpeakerphone.value}!!!');
+
     await _engine
         .setEnableSpeakerphone(!enableSpeakerphone.value)
         .then((value) {
