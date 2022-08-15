@@ -1,8 +1,6 @@
 // ignore_for_file: avoid_void_async, always_specify_types, unawaited_futures
 
 import 'dart:async';
-import 'dart:io';
-
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
@@ -16,6 +14,8 @@ import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+enum CallAction { calling, accepted, ended, declined, none }
+
 class Sagora extends GetxController {
   late final RtcEngine _engine;
 
@@ -23,6 +23,11 @@ class Sagora extends GetxController {
   // late TextEditingController _controller;
   StreamController<String> _infoStrings = StreamController.broadcast();
   Stream<String> get agoraLogs => _infoStrings.stream;
+  // Call Action
+  Rx<CallAction> _callAction = CallAction.none.obs;
+  CallAction get callAction => _callAction.value;
+  void set callAction(CallAction action) => _callAction.value = action;
+
   @override
   void onInit() {
     checkAgoraPermissions();
@@ -65,9 +70,10 @@ class Sagora extends GetxController {
       leaveChannel: (stats) {
         _infoStrings.add(' 👻👻👻👻👻 onLeaveChannel');
         removeSession();
-        if (Get.currentRoute == kAgoraCallScreen) {
-          Get.back<void>();
-        }
+
+        // if (Get.currentRoute == kAgoraCallScreen) {
+        //   Get.back<void>();
+        // }
       },
       userJoined: (uid, elapsed) {
         final info = '👻👻👻👻👻 userJoined: $uid';
@@ -79,37 +85,8 @@ class Sagora extends GetxController {
       },
     ));
 
-    // int playbackSignalVolume;
-    // int recordingSignalVolume;
-
-    // int inEarVolume;
-    // if (Platform.isAndroid) {
-    //   playbackSignalVolume = 400;
-    //   recordingSignalVolume = 100;
-    //   inEarVolume = 100;
-    // } else {
-    //   playbackSignalVolume = 100;
-    //   recordingSignalVolume = 400;
-    //   inEarVolume = 400;
-    // }
-
     await _engine.enableAudio();
     await _engine.disableVideo();
-    // _engine.setAudioProfile(
-    //     AudioProfile.SpeechStandard, AudioScenario.Default),
-    // // // PLAYBACK DEVICE
-    // // // play the audio received on this device at this volume (0 - 400)
-    // _engine.adjustPlaybackSignalVolume(playbackSignalVolume),
-    // // // AUDIO ENGINE
-    // // // do not allow any mixed audio signals when playing audio published from this device
-    // _engine.adjustAudioMixingPublishVolume(0),
-    // // // do not allow any mixed audio signals to be played from this device
-    // _engine.adjustAudioMixingPlayoutVolume(0),
-    // // // RECORDING DEVICE
-    // // // set the recording signal volume of this device
-    // _engine.adjustRecordingSignalVolume(recordingSignalVolume),
-    // // // set the playback volume for listeners with headphones (0 - 100)
-    // _engine.setInEarMonitoringVolume(inEarVolume),
     await _engine.setChannelProfile(ChannelProfile.Communication);
   }
 
@@ -161,12 +138,10 @@ class Sagora extends GetxController {
             ),
           );
           await FlutterCallkitIncoming.endAllCalls();
-          // Get.find<Sagora>().removeSession(
-          //     // chatId: event.body['extra']['chatId'],
-          //     );
-          if (Get.currentRoute == kAgoraCallScreen) Get.back<void>();
+          // change to decline to update view parts.
+          _callAction.value = CallAction.declined;
+          // if (Get.currentRoute == kAgoraCallScreen) Get.back<void>();
           break;
-
         case CallEvent.ACTION_CALL_ENDED:
           mezDbgPrint("CallEvent.ACTION_CALL_ENDED!");
           if (event?.body?['extra']?['chatId'] != null) {
@@ -182,12 +157,13 @@ class Sagora extends GetxController {
               ),
             );
           }
+          // change to ended to update view parts.
+          _callAction.value = CallAction.ended;
 
-          if (Get.currentRoute == kAgoraCallScreen) {
-            Get.back<void>(closeOverlays: true);
-          }
+          // if (Get.currentRoute == kAgoraCallScreen) {
+          //   Get.back<void>(closeOverlays: true);
+          // }
           break;
-
         case CallEvent.ACTION_CALL_ACCEPT:
           final Sagora _sagora = Get.find<Sagora>();
           if ((await _sagora.checkAgoraPermissions())) {
@@ -204,7 +180,8 @@ class Sagora extends GetxController {
                 event!.body!['extra']['calleeuid'],
               ),
             );
-
+            // change to Accept to update view parts.
+            _callAction.value = CallAction.accepted;
             // Pushing to call screen + awaiting in case we wanna return with value.
             // ignore: unawaited_futures
             Get.toNamed<void>(kAgoraCallScreen, arguments: <String, dynamic>{
@@ -226,69 +203,8 @@ class Sagora extends GetxController {
     });
   }
 
-  // Methods and Callbacks
-  // Future<void> _initEngine() async {
-  //   _engine =
-  //       await RtcEngine.createWithContext(RtcEngineContext(AgoraConfig.appId));
-  //   mezDbgPrint("Agora : createWithContext done${_engine}");
-  //   _addListeners();
-  //   await _engine.enableAudio();
-  //   mezDbgPrint("Agora : enableAudio done${_engine}");
-  //   await _engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
-  //   mezDbgPrint("Agora : setChannelProfile done${_engine}");
-  //   await _engine.setClientRole(ClientRole.Broadcaster);
-  //   mezDbgPrint("Agora : setClientRole done${_engine}");
-  //   await _engine.joinChannel(
-  //       AgoraConfig.token, AgoraConfig.channelId, null, 0);
-  // }
-
-  // void _addListeners() {
-  //   _engine.setEventHandler(RtcEngineEventHandler(
-  //     warning: (warningCode) {
-  //       logSink.log('warning $warningCode');
-  //     },
-  //     error: (errorCode) {
-  //       logSink.log('error $errorCode');
-  //     },
-  //     joinChannelSuccess: (channel, uid, elapsed) {
-  //       logSink.log('[ ----.----- ] joinChannelSuccess $channel $uid $elapsed');
-  //       isJoined.value = true;
-  //     },
-  //     leaveChannel: (stats) async {
-  //       logSink.log('leaveChannel ${stats.toJson()}');
-  //       isJoined.value = false;
-  //     },
-  //   ));
-  // }
-
-  // Future<void> joinChannel() async {
-  //   if (getPlatformType() == MezPlatform.ANDROID) {
-  //     await Permission.microphone.request();
-  //   }
-
-  //   await _engine
-  //       .joinChannel(AgoraConfig.token, AgoraConfig.channelId, null,
-  //           AgoraConfig.uid.value!)
-  //       .catchError((onError) {
-  //     logSink.log('error ${onError.toString()}');
-  //   });
-  // }
-
-  // Future<void> leaveChannel() async {
-  //   await _engine.leaveChannel();
-  //   isJoined.value = false;
-  //   openMicrophone.value = true;
-  //   enableSpeakerphone.value = true;
-  //   playEffect.value = false;
-  //   enableInEarMonitoring.value = false;
-  //   recordingVolume.value = 100;
-  //   playbackVolume.value = 100;
-  //   inEarMonitoringVolume.value = 100;
-  // }
-
   final RxBool openMicrophone = true.obs;
   Future<void> switchMicrophone() async {
-    // await _engine.muteLocalAudioStream(!openMicrophone);
     mezDbgPrint('OLD switchSpeakerphone -> ${openMicrophone.value}!!!');
     await _engine.enableLocalAudio(!openMicrophone.value).then((value) {
       openMicrophone.value = !openMicrophone.value;
@@ -312,37 +228,4 @@ class Sagora extends GetxController {
       mezDbgPrint('setEnableSpeakerphone $err');
     });
   }
-
-  // Future<void> switchEffect() async {
-  //   if (playEffect.value) {
-  //     _engine.stopEffect(1).then((value) {
-  //       playEffect.value = false;
-  //     }).catchError((err) {
-  //       logSink.log('stopEffect $err');
-  //     });
-  //   } else {
-  //     final path = (await _engine
-  //         .getAssetAbsolutePath("assets/sounds/notif-alert.mp3"))!;
-  //     _engine
-  //         .playEffect(1, path, 0, 1, 1, 100, openMicrophone.value)
-  //         .then((value) {
-  //       playEffect.value = true;
-  //     }).catchError((err) {
-  //       logSink.log('playEffect $err');
-  //     });
-  //   }
-  // }
-
-  // Future<void> onChangeInEarMonitoringVolume(double value) async {
-  //   inEarMonitoringVolume.value = value;
-  //   await _engine.setInEarMonitoringVolume(inEarMonitoringVolume.toInt());
-  //   refresh();
-  // }
-
-  // Future<void> toggleInEarMonitoring(value) async {
-  //   enableInEarMonitoring = value;
-  //   await _engine.enableInEarMonitoring(enableInEarMonitoring.value);
-  //   refresh();
-  // }
-
 }

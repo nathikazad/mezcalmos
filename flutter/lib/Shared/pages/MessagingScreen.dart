@@ -24,8 +24,6 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
-enum CallAction { calling, accepted, none }
-
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
@@ -50,7 +48,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
   MessageController controller =
       Get.put<MessageController>(MessageController());
   final Sagora sagora = Get.put<Sagora>(Sagora());
-  CallAction _callAction = CallAction.none;
   bool isChatLoaded = false;
   @override
   void initState() {
@@ -255,42 +252,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
                       )
                     ],
                   ),
-                  if (_callAction == CallAction.calling)
-                    Container(
-                      height: Get.height,
-                      width: Get.width,
-                      color: Colors.black.withOpacity(.6),
-                      child: Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          height: 300,
-                          width: Get.width - 100,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                    "Calling ${controller.recipient(recipientType: recipientType)!.name}"),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                ThreeDotsLoading(
-                                  dotsColor: Color.fromARGB(255, 19, 105, 197),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-
-                        // );
-                        // else
-                        //   return SizedBox();
-                      ),
-                    ),
                 ],
               ),
             )
@@ -317,9 +278,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
       if (_recipient != null) {
         // clickedCall.value = true;
-        setState(() {
-          _callAction = CallAction.calling;
-        });
         await controller.callUser(
           chatId: chatId,
           callee: _recipient,
@@ -342,9 +300,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
         // then we join if it's not null && it's not expired
         if (_agoraAuth != null) {
-          setState(() {
-            _callAction = CallAction.accepted;
-          });
           mezDbgPrint("AgoraAuth  :: passed validation test !");
           // await FlutterCallkitIncoming.startCall(chatId);
           // then join channel
@@ -353,6 +308,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
             channelId: chatId,
             uid: _agoraAuth['uid'],
           );
+
+          sagora.callAction = CallAction.calling;
           // Pushing to call screen + awaiting in case we wanna return with value.
           // ignore: unawaited_futures
           Get.toNamed<void>(kAgoraCallScreen, arguments: {
@@ -360,9 +317,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
             "talkingTo": _recipient,
           });
         } else {
-          setState(() {
-            _callAction = CallAction.none;
-          });
+          sagora.callAction = CallAction.none;
         }
       }
     } else {
