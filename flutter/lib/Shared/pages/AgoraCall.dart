@@ -50,74 +50,72 @@ class _AgoraCallState extends State<AgoraCall> {
           height: Get.height,
           width: Get.width,
           color: Colors.black,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              if (_sagora.callAction.value != CallAction.accepted &&
-                  _sagora.callAction.value != CallAction.calling)
-                Positioned(
-                  top: 15,
-                  left: 20,
-                  child: InkWell(
-                    onTap: Get.back,
-                    child: Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      color: Colors.white,
+          child: Obx(
+            () => Stack(
+              alignment: Alignment.center,
+              children: [
+                if (_sagora.callAction.value != CallAction.accepted &&
+                    _sagora.callAction.value != CallAction.calling)
+                  Positioned(
+                    top: 15,
+                    left: 20,
+                    child: InkWell(
+                      onTap: Get.back,
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-              Positioned(
-                top: 140,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade400,
-                        shape: BoxShape.circle,
-                        image: talkingTo?.image != null
-                            ? DecorationImage(
-                                fit: BoxFit.cover,
-                                image: Image.network(talkingTo!.image).image,
-                              )
-                            : null,
-                      ),
-                      child: Center(
-                        child: FittedBox(
-                          fit: BoxFit.cover,
-                          child: Icon(
-                            Icons.person,
+                Positioned(
+                  top: 140,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade400,
+                          shape: BoxShape.circle,
+                          image: talkingTo?.image != null
+                              ? DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: Image.network(talkingTo!.image).image,
+                                )
+                              : null,
+                        ),
+                        child: Center(
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: Icon(
+                              Icons.person,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    Obx(
-                      () => Text(
+                      SizedBox(height: 20),
+                      Text(
                         _getCallStatusText(),
                         style: Get.textTheme.bodyText1?.copyWith(
                           color: Colors.white,
                         ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      talkingTo?.name ?? "_",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Montserrat',
-                        fontSize: 28,
-                        fontWeight: FontWeight.w600,
+                      SizedBox(height: 10),
+                      Text(
+                        talkingTo?.name ?? "_",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Montserrat',
+                          fontSize: 28,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Obx(
-                () => Positioned(
+                Positioned(
                   bottom: 100,
                   child: Container(
                     width: Get.width,
@@ -129,8 +127,8 @@ class _AgoraCallState extends State<AgoraCall> {
                     ),
                   ),
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),
