@@ -133,7 +133,31 @@ class _AgoraCallState extends State<AgoraCall> {
         return [];
       case CallAction.calling:
         return <Widget>[
-          Flexible(child: ThreeDotsLoading()),
+          Flexible(
+            child: InkWell(
+              onTap: () {
+                _msgController.endCall(
+                  chatId: chatId,
+                  callee: talkingTo!,
+                );
+                _sagora.engine.leaveChannel();
+                // get back will dispose the view and reset the call Action back to CallAction.None
+                Get.back<void>();
+              },
+              child: Container(
+                padding: EdgeInsets.all(12),
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+                child: Center(
+                  child: Icon(
+                    Icons.call_end,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ];
       case CallAction.accepted:
         return <Widget>[
