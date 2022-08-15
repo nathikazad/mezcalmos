@@ -142,7 +142,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
                 height: 25,
               ),
               Text(
-                "Category Description",
+                "${_i18n()["catDesc"]}",
                 style: Get.textTheme.bodyText1,
               ),
               SizedBox(
@@ -161,7 +161,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
                 height: 25,
               ),
               Text(
-                "Category Description in ${_viewController.secondaryLang.value!.toLanguageName()}",
+                "${_i18n()["catDescIn"]} ${_viewController.secondaryLang.value!.toLanguageName()}",
                 style: Get.textTheme.bodyText1,
               ),
               SizedBox(

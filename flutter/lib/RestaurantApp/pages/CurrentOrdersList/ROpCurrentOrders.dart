@@ -72,6 +72,7 @@ class _LaundryOpCurrentOrdersListViewState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "${_i18n()["currentOrders"]}",

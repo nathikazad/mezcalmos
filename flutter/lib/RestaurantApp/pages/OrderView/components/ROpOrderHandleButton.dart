@@ -7,9 +7,8 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpOrderView']["ROpOrderHandleButton"];
+    ['pages']['ROpOrderView']["components"]["ROpOrderHandleButton"];
 
-//
 class ROpOrderHandleButton extends StatefulWidget {
   const ROpOrderHandleButton({Key? key, required this.order}) : super(key: key);
   final RestaurantOrder order;

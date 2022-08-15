@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpOrderView']["ROpOrderEstTime"];
+    ['pages']['ROpOrderView']["components"]["ROpOrderEstTime"];
 
 class ROpOrderEstTime extends StatefulWidget {
   const ROpOrderEstTime({Key? key, required this.order}) : super(key: key);

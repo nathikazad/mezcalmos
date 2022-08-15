@@ -1486,6 +1486,8 @@
                 },
                 "addCategory": "Añadir categoría",
                 "editCategory": "Editar categoria",
+                "catDesc": "Descripción de categoría",
+                "catDescIn": "Descripción de la categoría en",
                 "saveCategory": "Guardar categoría",
                 "categoryName": "Nombre de la categoría",
                 "categoryNameIn": "Nombre de categoría en",
