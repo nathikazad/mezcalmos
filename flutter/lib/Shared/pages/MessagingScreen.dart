@@ -22,6 +22,9 @@ import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
+
+enum CallAction { calling, accepted, none }
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -47,7 +50,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   MessageController controller =
       Get.put<MessageController>(MessageController());
   final Sagora sagora = Get.put<Sagora>(Sagora());
-
+  CallAction _callAction = CallAction.none;
   bool isChatLoaded = false;
   @override
   void initState() {
@@ -202,7 +205,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
             ),
           if (controller.isUserAuthorizedToCall())
             InkWell(
-              onTap: _onCallPress,
+              onTap: () async => await _onCallPress(),
               child: Container(
                 padding: EdgeInsets.all(5),
                 margin: EdgeInsets.only(right: 10),
@@ -252,43 +255,42 @@ class _MessagingScreenState extends State<MessagingScreen> {
                       )
                     ],
                   ),
-                  // Obx(() {
-                  //   // if (clickedCall.value)
-                  //   return Container(
-                  //       height: Get.height,
-                  //       width: Get.width,
-                  //       color: Colors.black.withOpacity(.6),
-                  //       child: Center(
-                  //         child: Container(
-                  //           decoration: BoxDecoration(
-                  //             color: Colors.white,
-                  //             borderRadius: BorderRadius.circular(10),
-                  //           ),
-                  //           height: 300,
-                  //           width: Get.width - 100,
-                  //           child: Center(
-                  //             child: Column(
-                  //               mainAxisAlignment: MainAxisAlignment.center,
-                  //               crossAxisAlignment: CrossAxisAlignment.center,
-                  //               children: [
-                  //                 Text(
-                  //                     "Calling ${controller.recipient(recipientType: recipientType)!.name}"),
-                  //                 SizedBox(
-                  //                   height: 10,
-                  //                 ),
-                  //                 ThreeDotsLoading(
-                  //                   dotsColor:
-                  //                       Color.fromARGB(255, 19, 105, 197),
-                  //                 )
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ));
-                  //   // );
-                  //   // else
-                  //   //   return SizedBox();
-                  // })
+                  if (_callAction == CallAction.calling)
+                    Container(
+                      height: Get.height,
+                      width: Get.width,
+                      color: Colors.black.withOpacity(.6),
+                      child: Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          height: 300,
+                          width: Get.width - 100,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                    "Calling ${controller.recipient(recipientType: recipientType)!.name}"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                ThreeDotsLoading(
+                                  dotsColor: Color.fromARGB(255, 19, 105, 197),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        // );
+                        // else
+                        //   return SizedBox();
+                      ),
+                    ),
                 ],
               ),
             )
@@ -315,6 +317,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
       if (_recipient != null) {
         // clickedCall.value = true;
+        setState(() {
+          _callAction = CallAction.calling;
+        });
         await controller.callUser(
           chatId: chatId,
           callee: _recipient,
@@ -337,6 +342,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
         // then we join if it's not null && it's not expired
         if (_agoraAuth != null) {
+          setState(() {
+            _callAction = CallAction.accepted;
+          });
           mezDbgPrint("AgoraAuth  :: passed validation test !");
           // await FlutterCallkitIncoming.startCall(chatId);
           // then join channel
@@ -350,6 +358,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
           Get.toNamed<void>(kAgoraCallScreen, arguments: {
             "chatId": chatId,
             "talkingTo": _recipient,
+          });
+        } else {
+          setState(() {
+            _callAction = CallAction.none;
           });
         }
       }
