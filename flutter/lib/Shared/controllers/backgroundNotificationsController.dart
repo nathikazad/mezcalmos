@@ -176,23 +176,10 @@ class BackgroundNotificationsController extends GetxController {
                 });
           }
         } else {
-          // FirebaseMessage ======> {chatId: -N7lDrRmBPB5g82se9KR, linkUrl: /messages/-N7lDrRmBPB5g82se9KR,
-          //callerImage: https://firebasestorage.googleapis.com/v0/b/mezcalmos-staging.appspot.com/o/users%2FoAxB9JquC1S7zQyRUuZF2gI1suL2%2Favatar%2FoAxB9JquC1S7zQyRUuZF2gI1suL2.compressed.jpg?alt=media&token=af4e39bd-b57e-4470-9a02-b7230bd84dc2,
-          //callerType: customer, callerName: SAADR, notificationType: call, language: en, callerId: oAxB9JquC1S7zQyRUuZF2gI1suL2,
-          //callNotificationType: endCall} | true
           mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> ${message.data}");
-          // Locally ending the call
-          // FlutterCallkitIncoming.endCall(message.data);
           await FlutterCallkitIncoming.endAllCalls();
-          mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> endedAllCalls");
-          // Agora side- leaving the channel!
           await Get.find<Sagora>().engine.leaveChannel();
-          mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> leftChannel");
-          // if the current route is the agora screen we have to pop it out of the stacks!
-          Get.find<Sagora>().callAction = CallAction.ended;
-          // if (Get.currentRoute == kAgoraCallScreen) {
-          //   Get.back<void>(closeOverlays: true);
-          // }
+          Get.find<Sagora>().callAction.value = CallAction.ended;
         }
       }
     });

@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
@@ -18,10 +20,20 @@ class _AgoraCallState extends State<AgoraCall> {
   final Sagora _sagora = Get.find<Sagora>();
   final Participant? talkingTo = Get.arguments?['talkingTo'] as Participant?;
   final String chatId = Get.arguments?['chatId'];
+  StreamSubscription? _sub = null;
+  @override
+  void initState() {
+    _sub = _sagora.callAction.stream.listen((event) {
+      mezDbgPrint(" 📝📝 New [callAction] change ===> $event");
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {
-    _sagora.callAction = CallAction.none;
+    _sub = null;
+    _sub?.cancel();
+    _sagora.callAction.value = CallAction.none;
     super.dispose();
   }
 
@@ -30,7 +42,9 @@ class _AgoraCallState extends State<AgoraCall> {
     mezDbgPrint("TalkingTo : ${talkingTo.toString()}");
     mezDbgPrint("ChatId : $chatId");
     return WillPopScope(
-      onWillPop: () async => Future<bool>.value(false),
+      onWillPop: () async => Future<bool>.value(
+          _sagora.callAction.value != CallAction.accepted &&
+              _sagora.callAction.value != CallAction.calling),
       child: Scaffold(
         body: Container(
           height: Get.height,
@@ -39,6 +53,19 @@ class _AgoraCallState extends State<AgoraCall> {
           child: Stack(
             alignment: Alignment.center,
             children: [
+              if (_sagora.callAction.value != CallAction.accepted &&
+                  _sagora.callAction.value != CallAction.calling)
+                Positioned(
+                  top: 15,
+                  left: 20,
+                  child: InkWell(
+                    onTap: Get.back,
+                    child: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               Positioned(
                 top: 140,
                 child: Column(
@@ -111,7 +138,7 @@ class _AgoraCallState extends State<AgoraCall> {
   }
 
   String _getCallStatusText() {
-    switch (_sagora.callAction) {
+    switch (_sagora.callAction.value) {
       case CallAction.accepted:
         return 'in call with';
       case CallAction.calling:
@@ -126,7 +153,7 @@ class _AgoraCallState extends State<AgoraCall> {
   }
 
   List<Widget> _getControlButtons() {
-    switch (_sagora.callAction) {
+    switch (_sagora.callAction.value) {
       case CallAction.none:
         return [];
       case CallAction.calling:
@@ -232,11 +259,45 @@ class _AgoraCallState extends State<AgoraCall> {
         return <Widget>[
           Flexible(
             child: InkWell(
-              onTap: () {
-                _msgController.callUser(
+              onTap: () async {
+                await _msgController.callUser(
                   chatId: chatId,
                   callee: talkingTo!,
+                  orderId: chatId,
                 );
+                mezDbgPrint("3 - sender id ${_msgController.sender()?.id}");
+                mezDbgPrint(
+                    "3 - sender name ${_msgController.sender()?.participantType}");
+
+                // Request Agora auth
+                // @Nathik this part does not work
+                final dynamic _agoraAuth = (await _sagora.getAgoraToken(
+                  chatId,
+                  Get.find<AuthController>().user!.id,
+                  talkingTo!.participantType == ParticipantType.Customer
+                      ? ParticipantType.DeliveryDriver
+                      : ParticipantType.Customer,
+                ))
+                    .snapshot
+                    .value;
+
+                mezDbgPrint("4 - A_agoraAuth $_agoraAuth");
+
+                // then we join if it's not null && it's not expired
+                if (_agoraAuth != null) {
+                  mezDbgPrint("AgoraAuth  :: passed validation test !");
+                  // await FlutterCallkitIncoming.startCall(chatId);
+                  // then join channel
+                  _sagora.joinChannel(
+                    token: _agoraAuth['token'],
+                    channelId: chatId,
+                    uid: _agoraAuth['uid'],
+                  );
+
+                  _sagora.callAction.value = CallAction.calling;
+                } else {
+                  _sagora.callAction.value = CallAction.none;
+                }
               },
               child: Container(
                 padding: EdgeInsets.all(12),

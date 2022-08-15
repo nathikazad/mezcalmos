@@ -25,10 +25,7 @@ class Sagora extends GetxController {
   StreamController<String> _infoStrings = StreamController.broadcast();
   Stream<String> get agoraLogs => _infoStrings.stream;
   // Call Action
-  Rx<CallAction> _callAction = CallAction.none.obs;
-  CallAction get callAction => _callAction.value;
-  void set callAction(CallAction action) => _callAction.value = action;
-
+  final Rx<CallAction> callAction = CallAction.none.obs;
   @override
   void onInit() {
     checkAgoraPermissions();
@@ -124,31 +121,7 @@ class Sagora extends GetxController {
     FlutterCallkitIncoming.onEvent.listen((CallEvent? event) async {
       mezDbgPrint("CallEvent ===>  $event");
 
-      FlutterCallkitIncoming.showMissCallNotification(event!.body)
-          .then((value) => mezDbgPrint("==== value ===> $value \n========"));
-
-      switch (event.name) {
-        case CallEvent.ACTION_CALL_TIMEOUT:
-          mezDbgPrint("CallEvent.TIMEOUT  ${event.body}!");
-          FlutterCallkitIncoming.showCallkitIncoming(event.body);
-          break;
-        // final MessageController _msgCtrl = Get.find<MessageController>();
-        // _msgCtrl.endCall(
-        //   chatId: event?.body['extra']['chatId'],
-        //   callee: Participant(
-        //     image: event!.body['avatar'],
-        //     name: event.body['nameCaller'],
-        //     participantType: event.body['extra']['callerType']
-        //         .toString()
-        //         .toParticipantType(),
-        //     id: event.body['extra']['callerId'],
-        //   ),
-        // );
-        // await Get.find<Sagora>().removeSession();
-        // // change to decline to update view parts.
-        // _callAction.value = CallAction.none;
-        // break;
-
+      switch (event?.name) {
         case CallEvent.ACTION_CALL_DECLINE:
           mezDbgPrint("CallEvent.DECLINED !");
           final MessageController _msgCtrl = Get.find<MessageController>();
@@ -163,9 +136,9 @@ class Sagora extends GetxController {
               id: event.body['extra']['callerId'],
             ),
           );
+          callAction.value = CallAction.declined;
           await FlutterCallkitIncoming.endAllCalls();
           // change to decline to update view parts.
-          _callAction.value = CallAction.declined;
           // if (Get.currentRoute == kAgoraCallScreen) Get.back<void>();
           break;
         case CallEvent.ACTION_CALL_ENDED:
@@ -184,7 +157,7 @@ class Sagora extends GetxController {
             );
           }
           // change to ended to update view parts.
-          _callAction.value = CallAction.ended;
+          callAction.value = CallAction.ended;
 
           // if (Get.currentRoute == kAgoraCallScreen) {
           //   Get.back<void>(closeOverlays: true);
@@ -207,7 +180,7 @@ class Sagora extends GetxController {
               ),
             );
             // change to Accept to update view parts.
-            _callAction.value = CallAction.accepted;
+            callAction.value = CallAction.accepted;
             // Pushing to call screen + awaiting in case we wanna return with value.
             // ignore: unawaited_futures
             Get.toNamed<void>(kAgoraCallScreen, arguments: <String, dynamic>{

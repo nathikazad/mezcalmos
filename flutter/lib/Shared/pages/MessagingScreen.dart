@@ -309,7 +309,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
             uid: _agoraAuth['uid'],
           );
 
-          sagora.callAction = CallAction.calling;
+          sagora.callAction.value = CallAction.calling;
           // Pushing to call screen + awaiting in case we wanna return with value.
           // ignore: unawaited_futures
           Get.toNamed<void>(kAgoraCallScreen, arguments: {
@@ -317,7 +317,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
             "talkingTo": _recipient,
           });
         } else {
-          sagora.callAction = CallAction.none;
+          sagora.callAction.value = CallAction.none;
         }
       }
     } else {
