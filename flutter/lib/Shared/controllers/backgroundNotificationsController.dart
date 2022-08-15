@@ -189,9 +189,10 @@ class BackgroundNotificationsController extends GetxController {
           await Get.find<Sagora>().engine.leaveChannel();
           mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> leftChannel");
           // if the current route is the agora screen we have to pop it out of the stacks!
-          if (Get.currentRoute == kAgoraCallScreen) {
-            Get.back<void>(closeOverlays: true);
-          }
+          Get.find<Sagora>().callAction = CallAction.ended;
+          // if (Get.currentRoute == kAgoraCallScreen) {
+          //   Get.back<void>(closeOverlays: true);
+          // }
         }
       }
     });

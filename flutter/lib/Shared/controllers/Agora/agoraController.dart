@@ -122,7 +122,31 @@ class Sagora extends GetxController {
     FlutterCallkitIncoming.onEvent.listen((CallEvent? event) async {
       mezDbgPrint("CallEvent ===>  $event");
 
+      FlutterCallkitIncoming.showMissCallNotification(event!.body)
+          .then((value) => mezDbgPrint("==== value ===> $value \n========"));
+
       switch (event?.name) {
+        case CallEvent.ACTION_CALL_TIMEOUT:
+          mezDbgPrint("CallEvent.TIMEOUT  ${event?.body}!");
+          FlutterCallkitIncoming.showCallkitIncoming(event!.body);
+          break;
+        // final MessageController _msgCtrl = Get.find<MessageController>();
+        // _msgCtrl.endCall(
+        //   chatId: event?.body['extra']['chatId'],
+        //   callee: Participant(
+        //     image: event!.body['avatar'],
+        //     name: event.body['nameCaller'],
+        //     participantType: event.body['extra']['callerType']
+        //         .toString()
+        //         .toParticipantType(),
+        //     id: event.body['extra']['callerId'],
+        //   ),
+        // );
+        // await Get.find<Sagora>().removeSession();
+        // // change to decline to update view parts.
+        // _callAction.value = CallAction.none;
+        // break;
+
         case CallEvent.ACTION_CALL_DECLINE:
           mezDbgPrint("CallEvent.DECLINED !");
           final MessageController _msgCtrl = Get.find<MessageController>();

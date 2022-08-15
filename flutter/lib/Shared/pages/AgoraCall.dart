@@ -41,54 +41,52 @@ class _AgoraCallState extends State<AgoraCall> {
             children: [
               Positioned(
                 top: 140,
-                child: Obx(
-                  () => Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 150,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade400,
-                          shape: BoxShape.circle,
-                          image: talkingTo?.image != null
-                              ? DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: Image.network(talkingTo!.image).image,
-                                )
-                              : null,
-                        ),
-                        child: Center(
-                          child: FittedBox(
-                            fit: BoxFit.cover,
-                            child: Icon(
-                              Icons.person,
-                            ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 150,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade400,
+                        shape: BoxShape.circle,
+                        image: talkingTo?.image != null
+                            ? DecorationImage(
+                                fit: BoxFit.cover,
+                                image: Image.network(talkingTo!.image).image,
+                              )
+                            : null,
+                      ),
+                      child: Center(
+                        child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: Icon(
+                            Icons.person,
                           ),
                         ),
                       ),
-                      if (_sagora.callAction == CallAction.calling) ...[
-                        SizedBox(height: 20),
-                        Text(
-                          _getCallStatusText(),
-                          style: Get.textTheme.bodyText1?.copyWith(
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
-                      SizedBox(height: 10),
-                      Text(
-                        talkingTo?.name ?? "_",
-                        style: TextStyle(
+                    ),
+                    SizedBox(height: 20),
+                    Obx(
+                      () => Text(
+                        _getCallStatusText(),
+                        style: Get.textTheme.bodyText1?.copyWith(
                           color: Colors.white,
-                          fontFamily: 'Montserrat',
-                          fontSize: 28,
-                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      talkingTo?.name ?? "_",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Montserrat',
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Obx(
