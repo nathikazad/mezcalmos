@@ -42,9 +42,8 @@ class _AgoraCallState extends State<AgoraCall> {
     mezDbgPrint("TalkingTo : ${talkingTo.toString()}");
     mezDbgPrint("ChatId : $chatId");
     return WillPopScope(
-      onWillPop: () async => Future<bool>.value(
-          _sagora.callAction.value != CallAction.accepted &&
-              _sagora.callAction.value != CallAction.calling),
+      onWillPop: () async =>
+          Future<bool>.value(_sagora.callAction.value != CallAction.calling),
       child: Scaffold(
         body: Container(
           height: Get.height,
@@ -54,8 +53,7 @@ class _AgoraCallState extends State<AgoraCall> {
             () => Stack(
               alignment: Alignment.center,
               children: [
-                if (_sagora.callAction.value != CallAction.accepted &&
-                    _sagora.callAction.value != CallAction.calling)
+                if (_sagora.callAction.value != CallAction.calling)
                   Positioned(
                     top: 15,
                     left: 20,

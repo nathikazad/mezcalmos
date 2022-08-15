@@ -200,7 +200,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
               ),
               onTap: () => Get.toNamed<void>(orderLink!),
             ),
-          if (controller.isUserAuthorizedToCall())
+          if (controller.isUserAuthorizedToCall() &&
+              ![CallAction.accepted, CallAction.calling]
+                  .contains(sagora.callAction.value))
             InkWell(
               onTap: () async => await _onCallPress(),
               child: Container(
