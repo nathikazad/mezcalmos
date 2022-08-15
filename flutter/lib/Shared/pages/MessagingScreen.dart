@@ -200,9 +200,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
               ),
               onTap: () => Get.toNamed<void>(orderLink!),
             ),
-          if (controller.isUserAuthorizedToCall() &&
-              ![CallAction.accepted, CallAction.calling]
-                  .contains(sagora.callAction.value))
+          if (controller.isUserAuthorizedToCall())
             InkWell(
               onTap: () async => await _onCallPress(),
               child: Container(
@@ -280,6 +278,19 @@ class _MessagingScreenState extends State<MessagingScreen> {
 
       if (_recipient != null) {
         // clickedCall.value = true;
+        mezDbgPrint(
+            "sagora.callAction.value =========----> ${sagora.callAction.value}");
+        if (sagora.callAction.value == CallAction.accepted ||
+            sagora.callAction.value == CallAction.calling) {
+          // ignore: unawaited_futures
+          Get.toNamed<void>(kAgoraCallScreen, arguments: {
+            "chatId": chatId,
+            "talkingTo": _recipient,
+          });
+
+          return;
+        }
+
         await controller.callUser(
           chatId: chatId,
           callee: _recipient,
