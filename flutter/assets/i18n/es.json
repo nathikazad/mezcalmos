@@ -1674,6 +1674,38 @@
     },
     "RestaurantApp": {
         "pages": {
+
+            "ROpItemView": {
+                "item": "Artículo",
+                "addItem": "Añadir artículo",
+                "saveItem": "Guardar el artículo",
+                "itemName": "Nombre del árticulo",
+                "itemDesc": "Descripción del Artículo",
+                "itemPrice": "Precio del articulo",
+                "category": "Categoría",
+                "itemOptions": "Opciones de artículos",
+                "addOption": "Añadir opción",
+                "deleteBtn": "Sí, eliminar el artículo",
+                "deleteHelper": "¿Estás seguro de que quieres eliminar este artículo?",
+                "deleteTitle": "Eliminar este artículo",
+                "deleteItem": "Eliminar elemento",
+                "components": {
+                    "ROpItemCategorySelector": {
+                        "errorText": "Porfavor seleccione una categoría",
+                        "none": "Ninguna"
+                    },
+                    "ROpItemAvChips": {
+                        "available": "Disponible",
+                        "unavailable": "Indisponible"
+                    },
+                    "ROpItemImage": {
+                        "addImage": "Agregar imagen del artículo",
+                        "errorText": "Se requiere una imagen"
+                    }
+                }
+
+            },
+
             "ROpOrderView": {
                 "cancelOrder": "Cancelar orden",
                 "orderItems": "Encargar artículos",
@@ -1692,6 +1724,52 @@
                     },
                     "ROpDriverCard": {
                         "noDriver": "No hay controlador asignado todavía"
+                    },
+                    "ROpOrderCustomer": {
+                        "customer": "Cliente"
+                    },
+                    "ROpOrderItems": {
+                        "note": "Nota"
+                    },
+                    "ROpOrderSummaryCard": {
+                        "orderSummary": "Resumen",
+                        "orderCost": "Costo de la orden",
+                        "deliveryCost": "Coste de envío",
+                        "totalCost": "Coste total",
+                        "deliveryLocation": "Lugar de entrega"
+                    },
+                    "ROpOrderNote": {
+                        "notes": "Notas"
+                    }
+                }
+            },
+            "ROpOptionView": {
+                "addOption": "Añadir opción",
+                "editOption": "editar opción",
+                "optionName": "Nombre de opción",
+                "required": "Requeridaa",
+                "optionChoices": "Opciones de opcionesciones",
+                "optionType": "Tipo de opción ",
+                "deleteOp": "Opción Eliminar",
+                "deleteOpHelper": "¿Estás seguro de que quieres eliminar esta opción?",
+                "deleteOpBtn": "Eliminar esta opción",
+                "components": {
+                    "ROpOptionChoice": {
+                        "chName": "Nombre de elección",
+                        "chNameIn": "Nombre de elección en",
+                        "required": "Requerida"
+                    },
+                    "ROpOptionSelector": {
+                        "one": "Una",
+                        "many": "Muchas",
+                        "custom": "Disfraz",
+                        "opChoiches": "Opciones de opciones",
+                        "min": "Mínimo",
+                        "free": "Gratis",
+                        "max": "Máximo",
+                        "costAboveLimit": "Costo de elección por encima del límite gratuito",
+                        "choooseManyHelper": "El cliente puede elegir muchas opciones",
+                        "chooseOneHelper": "El cliente puede elegir solo una opción"
                     }
                 }
             },
@@ -1722,13 +1800,59 @@
                 "prCancelBtn": "Sí, cancelar reorden",
                 "cancelHelperText": "¿Estás seguro de que quieres cancelar el proceso de reorden?",
                 "components": {
+                    "ROpSpecialsComponent": {
+                        "currentSp": "Artículos especiales actuales",
+                        "recentSp": "Artículos especiales recientes"
+                    },
+                    "ROpItemCard": {
+                        "category": "Categoría",
+                        "itemStatus": "Estado del artículo"
+                    },
                     "ROpCategoryItems": {
                         "noItems": "No hay artículos",
                         "editCatgeory": "Editar categoria",
-                        "deleteCatgeory": "Eliminar la categoría"
+                        "deleteCatgeory": "Eliminar la categoría",
+                        "deleteTitle": "Eliminar la categoría",
+                        "deleteHelper": "¿Estás seguro de que quieres eliminar esta categoría?",
+                        "deleteBtn": "Sí, eliminar la categoría"
 
                     }
 
+                }
+            },
+            "ROpEditInfoView": {
+                "controllers": {
+                    "ROpEditInfoController": {
+                        "error": "error",
+                        "selectPrimaryFirst": "Seleccione primero el idioma primario"
+
+                    }
+                },
+                "components": {
+                    "ROpLanguageSelectorComponent": {
+                        "none": "Ninguna",
+                        "errorText": "Seleccione el idioma"
+                    },
+                    "ROpAcceptedPayments": {
+                        "cash": "Dinero",
+                        "card": "Tarjeta",
+                        "acceptedPayments": "Pagos aceptados",
+                        "setup": "Configuración",
+
+                        "setupHelper": "Gracias por la configuración, ahora puede recibir pagos, pero no podrá retirar dinero a su cuenta bancaria.",
+                        "reqs": "Requisitos",
+                        "emailId": "Identificación de correo",
+                        "empty": "Vacía",
+                        "reqsHelper": "Inicie sesión en su cuenta de Stripe y asegúrese de completar todos los requisitos a continuación"
+                    }
+                },
+                "ROpEditInfoView": {
+                    "restaurantName": "Nombre del restaurante",
+                    "nameErrorText": "Proporcione un nombre",
+                    "defaultLanguage": "Idioma predeterminado",
+                    "secondaryLanguage": "Lenguaje secundario",
+                    "location": "Ubicación",
+                    "saveInfo": "Guardar información"
                 }
             }
         }

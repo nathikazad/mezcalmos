@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpItemView"]["components"]["ROpItemImage"];
 
 class ROpItemImage extends StatelessWidget {
   const ROpItemImage({
@@ -33,7 +37,7 @@ class ROpItemImage extends StatelessWidget {
                     CircleAvatar(
                       backgroundColor: Colors.grey.shade300,
                       backgroundImage: viewController.getRightImage,
-                      radius: 65,
+                      radius: 90,
                       child: (viewController.imageLoading.isTrue)
                           ? CircularProgressIndicator(
                               color: primaryBlueColor,
@@ -42,7 +46,7 @@ class ROpItemImage extends StatelessWidget {
                                   viewController.newImageUrl.value == null)
                               ? Center(
                                   child: Text(
-                                    "Add item picture",
+                                    '${_i18n()["addImage"]}',
                                     style: Get.textTheme.bodyText1,
                                     textAlign: TextAlign.center,
                                   ),
@@ -65,7 +69,7 @@ class ROpItemImage extends StatelessWidget {
                               decoration: BoxDecoration(shape: BoxShape.circle),
                               child: Icon(
                                 Icons.photo_camera,
-                                size: 20,
+                                size: 30,
                                 color: Colors.white,
                               ),
                             ),

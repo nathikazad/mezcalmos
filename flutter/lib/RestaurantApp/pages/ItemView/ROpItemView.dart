@@ -8,6 +8,7 @@ import 'package:mezcalmos/RestaurantApp/pages/ItemView/components/RopItemOptionC
 import 'package:mezcalmos/RestaurantApp/pages/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
@@ -17,6 +18,11 @@ import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpItemView"];
+
+//
 class ROpItemView extends StatefulWidget {
   const ROpItemView({Key? key}) : super(key: key);
 
@@ -106,12 +112,13 @@ class _ROpItemViewState extends State<ROpItemView>
     return Obx(
       () => CallToActionButton(
         height: 65,
-        text: (viewController.editMode.isTrue) ? "Save item" : "Add item",
+        text: (viewController.editMode.isTrue)
+            ? '${_i18n()["saveItem"]}'
+            : '${_i18n()["addItem"]}',
         onTap: () async {
           if (viewController.isSecondLangValid) {
             _tabController.index = 0;
             if (_formKey.currentState!.validate()) {
-              mezDbgPrint("Calling save");
               await viewController.saveItem();
             }
           } else {
@@ -126,7 +133,7 @@ class _ROpItemViewState extends State<ROpItemView>
   AppBar _appBar() {
     return mezcalmosAppBar(AppBarLeftButtonType.Back,
         onClick: Get.back,
-        title: "Item",
+        title: '${_i18n()["item"]}',
         showNotifications: true,
         tabBar: TabBar(controller: _tabController, tabs: [
           Tab(
@@ -150,7 +157,7 @@ class _ROpItemViewState extends State<ROpItemView>
             height: 8,
           ),
           Text(
-            "Item name",
+            '${_i18n()["itemName"]}',
             style: Get.textTheme.bodyText1,
           ),
           const SizedBox(
@@ -161,7 +168,7 @@ class _ROpItemViewState extends State<ROpItemView>
             controller: viewController.scItemNameController,
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Required";
+                return '${_i18n()["required"]}';
               }
               return null;
             },
@@ -170,7 +177,7 @@ class _ROpItemViewState extends State<ROpItemView>
             height: 25,
           ),
           Text(
-            "Item Description",
+            '${_i18n()["itemDesc"]}',
             style: Get.textTheme.bodyText1,
           ),
           const SizedBox(
@@ -204,7 +211,7 @@ class _ROpItemViewState extends State<ROpItemView>
             height: 35,
           ),
           Text(
-            "Item name",
+            '${_i18n()["itemName"]}',
             style: Get.textTheme.bodyText1,
           ),
           const SizedBox(
@@ -215,7 +222,7 @@ class _ROpItemViewState extends State<ROpItemView>
             controller: viewController.prItemNameController,
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Required";
+                return '${_i18n()["required"]}';
               }
               return null;
             },
@@ -224,7 +231,7 @@ class _ROpItemViewState extends State<ROpItemView>
             height: 25,
           ),
           Text(
-            "Item Price",
+            '${_i18n()["itemPrice"]}',
             style: Get.textTheme.bodyText1,
           ),
           const SizedBox(
@@ -234,7 +241,7 @@ class _ROpItemViewState extends State<ROpItemView>
             controller: viewController.itemPriceController,
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Required";
+                return '${_i18n()["required"]}';
               }
               return null;
             },
@@ -251,7 +258,7 @@ class _ROpItemViewState extends State<ROpItemView>
             height: 25,
           ),
           Text(
-            "Item Description",
+            '${_i18n()["itemDesc"]}',
             style: Get.textTheme.bodyText1,
           ),
           const SizedBox(
@@ -272,7 +279,7 @@ class _ROpItemViewState extends State<ROpItemView>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Category",
+                  '${_i18n()["category"]}',
                   style: Get.textTheme.bodyText1,
                 ),
                 const SizedBox(
@@ -285,7 +292,7 @@ class _ROpItemViewState extends State<ROpItemView>
             height: 25,
           ),
           Text(
-            "Item options",
+            '${_i18n()["itemOptions"]}',
             style: Get.textTheme.bodyText1,
           ),
           const SizedBox(
@@ -298,12 +305,11 @@ class _ROpItemViewState extends State<ROpItemView>
             categoryID: categoryId,
           ),
           MezAddButton(
-            title: "Add option",
+            title: '${_i18n()["addOption"]}',
             onClick: () async {
               final Option? newOption = await Get.toNamed(
                   getROpOptionRoute(restaurantId: restuarantID!)) as Option?;
               if (newOption != null) {
-                mezDbgPrint("From item view ===> ${newOption.toJson()}");
                 viewController.addOption(newOption);
               }
             },
@@ -328,9 +334,9 @@ class _ROpItemViewState extends State<ROpItemView>
                           .deleteItem(itemId: itemId!, catgeoryId: categoryId)
                           .then((value) => Get.back());
                     },
-                        title: "Delete this item",
-                        helperText:
-                            "Are you sure you want to delete this item ");
+                        title: '${_i18n()["deleteTitle"]}',
+                        primaryButtonText: '${_i18n()["deleteBtn"]}',
+                        helperText: "${_i18n()["deleteHelper"]}");
                   },
                   child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 5),
@@ -345,7 +351,7 @@ class _ROpItemViewState extends State<ROpItemView>
                           SizedBox(
                             width: 10,
                           ),
-                          Text("Delete item"),
+                          Text("${_i18n()["deleteItem"]}"),
                         ],
                       )))
               : null);

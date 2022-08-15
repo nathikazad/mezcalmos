@@ -8,9 +8,8 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
-// dynamic _i18n() =>
-//     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
-//         ["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpOrderView"]["components"]["ROpOrderItems"];
 
 class ROpOrderItems extends StatefulWidget {
   const ROpOrderItems({
@@ -92,7 +91,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                   ),
                   Container(
                     child: Text(
-                      "Note :",
+                      '${_i18n()["note"]} :',
                       style: Get.textTheme.bodyText1,
                     ),
                   ),
@@ -186,34 +185,6 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                 ],
               ),
             ),
-          // InkWell(
-          //   onTap: (widget.order.inProcess())
-          //       ? null
-          //       : () {
-          //           if (widget.item.unavailable) {
-          //             Get.snackbar("Error", "Item already unavailable",
-          //                 backgroundColor: Colors.black,
-          //                 colorText: Colors.white);
-          //           } else {
-          //             Get.find<ROpOrderController>()
-          //                 .markItemUnavailable(
-          //                     widget.order.orderId, widget.item.idInCart)
-          //                 .then((ServerResponse value) => mezDbgPrint("Done"));
-          //           }
-          //         },
-          //   child: Ink(
-          //       padding: const EdgeInsets.all(5),
-          //       decoration: BoxDecoration(
-          //           color: (widget.item.unavailable)
-          //               ? Colors.grey
-          //               : primaryBlueColor,
-          //           borderRadius: BorderRadius.circular(8)),
-          //       child: Text(
-          //         "Item unavailable",
-          //         style: Get.textTheme.bodyText2?.copyWith(
-          //             fontWeight: FontWeight.w600, color: Colors.white),
-          //       )),
-          // )
         ],
       ),
     );
@@ -245,7 +216,7 @@ Widget _itemChoiche(
         height: 5,
       ),
       Text(
-        optionName[userLanguage] ?? "OptionName",
+        optionName[userLanguage] ?? "Error",
         style: Get.textTheme.bodyText1,
       ),
       SizedBox(
@@ -260,7 +231,7 @@ Widget _itemChoiche(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        choices[index].name[userLanguage] ?? "choiceName",
+                        choices[index].name[userLanguage] ?? "Error",
                         style: Get.theme.textTheme.bodyText2,
                       ),
                       if (choices[index].cost > 0)

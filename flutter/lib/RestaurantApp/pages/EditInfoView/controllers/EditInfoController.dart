@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
-    ["EditInfoView"]["controllers"]["EditInfoController"];
+    ["ROpEditInfoView"]["controllers"]["ROpEditInfoController"];
 
 //
 class ROpEditInfoController {
@@ -32,6 +32,8 @@ class ROpEditInfoController {
 
   Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   TextEditingController restaurantNameTxt = TextEditingController();
+  TextEditingController prRestaurantDescTxt = TextEditingController();
+  TextEditingController scRestaurantDescTxt = TextEditingController();
   final Rxn<String> newImageUrl = Rxn();
   final Rxn<Location> newLocation = Rxn();
 
@@ -69,10 +71,15 @@ class ROpEditInfoController {
     if (restaurant.value != null) {
       _settingSchedules();
       restaurantNameTxt.text = restaurant.value?.info.name ?? '';
+
       newLocation.value = restaurant.value!.info.location;
       newImageUrl.value = restaurant.value?.info.image ?? '';
       primaryLang.value = restaurant.value!.primaryLanguage;
       secondaryLang.value = restaurant.value!.secondaryLanguage;
+      prRestaurantDescTxt.text =
+          restaurant.value?.description?[primaryLang] ?? '';
+      scRestaurantDescTxt.text =
+          restaurant.value?.description?[secondaryLang] ?? '';
     }
   }
 
@@ -91,6 +98,13 @@ class ROpEditInfoController {
       mezDbgPrint("Updating restuarnt name .....=>${restaurantNameTxt.text}");
 
       await restaurantInfoController.setRestaurantName(restaurantNameTxt.text);
+      mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
+    }
+    if (_updatePrDesc() || _updateScDesc()) {
+      mezDbgPrint(
+          "Updating restuarnt primary description .....=>${restaurantNameTxt.text}");
+
+      await restaurantInfoController.setRestaurantDesc(_contructDesc());
       mezDbgPrint("Restuarnt name done ....=>${restaurantNameTxt.text}");
     }
     if (newImageFile.value != null) {
@@ -264,6 +278,29 @@ class ROpEditInfoController {
             "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
       }
     }
+  }
+
+  bool _updatePrDesc() {
+    return (prRestaurantDescTxt.text != '' &&
+        prRestaurantDescTxt.text !=
+            restaurant.value?.description?[primaryLang]);
+  }
+
+  bool _updateScDesc() {
+    return (scRestaurantDescTxt.text != '' &&
+        scRestaurantDescTxt.text !=
+            restaurant.value?.description?[secondaryLang]);
+  }
+
+  LanguageMap _contructDesc() {
+    return {
+      primaryLang.value!: _updatePrDesc()
+          ? prRestaurantDescTxt.text
+          : restaurant.value!.description![primaryLang]!,
+      secondaryLang.value!: _updateScDesc()
+          ? scRestaurantDescTxt.text
+          : restaurant.value!.description![secondaryLang]!,
+    };
   }
 
   void dispose() {

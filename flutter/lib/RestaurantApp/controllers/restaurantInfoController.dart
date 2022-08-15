@@ -88,6 +88,16 @@ class RestaurantInfoController extends GetxController {
         .set(newName);
   }
 
+  Future<void> setRestaurantDesc(LanguageMap newDesc) async {
+    await _databaseHelper.firebaseDatabase
+        .ref()
+        .child(serviceProviderInfos(
+                orderType: OrderType.Restaurant, providerId: restaurantId) +
+            '/details')
+        .child('description')
+        .set(newDesc.toFirebaseFormat());
+  }
+
   Future<void> setRestaurantImage(String newImage) async {
     await _databaseHelper.firebaseDatabase
         .ref()

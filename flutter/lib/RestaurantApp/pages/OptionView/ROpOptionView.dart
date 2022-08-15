@@ -4,8 +4,8 @@ import 'package:mezcalmos/RestaurantApp/pages/OptionView/components/ROpOptionCho
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/components/ROpOptionTypeSelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/controllers/ROpOptionViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -13,6 +13,12 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/CallToActionButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpOptionView"];
+
+//
 
 class ROpOptionView extends StatefulWidget {
   const ROpOptionView({Key? key}) : super(key: key);
@@ -68,8 +74,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
               saveOption();
             },
             text: (_viewController.editMode.isTrue)
-                ? "Edit option"
-                : "Add option",
+                ? '${_i18n()["editOption"]}'
+                : '${_i18n()["addOption"]}',
           ),
           body: TabBarView(
             controller: _tabController,
@@ -100,7 +106,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Option name", style: Get.textTheme.bodyText1),
+            Text('${_i18n()["optionName"]}', style: Get.textTheme.bodyText1),
             SizedBox(
               height: 8,
             ),
@@ -109,7 +115,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                 style: Get.textTheme.bodyText1,
                 validator: (String? v) {
                   if (v == null || v.isEmpty) {
-                    return "required";
+                    return '${_i18n()["required"]}';
                   }
                   return null;
                 }),
@@ -121,7 +127,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                     height: 25,
                   ),
                   Text(
-                    "Option choices",
+                    '${_i18n()["optionChoices"]}',
                     style: Get.textTheme.bodyText1,
                   ),
                   SizedBox(
@@ -156,7 +162,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Option name", style: Get.textTheme.bodyText1),
+            Text('${_i18n()["optionName"]}', style: Get.textTheme.bodyText1),
             SizedBox(
               height: 8,
             ),
@@ -165,7 +171,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                 style: Get.textTheme.bodyText1,
                 validator: (String? v) {
                   if (v == null || v.isEmpty) {
-                    return "required";
+                    return '${_i18n()["required"]}';
                   }
                   return null;
                 }),
@@ -173,7 +179,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
               height: 25,
             ),
             Text(
-              "Option type",
+              '${_i18n()["optionType"]}',
               style: Get.textTheme.bodyText1,
             ),
             SizedBox(
@@ -190,7 +196,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                     height: 25,
                   ),
                   Text(
-                    "Option choices",
+                    '${_i18n()["optionChoices"]}',
                     style: Get.textTheme.bodyText1,
                   ),
                   SizedBox(
@@ -229,17 +235,14 @@ class _ROpOptionViewState extends State<ROpOptionView>
                   style: TextButton.styleFrom(
                       backgroundColor: offRedColor, primary: Colors.redAccent),
                   onPressed: () {
-                    mezDbgPrint("Delete option");
-                    mezDbgPrint("$itemId");
                     if (itemId != null) {
                       showConfirmationDialog(context, onYesClick: () async {
                         Get.back(closeOverlays: true);
                         Get.back();
                       },
-                          primaryButtonText: "Delete option",
-                          title: "Delete this option",
-                          helperText:
-                              "Are you sure you want to delete this option ");
+                          primaryButtonText: '${_i18n()["deleteOption"]}',
+                          title: '${_i18n()["deleteOpBtn"]}',
+                          helperText: "deleteOpHelper");
                     }
                   },
                   child: Container(
@@ -255,7 +258,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                           SizedBox(
                             width: 10,
                           ),
-                          Text("Delete option"),
+                          Text('${_i18n()["deleteOption"]}'),
                         ],
                       )))
               : null);
@@ -268,7 +271,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
     },
         title: (_viewController.editMode.isTrue)
             ? _viewController.editableOption.value!.name[userLanguage]
-            : "Add option",
+            : '${_i18n()["addOption"]}',
         tabBar: TabBar(controller: _tabController, tabs: [
           Tab(
             text:

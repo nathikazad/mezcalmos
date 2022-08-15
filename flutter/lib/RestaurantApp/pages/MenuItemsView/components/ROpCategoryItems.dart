@@ -4,10 +4,13 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpItemCa
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpMenuView"]["components"]["ROpCategoryItems"];
 
 class ROpCategoryItems extends StatelessWidget {
   const ROpCategoryItems(
@@ -53,7 +56,9 @@ class ROpCategoryItems extends StatelessWidget {
                 ),
               ),
             if (category.items.isEmpty)
-              Container(alignment: Alignment.center, child: Text("No items")),
+              Container(
+                  alignment: Alignment.center,
+                  child: Text('${_i18n()["noItems"]}')),
             (viewController.reOrderMode.isTrue)
                 ? ReorderableListView(
                     shrinkWrap: true,
@@ -78,8 +83,6 @@ class ROpCategoryItems extends StatelessWidget {
                         ),
                     ],
                     onReorder: (int oldIndex, int newIndex) {
-                      mezDbgPrint("OLD INDEX ======>>>>> $oldIndex");
-                      mezDbgPrint("NEw INDEX ======>>>>> $newIndex");
                       // to avoid last element missbehavior
                       if (oldIndex < newIndex) {
                         newIndex -= 1;
@@ -125,14 +128,15 @@ class ROpCategoryItems extends StatelessWidget {
                       onTap: () {
                         Get.back();
                         Get.toNamed(getCategoryEditRoute(
-                            categoryId: category.id!, restaurantId: ""));
+                            categoryId: category.id!,
+                            restaurantId: restaurantId));
                       },
                       child: Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 12, horizontal: 5),
                           alignment: Alignment.center,
                           child: Text(
-                            "Edit category",
+                            '${_i18n()["editCatgeory"]}',
                             style: Get.textTheme.bodyText1,
                           )),
                     ),
@@ -140,10 +144,9 @@ class ROpCategoryItems extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         showConfirmationDialog(context,
-                            title: "Delete category",
-                            helperText:
-                                "Are you sure you want to delete this category",
-                            primaryButtonText: "Yes, delete",
+                            title: '${_i18n()["deleteTitle"]}',
+                            helperText: '${_i18n()["deleteHelper"]}',
+                            primaryButtonText: '${_i18n()["deleteBtn"]}',
                             onYesClick: () async {
                           await viewController.deleteCategory(
                               categoryId: category.id!);
@@ -154,7 +157,7 @@ class ROpCategoryItems extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               vertical: 12, horizontal: 5),
                           child: Text(
-                            "Delete category",
+                            '${_i18n()["deleteCatgeory"]}',
                             style: Get.textTheme.bodyText1
                                 ?.copyWith(color: Colors.red),
                           )),

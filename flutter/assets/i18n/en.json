@@ -1698,6 +1698,79 @@
                     },
                     "ROpOrderCustomer": {
                         "customer": "Customer"
+                    },
+                    "ROpOrderItems": {
+                        "note": "Note"
+                    },
+                    "ROpOrderSummaryCard": {
+                        "orderSummary": "Summary",
+                        "orderCost": "Order Cost",
+                        "deliveryCost": "Delivery Cost",
+                        "totalCost": "Total Cost",
+                        "deliveryLocation": "Delivery Location"
+                    },
+                    "ROpOrderNote": {
+                        "notes": "Notes"
+                    }
+                }
+            },
+            "ROpItemView": {
+                "item": "Item",
+                "addItem": "Add item",
+                "saveItem": "Save item",
+                "itemName": "Item name",
+                "itemDesc": "Item description",
+                "itemPrice": "Item price",
+                "category": "Category",
+                "itemOptions": "Item options",
+                "addOption": "Add option",
+                "deleteBtn": "Yes, delete item",
+                "deleteHelper": "Are you sure you want to delete this item",
+                "deleteTitle": "Delete this item",
+                "deleteItem": "Delete item",
+                "components": {
+                    "ROpItemCategorySelector": {
+                        "errorText": "Please select a category",
+                        "none": "None"
+                    },
+                    "ROpItemAvChips": {
+                        "available": "Available",
+                        "unavailable": "Unavailable"
+                    },
+                    "ROpItemImage": {
+                        "addImage": "Add item picture",
+                        "errorText": "Image is required"
+                    }
+                }
+
+            },
+            "ROpOptionView": {
+                "addOption": "Add option",
+                "editOption": "Edit option",
+                "optionName": "Option name",
+                "required": "Required",
+                "optionChoices": "Option choices",
+                "optionType": "Option type",
+                "deleteOp": "Delete option",
+                "deleteOpHelper": "Are you sure you want to delete this option",
+                "deleteOpBtn": "Delete this option",
+                "components": {
+                    "ROpOptionChoice": {
+                        "chName": "Choice name",
+                        "chNameIn": "Choice name in",
+                        "required": "Required"
+                    },
+                    "ROpOptionSelector": {
+                        "one": "One",
+                        "many": "Many",
+                        "custom": "Custom",
+                        "opChoiches": "Option choices",
+                        "min": "Min",
+                        "free": "Free",
+                        "max": "Max",
+                        "costAboveLimit": "Cost for choice above the free limit",
+                        "choooseManyHelper": "Customer can choose many choices",
+                        "chooseOneHelper": "Customer can choose only one choice"
                     }
                 }
             },
@@ -1729,12 +1802,58 @@
                 "prCancelBtn": "Yes, Cancel reorder",
                 "cancelHelperText": "Are you sure you want to cancel the reorder process",
                 "components": {
+                    "ROpSpecialsComponent": {
+                        "currentSp": "Current special items",
+                        "recentSp": "Recent special items"
+                    },
+                    "ROpItemCard": {
+                        "category": "Category",
+                        "itemStatus": "Item status"
+                    },
                     "ROpCategoryItems": {
                         "noItems": "No items",
                         "editCatgeory": "Edit category",
-                        "deleteCatgeory": "Delete category"
+                        "deleteCatgeory": "Delete category",
+                        "deleteTitle": "Delete Category",
+                        "deleteHelper": "Are you sure you want to delete this category",
+                        "deleteBtn": "Yes, delete category"
                     }
 
+                }
+            },
+            "ROpEditInfoView": {
+                "controllers": {
+                    "ROpEditInfoController": {
+                        "error": "Error",
+                        "selectPrimaryFirst": "Select Primary language first"
+
+                    }
+                },
+                "components": {
+                    "ROpLanguageSelectorComponent": {
+                        "none": "None",
+                        "errorText": "Please select language "
+                    },
+                    "ROpAcceptedPayments": {
+                        "cash": "Cash",
+                        "card": "Card",
+                        "acceptedPayments": "Accepted payments",
+                        "setup": "Setup",
+
+                        "setupHelper": "Thanks for setup , you can now receive payments but you will not be able to withdraw money to your bank account",
+                        "reqs": "Requirements",
+                        "emailId": "Email ID",
+                        "empty": "Empty",
+                        "reqsHelper": "Please sign in to your stripe account and make sure you fill in all the requiremnts below"
+                    }
+                },
+                "ROpEditInfoView": {
+                    "restaurantName": "Restaurant name",
+                    "nameErrorText": "please provide a name",
+                    "defaultLanguage": "Default language",
+                    "secondaryLanguage": "Secondary language",
+                    "location": "Location",
+                    "saveInfo": "Save info"
                 }
             }
         }

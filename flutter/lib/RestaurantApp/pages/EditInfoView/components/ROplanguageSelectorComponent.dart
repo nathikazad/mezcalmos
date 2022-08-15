@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
-    ['EditInfoView']['components']['LanguageSelectorComponent'];
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpEditInfoView']['components']['ROpLanguageSelectorComponent'];
 
 typedef bool OnChangeShouldUpdateLang(
   LanguageType languageType,

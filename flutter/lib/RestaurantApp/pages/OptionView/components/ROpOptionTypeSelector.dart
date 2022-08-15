@@ -3,8 +3,14 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/components/ROpNumberSelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OptionView/controllers/ROpOptionViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpOptionView"]["components"]["ROpOptionSelector"];
+
+//
 class ROpOptionSelector extends StatelessWidget {
   const ROpOptionSelector({
     Key? key,
@@ -36,7 +42,7 @@ class ROpOptionSelector extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                    "Option choices",
+                    '${_i18n()["opChoiches"]}',
                     style: Get.textTheme.bodyText1,
                   ),
                   SizedBox(
@@ -44,33 +50,39 @@ class ROpOptionSelector extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          "Min",
-                          style: Get.textTheme.bodyText1,
+                      Flexible(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            '${_i18n()["min"]}',
+                            style: Get.textTheme.bodyText1,
+                          ),
                         ),
                       ),
                       Flexible(
                           child: ROpNumberSelector(
                         value: viewController.min,
                       )),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          "Free",
-                          style: Get.textTheme.bodyText1,
+                      Flexible(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            '${_i18n()["free"]}',
+                            style: Get.textTheme.bodyText1,
+                          ),
                         ),
                       ),
                       Flexible(
                           child: ROpNumberSelector(
                         value: viewController.free,
                       )),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          "Max",
-                          style: Get.textTheme.bodyText1,
+                      Flexible(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            '${_i18n()["max"]}',
+                            style: Get.textTheme.bodyText1,
+                          ),
                         ),
                       ),
                       Flexible(
@@ -87,7 +99,7 @@ class ROpOptionSelector extends StatelessWidget {
                           height: 20,
                         ),
                         Text(
-                          "Cost for option above the free limit",
+                          '${_i18n()["costAboveLimit"]}',
                           style: Get.textTheme.bodyText1,
                         ),
                         const SizedBox(
@@ -142,9 +154,9 @@ class ROpOptionSelector extends StatelessWidget {
   String? _helperText() {
     switch (viewController.optionType.value) {
       case OptionType.ChooseMany:
-        return "Customer can choose many options";
+        return '${_i18n()["choooseManyHelper"]}';
       case OptionType.ChooseOne:
-        return "Customer can choose only one option";
+        return '${_i18n()["chooseOneHelper"]}';
       case OptionType.Custom:
         return null;
     }
@@ -166,7 +178,7 @@ class ROpOptionSelector extends StatelessWidget {
                   ? primaryBlueColor
                   : Colors.grey.shade300),
           child: Text(
-            optionType.toOptionName(),
+            '${_i18n()["${optionType.toOptionName().toLowerCase()}"]}',
             style: Get.textTheme.bodyText1?.copyWith(
                 color: (optionType == viewController.optionType.value)
                     ? Colors.white

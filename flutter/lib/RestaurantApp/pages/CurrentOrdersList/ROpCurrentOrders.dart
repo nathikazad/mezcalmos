@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/orderController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CurrentOrdersList/components/ROpOrderCard.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -57,9 +58,8 @@ class _LaundryOpCurrentOrdersListViewState
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: mezcalmosAppBar(
-        AppBarLeftButtonType.Menu,
-      ),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+          showNotifications: true, ordersRoute: kPastOrdersListView),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: ROpDrawer(),
       body: Obx(
