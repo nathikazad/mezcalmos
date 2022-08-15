@@ -71,7 +71,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
           height: 50,
           width: 50,
           child: RiveAnimation.asset(
-            "assets/animation/motorbikeWithSmokeAnimation.riv",
+            "assets/animation/scooterWashingMachine.riv",
             fit: BoxFit.cover,
           ),
         );
