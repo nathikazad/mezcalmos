@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_void_async, always_specify_types, unawaited_futures
 
 import 'dart:async';
+
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
@@ -78,6 +79,7 @@ class Sagora extends GetxController {
       userJoined: (uid, elapsed) {
         final info = '👻👻👻👻👻 userJoined: $uid';
         _infoStrings.add(info);
+        _callAction.value = CallAction.accepted;
       },
       userOffline: (uid, reason) {
         final info = '👻👻👻👻👻 userOffline: $uid , reason: $reason';
@@ -125,10 +127,10 @@ class Sagora extends GetxController {
       FlutterCallkitIncoming.showMissCallNotification(event!.body)
           .then((value) => mezDbgPrint("==== value ===> $value \n========"));
 
-      switch (event?.name) {
+      switch (event.name) {
         case CallEvent.ACTION_CALL_TIMEOUT:
-          mezDbgPrint("CallEvent.TIMEOUT  ${event?.body}!");
-          FlutterCallkitIncoming.showCallkitIncoming(event!.body);
+          mezDbgPrint("CallEvent.TIMEOUT  ${event.body}!");
+          FlutterCallkitIncoming.showCallkitIncoming(event.body);
           break;
         // final MessageController _msgCtrl = Get.find<MessageController>();
         // _msgCtrl.endCall(
@@ -151,9 +153,9 @@ class Sagora extends GetxController {
           mezDbgPrint("CallEvent.DECLINED !");
           final MessageController _msgCtrl = Get.find<MessageController>();
           _msgCtrl.endCall(
-            chatId: event?.body['extra']['chatId'],
+            chatId: event.body['extra']['chatId'],
             callee: Participant(
-              image: event!.body['avatar'],
+              image: event.body['avatar'],
               name: event.body['nameCaller'],
               participantType: event.body['extra']['callerType']
                   .toString()
@@ -168,11 +170,11 @@ class Sagora extends GetxController {
           break;
         case CallEvent.ACTION_CALL_ENDED:
           mezDbgPrint("CallEvent.ACTION_CALL_ENDED!");
-          if (event?.body?['extra']?['chatId'] != null) {
+          if (event.body?['extra']?['chatId'] != null) {
             await Get.find<MessageController>().endCall(
-              chatId: event?.body?['extra']['chatId'],
+              chatId: event.body?['extra']['chatId'],
               callee: Participant(
-                image: event!.body['avatar'],
+                image: event.body['avatar'],
                 name: event.body['nameCaller'],
                 participantType: event.body['extra']['callerType']
                     .toString()
@@ -195,13 +197,13 @@ class Sagora extends GetxController {
             // that way we wont need to fetch the token and uid from db, using the bellow line :
             // final dynamic agoraAuth = await _sagora.getAgoraToken();
             mezDbgPrint(
-                "🎃🎃🎃 ACTION_CALL_ACCEPT::   Calling [_sagora.joinChannel] with extra::uid ${event?.body}");
+                "🎃🎃🎃 ACTION_CALL_ACCEPT::   Calling [_sagora.joinChannel] with extra::uid ${event.body}");
             joinChannel(
-              token: event?.body?['extra']['agoraToken'],
-              channelId: event?.body?['extra']['chatId'],
+              token: event.body?['extra']['agoraToken'],
+              channelId: event.body?['extra']['chatId'],
               uid: //5774112,
                   int.parse(
-                event!.body!['extra']['calleeuid'],
+                event.body!['extra']['calleeuid'],
               ),
             );
             // change to Accept to update view parts.
