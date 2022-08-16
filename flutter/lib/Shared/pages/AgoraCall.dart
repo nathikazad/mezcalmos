@@ -31,14 +31,16 @@ class _AgoraCallState extends State<AgoraCall> {
 
   @override
   void dispose() {
+    callTimer?.cancel();
+    callTimer = null;
     _sagora.callAction.value = CallStatus.none;
-    resetTimer();
     super.dispose();
   }
 
   void resetTimer() {
-    callTimer?.cancel();
     callSeconds.value = 0;
+    callTimer?.cancel();
+    callTimer = null;
   }
 
   String formatTime(int seconds) {
