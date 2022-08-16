@@ -50,11 +50,13 @@ class _AgoraCallState extends State<AgoraCall> {
   Future<void> initCallTimer() async {
     callTimer = Timer.periodic(Duration(seconds: 1), (Timer _subTimer) {
       callSeconds.value += 1;
+      mezDbgPrint('yyyyyyYYYYYYYYYYYYYYYYYYYYY:${callSeconds.value}');
       if (callSeconds.value == 60 &&
           _sagora.callAction.value == CallStatus.calling) {
         _sagora.callAction.value = CallStatus.timedOut;
         _subTimer.cancel();
         resetTimer();
+        _sagora.engine.leaveChannel();
         return;
       } else if (callSeconds.value >= 300) {
         // Max of 5mins call
@@ -133,7 +135,10 @@ class _AgoraCallState extends State<AgoraCall> {
                         SizedBox(
                           height: 10,
                         ),
-                        Text(formatTime(callSeconds.value))
+                        Text(
+                          formatTime(callSeconds.value),
+                          style: TextStyle(color: Colors.white),
+                        )
                       ],
                       SizedBox(height: 10),
                       Text(
