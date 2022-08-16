@@ -152,6 +152,7 @@ class BackgroundNotificationsController extends GetxController {
 
     onMessageListener =
         FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      Sagora agora = Get.find<Sagora>();
       mezDbgPrint(
           "FirebaseMessage ======> ${message.data} | ${message.contentAvailable}");
       if (message.data["notificationType"] ==
@@ -161,24 +162,23 @@ class BackgroundNotificationsController extends GetxController {
                 .toCallNotificationtType() ==
             CallNotificationtType.Incoming) {
           // handle incoming
-          if (Get.currentRoute != kAgoraCallScreen) {
-            await triggerIncomingCallAlert(
-                callerName: message.data["callerName"],
-                callerImage: message.data["callerImage"],
-                callerType: message.data["callerType"],
-                callerId: message.data["callerId"],
-                languageType:
-                    message.data["language"].toString().toLanguageType(),
-                extra: <String, dynamic>{
-                  "chatId": message.data['chatId'],
-                  "agoraToken": message.data['agoraToken'],
-                  "calleeuid": message.data['calleeuid'],
-                });
-          }
+          await agora.handleIfInChannelAlready();
+          await triggerIncomingCallAlert(
+              callerName: message.data["callerName"],
+              callerImage: message.data["callerImage"],
+              callerType: message.data["callerType"],
+              callerId: message.data["callerId"],
+              languageType:
+                  message.data["language"].toString().toLanguageType(),
+              extra: <String, dynamic>{
+                "chatId": message.data['chatId'],
+                "agoraToken": message.data['agoraToken'],
+                "calleeuid": message.data['calleeuid'],
+              });
         } else {
           mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> ${message.data}");
           await FlutterCallkitIncoming.endAllCalls();
-          await Get.find<Sagora>().engine.leaveChannel();
+          await agora.engine.leaveChannel();
           Get.find<Sagora>().callAction.value = CallStatus.none;
         }
       }
