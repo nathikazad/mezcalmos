@@ -234,8 +234,8 @@ class _AgoraCallState extends State<AgoraCall> {
                 child: Center(
                   child: Icon(
                     _sagora.enableSpeakerphone.value
-                        ? Icons.stop
-                        : Icons.speaker,
+                        ? Icons.volume_up_rounded
+                        : Icons.volume_off_rounded,
                     color: Colors.black,
                     size: 30,
                   ),
@@ -279,9 +279,7 @@ class _AgoraCallState extends State<AgoraCall> {
                 ),
                 child: Center(
                   child: Icon(
-                    _sagora.openMicrophone.value
-                        ? Icons.volume_off_rounded
-                        : Icons.volume_up_rounded,
+                    _sagora.openMicrophone.value ? Icons.mic_off : Icons.mic,
                     size: 30,
                     color: Colors.black,
                   ),
