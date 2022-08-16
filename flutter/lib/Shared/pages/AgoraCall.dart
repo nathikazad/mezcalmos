@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
-import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 class AgoraCall extends StatefulWidget {
   @override
@@ -20,20 +18,14 @@ class _AgoraCallState extends State<AgoraCall> {
   final Sagora _sagora = Get.find<Sagora>();
   final Participant? talkingTo = Get.arguments?['talkingTo'] as Participant?;
   final String chatId = Get.arguments?['chatId'];
-  StreamSubscription? _sub = null;
   @override
   void initState() {
-    _sub = _sagora.callAction.stream.listen((event) {
-      mezDbgPrint(" 📝📝 New [callAction] change ===> $event");
-    });
     super.initState();
   }
 
   @override
   void dispose() {
-    _sub = null;
-    _sub?.cancel();
-    _sagora.callAction.value = CallAction.none;
+    _sagora.callAction.value = CallStatus.none;
     super.dispose();
   }
 
@@ -42,8 +34,7 @@ class _AgoraCallState extends State<AgoraCall> {
     mezDbgPrint("TalkingTo : ${talkingTo.toString()}");
     mezDbgPrint("ChatId : $chatId");
     return WillPopScope(
-      onWillPop: () async =>
-          Future<bool>.value(_sagora.callAction.value != CallAction.calling),
+      onWillPop: () async => Future<bool>.value(false),
       child: Scaffold(
         body: Container(
           height: Get.height,
@@ -53,7 +44,7 @@ class _AgoraCallState extends State<AgoraCall> {
             () => Stack(
               alignment: Alignment.center,
               children: [
-                if (_sagora.callAction.value != CallAction.calling)
+                if (_sagora.callAction.value == CallStatus.none)
                   Positioned(
                     top: 15,
                     left: 20,
@@ -135,24 +126,18 @@ class _AgoraCallState extends State<AgoraCall> {
 
   String _getCallStatusText() {
     switch (_sagora.callAction.value) {
-      case CallAction.accepted:
+      case CallStatus.inCall:
         return 'in call with';
-      case CallAction.calling:
+      case CallStatus.calling:
         return 'calling ...';
-      case CallAction.declined:
-        return 'call declined :(';
-      case CallAction.ended:
+      case CallStatus.none:
         return 'call ended';
-      default:
-        return '';
     }
   }
 
   List<Widget> _getControlButtons() {
     switch (_sagora.callAction.value) {
-      case CallAction.none:
-        return [];
-      case CallAction.calling:
+      case CallStatus.calling:
         return <Widget>[
           Flexible(
             child: InkWell(
@@ -180,7 +165,7 @@ class _AgoraCallState extends State<AgoraCall> {
             ),
           ),
         ];
-      case CallAction.accepted:
+      case CallStatus.inCall:
         return <Widget>[
           Flexible(
             child: InkWell(
@@ -250,8 +235,7 @@ class _AgoraCallState extends State<AgoraCall> {
             ),
           )
         ];
-      case CallAction.declined:
-      case CallAction.ended:
+      case CallStatus.none:
         return <Widget>[
           Flexible(
             child: InkWell(
@@ -290,9 +274,9 @@ class _AgoraCallState extends State<AgoraCall> {
                     uid: _agoraAuth['uid'],
                   );
 
-                  _sagora.callAction.value = CallAction.calling;
+                  _sagora.callAction.value = CallStatus.calling;
                 } else {
-                  _sagora.callAction.value = CallAction.none;
+                  _sagora.callAction.value = CallStatus.none;
                 }
               },
               child: Container(

@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-enum CallAction { calling, accepted, ended, declined, none }
+enum CallStatus { none, calling, inCall }
 
 class Sagora extends GetxController {
   late final RtcEngine _engine;
@@ -25,7 +25,7 @@ class Sagora extends GetxController {
   StreamController<String> _infoStrings = StreamController.broadcast();
   Stream<String> get agoraLogs => _infoStrings.stream;
   // Call Action
-  final Rx<CallAction> callAction = CallAction.none.obs;
+  final Rx<CallStatus> callAction = CallStatus.none.obs;
   @override
   void onInit() {
     checkAgoraPermissions();
@@ -76,7 +76,7 @@ class Sagora extends GetxController {
       userJoined: (uid, elapsed) {
         final info = '👻👻👻👻👻 userJoined: $uid';
         _infoStrings.add(info);
-        callAction.value = CallAction.accepted;
+        callAction.value = CallStatus.inCall;
       },
       userOffline: (uid, reason) {
         final info = '👻👻👻👻👻 userOffline: $uid , reason: $reason';
@@ -136,7 +136,7 @@ class Sagora extends GetxController {
               id: event.body['extra']['callerId'],
             ),
           );
-          callAction.value = CallAction.declined;
+          callAction.value = CallStatus.none;
           await FlutterCallkitIncoming.endAllCalls();
           // change to decline to update view parts.
           // if (Get.currentRoute == kAgoraCallScreen) Get.back<void>();
@@ -157,7 +157,7 @@ class Sagora extends GetxController {
             );
           }
           // change to ended to update view parts.
-          callAction.value = CallAction.ended;
+          callAction.value = CallStatus.none;
 
           // if (Get.currentRoute == kAgoraCallScreen) {
           //   Get.back<void>(closeOverlays: true);
@@ -180,7 +180,7 @@ class Sagora extends GetxController {
               ),
             );
             // change to Accept to update view parts.
-            callAction.value = CallAction.accepted;
+            callAction.value = CallStatus.inCall;
             // Pushing to call screen + awaiting in case we wanna return with value.
             // ignore: unawaited_futures
             Get.toNamed<void>(kAgoraCallScreen, arguments: <String, dynamic>{

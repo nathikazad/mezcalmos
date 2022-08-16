@@ -277,20 +277,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
       mezDbgPrint("1 [RECIPIENT::calleeType ] $_calleeType");
 
       if (_recipient != null) {
-        // clickedCall.value = true;
-        mezDbgPrint(
-            "sagora.callAction.value =========----> ${sagora.callAction.value}");
-        if (sagora.callAction.value == CallAction.accepted ||
-            sagora.callAction.value == CallAction.calling) {
-          // ignore: unawaited_futures
-          Get.toNamed<void>(kAgoraCallScreen, arguments: {
-            "chatId": chatId,
-            "talkingTo": _recipient,
-          });
-
-          return;
-        }
-
         await controller.callUser(
           chatId: chatId,
           callee: _recipient,
@@ -322,7 +308,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
             uid: _agoraAuth['uid'],
           );
 
-          sagora.callAction.value = CallAction.calling;
+          sagora.callAction.value = CallStatus.calling;
           // Pushing to call screen + awaiting in case we wanna return with value.
           // ignore: unawaited_futures
           Get.toNamed<void>(kAgoraCallScreen, arguments: {
@@ -330,7 +316,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
             "talkingTo": _recipient,
           });
         } else {
-          sagora.callAction.value = CallAction.none;
+          sagora.callAction.value = CallStatus.none;
         }
       }
     } else {
