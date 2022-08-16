@@ -16,6 +16,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/LaundryOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -47,7 +48,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   final MGoogleMapController mapController = MGoogleMapController(
     enableMezSmartPointer: true,
   );
-
+  Widget? atLaundryWidget;
   @override
   void initState() {
     // Handle Order id from the rooting
@@ -59,11 +60,19 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
     }
     controller.clearOrderNotifications(orderId);
     order.value = controller.getOrder(orderId) as LaundryOrder?;
+    if (order.value!.isAtLaundry()) {
+      atLaundryWidget = atLaundryIcon;
+      mezDbgPrint("AT laundyyyyyyy");
+    }
 
     _orderListener =
         controller.getOrderStream(orderId).listen((Order? newOrderEvent) {
       if (newOrderEvent != null) {
         order.value = newOrderEvent as LaundryOrder?;
+        if (order.value!.isAtLaundry()) {
+          atLaundryWidget = atLaundryIcon;
+          mezDbgPrint("AT laundyyyyyyy");
+        }
         if (order.value!.inProcess()) {
           // @here
           updateMapByPhase(order.value!.getCurrentPhase());
@@ -126,7 +135,12 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                             SizedBox(
                               height: 20,
                             ),
-                            LaundryOrderStatusCard(order: order.value!),
+                            Obx(
+                              () => LaundryOrderStatusCard(
+                                order: order.value!,
+                                atLaundryIcon: atLaundryWidget,
+                              ),
+                            ),
                             CustomerLaundryOrderEst(
                               order: order.value!,
                             ),
