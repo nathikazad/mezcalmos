@@ -39,6 +39,7 @@ class AuthHooks {
     );
 
     /// Put CustomerAuthController
+    Get.put<Sagora>(Sagora(), permanent: true);
     Get.put<CustomerAuthController>(CustomerAuthController(), permanent: true);
     Get.put<ForegroundNotificationsController>(
         ForegroundNotificationsController(),
@@ -47,6 +48,5 @@ class AuthHooks {
     Get.put<TaxiController>(TaxiController(), permanent: true);
     Get.put<RestaurantController>(RestaurantController(), permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
-    Get.put<Sagora>(Sagora(), permanent: true);
   }
 }

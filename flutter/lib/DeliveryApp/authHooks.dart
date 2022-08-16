@@ -28,6 +28,7 @@ class AuthHooks {
     mezDbgPrint(
         "[+] CustomerApp::AuthHooks::onSignInHook -> Callback Executed.");
 
+    Get.put(Sagora(), permanent: true);
     Get.put(ForegroundNotificationsController(), permanent: true);
     Get.put(BackgroundNotificationsController(), permanent: true);
     Get.put(OrderController(), permanent: true);
@@ -35,6 +36,5 @@ class AuthHooks {
     Get.put(LaundryOrderController(), permanent: true);
     Get.put(RestaurantOrderController(), permanent: true);
     Get.put(MessageController(), permanent: true);
-    Get.put(Sagora(), permanent: true);
   }
 }
