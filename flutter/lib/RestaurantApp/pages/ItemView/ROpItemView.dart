@@ -38,7 +38,8 @@ class _ROpItemViewState extends State<ROpItemView>
   String? categoryId;
   bool? specials;
   ItemViewController viewController = ItemViewController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _prformKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _scformKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -81,15 +82,12 @@ class _ROpItemViewState extends State<ROpItemView>
             body: Obx(
               () {
                 if (viewController.restaurant.value != null) {
-                  return Form(
-                    key: _formKey,
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        _primaryTab(),
-                        _secondaryTab(),
-                      ],
-                    ),
+                  return TabBarView(
+                    controller: _tabController,
+                    children: [
+                      _primaryTab(),
+                      _secondaryTab(),
+                    ],
                   );
                 } else {
                   return CircularProgressIndicator();
@@ -116,15 +114,7 @@ class _ROpItemViewState extends State<ROpItemView>
             ? '${_i18n()["saveItem"]}'
             : '${_i18n()["addItem"]}',
         onTap: () async {
-          if (viewController.isSecondLangValid) {
-            _tabController.index = 0;
-            if (_formKey.currentState!.validate()) {
-              await viewController.saveItem();
-            }
-          } else {
-            _tabController.index = _tabController.length - 1;
-            _formKey.currentState!.validate();
-          }
+          await _handleSaveBtn();
         },
       ),
     );
@@ -150,46 +140,49 @@ class _ROpItemViewState extends State<ROpItemView>
   Widget _secondaryTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            '${_i18n()["itemName"]}',
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            style: Get.textTheme.bodyText1,
-            controller: viewController.scItemNameController,
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return '${_i18n()["required"]}';
-              }
-              return null;
-            },
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          Text(
-            '${_i18n()["itemDesc"]}',
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            style: Get.textTheme.bodyText1,
-            minLines: 4,
-            maxLines: 6,
-            controller: viewController.scItemDescController,
-          ),
-        ],
+      child: Form(
+        key: _scformKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              '${_i18n()["itemName"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              style: Get.textTheme.bodyText1,
+              controller: viewController.scItemNameController,
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return '${_i18n()["required"]}';
+                }
+                return null;
+              },
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Text(
+              '${_i18n()["itemDesc"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              style: Get.textTheme.bodyText1,
+              minLines: 4,
+              maxLines: 6,
+              controller: viewController.scItemDescController,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -197,125 +190,128 @@ class _ROpItemViewState extends State<ROpItemView>
   Widget _primaryTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ROpItemImage(
-            viewController: viewController,
-          ),
-          if (viewController.editMode.isTrue)
-            ROpItemAvChips(
+      child: Form(
+        key: _prformKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ROpItemImage(
               viewController: viewController,
             ),
-          const SizedBox(
-            height: 35,
-          ),
-          Text(
-            '${_i18n()["itemName"]}',
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            style: Get.textTheme.bodyText1,
-            controller: viewController.prItemNameController,
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return '${_i18n()["required"]}';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          Text(
-            '${_i18n()["itemPrice"]}',
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            controller: viewController.itemPriceController,
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return '${_i18n()["required"]}';
-              }
-              return null;
-            },
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
-            ],
-            textAlignVertical: TextAlignVertical.center,
-            style: Get.textTheme.bodyText1,
-            decoration: InputDecoration(
-                prefixIconColor: primaryBlueColor,
-                prefixIcon: Icon(Icons.attach_money)),
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          Text(
-            '${_i18n()["itemDesc"]}',
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            style: Get.textTheme.bodyText1,
-            maxLines: 6,
-            minLines: 4,
-            controller: viewController.prItemDescController,
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          if (viewController.specialMode.value == null ||
-              viewController.specialMode.value == false)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${_i18n()["category"]}',
-                  style: Get.textTheme.bodyText1,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ROpItemCategorySelector(viewController: viewController),
-              ],
+            if (viewController.editMode.isTrue)
+              ROpItemAvChips(
+                viewController: viewController,
+              ),
+            const SizedBox(
+              height: 35,
             ),
-          const SizedBox(
-            height: 25,
-          ),
-          Text(
-            '${_i18n()["itemOptions"]}',
-            style: Get.textTheme.bodyText1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ROpItemOptionCard(
-            viewController: viewController,
-            itemId: itemId,
-            restaurantID: restuarantID!,
-            categoryID: categoryId,
-          ),
-          MezAddButton(
-            title: '${_i18n()["addOption"]}',
-            onClick: () async {
-              final Option? newOption = await Get.toNamed(
-                  getROpOptionRoute(restaurantId: restuarantID!)) as Option?;
-              if (newOption != null) {
-                viewController.addOption(newOption);
-              }
-            },
-          ),
-          _deleteItemBtn()
-        ],
+            Text(
+              '${_i18n()["itemName"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              style: Get.textTheme.bodyText1,
+              controller: viewController.prItemNameController,
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return '${_i18n()["required"]}';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Text(
+              '${_i18n()["itemPrice"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: viewController.itemPriceController,
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return '${_i18n()["required"]}';
+                }
+                return null;
+              },
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+              ],
+              textAlignVertical: TextAlignVertical.center,
+              style: Get.textTheme.bodyText1,
+              decoration: InputDecoration(
+                  prefixIconColor: primaryBlueColor,
+                  prefixIcon: Icon(Icons.attach_money)),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Text(
+              '${_i18n()["itemDesc"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              style: Get.textTheme.bodyText1,
+              maxLines: 6,
+              minLines: 4,
+              controller: viewController.prItemDescController,
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            if (viewController.specialMode.value == null ||
+                viewController.specialMode.value == false)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${_i18n()["category"]}',
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ROpItemCategorySelector(viewController: viewController),
+                ],
+              ),
+            const SizedBox(
+              height: 25,
+            ),
+            Text(
+              '${_i18n()["itemOptions"]}',
+              style: Get.textTheme.bodyText1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ROpItemOptionCard(
+              viewController: viewController,
+              itemId: itemId,
+              restaurantID: restuarantID!,
+              categoryID: categoryId,
+            ),
+            MezAddButton(
+              title: '${_i18n()["addOption"]}',
+              onClick: () async {
+                final Option? newOption = await Get.toNamed(
+                    getROpOptionRoute(restaurantId: restuarantID!)) as Option?;
+                if (newOption != null) {
+                  viewController.addOption(newOption);
+                }
+              },
+            ),
+            _deleteItemBtn()
+          ],
+        ),
       ),
     );
   }
@@ -356,5 +352,37 @@ class _ROpItemViewState extends State<ROpItemView>
                       )))
               : null);
     });
+  }
+
+  Future<void> _handleSaveBtn() async {
+    if (_tabController.index == 0) {
+      await _handleFirstTab();
+    } else {
+      await _handleSecondTab();
+    }
+  }
+
+  Future<void> _handleSecondTab() async {
+    if (viewController.firstFormValid == true &&
+        _scformKey.currentState?.validate() == true) {
+      await viewController.saveItem();
+    } else if (_scformKey.currentState?.validate() == true &&
+        _prformKey.currentState?.validate() != true) {
+      viewController.secondFormValid = true;
+      _tabController.index = 0;
+    }
+  }
+
+  Future<void> _handleFirstTab() async {
+    if (_prformKey.currentState?.validate() == true &&
+        (_scformKey.currentState?.validate() == true ||
+            viewController.secondFormValid)) {
+      await viewController.saveItem();
+    } else if (_prformKey.currentState?.validate() == true &&
+        _scformKey.currentState?.validate() != true) {
+      viewController.firstFormValid = true;
+
+      _tabController.index = 1;
+    }
   }
 }

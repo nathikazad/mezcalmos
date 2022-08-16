@@ -31,8 +31,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   ROpOptionViewController _viewController = ROpOptionViewController();
-  final GlobalKey<FormState> prFormKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _prFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _scFormKey = GlobalKey<FormState>();
 
   String? itemId;
   String? categoryId;
@@ -71,7 +71,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
           bottomNavigationBar: CallToActionButton(
             height: 65,
             onTap: () async {
-              saveOption();
+              await _handleSaveBtn();
             },
             text: (_viewController.editMode.isTrue)
                 ? '${_i18n()["editOption"]}'
@@ -102,7 +102,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
     return SingleChildScrollView(
       padding: const EdgeInsets.all(12),
       child: Form(
-        key: scFormKey,
+        key: _scFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -158,7 +158,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
     return SingleChildScrollView(
       padding: const EdgeInsets.all(12),
       child: Form(
-        key: prFormKey,
+        key: _prFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -284,34 +284,37 @@ class _ROpOptionViewState extends State<ROpOptionView>
         ]));
   }
 
-  void saveOption() {
-    prFormKey.currentState?.save();
-    scFormKey.currentState?.save();
-    switch (isFormValid()) {
-      case FormValid.Valid:
-        _viewController.addOption();
-        Get.back(result: _viewController.addOption());
-        break;
-      case FormValid.PrimaryNotValid:
-        _tabController.animateTo(0);
-
-        break;
-      case FormValid.SecondaryNotValid:
-        _tabController.animateTo(1);
-
-        break;
-      default:
+  Future<void> _handleSaveBtn() async {
+    if (_tabController.index == 0) {
+      await _handleFirstTab();
+    } else {
+      await _handleSecondTab();
     }
   }
 
-  FormValid isFormValid() {
-    if (prFormKey.currentState == null ||
-        prFormKey.currentState!.validate() == false) {
-      return FormValid.PrimaryNotValid;
-    } else if (scFormKey.currentState == null ||
-        scFormKey.currentState!.validate() == false) {
-      return FormValid.SecondaryNotValid;
-    } else
-      return FormValid.Valid;
+  Future<void> _handleSecondTab() async {
+    if (_viewController.firstTabValid == true &&
+        _scFormKey.currentState?.validate() == true) {
+      _viewController.addOption();
+      Get.back(result: _viewController.addOption());
+    } else if (_scFormKey.currentState?.validate() == true &&
+        _prFormKey.currentState?.validate() != true) {
+      _viewController.secondTabValid = true;
+      _tabController.index = 0;
+    }
+  }
+
+  Future<void> _handleFirstTab() async {
+    if (_prFormKey.currentState?.validate() == true &&
+        (_scFormKey.currentState?.validate() == true ||
+            _viewController.secondTabValid)) {
+      _viewController.addOption();
+      Get.back(result: _viewController.addOption());
+    } else if (_prFormKey.currentState?.validate() == true &&
+        _scFormKey.currentState?.validate() != true) {
+      _viewController.firstTabValid = true;
+
+      _tabController.index = 1;
+    }
   }
 }

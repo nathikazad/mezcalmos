@@ -47,6 +47,8 @@ class ItemViewController {
   RxBool newCategoryAdded = RxBool(false);
   Rxn<Category> addedCatgeory = Rxn();
   RxBool isLoading = RxBool(false);
+  bool firstFormValid = false;
+  bool secondFormValid = false;
 
   // initalisation //
   // the itemId arguments for edit mode //
@@ -281,10 +283,6 @@ class ItemViewController {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else
       return null;
-  }
-
-  bool get isSecondLangValid {
-    return scItemNameController.text.isNotEmpty;
   }
 
   void dispose() {

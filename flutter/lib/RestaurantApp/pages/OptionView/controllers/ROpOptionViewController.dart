@@ -18,7 +18,9 @@ class ROpOptionViewController {
   TextEditingController scOptionName = TextEditingController();
   TextEditingController costPerExtra = TextEditingController();
 
-  // formKeys //
+  // form//
+  bool firstTabValid = false;
+  bool secondTabValid = false;
 
   // variables //
 

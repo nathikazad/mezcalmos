@@ -98,6 +98,20 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                 SizedBox(
                   height: 15,
                 ),
+                Text("${_i18n()["secondaryLanguage"]}"),
+                SizedBox(
+                  height: 5,
+                ),
+                ROpLanguageSelectorComponent(
+                  languageValue: editInfoController.secondaryLang,
+                  oppositeLanguageValue: editInfoController.primaryLang,
+                  onChangeShouldUpdateLang:
+                      editInfoController.validateSecondaryLanguUpdate,
+                  showDeleteIcon: true,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
                 Text(
                     'Description in ${editInfoController.primaryLang.value!.toLanguageName()}'),
                 SizedBox(
@@ -113,20 +127,6 @@ class _ROpEditInfoViewState extends State<ROpEditInfoView> {
                   height: 5,
                 ),
                 _scdescTextField(),
-                SizedBox(
-                  height: 15,
-                ),
-                Text("${_i18n()["secondaryLanguage"]}"),
-                SizedBox(
-                  height: 5,
-                ),
-                ROpLanguageSelectorComponent(
-                  languageValue: editInfoController.secondaryLang,
-                  oppositeLanguageValue: editInfoController.primaryLang,
-                  onChangeShouldUpdateLang:
-                      editInfoController.validateSecondaryLanguUpdate,
-                  showDeleteIcon: true,
-                ),
                 SizedBox(
                   height: 15,
                 ),

@@ -154,7 +154,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
                 style: Get.textTheme.bodyText1,
                 controller: _viewController.primaryCatDesc,
                 decoration: InputDecoration(
-                  hintText: '${_i18n()["categoryNameHint"]}',
+                  hintText: '${_i18n()["categoryDescHint"]}',
                 ),
               ),
               SizedBox(
@@ -173,7 +173,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
                 style: Get.textTheme.bodyText1,
                 controller: _viewController.secondaryCatDesc,
                 decoration: InputDecoration(
-                  hintText: '${_i18n()["categoryNameHint"]}',
+                  hintText: '${_i18n()["categoryDescHint"]}',
                 ),
               ),
             ],

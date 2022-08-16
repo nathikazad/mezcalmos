@@ -6,13 +6,14 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuItemsView/controllers/ROpMenuV
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpMenuView"]["components"]["ROpCategoryItems"];
 
-class ROpCategoryItems extends StatelessWidget {
+class ROpCategoryItems extends StatefulWidget {
   const ROpCategoryItems(
       {Key? key,
       required this.category,
@@ -25,85 +26,106 @@ class ROpCategoryItems extends StatelessWidget {
   final ROpMenuViewController viewController;
 
   @override
+  State<ROpCategoryItems> createState() => _ROpCategoryItemsState();
+}
+
+class _ROpCategoryItemsState extends State<ROpCategoryItems> {
+  final LanguageType userLanguage =
+      Get.find<LanguageController>().userLanguageKey;
+  @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Container(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(
-                    category.name![userLanguage]!,
-                    style: Get.textTheme.bodyText1,
+      () {
+        mezDbgPrint(getName());
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Text(
+                      widget.category.name![userLanguage]!,
+                      style: Get.textTheme.bodyText1,
+                    ),
                   ),
-                ),
-                (viewController.reOrderMode.isTrue)
-                    ? ROpRerorderIcon()
-                    : _categoryMenuBtn(context)
-              ],
-            ),
-            if (category.dialog?[userLanguage] != null)
-              Container(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Text(
-                  category.dialog![userLanguage]!,
-                  style: Get.textTheme.bodyText2,
-                ),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Text(
+                      getName(),
+                      style: Get.textTheme.bodyText1,
+                    ),
+                  ),
+                  (widget.viewController.reOrderMode.isTrue)
+                      ? ROpRerorderIcon()
+                      : _categoryMenuBtn(context)
+                ],
               ),
-            if (category.items.isEmpty)
-              Container(
-                  alignment: Alignment.center,
-                  child: Text('${_i18n()["noItems"]}')),
-            (viewController.reOrderMode.isTrue)
-                ? ReorderableListView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    proxyDecorator:
-                        (Widget child, int index, Animation<double> animation) {
-                      return Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: child,
-                      );
-                    },
-                    children: <Widget>[
-                      for (int index = 0;
-                          index < category.items.length;
-                          index += 1)
-                        ROpItemCard(
-                          key: Key('$index'),
-                          viewController: viewController,
-                          item: category.items[index],
-                          category: category,
-                        ),
-                    ],
-                    onReorder: (int oldIndex, int newIndex) {
-                      // to avoid last element missbehavior
-                      if (oldIndex < newIndex) {
-                        newIndex -= 1;
-                      }
-                      viewController.rorderSingleItem(
-                          catgeoryId: category.id!,
-                          oldIndex: oldIndex,
-                          newIndex: newIndex);
-                    })
-                : Column(
-                    children: List.generate(
-                        category.items.length,
-                        (int index) => ROpItemCard(
-                            item: category.items[index],
-                            category: category,
-                            viewController: viewController)),
+              if (widget.category.dialog?[userLanguage] != null)
+                Container(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(
+                    widget.category.dialog![userLanguage]!,
+                    style: Get.textTheme.bodyText2,
                   ),
-          ],
-        ),
-      ),
+                ),
+              if (widget.category.items.isEmpty)
+                Container(
+                    alignment: Alignment.center,
+                    child: Text('${_i18n()["noItems"]}')),
+              (widget.viewController.reOrderMode.isTrue)
+                  ? ReorderableListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      proxyDecorator: (Widget child, int index,
+                          Animation<double> animation) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: child,
+                        );
+                      },
+                      children: <Widget>[
+                        for (int index = 0;
+                            index < widget.category.items.length;
+                            index += 1)
+                          ROpItemCard(
+                            key: Key('$index'),
+                            viewController: widget.viewController,
+                            item: widget.category.items[index],
+                            category: widget.category,
+                          ),
+                      ],
+                      onReorder: (int oldIndex, int newIndex) {
+                        // to avoid last element missbehavior
+                        if (oldIndex < newIndex) {
+                          newIndex -= 1;
+                        }
+                        widget.viewController.rorderSingleItem(
+                            catgeoryId: widget.category.id!,
+                            oldIndex: oldIndex,
+                            newIndex: newIndex);
+                      })
+                  : Column(
+                      children: List.generate(
+                          widget.category.items.length,
+                          (int index) => ROpItemCard(
+                              item: widget.category.items[index],
+                              category: widget.category,
+                              viewController: widget.viewController)),
+                    ),
+            ],
+          ),
+        );
+      },
     );
+  }
+
+  String getName() {
+    return widget.category.name![userLanguage]!;
   }
 
   Widget _categoryMenuBtn(BuildContext context) {
@@ -128,8 +150,8 @@ class ROpCategoryItems extends StatelessWidget {
                       onTap: () {
                         Get.back();
                         Get.toNamed(getCategoryEditRoute(
-                            categoryId: category.id!,
-                            restaurantId: restaurantId));
+                            categoryId: widget.category.id!,
+                            restaurantId: widget.restaurantId));
                       },
                       child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -148,8 +170,8 @@ class ROpCategoryItems extends StatelessWidget {
                             helperText: '${_i18n()["deleteHelper"]}',
                             primaryButtonText: '${_i18n()["deleteBtn"]}',
                             onYesClick: () async {
-                          await viewController.deleteCategory(
-                              categoryId: category.id!);
+                          await widget.viewController
+                              .deleteCategory(categoryId: widget.category.id!);
                         }).then((value) => Get.back());
                       },
                       child: Container(

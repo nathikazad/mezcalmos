@@ -1482,6 +1482,7 @@
                         "categoryName": "Category name",
                         "categoryNameIn": "Category name in ",
                         "categoryNameHint": "Enter a category name",
+                        "categoryDescHint": "Enter a category description",
                         "categoryPrice": "Category pricing per kilogramme",
                         "categoryPriceHint": "Enter category pricing per kilogramme...",
                         "categoryPriceError": "Please enter valid price"
@@ -1719,6 +1720,7 @@
             "ROpItemView": {
                 "item": "Item",
                 "addItem": "Add item",
+                "required": "Required",
                 "saveItem": "Save item",
                 "itemName": "Item name",
                 "itemDesc": "Item description",
