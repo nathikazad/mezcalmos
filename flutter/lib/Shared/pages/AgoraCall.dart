@@ -113,14 +113,14 @@ class _AgoraCallState extends State<AgoraCall> {
                                 )
                               : null,
                         ),
-                        child: Center(
-                          child: FittedBox(
-                            fit: BoxFit.cover,
-                            child: Icon(
-                              Icons.person,
-                            ),
-                          ),
-                        ),
+                        // child: Center(
+                        //   child: FittedBox(
+                        //     fit: BoxFit.cover,
+                        //     child: Icon(
+                        //       Icons.person,
+                        //     ),
+                        //   ),
+                        // ),
                       ),
                       SizedBox(height: 20),
                       Text(
@@ -292,9 +292,6 @@ class _AgoraCallState extends State<AgoraCall> {
                   callee: talkingTo!,
                   orderId: chatId,
                 );
-                mezDbgPrint("3 - sender id ${_msgController.sender()?.id}");
-                mezDbgPrint(
-                    "3 - sender name ${_msgController.sender()?.participantType}");
 
                 // Request Agora auth
                 // @Nathik this part does not work
@@ -315,6 +312,7 @@ class _AgoraCallState extends State<AgoraCall> {
                   mezDbgPrint("AgoraAuth  :: passed validation test !");
                   // await FlutterCallkitIncoming.startCall(chatId);
                   // then join channel
+                  await _sagora.handleIfInChannelAlready();
                   await _sagora.joinChannel(
                     token: _agoraAuth['token'],
                     channelId: chatId,

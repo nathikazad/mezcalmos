@@ -40,6 +40,16 @@ class Sagora extends GetxController {
     super.onClose();
   }
 
+  Future<void> handleIfInChannelAlready() async {
+    try {
+      final String? currentCallId = await _engine.getCallId();
+      if (currentCallId != null) {
+        mezDbgPrint("-------------- CALL ID --------- $currentCallId");
+        await _engine.leaveChannel();
+      }
+    } catch (e) {}
+  }
+
   Future<bool> checkAgoraPermissions() async {
     bool isPermissionGranted = false;
     if (getPlatformType() == MezPlatform.ANDROID) {

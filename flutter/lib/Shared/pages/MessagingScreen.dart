@@ -303,6 +303,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
           // await FlutterCallkitIncoming.startCall(chatId);
           // then join channel
           // ignore: unawaited_futures
+          await sagora.handleIfInChannelAlready();
+
+          // ignore: unawaited_futures
           sagora
               .joinChannel(
             token: _agoraAuth['token'],
