@@ -31,9 +31,13 @@ class _AgoraCallState extends State<AgoraCall> {
 
   @override
   void dispose() {
-    callTimer?.cancel();
-    callTimer = null;
-    _sagora.callAction.value = CallStatus.none;
+    Future<void>.microtask(() {
+      callTimer?.cancel();
+      callTimer = null;
+      // leave it with Get.find, because the _sagora instance might get disposed .
+      Get.find<Sagora>().callAction.value = CallStatus.none;
+    });
+
     super.dispose();
   }
 

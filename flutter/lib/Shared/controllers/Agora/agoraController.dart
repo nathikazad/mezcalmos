@@ -204,34 +204,39 @@ class Sagora extends GetxController {
             // change to Accept to update view parts.
             callAction.value = CallStatus.inCall;
             if (Get.currentRoute == kAgoraCallScreen) {
-              Get.offAndToNamed<void>(kAgoraCallScreen,
-                  arguments: <String, dynamic>{
-                    "chatId": event.body?['extra']?['chatId'],
-                    "talkingTo": Participant(
-                      image: event.body?['avatar'],
-                      name: event.body?['nameCaller'],
-                      participantType: event.body['extra']['callerType']
-                          .toString()
-                          .toParticipantType(),
-                      // wrong actual user id, it's more like an agora generated id
-                      id: event.body['extra']['callerId'],
-                    ),
-                  });
+              Future<void>.microtask(
+                () => Get.offAndToNamed<void>(kAgoraCallScreen,
+                    arguments: <String, dynamic>{
+                      "chatId": event.body?['extra']?['chatId'],
+                      "talkingTo": Participant(
+                        image: event.body?['avatar'],
+                        name: event.body?['nameCaller'],
+                        participantType: event.body['extra']['callerType']
+                            .toString()
+                            .toParticipantType(),
+                        // wrong actual user id, it's more like an agora generated id
+                        id: event.body['extra']['callerId'],
+                      ),
+                    }),
+              );
             } else {
               // Pushing to call screen + awaiting in case we wanna return with value.
               // ignore: unawaited_futures
-              Get.toNamed<void>(kAgoraCallScreen, arguments: <String, dynamic>{
-                "chatId": event.body?['extra']?['chatId'],
-                "talkingTo": Participant(
-                  image: event.body?['avatar'],
-                  name: event.body?['nameCaller'],
-                  participantType: event.body['extra']['callerType']
-                      .toString()
-                      .toParticipantType(),
-                  // wrong actual user id, it's more like an agora generated id
-                  id: event.body['extra']['callerId'],
-                ),
-              });
+              Future.microtask(
+                () => Get.toNamed<void>(kAgoraCallScreen,
+                    arguments: <String, dynamic>{
+                      "chatId": event.body?['extra']?['chatId'],
+                      "talkingTo": Participant(
+                        image: event.body?['avatar'],
+                        name: event.body?['nameCaller'],
+                        participantType: event.body['extra']['callerType']
+                            .toString()
+                            .toParticipantType(),
+                        // wrong actual user id, it's more like an agora generated id
+                        id: event.body['extra']['callerId'],
+                      ),
+                    }),
+              );
             }
           }
           break;
