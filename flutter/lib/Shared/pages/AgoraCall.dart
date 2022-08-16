@@ -21,7 +21,7 @@ class _AgoraCallState extends State<AgoraCall> {
   final String chatId = Get.arguments?['chatId'];
   // used for call timing
   Timer? callTimer;
-  int callSeconds = 0;
+  RxInt callSeconds = 0.obs;
 
   @override
   void initState() {
@@ -38,18 +38,23 @@ class _AgoraCallState extends State<AgoraCall> {
 
   void resetTimer() {
     callTimer?.cancel();
-    callSeconds = 0;
+    callSeconds.value = 0;
+  }
+
+  String formatTime(int seconds) {
+    return '${(Duration(seconds: seconds))}'.split('.')[0].padLeft(8, '0');
   }
 
   Future<void> initCallTimer() async {
     callTimer = Timer.periodic(Duration(seconds: 1), (Timer _subTimer) {
-      callSeconds += 1;
-      if (callSeconds == 60 && _sagora.callAction.value == CallStatus.calling) {
+      callSeconds.value += 1;
+      if (callSeconds.value == 60 &&
+          _sagora.callAction.value == CallStatus.calling) {
         _sagora.callAction.value = CallStatus.timedOut;
         _subTimer.cancel();
         resetTimer();
         return;
-      } else if (callSeconds >= 300) {
+      } else if (callSeconds.value >= 300) {
         // Max of 5mins call
         // endCall
         _subTimer.cancel();
@@ -122,6 +127,12 @@ class _AgoraCallState extends State<AgoraCall> {
                           color: Colors.white,
                         ),
                       ),
+                      if (_sagora.callAction.value == CallStatus.inCall) ...[
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(formatTime(callSeconds.value))
+                      ],
                       SizedBox(height: 10),
                       Text(
                         talkingTo?.name ?? "_",
