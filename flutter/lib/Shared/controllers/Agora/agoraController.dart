@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/models/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-enum CallStatus { none, calling, inCall }
+enum CallStatus { none, calling, inCall, timedOut }
 
 class Sagora extends GetxController {
   late final RtcEngine _engine;

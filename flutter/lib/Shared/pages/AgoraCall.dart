@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Chat.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class AgoraCall extends StatefulWidget {
   @override
@@ -18,15 +19,56 @@ class _AgoraCallState extends State<AgoraCall> {
   final Sagora _sagora = Get.find<Sagora>();
   final Participant? talkingTo = Get.arguments?['talkingTo'] as Participant?;
   final String chatId = Get.arguments?['chatId'];
+  // used for call timing
+  Timer? callTimer;
+  int callSeconds = 0;
+
   @override
   void initState() {
+    initCallTimer();
     super.initState();
   }
 
   @override
   void dispose() {
     _sagora.callAction.value = CallStatus.none;
+    resetTimer();
     super.dispose();
+  }
+
+  void resetTimer() {
+    callTimer?.cancel();
+    callSeconds = 0;
+  }
+
+  Future<void> initCallTimer() async {
+    callTimer = Timer.periodic(Duration(seconds: 1), (Timer _subTimer) {
+      callSeconds += 1;
+      if (callSeconds == 60 && _sagora.callAction.value == CallStatus.calling) {
+        _sagora.callAction.value = CallStatus.timedOut;
+        _subTimer.cancel();
+        resetTimer();
+        return;
+      } else if (callSeconds >= 300) {
+        // Max of 5mins call
+        // endCall
+        _subTimer.cancel();
+        resetTimer();
+
+        _msgController.endCall(
+          chatId: chatId,
+          callee: talkingTo!,
+        );
+        _sagora.engine.leaveChannel();
+        _sagora.callAction.value = CallStatus.none;
+        // Get.back<void>();
+        MezSnackbar("Oops", "You have reached max time for your call!");
+      } else if (_sagora.callAction.value == CallStatus.none) {
+        _subTimer.cancel();
+        resetTimer();
+        return;
+      }
+    });
   }
 
   @override
@@ -116,11 +158,13 @@ class _AgoraCallState extends State<AgoraCall> {
   String _getCallStatusText() {
     switch (_sagora.callAction.value) {
       case CallStatus.inCall:
-        return 'in call with';
+        return 'In call with';
       case CallStatus.calling:
-        return 'calling ...';
+        return 'Calling ...';
       case CallStatus.none:
-        return 'call ended';
+        return 'Call ended';
+      case CallStatus.timedOut:
+        return "No answer from";
     }
   }
 
@@ -224,6 +268,7 @@ class _AgoraCallState extends State<AgoraCall> {
             ),
           )
         ];
+      case CallStatus.timedOut:
       case CallStatus.none:
         return <Widget>[
           Flexible(
@@ -257,12 +302,12 @@ class _AgoraCallState extends State<AgoraCall> {
                   mezDbgPrint("AgoraAuth  :: passed validation test !");
                   // await FlutterCallkitIncoming.startCall(chatId);
                   // then join channel
-                  _sagora.joinChannel(
+                  await _sagora.joinChannel(
                     token: _agoraAuth['token'],
                     channelId: chatId,
                     uid: _agoraAuth['uid'],
                   );
-
+                  await initCallTimer();
                   _sagora.callAction.value = CallStatus.calling;
                 } else {
                   _sagora.callAction.value = CallStatus.none;
