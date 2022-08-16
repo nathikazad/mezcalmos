@@ -45,23 +45,6 @@ class _AgoraCallState extends State<AgoraCall> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                if (_sagora.callAction.value == CallStatus.none)
-                  Positioned(
-                    top: 15,
-                    left: 20,
-                    child: InkWell(
-                      onTap: Get.back,
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        color: Colors.transparent,
-                        child: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
                 Positioned(
                   top: 140,
                   child: Column(
@@ -292,6 +275,23 @@ class _AgoraCallState extends State<AgoraCall> {
                 child: Center(
                   child: Icon(
                     Icons.call,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Flexible(
+            child: InkWell(
+              onTap: Get.back,
+              child: Container(
+                padding: EdgeInsets.all(12),
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+                child: Center(
+                  child: Icon(
+                    Icons.close,
                     color: Colors.white,
                     size: 30,
                   ),
