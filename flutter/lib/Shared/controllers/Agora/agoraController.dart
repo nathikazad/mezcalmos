@@ -89,7 +89,7 @@ class Sagora extends GetxController {
     await _engine.setChannelProfile(ChannelProfile.Communication);
   }
 
-  void joinChannel({
+  Future<void> joinChannel({
     required String token,
     required String channelId,
     required int uid,
@@ -110,11 +110,24 @@ class Sagora extends GetxController {
   Future<DatabaseEvent> getAgoraToken(
       String chatId, String userId, ParticipantType type) async {
     mezDbgPrint("Listening once on ${agoraChatNode(chatId, userId, type)}");
-    return FirebaseDatabase.instance
+    final DatabaseEvent ev = await (FirebaseDatabase.instance
         .ref()
         .child(agoraChatNode(chatId, userId, type))
-        .onValue
-        .first;
+        .once(DatabaseEventType.value));
+
+    if ((ev.snapshot.value as dynamic)?['expirationTime'] != null &&
+        (ev.snapshot.value as dynamic)?['token'] != null &&
+        (ev.snapshot.value as dynamic)?['uid'] != null) {
+      mezDbgPrint(
+        "[+] Agora Node Data ✅ filled : ${ev.snapshot.value}",
+      );
+      return Future.value(ev);
+    } else {
+      mezDbgPrint(
+        "[+] Agora Node Data not filled yet , only got : ${ev.snapshot.value}",
+      );
+      return getAgoraToken(chatId, userId, type);
+    }
   }
 
   void _startListeningOnCallEvents() {
@@ -164,8 +177,7 @@ class Sagora extends GetxController {
           // }
           break;
         case CallEvent.ACTION_CALL_ACCEPT:
-          final Sagora _sagora = Get.find<Sagora>();
-          if ((await _sagora.checkAgoraPermissions())) {
+          if ((await checkAgoraPermissions())) {
             // it's better to send token and chatId withing the variableParams on call notif
             // that way we wont need to fetch the token and uid from db, using the bellow line :
             // final dynamic agoraAuth = await _sagora.getAgoraToken();

@@ -302,18 +302,25 @@ class _MessagingScreenState extends State<MessagingScreen> {
           mezDbgPrint("AgoraAuth  :: passed validation test !");
           // await FlutterCallkitIncoming.startCall(chatId);
           // then join channel
-          sagora.joinChannel(
+          // ignore: unawaited_futures
+          sagora
+              .joinChannel(
             token: _agoraAuth['token'],
             channelId: chatId,
             uid: _agoraAuth['uid'],
-          );
+          )
+              .then((value) {
+            mezDbgPrint(
+                "[][][] MessageScreen :: sagora.joinChannel :: done ! ==> pushing to AgoraCall Screen !!!!");
 
-          sagora.callAction.value = CallStatus.calling;
-          // Pushing to call screen + awaiting in case we wanna return with value.
-          // ignore: unawaited_futures
-          Get.toNamed<void>(kAgoraCallScreen, arguments: {
-            "chatId": chatId,
-            "talkingTo": _recipient,
+            sagora.callAction.value = CallStatus.calling;
+            Get.toNamed<void>(kAgoraCallScreen, arguments: {
+              "chatId": chatId,
+              "talkingTo": _recipient,
+            });
+          }).onError((error, stackTrace) {
+            mezDbgPrint("Error ===> $error | $stackTrace");
+            sagora.callAction.value = CallStatus.none;
           });
         } else {
           sagora.callAction.value = CallStatus.none;

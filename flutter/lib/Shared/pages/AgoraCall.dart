@@ -33,15 +33,16 @@ class _AgoraCallState extends State<AgoraCall> {
   Widget build(BuildContext context) {
     mezDbgPrint("TalkingTo : ${talkingTo.toString()}");
     mezDbgPrint("ChatId : $chatId");
-    return WillPopScope(
-      onWillPop: () async => Future<bool>.value(false),
-      child: Scaffold(
-        body: Container(
-          height: Get.height,
-          width: Get.width,
-          color: Colors.black,
-          child: Obx(
-            () => Stack(
+    return Obx(
+      () => WillPopScope(
+        onWillPop: () async =>
+            Future<bool>.value(_sagora.callAction.value == CallStatus.none),
+        child: Scaffold(
+          body: Container(
+            height: Get.height,
+            width: Get.width,
+            color: Colors.black,
+            child: Stack(
               alignment: Alignment.center,
               children: [
                 if (_sagora.callAction.value == CallStatus.none)
@@ -50,9 +51,14 @@ class _AgoraCallState extends State<AgoraCall> {
                     left: 20,
                     child: InkWell(
                       onTap: Get.back,
-                      child: Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        color: Colors.white,
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        color: Colors.transparent,
+                        child: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
