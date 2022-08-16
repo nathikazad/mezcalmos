@@ -25,7 +25,7 @@ class Sagora extends GetxController {
   StreamController<String> _infoStrings = StreamController.broadcast();
   Stream<String> get agoraLogs => _infoStrings.stream;
   // Call Action
-  final Rx<CallStatus> callAction = CallStatus.none.obs;
+  final Rx<CallStatus> callStatus = CallStatus.none.obs;
   @override
   void onInit() {
     checkAgoraPermissions();
@@ -40,11 +40,24 @@ class Sagora extends GetxController {
     super.onClose();
   }
 
-  Future<void> handleIfInChannelAlready() async {
+  Future<bool> isInActiveCall() async {
     try {
       final String? currentCallId = await _engine.getCallId();
       if (currentCallId != null) {
         mezDbgPrint("-------------- CALL ID --------- $currentCallId");
+        return Future.value(true);
+      }
+      return Future.value(false);
+    } catch (e) {
+      return Future.value(false);
+    }
+  }
+
+  Future<void> handleIfInChannelAlready() async {
+    try {
+      final String? currentCallId = await _engine.getCallId();
+      bool _isInCall = await isInActiveCall();
+      if (_isInCall) {
         await _engine.leaveChannel();
       }
     } catch (e) {}
@@ -86,10 +99,12 @@ class Sagora extends GetxController {
       userJoined: (uid, elapsed) {
         final info = '👻👻👻👻👻 userJoined: $uid';
         _infoStrings.add(info);
-        callAction.value = CallStatus.inCall;
+        callStatus.value = CallStatus.inCall;
       },
       userOffline: (uid, reason) {
         final info = '👻👻👻👻👻 userOffline: $uid , reason: $reason';
+        removeSession();
+
         _infoStrings.add(info);
       },
     ));
@@ -111,6 +126,7 @@ class Sagora extends GetxController {
 
   Future<void> removeSession({String? chatId}) async {
     await _engine.leaveChannel();
+    callStatus.value = CallStatus.none;
     if (chatId != null) {
       await FlutterCallkitIncoming.endCall({"chatId": chatId});
     } else
@@ -159,7 +175,7 @@ class Sagora extends GetxController {
               id: event.body['extra']['callerId'],
             ),
           );
-          callAction.value = CallStatus.none;
+          callStatus.value = CallStatus.none;
           await FlutterCallkitIncoming.endAllCalls();
           // change to decline to update view parts.
           // if (Get.currentRoute == kAgoraCallScreen) Get.back<void>();
@@ -180,7 +196,7 @@ class Sagora extends GetxController {
             );
           }
           // change to ended to update view parts.
-          callAction.value = CallStatus.none;
+          callStatus.value = CallStatus.none;
 
           // if (Get.currentRoute == kAgoraCallScreen) {
           //   Get.back<void>(closeOverlays: true);
@@ -202,7 +218,7 @@ class Sagora extends GetxController {
               ),
             );
             // change to Accept to update view parts.
-            callAction.value = CallStatus.inCall;
+            callStatus.value = CallStatus.inCall;
             if (Get.currentRoute == kAgoraCallScreen) {
               Future<void>.microtask(
                 () => Get.offAndToNamed<void>(kAgoraCallScreen,

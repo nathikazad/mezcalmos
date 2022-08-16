@@ -316,17 +316,17 @@ class _MessagingScreenState extends State<MessagingScreen> {
             mezDbgPrint(
                 "[][][] MessageScreen :: sagora.joinChannel :: done ! ==> pushing to AgoraCall Screen !!!!");
 
-            sagora.callAction.value = CallStatus.calling;
+            sagora.callStatus.value = CallStatus.calling;
             Get.toNamed<void>(kAgoraCallScreen, arguments: {
               "chatId": chatId,
               "talkingTo": _recipient,
             });
           }).onError((error, stackTrace) {
             mezDbgPrint("Error ===> $error | $stackTrace");
-            sagora.callAction.value = CallStatus.none;
+            sagora.callStatus.value = CallStatus.none;
           });
         } else {
-          sagora.callAction.value = CallStatus.none;
+          sagora.callStatus.value = CallStatus.none;
         }
       }
     } else {

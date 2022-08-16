@@ -179,7 +179,7 @@ class BackgroundNotificationsController extends GetxController {
           mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> ${message.data}");
           await FlutterCallkitIncoming.endAllCalls();
           await agora.engine.leaveChannel();
-          Get.find<Sagora>().callAction.value = CallStatus.none;
+          Get.find<Sagora>().callStatus.value = CallStatus.none;
         }
       }
     });
