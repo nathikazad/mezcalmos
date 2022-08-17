@@ -25,7 +25,7 @@ import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder, RestaurantOrderStatus } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import { addServiceProviderOperatorsToChat, updateServiceProviderOrder } from "../shared/controllers/orderController";
+import { addServiceProviderAndOperatorsToChat, updateServiceProviderOrder } from "../shared/controllers/orderController";
 
 export = functions.https.onCall(async (data, context) => {
   if (!data.orderId || !data.orderType || !data.deliveryDriverId || !data.deliveryDriverType) {
@@ -111,7 +111,7 @@ export = functions.https.onCall(async (data, context) => {
   updateServiceProviderOrder(orderId, order);
 
   let serviceProviderchat: ChatObject = await createServiceProviderChat(serviceProviderDriverChatId, data, orderId, driverInfo);
-  addServiceProviderOperatorsToChat(orderId, order, serviceProviderchat, serviceProviderDriverChatId);
+  addServiceProviderAndOperatorsToChat(orderId, order, serviceProviderchat, serviceProviderDriverChatId);
 
   await createCustomerChat(customerDriverChatId, data, orderId, driverInfo, order);
 
@@ -161,6 +161,24 @@ async function createCustomerChat(customerDriverChatId: string, data: any, order
     ...order.customer,
     particpantType: ParticipantType.Customer
   });
+  switch (order.orderType) {
+    case OrderType.Laundry:
+      customerChat.addParticipant({
+        ...(order as LaundryOrder).laundry,
+        particpantType: ParticipantType.Laundry
+      });
+      break;
+    case OrderType.Restaurant:
+      customerChat.addParticipant({
+        ...(order as RestaurantOrder).restaurant,
+        particpantType: ParticipantType.Restaurant
+      });
+      break;
+
+    default:
+      break;
+  }
+
   await chatController.setChat(customerDriverChatId, customerChat.chatData);
 }
 

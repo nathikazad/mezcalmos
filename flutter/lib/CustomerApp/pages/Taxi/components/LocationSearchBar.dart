@@ -127,34 +127,27 @@ class LocationSearchBarState extends State<LocationSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 5,
-      left: 10,
-      right: 10,
-      child: Container(
-        decoration: getDecoration(),
-        child: Center(
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: <Widget>[
-              Column(
-                children: OrderPositionedFromToTopBar.buildwithWidgets(
-                  context: context,
-                  fromWidget: fromTextField(),
-                  toWidget: toTextField(),
-                ),
-              ),
-              Positioned(
-                top: locationSearchBarController.focusedTextField.value ==
-                        SearchComponentType.From
-                    ? 45
-                    : 95,
-                child: pickChoicesDropDown(),
-              ),
-            ],
+    return Stack(
+      clipBehavior: Clip.none,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(top: 5),
+          child: Column(
+            children: OrderPositionedFromToTopBar.buildwithWidgets(
+              context: context,
+              fromWidget: fromTextField(),
+              toWidget: toTextField(),
+            ),
           ),
         ),
-      ),
+        Positioned(
+          top: locationSearchBarController.focusedTextField.value ==
+                  SearchComponentType.From
+              ? 45
+              : 95,
+          child: pickChoicesDropDown(),
+        ),
+      ],
     );
   }
 
@@ -176,7 +169,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
   BoxDecoration getDecoration() {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(10),
-      color: Colors.transparent,
+      color: Colors.red,
       boxShadow: <BoxShadow>[
         BoxShadow(
           color: Color.fromARGB(60, 0, 0, 0),
@@ -320,6 +313,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
                 (LocationDropDownItem d) => Expanded(
                   child: InkWell(
                     onTap: () {
+                      mezDbgPrint("Clicked ${d.title}");
                       d.function();
                       locationSearchBarController.unfocusAllFocusNodes();
                       setState(() {});

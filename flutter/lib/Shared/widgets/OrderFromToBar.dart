@@ -74,98 +74,100 @@ class OrderPositionedFromToTopBar {
     required BuildContext context,
   }) {
     return [
-      Container(
-        clipBehavior: Clip.hardEdge,
-        width: Get.width / 1.05,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Color.fromARGB(255, 216, 225, 249),
-              spreadRadius: 0,
-              blurRadius: 7,
-              offset: Offset(0, 7),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Obx(
-                () => Container(
-                  width: 50,
-                  child: Text(
-                    i18n()["from"] + ':',
-                    textAlign: TextAlign.right,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    softWrap: false,
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
-                      fontFamily: 'Montserrat',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+      Column(
+        children: [
+          Container(
+            clipBehavior: Clip.hardEdge,
+            width: Get.width / 1.05,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Color.fromARGB(255, 216, 225, 249),
+                  spreadRadius: 0,
+                  blurRadius: 7,
+                  offset: Offset(0, 7),
                 ),
-              ),
-              SizedBox(width: 5),
-              fromWidget
-            ],
-          ),
-        ),
-      ),
-      SizedBox(
-        height: 8,
-      ),
-      Container(
-        clipBehavior: Clip.hardEdge,
-        width: Get.width / 1.05,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Color.fromARGB(255, 216, 225, 249),
-              spreadRadius: 0,
-              blurRadius: 7,
-              offset: Offset(0, 7),
+              ],
             ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Obx(
-                () => Container(
-                  width: 50,
-                  child: Center(
-                    child: Text(
-                      i18n()["to"] + ':',
-                      textAlign: TextAlign.right,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.grey.shade700,
-                        fontFamily: 'Montserrat',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Obx(
+                    () => Container(
+                      width: 50,
+                      child: Text(
+                        i18n()["from"] + ':',
+                        textAlign: TextAlign.right,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: TextStyle(
+                          color: Colors.grey.shade700,
+                          fontFamily: 'Montserrat',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  SizedBox(width: 5),
+                  fromWidget
+                ],
               ),
-              SizedBox(width: 5),
-              toWidget
-            ],
+            ),
           ),
-        ),
+          SizedBox(
+            height: 8,
+          ),
+          Container(
+            clipBehavior: Clip.hardEdge,
+            width: Get.width / 1.05,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Color.fromARGB(255, 216, 225, 249),
+                  spreadRadius: 0,
+                  blurRadius: 7,
+                  offset: Offset(0, 7),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Obx(
+                    () => Container(
+                      width: 50,
+                      child: Text(
+                        i18n()["to"] + ':',
+                        textAlign: TextAlign.right,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.grey.shade700,
+                          fontFamily: 'Montserrat',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 5),
+                  toWidget
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     ];
   }
@@ -307,7 +309,7 @@ class OrderPositionedFromToTopBar {
           ],
         ),
       ),
-      _getMezCalmosCircleIcon()
+      // _getMezCalmosCircleIcon()
     ];
   }
 

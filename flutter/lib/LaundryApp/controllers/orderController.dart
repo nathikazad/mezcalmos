@@ -180,6 +180,13 @@ class OrderController extends GetxController {
         });
   }
 
+  Future<ServerResponse> cancelOrder(String orderId) async {
+    return _callLaundryCloudFunction("cancelOrderFromAdmin", orderId,
+        optionalParams: {
+          "fromLaundryOperator": true,
+        });
+  }
+
   Future<ServerResponse> _callLaundryCloudFunction(
       String functionName, String orderId,
       {Map<String, dynamic>? optionalParams}) async {

@@ -292,15 +292,16 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           () => ServicesCard(
             title: "${_i18n()['taxi']["title"]}",
             url: "assets/images/customer/taxi/taxiService.png",
-            subtitle: "${_i18n()['taxi']["subtitle"]}",
-            onTap: () {
-              getServiceRoute(
-                  orderType: OrderType.Taxi,
-                  serviceRoute: kTaxiRequestRoute,
-                  singleOrderRoute: (String orderId) {
-                    Get.toNamed<void>(getTaxiOrderRoute(orderId));
-                  });
-            },
+            // subtitle: "${_i18n()['taxi']["subtitle"]}",
+            subtitle: "${_i18n()["comingSoon"]}",
+            // onTap: () {
+            //   getServiceRoute(
+            //       orderType: OrderType.Taxi,
+            //       serviceRoute: kTaxiRequestRoute,
+            //       singleOrderRoute: (String orderId) {
+            //         Get.toNamed<void>(getTaxiOrderRoute(orderId));
+            //       });
+            // },
           ),
         ),
       ],

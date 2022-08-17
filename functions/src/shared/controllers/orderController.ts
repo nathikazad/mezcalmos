@@ -4,7 +4,7 @@ import { RestaurantOrder } from "../models/Services/Restaurant/RestaurantOrder";
 import * as restaurantNodes from "../databaseNodes/services/restaurant";
 import * as laundryNodes from "../databaseNodes/services/laundry";
 import { ChatObject, ParticipantType } from "../models/Generic/Chat";
-import { addParticipantsToChat } from "./chatController";
+import { addParticipantsToChat, addParticipantToChat } from "./chatController";
 
 export function updateServiceProviderOrder(orderId: string, order: Order) {
   if (order.orderType == OrderType.Restaurant) {
@@ -16,10 +16,11 @@ export function updateServiceProviderOrder(orderId: string, order: Order) {
   }
 }
 
-export function addServiceProviderOperatorsToChat(orderId: string, order: Order, serviceProviderchat: ChatObject,
+export function addServiceProviderAndOperatorsToChat(orderId: string, order: Order, serviceProviderchat: ChatObject,
   serviceProviderDriverChatId: string) {
   switch (order.orderType) {
     case OrderType.Laundry:
+      addParticipantToChat((order as LaundryOrder).laundry, serviceProviderchat, serviceProviderDriverChatId, ParticipantType.Laundry);
       laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
         let laundryOperators: Record<string, boolean> = snapshot.val() || {};
         addParticipantsToChat(Object.keys(laundryOperators), serviceProviderchat, serviceProviderDriverChatId, ParticipantType.LaundryOperator)

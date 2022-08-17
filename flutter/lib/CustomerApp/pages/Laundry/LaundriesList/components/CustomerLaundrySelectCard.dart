@@ -101,7 +101,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           ),
                           Flexible(
                               child: Text(
-                                  ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}',
+                                  ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
                                   style: Get.textTheme.bodyText2)),
                         ],
                       ),

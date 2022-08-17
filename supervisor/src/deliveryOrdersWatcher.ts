@@ -73,9 +73,11 @@ async function checkdeliverableOrders() {
         for (let adminId in deliveryAdmins) {
           let deliveryAdmin: DeliveryAdmin = deliveryAdmins[adminId]
           let notification: fcmPayload = clone(payloadTemplate);
+          if (deliveryAdmin.notificationInfo) {
           notification.token = deliveryAdmin.notificationInfo.deviceNotificationToken
           notification.payload.data.linkUrl = linkUrl;
           push(notification)
+          }
         }
       }
 

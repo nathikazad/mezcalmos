@@ -45,3 +45,17 @@ export async function addParticipantsToChat(
 
   await updateChat(chatId, chat.chatData);
 }
+
+export async function addParticipantToChat(
+  userInfo: UserInfo,
+  chat: ChatObject,
+  chatId: string,
+  participantType: ParticipantType) {
+
+  chat.addParticipant({
+    ...userInfo,
+    particpantType: participantType
+  });
+
+  await updateChat(chatId, chat.chatData);
+}

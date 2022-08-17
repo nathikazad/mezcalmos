@@ -22,7 +22,7 @@ android/app/src/main/res/mipmap*
 assets/icons/*
 ios/Runner/Assets.xcassets/AppIcon*
 ios/Runner/Assets.xcassets/Contents.json
- 
+ios/Podfile 
 pre-main.dart
 android/launcherPackage.properties
 android/app/src/main/res/values/launcher.xml

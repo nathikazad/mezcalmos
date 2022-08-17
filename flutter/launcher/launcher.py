@@ -8,6 +8,7 @@ from enum import Enum
 import subprocess as proc
 import sys
 from time import sleep
+# from turtle import goto
 from typing import Type
 
 SHOULD_ASK_4_INPUT = False
@@ -535,7 +536,7 @@ class Launcher:
         self.__set_flutter_args__()
 class Config:
     
-    possible_args = ['--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
+    possible_args = ['--upgrade-env', '--fix-pods', '--verbose' , 'help', 'app' , 'env' , 'version', 'filter', 'fmode', '--build', '--lan', '--preview' , '--set-version']
     def __help__(self):
         print(f""" 
         + app=<AppName>
@@ -547,6 +548,7 @@ class Config:
         + --preview : Passing this along , will result on launching the app in the device-preview for testing an try many resolutions.
         + version=<version> : Used to set the project's version to a specific version.
        	+ --fix-pods : Special cmd for MAC M1 , meant for fixing pod problems on IOS.
+        + --upgrade-env : Upgrading the flutter environment while also fixing plugings in iOS part.
 	    + help : show this help menu
      
 
@@ -663,6 +665,14 @@ class Config:
         _pubspec = open(pubspec , errors='ignore' , encoding='utf-8').readlines()
         _localProperties = open(localProperties , errors='ignore' , encoding='utf-8').readlines()
 
+        _strippedLocalProps = ''.join(_localProperties).replace('\n','')
+        if 'flutter.versionName' not in _strippedLocalProps:
+            open(localProperties, 'a').write('flutter.versionName=1.0.0\n')
+        if 'flutter.versionCode' not in _strippedLocalProps:
+            open(localProperties, 'a').write('flutter.versionCode=1\n')
+        _localProperties = open(localProperties , errors='ignore' , encoding='utf-8').readlines()
+
+
         # pubspect regex check:
         # ex : version: 1.0.4+8
 
@@ -682,14 +692,14 @@ class Config:
         # ex : 
         # flutter.versionName=1.0.4
         # flutter.versionCode=8
-
         _versionName = [i for i,line in enumerate(_localProperties) if re.match(r' {0,}flutter\.versionName {0,}= {0,}[0-9]+\.[0-9]+\.[0-9]+' , line ) != None]
         _versionCode = [i for i,line in enumerate(_localProperties) if re.match(r' {0,}flutter\.versionCode {0,}= {0,}[0-9]+' , line ) != None]
         
 
         if _versionName.__len__() > 1 :
             PRINTLN(f"[?] Found multi version ddffinition in {_localProperties} at lines : {[x for x in _versionName]} ")
-            exit(DW_EXIT_REASONS.FOUND_MULTI_VERSION_NAME_IN_LOCAL_PROPERTIES)
+            exit(DW_EXIT_REASONS.FOUND_MULTI_VERSION_NAME_IN_LOCAL_PROPERTIES)            
+
         if _versionCode.__len__() > 1 :
             PRINTLN(f"[?] Found multi version ddffinition in {_localProperties} at lines : {[x for x in _versionCode]} ")
             exit(DW_EXIT_REASONS.FOUND_MULTI_VERSION_CODE_IN_LOCAL_PROPERTIES)
@@ -795,9 +805,16 @@ class Config:
             self.__patch_version__(_)
             #exit(DW_EXIT_REASONS.NORMAL)
                 # Cmd to fix Pods Problems
+        _ = self.__get_arg_value__('--upgrade-env')
+        if _:
+            os.system('flutter --version')
+            if input("[❓] Running this will upgrade flutter env and fix plugins related problems : y/n ?").lower() == 'y':
+                os.system('rm -rf ~/Library/Developer/Xcode/DerivedData/* && flutter upgrade --force && flutter pub upgrade && flutter pub upgrade --major-versions && flutter clean && python3 launcher.py --fix-pods')
+            exit(DW_EXIT_REASONS.NORMAL)
+
         _ = self.__get_arg_value__('--fix-pods')
         if _:
-            if input('This is only for MAC M1 chips ! Continue : y/n ?') == 'y':
+            if input('[❓] This is only for MAC M1 chips ! Continue : y/n ?').lower() == 'y':
                 print("[+] Clearing cache and Removing lock files ..")
                 os.system('rm -rf ../ios/Pods & rm ../ios/Podfile.lock & rm -rf ../ios/.symlinks & rm ../ios/Flutter/Flutter.podspec & rm ../pubspec.lock')
                 if not os.path.exists('../ios/Podfile'):
@@ -901,7 +918,7 @@ class Config:
 if __name__ == "__main__":
     if 'offers' in argv:
         simulate_counter_offers(
-            orderId= "-N8_J16QRVKzS9rnI4DH",
+            orderId= "-N8l0HFq5ygDPouwbaDj",
             customerId= "tSG0eSFZNGNA7grjBPFEBbpYwjE3"
         )
         exit(0)
@@ -910,20 +927,17 @@ if __name__ == "__main__":
         # Customer's destination To :
         simulateDriverMovements( 
             customerId="tSG0eSFZNGNA7grjBPFEBbpYwjE3", # Montassar's customer id
-            orderId="-N8kdMdTJ5VOwEBXZu5h", # taxi order id
-            orderType="laundry",
+            orderId="-N8_J16QRVKzS9rnI4DH", # taxi order id
+            orderType="taxi",
             driverId="oAxB9JquC1S7zQyRUuZF2gI1suL2", # driverId
-            driverType="dropoffDriver",
-            providerId="-N5kJoc2aVz9Qdm9X9yP",
-            # Customer's Home : 15.835299822564249,-97.0356907323003
-            # Provider location : 15.835502076340775,-97.04348623752594
-            # driver location - 15.8330619,-97.0368584,17
-            end="15.835299822564249,-97.0356907323003",
-            start="15.835502076340775,-97.04348623752594",
-            # start="15.835299822564249,-97.0356907323003",
-            # start="15.8330619,-97.0368584", # sense interdit
-            # start="15.8337,-97.04205", # driver near restaurant
-            duration_sec=20
+            driverType="driver",
+            # start="15.866373,-97.068697",
+            end="15.835721354763855,-97.04348623752594",
+            # 19.38003452020731 | -98.96333869546652
+            # destination : 15.835502076340775,-97.04348623752594
+            start="15.83476,-97.04242",
+            # end="15.865125366502896,-97.05751821398735",
+            duration_sec=120
         )
     Config(argv)
     exit(DW_EXIT_REASONS.NORMAL)

@@ -511,7 +511,7 @@
                             "unavailable": "Unavailable"
                         },
                         "CustomerLaundrySelectCard": {
-                            "days": "days",
+                            "days": "day",
                             "startingFrom": "Starting"
                         }
                     },

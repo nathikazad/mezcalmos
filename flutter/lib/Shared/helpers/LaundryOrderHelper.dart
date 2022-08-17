@@ -9,6 +9,15 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
         ['LaundryCurrentOrderView']['Components']['LaundryOrderStatusCard'];
 
+Widget atLaundryIcon = Container(
+  height: 50,
+  width: 50,
+  child: RiveAnimation.asset(
+    "assets/animation/washingMachine.riv",
+    fit: BoxFit.cover,
+  ),
+);
+
 extension LaundryOrderWidgets on LaundryOrder {
 // getting the order status string
 
@@ -66,12 +75,40 @@ extension LaundryOrderWidgets on LaundryOrder {
     }
   }
 
+  Future<Widget?> geAtLaundrytWidget() async {
+    final Rx<Widget> icon = Rx<Widget>(Container());
+    final Rx<RiveAnimation> animation = Rx<RiveAnimation>(aDriverAnimation);
+
+    await Future.delayed(Duration.zero);
+
+    animation.value = aWashingAnimation;
+    icon.value = animation.value;
+
+    return Container(height: 50, width: 50, child: icon.value);
+  }
+
   // getting icons widgets reperesent the current status
   Widget getOrderWidget() {
+    if (isAtLaundry()) {
+      return FutureBuilder<Widget?>(
+          future: geAtLaundrytWidget(),
+          builder: (BuildContext context, AsyncSnapshot<Widget?> snapshot) {
+            return Container(
+              child: snapshot.data,
+            );
+          });
+    } else {
+      return getStaticOrderWidget();
+    }
+  }
+
+  Widget getStaticOrderWidget() {
+    Widget orderWidget = Container();
+
     switch (status) {
       case LaundryOrderStatus.CancelledByCustomer:
       case LaundryOrderStatus.CancelledByAdmin:
-        return Container(
+        orderWidget = Container(
           padding: const EdgeInsets.all(5),
           decoration:
               BoxDecoration(color: Color(0xFFF9D8D6), shape: BoxShape.circle),
@@ -81,21 +118,32 @@ extension LaundryOrderWidgets on LaundryOrder {
             color: Colors.red,
           ),
         );
-
-      case LaundryOrderStatus.OrderReceieved:
+        break;
       case LaundryOrderStatus.AtLaundry:
-        return Container(
+        orderWidget = Container(
+          height: 50,
+          width: 50,
+          child: RiveAnimation.asset(
+            "assets/animation/washingMachine.riv",
+            fit: BoxFit.cover,
+          ),
+        );
+
+        break;
+      case LaundryOrderStatus.OrderReceieved:
+        orderWidget = Container(
           child: Icon(
             Icons.local_laundry_service,
             size: 40,
             color: primaryBlueColor,
           ),
         );
+        break;
       case LaundryOrderStatus.OtwPickupFromCustomer:
       case LaundryOrderStatus.OtwPickupFromLaundry:
       case LaundryOrderStatus.PickedUpFromLaundry:
       case LaundryOrderStatus.PickedUpFromCustomer:
-        return Container(
+        orderWidget = Container(
           height: 50,
           width: 50,
           child: RiveAnimation.asset(
@@ -104,8 +152,10 @@ extension LaundryOrderWidgets on LaundryOrder {
           ),
         );
 
+        break;
+
       case LaundryOrderStatus.Delivered:
-        return Container(
+        orderWidget = Container(
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
               color: secondaryLightBlueColor, shape: BoxShape.circle),
@@ -116,8 +166,10 @@ extension LaundryOrderWidgets on LaundryOrder {
           ),
         );
 
+        break;
+
       case LaundryOrderStatus.ReadyForDelivery:
-        return Container(
+        orderWidget = Container(
           child: Icon(
             Icons.dry_cleaning_rounded,
             size: 40,
@@ -125,5 +177,8 @@ extension LaundryOrderWidgets on LaundryOrder {
           ),
         );
     }
+    return orderWidget;
+
+    // return null;
   }
 }

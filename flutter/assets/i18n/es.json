@@ -529,7 +529,7 @@
                             "unavailable": "Unavailable"
                         },
                         "CustomerLaundrySelectCard": {
-                            "days": "dias",
+                            "days": "día",
                             "startingFrom": "Empezando"
                         }
                     }
@@ -1571,7 +1571,7 @@
                         "days": "dias"
                     },
                     "MinimumCostCard": {
-                        "minCost": "Minimum Cost"
+                        "minCost": "Costo mínimo"
                     }
                 }
             },
@@ -1664,6 +1664,7 @@
                     "customer": "Información del cliente",
                     "orderDate": "Fecha de orden",
                     "total": "Total",
+                    "toBeCalculated": "Para ser calculado",
                     "orderReady": "Pedido listo para la entrega"
                 }
             }

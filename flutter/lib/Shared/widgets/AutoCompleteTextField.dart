@@ -103,8 +103,10 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
         Overlay.of(context)?.insert(_overlayEntry);
         widget.focusGained();
       } else {
-        _overlayEntry.remove();
-        widget.focusLost();
+        if (_overlayEntry != null) {
+          _overlayEntry.remove();
+          widget.focusLost();
+        }
       }
     });
     widget.controller.addListener(_onSearchChanged);
@@ -119,7 +121,7 @@ class _AutoCompleteTextViewState extends State<AutoCompleteTextView> {
     });
   }
 
-  void _getSuggestions(String data) async {
+  Future<void> _getSuggestions(String data) async {
     if (data.length >= 3 && !suggestionsStreamController.isClosed) {
       idWithDescription.clear();
       idWithDescription = await widget.getSuggestionsMethod(data);
