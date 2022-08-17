@@ -24,13 +24,12 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
     await markInDb(event.data["markReceivedUrl"]);
   } else if (event.data["notificationType"] ==
       NotificationType.Call.toFirebaseFormatString()) {
-    mezDbgPrint("######## GOT BG FCM ###### ${event.data}");
     switch (event.data['callNotificationType']
         .toString()
         .toCallNotificationtType()) {
       case CallNotificationtType.Incoming:
-        mezDbgPrint(event.data);
-        // mezDbgPrint("Got extras ===> $_extras");
+        mezDbgPrint("# 👁 # [ BG NOTIF ] # [ I N C O M I N G ] ${event.data}");
+
         await triggerIncomingCallAlert(
           callerName: event.data["callerName"],
           callerImage: event.data["callerImage"],
@@ -46,14 +45,15 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
         break;
       // not here
       case CallNotificationtType.EndCall:
+        mezDbgPrint("# 👀 # [ BG NOTIF ] # [ E N D - C A L L] ${event.data}");
         await FlutterCallkitIncoming.endAllCalls();
+
         // await FlutterCallkitIncoming.endCall(
         //   event.data['chatId'],
         // );
         break;
       default:
-        mezDbgPrint(
-            "Got dEFAULT #E ===> ${event.data['callNotificationType']}");
+        mezDbgPrint("# 🗣 # [ BG NOTIF ] # [ U N K N O W N] ${event.data}");
     }
   }
 }
@@ -66,10 +66,11 @@ Future<void> triggerIncomingCallAlert({
   required Gen.LanguageType languageType,
   required Map<String, dynamic> extra,
 }) async {
+  final String _uuid = Uuid().v1();
   final Map<String, dynamic> params = <String, dynamic>{
-    'id': Uuid().v1(),
+    'id': _uuid,
     'nameCaller': callerName,
-    'appName': getAppName(),
+    'appName': 'Mezcalmos',
     'avatar': callerImage,
     'handle': callerName,
     'type': callerType,
@@ -105,7 +106,7 @@ Future<void> triggerIncomingCallAlert({
       'ringtonePath': 'system_ringtone_default'
     }
   };
-
+  // ignore: unawaited_futures
   await FlutterCallkitIncoming.showCallkitIncoming(params);
 }
 
