@@ -5,8 +5,8 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewItemScreen"]["components"]["ItemOptionCard"];
@@ -210,10 +210,12 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
 
 // FUNCTIONS //
   void assignMinimumChoices() {
-    widget.cartItem.value!.setNewChoices(
-        optionId: optionId,
-        newChoices: widget.option.choices
-            .sublist(0, (widget.option.minimumChoice as int)));
+    if (widget.option.minimumChoice > 0) {
+      widget.cartItem.value!.setNewChoices(
+          optionId: optionId,
+          newChoices: widget.option.choices
+              .sublist(0, (widget.option.minimumChoice as int)));
+    }
   }
 
   void handleChoiceCheckBox(Choice choice) {
